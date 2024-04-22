@@ -1,5 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  mode:'jit',
+  corePlugins:{
+    container: false
+  },
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -14,5 +18,14 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+    function ({ addVariant }) {
+      addVariant('focus-shadow-outline-blue', ({ modifySelectors, separator }) => {
+        modifySelectors(({ className }) => {
+          return `.focus\\:${className.split(separator).join('\\:')}:focus`;
+        });
+      });
+    },
+  ],
 };
