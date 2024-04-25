@@ -10,13 +10,38 @@ const FormPage = () => {
   const MyCustomWidget = (props) => {
     return (
       <input
-        className="block w-[100px] py-2 text-sm leading-6  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
+        className="block w-[300px] py-2 text-sm leading-6  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
         placeholder={props.placeholder}
         type="text"
         width={props.width}
         />
     );
   };
+
+
+  const selectWidget = (props) => {
+    return(
+      <div className="w-full max-w-xs mx-2 mb-3">
+
+      <label className="text-sm  leading-5 text-gray-700 flex">
+      select
+        <div className="ml-2">
+          {/* <NewTooltip tooltiptext="Indicate where the energy comes from" /> */}
+        </div>
+      </label>
+
+      <select
+        className="block w-[270px] py-2 text-sm leading-6  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
+        defaultValue=""
+      >
+        <option value="" disabled>
+        Select
+        </option>
+
+      </select>
+    </div>
+    )
+  }
 
   const dateWidget = (props) =>{
     return(
@@ -39,7 +64,8 @@ const FormPage = () => {
   
   const widgets = {
     myCustomWidget: MyCustomWidget,
-    dateWidget: dateWidget
+    dateWidget: dateWidget,
+    selectWidget: selectWidget
   };
 
   const schema = {
@@ -52,7 +78,8 @@ const FormPage = () => {
       street: { type: 'string' },
       country: { type: 'string' },
       age4: { type: 'number' },
-      date: {type: 'string'}      
+      date: {type: 'string'},
+
     },
     required: ['name', 'age', 'name4'],
   };
@@ -60,10 +87,10 @@ const FormPage = () => {
   const uiSchema = {
     name: {
       'ui:widget': 'myCustomWidget',      
-      placeholder: 'Name'
+      placeholder: 'Title'
     },
     age: {
-      classNames: 'block w-[60px] py-2 text-sm leading-6  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-600', 
+      classNames: 'block w-[200px] py-2 text-sm leading-6  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-600', 
     },
     address: {
       'ui:widget': 'myCustomWidget',      
