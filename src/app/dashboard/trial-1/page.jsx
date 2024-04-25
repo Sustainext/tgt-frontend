@@ -36,7 +36,7 @@ const FormPage = () => {
                 </div>
     )
   }
-  
+
   const widgets = {
     myCustomWidget: MyCustomWidget,
     dateWidget: dateWidget
@@ -52,36 +52,36 @@ const FormPage = () => {
       street: { type: 'string' },
       country: { type: 'string' },
       age4: { type: 'number' },
-      date: {type: 'string'}      
+      date: {type: 'string'}
     },
     required: ['name', 'age', 'name4'],
   };
 
   const uiSchema = {
     name: {
-      'ui:widget': 'myCustomWidget',      
+      'ui:widget': 'myCustomWidget',
       placeholder: 'Name'
     },
     age: {
-      classNames: 'block w-[60px] py-2 text-sm leading-6  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-600', 
+      classNames: 'block w-[60px] py-2 text-sm leading-6  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-600',
     },
     address: {
-      'ui:widget': 'myCustomWidget',      
+      'ui:widget': 'myCustomWidget',
       placeholder: 'Name',
       width: '170px'
     },
     age3: {
-      classNames: 'block w-[80px] py-2 text-sm leading-6  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-600', 
+      classNames: 'block w-[80px] py-2 text-sm leading-6  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-600',
     },
     street: {
-      'ui:widget': 'myCustomWidget',      
+      'ui:widget': 'myCustomWidget',
       placeholder: 'Name'
     },
     country: {
       'ui:widget': 'myCustomWidget',
     },
     age4: {
-      classNames: 'block w-[60px] py-2 text-sm leading-6  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-600', 
+      classNames: 'block w-[60px] py-2 text-sm leading-6  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-600',
     },
     date:{
       'ui:widget': 'dateWidget'
@@ -99,9 +99,9 @@ const FormPage = () => {
   return(
     <div className="flex justify-center items-center mx-4 mb-5 mt-5">
     <div className="flex-grow max-w-md mx-2">
-        <Form 
-          schema={schema} 
-          uiSchema={uiSchema} 
+        <Form
+          schema={schema}
+          uiSchema={uiSchema}
           validator={validator}
           widgets={widgets}
         />

@@ -1,0 +1,8 @@
+fieldset {
+    border: 2px solid #4A90E2;  /* Custom border color */
+    border-radius: 8px;         /* Rounded corners */
+    padding: 20px;              /* Padding around the content */
+    margin-bottom: 20px;        /* Space below each fieldset */
+  width: 100%;
+    display: flex;  /* Light background color */
+}

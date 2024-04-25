@@ -19,13 +19,6 @@ module.exports = {
     },
   },
   plugins: [
-    require('@tailwindcss/forms'),
-    function ({ addVariant }) {
-      addVariant('focus-shadow-outline-blue', ({ modifySelectors, separator }) => {
-        modifySelectors(({ className }) => {
-          return `.focus\\:${className.split(separator).join('\\:')}:focus`;
-        });
-      });
-    },
+
   ],
 };

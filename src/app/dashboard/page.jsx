@@ -52,7 +52,7 @@ const Dashboard = () => {
               </button>
               <div className="ml-auto mb-2">
               <div>
-            <button class="right-10 top-18 ms-2 bg-gradient-to-r from-[#364161] to-[#06081f] hover:bg-gray-600 text-white font-bold py-2 mr-4 px-2 rounded text-xs take-a-tour">Take a tour</button>
+            <button className="right-10 top-18 ms-2 bg-gradient-to-r from-[#364161] to-[#06081f] hover:bg-gray-600 text-white font-bold py-2 mr-4 px-2 rounded text-xs take-a-tour">Take a tour</button>
             </div>
               </div>
             </div>
