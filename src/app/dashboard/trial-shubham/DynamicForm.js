@@ -48,6 +48,7 @@ const schema = {
 };
 
 const uiSchema = {
+
   EnergyType: {
     "ui:widget": "myCustomSelectWidget",
 
@@ -79,7 +80,8 @@ const uiSchema = {
   }
 };
 
-// Instantiate the validator class with an empty configuration object
+
+
 const MyCustomWidget = (props) => {
   return (
     <div className="flex flex-col mb-4">
@@ -139,12 +141,10 @@ const widgets = {
 const DynamicForm = () => {
     return (
       <div className='flex mt-10 '>
-  <div>
+
         <Form schema={schema} uiSchema={uiSchema} widgets={widgets} validator={validator}  className='fieldset-custom'   />
-      </div>
-      <div>
-        <h2>form</h2>
-      </div>
+
+
       </div>
 
     );
