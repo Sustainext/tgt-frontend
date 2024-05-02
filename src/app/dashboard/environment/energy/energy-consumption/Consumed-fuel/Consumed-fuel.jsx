@@ -283,18 +283,7 @@ const Unit = [
                         </div>
                       </div>
                     </div>
-                    <div className="flex justify-center items-center w-[25px] h-[30px] px-2.5 py-1 bg-[#007EEF] rounded-r">
-                      <div className="relative inline-flex">
-                        <div className="absolute -mr-2 inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                          <MdOutlineArrowDropDown className="text-white bg-[#007EEF]" />
-                        </div>
-                        <select className="flex justify-center items-center w-[25px] h-[30px] px-2.5 py-1 bg-sky-600 rounded-r cursor-pointer appearance-none focus:outline-none text-white bg-blue hover:bg-light-blue-300">
-                          <option value="" className="text-white pe-1"></option>
 
-                          <option>sk</option>
-                        </select>
-                      </div>
-                    </div>
                   </div>
                   <div className="flex ml-4 h-[10px]">
                     <input
