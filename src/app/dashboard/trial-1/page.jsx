@@ -4,7 +4,6 @@ import Form from '@rjsf/core';
 import { RJSFSchema } from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
 import { render } from 'react-dom';
-
 const FormPage = () => {
 
   const MyCustomWidget = (props) => {
