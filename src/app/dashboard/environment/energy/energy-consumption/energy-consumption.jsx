@@ -37,10 +37,9 @@ const Energyconsumption = ({open}) => {
       <div className="flex flex-col justify-start overflow-x-hidden ">
 
 
-        <div className="flex justify-between items-center border-b border-gray-200 mb-5">
-          <div
-            className={`flex justify-between items-center`}
-          >
+        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
+
+            <div className='w-full'>
             <div className="text-left mb-4 ml-3 pt-5">
               <p className="text-sm">Environment</p>
               <div className='flex'>
@@ -55,16 +54,19 @@ const Energyconsumption = ({open}) => {
               </div>
 
             </div>
-            <div className="flex  absolute right-[4.5rem] border-l">
+            </div>
+            <div className='w-full float-end '>
+            <div className="flex float-end border-l">
               <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('1')}>GRI 302-1</button>
               <button className="text-[#fff] bg-amber-400 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 " onClick={() => toggleDrawer('2')}>SDG 7</button>
               <button className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('3')}>SDG 8</button>
               <button className="text-[#fff] bg-yellow-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 " onClick={() => toggleDrawer('4')}>SDG 12</button>
               <button className="text-[#fff] bg-lime-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('5')}>SDG 13</button>
             </div>
+            </div>
           </div>
 
-        </div>
+
         <div className="ml-3">
           <h6 className="text-[17px] mb-4 font-semibold">
 

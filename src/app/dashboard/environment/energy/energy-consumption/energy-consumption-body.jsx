@@ -144,18 +144,7 @@ const Energyconsumptionbody = ({open}) => {
 
         {/* Add more accordion items here */}
       </div>
-      <div className="flex justify-end items-center mt-[24] me-[10px]">
-        <button className="w-[150px] h-8 py-2 bg-[#007EEF] rounded shadow flex-col justify-center items-center inline-flex text-white text-xs font-bold leading-[15px]">
-          <div className="cursor-pointer">
-            <p className="text-white text-sm font-semibold">Save</p>
-            {/* {calculating
-          ? 'Calculating...'
-          : calculated
-          ? 'Calculated'
-          : 'Calculate'} */}
-          </div>
-        </button>
-      </div>
+
     </>
   );
 };

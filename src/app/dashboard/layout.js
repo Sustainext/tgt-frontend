@@ -1,11 +1,9 @@
 'use client'
-
-import { useState } from "react";
+import { useState ,useContext } from "react";
 import DashboardHeader from "./dashobardheader";
 import Sidenav from "./sidebar";
-
 export default function DashboardLayout({children}) {
-    const [open, setOpen] = useState(true);
+  const [open , setOpen ] = useState(true);
   return (
     <>
 
@@ -17,7 +15,7 @@ export default function DashboardLayout({children}) {
           <div className={`mx-2 w-full ${open ? "ml-[285px]" : "ml-[90px]"}`}>
             <div className="mb-5 ">
               <DashboardHeader  />
-              <div className="" >{children}</div>
+              <div>{children}</div>
             </div>
 
           </div>

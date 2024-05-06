@@ -25,10 +25,9 @@ const Sidenav = ({setOpen, open}) => {
     { title: "Organizational Structure", icon: <MdOutlineAccountTree/>, link:"#" },
     { title: "About", icon: <MdInfoOutline/>, link:"#" },
   ];
-
   const [submanuopen, setSubmenuopen] = useState(false);
   return (
-    <div className="flex min-h-screen fixed z-[100]">
+    <div className="min-h-screen fixed z-[100]">
       <div className={`bg-[#0a0528] min-h-screen p-5 pt-8 ${open ? "w-[17rem]" : "w-20"} duration-300 relative`}>
         <MdKeyboardDoubleArrowLeft className={`bg-white text-[#0a0528] text-3xl rounded-full absolute -right-3 top-9 border  cursor-pointer ${!open && "rotate-180"}`}
           onClick={() => setOpen(!open)} />

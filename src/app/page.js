@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 export default function Home() {
   return (
+    <>
+
     <main>
       <div
         className="min-h-screen bg-cover bg-center"
@@ -108,5 +110,6 @@ export default function Home() {
         </div>
       </div>
     </main>
+    </>
   );
 }

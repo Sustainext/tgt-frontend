@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Aside from "./sidepanel";
 import Energyconsumption from "./energy/energy-consumption/energy-consumption";
+import Emission from "./Emissions/emissions"
 const environment = ({ open }) => {
     const [activeTab, setActiveTab] = useState('Emissions');
     const handleTabClick = (tab) => {
@@ -20,7 +21,7 @@ const environment = ({ open }) => {
                     className="w-full"
                 >
                     {/* Emissions start  */}
-                    {/* {activeTab === 'Emissions' && <Emissions />} */}
+                    {activeTab === 'Emissions' && <Emission />}
                     {/* Energy start  */}
                     {activeTab === 'Energy consumed inside the organization' && <Energyconsumption open={open} />}
                     {/* {activeTab === 'Energy consumption outside of the organization' && <Energyconsumptionoutside />}
