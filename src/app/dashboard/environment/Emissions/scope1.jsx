@@ -34,6 +34,11 @@ const schema = {
           title: "Unit",
           enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
         },
+        Test: {
+          type: "string",
+          title: "Test",
+          enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
+        },
         Document: {
           type: "string",
           title: "Upload Document",
