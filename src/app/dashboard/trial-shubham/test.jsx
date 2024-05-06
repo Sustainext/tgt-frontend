@@ -1,8 +1,8 @@
 'use client'
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
-import { MdOutlineFileUpload,MdAdd ,MdOutlineDeleteOutline } from "react-icons/md";
+import { MdOutlineFileUpload, MdAdd, MdOutlineDeleteOutline,MdFilePresent  } from "react-icons/md";
 import CustomAddressField from './CustomAddressField'
 const schema = {
   type: 'object',
@@ -66,7 +66,11 @@ const CustomForm = () => {
   const handleFormDataChange = (data) => {
     setFormData(data.formData);
   };
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent the default form submission
+    console.log('Form data:', formData);
 
+  };
   return (
     <Form
       schema={schema}
@@ -77,12 +81,21 @@ const CustomForm = () => {
       fields={{
         'custom-ui': CustomAddressField,
       }}
-      onSubmit={({ formData }) => console.log('Form data:', formData)}
-    />
+    >
+      {/* Custom submit button */}
+      <div className="flex justify-end mt-4 right-1">
+        <button
+          type="submit"
+          className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline"
+          onClick={handleSubmit}
+        >
+          Submit
+        </button>
+      </div>
+    </Form>
   );
 };
 
 
 export default CustomForm;
-
 

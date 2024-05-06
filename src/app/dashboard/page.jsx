@@ -2,7 +2,6 @@
 'use client'
 import HomeDashboard from "./Home/page";
 import { useState} from "react";
-
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("tab1");
 
@@ -13,6 +12,7 @@ const Dashboard = () => {
 
   return (
     <>
+
       <div>
         <div className="ms-6">
           <div className="my-4 gradient-text text-opacity-20 text-[22px] font-semibold leading-relaxed ">
