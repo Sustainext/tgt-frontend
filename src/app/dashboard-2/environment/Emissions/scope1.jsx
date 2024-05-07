@@ -58,9 +58,9 @@ const schema = {
 const uiSchema = {
 
     Category:{
-      classNames: 'px-4 mb-6',
+      classNames: 'px-4 mb-4 inline-block',
       'ui:widget': 'selectWidget',
-      'ui:horizontal': false,
+      'ui:horizontal': true,
       enum: [
           { value: 'Heating', label: 'Heating' },
           { value: 'Cooling', label: 'Cooling' },
@@ -68,9 +68,9 @@ const uiSchema = {
       ],
     },
     Subcategory:{
-      classNames: 'px-4 mb-4',
+      classNames: 'px-4 mb-4 inline-block',
       'ui:widget': 'selectWidget',
-      'ui:horizontal': false,
+      'ui:horizontal': true,
       enum: [
         { value: 'Heating', label: 'Heating' },
         { value: 'Cooling', label: 'Cooling' },
@@ -78,9 +78,9 @@ const uiSchema = {
       ],
     },
     Activity:{
-      classNames: 'px-4 mb-4',
+      classNames: 'px-4 mb-4 inline-block',
       'ui:widget': 'selectWidget',
-      'ui:horizontal': false,
+      'ui:horizontal': true,
       enum: [
         { value: 'Heating', label: 'Heating' },
         { value: 'Cooling', label: 'Cooling' },
@@ -88,13 +88,13 @@ const uiSchema = {
        ],
     },
     Quantity:{
-      classNames: 'px-4 mb-4',
+      classNames: 'px-4 mb-4 inline-block',
       'ui:widget': 'inputWidget',
-      'ui:horizontal': false,
+      'ui:horizontal': true,
     
     },
     Unit:{
-      classNames: 'px-4 mb-4',
+      classNames: 'px-4 mb-4 inline-block',
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
       enum: [
@@ -104,7 +104,7 @@ const uiSchema = {
       ],
       },
     Test:{
-      classNames: 'px-4 mb-4',
+      classNames: 'px-4 mb-4 inline-block',
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
       enum: [
