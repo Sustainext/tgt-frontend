@@ -46,11 +46,11 @@ const schema = {
         title: "Test",
         enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
       },
-      Document: {
-        type: "string",
-        title: "Upload Document",
-        format: "data-url",  // This format helps to handle file data as a base64 encoded string
-      }
+      // Document: {
+      //   type: "string",
+      //   title: "Upload Document",
+      //   format: "data-url",  // This format helps to handle file data as a base64 encoded string
+      // }
     },
 
 };
@@ -58,7 +58,7 @@ const schema = {
 const uiSchema = {
 
     Category:{
-      classNames: 'px-4 mb-4 inline-block',
+      classNames: 'px-4 mb-4 inline-block w-[100px]',
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
       enum: [
@@ -113,7 +113,20 @@ const uiSchema = {
         { value: 'Steam', label: 'Steam' },
       ],
     },
+    // Document:{
+    //   classNames: 'px-4  inline-block w-[150px] truncate',
+    // },
 };
+
+function AddButton(props) {
+  const { icon, iconType, ...btnProps } = props;
+  return (
+    <button {...btnProps}>
+      {icon} <FormattedMessage defaultMessage='Add' />
+    </button>
+  );
+}
+
 
 const Scope1 = ({ }) => {
   const [formData, setFormData] = useState({});
@@ -129,7 +142,7 @@ const Scope1 = ({ }) => {
   return (
     <form onSubmit={handleSubmit}>
     {/* Render each form field */}
-    <div className="px-4 mb-4 flex flex-wrap">
+    <div className="px-4 mb-4 flex flex-wrap text-xs">
 
     <Form
       schema={schema}
