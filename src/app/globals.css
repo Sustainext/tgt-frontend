@@ -3,6 +3,7 @@
 @tailwind utilities;
 body{
   height: 100vh;
+
 }
 .scrollable-content {
     /* For Webkit-based browsers */
@@ -90,4 +91,24 @@ body{
     padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px #94a3b8;
+    border-radius: 10px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 10px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #1e293b;
   }

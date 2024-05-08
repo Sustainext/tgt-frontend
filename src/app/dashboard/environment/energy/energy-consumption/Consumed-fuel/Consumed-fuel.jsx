@@ -14,29 +14,36 @@ const schema = {
           type: "string",
           title: "Energy Type",
           enum: ['Electricity', 'Heating', 'Cooling', 'Steam'],
+          tooltiptext:"Indicate the type of energy purchased from the drop down"
         },
         Source: {
           type: "string",
           title: "Source",
           enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro'],
+          tooltiptext:"Indicate where the energy comes from"
         },
         Purpose: {
           type: "string",
-          title: "Purpose"
+          title: "Purpose",
+          tooltiptext:"Indicate the purpose it's being used for. ex: Furnace Heat Generation, Steam Generation"
         },
         Renewable: {
           type: "string",
           title: "Renewable/ Non-renewable",
           enum: ['Renewable', 'Non-renewable'],
+          tooltiptext:"Select from the dropdown to indicate whether it's Renewable or Non-Renewable Energy"
         },
+
         Quantity: {
           type: "string",
-          title: "Quantity"
+          title: "Quantity",
+          tooltiptext:"Indicate the purchased quantity"
         },
         Unit: {
           type: "string",
           title: "Unit",
           enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
+          tooltiptext:"Indicate the purchased consumed"
         },
         Document: {
           type: "string",

@@ -70,7 +70,7 @@ const uiSchema = {
 // </Tooltip>
 //   );
 // };
-const Scope1 = ({ }) => {
+const Scope2 = ({ }) => {
   const [formData, setFormData] = useState({});
 
   const handleFormDataChange = (data) => {
@@ -393,4 +393,4 @@ const CustomAddressField = ({ formData = {}, onChange, schema, }) => {
 };
 
 
-export default Scope1;
+export default Scope2;

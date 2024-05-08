@@ -14,7 +14,7 @@ const environment = ({ open }) => {
         <>
             <div className="flex w-full">
                 <div>
-                    <Aside activeTab={activeTab} handleTabClick={handleTabClick} />
+                    <Aside activeTab={activeTab} handleTabClick={handleTabClick}  />
                 </div>
 
                 <div
