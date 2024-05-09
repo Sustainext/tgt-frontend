@@ -10,7 +10,11 @@ module.exports = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+
     extend: {
+      fontFamily: {
+        'sans': ['Manrope', 'sans-serif'] // Add 'Roboto' as the default sans-serif font
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":

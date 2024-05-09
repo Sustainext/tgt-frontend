@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import { MdOutlineFileUpload, MdAdd, MdOutlineDeleteOutline, MdFilePresent, MdInfoOutline } from "react-icons/md";
+import { MdOutlineFileUpload, MdAdd, MdOutlineDeleteOutline, MdFilePresent, MdInfoOutline,MdClose } from "react-icons/md";
 import { GlobalState } from '../../../Context/page';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
@@ -28,7 +28,11 @@ const CustomAddressField = ({ formData = {}, onChange, schema }) => {
       const reader = new FileReader();
       reader.onloadend = () => {
         const updatedRows = [...rows];
-        updatedRows[index] = { ...updatedRows[index], Document: reader.result, fileType: file.type };
+        updatedRows[index] = {
+          ...updatedRows[index], Document: reader.result, fileType: file.type, fileName: file.name,
+          fileSize: file.size,
+          uploadDate: new Date().toLocaleDateString()
+        };
         setRows(updatedRows);
         updateFormData(updatedRows);
         setPreviewData(reader.result);
@@ -95,6 +99,7 @@ const CustomAddressField = ({ formData = {}, onChange, schema }) => {
   const PreviewModal = () => {
     if (!showModal || previewData === null) return null;
     let content;
+
     if (fileType.startsWith('image')) {
       content = <img src={previewData} alt="Preview" className="max-w-md max-h-md" />;
     } else if (fileType === 'application/pdf') {
@@ -103,22 +108,50 @@ const CustomAddressField = ({ formData = {}, onChange, schema }) => {
       content = <p>File preview not available.</p>;
     }
 
+
+
     return (
       <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
-        <div className="bg-white p-6 md:p-8 rounded-lg w-full max-w-xl h-full">
+        <div className="bg-white p-1 rounded-lg w-[60%] h-[90%] mt-6">
           <div className="flex justify-between  mt-4 mb-4">
             <div>
-              <h5 className="mb-4">File Preview</h5>
+              <h5 className="mb-4 ml-2 font-semibold">{fileNames[currentRowIndex]}</h5>
+
             </div>
-            <div>
-              <button className="px-4 py-2 mr-2 bg-red-500 text-white rounded hover:bg-red-600" onClick={handleDeleteFile}>Delete File</button>
-              <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" onClick={handleCloseModal}>Close</button>
+            <div className='flex'>
+              <button className="px-2 py-1 mr-2 w-[150px] flex items-center justify-center border border-red-500 text-red-600 text-[13px] rounded hover:bg-red-600 hover:text-white" onClick={handleDeleteFile}><MdOutlineDeleteOutline className="text-xl mr-2" />Delete File</button>
+              <button className="px-4 py-2 text-xl rounded " onClick={handleCloseModal}><MdClose /></button>
             </div>
 
           </div>
-
-          <div className="relative w-[500px] h-[450px]">{content}</div>
-
+          <div className='flex justify-between'>
+            <div className="relative w-[540px] h-[450px]">{content}</div>
+            <div className='w-[211px]'>
+              <div className='mb-4 mt-2'>
+                <h2 className='text-neutral-500 text-[15px] font-semibold  leading-relaxed tracking-wide'>File information</h2>
+              </div>
+              <div className='mb-4'>
+                <h2 className='text-neutral-500 text-[12px] font-semibold  leading-relaxed tracking-wide'>FILE NAME</h2>
+                <h2 className='text-[14px]  leading-relaxed tracking-wide'>{fileNames[currentRowIndex]}</h2>
+              </div>
+              <div className='mb-4'>
+                <h2 className='text-neutral-500 text-[12px] font-semibold  leading-relaxed tracking-wide'>FILE TYPE</h2>
+                <h2 className='text-[14px]  leading-relaxed tracking-wide'>{fileType}</h2>
+              </div>
+              <div className='mb-4'>
+                <h2 className='text-neutral-500 text-[12px] font-semibold  leading-relaxed tracking-wide'>FILE SIZE</h2>
+                <h2 className='text-[14px]  leading-relaxed tracking-wide'>{rows[currentRowIndex]?.fileSize / 1024} KB</h2>
+              </div>
+              <div className='mb-4'>
+                <h2 className='text-neutral-500 text-[12px] font-semibold  leading-relaxed tracking-wide'>LAST MODIFIED</h2>
+                <h2 className='text-[14px]  leading-relaxed tracking-wide'>{rows[currentRowIndex]?.uploadDate}</h2>
+              </div>
+              <div className='mb-4'>
+                <h2 className='text-neutral-500 text-[12px] font-semibold  leading-relaxed tracking-wide'>UPLOADED BY</h2>
+                <h2 className='text-[14px]  leading-relaxed tracking-wide'>shubham kanungo</h2>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -146,7 +179,7 @@ const CustomAddressField = ({ formData = {}, onChange, schema }) => {
                         <div className="w-full max-w-xs mb-3 px-2" key={key}>
                           <div className='flex'>
                             <label className="text-sm leading-5 text-gray-700 flex">{property.title}</label>   <MdInfoOutline
-                              data-tooltip-id={`tooltip-${property.tooltiptext.replace(/\s+/g, '-')}`} data-tooltip-content={property.tooltiptext} className="mt-1 ml-2 text-[14px]" />
+                              data-tooltip-id={`tooltip-${property.tooltiptext.replace(/\s+/g, '-')}`} data-tooltip-content={property.tooltiptext} className="mt-1 ml-2 text-[12px]" />
 
                             <ReactTooltip id={`tooltip-${property.tooltiptext.replace(/\s+/g, '-')}`} place="top" effect="solid" style={{
                               width: "290px", backgroundColor: "#000",

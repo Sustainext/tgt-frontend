@@ -16,7 +16,7 @@ export default function DashboardLayout({children}) {
           <div className={`mx-2 w-full ${open ? "ml-[240px]" : "ml-[90px]"}`}>
             <div className="mb-5 ">
               <DashboardHeader  />
-              <div className=" overflow-x-hidden">{children}</div>
+              <div>{children}</div>
             </div>
 
           </div>

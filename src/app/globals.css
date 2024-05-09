@@ -3,7 +3,14 @@
 @tailwind utilities;
 body{
   height: 100vh;
-
+}
+button,
+input,
+optgroup,
+select,
+textarea,
+h1,h2,h3,h4,h5,h6,p,div {
+  font-family: Manrope;
 }
 .scrollable-content {
     /* For Webkit-based browsers */
@@ -111,4 +118,7 @@ body{
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: #1e293b;
+  }
+  .btn{
+    display: none;
   }
