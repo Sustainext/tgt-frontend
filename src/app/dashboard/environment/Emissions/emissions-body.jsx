@@ -1,13 +1,15 @@
 'use client'
-import { useState } from "react";
-import { MdKeyboardArrowDown } from "react-icons/md";
+import { useState,useCallback  } from "react";
+import { MdKeyboardArrowDown, MdPower, MdOutlineLocalShipping, MdInfoOutline } from "react-icons/md";
 import { IoHomeOutline } from "react-icons/io5";
 import Scope1 from "./scope1";
+import Scope2 from "./scope2";
+import Scope3 from "./scope3";
 // import Consumedfuel from "./Consumed-fuel/Consumed-fuel";
-
-const AccordionItem = ({ title, children,scops,icons, tooltiptext, sdg, visible, open }) => {
+import { GlobalState } from "../../../../Context/page";
+const AccordionItem = ({ title, children, scops, icons, activeMonth}) => {
     const [isOpen, setIsOpen] = useState(false);
-
+    const { open } = GlobalState();
     return (
         <div className={`shadow-md py-1  mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200 ${open ? "w-[100%]" : "w-[100%]"}`}>
             <button
@@ -15,50 +17,90 @@ const AccordionItem = ({ title, children,scops,icons, tooltiptext, sdg, visible,
                 onClick={() => setIsOpen(!isOpen)}
             >
                 <div className="flex items-center px-3 w-[30%] ">
-                  <h5 className="text-[18px]">{icons}</h5> <h5 className="text-[12px]  text-[#344054] pt-1 px-3 font-semibold">{scops}</h5>
+                    <h5 className="text-[18px]">{icons}</h5> <h5 className="text-[12px]  text-[#344054] pt-1 px-3 font-semibold">{scops}</h5>
                 </div>
                 <div className="w-[40%]">
                     <h5 className="text-[12px]  text-[#344054] pt-1 px-3 font-semibold text-center">{title}</h5>
                 </div>
 
 
-                <div className="w-[30%] ">
+                <div className={`absolute flex justify-between ${isOpen ? 'right-[3rem]' : 'right-[3rem]'}`}>
                     <div className="float-end">
 
-                    <span>
-                        <MdKeyboardArrowDown className={`text-2xl ${isOpen && "rotate-i80"}`} />
-                    </span>
+                        <span>
+                            <MdKeyboardArrowDown className={`text-2xl ${isOpen && "rotate-i80"}`} />
+                        </span>
                     </div>
 
                 </div>
             </button>
-            {isOpen && <div className="p-4">{children}</div>}
+            {isOpen && <div className="py-4 px-4 w-full">
+                <div className="h-4 px-1 py-0.5 opacity-80 bg-gradient-to-r from-[#007EEF] to-[#2AE4FF] rounded-sm justify-start items-start gap-2.5 inline-flex ms-3"><div className="text-white text-[11px] font-bold uppercase leading-none">{activeMonth}</div></div>
+                {children}
+
+            </div>}
         </div>
     );
 };
+const Emissionsnbody = ({ activeMonth }) => {
+    const [globalFormData, setGlobalFormData] = useState({
+        scope1Data: {},
+        scope2Data: {},
+        scope3Data: {}
+    });
+    const handleScope1Change = useCallback((data) => {
+        setGlobalFormData(prev => ({ ...prev, scope1Data: data }));
+    }, []);
 
-const Emissionsnbody = ({ open }) => {
+    const handleScope2Change = useCallback((data) => {
+        setGlobalFormData(prev => ({ ...prev, scope2Data: data }));
+    }, []);
 
+    const handleScope3Change = useCallback((data) => {
+        setGlobalFormData(prev => ({ ...prev, scope3Data: data }));
+    }, []);
+    const handleSubmit = (e) => {
+        e.preventDefault(); // Prevent the default form submission
+        console.log('Form data:', globalFormData);
+
+    };
     return (
         <>
             <div className="mx-3">
-
                 <AccordionItem
                     title="Direct emission from operations"
                     scops="Scope 1"
-                    icons={<IoHomeOutline/>}
-                // tooltiptext="This section documents data corresponding to energy consumed - including fuels.
-                // Include:
-                // Self-Generated Energy shall be incorporated in this context.
-                // Exclude: Direct purchased Heating, Cooling, Electricity, and Steam. "
-
+                    icons={<IoHomeOutline />}
+                    activeMonth={activeMonth}
                 >
-                    <Scope1 open={open}/>
+                <Scope1 handleScope1Change={handleScope1Change} />
                 </AccordionItem>
-
-
+                <AccordionItem
+                    title="InDirect emission from operations"
+                    scops="Scope 2"
+                    icons={<MdPower />}
+                    activeMonth={activeMonth}
+                >
+                <Scope2 handleScope2Change={handleScope2Change} />
+                </AccordionItem>
+                <AccordionItem
+                    title="All other emissions (associated)"
+                    scops="Scope 3"
+                    icons={<MdOutlineLocalShipping />}
+                    activeMonth={activeMonth}
+                >
+                <Scope3 handleScope3Change={handleScope3Change} />
+                </AccordionItem>
             </div>
-
+            <div className="flex justify-end mt-4 right-1">
+                <button
+                    type="submit"
+                    className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline"
+                    onClick={handleSubmit}
+                >
+                    Calculate
+                </button>
+            </div>
         </>
     );
 };

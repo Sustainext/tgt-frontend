@@ -2,17 +2,18 @@
 import { useState ,useContext } from "react";
 import DashboardHeader from "./dashobardheader";
 import Sidenav from "./sidebar";
+import { GlobalState } from "../../Context/page";
 export default function DashboardLayout({children}) {
-  const [open , setOpen ] = useState(true);
+  const { open} = GlobalState();
   return (
     <>
 
-      <section open={open}>
+      <section>
         <div className="flex w-full">
           <div className="block float-left ">
-            <Sidenav open={open} setOpen={setOpen}/>
+            <Sidenav/>
           </div>
-          <div className={`mx-2 w-full ${open ? "ml-[285px]" : "ml-[90px]"}`}>
+          <div className={`mx-2 w-full ${open ? "ml-[240px]" : "ml-[90px]"}`}>
             <div className="mb-5 ">
               <DashboardHeader  />
               <div>{children}</div>

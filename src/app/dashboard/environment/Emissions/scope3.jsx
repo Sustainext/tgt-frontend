@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
-import { MdOutlineFileUpload, MdAdd, MdOutlineDeleteOutline, MdFilePresent, MdArrowDropDown, MdClose } from "react-icons/md";
+import { MdOutlineFileUpload, MdAdd, MdOutlineDeleteOutline, MdFilePresent, MdArrowDropDown,MdClose  } from "react-icons/md";
 import { GlobalState } from '../../../../Context/page';
 const schema = {
   type: 'object',
@@ -25,17 +25,12 @@ const schema = {
           title: "Activity",
           enum: ['Renewable', 'Non-renewable'],
         },
-        Quantity: {
-          type: "string",
+        Quantity:{
+            type: "string",
           title: "Activity",
         },
         Unit: {
           title: "Unit",
-          enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
-        },
-        Test: {
-          type: "string",
-          title: "Test",
           enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
         },
         Document: {
@@ -75,11 +70,11 @@ const uiSchema = {
 // </Tooltip>
 //   );
 // };
-const Scope1 = ({ handleScope1Change }) => {
+const Scope3 = ({handleScope3Change }) => {
   const [formData, setFormData] = useState({});
 
   const handleFormDataChange = (data) => {
-    handleScope1Change(data.formData);
+    handleScope3Change(data.formData);
     setFormData(data.formData);
   };
 
@@ -100,6 +95,9 @@ const Scope1 = ({ handleScope1Change }) => {
 
   );
 };
+
+
+
 
 const CustomAddressField = ({ formData = {}, onChange, schema, }) => {
   const { open } = GlobalState();
@@ -125,11 +123,9 @@ const CustomAddressField = ({ formData = {}, onChange, schema, }) => {
       const reader = new FileReader();
       reader.onloadend = () => {
         const updatedRows = [...rows];
-        updatedRows[index] = {
-          ...updatedRows[index], Document: reader.result, fileType: file.type, fileName: file.name,
+        updatedRows[index] = { ...updatedRows[index], Document: reader.result, fileType: file.type,fileName: file.name,
           fileSize: file.size,
-          uploadDate: new Date().toLocaleDateString()
-        };
+          uploadDate: new Date().toLocaleDateString()};
         setRows(updatedRows);
         updateFormData(updatedRows);
         setPreviewData(reader.result);
@@ -212,43 +208,43 @@ const CustomAddressField = ({ formData = {}, onChange, schema, }) => {
         <div className="bg-white p-1 rounded-lg w-[60%] h-[90%] mt-6">
           <div className="flex justify-between  mt-4 mb-4">
             <div>
-              <h5 className="mb-4 ml-2 font-semibold">{fileNames[currentRowIndex]}</h5>
+            <h5 className="mb-4 ml-2 font-semibold">{fileNames[currentRowIndex]}</h5>
 
             </div>
             <div className='flex'>
               <button className="px-2 py-1 mr-2 w-[150px] flex items-center justify-center border border-red-500 text-red-600 text-[13px] rounded hover:bg-red-600 hover:text-white" onClick={handleDeleteFile}><MdOutlineDeleteOutline className="text-xl" />Delete File</button>
-              <button className="px-4 py-2 text-xl rounded " onClick={handleCloseModal}><MdClose /></button>
+              <button className="px-4 py-2 text-xl rounded " onClick={handleCloseModal}><MdClose/></button>
             </div>
 
           </div>
-          <div className='flex justify-between'>
-            <div className="relative w-[540px] h-[450px]">{content}</div>
-            <div className='w-[211px]'>
-              <div className='mb-4 mt-2'>
-                <h2 className='text-neutral-500 text-[15px] font-semibold  leading-relaxed tracking-wide'>File information</h2>
-              </div>
-              <div className='mb-4'>
-                <h2 className='text-neutral-500 text-[12px] font-semibold  leading-relaxed tracking-wide'>FILE NAME</h2>
-                <h2 className='text-[14px]  leading-relaxed tracking-wide'>{fileNames[currentRowIndex]}</h2>
-              </div>
-              <div className='mb-4'>
-                <h2 className='text-neutral-500 text-[12px] font-semibold  leading-relaxed tracking-wide'>FILE TYPE</h2>
-                <h2 className='text-[14px]  leading-relaxed tracking-wide'>{fileType}</h2>
-              </div>
-              <div className='mb-4'>
-                <h2 className='text-neutral-500 text-[12px] font-semibold  leading-relaxed tracking-wide'>FILE SIZE</h2>
-                <h2 className='text-[14px]  leading-relaxed tracking-wide'>{rows[currentRowIndex]?.fileSize / 1024} KB</h2>
-              </div>
-              <div className='mb-4'>
-                <h2 className='text-neutral-500 text-[12px] font-semibold  leading-relaxed tracking-wide'>LAST MODIFIED</h2>
-                <h2 className='text-[14px]  leading-relaxed tracking-wide'>{rows[currentRowIndex]?.uploadDate}</h2>
-              </div>
-              <div className='mb-4'>
-                <h2 className='text-neutral-500 text-[12px] font-semibold  leading-relaxed tracking-wide'>UPLOADED BY</h2>
-                <h2 className='text-[14px]  leading-relaxed tracking-wide'>shubham kanungo</h2>
-              </div>
-            </div>
-          </div>
+<div className='flex justify-between'>
+<div className="relative w-[550px] h-[450px]">{content}</div>
+<div className='w-[211px]'>
+  <div className='mb-4 mt-2'>
+  <h2 className='text-neutral-500 text-[15px] font-semibold  leading-relaxed tracking-wide'>File information</h2>
+  </div>
+  <div className='mb-4'>
+    <h2 className='text-neutral-500 text-[12px] font-semibold  leading-relaxed tracking-wide'>FILE NAME</h2>
+    <h2 className='text-[14px]  leading-relaxed tracking-wide'>{fileNames[currentRowIndex]}</h2>
+  </div>
+  <div className='mb-4'>
+  <h2 className='text-neutral-500 text-[12px] font-semibold  leading-relaxed tracking-wide'>FILE TYPE</h2>
+  <h2 className='text-[14px]  leading-relaxed tracking-wide'>{fileType}</h2>
+  </div>
+  <div className='mb-4'>
+  <h2 className='text-neutral-500 text-[12px] font-semibold  leading-relaxed tracking-wide'>FILE SIZE</h2>
+  <h2 className='text-[14px]  leading-relaxed tracking-wide'>{rows[currentRowIndex]?.fileSize / 1024} KB</h2>
+  </div>
+  <div className='mb-4'>
+  <h2 className='text-neutral-500 text-[12px] font-semibold  leading-relaxed tracking-wide'>LAST MODIFIED</h2>
+  <h2 className='text-[14px]  leading-relaxed tracking-wide'>{rows[currentRowIndex]?.uploadDate}</h2>
+  </div>
+  <div className='mb-4'>
+  <h2 className='text-neutral-500 text-[12px] font-semibold  leading-relaxed tracking-wide'>UPLOADED BY</h2>
+  <h2 className='text-[14px]  leading-relaxed tracking-wide'>shubham kanungo</h2>
+  </div>
+</div>
+</div>
 
 
         </div>
@@ -412,5 +408,4 @@ const CustomAddressField = ({ formData = {}, onChange, schema, }) => {
   );
 };
 
-
-export default Scope1;
+export default Scope3;

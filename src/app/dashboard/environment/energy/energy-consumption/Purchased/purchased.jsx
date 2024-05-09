@@ -14,7 +14,7 @@ const schema = {
           type: "string",
           title: "Energy Type",
           enum: ['Electricity', 'Heating', 'Cooling', 'Steam'],
-          tooltiptext:"Indicate the type of energy purchased from the drop down"
+          tooltiptext:"Indicate type of energy from the drop down"
         },
         Source: {
           type: "string",
@@ -25,7 +25,7 @@ const schema = {
         Purpose: {
           type: "string",
           title: "Purpose",
-          tooltiptext:"Indicate the purpose it's being used for. ex: Furnace Heat Generation, Steam Generation"
+          tooltiptext:"Indicate where the energy comes fromIndicate the purpose it's being used for.E.g. Manufacturing, packaging, combustion"
         },
         Renewable: {
           type: "string",
@@ -62,28 +62,7 @@ const uiSchema = {
   },
 };
 
-//   return (
-//     <Tooltip title={tooltiptext} arrow placement="top" componentsProps={{
-//       tooltip: {
-//           sx: {
-//               backgroundColor: '#000',
-//               color: 'white',
-//               fontSize: '12px',
-//               boxShadow: 3,
-//               borderRadius:"8px"
-//           },
-//       },
-//       arrow: {
-//           sx: {
-//               color: '#000',
-//           },
-//       },
-//   }}>
-//   <MdInfoOutline/>
-// </Tooltip>
-//   );
-// };
-const Consumedfuel = ({ }) => {
+const Purchased = ({ }) => {
   const [formData, setFormData] = useState({});
 
   const handleFormDataChange = (data) => {
@@ -121,4 +100,4 @@ const Consumedfuel = ({ }) => {
 
 
 
-export default Consumedfuel;
+export default Purchased;

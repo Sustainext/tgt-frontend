@@ -3,9 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import EnvironmentHeader from '../../environmentheader';
 import Energyconsumptionbody from './energy-consumption-body';
-import { MdOutlineClear } from "react-icons/md";
+import { MdOutlineClear,MdInfoOutline } from "react-icons/md";
 import { Energydata } from '../../data/griinfo';
-
+import { Tooltip as ReactTooltip } from 'react-tooltip';
+import 'react-tooltip/dist/react-tooltip.css'
 const Energyconsumption = ({open}) => {
   const [activeMonth, setActiveMonth] = useState("Jan");
   const [data, setData] = useState();
@@ -67,11 +68,22 @@ const Energyconsumption = ({open}) => {
           </div>
 
 
-        <div className="ml-3">
-          <h6 className="text-[17px] mb-4 font-semibold">
+        <div className="ml-3 flex">
+          <h6 className="text-[17px] mb-4 font-semibold flex">
 
             Energy consumed inside the organization
-            {/* <NewTooltip tooltiptext="This section documents data corresponding to the energy consumption within the organisation" /> */}
+            <MdInfoOutline data-tooltip-id={`tooltip-$e1`} data-tooltip-content="This section documents data corresponding to the energy consumption within the organisation" className="mt-1.5 ml-2 text-[14px]" />
+
+                            <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
+                              width: "290px", backgroundColor: "#000",
+                              color: "white",
+                              fontSize: "12px",
+                              boxShadow: 3,
+                              borderRadius: "8px",
+                              textAlign: 'center',
+                            }}>
+
+                            </ReactTooltip>
           </h6>
         </div>
         <div className={`${isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"}
