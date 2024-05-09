@@ -33,9 +33,9 @@ const schema = {
           title: "Unit",
           enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
         },
-        Test: {
+        Unit2: {
           type: "string",
-          title: "Test",
+          title: "uint",
           enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
         },
         Document: {
@@ -276,7 +276,7 @@ const CustomAddressField = ({ formData = {}, onChange, schema, }) => {
                 if (property.format !== 'data-url') {
                   return (
                     <div className="w-full max-w-xs  px-2" key={key}>
-                      {property.enum && (key === 'Category' || key === 'Subcategory' || key === 'Activity') ? (
+                      {property.enum  ? (
                         <select
                           className={`block  py-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300 ${open ? "w-[152px]" : "w-[162px]"}`}
                           value={row[key] || ''}
@@ -297,7 +297,7 @@ const CustomAddressField = ({ formData = {}, onChange, schema, }) => {
                       ) : (
                         <>
                           <div>
-                            {key === 'Quantity' && (
+
                               <input
                                 className="border m-0.5 text-sm text-neutral-500 appearance-none rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                 type={inputType}
@@ -311,30 +311,9 @@ const CustomAddressField = ({ formData = {}, onChange, schema, }) => {
                                 }}
                               />
 
-                            )}
-                          </div>
-                          {key === 'Unit' && (
-                            <div className='-ml-[85px] flex'>
-                              <select
-                                className="cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none ms-1 font-bold text-xs bg-[#007EEF] text-white w-[61px]"
-                                value={row[key] || ''}
-                                onChange={(e) => {
-                                  const updatedRows = [...rows];
-                                  updatedRows[index][key] = e.target.value;
-                                  setRows(updatedRows);
-                                  updateFormData(updatedRows);
-                                }}
-                              >
-                                <option value="">{property.placeholder || `${property.title}`}</option>
-                                {property.enum.map((option) => (
-                                  <option key={option} value={option}>
-                                    {option}
-                                  </option>
-                                ))}
-                              </select>
 
-                            </div>
-                          )}
+                          </div>
+
 
                         </>
 

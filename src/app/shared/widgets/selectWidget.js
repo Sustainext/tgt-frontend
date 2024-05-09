@@ -2,9 +2,9 @@ const selectWidget = (props) => {
 
   console.log('Select Widget props are ', props)
   return (
-    <div className=" mx-2 mb-3">
+    <div className="mb-3">
       <select
-        className="block w-[100px] py-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
+        className="block w-[150px] py-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
         defaultValue=""
         onChange={(e) => {
           // Handle onChange event if necessary

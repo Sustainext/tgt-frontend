@@ -1,7 +1,7 @@
 const dateWidget = (props) =>{
     return(
       <div className="w-full max-w-xs mx-2 mb-3">
-                    <label className="text-sm  leading-5 text-gray-700 flex">
+                    <label className="text-sm  leading-5 text-gray-700 flex ml-1">
                         {props.label}
                         <div className="ml-2">
                             {/* <NewTooltip tooltiptext="Indicate the purpose it's being used for.E.g. Manufacturing, packaging, combustion " /> */}
