@@ -1,20 +1,23 @@
 'use client'
 import React, { useState } from 'react';
-import  Form  from '@rjsf/core';
+import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
-import { MdOutlineFileUpload, MdAdd, MdOutlineDeleteOutline, MdFilePresent, MdArrowDropDown } from "react-icons/md";
+import { MdAdd } from "react-icons/md";
 import dateWidget from '../../../shared/widgets/dateWidget';
 import selectWidget from '../../../shared/widgets/selectWidget';
 import inputWidget from '../../../shared/widgets/inputWidget';
-
+import { GlobalState } from '../../../../Context/page';
+import CustomFileUploadWidget from '../../../../app/shared/widgets/CustomFileUploadWidget'
+import AssignToWidget from '../../../shared/widgets/assignToWidget';
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
-  selectWidget: selectWidget
+  selectWidget: selectWidget,
+  FileUploadWidget: CustomFileUploadWidget,
+  AssignTobutton:AssignToWidget
 };
 
 const schema = {
-  title: 'Emissions',
   type: 'array',
   items: {
     type: 'object',
@@ -38,6 +41,18 @@ const schema = {
         type: "string",
         title: "Quantity"
       },
+      Quantity2: {
+        type: "string",
+        title: "Quantity2"
+      },
+      Quantity3: {
+        type: "string",
+        title: "Quantity3"
+      },
+      Quantity4: {
+        type: "string",
+        title: "Quantity4"
+      },
       Unit: {
         type: "string",
         title: "Unit",
@@ -48,15 +63,14 @@ const schema = {
         title: "Test",
         enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
       },
-      FileUpload: { // New property for file upload
+      FileUpload: {
         type: "string",
-        title: "Upload File",
         format: "data-url",
       },
       AssignTo: {
         type: "string",
         title: "Assign To",
-        enum: ['user1@sustainext.ai', 'user2@sustainext.ai'],
+
       }
       // Define other properties as needed
     }
@@ -68,209 +82,161 @@ const uiSchema = {
   items: {
     "classNames": "flex",
     Category: {
-      classNames: 'px-4 mb-4 inline-block w-[100px]',
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
+      'ui:options': {
+        label: false // This disables the label for this field
+      },
       enum: [
         { value: 'Heating', label: 'Heating' },
         { value: 'Cooling', label: 'Cooling' },
         { value: 'Steam', label: 'Steam' },
       ],
     },
-    // Define UI schema for other properties
-    
-    Subcategory:{
-      classNames: 'px-4 mb-4 inline-block',
+    Subcategory: {
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
+      'ui:options': {
+        label: false // This disables the label for this field
+      },
       enum: [
         { value: 'Heating', label: 'Heating' },
         { value: 'Cooling', label: 'Cooling' },
         { value: 'Steam', label: 'Steam' },
       ],
     },
-    Activity:{
-      classNames: 'px-4 mb-4 inline-block',
+    Activity: {
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
+      'ui:options': {
+        label: false // This disables the label for this field
+      },
       enum: [
         { value: 'Heating', label: 'Heating' },
         { value: 'Cooling', label: 'Cooling' },
         { value: 'Steam', label: 'Steam' },
       ],
     },
-    Quantity:{
-      classNames: 'px-4 mb-4 inline-block',
+    Quantity: {
       'ui:widget': 'inputWidget',
       'ui:horizontal': true,
-    
-    },
-    Unit:{
-      classNames: 'px-4 mb-4 inline-block',
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      enum: [
-        { value: 'Heating', label: 'Heating' },
-        { value: 'Cooling', label: 'Cooling' },
-        { value: 'Steam', label: 'Steam' },
-      ],
+      'ui:options': {
+        label: false // This disables the label for this field
       },
-    Test:{
-      classNames: 'px-4 mb-4 inline-block',
+
+    },
+    Quantity2: {
+      'ui:widget': 'inputWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false // This disables the label for this field
+      },
+
+    },
+    Quantity3: {
+      'ui:widget': 'inputWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false // This disables the label for this field
+      },
+
+    },
+    Quantity4: {
+      'ui:widget': 'inputWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false // This disables the label for this field
+      },
+
+    },
+    Unit: {
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
+      'ui:options': {
+        label: false // This disables the label for this field
+      },
       enum: [
         { value: 'Heating', label: 'Heating' },
         { value: 'Cooling', label: 'Cooling' },
         { value: 'Steam', label: 'Steam' },
       ],
     },
-    FileUpload: { // UI schema for file upload
-      classNames: 'px-4 mb-4 inline-block',
-      'ui:widget': 'file',
+    Test: {
+      'ui:widget': 'selectWidget',
       'ui:horizontal': true,
+      'ui:options': {
+        label: false // This disables the label for this field
+      },
+      enum: [
+        { value: 'Heating', label: 'Heating' },
+        { value: 'Cooling', label: 'Cooling' },
+        { value: 'Steam', label: 'Steam' },
+      ],
+    },
+    FileUpload: {
+      'ui:widget': 'FileUploadWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false // This disables the label for this field
+      },
     },
     AssignTo: {
-      classNames: 'px-4 mb-4 inline-block',
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      enum: [
-        { value: 'user1@sustainext.ai', label: 'user1@sustainext.ai' },
-        { value: 'user2@sustainext.ai', label: 'user2@sustainext.ai' },
-      ],
+
+        "ui:widget": "AssignTobutton",
+        'ui:options': {
+          label: false // This disables the label for this field
+        },
     },
     'ui:options': {
       orderable: false, // Prevent reordering of items
       addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
+      removable: false,
+      label: false, // Prevent removing items from UI
       layout: 'horizontal', // Set layout to horizontal
     }
   }
 };
 
-const environment2 = () => {
-  const [formData, setFormData] = useState([]);
-  // const [formCount, setFormCount] = useState(1); // Initial form count
+const Scope1 = () => {
+  const { open } = GlobalState();
+  const [formData, setFormData] = useState([{}]);
 
-  const handleFormDataChange = (data) => {
-    setFormData(data.formData);
+
+  const handleChange = (formData) => setFormData(formData);
+
+  const handleAddNew = () => {
+    const newData = [...formData, {}];  // Add a new empty object for a new row
+    setFormData(newData);
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission
+    e.preventDefault(); // Prevent default form submission
     console.log('Form data:', formData);
   };
 
-  // -------
-  const handleAddNew = () => {
-    const newData = [...formData, {}];
-    setFormData(newData);
-  };
-  
 
   return (
-    <form onSubmit={handleSubmit}>
-    {/* Render each form field */}
-    <div className="px-4 mb-4 flex flex-wrap text-xs">
 
-    <Form
-      schema={schema}
-      uiSchema={uiSchema}
-      formData={formData}
-      onChange={handleFormDataChange}
-      validator={validator}
-      widgets={widgets}
-    >
-    <div className="flex justify-start mt-4 right-1">
-        <button
-          type="button"
-          className="text-center py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline"
-          onClick={handleAddNew}
-        >
-          Add New
-        </button>
+      <>
+      <div className={`overflow-auto custom-scrollbar ${open ? "xl:w-[680px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
+        <Form
+          schema={schema}
+          uiSchema={uiSchema}
+          formData={formData}// Render only the first row
+          onChange={(e) => handleChange(e.formData)}
+          validator={validator}
+          widgets={widgets}
+        />
       </div>
 
-      {/* Custom submit button */}
       <div className="flex justify-start mt-4 right-1">
-        <button
-          type="submit"
-          className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline"
-          onClick={handleSubmit}
-        >
-          Submit
+        <button type="button" className="text-[#007EEF] text-[12px] flex cursor-pointer mt-5 mb-5" onClick={handleAddNew}>
+          <MdAdd className='text-lg' /> Add Row
         </button>
       </div>
-    </Form>
-    </div>
-    </form>
+</>
 
   );
 };
 
-
-export default environment2;
-
-  // ---------
-
-  // const handleAddForm = () => {
-  //   setFormCount(formCount + 1);
-  // };
-
-  // =======================
-  // const renderForms = () => {
-  //   const forms = [];
-  //   for (let i = 0; i < formCount; i++) {
-  //     forms.push(
-  //       <div key={i} className="flex items-center">
-  //         <Form
-  //           // key={i}
-  //           schema={schema}
-  //           uiSchema={uiSchema}
-  //           formData={formData}
-  //           onChange={handleFormDataChange}
-  //           validator={validator}
-  //           widgets={widgets}
-  //         />
-  //         <AddButton onClick={handleAddForm} />
-  //     </div>
-  //     );
-  //   }
-  //   return forms;
-  // };
-
-
-//   return (
-//     <form onSubmit={handleSubmit}>
-//       {/* Render each form field */}
-//       <div className="px-4 mb-4 flex flex-wrap text-xs">
-//         {renderForms()}
-//       </div>
-//       {/* Custom submit button */}
-//       <div className="flex justify-start mt-4 right-1">
-//         <button
-//           type="submit"
-//           className="text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline"
-//           onClick={handleSubmit}
-//         >
-//           Submit
-//         </button>
-//         {/* <AddButton onClick={handleAddForm} /> */}
-//       </div>
-//     </form>
-//   );
-// };
-
-// const AddButton = ({ onClick }) => {
-//   return (
-//     <button
-//       onClick={onClick}
-//       className="text-center py-1 text-sm w-[100px] bg-gray-500 text-white rounded hover:bg-gray-600 focus:outline-none focus:shadow-outline ml-4"
-//     >
-//       Add New
-//     </button>
-//   );
-// };
-
-// export default environment2;
-// =============================
+export default Scope1;
