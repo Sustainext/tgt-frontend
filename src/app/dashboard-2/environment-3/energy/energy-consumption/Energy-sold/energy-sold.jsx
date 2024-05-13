@@ -14,7 +14,7 @@ const schema = {
           type: "string",
           title: "Energy Type",
           enum: ['Electricity', 'Heating', 'Cooling', 'Steam'],
-          tooltiptext:"Indicate the type of energy purchased from the drop down"
+          tooltiptext:"Indicate the type of energy that is sold from the drop down including both purchased and self-generated."
         },
         Source: {
           type: "string",
@@ -22,10 +22,16 @@ const schema = {
           enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro'],
           tooltiptext:"Indicate where the energy comes from"
         },
-        Purpose: {
+        Typeofentity: {
+            type: "string",
+            title: "Type of entity",
+            enum: ['Generator', 'Aggregator', 'Distributor', 'TSO'],
+            tooltiptext:"Indicate the type of Entity the energy is being sold to to. E.g. TSO, Generator, Aggregator"
+          },
+          Nameofentity: {
           type: "string",
-          title: "Purpose",
-          tooltiptext:"Indicate the purpose it's being used for. ex: Furnace Heat Generation, Steam Generation"
+          title: "Name of entity",
+          tooltiptext:"Indicate the name of the Entity  to which Energy is being sold to"
         },
         Renewable: {
           type: "string",
@@ -37,13 +43,13 @@ const schema = {
         Quantity: {
           type: "string",
           title: "Quantity",
-          tooltiptext:"Indicate the purchased quantity"
+          tooltiptext:"Indicate the quantity that is sold"
         },
         Unit: {
           type: "string",
           title: "Unit",
           enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
-          tooltiptext:"Indicate the purchased consumed"
+          tooltiptext:"Select the correct unit corresponding to the quantity sold"
         },
         Document: {
           type: "string",
@@ -62,28 +68,7 @@ const uiSchema = {
   },
 };
 
-//   return (
-//     <Tooltip title={tooltiptext} arrow placement="top" componentsProps={{
-//       tooltip: {
-//           sx: {
-//               backgroundColor: '#000',
-//               color: 'white',
-//               fontSize: '12px',
-//               boxShadow: 3,
-//               borderRadius:"8px"
-//           },
-//       },
-//       arrow: {
-//           sx: {
-//               color: '#000',
-//           },
-//       },
-//   }}>
-//   <MdInfoOutline/>
-// </Tooltip>
-//   );
-// };
-const Consumedfuel = ({ }) => {
+const Energysold = ({ }) => {
   const [formData, setFormData] = useState({});
 
   const handleFormDataChange = (data) => {
@@ -121,4 +106,4 @@ const Consumedfuel = ({ }) => {
 
 
 
-export default Consumedfuel;
+export default Energysold;

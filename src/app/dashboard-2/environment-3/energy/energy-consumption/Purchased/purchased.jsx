@@ -3,15 +3,14 @@ import React, { useState, useEffect } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
 import { MdAdd,MdOutlineDeleteOutline } from "react-icons/md";
-import dateWidget from '../../../shared/widgets/dateWidget';
-import selectWidget from '../../../shared/widgets/selectWidget';
-import inputWidget from '../../../shared/widgets/inputWidget';
-import { GlobalState } from '../../../../Context/page';
-import CustomFileUploadWidget from '../../../shared/widgets/CustomFileUploadWidget';
-import AssignToWidget from '../../../shared/widgets/assignToWidget';
-import CustomSelectInputWidget from '../../../shared/widgets/CustomSelectInputWidget';
-import RemoveWidget from '../../../shared/widgets/RemoveWidget'
-const path = 'gri-environment-emissions-301-a'
+import dateWidget from '../../../../../shared/widgets/dateWidget';
+import selectWidget from '../../../../../shared/widgets/selectWidget';
+import inputWidget from '../../../../../shared/widgets/inputWidget';
+import { GlobalState } from '../../../../../../Context/page';
+import CustomFileUploadWidget from '../../../../../shared/widgets/CustomFileUploadWidget';
+import AssignToWidget from '../../../../../shared/widgets/assignToWidget';
+import CustomSelectInputWidget from '../../../../../shared/widgets/CustomSelectInputWidget';
+
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
@@ -19,7 +18,6 @@ const widgets = {
   FileUploadWidget: CustomFileUploadWidget,
   AssignTobutton: AssignToWidget,
   CustomSelectInputWidget:CustomSelectInputWidget,
-  RemoveWidgetnew:RemoveWidget
 };
 
 const schema = {
@@ -27,41 +25,52 @@ const schema = {
   items: {
     type: 'object',
     properties: {
-      Category: {
+      EnergyType: {
         type: "string",
-        title: "Category",
-        enum: ['Category', 'Heating', 'Cooling', 'Steam'],
+        title: "Energy Type",
+        tooltiptext: "Indicate type of energy from the drop down",
+        enum: ['Electricity', 'Heating', 'Cooling', 'Steam'],
+
       },
-      Subcategory: {
+      Source: {
         type: "string",
-        title: "Subcategory",
+        title: "Source",
         enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro'],
+        tooltiptext:"Indicate where the energy comes from"
       },
-      Activity: {
+      Purpose: {
         type: "string",
-        title: "Activity",
+        title: "Purpose",
+        tooltiptext:"Indicate where the energy comes fromIndicate the purpose it's being used for.E.g. Manufacturing, packaging, combustion"
+      },
+      Renewable: {
+        type: "string",
+        title: "Renewable/ Non-renewable",
         enum: ['Renewable', 'Non-renewable'],
-      },
-      QuantityUnit: {
-        type: "string",
-        title: "Quantity & Unit",
-        unitOptions: [
-          { value: 'Joules', label: 'Joules' },
-          { value: 'KJ', label: 'KJ' },
-          { value: 'Wh', label: 'Wh' },
-        ]
+        tooltiptext:"Select from the dropdown to indicate whether it's Renewable or Non-Renewable Energy"
       },
 
-
-      FileUpload: {
+      Quantity: {
         type: "string",
-        format: "data-url",
+        title: "Quantity",
+        tooltiptext:"Indicate the purchased quantity"
+      },
+      Unit: {
+        type: "string",
+        title: "Unit",
+        enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
+        tooltiptext:"Indicate the purchased consumed"
       },
       AssignTo: {
         type: "string",
         title: "Assign To",
 
       },
+      FileUpload: {
+        type: "string",
+        format: "data-url",
+      },
+
 
       // Define other properties as needed
     }
@@ -71,56 +80,52 @@ const schema = {
 const uiSchema = { // Add flex-wrap to wrap fields to the next line
   items: {
     "classNames": "flex",
-    Category: {
+    EnergyType: {
+      'ui:widget': 'selectWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false,
+        tooltiptext: "Indicate type of energy from the drop down", // Include tooltiptext in uiSchema
+      },
+
+
+    },
+    Source: {
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
       'ui:options': {
         label: false // This disables the label for this field
       },
-      enum: [
-        { value: 'Heating', label: 'Heating' },
-        { value: 'Cooling', label: 'Cooling' },
-        { value: 'Steam', label: 'Steam' },
-      ],
+
     },
-    Subcategory: {
+    Purpose:{
+      'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
+      'ui:options': {
+        label: false // This disables the label for this field
+      },
+    },
+    Renewable: {
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
       'ui:options': {
         label: false // This disables the label for this field
       },
-      enum: [
-        { value: 'Heating', label: 'Heating' },
-        { value: 'Cooling', label: 'Cooling' },
-        { value: 'Steam', label: 'Steam' },
-      ],
+
     },
-    Activity: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-      enum: [
-        { value: 'Heating', label: 'Heating' },
-        { value: 'Cooling', label: 'Cooling' },
-        { value: 'Steam', label: 'Steam' },
-      ],
-    },
-    QuantityUnit: {
-      'ui:widget': 'CustomSelectInputWidget', // Use your custom widget for QuantityUnit
+    Quantity:{
+      'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
       'ui:options': {
         label: false // This disables the label for this field
       },
     },
 
-
-    FileUpload: {
-      'ui:widget': 'FileUploadWidget',
+    Unit: {
+      'ui:widget': 'selectWidget',
       'ui:horizontal': true,
       'ui:options': {
         label: false // This disables the label for this field
       },
+
     },
     AssignTo: {
       "ui:widget": "AssignTobutton",
@@ -128,56 +133,39 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
         label: false // This disables the label for this field
       },
     },
+    FileUpload: {
+      'ui:widget': 'FileUploadWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false // This disables the label for this field
+      },
+    },
+
 
     'ui:options': {
       orderable: false, // Prevent reordering of items
       addable: false, // Prevent adding items from UI
-      removable: false,
-      label: false, // Prevent removing items from UI
+      removable: false, // Prevent removing items from UI
       layout: 'horizontal', // Set layout to horizontal
     }
   }
 };
 
-const Scope1 = () => {
+const Purchased = () => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
-  const [data, setData] = useState({})
-  const [schema_remote,setSchemaRemote] = useState(schema)
-  const [ui_schema_remote, setUiSchemaRemote] = useState(uiSchema)
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Make GET request using Axios
-        const response = await axios.get('http://localhost:8000/datametric/get-fieldgroups?path='+path);
-        // Set the data received from the response
-        setData(response.data[0]);
-        // Set loading state to false
-
-        setLoading(false);
-      } catch (error) {
-        // Set error state if there is an error
-      }
-    };
-
-    fetchData(); // Call fetchData function when component mounts
-  },[]);
-
-  useEffect(()=>{
-    console.log(data, 'is fetched')
-    setSchemaRemote(data.schema)
-    setUiSchemaRemote(data.ui_schema)
-  },[data]);
-
-  const handleChange = (formData) => setFormData(formData);
 
   const handleAddNew = () => {
-    const newData = [...formData, {}];  // Add a new empty object for a new row
-    setFormData(newData);
+    setFormData([...formData, {}]);
+  };
+
+  const handleRemove = (indexToRemove) => {
+    const updatedFormData = formData.filter((_, index) => index !== indexToRemove);
+    setFormData(updatedFormData);
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault();
     console.log('Form data:', formData);
   };
 
@@ -190,7 +178,7 @@ const Scope1 = () => {
           schema={schema}
           uiSchema={uiSchema}
           formData={formData}
-          onChange={(e) => handleChange(e.formData)}
+          onChange={(e) => setFormData(e.formData)}
           validator={validator}
           widgets={widgets}
         />
@@ -220,5 +208,5 @@ const Scope1 = () => {
   );
 };
 
-export default Scope1;
+export default Purchased;
 

@@ -14,7 +14,7 @@ const schema = {
           type: "string",
           title: "Energy Type",
           enum: ['Electricity', 'Heating', 'Cooling', 'Steam'],
-          tooltiptext:"Indicate the type of energy purchased from the drop down"
+          tooltiptext:"Indicate the type of energy generated from the drop down"
         },
         Source: {
           type: "string",
@@ -22,11 +22,7 @@ const schema = {
           enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro'],
           tooltiptext:"Indicate where the energy comes from"
         },
-        Purpose: {
-          type: "string",
-          title: "Purpose",
-          tooltiptext:"Indicate the purpose it's being used for. ex: Furnace Heat Generation, Steam Generation"
-        },
+
         Renewable: {
           type: "string",
           title: "Renewable/ Non-renewable",
@@ -37,13 +33,13 @@ const schema = {
         Quantity: {
           type: "string",
           title: "Quantity",
-          tooltiptext:"Indicate the purchased quantity"
+          tooltiptext:"Indicate the quantity that is self-generated but not consumed"
         },
         Unit: {
           type: "string",
           title: "Unit",
           enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
-          tooltiptext:"Indicate the purchased consumed"
+          tooltiptext:"Select the correct unit corresponding to the quantity of self-generated but not consumed."
         },
         Document: {
           type: "string",
@@ -62,28 +58,7 @@ const uiSchema = {
   },
 };
 
-//   return (
-//     <Tooltip title={tooltiptext} arrow placement="top" componentsProps={{
-//       tooltip: {
-//           sx: {
-//               backgroundColor: '#000',
-//               color: 'white',
-//               fontSize: '12px',
-//               boxShadow: 3,
-//               borderRadius:"8px"
-//           },
-//       },
-//       arrow: {
-//           sx: {
-//               color: '#000',
-//           },
-//       },
-//   }}>
-//   <MdInfoOutline/>
-// </Tooltip>
-//   );
-// };
-const Consumedfuel = ({ }) => {
+const Selfgenerated = ({ }) => {
   const [formData, setFormData] = useState({});
 
   const handleFormDataChange = (data) => {
@@ -121,4 +96,4 @@ const Consumedfuel = ({ }) => {
 
 
 
-export default Consumedfuel;
+export default Selfgenerated;

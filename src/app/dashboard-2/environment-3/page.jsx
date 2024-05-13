@@ -23,7 +23,7 @@ const environment = ({ open }) => {
                     {/* Emissions start  */}
                     {activeTab === 'Emissions' && <Emission />}
                     {/* Energy start  */}
-                    {activeTab === 'Energy consumed inside the organization' && <Energyconsumption open={open} />}
+                    {activeTab === 'Energy consumed inside the organization' && <Energyconsumption />}
                 </div>
             </div>
         </>
