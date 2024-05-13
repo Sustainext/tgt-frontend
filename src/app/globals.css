@@ -119,12 +119,13 @@ h1,h2,h3,h4,h5,h6,p,div {
   ::-webkit-scrollbar-thumb:hover {
     background: #1e293b;
   }
-  .btn{
-    display: none;
-  }
+
 
   fieldset{
     display: flex;
+  }
+  .btn{
+    display: none;
   }
 .control-label{
   text-align: center;
