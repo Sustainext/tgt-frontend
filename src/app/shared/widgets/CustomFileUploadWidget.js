@@ -1,16 +1,16 @@
 'use client'
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MdOutlineFileUpload, MdFilePresent, MdClose, MdDelete } from "react-icons/md";
 
 const CustomFileUploadWidget = ({ id, onChange, formDataObject, setFormDataObject }) => {
-  const [fileName, setFileName] = useState();
+  const [fileName, setFileName] = useState(null);
+  const [prevFileName, setPrevFileName] = useState(null); // State to store the previous file name
   const [showModal, setShowModal] = useState(false);
   const [previewData, setPreviewData] = useState(null);
   const [fileType, setFileType] = useState('');
   const [fileSize, setFileSize] = useState('');
   const [uploadDateTime, setUploadDateTime] = useState('');
 
-  // Update formDataObject with fileName when a file is uploaded
   useEffect(() => {
     if (fileName !== null && formDataObject) {
       const updatedFormData = { ...formDataObject, FileName: fileName };
@@ -20,8 +20,10 @@ const CustomFileUploadWidget = ({ id, onChange, formDataObject, setFormDataObjec
 
   const handleChange = (event) => {
     const selectedFile = event.target.files[0];
+    const newFileName = selectedFile ? selectedFile.name : null;
 
-    setFileName(selectedFile ? selectedFile.name : null);
+    setPrevFileName(fileName); // Store the previous file name
+    setFileName(newFileName);
     if (selectedFile) {
       const reader = new FileReader();
       reader.readAsDataURL(selectedFile);
@@ -46,6 +48,7 @@ const CustomFileUploadWidget = ({ id, onChange, formDataObject, setFormDataObjec
   };
 
   const handleDelete = () => {
+    setPrevFileName(null); // Clear the previous file name
     setFileName(null);
     setPreviewData(null);
     onChange(null); // Clear the selected file
@@ -53,7 +56,7 @@ const CustomFileUploadWidget = ({ id, onChange, formDataObject, setFormDataObjec
   };
 
   return (
-    <div className="w-[120px] flex justify-center items-center mx-2">
+    <div className="w-[120px] flex justify-center items-center">
       <input
         type="file"
         id={id}
@@ -99,14 +102,7 @@ const CustomFileUploadWidget = ({ id, onChange, formDataObject, setFormDataObjec
                 <h5 className="mb-4 ml-2 font-semibold">{fileName}</h5>
               </div>
               <div className='flex'>
-              <div>
-                  <button className="mt-1 px-2 py-1 mr-2 w-[150px] flex items-center justify-center border border-red-500 text-red-600 text-[13px] rounded hover:bg-red-600 hover:text-white" onClick={handleDelete}>
-                    <MdDelete className="text-xl" /> Delete File
-                  </button>
-                </div>
-                <div>
                 <button className="px-4 py-2 text-xl rounded " onClick={handleCloseModal}><MdClose /></button>
-                </div>
               </div>
             </div>
             <div className='flex justify-between'>
@@ -139,7 +135,11 @@ const CustomFileUploadWidget = ({ id, onChange, formDataObject, setFormDataObjec
                   <h2 className='text-neutral-500 text-[12px] font-semibold  leading-relaxed tracking-wide'>UPLOAD DATE & TIME</h2>
                   <h2 className='text-[14px]  leading-relaxed tracking-wide'>{uploadDateTime}</h2>
                 </div>
-
+                <div className='mb-4'>
+                  <button className="px-2 py-1 mr-2 w-[150px] flex items-center justify-center border border-red-500 text-red-600 text-[13px] rounded hover:bg-red-600 hover:text-white" onClick={handleDelete}>
+                    <MdDelete className="text-xl" /> Delete File
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -150,5 +150,6 @@ const CustomFileUploadWidget = ({ id, onChange, formDataObject, setFormDataObjec
 };
 
 export default CustomFileUploadWidget;
+
 
 
