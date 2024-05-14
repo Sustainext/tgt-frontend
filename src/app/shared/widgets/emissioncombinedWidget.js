@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
-const CombinedWidget = ({ formData = {}, onChange }) => {
-  const [category, setCategory] = useState(formData.Category || '');
-  const [subcategory, setSubcategory] = useState(formData.Subcategory || '');
-  const [activity, setActivity] = useState(formData.Activity || '');
-  const [quantityUnit, setQuantityUnit] = useState(formData.QuantityUnit || '');
+const CombinedWidget = ({ value = {}, onChange }) => {
+  const [category, setCategory] = useState(value.Category || '');
+  const [subcategory, setSubcategory] = useState(value.Subcategory || '');
+  const [activity, setActivity] = useState(value.Activity || '');
+  const [quantity, setQuantity] = useState(value.Quantity || '');
+  const [unit, setUnit] = useState(value.Unit || '');
+
   const [subcategories, setSubcategories] = useState([]);
   const [activities, setActivities] = useState([]);
-  const [quantityUnits, setQuantityUnits] = useState([]);
+  const [units, setUnits] = useState([]);
 
   useEffect(() => {
     if (category === 'Heating') {
@@ -32,13 +34,12 @@ const CombinedWidget = ({ formData = {}, onChange }) => {
   }, [subcategory]);
 
   useEffect(() => {
-    // Define quantity units based on the activity
     if (activity === 'Renewable' || activity === 'Photovoltaic') {
-      setQuantityUnits(['Joules', 'KJ']);
+      setUnits(['Joules', 'KJ']);
     } else if (activity === 'Non-renewable' || activity === 'Thermal') {
-      setQuantityUnits(['Wh']);
+      setUnits(['Wh']);
     } else {
-        setQuantityUnits([]);
+      setUnits(['Joules', 'KJ', 'Wh']);
     }
   }, [activity]);
 
@@ -46,45 +47,65 @@ const CombinedWidget = ({ formData = {}, onChange }) => {
     setCategory(value);
     setSubcategory('');
     setActivity('');
-    setQuantityUnit('');
-    onChange({ ...formData, Category: value, Subcategory: '', Activity: '', QuantityUnit: '' });
+    setQuantity('');
+    setUnit('');
+    onChange({ Category: value, Subcategory: '', Activity: '', Quantity: '', Unit: '' });
   };
 
   const handleSubcategoryChange = (value) => {
     setSubcategory(value);
     setActivity('');
-    setQuantityUnit('');
-    onChange({ ...formData, Subcategory: value, Activity: '', QuantityUnit: '' });
+    setQuantity('');
+    setUnit('');
+    onChange({ Category: category, Subcategory: value, Activity: '', Quantity: '', Unit: '' });
   };
 
   const handleActivityChange = (value) => {
     setActivity(value);
-    setQuantityUnit('');
-    onChange({ ...formData, Activity: value, QuantityUnit: '' });
+    setQuantity('');
+    setUnit('');
+    onChange({ Category: category, Subcategory: subcategory, Activity: value, Quantity: '', Unit: '' });
   };
 
-  const handleQuantityUnitChange = (value) => {
-    setQuantityUnit(value);
-    onChange({ ...formData, QuantityUnit: value });
+  const handleQuantityChange = (value) => {
+    setQuantity(value);
+    onChange({ Category: category, Subcategory: subcategory, Activity: activity, Quantity: value, Unit: unit });
+  };
+
+  const handleUnitChange = (value) => {
+    setUnit(value);
+    onChange({ Category: category, Subcategory: subcategory, Activity: activity, Quantity: quantity, Unit: value });
   };
 
   return (
     <div className='flex mb-5'>
-      <select value={category} onChange={(e) => handleCategoryChange(e.target.value)}   className="block w-[220px] py-2 mx-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300">
+      <select
+        value={category}
+        onChange={(e) => handleCategoryChange(e.target.value)}
+        className="block w-[220px] py-2 mx-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
+      >
         <option value="">Select Category</option>
         <option value="Heating">Heating</option>
         <option value="Cooling">Cooling</option>
         <option value="Steam">Steam</option>
       </select>
 
-      <select value={subcategory} onChange={(e) => handleSubcategoryChange(e.target.value)}   className="block w-[220px] py-2 mx-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300">
+      <select
+        value={subcategory}
+        onChange={(e) => handleSubcategoryChange(e.target.value)}
+        className="block w-[220px] py-2 mx-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
+      >
         <option value="">Select Subcategory</option>
         {subcategories.map((sub, index) => (
           <option key={index} value={sub}>{sub}</option>
         ))}
       </select>
 
-      <select value={activity} onChange={(e) => handleActivityChange(e.target.value)}   className="block w-[220px] py-2 mx-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300">
+      <select
+        value={activity}
+        onChange={(e) => handleActivityChange(e.target.value)}
+        className="block w-[220px] py-2 mx-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
+      >
         <option value="">Select Activity</option>
         {activities.map((act, index) => (
           <option key={index} value={act}>{act}</option>
@@ -93,18 +114,18 @@ const CombinedWidget = ({ formData = {}, onChange }) => {
 
       <div className='flex'>
         <input
-          type="text"
-          value={quantityUnit}
-          onChange={(e) => handleQuantityUnitChange(e.target.value)}
+          type="number"
+          value={quantity}
+          onChange={(e) => handleQuantityChange(e.target.value)}
           className="w-[150px] py-1 mt-2 pl-2 rounded-sm"
         />
         <select
-          value={quantityUnit}
-          onChange={(e) => handleQuantityUnitChange(e.target.value)}
+          value={unit}
+          onChange={(e) => handleUnitChange(e.target.value)}
           className="cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none mt-1.5 font-bold text-xs bg-sky-600 text-white -ml-12"
         >
           <option value="">Unit</option>
-          {quantityUnits.map((unit, index) => (
+          {units.map((unit, index) => (
             <option key={index} value={unit}>{unit}</option>
           ))}
         </select>
