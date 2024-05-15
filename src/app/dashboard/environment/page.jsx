@@ -1,7 +1,7 @@
 'use client'
 import { useState } from "react";
 import Aside from "./sidepanel";
-import Energyconsumption from "./energy/energy-consumption/energy-consumption";
+import Energyconsumption from "./energy/energy-consumed/energy-consumed";
 import Emission from "./Emissions/emissions"
 const environment = ({ open }) => {
     const [activeTab, setActiveTab] = useState('Emissions');

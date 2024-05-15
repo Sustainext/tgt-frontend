@@ -218,7 +218,7 @@ const Purchased = () => {
   return (
     <>
 
-      <div className={`overflow-auto custom-scrollbar flex ${open ? "xl:w-[680px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
+<div className={`overflow-auto custom-scrollbar flex justify-around  ${open ? "xl:w-[768px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
         <div>
           <div>
             <div className='flex'>

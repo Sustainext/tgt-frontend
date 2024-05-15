@@ -2,12 +2,12 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import EnvironmentHeader from '../../environmentheader';
-import Energyconsumptionbody from './energy-consumption-body';
-import { MdOutlineClear,MdInfoOutline } from "react-icons/md";
+import Energyconsumptionbody from './energy-consumed-body';
+import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
 import { Energydata } from '../../data/griinfo';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
-const Energyconsumption = ({open}) => {
+const Energyconsumption = ({ open }) => {
   const [activeMonth, setActiveMonth] = useState("Jan");
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
@@ -40,7 +40,7 @@ const Energyconsumption = ({open}) => {
 
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
 
-            <div className='w-full'>
+          <div className='w-full'>
             <div className="text-left mb-4 ml-3 pt-5">
               <p className="text-sm">Environment</p>
               <div className='flex'>
@@ -55,8 +55,8 @@ const Energyconsumption = ({open}) => {
               </div>
 
             </div>
-            </div>
-            <div className='w-full float-end '>
+          </div>
+          <div className='w-full float-end '>
             <div className="flex float-end border-l">
               <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('1')}>GRI 302-1</button>
               <button className="text-[#fff] bg-amber-400 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 " onClick={() => toggleDrawer('2')}>SDG 7</button>
@@ -64,8 +64,8 @@ const Energyconsumption = ({open}) => {
               <button className="text-[#fff] bg-yellow-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 " onClick={() => toggleDrawer('4')}>SDG 12</button>
               <button className="text-[#fff] bg-lime-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('5')}>SDG 13</button>
             </div>
-            </div>
           </div>
+        </div>
 
 
         <div className="ml-3 flex">
@@ -74,16 +74,16 @@ const Energyconsumption = ({open}) => {
             Energy consumed inside the organization
             <MdInfoOutline data-tooltip-id={`tooltip-$e1`} data-tooltip-content="This section documents data corresponding to the energy consumption within the organisation" className="mt-1.5 ml-2 text-[14px]" />
 
-                            <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
-                              width: "290px", backgroundColor: "#000",
-                              color: "white",
-                              fontSize: "12px",
-                              boxShadow: 3,
-                              borderRadius: "8px",
-                              textAlign: 'center',
-                            }}>
+            <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
+              width: "290px", backgroundColor: "#000",
+              color: "white",
+              fontSize: "12px",
+              boxShadow: 3,
+              borderRadius: "8px",
+              textAlign: 'center',
+            }}>
 
-                            </ReactTooltip>
+            </ReactTooltip>
           </h6>
         </div>
         <div className={`${isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"}
