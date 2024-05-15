@@ -2,27 +2,30 @@
 import React, { useState, useEffect } from 'react';
 import { MdOutlineFileUpload, MdFilePresent, MdClose, MdDelete } from "react-icons/md";
 
-const CustomFileUploadWidget = ({ id, onChange, formDataObject, setFormDataObject }) => {
-  const [fileName, setFileName] = useState(null);
-  const [prevFileName, setPrevFileName] = useState(null); // State to store the previous file name
+const CustomFileUploadWidget = ({ id, onChange, value = {} }) => {
+  const [fileName, setFileName] = useState(value.name || null);
   const [showModal, setShowModal] = useState(false);
-  const [previewData, setPreviewData] = useState(null);
+  const [previewData, setPreviewData] = useState(value.url || null);
   const [fileType, setFileType] = useState('');
   const [fileSize, setFileSize] = useState('');
   const [uploadDateTime, setUploadDateTime] = useState('');
 
   useEffect(() => {
-    if (fileName !== null && formDataObject) {
-      const updatedFormData = { ...formDataObject, FileName: fileName };
-      setFormDataObject(updatedFormData);
+    if (value.url && value.name) {
+      setFileName(value.name);
+      setPreviewData(value.url);
+      // Optionally, set other file info if available in value
+      // For instance, if the value object contains type, size, and upload date
+      setFileType(value.type || '');
+      setFileSize(value.size || '');
+      setUploadDateTime(value.uploadDateTime || '');
     }
-  }, [fileName, formDataObject, setFormDataObject]);
+  }, [value]);
 
   const handleChange = (event) => {
     const selectedFile = event.target.files[0];
     const newFileName = selectedFile ? selectedFile.name : null;
 
-    setPrevFileName(fileName); // Store the previous file name
     setFileName(newFileName);
     if (selectedFile) {
       const reader = new FileReader();
@@ -30,8 +33,14 @@ const CustomFileUploadWidget = ({ id, onChange, formDataObject, setFormDataObjec
       reader.onloadend = () => {
         const base64String = reader.result;
 
-        onChange(base64String);
-        setPreviewData(reader.result);
+        onChange({
+          name: newFileName,
+          url: base64String,
+          type: selectedFile.type,
+          size: selectedFile.size,
+          uploadDateTime: new Date().toLocaleString(),
+        });
+        setPreviewData(base64String);
         setFileType(selectedFile.type);
         setFileSize(selectedFile.size);
         setUploadDateTime(new Date().toLocaleString());
@@ -48,7 +57,6 @@ const CustomFileUploadWidget = ({ id, onChange, formDataObject, setFormDataObjec
   };
 
   const handleDelete = () => {
-    setPrevFileName(null); // Clear the previous file name
     setFileName(null);
     setPreviewData(null);
     onChange(null); // Clear the selected file
@@ -150,6 +158,3 @@ const CustomFileUploadWidget = ({ id, onChange, formDataObject, setFormDataObjec
 };
 
 export default CustomFileUploadWidget;
-
-
-

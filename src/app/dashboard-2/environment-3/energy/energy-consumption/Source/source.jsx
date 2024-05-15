@@ -29,7 +29,7 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
   items: {
 Q1: {
   "ui:title": "Please mention the standards used while compiling the information for 302-1 ?",
-  "ui:Gri":"GRI 302-1f",
+  "ui:Gri":"GRI 302-1g",
       'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
       'ui:options': {
         label: false // This disables the label for this field

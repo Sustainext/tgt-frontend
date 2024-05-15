@@ -11,7 +11,7 @@ const AccordionItem = ({ title, children, scops, icons, tooltiptext, sdg, visibl
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <div className={`shadow-md py-1  mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200 ${open ? "w-[100%]" : "w-[100%]"}`}>
+        <div className={`shadow-md py-1  mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200 ${open ? "w-[100%]" : "w-[100%]"}`} >
             <button
                 className="py-3  w-[100%]  text-left flex"
                 onClick={() => setIsOpen(!isOpen)}
@@ -34,7 +34,7 @@ const AccordionItem = ({ title, children, scops, icons, tooltiptext, sdg, visibl
 
                 </div>
             </button>
-            {isOpen && <div className="p-4">{children}</div>}
+            {isOpen && <div className="p-4" >{children}</div>}
         </div>
     );
 };

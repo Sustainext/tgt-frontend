@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
-import { MdAdd,MdOutlineDeleteOutline } from "react-icons/md";
+import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import dateWidget from '../../../../../shared/widgets/dateWidget';
 import selectWidget from '../../../../../shared/widgets/selectWidget';
 import inputWidget from '../../../../../shared/widgets/inputWidget';
@@ -10,14 +10,17 @@ import { GlobalState } from '../../../../../../Context/page';
 import CustomFileUploadWidget from '../../../../../shared/widgets/CustomFileUploadWidget';
 import AssignToWidget from '../../../../../shared/widgets/assignToWidget';
 import CustomSelectInputWidget from '../../../../../shared/widgets/CustomSelectInputWidget';
-
+import RemoveWidget from '../../../../../shared/widgets/RemoveWidget';
+import { Tooltip as ReactTooltip } from 'react-tooltip';
+import 'react-tooltip/dist/react-tooltip.css';
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
   selectWidget: selectWidget,
   FileUploadWidget: CustomFileUploadWidget,
   AssignTobutton: AssignToWidget,
-  CustomSelectInputWidget:CustomSelectInputWidget,
+  CustomSelectInputWidget: CustomSelectInputWidget,
+  RemoveWidget: RemoveWidget,
 };
 
 const schema = {
@@ -30,54 +33,56 @@ const schema = {
         title: "Energy Type",
         tooltiptext: "Indicate type of energy from the drop down",
         enum: ['Electricity', 'Heating', 'Cooling', 'Steam'],
+        tooltiptext: "Indicate the type of energy that is sold from the drop down including both purchased and self-generated."
 
       },
       Source: {
         type: "string",
         title: "Source",
-        enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro','Natural','Electricity','Cooling','Steam','Heating','Wood Biomas','Biogas','Other'],
-        tooltiptext:"Indicate where the energy comes from"
+        enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro'],
+        tooltiptext: "Indicate where the energy comes from"
       },
       Typeofentity: {
         type: "string",
         title: "Type of entity",
         enum: ['Generator', 'Aggregator', 'Distributor', 'TSO'],
-        tooltiptext:"Indicate the type of Entity the energy is being sold to to. E.g. TSO, Generator, Aggregator"
+        tooltiptext: "Indicate the type of Entity the energy is being sold to to. E.g. TSO, Generator, Aggregator"
       },
       Nameofentity: {
-      type: "string",
-      title: "Name of entity",
-      tooltiptext:"Indicate the name of the Entity  to which Energy is being sold to"
-    },
+        type: "string",
+        title: "Name of entity",
+        tooltiptext: "Indicate the name of the Entity  to which Energy is being sold to."
+      },
       Renewable: {
         type: "string",
         title: "Renewable/ Non-renewable",
         enum: ['Renewable', 'Non-renewable'],
-        tooltiptext:"Select from the dropdown to indicate whether it's Renewable or Non-Renewable Energy"
+        tooltiptext: "Select from the dropdown to indicate whether it's Renewable or Non-Renewable Energy"
       },
 
       Quantity: {
         type: "string",
         title: "Quantity",
-        tooltiptext:"Indicate the purchased quantity"
+        tooltiptext: "Indicate the quantity that is sold"
       },
       Unit: {
         type: "string",
         title: "Unit",
         enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
-        tooltiptext:"Indicate the purchased consumed"
+        tooltiptext: "Select the correct unit corresponding to the quantity sold."
       },
       AssignTo: {
         type: "string",
-        title: "Assign To",
-
       },
       FileUpload: {
         type: "string",
         format: "data-url",
       },
 
+      Remove: {
+        type: "string",
 
+      },
       // Define other properties as needed
     }
   }
@@ -85,13 +90,12 @@ const schema = {
 
 const uiSchema = { // Add flex-wrap to wrap fields to the next line
   items: {
-    "classNames": "flex",
     EnergyType: {
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
       'ui:options': {
         label: false,
-        tooltiptext: "Indicate type of energy from the drop down", // Include tooltiptext in uiSchema
+        // Include tooltiptext in uiSchema
       },
 
 
@@ -112,7 +116,7 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
       },
 
     },
-    Nameofentity:{
+    Nameofentity: {
       'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
       'ui:options': {
         label: false // This disables the label for this field
@@ -126,7 +130,7 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
       },
 
     },
-    Quantity:{
+    Quantity: {
       'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
       'ui:options': {
         label: false // This disables the label for this field
@@ -154,8 +158,13 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
         label: false // This disables the label for this field
       },
     },
-
-
+    Remove: {
+      "ui:widget": "RemoveWidget",
+      'ui:options': {
+        label: false // This disables the label for this field
+      },
+    },
+    classNames: 'fieldset',
     'ui:options': {
       orderable: false, // Prevent reordering of items
       addable: false, // Prevent adding items from UI
@@ -163,6 +172,36 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
       layout: 'horizontal', // Set layout to horizontal
     }
   }
+};
+const generateTooltip = (field, tooltipText) => {
+  if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
+    return null; // Return null to skip rendering tooltip for these fields
+  }
+
+  return (
+    <div className='mx-2 flex w-[230px]'>
+      <label className="text-sm leading-5 text-gray-700 flex">{field}</label>
+      <MdInfoOutline
+        data-tooltip-id={field}
+        data-tooltip-content={tooltipText}
+        className="mt-1 ml-2 text-[12px]"
+      />
+      <ReactTooltip
+        id={field}
+        place="top"
+        effect="solid"
+        style={{
+          width: "290px",
+          backgroundColor: "#000",
+          color: "white",
+          fontSize: "12px",
+          boxShadow: 3,
+          borderRadius: "8px",
+          textAlign: 'center',
+        }}
+      />
+    </div>
+  );
 };
 
 const Energysold = () => {
@@ -173,42 +212,43 @@ const Energysold = () => {
     setFormData([...formData, {}]);
   };
 
-  const handleRemove = (indexToRemove) => {
-    const updatedFormData = formData.filter((_, index) => index !== indexToRemove);
-    setFormData(updatedFormData);
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Form data:', formData);
   };
 
-
+  const renderFields = () => {
+    const fields = Object.keys(schema.items.properties);
+    return fields.map((field, index) => (
+      <div key={index}>
+        {generateTooltip(field, schema.items.properties[field].tooltiptext)}
+      </div>
+    ));
+  };
   return (
     <>
+
       <div className={`overflow-auto custom-scrollbar flex justify-around  ${open ? "xl:w-[680px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
         <div>
-        <Form
-          schema={schema}
-          uiSchema={uiSchema}
-          formData={formData}
-          onChange={(e) => setFormData(e.formData)}
-          validator={validator}
-          widgets={widgets}
-        />
+          <div>
+            <div className='flex'>
+              {renderFields()} {/* Render dynamic fields with tooltips */}
+            </div>
+          </div>
+          <Form
+            schema={schema}
+            uiSchema={uiSchema}
+            formData={formData}
+            onChange={(e) => setFormData(e.formData)}
+            validator={validator}
+            widgets={{
+              ...widgets,
+              RemoveWidget: () => <RemoveWidget formData={formData} setFormData={setFormData} />
+            }}
+          />
         </div>
 
- <div className="mt-2">
-        {formData.map((_, index) => (
-          <button
-            key={index}
-            className="text-[#007EEF] text-[12px] flex justify-center items-center cursor-pointer ml-3"
-            onClick={() => handleRemove(index)}
-          >
-            <MdOutlineDeleteOutline className="text-red-600 cursor-pointer text-2xl" />
-          </button>
-        ))}
-      </div>
       </div>
 
       <div className="flex justify-start mt-4 right-1">
@@ -221,6 +261,7 @@ const Energysold = () => {
     </>
   );
 };
+
 
 export default Energysold;
 

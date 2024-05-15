@@ -122,11 +122,20 @@ h1,h2,h3,h4,h5,h6,p,div {
 
 
   fieldset{
-    display: flex;
+    display: contents;
   }
   .btn{
     display: none;
   }
 .control-label{
   text-align: center;
+}
+.textareawi{
+  display: block !important;
+}
+/* .field {
+  display: block;
+} */
+.fieldset{
+display: flex;
 }

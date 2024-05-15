@@ -7,11 +7,12 @@ import CustomFileUploadWidget from '../../../shared/widgets/CustomFileUploadWidg
 import AssignToWidget from '../../../shared/widgets/assignToWidget';
 import CombinedWidget from '../../../shared/widgets/emissioncombinedWidget';
 import { GlobalState } from '../../../../Context/page';
-
+import RemoveWidget from '../../../shared/widgets/RemoveWidget';
 const widgets = {
+  EmissonCombinedWidget: CombinedWidget,
   FileUploadWidget: CustomFileUploadWidget,
   AssignTobutton: AssignToWidget,
-  EmissonCombinedWidget: CombinedWidget, // Update widgets to include CombinedWidget
+  RemoveWidget: RemoveWidget, // Update widgets to include CombinedWidget
 };
 
 const schema = {
@@ -31,12 +32,18 @@ const schema = {
         type: "string",
         title: "Assign To",
       },
+      Remove: {
+        type: "string",
+
+      },
     }
   }
 };
 
 const uiSchema = {
+  className: 'flex flex-wrap',
   items: {
+    classNames: 'flex flex-col md:flex-row w-full md:w-auto',
     Emission: {
       'ui:widget': 'EmissonCombinedWidget', // Use CombinedWidget for Emission field
       'ui:horizontal': true,
@@ -53,8 +60,16 @@ const uiSchema = {
     },
     AssignTo: {
       "ui:widget": "AssignTobutton",
+      'ui:horizontal': true,
       'ui:options': {
         label: false
+      },
+    },
+    Remove: {
+      "ui:widget": "RemoveWidget",
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false // This disables the label for this field
       },
     },
     'ui:options': {
@@ -83,36 +98,27 @@ const Scope1 = () => {
     console.log('Form data:', formData);
   };
 
-  const handleRemove = (indexToRemove) => {
-    const updatedFormData = formData.filter((_, index) => index !== indexToRemove);
-    setFormData(updatedFormData);
-  };
+
 
   return (
     <>
-     <div className={`overflow-auto custom-scrollbar flex   ${open ? "xl:w-[680px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px] 3xl:w-full"}`}>
+      <div className={`overflow-auto custom-scrollbar flex ${open ? "xl:w-[680px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
         <div>
           <Form
+            className='flex'
             schema={schema}
             uiSchema={uiSchema}
             formData={formData}
             onChange={(e) => handleChange(e.formData)}
             validator={validator}
-            widgets={widgets}
+            widgets={{
+              ...widgets,
+              RemoveWidget: () => <RemoveWidget formData={formData} setFormData={setFormData} />
+            }}
           />
         </div>
 
-        <div className="mt-2">
-          {formData.map((_, index) => (
-            <button
-              key={index}
-              className="text-[#007EEF] text-[12px] flex justify-center items-center cursor-pointer ml-3"
-              onClick={() => handleRemove(index)}
-            >
-              <MdOutlineDeleteOutline className="text-red-600 cursor-pointer text-2xl" />
-            </button>
-          ))}
-        </div>
+
       </div>
 
       <div className="flex justify-start mt-4 right-1">

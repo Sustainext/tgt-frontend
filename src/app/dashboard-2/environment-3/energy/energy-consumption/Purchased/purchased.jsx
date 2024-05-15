@@ -33,6 +33,7 @@ const schema = {
         title: "Energy Type",
         tooltiptext: "Indicate type of energy from the drop down",
         enum: ['Electricity', 'Heating', 'Cooling', 'Steam'],
+        tooltiptext: "Indicate the type of energy purchased from the drop down"
 
       },
       Source: {
@@ -62,7 +63,7 @@ const schema = {
         type: "string",
         title: "Unit",
         enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
-        tooltiptext: "Indicate the purchased consumed"
+        tooltiptext: "Select the correct unit corresponding to the quantity purchased."
       },
       AssignTo: {
         type: "string",
@@ -82,8 +83,10 @@ const schema = {
   }
 };
 
-const uiSchema = { // Add flex-wrap to wrap fields to the next line
+const uiSchema = {
+  className: 'flex flex-wrap', // Add flex-wrap to wrap fields to the next line
   items: {
+    classNames: 'flex flex-col md:flex-row w-full md:w-auto',
     EnergyType: {
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
@@ -133,6 +136,7 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
     },
     AssignTo: {
       "ui:widget": "AssignTobutton",
+      'ui:horizontal': true,
       'ui:options': {
         label: false // This disables the label for this field
       },
@@ -150,7 +154,6 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
         label: false // This disables the label for this field
       },
     },
-    classNames: 'fieldset',
     'ui:options': {
       orderable: false, // Prevent reordering of items
       addable: false, // Prevent adding items from UI
@@ -215,14 +218,16 @@ const Purchased = () => {
   return (
     <>
 
-      <div className={`overflow-auto custom-scrollbar flex justify-around  ${open ? "xl:w-[680px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
+      <div className={`overflow-auto custom-scrollbar flex ${open ? "xl:w-[680px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
         <div>
           <div>
             <div className='flex'>
               {renderFields()} {/* Render dynamic fields with tooltips */}
             </div>
           </div>
+
           <Form
+          className='flex'
             schema={schema}
             uiSchema={uiSchema}
             formData={formData}
@@ -232,6 +237,7 @@ const Purchased = () => {
               ...widgets,
               RemoveWidget: () => <RemoveWidget formData={formData} setFormData={setFormData} />
             }}
+
           />
         </div>
 
