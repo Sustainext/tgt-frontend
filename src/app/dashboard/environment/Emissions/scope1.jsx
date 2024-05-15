@@ -82,52 +82,56 @@ const uiSchema = {
   }
 };
 
-const Scope1 = () => {
+const Scope1 = ({ handleScope1Change, handleScope1Remove }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
 
-  const handleChange = (formData) => setFormData(formData);
+  const handleChange = (e) => {
+    setFormData(e.formData);
+    handleScope1Change(e.formData);
+  };
 
   const handleAddNew = () => {
     const newData = [...formData, {}];
     setFormData(newData);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form data:', formData);
+    handleScope1Change(newData);
   };
 
 
-
+  const updateFormData = (newData) => {
+    setFormData(newData);
+    handleScope1Change(newData);
+    handleScope1Remove(newData); // Ensure the parent state is updated
+  };
   return (
     <>
-      <div className={`overflow-auto custom-scrollbar flex ${open ? "xl:w-[680px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
-        <div>
-          <Form
-            className='flex'
-            schema={schema}
-            uiSchema={uiSchema}
-            formData={formData}
-            onChange={(e) => handleChange(e.formData)}
-            validator={validator}
-            widgets={{
-              ...widgets,
-              RemoveWidget: () => <RemoveWidget formData={formData} setFormData={setFormData} />
-            }}
-          />
-        </div>
+        <div className={`overflow-auto custom-scrollbar flex justify-around ${open ? "xl:w-[768px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
+      <Form
+        className='flex'
+        schema={schema}
+        uiSchema={uiSchema}
+        formData={formData}
+        onChange={handleChange}
+        validator={validator}
+        widgets={{
+          ...widgets,
+          RemoveWidget: () => (
+            <RemoveWidget
+              formData={formData}
+              setFormData={updateFormData} // Pass the update function instead
+            />
 
+          ),
 
+        }}
+      />
       </div>
-
       <div className="flex justify-start mt-4 right-1">
         <button type="button" className="text-[#007EEF] text-[12px] flex cursor-pointer mt-5 mb-5" onClick={handleAddNew}>
           <MdAdd className='text-lg' /> Add Row
         </button>
       </div>
 
-      <button type="button" onClick={handleSubmit}>Submit</button>
     </>
   );
 };
