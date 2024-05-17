@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { GlobalStateProvider } from "../Context/page";
+import { AuthProvider } from "../Context/auth";
 
 export const metadata = {
   title: "Sustainext",
@@ -19,7 +20,9 @@ export default function RootLayout({ children }) {
       </head>
 
       <body>
-        <GlobalStateProvider>{children}</GlobalStateProvider>
+        <GlobalStateProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </GlobalStateProvider>
       </body>
     </html>
   );
