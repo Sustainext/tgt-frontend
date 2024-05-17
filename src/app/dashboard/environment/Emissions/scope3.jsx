@@ -41,9 +41,9 @@ const schema = {
 };
 
 const uiSchema = {
-  className: 'flex flex-wrap',
+
   items: {
-    classNames: 'flex flex-col md:flex-row w-full md:w-auto',
+    classNames: 'fieldset',
     'ui:order': [
       'Emission', 'FileUpload', 'AssignTo', 'Remove'
     ],
