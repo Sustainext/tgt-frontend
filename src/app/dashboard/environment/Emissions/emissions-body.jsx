@@ -43,36 +43,7 @@ const AccordionItem = ({ title, children, scops, icons, activeMonth}) => {
     );
 };
 const Emissionsnbody = ({ activeMonth }) => {
-    const [globalFormData, setGlobalFormData] = useState({
-        scope1Data: {},
-        scope2Data: {},
-        scope3Data: {}
-    });
-    const handleScope1Change = useCallback((data) => {
-        setGlobalFormData(prev => ({ ...prev, scope1Data: data }));
-    }, []);
 
-    const handleScope2Change = useCallback((data) => {
-        setGlobalFormData(prev => ({ ...prev, scope2Data: data }));
-    }, []);
-
-    const handleScope3Change = useCallback((data) => {
-        setGlobalFormData(prev => ({ ...prev, scope3Data: data }));
-    }, []);
-    const handleSubmit = (e) => {
-        e.preventDefault(); // Prevent the default form submission
-        console.log('Form data:', globalFormData);
-
-    };
-    const handleScope1Remove = useCallback((data) => {
-        setGlobalFormData(prev => ({ ...prev, scope1Data: data }));
-    }, []);
-    const handleScope2Remove = useCallback((data) => {
-        setGloba2FormData(prev => ({ ...prev, scope2Data: data }));
-    }, []);
-    const handleScope3Remove = useCallback((data) => {
-        setGloba3FormData(prev => ({ ...prev, scope3Data: data }));
-    }, []);
     return (
         <>
             <div className="mx-3">
@@ -82,7 +53,7 @@ const Emissionsnbody = ({ activeMonth }) => {
                     icons={<IoHomeOutline />}
                     activeMonth={activeMonth}
                 >
-                <Scope1 handleScope1Change={handleScope1Change} handleScope1Remove={handleScope1Remove} />
+                <Scope1  />
                 </AccordionItem>
                 <AccordionItem
                     title="InDirect emission from operations"
@@ -90,7 +61,7 @@ const Emissionsnbody = ({ activeMonth }) => {
                     icons={<MdPower />}
                     activeMonth={activeMonth}
                 >
-                <Scope2 handleScope2Change={handleScope2Change} handleScope2Remove={handleScope2Remove} />
+                <Scope2  />
                 </AccordionItem>
                 <AccordionItem
                     title="All other emissions (associated)"
@@ -98,18 +69,10 @@ const Emissionsnbody = ({ activeMonth }) => {
                     icons={<MdOutlineLocalShipping />}
                     activeMonth={activeMonth}
                 >
-                <Scope3 handleScope3Change={handleScope3Change} handleScope3Remove={handleScope3Remove}/>
+                <Scope3/>
                 </AccordionItem>
             </div>
-            <div className="flex justify-end mt-4 right-1">
-                <button
-                    type="submit"
-                    className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline"
-                    onClick={handleSubmit}
-                >
-                    Calculate
-                </button>
-            </div>
+
         </>
     );
 };

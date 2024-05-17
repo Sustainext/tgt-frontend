@@ -40,8 +40,10 @@ const uiSchema = {
 };
 
 const Baseyearenergy = () => {
-
   const [formData, setFormData] = useState([{}]);
+  const handleChange = (e) => {
+    setFormData(e.formData);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Form data:', formData);
@@ -56,17 +58,16 @@ const Baseyearenergy = () => {
           schema={schema}
           uiSchema={uiSchema}
           formData={formData}
-          onChange={(e) => setFormData(e.formData)}
+          onChange={handleChange}
           validator={validator}
           widgets={widgets}
         />
         </div>
       </div>
-
-
-
-      <button type="button" onClick={handleSubmit}>Submit</button> {/* Add a submit button */}
-    </>
+      <div className='mb-4'>
+      <button type="button"  className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
+      </div>
+      </>
   );
 };
 

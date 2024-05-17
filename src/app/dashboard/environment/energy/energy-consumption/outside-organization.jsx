@@ -72,9 +72,12 @@ const schema = {
 };
 
 const uiSchema = {
-  className: 'flex flex-wrap', // Add flex-wrap to wrap fields to the next line
+  // Add flex-wrap to wrap fields to the next line
   items: {
-    classNames: 'flex flex-col md:flex-row w-full md:w-auto',
+    classNames: 'fieldset',
+    'ui:order': [
+      'EnergyType', 'Source', 'Purpose', 'Renewable', 'Quantity', 'Unit', 'AssignTo', 'FileUpload', 'Remove'
+    ],
     EnergyType: {
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
@@ -150,14 +153,14 @@ const uiSchema = {
     }
   }
 };
-const generateTooltip = (field, tooltipText) => {
+const generateTooltip = (field, title, tooltipText) => {
   if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
     return null; // Return null to skip rendering tooltip for these fields
   }
 
   return (
     <div className='mx-2 flex w-[230px]'>
-      <label className="text-sm leading-5 text-gray-700 flex">{field}</label>
+      <label className="text-sm leading-5 text-gray-700 flex">{title}</label>
       <MdInfoOutline
         data-tooltip-id={field}
         data-tooltip-content={tooltipText}
@@ -185,21 +188,36 @@ const Outsideorganization = () => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
 
-  const handleAddNew = () => {
-    setFormData([...formData, {}]);
+  const handleChange = (e) => {
+    setFormData(e.formData);
+
   };
 
+  const handleAddNew = () => {
+    const newData = [...formData, {}];
+    setFormData(newData);
+
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent the default form submission
     console.log('Form data:', formData);
-  };
 
+  };
+  const updateFormData = (updatedData) => {
+    setFormData(updatedData);
+
+  };
+  const handleRemove = (index) => {
+    const updatedData = [...formData];
+    updatedData.splice(index, 1);
+    setFormData(updatedData);
+  };
   const renderFields = () => {
     const fields = Object.keys(schema.items.properties);
     return fields.map((field, index) => (
       <div key={index}>
-        {generateTooltip(field, schema.items.properties[field].tooltiptext)}
+        {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext)}
       </div>
     ));
   };
@@ -219,11 +237,25 @@ const Outsideorganization = () => {
             schema={schema}
             uiSchema={uiSchema}
             formData={formData}
-            onChange={(e) => setFormData(e.formData)}
+            onChange={handleChange}
             validator={validator}
             widgets={{
               ...widgets,
-              RemoveWidget: () => <RemoveWidget formData={formData} setFormData={setFormData} />
+              RemoveWidget: (props) => (
+                <RemoveWidget
+                  {...props}
+                  index={props.id.split('_')[1]} // Pass the index
+                  onRemove={handleRemove}
+                />
+              ),
+              FileUploadWidget: (props) => (
+                <CustomFileUploadWidget
+                  {...props}
+                  scopes="eo1"
+                  setFormData={updateFormData}
+                />
+              )
+
             }}
 
           />
@@ -236,8 +268,10 @@ const Outsideorganization = () => {
           <MdAdd className='text-lg' /> Add Row
         </button>
       </div>
+      <div className='mb-4'>
+      <button type="button"  className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
+      </div>
 
-      <button type="button" onClick={handleSubmit}>Submit</button> {/* Add a submit button */}
     </>
   );
 };

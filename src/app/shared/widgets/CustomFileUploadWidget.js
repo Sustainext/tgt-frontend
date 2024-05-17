@@ -2,20 +2,18 @@
 import React, { useState, useEffect } from 'react';
 import { MdOutlineFileUpload, MdFilePresent, MdClose, MdDelete } from "react-icons/md";
 
-const CustomFileUploadWidget = ({ id, onChange, value = {} }) => {
-  const [fileName, setFileName] = useState(value.name || null);
+const CustomFileUploadWidget = ({ id, onChange, value = {}, scopes,setFormData }) => {
+  const [fileName, setFileName] = useState(value?.name || null);
   const [showModal, setShowModal] = useState(false);
-  const [previewData, setPreviewData] = useState(value.url || null);
-  const [fileType, setFileType] = useState('');
-  const [fileSize, setFileSize] = useState('');
-  const [uploadDateTime, setUploadDateTime] = useState('');
+  const [previewData, setPreviewData] = useState(value?.url || null);
+  const [fileType, setFileType] = useState(value?.type || '');
+  const [fileSize, setFileSize] = useState(value?.size || '');
+  const [uploadDateTime, setUploadDateTime] = useState(value?.uploadDateTime || '');
 
   useEffect(() => {
-    if (value.url && value.name) {
+    if (value?.url && value?.name) {
       setFileName(value.name);
       setPreviewData(value.url);
-      // Optionally, set other file info if available in value
-      // For instance, if the value object contains type, size, and upload date
       setFileType(value.type || '');
       setFileSize(value.size || '');
       setUploadDateTime(value.uploadDateTime || '');
@@ -56,24 +54,25 @@ const CustomFileUploadWidget = ({ id, onChange, value = {} }) => {
     setShowModal(false);
   };
 
-  const handleDelete = () => {
+  const handleDelete = (id, scopes) => {
     setFileName(null);
     setPreviewData(null);
-    onChange(null); // Clear the selected file
-    setShowModal(false); // Close the modal after deletion
+    onChange(null); // Clear the selected file for the specific id and scopes
+    setShowModal(false);
+    setFormData(value) // Close the modal after deletion
   };
 
   return (
     <div className="w-[120px] flex justify-center items-center">
       <input
         type="file"
-        id={id}
+        id={id + scopes}
         onChange={handleChange}
         style={{ display: 'none' }}
       />
 
       {fileName ? (
-        <label className="flex cursor-pointer ">
+        <label className="flex cursor-pointer">
           <div
             className="flex items-center mt-2"
             onClick={handlePreview}
@@ -87,10 +86,8 @@ const CustomFileUploadWidget = ({ id, onChange, value = {} }) => {
           </div>
         </label>
       ) : (
-        <label htmlFor={id} className="flex cursor-pointer ">
-          <div
-            className="flex items-center mt-2"
-          >
+        <label htmlFor={id + scopes} className="flex cursor-pointer">
+          <div className="flex items-center mt-2">
             <MdOutlineFileUpload
               className="w-6 h-6 mr-1 text-[#007EEF]"
             />
@@ -105,12 +102,19 @@ const CustomFileUploadWidget = ({ id, onChange, value = {} }) => {
       {showModal && previewData && (
         <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-1 rounded-lg w-[60%] h-[90%] mt-6">
-            <div className="flex justify-between  mt-4 mb-4">
+            <div className="flex justify-between mt-4 mb-4">
               <div>
                 <h5 className="mb-4 ml-2 font-semibold">{fileName}</h5>
               </div>
               <div className='flex'>
-                <button className="px-4 py-2 text-xl rounded " onClick={handleCloseModal}><MdClose /></button>
+                <div className='mb-4'>
+                  <button className="px-2 py-1 mr-2 w-[150px] flex items-center justify-center border border-red-500 text-red-600 text-[13px] rounded hover:bg-red-600 hover:text-white" onClick={() => handleDelete(id, scopes)}>
+                    <MdDelete className="text-xl" /> Delete File
+                  </button>
+                </div>
+                <div>
+                  <button className="px-4 py-2 text-xl rounded" onClick={handleCloseModal}><MdClose /></button>
+                </div>
               </div>
             </div>
             <div className='flex justify-between'>
@@ -125,28 +129,23 @@ const CustomFileUploadWidget = ({ id, onChange, value = {} }) => {
               </div>
               <div className='w-[211px]'>
                 <div className='mb-4 mt-2'>
-                  <h2 className='text-neutral-500 text-[15px] font-semibold  leading-relaxed tracking-wide'>File information</h2>
+                  <h2 className='text-neutral-500 text-[15px] font-semibold leading-relaxed tracking-wide'>File information</h2>
                 </div>
                 <div className='mb-4'>
-                  <h2 className='text-neutral-500 text-[12px] font-semibold  leading-relaxed tracking-wide'>FILE NAME</h2>
-                  <h2 className='text-[14px]  leading-relaxed tracking-wide'>{fileName}</h2>
+                  <h2 className='text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide'>FILE NAME</h2>
+                  <h2 className='text-[14px] leading-relaxed tracking-wide'>{fileName}</h2>
                 </div>
                 <div className='mb-4'>
-                  <h2 className='text-neutral-500 text-[12px] font-semibold  leading-relaxed tracking-wide'>FILE SIZE</h2>
-                  <h2 className='text-[14px]  leading-relaxed tracking-wide'>{(fileSize / 1024).toFixed(2)} KB</h2>
+                  <h2 className='text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide'>FILE SIZE</h2>
+                  <h2 className='text-[14px] leading-relaxed tracking-wide'>{(fileSize / 1024).toFixed(2)} KB</h2>
                 </div>
                 <div className='mb-4'>
-                  <h2 className='text-neutral-500 text-[12px] font-semibold  leading-relaxed tracking-wide'>FILE TYPE</h2>
-                  <h2 className='text-[14px]  leading-relaxed tracking-wide'>{fileType}</h2>
+                  <h2 className='text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide'>FILE TYPE</h2>
+                  <h2 className='text-[14px] leading-relaxed tracking-wide'>{fileType}</h2>
                 </div>
                 <div className='mb-4'>
-                  <h2 className='text-neutral-500 text-[12px] font-semibold  leading-relaxed tracking-wide'>UPLOAD DATE & TIME</h2>
-                  <h2 className='text-[14px]  leading-relaxed tracking-wide'>{uploadDateTime}</h2>
-                </div>
-                <div className='mb-4'>
-                  <button className="px-2 py-1 mr-2 w-[150px] flex items-center justify-center border border-red-500 text-red-600 text-[13px] rounded hover:bg-red-600 hover:text-white" onClick={handleDelete}>
-                    <MdDelete className="text-xl" /> Delete File
-                  </button>
+                  <h2 className='text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide'>UPLOAD DATE & TIME</h2>
+                  <h2 className='text-[14px] leading-relaxed tracking-wide'>{uploadDateTime}</h2>
                 </div>
               </div>
             </div>

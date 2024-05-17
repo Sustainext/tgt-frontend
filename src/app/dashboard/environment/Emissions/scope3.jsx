@@ -44,6 +44,9 @@ const uiSchema = {
   className: 'flex flex-wrap',
   items: {
     classNames: 'flex flex-col md:flex-row w-full md:w-auto',
+    'ui:order': [
+      'Emission', 'FileUpload', 'AssignTo', 'Remove'
+    ],
     Emission: {
       'ui:widget': 'EmissonCombinedWidget', // Use CombinedWidget for Emission field
       'ui:horizontal': true,
@@ -88,48 +91,75 @@ const Scope3 = ({ handleScope3Change, handleScope3Remove }) => {
 
   const handleChange = (e) => {
     setFormData(e.formData);
-    handleScope3Change(e.formData);
+
   };
 
   const handleAddNew = () => {
     const newData = [...formData, {}];
     setFormData(newData);
-    handleScope3Change(newData);
+
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent the default form submission
+    console.log('Form data:', formData);
 
-  const updateFormData = (newData) => {
-    setFormData(newData);
-    handleScope3Change(newData);
-    handleScope3Remove(newData); // Ensure the parent state is updated
   };
+  const updateFormData = (updatedData) => {
+    setFormData(updatedData);
+
+  };
+  const handleRemove = (index) => {
+    const updatedData = [...formData];
+    updatedData.splice(index, 1);
+    setFormData(updatedData);
+  };
+
   return (
     <>
-        <div className={`overflow-auto custom-scrollbar flex justify-around ${open ? "xl:w-[768px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
-      <Form
-        className='flex'
-        schema={schema}
-        uiSchema={uiSchema}
-        formData={formData}
-        onChange={handleChange}
-        validator={validator}
-        widgets={{
-          ...widgets,
-          RemoveWidget: () => (
-            <RemoveWidget
-              formData={formData}
-              setFormData={updateFormData} // Pass the update function instead
-            />
 
-          ),
+<div className={`overflow-auto custom-scrollbar flex justify-around  ${open ? "xl:w-[768px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
+        <div>
 
-        }}
-      />
+
+          <Form
+          className='flex'
+            schema={schema}
+            uiSchema={uiSchema}
+            formData={formData}
+            onChange={handleChange}
+            validator={validator}
+            widgets={{
+              ...widgets,
+              RemoveWidget: (props) => (
+                <RemoveWidget
+                  {...props}
+                  index={props.id.split('_')[1]} // Pass the index
+                  onRemove={handleRemove}
+                />
+              ),
+              FileUploadWidget: (props) => (
+                <CustomFileUploadWidget
+                  {...props}
+                  scopes="scope3"
+                  setFormData={updateFormData}
+                />
+              )
+
+            }}
+
+          />
+        </div>
+
       </div>
+
       <div className="flex justify-start mt-4 right-1">
         <button type="button" className="text-[#007EEF] text-[12px] flex cursor-pointer mt-5 mb-5" onClick={handleAddNew}>
           <MdAdd className='text-lg' /> Add Row
         </button>
+      </div>
+      <div className='mb-4'>
+      <button type="button"  className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
       </div>
 
     </>

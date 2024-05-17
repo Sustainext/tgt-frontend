@@ -72,9 +72,11 @@ const schema = {
 };
 
 const uiSchema = {
-  className: 'flex flex-wrap', // Add flex-wrap to wrap fields to the next line
   items: {
-    classNames: 'flex flex-col md:flex-row w-full md:w-auto',
+    classNames: 'fieldset',
+    'ui:order': [
+      'ProductServices', 'Quantity', 'Unit', 'Baseyear','AssignTo', 'FileUpload', 'Remove'
+    ],
 
     ProductServices: {
       'ui:widget': 'inputWidget',
@@ -166,15 +168,31 @@ const Productsservices = () => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
 
+  const handleChange = (e) => {
+    setFormData(e.formData);
+
+  };
+
   const handleAddNew = () => {
-    setFormData([...formData, {}]);
+    const newData = [...formData, {}];
+    setFormData(newData);
+
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent the default form submission
     console.log('Form data:', formData);
-  };
 
+  };
+  const updateFormData = (updatedData) => {
+    setFormData(updatedData);
+
+  };
+  const handleRemove = (index) => {
+    const updatedData = [...formData];
+    updatedData.splice(index, 1);
+    setFormData(updatedData);
+  }
   const renderFields = () => {
     const fields = Object.keys(schema.items.properties);
     return fields.map((field, index) => (
@@ -184,9 +202,11 @@ const Productsservices = () => {
     ));
   };
 
+
   return (
     <>
-      <div className={`overflow-auto custom-scrollbar flex justify-around ${open ? "xl:w-[768px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
+
+<div className={`overflow-auto custom-scrollbar flex justify-around  ${open ? "xl:w-[768px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
         <div>
           <div>
             <div className='flex'>
@@ -195,18 +215,34 @@ const Productsservices = () => {
           </div>
 
           <Form
-            className='flex'
+          className='flex'
             schema={schema}
             uiSchema={uiSchema}
             formData={formData}
-            onChange={(e) => setFormData(e.formData)}
+            onChange={handleChange}
             validator={validator}
             widgets={{
               ...widgets,
-              RemoveWidget: () => <RemoveWidget formData={formData} setFormData={setFormData} />
+              RemoveWidget: (props) => (
+                <RemoveWidget
+                  {...props}
+                  index={props.id.split('_')[1]} // Pass the index
+                  onRemove={handleRemove}
+                />
+              ),
+              FileUploadWidget: (props) => (
+                <CustomFileUploadWidget
+                  {...props}
+                  scopes="ps1"
+                  setFormData={updateFormData}
+                />
+              )
+
             }}
+
           />
         </div>
+
       </div>
 
       <div className="flex justify-start mt-4 right-1">
@@ -214,8 +250,10 @@ const Productsservices = () => {
           <MdAdd className='text-lg' /> Add Row
         </button>
       </div>
+      <div className='mb-4'>
+      <button type="button"  className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
+      </div>
 
-      <button type="button" onClick={handleSubmit}>Submit</button> {/* Add a submit button */}
     </>
   );
 };
