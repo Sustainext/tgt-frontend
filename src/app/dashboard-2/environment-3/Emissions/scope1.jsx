@@ -13,7 +13,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 // setting view-path as initializer
 
-const view_path = 'gri-environment-emissions-301-a'
+const view_path = 'gri-environment-emissions-301-a-scope-1'
 const client_id = 1
 const user_id = 1
 

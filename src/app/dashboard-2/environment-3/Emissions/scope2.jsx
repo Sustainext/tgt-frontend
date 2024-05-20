@@ -2,56 +2,38 @@
 import React, { useState, useEffect } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
-import { MdAdd,MdOutlineDeleteOutline } from "react-icons/md";
-import dateWidget from '../../../shared/widgets/dateWidget';
-import selectWidget from '../../../shared/widgets/selectWidget';
-import inputWidget from '../../../shared/widgets/inputWidget';
-import { GlobalState } from '../../../../Context/page';
+import { MdAdd, MdOutlineDeleteOutline } from "react-icons/md";
 import CustomFileUploadWidget from '../../../shared/widgets/CustomFileUploadWidget';
 import AssignToWidget from '../../../shared/widgets/assignToWidget';
-import CustomSelectInputWidget from '../../../shared/widgets/CustomSelectInputWidget';
-import RemoveWidget from '../../../shared/widgets/RemoveWidget'
+import CombinedWidget from '../../../shared/widgets/emissioncombinedWidget';
+import { GlobalState } from '../../../../Context/page';
+import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
+
+
+// setting view-path as initializer
+
+const view_path = 'gri-environment-emissions-301-a-scope-2'
+const client_id = 1
+const user_id = 1
+
 const widgets = {
-  inputWidget: inputWidget,
-  dateWidget: dateWidget,
-  selectWidget: selectWidget,
   FileUploadWidget: CustomFileUploadWidget,
   AssignTobutton: AssignToWidget,
-  CustomSelectInputWidget:CustomSelectInputWidget,
-  RemoveWidgetnew:RemoveWidget
+  EmissonCombinedWidget: CombinedWidget, // Update widgets to include CombinedWidget
 };
+
+const notify = (text) => toast(text);
 
 const schema = {
   type: 'array',
   items: {
     type: 'object',
     properties: {
-      Category: {
+      Emission: {
         type: "string",
-        title: "Category",
-        enum: ['Category', 'Heating', 'Cooling', 'Steam'],
+        title: "Emission",
       },
-      Subcategory: {
-        type: "string",
-        title: "Subcategory",
-        enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro'],
-      },
-      Activity: {
-        type: "string",
-        title: "Activity",
-        enum: ['Renewable', 'Non-renewable'],
-      },
-      QuantityUnit: {
-        type: "string",
-        title: "Quantity & Unit",
-        unitOptions: [
-          { value: 'Joules', label: 'Joules' },
-          { value: 'KJ', label: 'KJ' },
-          { value: 'Wh', label: 'Wh' },
-        ]
-      },
-
-
       FileUpload: {
         type: "string",
         format: "data-url",
@@ -59,129 +41,165 @@ const schema = {
       AssignTo: {
         type: "string",
         title: "Assign To",
-
       },
-
-      // Define other properties as needed
     }
   }
 };
 
-const uiSchema = { // Add flex-wrap to wrap fields to the next line
+const uiSchema = {
   items: {
-    "classNames": "flex",
-    Category: {
-      'ui:widget': 'selectWidget',
+    Emission: {
+      'ui:widget': 'EmissonCombinedWidget', // Use CombinedWidget for Emission field
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
-      },
-      enum: [
-        { value: 'Heating', label: 'Heating' },
-        { value: 'Cooling', label: 'Cooling' },
-        { value: 'Steam', label: 'Steam' },
-      ],
-    },
-    Subcategory: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-      enum: [
-        { value: 'Heating', label: 'Heating' },
-        { value: 'Cooling', label: 'Cooling' },
-        { value: 'Steam', label: 'Steam' },
-      ],
-    },
-    Activity: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-      enum: [
-        { value: 'Heating', label: 'Heating' },
-        { value: 'Cooling', label: 'Cooling' },
-        { value: 'Steam', label: 'Steam' },
-      ],
-    },
-    QuantityUnit: {
-      'ui:widget': 'CustomSelectInputWidget', // Use your custom widget for QuantityUnit
-      'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
-
-
     FileUpload: {
       'ui:widget': 'FileUploadWidget',
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     AssignTo: {
       "ui:widget": "AssignTobutton",
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
-
     'ui:options': {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
+      orderable: false,
+      addable: false,
       removable: false,
-      label: false, // Prevent removing items from UI
-      layout: 'horizontal', // Set layout to horizontal
+      label: false,
+      layout: 'horizontal',
     }
   }
 };
 
-const Scope2 = () => {
+const Scope1 = () => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
+  const [r_schema, setRemoteSchema] = useState({})
+  const [r_ui_schema, setRemoteUiSchema] = useState({})
+
+  const handleChange = (formData) => setFormData(formData);
 
   const handleAddNew = () => {
-    setFormData([...formData, {}]);
+    const newData = [...formData, {}];
+    setFormData(newData);
   };
+
+ 
 
   const handleRemove = (indexToRemove) => {
     const updatedFormData = formData.filter((_, index) => index !== indexToRemove);
     setFormData(updatedFormData);
   };
 
+  const updateFormData = async () => {
+
+    const data = {
+      client_id: client_id,
+      user_id : user_id,
+      path: view_path,
+      form_data : formData
+    }
+    
+    const url = 'http://localhost:8000/datametric/update-fieldgroup'
+    try {
+      const response = await axios.post(url, 
+        {
+          ...data
+        }
+      );
+  
+      console.log('Response:', response.data);
+      // toast(response.message)
+      // Handle the response data here
+    } catch (error) {
+      console.error('Error:', error);
+      // toast(error)
+      // Handle errors here
+    }
+  };
+
+  const loadFormData = async () =>{
+    
+    const base_url = 'http://localhost:8000/datametric/get-fieldgroups?path=';
+    const url = `${base_url}${view_path}&&client_id=${client_id}&&user_id=${user_id}`
+    console.log(url, 'is the url to be fired')
+
+// Make the GET request
+    axios.get(url)
+      .then(response => {
+        // Handle successful response
+        console.log(response.data, ' is the response data')
+        setRemoteSchema(response.data.form[0].schema)
+        setRemoteUiSchema(response.data.form[0].ui_schema)
+        const form_parent = response.data.form_data
+        const f_data = form_parent[0].data
+        setFormData(f_data)
+        // setFormData(response.data.form[0].form_data)
+      })
+      .catch(error => {
+        // Handle error
+        console.error('Error:', error);
+      });
+
+  }
+  // reload the forms
+  useEffect(()=>{
+    // console.log(r_schema, ' - is the remote schema from django', r_ui_schema, ' - is the remote ui schema from django')
+  },[r_schema, r_ui_schema])
+
+  // console log the formdata changes
+
+  useEffect(()=>{
+    console.log('formdata is changed - ', formData)
+
+
+  },[formData])
+
+  // fetch backend and replace initialized forms
+  useEffect(()=>{
+    console.log('Form loaded , ready for trigger')
+    loadFormData()
+  },[])
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Form data:', formData);
-  };
+    updateFormData()
 
+  };
 
   return (
     <>
-      <div className={`overflow-auto custom-scrollbar flex justify-around  ${open ? "xl:w-[680px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
+     <div className={`overflow-auto custom-scrollbar flex   ${open ? "xl:w-[680px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px] 3xl:w-full"}`}>
         <div>
-        <Form
-          schema={schema}
-          uiSchema={uiSchema}
-          formData={formData}
-          onChange={(e) => setFormData(e.formData)}
-          validator={validator}
-          widgets={widgets}
-        />
+          <Form
+            schema={r_schema}
+            uiSchema={r_ui_schema}
+            formData={formData}
+            onChange={(e) => handleChange(e.formData)}
+            validator={validator}
+            widgets={widgets}
+          />
         </div>
 
- <div className="mt-2">
-        {formData.map((_, index) => (
-          <button
-            key={index}
-            className="text-[#007EEF] text-[12px] flex justify-center items-center cursor-pointer ml-3"
-            onClick={() => handleRemove(index)}
-          >
-            <MdOutlineDeleteOutline className="text-red-600 cursor-pointer text-2xl" />
-          </button>
-        ))}
-      </div>
+        <div className="mt-2">
+          {formData.map((_, index) => (
+            <button
+              key={index}
+              className="text-[#007EEF] text-[12px] flex justify-center items-center cursor-pointer ml-3"
+              onClick={() => handleRemove(index)}
+            >
+              <MdOutlineDeleteOutline className="text-red-600 cursor-pointer text-2xl" />
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="flex justify-start mt-4 right-1">
@@ -189,11 +207,10 @@ const Scope2 = () => {
           <MdAdd className='text-lg' /> Add Row
         </button>
       </div>
-
-      <button type="button" onClick={handleSubmit}>Submit</button> {/* Add a submit button */}
+      <Toaster />
+      <button type="button" onClick={handleSubmit}>Submit</button>
     </>
   );
 };
 
-export default Scope2;
-
+export default Scope1;
