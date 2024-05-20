@@ -45,7 +45,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
   };
   return (
     <div className="m-3 ml-2 p-2 border border-r-2 border-b-2 shadow-lg rounded-l">
-      <div className="flex items-start py-4 min-h-[84vh] rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[200px] lg:w-[200px] xl:w-[220px] 2xl:w-[200px] 3xl:w-[351px] scrollable-content">
+      <div className="flex items-start py-4 min-h-[84vh] rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[200px] lg:w-[200px] xl:w-[200px] 2xl:w-[200px] 3xl:w-[351px] scrollable-content">
         <div className="flex flex-col w-full font-medium">
           <button className="flex items-center px-4 py-2 -mt-4 mb-8 rounded-none focus:outline-none text-[#727272] font-bold">
             <span className="text-[15px]">Environment</span>
@@ -178,7 +178,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                     <p className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${activeTab === "Waste diverted to disposal"
                       ? "text-blue-400"
                       : "bg-transparent text-[#727272] "
-                      }`} onClick={() => handleTabClick("Waste diverted to disposal")}>Waste Diverted to disposal</p></div>
+                      }`} onClick={() => handleTabClick("Waste diverted to disposal")}>Waste Directed to disposal</p></div>
 
                 </div>
               </>

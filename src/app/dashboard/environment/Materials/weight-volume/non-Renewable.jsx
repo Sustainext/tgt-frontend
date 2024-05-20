@@ -29,39 +29,48 @@ const schema = {
   items: {
     type: 'object',
     properties: {
-      EnergyType: {
+      Typeofmaterial: {
         type: "string",
-        title: "Energy Type",
-        enum: ['heating', 'cooling', 'steam', 'electricity', 'Fuel', 'Energy inside the organization (302-1)', 'Energy outside the organization (302-2)', 'Total Energy (302-1+302-2)', 'others'],
-        tooltiptext: "Indicate the type of energy for which energy intensity should be calculated",
+        title: "Type of material",
+        enum: ['Raw materials', 'Associated process materials','Semi-manufactured goods or parts','Materials for packaging purposes'],
+        tooltiptext: "Select the waste category from the given dropdown.",
+        display: "none",
       },
-      EnergyQuantity: {
+      Materialsused: {
         type: "string",
-        title: "Energy Quantity",
-        tooltiptext: "Indicate the quantity of Energy Type"
+        title: "Materials used",
+        enum: ['Aluminium batteries', 'Cobalt','Copper','Gold','iron','Lithium','Lubricants','Oil','Plastic','Solvents','Steel','Tantalum','Tin','Tungsten','Tires','Uranium','Zinc','Others'],
+        tooltiptext: "What materials does the compa use to produce its goods or services?",
+        display: "block",
+      },
+      Source: {
+        type: "string",
+        title: "Source",
+        enum: ['Externally sourced', 'Internally sourced'],
+        tooltiptext: "Where does the company get its materials from? Internally sourced materials: Materials that the company makes itself.Externally sourced materials: Materials that the company buys from other companies.",
+        display: "block",
+      },
+      Totalweight: {
+        type: "string",
+        title: "Total weight/volume",
+        tooltiptext: "How much material is used for the production of goods or services?(Please specify the total weight or volume.)",
+        display: "block",
+
       },
       Unit: {
         type: "string",
         title: "Unit",
-        enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
-        tooltiptext: "Select the correct unit corresponding to the quantity"
+        enum: ['Cubic centimeter cm3', 'Cubic decimeter dm3', 'Cubic meter m3', 'Gram', 'Kilogram Kg','Liter','Milligram','Milliliter','Fluid Ounce fl Oz','Gallon Gal','Pint Pt','Pound Lb','Quart Qt','Cubic foot ft3','Metric ton','US short ton (tn)'],
+        tooltiptext: "Use 1000 kilograms as the measure for a metric ton.",
+        display: "none",
       },
-      Organizationmetric: {
+      Datasource: {
         type: "string",
-        title: "Organization Metric",
-        enum: ['Production volume', 'size', 'number of full time employees', 'monetary units such as revenue or sales)', 'Production units', 'MMBtu'],
-        tooltiptext: "Select the organization metric for the corresponding Energy Intensity metric "
-      },
-      Metricquantity: {
-        type: "string",
-        title: "Metric Quantity",
-        tooltiptext: "Indicate the quantity for Organization metric"
-      },
-      Metricunit: {
-        type: "string",
-        title: "Metric Unit",
-        enum: ['Tonne', 'meter square', 'sales unit', 'liters', 'MWh', 'Revenue','FTE','Others'],
-        tooltiptext: "Select the correct unit corresponding to the metric quantity."
+        title: "Data source",
+        enum: ['Estimated', 'Direct measurement'],
+        tooltiptext: "What is the source of the data for the total weight or volume of materials used? Estimation: process of making an approximate calculation of something.Direct measurement: process of measuring something directly. For example, a company might directly measure the total weight or volume of materials used by weighing or measuring each batch of materials used.",
+        display: "block",
+
       },
       AssignTo: {
         type: "string",
@@ -82,25 +91,40 @@ const schema = {
 };
 
 const uiSchema = {
- // Add flex-wrap to wrap fields to the next line
+  // Add flex-wrap to wrap fields to the next line
   items: {
     classNames: 'fieldset',
     'ui:order': [
-      'EnergyType', 'EnergyQuantity', 'Unit', 'Organizationmetric', 'Metricquantity', 'Metricunit', 'AssignTo', 'FileUpload', 'Remove'
+      'Typeofmaterial', 'Materialsused', 'Source', 'Totalweight','Unit','Datasource','AssignTo', 'FileUpload', 'Remove'
     ],
-    EnergyType: {
+    Typeofmaterial: {
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
       'ui:options': {
         label: false,
       },
     },
-    EnergyQuantity: {
-      'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
+    Materialsused: {
+      'ui:widget': 'selectWidget', // Use your custom widget for QuantityUnit
       'ui:options': {
         label: false // This disables the label for this field
       },
     },
+    Source: {
+      'ui:widget': 'selectWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false // This disables the label for this field
+      },
+    },
+    Totalweight: {
+      'ui:widget': 'inputWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false // This disables the label for this field
+      },
+    },
+
     Unit: {
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
@@ -108,20 +132,7 @@ const uiSchema = {
         label: false // This disables the label for this field
       },
     },
-    Organizationmetric: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    Metricquantity: {
-      'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    Metricunit: {
+    Datasource: {
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
       'ui:options': {
@@ -157,7 +168,7 @@ const uiSchema = {
   }
 };
 
-const generateTooltip = (field, title, tooltipText) => {
+const generateTooltip = (field, title, tooltipText, display) => {
   if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
     return null; // Return null to skip rendering tooltip for these fields
   }
@@ -169,6 +180,7 @@ const generateTooltip = (field, title, tooltipText) => {
         data-tooltip-id={field}
         data-tooltip-content={tooltipText}
         className="mt-1 ml-2 text-[12px]"
+        style={{ display: display }}
       />
       <ReactTooltip
         id={field}
@@ -188,7 +200,7 @@ const generateTooltip = (field, title, tooltipText) => {
   );
 };
 
-const Intensity = () => {
+const NonRenewable = () => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
 
@@ -221,14 +233,14 @@ const Intensity = () => {
     const fields = Object.keys(schema.items.properties);
     return fields.map((field, index) => (
       <div key={index}>
-        {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext)}
+        {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext, schema.items.properties[field].display)}
       </div>
     ));
   };
   return (
     <>
 
-<div className={`overflow-auto custom-scrollbar flex justify-around  ${open ? "xl:w-[768px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
+      <div className={`overflow-auto custom-scrollbar flex justify-around  ${open ? "xl:w-[768px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
         <div>
           <div>
             <div className='flex'>
@@ -237,7 +249,7 @@ const Intensity = () => {
           </div>
 
           <Form
-          className='flex'
+            className='flex'
             schema={schema}
             uiSchema={uiSchema}
             formData={formData}
@@ -273,11 +285,12 @@ const Intensity = () => {
         </button>
       </div>
       <div className='mb-4'>
-      <button type="button"  className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
+        <button type="button" className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
       </div>
 
     </>
   );
 };
 
-export default Intensity;
+export default NonRenewable;
+

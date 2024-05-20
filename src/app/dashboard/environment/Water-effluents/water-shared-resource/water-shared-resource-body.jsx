@@ -4,8 +4,9 @@ import { MdKeyboardArrowDown, MdInfoOutline } from "react-icons/md";
 import { GlobalState } from "../../../../../Context/page";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
-import Wastegeneratedeimpact from "./waste-generated-impact"
-import Wastecontextualinformation from "./waste-contextual-information"
+import Watersharedresourceimpact from "./water-shared-resource-impect";
+import Sharedresource from "./shared-resource";
+import Receivingwaterbody from "./receiving-waterbody"
 const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
@@ -38,7 +39,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
         {isOpen ? (
             <>
               {sdg && sdg.map((sdgItem, index) => (
-                <div key={index} className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2" style={{ display:display}} >
+                <div key={index} className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2" style={{ display: 'none' }} >
                   <p className="text-[#0057A5] text-[10px] inline-block align-middle px-2 font-semibold">{sdgItem}</p>
                 </div>
               ))}
@@ -60,33 +61,42 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
   );
 };
 
-const Wastegeneratedbody = () => {
+const Watersharedresourcebody = () => {
 
 
   return (
     <>
       <div className="mx-3">
       <AccordionItem
-          title="Waste generated"
-          tooltiptext={`This section documents the data corresponding to the total weight of waste generated
-          and any contextual information necessary to understand how the data has been complied. `}
-          sdg={['GRI 306-3a','GRI 306-3b','GRI 306-3c']}
+          title="Interaction with water as shared resource"
+          tooltiptext={` This section documents data corresponding to the organizational interactions with water.`}
+          sdg={['GRI 303-1a','GRI 303-1b','GRI 303-1c','GRI 303-1d']}
           display="block"
         >
 
-          <Wastegeneratedeimpact/>
+          <Watersharedresourceimpact/>
+        </AccordionItem>
+
+        <AccordionItem
+          title="Management of water discharge-related impacts"
+          tooltiptext={`This section documents data corresponding to  requirements for controlling the quality
+          of effluent discharge.`}
+          sdg={['GRI 303-2a']}
+          display="block"
+        >
+
+          <Sharedresource/>
         </AccordionItem>
         <AccordionItem
-          title="Contextual Information to understand data compilation"
-          tooltiptext={`This section documents the data corresponding to the contextual information necessary
-          to understand the data and how the data has beencompiled.`}
-          sdg={['GRI 306-3b']}
+          title="Profile of receiving waterbody"
+          tooltiptext={`This section documents data corresponding to  requirements for controlling the quality
+          of effluent discharge. This section documents data corresponding to the organizational interactions with water.`}
+          sdg={['GRI 303-2a']}
           display="block"
         >
 
-          <Wastecontextualinformation/>
+          <Receivingwaterbody/>
         </AccordionItem>
-
         {/* Add more accordion items here */}
       </div>
 
@@ -94,4 +104,4 @@ const Wastegeneratedbody = () => {
   );
 };
 
-export default Wastegeneratedbody;
+export default Watersharedresourcebody;

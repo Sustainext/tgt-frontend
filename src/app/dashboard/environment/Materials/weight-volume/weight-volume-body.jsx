@@ -4,8 +4,8 @@ import { MdKeyboardArrowDown, MdInfoOutline } from "react-icons/md";
 import { GlobalState } from "../../../../../Context/page";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
-import Wastegeneratedeimpact from "./waste-generated-impact"
-import Wastecontextualinformation from "./waste-contextual-information"
+import NonRenewable from "./non-Renewable";
+import Renewable from "./renewable"
 const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
@@ -60,31 +60,38 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
   );
 };
 
-const Wastegeneratedbody = () => {
+const Weightvolumebody = () => {
 
 
   return (
     <>
       <div className="mx-3">
       <AccordionItem
-          title="Waste generated"
-          tooltiptext={`This section documents the data corresponding to the total weight of waste generated
-          and any contextual information necessary to understand how the data has been complied. `}
-          sdg={['GRI 306-3a','GRI 306-3b','GRI 306-3c']}
+          title="Non-Renewable materials used"
+          tooltiptext={`This section documents data corresponding to the total weight or
+          volume of non-renewable materials used for the production of
+          goods/service Non-Renewable Materials: materials that cannot be replenished naturally
+          over time. They are typically formed from geological processes that take
+          millions of years, such as Fossil Fuel, Glass, Fuel. `}
+          sdg={['GRI 301-1a']}
           display="block"
         >
 
-          <Wastegeneratedeimpact/>
+          <NonRenewable/>
         </AccordionItem>
         <AccordionItem
-          title="Contextual Information to understand data compilation"
-          tooltiptext={`This section documents the data corresponding to the contextual information necessary
-          to understand the data and how the data has beencompiled.`}
-          sdg={['GRI 306-3b']}
+          title="Renewable materials used"
+          tooltiptext={`This section documents data corresponding to the
+          total weight or volume of renewable materials used
+         for the production of goods/services.
+         Renewable Materials: materials that can be
+         replenished naturally over time, such as
+         Wood, Paper, Leather.`}
+          sdg={['GRI 301-1a']}
           display="block"
         >
 
-          <Wastecontextualinformation/>
+          <Renewable/>
         </AccordionItem>
 
         {/* Add more accordion items here */}
@@ -94,4 +101,4 @@ const Wastegeneratedbody = () => {
   );
 };
 
-export default Wastegeneratedbody;
+export default Weightvolumebody;

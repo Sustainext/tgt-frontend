@@ -4,9 +4,9 @@ import { MdKeyboardArrowDown, MdInfoOutline } from "react-icons/md";
 import { GlobalState } from "../../../../../Context/page";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
-import Wastegeneratedeimpact from "./waste-generated-impact"
-import Wastecontextualinformation from "./waste-contextual-information"
-const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
+import Reclaimedproductspackdging from "./reclaimed-products-packaging";
+import Datacollection from "./data-collection"
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,sdgdiplay }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
 
@@ -38,7 +38,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
         {isOpen ? (
             <>
               {sdg && sdg.map((sdgItem, index) => (
-                <div key={index} className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2" style={{ display:display}} >
+                <div key={index} className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2" style={{ display:sdgdiplay}} >
                   <p className="text-[#0057A5] text-[10px] inline-block align-middle px-2 font-semibold">{sdgItem}</p>
                 </div>
               ))}
@@ -60,33 +60,39 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
   );
 };
 
-const Wastegeneratedbody = () => {
-
-
+const Reclaimedproductsbody = () => {
   return (
     <>
       <div className="mx-3">
       <AccordionItem
-          title="Waste generated"
-          tooltiptext={`This section documents the data corresponding to the total weight of waste generated
-          and any contextual information necessary to understand how the data has been complied. `}
-          sdg={['GRI 306-3a','GRI 306-3b','GRI 306-3c']}
+          title="Reclaimed products and their packaging materials"
+          tooltiptext={`This section documents data corresponding to the amount
+          of recycled material used for packaging of the goods/services
+          during the reporting period. Reclaimed products are products
+           that have been used and then collected, processed, and
+          marketed for reuse. They can be reused in their original form
+          or they can be used to manufacture new products.
+          Examples include refurbished electronics, recycled clothing,
+          reclaimed wood, and reclaimed building materials.
+          Exclude: rejects and recalls of products`}
+          sdg={['GRI 301-3a','GRI 301-3b']}
           display="block"
+          sdgdiplay="block"
         >
 
-          <Wastegeneratedeimpact/>
+          <Reclaimedproductspackdging/>
         </AccordionItem>
+
         <AccordionItem
-          title="Contextual Information to understand data compilation"
-          tooltiptext={`This section documents the data corresponding to the contextual information necessary
-          to understand the data and how the data has beencompiled.`}
-          sdg={['GRI 306-3b']}
+          title="Data Collection method"
+          tooltiptext={`  This section documents data corresponding to the organizational interactions with water.`}
+          sdg={['GRI 303-1b']}
           display="block"
+          sdgdiplay="none"
         >
 
-          <Wastecontextualinformation/>
+          <Datacollection/>
         </AccordionItem>
-
         {/* Add more accordion items here */}
       </div>
 
@@ -94,4 +100,4 @@ const Wastegeneratedbody = () => {
   );
 };
 
-export default Wastegeneratedbody;
+export default Reclaimedproductsbody;

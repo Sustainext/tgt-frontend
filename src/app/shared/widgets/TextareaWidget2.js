@@ -19,8 +19,9 @@ const TextareaWidget2 = (props) => {
           <div>
             <div className="flex">
               <div>
-                <h6 className="text-sm font-medium text-[#344054] flex">
+                <h6 className="text-sm font-medium text-[#344054] flex" style={{ display: uiSchema["ui:haddingdisplay"] }}>
                   {uiSchema["ui:hadding"]}
+
                 </h6>
               </div>
               <div>
@@ -31,6 +32,7 @@ const TextareaWidget2 = (props) => {
                   )}`}
                   data-tooltip-content={uiSchema["ui:tooltipshadding"]}
                   className="mt-1 ml-2 text-[14px]"
+                  style={{ display: uiSchema["ui:haddingtooltipdisplay"] }}
                 />
                 {/* Tooltip */}
                 <ReactTooltip
@@ -50,18 +52,14 @@ const TextareaWidget2 = (props) => {
             </div>
             <div className="flex">
               <div>
-                <h6 className="text-sm text-[#727272] w-[600px] flex">
-                  {uiSchema["ui:title"]}
-                </h6>
-              </div>
-              <div>
-                <MdInfoOutline
+                <h6 className="text-sm text-[#727272] w-[560px] flex">
+                  {uiSchema["ui:title"]} <MdInfoOutline
                   data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(
                     /\s+/g,
                     "-"
                   )}`}
                   data-tooltip-content={uiSchema["ui:tooltipstitle"]}
-                  className="mt-1 ml-2 text-[14px]"
+                  className="mt-1 ml-2 w-[30px] text-[#344054] text-[14px]"
                   style={{ display: uiSchema["ui:titletooltipdisplay"] }}
                 />
                 {/* Tooltip */}
@@ -78,10 +76,13 @@ const TextareaWidget2 = (props) => {
                     borderRadius: "8px",
                   }}
                 ></ReactTooltip>
+
+                </h6>
               </div>
+
             </div>
           </div>
-          <div className={`${open ? "w-[20%]" : "w-[20%]"}`}>
+          <div className={`${open ? "w-[20%]" : "w-[20%]"}`}   style={{ display: uiSchema["ui:gridisplay"] }}>
             <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2">
               <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
                 {uiSchema["ui:Gri"]}
@@ -92,11 +93,7 @@ const TextareaWidget2 = (props) => {
 
         <textarea
           placeholder="Enter a description..."
-          className={`backdrop:before:w-[48rem] border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer ${
-            open
-              ? "sm:w-[48rem] md:w-[89%] lg:w-[87%] xl:w-[92%] 2xl:w-[85%]"
-              : "sm:w-[85%] md:w-[92%] lg:w-[88%] xl:w-[88.5%] 2xl:sm:w-[86%]"
-          }`}
+          className={`backdrop:before:w-[48rem] border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-[90%]`}
           value={value}
           onChange={handleChange}
           rows={7}

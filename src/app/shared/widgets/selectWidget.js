@@ -14,7 +14,6 @@ const selectWidget = (props) => {
         value={props.value || ''}
         onChange={handleChange}
       >
-        {/* Include an option for users to select a placeholder, ensuring it can't be reselected after making a choice */}
         <option value="" disabled={!!props.value}>{`Select ${props.label}` || "Select..."}</option>
         {props.options.enumOptions.map((option) => (
           <option key={option.value} value={option.value}>

@@ -6,8 +6,8 @@ import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
 import { Energydata } from '../../data/griinfo';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
-import Wastegeneratedbody from './waste-generated-body';
-const Wastegenerated = () => {
+import Weightvolumebody from './weight-volume-body';
+const Weightvolume = () => {
     const [activeMonth, setActiveMonth] = useState("Jan");
     const [data, setData] = useState();
     const [category, setCategory] = useState("");
@@ -43,24 +43,21 @@ const Wastegenerated = () => {
                             <div className='flex'>
                                 <div>
                                     <p className="gradient-text text-[22px] font-bold">
-                                        Waste
+                                    Materials
                                     </p>
                                 </div>
-                                <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md" >
+                                {/* <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md" >
                                     <p className="text-gray-500 text-[12px] pt-0.5 px-2">Material Topic</p>
-                                </div>
+                                </div> */}
                             </div>
 
                         </div>
                     </div>
                     <div className='w-full float-end '>
                         <div className="flex float-end border-l">
-                            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('26')}>GRI 306 - 3</button>
-                            <button className="text-[#fff] bg-[#4C9F38] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 " onClick={() => toggleDrawer('19')}>SDG 3</button>
-                            <button className="text-[#fff] bg-cyan-500 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('20')}>SDG 6</button>
-                            <button className="text-[#fff] bg-[#FD9D24] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 " onClick={() => toggleDrawer('21')}>SDG 11</button>
-                            <button className="text-[#fff] bg-yellow-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('22')}>SDG 12</button>
-                            <button className="text-[#fff] bg-[#56C02B] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('23')}>SDG 15</button>
+                        <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('37')}>GRI 301-1</button>
+              <button className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('35')}>SDG 8</button>
+              <button className="text-[#fff] bg-yellow-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 " onClick={() => toggleDrawer('36')}>SDG 12</button>
                         </div>
                     </div>
                 </div>
@@ -69,9 +66,11 @@ const Wastegenerated = () => {
                 <div className="ml-3 flex">
                     <h6 className="text-[17px] mb-4 font-semibold flex">
 
-                        Topic disclosure
-                        {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
-                            data-tooltip-content="This section is dedicated to the calculation of Energy Intensity Ratios based on organizational metrics. These ratios quantify the energy demand per unit of activity, output, or any other organization-specific metric" className="mt-1.5 ml-2 text-[14px]" />
+                    Disclosure 301-1 Materials used by weight or volume
+                        <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
+                            data-tooltip-content="This section documents data corresponding to the renewable
+                            and/or non-renewable materials used in the production of
+                            goods/services during the reporting period." className="mt-1.5 ml-2 text-[14px]" />
                         <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
                             width: "290px", backgroundColor: "#000",
                             color: "white",
@@ -81,7 +80,7 @@ const Wastegenerated = () => {
                             textAlign: 'left',
                         }}>
 
-                        </ReactTooltip> */}
+                        </ReactTooltip>
                     </h6>
                 </div>
                 <div className={`${isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"}
@@ -107,8 +106,8 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
                 </div>
             </div>
             <EnvironmentHeader activeMonth={activeMonth} setActiveMonth={setActiveMonth} />
-            <Wastegeneratedbody />
+            <Weightvolumebody />
         </>
     );
 };
-export default Wastegenerated;
+export default Weightvolume;

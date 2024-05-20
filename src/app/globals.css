@@ -44,8 +44,8 @@ h1,h2,h3,h4,h5,h6,p,div {
     font-weight:bold;
   }
   .custom-scrollbar::-webkit-scrollbar {
-    width: 0.5rem;
-    height: 3px; /* width of the entire scrollbar */
+    width: 0.8rem;
+    height: 4px; /* width of the entire scrollbar */
   }
 
   .custom-scrollbar::-webkit-scrollbar-track {

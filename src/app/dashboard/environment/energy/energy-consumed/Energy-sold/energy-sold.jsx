@@ -183,7 +183,7 @@ const generateTooltip = (field, title, tooltipText) => {
 
   return (
     <div className='mx-2 flex w-[230px]'>
-      <label className="text-sm leading-5 text-gray-700 flex">{title}</label>
+      <label className="text-[13px] leading-5 text-gray-700 flex">{title}</label>
       <MdInfoOutline
         data-tooltip-id={field}
         data-tooltip-content={tooltipText}
@@ -200,7 +200,7 @@ const generateTooltip = (field, title, tooltipText) => {
           fontSize: "12px",
           boxShadow: 3,
           borderRadius: "8px",
-          textAlign: 'center',
+          textAlign: 'left',
         }}
       />
     </div>

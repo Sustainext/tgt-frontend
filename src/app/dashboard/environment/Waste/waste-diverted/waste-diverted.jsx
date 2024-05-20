@@ -6,8 +6,8 @@ import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
 import { Energydata } from '../../data/griinfo';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
-import Wastegeneratedbody from './waste-generated-body';
-const Wastegenerated = () => {
+import Wastedivertedbody from './waste-diverted-body';
+const Wastediverted = () => {
     const [activeMonth, setActiveMonth] = useState("Jan");
     const [data, setData] = useState();
     const [category, setCategory] = useState("");
@@ -55,12 +55,10 @@ const Wastegenerated = () => {
                     </div>
                     <div className='w-full float-end '>
                         <div className="flex float-end border-l">
-                            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('26')}>GRI 306 - 3</button>
-                            <button className="text-[#fff] bg-[#4C9F38] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 " onClick={() => toggleDrawer('19')}>SDG 3</button>
-                            <button className="text-[#fff] bg-cyan-500 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('20')}>SDG 6</button>
-                            <button className="text-[#fff] bg-[#FD9D24] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 " onClick={() => toggleDrawer('21')}>SDG 11</button>
-                            <button className="text-[#fff] bg-yellow-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('22')}>SDG 12</button>
-                            <button className="text-[#fff] bg-[#56C02B] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('23')}>SDG 15</button>
+                        <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('27')}>GRI 306 - 4</button>
+              <button className="text-[#fff] bg-[#4C9F38] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 " onClick={() => toggleDrawer('19')}>SDG 3</button>
+              <button className="text-[#fff] bg-[#FD9D24] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 " onClick={() => toggleDrawer('21')}>SDG 11</button>
+              <button className="text-[#fff] bg-yellow-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('22')}>SDG 12</button>
                         </div>
                     </div>
                 </div>
@@ -107,8 +105,8 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
                 </div>
             </div>
             <EnvironmentHeader activeMonth={activeMonth} setActiveMonth={setActiveMonth} />
-            <Wastegeneratedbody />
+            <Wastedivertedbody />
         </>
     );
 };
-export default Wastegenerated;
+export default Wastediverted;

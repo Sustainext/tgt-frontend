@@ -29,39 +29,45 @@ const schema = {
   items: {
     type: 'object',
     properties: {
-      EnergyType: {
+        Wastecategory: {
         type: "string",
-        title: "Energy Type",
-        enum: ['heating', 'cooling', 'steam', 'electricity', 'Fuel', 'Energy inside the organization (302-1)', 'Energy outside the organization (302-2)', 'Total Energy (302-1+302-2)', 'others'],
-        tooltiptext: "Indicate the type of energy for which energy intensity should be calculated",
+        title: "Waste category",
+        enum: ['Hazardous', 'Non Hazardous'],
+        tooltiptext: "Select the waste category from the given dropdown.",
+        display:"block",
       },
-      EnergyQuantity: {
+      WasteType: {
         type: "string",
-        title: "Energy Quantity",
-        tooltiptext: "Indicate the quantity of Energy Type"
+        title: "Waste Type",
+        tooltiptext: "Please specify the type of waste. e.g. Paper waste, E-waste, chemical waste etc. ",
+        display:"block",
       },
       Unit: {
         type: "string",
         title: "Unit",
-        enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
-        tooltiptext: "Select the correct unit corresponding to the quantity"
+        enum: ['g', 'Kgs', 't (metric tons)', 'ton (US short ton)', 'lbs'],
+        tooltiptext: "Use 1000 kilograms as the measure for a metric ton.",
+        display:"block",
       },
-      Organizationmetric: {
+      Wastedisposed: {
         type: "string",
-        title: "Organization Metric",
-        enum: ['Production volume', 'size', 'number of full time employees', 'monetary units such as revenue or sales)', 'Production units', 'MMBtu'],
-        tooltiptext: "Select the organization metric for the corresponding Energy Intensity metric "
+        title: "Waste disposed (No.)",
+        display:"none",
+
       },
-      Metricquantity: {
+      Methodofdisposal: {
         type: "string",
-        title: "Metric Quantity",
-        tooltiptext: "Indicate the quantity for Organization metric"
+        title: "Method of disposal",
+        enum: ['Inceneration (with energy recovery) for reuse', 'Inceneration (without energy recovery)', 'Landfilling','Other (please specify)','External Vendor'],
+        tooltiptext: "Disposal: Any operation which is not recovery, even where the operation has as a secondary consequence the recovery of energy Landfilling: Final depositing of solid waste at, below, or above ground level at engineered disposal sites Incineration: Controlled burning of waste at high temperatures",
+        display:"block",
       },
-      Metricunit: {
+      Site: {
         type: "string",
-        title: "Metric Unit",
-        enum: ['Tonne', 'meter square', 'sales unit', 'liters', 'MWh', 'Revenue','FTE','Others'],
-        tooltiptext: "Select the correct unit corresponding to the metric quantity."
+        title: "Site",
+        enum: ['Onsite', 'Offsite'],
+        tooltiptext: "On-site: ‘Onsite’ means within the physical boundary  or administrative control of the reporting organization Off-site: ‘Offsite’ means outside the physical boundary \ or administrative control of the reporting organization",
+        display:"block",
       },
       AssignTo: {
         type: "string",
@@ -86,16 +92,16 @@ const uiSchema = {
   items: {
     classNames: 'fieldset',
     'ui:order': [
-      'EnergyType', 'EnergyQuantity', 'Unit', 'Organizationmetric', 'Metricquantity', 'Metricunit', 'AssignTo', 'FileUpload', 'Remove'
+      'Wastecategory', 'WasteType', 'Unit', 'Wastedisposed','Methodofdisposal','Site','AssignTo', 'FileUpload', 'Remove'
     ],
-    EnergyType: {
+    Wastecategory: {
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
       'ui:options': {
         label: false,
       },
     },
-    EnergyQuantity: {
+    WasteType: {
       'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
       'ui:options': {
         label: false // This disables the label for this field
@@ -108,20 +114,22 @@ const uiSchema = {
         label: false // This disables the label for this field
       },
     },
-    Organizationmetric: {
+    Wastedisposed: {
+      'ui:widget': 'inputWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false // This disables the label for this field
+      },
+    },
+
+    Methodofdisposal: {
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
       'ui:options': {
         label: false // This disables the label for this field
       },
     },
-    Metricquantity: {
-      'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    Metricunit: {
+    Site: {
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
       'ui:options': {
@@ -157,7 +165,7 @@ const uiSchema = {
   }
 };
 
-const generateTooltip = (field, title, tooltipText) => {
+const generateTooltip = (field, title, tooltipText, display) => {
   if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
     return null; // Return null to skip rendering tooltip for these fields
   }
@@ -169,6 +177,7 @@ const generateTooltip = (field, title, tooltipText) => {
         data-tooltip-id={field}
         data-tooltip-content={tooltipText}
         className="mt-1 ml-2 text-[12px]"
+        style={{display:display}}
       />
       <ReactTooltip
         id={field}
@@ -188,7 +197,7 @@ const generateTooltip = (field, title, tooltipText) => {
   );
 };
 
-const Intensity = () => {
+const Wastedirectedimpact = () => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
 
@@ -221,7 +230,7 @@ const Intensity = () => {
     const fields = Object.keys(schema.items.properties);
     return fields.map((field, index) => (
       <div key={index}>
-        {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext)}
+        {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext, schema.items.properties[field].display)}
       </div>
     ));
   };
@@ -280,4 +289,5 @@ const Intensity = () => {
   );
 };
 
-export default Intensity;
+export default Wastedirectedimpact;
+

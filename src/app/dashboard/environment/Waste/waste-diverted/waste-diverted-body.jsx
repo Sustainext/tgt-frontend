@@ -4,9 +4,10 @@ import { MdKeyboardArrowDown, MdInfoOutline } from "react-icons/md";
 import { GlobalState } from "../../../../../Context/page";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
-import Wastegeneratedeimpact from "./waste-generated-impact"
-import Wastecontextualinformation from "./waste-contextual-information"
-const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
+import Wastedivertedimpact from "./waste-diverted-impact";
+import Wastedivertedcontextualinformation from "./waste-diverted-contextual-information";
+
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,tooltipblock }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
 
@@ -22,7 +23,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
 
         <div className="flex items-center justify-center">
           <MdInfoOutline
-            data-tooltip-id={`tooltip-${title.replace(/\s+/g, '-')}`} data-tooltip-content={tooltiptext} className="mt-1 text-[14px]" style={{display:display}} />
+            data-tooltip-id={`tooltip-${title.replace(/\s+/g, '-')}`} data-tooltip-content={tooltiptext} className="mt-1 text-[14px]" style={{display:tooltipblock}} />
           {/* Tooltip */}
           <ReactTooltip id={`tooltip-${title.replace(/\s+/g, '-')}`} place="top" effect="solid" style={{
             width: "300px", backgroundColor: "#000",
@@ -60,31 +61,33 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
   );
 };
 
-const Wastegeneratedbody = () => {
+const Wastedivertedbody = () => {
 
 
   return (
     <>
       <div className="mx-3">
       <AccordionItem
-          title="Waste generated"
+          title="Waste diverted from disposal"
           tooltiptext={`This section documents the data corresponding to the total weight of waste generated
           and any contextual information necessary to understand how the data has been complied. `}
-          sdg={['GRI 306-3a','GRI 306-3b','GRI 306-3c']}
+          sdg={['GRI 306-4a','GRI 306-4b','GRI 306-4c','GRI 306-4d']}
           display="block"
+          tooltipblock="none"
         >
 
-          <Wastegeneratedeimpact/>
+          <Wastedivertedimpact/>
         </AccordionItem>
         <AccordionItem
           title="Contextual Information to understand data compilation"
           tooltiptext={`This section documents the data corresponding to the contextual information necessary
           to understand the data and how the data has beencompiled.`}
-          sdg={['GRI 306-3b']}
+          sdg={['GRI 306-4e']}
           display="block"
+          tooltipblock="block"
         >
 
-          <Wastecontextualinformation/>
+          <Wastedivertedcontextualinformation/>
         </AccordionItem>
 
         {/* Add more accordion items here */}
@@ -94,4 +97,4 @@ const Wastegeneratedbody = () => {
   );
 };
 
-export default Wastegeneratedbody;
+export default Wastedivertedbody;

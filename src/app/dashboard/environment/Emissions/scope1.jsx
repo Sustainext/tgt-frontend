@@ -121,8 +121,6 @@ const Scope1 = () => {
 
 <div className={`overflow-auto custom-scrollbar flex justify-around  ${open ? "xl:w-[768px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
         <div>
-
-
           <Form
           className='flex'
             schema={schema}

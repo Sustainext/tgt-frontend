@@ -4,8 +4,7 @@ import { MdKeyboardArrowDown, MdInfoOutline } from "react-icons/md";
 import { GlobalState } from "../../../../../Context/page";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
-import Wastegeneratedeimpact from "./waste-generated-impact"
-import Wastecontextualinformation from "./waste-contextual-information"
+import Recycledinput from "./recycled-input";
 const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
@@ -60,32 +59,22 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
   );
 };
 
-const Wastegeneratedbody = () => {
-
-
+const Recycledbody = () => {
   return (
     <>
       <div className="mx-3">
       <AccordionItem
-          title="Waste generated"
-          tooltiptext={`This section documents the data corresponding to the total weight of waste generated
-          and any contextual information necessary to understand how the data has been complied. `}
-          sdg={['GRI 306-3a','GRI 306-3b','GRI 306-3c']}
+          title="Recycled input materials used"
+          tooltiptext={`This section documents data corresponding to
+          the amount of recycled material used for production
+           of goods/services during the reporting period.`}
+          sdg={['GRI 301-2a']}
           display="block"
         >
 
-          <Wastegeneratedeimpact/>
+          <Recycledinput/>
         </AccordionItem>
-        <AccordionItem
-          title="Contextual Information to understand data compilation"
-          tooltiptext={`This section documents the data corresponding to the contextual information necessary
-          to understand the data and how the data has beencompiled.`}
-          sdg={['GRI 306-3b']}
-          display="block"
-        >
 
-          <Wastecontextualinformation/>
-        </AccordionItem>
 
         {/* Add more accordion items here */}
       </div>
@@ -94,4 +83,4 @@ const Wastegeneratedbody = () => {
   );
 };
 
-export default Wastegeneratedbody;
+export default Recycledbody;
