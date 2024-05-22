@@ -14,7 +14,7 @@ const environment = ({ open }) => {
         <>
             <div className="flex w-full">
                 <div>
-                    <Aside activeTab={activeTab} handleTabClick={handleTabClick}  />
+                    <Aside activeTab={activeTab} handleTabClick={handleTabClick} />
                 </div>
 
                 <div
@@ -23,28 +23,7 @@ const environment = ({ open }) => {
                     {/* Emissions start  */}
                     {activeTab === 'Emissions' && <Emission />}
                     {/* Energy start  */}
-                    {activeTab === 'Energy consumed inside the organization' && <Energyconsumption open={open} />}
-                    {/* {activeTab === 'Energy consumption outside of the organization' && <Energyconsumptionoutside />}
-        {activeTab === 'Energy Intensity' && <Energyintensity />}
-        {activeTab === 'Reduction of energy consumption' && <Reductionenergyconsumption />}
-        {activeTab === 'Reductions in energy requirements of products and services' && <Energyproductsservices />} */}
-                    {/* waste start  */}
-                    {/* {activeTab === 'Significant waste related impact' && <Significantwaste />}
-        {activeTab === 'Management of significant waste related impacts' && <Managementwaste />}
-        {activeTab === 'Waste generated' && <Wastegenerated />}
-        {activeTab === 'Waste Diverted from disposal' && <Wastefromdisposal />}
-        {activeTab === 'Waste diverted to disposal' && <Wastetodisposal />} */}
-                    {/* Water start  */}
-                    {/* {activeTab === 'Interaction with water as shared resource' && <Watersharedresource />}
-        {activeTab === 'Water Withdrawal and Water Discharge from All Areas' && <Waterdischargefromallareas />}
-        {activeTab === 'Water withdrawal/Discharge from areas with water stress' && <Waterstres />}
-        {activeTab === 'Substances of concern' && <Substancesofconcern />}
-        {activeTab === 'Change in water storage' && <Waterstorage />} */}
-                    {/* Materials start  */}
-                    {/* {activeTab === 'Materials used by weight or volume' && <Materials1 />}
-        {activeTab === 'Recycled input materials used' && <Materials2 />}
-        {activeTab === 'Reclaimed products and their packaging materials' && <Materials3 />} */}
-
+                    {activeTab === 'Energy consumed inside the organization' && <Energyconsumption />}
                 </div>
             </div>
         </>

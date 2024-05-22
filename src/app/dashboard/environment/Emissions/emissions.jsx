@@ -41,7 +41,7 @@ const Emissions = ({open}) => {
 
       </div>
       <EmissionsHeader activeMonth={activeMonth} setActiveMonth={setActiveMonth} />
-      <Emissionsnbody activeMonth={activeMonth} />
+      <Emissionsnbody open={open} />
 
 
 
