@@ -38,8 +38,7 @@ const AccordionItem = ({ title, children, scops, icons, tooltiptext, sdg, visibl
         </div>
     );
 };
-
-const Emissionsnbody = ({ open }) => {
+const Emissionsnbody = ({ activeMonth }) => {
 
     return (
         <>
@@ -49,7 +48,7 @@ const Emissionsnbody = ({ open }) => {
                     scops="Scope 1"
                     icons={<IoHomeOutline />}
                 >
-                    <Scope1 />
+                <Scope1  />
                 </AccordionItem>
 
                 <AccordionItem
@@ -57,7 +56,7 @@ const Emissionsnbody = ({ open }) => {
                     scops="Scope 2"
                     icons={<IoHomeOutline />}
                 >
-                    <Scope2/>
+                <Scope2  />
                 </AccordionItem>
 
                 <AccordionItem
@@ -65,7 +64,7 @@ const Emissionsnbody = ({ open }) => {
                     scops="Scope 3"
                     icons={<IoHomeOutline />}
                 >
-                    <Scope3/>
+                <Scope3/>
                 </AccordionItem>
 
             </div>

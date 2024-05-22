@@ -1,12 +1,11 @@
+'use client'
 import React, { useState, useEffect } from 'react';
-
 const CombinedWidget = ({ value = {}, onChange }) => {
   const [category, setCategory] = useState(value.Category || '');
   const [subcategory, setSubcategory] = useState(value.Subcategory || '');
   const [activity, setActivity] = useState(value.Activity || '');
   const [quantity, setQuantity] = useState(value.Quantity || '');
   const [unit, setUnit] = useState(value.Unit || '');
-
   const [subcategories, setSubcategories] = useState([]);
   const [activities, setActivities] = useState([]);
   const [units, setUnits] = useState([]);
@@ -39,7 +38,7 @@ const CombinedWidget = ({ value = {}, onChange }) => {
     } else if (activity === 'Non-renewable' || activity === 'Thermal') {
       setUnits(['Wh']);
     } else {
-      setUnits(['Joules', 'KJ', 'Wh']);
+      setUnits([]);
     }
   }, [activity]);
 
@@ -79,18 +78,21 @@ const CombinedWidget = ({ value = {}, onChange }) => {
 
   return (
     <div className='flex mb-5'>
+      <div>
       <select
         value={category}
         onChange={(e) => handleCategoryChange(e.target.value)}
-        className="block w-[220px] py-2 mx-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
+        className="block w-[220px] py-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
       >
         <option value="">Select Category</option>
         <option value="Heating">Heating</option>
         <option value="Cooling">Cooling</option>
         <option value="Steam">Steam</option>
       </select>
+      </div>
 
-      <select
+<div>
+<select
         value={subcategory}
         onChange={(e) => handleSubcategoryChange(e.target.value)}
         className="block w-[220px] py-2 mx-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
@@ -100,8 +102,10 @@ const CombinedWidget = ({ value = {}, onChange }) => {
           <option key={index} value={sub}>{sub}</option>
         ))}
       </select>
+</div>
 
-      <select
+<div>
+<select
         value={activity}
         onChange={(e) => handleActivityChange(e.target.value)}
         className="block w-[220px] py-2 mx-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
@@ -111,8 +115,10 @@ const CombinedWidget = ({ value = {}, onChange }) => {
           <option key={index} value={act}>{act}</option>
         ))}
       </select>
+  </div>
 
-      <div className='flex'>
+<div>
+<div className='flex mx-2'>
         <input
           type="number"
           value={quantity}
@@ -122,7 +128,7 @@ const CombinedWidget = ({ value = {}, onChange }) => {
         <select
           value={unit}
           onChange={(e) => handleUnitChange(e.target.value)}
-          className="cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none mt-1.5 font-bold text-xs bg-sky-600 text-white -ml-12"
+          className="cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none mt-1.5 font-bold text-xs bg-sky-600 text-white -ml-11"
         >
           <option value="">Unit</option>
           {units.map((unit, index) => (
@@ -130,6 +136,8 @@ const CombinedWidget = ({ value = {}, onChange }) => {
           ))}
         </select>
       </div>
+</div>
+
     </div>
   );
 };
