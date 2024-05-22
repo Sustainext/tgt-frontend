@@ -15,7 +15,7 @@ const Sidenav = () => {
       submenu: true,
       submenuItems: [
         { title: "Environment",icon: <MdPublic />, link:"/dashboard/environment" },
-        { title: "Social", icon: <MdOutlineGroup /> ,link:"/dashboard/environment"},
+        { title: "Social", icon: <MdOutlineGroup /> ,link:"/dashboard/social"},
         { title: "Governance", icon: <MdOutlineDiversity1/> ,link:"/dashboard/environment"},
         { title: "General", icon: <MdOutlineDiversity2 />,link:"/dashboard/environment"} ,
         { title: "Economic", icon: <MdOutlineDiversity3  />,link:"/dashboard/environment"},
