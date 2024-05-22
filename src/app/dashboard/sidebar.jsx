@@ -32,7 +32,7 @@ const Sidenav = () => {
   return (
     <>
     <div className="min-h-screen fixed z-[100]">
-      <div className={`bg-[#0a0528] min-h-screen px-3 pt-8 ${open ? "w-[15rem]" : "w-20"} duration-300 relative`}>
+      <div className={`bg-[#0a0528] min-h-screen px-3 pt-8 ${open ? "w-[15.4rem]" : "w-20"} duration-300 relative`}>
         <MdKeyboardDoubleArrowLeft className={`bg-white text-[#0a0528] text-3xl rounded-full absolute -right-3 top-9 border  cursor-pointer ${!open && "rotate-180"}`}
           onClick={() => setOpen(!open)} />
         <div className="inline-flex">

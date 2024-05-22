@@ -15,7 +15,11 @@ import Wastedirected from "./Waste/waste-directed/waste-directed";
 import Weightvolume from "./Materials/weight-volume/weight-volume";
 import Recycled from "./Materials/recycled/recycled";
 import Reclaimedproducts from "./Materials/reclaimed-products/reclaimed-products";
-import Watersharedresource from "./Water-effluents/water-shared-resource/water-shared-resource"
+import Watersharedresource from "./Water-effluents/water-shared-resource/water-shared-resource";
+import Dischargefromareas from "./Water-effluents/discharge-from-all-areas/discharge-from-all-areas";
+import Waterstres from "./Water-effluents/water-stres/water-stres";
+import Substancesconcern from "./Water-effluents/substances-concern/substances-concern";
+import Waterstorage from "./Water-effluents/water-storage/water-storage"
 const environment = ({ open }) => {
     const [activeTab, setActiveTab] = useState('Emissions');
     const handleTabClick = (tab) => {
@@ -50,7 +54,10 @@ const environment = ({ open }) => {
                     {activeTab === 'Recycled input materials used' && <Recycled />}
                     {activeTab === 'Reclaimed products and their packaging materials' && <Reclaimedproducts />}
                     {activeTab === 'Interaction with water as shared resource' && <Watersharedresource />}
-
+                    {activeTab === 'Water Withdrawal and Water Discharge from All Areas' && <Dischargefromareas />}
+                    {activeTab === 'Water withdrawal/Discharge from areas with water stress' && <Waterstres />}
+                    {activeTab === 'Substances of concern' && <Substancesconcern />}
+                    {activeTab === 'Change in water storage' && <Waterstorage />}
                 </div>
             </div>
         </>

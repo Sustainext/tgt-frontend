@@ -29,55 +29,29 @@ const schema = {
     items: {
         type: 'object',
         properties: {
-            Totalweight: {
-                type: "string",
-                title: "Total weight/volume",
-                tooltiptext: "Use the total weight or volume of materials used as specified in Disclosure 301-1",
-                display: "block",
-
-            },
-            Recycledmaterialsused: {
-                type: "string",
-                title: "Recycled materials used",
-                enum: ['Yes', 'No'],
-                tooltiptext: "Does the company use recycled materials in its production process?",
-                display: "block",
-            },
-            Typeofrecycledmaterialused: {
-                type: "string",
-                title: "Type of recycled material used",
-                enum: ['Recycled plastic', 'Recycled metal', 'Recycled paper products', 'Recycled Glass', 'Natural materials', 'Others'],
-                tooltiptext: "What types of recycled materials does the company use?",
-                display: "block",
-            },
-            Amountofmaterialrecycled: {
-                type: "string",
-                title: "Amount of material recycled ",
-                tooltiptext: "Please specify the amount of material the company recycled during the reporting period.",
-                display: "block",
-            },
-
             Unit: {
                 type: "string",
                 title: "Unit",
-                enum: ['Cubic centimeter cm3', 'Cubic decimeter dm3', 'Cubic meter m3', 'Gram', 'Kilogram Kg', 'Liter', 'Milligram', 'Milliliter', 'Fluid Ounce fl Oz', 'Gallon Gal', 'Pint Pt', 'Pound Lb', 'Quart Qt', 'Cubic foot ft3', 'Metric ton', 'US short ton (tn)'],
-                tooltiptext: "Use 1000 kilograms as the measure for a metric ton.",
-                display: "none",
-            },
-            Amountofrecycledinputmaterialused: {
-                type: "string",
-                title: "Amount of recycled input material used ",
-                tooltiptext: "How much recycled material is used for the production of goods or services? Recycled Input Materials: Materials that have been used and then processed into new materials. ",
-                display: "block",
+                enum: ['Litre', 'Megalitre','Cubic meter','Kilolitre','Million litrse per day'],
+                tooltiptext: "Select the correct unit corresponding to the change in water storage.",
             },
 
-            Unit2: {
+            Reporting1: {
                 type: "string",
-                title: "Unit",
-                enum: ['Cubic centimeter cm3', 'Cubic decimeter dm3', 'Cubic meter m3', 'Gram', 'Kilogram Kg', 'Liter', 'Milligram', 'Milliliter', 'Fluid Ounce fl Oz', 'Gallon Gal', 'Pint Pt', 'Pound Lb', 'Quart Qt', 'Cubic foot ft3', 'Metric ton', 'US short ton (tn)'],
-                tooltiptext: "Use 1000 kilograms as the measure for a metric ton.",
-                display: "none",
+                title: "Total water storage at the end of the reporting period",
+                tooltiptext: "What was the water storage capacity of the company at the end of the reporting period?"
             },
+                Reporting2: {
+                type: "string",
+                title: "Total water storage at the beginning of the reporting period",
+                tooltiptext: "What was the water storage capacity of the company at the beginning of the reporting period?"
+            },
+             Reporting3: {
+                type: "string",
+                title: "Change in water storage",
+                tooltiptext: "Change in water storage = Total water storage at the end of the reporting period - Total water storage at the beginning of the reporting period"
+            },
+
             AssignTo: {
                 type: "string",
                 title: "Assign To",
@@ -101,29 +75,29 @@ const uiSchema = {
     items: {
         classNames: 'fieldset',
         'ui:order': [
-            'Totalweight', 'Recycledmaterialsused', 'Typeofrecycledmaterialused', 'Amountofmaterialrecycled', 'Unit', 'Amountofrecycledinputmaterialused', 'Unit2', 'AssignTo', 'FileUpload', 'Remove'
+            'Unit', 'Reporting1', 'Reporting2', 'Reporting3', 'AssignTo', 'FileUpload', 'Remove'
         ],
-        Totalweight: {
-            'ui:widget': 'inputWidget',
-            'ui:horizontal': true,
-            'ui:options': {
-                label: false // This disables the label for this field
-            },
-        },
-        Recycledmaterialsused: {
+        Unit: {
             'ui:widget': 'selectWidget',
             'ui:horizontal': true,
             'ui:options': {
                 label: false,
             },
         },
-        Typeofrecycledmaterialused: {
-            'ui:widget': 'selectWidget', // Use your custom widget for QuantityUnit
+        Reporting1: {
+            'ui:widget': 'inputWidget',
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false,
+            },
+        },
+        Reporting2: {
+            'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
             'ui:options': {
                 label: false // This disables the label for this field
             },
         },
-        Amountofmaterialrecycled: {
+        Reporting3: {
             'ui:widget': 'inputWidget',
             'ui:horizontal': true,
             'ui:options': {
@@ -131,28 +105,6 @@ const uiSchema = {
             },
         },
 
-
-        Unit: {
-            'ui:widget': 'selectWidget',
-            'ui:horizontal': true,
-            'ui:options': {
-                label: false // This disables the label for this field
-            },
-        },
-        Amountofrecycledinputmaterialused: {
-            'ui:widget': 'inputWidget',
-            'ui:horizontal': true,
-            'ui:options': {
-                label: false // This disables the label for this field
-            },
-        },
-        Unit2: {
-            'ui:widget': 'selectWidget',
-            'ui:horizontal': true,
-            'ui:options': {
-                label: false // This disables the label for this field
-            },
-        },
         AssignTo: {
             "ui:widget": "AssignTobutton",
             'ui:horizontal': true,
@@ -182,7 +134,7 @@ const uiSchema = {
     }
 };
 
-const generateTooltip = (field, title, tooltipText, display) => {
+const generateTooltip = (field, title, tooltipText) => {
     if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
         return null; // Return null to skip rendering tooltip for these fields
     }
@@ -193,8 +145,7 @@ const generateTooltip = (field, title, tooltipText, display) => {
             <MdInfoOutline
                 data-tooltip-id={field}
                 data-tooltip-content={tooltipText}
-                className="mt-1 ml-2 text-[12px]"
-                style={{ display: display }}
+                className="mt-1 ml-2 w-[30px] text-[12px]"
             />
             <ReactTooltip
                 id={field}
@@ -214,7 +165,7 @@ const generateTooltip = (field, title, tooltipText, display) => {
     );
 };
 
-const Recycledinput = () => {
+const WaterstorageQ1 = () => {
     const { open } = GlobalState();
     const [formData, setFormData] = useState([{}]);
 
@@ -231,12 +182,22 @@ const Recycledinput = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent the default form submission
-        console.log('Form data:', formData);
+        const submissionData = {
+            formData,
+            selectedOption
+        };
+        console.log('Form data:', submissionData);
 
     };
     const updateFormData = (updatedData) => {
         setFormData(updatedData);
 
+    };
+    const [selectedOption, setSelectedOption] = useState('');
+
+    // Handle changing the select dropdown
+    const handleSelectChange = (event) => {
+        setSelectedOption(event.target.value);
     };
     const handleRemove = (index) => {
         const updatedData = [...formData];
@@ -247,58 +208,91 @@ const Recycledinput = () => {
         const fields = Object.keys(schema.items.properties);
         return fields.map((field, index) => (
             <div key={index}>
-                {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext, schema.items.properties[field].display)}
+                {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext)}
             </div>
         ));
     };
     return (
         <>
+            <div className="w-full max-w-xs mb-2">
+                <label className="text-sm leading-5 text-gray-700 flex">
+                    Does water storage have a significant water-related impact?
+                    <div className="ml-2">
+                        <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
+                            data-tooltip-content="Indicate whether the water storage have a significant water-related impact." className="mt-1.5 ml-2 text-[14px]" />
+                        <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
+                            width: "290px", backgroundColor: "#000",
+                            color: "white",
+                            fontSize: "12px",
+                            boxShadow: 3,
+                            borderRadius: "8px",
+                            textAlign: 'left',
+                        }}>
+                        </ReactTooltip>
+                    </div>
+                </label>
+                <select
+                    className="block w-[270px] py-2 text-sm leading-6  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
+                    value={selectedOption}
+                    onChange={handleSelectChange}
+                >
+                    <option>Select Yes/No</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
 
-            <div className={`overflow-auto custom-scrollbar flex justify-around  ${open ? "xl:w-[768px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
-                <div>
+                </select>
+            </div>
+            {selectedOption === 'yes' && (
+                <>
+                <div className={`overflow-auto custom-scrollbar flex justify-between  ${open ? "xl:w-[768px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
                     <div>
-                        <div className='flex'>
-                            {renderFields()} {/* Render dynamic fields with tooltips */}
+                        <div>
+                            <div className='flex'>
+                                {renderFields()} {/* Render dynamic fields with tooltips */}
+                            </div>
                         </div>
+
+                        <Form
+                            className='flex'
+                            schema={schema}
+                            uiSchema={uiSchema}
+                            formData={formData}
+                            onChange={handleChange}
+                            validator={validator}
+                            widgets={{
+                                ...widgets,
+                                RemoveWidget: (props) => (
+                                    <RemoveWidget
+                                        {...props}
+                                        index={props.id.split('_')[1]} // Pass the index
+                                        onRemove={handleRemove}
+                                    />
+                                ),
+                                FileUploadWidget: (props) => (
+                                    <CustomFileUploadWidget
+                                        {...props}
+                                        scopes="in1"
+                                        setFormData={updateFormData}
+                                    />
+                                )
+
+                            }}
+
+                        />
                     </div>
 
-                    <Form
-                        className='flex'
-                        schema={schema}
-                        uiSchema={uiSchema}
-                        formData={formData}
-                        onChange={handleChange}
-                        validator={validator}
-                        widgets={{
-                            ...widgets,
-                            RemoveWidget: (props) => (
-                                <RemoveWidget
-                                    {...props}
-                                    index={props.id.split('_')[1]} // Pass the index
-                                    onRemove={handleRemove}
-                                />
-                            ),
-                            FileUploadWidget: (props) => (
-                                <CustomFileUploadWidget
-                                    {...props}
-                                    scopes="in1"
-                                    setFormData={updateFormData}
-                                />
-                            )
-
-                        }}
-
-                    />
                 </div>
 
-            </div>
 
             <div className="flex justify-start mt-4 right-1">
                 <button type="button" className="text-[#007EEF] text-[12px] flex cursor-pointer mt-5 mb-5" onClick={handleAddNew}>
                     <MdAdd className='text-lg' /> Add Row
                 </button>
+
             </div>
-            <div className='mb-4'>
+            </>
+               )}
+            <div className='mb-6'>
                 <button type="button" className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
             </div>
 
@@ -306,5 +300,4 @@ const Recycledinput = () => {
     );
 };
 
-export default Recycledinput;
-
+export default WaterstorageQ1;
