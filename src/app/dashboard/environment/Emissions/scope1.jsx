@@ -28,7 +28,11 @@ const Scope1 = () => {
   const [r_schema, setRemoteSchema] = useState({})
   const [r_ui_schema, setRemoteUiSchema] = useState({})
 
-  const handleChange = (formData) => setFormData(formData);
+  const handleChange = (e) => {
+    setFormData(e.formData);
+ 
+  };
+  
 
   const handleAddNew = () => {
     const newData = [...formData, {}];
