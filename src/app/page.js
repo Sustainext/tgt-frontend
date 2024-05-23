@@ -22,7 +22,7 @@ export default function Home() {
     event.preventDefault();
     try {
       await login(email, password);
-      router.push('/dashboard');
+      
     } catch (e) {
       console.log('Could not login');
     }

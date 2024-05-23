@@ -1,19 +1,30 @@
 'use client'
-import React, { createContext, useContext, useState } from 'react';
-import { saveToLocalStorage, removeFromLocalStorage } from '../app/utils/storage';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { saveToLocalStorage, removeFromLocalStorage, loadFromLocalStorage } from '../app/utils/storage';
+import { useRouter } from 'next/navigation';
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import axiosInstance from '../app/utils/axiosMiddleware';
 
 const AuthContext = createContext(null);
 
 export const useAuth = () => useContext(AuthContext);
 
 export function AuthProvider({ children }) {  
-  const [token, setToken] = useState(null);
-  const [userDetails, setUserDetails] = useState(null);
-  
+  const [token, setToken] = useState(loadFromLocalStorage('token'));
+  const [userDetails, setUserDetails] = useState(loadFromLocalStorage('userData'));
+  const router = useRouter();
+
+  useEffect(() => {
+    if (token) {
+      fetchUserDetails(token).then(data => setUserDetails(data));
+    }
+  }, [token]);
+
   const login = async (username, password) => {
     const backendUrl = process.env.BACKEND_API_URL;
     const loginUrl = `${backendUrl}/api/auth/login/`;
-
+  
     try {
       const response = await fetch(loginUrl, {
         method: 'POST',
@@ -22,22 +33,40 @@ export function AuthProvider({ children }) {
         },
         body: JSON.stringify({ username, password }),
       });
-
+  
       if (!response.ok) {
-        throw new Error('Failed to login');
+        // Handle specific status codes
+        if (response.status === 400) {
+          throw new Error('Incorrect username or password');
+        } else {
+          throw new Error('Failed to login');
+        }
       }
-
+  
       const userData = await response.json();
       const receivedToken = userData.key.access;
+  
       setToken(receivedToken);
       saveToLocalStorage('token', receivedToken);
-
+      router.push('/dashboard');
+  
       // Fetch user details
       const userDetails = await fetchUserDetails(receivedToken);
       setUserDetails(userDetails);
-
+      saveToLocalStorage('userData', userDetails);
+  
     } catch (error) {
       console.error('Login error:', error);
+      toast.error('Failed to login: ' + error.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
 
@@ -46,20 +75,13 @@ export function AuthProvider({ children }) {
     const userDetailsUrl = `${backendUrl}/user_org`;
 
     try {
-      const response = await fetch(userDetailsUrl, {
-        method: 'GET',
+      const response = await axiosInstance.get(userDetailsUrl, {
         headers: {
-          'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch user details');
-      }
-
-      const data = await response.json();
-      return data;
+      return response.data;
     } catch (error) {
       console.error('Fetch user details error:', error);
       return null;
@@ -85,7 +107,8 @@ export function AuthProvider({ children }) {
 
       setToken(null);
       setUserDetails(null);
-      removeFromLocalStorage('token');
+      localStorage.clear();
+
     } catch (error) {
       console.error('Logout error:', error);
     }

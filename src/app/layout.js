@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { GlobalStateProvider } from "../Context/page";
 import { AuthProvider } from "../Context/auth";
+import { ToastContainer } from 'react-toastify';
 
 export const metadata = {
   title: "Sustainext",
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
       </head>
 
       <body>
+      <ToastContainer style={{ fontSize: "12px" }} />
         <GlobalStateProvider>
           <AuthProvider>{children}</AuthProvider>
         </GlobalStateProvider>
