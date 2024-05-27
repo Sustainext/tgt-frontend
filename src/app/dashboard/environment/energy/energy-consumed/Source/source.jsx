@@ -47,17 +47,18 @@ Q1: {
     }
   }
 };
-const Source = () => {
-  const { open } = GlobalState();
+const Source = ({ handleQ6Change}) => {
   const [formData, setFormData] = useState([{}]);
+  const handleChange = (e) => {
+    setFormData(e.formData);
 
-
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form data:', formData);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent the default form submission
+    console.log('Form data:', formData);
+
+  };
 
   return (
     <>
@@ -67,7 +68,7 @@ const Source = () => {
           schema={schema}
           uiSchema={uiSchema}
           formData={formData}
-          onChange={(e) => setFormData(e.formData)}
+          onChange={handleChange}
           validator={validator}
           widgets={widgets}
         />
@@ -75,8 +76,10 @@ const Source = () => {
       </div>
 
 
-
-      <button type="button" onClick={handleSubmit}>Submit</button> {/* Add a submit button */}
+      <div className='mb-4'>
+      <button type="button"  className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
+      </div>
+     {/* Add a submit button */}
     </>
   );
 };

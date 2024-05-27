@@ -1,5 +1,5 @@
 'use client';
-import { useState } from "react";
+import { useState,useCallback } from "react";
 import { MdKeyboardArrowDown, MdInfoOutline } from "react-icons/md";
 import ConsumedFuel from "./Consumed-fuel/Consumed-fuel";
 import { GlobalState } from "../../../../../Context/page";
@@ -64,7 +64,8 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
   );
 };
 
-const EnergyConsumptionBody = () => {
+const EnergyConsumedBody = () => {
+
   return (
     <>
       <div className="mx-3">
@@ -88,7 +89,7 @@ const EnergyConsumptionBody = () => {
           sdg={['GRI 302-1c', 'GRI 302-1e']}
           display="block"
         >
-          <ConsumedFuel />
+          <ConsumedFuel/>
         </AccordionItem>
         <AccordionItem
        title="Self generated - not consumed or sold"
@@ -124,12 +125,13 @@ const EnergyConsumptionBody = () => {
           sdg={['GRI 302-1g']}
           display="none"
         >
-          <Source />
+          <Source  />
         </AccordionItem>
         {/* Add more accordion items here */}
       </div>
+
     </>
   );
 };
 
-export default EnergyConsumptionBody;
+export default EnergyConsumedBody;

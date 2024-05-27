@@ -13,7 +13,7 @@ export default function DashboardLayout({children}) {
           <div className="block float-left ">
             <Sidenav/>
           </div>
-          <div className={`mx-2 w-full ${open ? "ml-[240px]" : "ml-[90px]"}`}>
+          <div className={`mx-2 w-full ${open ? "ml-[243px]" : "ml-[87px]"}`}>
             <div className="mb-5 ">
               <DashboardHeader  />
               <div>{children}</div>

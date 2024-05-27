@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
 import { MdAdd, MdOutlineDeleteOutline } from "react-icons/md";
@@ -8,116 +8,153 @@ import AssignToWidget from '../../../shared/widgets/assignToWidget';
 import CombinedWidget from '../../../shared/widgets/emissioncombinedWidget';
 import { GlobalState } from '../../../../Context/page';
 import RemoveWidget from '../../../shared/widgets/RemoveWidget';
+import axios from 'axios';
+// import toast, { Toaster } from 'react-hot-toast';
 const widgets = {
   EmissonCombinedWidget: CombinedWidget,
   FileUploadWidget: CustomFileUploadWidget,
   AssignTobutton: AssignToWidget,
   RemoveWidget: RemoveWidget, // Update widgets to include CombinedWidget
 };
-
-const schema = {
-  type: 'array',
-  items: {
-    type: 'object',
-    properties: {
-      Emission: {
-        type: "string",
-        title: "Emission",
-      },
-      FileUpload: {
-        type: "string",
-        format: "data-url",
-      },
-      AssignTo: {
-        type: "string",
-        title: "Assign To",
-      },
-      Remove: {
-        type: "string",
-
-      },
-    }
-  }
-};
-
-const uiSchema = {
-  className: 'flex flex-wrap',
-  items: {
-    classNames: 'flex flex-col md:flex-row w-full md:w-auto',
-    Emission: {
-      'ui:widget': 'EmissonCombinedWidget', // Use CombinedWidget for Emission field
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
-      },
-    },
-    FileUpload: {
-      'ui:widget': 'FileUploadWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
-      },
-    },
-    AssignTo: {
-      "ui:widget": "AssignTobutton",
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
-      },
-    },
-    Remove: {
-      "ui:widget": "RemoveWidget",
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    'ui:options': {
-      orderable: false,
-      addable: false,
-      removable: false,
-      label: false,
-      layout: 'horizontal',
-    }
-  }
-};
+const view_path = 'gri-environment-emissions-301-a-scope-1'
+const client_id = 1
+const user_id = 1
+// const notify = (text) => toast(text);
 
 const Scope1 = () => {
+
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
+  const [r_schema, setRemoteSchema] = useState({})
+  const [r_ui_schema, setRemoteUiSchema] = useState({})
 
-  const handleChange = (formData) => setFormData(formData);
+  const handleChange = (e) => {
+    setFormData(e.formData);
+ 
+  };
+  
 
   const handleAddNew = () => {
     const newData = [...formData, {}];
     setFormData(newData);
   };
+  const updateFormData = async () => {
+
+    const data = {
+      client_id: client_id,
+      user_id : user_id,
+      path: view_path,
+      form_data : formData
+    }
+
+    const url = 'http://localhost:8000/datametric/update-fieldgroup'
+    try {
+      const response = await axios.post(url,
+        {
+          ...data
+        }
+      );
+
+      console.log('Response:', response.data);
+      // toast(response.message)
+      // Handle the response data here
+    } catch (error) {
+      console.error('Error:', error);
+      // toast(error)
+      // Handle errors here
+    }
+  };
+
+  const loadFormData = async () =>{
+    const base_url = 'http://localhost:8000/datametric/get-fieldgroups?path=';
+    const url = `${base_url}${view_path}&&client_id=${client_id}&&user_id=${user_id}`
+    console.log(url, 'is the url to be fired')
+
+// Make the GET request
+    axios.get(url)
+      .then(response => {
+        // Handle successful response
+        console.log(response.data, ' is the response data')
+        setRemoteSchema(response.data.form[0].schema)
+        setRemoteUiSchema(response.data.form[0].ui_schema)
+        const form_parent = response.data.form_data
+        const f_data = form_parent[0].data
+        setFormData(f_data)
+        // setFormData(response.data.form[0].form_data)
+      })
+      .catch(error => {
+        // Handle error
+        console.error('Error:', error);
+      });
+
+  }
+  // reload the forms
+  useEffect(()=>{
+    // console.log(r_schema, ' - is the remote schema from django', r_ui_schema, ' - is the remote ui schema from django')
+  },[r_schema, r_ui_schema])
+
+  // console log the formdata changes
+
+  useEffect(()=>{
+    console.log('formdata is changed - ', formData)
+
+
+  },[formData])
+
+  // fetch backend and replace initialized forms
+  useEffect(()=>{
+    console.log('Form loaded , ready for trigger')
+    loadFormData()
+  },[])
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Form data:', formData);
+    updateFormData()
+  }
+  const updateFormDatanew = (updatedData) => {
+    setFormData(updatedData);
+
   };
-
-
+  const handleRemove = (index) => {
+    const updatedData = [...formData];
+    updatedData.splice(index, 1);
+    setFormData(updatedData);
+  };
 
   return (
     <>
-      <div className={`overflow-auto custom-scrollbar flex ${open ? "xl:w-[680px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
+
+<div className={`overflow-auto custom-scrollbar flex justify-around  ${open ? "xl:w-[768px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
         <div>
           <Form
-            className='flex'
-            schema={schema}
-            uiSchema={uiSchema}
+          className='flex'
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
-            onChange={(e) => handleChange(e.formData)}
+            onChange={handleChange}
             validator={validator}
             widgets={{
               ...widgets,
-              RemoveWidget: () => <RemoveWidget formData={formData} setFormData={setFormData} />
+              RemoveWidget: (props) => (
+                <RemoveWidget
+                  {...props}
+                  index={props.id.split('_')[1]} // Pass the index
+                  onRemove={handleRemove}
+                />
+              ),
+              FileUploadWidget: (props) => (
+                <CustomFileUploadWidget
+                  {...props}
+                  scopes="scope1"
+                  setFormData={updateFormDatanew}
+                />
+              )
+
             }}
+
           />
         </div>
-
 
       </div>
 
@@ -126,8 +163,10 @@ const Scope1 = () => {
           <MdAdd className='text-lg' /> Add Row
         </button>
       </div>
+      <div className='mb-4'>
+      <button type="button"  className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
+      </div>
 
-      <button type="button" onClick={handleSubmit}>Submit</button>
     </>
   );
 };

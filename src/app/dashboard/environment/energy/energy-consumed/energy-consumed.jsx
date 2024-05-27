@@ -2,12 +2,12 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import EnvironmentHeader from '../../environmentheader';
-import Energyconsumptionbody from './energy-consumed-body';
+import EnergyConsumedBody from './energy-consumed-body';
 import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
 import { Energydata } from '../../data/griinfo';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
-const Energyconsumption = ({ open }) => {
+const Energyconsumed = ({ open }) => {
   const [activeMonth, setActiveMonth] = useState("Jan");
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
@@ -109,7 +109,7 @@ const Energyconsumption = ({ open }) => {
         </div>
       </div>
       <EnvironmentHeader activeMonth={activeMonth} setActiveMonth={setActiveMonth} />
-      <Energyconsumptionbody open={open} />
+      <EnergyConsumedBody />
 
 
 
@@ -118,4 +118,4 @@ const Energyconsumption = ({ open }) => {
   );
 };
 
-export default Energyconsumption;
+export default Energyconsumed;

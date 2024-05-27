@@ -13,6 +13,8 @@ import CustomSelectInputWidget from '../../../../../shared/widgets/CustomSelectI
 import RemoveWidget from '../../../../../shared/widgets/RemoveWidget';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
+import axios from 'axios';
+
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
@@ -22,6 +24,10 @@ const widgets = {
   CustomSelectInputWidget: CustomSelectInputWidget,
   RemoveWidget: RemoveWidget,
 };
+
+const view_path = 'gri-environment-energy-302-1c-1e-consumed_fuel'
+const client_id = 1
+const user_id = 1
 
 const schema = {
   type: 'array',
@@ -84,6 +90,9 @@ const schema = {
 
 const uiSchema = { // Add flex-wrap to wrap fields to the next line
   items: {
+    'ui:order': [
+      'EnergyType', 'Source', 'Purpose', 'Renewable', 'Quantity', 'Unit', 'AssignTo', 'FileUpload', 'Remove'
+    ],
     EnergyType: {
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
@@ -159,14 +168,14 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
     }
   }
 };
-const generateTooltip = (field, tooltipText) => {
+const generateTooltip = (field, title, tooltipText) => {
   if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
     return null; // Return null to skip rendering tooltip for these fields
   }
 
   return (
     <div className='mx-2 flex w-[230px]'>
-      <label className="text-sm leading-5 text-gray-700 flex">{field}</label>
+      <label className="text-[13px] leading-5 text-gray-700 flex">{title}</label>
       <MdInfoOutline
         data-tooltip-id={field}
         data-tooltip-content={tooltipText}
@@ -183,7 +192,7 @@ const generateTooltip = (field, tooltipText) => {
           fontSize: "12px",
           boxShadow: 3,
           borderRadius: "8px",
-          textAlign: 'center',
+          textAlign: 'left',
         }}
       />
     </div>
@@ -193,45 +202,142 @@ const generateTooltip = (field, tooltipText) => {
 const Consumedfuel = () => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
+  const [r_schema, setRemoteSchema] = useState({})
+  const [r_ui_schema, setRemoteUiSchema] = useState({})
+
+  const handleChange = (e) => {
+    setFormData(e.formData);
+
+  };
 
   const handleAddNew = () => {
-    setFormData([...formData, {}]);
+    const newData = [...formData, {}];
+    setFormData(newData);
+
   };
+
+  // The below code on updateFormData is by White Beard
+  const updateFormData = async () => {
+    const data = {
+      client_id : client_id,
+      user_id : user_id,
+      path: view_path,
+      form_data: formData
+    }
+
+    const url = 'http://localhost:8000/datametric/update-fieldgroup'
+    try{
+      const response = await axios.post(url,
+        {
+          ...data
+        }
+      );
+
+      console.log('Response:', response.data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  const loadFormData = async () => {
+    const base_url = 'http://localhost:8000/datametric/get-fieldgroups?path=';
+    const url = `${base_url}${view_path}&&client_id=${client_id}&&user_id=${user_id}`
+    console.log(url, 'is the url to be fired')
+
+    //making the GET request
+    axios.get(url)
+    .then(response => {
+      //handling the successful response
+      console.log(response.data, 'is the response data')
+      setRemoteSchema(response.data.form[0].schema)
+      setRemoteUiSchema(response.data.form[0].uiSchema)
+      const form_parent = response.data.form[0].form_data
+      const f_data = form_parent[0].data
+      setFormData(f_data)
+      // setting the setFormData(response.data.form[0].form_data)
+    })
+    .catch(error =>{
+      //handling the error response
+      console.log('Error:', error);
+    });
+  }
+  //Reloading the forms -- White Beard
+  useEffect(() => {
+    //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
+  },[r_schema, r_ui_schema])
+
+  // console log the form data change
+  useEffect(() => {
+    console.log('Form data is changed -', formData)
+  },[formData])
+
+  // fetch backend and replace initialized forms
+  useEffect (()=> {
+    console.log('From loaded , ready for trigger')
+    loadFormData()
+  },[])
 
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent the default form submission
     console.log('Form data:', formData);
-  };
+    updateFormData()
 
+  };
+  const updateFormDatanew = (updatedData) => {
+    setFormData(updatedData);
+
+  };
+  const handleRemove = (index) => {
+    const updatedData = [...formData];
+    updatedData.splice(index, 1);
+    setFormData(updatedData);
+  };
   const renderFields = () => {
     const fields = Object.keys(schema.items.properties);
     return fields.map((field, index) => (
       <div key={index}>
-        {generateTooltip(field, schema.items.properties[field].tooltiptext)}
+        {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext)}
       </div>
     ));
   };
   return (
     <>
 
-      <div className={`overflow-auto custom-scrollbar flex justify-around  ${open ? "xl:w-[768px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
+<div className={`overflow-auto custom-scrollbar flex justify-around  ${open ? "xl:w-[768px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
         <div>
           <div>
             <div className='flex'>
               {renderFields()} {/* Render dynamic fields with tooltips */}
             </div>
           </div>
+
           <Form
+          className='flex'
             schema={schema}
             uiSchema={uiSchema}
             formData={formData}
-            onChange={(e) => setFormData(e.formData)}
+            onChange={handleChange}
             validator={validator}
             widgets={{
               ...widgets,
-              RemoveWidget: () => <RemoveWidget formData={formData} setFormData={setFormData} />
+              RemoveWidget: (props) => (
+                <RemoveWidget
+                  {...props}
+                  index={props.id.split('_')[1]} // Pass the index
+                  onRemove={handleRemove}
+                />
+              ),
+              FileUploadWidget: (props) => (
+                <CustomFileUploadWidget
+                  {...props}
+                  scopes="ec2"
+                  setFormData={updateFormData}
+                />
+              )
+
             }}
+
           />
         </div>
 
@@ -242,8 +348,10 @@ const Consumedfuel = () => {
           <MdAdd className='text-lg' /> Add Row
         </button>
       </div>
+      <div className='mb-4'>
+      <button type="button"  className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
+      </div>
 
-      <button type="button" onClick={handleSubmit}>Submit</button> {/* Add a submit button */}
     </>
   );
 };
