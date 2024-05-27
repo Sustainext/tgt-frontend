@@ -1,7 +1,7 @@
 'use client'
 import MyGoals from "./MyGoals";
 import MyTasks from "./MyTasks";
-import Preferences from "./Preferences";
+import Preferences from "./Preferences/page";
 const HomeDashboard = () =>  {
   return (
     <>
