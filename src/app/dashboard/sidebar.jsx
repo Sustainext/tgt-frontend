@@ -70,7 +70,7 @@ const Sidenav = () => {
     {
       title: "Organizational Structure",
       icon: <MdOutlineAccountTree />,
-      link: "#",
+      link: "/dashboard/OrgStructure",
     },
     { title: "About", icon: <MdInfoOutline />, link: "#" },
   ];
