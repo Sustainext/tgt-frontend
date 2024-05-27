@@ -14,6 +14,7 @@ import RemoveWidget from '../../../../../shared/widgets/RemoveWidget';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 import axios from 'axios';
+import axiosInstance from '../../../../../utils/axiosMiddleware';
 
 const widgets = {
   inputWidget: inputWidget,
@@ -250,8 +251,8 @@ const Consumedfuel = () => {
       //handling the successful response
       console.log(response.data, 'is the response data')
       setRemoteSchema(response.data.form[0].schema)
-      setRemoteUiSchema(response.data.form[0].uiSchema)
-      const form_parent = response.data.form[0].form_data
+      setRemoteUiSchema(response.data.form[0].ui_schema)
+      const form_parent = response.data.form_data
       const f_data = form_parent[0].data
       setFormData(f_data)
       // setting the setFormData(response.data.form[0].form_data)
@@ -332,7 +333,7 @@ const Consumedfuel = () => {
                 <CustomFileUploadWidget
                   {...props}
                   scopes="ec2"
-                  setFormData={updateFormData}
+                  setFormData={updateFormDatanew}
                 />
               )
 
