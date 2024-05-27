@@ -82,7 +82,7 @@ const CombinedWidget = ({ value = {}, onChange }) => {
       <select
         value={category}
         onChange={(e) => handleCategoryChange(e.target.value)}
-        className="block w-[220px] py-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
+        className="block w-[180px] py-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
       >
         <option value="">Select Category</option>
         <option value="Heating">Heating</option>
@@ -95,7 +95,7 @@ const CombinedWidget = ({ value = {}, onChange }) => {
 <select
         value={subcategory}
         onChange={(e) => handleSubcategoryChange(e.target.value)}
-        className="block w-[220px] py-2 mx-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
+        className="block w-[180px] py-2 mx-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
       >
         <option value="">Select Subcategory</option>
         {subcategories.map((sub, index) => (
@@ -108,7 +108,7 @@ const CombinedWidget = ({ value = {}, onChange }) => {
 <select
         value={activity}
         onChange={(e) => handleActivityChange(e.target.value)}
-        className="block w-[220px] py-2 mx-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
+        className="block w-[180px] py-2 mx-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
       >
         <option value="">Select Activity</option>
         {activities.map((act, index) => (
@@ -123,12 +123,12 @@ const CombinedWidget = ({ value = {}, onChange }) => {
           type="number"
           value={quantity}
           onChange={(e) => handleQuantityChange(e.target.value)}
-          className="w-[150px] py-1 mt-2 pl-2 rounded-sm"
+          className="w-[70px] py-1 mt-2 pl-2 rounded-sm"
         />
         <select
           value={unit}
           onChange={(e) => handleUnitChange(e.target.value)}
-          className="cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none mt-1.5 font-bold text-xs bg-sky-600 text-white -ml-11"
+          className="w-[70px] ml-1 cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none mt-1.5 font-bold text-xs bg-sky-600 text-white -ml-11"
         >
           <option value="">Unit</option>
           {units.map((unit, index) => (
