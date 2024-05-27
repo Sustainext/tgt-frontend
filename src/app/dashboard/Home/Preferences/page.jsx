@@ -118,7 +118,7 @@ const Preferences = () => {
               <div key={item.id} className="relative shadow-sm h-20  border border-gray-200">
                 <div className="flex justify-center h-10  mb-2">
                   <img
-                    src={item.Image}
+                    src={`${process.env.BACKEND_API_URL}${item.Image}`}
                     alt="cover"
                     className="transition-all w-[80%] aspect-[3/2] object-contain mt-2"
                   />
@@ -146,7 +146,7 @@ const Preferences = () => {
               <div key={item.id} className="relative shadow-sm h-20  border border-gray-200">
                 <div className="flex justify-center h-10  mb-2">
                   <img
-                    src={item.Image}
+                    src={`${process.env.BACKEND_API_URL}${item.Image}`}
                     alt="cover"
                     className="transition-all w-[80%] aspect-[3/2] object-contain mt-2"
                   />
@@ -174,7 +174,7 @@ const Preferences = () => {
               <div key={item.id} className="relative shadow-sm h-20  border border-gray-200">
                 <div className="flex justify-center h-10  mb-2">
                   <img
-                    src={item.Image}
+                    src={`${process.env.BACKEND_API_URL}${item.Image}`}
                     alt="cover"
                     className="transition-all w-[80%] aspect-[3/2] object-contain mt-2"
                   />
@@ -199,7 +199,7 @@ const Preferences = () => {
         <div className="grid grid-cols-8 gap-2 mb-3">
           {data &&
             data.map((item) => (
-              <img key={item.id} src={item.Image} alt="cover" className="transition-all" />
+              <img key={item.id} src={`${process.env.BACKEND_API_URL}${item.Image}`} alt="cover" className="transition-all" />
             ))}
           {edit && (
             <div onClick={()=>routeToPage(1)}>
@@ -219,7 +219,7 @@ const Preferences = () => {
               <div key={item.id} className="relative shadow-sm h-20  border border-gray-200">
                 <div className="flex justify-center h-10  mb-2">
                   <img
-                    src={item.Image}
+                    src={`${process.env.BACKEND_API_URL}${item.Image}`}
                     alt="cover"
                     className="transition-all w-[80%] aspect-[3/2] object-contain mt-2"
                   />
@@ -247,7 +247,7 @@ const Preferences = () => {
               <div key={item.id} className="relative shadow-sm h-20  border border-gray-200">
                 <div className="flex justify-center h-10  mb-2">
                   <img
-                    src={item.Image}
+                    src={`${process.env.BACKEND_API_URL}${item.Image}`}
                     alt="cover"
                     className="transition-all w-[80%] aspect-[3/2] object-contain mt-2"
                   />

@@ -1,11 +1,15 @@
-
-
 import axios from 'axios';
+const getAuthToken = () => {
+    if (typeof window !== 'undefined') {
+        return localStorage.getItem('token')?.replace(/"/g, "");
+    }
+    return '';
+}
 
 const axiosInstance = axios.create({
     baseURL: process.env.BACKEND_API_URL,
     headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')?.replace(/"/g, "")}`,
+        'Authorization': `Bearer ${getAuthToken()}`,
     }
 });
 
@@ -19,8 +23,8 @@ axiosInstance.interceptors.response.use(
             originalRequest._retry = true;
 
             try {
-                const refreshTokenResponse = await axios.post(`${process.env.BACKEND_API_URL}/refresh-token`, {
-                    refresh: localStorage.getItem('refreshToken'),
+                const refreshTokenResponse = await axios.post(`${process.env.BACKEND_API_URL}/refresh_token`, {
+                    refresh: localStorage.getItem('refreshToken').replace(/"/g, ""),
                 });
 
                 const { accessToken } = refreshTokenResponse.data;
