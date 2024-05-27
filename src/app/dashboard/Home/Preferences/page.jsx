@@ -35,9 +35,15 @@ const Preferences = () => {
 
   const fetchpreference = async () => {
     LoaderOpen();
+    const token = localStorage.getItem('token')?.replace(/"/g, "");
     try {
-      const response = await axiosInstance.get(
-        `${process.env.BACKEND_API_URL}/organization_preference/`
+      const response = await axios.get(
+        `${process.env.BACKEND_API_URL}/organization_preference/`,
+        {
+          headers: {
+            Authorization: 'Bearer ' + token,
+          },
+        }
       );
       const { org_data } = response.data;
       setData(org_data.sdg);
@@ -65,6 +71,7 @@ const Preferences = () => {
       LoaderClose();
     }
   };
+  
 
   useEffect(() => {
     if (isMounted.current) {

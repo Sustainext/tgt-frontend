@@ -29,9 +29,9 @@ axiosInstance.interceptors.response.use(
                 });
 
                 const { access } = refreshTokenResponse.data;
-                localStorage.setItem('token', accessToken);
+                localStorage.setItem('token', access);
 
-                originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
+                originalRequest.headers['Authorization'] = `Bearer ${access}`;
                 return axiosInstance(originalRequest);
             } catch (refreshError) {
                 console.error('Token refresh failed:', refreshError);
