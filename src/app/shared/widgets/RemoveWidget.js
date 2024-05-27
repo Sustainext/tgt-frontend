@@ -8,7 +8,7 @@ const RemoveWidget = ({ index, onRemove }) => {
   };
 
   return (
-    <div className='flex justify-center items-center mt-2'>
+    <div className='flex justify-center items-center mt-2 ml-2'>
   <button type="button" onClick={handleRemove} className=" text-red-500">
       <MdOutlineDeleteOutline className='text-[23px]' />
     </button>
