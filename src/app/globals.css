@@ -139,3 +139,11 @@ h1,h2,h3,h4,h5,h6,p,div {
 .fieldset{
 display: flex;
 }
+.gradient-background {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 174, 239, 0.05) 7.92%,
+    rgba(106, 223, 35, 0.05) 89.75%
+  );
+  /* Other CSS properties can be added as needed */
+}

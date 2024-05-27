@@ -6,8 +6,8 @@ import { Energydata } from "../../../environment/data/griinfo"
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import Socialheader from "../../socialheader"
-import Ohsscreeen1 from "./ohs-screeen"
-const Ohsmanagment = () => {
+import Riskscreeen from './risk-screeen';
+const Riskassessment = () => {
     const [activeMonth, setActiveMonth] = useState("Jan");
     const [data, setData] = useState();
     const [category, setCategory] = useState("");
@@ -43,7 +43,7 @@ const Ohsmanagment = () => {
                             <div className='flex'>
                                 <div>
                                     <p className="gradient-text text-[22px] font-bold">
-                                        Occupational Health and Safety 2018
+                                    Hazard identification, risk assessment, and incident investigation
                                     </p>
                                 </div>
 
@@ -64,7 +64,7 @@ const Ohsmanagment = () => {
                 <div className="ml-3 flex">
                     <h6 className="text-[17px] mb-4 font-semibold flex">
 
-                        Occupational health and safety management system
+                    Hazard identification, risk assessment, and incident investigation
                         {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[14px]" />
@@ -103,9 +103,9 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
                 </div>
             </div>
             <Socialheader activeMonth={activeMonth} setActiveMonth={setActiveMonth} />
-            <Ohsscreeen1 />
+            <Riskscreeen />
 
         </>
     );
 };
-export default Ohsmanagment;
+export default Riskassessment;

@@ -1,8 +1,17 @@
 'use client'
 import React, { useState } from "react";
 import { MdKeyboardArrowDown, MdInfoOutline } from "react-icons/md";
-
 import Ohsmanagment from "./OHS/ohs-management/page"
+import Riskassessment from "./OHS/risk-assessment/page";
+import Ohsservices from "./OHS/ohs-services/page";
+import Workinvolvement from "./OHS/work-involvement/page";
+import Ohstraining from "./OHS/ohs-training/page";
+import Promotionhealth from "./OHS/promotion-health/page"
+import Preventionohsimpact from "./OHS/prevention-ohs-Impact/page"
+import Ohsmanagementsystemcoverage from "./OHS/ohs-management-system-coverage/page"
+import Injuries from "./OHS/Injuries/page"
+import Illhealth from "./OHS/ill-health/page"
+import Childlabour from "./Human-Rights/child-labour/page"
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -19,7 +28,7 @@ const AccordionItem = ({ title, children }) => {
         <div className="mt-1">
           {" "}
           <span>
-          <MdKeyboardArrowDown className={`text-2xl ${isOpen ? "rotate-180" : ""}`} />
+            <MdKeyboardArrowDown className={`text-2xl ${isOpen ? "rotate-180" : ""}`} />
           </span>
         </div>
       </button>
@@ -86,21 +95,19 @@ const Social = () => {
                         </>
                       ) : (
                         <div
-                          className={`${
-                            activeStep === 1
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
+                          className={`${activeStep === 1
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 1
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 1
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -122,11 +129,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 1
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 1
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Employee Hires & Turnover
                           </p>
@@ -153,21 +159,19 @@ const Social = () => {
                         </>
                       ) : (
                         <div
-                          className={`${
-                            activeStep === 2
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
+                          className={`${activeStep === 2
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 2
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 2
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -189,11 +193,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 2
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 2
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Benefits
                           </p>
@@ -224,11 +227,10 @@ const Social = () => {
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 3
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 3
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -250,11 +252,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 3
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 3
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Parental Leave
                           </p>
@@ -287,11 +288,10 @@ const Social = () => {
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 4
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 4
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -313,11 +313,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 4
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 4
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Notice Period
                           </p>
@@ -347,21 +346,19 @@ const Social = () => {
                         </>
                       ) : (
                         <div
-                          className={`${
-                            activeStep === 5
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
+                          className={`${activeStep === 5
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 5
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 5
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -383,11 +380,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 5
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 5
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             OHS Management
                           </p>
@@ -414,21 +410,19 @@ const Social = () => {
                         </>
                       ) : (
                         <div
-                          className={`${
-                            activeStep === 6
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
+                          className={`${activeStep === 6
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 6
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 6
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -450,11 +444,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 6
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 6
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Risk Assessment
                           </p>
@@ -481,21 +474,19 @@ const Social = () => {
                         </>
                       ) : (
                         <div
-                          className={`${
-                            activeStep === 7
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
+                          className={`${activeStep === 7
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 7
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 7
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -517,11 +508,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 7
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 7
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             OHS Sevices
                           </p>
@@ -548,21 +538,19 @@ const Social = () => {
                         </>
                       ) : (
                         <div
-                          className={`${
-                            activeStep === 8
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
+                          className={`${activeStep === 8
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 8
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 8
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -584,11 +572,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 8
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 8
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Worker Involvement in OHS
                           </p>
@@ -615,21 +602,19 @@ const Social = () => {
                         </>
                       ) : (
                         <div
-                          className={`${
-                            activeStep === 9
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
+                          className={`${activeStep === 9
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 9
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 9
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -651,11 +636,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 9
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 9
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             OHS Training
                           </p>
@@ -683,21 +667,19 @@ const Social = () => {
                         </>
                       ) : (
                         <div
-                          className={`${
-                            activeStep === 10
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
+                          className={`${activeStep === 10
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 10
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 10
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -719,11 +701,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 10
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 10
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Promotion of Health
                           </p>
@@ -750,21 +731,19 @@ const Social = () => {
                         </>
                       ) : (
                         <div
-                          className={`${
-                            activeStep === 11
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
+                          className={`${activeStep === 11
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 11
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 11
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -786,11 +765,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 11
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 11
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Prevention of OHS Impact
                           </p>
@@ -817,21 +795,19 @@ const Social = () => {
                         </>
                       ) : (
                         <div
-                          className={`${
-                            activeStep === 12
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
+                          className={`${activeStep === 12
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 12
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 12
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -853,11 +829,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 12
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 12
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             OHS Management System Coverage
                           </p>
@@ -884,21 +859,19 @@ const Social = () => {
                         </>
                       ) : (
                         <div
-                          className={`${
-                            activeStep === 13
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
+                          className={`${activeStep === 13
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 13
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 13
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -920,11 +893,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 13
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 13
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Injuries
                           </p>
@@ -955,11 +927,10 @@ const Social = () => {
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 14
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 14
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -981,11 +952,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 14
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 14
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Ill-health
                           </p>
@@ -1015,21 +985,19 @@ const Social = () => {
                         </>
                       ) : (
                         <div
-                          className={`${
-                            activeStep === 15
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
+                          className={`${activeStep === 15
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 15
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 15
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -1051,11 +1019,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 15
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 15
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Training Hours
                           </p>
@@ -1082,21 +1049,19 @@ const Social = () => {
                         </>
                       ) : (
                         <div
-                          className={`${
-                            activeStep === 16
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
+                          className={`${activeStep === 16
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 16
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 16
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -1118,11 +1083,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 16
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 16
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Skill Upgrade
                           </p>
@@ -1153,11 +1117,10 @@ const Social = () => {
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 17
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 17
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -1179,11 +1142,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 17
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 17
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Performance development
                           </p>
@@ -1213,21 +1175,19 @@ const Social = () => {
                         </>
                       ) : (
                         <div
-                          className={`${
-                            activeStep === 18
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
+                          className={`${activeStep === 18
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 18
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 18
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -1249,11 +1209,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 18
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 18
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Diversity of the board
                           </p>
@@ -1284,11 +1243,10 @@ const Social = () => {
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 19
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 19
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -1310,11 +1268,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 19
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 19
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Salary Ratio
                           </p>
@@ -1347,11 +1304,10 @@ const Social = () => {
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 20
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 20
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -1373,11 +1329,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 20
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 20
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Incidents of Discrimination
                           </p>
@@ -1410,11 +1365,10 @@ const Social = () => {
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 21
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 21
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -1436,11 +1390,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 21
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 21
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Collective Bargaining
                           </p>
@@ -1469,21 +1422,19 @@ const Social = () => {
                         </>
                       ) : (
                         <div
-                          className={`${
-                            activeStep === 22
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
+                          className={`${activeStep === 22
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 22
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 22
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -1505,11 +1456,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 22
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 22
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Child Labour
                           </p>
@@ -1536,21 +1486,19 @@ const Social = () => {
                         </>
                       ) : (
                         <div
-                          className={`${
-                            activeStep === 23
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
+                          className={`${activeStep === 23
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 23
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 23
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -1572,11 +1520,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 23
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 23
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Forced or Compulsory Labour
                           </p>
@@ -1607,11 +1554,10 @@ const Social = () => {
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 24
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 24
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -1633,11 +1579,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 24
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 24
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Security Personnel
                           </p>
@@ -1670,11 +1615,10 @@ const Social = () => {
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 25
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 25
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -1696,11 +1640,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 25
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 25
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Indigenous People
                           </p>
@@ -1729,21 +1672,19 @@ const Social = () => {
                         </>
                       ) : (
                         <div
-                          className={`${
-                            activeStep === 26
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
+                          className={`${activeStep === 26
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 26
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 26
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -1765,11 +1706,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 26
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 26
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Community Engagement
                           </p>
@@ -1800,11 +1740,10 @@ const Social = () => {
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 27
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 27
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -1826,11 +1765,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 27
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 27
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Impact on Community
                           </p>
@@ -1859,21 +1797,19 @@ const Social = () => {
                         </>
                       ) : (
                         <div
-                          className={`${
-                            activeStep === 28
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
+                          className={`${activeStep === 28
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 28
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 28
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -1895,11 +1831,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 28
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 28
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Suppliers Screened
                           </p>
@@ -1930,11 +1865,10 @@ const Social = () => {
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 29
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 29
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -1956,11 +1890,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 29
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 29
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Impacts & Actions Taken
                           </p>
@@ -1993,11 +1926,10 @@ const Social = () => {
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 30
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 30
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -2019,11 +1951,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 30
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 30
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Political Contribution
                           </p>
@@ -2052,21 +1983,19 @@ const Social = () => {
                         </>
                       ) : (
                         <div
-                          className={`${
-                            activeStep === 31
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
+                          className={`${activeStep === 31
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 31
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 31
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -2088,11 +2017,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 31
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 31
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Product/Service Safety
                           </p>
@@ -2123,11 +2051,10 @@ const Social = () => {
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 32
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 32
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -2149,11 +2076,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 32
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 32
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Compliance
                           </p>
@@ -2182,21 +2108,19 @@ const Social = () => {
                         </>
                       ) : (
                         <div
-                          className={`${
-                            activeStep === 33
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
+                          className={`${activeStep === 33
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 33
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 33
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -2218,11 +2142,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 33
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 33
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Product/Service Labeling
                           </p>
@@ -2249,21 +2172,19 @@ const Social = () => {
                         </>
                       ) : (
                         <div
-                          className={`${
-                            activeStep === 34
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
+                          className={`${activeStep === 34
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 34
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 34
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -2285,11 +2206,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 34
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 34
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Service Information & Labeling
                           </p>
@@ -2320,11 +2240,10 @@ const Social = () => {
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 35
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 35
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -2346,11 +2265,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 35
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 35
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Marketing Communications
                           </p>
@@ -2383,11 +2301,10 @@ const Social = () => {
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${
-                              activeStep === 36
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
+                            className={`${activeStep === 36
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
                             viewBox="0 0 16 16"
                           >
                             <circle cx="8" cy="8" r="8" />
@@ -2409,11 +2326,10 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${
-                              activeStep === 36
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[0.815rem] text-gray-600"
-                            } `}
+                            className={`${activeStep === 36
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[0.815rem] text-gray-600"
+                              } `}
                           >
                             Privacy
                           </p>
@@ -2427,13 +2343,83 @@ const Social = () => {
           </div>
           <div className="w-full ms-3">
 
-          {activeStep === 5 && (
-                <>
-                  <div>
-                    <Ohsmanagment/>
-                  </div>
-                </>
-              )}
+            {activeStep === 5 && (
+              <>
+                <div>
+                  <Ohsmanagment />
+                </div>
+              </>
+            )}
+            {activeStep === 6 && (
+              <>
+                <div>
+                  <Riskassessment />
+                </div>
+              </>
+            )}
+            {activeStep === 7 && (
+              <>
+                <div>
+                  <Ohsservices />
+                </div>
+              </>
+            )}
+            {activeStep === 8 && (
+              <>
+                <div>
+                  <Workinvolvement />
+                </div>
+              </>
+            )}
+            {activeStep === 9 && (
+              <>
+                <div>
+                  <Ohstraining />
+                </div>
+              </>
+            )}
+            {activeStep === 10 && (
+              <>
+                <div>
+                  <Promotionhealth />
+                </div>
+              </>
+            )}
+            {activeStep === 11 && (
+              <>
+                <div>
+                  <Preventionohsimpact />
+                </div>
+              </>
+            )}
+            {activeStep === 12 && (
+              <>
+                <div>
+                  <Ohsmanagementsystemcoverage />
+                </div>
+              </>
+            )}
+             {activeStep === 13 && (
+              <>
+                <div>
+                  <Injuries />
+                </div>
+              </>
+            )}
+              {activeStep === 14 && (
+              <>
+                <div>
+                  <Illhealth />
+                </div>
+              </>
+            )}
+                 {activeStep === 22 && (
+              <>
+                <div>
+                  <Childlabour />
+                </div>
+              </>
+            )}
 
           </div>
         </div>

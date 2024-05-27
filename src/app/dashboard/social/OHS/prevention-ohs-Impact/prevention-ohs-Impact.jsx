@@ -1,0 +1,14 @@
+import Screen1 from "./screen1";
+import Screen2 from "./screen2";
+const Preventionohsimpactscreen = () => {
+
+    return (
+        <>
+          <Screen1/>
+          <Screen2/>
+
+        </>
+    );
+};
+
+export default Preventionohsimpactscreen;
