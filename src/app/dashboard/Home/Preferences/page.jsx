@@ -35,16 +35,15 @@ const Preferences = () => {
 
   const fetchpreference = async () => {
     LoaderOpen();
+    const token = localStorage.getItem('token')?.replace(/"/g, "");
     try {
-      const stringWithQuotes = localStorage.getItem("token");
-      const stringWithoutQuotes = stringWithQuotes.replace(/"/g, "");
-      const options = {
-        headers: {
-          Authorization: `Bearer ${stringWithoutQuotes}`,
-        },
-      };
-      const response = await axiosInstance.get(
-        `${process.env.BACKEND_API_URL}/organization_preference/`
+      const response = await axios.get(
+        `${process.env.BACKEND_API_URL}/organization_preference/`,
+        {
+          headers: {
+            Authorization: 'Bearer ' + token,
+          },
+        }
       );
       const { org_data } = response.data;
       setData(org_data.sdg);
@@ -72,6 +71,7 @@ const Preferences = () => {
       LoaderClose();
     }
   };
+  
 
   useEffect(() => {
     if (isMounted.current) {
@@ -118,7 +118,7 @@ const Preferences = () => {
               <div key={item.id} className="relative shadow-sm h-20  border border-gray-200">
                 <div className="flex justify-center h-10  mb-2">
                   <img
-                    src={item.Image}
+                    src={`${process.env.BACKEND_API_URL}${item.Image}`}
                     alt="cover"
                     className="transition-all w-[80%] aspect-[3/2] object-contain mt-2"
                   />
@@ -146,7 +146,7 @@ const Preferences = () => {
               <div key={item.id} className="relative shadow-sm h-20  border border-gray-200">
                 <div className="flex justify-center h-10  mb-2">
                   <img
-                    src={item.Image}
+                    src={`${process.env.BACKEND_API_URL}${item.Image}`}
                     alt="cover"
                     className="transition-all w-[80%] aspect-[3/2] object-contain mt-2"
                   />
@@ -174,7 +174,7 @@ const Preferences = () => {
               <div key={item.id} className="relative shadow-sm h-20  border border-gray-200">
                 <div className="flex justify-center h-10  mb-2">
                   <img
-                    src={item.Image}
+                    src={`${process.env.BACKEND_API_URL}${item.Image}`}
                     alt="cover"
                     className="transition-all w-[80%] aspect-[3/2] object-contain mt-2"
                   />
@@ -199,7 +199,7 @@ const Preferences = () => {
         <div className="grid grid-cols-8 gap-2 mb-3">
           {data &&
             data.map((item) => (
-              <img key={item.id} src={item.Image} alt="cover" className="transition-all" />
+              <img key={item.id} src={`${process.env.BACKEND_API_URL}${item.Image}`} alt="cover" className="transition-all" />
             ))}
           {edit && (
             <div onClick={()=>routeToPage(1)}>
@@ -219,7 +219,7 @@ const Preferences = () => {
               <div key={item.id} className="relative shadow-sm h-20  border border-gray-200">
                 <div className="flex justify-center h-10  mb-2">
                   <img
-                    src={item.Image}
+                    src={`${process.env.BACKEND_API_URL}${item.Image}`}
                     alt="cover"
                     className="transition-all w-[80%] aspect-[3/2] object-contain mt-2"
                   />
@@ -247,7 +247,7 @@ const Preferences = () => {
               <div key={item.id} className="relative shadow-sm h-20  border border-gray-200">
                 <div className="flex justify-center h-10  mb-2">
                   <img
-                    src={item.Image}
+                    src={`${process.env.BACKEND_API_URL}${item.Image}`}
                     alt="cover"
                     className="transition-all w-[80%] aspect-[3/2] object-contain mt-2"
                   />
