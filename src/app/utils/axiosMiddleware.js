@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 const getAuthToken = () => {
     if (typeof window !== 'undefined') {
         return localStorage.getItem('token')?.replace(/"/g, "");
@@ -24,11 +25,11 @@ axiosInstance.interceptors.response.use(
 
             try {
                 const refreshTokenResponse = await axios.post(`${process.env.BACKEND_API_URL}/refresh_token`, {
-                    refresh: localStorage.getItem('refreshToken').replace(/"/g, ""),
+                    refresh: localStorage.getItem('refresh').replace(/"/g, ""),
                 });
 
-                const { accessToken } = refreshTokenResponse.data;
-                localStorage.setItem('accessToken', accessToken);
+                const { access } = refreshTokenResponse.data;
+                localStorage.setItem('token', accessToken);
 
                 originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
                 return axiosInstance(originalRequest);

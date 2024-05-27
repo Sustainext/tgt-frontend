@@ -36,13 +36,6 @@ const Preferences = () => {
   const fetchpreference = async () => {
     LoaderOpen();
     try {
-      const stringWithQuotes = localStorage.getItem("token");
-      const stringWithoutQuotes = stringWithQuotes.replace(/"/g, "");
-      const options = {
-        headers: {
-          Authorization: `Bearer ${stringWithoutQuotes}`,
-        },
-      };
       const response = await axiosInstance.get(
         `${process.env.BACKEND_API_URL}/organization_preference/`
       );

@@ -45,9 +45,11 @@ export function AuthProvider({ children }) {
   
       const userData = await response.json();
       const receivedToken = userData.key.access;
+      const refreshToken = userData.key.refresh;
   
       setToken(receivedToken);
       saveToLocalStorage('token', receivedToken);
+      saveToLocalStorage('refresh',refreshToken)
       router.push('/dashboard');
   
       // Fetch user details
