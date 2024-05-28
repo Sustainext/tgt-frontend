@@ -35,7 +35,7 @@ const Entity = () => {
   };
 
   const handleGeneralDetails = async (method, data, id = '') => {
-    const url = `/corporate${id ? `/${id}/` : ''}`;
+    const url = `/corporate${id ? `/${id}/` : ''}?partial=true`;
     const payload = {
       name: data.generalDetails.name || 'Test Corp',
       corporatetype: data.generalDetails.type || 'Default',
@@ -70,7 +70,7 @@ const Entity = () => {
       type_of_services: null,
       type_of_business_relationship: null,
       framework: data.reportingPeriodInformation.reportingFramework || 'GRI: With reference to',
-      organization: data.generalDetails.organisation || 'Acme Group',
+      // organization: data.generalDetails.organization || null,
     };
 
     try {

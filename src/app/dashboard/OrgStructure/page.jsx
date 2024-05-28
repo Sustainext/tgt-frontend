@@ -3,7 +3,11 @@ import { useState, useEffect } from 'react';
 import { FaTrashAlt, FaEye, FaEdit, FaAngleRight, FaAngleDown } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
 import axiosInstance from '../../utils/axiosMiddleware';
+import axios from 'axios';
 import Link from 'next/link';
+import Organization from './forms/Organization/page';
+import ConfirmationModal from '../../shared/components/ConfirmationModal'
+import EntityView from '../../shared/components/EntityView'
 
 const Table = ({ data, labels, currentIndex, rawData }) => {
   const router = useRouter();
@@ -104,6 +108,7 @@ const Table = ({ data, labels, currentIndex, rawData }) => {
           fax: entity.fax,
           zipcode: entity.zipcode,
           framework: entity.framework,
+          organization: entity.organization
         });
 
         entity.location.forEach((location) => {
@@ -321,7 +326,7 @@ const Table = ({ data, labels, currentIndex, rawData }) => {
           </td>
         </tr>
       )}
-      {/* {showEntityView && (
+      {showEntityView && (
         <EntityView onClose={closeEntityView} data={filteredEntity} viewType={viewType} />
       )}
       <div>
@@ -331,7 +336,7 @@ const Table = ({ data, labels, currentIndex, rawData }) => {
           onConfirm={() => handleEntityDelete(labels[currentIndex], data)}
           message='Are you sure you want to delete this entity?'
         />
-      </div> */}
+      </div>
     </>
   );
 };
@@ -405,14 +410,28 @@ const Structure = () => {
   const levelLabels = ['Organisation', 'Corporate Entity', 'Location'];
   const [hData, setHData] = useState([]);
   const [rawData, setRawData] = useState([]);
+  const [token,setToken]=useState(null);
+
+  useEffect(() => {
+    const tokenFromLocalStorage = localStorage.getItem('token');
+    if (tokenFromLocalStorage) {
+      setToken(tokenFromLocalStorage.replace(/"/g, ''));
+    }
+  }, []);
+
+  const options = {
+    headers : {
+      Authorization:`Bearer ${token}`
+    }
+  }
 
   useEffect(() => {
     fetchHierarchy();
-  }, []);
+  }, [token]);
 
   const fetchHierarchy = () => {
-    axiosInstance
-      .get(`${process.env.BACKEND_API_URL}/structure`)
+    axios
+      .get(`${process.env.BACKEND_API_URL}/structure`,options)
       .then((response) => {
         setRawData(response.data);
         const filtered = filterData(response.data);

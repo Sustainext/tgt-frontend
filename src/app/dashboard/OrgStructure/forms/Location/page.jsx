@@ -1,12 +1,11 @@
-'use client';
-
-import React, { useState, useEffect, useMemo } from 'react';
+'use client'
+import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Country, State, City } from 'country-state-city';
 import { FiArrowLeft } from 'react-icons/fi';
 import industryList from '../../../../shared/data/sectors';
 import { timeZones } from '../../../../shared/data/timezones';
-import axiosInstance,{ post, put } from '../../../../utils/axiosMiddleware';
+import axiosInstance, { post, put } from '../../../../utils/axiosMiddleware';
 
 const dateFormatOptions = [
   { label: 'MM/DD/YYYY', value: 'MM/DD/YYYY' },
@@ -46,7 +45,7 @@ const initialState = {
     corporateEntity: '',
     timeZone: '',
     language: '',
-    dateFormat: ''
+    dateFormat: '',
   },
   addressInformation: {
     country: '',
@@ -72,7 +71,7 @@ const Location = ({ heading }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const queryData = searchParams.get('data');
-  
+
   const [formData, setFormData] = useState(initialState);
   const [selectedIndustry, setSelectedIndustry] = useState('');
   const [subIndustries, setSubIndustries] = useState([]);
@@ -109,15 +108,11 @@ const Location = ({ heading }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.get(
-          `/corporategetonly`
-        );
+        const response = await axiosInstance.get(`/corporategetonly`);
         console.log('Corporates:', response.data);
         setCorporates(response.data);
       } catch (e) {
-        console.log(
-          'failed fetching organization',
-          process.env.REACT_APP_BACKEND_URL        );
+        console.log('failed fetching organization', process.env.BACKEND_API_URL);
       }
     };
 
@@ -290,7 +285,6 @@ const Location = ({ heading }) => {
       country: data.addressInformation.country || 'IN',
       from_date: data.reportingPeriodInformation.fromDate || null,
       to_date: data.reportingPeriodInformation.toDate || null,
-    //   framework: data.reportingPeriodInformation.reportingFramework || 'GRI: With reference to',
     };
 
     try {
@@ -307,7 +301,7 @@ const Location = ({ heading }) => {
   const handleEditLocation = async (event, data, id) => {
     event.preventDefault();
 
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/location/${id}/`;
+    const url = `/location/${id}/`;
 
     const payload = {
       name: data.generalDetails.name || '',
@@ -421,6 +415,95 @@ const Location = ({ heading }) => {
     }
   };
 
+  useEffect(() => {
+    if (editData) {
+      const selectedCountryCode = editData.filteredData[0].country;
+      const selectedStateCode = editData.filteredData[0].state;
+
+      const statesOfSelectedCountry =
+        State.getStatesOfCountry(selectedCountryCode);
+      const citiesOfSelectedState = City.getCitiesOfState(
+        selectedCountryCode,
+        selectedStateCode
+      );
+
+      const selectedIndustryValue = editData.filteredData[0].sector;
+
+      // Find the corresponding industry object
+      const selectedIndustryData = industryList.find(
+        (industry) => industry.industry === selectedIndustryValue
+      );
+
+      // Get the sub-industries for the selected industry
+      const subIndustriesForSelectedIndustry =
+        selectedIndustryData?.subIndustries || [];
+
+      const frameworkNumbers = editData.filteredData[0].framework;
+
+      // Map the numeric values to framework names
+      // const selectedFrameworks = Array.isArray(frameworkNumbers)
+      //   ? frameworkNumbers.map((num) => frameworkMapping[num])
+      //   : [frameworkMapping[frameworkNumbers]];
+      // console.log('data in lcoation', editData.filteredData[0]);
+
+      setFormData({
+        generalDetails: {
+          name: editData.filteredData[0].name,
+          email: editData.filteredData[0].email,
+          phone: editData.filteredData[0].phone,
+          website: editData.filteredData[0].website,
+          typelocation: editData.filteredData[0].location_type,
+          ownership: editData.filteredData[0].owner,
+          location: editData.filteredData[0].location_of_headquarters,
+          Empcount: editData.filteredData[0].employeecount,
+          revenue: editData.filteredData[0].revenue,
+          mobile: editData.filteredData[0].mobile,
+          fax: editData.filteredData[0].fax,
+          sector: editData.filteredData[0].sector,
+          subIndustry: editData.filteredData[0].subindustry,
+          organisation: editData.filteredData[0].organisation,
+          dateFormat: editData.filteredData[0].date_format,
+          currency: editData.filteredData[0].currency,
+          timeZone: editData.filteredData[0].timezone,
+          language: editData.filteredData[0].language,
+        },
+
+        addressInformation: {
+          country: editData.filteredData[0].country,
+          state: editData.filteredData[0].state,
+          city: editData.filteredData[0].city,
+          street: editData.filteredData[0].streetaddress,
+          zipCode: editData.filteredData[0].zipCode,
+          latitude: editData.filteredData[0].latitude,
+          longitude: editData.filteredData[0].longitude,
+        },
+
+        reportingPeriodInformation: {
+          fromDate: editData.filteredData[0].from_date,
+          toDate: editData.filteredData[0].to_date,
+          reportingFramework: editData.filteredData[0].framework,
+        },
+        errors: {
+          latitude: '',
+          longitude: '',
+        },
+      });
+
+      setStates(statesOfSelectedCountry);
+      setCities(citiesOfSelectedState);
+      setSelectedCountry(selectedCountryCode);
+      setSelectedState(selectedStateCode);
+      setSelectedCity(editData.filteredData[0].city);
+
+      setSelectedIndustry(selectedIndustryValue);
+      setSubIndustries(subIndustriesForSelectedIndustry);
+
+      setSelectedFrameworks(selectedFrameworks);
+    }
+  }, [editData]);
+
+  
+
   return (
     <div className='px-4 mt-4'>
       <div className='flex justify-between items-center drop-shadow-lg border-b-2 py-6 w-full'>
@@ -489,7 +572,7 @@ const Location = ({ heading }) => {
               <input
                 type='text'
                 name='name'
-                value={formData.generalDetails.name}
+                value={formData.generalDetails?.name}
                 onChange={handleGeneralDetailsChange}
                 className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
               />
@@ -506,7 +589,7 @@ const Location = ({ heading }) => {
               <input
                 type='text'
                 name='phone'
-                value={formData.generalDetails.phone}
+                value={formData.generalDetails?.phone}
                 onChange={handleGeneralDetailsChange}
                 className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
               />
@@ -522,7 +605,7 @@ const Location = ({ heading }) => {
               <input
                 type='text'
                 name='mobile'
-                value={formData.generalDetails.mobile}
+                value={formData.generalDetails?.mobile}
                 onChange={handleGeneralDetailsChange}
                 className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
               />
@@ -537,7 +620,7 @@ const Location = ({ heading }) => {
               <input
                 type='text'
                 name='website'
-                value={formData.generalDetails.website}
+                value={formData.generalDetails?.website}
                 onChange={handleGeneralDetailsChange}
                 className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
               />
@@ -552,7 +635,7 @@ const Location = ({ heading }) => {
               <input
                 type='text'
                 name='fax'
-                value={formData.generalDetails.fax}
+                value={formData.generalDetails?.fax}
                 onChange={handleGeneralDetailsChange}
                 className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
               />
@@ -567,7 +650,7 @@ const Location = ({ heading }) => {
               <input
                 type='text'
                 name='Empcount'
-                value={formData.generalDetails.Empcount}
+                value={formData.generalDetails?.Empcount}
                 onChange={handleGeneralDetailsChange}
                 className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
               />
@@ -582,7 +665,7 @@ const Location = ({ heading }) => {
               <input
                 type='text'
                 name='revenue'
-                value={formData.generalDetails.revenue}
+                value={formData.generalDetails?.revenue}
                 onChange={handleGeneralDetailsChange}
                 className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
               />
@@ -596,7 +679,7 @@ const Location = ({ heading }) => {
               </label>
               <select
                 name='sector'
-                value={formData.generalDetails.sector}
+                value={formData.generalDetails?.sector}
                 onChange={handleSectorChange}
                 className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
               >
@@ -617,7 +700,7 @@ const Location = ({ heading }) => {
               </label>
               <select
                 name='subIndustry'
-                value={formData.generalDetails.subIndustry}
+                value={formData.generalDetails?.subIndustry}
                 onChange={handleGeneralDetailsChange}
                 className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
               >
@@ -640,7 +723,7 @@ const Location = ({ heading }) => {
               <input
                 type='text'
                 name='typelocation'
-                value={formData.generalDetails.typelocation}
+                value={formData.generalDetails?.typelocation}
                 onChange={handleGeneralDetailsChange}
                 className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
               />
@@ -661,7 +744,7 @@ const Location = ({ heading }) => {
               <input
                 type='text'
                 name='street'
-                value={formData.addressInformation.street}
+                value={formData.addressInformation?.street}
                 onChange={handleAddressInformationChange}
                 className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
               />
@@ -678,7 +761,7 @@ const Location = ({ heading }) => {
 
               <select
                 name='country'
-                value={formData.addressInformation.country}
+                value={formData.addressInformation?.country}
                 onChange={handleAddressInformationChange}
                 className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
               >
@@ -700,7 +783,7 @@ const Location = ({ heading }) => {
 
               <select
                 name='state'
-                value={formData.addressInformation.state}
+                value={formData.addressInformation?.state}
                 onChange={handleAddressInformationChange}
                 className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
               >
@@ -722,7 +805,7 @@ const Location = ({ heading }) => {
 
               <select
                 name='city'
-                value={formData.addressInformation.city}
+                value={formData.addressInformation?.city}
                 onChange={handleAddressInformationChange}
                 className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
               >
@@ -745,7 +828,7 @@ const Location = ({ heading }) => {
               <input
                 type='text'
                 name='zipCode'
-                value={formData.addressInformation.zipCode}
+                value={formData.addressInformation?.zipCode}
                 onChange={handleAddressInformationChange}
                 className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
               />
@@ -760,17 +843,17 @@ const Location = ({ heading }) => {
               <input
                 type='number'
                 name='latitude'
-                value={formData.addressInformation.latitude}
+                value={formData.addressInformation?.latitude}
                 onChange={handleAddressInformationChange}
                 className={`border rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight ${
-                  formData.errors.latitude
+                  formData.errors?.latitude
                     ? 'border-red-500'
                     : 'border-gray-300'
                 }`}
               />
-              {formData.errors.latitude && (
+              {formData.errors?.latitude && (
                 <p className='text-red-500 text-xs mt-1'>
-                  {formData.errors.latitude}
+                  {formData.errors?.latitude}
                 </p>
               )}
             </div>
@@ -784,17 +867,17 @@ const Location = ({ heading }) => {
               <input
                 type='number'
                 name='longitude'
-                value={formData.addressInformation.longitude}
+                value={formData.addressInformation?.longitude}
                 onChange={handleAddressInformationChange}
                 className={`border rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight ${
-                  formData.errors.longitude
+                  formData.errors?.longitude
                     ? 'border-red-500'
                     : 'border-gray-300'
                 }`}
               />
-              {formData.errors.longitude && (
+              {formData.errors?.longitude && (
                 <p className='text-red-500 text-xs mt-1'>
-                  {formData.errors.longitude}
+                  {formData.errors?.longitude}
                 </p>
               )}
             </div>
@@ -827,7 +910,7 @@ const Location = ({ heading }) => {
               </label>
               <select
                 name='dateFormat'
-                value={formData.generalDetails.dateFormat}
+                value={formData.generalDetails?.dateFormat}
                 onChange={handleGeneralDetailsChange}
                 className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
               >
@@ -847,7 +930,7 @@ const Location = ({ heading }) => {
               </label>
               <select
                 name='currency'
-                value={formData.generalDetails.currency}
+                value={formData.generalDetails?.currency}
                 onChange={handleGeneralDetailsChange}
                 className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
               >
@@ -868,8 +951,8 @@ const Location = ({ heading }) => {
               </label>
               <select
                 name='timeZone'
-                value={formData.generalDetails.timeZone}
-                onChange={handleTimezoneChange}
+                value={formData.generalDetails?.timeZone}
+                onChange={handleGeneralDetailsChange}
                 className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
               >
                 {timeZones.map((option) => (
@@ -886,10 +969,9 @@ const Location = ({ heading }) => {
               >
                 Language
               </label>
-
               <select
                 name='language'
-                value={formData.generalDetails.language}
+                value={formData.generalDetails?.language}
                 onChange={handleGeneralDetailsChange}
                 className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
               >
@@ -932,7 +1014,7 @@ const Location = ({ heading }) => {
                 type='date'
                 name='fromDate'
                 id='fromDate'
-                value={formData.reportingPeriodInformation.fromDate}
+                value={formData.reportingPeriodInformation?.fromDate}
                 onChange={handleReportingPeriodChange}
                 className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
               />
@@ -948,7 +1030,7 @@ const Location = ({ heading }) => {
                 type='date'
                 name='toDate'
                 id='toDate'
-                value={formData.reportingPeriodInformation.toDate}
+                value={formData.reportingPeriodInformation?.toDate}
                 onChange={handleReportingPeriodChange}
                 className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
               />
