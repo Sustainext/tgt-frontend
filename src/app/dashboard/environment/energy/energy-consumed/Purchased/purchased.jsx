@@ -255,7 +255,7 @@ const Purchased = () => {
         // handling the successful response
         console.log(response.data, 'is the response data')
         setRemoteSchema(response.data.form[0].schema)
-        setRemoteUiSchema(response.data.form[0].uiSchema)
+        setRemoteUiSchema(response.data.form[0].ui_schema)
         const form_parent = response.data.form_data
         const f_data = form_parent[0].data
         setFormData(f_data)
@@ -337,7 +337,7 @@ const Purchased = () => {
                 <CustomFileUploadWidget
                   {...props}
                   scopes="ec1"
-                  setFormData={updateFormData}
+                  setFormData={updateFormDatanew}
                 />
               )
 

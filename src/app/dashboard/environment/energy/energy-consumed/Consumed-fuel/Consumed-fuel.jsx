@@ -217,7 +217,7 @@ const Consumedfuel = () => {
 
   };
 
-  // The below code on updateFormData is by White Beard
+  // The below code on updateFormData 
   const updateFormData = async () => {
     const data = {
       client_id : client_id,
@@ -315,8 +315,8 @@ const Consumedfuel = () => {
 
           <Form
           className='flex'
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
