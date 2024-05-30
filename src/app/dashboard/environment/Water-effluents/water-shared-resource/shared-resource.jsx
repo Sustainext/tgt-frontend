@@ -2,8 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
-import TextareaWidget2 from "../../../../shared/widgets/TextareaWidget2";
-const widgets = {
+import TextareaWidget2 from "../../../../shared/widgets/Textarea/TextareaWidget2";const widgets = {
     TextareaWidgetnew: TextareaWidget2,
 };
 

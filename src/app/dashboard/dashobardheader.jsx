@@ -2,7 +2,7 @@ const DashboardHeader = () => {
     return (
         <>
 
-<div className="flex justify-between   bg-white sticky top-0 right-0 border-b border-sky-600 border-opacity-50 pt-1 w-full mx-2">
+<div className="flex justify-between z-[100]  bg-white sticky top-0 right-0 border-b border-sky-600 border-opacity-50 pt-1 w-full mx-2">
   <div className="flex justify-start items-center my-4 gap-1 px-2">
     <a href="/home">
       <span className="text-[#007EEF] hover:text-[#0057A5]">Home</span>

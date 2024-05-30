@@ -2,11 +2,11 @@
 import React, { useState } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
-import inputWidget2 from '../../../../shared/widgets/inputWidget2';
+import inputWidget2 from '../../../../shared/widgets/Input/inputWidget2';
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
-import RadioWidget2 from '../../../../shared/widgets/radioWidget2';
+import RadioWidget2 from '../../../../shared/widgets/Input/radioWidget2';
 
 const widgets = {
     inputWidget: inputWidget2,
@@ -75,7 +75,7 @@ const Screen1 = () => {
              <div className="mx-2 p-3 mb-6 rounded-md" style={{boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px"}}>
                 <div className='mb-4 flex'>
                     <div className='w-[80%]'>
-                    <h2 className='flex mx-2 text-[14px] text-gray-500 font-semibold'>
+                    <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold'>
                     Access to non-occupational medical and healthcare services
                         <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to

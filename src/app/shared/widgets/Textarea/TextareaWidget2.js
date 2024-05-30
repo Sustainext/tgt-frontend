@@ -1,5 +1,5 @@
 import React from "react";
-import { GlobalState } from "../../../Context/page";
+import { GlobalState } from "../../../../Context/page";
 import { MdKeyboardArrowDown, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";

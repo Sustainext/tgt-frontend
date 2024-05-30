@@ -2,7 +2,7 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
-import { Energydata } from "../../../environment/data/griinfo"
+import { Socialdata } from "../../data/socialgriinfo"
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import Socialheader from "../../socialheader"
@@ -22,7 +22,7 @@ const Preventionohsimpact = () => {
     };
     useEffect(() => {
         var newData = [];
-        Energydata.map((program) => {
+        Socialdata.map((program) => {
             program.category.map((tag) => {
                 if (tag === category) {
                     newData.push(program);
@@ -43,7 +43,7 @@ const Preventionohsimpact = () => {
                             <div className='flex'>
                                 <div>
                                     <p className="gradient-text text-[22px] font-bold">
-                                    Ocupational Health and Safety 2018
+                                        Ocupational Health and Safety 2018
                                     </p>
                                 </div>
 
@@ -53,9 +53,8 @@ const Preventionohsimpact = () => {
                     </div>
                     <div className='w-full float-end '>
                         <div className="flex float-end border-l">
-                            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('33')}>GRI 403 - 7</button>
-
-                            <button className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('29')}>SDG 8</button>
+                            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('34')}>GRI 403 - 7</button>
+                            <button className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('35')}>SDG 8</button>
                         </div>
                     </div>
                 </div>
@@ -64,7 +63,7 @@ const Preventionohsimpact = () => {
                 <div className="ml-3 flex">
                     <h6 className="text-[17px] mb-4 font-semibold flex">
 
-                    Prevention and mitigation of occupational health & safety related impacts directly linked by business relationships
+                        Prevention and mitigation of occupational health & safety related impacts directly linked by business relationships
                         {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[14px]" />
@@ -103,7 +102,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
                 </div>
             </div>
             <Socialheader activeMonth={activeMonth} setActiveMonth={setActiveMonth} />
-            <Preventionohsimpactscreen/>
+            <Preventionohsimpactscreen />
             {/* <Riskscreeen /> */}
 
         </>

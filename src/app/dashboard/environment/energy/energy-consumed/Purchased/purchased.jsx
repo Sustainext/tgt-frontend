@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
-import dateWidget from '../../../../../shared/widgets/dateWidget';
-import selectWidget from '../../../../../shared/widgets/selectWidget';
-import inputWidget from '../../../../../shared/widgets/inputWidget';
+import dateWidget from '../../../../../shared/widgets/Input/dateWidget';
+import selectWidget from '../../../../../shared/widgets/Select/selectWidget';
+import inputWidget from '../../../../../shared/widgets/Input/inputWidget';
 import { GlobalState } from '../../../../../../Context/page';
 import CustomFileUploadWidget from '../../../../../shared/widgets/CustomFileUploadWidget';
 import AssignToWidget from '../../../../../shared/widgets/assignToWidget';
@@ -227,7 +227,7 @@ const Purchased = () => {
     const newFormData = formData.filter((_, i) => i !== index);
     setFormData(newFormData);
   };
-  const renderFields = (schema) => {
+  const renderFields = () => {
     const fields = Object.keys(schema.items.properties);
     return fields.map((field, index) => (
       <div key={index}>
