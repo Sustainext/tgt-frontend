@@ -2,12 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
-import TextareaWidget from '../../../../shared/widgets/TextareaWidget';
+import TextareaWidget from '../../../../shared/widgets/Textarea/TextareaWidget';
 import { GlobalState } from '../../../../../Context/page';
 import { MdKeyboardArrowDown, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import selectWidget2 from "../../../../shared/widgets/selectWidget2"
+import selectWidget2 from "../../../../shared/widgets/Select/selectWidget2"
 import axios from 'axios';
 
 const widgets = {

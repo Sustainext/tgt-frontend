@@ -14,7 +14,7 @@ const selectWidget2 = (props) => {
           value={props.value || ''}
           onChange={handleChange}
         >
-          <option value="" disabled={!!props.value}>{`Select ${props.label}` || "Select..."}</option>
+          <option value="" disabled={!!props.value}>{`Select`}</option>
           {props.options.enumOptions.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}

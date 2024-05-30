@@ -2,7 +2,7 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
-import { Energydata } from "../../../environment/data/griinfo"
+import { Socialdata } from "../../data/socialgriinfo"
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import Socialheader from "../../socialheader"
@@ -22,7 +22,7 @@ const Illhealth = () => {
     };
     useEffect(() => {
         var newData = [];
-        Energydata.map((program) => {
+        Socialdata.map((program) => {
             program.category.map((tag) => {
                 if (tag === category) {
                     newData.push(program);
@@ -53,10 +53,10 @@ const Illhealth = () => {
                     </div>
                     <div className='w-full float-end '>
                         <div className="flex float-end border-l">
-                            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('33')}>GRI 403 - 10</button>
-                            <button className="text-[#fff] bg-green-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('29')}>SDG 3</button>
-                            <button className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('29')}>SDG 8</button>
-                            <button className="text-[#fff] bg-blue-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('29')}>SDG 16</button>
+                            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('42')}>GRI 403 - 10</button>
+                            <button className="text-[#fff] bg-green-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('43')}>SDG 3</button>
+                            <button className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('44')}>SDG 8</button>
+                            <button className="text-[#fff] bg-blue-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('45')}>SDG 16</button>
                         </div>
                     </div>
                 </div>

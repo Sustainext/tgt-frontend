@@ -2,12 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
-import inputWidget2 from '../../../../shared/widgets/inputWidget2';
+import inputWidget2 from '../../../../shared/widgets/Input/inputWidget2';
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
-import RadioWidget from '../../../../shared/widgets/radioWidget';
-import RadioWidget2 from '../../../../shared/widgets/radioWidget2';
+import RadioWidget from '../../../../shared/widgets/Input/radioWidget';
+import RadioWidget2 from '../../../../shared/widgets/Input/radioWidget2';
 import axios from 'axios';
 
 const widgets = {

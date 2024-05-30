@@ -1,5 +1,5 @@
 import React from "react";
-import { GlobalState } from "../../../Context/page";
+import { GlobalState } from "../../../../Context/page";
 
 const TextareaWidget = (props) => {
   const { open } = GlobalState();

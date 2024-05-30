@@ -2,13 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
-import TextareaWidget from '../../../../shared/widgets/TextareaWidget';
+import TextareaWidget from '../../../../shared/widgets/Textarea/TextareaWidget';
 import axios from 'axios';
-
 const widgets = {
   TextareaWidgetnew: TextareaWidget,
 };
-
 const view_path = 'gri-environment-energy-302-2c-conversion_factor'
 const client_id = 1
 const user_id = 1

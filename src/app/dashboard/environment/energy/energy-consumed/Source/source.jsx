@@ -3,8 +3,9 @@ import React, { useState, useEffect } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
 import { GlobalState } from '../../../../../../Context/page';
-import TextareaWidget from '../../../../../shared/widgets/TextareaWidget';
+import TextareaWidget from '../../../../../shared/widgets//Textarea/TextareaWidget';
 import axios from 'axios';
+
 const widgets = {
 TextareaWidgetnew:TextareaWidget,
 };

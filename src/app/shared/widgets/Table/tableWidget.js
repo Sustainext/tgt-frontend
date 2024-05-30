@@ -1,3 +1,5 @@
+
+'use client'
 import React, { useState, useCallback } from "react";
 import { MdInfoOutline,MdOutlineDeleteOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
@@ -44,7 +46,7 @@ const CustomTableWidget = ({
               <th
                 key={idx}
                 style={{ minWidth: "120px", textAlign: "left" }}
-                className="text-[12px] border border-gray-300 px-2"
+                className="text-[12px] border border-gray-300 px-2 py-2"
               >
                 <div className="flex items-center">
                   <p>{item.title}
@@ -53,6 +55,7 @@ const CustomTableWidget = ({
                     <MdInfoOutline
                    data-tooltip-id={`tooltip-${item.title.replace(/\s+/g, '-')}`}
                    data-tooltip-content={item.tooltip}
+                   style={{display:`${item.display}`}}
 
                   className="ml-2 cursor-pointer" />
                   <ReactTooltip
