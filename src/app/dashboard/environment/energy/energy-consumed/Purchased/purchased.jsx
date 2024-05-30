@@ -293,12 +293,12 @@ const Purchased = () => {
     setFormData(updatedData);
 
   };
+
   const handleRemove = (index) => {
-    const updatedData = [...formData];
-    updatedData.splice(index, 1);
-    setFormData(updatedData);
+    const newFormData = formData.filter((_, i) => i !== index);
+    setFormData(newFormData);
   };
-  const renderFields = () => {
+  const renderFields = (schema) => {
     const fields = Object.keys(schema.items.properties);
     return fields.map((field, index) => (
       <div key={index}>
@@ -306,6 +306,7 @@ const Purchased = () => {
       </div>
     ));
   };
+
   return (
     <>
 
@@ -329,7 +330,7 @@ const Purchased = () => {
               RemoveWidget: (props) => (
                 <RemoveWidget
                   {...props}
-                  index={props.id.split('_')[1]} // Pass the index
+                  index={props.id} // Pass the index
                   onRemove={handleRemove}
                 />
               ),

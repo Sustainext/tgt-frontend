@@ -1,7 +1,7 @@
 import React from 'react';
 import { MdOutlineDeleteOutline } from "react-icons/md";
 
-const RemoveWidget = ({ index, onRemove }) => {
+const RemoveWidget = ({ index, onRemove, }) => {
   const handleRemove = () => {
     onRemove(parseInt(index, 10));
     console.log(parseInt(index, 10));

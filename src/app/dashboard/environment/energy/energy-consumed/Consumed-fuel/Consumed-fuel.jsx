@@ -202,7 +202,7 @@ const generateTooltip = (field, title, tooltipText) => {
 
 const Consumedfuel = () => {
   const { open } = GlobalState();
-  const [formData, setFormData] = useState([{}]);
+  const [formData, setFormData] = useState([{}]); 
   const [r_schema, setRemoteSchema] = useState({})
   const [r_ui_schema, setRemoteUiSchema] = useState({})
 

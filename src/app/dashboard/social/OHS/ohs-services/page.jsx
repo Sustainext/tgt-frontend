@@ -1,4 +1,3 @@
-
 'use client'
 import React, { useState, useEffect } from 'react';
 import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
@@ -6,8 +5,8 @@ import { Energydata } from "../../../environment/data/griinfo"
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import Socialheader from "../../socialheader"
-import Ohsscreeen1 from "./ohs-screeen"
-const Ohsmanagment = () => {
+import Ohsservicesmain from "./ohs-services"
+const Ohsservices = () => {
     const [activeMonth, setActiveMonth] = useState("Jan");
     const [data, setData] = useState();
     const [category, setCategory] = useState("");
@@ -43,7 +42,7 @@ const Ohsmanagment = () => {
                             <div className='flex'>
                                 <div>
                                     <p className="gradient-text text-[22px] font-bold">
-                                        Occupational Health and Safety 2018
+                                    Ocupational Health and Safety 2018
                                     </p>
                                 </div>
 
@@ -53,7 +52,7 @@ const Ohsmanagment = () => {
                     </div>
                     <div className='w-full float-end '>
                         <div className="flex float-end border-l">
-                            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('33')}>GRI 403 - 1</button>
+                            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('33')}>GRI 403 - 3</button>
 
                             <button className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('29')}>SDG 8</button>
                         </div>
@@ -64,7 +63,7 @@ const Ohsmanagment = () => {
                 <div className="ml-3 flex">
                     <h6 className="text-[17px] mb-4 font-semibold flex">
 
-                        Occupational health and safety management system
+                    Occupational Health Services
                         {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[14px]" />
@@ -103,9 +102,9 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
                 </div>
             </div>
             <Socialheader activeMonth={activeMonth} setActiveMonth={setActiveMonth} />
-            <Ohsscreeen1 />
+            <Ohsservicesmain />
 
         </>
     );
 };
-export default Ohsmanagment;
+export default Ohsservices;
