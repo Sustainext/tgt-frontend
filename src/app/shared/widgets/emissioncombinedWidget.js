@@ -12,10 +12,11 @@ const CombinedWidget = ({ value = {}, onChange }) => {
   const [activities, setActivities] = useState([]);
   const [units, setUnits] = useState([]);
   const [base_categories, setBaseCategories] = useState([])
-  
+
   useEffect(() => {
     console.log('category selected is', category)
     console.log('subcategory selected is', subcategory)
+
   }, [category, subcategory]);
 
 
@@ -61,22 +62,54 @@ const CombinedWidget = ({ value = {}, onChange }) => {
     console.log('fetched activities are ', activities)
   }, [activities]);
 
-  useEffect(()=>{
-    console.log(
-      'scope1Info is loading '
-    )
-    const b_categories = scope1Info[0].Category.map(item => item.name);
-    setBaseCategories(b_categories)
-  },[])
+  // useEffect(()=>{
+  //   console.log(
+  //     'scope1Info is loading '
+  //   )
+  //   const b_categories = scope1Info[0].Category.map(item => item.name);
+  //   setBaseCategories(b_categories)
+  // },[])
 
-  useEffect(()=>{
-    console.log(base_categories, ' is baseCategories')
-  },[base_categories])
-  
-  useEffect(()=>{
-    console.log(subcategories, 'is the subcategories')
-  },[subcategories])
+  // useEffect(()=>{
+  //   console.log(base_categories, ' is baseCategories')
+  // },[base_categories])
 
+
+
+  const fetchBaseCategories = async () => {
+    // Fetch logic here, assume it updates base_categories
+    setBaseCategories(scope1Info.map(info => info.Category.map(c => c.name)).flat());
+  };
+  const fetchSubcategories = async () => {
+    const selectedCategory = scope1Info.find(info => info.Category.some(c => c.name === category));
+    const newSubcategories = selectedCategory ? selectedCategory.Category.find(c => c.name === category).SubCategory : [];
+    setSubcategories(newSubcategories);
+    if (!newSubcategories.find(sub => sub === value.Subcategory)) {
+      setSubcategory(''); // Reset subcategory if it's not valid in the new category
+    }
+  };
+  useEffect(() => {
+    fetchBaseCategories();
+  }, []);
+
+  useEffect(() => {
+    if (category) {
+      fetchSubcategories();
+    }
+  }, [category]);
+  // const handleCategoryChange = (value) => {
+  //   console.log('Handle category change triggered')
+  //   setCategory(value);
+  //   setSubcategory('');
+  //   setActivity('');
+  //   setQuantity('');
+  //   setUnit('');
+  //   const selectedCategory = scope1Info[0].Category.find(item => item.name === value);
+  //   const subCategories = selectedCategory ? selectedCategory.SubCategory : [];
+  //   console.log(subCategories, ' are the subcategories')
+  //   setSubcategories(subCategories)
+  //   onChange({ Category: value, Subcategory: '', Activity: '', Quantity: '', Unit: '' });
+  // };
   const handleCategoryChange = (value) => {
     console.log('Handle category change triggered')
     setCategory(value);
@@ -84,13 +117,14 @@ const CombinedWidget = ({ value = {}, onChange }) => {
     setActivity('');
     setQuantity('');
     setUnit('');
-    const selectedCategory = scope1Info[0].Category.find(item => item.name === value);
-    const subCategories = selectedCategory ? selectedCategory.SubCategory : [];
-    console.log(subCategories, ' are the subcategories')
-    setSubcategories(subCategories)
-    onChange({ Category: value, Subcategory: '', Activity: '', Quantity: '', Unit: '' });
-  };
 
+    const selectedCategory = scope1Info.find(info => info.Category.some(c => c.name === value));
+    const subCategories = selectedCategory ? selectedCategory.Category.find(c => c.name === value).SubCategory : [];
+    console.log(subCategories, ' are the subcategories');
+
+    setSubcategories(subCategories); // Assuming subcategory objects have a 'name' property
+    onChange({ Category: value, Subcategory: '', Activity: '', Quantity: '', Unit: '' });
+};
   const handleSubcategoryChange = (value) => {
     setSubcategory(value);
     setActivity('');
