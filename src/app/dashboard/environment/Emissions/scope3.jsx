@@ -30,7 +30,7 @@ const Scope3 = () => {
 
   const handleChange = (e) => {
     setFormData(e.formData);
- 
+
   };;
 
   const handleAddNew = () => {
@@ -46,7 +46,7 @@ const Scope3 = () => {
       form_data : formData
     }
 
-    const url = 'http://localhost:8000/datametric/update-fieldgroup'
+    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
     try {
       const response = await axios.post(url,
         {

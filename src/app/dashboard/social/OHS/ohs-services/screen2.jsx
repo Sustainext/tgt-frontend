@@ -7,7 +7,7 @@ import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 import RadioWidget2 from '../../../../shared/widgets/Input/radioWidget2';
-import axios from 'axios';  
+import axios from 'axios';
 
 const widgets = {
     inputWidget: inputWidget2,
@@ -86,7 +86,7 @@ const Screen2 = () => {
         setFormData(e.formData);
     };
 
-    // The below code on updateFormData 
+    // The below code on updateFormData
   const updateFormData = async () => {
     const data = {
       client_id : client_id,
@@ -95,7 +95,7 @@ const Screen2 = () => {
       form_data: formData
     }
 
-    const url = 'http://localhost:8000/datametric/update-fieldgroup'
+    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
     try{
       const response = await axios.post(url,
         {
@@ -110,7 +110,7 @@ const Screen2 = () => {
   };
 
   const loadFormData = async () => {
-    const base_url = 'http://localhost:8000/datametric/get-fieldgroups?path=';
+    const base_url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path=`;
     const url = `${base_url}${view_path}&&client_id=${client_id}&&user_id=${user_id}`
     console.log(url, 'is the url to be fired')
 

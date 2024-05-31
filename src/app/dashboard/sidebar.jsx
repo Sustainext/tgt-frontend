@@ -44,7 +44,7 @@ const Sidenav = () => {
         {
           title: "Social",
           icon: <MdOutlineGroup />,
-          link: "/dashboard/environment",
+          link: "/dashboard/social",
         },
         {
           title: "Governance",

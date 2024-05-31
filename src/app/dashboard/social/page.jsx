@@ -14,6 +14,7 @@ import Illhealth from "./OHS/ill-health/page"
 import Childlabour from "./Human-Rights/child-labour/page";
 import Forcedorcompulsorylabour from "./Human-Rights/forced-or-compulsory-labour/page";
 import Securitypersonnel from "./Human-Rights/security-personnel/page";
+import Parentalleave from "./Employment/Parental-Leave/page";
 import Benefits from "./Employment/Benefits/page";
 import EmployeeHiresTurnover from "./Employment/Employee-Hires-Turnover/page";
 const AccordionItem = ({ title, children }) => {
@@ -1121,7 +1122,13 @@ const Social = () => {
               </>
             )}
 
-
+          {activeStep === 3 && (
+              <>
+                <div>
+                  <Parentalleave />
+                </div>
+              </>
+            )}
             {activeStep === 5 && (
               <>
                 <div>
