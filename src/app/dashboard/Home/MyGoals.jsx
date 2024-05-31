@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import Moment from 'react-moment';
 import axios from 'axios';
 import { useAuth } from '../../../Context/auth';
+import { del, patch, post } from '../../utils/axiosMiddleware';
 
 const MyGoals = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -62,8 +63,7 @@ const MyGoals = () => {
     const sandData = {
       completed: true,
     };
-    await axios
-      .patch(`${process.env.REACT_APP_BACKEND_URL}/mygoal/${id}/`, sandData, options)
+    await patch(`/mygoal/${id}/`, sandData)
       .then((response) => {
         if (response.status === 200) {
           toast.success("Goal has been completed successfully", {
@@ -94,8 +94,7 @@ const MyGoals = () => {
 
   const handleDelete = async (id) => {
     LoaderOpen();
-    await axios
-      .delete(`${process.env.REACT_APP_BACKEND_URL}/mygoal/${id}/`, options)
+    await del(`/mygoal/${id}/`)
       .then((response) => {
         if (response.status === 200) {
           toast.success("Goal has been deleted successfully", {
@@ -137,8 +136,7 @@ const MyGoals = () => {
       assigned_to: userId,
       completed: false,
     };
-    await axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/mygoal/`, sandData, options)
+    await post(`/mygoal/`, sandData)
       .then((response) => {
         if (response.status === 200) {
           toast.success("Goal has been added successfully", {

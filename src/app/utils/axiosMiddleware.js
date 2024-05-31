@@ -1,46 +1,58 @@
 import axios from 'axios';
-import { useAuth } from '../../Context/auth';
-
-// const getAuthToken = () => {
-//     if (typeof window !== 'undefined') {
-//         return localStorage.getItem('token')?.replace(/"/g, "");
-//     }
-//     return '';
-// }
 
 const getAuthToken = () => {
     if (typeof window !== 'undefined') {
         return localStorage.getItem('token')?.replace(/"/g, "");
     }
     return '';
-}
+};
 
 const axiosInstance = axios.create({
     baseURL: process.env.BACKEND_API_URL,
-    headers: {
-        'Authorization': `Bearer ${getAuthToken()}`,
-    }
 });
+
+// Add a request interceptor to include the token in the headers
+axiosInstance.interceptors.request.use(
+    async (config) => {
+        const token = getAuthToken();
+
+        if (token) {
+            config.headers['Authorization'] = `Bearer ${token}`;
+        }
+
+        return config;
+    },
+    (error) => Promise.reject(error)
+);
 
 // Add a response interceptor to handle 403 errors
 axiosInstance.interceptors.response.use(
-    response => response,
+    (response) => response,
     async (error) => {
         const originalRequest = error.config;
 
-        if (error.response.status === 403 && !originalRequest._retry) {
+        if (error.response && error.response.status === 403 && !originalRequest._retry) {
             originalRequest._retry = true;
 
             try {
-                const refreshTokenResponse = await axios.post(`${process.env.BACKEND_API_URL}/refresh_token`, {
-                    refresh: localStorage.getItem('refresh').replace(/"/g, ""),
-                });
+                const refreshToken = localStorage.getItem('refresh')?.replace(/"/g, "");
 
-                const { access } = refreshTokenResponse.data;
-                localStorage.setItem('token', access);
+                if (refreshToken) {
+                    const refreshTokenResponse = await axios.post(`${process.env.BACKEND_API_URL}/refresh_token`, {
+                        refresh: refreshToken,
+                    });
 
-                originalRequest.headers['Authorization'] = `Bearer ${access}`;
-                return axiosInstance(originalRequest);
+                    const { access } = refreshTokenResponse.key;
+                    localStorage.setItem('token', access);
+
+                    originalRequest.headers['Authorization'] = `Bearer ${access}`;
+                    return axiosInstance(originalRequest);
+                } else {
+                    // Handle the case where the refresh token is missing
+                    console.error('No refresh token available');
+                    // Optionally handle missing refresh token (e.g., redirect to login)
+                    // router.push('/')
+                }
             } catch (refreshError) {
                 console.error('Token refresh failed:', refreshError);
                 // Optionally handle token refresh failure (e.g., redirect to login)
@@ -65,7 +77,13 @@ const post = async (url, data, config) => {
     return axiosInstance.post(url, data, config);
 };
 
-export { put, patch, post };
+const del = async (url, data, config) => {
+    return axiosInstance.delete(url, data, config);
+};
+
+export { put, patch, post, del };
 export default axiosInstance;
+
+
 
 

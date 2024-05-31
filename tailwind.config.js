@@ -13,7 +13,7 @@ module.exports = {
 
     extend: {
       fontFamily: {
-        'sans': ['Manrope', 'sans-serif'] // Add 'Roboto' as the default sans-serif font
+        'sans': ['Manrope', 'sans-serif']
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -22,7 +22,7 @@ module.exports = {
       },
 
         zIndex: {
-          '-1000': '-1000', // Add the z-index value -1000
+          '-1000': '-1000',
         },
         screens: {
           '3xl': '2050px',

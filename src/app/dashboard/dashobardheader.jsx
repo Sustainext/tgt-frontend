@@ -1,11 +1,14 @@
 'use client'
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../../Context/auth";
 import { useRouter } from "next/navigation";
 import { loadFromLocalStorage } from "../utils/storage";
 
 const DashboardHeader = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [username, setUsername] = useState('');
+  const [email,setEmail]= useState('');
+  const [initials,setInitials] = useState('');
   const { logout } = useAuth();
   const router = useRouter();
   const userDetails = loadFromLocalStorage('userData')
@@ -37,6 +40,12 @@ const DashboardHeader = () => {
     return input;
   };
 
+  useEffect(()=>{
+    setUsername(extractUsername(userDetails?.user_detail[0].username));
+    setEmail(userDetails?.user_detail[0].username);
+    setInitials(getInitials(userDetails?.user_detail[0].username))
+  },[])
+
   return (
     <>
       <div className="flex justify-between bg-white sticky top-0 right-0 border-b border-sky-600 border-opacity-50 pt-1 w-full mx-2 -z--1000">
@@ -55,7 +64,7 @@ const DashboardHeader = () => {
           <div className="me-8 flex items-center">
             <div className="text-[#007EEF]">
               <span className="text-[#007EEF]"> Hi,</span>
-              <span className="me-4 text-[#007EEF]">{extractUsername(userDetails?.user_detail[0].username)}</span>
+              <span className="me-4 text-[#007EEF]">{username}</span>
             </div>
             <div className="relative cursor-pointer" onClick={toggleDropdown}>
               <div className="flex justify-center items-center">
@@ -74,7 +83,7 @@ const DashboardHeader = () => {
                     fontWeight: "bold",
                   }}
                 >
-                  {getInitials(userDetails?.user_detail[0].username)}
+                  {initials}
                 </div>
                 <div>
                   <svg
@@ -96,10 +105,10 @@ const DashboardHeader = () => {
                         <div className="self-stretch px-4 py-1 justify-start items-center inline-flex">
                           <div className="grow shrink basis-0 py-1 flex-col justify-start items-start inline-flex">
                             <div className="self-stretch text-black/opacity-90 text-[13px] font-normal font-['Manrope'] leading-none">
-                              {extractUsername(userDetails?.user_detail[0].username)}
+                              {username}
                             </div>
                             <div className="self-stretch text-black/opacity-60 text-xs font-normal font-['Manrope'] leading-[15px]">
-                              {userDetails?.user_detail[0].username}
+                              {email}
                             </div>
                           </div>
                         </div>

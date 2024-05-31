@@ -56,6 +56,7 @@ export function AuthProvider({ children }) {
       const userDetails = await fetchUserDetails(receivedToken);
       setUserDetails(userDetails);
       saveToLocalStorage('userData', userDetails);
+      saveToLocalStorage('user_id', userDetails.user_detail[0].id);
   
     } catch (error) {
       console.error('Login error:', error);
