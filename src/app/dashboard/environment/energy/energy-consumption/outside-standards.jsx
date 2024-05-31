@@ -4,7 +4,9 @@ import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
 import TextareaWidget from '../../../../shared/widgets/Textarea/TextareaWidget';
 import axios from 'axios';
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Oval } from 'react-loader-spinner';
 const widgets = {
   TextareaWidgetnew: TextareaWidget,
 };
@@ -94,7 +96,14 @@ const OutsideStandards = () => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({})
   const [r_ui_schema, setRemoteUiSchema] = useState({})
+  const [loopen, setLoOpen] = useState(false);
 
+  const LoaderOpen = () => {
+    setLoOpen(true);
+  };
+  const LoaderClose = () => {
+    setLoOpen(false);
+  };
   //The below code
   const updateFormData = async () => {
     const data = {
@@ -112,13 +121,49 @@ const OutsideStandards = () => {
         }
       );
 
-      console.log('Response:', response.data);
+      if (response.status === 200) {
+        toast.success("Data added successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        LoaderClose();
+        loadFormData();
+
+      }else {
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        LoaderClose();
+      }
     } catch (error) {
-      console.error('Error:', error);
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
 
   const loadFormData = async () => {
+    LoaderOpen();
     const base_url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path=`;
     const url = `${base_url}${view_path}&&client_id=${client_id}&&user_id=${user_id}`
     console.log(url, 'is the url to be fired')
@@ -133,11 +178,26 @@ const OutsideStandards = () => {
       const form_parent = response.data.form_data
       const f_data = form_parent[0].data
       setFormData(f_data)
+      LoaderClose();
       // setting the setFormData(response.data.form[0].form_data)
     })
-    .catch(error =>{
-      //handling the error response
-      console.log('Error:', error);
+    .catch(error => {
+
+      const errorMessage =
+        error.response && error.response.data && error.response.data.message
+          ? error.response.data.message
+          : "Oops, something went wrong";
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      LoaderClose();
     });
   }
   //Reloading the forms -- White Beard
