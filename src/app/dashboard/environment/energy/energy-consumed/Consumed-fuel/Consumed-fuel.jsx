@@ -202,7 +202,7 @@ const generateTooltip = (field, title, tooltipText) => {
 
 const Consumedfuel = () => {
   const { open } = GlobalState();
-  const [formData, setFormData] = useState([{}]); 
+  const [formData, setFormData] = useState([{}]);  
   const [r_schema, setRemoteSchema] = useState({})
   const [r_ui_schema, setRemoteUiSchema] = useState({})
 
@@ -226,7 +226,7 @@ const Consumedfuel = () => {
       form_data: formData
     }
 
-    const url = 'http://localhost:8000/datametric/update-fieldgroup'
+    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
     try{
       const response = await axios.post(url,
         {
@@ -241,7 +241,7 @@ const Consumedfuel = () => {
   };
 
   const loadFormData = async () => {
-    const base_url = 'http://localhost:8000/datametric/get-fieldgroups?path=';
+    const base_url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path=`;
     const url = `${base_url}${view_path}&&client_id=${client_id}&&user_id=${user_id}`
     console.log(url, 'is the url to be fired')
 
@@ -262,7 +262,7 @@ const Consumedfuel = () => {
       console.log('Error:', error);
     });
   }
-  //Reloading the forms -- White Beard
+  //Reloading the forms 
   useEffect(() => {
     //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
   },[r_schema, r_ui_schema])

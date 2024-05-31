@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
 import inputWidget2 from '../../../../shared/widgets/Input/inputWidget2';
@@ -7,11 +7,16 @@ import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 import RadioWidget2 from '../../../../shared/widgets/Input/radioWidget2';
+import axios from 'axios';
 
 const widgets = {
     inputWidget: inputWidget2,
     RadioWidget2:RadioWidget2,
 };
+
+const view_path = 'gri-social-ohs-403-9f-workers_excluded'
+const client_id = 1
+const user_id = 1
 
 const schema = {
     type: 'array',
@@ -88,14 +93,78 @@ const uiSchema = {
 
 const Screen5 = () => {
     const [formData, setFormData] = useState([{}]);
+    const [r_schema, setRemoteSchema] = useState({})
+    const [r_ui_schema, setRemoteUiSchema] = useState({})
 
     const handleChange = (e) => {
         setFormData(e.formData);
     };
 
+    // The below code on updateFormData 
+    const updateFormData = async () => {
+        const data = {
+        client_id : client_id,
+        user_id : user_id,
+        path: view_path,
+        form_data: formData
+        }
+
+        const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
+        try{
+        const response = await axios.post(url,
+            {
+            ...data
+            }
+        );
+
+        console.log('Response:', response.data);
+        } catch (error) {
+        console.error('Error:', error);
+        }
+    };
+
+    const loadFormData = async () => {
+        const base_url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path=`;
+        const url = `${base_url}${view_path}&&client_id=${client_id}&&user_id=${user_id}`
+        console.log(url, 'is the url to be fired')
+
+        //making the GET request
+        axios.get(url)
+        .then(response => {
+        //handling the successful response
+        console.log(response.data, 'is the response data')
+        setRemoteSchema(response.data.form[0].schema)
+        setRemoteUiSchema(response.data.form[0].ui_schema)
+        const form_parent = response.data.form_data
+        const f_data = form_parent[0].data
+        setFormData(f_data)
+        // setting the setFormData(response.data.form[0].form_data)
+        })
+        .catch(error =>{
+        //handling the error response
+        console.log('Error:', error);
+        });
+    }
+    //Reloading the forms
+    useEffect(() => {
+        //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
+    },[r_schema, r_ui_schema])
+
+    // console log the form data change
+    useEffect(() => {
+        console.log('Form data is changed -', formData)
+    },[formData])
+
+    // fetch backend and replace initialized forms
+    useEffect (()=> {
+        console.log('From loaded , ready for trigger')
+        loadFormData()
+    },[])
+
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent the default form submission
         console.log('Form data:', formData);
+        updateFormData()
     };
 
     return (
@@ -131,8 +200,8 @@ const Screen5 = () => {
                 </div>
                 <div className='mx-2'>
                     <Form
-                        schema={schema}
-                        uiSchema={uiSchema}
+                        schema={r_schema}
+                        uiSchema={r_ui_schema}
                         formData={formData}
                         onChange={handleChange}
                         validator={validator}

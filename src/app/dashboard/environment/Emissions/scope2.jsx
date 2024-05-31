@@ -46,7 +46,7 @@ const Scope2 = () => {
       form_data : formData
     }
 
-    const url = 'http://localhost:8000/datametric/update-fieldgroup'
+    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
     try {
       const response = await axios.post(url,
         {
@@ -65,7 +65,7 @@ const Scope2 = () => {
   };
 
   const loadFormData = async () =>{
-    const base_url = 'http://localhost:8000/datametric/get-fieldgroups?path=';
+    const base_url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path=`;
     const url = `${base_url}${view_path}&&client_id=${client_id}&&user_id=${user_id}`
     console.log(url, 'is the url to be fired')
 
