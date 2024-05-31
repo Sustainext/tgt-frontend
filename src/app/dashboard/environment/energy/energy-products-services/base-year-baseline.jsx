@@ -52,7 +52,7 @@ const Baseyearenergybaseline = () => {
   const [r_schema, setRemoteSchema] = useState({})
   const [r_ui_schema, setRemoteUiSchema] = useState({})
 
-  // The below code on updateFormData 
+  // The below code on updateFormData
   const updateFormData = async () => {
     const data = {
       client_id : client_id,

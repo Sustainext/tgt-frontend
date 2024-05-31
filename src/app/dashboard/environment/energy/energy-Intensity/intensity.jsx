@@ -210,7 +210,7 @@ const Intensity = () => {
 
   };
 
-  //The below code 
+  //The below code
   const updateFormData = async () => {
     const data = {
       client_id : client_id,

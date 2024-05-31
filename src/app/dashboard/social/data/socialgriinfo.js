@@ -576,7 +576,7 @@ export const Socialdata = [
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
+              href="https://www.globalreporting.org/pdf.ashx?id=12622&page=7"
               target="_blank"
             >
               Learn more <MdChevronRight className="text-lg mt-1" />
@@ -771,7 +771,7 @@ export const Socialdata = [
             GRI 409-1: Operations and suppliers at significant risk for
             incidents of forced or compulsory labor
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[310px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
               Guidance for Disclosure 409-1
             </p>
@@ -792,7 +792,7 @@ export const Socialdata = [
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
+              href="https://www.globalreporting.org/pdf.ashx?id=12633&page=7"
               target="_blank"
             >
               Learn more <MdChevronRight className="text-lg mt-1" />
@@ -936,7 +936,7 @@ export const Socialdata = [
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
+              href="https://www.globalreporting.org/pdf.ashx?id=12644&page=1"
               target="_blank"
             >
               Learn more <MdChevronRight className="text-lg mt-1" />
@@ -1052,7 +1052,7 @@ export const Socialdata = [
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
+              href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
               target="_blank"
             >
               Learn more <MdChevronRight className="text-lg mt-1" />
@@ -1164,7 +1164,7 @@ export const Socialdata = [
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
+              href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
               target="_blank"
             >
               Learn more <MdChevronRight className="text-lg mt-1" />
@@ -1279,7 +1279,7 @@ export const Socialdata = [
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
+              href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
               target="_blank"
             >
               Learn more <MdChevronRight className="text-lg mt-1" />
@@ -1431,7 +1431,7 @@ export const Socialdata = [
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
+              href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
               target="_blank"
             >
               Learn more <MdChevronRight className="text-lg mt-1" />
@@ -1599,7 +1599,7 @@ export const Socialdata = [
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
+              href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
               target="_blank"
             >
               Learn more <MdChevronRight className="text-lg mt-1" />
@@ -1772,7 +1772,7 @@ export const Socialdata = [
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
+              href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
               target="_blank"
             >
               Learn more <MdChevronRight className="text-lg mt-1" />
@@ -1935,7 +1935,7 @@ export const Socialdata = [
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
+              href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
               target="_blank"
             >
               Learn more <MdChevronRight className="text-lg mt-1" />
@@ -2071,7 +2071,7 @@ export const Socialdata = [
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
+              href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
               target="_blank"
             >
               Learn more <MdChevronRight className="text-lg mt-1" />
@@ -2401,7 +2401,7 @@ export const Socialdata = [
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
+              href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
               target="_blank"
             >
               Learn more <MdChevronRight className="text-lg mt-1" />
@@ -2680,7 +2680,7 @@ If the organization does not follow the ILO code of practice, it can indicate wh
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
+              href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
               target="_blank"
             >
               Learn more <MdChevronRight className="text-lg mt-1" />

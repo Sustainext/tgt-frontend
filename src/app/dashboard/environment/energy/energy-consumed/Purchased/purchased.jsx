@@ -13,6 +13,9 @@ import CustomSelectInputWidget from '../../../../../shared/widgets/CustomSelectI
 import RemoveWidget from '../../../../../shared/widgets/RemoveWidget';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Oval } from 'react-loader-spinner';
 // import { error } from 'console';
 import axios from 'axios';
 const widgets = {
@@ -92,7 +95,7 @@ const schema = {
 };
 
 const uiSchema = {
- // Add flex-wrap to wrap fields to the next line
+  // Add flex-wrap to wrap fields to the next line
   items: {
 
     'ui:order': [
@@ -210,6 +213,14 @@ const Purchased = () => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({})
   const [r_ui_schema, setRemoteUiSchema] = useState({})
+  const [loopen, setLoOpen] = useState(false);
+
+  const LoaderOpen = () => {
+    setLoOpen(true);
+  };
+  const LoaderClose = () => {
+    setLoOpen(false);
+  };
 
   const handleChange = (e) => {
     setFormData(e.formData);
@@ -238,16 +249,52 @@ const Purchased = () => {
         }
       );
 
-      console.log('Response:', response.data);
+      if (response.status === 200) {
+        toast.success("Data added successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        LoaderClose();
+        loadFormData();
+
+      }else {
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        LoaderClose();
+      }
     } catch (error) {
-      console.error('Error:', error);
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
 
-  const loadFormData = async () =>{
+  const loadFormData = async () => {
+    LoaderOpen();
     const base_url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path=`;
     const url = `${base_url}${view_path}&&client_id=${client_id}&&user_id=${user_id}`
-    console.log(url, 'is the url to be fired')
+    // console.log(url, 'is the url to be fired')
 
     // making the GET request
     axios.get(url)
@@ -259,33 +306,47 @@ const Purchased = () => {
         const form_parent = response.data.form_data
         const f_data = form_parent[0].data
         setFormData(f_data)
-        // setting the serFormData(response.data.form[0].form_data)
+        LoaderClose();
       })
       .catch(error => {
-        // handling the error
-        console.error('Error:', error);
+
+        const errorMessage =
+          error.response && error.response.data && error.response.data.message
+            ? error.response.data.message
+            : "Oops, something went wrong";
+        toast.error(errorMessage, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        LoaderClose();
       });
   }
 
   // Reloading the forms -- White Beard
-  useEffect(()=>{
+  useEffect(() => {
     //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-  },[r_schema, r_ui_schema])
+  }, [r_schema, r_ui_schema])
 
   // console log the form data changes
   useEffect(() => {
-    console.log('formdata is changed -',formData)
-  },[formData])
+    console.log('formdata is changed -', formData)
+  }, [formData])
 
   // fetch backend and replace initialized forms
-  useEffect (()=> {
+  useEffect(() => {
     console.log('From loaded , ready for trigger')
     loadFormData()
-  },[])
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
-    console.log('Form data:', formData);
+    // console.log('Form data:', formData);
     updateFormData()
 
   };
@@ -310,7 +371,7 @@ const Purchased = () => {
   return (
     <>
 
-<div className={`overflow-auto custom-scrollbar flex justify-around  ${open ? "xl:w-[768px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
+      <div className={`overflow-auto custom-scrollbar flex justify-around  ${open ? "xl:w-[768px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
         <div>
           <div>
             <div className='flex'>
@@ -319,7 +380,7 @@ const Purchased = () => {
           </div>
 
           <Form
-          className='flex'
+            className='flex'
             schema={schema}
             uiSchema={uiSchema}
             formData={formData}
@@ -347,6 +408,18 @@ const Purchased = () => {
           />
         </div>
 
+        {loopen && (
+          <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+            <Oval
+              height={50}
+              width={50}
+              color="#00BFFF"
+              secondaryColor="#f3f3f3"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
+          </div>
+        )}
       </div>
 
       <div className="flex justify-start mt-4 right-1">
@@ -355,7 +428,7 @@ const Purchased = () => {
         </button>
       </div>
       <div className='mb-4'>
-      <button type="button"  className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
+        <button type="button" className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
       </div>
 
     </>

@@ -30,7 +30,7 @@ const Scope3 = () => {
 
   const handleChange = (e) => {
     setFormData(e.formData);
- 
+
   };;
 
   const handleAddNew = () => {

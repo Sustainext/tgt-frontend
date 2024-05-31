@@ -14,6 +14,9 @@ import RemoveWidget from '../../../../../shared/widgets/RemoveWidget';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 import axios from 'axios';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Oval } from 'react-loader-spinner';
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
@@ -85,7 +88,7 @@ const schema = {
 const uiSchema = { // Add flex-wrap to wrap fields to the next line
   items: {
     'ui:order': [
-      'EnergyType', 'Source','Renewable', 'Quantity', 'Unit', 'AssignTo', 'FileUpload', 'Remove'
+      'EnergyType', 'Source', 'Renewable', 'Quantity', 'Unit', 'AssignTo', 'FileUpload', 'Remove'
     ],
     EnergyType: {
       'ui:widget': 'selectWidget',
@@ -192,7 +195,14 @@ const Selfgenerated = () => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({})
   const [r_ui_schema, setRemoteUiSchema] = useState({})
+  const [loopen, setLoOpen] = useState(false);
 
+  const LoaderOpen = () => {
+    setLoOpen(true);
+  };
+  const LoaderClose = () => {
+    setLoOpen(false);
+  };
   const handleChange = (e) => {
     setFormData(e.formData);
 
@@ -203,67 +213,117 @@ const Selfgenerated = () => {
     setFormData(newData);
 
   };
-  
+
   // The below code
   const updateFormData = async () => {
     const data = {
-      client_id : client_id,
-      user_id : user_id,
+      client_id: client_id,
+      user_id: user_id,
       path: view_path,
       form_data: formData
     }
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
-    try{
+    try {
       const response = await axios.post(url,
         {
           ...data
         }
       );
 
-      console.log('Response:', response.data);
+      if (response.status === 200) {
+        toast.success("Data added successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        LoaderClose();
+        loadFormData();
+
+      } else {
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        LoaderClose();
+      }
     } catch (error) {
-      console.error('Error:', error);
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
 
   const loadFormData = async () => {
+    LoaderOpen();
     const base_url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path=`;
     const url = `${base_url}${view_path}&&client_id=${client_id}&&user_id=${user_id}`
     console.log(url, 'is the url to be fired')
 
     //making the GET request
     axios.get(url)
-    .then(response => {
-      //handling the successful response
-      console.log(response.data, 'is the response data')
-      setRemoteSchema(response.data.form[0].schema)
-      setRemoteUiSchema(response.data.form[0].ui_schema)
-      const form_parent = response.data.form_data
-      const f_data = form_parent[0].data
-      setFormData(f_data)
-      // setting the setFormData(response.data.form[0].form_data)
-    })
-    .catch(error =>{
-      //handling the error response
-      console.log('Error:', error);
-    });
+      .then(response => {
+        //handling the successful response
+        console.log(response.data, 'is the response data')
+        setRemoteSchema(response.data.form[0].schema)
+        setRemoteUiSchema(response.data.form[0].ui_schema)
+        const form_parent = response.data.form_data
+        const f_data = form_parent[0].data
+        setFormData(f_data)
+        LoaderClose();
+        // setting the setFormData(response.data.form[0].form_data)
+      })
+      .catch(error => {
+        const errorMessage =
+          error.response && error.response.data && error.response.data.message
+            ? error.response.data.message
+            : "Oops, something went wrong";
+        toast.error(errorMessage, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        LoaderClose();
+      });
   }
   //Reloading the forms -- White Beard
   useEffect(() => {
     //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-  },[r_schema, r_ui_schema])
+  }, [r_schema, r_ui_schema])
 
   // console log the form data change
   useEffect(() => {
     console.log('Form data is changed -', formData)
-  },[formData])
+  }, [formData])
 
   // fetch backend and replace initialized forms
-  useEffect (()=> {
+  useEffect(() => {
     console.log('From loaded , ready for trigger')
     loadFormData()
-  },[])
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -291,7 +351,7 @@ const Selfgenerated = () => {
   return (
     <>
 
-<div className={`overflow-auto custom-scrollbar flex justify-around  ${open ? "xl:w-[768px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
+      <div className={`overflow-auto custom-scrollbar flex justify-around  ${open ? "xl:w-[768px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
         <div>
           <div>
             <div className='flex'>
@@ -300,7 +360,7 @@ const Selfgenerated = () => {
           </div>
 
           <Form
-          className='flex'
+            className='flex'
             schema={r_schema}
             uiSchema={r_ui_schema}
             formData={formData}
@@ -327,7 +387,18 @@ const Selfgenerated = () => {
 
           />
         </div>
-
+        {loopen && (
+          <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+            <Oval
+              height={50}
+              width={50}
+              color="#00BFFF"
+              secondaryColor="#f3f3f3"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
+          </div>
+        )}
       </div>
 
       <div className="flex justify-start mt-4 right-1">
@@ -336,7 +407,7 @@ const Selfgenerated = () => {
         </button>
       </div>
       <div className='mb-4'>
-      <button type="button"  className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
+        <button type="button" className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
       </div>
 
     </>

@@ -119,7 +119,7 @@ const Screen2 = () => {
         setFormData(e.formData);
     };
 
-    // The below code on updateFormData 
+    // The below code on updateFormData
     const updateFormData = async () => {
         const data = {
         client_id : client_id,
@@ -183,7 +183,7 @@ const Screen2 = () => {
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent the default form submission
         console.log('Form data:', formData);
-        updateFormData(); 
+        updateFormData();
     };
 
     return (

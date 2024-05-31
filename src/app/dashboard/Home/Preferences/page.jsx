@@ -71,7 +71,7 @@ const Preferences = () => {
       LoaderClose();
     }
   };
-  
+
 
   useEffect(() => {
     if (isMounted.current) {
@@ -99,10 +99,10 @@ const Preferences = () => {
             <div className="text-sky-600 text-[10px] font-bold leading-[13px] space-x-2">
               <button
                 onClick={handleEditToggle}
-                className="text-sky-600 text-[10px] font-normal leading-[13px] space-x-2 me-2"
+                className="text-sky-600 text-[10px] font-normal leading-[13px] space-x-2 me-2 flex"
               >
                 <AiOutlineEdit style={{ fontSize: "18px" }} />
-                <span>Edit</span>
+                <span className="text-[13px] mt-1">Edit</span>
               </button>
             </div>
           </div>

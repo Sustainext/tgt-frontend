@@ -9,10 +9,6 @@ import { MdOutlineClear } from "react-icons/md";
 const Emissions = ({open}) => {
   const [activeMonth, setActiveMonth] = useState("Jan");
 
-
-
-
-
   return (
     <>
       <div className="flex flex-col justify-start overflow-x-hidden ">

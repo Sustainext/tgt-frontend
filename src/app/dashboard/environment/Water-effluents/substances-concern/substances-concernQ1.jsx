@@ -205,7 +205,7 @@ const SubstancesconcernQ1 = () => {
 
   };
 
-  // The below code on updateFormData 
+  // The below code on updateFormData
   const updateFormData = async () => {
     const data = {
       client_id : client_id,
@@ -265,7 +265,7 @@ const SubstancesconcernQ1 = () => {
     console.log('From loaded , ready for trigger')
     loadFormData()
   },[])
-  
+
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
     console.log('Form data:', formData);

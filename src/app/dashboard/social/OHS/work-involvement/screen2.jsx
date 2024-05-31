@@ -83,7 +83,7 @@ const Screen2 = () => {
         setFormData(e.formData);
     };
 
-    // The below code on updateFormData 
+    // The below code on updateFormData
   const updateFormData = async () => {
     const data = {
       client_id : client_id,

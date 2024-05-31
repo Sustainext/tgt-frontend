@@ -176,7 +176,7 @@ const Waterdischarge = () => {
 
   };
 
-  // The below code on updateFormData 
+  // The below code on updateFormData
   const updateFormData = async () => {
     const data = {
       client_id : client_id,

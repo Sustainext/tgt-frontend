@@ -7,7 +7,7 @@ import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 import RadioWidget2 from '../../../../shared/widgets/Input/radioWidget2';
-import axios from 'axios';  
+import axios from 'axios';
 
 const widgets = {
     inputWidget: inputWidget2,
@@ -86,7 +86,7 @@ const Screen2 = () => {
         setFormData(e.formData);
     };
 
-    // The below code on updateFormData 
+    // The below code on updateFormData
   const updateFormData = async () => {
     const data = {
       client_id : client_id,

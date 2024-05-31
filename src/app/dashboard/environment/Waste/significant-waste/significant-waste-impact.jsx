@@ -72,7 +72,7 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
     }
 };
 const Significantwasteimpact = () => {
-    const [formData, setFormData] = useState([{}]);  
+    const [formData, setFormData] = useState([{}]);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
 
@@ -80,7 +80,7 @@ const Significantwasteimpact = () => {
     setFormData(e.formData);
   };
 
-  // The below code on updateFormData 
+  // The below code on updateFormData
   const updateFormData = async () => {
     const data = {
       client_id : client_id,
