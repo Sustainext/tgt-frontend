@@ -36,7 +36,7 @@ export default function Home() {
     <>
       <main>
         <div
-          className="min-h-screen bg-cover bg-center"
+          className="min-h-[135vh] bg-cover bg-center"
           style={{
             backgroundImage:
               "url('https://sustainextstorage1.blob.core.windows.net/sustainext-frontend-assets/Home/authbg.webp')",

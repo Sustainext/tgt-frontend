@@ -63,23 +63,23 @@ const Sidenav = () => {
         },
       ],
     },
-    { title: "Analyse", icon: <MdOutlineBarChart />, link: "#" },
+    { title: "Analyse", icon: <MdOutlineBarChart />, link: "/dashboard/Analyse" },
     { title: "Report", icon: <MdEditNote />, link: "#" },
     { title: "Optimise", icon: <MdOutlineSettingsSuggest />, link: "#" },
-    { title: "Track", icon: <MdOutlineSearch />, spacing: true, link: "#" },
+    { title: "Track", icon: <MdOutlineSearch />, spacing: true, link: "/dashboard/Track" },
     {
       title: "Organizational Structure",
       icon: <MdOutlineAccountTree />,
-      link: "#",
+      link: "/dashboard/OrgStructure",
     },
     { title: "About", icon: <MdInfoOutline />, link: "#" },
   ];
   const [submanuopen, setSubmenuopen] = useState(false);
   return (
     <>
-      <div className="min-h-screen fixed z-[100]">
+      <div className="min-h-[100vh] fixed z-[100]">
         <div
-          className={`bg-[#0a0528] min-h-screen px-3 pt-8 ${
+          className={`bg-[#0a0528] min-h-[135vh] ps-3 pt-8 ${
             open ? "w-[15rem]" : "w-20"
           } duration-300 relative`}
         >

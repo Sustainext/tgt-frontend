@@ -30,7 +30,7 @@ const environment = ({ open }) => {
     return (
         <>
             <div className="flex w-full">
-                <div>
+                <div className="min-h-[135vh]">
                     <Aside activeTab={activeTab} handleTabClick={handleTabClick} />
                 </div>
 
