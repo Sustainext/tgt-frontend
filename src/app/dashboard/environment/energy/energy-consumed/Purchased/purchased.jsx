@@ -16,7 +16,7 @@ import 'react-tooltip/dist/react-tooltip.css';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
-// import { error } from 'console';
+
 import axios from 'axios';
 const widgets = {
   inputWidget: inputWidget,
@@ -370,8 +370,7 @@ const Purchased = () => {
 
   return (
     <>
-
-      <div className={`overflow-auto custom-scrollbar flex justify-around  ${open ? "xl:w-[768px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
+      <div className={`overflow-auto custom-scrollbar flex justify-around  ${open ? "xl:w-[100%] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
         <div>
           <div>
             <div className='flex'>
