@@ -1,5 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react';
+import { scope1Info,scope2Info, scope3Info } from './scopeInfo';
+import axios from 'axios';
 const CombinedWidget = ({ value = {}, onChange }) => {
   const [category, setCategory] = useState(value.Category || '');
   const [subcategory, setSubcategory] = useState(value.Subcategory || '');
@@ -9,53 +11,128 @@ const CombinedWidget = ({ value = {}, onChange }) => {
   const [subcategories, setSubcategories] = useState([]);
   const [activities, setActivities] = useState([]);
   const [units, setUnits] = useState([]);
+  const [base_categories, setBaseCategories] = useState([])
 
   useEffect(() => {
-    if (category === 'Heating') {
-      setSubcategories(['Coal', 'Solar']);
-    } else if (category === 'Cooling') {
-      setSubcategories(['Electric', 'Natural Gas']);
-    } else if (category === 'Steam') {
-      setSubcategories(['Generated', 'Purchased']);
-    } else {
-      setSubcategories([]);
+    console.log('category selected is', category)
+    console.log('subcategory selected is', subcategory)
+
+  }, [category, subcategory]);
+
+
+  async function fetchActivities() {
+    // console.log("Fetching activities", page);
+    console.log(process.env, ' is the climatiq key')
+    const baseURL = "https://api.climatiq.io";
+    const resultsPerPage = 500;
+    const axiosConfig = {
+      headers: {
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_APP_CLIMATIQ_KEY}`,
+        Accept: "application/json",
+        "Content-type": "application/json",
+      },
+    };
+    const region = "US";
+    let currentYear = '2023';
+    let activitiesData=[];
+    // let totalResults = 0;
+    // let totalPages;
+
+    try {
+
+      const url = `${baseURL}/data/v1/search?results_per_page=500&year=${currentYear}&region=${region}*&category=${subcategory}&page=1&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;
+      console.log(url, 'is the url')
+      const response = await axios.get(url, axiosConfig);
+      console.log(response.data, ' climatiq data ...')
+      activitiesData = response.data.results;
+      setActivities(activitiesData)
+
+    } catch (error) {
+      // ! Throws Error if couldn't fetch data
+      console.error("Error fetching data from different regions: ", error);
+      throw error;
     }
-  }, [category]);
+  }
 
   useEffect(() => {
-    if (subcategory === 'Coal') {
-      setActivities(['Renewable', 'Non-renewable']);
-    } else if (subcategory === 'Solar') {
-      setActivities(['Photovoltaic', 'Thermal']);
-    } else {
-      setActivities([]);
-    }
+    fetchActivities()
   }, [subcategory]);
 
   useEffect(() => {
-    if (activity === 'Renewable' || activity === 'Photovoltaic') {
-      setUnits(['Joules', 'KJ']);
-    } else if (activity === 'Non-renewable' || activity === 'Thermal') {
-      setUnits(['Wh']);
-    } else {
-      setUnits([]);
-    }
-  }, [activity]);
+    console.log('fetched activities are ', activities)
+  }, [activities]);
 
+  // useEffect(()=>{
+  //   console.log(
+  //     'scope1Info is loading '
+  //   )
+  //   const b_categories = scope1Info[0].Category.map(item => item.name);
+  //   setBaseCategories(b_categories)
+  // },[])
+
+  // useEffect(()=>{
+  //   console.log(base_categories, ' is baseCategories')
+  // },[base_categories])
+
+
+
+  const fetchBaseCategories = async () => {
+    // Fetch logic here, assume it updates base_categories
+    setBaseCategories(scope1Info.map(info => info.Category.map(c => c.name)).flat());
+  };
+  const fetchSubcategories = async () => {
+    const selectedCategory = scope1Info.find(info => info.Category.some(c => c.name === category));
+    const newSubcategories = selectedCategory ? selectedCategory.Category.find(c => c.name === category).SubCategory : [];
+    setSubcategories(newSubcategories);
+    if (!newSubcategories.find(sub => sub === value.Subcategory)) {
+      setSubcategory(''); // Reset subcategory if it's not valid in the new category
+    }
+  };
+  useEffect(() => {
+    fetchBaseCategories();
+  }, []);
+
+  useEffect(() => {
+    if (category) {
+      fetchSubcategories();
+    }
+  }, [category]);
+  // const handleCategoryChange = (value) => {
+  //   console.log('Handle category change triggered')
+  //   setCategory(value);
+  //   setSubcategory('');
+  //   setActivity('');
+  //   setQuantity('');
+  //   setUnit('');
+  //   const selectedCategory = scope1Info[0].Category.find(item => item.name === value);
+  //   const subCategories = selectedCategory ? selectedCategory.SubCategory : [];
+  //   console.log(subCategories, ' are the subcategories')
+  //   setSubcategories(subCategories)
+  //   onChange({ Category: value, Subcategory: '', Activity: '', Quantity: '', Unit: '' });
+  // };
   const handleCategoryChange = (value) => {
+    console.log('Handle category change triggered')
     setCategory(value);
     setSubcategory('');
     setActivity('');
     setQuantity('');
     setUnit('');
-    onChange({ Category: value, Subcategory: '', Activity: '', Quantity: '', Unit: '' });
-  };
 
+    const selectedCategory = scope1Info.find(info => info.Category.some(c => c.name === value));
+    const subCategories = selectedCategory ? selectedCategory.Category.find(c => c.name === value).SubCategory : [];
+    console.log(subCategories, ' are the subcategories');
+
+    setSubcategories(subCategories); // Assuming subcategory objects have a 'name' property
+    onChange({ Category: value, Subcategory: '', Activity: '', Quantity: '', Unit: '' });
+};
   const handleSubcategoryChange = (value) => {
     setSubcategory(value);
     setActivity('');
     setQuantity('');
     setUnit('');
+
+    // fetch activities
+
     onChange({ Category: category, Subcategory: value, Activity: '', Quantity: '', Unit: '' });
   };
 
@@ -63,6 +140,7 @@ const CombinedWidget = ({ value = {}, onChange }) => {
     setActivity(value);
     setQuantity('');
     setUnit('');
+
     onChange({ Category: category, Subcategory: subcategory, Activity: value, Quantity: '', Unit: '' });
   };
 
@@ -85,9 +163,9 @@ const CombinedWidget = ({ value = {}, onChange }) => {
         className="block w-[180px] py-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
       >
         <option value="">Select Category</option>
-        <option value="Heating">Heating</option>
-        <option value="Cooling">Cooling</option>
-        <option value="Steam">Steam</option>
+            {base_categories.map((categoryName, index) => (
+                <option key={index} value={categoryName}>{categoryName}</option>
+            ))}
       </select>
       </div>
 
@@ -111,8 +189,10 @@ const CombinedWidget = ({ value = {}, onChange }) => {
         className="block w-[180px] py-2 mx-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
       >
         <option value="">Select Activity</option>
-        {activities.map((act, index) => (
-          <option key={index} value={act}>{act}</option>
+        {activities.map((item, index) => (
+          <option key={index} value={`${item.name} - ( ${item.source} ) - ${item.unit_type}`}
+          >{item.name} - ( {item.source} ) - {item.unit_type} -{" "}
+          {item.region} - {item.year}</option>
         ))}
       </select>
   </div>
