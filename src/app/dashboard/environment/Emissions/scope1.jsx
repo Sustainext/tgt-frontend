@@ -44,7 +44,8 @@ const Scope1 = () => {
       client_id: client_id,
       user_id : user_id,
       path: view_path,
-      form_data : formData
+      form_data : formData,
+      schema: r_schema
     }
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
