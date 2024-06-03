@@ -9,7 +9,9 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import selectWidget2 from "../../../../shared/widgets/Select/selectWidget2"
 import axios from 'axios';
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Oval } from 'react-loader-spinner';
 const widgets = {
     TextareaWidgetnew: TextareaWidget,
     selectWidget: selectWidget2,
@@ -18,28 +20,38 @@ const widgets = {
 const view_path = 'gri-environment-water-303-2a-profile_receiving_waterbody'
 const client_id = 1
 const user_id = 1
-
 const schema = {
-    type: 'object',
-    properties: {
-        Q1: {
-            type: "string",
-            enum: ['Yes', 'No'],
-            title: "option"
+    type: 'array',
+    items: {
+        type: 'object',
+        properties: {
+            Q1: {
+                type: "string",
+                enum: ['Yes', 'No'],
+                title: "option"
+            }
+
+            // Define other properties as needed
         }
     }
 };
 
-
-
 const uiSchema = {
+    items: {
     Q1: {
 
         "ui:widget": "selectWidget",
         'ui:options': {
             label: false // This disables the label for this field
         },
+    },
+    'ui:options': {
+        orderable: false, // Prevent reordering of items
+        addable: false, // Prevent adding items from UI
+        removable: false, // Prevent removing items from UI
+        layout: 'horizontal', // Set layout to horizontal
     }
+}
 };
 
 const Receivingwaterbody = () => {
@@ -47,71 +59,143 @@ const Receivingwaterbody = () => {
     const [formData, setFormData] = useState([{ Q1: '', details: '' }]); // Initial form data
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
-
-    const handleChange = ({ formData }) => {
-        setFormData(formData);
+    const [loopen, setLoOpen] = useState(false);
+    const LoaderOpen = () => {
+        setLoOpen(true);
     };
+    const LoaderClose = () => {
+        setLoOpen(false);
+    };
+    // const handleChange = (e) => {
+    //     const { formData } = e;
+    //     // Remove any unwanted keys
+    //     const cleanFormData = Object.keys(formData).reduce((acc, key) => {
+    //         if (!isNaN(key)) { // Assuming numeric keys are unwanted
+    //             return acc;
+    //         }
+    //         acc[key] = formData[key];
+    //         return acc;
+    //     }, {});
 
+    //     setFormData(cleanFormData);
+    // };
+    const handleChange = (e) => {
+        setFormData(e.formData);
+    };
     // The below code on updateFormData
     const updateFormData = async () => {
+        LoaderOpen();
         const data = {
-        client_id : client_id,
-        user_id : user_id,
-        path: view_path,
-        form_data: formData
+            client_id: client_id,
+            user_id: user_id,
+            path: view_path,
+            form_data: formData
         }
 
         const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
-        try{
-        const response = await axios.post(url,
-            {
-            ...data
-            }
-        );
+        try {
+            const response = await axios.post(url,
+                {
+                    ...data
+                }
+            );
 
-        console.log('Response:', response.data);
+            if (response.status === 200) {
+                toast.success("Data added successfully", {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+                LoaderClose();
+                loadFormData();
+
+            } else {
+                toast.error("Oops, something went wrong", {
+                    position: "top-right",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+                LoaderClose();
+            }
         } catch (error) {
-        console.error('Error:', error);
+            toast.error("Oops, something went wrong", {
+                position: "top-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+            LoaderClose();
         }
     };
 
     const loadFormData = async () => {
+        LoaderOpen();
         const base_url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path=`;
         const url = `${base_url}${view_path}&&client_id=${client_id}&&user_id=${user_id}`
         console.log(url, 'is the url to be fired')
 
         //making the GET request
         axios.get(url)
-        .then(response => {
-        //handling the successful response
-        console.log(response.data, 'is the response data')
-        setRemoteSchema(response.data.form[0].schema)
-        setRemoteUiSchema(response.data.form[0].ui_schema)
-        const form_parent = response.data.form_data
-        const f_data = form_parent[0].data
-        setFormData(f_data)
-        // setting the setFormData(response.data.form[0].form_data)
-        })
-        .catch(error =>{
-        //handling the error response
-        console.log('Error:', error);
-        });
+            .then(response => {
+                //handling the successful response
+                console.log(response.data, 'is the response data')
+                setRemoteSchema(response.data.form[0].schema)
+                setRemoteUiSchema(response.data.form[0].ui_schema)
+                const form_parent = response.data.form_data
+                const f_data = form_parent[0].data
+                setFormData(f_data)
+                LoaderClose();
+                // setting the setFormData(response.data.form[0].form_data)
+            })
+            .catch(error => {
+
+                const errorMessage =
+                    error.response && error.response.data && error.response.data.message
+                        ? error.response.data.message
+                        : "Oops, something went wrong";
+                toast.error(errorMessage, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+                LoaderClose();
+            });
     }
     //Reloading the forms -- White Beard
+
     useEffect(() => {
         //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-    },[r_schema, r_ui_schema])
-
+      },[r_schema, r_ui_schema])
     // console log the form data change
     useEffect(() => {
         console.log('Form data is changed -', formData)
-    },[formData])
+    }, [formData])
 
     // fetch backend and replace initialized forms
-    useEffect (()=> {
+
+    useEffect(() => {
         console.log('From loaded , ready for trigger')
         loadFormData()
-    },[])
+    }, [])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -159,7 +243,7 @@ const Receivingwaterbody = () => {
                     validator={validator}
                     widgets={widgets} // Make sure this is passed to the Form
                 >
-                    {formData.Q1 === 'Yes' && (
+                    {formData[0].Q1 === 'Yes' && (
                         <>
                             <h2 className='mb-2 text-sm'>If yes please specify</h2>
                             <textarea
@@ -169,8 +253,8 @@ const Receivingwaterbody = () => {
                                     : "sm:w-[85%] md:w-[92%] lg:w-[88%] xl:w-[88.5%] 2xl:sm:w-[86%]"
                                     }`}
                                 id="details"
-                                value={formData.details}
-                                onChange={e => setFormData({ ...formData, details: e.target.value })}
+                                value={formData[0].details}
+                                onChange={e => setFormData([{...formData[0], details: e.target.value }])}
                                 rows={7}
                             />
                         </>
@@ -181,6 +265,18 @@ const Receivingwaterbody = () => {
                     <button type="button" className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
                 </div>
             </div>
+            {loopen && (
+                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                    <Oval
+                        height={50}
+                        width={50}
+                        color="#00BFFF"
+                        secondaryColor="#f3f3f3"
+                        strokeWidth={2}
+                        strokeWidthSecondary={2}
+                    />
+                </div>
+            )}
         </>
     );
 };

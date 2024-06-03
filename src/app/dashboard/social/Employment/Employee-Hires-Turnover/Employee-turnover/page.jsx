@@ -42,9 +42,9 @@ function convertShortNameToFullName(shortName) {
     const index = shortMonthNames.indexOf(shortName);
     return index !== -1 ? fullMonthNames[index] : "Unknown";
   }
-const tabs = [
-    { title: 'Leased employees', tooltip: "Individuals with fixed-term contracts, typically offering benefits like health insurance and job security." },
-    { title: 'Permanent Employee', tooltip: "Individuals hired for specific projects or timeframes, often with limited benefits and shorter contracts." },
+  const tabs = [
+    { title: 'Permanent Employees', tooltip: "Individuals with fixed-term contracts, typically offering benefits like health insurance and job security." },
+    { title: 'Temporary employee', tooltip: "Individuals hired for specific projects or timeframes, often with limited benefits and shorter contracts." },
     { title: 'Nonguaranteed Hours Employees', tooltip: "Individuals whose working hours vary and are not guaranteed, often with part-time or contract-based arrangements." },
     { title: 'Full-Time Employee', tooltip: "Individuals working a regular, fixed schedule." },
     { title: 'Part-Time Employee', tooltip: "Individuals working less than a regular, full-time schedule." }
