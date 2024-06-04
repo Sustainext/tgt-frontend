@@ -32,7 +32,7 @@ import {
   data13,
 } from "./data";
 
-const AnalyseEnergy = ({isBoxOpen}) => {
+const AnalyseEnergy = ({ isBoxOpen }) => {
   const [organisations, setOrganisations] = useState([]);
   const [corporates, setCorporates] = useState([]);
   const [selectedOrg, setSelectedOrg] = useState("");
@@ -187,7 +187,7 @@ const AnalyseEnergy = ({isBoxOpen}) => {
                   </div>
                 </div>
                 <div className="w-3.5 h-3.5">
-                    <AiOutlineCalendar style={{zIndex: '-10px'}} />
+                  <AiOutlineCalendar style={{ zIndex: "-10px" }} />
                 </div>
               </div>
             </div>
@@ -332,11 +332,11 @@ const AnalyseEnergy = ({isBoxOpen}) => {
               <p>Energy Sold (non-renewable energy)</p>
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 302-1d
+                  GRI 302-1d
                 </div>
               </div>
             </div>
-              <DynamicTable columns={columns9} data={data9} />
+            <DynamicTable columns={columns9} data={data9} />
           </div>
           <div className="mb-6">
             <div
@@ -346,11 +346,11 @@ const AnalyseEnergy = ({isBoxOpen}) => {
               <p>Energy Consumption outside of the organization</p>
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 302-2a
+                  GRI 302-2a
                 </div>
               </div>
             </div>
-              <DynamicTable columns={columns10} data={data10} />
+            <DynamicTable columns={columns10} data={data10} />
           </div>
           <div className="mb-6">
             <div
@@ -360,11 +360,11 @@ const AnalyseEnergy = ({isBoxOpen}) => {
               <p>Energy Intensity</p>
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 302-3a
+                  GRI 302-3a
                 </div>
               </div>
             </div>
-              <DynamicTable columns={columns13} data={data13} />
+            <DynamicTable columns={columns13} data={data13} />
           </div>
           <div className="mb-6">
             <div
@@ -373,19 +373,19 @@ const AnalyseEnergy = ({isBoxOpen}) => {
             >
               <p>Reduction of energy consumption</p>
               <div className="">
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 302-5a
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 302-5a
+                  </div>
                 </div>
-              </div>
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 302-5b
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 302-5b
+                  </div>
                 </div>
-              </div>
               </div>
             </div>
-              <DynamicTable columns={columns11} data={data11} />
+            <DynamicTable columns={columns11} data={data11} />
           </div>
           <div className="mb-6">
             <div
@@ -394,24 +394,24 @@ const AnalyseEnergy = ({isBoxOpen}) => {
             >
               <p>Reductions in energy requirements of products and services</p>
               <div className="">
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 302-4a
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 302-4a
+                  </div>
                 </div>
-              </div>
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 302-4b
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 302-4b
+                  </div>
                 </div>
-              </div>
               </div>
             </div>
-              <DynamicTable columns={columns12} data={data12} />
+            <DynamicTable columns={columns12} data={data12} />
           </div>
         </div>
         <div
           style={{
-            position: `${isBoxOpen? "unset": "sticky"}`,
+            position: `${isBoxOpen ? "unset" : "sticky"}`,
             top: "10rem",
             // zIndex: "0",
             height: "fit-content",
