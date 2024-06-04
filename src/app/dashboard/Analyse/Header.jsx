@@ -5,18 +5,20 @@ import { IoCloseOutline } from "react-icons/io5";
 import { toast } from 'react-toastify';
 import { patch } from '../../utils/axiosMiddleware'; // Assuming axiosInstance is in utils folder
 
-const Header = ({ activeTab }) => {
+const Header = ({ activeTab, setIsBoxOpen }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [category, setCategory] = useState("");
   const [data, setData] = useState([]);
 
   const toggleDrawerClose = () => {
     setIsOpen(!isOpen);
+    setIsBoxOpen((prev)=>!prev);
   };
 
   const toggleDrawer = (selected) => {
     setIsOpen(!isOpen);
     setCategory(selected);
+    setIsBoxOpen((prev)=>!prev);
   };
 
   useEffect(() => {
@@ -27,7 +29,7 @@ const Header = ({ activeTab }) => {
   }, [category]);
 
   return (
-    <div className="flex justify-between items-center border-b border-gray-200 pb-4 z-10">
+    <div className="flex justify-between items-center border-b border-gray-200 pb-4 -z--1000 relative">
       <div className="h-[46px] flex-col justify-start items-start gap-0.5 inline-flex ms-8 mt-8">
         <div className="text-black text-opacity-50 text-[11px] font-semibold font-['Manrope'] capitalize leading-[14px]">
           Environment
@@ -75,11 +77,12 @@ const Header = ({ activeTab }) => {
         </div>
       </div>
       <div
+      style={{zIndex:'1000 !important'}}
         className={`${
           isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"
         }
         fixed right-[51px] top-0 w-[340px] h-full bg-white rounded-md
-        transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
+        transition-transform duration-300 ease-in-out shadow-2xl px-2`}
       >
         {data.map((program) => (
           <div key={program.id}>
