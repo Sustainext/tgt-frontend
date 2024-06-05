@@ -18,6 +18,8 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
         className="py-3 w-[100%] text-left flex"
         onClick={() => setIsOpen(!isOpen)}// Unique ID for the tooltip, spaces replaced by dashes
       >
+     <div className="flex justify-between">
+        <div className="flex w-[65vw]">
         <div className="flex items-center">
           <h5 className="text-[14px] text-[#344054] px-3">{title}</h5>
         </div>
@@ -36,7 +38,9 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
 
           </ReactTooltip>
         </div>
-        <div className={`absolute flex justify-between ${isOpen ? 'right-[3rem]' : 'right-[3rem]'}`}>
+        </div>
+       <div className=" w-[20vw] ">
+       <div className={`flex float-end`}>
         {isOpen ? (
             <>
               {sdg && sdg.map((sdgItem, index) => (
@@ -55,6 +59,8 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
             </>
           )}
           <MdKeyboardArrowDown className={`text-2xl ${isOpen ? "rotate-180" : ""}`} />
+        </div>
+       </div>
         </div>
       </button>
       {isOpen && <div className="p-4">{children}</div>}

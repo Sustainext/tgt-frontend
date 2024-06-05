@@ -17,13 +17,15 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,tooltipblock
         className="py-3 w-[100%] text-left flex"
         onClick={() => setIsOpen(!isOpen)}// Unique ID for the tooltip, spaces replaced by dashes
       >
+          <div className="flex justify-between">
+        <div className="flex w-[65vw]">
         <div className="flex items-center">
           <h5 className="text-[14px] text-[#344054] px-3">{title}</h5>
         </div>
 
         <div className="flex items-center justify-center">
           <MdInfoOutline
-            data-tooltip-id={`tooltip-${title.replace(/\s+/g, '-')}`} data-tooltip-content={tooltiptext} className="mt-1 text-[14px]" style={{display:tooltipblock}} />
+            data-tooltip-id={`tooltip-${title.replace(/\s+/g, '-')}`} data-tooltip-content={tooltiptext} className="mt-1 text-[14px]" style={{display:display}} />
           {/* Tooltip */}
           <ReactTooltip id={`tooltip-${title.replace(/\s+/g, '-')}`} place="top" effect="solid" style={{
             width: "300px", backgroundColor: "#000",
@@ -35,11 +37,13 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,tooltipblock
 
           </ReactTooltip>
         </div>
-        <div className={`absolute flex justify-between ${isOpen ? 'right-[3rem]' : 'right-[3rem]'}`}>
+        </div>
+       <div className=" w-[20vw] ">
+       <div className={`flex float-end`}>
         {isOpen ? (
             <>
               {sdg && sdg.map((sdgItem, index) => (
-                <div key={index} className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2" style={{ display:display}} >
+                <div key={index} className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2" style={{ display: display }} >
                   <p className="text-[#0057A5] text-[10px] inline-block align-middle px-2 font-semibold">{sdgItem}</p>
                 </div>
               ))}
@@ -54,6 +58,8 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,tooltipblock
             </>
           )}
           <MdKeyboardArrowDown className={`text-2xl ${isOpen ? "rotate-180" : ""}`} />
+        </div>
+       </div>
         </div>
       </button>
       {isOpen && <div className="p-4">{children}</div>}

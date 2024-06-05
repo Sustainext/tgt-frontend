@@ -20,7 +20,9 @@ import Dischargefromareas from "./Water-effluents/discharge-from-all-areas/disch
 import Waterstres from "./Water-effluents/water-stres/water-stres";
 import Substancesconcern from "./Water-effluents/substances-concern/substances-concern";
 import Waterstorage from "./Water-effluents/water-storage/water-storage"
-const environment = ({ open }) => {
+import { GlobalState } from "@/Context/page";
+const environment = ({  }) => {
+    const { open } = GlobalState();
     const [activeTab, setActiveTab] = useState('Emissions');
     const handleTabClick = (tab) => {
         setActiveTab(tab);
@@ -35,7 +37,7 @@ const environment = ({ open }) => {
                 </div>
 
                 <div
-                    className="w-full"
+                    className={`${open ? " w-[87vw]" :" w-[98vw]" }`}
                 >
                     {/* Emissions start  */}
                     {activeTab === 'Emissions' && <Emission />}
