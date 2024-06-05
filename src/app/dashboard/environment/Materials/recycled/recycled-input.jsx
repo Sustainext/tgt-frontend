@@ -299,6 +299,7 @@ const Recycledinput = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

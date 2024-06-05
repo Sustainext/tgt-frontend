@@ -282,6 +282,7 @@ const Wastedivertedimpact = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

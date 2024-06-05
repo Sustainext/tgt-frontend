@@ -270,6 +270,7 @@ const WaterstorageQ2 = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

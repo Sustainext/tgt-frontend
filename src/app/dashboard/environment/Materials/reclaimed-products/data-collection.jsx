@@ -129,6 +129,7 @@ const Datacollection = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

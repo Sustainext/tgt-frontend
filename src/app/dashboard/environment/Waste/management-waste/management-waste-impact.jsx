@@ -164,6 +164,7 @@ const Managementwasteimpact = () => {
             progress: undefined,
             theme: "colored",
           });
+          LoaderClose();
         }
     };
 

@@ -287,6 +287,7 @@ const Purchased = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

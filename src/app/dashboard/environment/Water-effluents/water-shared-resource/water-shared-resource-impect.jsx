@@ -179,6 +179,7 @@ const Watersharedresourceimpact = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

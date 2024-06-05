@@ -257,6 +257,7 @@ const Wastegeneratedeimpact = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

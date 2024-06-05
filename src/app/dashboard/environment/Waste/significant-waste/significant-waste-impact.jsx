@@ -143,6 +143,7 @@ const Significantwasteimpact = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

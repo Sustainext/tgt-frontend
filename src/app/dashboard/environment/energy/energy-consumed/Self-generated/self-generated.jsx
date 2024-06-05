@@ -269,6 +269,7 @@ const Selfgenerated = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

@@ -282,6 +282,7 @@ const Consumedfuel = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

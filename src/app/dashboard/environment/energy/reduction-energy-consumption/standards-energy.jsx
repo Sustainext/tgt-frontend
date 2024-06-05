@@ -153,6 +153,7 @@ const Standardsenergy = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

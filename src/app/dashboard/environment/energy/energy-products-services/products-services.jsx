@@ -248,6 +248,7 @@ const Productsservices = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

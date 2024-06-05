@@ -285,6 +285,7 @@ const NonRenewable = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 
