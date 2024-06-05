@@ -197,6 +197,7 @@ const WaterstorageQ2 = () => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({})
   const [r_ui_schema, setRemoteUiSchema] = useState({})
+  const [loopen, setLoOpen] = useState(false);
   const LoaderOpen = () => {
     setLoOpen(true);
   };

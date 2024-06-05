@@ -228,6 +228,7 @@ const Consumedfuel = () => {
 
   // The below code on updateFormData
   const updateFormData = async () => {
+    LoaderOpen();
     const data = {
       client_id : client_id,
       user_id : user_id,
