@@ -55,8 +55,8 @@ const Waterstorage = () => {
                     </div>
                     <div className='w-full float-end '>
                         <div className="flex float-end border-l">
-                        <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('33')}>GRI 303 - 3</button>
-              <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('34')}>GRI 303 - 4</button>
+
+              <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('50')}>GRI 303 - 5</button>
               <button className="text-[#fff] bg-cyan-500 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('29')}>SDG 6</button>
                         </div>
                     </div>

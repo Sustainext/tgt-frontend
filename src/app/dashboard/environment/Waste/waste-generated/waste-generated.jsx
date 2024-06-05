@@ -56,10 +56,10 @@ const Wastegenerated = () => {
                     <div className='w-full float-end '>
                         <div className="flex float-end border-l">
                             <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('26')}>GRI 306 - 3</button>
-                            <button className="text-[#fff] bg-[#4C9F38] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 " onClick={() => toggleDrawer('19')}>SDG 3</button>
-                            <button className="text-[#fff] bg-cyan-500 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('20')}>SDG 6</button>
-                            <button className="text-[#fff] bg-[#FD9D24] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 " onClick={() => toggleDrawer('21')}>SDG 11</button>
-                            <button className="text-[#fff] bg-yellow-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('22')}>SDG 12</button>
+                            <button className="text-[#fff] bg-[#4C9F38] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 " onClick={() => toggleDrawer('46')}>SDG 3</button>
+                            <button className="text-[#fff] bg-cyan-500 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('49')}>SDG 6</button>
+                            <button className="text-[#fff] bg-[#FD9D24] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 " onClick={() => toggleDrawer('48')}>SDG 11</button>
+                            <button className="text-[#fff] bg-yellow-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('45')}>SDG 12</button>
                             <button className="text-[#fff] bg-[#56C02B] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('23')}>SDG 15</button>
                         </div>
                     </div>

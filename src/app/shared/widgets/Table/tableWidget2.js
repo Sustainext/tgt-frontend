@@ -28,7 +28,7 @@ const CustomTableWidget2 = ({ id, options, value, required, onChange }) => {
 
     return (
         <div style={{ overflowX: "auto", maxHeight: "400px" }}>
-            <table id={id} className="rounded-md border border-gray-300">
+            <table id={id} className="rounded-md border border-gray-300 w-full">
                 <thead className="gradient-background">
                     <tr>
                         <th className="border border-gray-300" style={{ textAlign: "left" }}> </th>

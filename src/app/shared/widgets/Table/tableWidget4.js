@@ -51,7 +51,7 @@ const CustomTableWidget4 = ({ id, options, value, required, onChange, formContex
 
     return (
         <div style={{ overflowY: "auto", maxHeight: "600px" }}>
-            <table id={id} style={{ width: "100%", maxWidth: "1010px", minWidth: "300px", overflowY: "auto", maxHeight: "400px" }} className="rounded-md border border-gray-300">
+            <table id={id} className="rounded-md border border-gray-300 w-full">
                 <thead className="gradient-background">
                     <tr>
                         {options.titles.map((item, idx) => (

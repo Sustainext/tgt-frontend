@@ -1,5 +1,3 @@
-
-
 import { MdChevronRight } from "react-icons/md";
 export const Energydata = [
   {
@@ -13,10 +11,10 @@ export const Energydata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Disclosure 302-1 Energy consumption within the organization
+            Disclosure 302-1 Energy consumption within the organization
           </p>
           <div className="h-[350px] overflow-y-auto custom-scrollbar">
-            <p className="text-[13px] text-[#222222] mb-4">
+            <p className="text-[13px] text-black mb-4">
               Compilation requirement:
             </p>
             <p className="text-[11px] text-[#727272]">
@@ -25,30 +23,40 @@ export const Energydata = [
             </p>
             <ul className="list-disc ml-6 mb-4">
               <li className="text-[11px] text-[#727272]">
-              Avoid the double-counting of fuel consumption, when reporting self-generated energy consumption. If the organization generates electricity from a nonrenewable or renewable fuel source and then consumes the generated electricity, the energy consumption shall be counted once under fuel consumption
+                Avoid the double-counting of fuel consumption, when reporting
+                self-generated energy consumption. If the organization generates
+                electricity from a nonrenewable or renewable fuel source and
+                then consumes the generated electricity, the energy consumption
+                shall be counted once under fuel consumption
               </li>
 
               <li className="text-[11px] text-[#727272]">
-              Report fuel consumption separately for non-renewable and renewable fuel sources.
+                Report fuel consumption separately for non-renewable and
+                renewable fuel sources.
               </li>
               <li className="text-[11px] text-[#727272]">
-              Only report energy consumed by entities owned or controlled by the organization
+                Only report energy consumed by entities owned or controlled by
+                the organization
               </li>
             </ul>
-            <p className="text-[11px] text-[#727272] mb-1">
-              Total energy consumption within the organization Non-renewable fuel consumed Renewable fuel consumed Electricity, heating, cooling, and steam purchased for consumption Self-generated electricity, heating, cooling, and steam, which are
-              not consumed (see clause 2.1.1) Electricity, heating, cooling, and steam sold
+            <p className="text-[11px] text-[#727272] mb-1 break-all">
+              Total energy consumption within the organization = Non-renewable
+              fuel consumed + Renewable fuel consumed + Electricity, heating,
+              cooling, and steam purchased for consumption + Self-generated
+              electricity, heating, cooling, and steam, which are not consumed
+              (see clause 2.1.1) - Electricity, heating, cooling, and steam
+              sold.
             </p>
           </div>
           <div>
-              <a
-                className="text-[14px] text-[#2196F3] pt-1 flex"
-                href="https://www.globalreporting.org/pdf.ashx?id=12467&page=1"
-                target="_blank"
-              >
-                Learn more <MdChevronRight className="text-lg pt-1" />
-              </a>
-            </div>
+            <a
+              className="text-[14px] text-[#2196F3] pt-1 flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12467&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg pt-1" />
+            </a>
+          </div>
         </div>
       </>,
     ],
@@ -96,14 +104,14 @@ export const Energydata = [
             </p>
           </div>
           <div>
-              <a
-                className="text-[14px] text-[#2196F3] pt-5 inline-flex"
-                href="https://sdgs.un.org/goals/goal7"
-                target="_blank"
-              >
-                Learn more <MdChevronRight  />
-              </a>
-            </div>
+            <a
+              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              href="https://sdgs.un.org/goals/goal7"
+              target="_blank"
+            >
+              Learn more <MdChevronRight />
+            </a>
+          </div>
         </div>
       </>,
     ],
@@ -125,25 +133,37 @@ export const Energydata = [
       <>
         <div className="p-2 pt-5">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Sustainable Development Goal 8: Promote sustained, inclusive and sustainable economic growth, full and productive employment and decent work for all
+            Sustainable Development Goal 8: Promote sustained, inclusive and
+            sustainable economic growth, full and productive employment and
+            decent work for all
           </p>
           <div className="h-[300px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Improve progressively, through 2030, global resource efficiency in consumption and production and endeavour to decouple economic growth from environmental degradation, in accordance with the 10-Year Framework of Programmes on Sustainable Consumption and Production, with developed countries taking the lead
+              Improve progressively, through 2030, global resource efficiency in
+              consumption and production and endeavour to decouple economic
+              growth from environmental degradation, in accordance with the
+              10-Year Framework of Programmes on Sustainable Consumption and
+              Production, with developed countries taking the lead Improve
+              progressively, through 2030, global resource efficiency in
+              consumption and production and endeavour to decouple economic
+              growth from environmental degradation, in accordance with the
+              10-Year Framework of Programmes on Sustainable Consumption and
+              Production, with developed countries taking the lead
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">8.4.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Material footprint, material footprint per capita, and material footprint per GDP
+              Material footprint, material footprint per capita, and material
+              footprint per GDP
             </p>
 
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">8.4.2</p>
             <p className="text-[11px] text-[#727272] mb-2">
-            Domestic material consumption, domestic material consumption per capita, and domestic material consumption per GDP
+              Domestic material consumption, domestic material consumption per
+              capita, and domestic material consumption per GDP
             </p>
-
           </div>
           <div>
             <a
@@ -151,7 +171,7 @@ export const Energydata = [
               href="https://sdgs.un.org/goals/goal8"
               target="_blank"
             >
-              Learn more <MdChevronRight  />
+              Learn more <MdChevronRight />
             </a>
           </div>
         </div>
@@ -197,14 +217,14 @@ export const Energydata = [
             </p>
           </div>
           <div>
-              <a
-                className="text-[14px] text-[#2196F3] pt-5 inline-flex"
-                href="https://sdgs.un.org/goals/goal12"
-                target="_blank"
-              >
-                Learn more <MdChevronRight  />
-              </a>
-            </div>
+            <a
+              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              href="https://sdgs.un.org/goals/goal12"
+              target="_blank"
+            >
+              Learn more <MdChevronRight />
+            </a>
+          </div>
         </div>
       </>,
     ],
@@ -245,7 +265,7 @@ export const Energydata = [
             <p className="text-[11px] text-[#727272] mb-2">
               Number of countries that adopt and implement national disaster
               risk reduction strategies in line with the Sendai Framework for
-              Disaster Risk Reduction 2015–203
+              Disaster Risk Reduction 2015–2030
             </p>
             <p className="text-[11px] text-[#222222] mb-2">13.1.3</p>
             <p className="text-[11px] text-[#727272] mb-2">
@@ -260,7 +280,7 @@ export const Energydata = [
               href="https://sdgs.un.org/goals/goal13"
               target="_blank"
             >
-              Learn more <MdChevronRight  />
+              Learn more <MdChevronRight />
             </a>
           </div>
         </div>
@@ -291,7 +311,7 @@ export const Energydata = [
           </div>
           <div>
             <a className="text-[14px] text-[#2196F3] mt-3">
-              Learn more <MdChevronRight  />
+              Learn more <MdChevronRight />
             </a>
           </div>
         </div>
@@ -333,7 +353,7 @@ export const Energydata = [
           </div>
           <div>
             <a className="text-[14px] text-[#2196F3] mt-3">
-              Learn more <MdChevronRight  />
+              Learn more <MdChevronRight />
             </a>
           </div>
         </div>
@@ -393,7 +413,7 @@ export const Energydata = [
           </div>
           <div>
             <a className="text-[14px] text-[#2196F3] mt-3">
-              Learn more <MdChevronRight  />
+              Learn more <MdChevronRight />
             </a>
           </div>
         </div>
@@ -439,7 +459,7 @@ export const Energydata = [
           </div>
           <div>
             <a className="text-[14px] text-[#2196F3] mt-3">
-              Learn more <MdChevronRight  />
+              Learn more <MdChevronRight />
             </a>
           </div>
         </div>
@@ -477,7 +497,7 @@ export const Energydata = [
           </div>
           <div>
             <a className="text-[14px] text-[#2196F3] mt-3">
-              Learn more <MdChevronRight  />
+              Learn more <MdChevronRight />
             </a>
           </div>
         </div>
@@ -525,7 +545,7 @@ export const Energydata = [
           </div>
           <div>
             <a className="text-[14px] text-[#2196F3] mt-3">
-              Learn more <MdChevronRight  />
+              Learn more <MdChevronRight />
             </a>
           </div>
         </div>
@@ -577,7 +597,7 @@ export const Energydata = [
           </div>
           <div>
             <a className="text-[14px] text-[#2196F3] mt-3">
-              Learn more <MdChevronRight  />
+              Learn more <MdChevronRight />
             </a>
           </div>
         </div>
@@ -626,7 +646,7 @@ export const Energydata = [
           </div>
           <div>
             <a className="text-[14px] text-[#2196F3] mt-3">
-              Learn more <MdChevronRight  />
+              Learn more <MdChevronRight />
             </a>
           </div>
         </div>
@@ -664,7 +684,7 @@ export const Energydata = [
           </div>
           <div>
             <a className="text-[14px] text-[#2196F3] mt-3">
-              Learn more <MdChevronRight  />
+              Learn more <MdChevronRight />
             </a>
           </div>
         </div>
@@ -682,7 +702,7 @@ export const Energydata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Disclosure 302-2 Energy consumption outside of the organization
+            Disclosure 302-2 Energy consumption outside of the organization
           </p>
           <div className="h-[350px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">
@@ -695,31 +715,41 @@ export const Energydata = [
             </p>
             <p className="text-[13px] text-[#222222] mb-2">Guidance:</p>
             <p className="text-[11px] text-[#727272] mb-2">
-            The reporting organization can identify energy consumption outside of the organization by assessing whether an activity’s energy consumption:
+              The reporting organization can identify energy consumption outside
+              of the organization by assessing whether an activity’s energy
+              consumption:
             </p>
             <ul className="list-disc ml-6 mb-4">
               <li className="text-[11px] text-[#727272]">
-              Contributes significantly to the organization’s total anticipated energy consumption outside of the organization.
+                Contributes significantly to the organization’s total
+                anticipated energy consumption outside of the organization.
               </li>
               <li className="text-[11px] text-[#727272]">
-              Offers potential for reductions the organization can undertake or influence.
+                Offers potential for reductions the organization can undertake
+                or influence.
               </li>
               <li className="text-[11px] text-[#727272]">
-              Contributes to climate change-related risks, such as financial, regulatory, supply chain, product and customer, litigation, and reputational risks.
+                Contributes to climate change-related risks, such as financial,
+                regulatory, supply chain, product and customer, litigation, and
+                reputational risks.
               </li>
               <li className="text-[11px] text-[#727272]">
-              Is deemed material by stakeholders, such as customers, suppliers, investors, or civil society.
+                Is deemed material by stakeholders, such as customers,
+                suppliers, investors, or civil society.
               </li>
               <li className="text-[11px] text-[#727272]">
-              Results from outsourced activities previously performed in-house, or that are typically performed in-house by other organizations in the same sector.
+                Results from outsourced activities previously performed
+                in-house, or that are typically performed in-house by other
+                organizations in the same sector.
               </li>
               <li className="text-[11px] text-[#727272]">
-              Has been identified as significant for the organization’s sector.
+                Has been identified as significant for the organization’s
+                sector.
               </li>
               <li className="text-[11px] text-[#727272]">
-              Meets any additional criteria for determining relevance, developed by the organization or by organizations in its sector.
+                Meets any additional criteria for determining relevance,
+                developed by the organization or by organizations in its sector.
               </li>
-
             </ul>
             <p className="text-[13px] text-[#222222] mb-2">Background:</p>
             <p className="text-[11px] text-[#727272] mb-2">
@@ -733,14 +763,14 @@ export const Energydata = [
             </p>
           </div>
           <div>
-              <a
-                className="text-[14px] text-[#2196F3] pt-5 inline-flex"
-                href="https://www.globalreporting.org/pdf.ashx?id=12467&page=1"
-                target="_blank"
-              >
-                Learn more <MdChevronRight  />
-              </a>
-            </div>
+            <a
+              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12467&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight />
+            </a>
+          </div>
         </div>
       </>,
     ],
@@ -756,7 +786,7 @@ export const Energydata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Disclosure 302-3 Energy intensity
+            Disclosure 302-3 Energy intensity
           </p>
           <div className="h-[350px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">
@@ -768,12 +798,15 @@ export const Energydata = [
             </p>
             <ul className="list-disc ml-6 mb-4">
               <li className="text-[11px] text-[#727272]">
-              Calculate the ratio by dividing the absolute energy consumption (the numerator) by the organization-specific metric (the denominator).
+                Calculate the ratio by dividing the absolute energy consumption
+                (the numerator) by the organization-specific metric (the
+                denominator).
               </li>
               <li className="text-[11px] text-[#727272]">
-              If reporting an intensity ratio both for the energy consumed within the organization and outside of it, report these intensity ratios separately.
+                If reporting an intensity ratio both for the energy consumed
+                within the organization and outside of it, report these
+                intensity ratios separately.
               </li>
-
             </ul>
 
             <p className="text-[13px] text-[#222222] mb-2">Guidance:</p>
@@ -812,32 +845,25 @@ export const Energydata = [
             <p className="text-[13px] text-[#222222] mb-2">Background:</p>
             <p className="text-[11px] text-[#727272] mb-1">
               Energy intensity ratios define energy consumption in the context
-              of an organization-specific metric.
-            </p>
-            <p className="text-[11px] text-[#727272] mb-1">
-              These ratios express the energy required per unit of activity,
-              output, or any other organization specific metric.
-            </p>
-            <p className="text-[11px] text-[#727272] mb-1">
-              Intensity ratios are often called normalized environmental impact
-              data.
-            </p>
-            <p className="text-[11px] text-[#727272] mb-1">
-              In combination with the organization’s total energy consumption,
-              reported in Disclosures reported in Disclosures 302-1 and 302-2,
-              energy intensity helps to contextualize the organization’s
-              efficiency, including in relation to other organizations.
+              of an organization-specific metric. These ratios express the
+              energy required per unit of activity, output, or any other
+              organization specific metric. Intensity ratios are often called
+              normalized environmental impact data.In combination with the
+              organization’s total energy consumption, reported in Disclosures
+              reported in Disclosures 302-1 and 302-2, energy intensity helps to
+              contextualize the organization’s efficiency, including in relation
+              to other organizations.
             </p>
           </div>
           <div>
-              <a
-                className="text-[14px] text-[#2196F3] pt-5 inline-flex"
-                href="https://www.globalreporting.org/pdf.ashx?id=12467&page=1"
-                target="_blank"
-              >
-                Learn more <MdChevronRight  />
-              </a>
-            </div>
+            <a
+              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12467&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight />
+            </a>
+          </div>
         </div>
       </>,
     ],
@@ -861,24 +887,31 @@ export const Energydata = [
             </p>
             <p className="text-[11px] text-[#727272] mb-2">
               When compiling the information specified in Disclosure 302-4, the
-              reporting  organization shall:
+              reporting organization shall:
             </p>
 
             <ul className="list-disc ml-6 mb-4">
               <li className="text-[11px] text-[#727272]">
-              Exclude reductions resulting from reduced production capacity or outsourcing.
+                Exclude reductions resulting from reduced production capacity or
+                outsourcing.
               </li>
               <li className="text-[11px] text-[#727272]">
-              Describe whether energy reduction is estimated, modeled, or sourced from direct measurements.
+                Describe whether energy reduction is estimated, modeled, or
+                sourced from direct measurements.
               </li>
               <li className="text-[11px] text-[#727272]">
-              If estimation or modeling is used, the organization shall disclose the methods used.
+                If estimation or modeling is used, the organization shall
+                disclose the methods used.
               </li>
             </ul>
 
             <p className="text-[13px] text-[#222222] mb-2">Recommendations::</p>
             <p className="text-[11px] text-[#727272] mb-2">
-            The reporting organization can prioritize disclosing reduction initiatives that were implemented in the reporting period, and that have the potential to contribute significantly to reductions. The organization can describe reduction initiatives and their targets when reporting how it manages this topic.
+              The reporting organization can prioritize disclosing reduction
+              initiatives that were implemented in the reporting period, and
+              that have the potential to contribute significantly to reductions.
+              The organization can describe reduction initiatives and their
+              targets when reporting how it manages this topic.
             </p>
             <p className="text-[11px] text-[#727272] mb-2">
               Reduction initiatives can include:
@@ -905,21 +938,20 @@ export const Energydata = [
             <p className="text-[13px] text-[#222222] mb-2">Guidance:</p>
             <p className="text-[11px] text-[#727272] mb-2">
               Use-oriented figures can include, for example, the energy
-              requirements of a car or a computer. Consumption patterns can include, for example, 10 percent less
-              energy use per 100 km travelled or per time unit (hour, average
-              working day)
+              requirements of a car or a computer. Consumption patterns can
+              include, for example, 10 percent less energy use per 100 km
+              travelled or per time unit (hour, average working day)
             </p>
-
           </div>
           <div>
-              <a
-                className="text-[14px] text-[#2196F3] pt-5 inline-flex"
-                href="https://www.globalreporting.org/pdf.ashx?id=12467&page=1"
-                target="_blank"
-              >
-                Learn more <MdChevronRight  />
-              </a>
-            </div>
+            <a
+              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12467&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight />
+            </a>
+          </div>
         </div>
       </>,
     ],
@@ -962,7 +994,7 @@ export const Energydata = [
               impacts caused by runoff, and how they are addressed. For example,
               runoff can carry high-nutrient and pollution loads due to the
               organization’s activities, leading to eutrophication and other
-              negative impacts on local waterbodies.  organization shall:
+              negative impacts on local waterbodies. organization shall:
             </p>
 
             <p className="text-[13px] text-[#222222] mb-2">Recommendations:</p>
@@ -972,30 +1004,32 @@ export const Energydata = [
             </p>
             <ul className="list-disc ml-6 mb-2">
               <li className="text-[11px] text-[#727272]">
-              If subject to different standards and methodologies, describe the approach to selecting them.
+                If subject to different standards and methodologies, describe
+                the approach to selecting them.
               </li>
               <li className="text-[11px] text-[#727272]">
-              Refer to industry use standards to obtain this information, where available (such as fuel consumption of cars for 100 km at 90 km/h).
+                Refer to industry use standards to obtain this information,
+                where available (such as fuel consumption of cars for 100 km at
+                90 km/h).
               </li>
             </ul>
             <p className="text-[13px] text-[#222222] mb-2">Guidance:</p>
             <p className="text-[11px] text-[#727272] mb-2">
               Use-oriented figures can include, for example, the energy
-              requirements of a car or a computer.  Consumption patterns can include, for example, 10 percent less
-              energy use per 100 km travelled or per time unit (hour, average
-              working day).
+              requirements of a car or a computer. Consumption patterns can
+              include, for example, 10 percent less energy use per 100 km
+              travelled or per time unit (hour, average working day).
             </p>
-
           </div>
           <div>
-              <a
-                className="text-[14px] text-[#2196F3] pt-5 inline-flex"
-                href="https://www.globalreporting.org/pdf.ashx?id=12467&page=1"
-                target="_blank"
-              >
-                Learn more <MdChevronRight  />
-              </a>
-            </div>
+            <a
+              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12467&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight />
+            </a>
+          </div>
         </div>
       </>,
     ],
@@ -1018,7 +1052,8 @@ export const Energydata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Sustainable Development Goal 3: Ensure healthy lives and promote well-being for all at all ages
+            Sustainable Development Goal 3: Ensure healthy lives and promote
+            well-being for all at all ages
           </p>
           <div className="h-[300px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 3.9</p>
@@ -1029,49 +1064,71 @@ export const Energydata = [
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">3.9</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            By 2030, substantially reduce the number of deaths and illnesses from hazardous chemicals and air, water and soil pollution and contamination
+              By 2030, substantially reduce the number of deaths and illnesses
+              from hazardous chemicals and air, water and soil pollution and
+              contamination
             </p>
             <p className="text-[13px] text-[#222222] mb-2">Target 3.a</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Strengthen the implementation of the World Health Organization Framework Convention on Tobacco Control in all countries, as appropriate
+              Strengthen the implementation of the World Health Organization
+              Framework Convention on Tobacco Control in all countries, as
+              appropriate
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">3.a.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Age-standardized prevalence of current tobacco use among persons aged 15 years and older
+              Age-standardized prevalence of current tobacco use among persons
+              aged 15 years and older
             </p>
             <p className="text-[13px] text-[#222222] mb-2">Target 3.b</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Support the research and development of vaccines and medicines for the communicable and non-communicable diseases that primarily affect developing countries, provide access to affordable essential medicines and vaccines, in accordance with the Doha Declaration on the TRIPS Agreement and Public Health, which affirms the right of developing countries to use to the full the provisions in the Agreement on Trade-Related Aspects of Intellectual Property Rights regarding flexibilities to protect public health, and, in particular, provide access to medicines for all
+              Support the research and development of vaccines and medicines for
+              the communicable and non-communicable diseases that primarily
+              affect developing countries, provide access to affordable
+              essential medicines and vaccines, in accordance with the Doha
+              Declaration on the TRIPS Agreement and Public Health, which
+              affirms the right of developing countries to use to the full the
+              provisions in the Agreement on Trade-Related Aspects of
+              Intellectual Property Rights regarding flexibilities to protect
+              public health, and, in particular, provide access to medicines for
+              all
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">3.b.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of the target population covered by all vaccines included in their national programme
+              Proportion of the target population covered by all vaccines
+              included in their national programme
             </p>
 
             <p className="text-[11px] text-[#222222] mb-2">3.b.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Total net official development assistance to medical research and basic health sectors
+              Total net official development assistance to medical research and
+              basic health sectors
             </p>
             <p className="text-[11px] text-[#222222] mb-2">3.b.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of health facilities that have a core set of relevant essential medicines available and affordable on a sustainable basis
+              Proportion of health facilities that have a core set of relevant
+              essential medicines available and affordable on a sustainable
+              basis
             </p>
             <p className="text-[13px] text-[#222222] mb-2">Target 3.c</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Substantially increase health financing and the recruitment, development, training and retention of the health workforce in developing countries, especially in least developed countries and small island developing States
+              Substantially increase health financing and the recruitment,
+              development, training and retention of the health workforce in
+              developing countries, especially in least developed countries and
+              small island developing States
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">3.c.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Health worker density and distribution
+              Health worker density and distribution
             </p>
             <p className="text-[13px] text-[#222222] mb-2">Target 3.d</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Strengthen the capacity of all countries, in particular developing countries, for early warning, risk reduction and management of national and global health risks
+              Strengthen the capacity of all countries, in particular developing
+              countries, for early warning, risk reduction and management of
+              national and global health risks
             </p>
-
           </div>
           <div>
             <a
@@ -1079,7 +1136,7 @@ export const Energydata = [
               href="https://sdgs.un.org/goals/goal3"
               target="_blank"
             >
-              Learn more <MdChevronRight  />
+              Learn more <MdChevronRight />
             </a>
           </div>
         </div>
@@ -1103,50 +1160,63 @@ export const Energydata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Sustainable Development Goal 6: Ensure availability and sustainable management of water and sanitation for all
+            Sustainable Development Goal 6: Ensure availability and sustainable
+            management of water and sanitation for all
           </p>
           <div className="h-[300px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 6.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            By 2030, improve water quality by reducing pollution, eliminating dumping and minimizing release of hazardous chemicals and materials, halving the proportion of untreated wastewater and substantially increasing recycling and safe reuse globally
+              By 2030, improve water quality by reducing pollution, eliminating
+              dumping and minimizing release of hazardous chemicals and
+              materials, halving the proportion of untreated wastewater and
+              substantially increasing recycling and safe reuse globally
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">6.3.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of domestic and industrial wastewater flows safely treated
+              Proportion of domestic and industrial wastewater flows safely
+              treated
             </p>
             <p className="text-[11px] text-[#222222] mb-2">6.3.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of bodies of water with good ambient water quality
+              Proportion of bodies of water with good ambient water quality
             </p>
             <p className="text-[13px] text-[#222222] mb-2">Target 6.6</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            By 2020, protect and restore water-related ecosystems, including mountains, forests, wetlands, rivers, aquifers and lakes
+              By 2020, protect and restore water-related ecosystems, including
+              mountains, forests, wetlands, rivers, aquifers and lakes
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">6.6.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Change in the extent of water-related ecosystems over time
+              Change in the extent of water-related ecosystems over time
             </p>
             <p className="text-[13px] text-[#222222] mb-2">Target 6.a</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            By 2030, expand international cooperation and capacity-building support to developing countries in water- and sanitation-related activities and programmes, including water harvesting, desalination, water efficiency, wastewater treatment, recycling and reuse technologies
+              By 2030, expand international cooperation and capacity-building
+              support to developing countries in water- and sanitation-related
+              activities and programmes, including water harvesting,
+              desalination, water efficiency, wastewater treatment, recycling
+              and reuse technologies
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">6.a.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Amount of water- and sanitation-related official development assistance that is part of a government-coordinated spending plan
+              Amount of water- and sanitation-related official development
+              assistance that is part of a government-coordinated spending plan
             </p>
             <p className="text-[13px] text-[#222222] mb-2">Target 6.b</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Support and strengthen the participation of local communities in improving water and sanitation management
+              Support and strengthen the participation of local communities in
+              improving water and sanitation management
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
-            <p className="text-[11px] text-[#222222] mb-2">6.b.2</p>
+            <p className="text-[11px] text-[#222222] mb-2">6.b.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of local administrative units with established and operational policies and procedures for participation of local communities in water and sanitation management
+              Proportion of local administrative units with established and
+              operational policies and procedures for participation of local
+              communities in water and sanitation management
             </p>
-
           </div>
           <div>
             <a
@@ -1154,7 +1224,7 @@ export const Energydata = [
               href="https://sdgs.un.org/goals/goal6"
               target="_blank"
             >
-              Learn more <MdChevronRight  />
+              Learn more <MdChevronRight />
             </a>
           </div>
         </div>
@@ -1178,21 +1248,27 @@ export const Energydata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Sustainable Development Goal 11: Make cities and human settlements inclusive, safe, resilient and sustainable
+            Sustainable Development Goal 11: Make cities and human settlements
+            inclusive, safe, resilient and sustainable
           </p>
           <div className="h-[300px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 11.6</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            By 2030, reduce the adverse per capita environmental impact of cities, including by paying special attention to air quality and municipal and other waste management
+              By 2030, reduce the adverse per capita environmental impact of
+              cities, including by paying special attention to air quality and
+              municipal and other waste management
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">11.6.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of municipal solid waste collected and managed in controlled facilities out of total municipal waste generated, by cities
+              Proportion of municipal solid waste collected and managed in
+              controlled facilities out of total municipal waste generated, by
+              cities
             </p>
             <p className="text-[11px] text-[#222222] mb-2">11.6.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Annual mean levels of fine particulate matter (e.g. PM2.5 and PM10) in cities (population weighted)
+              Annual mean levels of fine particulate matter (e.g. PM2.5 and
+              PM10) in cities (population weighted)
             </p>
           </div>
           <div>
@@ -1201,7 +1277,7 @@ export const Energydata = [
               href="https://sdgs.un.org/goals/goal11"
               target="_blank"
             >
-              Learn more <MdChevronRight  />
+              Learn more <MdChevronRight />
             </a>
           </div>
         </div>
@@ -1225,32 +1301,41 @@ export const Energydata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Sustainable Development Goal 12: Ensure sustainable consumption and production patterns
+            Sustainable Development Goal 12: Ensure sustainable consumption and
+            production patterns
           </p>
           <div className="h-[300px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 12.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            By 2020, achieve the environmentally sound management of chemicals and all wastes throughout their life cycle, in accordance with agreed international frameworks, and significantly reduce their release to air, water and soil in order to minimize their adverse impacts on human health and the environment
+              By 2020, achieve the environmentally sound management of chemicals
+              and all wastes throughout their life cycle, in accordance with
+              agreed international frameworks, and significantly reduce their
+              release to air, water and soil in order to minimize their adverse
+              impacts on human health and the environment
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">12.2.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Number of parties to international multilateral environmental agreements on hazardous waste, and other chemicals that meet their commitments and obligations in transmitting information as required by each relevant agreement
+              Number of parties to international multilateral environmental
+              agreements on hazardous waste, and other chemicals that meet their
+              commitments and obligations in transmitting information as
+              required by each relevant agreement
             </p>
             <p className="text-[11px] text-[#222222] mb-2">12.2.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            (a) Hazardous waste generated per capita; and (b) proportion of hazardous waste treated, by type of treatment
+              (a) Hazardous waste generated per capita; and (b) proportion of
+              hazardous waste treated, by type of treatment
             </p>
             <p className="text-[13px] text-[#222222] mb-2">Target 12.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            By 2030, substantially reduce waste generation through prevention, reduction, recycling and reuse
+              By 2030, substantially reduce waste generation through prevention,
+              reduction, recycling and reuse
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">12.2.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            National recycling rate, tons of material recycled
+              National recycling rate, tons of material recycled
             </p>
-
           </div>
           <div>
             <a
@@ -1258,14 +1343,14 @@ export const Energydata = [
               href="https://sdgs.un.org/goals/goal12"
               target="_blank"
             >
-              Learn more <MdChevronRight  />
+              Learn more <MdChevronRight />
             </a>
           </div>
         </div>
       </>,
     ],
   },
-// screen two //
+  // screen two //
 
   {
     category: ["23"],
@@ -1284,23 +1369,30 @@ export const Energydata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Sustainable Development Goal 15: Protect, restore and promote sustainable use of terrestrial ecosystems, sustainably manage forests, combat desertification, and halt and reverse land degradation and halt biodiversity loss
+            Sustainable Development Goal 15: Protect, restore and promote
+            sustainable use of terrestrial ecosystems, sustainably manage
+            forests, combat desertification, and halt and reverse land
+            degradation and halt biodiversity loss
           </p>
           <div className="h-[250px] overflow-y-scroll custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 15</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            By 2020, ensure the conservation, restoration and sustainable use of terrestrial and inland freshwater ecosystems and their services, in particular forests, wetlands, mountains and drylands, in line with obligations under international agreements
+              By 2020, ensure the conservation, restoration and sustainable use
+              of terrestrial and inland freshwater ecosystems and their
+              services, in particular forests, wetlands, mountains and drylands,
+              in line with obligations under international agreements
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">15.1.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Forest area as a proportion of total land area
+              Forest area as a proportion of total land area
             </p>
             <p className="text-[11px] text-[#222222] mb-2">15.1.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of important sites for terrestrial and freshwater biodiversity that are covered by protected areas, by ecosystem type
+              Proportion of important sites for terrestrial and freshwater
+              biodiversity that are covered by protected areas, by ecosystem
+              type
             </p>
-
           </div>
           <div>
             <a
@@ -1308,7 +1400,7 @@ export const Energydata = [
               href="https://sdgs.un.org/goals/goal15"
               target="_blank"
             >
-              Learn more <MdChevronRight  />
+              Learn more <MdChevronRight />
             </a>
           </div>
         </div>
@@ -1326,7 +1418,8 @@ export const Energydata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Disclosure 306-1 Waste generation and significant waste-related impacts
+            Disclosure 306-1 Waste generation and significant waste-related
+            impacts
           </p>
 
           <div className="h-[350px] overflow-y-auto custom-scrollbar">
@@ -1340,28 +1433,39 @@ export const Energydata = [
               products, or packaging.
             </p>
             <p className="text-[11px] text-[#727272] mb-2">
-            The organization can assess and report whether inputs, activities, and outputs lead or could lead to significant waste-related impacts using the following criteria:
+              The organization can assess and report whether inputs, activities,
+              and outputs lead or could lead to significant waste-related
+              impacts using the following criteria:
             </p>
-
 
             <ul className="list-disc ml-6 mb-4">
               <li className="text-[11px] text-[#727272]">
-              Quantity of inputs used to produce the organization’s products or services, which will become waste after they are used for production.
+                Quantity of inputs used to produce the organization’s products
+                or services, which will become waste after they are used for
+                production.
               </li>
 
               <li className="text-[11px] text-[#727272]">
-              Quantity of waste outputs generated in the organization’s own activities, or quantity of outputs it provides to entities downstream that will eventually become waste when they reach their end of life.
+                Quantity of waste outputs generated in the organization’s own
+                activities, or quantity of outputs it provides to entities
+                downstream that will eventually become waste when they reach
+                their end of life.
               </li>
               <li className="text-[11px] text-[#727272]">
-              Hazardous characteristics of inputs and outputs. Properties of input materials or design characteristics of outputs that limit or prevent their recovery or limit the length of their life.
+                Hazardous characteristics of inputs and outputs. Properties of
+                input materials or design characteristics of outputs that limit
+                or prevent their recovery or limit the length of their life.
               </li>
               <li className="text-[11px] text-[#727272]">
-              Known potential negative threats associated with specific materials when they are discarded. For example, the potential threat of marine pollution resulting from leakage of discarded plastic packaging into waterbodies.
+                Known potential negative threats associated with specific
+                materials when they are discarded. For example, the potential
+                threat of marine pollution resulting from leakage of discarded
+                plastic packaging into waterbodies.
               </li>
               <li className="text-[11px] text-[#727272]">
-              Types of activities that lead to significant quantities of waste generation or to generation of hazardous waste.
+                Types of activities that lead to significant quantities of waste
+                generation or to generation of hazardous waste.
               </li>
-
             </ul>
             <p className="text-[11px] text-[#727272] mb-2">
               The organization is required to report on inputs that it receives
@@ -1398,7 +1502,6 @@ export const Energydata = [
                 see the guidance for Disclosure 302-2 in GRI 302: Energy 2016)
               </li>
             </ul>
-
           </div>
           <div>
             <a
@@ -1406,7 +1509,7 @@ export const Energydata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12521"
               target="_blank"
             >
-              Learn more <MdChevronRight  />
+              Learn more <MdChevronRight />
             </a>
           </div>
         </div>
@@ -1424,28 +1527,37 @@ export const Energydata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Disclosure 306-2 Management of significant waste related impacts
+            Disclosure 306-2 Management of significant waste related impacts
           </p>
 
           <div className="h-[350px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-[#727272] mb-2">
-            Actions, including circularity measures, to prevent waste generation and to manage significant impacts from waste generated can include:
+              Actions, including circularity measures, to prevent waste
+              generation and to manage significant impacts from waste generated
+              can include:
             </p>
-
 
             <ul className="list-disc ml-6 mb-4">
               <li className="text-[11px] text-[#727272]">
-              Input material choices and product design: Improving materials selection and product design through consideration for longevity and durability, repairability, modularity and disassembly, and recyclability.
+                Input material choices and product design: Improving materials
+                selection and product design through consideration for longevity
+                and durability, repairability, modularity and disassembly, and
+                recyclability.
               </li>
               <li className="text-[11px] text-[#727272]">
-              Reducing the use of raw and finite materials by procuring secondary materials (e.g., used or recycled input materials) or renewable materials.
+                Reducing the use of raw and finite materials by procuring
+                secondary materials (e.g., used or recycled input materials) or
+                renewable materials.
               </li>
               <li className="text-[11px] text-[#727272]">
-              Substituting inputs that have hazardous characteristics with inputs that are nonhazardous.
+                Substituting inputs that have hazardous characteristics with
+                inputs that are nonhazardous.
               </li>
             </ul>
             <p className="text-[11px] text-[#727272] mb-2">
-            Collaboration in the value chain and business model innovation: Setting policies for procurement from suppliers that have sound waste prevention and waste management criteria.
+              Collaboration in the value chain and business model innovation:
+              Setting policies for procurement from suppliers that have sound
+              waste prevention and waste management criteria.
             </p>
             <ul className="list-disc ml-6 mb-4">
               <li className="text-[11px] text-[#727272]">
@@ -1454,17 +1566,22 @@ export const Energydata = [
                 by-products from production) become inputs for another
                 organization.
               </li>
+
               <li className="text-[11px] text-[#727272]">
-              Engaging in or setting up industrial symbiosis as a result of which the organization’s waste or other outputs (e.g., by-products from production) become inputs for another organization.
+                Participating in a collective or individual extended producer
+                responsibility scheme or applying product stewardship, which
+                extends the producer’s responsibility for a product or service
+                to its end of life.
               </li>
               <li className="text-[11px] text-[#727272]">
-              Participating in a collective or individual extended producer responsibility scheme or applying product stewardship, which extends the producer’s responsibility for a product or service to its end of life.
+                Transitioning to and applying new business models, such as
+                product service systems that use services instead of products to
+                meet consumer demand.
               </li>
               <li className="text-[11px] text-[#727272]">
-              Transitioning to and applying new business models, such as product service systems that use services instead of products to meet consumer demand.
-              </li>
-              <li className="text-[11px] text-[#727272]">
-              Engaging in or setting up product take-back schemes and reverse logistics processes to divert products and materials from disposal.
+                Engaging in or setting up product take-back schemes and reverse
+                logistics processes to divert products and materials from
+                disposal.
               </li>
             </ul>
             <p className="text-[11px] text-[#727272] mb-2">
@@ -1472,28 +1589,52 @@ export const Energydata = [
             </p>
             <ul className="list-disc ml-6 mb-4">
               <li className="text-[11px] text-[#727272]">
-              Establishing and improving facilities for waste management, including facilities for the collection and sorting of waste.
+                Establishing and improving facilities for waste management,
+                including facilities for the collection and sorting of waste.
               </li>
               <li className="text-[11px] text-[#727272]">
-              Recovering products, components, and materials from waste through preparation for reuse and recycling.
+                Recovering products, components, and materials from waste
+                through preparation for reuse and recycling.
               </li>
               <li className="text-[11px] text-[#727272]">
-              Engaging with consumers to raise awareness about sustainable consumption practices such as reduced purchasing of products, product sharing, exchange, reuse, and recycling.
+                Engaging with consumers to raise awareness about sustainable
+                consumption practices such as reduced purchasing of products,
+                product sharing, exchange, reuse, and recycling.
               </li>
             </ul>
             <p className="text-[13px] text-[#222222] mb-2">
-            Guidance for Disclosure 306-2b
+              Guidance for Disclosure 306-2b
             </p>
             <p className="text-[11px] text-[#727272] mb-2">
-            This disclosure can provide insight into the level of control the organization assumes for waste management outsourced to a third party. In the context of this Standard, a third party includes a public or private waste management organization, or any other entity or group of individuals formally or informally involved in handling the reporting organization’s waste. Waste management by third parties can include the collection, transportation, recovery, and disposal of waste, as well as the supervision of such operations and the aftercare of disposal sites. The organization may specify agreements in a contract for the third party to follow when managing its waste, or rely on existing legislative obligations, such as local environmental laws and regulations, to ensure that the third party manages the waste adequately.
+              This disclosure can provide insight into the level of control the
+              organization assumes for waste management outsourced to a third
+              party. In the context of this Standard, a third party includes a
+              public or private waste management organization, or any other
+              entity or group of individuals formally or informally involved in
+              handling the reporting organization’s waste. Waste management by
+              third parties can include the collection, transportation,
+              recovery, and disposal of waste, as well as the supervision of
+              such operations and the aftercare of disposal sites. The
+              organization may specify agreements in a contract for the third
+              party to follow when managing its waste, or rely on existing
+              legislative obligations, such as local environmental laws and
+              regulations, to ensure that the third party manages the waste
+              adequately.
             </p>
             <p className="text-[13px] text-[#222222] mb-2">
-            Guidance for Disclosure 306-2c
+              Guidance for Disclosure 306-2c
             </p>
             <p className="text-[11px] text-[#727272] mb-2">
-            The processes that the organization has in place for collecting and monitoring waste-related data can reflect its commitment to managing waste-related impacts. Such processes can include online data entry, maintaining a centralized database, real-time weighbridge measurement, and annual external data validation. The organization can specify whether the data collection and monitoring processes extend beyond waste generated in its own activities to include waste generated upstream and downstream in its value chain.
+              The processes that the organization has in place for collecting
+              and monitoring waste-related data can reflect its commitment to
+              managing waste-related impacts. Such processes can include online
+              data entry, maintaining a centralized database, real-time
+              weighbridge measurement, and annual external data validation. The
+              organization can specify whether the data collection and
+              monitoring processes extend beyond waste generated in its own
+              activities to include waste generated upstream and downstream in
+              its value chain.
             </p>
-
           </div>
           <div>
             <a
@@ -1501,7 +1642,7 @@ export const Energydata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12521"
               target="_blank"
             >
-              Learn more <MdChevronRight  />
+              Learn more <MdChevronRight />
             </a>
           </div>
         </div>
@@ -1519,12 +1660,12 @@ export const Energydata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Disclosure 306-3 Waste generated
+            Disclosure 306-3 Waste generated
           </p>
 
           <div className="h-[350px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">
-            Compilation requirement:
+              Compilation requirement:
             </p>
             <p className="text-[11px] text-[#727272] mb-2">
               2.1 When compiling the information specified in Disclosure
@@ -1578,14 +1719,13 @@ export const Energydata = [
               or losses, or other modifications to the waste. In the context of
               this Standard, leaks result from physical or technical failures
               (e.g., a trail of waste from a waste collection truck), while
-              losses result from inadequate security measures or administrative failures (e.g., theft or lost records).
-              To help understand how the data has been compiled, the
-              organization can specify whether the data has been modeled or
-              sourced from direct
-              measurements, such as waste transfer notes from contracted waste
-              collectors, external assurance, or audits of waste-related data.
+              losses result from inadequate security measures or administrative
+              failures (e.g., theft or lost records). To help understand how the
+              data has been compiled, the organization can specify whether the
+              data has been modeled or sourced from direct measurements, such as
+              waste transfer notes from contracted waste collectors, external
+              assurance, or audits of waste-related data.
             </p>
-
           </div>
           <div>
             <a
@@ -1593,7 +1733,7 @@ export const Energydata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12521"
               target="_blank"
             >
-              Learn more <MdChevronRight  />
+              Learn more <MdChevronRight />
             </a>
           </div>
         </div>
@@ -1620,7 +1760,7 @@ export const Energydata = [
             </p>
             <p className="text-[11px] text-[#727272] mb-2">
               2.2 When compiling the information specified in Disclosure 306-4,
-              the reporting  organization shall:
+              the reporting organization shall:
             </p>
 
             <p className="text-[11px] text-[#727272] mb-2">
@@ -1688,14 +1828,12 @@ export const Energydata = [
               from disposal onsite and offsite (e.g., lack of infrastructure
               onsite to recover materials from waste). It can also describe
               sector practices, sector standards, or external regulations that
-              mandate a specific recovery operation.
-              To help understand how the data has been compiled, the
-              organization can specify whether the data has been modeled or
-              sourced from direct measurements, such as waste transfer notes
-              from contracted waste collectors, external assurance, or audits of
-              waste-related data.
+              mandate a specific recovery operation. To help understand how the
+              data has been compiled, the organization can specify whether the
+              data has been modeled or sourced from direct measurements, such as
+              waste transfer notes from contracted waste collectors, external
+              assurance, or audits of waste-related data.
             </p>
-
           </div>
           <div>
             <a
@@ -1703,7 +1841,7 @@ export const Energydata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12521"
               target="_blank"
             >
-              Learn more <MdChevronRight  />
+              Learn more <MdChevronRight />
             </a>
           </div>
         </div>
@@ -1794,12 +1932,11 @@ export const Energydata = [
               to disposal onsite and offsite (e.g., local regulations that
               prohibit landfilling of specific types of waste). It can also
               describe sector practices, sector standards, or external
-              regulations that mandate a specific disposal operation.
-              To help understand how the data has been compiled, the
-              organization can specify whether the data has been modeled or
-              sourced from direct measurements, such as waste transfer notes
-              from contracted waste collectors, external assurance, or audits of
-              waste-related data.
+              regulations that mandate a specific disposal operation. To help
+              understand how the data has been compiled, the organization can
+              specify whether the data has been modeled or sourced from direct
+              measurements, such as waste transfer notes from contracted waste
+              collectors, external assurance, or audits of waste-related data.
             </p>
           </div>
           <div>
@@ -1808,7 +1945,7 @@ export const Energydata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12521"
               target="_blank"
             >
-              Learn more <MdChevronRight  />
+              Learn more <MdChevronRight />
             </a>
           </div>
         </div>
@@ -1833,67 +1970,88 @@ export const Energydata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Sustainable Development Goal 6: Ensure availability and sustainable management of water and sanitation for all
+            Sustainable Development Goal 6: Ensure availability and sustainable
+            management of water and sanitation for all
           </p>
           <div className="h-[300px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 6.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            By 2030, improve water quality by reducing pollution, eliminating dumping and minimizing release of hazardous chemicals and materials, halving the proportion of untreated wastewater and substantially increasing recycling and safe reuse globally.
+              By 2030, improve water quality by reducing pollution, eliminating
+              dumping and minimizing release of hazardous chemicals and
+              materials, halving the proportion of untreated wastewater and
+              substantially increasing recycling and safe reuse globally.
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">6.3.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of domestic and industrial wastewater flows safely treated.
+              Proportion of domestic and industrial wastewater flows safely
+              treated.
             </p>
             <p className="text-[11px] text-[#222222] mb-2">6.3.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of bodies of water with good ambient water quality.
+              Proportion of bodies of water with good ambient water quality.
             </p>
             <p className="text-[13px] text-[#222222] mb-2">Target 6.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            By 2030, substantially increase water-use efficiency across all sectors and ensure sustainable withdrawals and supply of freshwater to address water scarcity and substantially reduce the number of people suffering from water scarcity.
+              By 2030, substantially increase water-use efficiency across all
+              sectors and ensure sustainable withdrawals and supply of
+              freshwater to address water scarcity and substantially reduce the
+              number of people suffering from water scarcity.
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">6.4.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Change in water-use efficiency over time.
+              Change in water-use efficiency over time.
             </p>
             <p className="text-[11px] text-[#222222] mb-2">6.4.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Level of water stress: freshwater withdrawal as a proportion of available freshwater resources.
+              Level of water stress: freshwater withdrawal as a proportion of
+              available freshwater resources.
             </p>
             <p className="text-[13px] text-[#222222] mb-2">Target 6.6</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            By 2020, protect and restore water-related ecosystems, including mountains, forests, wetlands, rivers, aquifers and lakes.
+              By 2020, protect and restore water-related ecosystems, including
+              mountains, forests, wetlands, rivers, aquifers and lakes.
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">6.6.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Change in the extent of water-related ecosystems over time.
+              Change in the extent of water-related ecosystems over time.
             </p>
             <p className="text-[13px] text-[#222222] mb-2">Target 6.a</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            By 2030, expand international cooperation and capacity-building support to developing countries in water- and sanitation-related activities and programmes, including water harvesting, desalination, water efficiency, wastewater treatment, recycling and reuse technologies.
+              By 2030, expand international cooperation and capacity-building
+              support to developing countries in water- and sanitation-related
+              activities and programmes, including water harvesting,
+              desalination, water efficiency, wastewater treatment, recycling
+              and reuse technologies.
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">6.a.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Amount of water- and sanitation-related official development assistance that is part of a government-coordinated spending plan.
+              Amount of water- and sanitation-related official development
+              assistance that is part of a government-coordinated spending plan.
             </p>
             <p className="text-[13px] text-[#222222] mb-2">Target 6.b</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Support and strengthen the participation of local communities in improving water and sanitation management.
+              Support and strengthen the participation of local communities in
+              improving water and sanitation management.
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
-            <p className="text-[11px] text-[#222222] mb-2">6.b.2</p>
+            <p className="text-[11px] text-[#222222] mb-2">6.b.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of local administrative units with established and operational policies and procedures for participation of local communities in water and sanitation management.
+              Proportion of local administrative units with established and
+              operational policies and procedures for participation of local
+              communities in water and sanitation management.
             </p>
-
           </div>
           <div>
-            <a className="text-[14px] text-[#2196F3] pt-5 inline-flex" href="https://sdgs.un.org/goals/goal6" target="_blank">
-              Learn more <MdChevronRight  />
+            <a
+              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              href="https://sdgs.un.org/goals/goal6"
+              target="_blank"
+            >
+              Learn more <MdChevronRight />
             </a>
           </div>
         </div>
@@ -1917,30 +2075,41 @@ export const Energydata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Sustainable Development Goal 12: Ensure sustainable consumption and production pattern
+            Sustainable Development Goal 12: Ensure sustainable consumption and
+            production pattern
           </p>
           <div className="h-[280px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 12.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            By 2020, achieve the environmentally sound management of chemicals and all wastes throughout their life cycle, in accordance with agreed international frameworks, and significantly reduce their release to air, water and soil in order to minimize their adverse impacts on human health and the environment.
+              By 2020, achieve the environmentally sound management of chemicals
+              and all wastes throughout their life cycle, in accordance with
+              agreed international frameworks, and significantly reduce their
+              release to air, water and soil in order to minimize their adverse
+              impacts on human health and the environment.
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">12.4.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Number of parties to international multilateral environmental agreements on hazardous waste, and other chemicals that meet their commitments and obligations in transmitting information as required by each relevant agreement.
+              Number of parties to international multilateral environmental
+              agreements on hazardous waste, and other chemicals that meet their
+              commitments and obligations in transmitting information as
+              required by each relevant agreement.
             </p>
             <p className="text-[11px] text-[#222222] mb-2">12.2.2</p>
             <p className="text-[11px] text-[#727272] mb-1">
-            (a) Hazardous waste generated per capita; and
+              (a) Hazardous waste generated per capita; and
             </p>
             <p className="text-[11px] text-[#727272] mb-4">
               (b) Proportion of hazardous waste treated, by type of treatment
             </p>
-
           </div>
           <div>
-            <a className="text-[14px] text-[#2196F3] pt-5 inline-flex" href="https://sdgs.un.org/goals/goal12" target="_blank">
-              Learn more <MdChevronRight  />
+            <a
+              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              href="https://sdgs.un.org/goals/goal12"
+              target="_blank"
+            >
+              Learn more <MdChevronRight />
             </a>
           </div>
         </div>
@@ -2112,7 +2281,7 @@ export const Energydata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12488"
               target="_blank"
             >
-              Learn more <MdChevronRight  />
+              Learn more <MdChevronRight />
             </a>
           </div>
         </div>
@@ -2153,7 +2322,7 @@ export const Energydata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12488"
               target="_blank"
             >
-              Learn more <MdChevronRight  />
+              Learn more <MdChevronRight />
             </a>
           </div>
         </div>
@@ -2234,18 +2403,16 @@ export const Energydata = [
               water stress. This can give stakeholders more confidence in the
               organization’s water stewardship efforts and practices.
             </p>
-
-
           </div>
           <div>
-              <a
-                className="text-[14px] text-[#2196F3] pt-5 inline-flex"
-                href="https://www.globalreporting.org/pdf.ashx?id=12488"
-                target="_blank"
-              >
-                Learn more <MdChevronRight  />
-              </a>
-            </div>
+            <a
+              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12488"
+              target="_blank"
+            >
+              Learn more <MdChevronRight />
+            </a>
+          </div>
         </div>
       </>,
     ],
@@ -2327,18 +2494,16 @@ export const Energydata = [
               report the information requested in Disclosure 303-4 for each
               facility in areas with water stress.
             </p>
-
-
           </div>
           <div>
-              <a
-                className="text-[14px] text-[#2196F3] pt-5 inline-flex"
-                href="https://www.globalreporting.org/pdf.ashx?id=12488"
-                target="_blank"
-              >
-                Learn more <MdChevronRight  />
-              </a>
-            </div>
+            <a
+              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12488"
+              target="_blank"
+            >
+              Learn more <MdChevronRight />
+            </a>
+          </div>
         </div>
       </>,
     ],
@@ -2354,45 +2519,51 @@ export const Energydata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Disclosure 303-5 Water consumption
+            Disclosure 303-5 Water consumption
           </p>
           <div className="h-[350px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-[#222222] mb-2">
-            Guidance for Disclosure 303-5
+              Guidance for Disclosure 303-5
             </p>
 
             <p className="text-[11px] text-[#727272] mb-2">
-            If the reporting organization cannot directly measure water consumption, it may calculate this using the following formula:
-
-Water consumption = Total water withdrawal -Total water discharge
+              If the reporting organization cannot directly measure water
+              consumption, it may calculate this using the following formula:
+              Water consumption = Total water withdrawal -Total water discharge
             </p>
 
             <p className="text-[11px] text-[#222222] mb-2">
-            Guidance for Disclosure 303-5-c
+              Guidance for Disclosure 303-5-c
             </p>
 
             <p className="text-[11px] text-[#727272] mb-2">
-            If the water in storage has been identified as having a significant water-related impact, the
-organization is required to report change in water storage. The organization may calculate  change in water storage using the following formula:
-Change in water storage = Total water storage at the end of the reporting period -
-Total water storage at the beginning of the reporting period.
+              If the water in storage has been identified as having a
+              significant water-related impact, the organization is required to
+              report change in water storage. The organization may calculate
+              change in water storage using the following formula: Change in
+              water storage = Total water storage at the end of the reporting
+              period - Total water storage at the beginning of the reporting
+              period.
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Background</p>
             <p className="text-[11px] text-[#727272] mb-2">
-            Water consumption measures water used by an organization such that it is no longer available for use by the ecosystem or local community in the reporting period. Reporting the volume of water consumption can help the organization understand the overall scale of its impact due to water withdrawal on downstream water availability.
+              Water consumption measures water used by an organization such that
+              it is no longer available for use by the ecosystem or local
+              community in the reporting period. Reporting the volume of water
+              consumption can help the organization understand the overall scale
+              of its impact due to water withdrawal on downstream water
+              availability.
             </p>
-
-
           </div>
           <div className="mt-5">
-              <a
-                className="text-[14px] text-[#2196F3] pt-5 inline-flex"
-                href="https://www.globalreporting.org/pdf.ashx?id=12488"
-                target="_blank"
-              >
-                Learn more <MdChevronRight  />
-              </a>
-            </div>
+            <a
+              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12488"
+              target="_blank"
+            >
+              Learn more <MdChevronRight />
+            </a>
+          </div>
         </div>
       </>,
     ],
@@ -2440,17 +2611,16 @@ Total water storage at the beginning of the reporting period.
               Domestic material consumption, domestic material consumption per
               capita, and domestic material consumption per GDP
             </p>
-
           </div>
           <div>
-              <a
-                className="text-[14px] text-[#2196F3] pt-5 inline-flex"
-                href="https://sdgs.un.org/goals/goal8"
-                target="_blank"
-              >
-                Learn more <MdChevronRight  />
-              </a>
-            </div>
+            <a
+              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              href="https://sdgs.un.org/goals/goal8"
+              target="_blank"
+            >
+              Learn more <MdChevronRight />
+            </a>
+          </div>
         </div>
       </>,
     ],
@@ -2492,17 +2662,16 @@ Total water storage at the beginning of the reporting period.
               Domestic material consumption, domestic material consumption per
               capita, and domestic material consumption per GDP
             </p>
-
           </div>
           <div>
-              <a
-                className="text-[14px] text-[#2196F3] pt-5 inline-flex"
-                href="https://sdgs.un.org/goals/goal12"
-                target="_blank"
-              >
-                Learn more <MdChevronRight  />
-              </a>
-            </div>
+            <a
+              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              href="https://sdgs.un.org/goals/goal12"
+              target="_blank"
+            >
+              Learn more <MdChevronRight />
+            </a>
+          </div>
         </div>
       </>,
     ],
@@ -2574,17 +2743,16 @@ Total water storage at the beginning of the reporting period.
               original state, and not to be presented with further data
               manipulation, such as reporting it as ‘dry weight’.
             </p>
-
           </div>
           <div>
-              <a
-                className="text-[14px] text-[#2196F3] pt-5 inline-flex"
-                href="https://globalreporting.org/pdf.ashx?id=12456&page=1"
-                target="_blank"
-              >
-                Learn more <MdChevronRight  />
-              </a>
-            </div>
+            <a
+              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              href="https://globalreporting.org/pdf.ashx?id=12456&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight />
+            </a>
+          </div>
         </div>
       </>,
     ],
@@ -2643,7 +2811,7 @@ Total water storage at the beginning of the reporting period.
               </li>
             </ul>
             <p className="text-[11px] text-[#727272] mb-2">
-              Percentage of recycled input materials used =[Total recycled input
+              Percentage of recycled input materials used = [Total recycled input
               materials used/Total input materials used] * 100
             </p>
 
@@ -2654,17 +2822,16 @@ Total water storage at the beginning of the reporting period.
               units, the organization can convert measurements to standardized
               units.
             </p>
-
           </div>
           <div>
-              <a
-                className="text-[14px] text-[#2196F3] pt-5 inline-flex"
-                href="https://globalreporting.org/pdf.ashx?id=12456&page=1"
-                target="_blank"
-              >
-                Learn more <MdChevronRight  />
-              </a>
-            </div>
+            <a
+              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              href="https://globalreporting.org/pdf.ashx?id=12456&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight />
+            </a>
+          </div>
         </div>
       </>,
     ],
@@ -2710,17 +2877,16 @@ Total water storage at the beginning of the reporting period.
               Domestic material consumption, domestic material consumption per
               capita, and domestic material consumption per GDP
             </p>
-
           </div>
           <div>
-              <a
-                className="text-[14px] text-[#2196F3] pt-5 inline-flex"
-                href="https://sdgs.un.org/goals/goal8"
-                target="_blank"
-              >
-                Learn more <MdChevronRight  />
-              </a>
-            </div>
+            <a
+              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              href="https://sdgs.un.org/goals/goal8"
+              target="_blank"
+            >
+              Learn more <MdChevronRight />
+            </a>
+          </div>
         </div>
       </>,
     ],
@@ -2785,17 +2951,16 @@ Total water storage at the beginning of the reporting period.
             <p className="text-[11px] text-[#727272] mb-2">
               (b) proportion of hazardous waste treated, by type of treatment
             </p>
-
           </div>
           <div>
-              <a
-                className="text-[14px] text-[#2196F3] pt-5 inline-flex"
-                href="https://sdgs.un.org/goals/goal12"
-                target="_blank"
-              >
-                Learn more <MdChevronRight  />
-              </a>
-            </div>
+            <a
+              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              href="https://sdgs.un.org/goals/goal12"
+              target="_blank"
+            >
+              Learn more <MdChevronRight />
+            </a>
+          </div>
         </div>
       </>,
     ],
@@ -2857,17 +3022,16 @@ Total water storage at the beginning of the reporting period.
               The reporting organization can also report recycling or reuse of
               packaging separately.
             </p>
-
           </div>
           <div>
-              <a
-                className="text-[14px] text-[#2196F3] pt-5 inline-flex"
-                href="https://globalreporting.org/pdf.ashx?id=12456&page=1"
-                target="_blank"
-              >
-                Learn more <MdChevronRight  />
-              </a>
-            </div>
+            <a
+              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              href="https://globalreporting.org/pdf.ashx?id=12456&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight />
+            </a>
+          </div>
         </div>
       </>,
     ],
@@ -2913,17 +3077,16 @@ Total water storage at the beginning of the reporting period.
               Domestic material consumption, domestic material consumption per
               capita, and domestic material consumption per GDP
             </p>
-
           </div>
           <div>
-              <a
-                className="text-[14px] text-[#2196F3] pt-5 inline-flex"
-                href="https://sdgs.un.org/goals/goal8"
-                target="_blank"
-              >
-                Learn more <MdChevronRight  />
-              </a>
-            </div>
+            <a
+              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              href="https://sdgs.un.org/goals/goal8"
+              target="_blank"
+            >
+              Learn more <MdChevronRight />
+            </a>
+          </div>
         </div>
       </>,
     ],
@@ -2965,18 +3128,525 @@ Total water storage at the beginning of the reporting period.
               Domestic material consumption, domestic material consumption per
               capita, and domestic material consumption per GDP
             </p>
-
           </div>
 
           <div>
-              <a
-                className="text-[14px] text-[#2196F3] pt-5 inline-flex"
-                href="https://sdgs.un.org/goals/goal12"
-                target="_blank"
-              >
-                Learn more <MdChevronRight  />
-              </a>
-            </div>
+            <a
+              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              href="https://sdgs.un.org/goals/goal12"
+              target="_blank"
+            >
+              Learn more <MdChevronRight />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["45"],
+    header: [
+      <>
+        <div className="flex w-[100px]">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-12.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-yellow-600 text-[17px] font-bold ml-2">SDG 12</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 12: Ensure sustainable consumption and
+            production patterns
+          </p>
+          <div className="h-[280px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 12.4</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2020, achieve the environmentally sound management of chemicals
+              and all wastes throughout their life cycle, in accordance with
+              agreed international frameworks, and significantly reduce their
+              release to air, water and soil in order to minimize their adverse
+              impacts on human health and the environment
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">12.4.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Number of parties to international multilateral environmental
+              agreements on hazardous waste, and other chemicals that meet their
+              commitments and obligations in transmitting information as
+              required by each relevant agreement
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">12.4.2</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              (a) Hazardous waste generated per capita; and (b) proportion of
+              hazardous waste treated, by type of treatment
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 12.5</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, substantially reduce waste generation through prevention,
+              reduction, recycling and reuse
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">12.5.2</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              National recycling rate, tons of material recycled
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              href="https://sdgs.un.org/goals/goal12"
+              target="_blank"
+            >
+              Learn more <MdChevronRight />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["46"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-03.png"
+            className="w-[32px] h-[32px]"
+          />{" "}
+          <h5 className="text-[#2D9A47] text-[17px] font-bold ml-2">SDG 3</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 3: Ensure healthy lives and promote
+            well-being for all at all ages
+          </p>
+          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 3.9</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, reduce the global maternal mortality ratio to less than
+              70 per 100,000 live births
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">3.9</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, substantially reduce the number of deaths and illnesses
+              from hazardous chemicals and air, water and soil pollution and
+              contamination
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 3.a</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Strengthen the implementation of the World Health Organization
+              Framework Convention on Tobacco Control in all countries, as
+              appropriate
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">3.a.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Age-standardized prevalence of current tobacco use among persons
+              aged 15 years and older
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 3.b</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Support the research and development of vaccines and medicines for
+              the communicable and non-communicable diseases that primarily
+              affect developing countries, provide access to affordable
+              essential medicines and vaccines, in accordance with the Doha
+              Declaration on the TRIPS Agreement and Public Health, which
+              affirms the right of developing countries to use to the full the
+              provisions in the Agreement on Trade-Related Aspects of
+              Intellectual Property Rights regarding flexibilities to protect
+              public health, and, in particular, provide access to medicines for
+              all
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">3.b.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of the target population covered by all vaccines
+              included in their national programme
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">3.b.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Total net official development assistance to medical research and
+              basic health sectors
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">3.b.3</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of health facilities that have a core set of relevant
+              essential medicines available and affordable on a sustainable
+              basis
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 3.c</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Substantially increase health financing and the recruitment,
+              development, training and retention of the health workforce in
+              developing countries, especially in least developed countries and
+              small island developing States
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">3.c.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Health worker density and distribution
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 3.d</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Strengthen the capacity of all countries, in particular developing
+              countries, for early warning, risk reduction and management of
+              national and global health risks
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              href="https://sdgs.un.org/goals/goal3"
+              target="_blank"
+            >
+              Learn more <MdChevronRight />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["47"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-06.png"
+            className="w-[32px] h-[32px]"
+          />{" "}
+          <h5 className="text-cyan-500 text-[17px] font-bold ml-2">SDG 6</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 6: Ensure availability and sustainable
+            management of water and sanitation for all
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 6.3</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, improve water quality by reducing pollution, eliminating
+              dumping and minimizing release of hazardous chemicals and
+              materials, halving the proportion of untreated wastewater and
+              substantially increasing recycling and safe reuse globally
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">6.3.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of domestic and industrial wastewater flows safely
+              treated
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">6.3.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of bodies of water with good ambient water quality
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 6.6</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2020, protect and restore water-related ecosystems, including
+              mountains, forests, wetlands, rivers, aquifers and lakes
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">6.6.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Change in the extent of water-related ecosystems over time
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 6.a</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, expand international cooperation and capacity-building
+              support to developing countries in water- and sanitation-related
+              activities and programmes, including water harvesting,
+              desalination, water efficiency, wastewater treatment, recycling
+              and reuse technologies
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">6.a.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Amount of water- and sanitation-related official development
+              assistance that is part of a government-coordinated spending plan
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 6.b</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Amount of water- and sanitation-related official development
+              assistance that is part of a government-coordinated spending plan
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">6.b.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Support and strengthen the participation of local communities in
+              improving water and sanitation management
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              href="https://sdgs.un.org/goals/goal6"
+              target="_blank"
+            >
+              Learn more <MdChevronRight />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["48"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-11.png"
+            className="w-[32px] h-[32px]"
+          />{" "}
+          <h5 className="text-[#FD9D24] text-[17px] font-bold ml-2">SDG 11</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 11: Make cities and human settlements
+            inclusive, safe, resilient and sustainable
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 11.6</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, reduce the adverse per capita environmental impact of
+              cities, including by paying special attention to air quality and
+              municipal and other waste management
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">11.6.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of municipal solid waste collected and managed in
+              controlled facilities out of total municipal waste generated, by
+              cities
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">11.6.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Annual mean levels of fine particulate matter (e.g. PM2.5 and
+              PM10) in cities (population weighted)
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              href="https://sdgs.un.org/goals/goal11"
+              target="_blank"
+            >
+              Learn more <MdChevronRight />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["49"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-06.png"
+            className="w-[32px] h-[32px]"
+          />{" "}
+          <h5 className="text-cyan-500 text-[17px] font-bold ml-2">SDG 6</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 6: Ensure availability and sustainable
+            management of water and sanitation for all
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 6.6</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2020, protect and restore water-related ecosystems, including
+              mountains, forests, wetlands, rivers, aquifers and lakes
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">6.6.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Change in the extent of water-related ecosystems over time
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 6.a</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, expand international cooperation and capacity-building
+              support to developing countries in water- and sanitation-related
+              activities and programmes, including water harvesting,
+              desalination, water efficiency, wastewater treatment, recycling
+              and reuse technologies
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">6.a.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Amount of water- and sanitation-related official development
+              assistance that is part of a government-coordinated spending plan
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 6.b</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Amount of water- and sanitation-related official development
+              assistance that is part of a government-coordinated spending plan
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">6.b.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Support and strengthen the participation of local communities in
+              improving water and sanitation management
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              href="https://sdgs.un.org/goals/goal6"
+              target="_blank"
+            >
+              Learn more <MdChevronRight />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["50"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        Disclosure 303-5 Water consumption
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 303-5 Water consumption
+          </p>
+          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-[#222222] mb-2">
+              Guidance for Disclosure 303-5
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              If the reporting organization cannot directly measure water
+              consumption, it may calculate this using the following formula:
+              Water consumption = Total water withdrawal -Total water discharge
+            </p>
+
+            <p className="text-[11px] text-[#222222] mb-2">
+              Guidance for Disclosure 303-5-c
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              If the water in storage has been identified as having a
+              significant water-related impact, the organization is required to
+              report change in water storage. The organization may calculate
+              change in water storage using the following formula: Change in
+              water storage = Total water storage at the end of the reporting
+              period - Total water storage at the beginning of the reporting
+              period.
+            </p>
+
+            <p className="text-[11px] text-[#222222] mb-2">Background</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Water consumption measures water used by an organization such that
+              it is no longer available for use by the ecosystem or local
+              community in the reporting period. Reporting the volume of water
+              consumption can help the organization understand the overall scale
+              of its impact due to water withdrawal on downstream water
+              availability.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12488"
+              target="_blank"
+            >
+              Learn more <MdChevronRight />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["51"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+      GRI 301: Materials 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Disclosure 301-1 Materials used by weight or volume
+          </p>
+
+          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-[#222222] mb-2">
+            Renewable Materials:
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+            Materials that can be replenished naturally over time, such as Wood, Paper, Leather.
+            </p>
+
+            <p className="text-[11px] text-[#222222] mb-2">
+            Non-Renewable Materials:
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+            Materials that cannot be replenished naturally over time. They are typically formed from geological processes that take millions of years, such as Fossil Fuel, Glass, Fuel.
+</p>
+            <p className="text-[11px] text-[#222222] mb-2">Internally sourced materials  </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            Materials that the company makes itself.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Estimation  </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            Process of making an approximate calculation of something.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Direct measurement</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            Process of measuring something directly. For example, a company might directly measure the total weight or volume of materials used by weighing or measuring each batch of materials used.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            GRI 301-1 focuses on the materials an organization uses, measured by weight or volume. This data is important to understand the organization's resource consumption.
+            </p>
+
+            <p className="text-[11px] text-[#222222] mb-2">GRI Guidance: </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            The reported usage data are to reflect the material in its original state, and not to be presented with further data manipulation, such as reporting it as ‘dry weight’.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              href="https://globalreporting.org/pdf.ashx?id=12456&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight />
+            </a>
+          </div>
         </div>
       </>,
     ],

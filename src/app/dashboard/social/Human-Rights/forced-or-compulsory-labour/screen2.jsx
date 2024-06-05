@@ -58,7 +58,7 @@ const Screen2 = () => {
         setFormData(e.formData);
     };
 
-    // The below code on updateFormData 
+    // The below code on updateFormData
     const updateFormData = async () => {
         const data = {
         client_id : client_id,
@@ -103,7 +103,7 @@ const Screen2 = () => {
         console.log('Error:', error);
         });
     }
-    //Reloading the forms 
+    //Reloading the forms
     useEffect(() => {
         //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
     },[r_schema, r_ui_schema])
@@ -143,7 +143,7 @@ const Screen2 = () => {
 
     return (
         <>
-            <div className="mx-2 p-3 mb-6 rounded-md min-w-[700px] max-w-[1010px]" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+            <div className="mx-2 p-3 mb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
                 <div className='mb-4 flex'>
                     <div className='w-[80%]'>
                         <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold mb-2'>

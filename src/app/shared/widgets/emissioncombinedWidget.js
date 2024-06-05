@@ -208,7 +208,7 @@ const CombinedWidget = ({ value = {}, onChange }) => {
         <select
           value={unit}
           onChange={(e) => handleUnitChange(e.target.value)}
-          className="w-[70px] ml-1 cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none mt-1.5 font-bold text-xs bg-sky-600 text-white -ml-11"
+          className="w-[70px]  cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none mt-1.5 font-bold text-xs bg-sky-600 text-white -ml-11"
         >
           <option value="">Unit</option>
           {units.map((unit, index) => (
