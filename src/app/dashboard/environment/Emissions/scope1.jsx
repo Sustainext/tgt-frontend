@@ -2,14 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
-import { MdAdd, MdOutlineDeleteOutline } from "react-icons/md";
+import { MdAdd } from "react-icons/md";
 import CustomFileUploadWidget from '../../../shared/widgets/CustomFileUploadWidget';
 import AssignToWidget from '../../../shared/widgets/assignToWidget';
 import CombinedWidget from '../../../shared/widgets/emissioncombinedWidget';
 import { GlobalState } from '../../../../Context/page';
 import RemoveWidget from '../../../shared/widgets/RemoveWidget';
 import axios from 'axios';
-// import toast, { Toaster } from 'react-hot-toast';
+
 const widgets = {
   EmissonCombinedWidget: CombinedWidget,
   FileUploadWidget: CustomFileUploadWidget,
@@ -44,7 +44,8 @@ const Scope1 = () => {
       client_id: client_id,
       user_id : user_id,
       path: view_path,
-      form_data : formData
+      form_data : formData,
+      schema: r_schema
     }
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
