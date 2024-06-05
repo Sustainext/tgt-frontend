@@ -7,6 +7,9 @@ import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 import axios from 'axios';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Oval } from 'react-loader-spinner';
 // Simple Custom Table Widget
 const widgets = {
     TableWidget: CustomTableWidget,
@@ -53,6 +56,14 @@ const Screen2 = () => {
     }]);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
+    const [loopen, setLoOpen] = useState(false);
+    
+    const LoaderOpen = () => {
+        setLoOpen(true);
+      };
+      const LoaderClose = () => {
+        setLoOpen(false);
+      };
 
     const handleChange = (e) => {
         setFormData(e.formData);
@@ -60,6 +71,7 @@ const Screen2 = () => {
 
     // The below code on updateFormData
     const updateFormData = async () => {
+        LoaderOpen();
         const data = {
         client_id : client_id,
         user_id : user_id,
@@ -74,14 +86,54 @@ const Screen2 = () => {
             ...data
             }
         );
-
-        console.log('Response:', response.data);
+        if (response.status === 200) {
+            toast.success("Data added successfully", {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+            LoaderClose();
+            loadFormData();
+    
+          }else {
+            toast.error("Oops, something went wrong", {
+              position: "top-right",
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+            LoaderClose();
+          }
         } catch (error) {
-        console.error('Error:', error);
+          toast.error("Oops, something went wrong", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          LoaderClose();
         }
+        // console.log('Response:', response.data);
+        // } catch (error) {
+        // console.error('Error:', error);
+        // }
     };
 
     const loadFormData = async () => {
+        LoaderOpen();
         const base_url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path=`;
         const url = `${base_url}${view_path}&&client_id=${client_id}&&user_id=${user_id}`
         console.log(url, 'is the url to be fired')
@@ -96,11 +148,27 @@ const Screen2 = () => {
         const form_parent = response.data.form_data
         const f_data = form_parent[0].data
         setFormData(f_data)
+        LoaderClose();
         // setting the setFormData(response.data.form[0].form_data)
         })
         .catch(error =>{
+            const errorMessage =
+            error.response && error.response.data && error.response.data.message
+              ? error.response.data.message
+              : "Oops, something went wrong";
+          toast.error(errorMessage, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          LoaderClose();
         //handling the error response
-        console.log('Error:', error);
+        // console.log('Error:', error);
         });
     }
     //Reloading the forms
@@ -200,7 +268,18 @@ const Screen2 = () => {
                     <button type="button" className="text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
                 </div>
             </div>
-
+            {loopen && (
+            <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                <Oval
+                height={50}
+                width={50}
+                color="#00BFFF"
+                secondaryColor="#f3f3f3"
+                strokeWidth={2}
+                strokeWidthSecondary={2}
+                />
+            </div>
+            )}
         </>
     );
 };

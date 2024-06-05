@@ -129,6 +129,7 @@ const Benefitsscreen = () => {
             progress: undefined,
             theme: "colored",
           });
+          LoaderClose();
         }
         // console.log('Response:', response.data);
         // } catch (error) {
