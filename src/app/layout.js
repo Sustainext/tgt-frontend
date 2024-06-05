@@ -3,6 +3,7 @@ import "./globals.css";
 import { GlobalStateProvider } from "../Context/page";
 import { AuthProvider } from "../Context/auth";
 import { ToastContainer } from 'react-toastify';
+import 'react-tooltip/dist/react-tooltip.css';
 
 export const metadata = {
   title: "Sustainext",
