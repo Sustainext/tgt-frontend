@@ -9,7 +9,7 @@ import CombinedWidget from '../../../shared/widgets/emissioncombinedWidget';
 import { GlobalState } from '../../../../Context/page';
 import RemoveWidget from '../../../shared/widgets/RemoveWidget';
 import axios from 'axios';
-// import toast, { Toaster } from 'react-hot-toast';
+
 const widgets = {
   EmissonCombinedWidget: CombinedWidget,
   FileUploadWidget: CustomFileUploadWidget,

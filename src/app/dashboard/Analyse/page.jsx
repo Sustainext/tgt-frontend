@@ -3,10 +3,12 @@ import React, { useState } from "react";
 import Header from "./Header";
 import Aside from "./Aside";
 import AnalyseEmission from "./Emission/page";
-// import AnalyseEnergy from "./Energy";
-
+import AnalyseEnergy from "./Energy/page";
+import AnalyseWaste from "./Waste/page";
+import AnalyseMaterials from "./Materials/page";
 const Analyse = () => {
   const [activeTab, setActiveTab] = useState("Emissions");
+  const [isBoxOpen, setIsBoxOpen] = useState(false);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -19,10 +21,13 @@ const Analyse = () => {
       </div>
       <div className="w-full ms-8">
         <div className="sticky top-14 bg-white">
-          <Header activeTab={activeTab} />
+          <Header activeTab={activeTab} setIsBoxOpen={setIsBoxOpen} />
         </div>
         {activeTab === "Emissions" && <AnalyseEmission />}
-        {/* {activeTab === "Energy" && <AnalyseEnergy />} */}
+        {activeTab === "Energy" && <AnalyseEnergy isBoxOpen={isBoxOpen} />}
+        {activeTab === "Waste" && <AnalyseWaste isBoxOpen={isBoxOpen} />}
+        {activeTab === "Materials" && <AnalyseMaterials isBoxOpen={isBoxOpen} />}
+
       </div>
     </div>
   );

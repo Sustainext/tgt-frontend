@@ -1,28 +1,28 @@
-'use client'
-import React, { useState, useEffect } from 'react';
-import { scope1Info,scope2Info, scope3Info } from './scopeInfo';
-import axios from 'axios';
+"use client";
+import React, { useState, useEffect } from "react";
+import { scope1Info, scope2Info, scope3Info } from "./scopeInfo";
+import axios from "axios";
+
 const CombinedWidget = ({ value = {}, onChange }) => {
-  const [category, setCategory] = useState(value.Category || '');
-  const [subcategory, setSubcategory] = useState(value.Subcategory || '');
-  const [activity, setActivity] = useState(value.Activity || '');
-  const [quantity, setQuantity] = useState(value.Quantity || '');
-  const [unit, setUnit] = useState(value.Unit || '');
+
+  const [category, setCategory] = useState(value.Category || "");
+  const [subcategory, setSubcategory] = useState(value.Subcategory || "");
+  const [activity, setActivity] = useState(value.Activity || "");
+  const [quantity, setQuantity] = useState(value.Quantity || "");
+  const [unit, setUnit] = useState(value.Unit || "");
   const [subcategories, setSubcategories] = useState([]);
   const [activities, setActivities] = useState([]);
   const [units, setUnits] = useState([]);
-  const [base_categories, setBaseCategories] = useState([])
+  const [base_categories, setBaseCategories] = useState([]);
 
   useEffect(() => {
-    console.log('category selected is', category)
-    console.log('subcategory selected is', subcategory)
-
+    console.log("category selected is", category);
+    console.log("subcategory selected is", subcategory);
   }, [category, subcategory]);
-
 
   async function fetchActivities() {
     // console.log("Fetching activities", page);
-    console.log(process.env, ' is the climatiq key')
+    console.log(process.env, " is the climatiq key");
     const baseURL = "https://api.climatiq.io";
     const resultsPerPage = 500;
     const axiosConfig = {
@@ -33,20 +33,18 @@ const CombinedWidget = ({ value = {}, onChange }) => {
       },
     };
     const region = "US";
-    let currentYear = '2023';
-    let activitiesData=[];
+    let currentYear = "2023";
+    let activitiesData = [];
     // let totalResults = 0;
     // let totalPages;
 
     try {
-
       const url = `${baseURL}/data/v1/search?results_per_page=500&year=${currentYear}&region=${region}*&category=${subcategory}&page=1&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;
-      console.log(url, 'is the url')
+      console.log(url, "is the url");
       const response = await axios.get(url, axiosConfig);
-      console.log(response.data, ' climatiq data ...')
+      console.log(response.data, " climatiq data ...");
       activitiesData = response.data.results;
-      setActivities(activitiesData)
-
+      setActivities(activitiesData);
     } catch (error) {
       // ! Throws Error if couldn't fetch data
       console.error("Error fetching data from different regions: ", error);
@@ -55,11 +53,11 @@ const CombinedWidget = ({ value = {}, onChange }) => {
   }
 
   useEffect(() => {
-    fetchActivities()
+    fetchActivities();
   }, [subcategory]);
 
   useEffect(() => {
-    console.log('fetched activities are ', activities)
+    console.log("fetched activities are ", activities);
   }, [activities]);
 
   // useEffect(()=>{
@@ -74,18 +72,22 @@ const CombinedWidget = ({ value = {}, onChange }) => {
   //   console.log(base_categories, ' is baseCategories')
   // },[base_categories])
 
-
-
   const fetchBaseCategories = async () => {
     // Fetch logic here, assume it updates base_categories
-    setBaseCategories(scope1Info.map(info => info.Category.map(c => c.name)).flat());
+    setBaseCategories(
+      scope1Info.map((info) => info.Category.map((c) => c.name)).flat()
+    );
   };
   const fetchSubcategories = async () => {
-    const selectedCategory = scope1Info.find(info => info.Category.some(c => c.name === category));
-    const newSubcategories = selectedCategory ? selectedCategory.Category.find(c => c.name === category).SubCategory : [];
+    const selectedCategory = scope1Info.find((info) =>
+      info.Category.some((c) => c.name === category)
+    );
+    const newSubcategories = selectedCategory
+      ? selectedCategory.Category.find((c) => c.name === category).SubCategory
+      : [];
     setSubcategories(newSubcategories);
-    if (!newSubcategories.find(sub => sub === value.Subcategory)) {
-      setSubcategory(''); // Reset subcategory if it's not valid in the new category
+    if (!newSubcategories.find((sub) => sub === value.Subcategory)) {
+      setSubcategory(""); // Reset subcategory if it's not valid in the new category
     }
   };
   useEffect(() => {
@@ -111,51 +113,86 @@ const CombinedWidget = ({ value = {}, onChange }) => {
   //   onChange({ Category: value, Subcategory: '', Activity: '', Quantity: '', Unit: '' });
   // };
   const handleCategoryChange = (value) => {
-    console.log('Handle category change triggered')
+    console.log("Handle category change triggered");
     setCategory(value);
-    setSubcategory('');
-    setActivity('');
-    setQuantity('');
-    setUnit('');
+    setSubcategory("");
+    setActivity("");
+    setQuantity("");
+    setUnit("");
 
-    const selectedCategory = scope1Info.find(info => info.Category.some(c => c.name === value));
-    const subCategories = selectedCategory ? selectedCategory.Category.find(c => c.name === value).SubCategory : [];
-    console.log(subCategories, ' are the subcategories');
+    const selectedCategory = scope1Info.find((info) =>
+      info.Category.some((c) => c.name === value)
+    );
+    const subCategories = selectedCategory
+      ? selectedCategory.Category.find((c) => c.name === value).SubCategory
+      : [];
+    console.log(subCategories, " are the subcategories");
 
-    setSubcategories(subCategories); // Assuming subcategory objects have a 'name' property
-    onChange({ Category: value, Subcategory: '', Activity: '', Quantity: '', Unit: '' });
-};
+    setSubcategories(subCategories);
+    onChange({
+      Category: value,
+      Subcategory: "",
+      Activity: "",
+      Quantity: "",
+      Unit: "",
+    });
+  };
+
   const handleSubcategoryChange = (value) => {
     setSubcategory(value);
-    setActivity('');
-    setQuantity('');
-    setUnit('');
+    setActivity("");
+    setQuantity("");
+    setUnit("");
 
     // fetch activities
 
-    onChange({ Category: category, Subcategory: value, Activity: '', Quantity: '', Unit: '' });
+    onChange({
+      Category: category,
+      Subcategory: value,
+      Activity: "",
+      Quantity: "",
+      Unit: "",
+    });
   };
 
   const handleActivityChange = (value) => {
     setActivity(value);
-    setQuantity('');
-    setUnit('');
+    setQuantity("");
+    setUnit("");
 
-    onChange({ Category: category, Subcategory: subcategory, Activity: value, Quantity: '', Unit: '' });
+    onChange({
+      Category: category,
+      Subcategory: subcategory,
+      Activity: value,
+      Quantity: "",
+      Unit: "",
+    });
   };
 
   const handleQuantityChange = (value) => {
     setQuantity(value);
-    onChange({ Category: category, Subcategory: subcategory, Activity: activity, Quantity: value, Unit: unit });
+    onChange({
+      Category: category,
+      Subcategory: subcategory,
+      Activity: activity,
+      Quantity: value,
+      Unit: unit,
+    });
   };
 
   const handleUnitChange = (value) => {
     setUnit(value);
-    onChange({ Category: category, Subcategory: subcategory, Activity: activity, Quantity: quantity, Unit: value });
+    onChange({
+      Category: category,
+      Subcategory: subcategory,
+      Activity: activity,
+      Quantity: quantity,
+      Unit: value,
+    });
   };
 
   return (
-    <div className='flex mb-5'>
+    <div className="flex mb-5">
       <div>
       <select
         value={category}
