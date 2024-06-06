@@ -5,7 +5,6 @@ import { unitTypes } from "../data/units";
 import axios from "axios";
 
 const CombinedWidget = ({ value = {}, onChange, scope }) => {
-  
   const [category, setCategory] = useState(value.Category || "");
   const [subcategory, setSubcategory] = useState(value.Subcategory || "");
   const [activity, setActivity] = useState(value.Activity || "");
@@ -15,30 +14,30 @@ const CombinedWidget = ({ value = {}, onChange, scope }) => {
   const [activities, setActivities] = useState([]);
   const [units, setUnits] = useState([]);
   const [base_categories, setBaseCategories] = useState([]);
+  const [selectedActivity, setSelectedActivity] = useState(null);
 
   const scopeMappings = {
     scope1: scope1Info,
     scope2: scope2Info,
-    scope3: scope3Info
+    scope3: scope3Info,
   };
 
   const scopeData = scopeMappings[scope];
 
   const fetchBaseCategories = async () => {
-    
     if (!scopeData) {
       console.error("Invalid scope provided");
       return;
     }
-
-    const categories = scopeData.flatMap(info => info.Category.map(c => c.name));
+    const categories = scopeData.flatMap((info) =>
+      info.Category.map((c) => c.name)
+    );
     setBaseCategories(categories);
-};
+  };
 
-useEffect(() => {
-  fetchBaseCategories();
-}, []);
-
+  useEffect(() => {
+    fetchBaseCategories();
+  }, []);
 
   async function fetchActivities() {
     console.log(process.env, " is the climatiq key");
@@ -75,29 +74,53 @@ useEffect(() => {
     fetchActivities();
   }, [subcategory]);
 
-
   const fetchSubcategories = async () => {
-    const selectedCategory = scopeMappings[scope].find(info =>
-      info.Category.some(c => c.name === category)
+    const selectedCategory = scopeMappings[scope].find((info) =>
+      info.Category.some((c) => c.name === category)
     );
     const newSubcategories = selectedCategory
-      ? selectedCategory.Category.find(c => c.name === category).SubCategory
+      ? selectedCategory.Category.find((c) => c.name === category).SubCategory
       : [];
     setSubcategories(newSubcategories);
     // Reset subcategory if it's not valid in the new category
-    if (!newSubcategories.find(sub => sub === value.Subcategory)) {
+    if (!newSubcategories.find((sub) => sub === value.Subcategory)) {
       setSubcategory("");
     }
-};
+  };
 
-useEffect(() => {
+  useEffect(() => {
     if (category) {
       fetchSubcategories();
     }
-}, [category]);
+  }, [category]);
 
+  useEffect(() => {
+    if (activities.length > 0 && value.Activity) {
+      const initialActivity = activities.find(
+        (act) =>
+          `${act.name} - ( ${act.source} ) - ${act.unit_type}` ===
+          value.Activity
+      );
+      setSelectedActivity(initialActivity);
+    }
+  }, [activities, value.Activity]);
 
-  
+  useEffect(() => {
+    if (selectedActivity && selectedActivity.unit_type) {
+      const unitConfig = unitTypes.find(
+        (u) => u.unit_type === selectedActivity.unit_type
+      );
+      if (unitConfig) {
+        const availableUnits = Object.values(unitConfig.units).flat();
+        setUnits(availableUnits);
+      } else {
+        setUnits([]);
+      }
+    } else {
+      setUnits([]);
+    }
+  }, [selectedActivity]);
+
   const handleCategoryChange = (value) => {
     console.log("Handle category change triggered");
     setCategory(value);
@@ -145,6 +168,11 @@ useEffect(() => {
     setActivity(value);
     setQuantity("");
     setUnit("");
+
+    const foundActivity = activities.find(
+      (act) => `${act.name} - ( ${act.source} ) - ${act.unit_type}` === value
+    );
+    setSelectedActivity(foundActivity);
 
     onChange({
       Category: category,
