@@ -35,4 +35,19 @@ export const yearInfo = [
     '2023-2024',
     '2024-2025',
   ];
+
+  export const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
   

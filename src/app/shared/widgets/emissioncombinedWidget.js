@@ -1,10 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { scope1Info, scope2Info, scope3Info } from "./scopeInfo";
+import { scope1Info, scope2Info, scope3Info } from "../data/scopeInfo";
+import { unitTypes } from "../data/units";
 import axios from "axios";
 
-const CombinedWidget = ({ value = {}, onChange }) => {
-
+const CombinedWidget = ({ value = {}, onChange, scope }) => {
+  
   const [category, setCategory] = useState(value.Category || "");
   const [subcategory, setSubcategory] = useState(value.Subcategory || "");
   const [activity, setActivity] = useState(value.Activity || "");
@@ -15,13 +16,31 @@ const CombinedWidget = ({ value = {}, onChange }) => {
   const [units, setUnits] = useState([]);
   const [base_categories, setBaseCategories] = useState([]);
 
-  useEffect(() => {
-    console.log("category selected is", category);
-    console.log("subcategory selected is", subcategory);
-  }, [category, subcategory]);
+  const scopeMappings = {
+    scope1: scope1Info,
+    scope2: scope2Info,
+    scope3: scope3Info
+  };
+
+  const scopeData = scopeMappings[scope];
+
+  const fetchBaseCategories = async () => {
+    
+    if (!scopeData) {
+      console.error("Invalid scope provided");
+      return;
+    }
+
+    const categories = scopeData.flatMap(info => info.Category.map(c => c.name));
+    setBaseCategories(categories);
+};
+
+useEffect(() => {
+  fetchBaseCategories();
+}, []);
+
 
   async function fetchActivities() {
-    // console.log("Fetching activities", page);
     console.log(process.env, " is the climatiq key");
     const baseURL = "https://api.climatiq.io";
     const resultsPerPage = 500;
@@ -56,62 +75,29 @@ const CombinedWidget = ({ value = {}, onChange }) => {
     fetchActivities();
   }, [subcategory]);
 
-  useEffect(() => {
-    console.log("fetched activities are ", activities);
-  }, [activities]);
 
-  // useEffect(()=>{
-  //   console.log(
-  //     'scope1Info is loading '
-  //   )
-  //   const b_categories = scope1Info[0].Category.map(item => item.name);
-  //   setBaseCategories(b_categories)
-  // },[])
-
-  // useEffect(()=>{
-  //   console.log(base_categories, ' is baseCategories')
-  // },[base_categories])
-
-  const fetchBaseCategories = async () => {
-    // Fetch logic here, assume it updates base_categories
-    setBaseCategories(
-      scope1Info.map((info) => info.Category.map((c) => c.name)).flat()
-    );
-  };
   const fetchSubcategories = async () => {
-    const selectedCategory = scope1Info.find((info) =>
-      info.Category.some((c) => c.name === category)
+    const selectedCategory = scopeMappings[scope].find(info =>
+      info.Category.some(c => c.name === category)
     );
     const newSubcategories = selectedCategory
-      ? selectedCategory.Category.find((c) => c.name === category).SubCategory
+      ? selectedCategory.Category.find(c => c.name === category).SubCategory
       : [];
     setSubcategories(newSubcategories);
-    if (!newSubcategories.find((sub) => sub === value.Subcategory)) {
-      setSubcategory(""); // Reset subcategory if it's not valid in the new category
+    // Reset subcategory if it's not valid in the new category
+    if (!newSubcategories.find(sub => sub === value.Subcategory)) {
+      setSubcategory("");
     }
-  };
-  useEffect(() => {
-    fetchBaseCategories();
-  }, []);
+};
 
-  useEffect(() => {
+useEffect(() => {
     if (category) {
       fetchSubcategories();
     }
-  }, [category]);
-  // const handleCategoryChange = (value) => {
-  //   console.log('Handle category change triggered')
-  //   setCategory(value);
-  //   setSubcategory('');
-  //   setActivity('');
-  //   setQuantity('');
-  //   setUnit('');
-  //   const selectedCategory = scope1Info[0].Category.find(item => item.name === value);
-  //   const subCategories = selectedCategory ? selectedCategory.SubCategory : [];
-  //   console.log(subCategories, ' are the subcategories')
-  //   setSubcategories(subCategories)
-  //   onChange({ Category: value, Subcategory: '', Activity: '', Quantity: '', Unit: '' });
-  // };
+}, [category]);
+
+
+  
   const handleCategoryChange = (value) => {
     console.log("Handle category change triggered");
     setCategory(value);
