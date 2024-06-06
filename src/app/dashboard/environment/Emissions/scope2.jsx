@@ -11,11 +11,12 @@ import RemoveWidget from '../../../shared/widgets/RemoveWidget';
 import axios from 'axios';
 
 const widgets = {
-  EmissonCombinedWidget: CombinedWidget,
+  EmissonCombinedWidget: (props) => <CombinedWidget {...props} scope="scope2" />,
   FileUploadWidget: CustomFileUploadWidget,
   AssignTobutton: AssignToWidget,
-  RemoveWidget: RemoveWidget, // Update widgets to include CombinedWidget
+  RemoveWidget: RemoveWidget,
 };
+
 const view_path = 'gri-environment-emissions-301-a-scope-2'
 const client_id = 1
 const user_id = 1
@@ -138,7 +139,7 @@ const Scope2 = () => {
               RemoveWidget: (props) => (
                 <RemoveWidget
                   {...props}
-                  index={props.id.split('_')[1]} // Pass the index
+                  index={props.id.split('_')[1]}
                   onRemove={handleRemove}
                 />
               ),

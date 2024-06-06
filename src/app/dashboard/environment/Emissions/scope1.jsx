@@ -11,7 +11,7 @@ import RemoveWidget from '../../../shared/widgets/RemoveWidget';
 import axios from 'axios';
 
 const widgets = {
-  EmissonCombinedWidget: CombinedWidget,
+  EmissonCombinedWidget: (props) => <CombinedWidget {...props} scope="scope1" />,
   FileUploadWidget: CustomFileUploadWidget,
   AssignTobutton: AssignToWidget,
   RemoveWidget: RemoveWidget, // Update widgets to include CombinedWidget
@@ -30,7 +30,6 @@ const Scope1 = () => {
 
   const handleChange = (e) => {
     setFormData(e.formData);
-
   };
 
 
