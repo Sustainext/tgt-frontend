@@ -4,7 +4,7 @@ import { scope1Info, scope2Info, scope3Info } from "./scopeInfo";
 import axios from "axios";
 
 const CombinedWidget = ({ value = {}, onChange }) => {
-  
+
   const [category, setCategory] = useState(value.Category || "");
   const [subcategory, setSubcategory] = useState(value.Subcategory || "");
   const [activity, setActivity] = useState(value.Activity || "");
