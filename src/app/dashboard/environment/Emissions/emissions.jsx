@@ -6,6 +6,8 @@ import { MdOutlineClear } from "react-icons/md";
 
 const Emissions = ({ open }) => {
   const [activeMonth, setActiveMonth] = useState("Jan");
+  const [location, setLocation] = useState("");
+  const [year, setYear] = useState("");
 
   return (
     <>
@@ -31,8 +33,12 @@ const Emissions = ({ open }) => {
       <EmissionsHeader
         activeMonth={activeMonth}
         setActiveMonth={setActiveMonth}
+        location={location}
+        setLocation={setLocation}
+        year={year}
+        setYear={setYear}
       />
-      <Emissionsnbody open={open} />
+      <Emissionsnbody open={open} location={location} year={year} month={activeMonth} />
     </>
   );
 };

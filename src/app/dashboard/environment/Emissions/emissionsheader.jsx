@@ -1,13 +1,32 @@
-'use client'
+'use client';
 import { useEffect, useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { yearInfo, months } from "@/app/shared/data/yearInfo";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 
-const EmissionsHeader = ({ activeMonth, setActiveMonth }) => {
+const monthMapping = {
+  "Jan": 1,
+  "Feb": 2,
+  "Mar": 3,
+  "Apr": 4,
+  "May": 5,
+  "Jun": 6,
+  "Jul": 7,
+  "Aug": 8,
+  "Sep": 9,
+  "Oct": 10,
+  "Nov": 11,
+  "Dec": 12
+};
+
+const getMonthString = (monthNumber) => {
+  return Object.keys(monthMapping).find(key => monthMapping[key] === monthNumber);
+};
+
+const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, year, setYear }) => {
   const [formState, setFormState] = useState({
-    location: "",
-    year: "",
+    location: location,
+    year: year,
     month: activeMonth,
   });
 
@@ -28,15 +47,28 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth }) => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+
     setFormState((prevState) => ({
       ...prevState,
       [name]: value,
     }));
 
     if (name === "month") {
-      setActiveMonth(value);
+      setActiveMonth(monthMapping[value]);
+    } else if (name === "location") {
+      setLocation(value);
+    } else if (name === "year") {
+      setYear(value);
     }
   };
+
+  useEffect(() => {
+    setFormState({
+      location: location,
+      year: year,
+      month: activeMonth,
+    });
+  }, [location, year, activeMonth]);
 
   return (
     <>
@@ -99,13 +131,13 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth }) => {
               <button
                 key={index}
                 className={`text-[12px] border-r mx-1 ${
-                  formState.month === month ? "bg-white shadow-md rounded-lg" : ""
+                  formState.month === monthMapping[month] ? "bg-white shadow-md rounded-lg" : ""
                 }`}
                 onClick={() => handleChange({ target: { name: "month", value: month } })}
               >
                 <p
                   className={`text-center ${
-                    formState.month === month
+                    formState.month === monthMapping[month]
                       ? "custom-gradient-text"
                       : "text-[#A1A1A1]"
                   } hover:bg-[#f7f7f7] py-1 w-[55px] ${

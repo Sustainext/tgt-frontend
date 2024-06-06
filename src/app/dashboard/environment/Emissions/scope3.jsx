@@ -9,19 +9,20 @@ import CombinedWidget from '../../../shared/widgets/emissioncombinedWidget';
 import { GlobalState } from '../../../../Context/page';
 import RemoveWidget from '../../../shared/widgets/RemoveWidget';
 import axios from 'axios';
+import axiosInstance, { post } from '@/app/utils/axiosMiddleware';
 
 const widgets = {
   EmissonCombinedWidget: (props) => <CombinedWidget {...props} scope="scope3" />,
   FileUploadWidget: CustomFileUploadWidget,
   AssignTobutton: AssignToWidget,
-  RemoveWidget: RemoveWidget, // Update widgets to include CombinedWidget
+  RemoveWidget: RemoveWidget,
 };
 const view_path = 'gri-environment-emissions-301-a-scope-3'
 const client_id = 1
 const user_id = 1
 // const notify = (text) => toast(text);
 
-const Scope3 = () => {
+const Scope3 = ({ location, year, month }) => {
 
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
@@ -43,12 +44,15 @@ const Scope3 = () => {
       client_id: client_id,
       user_id : user_id,
       path: view_path,
-      form_data : formData
+      form_data : formData,
+      location,
+      year,
+      month
     }
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
     try {
-      const response = await axios.post(url,
+      const response = await post(url,
         {
           ...data
         }
@@ -65,12 +69,12 @@ const Scope3 = () => {
   };
 
   const loadFormData = async () =>{
-    const base_url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path=`;
-    const url = `${base_url}${view_path}&&client_id=${client_id}&&user_id=${user_id}`
+    const base_url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=`;
+    const url = `${base_url}${view_path}&&client_id=${client_id}&&user_id=${user_id}&&location=${location}&&year=${year}&&month=${month}`
     console.log(url, 'is the url to be fired')
 
 // Make the GET request
-    axios.get(url)
+    axiosInstance.get(url)
       .then(response => {
         // Handle successful response
         console.log(response.data, ' is the response data')
