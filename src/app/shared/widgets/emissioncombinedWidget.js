@@ -194,76 +194,67 @@ const CombinedWidget = ({ value = {}, onChange }) => {
   return (
     <div className="flex mb-5">
       <div>
-        <select
-          value={category}
-          onChange={(e) => handleCategoryChange(e.target.value)}
-          className="block w-[180px] py-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
-        >
-          <option value="">Select Category</option>
-          {base_categories.map((categoryName, index) => (
-            <option key={index} value={categoryName}>
-              {categoryName}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div>
-        <select
-          value={subcategory}
-          onChange={(e) => handleSubcategoryChange(e.target.value)}
-          className="block w-[180px] py-2 mx-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
-        >
-          <option value="">Select Subcategory</option>
-          {subcategories.map((sub, index) => (
-            <option key={index} value={sub}>
-              {sub}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div>
-        <select
-          value={activity}
-          onChange={(e) => handleActivityChange(e.target.value)}
-          className="block w-[180px] py-2 mx-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
-        >
-          <option value="">Select Activity</option>
-          {activities.map((item, index) => (
-            <option
-              key={index}
-              value={`${item.name} - ( ${item.source} ) - ${item.unit_type}`}
-            >
-              {item.name} - ( {item.source} ) - {item.unit_type} - {item.region}{" "}
-              - {item.year}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div>
-        <div className="flex mx-2">
-          <input
-            type="number"
-            value={quantity}
-            onChange={(e) => handleQuantityChange(e.target.value)}
-            className="w-[70px] py-1 mt-2 pl-2 rounded-sm"
-          />
-          <select
-            value={unit}
-            onChange={(e) => handleUnitChange(e.target.value)}
-            className="w-[70px]  cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none mt-1.5 font-bold text-xs bg-sky-600 text-white -ml-11"
-          >
-            <option value="">Unit</option>
-            {units.map((unit, index) => (
-              <option key={index} value={unit}>
-                {unit}
-              </option>
+      <select
+        value={category}
+        onChange={(e) => handleCategoryChange(e.target.value)}
+        className="block w-[20vw]  py-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
+      >
+        <option value="">Select Category</option>
+            {base_categories.map((categoryName, index) => (
+                <option key={index} value={categoryName}>{categoryName}</option>
             ))}
-          </select>
-        </div>
+      </select>
       </div>
+
+<div>
+<select
+        value={subcategory}
+        onChange={(e) => handleSubcategoryChange(e.target.value)}
+        className="block w-[20vw] py-2 mx-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
+      >
+        <option value="">Select Subcategory</option>
+        {subcategories.map((sub, index) => (
+          <option key={index} value={sub}>{sub}</option>
+        ))}
+      </select>
+</div>
+
+<div>
+<select
+        value={activity}
+        onChange={(e) => handleActivityChange(e.target.value)}
+        className="block w-[20vw]  py-2 mx-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
+      >
+        <option value="">Select Activity</option>
+        {activities.map((item, index) => (
+          <option key={index} value={`${item.name} - ( ${item.source} ) - ${item.unit_type}`}
+          >{item.name} - ( {item.source} ) - {item.unit_type} -{" "}
+          {item.region} - {item.year}</option>
+        ))}
+      </select>
+  </div>
+
+<div>
+<div className='flex mx-2'>
+        <input
+          type="number"
+          value={quantity}
+          onChange={(e) => handleQuantityChange(e.target.value)}
+          className="w-[15vw] py-1 mt-2 pl-2 rounded-sm "
+        />
+        <select
+          value={unit}
+          onChange={(e) => handleUnitChange(e.target.value)}
+          className="w-[80px]  text-center cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none mt-1.5 font-bold text-xs bg-sky-600 text-white -ml-16"
+        >
+          <option value="">Unit</option>
+          {units.map((unit, index) => (
+            <option key={index} value={unit}>{unit}</option>
+          ))}
+        </select>
+      </div>
+</div>
+
     </div>
   );
 };
