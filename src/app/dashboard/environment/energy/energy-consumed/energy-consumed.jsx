@@ -8,7 +8,9 @@ import { Energydata } from '../../data/griinfo';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 const Energyconsumed = ({ open }) => {
-  const [activeMonth, setActiveMonth] = useState("Jan");
+  const [activeMonth, setActiveMonth] = useState(1);
+  const [location, setLocation] = useState("");
+  const [year, setYear] = useState("");
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -108,8 +110,14 @@ const Energyconsumed = ({ open }) => {
 
         </div>
       </div>
-      <EnvironmentHeader activeMonth={activeMonth} setActiveMonth={setActiveMonth} />
-      <EnergyConsumedBody />
+      <EnvironmentHeader
+      activeMonth={activeMonth}
+            setActiveMonth={setActiveMonth}
+            location={location}
+            setLocation={setLocation}
+            year={year}
+            setYear={setYear} />
+      <EnergyConsumedBody  location={location} year={year} month={activeMonth}/>
 
 
 

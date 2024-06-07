@@ -10,12 +10,14 @@ const CombinedWidget = ({ value = {}, onChange, scope }) => {
   const [activity, setActivity] = useState(value.Activity || "");
   const [quantity, setQuantity] = useState(value.Quantity || "");
   const [unit, setUnit] = useState(value.Unit || "");
+  const [activity_id, setactivityid] = useState(value.activity_id || "");
+  const [unit_type, setunittype] = useState(value.unit_type || "");
   const [subcategories, setSubcategories] = useState([]);
   const [activities, setActivities] = useState([]);
   const [units, setUnits] = useState([]);
   const [base_categories, setBaseCategories] = useState([]);
   const [selectedActivity, setSelectedActivity] = useState(null);
-
+     const [activid, setactiveid]  = useState("");
   const scopeMappings = {
     scope1: scope1Info,
     scope2: scope2Info,
@@ -144,6 +146,7 @@ const CombinedWidget = ({ value = {}, onChange, scope }) => {
       Activity: "",
       Quantity: "",
       Unit: "",
+      activity_id:"",
     });
   };
 
@@ -161,6 +164,7 @@ const CombinedWidget = ({ value = {}, onChange, scope }) => {
       Activity: "",
       Quantity: "",
       Unit: "",
+      activity_id:"",
     });
   };
 
@@ -173,13 +177,15 @@ const CombinedWidget = ({ value = {}, onChange, scope }) => {
       (act) => `${act.name} - ( ${act.source} ) - ${act.unit_type}` === value
     );
     setSelectedActivity(foundActivity);
-
+    setactiveid(foundActivity.activity_id);
     onChange({
       Category: category,
       Subcategory: subcategory,
       Activity: value,
       Quantity: "",
       Unit: "",
+      activity_id: foundActivity.activity_id, // Update with found activity's ID
+      unit_type: foundActivity.unit_type,
     });
   };
 
@@ -191,6 +197,8 @@ const CombinedWidget = ({ value = {}, onChange, scope }) => {
       Activity: activity,
       Quantity: value,
       Unit: unit,
+      activity_id: activid, // Pass the stored activity_id
+      unit_type: selectedActivity ? selectedActivity.unit_type : "",
     });
   };
 
@@ -202,6 +210,8 @@ const CombinedWidget = ({ value = {}, onChange, scope }) => {
       Activity: activity,
       Quantity: quantity,
       Unit: value,
+      activity_id: activid, // Pass the stored activity_id
+      unit_type: selectedActivity ? selectedActivity.unit_type : "",
     });
   };
 
@@ -254,12 +264,12 @@ const CombinedWidget = ({ value = {}, onChange, scope }) => {
           type="number"
           value={quantity}
           onChange={(e) => handleQuantityChange(e.target.value)}
-          className="w-[15vw] py-1 mt-2 pl-2 rounded-sm "
+          className="w-[15vw] py-0.5 mt-2 pl-2 rounded-sm border-none focus:outline-none focus:ring-0"
         />
         <select
           value={unit}
           onChange={(e) => handleUnitChange(e.target.value)}
-          className="w-[80px]  text-center cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none mt-1.5 font-bold text-xs bg-sky-600 text-white -ml-16"
+          className="w-[80px]  text-center cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none mt-1.5 font-bold text-xs bg-sky-600 text-white -ml-20"
         >
           <option value="">Unit</option>
           {units.map((unit, index) => (

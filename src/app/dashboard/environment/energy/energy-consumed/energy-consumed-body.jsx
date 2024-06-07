@@ -10,15 +10,21 @@ import Selfgenerated from "./Self-generated/self-generated"
 import Energysold from "./Energy-sold/energy-sold"
 import Standards from "./Standards/standards"
 import Source from "./Source/source";
-const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,location  }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
-
+  const handleClick = () => {
+    if (!location) {
+      alert("Please select a location.");
+      return;
+    }
+    setIsOpen(!isOpen);
+  };
   return (
     <div className={`shadow-md py-1 mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200 ${open ? "w-[100%]" : "w-[100%]"}`}>
       <button
         className="py-3 w-[100%] text-left flex"
-        onClick={() => setIsOpen(!isOpen)}// Unique ID for the tooltip, spaces replaced by dashes
+        onClick={handleClick}// Unique ID for the tooltip, spaces replaced by dashes
       >
         <div className="flex justify-between">
         <div className="flex w-[65vw]">
@@ -72,7 +78,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
   );
 };
 
-const EnergyConsumedBody = () => {
+const EnergyConsumedBody = ({location, year, month}) => {
 
   return (
     <>
@@ -85,8 +91,9 @@ const EnergyConsumedBody = () => {
            the organization.  Exclude: Do not include data relating to fuel consumption. `}
           sdg={['GRI 302-1a', 'GRI 302-1b']}
           display="block"
+          location={location}
         >
-          <Purchased />
+          <Purchased  location={location} year={year} month={month}/>
         </AccordionItem>
         <AccordionItem
           title="Consumed fuel and energy, including self generated"
@@ -96,8 +103,9 @@ const EnergyConsumedBody = () => {
           Exclude: Direct purchased Heating, Cooling, Electricity, and Steam.`}
           sdg={['GRI 302-1c', 'GRI 302-1e']}
           display="block"
+          location={location}
         >
-          <ConsumedFuel/>
+          <ConsumedFuel location={location} year={year} month={month}/>
         </AccordionItem>
         <AccordionItem
        title="Self generated - not consumed or sold"
@@ -106,8 +114,9 @@ const EnergyConsumedBody = () => {
           remains unconsumed or unsold.`}
            sdg={['GRI 302-1']}
            display="block"
+           location={location}
         >
-          <Selfgenerated />
+          <Selfgenerated location={location} year={year} month={month}/>
         </AccordionItem>
         <AccordionItem
        title="Energy sold"
@@ -116,24 +125,27 @@ const EnergyConsumedBody = () => {
           it is procured or self-generated. `}
           sdg={['GRI 302-1d']}
           display="block"
+          location={location}
         >
-          <Energysold />
+          <Energysold location={location} year={year} month={month}/>
         </AccordionItem>
         <AccordionItem
        title="Standards, methodologies, assumptions and calculation tools used"
           tooltiptext={`Standards, methodologies, assumptions and calculation tools used`}
           sdg={['GRI 302-1f']}
           display="none"
+          location={location}
         >
-          <Standards />
+          <Standards location={location} year={year} month={month}/>
         </AccordionItem>
         <AccordionItem
        title="Source of  conversion factor"
           tooltiptext={`Source of  conversion factor `}
           sdg={['GRI 302-1g']}
           display="none"
+          location={location}
         >
-          <Source  />
+          <Source  location={location} year={year} month={month}/>
         </AccordionItem>
         {/* Add more accordion items here */}
       </div>
