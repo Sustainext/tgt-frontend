@@ -123,9 +123,7 @@ const Scope1 = ({ location, year, month }) => {
   return (
     <>
       <div
-        className={`overflow-auto custom-scrollbar flex justify-around  ${
-          open ? "xl:w-[768px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"
-        }`}
+        className={`overflow-auto custom-scrollbar flex`}
       >
         <div>
           <Form

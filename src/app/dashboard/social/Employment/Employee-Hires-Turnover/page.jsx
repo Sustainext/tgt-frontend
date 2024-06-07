@@ -10,7 +10,9 @@ import Employeeturnover from "./Employee-turnover/page"
 // import {Socialdata} from "../../data/socialgriinfo"
 import {Socialdata} from "../../data/socialgriinfo"
 const EmployeeHiresTurnover = () => {
-    const [activeMonth, setActiveMonth] = useState("Jan");
+    const [activeMonth, setActiveMonth] = useState(1);
+  const [location, setLocation] = useState("");
+  const [year, setYear] = useState("");
     const [data, setData] = useState();
     const [category, setCategory] = useState("");
     const [isOpen, setIsOpen] = useState(false);
@@ -104,10 +106,17 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
 
                 </div>
             </div>
-            <Socialheader activeMonth={activeMonth} setActiveMonth={setActiveMonth} />
+            <Socialheader
+            activeMonth={activeMonth}
+            setActiveMonth={setActiveMonth}
+            location={location}
+            setLocation={setLocation}
+            year={year}
+            setYear={setYear}
+            />
             <p className='mt-6 mx-4 text-[12px] mb-3'> Please ensure that data added in this section corresponds to the location selected above</p>
-            <NewEmployeeHire activeMonth={activeMonth} />
-            <Employeeturnover activeMonth={activeMonth} />
+            <NewEmployeeHire location={location} year={year} month={activeMonth} activeMonth={activeMonth}/>
+            <Employeeturnover location={location} year={year} month={activeMonth} activeMonth={activeMonth} />
         </>
     );
 };
