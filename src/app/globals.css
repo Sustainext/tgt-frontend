@@ -148,3 +148,6 @@ display: flex;
   );
   /* Other CSS properties can be added as needed */
 }
+.important-width {
+  width: 420px !important;
+}
