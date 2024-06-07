@@ -234,6 +234,7 @@ const Purchased = () => {
   };
   //The below code on updateFormData is by White Beard
   const updateFormData = async () => {
+    LoaderOpen();
     const data = {
       client_id: client_id,
       user_id: user_id,
