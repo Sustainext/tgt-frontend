@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
@@ -59,12 +59,19 @@ const initialBenefits = [
     { benefits: "Stock Ownership", fulltime: false, parttime: false, temporary: false, location: "" },
     { benefits: "Others", fulltime: false, parttime: false, temporary: false, location: "" }
 ];
-const Benefitsscreen = () => {
+const Benefitsscreen = ({location, year, month}) => {
     const [formData, setFormData] = useState(initialBenefits);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
     const [loopen, setLoOpen] = useState(false);
-    
+    const toastShown = useRef(false);
+    const getAuthToken = () => {
+        if (typeof window !== 'undefined') {
+            return localStorage.getItem('token')?.replace(/"/g, "");
+        }
+        return '';
+    };
+    const token = getAuthToken();
     const LoaderOpen = () => {
         setLoOpen(true);
       };
@@ -72,110 +79,89 @@ const Benefitsscreen = () => {
         setLoOpen(false);
       };
 
-    const handleChange = (e) => setFormData(e.formData);
+    const handleChange = (e) => {
+        setFormData(e.formData); // Ensure you are extracting formData from the event
+    };
 
     // The below code on updateFormData
-    const updateFormData = async () => {
+    let axiosConfig = {
+        headers: {
+          Authorization: 'Bearer ' + token,
+        },
+      };
+      const updateFormData = async () => {
         LoaderOpen();
         const data = {
-        client_id : client_id,
-        user_id : user_id,
-        path: view_path,
-        form_data: formData
+            client_id: client_id,
+            user_id: user_id,
+            path: view_path,
+            form_data: formData,
+            location,
+            year,
+            month
         }
 
         const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
-        try{
-        const response = await axios.post(url,
-            {
-            ...data
+        try {
+            const response = await axios.post(url, data, axiosConfig);
+            if (response.status === 200) {
+                toast.success("Data added successfully", {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+                LoaderClose();
+                loadFormData();
+            } else {
+                toast.error("Oops, something went wrong", {
+                    position: "top-right",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+                LoaderClose();
             }
-        );
-        if (response.status === 200) {
-            toast.success("Data added successfully", {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
-            LoaderClose();
-            loadFormData();
-    
-          }else {
-            toast.error("Oops, something went wrong", {
-              position: "top-right",
-              autoClose: 1000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "colored",
-            });
-            LoaderClose();
-          }
         } catch (error) {
-          toast.error("Oops, something went wrong", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          LoaderClose();
+            toast.error("Oops, something went wrong", {
+                position: "top-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+            LoaderClose();
         }
-        // console.log('Response:', response.data);
-        // } catch (error) {
-        // console.error('Error:', error);
-        // }
     };
+
 
     const loadFormData = async () => {
         LoaderOpen();
-        const base_url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path=`;
-        const url = `${base_url}${view_path}&&client_id=${client_id}&&user_id=${user_id}`
-        console.log(url, 'is the url to be fired')
-
-        //making the GET request
-        axios.get(url)
-        .then(response => {
-        //handling the successful response
-        console.log(response.data, 'is the response data')
-        setRemoteSchema(response.data.form[0].schema)
-        setRemoteUiSchema(response.data.form[0].ui_schema)
-        const form_parent = response.data.form_data
-        const f_data = form_parent[0].data
-        setFormData(f_data)
-        LoaderClose();
-        // setting the setFormData(response.data.form[0].form_data)
-        })
-        .catch(error =>{
-            const errorMessage =
-            error.response && error.response.data && error.response.data.message
-              ? error.response.data.message
-              : "Oops, something went wrong";
-          toast.error(errorMessage, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          LoaderClose();
-        //handling the error response
-        // console.log('Error:', error);
-        });
-    }
+        const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+        try {
+            const response = await axios.get(url, axiosConfig);
+            console.log('API called successfully:', response.data);
+            setRemoteSchema(response.data.form[0].schema);
+            setRemoteUiSchema(response.data.form[0].ui_schema);
+            const form_parent = response.data.form_data;
+            setFormData(form_parent[0].data);
+        } catch (error) {
+            console.error('API call failed:', error);
+        } finally {
+            LoaderClose();
+        }
+    };
     //Reloading the forms -- White Beard
     useEffect(() => {
         //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
@@ -187,10 +173,29 @@ const Benefitsscreen = () => {
     },[formData])
 
     // fetch backend and replace initialized forms
-    useEffect (()=> {
-        console.log('From loaded , ready for trigger')
-        loadFormData()
-    },[])
+    useEffect(() => {
+        if (location && year && month) {
+            loadFormData();
+            toastShown.current = false; // Reset the flag when valid data is present
+        } else {
+            // Only show the toast if it has not been shown already
+            if (!toastShown.current) {
+                toast.warn("Please select location, year, and month first", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+                toastShown.current = true; // Set the flag to true after showing the toast
+            }
+        }
+    }, [location, year, month]); // Dependencies // React only triggers this effect if these dependencies change
+
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
