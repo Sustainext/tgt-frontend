@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { yearInfo, months } from "@/app/shared/data/yearInfo";
 import axiosInstance from "@/app/utils/axiosMiddleware";
+import { useEmissions } from './EmissionsContext';
 
 const monthMapping = {
   "Jan": 1,
@@ -30,8 +31,11 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, y
     month: activeMonth,
   });
 
-  const [locations, setLocations] = useState([]);
+  const { climatiqData } = useEmissions();
 
+
+  const [locations, setLocations] = useState([]);
+  const [localClimatiq, setlocalClimatiq] = useState(0)
   useEffect(() => {
     const fetchLocations = async () => {
       try {
@@ -44,6 +48,22 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, y
 
     fetchLocations();
   }, []);
+
+  useEffect(()=>{
+
+    console.log('Got the climatiqData in header --- ')
+    if (climatiqData?.result?.[0]) {
+      let sum = 0
+      for (const item of climatiqData.result) {
+        // Access a particular property of each item and do something with it
+        sum = sum + item.co2e 
+        // Add your logic here
+      }
+      setlocalClimatiq(sum)
+
+    }
+    
+  },[climatiqData])
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -120,7 +140,7 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, y
             <div className="float-end">
               <p className="text-[12px]">
                 GHG Emissions for the month ={" "}
-                <span className="text-[#6adf23]">0 tCO2e</span>
+                <span className="text-[#6adf23]">{localClimatiq} - kg - tCO2e </span>
               </p>
             </div>
           </div>

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import EmissionsHeader from "./emissionsheader";
 import Emissionsnbody from "./emissions-body";
 import { MdOutlineClear } from "react-icons/md";
+import { EmissionsProvider } from "./EmissionsContext";
 
 const Emissions = ({ open }) => {
   const [activeMonth, setActiveMonth] = useState("Jan");
@@ -10,6 +11,7 @@ const Emissions = ({ open }) => {
   const [year, setYear] = useState("");
 
   return (
+    <EmissionsProvider>
     <>
       <div className="flex flex-col justify-start overflow-x-hidden ">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
@@ -40,6 +42,7 @@ const Emissions = ({ open }) => {
       />
       <Emissionsnbody open={open} location={location} year={year} month={activeMonth} />
     </>
+    </EmissionsProvider>
   );
 };
 
