@@ -23,7 +23,7 @@ const getMonthString = (monthNumber) => {
   return Object.keys(monthMapping).find(key => monthMapping[key] === monthNumber);
 };
 
-const EnvironmentHeader = ({ activeMonth, setActiveMonth, location, setLocation, year, setYear }) => {
+const EnvironmentHeader = ({ activeMonth, setActiveMonth, location, setLocation, year, setYear,locationMessage,setLocationMessage }) => {
   const [formState, setFormState] = useState({
     location: location,
     year: year,
@@ -47,7 +47,7 @@ const EnvironmentHeader = ({ activeMonth, setActiveMonth, location, setLocation,
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-
+    setLocationMessage();
     setFormState((prevState) => ({
       ...prevState,
       [name]: value,
@@ -60,6 +60,7 @@ const EnvironmentHeader = ({ activeMonth, setActiveMonth, location, setLocation,
     } else if (name === "year") {
       setYear(value);
     }
+
   };
 
   useEffect(() => {
@@ -74,6 +75,7 @@ const EnvironmentHeader = ({ activeMonth, setActiveMonth, location, setLocation,
     <>
       <div className="ml-2 mb-5">
         <div className="flex mb-5 gap-4">
+          <div>
           <div className="relative">
             <select
               name="location"
@@ -94,8 +96,14 @@ const EnvironmentHeader = ({ activeMonth, setActiveMonth, location, setLocation,
                 style={{ fontSize: "16px" }}
               />
             </div>
+
           </div>
-          <div className="ml-3 relative">
+          <div>
+           {locationMessage && <p className="text-red-500 ml-2">{locationMessage}</p>}
+           </div>
+          </div>
+<div>
+<div className="ml-3 relative">
             <select
               name="year"
               className="border m-0.5 text-sm text-neutral-500 appearance-none pr-32 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -116,8 +124,11 @@ const EnvironmentHeader = ({ activeMonth, setActiveMonth, location, setLocation,
               />
             </div>
           </div>
+</div>
+
 
         </div>
+
         <div className="flex justify-between mb-4">
           <div className="flex bg-[#f7f7f7] py-1 rounded-lg">
             {months.map((month, index) => (

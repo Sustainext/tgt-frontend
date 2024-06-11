@@ -14,7 +14,7 @@ const Energyconsumed = ({ open }) => {
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-
+  const [locationMessage, setLocationMessage] = useState("");
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   }
@@ -116,8 +116,10 @@ const Energyconsumed = ({ open }) => {
             location={location}
             setLocation={setLocation}
             year={year}
-            setYear={setYear} />
-      <EnergyConsumedBody  location={location} year={year} month={activeMonth}/>
+            setYear={setYear}
+            locationMessage={locationMessage}
+            setLocationMessage={setLocationMessage}/>
+      <EnergyConsumedBody  location={location} year={year} month={activeMonth} setLocationMessage={setLocationMessage}/>
 
 
 
