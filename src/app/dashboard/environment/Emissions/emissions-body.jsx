@@ -54,7 +54,7 @@ const AccordionItem = ({
     </div>
   );
 };
-const Emissionsnbody = ({  location, year, month }) => {
+const Emissionsnbody = ({  location, year, month, countryCode }) => {
   return (
     <>
       <div className="mx-3">
@@ -63,7 +63,7 @@ const Emissionsnbody = ({  location, year, month }) => {
           scops="Scope 1"
           icons={<IoHomeOutline />}
         >
-          <Scope1 location={location} year={year} month={month} />
+          <Scope1 location={location} year={year} month={month} countryCode={countryCode} />
         </AccordionItem>
 
         <AccordionItem
@@ -71,7 +71,7 @@ const Emissionsnbody = ({  location, year, month }) => {
           scops="Scope 2"
           icons={<IoHomeOutline />}
         >
-          <Scope2 location={location} year={year} month={month} />
+          <Scope2 location={location} year={year} month={month} countryCode={countryCode}/>
         </AccordionItem>
 
         <AccordionItem
@@ -79,7 +79,7 @@ const Emissionsnbody = ({  location, year, month }) => {
           scops="Scope 3"
           icons={<IoHomeOutline />}
         >
-          <Scope3 location={location} year={year} month={month} />
+          <Scope3 location={location} year={year} month={month} countryCode={countryCode}/>
         </AccordionItem>
       </div>
     </>

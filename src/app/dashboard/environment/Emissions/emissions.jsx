@@ -1,13 +1,13 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import EmissionsHeader from "./emissionsheader";
 import Emissionsnbody from "./emissions-body";
-import { MdOutlineClear } from "react-icons/md";
 
 const Emissions = ({ open }) => {
-  const [activeMonth, setActiveMonth] = useState("Jan");
+  const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState("");
+  const [countryCode, setCountryCode] = useState('');
 
   return (
     <>
@@ -37,8 +37,9 @@ const Emissions = ({ open }) => {
         setLocation={setLocation}
         year={year}
         setYear={setYear}
+        setCountryCode={setCountryCode}
       />
-      <Emissionsnbody open={open} location={location} year={year} month={activeMonth} />
+      <Emissionsnbody open={open} location={location} year={year} month={activeMonth} countryCode={countryCode} />
     </>
   );
 };

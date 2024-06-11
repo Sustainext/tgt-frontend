@@ -21,11 +21,9 @@ import Waterstres from "./Water-effluents/water-stres/water-stres";
 import Substancesconcern from "./Water-effluents/substances-concern/substances-concern";
 import Waterstorage from "./Water-effluents/water-storage/water-storage"
 import { GlobalState } from "@/Context/page";
-
-const environment = () => {
-    const [activeTab, setActiveTab] = useState('Emissions');
+const environment = ({  }) => {
     const { open } = GlobalState();
-
+    const [activeTab, setActiveTab] = useState('Emissions');
     const handleTabClick = (tab) => {
         setActiveTab(tab);
 
@@ -39,7 +37,7 @@ const environment = () => {
                 </div>
 
                 <div
-                    className={`${open? 'w-[85vw]':'w-[98vw]'}`}
+                    className={`${open ? " w-[87vw]" :" w-[98vw]" }`}
                 >
                     {/* Emissions start  */}
                     {activeTab === 'Emissions' && <Emission />}

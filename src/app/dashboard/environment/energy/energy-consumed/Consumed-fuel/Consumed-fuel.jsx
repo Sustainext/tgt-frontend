@@ -177,7 +177,7 @@ const generateTooltip = (field, title, tooltipText) => {
   }
 
   return (
-    <div className='mx-2 flex w-[230px]'>
+    <div className='mx-2 flex w-[20vw]'>
       <label className="text-[13px] leading-5 text-gray-700 flex">{title}</label>
       <MdInfoOutline
         data-tooltip-id={field}
@@ -321,7 +321,7 @@ const Consumedfuel = () => {
     LoaderClose();
     });
   }
-  //Reloading the forms 
+  //Reloading the forms
   useEffect(() => {
     //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
   },[r_schema, r_ui_schema])
@@ -364,7 +364,7 @@ const Consumedfuel = () => {
   return (
     <>
 
-<div className={`overflow-auto custom-scrollbar flex justify-around  ${open ? "xl:w-[768px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
+<div className={`overflow-auto custom-scrollbar flex`}>
         <div>
           <div>
             <div className='flex'>

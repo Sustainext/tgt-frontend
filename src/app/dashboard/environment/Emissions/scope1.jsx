@@ -12,9 +12,7 @@ import axios from "axios";
 import axiosInstance, { post } from "@/app/utils/axiosMiddleware";
 
 const widgets = {
-  EmissonCombinedWidget: (props) => (
-    <CombinedWidget {...props} scope="scope1" />
-  ),
+  EmissonCombinedWidget: CombinedWidget,
   FileUploadWidget: CustomFileUploadWidget,
   AssignTobutton: AssignToWidget,
   RemoveWidget: RemoveWidget, // Update widgets to include CombinedWidget
@@ -24,7 +22,7 @@ const client_id = 1;
 const user_id = 1;
 // const notify = (text) => toast(text);
 
-const Scope1 = ({ location, year, month }) => {
+const Scope1 = ({ location, year, month, countryCode }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -123,9 +121,8 @@ const Scope1 = ({ location, year, month }) => {
   return (
     <>
       <div
-        className={`overflow-auto custom-scrollbar flex justify-around  ${
-          open ? "xl:w-[768px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"
-        }`}
+        className={`overflow-y-visible custom-scrollbar flex`}
+        style={{ position: 'relative' }}
       >
         <div>
           <Form
@@ -140,7 +137,7 @@ const Scope1 = ({ location, year, month }) => {
               RemoveWidget: (props) => (
                 <RemoveWidget
                   {...props}
-                  index={props.id.split("_")[1]} // Pass the index
+                  index={props.id.split("_")[1]}
                   onRemove={handleRemove}
                 />
               ),
@@ -151,24 +148,26 @@ const Scope1 = ({ location, year, month }) => {
                   setFormData={updateFormDatanew}
                 />
               ),
+              EmissonCombinedWidget : (props) => (
+                <CombinedWidget {...props} scope="scope1" year={year} countryCode={countryCode} />
+              )
             }}
           />
         </div>
       </div>
 
-      <div className="flex justify-start mt-4 right-1">
+      <div className="flex justify-between right-1 mt-5">
         <button
           type="button"
-          className="text-[#007EEF] text-[12px] flex cursor-pointer mt-5 mb-5"
+          className="text-[#007EEF] text-[12px] flex cursor-pointer my-auto"
           onClick={handleAddNew}
         >
           <MdAdd className="text-lg" /> Add Row
         </button>
-      </div>
-      <div className="mb-4">
+
         <button
           type="button"
-          className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end"
+          className="h-8 text-center py-1 text-sm w-[100px] bg-[rgb(2,132,199)] text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline"
           onClick={handleSubmit}
         >
           Submit

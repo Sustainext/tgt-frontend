@@ -23,7 +23,7 @@ const getMonthString = (monthNumber) => {
   return Object.keys(monthMapping).find(key => monthMapping[key] === monthNumber);
 };
 
-const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, year, setYear }) => {
+const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, year, setYear, setCountryCode }) => {
   const [formState, setFormState] = useState({
     location: location,
     year: year,
@@ -31,6 +31,7 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, y
   });
 
   const [locations, setLocations] = useState([]);
+  const [countryCode, setCountryCodeState] = useState('');
 
   useEffect(() => {
     const fetchLocations = async () => {
@@ -56,6 +57,11 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, y
     if (name === "month") {
       setActiveMonth(monthMapping[value]);
     } else if (name === "location") {
+      const selectedLocation = locations.find(loc => loc.name === value);
+      if (selectedLocation) {
+        setCountryCodeState(selectedLocation.country);
+        setCountryCode(selectedLocation.country);
+      }
       setLocation(value);
     } else if (name === "year") {
       setYear(value);
