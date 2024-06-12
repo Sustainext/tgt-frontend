@@ -24,6 +24,7 @@ import { GlobalState } from "@/Context/page";
 const environment = ({  }) => {
     const { open } = GlobalState();
     const [activeTab, setActiveTab] = useState('Emissions');
+
     const handleTabClick = (tab) => {
         setActiveTab(tab);
 

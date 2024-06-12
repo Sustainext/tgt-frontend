@@ -159,6 +159,7 @@ const OutsideStandards = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

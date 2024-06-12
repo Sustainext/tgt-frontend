@@ -271,6 +271,7 @@ const Outsideorganization = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

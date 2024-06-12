@@ -295,6 +295,7 @@ const Energysold = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

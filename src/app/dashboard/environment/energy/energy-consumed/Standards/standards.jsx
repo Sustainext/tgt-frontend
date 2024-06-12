@@ -166,6 +166,7 @@ const Standards = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

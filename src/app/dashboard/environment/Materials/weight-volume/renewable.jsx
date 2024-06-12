@@ -285,6 +285,7 @@ const Renewable = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

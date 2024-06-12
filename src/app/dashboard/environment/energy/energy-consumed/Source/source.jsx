@@ -127,6 +127,7 @@ const Source = ({ handleQ6Change}) => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

@@ -179,6 +179,7 @@ const Sharedresource = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

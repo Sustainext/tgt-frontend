@@ -119,6 +119,7 @@ const OutsideSource = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

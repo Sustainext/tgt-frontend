@@ -153,6 +153,7 @@ const ProductsStandardsenergy = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

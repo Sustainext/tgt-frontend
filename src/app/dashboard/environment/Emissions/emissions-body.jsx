@@ -82,6 +82,17 @@ const Emissionsnbody = ({  location, year, month, countryCode }) => {
           <Scope3 location={location} year={year} month={month} countryCode={countryCode}/>
         </AccordionItem>
       </div>
+      <div className="flex justify-end items-center mt-[24] me-5">
+          <button
+            // onClick={handleCalculate}
+            className="w-[172px] h-8 px-[22px] py-2 bg-sky-600 rounded shadow flex-col justify-center items-center inline-flex text-white text-xs font-bold leading-[15px]"
+          >
+            <div className="cursor-pointer">
+              Calculate
+
+            </div>
+          </button>
+        </div>
     </>
   );
 };

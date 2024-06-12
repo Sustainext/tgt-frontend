@@ -129,6 +129,7 @@ const Wastedivertedcontextualinformation = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

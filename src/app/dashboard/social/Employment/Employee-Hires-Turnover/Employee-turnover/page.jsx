@@ -10,38 +10,13 @@ import Tab3 from "./tab3";
 import Tab4 from "./tab4";
 import Tab5 from "./tab5";
 function convertShortNameToFullName(shortName) {
-    const shortMonthNames = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-    const fullMonthNames = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
+    const shortMonthNames = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    const fullMonthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
+    // Convert shortName to string in case it's not
     const index = shortMonthNames.indexOf(shortName);
     return index !== -1 ? fullMonthNames[index] : "Unknown";
-  }
+}
   const tabs = [
     { title: 'Permanent Employees', tooltip: "Individuals with fixed-term contracts, typically offering benefits like health insurance and job security." },
     { title: 'Temporary employee', tooltip: "Individuals hired for specific projects or timeframes, often with limited benefits and shorter contracts." },
@@ -50,7 +25,7 @@ function convertShortNameToFullName(shortName) {
     { title: 'Part-Time Employee', tooltip: "Individuals working less than a regular, full-time schedule." }
 ];
 
-const Employeeturnover = ({ activeMonth }) => {
+const Employeeturnover = ({ location, year, month,activeMonth }) => {
     const [activeTabIndex, setActiveTabIndex] = useState(0);
     const fullName = convertShortNameToFullName(activeMonth);
     return (
@@ -108,12 +83,12 @@ const Employeeturnover = ({ activeMonth }) => {
                 </ul>
                 {/* Content */}
                 <div className="mt-2">
-                    {activeTabIndex === 0 && <div><Tab1 fullName={fullName} /></div>}
-                    {activeTabIndex === 1 && <div><Tab2 fullName={fullName} /> </div>}
-                    {activeTabIndex === 2 && <div> <Tab3 fullName={fullName} /> </div>}
-                    {activeTabIndex === 3 && <div> <Tab4 fullName={fullName} /> </div>}
-                    {activeTabIndex === 4 && <div> <Tab5 fullName={fullName} /> </div>}
-                </div>
+                        {activeTabIndex === 0 && <div><Tab1 fullName={fullName} location={location} year={year} month={month} /></div>}
+                        {activeTabIndex === 1 && <div><Tab2 fullName={fullName} location={location} year={year} month={month}  /> </div>}
+                        {activeTabIndex === 2 && <div> <Tab3 fullName={fullName} location={location} year={year} month={month} /> </div>}
+                        {activeTabIndex === 3 && <div> <Tab4 fullName={fullName} location={location} year={year} month={month} /> </div>}
+                        {activeTabIndex === 4 && <div> <Tab5 fullName={fullName} location={location} year={year} month={month} /> </div>}
+                    </div>
             </div>
         </>
     );

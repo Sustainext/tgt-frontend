@@ -5,7 +5,6 @@ import { scope1Info, scope2Info, scope3Info } from "../data/scopeInfo";
 import { unitTypes } from "../data/units";
 import { categoriesToAppend, categoryMappings } from "../data/customActivities";
 import axios from "axios";
-import { debounce } from "lodash";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 
 const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
@@ -14,11 +13,12 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
   const [activity, setActivity] = useState(value.Activity || "");
   const [quantity, setQuantity] = useState(value.Quantity || "");
   const [unit, setUnit] = useState(value.Unit || "");
+  const [activity_id, setActivityId] = useState(value.activity_id || "");
+  const [unit_type, setUnitType] = useState(value.unit_type || "");
   const [subcategories, setSubcategories] = useState([]);
   const [activities, setActivities] = useState([]);
   const [units, setUnits] = useState([]);
   const [baseCategories, setBaseCategories] = useState([]);
-  const [selectedActivity, setSelectedActivity] = useState(null);
   const [activitySearch, setActivitySearch] = useState("");
   const [isDropdownActive, setIsDropdownActive] = useState(false);
   const isFetching = useRef(false);
@@ -238,12 +238,6 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (subcategory) {
-  //     fetchActivities();
-  //   }
-  // }, [fetchActivities, subcategory]);
-
   const fetchSubcategories = async () => {
     const selectedCategory = scopeMappings[scope].find((info) =>
       info.Category.some((c) => c.name === category)
@@ -271,25 +265,18 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
           `${act.name} - ( ${act.source} ) - ${act.unit_type}` ===
           value.Activity
       );
-      setSelectedActivity(initialActivity);
+      if (initialActivity) {
+        setActivityId(initialActivity.id);
+        setUnitType(initialActivity.unit_type);
+      }
     }
   }, [activities, value.Activity]);
 
   useEffect(() => {
-    if (selectedActivity && selectedActivity.unit_type) {
-      const unitConfig = unitTypes.find(
-        (u) => u.unit_type === selectedActivity.unit_type
-      );
-      if (unitConfig) {
-        const availableUnits = Object.values(unitConfig.units).flat();
-        setUnits(availableUnits);
-      } else {
-        setUnits([]);
-      }
-    } else {
-      setUnits([]);
-    }
-  }, [selectedActivity]);
+    const unitConfig = unitTypes.find((u) => u.unit_type === unit_type);
+    setUnits(unitConfig ? Object.values(unitConfig.units).flat() : []);
+  }, [unit_type]);
+  
 
   const handleCategoryChange = (value) => {
     console.log("Handle category change triggered");
@@ -298,6 +285,8 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
     setActivity("");
     setQuantity("");
     setUnit("");
+    setActivityId("");
+    setUnitType("");
 
     const selectedCategory = scope1Info.find((info) =>
       info.Category.some((c) => c.name === value)
@@ -314,6 +303,8 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
       Activity: "",
       Quantity: "",
       Unit: "",
+      activity_id: "",
+      unit_type: "",
     });
   };
 
@@ -322,6 +313,8 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
     setActivity("");
     setQuantity("");
     setUnit("");
+    setActivityId("");
+    setUnitType("");
 
     onChange({
       Category: category,
@@ -329,6 +322,8 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
       Activity: "",
       Quantity: "",
       Unit: "",
+      activity_id: "",
+      unit_type: "",
     });
   };
 
@@ -336,20 +331,35 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
     setActivity(value);
     setQuantity("");
     setUnit("");
-
+  
     const foundActivity = activities.find(
-      (act) => `${act.name} - ( ${act.source} ) - ${act.unit_type}` === value
+      (act) => `${act.name} - (${act.source}) - ${act.unit_type}` === value
     );
-    setSelectedActivity(foundActivity);
-
+  
+    console.log('Found activity:', foundActivity);
+  
+    if (foundActivity) {
+      setActivityId(foundActivity.id);
+      setUnitType(foundActivity.unit_type);
+      const unitConfig = unitTypes.find((u) => u.unit_type === foundActivity.unit_type);
+      setUnits(unitConfig ? Object.values(unitConfig.units).flat() : []);
+    } else {
+      setActivityId("");
+      setUnitType("");
+      setUnits([]);
+    }
+  
     onChange({
       Category: category,
       Subcategory: subcategory,
       Activity: value,
       Quantity: "",
       Unit: "",
+      activity_id: foundActivity ? foundActivity.id : "",
+      unit_type: foundActivity ? foundActivity.unit_type : "",
     });
   };
+  
 
   const handleQuantityChange = (value) => {
     setQuantity(value);
@@ -359,6 +369,8 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
       Activity: activity,
       Quantity: value,
       Unit: unit,
+      activity_id: activity_id,
+      unit_type: unit_type,
     });
   };
 
@@ -370,6 +382,8 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
       Activity: activity,
       Quantity: quantity,
       Unit: value,
+      activity_id: activity_id,
+      unit_type: unit_type,
     });
   };
 
@@ -500,7 +514,7 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
         </div>
       </div>
 
-      <div style={{ width: "20%",paddingLeft:'10px' }}>
+      <div style={{ width: "20%", paddingLeft: "10px" }}>
         <input
           ref={quantityRef}
           type="number"

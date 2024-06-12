@@ -238,6 +238,7 @@ const Waterdischarge = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

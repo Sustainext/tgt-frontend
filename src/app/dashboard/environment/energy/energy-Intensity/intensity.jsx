@@ -274,6 +274,7 @@ const Intensity = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

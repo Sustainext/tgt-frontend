@@ -274,6 +274,7 @@ const Waterwithdrawal = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

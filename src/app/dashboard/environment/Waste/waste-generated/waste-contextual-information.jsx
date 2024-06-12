@@ -129,6 +129,7 @@ const Wastecontextualinformation = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

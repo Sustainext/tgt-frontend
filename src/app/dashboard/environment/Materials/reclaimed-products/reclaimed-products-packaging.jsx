@@ -364,6 +364,7 @@ const Reclaimedproductspackdging = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

@@ -268,6 +268,7 @@ const SubstancesconcernQ1 = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 

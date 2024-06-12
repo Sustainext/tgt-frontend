@@ -119,6 +119,7 @@ const Baseyearenergy = () => {
         progress: undefined,
         theme: "colored",
       });
+      LoaderClose();
     }
   };
 
