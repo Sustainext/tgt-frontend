@@ -5,6 +5,7 @@ import { scope1Info, scope2Info, scope3Info } from "../data/scopeInfo";
 import { unitTypes } from "../data/units";
 import { categoriesToAppend, categoryMappings } from "../data/customActivities";
 import axios from "axios";
+import { debounce } from "lodash";
 
 const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
   const [category, setCategory] = useState(value.Category || "");
@@ -234,7 +235,7 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
     } finally {
       isFetching.current = false;
     }
-  }, [subcategory]);
+  }, []);
 
   // useEffect(() => {
   //   if (subcategory) {
@@ -250,6 +251,7 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
       ? selectedCategory.Category.find((c) => c.name === category).SubCategory
       : [];
     setSubcategories(newSubcategories);
+    fetchActivities();
     if (!newSubcategories.find((sub) => sub === value.Subcategory)) {
       setSubcategory("");
     }
