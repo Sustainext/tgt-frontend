@@ -27,7 +27,7 @@ const client_id = 1;
 const user_id = 1;
 // const notify = (text) => toast(text);
 
-const Scope1 = ({ location, year, month }) => {
+const Scope1 = ({ location, year, month,successCallback }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -67,6 +67,7 @@ const Scope1 = ({ location, year, month }) => {
       const response = await post(url, {
         ...data,
       });
+      console.log('response status is ', response.status)
       if (response.status === 200) {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -78,6 +79,7 @@ const Scope1 = ({ location, year, month }) => {
           progress: undefined,
           theme: "light",
         });
+        successCallback();
         LoaderClose();
         loadFormData();
 
@@ -106,15 +108,7 @@ const Scope1 = ({ location, year, month }) => {
         theme: "colored",
       });
       LoaderClose();
-    }
-      // console.log("Response:", response.data);
-      // toast(response.message)
-      // Handle the response data here
-    // } catch (error) {
-    //   console.error("Error:", error);
-      // toast(error)
-      // Handle errors here
-    
+    }    
   };
 
   const loadFormData = async () => {

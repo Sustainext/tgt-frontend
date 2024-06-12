@@ -2,6 +2,10 @@
 import { useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoHomeOutline } from "react-icons/io5";
+import { ToastContainer, toast } from "react-toastify";
+import axiosInstance, { post } from "@/app/utils/axiosMiddleware";
+import { useEmissions } from './EmissionsContext';
+
 import Scope1 from "./scope1";
 import Scope2 from "./scope2";
 import Scope3 from "./scope3";
@@ -17,6 +21,8 @@ const AccordionItem = ({
   open,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+
 
   return (
     <div
@@ -55,6 +61,70 @@ const AccordionItem = ({
   );
 };
 const Emissionsnbody = ({  location, year, month }) => {
+
+const { setClimatiqData } = useEmissions();
+
+const getLatestComputedData = ()=>{
+    console.log('Climatiq is success !!!! -----------****************')
+    const base_url = `${process.env.BACKEND_API_URL}/datametric/get-climatiq-score?`;
+    const url = `${base_url}location=${location}&&year=${year}&&month=${month}`;
+    console.log(url, "is the url to be fired from getLatestComputedData");
+
+    // Make the GET request
+    axiosInstance
+      .get(url)
+      .then((response) => {
+        // Handle successful response
+        console.log(response.data, " is the response data");
+        console.log(' This is the climatiq computed result')
+        setClimatiqData(response.data)
+        if (response.status === 200) {
+            toast.success("Computed Emissions Total Score!", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+              });
+        }else{
+            toast.error("Combined computation failed for Emissions!", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+              });
+        }
+
+        // setFormData(response.data.form[0].form_data)
+      })
+      .catch((error) => {
+        
+        console.log(error, ' -got error')
+        const errorMessage =
+        error.response && error.response.data && error.response.data.message
+          ? error.response.data.message
+          : "Oops, something went wrong";
+        toast.error(errorMessage, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
+      });
+
+
+}
   return (
     <>
       <div className="mx-3">
@@ -63,7 +133,7 @@ const Emissionsnbody = ({  location, year, month }) => {
           scops="Scope 1"
           icons={<IoHomeOutline />}
         >
-          <Scope1 location={location} year={year} month={month} />
+          <Scope1 location={location} year={year} month={month} successCallback={getLatestComputedData} />
         </AccordionItem>
 
         <AccordionItem
