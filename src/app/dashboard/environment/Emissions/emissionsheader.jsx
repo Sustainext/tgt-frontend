@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { yearInfo, months } from "@/app/shared/data/yearInfo";
 import axiosInstance from "@/app/utils/axiosMiddleware";
+import { useEmissions } from './EmissionsContext';
 
 const monthMapping = {
   "Jan": 1,
@@ -23,14 +24,17 @@ const getMonthString = (monthNumber) => {
   return Object.keys(monthMapping).find(key => monthMapping[key] === monthNumber);
 };
 
-const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, year, setYear, setCountryCode }) => {
+const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, year, setYear, setCountryCode, locationError, setLocationError }) => {
   const [formState, setFormState] = useState({
     location: location,
     year: year,
     month: activeMonth,
   });
 
+  const { climatiqData } = useEmissions();
+
   const [locations, setLocations] = useState([]);
+  const [localClimatiq, setlocalClimatiq] = useState(0);
   const [countryCode, setCountryCodeState] = useState('');
 
   useEffect(() => {
@@ -46,6 +50,17 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, y
     fetchLocations();
   }, []);
 
+  useEffect(() => {
+    console.log('Got the climatiqData in header --- ');
+    if (climatiqData?.result?.[0]) {
+      let sum = 0;
+      for (const item of climatiqData.result) {
+        sum += item.co2e;
+      }
+      setlocalClimatiq(sum);
+    }
+  }, [climatiqData]);
+
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -53,6 +68,8 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, y
       ...prevState,
       [name]: value,
     }));
+
+    setLocationError(""); // Clear any existing location error
 
     if (name === "month") {
       setActiveMonth(monthMapping[value]);
@@ -79,7 +96,7 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, y
   return (
     <>
       <div className="ml-2 mb-5">
-        <div className="flex mb-5 gap-4">
+        <div className="flex gap-4 mb-5">
           <div className="relative">
             <select
               name="location"
@@ -100,6 +117,7 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, y
                 style={{ fontSize: "16px" }}
               />
             </div>
+            {locationError && <p className="text-red-500 text-sm ps-2">{locationError}</p>}
           </div>
           <div className="ml-3 relative">
             <select
@@ -126,7 +144,7 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, y
             <div className="float-end">
               <p className="text-[12px]">
                 GHG Emissions for the month ={" "}
-                <span className="text-[#6adf23]">0 tCO2e</span>
+                <span className="text-[#6adf23]">{localClimatiq} - kg - tCO2e </span>
               </p>
             </div>
           </div>

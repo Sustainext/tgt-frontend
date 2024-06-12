@@ -266,7 +266,8 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
           value.Activity
       );
       if (initialActivity) {
-        setActivityId(initialActivity.id);
+        const activityId = initialActivity.activity_id;
+        setActivityId(activityId);
         setUnitType(initialActivity.unit_type);
       }
     }
@@ -339,7 +340,8 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
     console.log('Found activity:', foundActivity);
   
     if (foundActivity) {
-      setActivityId(foundActivity.id);
+      const activityId = foundActivity.activity_id;
+      setActivityId(activityId);
       setUnitType(foundActivity.unit_type);
       const unitConfig = unitTypes.find((u) => u.unit_type === foundActivity.unit_type);
       setUnits(unitConfig ? Object.values(unitConfig.units).flat() : []);
@@ -355,7 +357,7 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
       Activity: value,
       Quantity: "",
       Unit: "",
-      activity_id: foundActivity ? foundActivity.id : "",
+      activity_id: foundActivity ? foundActivity.activity_id : "",
       unit_type: foundActivity ? foundActivity.unit_type : "",
     });
   };

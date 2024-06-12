@@ -16,8 +16,8 @@ import 'react-tooltip/dist/react-tooltip.css';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
-
 import axios from 'axios';
+
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
@@ -312,7 +312,7 @@ const Purchased = ({location, year, month}) => {
           LoaderClose();
       }
   };
-  //Reloading the forms -- White Beard
+  //Reloading the forms 
   useEffect(() => {
       //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
   },[r_schema, r_ui_schema])
@@ -364,10 +364,10 @@ const Purchased = ({location, year, month}) => {
     setFormData(updatedData);
 
   };
-
   const handleRemove = (index) => {
-    const newFormData = formData.filter((_, i) => i !== index);
-    setFormData(newFormData);
+    const updatedData = [...formData];
+    updatedData.splice(index, 1);
+    setFormData(updatedData);
   };
   const renderFields = () => {
     const fields = Object.keys(schema.items.properties);

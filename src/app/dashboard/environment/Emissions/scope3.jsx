@@ -1,15 +1,18 @@
-"use client";
 import React, { useState, useEffect } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import { MdAdd, MdOutlineDeleteOutline } from "react-icons/md";
-import CustomFileUploadWidget from "../../../shared/widgets/CustomFileUploadWidget";
-import AssignToWidget from "../../../shared/widgets/assignToWidget";
-import CombinedWidget from "../../../shared/widgets/emissioncombinedWidget";
-import { GlobalState } from "../../../../Context/page";
-import RemoveWidget from "../../../shared/widgets/RemoveWidget";
-import axios from "axios";
-import axiosInstance, { post } from "@/app/utils/axiosMiddleware";
+import { MdAdd } from "react-icons/md";
+import CustomFileUploadWidget from '../../../shared/widgets/CustomFileUploadWidget';
+import AssignToWidget from '../../../shared/widgets/assignToWidget';
+import CombinedWidget from '../../../shared/widgets/emissioncombinedWidget';
+import { GlobalState } from '../../../../Context/page';
+import RemoveWidget from '../../../shared/widgets/RemoveWidget';
+import axiosInstance, { post } from '@/app/utils/axiosMiddleware';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Oval } from 'react-loader-spinner';
+import { useEmissions } from "./EmissionsContext";
+import CalculateSuccess from "./calculateSuccess";
 
 const widgets = {
   EmissonCombinedWidget: CombinedWidget,
@@ -17,16 +20,38 @@ const widgets = {
   AssignTobutton: AssignToWidget,
   RemoveWidget: RemoveWidget,
 };
+
 const view_path = "gri-environment-emissions-301-a-scope-3";
 const client_id = 1;
 const user_id = 1;
-// const notify = (text) => toast(text);
 
-const Scope3 = ({ location, year, month, countryCode }) => {
+const Scope3 = ({ location, year, month, successCallback, countryCode }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
+  const [loopen, setLoOpen] = useState(false);
+  const [modalData, setModalData] = useState(null);
+  const { climatiqData } = useEmissions();
+  const [localClimatiq, setLocalClimatiq] = useState(0);
+
+  useEffect(() => {
+    if (climatiqData?.result?.[0]) {
+      let sum = 0;
+      for (const item of climatiqData.result) {
+        sum += item.co2e;
+      }
+      setLocalClimatiq(sum);
+    }
+  }, [climatiqData]);
+
+  const LoaderOpen = () => {
+    setLoOpen(true);
+  };
+
+  const LoaderClose = () => {
+    setLoOpen(false);
+  };
 
   const handleChange = (e) => {
     setFormData(e.formData);
@@ -36,7 +61,9 @@ const Scope3 = ({ location, year, month, countryCode }) => {
     const newData = [...formData, {}];
     setFormData(newData);
   };
+
   const updateFormData = async () => {
+    LoaderOpen();
     const data = {
       client_id: client_id,
       user_id: user_id,
@@ -49,68 +76,78 @@ const Scope3 = ({ location, year, month, countryCode }) => {
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
-      const response = await post(url, {
-        ...data,
-      });
+      const response = await post(url, { ...data });
 
-      console.log("Response:", response.data);
-      // toast(response.message)
-      // Handle the response data here
+      successCallback();
+      if (response.status === 200) {
+        setModalData({
+          location,
+          month,
+          message: "Emission has been created",
+          monthly_emissions: localClimatiq
+        });
+        loadFormData();
+      } else {
+        setModalData({
+          message: "Oops, something went wrong"
+        });
+      }
     } catch (error) {
-      console.error("Error:", error);
-      // toast(error)
-      // Handle errors here
+      setModalData({
+        message: "Oops, something went wrong"
+      });
+    } finally {
+      LoaderClose();
     }
   };
 
   const loadFormData = async () => {
+    LoaderOpen();
     const base_url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=`;
     const url = `${base_url}${view_path}&&client_id=${client_id}&&user_id=${user_id}&&location=${location}&&year=${year}&&month=${month}`;
-    console.log(url, "is the url to be fired");
 
-    // Make the GET request
     axiosInstance
       .get(url)
       .then((response) => {
-        // Handle successful response
-        console.log(response.data, " is the response data");
         setRemoteSchema(response.data.form[0].schema);
         setRemoteUiSchema(response.data.form[0].ui_schema);
         const form_parent = response.data.form_data;
         const f_data = form_parent[0].data;
         setFormData(f_data);
-        // setFormData(response.data.form[0].form_data)
+        LoaderClose();
       })
       .catch((error) => {
-        // Handle error
-        console.error("Error:", error);
+        const errorMessage =
+          error.response && error.response.data && error.response.data.message
+            ? error.response.data.message
+            : "Oops, something went wrong";
+        toast.error(errorMessage, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        LoaderClose();
       });
   };
-  // reload the forms
-  useEffect(() => {
-    // console.log(r_schema, ' - is the remote schema from django', r_ui_schema, ' - is the remote ui schema from django')
-  }, [r_schema, r_ui_schema]);
-
-  // console log the formdata changes
 
   useEffect(() => {
-    console.log("formdata is changed - ", formData);
-  }, [formData]);
-
-  // fetch backend and replace initialized forms
-  useEffect(() => {
-    console.log("Form loaded , ready for trigger");
     loadFormData();
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form data:", formData);
     updateFormData();
   };
+
   const updateFormDatanew = (updatedData) => {
     setFormData(updatedData);
   };
+
   const handleRemove = (index) => {
     const updatedData = [...formData];
     updatedData.splice(index, 1);
@@ -119,7 +156,7 @@ const Scope3 = ({ location, year, month, countryCode }) => {
 
   return (
     <>
-      <div className={`overflow-y-visible custom-scrollbar flex`}>
+      <div className={`overflow-y-visible custom-scrollbar flex`} style={{ position: 'relative' }}>
         <div>
           <Form
             className="flex"
@@ -144,9 +181,9 @@ const Scope3 = ({ location, year, month, countryCode }) => {
                   setFormData={updateFormDatanew}
                 />
               ),
-              EmissonCombinedWidget : (props) => (
+              EmissonCombinedWidget: (props) => (
                 <CombinedWidget {...props} scope="scope3" year={year} countryCode={countryCode} />
-              )
+              ),
             }}
           />
         </div>
@@ -169,6 +206,28 @@ const Scope3 = ({ location, year, month, countryCode }) => {
           Submit
         </button>
       </div>
+      
+      {loopen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
+
+      {modalData && (
+        <CalculateSuccess
+          data={modalData}
+          onClose={() => setModalData(null)}
+        />
+      )}
+
+      <ToastContainer />
     </>
   );
 };
