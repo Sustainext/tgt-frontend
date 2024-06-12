@@ -9,9 +9,13 @@ import 'react-tooltip/dist/react-tooltip.css'
 import Weightvolumebody from './weight-volume-body';
 const Weightvolume = () => {
     const [activeMonth, setActiveMonth] = useState("Jan");
+    const [location, setLocation] = useState("");
+    const [year, setYear] = useState("");
     const [data, setData] = useState();
     const [category, setCategory] = useState("");
     const [isOpen, setIsOpen] = useState(false);
+    const [locationMessage, setLocationMessage] = useState("");
+
 
     const toggleDrawerclose = () => {
         setIsOpen(!isOpen);
@@ -105,8 +109,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
 
                 </div>
             </div>
-            <EnvironmentHeader activeMonth={activeMonth} setActiveMonth={setActiveMonth} />
-            <Weightvolumebody />
+            <EnvironmentHeader 
+            activeMonth={activeMonth} 
+            setActiveMonth={setActiveMonth}
+            location={location}
+            setLocation={setLocation}
+            year={year}
+            setYear={setYear}
+            locationMessage={locationMessage}
+            setLocationMessage={setLocationMessage} />
+            <Weightvolumebody location={location} year={year} month={activeMonth} setLocationMessage={setLocationMessage}/>
         </>
     );
 };
