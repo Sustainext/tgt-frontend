@@ -6,6 +6,7 @@ import { unitTypes } from "../data/units";
 import { categoriesToAppend, categoryMappings } from "../data/customActivities";
 import axios from "axios";
 import { debounce } from "lodash";
+import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 
 const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
   const [category, setCategory] = useState(value.Category || "");
@@ -430,7 +431,7 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
         </select>
       </div>
 
-      <div className="relative" style={{ width: "320px" }}>
+      <div className="relative" style={{ width: "310px" }}>
         <input
           ref={inputRef}
           type="text"
@@ -487,15 +488,25 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
               ))}
           </select>
         )}
+        <div
+          className="absolute inset-y-0 -right-2 flex items-center cursor-pointer"
+          onClick={toggleDropdown}
+        >
+          {isDropdownActive ? (
+            <FaAngleUp className="text-neutral-500" style={{ fontSize: "20px" }} />
+          ) : (
+            <FaAngleDown className="text-neutral-500" style={{ fontSize: "20px" }} />
+          )}
+        </div>
       </div>
 
-      <div style={{ width: "20%" }}>
+      <div style={{ width: "20%",paddingLeft:'10px' }}>
         <input
           ref={quantityRef}
           type="number"
           value={quantity}
           onChange={(e) => handleQuantityChange(e.target.value)}
-          className="w-full py-1 mt-2 pl-2 rounded-sm"
+          className="w-full py-1 mt-2 pl-2 rounded-sm border-b"
         />
       </div>
 
