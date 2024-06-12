@@ -1,15 +1,15 @@
 import React from "react";
-import ReusableTable from "../../../shared/components/Table";
+import ReusableTable from "../../../../shared/components/Table";
 
-const ScopeTable = ({ data }) => {
+const SourceTable = ({ data }) => {
   const columns = [
     {
       Header: "S.No",
       accessor: "sno",
     },
     {
-      Header: "Scope",
-      accessor: "scope",
+      Header: "Source",
+      accessor: "source",
     },
     {
       Header: "Contribution %",
@@ -24,4 +24,4 @@ const ScopeTable = ({ data }) => {
   return <ReusableTable columns={columns} data={data} />;
 };
 
-export default ScopeTable;
+export default SourceTable;

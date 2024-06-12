@@ -7,7 +7,7 @@ import AnalyseEnergy from "./Energy/page";
 import AnalyseWaste from "./Waste/page";
 import AnalyseMaterials from "./Materials/page";
 import AnalyseWaterEffluents from "./Water-Effluents/page";
-const Analyse = () => {
+const environment = () => {
   const [activeTab, setActiveTab] = useState("Emissions");
   const [isBoxOpen, setIsBoxOpen] = useState(false);
 
@@ -35,4 +35,4 @@ const Analyse = () => {
   );
 };
 
-export default Analyse;
+export default environment;

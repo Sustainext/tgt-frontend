@@ -1,5 +1,4 @@
-"use client";
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardArrowDown,
@@ -21,6 +20,7 @@ import { LiaHomeSolid } from "react-icons/lia";
 import Link from "next/link";
 import DashboardHeader from "./dashobardheader";
 import { GlobalState } from "../../Context/page";
+
 const Sidenav = () => {
   const { open, setOpen } = GlobalState();
   const Menus = [
@@ -63,7 +63,39 @@ const Sidenav = () => {
         },
       ],
     },
-    { title: "Analyse", icon: <MdOutlineBarChart />, link: "/dashboard/Analyse" },
+    {
+      title: "Analyse",
+      icon: <MdOutlineBarChart />,
+      submenu: true,
+      submenuItems: [
+        {
+          title: "Environment",
+          icon: <MdPublic />,
+          link: "/dashboard/Analyse/environment",
+        },
+        {
+          title: "Social",
+          icon: <MdOutlineGroup />,
+          link: "/dashboard/Analyse/social",
+        },
+        {
+          title: "Governance",
+          icon: <MdOutlineDiversity1 />,
+          link: "/dashboard/environment",
+        },
+        {
+          title: "General",
+          icon: <MdOutlineDiversity2 />,
+          link: "/dashboard/environment",
+        },
+        {
+          title: "Economic",
+          icon: <MdOutlineDiversity3 />,
+          link: "/dashboard/environment",
+        },
+      ],
+    },
+    // { title: "Analyse", icon: <MdOutlineBarChart />, link: "/dashboard/Analyse" },
     { title: "Report", icon: <MdEditNote />, link: "#" },
     { title: "Optimise", icon: <MdOutlineSettingsSuggest />, link: "#" },
     { title: "Track", icon: <MdOutlineSearch />, spacing: true, link: "/dashboard/Track" },
@@ -74,7 +106,14 @@ const Sidenav = () => {
     },
     { title: "About", icon: <MdInfoOutline />, link: "#" },
   ];
-  const [submanuopen, setSubmenuopen] = useState(false);
+
+  const [submenuOpen, setSubmenuOpen] = useState(new Array(Menus.length).fill(false));
+
+  const toggleSubmenu = (index) => {
+    const newSubmenuOpen = submenuOpen.map((item, i) => i === index ? !item : false);
+    setSubmenuOpen(newSubmenuOpen);
+  };
+
   return (
     <>
       <div className="min-h-[100vh] fixed z-[100]">
@@ -98,48 +137,42 @@ const Sidenav = () => {
           </div>
           <ul className="pt-2">
             {Menus.map((menu, index) => (
-              <>
+              <React.Fragment key={index}>
                 {menu.submenu ? (
                   <li
-                    key={index}
                     className=" text-white text-sm p-2 flex items-center gap-x-4 cursor-pointer hover:bg-[#007EEF] rounded-md mt-2"
-                    onClick={() => setSubmenuopen(!submanuopen)}
+                    onClick={() => toggleSubmenu(index)}
                   >
                     <span className="text-2xl block float-left">
                       {menu.icon ? menu.icon : <LiaHomeSolid />}
                     </span>
                     <span
-                      className={`text-sm font-medium flex-1 ${
-                        !open && "hidden"
-                      }`}
+                      className={`text-sm font-medium flex-1 ${!open && "hidden"}`}
                     >
                       {menu.title}
                     </span>
                     {menu.submenu && open && (
                       <MdKeyboardArrowDown
-                        className={`text-2xl ${submanuopen && "rotate-i80"}`}
+                        className={`text-2xl ${submenuOpen[index] ? "rotate-180" : ""}`}
                       />
                     )}
                   </li>
                 ) : (
-                  <Link href={menu.link}>
+                  <Link href={menu.link} key={index}>
                     <li
-                      key={index}
                       className=" text-white text-sm p-2 flex items-center gap-x-4 cursor-pointer hover:bg-[#007EEF] rounded-md mt-2"
                     >
                       <span className="text-2xl block float-left">
                         {menu.icon ? menu.icon : <LiaHomeSolid />}
                       </span>
                       <span
-                        className={`text-sm font-medium flex-1 ${
-                          !open && "hidden"
-                        }`}
+                        className={`text-sm font-medium flex-1 ${!open && "hidden"}`}
                       >
                         {menu.title}
                       </span>
                       {menu.submenu && open && (
                         <MdKeyboardArrowDown
-                          className={`text-2xl ${submanuopen && "rotate-i80"}`}
+                          className={`text-2xl ${submenuOpen[index] ? "rotate-180" : ""}`}
                         />
                       )}
                     </li>
@@ -149,34 +182,27 @@ const Sidenav = () => {
                   <hr className="bg-[rgba(217, 217, 217, 1)] h-[0.0625rem] my-4 mx-3 opacity-30" />
                 )}
 
-                {menu.submenu && submanuopen && open && (
+                {menu.submenu && submenuOpen[index] && open && (
                   <ul>
-                    {menu.submenuItems.map((submanuItem, index) => (
-                      <Link href={submanuItem.link} key={index}>
+                    {menu.submenuItems.map((submenuItem, subIndex) => (
+                      <Link href={submenuItem.link} key={subIndex}>
                         <li
-                          key={index}
                           className=" text-white text-sm p-2 px-5 flex items-center gap-x-4 cursor-pointer hover:bg-[#007EEF] rounded-md mt-2"
                         >
                           <span className="text-2xl block float-left">
-                            {submanuItem.icon ? (
-                              submanuItem.icon
-                            ) : (
-                              <LiaHomeSolid />
-                            )}
+                            {submenuItem.icon ? submenuItem.icon : <LiaHomeSolid />}
                           </span>
                           <span
-                            className={` text-sm font-medium flex-1 ${
-                              !open && "hidden"
-                            }`}
+                            className={`text-sm font-medium flex-1 ${!open && "hidden"}`}
                           >
-                            {submanuItem.title}
+                            {submenuItem.title}
                           </span>
                         </li>
                       </Link>
                     ))}
                   </ul>
                 )}
-              </>
+              </React.Fragment>
             ))}
           </ul>
         </div>
