@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import ScopeTable from "./ScopeTable";
 import SourceTable from "./SourceTable";
 import LocationTable from "./LocationTable";
-import axiosInstance from "../../../utils/axiosMiddleware";
-import { yearInfo } from "../../../shared/data/yearInfo";
+import axiosInstance from "../../../../utils/axiosMiddleware";
+import { yearInfo } from "../../../../shared/data/yearInfo";
 
 const AnalyseEmission = () => {
   const [analyseData, setAnalyseData] = useState([]);

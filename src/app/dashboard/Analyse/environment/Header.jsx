@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Energydata } from "../../shared/data/Energydata";
+import { Energydata } from "./../../../shared/data/Energydata";
 import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
 import { toast } from 'react-toastify';
-import { patch } from '../../utils/axiosMiddleware';
+import { patch } from '../../../utils/axiosMiddleware';
 
 const Header = ({ activeTab, setIsBoxOpen }) => {
   const [isOpen, setIsOpen] = useState(false);
