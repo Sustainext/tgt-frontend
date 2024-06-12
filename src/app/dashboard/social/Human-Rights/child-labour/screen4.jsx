@@ -183,16 +183,6 @@ const Screen4 = ({location, year, month}) => {
         } else {
             // Only show the toast if it has not been shown already
             if (!toastShown.current) {
-                toast.warn("Please select location, year, and month first", {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
                 toastShown.current = true; // Set the flag to true after showing the toast
             }
         }

@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect,useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
 import CustomTableWidget from "../../../../shared/widgets/Table/tableWidget"
@@ -101,7 +101,7 @@ const Screen1 = ({location, year, month}) => {
 
         const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
         try{
-        const response = await axios.post(url,data, axiosConfig);
+        const response = await axios.post(url, data, axiosConfig);
         if (response.status === 200) {
             toast.success("Data added successfully", {
               position: "top-right",

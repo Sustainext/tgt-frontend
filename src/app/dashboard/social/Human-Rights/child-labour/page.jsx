@@ -9,7 +9,7 @@ import Socialheader from "../../socialheader"
 import Childlabourscreen from "./childlabour"
 
 const Childlabour = () => {
-    const [activeMonth, setActiveMonth] = useState("Jan");
+    const [activeMonth, setActiveMonth] = useState(1);
     const [location, setLocation] = useState("");
     const [year, setYear] = useState("");
     const [data, setData] = useState();
@@ -105,7 +105,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
                     ))}
 
                 </div>
-            </div>
+            </div> 
             <Socialheader 
             activeMonth={activeMonth}
             setActiveMonth={setActiveMonth}
