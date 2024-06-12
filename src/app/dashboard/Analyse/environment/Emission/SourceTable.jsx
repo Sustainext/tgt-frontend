@@ -12,12 +12,16 @@ const SourceTable = ({ data }) => {
       accessor: "source",
     },
     {
-      Header: "Contribution %",
+      Header: "Percentage contribution",
       accessor: "ageContribution",
     },
     {
-      Header: "Total Emissions (tCO2e)",
+      Header: "Total Emissions",
       accessor: "totalemissions",
+    },
+    {
+      Header: "Units",
+      accessor: "units",
     },
   ];
 

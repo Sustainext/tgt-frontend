@@ -3,34 +3,30 @@ import React from "react";
 const Table = ({ columns, data }) => {
   return (
     <div className="container mx-auto p-4">
-      <table className="min-w-max w-full table-auto" style={{ border: "none" }}>
-        <thead>
-          <tr className="border-b border-black border-opacity-10">
-            {columns.map((column) => (
+      <table className="min-w-full border-collapse block md:table w-full rounded-lg overflow-hidden">
+        <thead className="block md:table-header-group border">
+          <tr className="border border-gray-300 md:table-row gradient-background">
+            {columns.map((column, index) => (
               <th
                 key={column.accessor}
-                className="px-6 py-3 text-neutral-500 text-xs font-normal leading-[15px] text-left w-1/4"
-                style={{ border: "none" }}
+                className={`px-2 py-3 font-semibold text-gray-600 block md:table-cell text-sm ${
+                  index === 0 ? 'text-left' : 'text-center'
+                }`}
               >
                 {column.Header}
               </th>
             ))}
           </tr>
         </thead>
-        <tbody
-          className="text-gray-600 text-sm font-light"
-          style={{ border: "none" }}
-        >
+        <tbody className="block md:table-row-group">
           {data.map((row, rowIndex) => (
-            <tr
-              key={rowIndex}
-              className="border-b border-gray-200 hover:bg-gray-100"
-            >
-              {columns.map((column) => (
+            <tr key={rowIndex} className="border border-gray-300 md:table-row">
+              {columns.map((column, colIndex) => (
                 <td
-                  key={column.accessor}
-                  className="py-3 px-6 text-left text-black text-opacity-90 text-[13px] font-normal leading-none"
-                  style={{ border: "none" }}
+                  key={colIndex}
+                  className={`p-2 block md:table-cell ${
+                    colIndex === 0 ? 'text-left font-bold' : 'text-center'
+                  } text-sm`}
                 >
                   {row[column.accessor]}
                 </td>
