@@ -6,15 +6,23 @@ import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import Reclaimedproductspackdging from "./reclaimed-products-packaging";
 import Datacollection from "./data-collection"
-const AccordionItem = ({ title, children, tooltiptext, sdg, display,sdgdiplay }) => {
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,sdgdiplay,location,setLocationMessage,year }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
+  const handleClick = () => {
+    if (!location) {
+      setLocationMessage("Please select a location and year")
+
+      return;
+    }
+    setIsOpen(!isOpen);
+  };
 
   return (
     <div className={`shadow-md py-1 mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200 ${open ? "w-[100%]" : "w-[100%]"}`}>
       <button
         className="py-3 w-[100%] text-left flex"
-        onClick={() => setIsOpen(!isOpen)}// Unique ID for the tooltip, spaces replaced by dashes
+        onClick={handleClick}// Unique ID for the tooltip, spaces replaced by dashes
       >
            <div className="flex justify-between">
         <div className="flex w-[65vw]">
@@ -67,7 +75,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,sdgdiplay })
   );
 };
 
-const Reclaimedproductsbody = () => {
+const Reclaimedproductsbody = ({location, year, month,setLocationMessage}) => {
   return (
     <>
       <div className="mx-3">
@@ -85,9 +93,11 @@ const Reclaimedproductsbody = () => {
           sdg={['GRI 301-3a','GRI 301-3b']}
           display="block"
           sdgdiplay="block"
+          location={location}
+          setLocationMessage={setLocationMessage}
         >
 
-          <Reclaimedproductspackdging/>
+          <Reclaimedproductspackdging location={location} year={year} month={month}/>
         </AccordionItem>
 
         <AccordionItem
@@ -96,9 +106,11 @@ const Reclaimedproductsbody = () => {
           sdg={['GRI 303-1b']}
           display="block"
           sdgdiplay="none"
+          location={location}
+          setLocationMessage={setLocationMessage}
         >
 
-          <Datacollection/>
+          <Datacollection location={location} year={year} month={month}/>
         </AccordionItem>
         {/* Add more accordion items here */}
       </div>

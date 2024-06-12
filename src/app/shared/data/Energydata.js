@@ -1614,6 +1614,114 @@ export const Energydata = [
       </>,
     ],
   },
+  {
+    category: ["19"],
+    header: [<h5 className="text-sky-600 text-[17px] font-bold">GRI 401: Employment 2016</h5>],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 401-1:New employee hires and employee turnover
+          </p>
+          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-4">GRI Guidance:</p>
+            <p className="text-[11px] text-[#727272]">
+              An organization can use the following age groups:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                Under 30 years old;
+              </li>
+
+              <li className="text-[11px] text-[#727272]">30-50 years old;</li>
+              <li className="text-[11px] text-[#727272]">Over 50 years old.</li>
+            </ul>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["20"],
+    header: [<h5 className="text-sky-600 text-[17px] font-bold">GRI 401: Employment 2016</h5>],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 401-2: Benefits provided to full-time employees that are not provided to temporary or part-time employees
+          </p>
+          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-4">Background</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Data reported under this disclosure provide a measure of an
+              organization’s investment in human resources and the minimum
+              benefits it offers its full-time employees. The quality of
+              benefits for full-time employees is a key factor in retaining
+              employees.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-4">
+              Compilation requirements
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              When compiling the information specified in Disclosure 401-2, the
+              reporting organization shall exclude in-kind benefits such as
+              provision of sports or child day care facilities, free meals
+              during working time, and similar general employee welfare
+              programs.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["21"],
+    header: [<h5 className="text-sky-600 text-[17px] font-bold">GRI 401: Employment 2016</h5>],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">GRI 401-3: Parental Leave</p>
+          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-[#727272] mb-4">
+              Employees entitled to parental leave means those employees that
+              are covered by organizational policies, agreements or contracts
+              that contain parental leave entitlements. To determine who
+              returned to work after parental leave ended and were still
+              employed 12 months later, an organization can consult records from
+              the prior reporting periods.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
   //  sdg contet start//
   {
     category: ["sd1"],
@@ -2213,6 +2321,227 @@ export const Energydata = [
               target="_blank"
             >
               Learn more <MdChevronRight />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["sd10"],
+    header: [
+      <>
+        <div className="flex w-[100px]">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-03.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-green-500 text-[17px] font-bold ml-2">SDG 3</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 3: Ensure healthy lives and promote
+            well-being for all at all ages
+          </p>
+          <div className="h-[280px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 3.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, end preventable deaths of newborns and children under 5
+              years of age, with all countries aiming to reduce neonatal
+              mortality to at least as low as 12 per 1,000 live births and
+              under-5 mortality to at least as low as 25 per 1,000 live births.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">3.2.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Under-five mortality rate.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">3.2.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Neonatal mortality rate.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal3"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["sd11"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-05.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-orange-600 text-[17px] font-bold ml-2">SDG 5</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 5: Achieve gender equality and empower
+            all women and girls
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 5.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Eliminate all forms of violence against all women and girls in the
+              public and private spheres, including trafficking and sexual and
+              other types of exploitation.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#727272] mb-2">5.2.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of ever-partnered women and girls aged 15 years and
+              older subjected to physical, sexual or psychological violence by a
+              current or former intimate partner in the previous 12 months, by
+              form of violence and by age.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#727272] mb-2">5.2.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of women and girls aged 15 years and older subjected to
+              sexual violence by persons other than an intimate partner in the
+              previous 12 months, by age and place of occurrence.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal5"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["sd12"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-08.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-red-900 text-[17px] font-bold ml-2">SDG 8</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 8: Promote sustained, inclusive and
+            sustainable economic growth, full and productive employment and
+            decent work for all
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 8.5</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, achieve full and productive employment and decent work
+              for all women and men, including for young people and persons with
+              disabilities, and equal pay for work of equal value.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.5.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Average hourly earnings of female and male employees, by
+              occupation, age and persons with disabilities.
+            </p>
+
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.5.2</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Unemployment rate, by sex, age and persons with disabilities.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 8.6</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2020, substantially reduce the proportion of youth not in employment, education or training.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.6.1</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            Proportion of youth (aged 15-24 years) not in education, employment or training.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal8"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["sd13"],
+    header: [
+      <>
+        <div className="flex w-[100px]">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-10.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-pink-500 text-[17px] font-bold ml-2">SDG 10</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 10: Reduce inequality within and among
+            countries
+          </p>
+          <div className="h-[280px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 10.3</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Ensure equal opportunity and reduce inequalities of outcome,
+              including by eliminating discriminatory laws, policies and
+              practices and promoting appropriate legislation, policies and
+              action in this regard.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">10.3.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of population reporting having personally felt
+              discriminated against or harassed within the previous 12 months on
+              the basis of a ground of discrimination prohibited under
+              international human rights law.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal12"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
             </a>
           </div>
         </div>

@@ -8,7 +8,9 @@ import 'react-tooltip/dist/react-tooltip.css'
 import Socialheader from "../../socialheader"
 import Illhealthscreen1 from "./illhealth"
 const Illhealth = () => {
-    const [activeMonth, setActiveMonth] = useState("Jan");
+    const [activeMonth, setActiveMonth] = useState(1);
+    const [location, setLocation] = useState("");
+    const [year, setYear] = useState("");
     const [data, setData] = useState();
     const [category, setCategory] = useState("");
     const [isOpen, setIsOpen] = useState(false);
@@ -103,8 +105,14 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
 
                 </div>
             </div>
-            <Socialheader activeMonth={activeMonth} setActiveMonth={setActiveMonth} />
-            <Illhealthscreen1/>
+            <Socialheader 
+            activeMonth={activeMonth}
+            setActiveMonth={setActiveMonth}
+            location={location}
+            setLocation={setLocation}
+            year={year}
+            setYear={setYear} />
+            <Illhealthscreen1 location={location} year={year} month={activeMonth}/>
 
         </>
     );

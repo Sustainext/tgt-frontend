@@ -7,15 +7,23 @@ import 'react-tooltip/dist/react-tooltip.css'
 import Wastedirectedimpact from "./waste-directed-impact";
 import Wastedirectedcontextualinformation from "./waste-directed-contextual-information";
 
-const AccordionItem = ({ title, children, tooltiptext, sdg, display,tooltipblock }) => {
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,tooltipblock,location,setLocationMessage,year }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
+  const handleClick = () => {
+    if (!location) {
+      setLocationMessage("Please select a location and year")
+
+      return;
+    }
+    setIsOpen(!isOpen);
+  };
 
   return (
     <div className={`shadow-md py-1 mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200 ${open ? "w-[100%]" : "w-[100%]"}`}>
       <button
         className="py-3 w-[100%] text-left flex"
-        onClick={() => setIsOpen(!isOpen)}// Unique ID for the tooltip, spaces replaced by dashes
+        onClick={handleClick}// Unique ID for the tooltip, spaces replaced by dashes
       >
           <div className="flex justify-between">
         <div className="flex w-[65vw]">
@@ -67,7 +75,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,tooltipblock
   );
 };
 
-const Wastedirectedbody = () => {
+const Wastedirectedbody = ({location, year, month,setLocationMessage}) => {
 
 
   return (
@@ -80,9 +88,11 @@ const Wastedirectedbody = () => {
           sdg={['GRI 306-5a','GRI 306-5b','GRI 306-5c','GRI 306-5d','GRI 306-5e']}
           display="block"
           tooltipblock="none"
+          location={location}
+          setLocationMessage={setLocationMessage}
         >
 
-          <Wastedirectedimpact/>
+          <Wastedirectedimpact location={location} year={year} month={month}/>
         </AccordionItem>
         <AccordionItem
           title="Contextual Information to understand data compilation"
@@ -91,9 +101,11 @@ const Wastedirectedbody = () => {
           sdg={['GRI 306-5e']}
           display="block"
           tooltipblock="block"
+          location={location}
+          setLocationMessage={setLocationMessage}
         >
 
-          <Wastedirectedcontextualinformation/>
+          <Wastedirectedcontextualinformation location={location} year={year} month={month}/>
         </AccordionItem>
 
         {/* Add more accordion items here */}

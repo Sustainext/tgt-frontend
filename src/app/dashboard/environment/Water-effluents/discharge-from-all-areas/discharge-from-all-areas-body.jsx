@@ -6,15 +6,23 @@ import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import Waterwithdrawal from "./water-withdrawal";
 import Waterdischarge from "./Water-discharge";
-const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
+  const handleClick = () => {
+    if (!location) {
+      setLocationMessage("Please select a location and year")
+
+      return;
+    }
+    setIsOpen(!isOpen);
+  };
 
   return (
     <div className={`shadow-md py-1 mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200 ${open ? "w-[100%]" : "w-[100%]"}`}>
       <button
         className="py-3 w-[100%] text-left flex"
-        onClick={() => setIsOpen(!isOpen)}// Unique ID for the tooltip, spaces replaced by dashes
+        onClick={handleClick}// Unique ID for the tooltip, spaces replaced by dashes
       >
       <div className="flex justify-between">
         <div className="flex w-[65vw]">
@@ -59,7 +67,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
   );
 };
 
-const Dischargefromareasbody = () => {
+const Dischargefromareasbody = ({location, year, month,setLocationMessage}) => {
 
 
   return (
@@ -71,9 +79,11 @@ const Dischargefromareasbody = () => {
           to total water withdrawal and total water discharge. `}
           sdg={['GRI 303-3a','GRI 303-3b','GRI 303-3c','GRI 303-3d']}
           display="block"
+          location={location}
+          setLocationMessage={setLocationMessage}
         >
 
-          <Waterwithdrawal/>
+          <Waterwithdrawal location={location} year={year} month={month}/>
         </AccordionItem>
 
         <AccordionItem
@@ -82,9 +92,11 @@ const Dischargefromareasbody = () => {
           to total water withdrawal and total water discharge. `}
           sdg={['GRI 303-4a']}
           display="none"
+          location={location}
+          setLocationMessage={setLocationMessage}
         >
 
-          <Waterdischarge/>
+          <Waterdischarge location={location} year={year} month={month}/>
         </AccordionItem>
         {/* Add more accordion items here */}
       </div>

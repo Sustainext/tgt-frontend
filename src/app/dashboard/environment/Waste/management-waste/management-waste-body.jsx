@@ -5,15 +5,23 @@ import { GlobalState } from "../../../../../Context/page";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import Managementwasteimpact from "./management-waste-impact";
-const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
+  const handleClick = () => {
+    if (!location) {
+      setLocationMessage("Please select a location and year")
+
+      return;
+    }
+    setIsOpen(!isOpen);
+  };
 
   return (
     <div className={`shadow-md py-1 mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200 ${open ? "w-[100%]" : "w-[100%]"}`}>
       <button
         className="py-3 w-[100%] text-left flex"
-        onClick={() => setIsOpen(!isOpen)}// Unique ID for the tooltip, spaces replaced by dashes
+        onClick={handleClick}// Unique ID for the tooltip, spaces replaced by dashes
       >
        <div className="flex justify-between">
         <div className="flex w-[65vw]">
@@ -65,7 +73,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
   );
 };
 
-const Managementwastebody = () => {
+const Managementwastebody = ({location, year, month,setLocationMessage}) => {
 
 
   return (
@@ -76,9 +84,11 @@ const Managementwastebody = () => {
           tooltiptext={`This section contains disclosures for organizations to report information about how they manage waste related impacts`}
           sdg={['GRI 306-2a']}
           display="block"
+          location={location}
+          setLocationMessage={setLocationMessage}
         >
 
-          <Managementwasteimpact/>
+          <Managementwasteimpact location={location} year={year} month={month}/>
         </AccordionItem>
 
 

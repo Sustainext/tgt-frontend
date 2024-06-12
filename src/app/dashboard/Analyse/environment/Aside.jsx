@@ -6,7 +6,7 @@ import {
   IoWaterOutline,
   IoLeafOutline,
 } from "react-icons/io5";
-import material from "../../../../public/material.svg";
+import material from "../../../../../public/material.svg";
 import Image from "next/image";
 
 const Aside = ({ activeTab, handleTabClick }) => {

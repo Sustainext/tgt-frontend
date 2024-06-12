@@ -11,8 +11,8 @@ import Significantlocations from "./Significant-locations"
 
 const Benefits = () => {
     const [activeMonth, setActiveMonth] = useState(1);
-  const [location, setLocation] = useState("");
-  const [year, setYear] = useState("");
+    const [location, setLocation] = useState("");
+    const [year, setYear] = useState("");
     const [data, setData] = useState();
     const [category, setCategory] = useState("");
     const [isOpen, setIsOpen] = useState(false);

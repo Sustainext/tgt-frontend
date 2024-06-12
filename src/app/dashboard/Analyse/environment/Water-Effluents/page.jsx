@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { yearInfo } from "../../../shared/data/yearInfo";
 import { AiOutlineCalendar } from "react-icons/ai";
 import TableSidebar from "./TableSidebar";
 import DynamicTable from "./customTable";
