@@ -1,5 +1,5 @@
 'use client';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoHomeOutline } from "react-icons/io5";
 import { ToastContainer, toast } from "react-toastify";
@@ -139,6 +139,10 @@ const Emissionsnbody = ({ location, year, month, countryCode, locationError, set
     setLocationError("");
     return true;
   };
+
+  useEffect(()=>{
+    getLatestComputedData();
+  },[year,location,month])
 
   return (
     <>
