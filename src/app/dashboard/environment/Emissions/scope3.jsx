@@ -121,20 +121,7 @@ const Scope3 = ({ location, year, month, successCallback, countryCode }) => {
         LoaderClose();
       })
       .catch((error) => {
-        const errorMessage =
-          error.response && error.response.data && error.response.data.message
-            ? error.response.data.message
-            : "Oops, something went wrong";
-        toast.error(errorMessage, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+        console.log(error)
         LoaderClose();
       });
   };
