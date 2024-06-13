@@ -12,8 +12,8 @@ import axiosInstance, { post } from '@/app/utils/axiosMiddleware';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
-import CalculateSuccess from "./calculateSuccess"; // Update the import path accordingly
-import { useEmissions } from "./EmissionsContext"; // Update the import path accordingly
+import CalculateSuccess from "./calculateSuccess";
+import { useEmissions } from "./EmissionsContext";
 
 const widgets = {
   EmissonCombinedWidget: CombinedWidget,
@@ -33,8 +33,12 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
-  const { climatiqData } = useEmissions();
+  const { climatiqData, setScope2Data } = useEmissions();
   const [localClimatiq, setlocalClimatiq] = useState(0);
+
+  useEffect(()=>{
+    setScope2Data(formData)
+  },[formData])
 
   useEffect(() => {
     console.log('Got the climatiqData in header --- ');
@@ -121,9 +125,7 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
         LoaderClose();
       })
       .catch((error) => {
-        setModalData({
-          message: error.response?.data?.message || "Oops, something went wrong"
-        });
+        console.log(error)
         LoaderClose();
       });
   };
@@ -186,7 +188,10 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
               ),
               EmissonCombinedWidget: (props) => (
                 <CombinedWidget {...props} scope="scope2" year={year} countryCode={countryCode} />
-              )
+              ),
+              AssignTobutton : (props) => (
+                <AssignToWidget {...props} scope="scope2" location={location} year={year} month={month} data={formData} />
+              ),
             }}
           />
         </div>

@@ -1,11 +1,22 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import Tick from '../../../../../public/tick.svg';
-import Error from '../../../../../public/error.svg';
+import Image from 'next/image';
+import { useEmissions } from './EmissionsContext';
+import Tick from '@/app/shared/assets/tick.svg';
+import Error from '@/app/shared/assets/error.svg';
 
 const CalculateSuccess = ({ onClose, data }) => {
   const isLoading = !data.message;
   const [showErrorUi, setShowErrorUi] = useState(false);
+  const { climatiqData } = useEmissions();
+  const [localClimatiq, setlocalClimatiq] = useState(0);
+
+  useEffect(() => {
+    if (climatiqData?.result?.length > 0) {
+      const sum = climatiqData.result.reduce((acc, item) => acc + item.co2e, 0);
+      setlocalClimatiq(sum);
+    }
+  }, [climatiqData]);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -31,7 +42,7 @@ const CalculateSuccess = ({ onClose, data }) => {
               </div>
             </div>
             <div className='success'>
-              <img src={Tick} className='h-14 absolute top-20 left-[45%]' />
+              <Image src={Tick} alt='Success' className='h-14 absolute top-20 left-[45%]' width={56} height={56} />
               <div className='w-[415px] h-[158px] pl-4 pr-[37.10px] py-4 left-[46px] top-[174px] absolute bg-gray-100 rounded-lg shadow flex-col justify-center items-center gap-3 inline-flex'>
                 <div className='w-[359px]'>
                   <span className="text-sky-700 text-[15px] font-normal font-['Manrope'] leading-normal">
@@ -57,7 +68,7 @@ const CalculateSuccess = ({ onClose, data }) => {
                     {' '}
                   </span>
                   <span className="text-green-400 text-[15px] font-bold font-['Manrope'] leading-normal">
-                    {data.monthly_emissions} tCO<sub>2</sub>e
+                    {localClimatiq} tCO<sub>2</sub>e
                   </span>
                 </div>
               </div>
@@ -76,9 +87,12 @@ const CalculateSuccess = ({ onClose, data }) => {
           <div className='w-[502px] h-[280px] pl-[65px] pr-[43px] py-[30px] bg-white rounded-lg shadow justify-end items-center inline-flex'>
             <div className='w-[394px] h-[220px] relative'>
               <div className='w-[394px] h-[146px] left-0 top-0 absolute'>
-                <img
-                  className='w-20 h-20 left-[147px] top-0 absolute'
+                <Image
                   src={Error}
+                  alt='Error'
+                  className='w-20 h-20 left-[147px] top-0 absolute'
+                  width={80}
+                  height={80}
                 />
                 <div className='w-[394px] h-[50px] left-0 top-[80px] absolute'>
                   <div className="left-[30px] top-0 absolute text-neutral-500 text-[22px] font-bold font-['Manrope'] leading-relaxed">

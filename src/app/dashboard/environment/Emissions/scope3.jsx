@@ -32,8 +32,12 @@ const Scope3 = ({ location, year, month, successCallback, countryCode }) => {
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
-  const { climatiqData } = useEmissions();
+  const { climatiqData, setScope3Data } = useEmissions();
   const [localClimatiq, setLocalClimatiq] = useState(0);
+
+  useEffect(()=>{
+    setScope3Data(formData)
+  },[formData])
 
   useEffect(() => {
     if (climatiqData?.result?.[0]) {
@@ -183,6 +187,9 @@ const Scope3 = ({ location, year, month, successCallback, countryCode }) => {
               ),
               EmissonCombinedWidget: (props) => (
                 <CombinedWidget {...props} scope="scope3" year={year} countryCode={countryCode} />
+              ),
+              AssignTobutton : (props) => (
+                <AssignToWidget {...props} scope="scope3" location={location} year={year} month={month} data={formData} />
               ),
             }}
           />

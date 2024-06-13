@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
@@ -32,21 +33,19 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
-  const { climatiqData } = useEmissions();
+  const { climatiqData, setScope1Data } = useEmissions();
   const [localClimatiq, setlocalClimatiq] = useState(0);
 
-
   useEffect(() => {
-    console.log('Got the climatiqData in header --- ');
-    if (climatiqData?.result?.[0]) {
-      let sum = 0;
-      for (const item of climatiqData.result) {
-        sum += item.co2e;
-      }
+    if (climatiqData?.result?.length > 0) {
+      const sum = climatiqData.result.reduce((acc, item) => acc + item.co2e, 0);
       setlocalClimatiq(sum);
     }
   }, [climatiqData]);
 
+  useEffect(()=>{
+    setScope1Data(formData)
+  },[formData])
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -72,34 +71,32 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      schema: r_schema,
       location,
       year,
-      month
+      month,
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
-      const response = await post(url, {
-        ...data,
-      });
-        successCallback();
-        if (response.status === 200) {
-          setModalData({
-            location,
-            month,
-            message: "Emission has been created",
-            monthly_emissions: localClimatiq
-          });
-        loadFormData();
+      const response = await post(url, data);
+
+      await successCallback();
+      await loadFormData();
+      if (response.status === 200) {
+        setModalData({
+          location,
+          month,
+          message: "Emission has been created",
+          monthly_emissions: localClimatiq,
+        });
       } else {
         setModalData({
-          message: "Oops, something went wrong"
+          message: "Oops, something went wrong",
         });
       }
     } catch (error) {
       setModalData({
-        message: "Oops, something went wrong"
+        message: "Oops, something went wrong",
       });
     } finally {
       LoaderClose();
@@ -111,30 +108,23 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
     const base_url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=`;
     const url = `${base_url}${view_path}&&client_id=${client_id}&&user_id=${user_id}&&location=${location}&&year=${year}&&month=${month}`;
 
-    axiosInstance
-      .get(url)
-      .then((response) => {
-        setRemoteSchema(response.data.form[0].schema);
-        setRemoteUiSchema(response.data.form[0].ui_schema);
-        const form_parent = response.data.form_data;
-        const f_data = form_parent[0].data;
-        setFormData(f_data);
-        LoaderClose();
-      })
-      .catch((error) => {
-        LoaderClose();
-      });
+    try {
+      const response = await axiosInstance.get(url);
+      setRemoteSchema(response.data.form[0].schema);
+      setRemoteUiSchema(response.data.form[0].ui_schema);
+      const form_parent = response.data.form_data;
+      const f_data = form_parent[0].data;
+      setFormData(f_data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      LoaderClose();
+    }
   };
-
-  useEffect(() => {}, [r_schema, r_ui_schema]);
-
-  useEffect(() => {
-    console.log("formdata is changed - ", formData);
-  }, [formData]);
 
   useEffect(() => {
     loadFormData();
-  }, []);
+  }, [location, year, month]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -184,7 +174,18 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
               ),
               EmissonCombinedWidget: (props) => (
                 <CombinedWidget {...props} scope="scope1" year={year} countryCode={countryCode} />
-              )
+              ),
+              AssignTobutton: (props) => (
+                <AssignToWidget
+                  {...props}
+                  scope="scope1"
+                  location={location}
+                  year={year}
+                  month={month}
+                  data={formData}
+                  countryCode={countryCode}
+                />
+              ),
             }}
           />
         </div>
@@ -207,7 +208,7 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
           Submit
         </button>
       </div>
-      
+
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <Oval
