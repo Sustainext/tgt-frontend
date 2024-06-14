@@ -516,13 +516,13 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
         </div>
       </div>
 
-      <div style={{ width: "140px", paddingLeft: "10px" }}>
+      <div style={{ width: "140px", }} className="ml-3 pl-4">
         <input
           ref={quantityRef}
           type="number"
           value={quantity}
           onChange={(e) => handleQuantityChange(e.target.value)}
-          className="w-[10vw] py-1 mt-2 pl-2 rounded-sm border-b"
+          className="w-[10vw] py-1 mt-2 pl-2 rounded-sm border-b focus:outline-none"
         />
       </div>
 
