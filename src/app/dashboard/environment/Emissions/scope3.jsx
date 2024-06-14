@@ -3,7 +3,7 @@ import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import { MdAdd } from "react-icons/md";
 import CustomFileUploadWidget from '../../../shared/widgets/CustomFileUploadWidget';
-import AssignToWidget from '../../../shared/widgets/assignToWidget';
+import AssignToWidgetEmission from "@/app/shared/widgets/assignToWidgetEmission";
 import CombinedWidget from '../../../shared/widgets/emissioncombinedWidget';
 import { GlobalState } from '../../../../Context/page';
 import RemoveWidget from '../../../shared/widgets/RemoveWidget';
@@ -17,7 +17,7 @@ import CalculateSuccess from "./calculateSuccess";
 const widgets = {
   EmissonCombinedWidget: CombinedWidget,
   FileUploadWidget: CustomFileUploadWidget,
-  AssignTobutton: AssignToWidget,
+  AssignTobutton: AssignToWidgetEmission,
   RemoveWidget: RemoveWidget,
 };
 
@@ -176,7 +176,7 @@ const Scope3 = ({ location, year, month, successCallback, countryCode }) => {
                 <CombinedWidget {...props} scope="scope3" year={year} countryCode={countryCode} />
               ),
               AssignTobutton : (props) => (
-                <AssignToWidget {...props} scope="scope3" location={location} year={year} month={month} data={formData} />
+                <AssignToWidgetEmission {...props} scope="scope3" location={location} year={year} month={month} data={formData} />
               ),
             }}
           />

@@ -14,11 +14,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
 import CalculateSuccess from "./calculateSuccess";
 import { useEmissions } from "./EmissionsContext";
+import AssignToWidgetEmission from "@/app/shared/widgets/assignToWidgetEmission";
 
 const widgets = {
   EmissonCombinedWidget: CombinedWidget,
   FileUploadWidget: CustomFileUploadWidget,
-  AssignTobutton: AssignToWidget,
+  AssignTobutton: AssignToWidgetEmission,
   RemoveWidget: RemoveWidget,
 };
 
@@ -190,7 +191,7 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
                 <CombinedWidget {...props} scope="scope2" year={year} countryCode={countryCode} />
               ),
               AssignTobutton : (props) => (
-                <AssignToWidget {...props} scope="scope2" location={location} year={year} month={month} data={formData} />
+                <AssignToWidgetEmission {...props} scope="scope2" location={location} year={year} month={month} data={formData} />
               ),
             }}
           />

@@ -1045,7 +1045,7 @@ const MyTask = () => {
 
   return (
     <>
-      <div className="rounded-lg shadow border border-gray-200 p-4 h-[320px] ">
+      <div className="rounded-lg shadow border border-gray-200 p-4 h-[320px] overflow-x-auto">
         <div className="flex justify-between mb-4">
           <div className="text-neutral-800 text-[15px] font-bold leading-tight">
             My Task
