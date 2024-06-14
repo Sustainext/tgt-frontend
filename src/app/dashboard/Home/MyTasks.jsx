@@ -7,7 +7,8 @@ import {
   FiUser,
   FiChevronDown,
   FiCheckCircle,
-  FiLoader
+  FiLoader,
+  FiX
 } from "react-icons/fi";
 import axios from "axios";
 import { toast } from "react-toastify";

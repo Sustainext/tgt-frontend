@@ -1,3 +1,4 @@
+'use client'
 import React, { useEffect, useState, useRef } from 'react';
 import { CiCircleCheck } from "react-icons/ci";
 import { ToastContainer, toast } from "react-toastify";
@@ -129,7 +130,7 @@ const Ratings = () => {
         <div className="grid grid-cols-6 gap-6 m-6">
           {data && data.map((item) => (
             <div key={item.id}
-            //  onClick={() => toggleSelect(item.id)}
+             onClick={() => toggleSelect(item.id)}
              >
               <div className="relative shadow-sm h-40 border border-gray-200">
                 <div className="flex justify-center h-20 mb-2">

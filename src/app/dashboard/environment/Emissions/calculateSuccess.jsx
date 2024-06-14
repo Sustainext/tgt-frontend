@@ -1,0 +1,127 @@
+'use client'
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { useEmissions } from './EmissionsContext';
+import Tick from '@/app/shared/assets/tick.svg';
+import Error from '@/app/shared/assets/error.svg';
+
+const CalculateSuccess = ({ onClose, data }) => {
+  const isLoading = !data.message;
+  const [showErrorUi, setShowErrorUi] = useState(false);
+  const { climatiqData } = useEmissions();
+  const [localClimatiq, setlocalClimatiq] = useState(0);
+
+  useEffect(() => {
+    if (climatiqData?.result?.length > 0) {
+      const sum = climatiqData.result.reduce((acc, item) => acc + item.co2e, 0);
+      setlocalClimatiq(sum);
+    }
+  }, [climatiqData]);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setShowErrorUi(true);
+    }, 10000);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, []);
+  
+  return (
+    <div className='fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 bg-black bg-opacity-50'>
+      {/* {isLoading && <div className='text-white text-2xl'>Calculating...</div>} */}
+      {data &&
+        data.location &&
+        data.message &&
+        data.message === 'Emission has been created' && (
+          <div className='w-[502px] h-[387.50px] relative bg-white rounded-lg shadow'>
+            <div className='h-[31px] left-[158px] top-[27px] absolute justify-center items-center gap-2 inline-flex'>
+              <div className="gradient-text-green text-opacity-20 text-[22px] font-bold font-['Manrope'] leading-relaxed w-full">
+                Calculated Result
+              </div>
+            </div>
+            <div className='success'>
+              <Image src={Tick} alt='Success' className='h-14 absolute top-20 left-[45%]' width={56} height={56} />
+              <div className='w-[415px] h-[158px] pl-4 pr-[37.10px] py-4 left-[46px] top-[174px] absolute bg-gray-100 rounded-lg shadow flex-col justify-center items-center gap-3 inline-flex'>
+                <div className='w-[359px]'>
+                  <span className="text-sky-700 text-[15px] font-normal font-['Manrope'] leading-normal">
+                    Location={' '}
+                  </span>
+                  <span className="text-sky-500 text-[15px] font-bold font-['Manrope'] leading-normal">
+                    {data.location}
+                  </span>
+                </div>
+                <div className='w-[359px]'>
+                  <span className="text-sky-700 text-[15px] font-normal font-['Manrope'] leading-normal">
+                    Month ={' '}
+                  </span>
+                  <span className="text-sky-500 text-[15px] font-bold font-['Manrope'] leading-normal">
+                    {data.month}
+                  </span>
+                </div>
+                <div className='w-[359px]'>
+                  <span className="text-sky-700 text-[15px] font-normal font-['Manrope'] leading-normal">
+                    GHG Emissions for the month =
+                  </span>
+                  <span className="text-sky-500 text-[15px] font-normal font-['Manrope'] leading-normal">
+                    {' '}
+                  </span>
+                  <span className="text-green-400 text-[15px] font-bold font-['Manrope'] leading-normal">
+                    {localClimatiq} tCO<sub>2</sub>e
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className='mt-4 flex justify-end'>
+              <button className='px-4 py-2' onClick={onClose}>
+                x
+              </button>
+            </div>
+          </div>
+        )}
+      {data &&
+        showErrorUi &&
+        data.message &&
+        data.message !== 'Emission has been created' && (
+          <div className='w-[502px] h-[280px] pl-[65px] pr-[43px] py-[30px] bg-white rounded-lg shadow justify-end items-center inline-flex'>
+            <div className='w-[394px] h-[220px] relative'>
+              <div className='w-[394px] h-[146px] left-0 top-0 absolute'>
+                <Image
+                  src={Error}
+                  alt='Error'
+                  className='w-20 h-20 left-[147px] top-0 absolute'
+                  width={80}
+                  height={80}
+                />
+                <div className='w-[394px] h-[50px] left-0 top-[80px] absolute'>
+                  <div className="left-[30px] top-0 absolute text-neutral-500 text-[22px] font-bold font-['Manrope'] leading-relaxed">
+                    Oops, something went wrong
+                  </div>
+                  <div className="left-0 top-[34px] absolute text-neutral-400 text-[13px] font-normal font-['Manrope'] leading-none">
+                    We are unable to calculate results at the moment. Please try
+                    again{' '}
+                  </div>
+                </div>
+              </div>
+              <div className='w-[114px] h-[42px] px-[11px] py-2 left-[129px] top-[178px] absolute rounded flex-col justify-center items-center inline-flex'>
+                <div className='justify-center items-center gap-2 inline-flex'>
+                  <div className='h-[22px] flex-col justify-center items-center inline-flex'>
+                    <div className='h-6 relative flex-col justify-start items-start flex' />
+                  </div>
+                  <button
+                    onClick={onClose}
+                    className="text-sky-500 text-[15px] font-medium font-['Roboto'] uppercase leading-relaxed tracking-wide cursor-pointer"
+                  >
+                    Go back
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+    </div>
+  );
+};
+
+export default CalculateSuccess;

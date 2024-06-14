@@ -6,15 +6,23 @@ import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import SubstancesconcernQ1 from "./substances-concernQ1"
 import SubstancesconcernQ2 from "./substances-concernQ2"
-const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
+  const handleClick = () => {
+    if (!location) {
+      setLocationMessage("Please select a location and year")
+
+      return;
+    }
+    setIsOpen(!isOpen);
+  };
 
   return (
     <div className={`shadow-md py-1 mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200 ${open ? "w-[100%]" : "w-[100%]"}`}>
       <button
         className="py-3 w-[100%] text-left flex"
-        onClick={() => setIsOpen(!isOpen)}// Unique ID for the tooltip, spaces replaced by dashes
+        onClick={handleClick}// Unique ID for the tooltip, spaces replaced by dashes
       >
         <div className="flex items-center">
           <h5 className="text-[14px] text-[#344054] px-3">{title}</h5>
@@ -52,7 +60,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
   );
 };
 
-const Substancesconcernbody = () => {
+const Substancesconcernbody = ({location, year, month,setLocationMessage}) => {
 
 
   return (
@@ -63,9 +71,11 @@ const Substancesconcernbody = () => {
           tooltiptext={`This section documents data corresponding to substances of concern which the discharges are treated for`}
           sdg={['GRI 303-4d']}
           display="block"
+          location={location}
+          setLocationMessage={setLocationMessage}
         >
 
-          <SubstancesconcernQ1/>
+          <SubstancesconcernQ1 location={location} year={year} month={month}/>
         </AccordionItem>
 
         <AccordionItem
@@ -74,9 +84,11 @@ const Substancesconcernbody = () => {
           water storage has been identified as having a significant water-related impact.`}
           sdg={['GRI 303-3d','GRI 303-4e']}
           display="block"
+          location={location}
+          setLocationMessage={setLocationMessage}
         >
 
-          <SubstancesconcernQ2/>
+          <SubstancesconcernQ2 location={location} year={year} month={month}/>
         </AccordionItem>
         {/* Add more accordion items here */}
       </div>

@@ -1,13 +1,13 @@
 import Screen1 from "./screen1";
 import Screen2 from "./screen2";
 
-const Ohsservicesmain = () => {
+const Ohsservicesmain = ({ location, year, month}) => {
 
     return (
         <>
 
-          <Screen1/>
-          <Screen2/>
+          <Screen1 location={location} year={year} month={month}/>
+          <Screen2 location={location} year={year} month={month}/>
 
 
 

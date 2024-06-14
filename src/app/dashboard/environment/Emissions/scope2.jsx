@@ -1,138 +1,170 @@
-'use client'
-import React, { useState, useEffect } from 'react';
-import Form from '@rjsf/core';
-import validator from '@rjsf/validator-ajv8';
-import { MdAdd, MdOutlineDeleteOutline } from "react-icons/md";
+"use client";
+import React, { useState, useEffect } from "react";
+import Form from "@rjsf/core";
+import validator from "@rjsf/validator-ajv8";
+import { MdAdd } from "react-icons/md";
 import CustomFileUploadWidget from '../../../shared/widgets/CustomFileUploadWidget';
 import AssignToWidget from '../../../shared/widgets/assignToWidget';
 import CombinedWidget from '../../../shared/widgets/emissioncombinedWidget';
 import { GlobalState } from '../../../../Context/page';
 import RemoveWidget from '../../../shared/widgets/RemoveWidget';
-import axios from 'axios';
 import axiosInstance, { post } from '@/app/utils/axiosMiddleware';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Oval } from 'react-loader-spinner';
+import CalculateSuccess from "./calculateSuccess";
+import { useEmissions } from "./EmissionsContext";
 
 const widgets = {
-  EmissonCombinedWidget: (props) => <CombinedWidget {...props} scope="scope2" />,
+  EmissonCombinedWidget: CombinedWidget,
   FileUploadWidget: CustomFileUploadWidget,
   AssignTobutton: AssignToWidget,
   RemoveWidget: RemoveWidget,
 };
 
-const view_path = 'gri-environment-emissions-301-a-scope-2'
-const client_id = 1
-const user_id = 1
-// const notify = (text) => toast(text);
+const view_path = "gri-environment-emissions-301-a-scope-2";
+const client_id = 1;
+const user_id = 1;
 
-const Scope2 = ({ location, year, month }) => {
-
+const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
-  const [r_schema, setRemoteSchema] = useState({})
-  const [r_ui_schema, setRemoteUiSchema] = useState({})
+  const [r_schema, setRemoteSchema] = useState({});
+  const [r_ui_schema, setRemoteUiSchema] = useState({});
+  const [loopen, setLoOpen] = useState(false);
+  const [modalData, setModalData] = useState(null);
+  const { climatiqData, setScope2Data } = useEmissions();
+  const [localClimatiq, setlocalClimatiq] = useState(0);
+
+  useEffect(()=>{
+    setScope2Data(formData)
+  },[formData])
+
+  useEffect(() => {
+    console.log('Got the climatiqData in header --- ');
+    if (climatiqData?.result?.[0]) {
+      let sum = 0;
+      for (const item of climatiqData.result) {
+        sum += item.co2e;
+      }
+      setlocalClimatiq(sum);
+    }
+  }, [climatiqData]);
+
+  const LoaderOpen = () => {
+    setLoOpen(true);
+  };
+
+  const LoaderClose = () => {
+    setLoOpen(false);
+  };
 
   const handleChange = (e) => {
     setFormData(e.formData);
-
   };
 
   const handleAddNew = () => {
     const newData = [...formData, {}];
     setFormData(newData);
   };
-  const updateFormData = async () => {
 
+  const updateFormData = async () => {
+    LoaderOpen();
     const data = {
       client_id: client_id,
-      user_id : user_id,
+      user_id: user_id,
       path: view_path,
-      form_data : formData,
+      form_data: formData,
       location,
       year,
       month
-    }
+    };
 
-    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
+    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
-      const response = await post(url,
-        {
-          ...data
-        }
-      );
+      const response = await post(url, {
+        ...data,
+      });
 
-      console.log('Response:', response.data);
-      // toast(response.message)
-      // Handle the response data here
+      successCallback();
+        if (response.status === 200) {
+          setModalData({
+            location,
+            month,
+            message: "Emission has been created",
+            monthly_emissions: localClimatiq
+          });
+        loadFormData();
+      } else {
+        setModalData({
+          message: "Oops, something went wrong"
+        });
+      }
     } catch (error) {
-      console.error('Error:', error);
-      // toast(error)
-      // Handle errors here
+      setModalData({
+        message: "Oops, something went wrong"
+      });
+    } finally {
+      LoaderClose();
     }
   };
 
-  const loadFormData = async () =>{
+  const loadFormData = async () => {
+    LoaderOpen();
     const base_url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=`;
-    const url = `${base_url}${view_path}&&client_id=${client_id}&&user_id=${user_id}&&location=${location}&&year=${year}&&month=${month}`
-    console.log(url, 'is the url to be fired')
+    const url = `${base_url}${view_path}&&client_id=${client_id}&&user_id=${user_id}&&location=${location}&&year=${year}&&month=${month}`;
 
-// Make the GET request
-    axiosInstance.get(url)
-      .then(response => {
-        // Handle successful response
-        console.log(response.data, ' is the response data')
-        setRemoteSchema(response.data.form[0].schema)
-        setRemoteUiSchema(response.data.form[0].ui_schema)
-        const form_parent = response.data.form_data
-        const f_data = form_parent[0].data
-        setFormData(f_data)
-        // setFormData(response.data.form[0].form_data)
+    axiosInstance
+      .get(url)
+      .then((response) => {
+        setRemoteSchema(response.data.form[0].schema);
+        setRemoteUiSchema(response.data.form[0].ui_schema);
+        const form_parent = response.data.form_data;
+        const f_data = form_parent[0].data;
+        setFormData(f_data);
+        LoaderClose();
       })
-      .catch(error => {
-        // Handle error
-        console.error('Error:', error);
+      .catch((error) => {
+        console.log(error)
+        LoaderClose();
       });
+  };
 
-  }
-  // reload the forms
-  useEffect(()=>{
-    // console.log(r_schema, ' - is the remote schema from django', r_ui_schema, ' - is the remote ui schema from django')
-  },[r_schema, r_ui_schema])
+  useEffect(() => {}, [r_schema, r_ui_schema]);
 
-  // console log the formdata changes
+  useEffect(() => {
+    console.log("formdata is changed - ", formData);
+  }, [formData]);
 
-  useEffect(()=>{
-    console.log('formdata is changed - ', formData)
-
-
-  },[formData])
-
-  // fetch backend and replace initialized forms
-  useEffect(()=>{
-    console.log('Form loaded , ready for trigger')
-    loadFormData()
-  },[])
+  useEffect(() => {
+    loadFormData();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form data:', formData);
-    updateFormData()
-  }
+    updateFormData();
+  };
+
   const updateFormDatanew = (updatedData) => {
     setFormData(updatedData);
-
   };
+
   const handleRemove = (index) => {
     const updatedData = [...formData];
     updatedData.splice(index, 1);
     setFormData(updatedData);
   };
 
+  const handleCloseModal = () => {
+    setModalData(null);
+  };
+
   return (
     <>
-
-<div className={`overflow-auto custom-scrollbar flex`}>
+      <div className={`overflow-y-visible custom-scrollbar flex`} style={{ position: 'relative' }}>
         <div>
           <Form
-          className='flex'
+            className="flex"
             schema={r_schema}
             uiSchema={r_ui_schema}
             formData={formData}
@@ -143,7 +175,7 @@ const Scope2 = ({ location, year, month }) => {
               RemoveWidget: (props) => (
                 <RemoveWidget
                   {...props}
-                  index={props.id.split('_')[1]}
+                  index={props.id.split("_")[1]}
                   onRemove={handleRemove}
                 />
               ),
@@ -153,24 +185,55 @@ const Scope2 = ({ location, year, month }) => {
                   scopes="scope2"
                   setFormData={updateFormDatanew}
                 />
-              )
-
+              ),
+              EmissonCombinedWidget: (props) => (
+                <CombinedWidget {...props} scope="scope2" year={year} countryCode={countryCode} />
+              ),
+              AssignTobutton : (props) => (
+                <AssignToWidget {...props} scope="scope2" location={location} year={year} month={month} data={formData} />
+              ),
             }}
-
           />
         </div>
-
       </div>
 
-      <div className="flex justify-start mt-4 right-1">
-        <button type="button" className="text-[#007EEF] text-[12px] flex cursor-pointer mt-5 mb-5" onClick={handleAddNew}>
-          <MdAdd className='text-lg' /> Add Row
+      <div className="flex justify-between right-1 mt-5">
+        <button
+          type="button"
+          className="text-[#007EEF] text-[12px] flex cursor-pointer my-auto"
+          onClick={handleAddNew}
+        >
+          <MdAdd className="text-lg" /> Add Row
+        </button>
+
+        <button
+          type="button"
+          className="h-8 text-center py-1 text-sm w-[100px] bg-[rgb(2,132,199)] text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline"
+          onClick={handleSubmit}
+        >
+          Submit
         </button>
       </div>
-      <div className='mb-4'>
-      <button type="button"  className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
-      </div>
+      
+      {loopen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
 
+      {modalData && (
+        <CalculateSuccess
+          data={modalData}
+          onClose={handleCloseModal}
+        />
+      )}
     </>
   );
 };

@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { MdOutlineFileUpload, MdFilePresent, MdClose, MdDelete } from "react-icons/md";
+import { BlobServiceClient } from '@azure/storage-blob';
 
 const CustomFileUploadWidget = ({ id, onChange, value = {}, scopes,setFormData }) => {
   const [fileName, setFileName] = useState(value?.name || null);
@@ -10,8 +11,47 @@ const CustomFileUploadWidget = ({ id, onChange, value = {}, scopes,setFormData }
   const [fileSize, setFileSize] = useState(value?.size || '');
   const [uploadDateTime, setUploadDateTime] = useState(value?.uploadDateTime || '');
 
+
+const uploadFileToAzure = async (file, newFileName) => {
+  // Read file content as ArrayBuffer
+  const arrayBuffer = await file.arrayBuffer();
+  const blob = new Blob([arrayBuffer]);
+
+  // Azure Storage configuration
+  const accountName = process.env.NEXT_PUBLIC_AZURE_STORAGE_ACCOUNT;
+  const containerName = process.env.NEXT_PUBLIC_AZURE_STORAGE_CONTAINER;
+  const sasToken = process.env.NEXT_PUBLIC_AZURE_SAS_TOKEN;
+
+  const blobServiceClient = new BlobServiceClient(
+    `https://${accountName}.blob.core.windows.net?${sasToken}`
+  );
+
+  const containerClient = blobServiceClient.getContainerClient(containerName);
+  const blobName = newFileName || file.name; // Use newFileName or fallback to file name
+  const blobClient = containerClient.getBlockBlobClient(blobName);
+
+  try {
+    // Upload the blob to Azure Blob Storage
+    await blobClient.uploadData(blob);
+    const url = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}`;
+
+    return url;
+  } catch (error) {
+    console.error('Error uploading file:', error.message);
+    alert('Error uploading file. Please check the console for more details.');
+    return null;
+  }
+};
+
+
+
   useEffect(() => {
+
+    console.log(value, ' is the new value')
+
     if (value?.url && value?.name) {
+    
+
       setFileName(value.name);
       setPreviewData(value.url);
       setFileType(value.type || '');
@@ -20,31 +60,45 @@ const CustomFileUploadWidget = ({ id, onChange, value = {}, scopes,setFormData }
     }
   }, [value]);
 
-  const handleChange = (event) => {
+  const handleChange = async (event) => {
+    console.log('handle change called');
     const selectedFile = event.target.files[0];
-    const newFileName = selectedFile ? selectedFile.name : null;
 
+    const newFileName = selectedFile ? selectedFile.name : null;
+    console.log(selectedFile, ' is the selectedFile');
     setFileName(newFileName);
+    
     if (selectedFile) {
       const reader = new FileReader();
       reader.readAsDataURL(selectedFile);
+  
       reader.onloadend = () => {
         const base64String = reader.result;
-
-        onChange({
-          name: newFileName,
-          url: base64String,
-          type: selectedFile.type,
-          size: selectedFile.size,
-          uploadDateTime: new Date().toLocaleString(),
-        });
-        setPreviewData(base64String);
-        setFileType(selectedFile.type);
-        setFileSize(selectedFile.size);
-        setUploadDateTime(new Date().toLocaleString());
+        console.log(reader, ' is the reader object');
+        
+        const uploadAndSetState = async () => {
+          const url = await uploadFileToAzure(selectedFile, newFileName);
+          alert(url, ' is upload');
+          
+          onChange({
+            name: newFileName,
+            url: url,
+            type: selectedFile.type,
+            size: selectedFile.size,
+            uploadDateTime: new Date().toLocaleString(),
+          });
+          
+          setPreviewData(base64String);
+          setFileType(selectedFile.type);
+          setFileSize(selectedFile.size);
+          setUploadDateTime(new Date().toLocaleString());
+        };
+  
+        uploadAndSetState();
       };
     }
   };
+  
 
   const handlePreview = () => {
     setShowModal(true);
@@ -118,15 +172,15 @@ const CustomFileUploadWidget = ({ id, onChange, value = {}, scopes,setFormData }
               </div>
             </div>
             <div className='flex justify-between'>
-              <div className="relative w-[540px] h-[450px]">
-                {fileType.startsWith('image') ? (
-                  <img src={previewData} alt="Preview" className="max-w-md max-h-md" />
-                ) : fileType === 'application/pdf' ? (
-                  <iframe src={previewData} title="PDF Preview" className="w-full h-full" />
-                ) : (
-                  <p>File preview not available.</p>
-                )}
-              </div>
+            <div className="relative w-[540px] h-[450px]">
+              {fileType.startsWith('image') ? (
+                <img src={previewData} alt="Preview" className="max-w-full max-h-full object-contain" />
+              ) : fileType === 'application/pdf' ? (
+                <iframe src={previewData} title="PDF Preview" className="w-full h-full" />
+              ) : (
+                <p>File preview not available.Please download and verify</p>
+              )}
+            </div>
               <div className='w-[211px]'>
                 <div className='mb-4 mt-2'>
                   <h2 className='text-neutral-500 text-[15px] font-semibold leading-relaxed tracking-wide'>File information</h2>

@@ -6,15 +6,23 @@ import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import Wastegeneratedeimpact from "./waste-generated-impact"
 import Wastecontextualinformation from "./waste-contextual-information"
-const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
+  const handleClick = () => {
+    if (!location) {
+      setLocationMessage("Please select a location and year")
+
+      return;
+    }
+    setIsOpen(!isOpen);
+  };
 
   return (
     <div className={`shadow-md py-1 mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200 ${open ? "w-[100%]" : "w-[100%]"}`}>
       <button
         className="py-3 w-[100%] text-left flex"
-        onClick={() => setIsOpen(!isOpen)}// Unique ID for the tooltip, spaces replaced by dashes
+        onClick={handleClick}// Unique ID for the tooltip, spaces replaced by dashes
       >
        <div className="flex justify-between">
         <div className="flex w-[65vw]">
@@ -66,7 +74,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
   );
 };
 
-const Wastegeneratedbody = () => {
+const Wastegeneratedbody = ({location, year, month,setLocationMessage}) => {
 
 
   return (
@@ -78,9 +86,11 @@ const Wastegeneratedbody = () => {
           and any contextual information necessary to understand how the data has been complied. `}
           sdg={['GRI 306-3a','GRI 306-3b','GRI 306-3c']}
           display="block"
+          location={location}
+          setLocationMessage={setLocationMessage}
         >
 
-          <Wastegeneratedeimpact/>
+          <Wastegeneratedeimpact location={location} year={year} month={month}/>
         </AccordionItem>
         <AccordionItem
           title="Contextual Information to understand data compilation"
@@ -88,9 +98,11 @@ const Wastegeneratedbody = () => {
           to understand the data and how the data has beencompiled.`}
           sdg={['GRI 306-3b']}
           display="block"
+          location={location}
+          setLocationMessage={setLocationMessage}
         >
 
-          <Wastecontextualinformation/>
+          <Wastecontextualinformation location={location} year={year} month={month}/>
         </AccordionItem>
 
         {/* Add more accordion items here */}

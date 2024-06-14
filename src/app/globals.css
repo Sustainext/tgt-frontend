@@ -148,6 +148,14 @@ display: flex;
   );
   /* Other CSS properties can be added as needed */
 }
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+  display: none; /* Hide the up-down icons */
+}
+
 .important-width {
   width: 420px !important;
 }
