@@ -14,6 +14,7 @@ const CustomFileUploadWidget = ({ id, onChange, value = {}, scopes,setFormData }
 
 const uploadFileToAzure = async (file, newFileName) => {
   // Read file content as ArrayBuffer
+  console.log(file, ' is the file object')
   const arrayBuffer = await file.arrayBuffer();
   const blob = new Blob([arrayBuffer]);
 
@@ -32,7 +33,15 @@ const uploadFileToAzure = async (file, newFileName) => {
 
   try {
     // Upload the blob to Azure Blob Storage
-    await blobClient.uploadData(blob);
+
+    const uploadOptions = {
+      blobHTTPHeaders: {
+        blobContentType: file.type // Set the content type
+      }
+    };
+
+
+    await blobClient.uploadData(blob,uploadOptions);
     const url = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}`;
 
     return url;
@@ -42,6 +51,8 @@ const uploadFileToAzure = async (file, newFileName) => {
     return null;
   }
 };
+
+
 
 
 
