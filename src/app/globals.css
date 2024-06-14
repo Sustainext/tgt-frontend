@@ -174,3 +174,32 @@ input[type='number']::-webkit-outer-spin-button {
   position: absolute !important;
   line-height: initial;
 }
+.upload-button {
+  background-color: #3B82F6; /* Green */
+  border: none;
+  color: white;
+  padding: 8px 20px;
+  text-align: center;
+  text-decoration: none;
+  /* display: inline-block; */
+  font-size: 12px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.upload-button:hover {
+  background-color: #3B82F6;
+}
+.jodit-toolbar-button.jodit-toolbar-button_image,
+.jodit-toolbar-button.jodit-toolbar-button_file,
+.jodit-toolbar-button.jodit-toolbar-button_video {
+  display: none !important;
+}
+.jodit-ui-group__speechRecognize {
+  display: none !important;
+}
+.jodit-status-bar-link{
+  display: none !important;
+}

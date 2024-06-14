@@ -96,7 +96,7 @@ const Sidenav = () => {
       ],
     },
     // { title: "Analyse", icon: <MdOutlineBarChart />, link: "/dashboard/Analyse" },
-    { title: "Report", icon: <MdEditNote />, link: "#" },
+    { title: "Report", icon: <MdEditNote />, link: "/dashboard/Report" },
     { title: "Optimise", icon: <MdOutlineSettingsSuggest />, link: "#" },
     { title: "Track", icon: <MdOutlineSearch />, spacing: true, link: "/dashboard/Track" },
     {

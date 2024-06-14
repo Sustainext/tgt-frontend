@@ -277,7 +277,7 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
     const unitConfig = unitTypes.find((u) => u.unit_type === unit_type);
     setUnits(unitConfig ? Object.values(unitConfig.units).flat() : []);
   }, [unit_type]);
-  
+
 
   const handleCategoryChange = (value) => {
     console.log("Handle category change triggered");
@@ -332,13 +332,13 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
     setActivity(value);
     setQuantity("");
     setUnit("");
-  
+
     const foundActivity = activities.find(
       (act) => `${act.name} - (${act.source}) - ${act.unit_type}` === value
     );
-  
+
     console.log('Found activity:', foundActivity);
-  
+
     if (foundActivity) {
       const activityId = foundActivity.activity_id;
       setActivityId(activityId);
@@ -350,7 +350,7 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
       setUnitType("");
       setUnits([]);
     }
-  
+
     onChange({
       Category: category,
       Subcategory: subcategory,
@@ -361,7 +361,7 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
       unit_type: foundActivity ? foundActivity.unit_type : "",
     });
   };
-  
+
 
   const handleQuantityChange = (value) => {
     setQuantity(value);
@@ -421,7 +421,7 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
         <select
           value={category}
           onChange={(e) => handleCategoryChange(e.target.value)}
-          className="block w-full py-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
+          className="block w-[12vw] py-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
         >
           <option value="">Select Category</option>
           {baseCategories.map((categoryName, index) => (
@@ -436,7 +436,7 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
         <select
           value={subcategory}
           onChange={(e) => handleSubcategoryChange(e.target.value)}
-          className="block w-full py-2 mx-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
+          className="block w-[12vw] py-2 mx-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
         >
           <option value="">Select Subcategory</option>
           {subcategories.map((sub, index) => (
@@ -447,7 +447,7 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
         </select>
       </div>
 
-      <div className="relative" style={{ width: "310px" }}>
+      <div className="relative" style={{ width: "220px" }}>
         <input
           ref={inputRef}
           type="text"
@@ -463,7 +463,7 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
           value={activitySearch}
           onChange={(e) => setActivitySearch(e.target.value)}
           onFocus={toggleDropdown}
-          className="w-full px-4 py-2 mx-2 mb-2 rounded focus:outline-none"
+          className="w-[14vw] px-4 py-2 mx-2 mb-2 rounded focus:outline-none"
         />
 
         {isDropdownActive && (
@@ -476,7 +476,7 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
               toggleDropdown();
               setActivitySearch("");
             }}
-            className="absolute left-0 max-w-[850px] cursor-pointer bg-white py-2 border-2 rounded-lg z-50 pb-2"
+            className="absolute left-0 top-8 cursor-pointer max-w-[750px] bg-white py-2 border-2 rounded-lg z-50 pb-2"
             style={{ position: "absolute", zIndex: 1000 }}
           >
             <option value="" className="px-1">
@@ -516,17 +516,17 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
         </div>
       </div>
 
-      <div style={{ width: "20%", paddingLeft: "10px" }}>
+      <div style={{ width: "140px", }} className="ml-3 pl-4">
         <input
           ref={quantityRef}
           type="number"
           value={quantity}
           onChange={(e) => handleQuantityChange(e.target.value)}
-          className="w-full py-1 mt-2 pl-2 rounded-sm border-b"
+          className="w-[10vw] py-1 mt-2 pl-2 rounded-sm border-b focus:outline-none"
         />
       </div>
 
-      <div style={{ width: "10%" }}>
+      <div style={{ width: "100px"}} className="ml-2">
         <select
           value={unit}
           onChange={(e) => handleUnitChange(e.target.value)}
