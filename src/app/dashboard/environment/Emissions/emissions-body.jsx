@@ -85,49 +85,10 @@ const Emissionsnbody = ({ location, year, month, countryCode, locationError, set
         console.log(response.data, " is the response data");
         console.log(' This is the climatiq computed result')
         setClimatiqData(response.data)
-        if (response.status === 200) {
-          toast.success("Computed Emissions Total Score!", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-        } else {
-          toast.error("Combined computation failed for Emissions!", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-        }
-
         // setFormData(response.data.form[0].form_data)
       })
       .catch((error) => {
-
         console.log(error, ' -got error')
-        const errorMessage =
-          error.response && error.response.data && error.response.data.message
-            ? error.response.data.message
-            : "Oops, something went wrong";
-        toast.error(errorMessage, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
       });
   }
 

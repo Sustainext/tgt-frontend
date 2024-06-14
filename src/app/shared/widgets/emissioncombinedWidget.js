@@ -476,7 +476,7 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
               toggleDropdown();
               setActivitySearch("");
             }}
-            className="absolute left-0 cursor-pointer max-w-[750px] bg-white py-2 border-2 rounded-lg z-50 pb-2"
+            className="absolute left-0 top-8 cursor-pointer max-w-[750px] bg-white py-2 border-2 rounded-lg z-50 pb-2"
             style={{ position: "absolute", zIndex: 1000 }}
           >
             <option value="" className="px-1">
