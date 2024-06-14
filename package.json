@@ -10,6 +10,7 @@
     "build:css": "tailwindcss build src/app/globals.css -o output.css"
   },
   "dependencies": {
+    "@nivo/pie": "^0.87.0",
     "@rjsf/core": "^5.18.2",
     "@rjsf/utils": "^5.18.2",
     "@rjsf/validator-ajv8": "^5.18.2",
@@ -17,6 +18,7 @@
     "axios": "^1.7.1",
     "country-state-city": "^3.2.1",
     "framer-motion": "^11.2.6",
+    "jodit-react": "^4.1.2",
     "lodash": "^4.17.21",
     "next": "^14.2.3",
     "react": "^18.3.1",
