@@ -10,12 +10,13 @@ import Selfgenerated from "./Self-generated/self-generated"
 import Energysold from "./Energy-sold/energy-sold"
 import Standards from "./Standards/standards"
 import Source from "./Source/source";
-const AccordionItem = ({ title, children, tooltiptext, sdg, display,location  }) => {
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year  }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
   const handleClick = () => {
     if (!location) {
-      alert("Please select a location.");
+      setLocationMessage("Please select a location and year")
+
       return;
     }
     setIsOpen(!isOpen);
@@ -78,7 +79,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location  })
   );
 };
 
-const EnergyConsumedBody = ({location, year, month}) => {
+const EnergyConsumedBody = ({location, year, month,setLocationMessage}) => {
 
   return (
     <>
@@ -92,6 +93,7 @@ const EnergyConsumedBody = ({location, year, month}) => {
           sdg={['GRI 302-1a', 'GRI 302-1b']}
           display="block"
           location={location}
+          setLocationMessage={setLocationMessage}
         >
           <Purchased  location={location} year={year} month={month}/>
         </AccordionItem>
@@ -104,6 +106,7 @@ const EnergyConsumedBody = ({location, year, month}) => {
           sdg={['GRI 302-1c', 'GRI 302-1e']}
           display="block"
           location={location}
+          setLocationMessage={setLocationMessage}
         >
           <ConsumedFuel location={location} year={year} month={month}/>
         </AccordionItem>
@@ -115,6 +118,7 @@ const EnergyConsumedBody = ({location, year, month}) => {
            sdg={['GRI 302-1']}
            display="block"
            location={location}
+           setLocationMessage={setLocationMessage}
         >
           <Selfgenerated location={location} year={year} month={month}/>
         </AccordionItem>
@@ -126,6 +130,7 @@ const EnergyConsumedBody = ({location, year, month}) => {
           sdg={['GRI 302-1d']}
           display="block"
           location={location}
+          setLocationMessage={setLocationMessage}
         >
           <Energysold location={location} year={year} month={month}/>
         </AccordionItem>
@@ -135,6 +140,7 @@ const EnergyConsumedBody = ({location, year, month}) => {
           sdg={['GRI 302-1f']}
           display="none"
           location={location}
+          setLocationMessage={setLocationMessage}
         >
           <Standards location={location} year={year} month={month}/>
         </AccordionItem>
@@ -144,6 +150,7 @@ const EnergyConsumedBody = ({location, year, month}) => {
           sdg={['GRI 302-1g']}
           display="none"
           location={location}
+          setLocationMessage={setLocationMessage}
         >
           <Source  location={location} year={year} month={month}/>
         </AccordionItem>

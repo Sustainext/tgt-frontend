@@ -1,23 +1,31 @@
 "use client";
-import React, { useState, useEffect } from "react";
+
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { scope1Info, scope2Info, scope3Info } from "../data/scopeInfo";
 import { unitTypes } from "../data/units";
+import { categoriesToAppend, categoryMappings } from "../data/customActivities";
 import axios from "axios";
+import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 
-const CombinedWidget = ({ value = {}, onChange, scope }) => {
+const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
   const [category, setCategory] = useState(value.Category || "");
   const [subcategory, setSubcategory] = useState(value.Subcategory || "");
   const [activity, setActivity] = useState(value.Activity || "");
   const [quantity, setQuantity] = useState(value.Quantity || "");
   const [unit, setUnit] = useState(value.Unit || "");
-  const [activity_id, setactivityid] = useState(value.activity_id || "");
-  const [unit_type, setunittype] = useState(value.unit_type || "");
+  const [activity_id, setActivityId] = useState(value.activity_id || "");
+  const [unit_type, setUnitType] = useState(value.unit_type || "");
   const [subcategories, setSubcategories] = useState([]);
   const [activities, setActivities] = useState([]);
   const [units, setUnits] = useState([]);
-  const [base_categories, setBaseCategories] = useState([]);
-  const [selectedActivity, setSelectedActivity] = useState(null);
-     const [activid, setactiveid]  = useState("");
+  const [baseCategories, setBaseCategories] = useState([]);
+  const [activitySearch, setActivitySearch] = useState("");
+  const [isDropdownActive, setIsDropdownActive] = useState(false);
+  const isFetching = useRef(false);
+  const dropdownRef = useRef(null);
+  const inputRef = useRef(null);
+  const quantityRef = useRef(null);
+
   const scopeMappings = {
     scope1: scope1Info,
     scope2: scope2Info,
@@ -41,8 +49,12 @@ const CombinedWidget = ({ value = {}, onChange, scope }) => {
     fetchBaseCategories();
   }, []);
 
-  async function fetchActivities() {
-    console.log(process.env, " is the climatiq key");
+  let wildcard = false;
+
+  const fetchActivities = useCallback(async (page = 1, customFetchExecuted = false) => {
+    if (isFetching.current) return;
+    isFetching.current = true;
+
     const baseURL = "https://api.climatiq.io";
     const resultsPerPage = 500;
     const axiosConfig = {
@@ -52,29 +64,179 @@ const CombinedWidget = ({ value = {}, onChange, scope }) => {
         "Content-type": "application/json",
       },
     };
-    const region = "US";
-    let currentYear = "2023";
+
+    if (!category) {
+      console.warn("Category is required");
+      isFetching.current = false;
+      return;
+    }
+    if (!subcategory) {
+      console.warn("Subcategory is required");
+      isFetching.current = false;
+      return;
+    }
+    if (!year) {
+      console.warn("Year is required");
+      isFetching.current = false;
+      return;
+    }
+    if (!countryCode) {
+      console.warn("CountryCode is required");
+      isFetching.current = false;
+      return;
+    }
+
+    const region = countryCode || "*";
+    let currentYear = year;
+    if (year == "2024") currentYear = "2023";
+    let wildcardResultZero = false;
+
     let activitiesData = [];
-    // let totalResults = 0;
-    // let totalPages;
+    let totalResults = 0;
+    let totalPrivateResults = 0;
+    let totalPages = 1;
+    let totalPagesCustom = 0;
+    let wildcardActivitiesData = [];
+    let yearlyResponseData = [];
+    let newActivitiesData = [];
+    let customFetchData = [];
+    let multipleSourceData = [];
+    let finalActivitiesData = [];
 
     try {
-      const url = `${baseURL}/data/v1/search?results_per_page=500&year=${currentYear}&region=${region}*&category=${subcategory}&page=1&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;
-      console.log(url, "is the url");
-      const response = await axios.get(url, axiosConfig);
-      console.log(response.data, " climatiq data ...");
-      activitiesData = response.data.results;
-      setActivities(activitiesData);
-    } catch (error) {
-      // ! Throws Error if couldn't fetch data
-      console.error("Error fetching data from different regions: ", error);
-      throw error;
-    }
-  }
+      while (page <= totalPages) {
+        console.log(
+          `Fetching activities for category: ${category}, subcategory: ${subcategory}, year: ${year}, region: ${region}, page: ${page}`
+        );
 
-  useEffect(() => {
-    fetchActivities();
-  }, [subcategory]);
+        if (!wildcard) {
+          console.log("Performing initial API call...");
+          const url = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${currentYear}&region=${region}*&category=${subcategory}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;
+          console.log(`API URL: ${url}`);
+
+          const response = await axios.get(url, axiosConfig);
+          activitiesData = [...activitiesData, ...response.data.results];
+          totalResults = response.data.results.length;
+          totalPages = response.data.last_page;
+          totalPrivateResults = activitiesData.reduce((count, activity) => {
+            if (activity.access_type === "private") {
+              count += 1;
+            }
+            return count;
+          }, 0);
+
+          console.log(
+            `Initial call results: ${totalResults} results, ${totalPrivateResults} private results, ${totalPages} total pages`
+          );
+        }
+
+        const effectiveCount = totalResults - totalPrivateResults;
+        if (effectiveCount <= 5) {
+          wildcard = true;
+          console.log(
+            "Switching to wildcard search due to insufficient results"
+          );
+        }
+
+        if (wildcard) {
+          console.log("Performing wildcard API call...");
+          const wildcardResponse = await axios.get(
+            `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${currentYear}&region=*&category=${subcategory}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`,
+            axiosConfig
+          );
+          console.log(`Wildcard API URL: ${wildcardResponse.config.url}`);
+
+          wildcardActivitiesData = [
+            ...wildcardActivitiesData,
+            ...wildcardResponse.data.results,
+          ];
+          totalPages = wildcardResponse.data.last_page;
+
+          console.log(
+            `Wildcard call results: ${wildcardResponse.data.results.length} results, ${totalPages} total pages`
+          );
+
+          if (totalPages === 0) wildcardResultZero = true;
+
+          if (wildcardResultZero) {
+            console.log(
+              "No results with wildcard search, trying previous years"
+            );
+            for (let i = currentYear - 1; i >= 2019; i--) {
+              const yearlyResponse = await axios.get(
+                `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${i}&region=${region}*&category=${subcategory}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`,
+                axiosConfig
+              );
+              const yearlyActivitiesData = yearlyResponse.data.results;
+              totalPages = yearlyResponse.data.last_page;
+              yearlyResponseData = [
+                ...yearlyResponseData,
+                ...yearlyActivitiesData,
+              ];
+              console.log(
+                `Yearly results for ${i}: ${yearlyActivitiesData.length}`
+              );
+              if (yearlyActivitiesData.length !== 0) break;
+            }
+          }
+
+          newActivitiesData = wildcardActivitiesData.filter(
+            (activity) => activity.access_type !== "private"
+          );
+
+          const CombinedActivitiesData = [
+            ...activitiesData,
+            ...newActivitiesData,
+            ...yearlyResponseData,
+          ];
+
+          console.log(
+            "custom",
+            categoriesToAppend.includes(subcategory),
+            categoryMappings[subcategory],
+            !customFetchExecuted
+          );
+
+          if (
+            categoriesToAppend.includes(subcategory) &&
+            categoryMappings[subcategory] &&
+            !customFetchExecuted
+          ) {
+            console.log("Executing custom fetch logic");
+            for (const entry of categoryMappings[subcategory]) {
+              const source = entry.source;
+              const year = entry.year;
+
+              const url = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&source=${source}&year=${year}&region=*&category=${subcategory}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;
+              console.log(`Custom fetch URL: ${url}`);
+
+              const response = await axios.get(url, axiosConfig);
+              customFetchData = customFetchData.concat(response.data.results);
+              finalActivitiesData = [
+                ...customFetchData,
+                ...activitiesData,
+                ...newActivitiesData,
+                ...yearlyResponseData,
+              ];
+              totalPagesCustom = response.data.last_page;
+            }
+            customFetchExecuted = true;
+          }
+
+          console.log(
+            "Final activities data length:",
+            [...CombinedActivitiesData, ...customFetchData].length
+          );
+          setActivities([...CombinedActivitiesData, ...customFetchData]);
+          page++;
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching data from different regions: ", error);
+    } finally {
+      isFetching.current = false;
+    }
+  }, []);
 
   const fetchSubcategories = async () => {
     const selectedCategory = scopeMappings[scope].find((info) =>
@@ -84,7 +246,7 @@ const CombinedWidget = ({ value = {}, onChange, scope }) => {
       ? selectedCategory.Category.find((c) => c.name === category).SubCategory
       : [];
     setSubcategories(newSubcategories);
-    // Reset subcategory if it's not valid in the new category
+    fetchActivities();
     if (!newSubcategories.find((sub) => sub === value.Subcategory)) {
       setSubcategory("");
     }
@@ -103,25 +265,19 @@ const CombinedWidget = ({ value = {}, onChange, scope }) => {
           `${act.name} - ( ${act.source} ) - ${act.unit_type}` ===
           value.Activity
       );
-      setSelectedActivity(initialActivity);
+      if (initialActivity) {
+        const activityId = initialActivity.activity_id;
+        setActivityId(activityId);
+        setUnitType(initialActivity.unit_type);
+      }
     }
   }, [activities, value.Activity]);
 
   useEffect(() => {
-    if (selectedActivity && selectedActivity.unit_type) {
-      const unitConfig = unitTypes.find(
-        (u) => u.unit_type === selectedActivity.unit_type
-      );
-      if (unitConfig) {
-        const availableUnits = Object.values(unitConfig.units).flat();
-        setUnits(availableUnits);
-      } else {
-        setUnits([]);
-      }
-    } else {
-      setUnits([]);
-    }
-  }, [selectedActivity]);
+    const unitConfig = unitTypes.find((u) => u.unit_type === unit_type);
+    setUnits(unitConfig ? Object.values(unitConfig.units).flat() : []);
+  }, [unit_type]);
+  
 
   const handleCategoryChange = (value) => {
     console.log("Handle category change triggered");
@@ -130,6 +286,8 @@ const CombinedWidget = ({ value = {}, onChange, scope }) => {
     setActivity("");
     setQuantity("");
     setUnit("");
+    setActivityId("");
+    setUnitType("");
 
     const selectedCategory = scope1Info.find((info) =>
       info.Category.some((c) => c.name === value)
@@ -146,7 +304,8 @@ const CombinedWidget = ({ value = {}, onChange, scope }) => {
       Activity: "",
       Quantity: "",
       Unit: "",
-      activity_id:"",
+      activity_id: "",
+      unit_type: "",
     });
   };
 
@@ -155,8 +314,8 @@ const CombinedWidget = ({ value = {}, onChange, scope }) => {
     setActivity("");
     setQuantity("");
     setUnit("");
-
-    // fetch activities
+    setActivityId("");
+    setUnitType("");
 
     onChange({
       Category: category,
@@ -164,7 +323,8 @@ const CombinedWidget = ({ value = {}, onChange, scope }) => {
       Activity: "",
       Quantity: "",
       Unit: "",
-      activity_id:"",
+      activity_id: "",
+      unit_type: "",
     });
   };
 
@@ -172,22 +332,36 @@ const CombinedWidget = ({ value = {}, onChange, scope }) => {
     setActivity(value);
     setQuantity("");
     setUnit("");
-
+  
     const foundActivity = activities.find(
-      (act) => `${act.name} - ( ${act.source} ) - ${act.unit_type}` === value
+      (act) => `${act.name} - (${act.source}) - ${act.unit_type}` === value
     );
-    setSelectedActivity(foundActivity);
-    setactiveid(foundActivity.activity_id);
+  
+    console.log('Found activity:', foundActivity);
+  
+    if (foundActivity) {
+      const activityId = foundActivity.activity_id;
+      setActivityId(activityId);
+      setUnitType(foundActivity.unit_type);
+      const unitConfig = unitTypes.find((u) => u.unit_type === foundActivity.unit_type);
+      setUnits(unitConfig ? Object.values(unitConfig.units).flat() : []);
+    } else {
+      setActivityId("");
+      setUnitType("");
+      setUnits([]);
+    }
+  
     onChange({
       Category: category,
       Subcategory: subcategory,
       Activity: value,
       Quantity: "",
       Unit: "",
-      activity_id: foundActivity.activity_id, // Update with found activity's ID
-      unit_type: foundActivity.unit_type,
+      activity_id: foundActivity ? foundActivity.activity_id : "",
+      unit_type: foundActivity ? foundActivity.unit_type : "",
     });
   };
+  
 
   const handleQuantityChange = (value) => {
     setQuantity(value);
@@ -197,8 +371,8 @@ const CombinedWidget = ({ value = {}, onChange, scope }) => {
       Activity: activity,
       Quantity: value,
       Unit: unit,
-      activity_id: activid, // Pass the stored activity_id
-      unit_type: selectedActivity ? selectedActivity.unit_type : "",
+      activity_id: activity_id,
+      unit_type: unit_type,
     });
   };
 
@@ -210,75 +384,162 @@ const CombinedWidget = ({ value = {}, onChange, scope }) => {
       Activity: activity,
       Quantity: quantity,
       Unit: value,
-      activity_id: activid, // Pass the stored activity_id
-      unit_type: selectedActivity ? selectedActivity.unit_type : "",
+      activity_id: activity_id,
+      unit_type: unit_type,
     });
   };
 
+  const toggleDropdown = () => {
+    setIsDropdownActive(!isDropdownActive);
+    if (isDropdownActive) {
+      setActivitySearch("");
+    }
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target) &&
+        inputRef.current &&
+        !inputRef.current.contains(event.target)
+      ) {
+        setIsDropdownActive(false);
+        setActivitySearch("");
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className="flex mb-5">
-      <div>
-      <select
-        value={category}
-        onChange={(e) => handleCategoryChange(e.target.value)}
-        className="block w-[20vw]  py-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
-      >
-        <option value="">Select Category</option>
-            {base_categories.map((categoryName, index) => (
-                <option key={index} value={categoryName}>{categoryName}</option>
-            ))}
-      </select>
-      </div>
-
-<div>
-<select
-        value={subcategory}
-        onChange={(e) => handleSubcategoryChange(e.target.value)}
-        className="block w-[20vw] py-2 mx-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
-      >
-        <option value="">Select Subcategory</option>
-        {subcategories.map((sub, index) => (
-          <option key={index} value={sub}>{sub}</option>
-        ))}
-      </select>
-</div>
-
-<div>
-<select
-        value={activity}
-        onChange={(e) => handleActivityChange(e.target.value)}
-        className="block w-[20vw]  py-2 mx-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
-      >
-        <option value="">Select Activity</option>
-        {activities.map((item, index) => (
-          <option key={index} value={`${item.name} - ( ${item.source} ) - ${item.unit_type}`}
-          >{item.name} - ( {item.source} ) - {item.unit_type} -{" "}
-          {item.region} - {item.year}</option>
-        ))}
-      </select>
-  </div>
-
-<div>
-<div className='flex mx-2'>
-        <input
-          type="number"
-          value={quantity}
-          onChange={(e) => handleQuantityChange(e.target.value)}
-          className="w-[15vw] py-0.5 mt-2 pl-2 rounded-sm border-none focus:outline-none focus:ring-0"
-        />
+      <div style={{ width: "200px" }}>
         <select
-          value={unit}
-          onChange={(e) => handleUnitChange(e.target.value)}
-          className="w-[80px]  text-center cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none mt-1.5 font-bold text-xs bg-sky-600 text-white -ml-20"
+          value={category}
+          onChange={(e) => handleCategoryChange(e.target.value)}
+          className="block w-full py-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
         >
-          <option value="">Unit</option>
-          {units.map((unit, index) => (
-            <option key={index} value={unit}>{unit}</option>
+          <option value="">Select Category</option>
+          {baseCategories.map((categoryName, index) => (
+            <option key={index} value={categoryName}>
+              {categoryName}
+            </option>
           ))}
         </select>
       </div>
-</div>
 
+      <div style={{ width: "200px" }}>
+        <select
+          value={subcategory}
+          onChange={(e) => handleSubcategoryChange(e.target.value)}
+          className="block w-full py-2 mx-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
+        >
+          <option value="">Select Subcategory</option>
+          {subcategories.map((sub, index) => (
+            <option key={index} value={sub}>
+              {sub}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="relative" style={{ width: "310px" }}>
+        <input
+          ref={inputRef}
+          type="text"
+          placeholder={
+            isFetching.current
+              ? "Fetching activities..."
+              : activities.length === 0
+              ? "No relevant activities found"
+              : activity
+              ? activity
+              : "Select Activity"
+          }
+          value={activitySearch}
+          onChange={(e) => setActivitySearch(e.target.value)}
+          onFocus={toggleDropdown}
+          className="w-full px-4 py-2 mx-2 mb-2 rounded focus:outline-none"
+        />
+
+        {isDropdownActive && (
+          <select
+            ref={dropdownRef}
+            size="9"
+            value={activity}
+            onChange={(e) => {
+              handleActivityChange(e.target.value);
+              toggleDropdown();
+              setActivitySearch("");
+            }}
+            className="absolute left-0 max-w-[850px] cursor-pointer bg-white py-2 border-2 rounded-lg z-50 pb-2"
+            style={{ position: "absolute", zIndex: 1000 }}
+          >
+            <option value="" className="px-1">
+              {isFetching.current
+                ? "Fetching activities..."
+                : activities.length === 0
+                ? "No relevant activities found"
+                : "Select Activity"}
+            </option>
+            {activities
+              .filter((item) =>
+                item.name.toLowerCase().includes(activitySearch.toLowerCase())
+              )
+              .map((item) => (
+                <option
+                  key={item.id}
+                  value={`${item.name} - (${item.source}) - ${item.unit_type}`}
+                  className="px-2"
+                >
+                  {item.name} - ({item.source}) - {item.unit_type} -{" "}
+                  {item.region} - {item.year}
+                  {item.source_lca_activity !== "unknown" &&
+                    ` - ${item.source_lca_activity}`}
+                </option>
+              ))}
+          </select>
+        )}
+        <div
+          className="absolute inset-y-0 -right-2 flex items-center cursor-pointer"
+          onClick={toggleDropdown}
+        >
+          {isDropdownActive ? (
+            <FaAngleUp className="text-neutral-500" style={{ fontSize: "20px" }} />
+          ) : (
+            <FaAngleDown className="text-neutral-500" style={{ fontSize: "20px" }} />
+          )}
+        </div>
+      </div>
+
+      <div style={{ width: "20%", paddingLeft: "10px" }}>
+        <input
+          ref={quantityRef}
+          type="number"
+          value={quantity}
+          onChange={(e) => handleQuantityChange(e.target.value)}
+          className="w-full py-1 mt-2 pl-2 rounded-sm border-b"
+        />
+      </div>
+
+      <div style={{ width: "10%" }}>
+        <select
+          value={unit}
+          onChange={(e) => handleUnitChange(e.target.value)}
+          className="w-full text-center cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none mt-1.5 font-bold text-sm bg-sky-600 text-white"
+        >
+          <option value="">Unit</option>
+          {units.map((unit, index) => (
+            <option key={index} value={unit}>
+              {unit}
+            </option>
+          ))}
+        </select>
+      </div>
     </div>
   );
 };

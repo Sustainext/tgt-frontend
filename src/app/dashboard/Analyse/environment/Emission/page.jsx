@@ -3,9 +3,8 @@ import React, { useEffect, useState } from "react";
 import ScopeTable from "./ScopeTable";
 import SourceTable from "./SourceTable";
 import LocationTable from "./LocationTable";
-import axiosInstance from "../../../utils/axiosMiddleware";
-import { yearInfo } from "../../../shared/data/yearInfo";
-
+import axiosInstance from "../../../../utils/axiosMiddleware";
+import {yearInfo}  from "../../../../shared/data/yearInfo"
 const AnalyseEmission = () => {
   const [analyseData, setAnalyseData] = useState([]);
   const [organisations, setOrganisations] = useState([]);
@@ -20,45 +19,51 @@ const AnalyseEmission = () => {
   const fetchData = async () => {
     try {
       const response = await axiosInstance.get(
-        `/analyseview`,
+        `/sustainapp/get_emission_analysis`,
         {
           params: {
-            username: "mahinder.singh@sustainext.ai",
+
             year: selectedYear,
+            organisation:selectedOrg,
+            corporate:selectedCorp,
           },
         }
       );
 
-      const data = response.data;
-      const keyToUse = selectedCorp || "";
-      const selectedData = data[keyToUse];
+      const data = response.data.data;
+      console.log(data ,"testing");
+      // const keyToUse = selectedCorp || "";
+      // const selectedData = data[keyToUse];
+      // console.log(selectedData ,"selectedData");
+      // console.log(selectedCorp ,"selectedCorp");
 
-      if (selectedData) {
-        const { source, scope, location } = selectedData;
-        const formattedLocation = location.map((loc, index) => ({
+        const { top_emission_by_source, top_emission_by_scope, top_emission_by_location } = data;
+        const formattedLocation = top_emission_by_location.map((loc, index) => ({
           sno: String(index + 1),
-          location: loc.location_name,
-          ageContribution: `${loc.contribution_scope}%`,
-          totalemissions: String(loc.total_co2e),
+          location: loc.location,
+          ageContribution: `${loc.contribution}%`,
+          totalemissions: String(loc.total),
+          units:"tCO2e",
         }));
-        const formattedScope = scope.map((s, index) => ({
+        const formattedScope = top_emission_by_scope.map((s, index) => ({
           sno: String(index + 1),
-          scope: s.scope_name,
-          ageContribution: `${s.contribution_scope}%`,
-          totalemissions: String(s.total_co2e),
+          scope: s.scope,
+          ageContribution: `${s.contribution}%`,
+          totalemissions: String(s.total),
+          units:"tCO2e",
         }));
-        const formattedSource = source.map((src, index) => ({
+        const formattedSource = top_emission_by_source.map((src, index) => ({
           sno: String(index + 1),
-          source: src.source_name,
-          ageContribution: `${src.contribution_source}%`,
-          totalemissions: String(src.total_co2e),
+          source: src.source,
+          ageContribution: `${src.contribution}%`,
+          totalemissions: String(src.total),
+          units:"tCO2e",
         }));
         setScopeData(formattedScope);
         setSourceData(formattedSource);
         setLocationData(formattedLocation);
-      } else {
-        console.log("Organisation not found in the data");
-      }
+        // console.log(formattedLocation ,"testingformattedLocation");
+
 
       const resultArray = Object.keys(data).map((key) => ({
         key: key,
@@ -113,7 +118,7 @@ const AnalyseEmission = () => {
 
   return (
     <>
-      <div className="my-4 pb-5 mx-5 text-left">
+      <div className="mt-4 pb-3 mx-5 text-left">
         <div className="mb-2 flex items-center py-4 px-3 gap-6">
           <div className="grid grid-cols-1 md:grid-cols-3 w-[80%] mb-4">
             <div className="mr-2">
@@ -153,7 +158,7 @@ const AnalyseEmission = () => {
                 >
                   <option value="">--Select Corporate--</option>
                   {corporates?.map((corp) => (
-                    <option key={corp.id} value={corp.name}>
+                    <option key={corp.id} value={corp.id}>
                       {corp.name}
                     </option>
                   ))}
@@ -188,15 +193,26 @@ const AnalyseEmission = () => {
           <div className="mx-8"></div>
         </div>
       </div>
-      <div className="mt-8">
-        <ScopeTable data={scopeData} />
-      </div>
-      <div className="mt-8">
+      <div className="mt-4">
+        <div className="mx-4">
+          <h2 className=" font-bold text-[15px]">Top Emissions by Source</h2>
+        </div>
         <SourceTable data={sourceData} />
       </div>
+
       <div className="mt-8">
+      <div className="mx-4">
+          <h2 className=" font-bold text-[15px]">Top Emissions by Location</h2>
+        </div>
         <LocationTable data={locationData} />
       </div>
+      <div className="mt-8">
+      <div className="mx-4">
+          <h2 className=" font-bold text-[15px]">Top Emissions by Scope</h2>
+        </div>
+        <ScopeTable data={scopeData} />
+      </div>
+
     </>
   );
 };

@@ -1,5 +1,5 @@
-"use client";
-import { useState } from "react";
+'use client';
+import { useEffect, useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoHomeOutline } from "react-icons/io5";
 import { ToastContainer, toast } from "react-toastify";
@@ -19,10 +19,16 @@ const AccordionItem = ({
   sdg,
   visible,
   open,
+  onAccordionClick
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-
+  const handleAccordionClick = () => {
+    const canExpand = onAccordionClick();
+    if (canExpand) {
+      setIsOpen(!isOpen);
+    }
+  };
 
   return (
     <div
@@ -32,7 +38,7 @@ const AccordionItem = ({
     >
       <button
         className="py-3  w-[100%]  text-left flex"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={handleAccordionClick}
       >
         <div className="flex items-center px-3 w-[30%] ">
           <h5 className="text-[18px]">{icons}</h5>{" "}
@@ -60,11 +66,12 @@ const AccordionItem = ({
     </div>
   );
 };
-const Emissionsnbody = ({  location, year, month }) => {
 
-const { setClimatiqData } = useEmissions();
+const Emissionsnbody = ({ location, year, month, countryCode, locationError, setLocationError }) => {
 
-const getLatestComputedData = ()=>{
+  const { setClimatiqData } = useEmissions();
+
+  const getLatestComputedData = () => {
     console.log('Climatiq is success !!!! -----------****************')
     const base_url = `${process.env.BACKEND_API_URL}/datametric/get-climatiq-score?`;
     const url = `${base_url}location=${location}&&year=${year}&&month=${month}`;
@@ -79,39 +86,18 @@ const getLatestComputedData = ()=>{
         console.log(' This is the climatiq computed result')
         setClimatiqData(response.data)
         if (response.status === 200) {
-            toast.success("Computed Emissions Total Score!", {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-              });
-        }else{
-            toast.error("Combined computation failed for Emissions!", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-              });
-        }
-
-        // setFormData(response.data.form[0].form_data)
-      })
-      .catch((error) => {
-        
-        console.log(error, ' -got error')
-        const errorMessage =
-        error.response && error.response.data && error.response.data.message
-          ? error.response.data.message
-          : "Oops, something went wrong";
-        toast.error(errorMessage, {
+          toast.success("Computed Emissions Total Score!", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        } else {
+          toast.error("Combined computation failed for Emissions!", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -120,11 +106,44 @@ const getLatestComputedData = ()=>{
             draggable: true,
             progress: undefined,
             theme: "colored",
+          });
+        }
+
+        // setFormData(response.data.form[0].form_data)
+      })
+      .catch((error) => {
+
+        console.log(error, ' -got error')
+        const errorMessage =
+          error.response && error.response.data && error.response.data.message
+            ? error.response.data.message
+            : "Oops, something went wrong";
+        toast.error(errorMessage, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
         });
       });
+  }
 
+  const handleAccordionClick = () => {
+    if (!location) {
+      setLocationError("Please select a location");
+      return false;
+    }
+    setLocationError("");
+    return true;
+  };
 
-}
+  useEffect(()=>{
+    getLatestComputedData();
+  },[year,location,month])
+
   return (
     <>
       <div className="mx-3">
@@ -132,37 +151,39 @@ const getLatestComputedData = ()=>{
           title="Direct emission from operations"
           scops="Scope 1"
           icons={<IoHomeOutline />}
+          onAccordionClick={handleAccordionClick}
         >
-          <Scope1 location={location} year={year} month={month} successCallback={getLatestComputedData} />
+          <Scope1 location={location} year={year} month={month} countryCode={countryCode} successCallback={getLatestComputedData} />
         </AccordionItem>
 
         <AccordionItem
           title="InDirect emission from operations"
           scops="Scope 2"
           icons={<IoHomeOutline />}
+          onAccordionClick={handleAccordionClick}
         >
-          <Scope2 location={location} year={year} month={month} />
+          <Scope2 location={location} year={year} month={month} countryCode={countryCode} successCallback={getLatestComputedData}/>
         </AccordionItem>
 
         <AccordionItem
           title="All other emissions (associated)"
           scops="Scope 3"
           icons={<IoHomeOutline />}
+          onAccordionClick={handleAccordionClick}
         >
-          <Scope3 location={location} year={year} month={month} />
+          <Scope3 location={location} year={year} month={month} countryCode={countryCode} successCallback={getLatestComputedData}/>
         </AccordionItem>
       </div>
       <div className="flex justify-end items-center mt-[24] me-5">
-          <button
-            // onClick={handleCalculate}
-            className="w-[172px] h-8 px-[22px] py-2 bg-sky-600 rounded shadow flex-col justify-center items-center inline-flex text-white text-xs font-bold leading-[15px]"
-          >
-            <div className="cursor-pointer">
-              Calculate
-
-            </div>
-          </button>
-        </div>
+        <button
+          // onClick={handleCalculate}
+          className="w-[172px] h-8 px-[22px] py-2 bg-sky-600 rounded shadow flex-col justify-center items-center inline-flex text-white text-xs font-bold leading-[15px]"
+        >
+          <div className="cursor-pointer">
+            Calculate
+          </div>
+        </button>
+      </div>
     </>
   );
 };

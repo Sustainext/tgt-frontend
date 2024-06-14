@@ -1,5 +1,5 @@
 import React from "react";
-import ReusableTable from "../../../shared/components/Table";
+import ReusableTable from "../../../../shared/components/Table";
 
 const ScopeTable = ({ data }) => {
   const columns = [
@@ -8,16 +8,20 @@ const ScopeTable = ({ data }) => {
       accessor: "sno",
     },
     {
-      Header: "Scope",
+      Header: "Scope ",
       accessor: "scope",
     },
     {
-      Header: "Contribution %",
+      Header: "Percentage contribution",
       accessor: "ageContribution",
     },
     {
-      Header: "Total Emissions (tCO2e)",
+      Header: "Total Emissions",
       accessor: "totalemissions",
+    },
+    {
+      Header: "Units",
+      accessor: "units",
     },
   ];
 

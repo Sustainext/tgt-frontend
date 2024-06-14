@@ -9,9 +9,12 @@ import 'react-tooltip/dist/react-tooltip.css'
 import Waterstoragebody from './water-storage-body';
 const Waterstorage = () => {
     const [activeMonth, setActiveMonth] = useState("Jan");
+    const [location, setLocation] = useState("");
+    const [year, setYear] = useState("");
     const [data, setData] = useState();
     const [category, setCategory] = useState("");
     const [isOpen, setIsOpen] = useState(false);
+    const [locationMessage, setLocationMessage] = useState("");
 
     const toggleDrawerclose = () => {
         setIsOpen(!isOpen);
@@ -104,8 +107,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
 
                 </div>
             </div>
-            <EnvironmentHeader activeMonth={activeMonth} setActiveMonth={setActiveMonth} />
-            <Waterstoragebody />
+            <EnvironmentHeader
+            activeMonth={activeMonth} 
+                setActiveMonth={setActiveMonth}
+                location={location}
+                setLocation={setLocation}
+                year={year}
+                setYear={setYear}
+                locationMessage={locationMessage}
+                setLocationMessage={setLocationMessage} />
+            <Waterstoragebody location={location} year={year} month={activeMonth} setLocationMessage={setLocationMessage}/>
         </>
     );
 };

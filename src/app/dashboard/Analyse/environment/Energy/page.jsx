@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { yearInfo } from "../../../shared/data/yearInfo";
+import { yearInfo } from "../../../../shared/data/yearInfo";
 import { AiOutlineCalendar } from "react-icons/ai";
 import TableSidebar from "./TableSidebar";
 import DynamicTable from "./customTable";
@@ -32,7 +32,7 @@ import {
   data13,
 } from "./data";
 
-const AnalyseMaterials = ({ isBoxOpen }) => {
+const AnalyseEnergy = ({ isBoxOpen }) => {
   const [organisations, setOrganisations] = useState([]);
   const [corporates, setCorporates] = useState([]);
   const [selectedOrg, setSelectedOrg] = useState("");
@@ -197,18 +197,16 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
       <div className="flex justify-between">
         <div className={`ps-4 ${collapsed ? "w-[81%]" : "w-[78%]"} me-4`}>
           <div className="mb-6">
-          <p className="text-black text-[16px] ">Materials used by weight or volume</p>
             <div
-              id="materials1"
+              id="fuelFromRenewable"
               className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
             >
-
               <p>
-              Non-Renewable materials used
+                Fuel Consumption within the organisation from Renewable sources
               </p>
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 301-1a
+                  GRI 302-1a
                 </div>
               </div>
             </div>
@@ -216,31 +214,30 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
           </div>
           <div className="mb-6">
             <div
-              id="materials2"
+              id="fuelFromNonRenewable"
               className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
             >
               <p>
-              Renewable materials used
+                Fuel Consumption within the organisation from Non-renewable
+                sources
               </p>
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 301-1a
+                  GRI 302-1b
                 </div>
               </div>
             </div>
             <DynamicTable columns={columns2} data={data2} />
           </div>
           <div className="mb-6">
-          <p className="text-black text-[16px]">Recycled input materials used</p>
             <div
-              id="materials3"
+              id="EnergyWithinOrganization"
               className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
             >
-
-              <p>Percentage of recycled materials used (Production)</p>
+              <p>Energy Consumption Within the organisation</p>
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 301-2a
+                  GRI 302-1e
                 </div>
               </div>
             </div>
@@ -248,28 +245,169 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
           </div>
           <div className="mb-6">
             <div
-              id="materials4"
+              id="DirectFromRenewable"
               className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
             >
               <p>
-              Reclaimed products and their packaging materials
+                Direct Purchased Heating, Cooling, Electricity and Steam from
+                renewable sources
               </p>
-              <div className="flex gap-2">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 301-3a
+                  GRI 302-1
                 </div>
-              </div>
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 301-3b
-                </div>
-              </div>
               </div>
             </div>
             <DynamicTable columns={columns4} data={data4} />
           </div>
-
+          <div className="mb-6">
+            <div
+              id="DirectFromNonRenewable"
+              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+            >
+              <p>
+                Direct Purchased Heating, Cooling, Electricity and Steam from
+                non-renewable sources
+              </p>
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 302-1
+                </div>
+              </div>
+            </div>
+            <DynamicTable columns={columns5} data={data5} />
+          </div>
+          <div className="mb-6">
+            <div
+              id="SelfGenFromRenewable"
+              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+            >
+              <p>
+                Self Generated Energy - not consumed or sold (Renewable Energy)
+              </p>
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 302-1
+                </div>
+              </div>
+            </div>
+            <DynamicTable columns={columns6} data={data6} />
+          </div>
+          <div className="mb-6">
+            <div
+              id="SelfGenFromNonRenewable"
+              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+            >
+              <p>
+                Self Generated Energy - not consumed or sold (non-renewable
+                Energy)
+              </p>
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 302-1
+                </div>
+              </div>
+            </div>
+            <DynamicTable columns={columns7} data={data7} />
+          </div>
+          <div className="mb-6">
+            <div
+              id="EnergySoldRenewable"
+              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+            >
+              <p>Energy Sold (Renewable energy)</p>
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 302-1d
+                </div>
+              </div>
+            </div>
+            <DynamicTable columns={columns8} data={data8} />
+          </div>
+          <div className="mb-6">
+            <div
+              id="EnergySoldNonRenewable"
+              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+            >
+              <p>Energy Sold (non-renewable energy)</p>
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 302-1d
+                </div>
+              </div>
+            </div>
+            <DynamicTable columns={columns9} data={data9} />
+          </div>
+          <div className="mb-6">
+            <div
+              id="EnergyOutsideOrganization"
+              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+            >
+              <p>Energy Consumption outside of the organization</p>
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 302-2a
+                </div>
+              </div>
+            </div>
+            <DynamicTable columns={columns10} data={data10} />
+          </div>
+          <div className="mb-6">
+            <div
+              id="EnergyIntensity"
+              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+            >
+              <p>Energy Intensity</p>
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 302-3a
+                </div>
+              </div>
+            </div>
+            <DynamicTable columns={columns13} data={data13} />
+          </div>
+          <div className="mb-6">
+            <div
+              id="ReductionOfEnergy"
+              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+            >
+              <p>Reduction of energy consumption</p>
+              <div className="">
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 302-5a
+                  </div>
+                </div>
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 302-5b
+                  </div>
+                </div>
+              </div>
+            </div>
+            <DynamicTable columns={columns11} data={data11} />
+          </div>
+          <div className="mb-6">
+            <div
+              id="ReductionInEnergyOfPS"
+              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+            >
+              <p>Reductions in energy requirements of products and services</p>
+              <div className="">
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 302-4a
+                  </div>
+                </div>
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 302-4b
+                  </div>
+                </div>
+              </div>
+            </div>
+            <DynamicTable columns={columns12} data={data12} />
+          </div>
         </div>
         <div
           style={{
@@ -289,4 +427,4 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
   );
 };
 
-export default AnalyseMaterials;
+export default AnalyseEnergy;

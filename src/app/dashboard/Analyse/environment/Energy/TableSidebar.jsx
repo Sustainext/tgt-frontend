@@ -53,7 +53,7 @@ const TableSidebar = () => {
   }, []);
 
   return (
-    <div className="w-[199px] h-[580px] pl-[17px] pr-[21px] py-[21px] rounded-lg border flex-col justify-start items-end gap-2 inline-flex">
+    <div className="w-[199px] h-[600px] pl-[17px] pr-[21px] py-[21px] rounded-lg border flex-col justify-start items-end gap-2 inline-flex">
       <div className="w-[161px] justify-end items-center gap-2 inline-flex">
         <div className="text-right text-neutral-500 text-[10px] font-semibold font-['Manrope'] leading-[14px] tracking-wide">
           Tables

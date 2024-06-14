@@ -5,15 +5,23 @@ import { GlobalState } from "../../../../../Context/page";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import Recycledinput from "./recycled-input";
-const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
+  const handleClick = () => {
+    if (!location) {
+      setLocationMessage("Please select a location and year")
+
+      return;
+    }
+    setIsOpen(!isOpen);
+  };
 
   return (
     <div className={`shadow-md py-1 mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200 ${open ? "w-[100%]" : "w-[100%]"}`}>
       <button
         className="py-3 w-[100%] text-left flex"
-        onClick={() => setIsOpen(!isOpen)}// Unique ID for the tooltip, spaces replaced by dashes
+        onClick={handleClick}// Unique ID for the tooltip, spaces replaced by dashes
       >
        <div className="flex justify-between">
         <div className="flex w-[65vw]">
@@ -65,7 +73,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display }) => {
   );
 };
 
-const Recycledbody = () => {
+const Recycledbody = ({location, year, month,setLocationMessage}) => {
   return (
     <>
       <div className="mx-3">
@@ -76,9 +84,11 @@ const Recycledbody = () => {
            of goods/services during the reporting period.`}
           sdg={['GRI 301-2a']}
           display="block"
+          location={location}
+          setLocationMessage={setLocationMessage}
         >
 
-          <Recycledinput/>
+          <Recycledinput location={location} year={year} month={month}/>
         </AccordionItem>
 
 

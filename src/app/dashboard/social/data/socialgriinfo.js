@@ -123,6 +123,15 @@ export const Socialdata = [
             <p className="text-[11px] text-[#727272] mb-2">
               Unemployment rate, by sex, age and persons with disabilities.
             </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 8.6</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2020, substantially reduce the proportion of youth not in employment, education or training.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.6.1</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            Proportion of youth (aged 15-24 years) not in education, employment or training.
+            </p>
           </div>
           <div>
             <a

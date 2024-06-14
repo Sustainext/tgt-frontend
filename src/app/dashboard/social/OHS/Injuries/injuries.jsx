@@ -4,16 +4,16 @@ import Screen3 from "./screen3";
 import Screen4 from "./screen4";
 import Screen5 from "./screen5";
 import Screen6 from "./screen6";
-const Injuriesscreen = () => {
+const Injuriesscreen = ({ location, year, month}) => {
 
     return (
         <>
-        <Screen1/>
-        <Screen2/>
-        <Screen3/>
-        <Screen4/>
-        <Screen5/>
-        <Screen6/>
+        <Screen1 location={location} year={year} month={month}/>
+        <Screen2 location={location} year={year} month={month}/>
+        <Screen3 location={location} year={year} month={month}/>
+        <Screen4 location={location} year={year} month={month}/>
+        <Screen5 location={location} year={year} month={month}/>
+        <Screen6 location={location} year={year} month={month}/>
 
 
         </>

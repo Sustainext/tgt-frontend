@@ -24,7 +24,7 @@ const getMonthString = (monthNumber) => {
   return Object.keys(monthMapping).find(key => monthMapping[key] === monthNumber);
 };
 
-const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, year, setYear }) => {
+const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, year, setYear, setCountryCode, locationError, setLocationError }) => {
   const [formState, setFormState] = useState({
     location: location,
     year: year,
@@ -33,9 +33,10 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, y
 
   const { climatiqData } = useEmissions();
 
-
   const [locations, setLocations] = useState([]);
-  const [localClimatiq, setlocalClimatiq] = useState(0)
+  const [localClimatiq, setlocalClimatiq] = useState(0);
+  const [countryCode, setCountryCodeState] = useState('');
+
   useEffect(() => {
     const fetchLocations = async () => {
       try {
@@ -49,21 +50,16 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, y
     fetchLocations();
   }, []);
 
-  useEffect(()=>{
-
-    console.log('Got the climatiqData in header --- ')
+  useEffect(() => {
+    console.log('Got the climatiqData in header --- ');
     if (climatiqData?.result?.[0]) {
-      let sum = 0
+      let sum = 0;
       for (const item of climatiqData.result) {
-        // Access a particular property of each item and do something with it
-        sum = sum + item.co2e 
-        // Add your logic here
+        sum += item.co2e;
       }
-      setlocalClimatiq(sum)
-
+      setlocalClimatiq(sum);
     }
-    
-  },[climatiqData])
+  }, [climatiqData]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -73,9 +69,16 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, y
       [name]: value,
     }));
 
+    setLocationError(""); // Clear any existing location error
+
     if (name === "month") {
       setActiveMonth(monthMapping[value]);
     } else if (name === "location") {
+      const selectedLocation = locations.find(loc => loc.name === value);
+      if (selectedLocation) {
+        setCountryCodeState(selectedLocation.country);
+        setCountryCode(selectedLocation.country);
+      }
       setLocation(value);
     } else if (name === "year") {
       setYear(value);
@@ -93,7 +96,7 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, y
   return (
     <>
       <div className="ml-2 mb-5">
-        <div className="flex mb-5 gap-4">
+        <div className="flex gap-4 mb-5">
           <div className="relative">
             <select
               name="location"
@@ -114,6 +117,7 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, y
                 style={{ fontSize: "16px" }}
               />
             </div>
+            {locationError && <p className="text-red-500 text-sm ps-2">{locationError}</p>}
           </div>
           <div className="ml-3 relative">
             <select
