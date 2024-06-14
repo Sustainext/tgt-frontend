@@ -226,22 +226,34 @@ const { open } = GlobalState();
         setSelectedImage();
       });
   };
+  const getAuthToken = () => {
+    if (typeof window !== 'undefined') {
+        return localStorage.getItem('token')?.replace(/"/g, "");
+    }
+    return '';
+};
+const token = getAuthToken();
+let axiosConfig = {
+  headers: {
+    Authorization: 'Bearer ' + token,
+  },
+};
   const handleDownloadpdf = async () => {
     // Set loading to true for the specific item
     setLoading(true);
     setIsOpen(false);
-    setLoadingById(prevState => ({ ...prevState, [reportId]: true }));
+
 
     try {
       const response = await fetch(
-        `${process.env.BACKEND_API_URL}/sustainapp/report_pdf/${reportId}/?download=true`
+        `${process.env.BACKEND_API_URL}/sustainapp/report_pdf/${reportId}/?download=true`,axiosConfig
       );
       const blob = await response.blob();
       const downloadUrl = window.URL.createObjectURL(blob);
 
       const link = document.createElement("a");
       link.href = downloadUrl;
-      link.setAttribute("download", `${reporttepname}.pdf`); // Setting the file name dynamically
+      link.setAttribute("download", `${reportname}.pdf`); // Setting the file name dynamically
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -249,24 +261,20 @@ const { open } = GlobalState();
       console.error("Error downloading the file:", error);
     } finally {
       // Set loading to false for the specific item
-      setLoadingById(prevState => ({ ...prevState, [reportId]: false }));
+
       setIsOpen(null);
+      setLoading(false);
     }
   };
+
   const handleDownloaddocx = async () => {
-    const stringWithQuotes = localStorage.getItem("authTokens");
-    const stringWithoutQuotes = stringWithQuotes.replace(/"/g, "");
-    const options = {
-      headers: {
-        Authorization: `Token ${stringWithoutQuotes}`,
-      },
-    };
+
 
     setLoading(true);
     setIsOpen(false);
     try {
       const response = await fetch(
-        `${process.env.BACKEND_API_URL}/sustainapp/report_word_download/${reportId}/`, options
+        `${process.env.BACKEND_API_URL}/sustainapp/report_word_download/${reportId}/`, axiosConfig
 
       );
 
@@ -275,7 +283,7 @@ const { open } = GlobalState();
 
       const link = document.createElement("a");
       link.href = downloadUrl;
-      link.setAttribute("download", `${reporttepname}.docx`); // Setting the file name dynamically
+      link.setAttribute("download", `${reportname}.docx`); // Setting the file name dynamically
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -283,7 +291,7 @@ const { open } = GlobalState();
       console.error("Error downloading the file:", error);
     } finally {
       // Set loading to false for the specific item
-
+      setLoading(false);
       setIsOpen(null);
     }
 

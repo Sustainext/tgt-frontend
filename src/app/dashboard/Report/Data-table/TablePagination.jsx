@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
+
 import axiosInstance,{del} from "@/app/utils/axiosMiddleware";
 const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -153,13 +154,25 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts }) => {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+  const getAuthToken = () => {
+    if (typeof window !== 'undefined') {
+        return localStorage.getItem('token')?.replace(/"/g, "");
+    }
+    return '';
+};
+const token = getAuthToken();
+let axiosConfig = {
+  headers: {
+    Authorization: 'Bearer ' + token,
+  },
+};
   const handleDownloadpdf = async () => {
     // Set loading to true for the specific item
     setLoadingById(prevState => ({ ...prevState, [reportid]: true }));
 
     try {
       const response = await fetch(
-        `${process.env.BACKEND_API_URL}/sustainapp/report_pdf/${reportid}/?download=true`
+        `${process.env.BACKEND_API_URL}/sustainapp/report_pdf/${reportid}/?download=true`,axiosConfig
       );
       const blob = await response.blob();
       const downloadUrl = window.URL.createObjectURL(blob);
@@ -183,8 +196,8 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts }) => {
     setLoadingById(prevState => ({ ...prevState, [reportid]: true }));
 
     try {
-      const response = await axiosInstance.get(
-        `/sustainapp/report_word_download/${reportid}/`
+      const response = await fetch(
+        `${process.env.BACKEND_API_URL}/sustainapp/report_word_download/${reportid}/`,axiosConfig
 
       );
 
