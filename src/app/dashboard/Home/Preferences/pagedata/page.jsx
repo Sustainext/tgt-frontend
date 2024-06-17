@@ -11,12 +11,14 @@ const PreferencePages = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const currentPageParam = searchParams.get("currentPage");
-    const initialPage = currentPageParam ? parseInt(currentPageParam) : 1;
-    setCurrentPage(initialPage);
-    console.log('page', initialPage);
-  }, [window.location.search]);
+    if (typeof window !== "undefined") {
+      const searchParams = new URLSearchParams(window.location.search);
+      const currentPageParam = searchParams.get("currentPage");
+      const initialPage = currentPageParam ? parseInt(currentPageParam) : 1;
+      setCurrentPage(initialPage);
+      console.log('page', initialPage);
+    }
+  }, []);
 
   return (
     <div>

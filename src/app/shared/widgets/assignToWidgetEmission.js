@@ -244,6 +244,7 @@ const AssignToWidgetEmission = ({ id, scope, location, year, month, data, countr
                 <div>
                   <button
                     className="bg-white border border-gray-300 text-black py-1 rounded-md shadow-sm w-full text-center text-md"
+                    type="button"
                     onClick={closeModal}
                   >
                     Cancel

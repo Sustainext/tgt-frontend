@@ -1,12 +1,14 @@
 
+'use client';
 import React, { useState, useRef, useEffect } from "react";
-import JoditEditor from "jodit-react";
 import Moment from "react-moment";
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 function Carbonaccountingobjectives({ value, setValue, roles, setRoles }) {
   const orgname = localStorage.getItem("reportorgname");
   const reportstartdateStr = localStorage.getItem("reportstartdate");
   const reportenddateStr = localStorage.getItem("reportenddate");
+  const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
   const editor = useRef(null);
   const [content, setContent] = useState("");
   const config = {
