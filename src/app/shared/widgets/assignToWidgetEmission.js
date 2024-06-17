@@ -141,7 +141,7 @@ const AssignToWidgetEmission = ({ id, scope, location, year, month, data, countr
 
   return (
     <>
-      <div className="flex justify-center items-center mt-2">
+      <div className="flex justify-center items-center mt-2 mx-2">
         <button
           className="text-center py-1 text-sm w-[100px] bg-[rgb(2,132,199)] text-white rounded focus:outline-none focus:shadow-outline"
           type="button"
