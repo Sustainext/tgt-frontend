@@ -1,3 +1,4 @@
+"use client"
 import { useState, useEffect } from "react";
 import { yearInfo } from "../../../../shared/data/yearInfo";
 import { AiOutlineCalendar } from "react-icons/ai";
