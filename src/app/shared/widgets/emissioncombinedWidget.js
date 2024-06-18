@@ -523,7 +523,7 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
         type="number"
         value={quantity}
         onChange={(e) => handleQuantityChange(e.target.value)}
-        className="w-full py-1 mt-2 pl-2 rounded-sm border-b focus:outline-none text-right"
+        className="w-full py-1 mt-2 pl-2 rounded-sm border-b focus:outline-none"
       />
     </div>
 
