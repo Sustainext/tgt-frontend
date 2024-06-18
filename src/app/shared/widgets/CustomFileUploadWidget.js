@@ -119,13 +119,28 @@ const uploadFileToAzure = async (file, newFileName) => {
     setShowModal(false);
   };
 
-  const handleDelete = (id, scopes) => {
+  // const handleDelete = (id, scopes) => {
+  //   setFileName(null);
+  //   setPreviewData(null);
+  //   onChange(null); // Clear the selected file for the specific id and scopes
+  //   setShowModal(false);
+  //   setFormData(value) // Close the modal after deletion
+  // };
+
+  const handleDelete = () => {
+    const resetValue = {
+        name: '',
+        url: '',
+        type: '',
+        size: '',
+        uploadDateTime: ''
+    };
+
     setFileName(null);
     setPreviewData(null);
-    onChange(null); // Clear the selected file for the specific id and scopes
+    onChange(resetValue);
     setShowModal(false);
-    setFormData(value) // Close the modal after deletion
-  };
+};
 
   return (
     <div className="w-[120px] flex justify-center items-center">
