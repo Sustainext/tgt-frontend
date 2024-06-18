@@ -36,6 +36,7 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
   const [modalData, setModalData] = useState(null);
   const { climatiqData, setScope2Data } = useEmissions();
   const [localClimatiq, setlocalClimatiq] = useState(0);
+  const [activityCache, setActivityCache] = useState({});
 
   useEffect(()=>{
     setScope2Data(formData)
@@ -64,9 +65,25 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
     setFormData(e.formData);
   };
 
+  const handleCombinedWidgetChange = (index, field, value, activityId, unitType) => {
+    const updatedFormData = [...formData];
+    if (!updatedFormData[index]?.Emission) {
+      updatedFormData[index] = { Emission: {} };
+    }
+    updatedFormData[index].Emission[field] = value;
+  
+    if (activityId !== undefined) {
+      updatedFormData[index].Emission.activity_id = activityId;
+    }
+    if (unitType !== undefined) {
+      updatedFormData[index].Emission.unit_type = unitType;
+    }
+  
+    setFormData(updatedFormData);
+  };
+
   const handleAddNew = () => {
-    const newData = [...formData, {}];
-    setFormData(newData);
+    setFormData((prevFormData) => [...prevFormData, { Emission: {} }]);
   };
 
   const updateFormData = async () => {
@@ -160,6 +177,13 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
     setModalData(null);
   };
 
+  const updateCache = (subcategory, activities) => {
+    setActivityCache((prevCache) => ({
+      ...prevCache,
+      [subcategory]: activities,
+    }));
+  };
+
   return (
     <>
       <div className={`overflow-y-visible custom-scrollbar flex`} style={{ position: 'relative' }}>
@@ -188,7 +212,23 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
                 />
               ),
               EmissonCombinedWidget: (props) => (
-                <CombinedWidget {...props} scope="scope2" year={year} countryCode={countryCode} />
+                <CombinedWidget
+                  {...props}
+                  scope="scope2"
+                  year={year}
+                  countryCode={countryCode}
+                  onChange={({ type, value, activityId, unitType }) =>
+                    handleCombinedWidgetChange(
+                      props.id.split("_")[1],
+                      type,
+                      value,
+                      activityId,
+                      unitType
+                    )
+                  }
+                  activityCache={activityCache}
+                  updateCache={updateCache}
+                />
               ),
               AssignTobutton : (props) => (
                 <AssignToWidgetEmission {...props} scope="scope2" location={location} year={year} month={month} data={formData} />

@@ -63,6 +63,9 @@ const AccordionItem = ({
         </div>
       </button>
       {isOpen && <div className="p-4">{children}</div>}
+      {/* <div className={`p-4 transition-all duration-200 ${isOpen ? 'block' : 'hidden'}`}>
+        {children}
+      </div> */}
     </div>
   );
 };
