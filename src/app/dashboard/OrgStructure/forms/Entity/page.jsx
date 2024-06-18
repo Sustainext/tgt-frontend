@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import GeneralInfo from "../Organization/GeneralInfo";
 import { post, put } from "../../../../utils/axiosMiddleware";
@@ -95,6 +95,7 @@ const Entity = () => {
   };
 
   return (
+
     <form onSubmit={handleSubmit} className="p-4 rounded-md m-0">
       <GeneralInfo
         handleGeneralDetailsSubmit={
@@ -104,6 +105,7 @@ const Entity = () => {
         editData={data}
       />
     </form>
+
   );
 };
 

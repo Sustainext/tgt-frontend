@@ -41,15 +41,18 @@ const { open } = GlobalState();
   const [imageSrc, setImage] = useState("");
   const [loading, setLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState();
-  const reportname = localStorage.getItem("reportname");
-  const reportstartdateStr = localStorage.getItem("reportstartdate");
-  const reportenddateStr = localStorage.getItem("reportenddate");
+  const isMounted = useRef(true);
+
+  const reportname = typeof window !== 'undefined' ? localStorage.getItem("reportname") : '';
+  const reportstartdateStr = typeof window !== 'undefined' ? localStorage.getItem("reportstartdate"): '';
+  const reportenddateStr = typeof window !== 'undefined' ? localStorage.getItem("reportenddate") : ''
+  const reportId = typeof window !== 'undefined' ? localStorage.getItem("reportid") : '';
   const reportstartdate = reportstartdateStr ? new Date(reportstartdateStr) : null;
   const reportenddate = reportenddateStr ? new Date(reportenddateStr) : null;
   const startYear = reportstartdate ? reportstartdate.getFullYear() : null;
   const endYear = reportenddate ? reportenddate.getFullYear() : null;
-  const reportId=localStorage.getItem("reportid");
-  const [loadingById, setLoadingById] = useState({});
+
+
   let display;
 
   if (startYear === endYear) {
@@ -58,8 +61,19 @@ const { open } = GlobalState();
     display = `${startYear} - ${endYear}`;
   }
 
-  const isMounted = useRef(true);
+  const getAuthToken = () => {
+    if (typeof window !== 'undefined') {
+        return localStorage.getItem('token')?.replace(/"/g, "");
+    }
+    return '';
+};
 
+const token = getAuthToken();
+let axiosConfig = {
+  headers: {
+    Authorization: 'Bearer ' + token,
+  },
+};
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -226,18 +240,7 @@ const { open } = GlobalState();
         setSelectedImage();
       });
   };
-  const getAuthToken = () => {
-    if (typeof window !== 'undefined') {
-        return localStorage.getItem('token')?.replace(/"/g, "");
-    }
-    return '';
-};
-const token = getAuthToken();
-let axiosConfig = {
-  headers: {
-    Authorization: 'Bearer ' + token,
-  },
-};
+
   const handleDownloadpdf = async () => {
     // Set loading to true for the specific item
     setLoading(true);

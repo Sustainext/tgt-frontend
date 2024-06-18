@@ -5,9 +5,9 @@ import { unitTypes } from "../data/units";
 import { categoriesToAppend, categoryMappings } from "../data/customActivities";
 import axios from "axios";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
-import debounce from 'lodash/debounce';
-
-const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode, activityCache, updateCache }) => {
+import { GlobalState } from "@/Context/page";
+const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
+  const { open } = GlobalState();
   const [category, setCategory] = useState(value.Category || "");
   const [subcategory, setSubcategory] = useState(value.Subcategory || "");
   const [activity, setActivity] = useState(value.Activity || "");
@@ -405,54 +405,54 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode, activi
 
   return (
     <div className="flex mb-5">
-      <div style={{ width: "200px" }}>
-        <select
-          value={category}
-          onChange={(e) => handleCategoryChange(e.target.value)}
-          className="block w-[12vw] py-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
-        >
-          <option value="">Select Category</option>
-          {baseCategories.map((categoryName, index) => (
-            <option key={index} value={categoryName}>
-              {categoryName}
-            </option>
-          ))}
-        </select>
-      </div>
+    <div className={`${open ? "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[12vw] 2xl:w-[13vw] 3xl:w-[13vw] " : "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[14vw] 2xl:w-[16vw] 3xl:w-[16vw]"}}`}>
+      <select
+        value={category}
+        onChange={(e) => handleCategoryChange(e.target.value)}
+        className="w-full py-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 border-b-2 border-gray-300"
+      >
+        <option value="">Select Category</option>
+        {baseCategories.map((categoryName, index) => (
+          <option key={index} value={categoryName}>
+            {categoryName}
+          </option>
+        ))}
+      </select>
+    </div>
 
-      <div style={{ width: "200px" }}>
-        <select
-          value={subcategory}
-          onChange={(e) => handleSubcategoryChange(e.target.value)}
-          className="block w-[12vw] py-2 mx-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
-        >
-          <option value="">Select Subcategory</option>
-          {subcategories.map((sub, index) => (
-            <option key={index} value={sub}>
-              {sub}
-            </option>
-          ))}
-        </select>
-      </div>
+    <div className={`${open ? "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[12vw] 2xl:w-[13vw] 3xl:w-[13vw] " : "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[14vw] 2xl:w-[16vw] 3xl:w-[16vw]"}} mx-2`}>
+      <select
+        value={subcategory}
+        onChange={(e) => handleSubcategoryChange(e.target.value)}
+        className="w-full py-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 border-b-2 border-gray-300"
+      >
+        <option value="">Select Subcategory</option>
+        {subcategories.map((sub, index) => (
+          <option key={index} value={sub}>
+            {sub}
+          </option>
+        ))}
+      </select>
+    </div>
 
-      <div className="relative" style={{ width: "220px" }}>
-        <input
-          ref={inputRef}
-          type="text"
-          placeholder={
-            isFetching.current
-              ? "Fetching activities..."
-              : activities.length === 0
-              ? "No relevant activities found"
-              : activity
-              ? activity
-              : "Select Activity"
-          }
-          value={activitySearch}
-          onChange={(e) => setActivitySearch(e.target.value)}
-          onFocus={toggleDropdown}
-          className="w-[14vw] px-4 py-2 mx-2 mb-2 rounded focus:outline-none"
-        />
+    <div className={`${open ? "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[15vw] 2xl:w-[18vw] 3xl:w-[18vw] " : "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[18vw] 2xl:w-[22vw] 3xl:w-[22vw]"}} mx-2 relative`}>
+      <input
+        ref={inputRef}
+        type="text"
+        placeholder={
+          isFetching.current
+            ? "Fetching activities..."
+            : activities.length === 0
+            ? "No relevant activities found"
+            : activity
+            ? activity
+            : "Select Activity"
+        }
+        value={activitySearch}
+        onChange={(e) => setActivitySearch(e.target.value)}
+        onFocus={toggleDropdown}
+        className="w-full px-4 py-2 mx-2 mb-2 rounded focus:outline-none"
+      />
 
         {isDropdownActive && (
           <select
@@ -504,31 +504,31 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode, activi
         </div>
       </div>
 
-      <div style={{ width: "140px", }} className="ml-3 pl-4">
-        <input
-          ref={quantityRef}
-          type="number"
-          value={quantity}
-          onChange={handleQuantityChange}
-          className="w-[10vw] py-1 mt-2 pl-2 rounded-sm border-b focus:outline-none"
-        />
-      </div>
-
-      <div style={{ width: "100px"}} className="ml-2">
-        <select
-          value={unit}
-          onChange={(e) => handleUnitChange(e.target.value)}
-          className="w-full text-center cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none mt-1.5 font-bold text-sm bg-sky-600 text-white"
-        >
-          <option value="">Unit</option>
-          {units.map((unit, index) => (
-            <option key={index} value={unit}>
-              {unit}
-            </option>
-          ))}
-        </select>
-      </div>
+    <div  className={`${open ? "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[12vw] 2xl:w-[13vw] 3xl:w-[13vw] " : "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[12vw] 2xl:w-[16vw] 3xl:w-[16vw]"}} mx-2 mt-2 sm:mt-0`}>
+      <input
+        ref={quantityRef}
+        type="number"
+        value={quantity}
+        onChange={(e) => handleQuantityChange(e.target.value)}
+        className="w-full py-1 mt-2 pl-2 rounded-sm border-b focus:outline-none text-right"
+      />
     </div>
+
+    <div className={`${open ? "sm:w-[5vw] md:w-[5vw] lg:w-[5vw] xl:w-[7vw] 2xl:w-[6vw] 3xl:w-[6vw] " : "sm:w-[5vw] md:w-[5vw] lg:w-[5vw] xl:w-[7vw] 2xl:w-[5vw] 3xl:w-[5vw]"}} mx-2`}>
+      <select
+        value={unit}
+        onChange={(e) => handleUnitChange(e.target.value)}
+        className="w-[100px] text-center cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none mt-1.5 font-bold text-sm bg-sky-600 text-white"
+      >
+        <option value="">Unit</option>
+        {units.map((unit, index) => (
+          <option key={index} value={unit}>
+            {unit}
+          </option>
+        ))}
+      </select>
+    </div>
+  </div>
   );
 };
 

@@ -88,11 +88,9 @@ const Emissionsnbody = ({ location, year, month, countryCode, locationError, set
         console.log(response.data, " is the response data");
         console.log(' This is the climatiq computed result')
         setClimatiqData(response.data)
-
         // setFormData(response.data.form[0].form_data)
       })
       .catch((error) => {
-
         console.log(error, ' -got error')
       });
   }
