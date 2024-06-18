@@ -59,6 +59,7 @@ const Tab1 = ({fullName,location, year, month}) => {
         { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 },
         { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 },
     ]);
+
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
     const [loopen, setLoOpen] = useState(false);
@@ -206,6 +207,7 @@ const Tab1 = ({fullName,location, year, month}) => {
             <div className="mx-2 p-3 mb-6 rounded-md">
 
                 <Form
+                    key={`${location}-${year}-${month}`}
                     schema={r_schema}
                     uiSchema={r_ui_schema}
                     formData={formData}
