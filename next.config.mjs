@@ -5,6 +5,7 @@ const nextConfig = {
         NEXT_APP_TRACK_URL: 'https://app.powerbi.com/view?r=eyJrIjoiNjNjMmI2ODYtNTQ5ZS00ZWUzLWIzOGQtMDk1N2Q3ZmVmNTlmIiwidCI6ImIwZjhlODRjLWU0YTgtNDc5OS04MWIwLWRmMTUwMDY0MDM3ZCJ9',
         NEXT_PUBLIC_APP_CLIMATIQ_KEY: 'HE3SK2V2F04MTSG9210JSQXB2QCX',
         NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION: '8',
+
     },
     images: {
         domains: ['udm-be.sustainext.ai'],
@@ -34,6 +35,10 @@ const nextConfig = {
         // }
         return config;
     },
+    experimental: {
+        missingSuspenseWithCSRBailout: false,
+      },
+
 };
 
 export default nextConfig;

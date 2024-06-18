@@ -4,14 +4,12 @@ import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import { MdAdd } from "react-icons/md";
 import CustomFileUploadWidget from "../../../shared/widgets/CustomFileUploadWidget";
-import AssignToWidget from "../../../shared/widgets/assignToWidget";
 import CombinedWidget from "../../../shared/widgets/emissioncombinedWidget";
 import { GlobalState } from "../../../../Context/page";
 import RemoveWidget from "../../../shared/widgets/RemoveWidget";
 import axiosInstance, { post } from "@/app/utils/axiosMiddleware";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Oval } from 'react-loader-spinner';
+import { Oval } from "react-loader-spinner";
 import CalculateSuccess from "./calculateSuccess";
 import { useEmissions } from "./EmissionsContext";
 import AssignToWidgetEmission from "@/app/shared/widgets/assignToWidgetEmission";
@@ -36,6 +34,7 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
   const [modalData, setModalData] = useState(null);
   const { climatiqData, setScope1Data } = useEmissions();
   const [localClimatiq, setlocalClimatiq] = useState(0);
+  const [activityCache, setActivityCache] = useState({});
 
   useEffect(() => {
     if (climatiqData?.result?.length > 0) {
@@ -44,9 +43,9 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
     }
   }, [climatiqData]);
 
-  useEffect(()=>{
-    setScope1Data(formData)
-  },[formData])
+  useEffect(() => {
+    setScope1Data(formData);
+  }, [formData]);
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -60,9 +59,51 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
     setFormData(e.formData);
   };
 
+  const handleCombinedWidgetChange = (index, field, value, activityId, unitType) => {
+    setFormData(prevFormData => {
+      const updatedFormData = [...prevFormData];
+      const currentEmission = updatedFormData[index]?.Emission || {};
+  
+      updatedFormData[index] = {
+        ...updatedFormData[index],
+        Emission: {
+          ...currentEmission,
+          [field]: value,
+          ...(activityId !== undefined && { activity_id: activityId }),
+          ...(unitType !== undefined && { unit_type: unitType })
+        }
+      };
+  
+      return updatedFormData;
+    });
+  };
+  
+
+  const handleFileWidgetChange = (index, name, url, type, size, uploadDateTime) => {
+    setFormData(prevFormData => {
+      const updatedFormData = [...prevFormData];
+      const currentEmission = updatedFormData[index]?.Emission || {};
+      
+      updatedFormData[index] = {
+        ...updatedFormData[index],
+        Emission: currentEmission,
+        FileUpload: {
+          name: name,
+          url: url,
+          type: type,
+          size: size,
+          uploadDateTime: uploadDateTime
+        }
+      };
+  
+      console.log('Updated form data:', updatedFormData);
+      return updatedFormData;
+    });
+  };
+  
+
   const handleAddNew = () => {
-    const newData = [...formData, {}];
-    setFormData(newData);
+    setFormData((prevFormData) => [...prevFormData, { Emission: {} }]);
   };
 
   const updateFormData = async () => {
@@ -146,9 +187,19 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
     setModalData(null);
   };
 
+  const updateCache = (subcategory, activities) => {
+    setActivityCache((prevCache) => ({
+      ...prevCache,
+      [subcategory]: activities,
+    }));
+  };
+
   return (
     <>
-      <div className={`overflow-y-visible custom-scrollbar flex`} style={{ position: 'relative' }}>
+      <div
+        className={`overflow-y-visible custom-scrollbar flex`}
+        style={{ position: "relative" }}
+      >
         <div>
           <Form
             className="flex"
@@ -171,10 +222,32 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
                   {...props}
                   scopes="scope1"
                   setFormData={updateFormDatanew}
+                  onChange={({ name,url,type,size,uploadDateTime }) =>
+                    handleFileWidgetChange(
+                      props.id.split("_")[1],
+                      name,url,type,size,uploadDateTime
+                    )
+                  }
                 />
               ),
               EmissonCombinedWidget: (props) => (
-                <CombinedWidget {...props} scope="scope1" year={year} countryCode={countryCode} />
+                <CombinedWidget
+                  {...props}
+                  scope="scope1"
+                  year={year}
+                  countryCode={countryCode}
+                  onChange={({ type, value, activityId, unitType }) =>
+                    handleCombinedWidgetChange(
+                      props.id.split("_")[1],
+                      type,
+                      value,
+                      activityId,
+                      unitType
+                    )
+                  }
+                  activityCache={activityCache}
+                  updateCache={updateCache}
+                />
               ),
               AssignTobutton: (props) => (
                 <AssignToWidgetEmission
@@ -224,10 +297,7 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
       )}
 
       {modalData && (
-        <CalculateSuccess
-          data={modalData}
-          onClose={handleCloseModal}
-        />
+        <CalculateSuccess data={modalData} onClose={handleCloseModal} />
       )}
     </>
   );

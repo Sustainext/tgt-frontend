@@ -61,7 +61,7 @@ const uploadFileToAzure = async (file, newFileName) => {
     console.log(value, ' is the new value')
 
     if (value?.url && value?.name) {
-    
+
 
       setFileName(value.name);
       setPreviewData(value.url);
@@ -78,19 +78,19 @@ const uploadFileToAzure = async (file, newFileName) => {
     const newFileName = selectedFile ? selectedFile.name : null;
     console.log(selectedFile, ' is the selectedFile');
     setFileName(newFileName);
-    
+
     if (selectedFile) {
       const reader = new FileReader();
       reader.readAsDataURL(selectedFile);
-  
+
       reader.onloadend = () => {
         const base64String = reader.result;
         console.log(reader, ' is the reader object');
-        
+
         const uploadAndSetState = async () => {
           const url = await uploadFileToAzure(selectedFile, newFileName);
           alert(url, ' is upload');
-          
+
           onChange({
             name: newFileName,
             url: url,
@@ -98,18 +98,18 @@ const uploadFileToAzure = async (file, newFileName) => {
             size: selectedFile.size,
             uploadDateTime: new Date().toLocaleString(),
           });
-          
+
           setPreviewData(base64String);
           setFileType(selectedFile.type);
           setFileSize(selectedFile.size);
           setUploadDateTime(new Date().toLocaleString());
         };
-  
+
         uploadAndSetState();
       };
     }
   };
-  
+
 
   const handlePreview = () => {
     setShowModal(true);
@@ -119,16 +119,31 @@ const uploadFileToAzure = async (file, newFileName) => {
     setShowModal(false);
   };
 
-  const handleDelete = (id, scopes) => {
+  // const handleDelete = (id, scopes) => {
+  //   setFileName(null);
+  //   setPreviewData(null);
+  //   onChange(null); // Clear the selected file for the specific id and scopes
+  //   setShowModal(false);
+  //   setFormData(value) // Close the modal after deletion
+  // };
+
+  const handleDelete = () => {
+    const resetValue = {
+        name: '',
+        url: '',
+        type: '',
+        size: '',
+        uploadDateTime: ''
+    };
+
     setFileName(null);
     setPreviewData(null);
-    onChange(null); // Clear the selected file for the specific id and scopes
+    onChange(resetValue);
     setShowModal(false);
-    setFormData(value) // Close the modal after deletion
-  };
+};
 
   return (
-    <div className="w-[120px] flex justify-center items-center">
+    <div className="w-[120px] flex justify-center items-center mx-2">
       <input
         type="file"
         id={id + scopes}

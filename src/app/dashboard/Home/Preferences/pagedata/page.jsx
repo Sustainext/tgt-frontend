@@ -13,14 +13,14 @@ const PreferencePages = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       const searchParams = new URLSearchParams(window.location.search);
-      const currentPageParam = searchParams.get('currentPage');
+      const currentPageParam = searchParams.get("currentPage");
       const initialPage = currentPageParam ? parseInt(currentPageParam) : 1;
       setCurrentPage(initialPage);
       console.log('page', initialPage);
     }
-  }, [router]);
+  }, []);
 
   return (
     <div>

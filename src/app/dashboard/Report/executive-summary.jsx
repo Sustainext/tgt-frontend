@@ -13,7 +13,7 @@ function Executivesummary({
   let uint2 = '';
   let uint3 = '';
 
-  console.log(exdata, "data passing");
+  // console.log(exdata, "data passing");
 
   // Loop through each corporate's scopes to sum up the emissions by scope
   exdata.forEach((corporate) => {
