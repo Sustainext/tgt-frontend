@@ -1,13 +1,13 @@
-"use client";
-
+'use client';
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { scope1Info, scope2Info, scope3Info } from "../data/scopeInfo";
 import { unitTypes } from "../data/units";
 import { categoriesToAppend, categoryMappings } from "../data/customActivities";
 import axios from "axios";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
+import debounce from 'lodash/debounce';
 
-const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
+const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode, activityCache, updateCache }) => {
   const [category, setCategory] = useState(value.Category || "");
   const [subcategory, setSubcategory] = useState(value.Subcategory || "");
   const [activity, setActivity] = useState(value.Activity || "");
@@ -54,6 +54,13 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
   const fetchActivities = useCallback(async (page = 1, customFetchExecuted = false) => {
     if (isFetching.current) return;
     isFetching.current = true;
+
+    // Check cache first
+    if (activityCache[subcategory]) {
+      setActivities(activityCache[subcategory]);
+      isFetching.current = false;
+      return;
+    }
 
     const baseURL = "https://api.climatiq.io";
     const resultsPerPage = 500;
@@ -228,6 +235,8 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
             [...CombinedActivitiesData, ...customFetchData].length
           );
           setActivities([...CombinedActivitiesData, ...customFetchData]);
+          // Cache activities
+          updateCache(subcategory, [...CombinedActivitiesData, ...customFetchData]);
           page++;
         }
       }
@@ -236,9 +245,9 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
     } finally {
       isFetching.current = false;
     }
-  }, []);
+  }, [category, subcategory, year, countryCode, activityCache, updateCache]);
 
-  const fetchSubcategories = async () => {
+  const fetchSubcategories = useCallback(async () => {
     const selectedCategory = scopeMappings[scope].find((info) =>
       info.Category.some((c) => c.name === category)
     );
@@ -247,16 +256,16 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
       : [];
     setSubcategories(newSubcategories);
     fetchActivities();
-    if (!newSubcategories.find((sub) => sub === value.Subcategory)) {
-      setSubcategory("");
-    }
-  };
+    // if (!newSubcategories.find((sub) => sub === value.Subcategory)) {
+    //   setSubcategory("");
+    // }
+  }, [category, scope, value.Subcategory, fetchActivities]);
 
   useEffect(() => {
     if (category) {
       fetchSubcategories();
     }
-  }, [category]);
+  }, [category, fetchSubcategories]);
 
   useEffect(() => {
     if (activities.length > 0 && value.Activity) {
@@ -278,16 +287,14 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
     setUnits(unitConfig ? Object.values(unitConfig.units).flat() : []);
   }, [unit_type]);
 
-
-  const handleCategoryChange = (value) => {
-    console.log("Handle category change triggered");
+  const handleCategoryChange = useCallback((value) => {
     setCategory(value);
-    setSubcategory("");
-    setActivity("");
-    setQuantity("");
-    setUnit("");
-    setActivityId("");
-    setUnitType("");
+    // setSubcategory("");
+    // setActivity("");
+    // setQuantity("");
+    // setUnit("");
+    // setActivityId("");
+    // setUnitType("");
 
     const selectedCategory = scope1Info.find((info) =>
       info.Category.some((c) => c.name === value)
@@ -295,40 +302,29 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
     const subCategories = selectedCategory
       ? selectedCategory.Category.find((c) => c.name === value).SubCategory
       : [];
-    console.log(subCategories, " are the subcategories");
 
     setSubcategories(subCategories);
     onChange({
-      Category: value,
-      Subcategory: "",
-      Activity: "",
-      Quantity: "",
-      Unit: "",
-      activity_id: "",
-      unit_type: "",
+      type: "Category",
+      value,
     });
-  };
+  }, [onChange]);
 
-  const handleSubcategoryChange = (value) => {
+  const handleSubcategoryChange = useCallback((value) => {
     setSubcategory(value);
-    setActivity("");
-    setQuantity("");
-    setUnit("");
-    setActivityId("");
-    setUnitType("");
+    // setActivity("");
+    // setQuantity("");
+    // setUnit("");
+    // setActivityId("");
+    // setUnitType("");
 
     onChange({
-      Category: category,
-      Subcategory: value,
-      Activity: "",
-      Quantity: "",
-      Unit: "",
-      activity_id: "",
-      unit_type: "",
+      type: "Subcategory",
+      value,
     });
-  };
+  }, [onChange]);
 
-  const handleActivityChange = (value) => {
+  const handleActivityChange = useCallback((value) => {
     setActivity(value);
     setQuantity("");
     setUnit("");
@@ -337,7 +333,7 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
       (act) => `${act.name} - (${act.source}) - ${act.unit_type}` === value
     );
 
-    console.log('Found activity:', foundActivity);
+    console.log('activity found', foundActivity);
 
     if (foundActivity) {
       const activityId = foundActivity.activity_id;
@@ -352,49 +348,41 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
     }
 
     onChange({
-      Category: category,
-      Subcategory: subcategory,
-      Activity: value,
-      Quantity: "",
-      Unit: "",
-      activity_id: foundActivity ? foundActivity.activity_id : "",
-      unit_type: foundActivity ? foundActivity.unit_type : "",
+      type: "Activity",
+      value,
+      activityId: foundActivity ? foundActivity.activity_id : "",
+      unitType: foundActivity ? foundActivity.unit_type : "",
     });
-  };
+  }, [category, subcategory, activities, onChange]);
 
-
-  const handleQuantityChange = (value) => {
+  const debouncedHandleQuantityChange = useCallback(debounce((value) => {
     setQuantity(value);
     onChange({
-      Category: category,
-      Subcategory: subcategory,
-      Activity: activity,
-      Quantity: value,
-      Unit: unit,
-      activity_id: activity_id,
-      unit_type: unit_type,
+      type: "Quantity",
+      value,
     });
+  }, 300), [category, subcategory, activity, unit, activity_id, unit_type, onChange]);
+
+  const handleQuantityChange = (e) => {
+    const value = e.target.value;
+    setQuantity(value);
+    debouncedHandleQuantityChange(value);
   };
 
-  const handleUnitChange = (value) => {
+  const handleUnitChange = useCallback((value) => {
     setUnit(value);
     onChange({
-      Category: category,
-      Subcategory: subcategory,
-      Activity: activity,
-      Quantity: quantity,
-      Unit: value,
-      activity_id: activity_id,
-      unit_type: unit_type,
+      type: "Unit",
+      value,
     });
-  };
+  }, [category, subcategory, activity, quantity, activity_id, unit_type, onChange]);
 
-  const toggleDropdown = () => {
+  const toggleDropdown = useCallback(() => {
     setIsDropdownActive(!isDropdownActive);
     if (isDropdownActive) {
       setActivitySearch("");
     }
-  };
+  }, [isDropdownActive]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -521,7 +509,7 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
           ref={quantityRef}
           type="number"
           value={quantity}
-          onChange={(e) => handleQuantityChange(e.target.value)}
+          onChange={handleQuantityChange}
           className="w-[10vw] py-1 mt-2 pl-2 rounded-sm border-b focus:outline-none"
         />
       </div>
