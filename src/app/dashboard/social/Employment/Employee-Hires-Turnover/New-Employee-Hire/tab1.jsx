@@ -59,7 +59,7 @@ const Tab1 = ({fullName,location, year, month}) => {
         { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 },
         { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 },
     ]);
-
+    // const [formData, setFormData] = useState([]);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
     const [loopen, setLoOpen] = useState(false);
@@ -153,25 +153,34 @@ const Tab1 = ({fullName,location, year, month}) => {
             console.log('API called successfully:', response.data);
             setRemoteSchema(response.data.form[0].schema);
             setRemoteUiSchema(response.data.form[0].ui_schema);
-            const form_parent = response.data.form_data;
-            setFormData(form_parent[0].data);
+
+
+            if (response.data.form_data.length > 0) {
+                setFormData(response.data.form_data[0].data); // Assumes form_data is wrapped in an object under 'data'
+            } else {
+                // Handle empty response by either keeping the default state or resetting to default
+                setFormData([
+                    { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 },
+                    { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 },
+                    { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 }
+                ]);
+            }
+
+
         } catch (error) {
-            console.error('API call failed:', error);
+            setFormData([
+                { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 },
+                { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 },
+                { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 }
+            ]);
         } finally {
             LoaderClose();
         }
     };
-    //Reloading the forms -- White Beard
-    useEffect(() => {
-        //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-    },[r_schema, r_ui_schema])
 
-    // console log the form data change
-    useEffect(() => {
-        console.log('Form data is changed -', formData)
-    },[formData])
 
-    // fetch backend and replace initialized forms
+
+
     useEffect(() => {
         if (location && year && month) {
             loadFormData();
