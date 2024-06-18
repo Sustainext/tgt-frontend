@@ -398,7 +398,7 @@ const handleQuantity2Change = useCallback((e) => {
         value: newUnit2,
     });
   }, [onChange]);
-  
+
 
   const toggleDropdown = useCallback(() => {
     setIsDropdownActive(!isDropdownActive);
@@ -431,8 +431,8 @@ const handleQuantity2Change = useCallback((e) => {
       <div
         className={`${
           open
-            ? "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[12vw] 2xl:w-[13vw] 3xl:w-[13vw] "
-            : "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[14vw] 2xl:w-[16vw] 3xl:w-[16vw]"
+            ? "sm:w-[5vw] md:w-[10vw] lg:w-[13vw] xl:w-[12vw] 2xl:w-[13vw] 3xl:w-[13vw] "
+            : "sm:w-[5vw] md:w-[10vw] lg:w-[15vw] xl:w-[14vw] 2xl:w-[16vw] 3xl:w-[16vw]"
         }}`}
       >
         <select
@@ -452,8 +452,8 @@ const handleQuantity2Change = useCallback((e) => {
       <div
         className={`${
           open
-            ? "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[12vw] 2xl:w-[13vw] 3xl:w-[13vw] "
-            : "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[14vw] 2xl:w-[16vw] 3xl:w-[16vw]"
+            ? "sm:w-[5vw] md:w-[10vw] lg:w-[13vw] xl:w-[12vw] 2xl:w-[13vw] 3xl:w-[13vw] "
+            : "sm:w-[5vw] md:w-[10vw] lg:w-[15vw] xl:w-[14vw] 2xl:w-[16vw] 3xl:w-[16vw]"
         }} mx-2`}
       >
         <select
@@ -473,8 +473,8 @@ const handleQuantity2Change = useCallback((e) => {
       <div
         className={`${
           open
-            ? "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[15vw] 2xl:w-[18vw] 3xl:w-[18vw] "
-            : "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[18vw] 2xl:w-[22vw] 3xl:w-[22vw]"
+            ? "sm:w-[5vw] md:w-[10vw] lg:w-[18vw] xl:w-[15vw] 2xl:w-[18vw] 3xl:w-[18vw] "
+            : "sm:w-[5vw] md:w-[10vw] lg:w-[20vw] xl:w-[18vw] 2xl:w-[22vw] 3xl:w-[22vw]"
         }} relative`}
       >
         <input
@@ -553,8 +553,8 @@ const handleQuantity2Change = useCallback((e) => {
       <div
         className={`flex justify-center items-center ${
           open
-            ? "sm:w-[6vw] md:w-[12vw] lg:w-[12vw] xl:w-[22vw] 2xl:w-[22vw] 3xl:w-[18vw] "
-            : "sm:w-[6vw] md:w-[12vw] lg:w-[12vw] xl:w-[26vw] 2xl:w-[22vw] 3xl:w-[18vw]"
+            ? "sm:w-[6vw] md:w-[12vw] lg:w-[15vw] xl:w-[22vw] 2xl:w-[22vw] 3xl:w-[18vw] "
+            : "sm:w-[6vw] md:w-[12vw] lg:w-[18vw] xl:w-[26vw] 2xl:w-[22vw] 3xl:w-[18vw]"
         }} mx-2 mt-2 sm:mt-0`}
       >
         {unit_type.includes("Over") ? (
@@ -562,8 +562,8 @@ const handleQuantity2Change = useCallback((e) => {
             <div
               className={`${
                 open
-                  ? "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[12vw] 2xl:w-[13vw] 3xl:w-[13vw] "
-                  : "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[12vw] 2xl:w-[16vw] 3xl:w-[16vw]"
+                  ? "sm:w-[5vw] md:w-[10vw] lg:w-[13vw] xl:w-[12vw] 2xl:w-[13vw] 3xl:w-[13vw] "
+                  : "sm:w-[5vw] md:w-[10vw] lg:w-[18vw] xl:w-[12vw] 2xl:w-[16vw] 3xl:w-[16vw]"
               }} mx-2 mt-2 sm:mt-0`}
             >
               <input
@@ -597,8 +597,8 @@ const handleQuantity2Change = useCallback((e) => {
             <div
               className={`${
                 open
-                  ? "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[12vw] 2xl:w-[13vw] 3xl:w-[13vw] "
-                  : "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[12vw] 2xl:w-[16vw] 3xl:w-[16vw]"
+                  ? "sm:w-[5vw] md:w-[10vw] lg:w-[13vw] xl:w-[12vw] 2xl:w-[13vw] 3xl:w-[13vw] "
+                  : "sm:w-[5vw] md:w-[10vw] lg:w-[18vw] xl:w-[12vw] 2xl:w-[16vw] 3xl:w-[16vw]"
               }} mx-2 mt-2 sm:mt-0`}
             >
               <input
@@ -635,8 +635,8 @@ const handleQuantity2Change = useCallback((e) => {
             <div
               className={`${
                 open
-                  ? "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[21vw] 2xl:w-[13vw] 3xl:w-[13vw] "
-                  : "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[26vw] 2xl:w-[16vw] 3xl:w-[16vw]"
+                  ? "sm:w-[5vw] md:w-[10vw] lg:w-[13vw] xl:w-[21vw] 2xl:w-[13vw] 3xl:w-[13vw] "
+                  : "sm:w-[5vw] md:w-[10vw] lg:w-[18vw] xl:w-[26vw] 2xl:w-[16vw] 3xl:w-[16vw]"
               }} mx-2 mt-2 sm:mt-0`}
             >
               <input
