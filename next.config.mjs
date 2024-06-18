@@ -35,6 +35,7 @@ const nextConfig = {
         // }
         return config;
     },
+    distDir: 'custom_build',
     experimental: {
         missingSuspenseWithCSRBailout: false,
       },
