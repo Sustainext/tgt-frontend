@@ -215,6 +215,7 @@ const Purchased = ({location, year, month}) => {
   const [r_ui_schema, setRemoteUiSchema] = useState({})
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
+
   const getAuthToken = () => {
       if (typeof window !== 'undefined') {
           return localStorage.getItem('token')?.replace(/"/g, "");
@@ -312,7 +313,7 @@ const Purchased = ({location, year, month}) => {
           LoaderClose();
       }
   };
-  //Reloading the forms 
+  //Reloading the forms
   useEffect(() => {
       //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
   },[r_schema, r_ui_schema])

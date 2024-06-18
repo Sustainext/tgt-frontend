@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import valentaimage from "../../../../../public/sustainext.png"; // Update the import path
@@ -15,7 +16,7 @@ function CoverSheet({
   const [error, setError] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
 
-  const reportname = localStorage.getItem("reportorgname");
+  const reportname = typeof window !== 'undefined' ? localStorage.getItem("reportname") : '';
 
   useEffect(() => {
     const storedImage = localStorage.getItem("selectedImage");

@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, useEffect, useMemo } from "react";
 import { MdDownload, MdEdit, MdDelete, MdKeyboardArrowDown, MdKeyboardArrowUp, MdOutlineWarningAmber } from "react-icons/md";
 import { useRouter } from 'next/navigation';

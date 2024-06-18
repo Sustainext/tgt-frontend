@@ -410,20 +410,30 @@ const Structure = () => {
   const levelLabels = ['Organisation', 'Corporate Entity', 'Location'];
   const [hData, setHData] = useState([]);
   const [rawData, setRawData] = useState([]);
-  const [token,setToken]=useState(localStorage.getItem('token').replace(/"/g, ''));
-
+  // const [token,setToken]=useState(localStorage.getItem('token').replace(/"/g, ''));
+  const getAuthToken = () => {
+    if (typeof window !== 'undefined') {
+        return localStorage.getItem('token')?.replace(/"/g, "");
+    }
+    return '';
+};
+const token = getAuthToken();
   // useEffect(() => {
   //   const tokenFromLocalStorage = localStorage.getItem('token');
   //   if (tokenFromLocalStorage) {
   //     setToken(tokenFromLocalStorage.replace(/"/g, ''));
   //   }
   // }, []);
-
-  const options = {
-    headers : {
-      Authorization:`Bearer ${token}`
-    }
-  }
+  let axiosConfig = {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  };
+  // const options = {
+  //   headers : {
+  //     Authorization:`Bearer ${token}`
+  //   }
+  // }
 
   useEffect(() => {
     fetchHierarchy();
@@ -431,7 +441,7 @@ const Structure = () => {
 
   const fetchHierarchy = () => {
     axios
-      .get(`${process.env.BACKEND_API_URL}/structure`,options)
+      .get(`${process.env.BACKEND_API_URL}/structure`,axiosConfig)
       .then((response) => {
         setRawData(response.data);
         const filtered = filterData(response.data);

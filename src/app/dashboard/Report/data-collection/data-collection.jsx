@@ -1,7 +1,6 @@
 'use client'
 import React, { useRef } from "react";
-import JoditEditor from "jodit-react";
-
+import dynamic from 'next/dynamic';
 function Datacollection({
   souresdata,
   display,
@@ -12,7 +11,7 @@ function Datacollection({
 }) {
   const orgname = localStorage.getItem("reportorgname");
   const sourcesData = souresdata.flatMap((corporate) => corporate.sources || []); // Flatten sources if nested
-
+  const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
   // Filter sources by scope
   const scope1 = sourcesData.filter((source) => source.scope_name === "Scope-1");
   const scope2 = sourcesData.filter((source) => source.scope_name === "Scope-2");
