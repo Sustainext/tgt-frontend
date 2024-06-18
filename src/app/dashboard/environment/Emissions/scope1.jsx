@@ -60,21 +60,47 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
   };
 
   const handleCombinedWidgetChange = (index, field, value, activityId, unitType) => {
-    const updatedFormData = [...formData];
-    if (!updatedFormData[index]?.Emission) {
-      updatedFormData[index] = { Emission: {} };
-    }
-    updatedFormData[index].Emission[field] = value;
+    setFormData(prevFormData => {
+      const updatedFormData = [...prevFormData];
+      const currentEmission = updatedFormData[index]?.Emission || {};
   
-    if (activityId !== undefined) {
-      updatedFormData[index].Emission.activity_id = activityId;
-    }
-    if (unitType !== undefined) {
-      updatedFormData[index].Emission.unit_type = unitType;
-    }
+      updatedFormData[index] = {
+        ...updatedFormData[index],
+        Emission: {
+          ...currentEmission,
+          [field]: value,
+          ...(activityId !== undefined && { activity_id: activityId }),
+          ...(unitType !== undefined && { unit_type: unitType })
+        }
+      };
   
-    setFormData(updatedFormData);
+      return updatedFormData;
+    });
   };
+  
+
+  const handleFileWidgetChange = (index, name, url, type, size, uploadDateTime) => {
+    setFormData(prevFormData => {
+      const updatedFormData = [...prevFormData];
+      const currentEmission = updatedFormData[index]?.Emission || {};
+      
+      updatedFormData[index] = {
+        ...updatedFormData[index],
+        Emission: currentEmission,
+        FileUpload: {
+          name: name,
+          url: url,
+          type: type,
+          size: size,
+          uploadDateTime: uploadDateTime
+        }
+      };
+  
+      console.log('Updated form data:', updatedFormData);
+      return updatedFormData;
+    });
+  };
+  
 
   const handleAddNew = () => {
     setFormData((prevFormData) => [...prevFormData, { Emission: {} }]);
@@ -196,6 +222,12 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
                   {...props}
                   scopes="scope1"
                   setFormData={updateFormDatanew}
+                  onChange={({ name,url,type,size,uploadDateTime }) =>
+                    handleFileWidgetChange(
+                      props.id.split("_")[1],
+                      name,url,type,size,uploadDateTime
+                    )
+                  }
                 />
               ),
               EmissonCombinedWidget: (props) => (
