@@ -1,13 +1,21 @@
-'use client';
+"use client";
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { scope1Info, scope2Info, scope3Info } from "../data/scopeInfo";
 import { unitTypes } from "../data/units";
 import { categoriesToAppend, categoryMappings } from "../data/customActivities";
 import axios from "axios";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
-import { GlobalState } from "@/Context/page";
-const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
-  const { open } = GlobalState();
+import debounce from "lodash/debounce";
+
+const CombinedWidget = ({
+  value = {},
+  onChange,
+  scope,
+  year,
+  countryCode,
+  activityCache,
+  updateCache,
+}) => {
   const [category, setCategory] = useState(value.Category || "");
   const [subcategory, setSubcategory] = useState(value.Subcategory || "");
   const [activity, setActivity] = useState(value.Activity || "");
@@ -51,201 +59,171 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
 
   let wildcard = false;
 
-  const fetchActivities = useCallback(async (page = 1, customFetchExecuted = false) => {
-    if (isFetching.current) return;
-    isFetching.current = true;
+  const fetchActivities = useCallback(
+    async (page = 1, customFetchExecuted = false) => {
+      if (isFetching.current) return;
+      isFetching.current = true;
 
-    // Check cache first
-    if (activityCache[subcategory]) {
-      setActivities(activityCache[subcategory]);
-      isFetching.current = false;
-      return;
-    }
-
-    const baseURL = "https://api.climatiq.io";
-    const resultsPerPage = 500;
-    const axiosConfig = {
-      headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_APP_CLIMATIQ_KEY}`,
-        Accept: "application/json",
-        "Content-type": "application/json",
-      },
-    };
-
-    if (!category) {
-      console.warn("Category is required");
-      isFetching.current = false;
-      return;
-    }
-    if (!subcategory) {
-      console.warn("Subcategory is required");
-      isFetching.current = false;
-      return;
-    }
-    if (!year) {
-      console.warn("Year is required");
-      isFetching.current = false;
-      return;
-    }
-    if (!countryCode) {
-      console.warn("CountryCode is required");
-      isFetching.current = false;
-      return;
-    }
-
-    const region = countryCode || "*";
-    let currentYear = year;
-    if (year == "2024") currentYear = "2023";
-    let wildcardResultZero = false;
-
-    let activitiesData = [];
-    let totalResults = 0;
-    let totalPrivateResults = 0;
-    let totalPages = 1;
-    let totalPagesCustom = 0;
-    let wildcardActivitiesData = [];
-    let yearlyResponseData = [];
-    let newActivitiesData = [];
-    let customFetchData = [];
-    let multipleSourceData = [];
-    let finalActivitiesData = [];
-
-    try {
-      while (page <= totalPages) {
-        console.log(
-          `Fetching activities for category: ${category}, subcategory: ${subcategory}, year: ${year}, region: ${region}, page: ${page}`
-        );
-
-        if (!wildcard) {
-          console.log("Performing initial API call...");
-          const url = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${currentYear}&region=${region}*&category=${subcategory}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;
-          console.log(`API URL: ${url}`);
-
-          const response = await axios.get(url, axiosConfig);
-          activitiesData = [...activitiesData, ...response.data.results];
-          totalResults = response.data.results.length;
-          totalPages = response.data.last_page;
-          totalPrivateResults = activitiesData.reduce((count, activity) => {
-            if (activity.access_type === "private") {
-              count += 1;
-            }
-            return count;
-          }, 0);
-
-          console.log(
-            `Initial call results: ${totalResults} results, ${totalPrivateResults} private results, ${totalPages} total pages`
-          );
-        }
-
-        const effectiveCount = totalResults - totalPrivateResults;
-        if (effectiveCount <= 5) {
-          wildcard = true;
-          console.log(
-            "Switching to wildcard search due to insufficient results"
-          );
-        }
-
-        if (wildcard) {
-          console.log("Performing wildcard API call...");
-          const wildcardResponse = await axios.get(
-            `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${currentYear}&region=*&category=${subcategory}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`,
-            axiosConfig
-          );
-          console.log(`Wildcard API URL: ${wildcardResponse.config.url}`);
-
-          wildcardActivitiesData = [
-            ...wildcardActivitiesData,
-            ...wildcardResponse.data.results,
-          ];
-          totalPages = wildcardResponse.data.last_page;
-
-          console.log(
-            `Wildcard call results: ${wildcardResponse.data.results.length} results, ${totalPages} total pages`
-          );
-
-          if (totalPages === 0) wildcardResultZero = true;
-
-          if (wildcardResultZero) {
-            console.log(
-              "No results with wildcard search, trying previous years"
-            );
-            for (let i = currentYear - 1; i >= 2019; i--) {
-              const yearlyResponse = await axios.get(
-                `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${i}&region=${region}*&category=${subcategory}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`,
-                axiosConfig
-              );
-              const yearlyActivitiesData = yearlyResponse.data.results;
-              totalPages = yearlyResponse.data.last_page;
-              yearlyResponseData = [
-                ...yearlyResponseData,
-                ...yearlyActivitiesData,
-              ];
-              console.log(
-                `Yearly results for ${i}: ${yearlyActivitiesData.length}`
-              );
-              if (yearlyActivitiesData.length !== 0) break;
-            }
-          }
-
-          newActivitiesData = wildcardActivitiesData.filter(
-            (activity) => activity.access_type !== "private"
-          );
-
-          const CombinedActivitiesData = [
-            ...activitiesData,
-            ...newActivitiesData,
-            ...yearlyResponseData,
-          ];
-
-          console.log(
-            "custom",
-            categoriesToAppend.includes(subcategory),
-            categoryMappings[subcategory],
-            !customFetchExecuted
-          );
-
-          if (
-            categoriesToAppend.includes(subcategory) &&
-            categoryMappings[subcategory] &&
-            !customFetchExecuted
-          ) {
-            console.log("Executing custom fetch logic");
-            for (const entry of categoryMappings[subcategory]) {
-              const source = entry.source;
-              const year = entry.year;
-
-              const url = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&source=${source}&year=${year}&region=*&category=${subcategory}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;
-              console.log(`Custom fetch URL: ${url}`);
-
-              const response = await axios.get(url, axiosConfig);
-              customFetchData = customFetchData.concat(response.data.results);
-              finalActivitiesData = [
-                ...customFetchData,
-                ...activitiesData,
-                ...newActivitiesData,
-                ...yearlyResponseData,
-              ];
-              totalPagesCustom = response.data.last_page;
-            }
-            customFetchExecuted = true;
-          }
-
-          console.log(
-            "Final activities data length:",
-            [...CombinedActivitiesData, ...customFetchData].length
-          );
-          setActivities([...CombinedActivitiesData, ...customFetchData]);
-          // Cache activities
-          updateCache(subcategory, [...CombinedActivitiesData, ...customFetchData]);
-          page++;
-        }
+      // Check cache first
+      if (activityCache[subcategory]) {
+        setActivities(activityCache[subcategory]);
+        isFetching.current = false;
+        return;
       }
-    } catch (error) {
-      console.error("Error fetching data from different regions: ", error);
-    } finally {
-      isFetching.current = false;
-    }
-  }, [category, subcategory, year, countryCode, activityCache, updateCache]);
+
+      const baseURL = "https://api.climatiq.io";
+      const resultsPerPage = 500;
+      const axiosConfig = {
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_APP_CLIMATIQ_KEY}`,
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+      };
+
+      if (!category) {
+        console.warn("Category is required");
+        isFetching.current = false;
+        return;
+      }
+      if (!subcategory) {
+        console.warn("Subcategory is required");
+        isFetching.current = false;
+        return;
+      }
+      if (!year) {
+        console.warn("Year is required");
+        isFetching.current = false;
+        return;
+      }
+      if (!countryCode) {
+        console.warn("CountryCode is required");
+        isFetching.current = false;
+        return;
+      }
+
+      const region = countryCode || "*";
+      let currentYear = year;
+      if (year == "2024") currentYear = "2023";
+      let wildcardResultZero = false;
+
+      let activitiesData = [];
+      let totalResults = 0;
+      let totalPrivateResults = 0;
+      let totalPages = 1;
+      let totalPagesCustom = 0;
+      let wildcardActivitiesData = [];
+      let yearlyResponseData = [];
+      let newActivitiesData = [];
+      let customFetchData = [];
+      let multipleSourceData = [];
+      let finalActivitiesData = [];
+
+      try {
+        while (page <= totalPages) {
+          if (!wildcard) {
+            console.log("Performing initial API call...");
+            const url = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${currentYear}&region=${region}*&category=${subcategory}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;
+            console.log(`API URL: ${url}`);
+
+            const response = await axios.get(url, axiosConfig);
+            activitiesData = [...activitiesData, ...response.data.results];
+            totalResults = response.data.results.length;
+            totalPages = response.data.last_page;
+            totalPrivateResults = activitiesData.reduce((count, activity) => {
+              if (activity.access_type === "private") {
+                count += 1;
+              }
+              return count;
+            }, 0);
+          }
+
+          const effectiveCount = totalResults - totalPrivateResults;
+          if (effectiveCount <= 5) {
+            wildcard = true;
+          }
+
+          if (wildcard) {
+            const wildcardResponse = await axios.get(
+              `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${currentYear}&region=*&category=${subcategory}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`,
+              axiosConfig
+            );
+
+            wildcardActivitiesData = [
+              ...wildcardActivitiesData,
+              ...wildcardResponse.data.results,
+            ];
+            totalPages = wildcardResponse.data.last_page;
+
+            if (totalPages === 0) wildcardResultZero = true;
+
+            if (wildcardResultZero) {
+              for (let i = currentYear - 1; i >= 2019; i--) {
+                const yearlyResponse = await axios.get(
+                  `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${i}&region=${region}*&category=${subcategory}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`,
+                  axiosConfig
+                );
+                const yearlyActivitiesData = yearlyResponse.data.results;
+                totalPages = yearlyResponse.data.last_page;
+                yearlyResponseData = [
+                  ...yearlyResponseData,
+                  ...yearlyActivitiesData,
+                ];
+                if (yearlyActivitiesData.length !== 0) break;
+              }
+            }
+
+            newActivitiesData = wildcardActivitiesData.filter(
+              (activity) => activity.access_type !== "private"
+            );
+
+            const CombinedActivitiesData = [
+              ...activitiesData,
+              ...newActivitiesData,
+              ...yearlyResponseData,
+            ];
+
+            if (
+              categoriesToAppend.includes(subcategory) &&
+              categoryMappings[subcategory] &&
+              !customFetchExecuted
+            ) {
+              for (const entry of categoryMappings[subcategory]) {
+                const source = entry.source;
+                const year = entry.year;
+
+                const url = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&source=${source}&year=${year}&region=*&category=${subcategory}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;
+
+                const response = await axios.get(url, axiosConfig);
+                customFetchData = customFetchData.concat(response.data.results);
+                finalActivitiesData = [
+                  ...customFetchData,
+                  ...activitiesData,
+                  ...newActivitiesData,
+                  ...yearlyResponseData,
+                ];
+                totalPagesCustom = response.data.last_page;
+              }
+              customFetchExecuted = true;
+            }
+
+            setActivities([...CombinedActivitiesData, ...customFetchData]);
+            // Cache activities
+            updateCache(subcategory, [
+              ...CombinedActivitiesData,
+              ...customFetchData,
+            ]);
+            page++;
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching data from different regions: ", error);
+      } finally {
+        isFetching.current = false;
+      }
+    },
+    [category, subcategory, year, countryCode, activityCache, updateCache]
+  );
 
   const fetchSubcategories = useCallback(async () => {
     const selectedCategory = scopeMappings[scope].find((info) =>
@@ -256,9 +234,6 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
       : [];
     setSubcategories(newSubcategories);
     fetchActivities();
-    // if (!newSubcategories.find((sub) => sub === value.Subcategory)) {
-    //   setSubcategory("");
-    // }
   }, [category, scope, value.Subcategory, fetchActivities]);
 
   useEffect(() => {
@@ -287,81 +262,82 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
     setUnits(unitConfig ? Object.values(unitConfig.units).flat() : []);
   }, [unit_type]);
 
-  const handleCategoryChange = useCallback((value) => {
-    setCategory(value);
-    // setSubcategory("");
-    // setActivity("");
-    // setQuantity("");
-    // setUnit("");
-    // setActivityId("");
-    // setUnitType("");
+  const handleCategoryChange = useCallback(
+    (value) => {
+      setCategory(value);
+      const selectedCategory = scope1Info.find((info) =>
+        info.Category.some((c) => c.name === value)
+      );
+      const subCategories = selectedCategory
+        ? selectedCategory.Category.find((c) => c.name === value).SubCategory
+        : [];
 
-    const selectedCategory = scope1Info.find((info) =>
-      info.Category.some((c) => c.name === value)
-    );
-    const subCategories = selectedCategory
-      ? selectedCategory.Category.find((c) => c.name === value).SubCategory
-      : [];
+      setSubcategories(subCategories);
+      onChange({
+        type: "Category",
+        value,
+      });
+    },
+    [onChange]
+  );
 
-    setSubcategories(subCategories);
-    onChange({
-      type: "Category",
-      value,
-    });
-  }, [onChange]);
+  const handleSubcategoryChange = useCallback(
+    (value) => {
+      setSubcategory(value);
+      onChange({
+        type: "Subcategory",
+        value,
+      });
+    },
+    [onChange]
+  );
 
-  const handleSubcategoryChange = useCallback((value) => {
-    setSubcategory(value);
-    // setActivity("");
-    // setQuantity("");
-    // setUnit("");
-    // setActivityId("");
-    // setUnitType("");
+  const handleActivityChange = useCallback(
+    (value) => {
+      setActivity(value);
+      setQuantity("");
+      setUnit("");
 
-    onChange({
-      type: "Subcategory",
-      value,
-    });
-  }, [onChange]);
+      const foundActivity = activities.find(
+        (act) => `${act.name} - (${act.source}) - ${act.unit_type}` === value
+      );
 
-  const handleActivityChange = useCallback((value) => {
-    setActivity(value);
-    setQuantity("");
-    setUnit("");
+      console.log("activity found", foundActivity);
 
-    const foundActivity = activities.find(
-      (act) => `${act.name} - (${act.source}) - ${act.unit_type}` === value
-    );
+      if (foundActivity) {
+        const activityId = foundActivity.activity_id;
+        setActivityId(activityId);
+        setUnitType(foundActivity.unit_type);
+        const unitConfig = unitTypes.find(
+          (u) => u.unit_type === foundActivity.unit_type
+        );
+        setUnits(unitConfig ? Object.values(unitConfig.units).flat() : []);
+      } else {
+        setActivityId("");
+        setUnitType("");
+        setUnits([]);
+      }
 
-    console.log('activity found', foundActivity);
+      onChange({
+        type: "Activity",
+        value,
+        activityId: foundActivity ? foundActivity.activity_id : "",
+        unitType: foundActivity ? foundActivity.unit_type : "",
+      });
+    },
+    [category, subcategory, activities, onChange]
+  );
 
-    if (foundActivity) {
-      const activityId = foundActivity.activity_id;
-      setActivityId(activityId);
-      setUnitType(foundActivity.unit_type);
-      const unitConfig = unitTypes.find((u) => u.unit_type === foundActivity.unit_type);
-      setUnits(unitConfig ? Object.values(unitConfig.units).flat() : []);
-    } else {
-      setActivityId("");
-      setUnitType("");
-      setUnits([]);
-    }
-
-    onChange({
-      type: "Activity",
-      value,
-      activityId: foundActivity ? foundActivity.activity_id : "",
-      unitType: foundActivity ? foundActivity.unit_type : "",
-    });
-  }, [category, subcategory, activities, onChange]);
-
-  const debouncedHandleQuantityChange = useCallback(debounce((value) => {
-    setQuantity(value);
-    onChange({
-      type: "Quantity",
-      value,
-    });
-  }, 300), [category, subcategory, activity, unit, activity_id, unit_type, onChange]);
+  const debouncedHandleQuantityChange = useCallback(
+    debounce((value) => {
+      setQuantity(value);
+      onChange({
+        type: "Quantity",
+        value,
+      });
+    }, 300),
+    [category, subcategory, activity, unit, activity_id, unit_type, onChange]
+  );
 
   const handleQuantityChange = (e) => {
     const value = e.target.value;
@@ -369,13 +345,24 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
     debouncedHandleQuantityChange(value);
   };
 
-  const handleUnitChange = useCallback((value) => {
-    setUnit(value);
-    onChange({
-      type: "Unit",
-      value,
-    });
-  }, [category, subcategory, activity, quantity, activity_id, unit_type, onChange]);
+  const handleUnitChange = useCallback(
+    (value) => {
+      setUnit(value);
+      onChange({
+        type: "Unit",
+        value,
+      });
+    },
+    [
+      category,
+      subcategory,
+      activity,
+      quantity,
+      activity_id,
+      unit_type,
+      onChange,
+    ]
+  );
 
   const toggleDropdown = useCallback(() => {
     setIsDropdownActive(!isDropdownActive);
@@ -405,54 +392,72 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
 
   return (
     <div className="flex mb-5">
-    <div className={`${open ? "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[12vw] 2xl:w-[13vw] 3xl:w-[13vw] " : "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[14vw] 2xl:w-[16vw] 3xl:w-[16vw]"}}`}>
-      <select
-        value={category}
-        onChange={(e) => handleCategoryChange(e.target.value)}
-        className="w-full py-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 border-b-2 border-gray-300"
+      <div
+        className={`${
+          open
+            ? "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[12vw] 2xl:w-[13vw] 3xl:w-[13vw] "
+            : "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[14vw] 2xl:w-[16vw] 3xl:w-[16vw]"
+        }}`}
       >
-        <option value="">Select Category</option>
-        {baseCategories.map((categoryName, index) => (
-          <option key={index} value={categoryName}>
-            {categoryName}
-          </option>
-        ))}
-      </select>
-    </div>
+        <select
+          value={category}
+          onChange={(e) => handleCategoryChange(e.target.value)}
+          className="w-full py-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 border-b-2 border-gray-300"
+        >
+          <option value="">Select Category</option>
+          {baseCategories.map((categoryName, index) => (
+            <option key={index} value={categoryName}>
+              {categoryName}
+            </option>
+          ))}
+        </select>
+      </div>
 
-    <div className={`${open ? "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[12vw] 2xl:w-[13vw] 3xl:w-[13vw] " : "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[14vw] 2xl:w-[16vw] 3xl:w-[16vw]"}} mx-2`}>
-      <select
-        value={subcategory}
-        onChange={(e) => handleSubcategoryChange(e.target.value)}
-        className="w-full py-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 border-b-2 border-gray-300"
+      <div
+        className={`${
+          open
+            ? "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[12vw] 2xl:w-[13vw] 3xl:w-[13vw] "
+            : "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[14vw] 2xl:w-[16vw] 3xl:w-[16vw]"
+        }} mx-2`}
       >
-        <option value="">Select Subcategory</option>
-        {subcategories.map((sub, index) => (
-          <option key={index} value={sub}>
-            {sub}
-          </option>
-        ))}
-      </select>
-    </div>
+        <select
+          value={subcategory}
+          onChange={(e) => handleSubcategoryChange(e.target.value)}
+          className="w-full py-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 border-b-2 border-gray-300"
+        >
+          <option value="">Select Subcategory</option>
+          {subcategories.map((sub, index) => (
+            <option key={index} value={sub}>
+              {sub}
+            </option>
+          ))}
+        </select>
+      </div>
 
-    <div className={`${open ? "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[15vw] 2xl:w-[18vw] 3xl:w-[18vw] " : "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[18vw] 2xl:w-[22vw] 3xl:w-[22vw]"}} mx-2 relative`}>
-      <input
-        ref={inputRef}
-        type="text"
-        placeholder={
-          isFetching.current
-            ? "Fetching activities..."
-            : activities.length === 0
-            ? "No relevant activities found"
-            : activity
-            ? activity
-            : "Select Activity"
-        }
-        value={activitySearch}
-        onChange={(e) => setActivitySearch(e.target.value)}
-        onFocus={toggleDropdown}
-        className="w-full px-4 py-2 mx-2 mb-2 rounded focus:outline-none"
-      />
+      <div
+        className={`${
+          open
+            ? "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[15vw] 2xl:w-[18vw] 3xl:w-[18vw] "
+            : "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[18vw] 2xl:w-[22vw] 3xl:w-[22vw]"
+        }} mx-2 relative`}
+      >
+        <input
+          ref={inputRef}
+          type="text"
+          placeholder={
+            isFetching.current
+              ? "Fetching activities..."
+              : activities.length === 0
+              ? "No relevant activities found"
+              : activity
+              ? activity
+              : "Select Activity"
+          }
+          value={activitySearch}
+          onChange={(e) => setActivitySearch(e.target.value)}
+          onFocus={toggleDropdown}
+          className="w-full px-4 py-2 mx-2 mb-2 rounded focus:outline-none"
+        />
 
         {isDropdownActive && (
           <select
@@ -497,38 +502,139 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode }) => {
           onClick={toggleDropdown}
         >
           {isDropdownActive ? (
-            <FaAngleUp className="text-neutral-500" style={{ fontSize: "20px" }} />
+            <FaAngleUp
+              className="text-neutral-500"
+              style={{ fontSize: "20px" }}
+            />
           ) : (
-            <FaAngleDown className="text-neutral-500" style={{ fontSize: "20px" }} />
+            <FaAngleDown
+              className="text-neutral-500"
+              style={{ fontSize: "20px" }}
+            />
           )}
         </div>
       </div>
-
-    <div  className={`${open ? "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[12vw] 2xl:w-[13vw] 3xl:w-[13vw] " : "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[12vw] 2xl:w-[16vw] 3xl:w-[16vw]"}} mx-2 mt-2 sm:mt-0`}>
-      <input
-        ref={quantityRef}
-        type="number"
-        value={quantity}
-        onChange={(e) => handleQuantityChange(e.target.value)}
-        className="w-full py-1 mt-2 pl-2 rounded-sm border-b focus:outline-none text-right"
-      />
-    </div>
-
-    <div className={`${open ? "sm:w-[5vw] md:w-[5vw] lg:w-[5vw] xl:w-[7vw] 2xl:w-[6vw] 3xl:w-[6vw] " : "sm:w-[5vw] md:w-[5vw] lg:w-[5vw] xl:w-[7vw] 2xl:w-[5vw] 3xl:w-[5vw]"}} mx-2`}>
-      <select
-        value={unit}
-        onChange={(e) => handleUnitChange(e.target.value)}
-        className="w-[100px] text-center cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none mt-1.5 font-bold text-sm bg-sky-600 text-white"
+      <div
+        className={`${
+          open
+            ? "sm:w-[6vw] md:w-[12vw] lg:w-[12vw] xl:w-[16vw] 2xl:w-[22vw] 3xl:w-[18vw] "
+            : "sm:w-[6vw] md:w-[12vw] lg:w-[12vw] xl:w-[16vw] 2xl:w-[22vw] 3xl:w-[18vw]"
+        }} mx-2 mt-2 sm:mt-0`}
       >
-        <option value="">Unit</option>
-        {units.map((unit, index) => (
-          <option key={index} value={unit}>
-            {unit}
-          </option>
-        ))}
-      </select>
+        {/* {unit_type.includes("Over") ? (
+          <>
+            <div
+              className={`${
+                open
+                  ? "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[12vw] 2xl:w-[13vw] 3xl:w-[13vw] "
+                  : "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[12vw] 2xl:w-[16vw] 3xl:w-[16vw]"
+              }} mx-2 mt-2 sm:mt-0`}
+            >
+              <input
+                ref={quantityRef}
+                type="number"
+                value={quantity}
+                onChange={handleQuantityChange}
+                className="w-full py-1 mt-2 pl-2 rounded-sm border-b focus:outline-none"
+              />
+            </div>
+            <div
+              className={`${
+                open
+                  ? "sm:w-[5vw] md:w-[5vw] lg:w-[5vw] xl:w-[7vw] 2xl:w-[6vw] 3xl:w-[6vw] "
+                  : "sm:w-[5vw] md:w-[5vw] lg:w-[5vw] xl:w-[7vw] 2xl:w-[5vw] 3xl:w-[5vw]"
+              }} mx-2`}
+            >
+              <select
+                value={unit}
+                onChange={(e) => handleUnitChange(e.target.value)}
+                className="w-[100px] text-center cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none mt-1.5 font-bold text-sm bg-sky-600 text-white"
+              >
+                <option value="">Unit</option>
+                {units.map((unit, index) => (
+                  <option key={index} value={unit}>
+                    {unit}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div
+              className={`${
+                open
+                  ? "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[12vw] 2xl:w-[13vw] 3xl:w-[13vw] "
+                  : "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[12vw] 2xl:w-[16vw] 3xl:w-[16vw]"
+              }} mx-2 mt-2 sm:mt-0`}
+            >
+              <input
+                ref={quantityRef}
+                type="number"
+                value={quantity}
+                onChange={handleQuantityChange}
+                className="w-full py-1 mt-2 pl-2 rounded-sm border-b focus:outline-none"
+              />
+            </div>
+            <div
+              className={`${
+                open
+                  ? "sm:w-[5vw] md:w-[5vw] lg:w-[5vw] xl:w-[7vw] 2xl:w-[6vw] 3xl:w-[6vw] "
+                  : "sm:w-[5vw] md:w-[5vw] lg:w-[5vw] xl:w-[7vw] 2xl:w-[5vw] 3xl:w-[5vw]"
+              }} mx-2`}
+            >
+              <select
+                value={unit}
+                onChange={(e) => handleUnitChange(e.target.value)}
+                className="w-[100px] text-center cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none mt-1.5 font-bold text-sm bg-sky-600 text-white"
+              >
+                <option value="">Unit</option>
+                {units.map((unit, index) => (
+                  <option key={index} value={unit}>
+                    {unit}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </>
+        ) : (
+          <>
+            <div
+              className={`${
+                open
+                  ? "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[12vw] 2xl:w-[13vw] 3xl:w-[13vw] "
+                  : "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[12vw] 2xl:w-[16vw] 3xl:w-[16vw]"
+              }} mx-2 mt-2 sm:mt-0`}
+            >
+              <input
+                ref={quantityRef}
+                type="number"
+                value={quantity}
+                onChange={handleQuantityChange}
+                className="w-full py-1 mt-2 pl-2 rounded-sm border-b focus:outline-none"
+              />
+            </div>
+            <div
+              className={`${
+                open
+                  ? "sm:w-[5vw] md:w-[5vw] lg:w-[5vw] xl:w-[7vw] 2xl:w-[6vw] 3xl:w-[6vw] "
+                  : "sm:w-[5vw] md:w-[5vw] lg:w-[5vw] xl:w-[7vw] 2xl:w-[5vw] 3xl:w-[5vw]"
+              }} mx-2`}
+            >
+              <select
+                value={unit}
+                onChange={(e) => handleUnitChange(e.target.value)}
+                className="w-[100px] text-center cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none mt-1.5 font-bold text-sm bg-sky-600 text-white"
+              >
+                <option value="">Unit</option>
+                {units.map((unit, index) => (
+                  <option key={index} value={unit}>
+                    {unit}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </>
+        )} */}
+      </div>
     </div>
-  </div>
   );
 };
 
