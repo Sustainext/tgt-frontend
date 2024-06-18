@@ -6,6 +6,7 @@ import { categoriesToAppend, categoryMappings } from "../data/customActivities";
 import axios from "axios";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import debounce from "lodash/debounce";
+import { GlobalState } from "@/Context/page";
 
 const CombinedWidget = ({
   value = {},
@@ -21,11 +22,18 @@ const CombinedWidget = ({
   const [activity, setActivity] = useState(value.Activity || "");
   const [quantity, setQuantity] = useState(value.Quantity || "");
   const [unit, setUnit] = useState(value.Unit || "");
+
+  const [quantity2, setQuantity2] = useState(value.Quantity2 || "");
+  const [unit2, setUnit2] = useState(value.Unit2 || "");
+
   const [activity_id, setActivityId] = useState(value.activity_id || "");
   const [unit_type, setUnitType] = useState(value.unit_type || "");
   const [subcategories, setSubcategories] = useState([]);
   const [activities, setActivities] = useState([]);
   const [units, setUnits] = useState([]);
+
+  const [units2, setUnits2] = useState([]);
+
   const [baseCategories, setBaseCategories] = useState([]);
   const [activitySearch, setActivitySearch] = useState("");
   const [isDropdownActive, setIsDropdownActive] = useState(false);
@@ -33,6 +41,8 @@ const CombinedWidget = ({
   const dropdownRef = useRef(null);
   const inputRef = useRef(null);
   const quantityRef = useRef(null);
+
+  const { open } = GlobalState();
 
   const scopeMappings = {
     scope1: scope1Info,
@@ -257,10 +267,17 @@ const CombinedWidget = ({
     }
   }, [activities, value.Activity]);
 
+  // useEffect(() => {
+  //   const unitConfig = unitTypes.find((u) => u.unit_type === unit_type);
+  //   setUnits(unitConfig ? Object.values(unitConfig.units).flat() : []);
+  // }, [unit_type]);
+
   useEffect(() => {
     const unitConfig = unitTypes.find((u) => u.unit_type === unit_type);
     setUnits(unitConfig ? Object.values(unitConfig.units).flat() : []);
-  }, [unit_type]);
+    setUnits2(unitConfig ? Object.values(unitConfig.units).flat() : []);
+}, [unit_type]);
+
 
   const handleCategoryChange = useCallback(
     (value) => {
@@ -345,6 +362,15 @@ const CombinedWidget = ({
     debouncedHandleQuantityChange(value);
   };
 
+const handleQuantity2Change = useCallback((e) => {
+  const newQuantity2 = e.target.value;
+  setQuantity2(newQuantity2);
+  onChange({
+      type: "Quantity2",
+      value: newQuantity2,
+  });
+}, [onChange]);
+
   const handleUnitChange = useCallback(
     (value) => {
       setUnit(value);
@@ -363,6 +389,16 @@ const CombinedWidget = ({
       onChange,
     ]
   );
+
+  const handleUnit2Change = useCallback((e) => {
+    const newUnit2 = e.target.value;
+    setUnit2(newUnit2);
+    onChange({
+        type: "Unit2",
+        value: newUnit2,
+    });
+  }, [onChange]);
+  
 
   const toggleDropdown = useCallback(() => {
     setIsDropdownActive(!isDropdownActive);
@@ -439,7 +475,7 @@ const CombinedWidget = ({
           open
             ? "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[15vw] 2xl:w-[18vw] 3xl:w-[18vw] "
             : "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[18vw] 2xl:w-[22vw] 3xl:w-[22vw]"
-        }} mx-2 relative`}
+        }} relative`}
       >
         <input
           ref={inputRef}
@@ -456,7 +492,7 @@ const CombinedWidget = ({
           value={activitySearch}
           onChange={(e) => setActivitySearch(e.target.value)}
           onFocus={toggleDropdown}
-          className="w-full px-4 py-2 mx-2 mb-2 rounded focus:outline-none"
+          className="w-full pr-4 py-2 mx-2 mb-2 rounded focus:outline-none"
         />
 
         {isDropdownActive && (
@@ -515,13 +551,13 @@ const CombinedWidget = ({
         </div>
       </div>
       <div
-        className={`${
+        className={`flex justify-center items-center ${
           open
-            ? "sm:w-[6vw] md:w-[12vw] lg:w-[12vw] xl:w-[16vw] 2xl:w-[22vw] 3xl:w-[18vw] "
-            : "sm:w-[6vw] md:w-[12vw] lg:w-[12vw] xl:w-[16vw] 2xl:w-[22vw] 3xl:w-[18vw]"
+            ? "sm:w-[6vw] md:w-[12vw] lg:w-[12vw] xl:w-[22vw] 2xl:w-[22vw] 3xl:w-[18vw] "
+            : "sm:w-[6vw] md:w-[12vw] lg:w-[12vw] xl:w-[26vw] 2xl:w-[22vw] 3xl:w-[18vw]"
         }} mx-2 mt-2 sm:mt-0`}
       >
-        {/* {unit_type.includes("Over") ? (
+        {unit_type.includes("Over") ? (
           <>
             <div
               className={`${
@@ -535,20 +571,20 @@ const CombinedWidget = ({
                 type="number"
                 value={quantity}
                 onChange={handleQuantityChange}
-                className="w-full py-1 mt-2 pl-2 rounded-sm border-b focus:outline-none"
+                className="w-full py-1 mt-2 rounded-sm border-b focus:outline-none"
               />
             </div>
             <div
               className={`${
                 open
-                  ? "sm:w-[5vw] md:w-[5vw] lg:w-[5vw] xl:w-[7vw] 2xl:w-[6vw] 3xl:w-[6vw] "
-                  : "sm:w-[5vw] md:w-[5vw] lg:w-[5vw] xl:w-[7vw] 2xl:w-[5vw] 3xl:w-[5vw]"
-              }} mx-2`}
+                  ? "sm:w-[5vw] md:w-[5vw] lg:w-[5vw] xl:w-[5vw] 2xl:w-[6vw] 3xl:w-[6vw] "
+                  : "sm:w-[5vw] md:w-[5vw] lg:w-[5vw] xl:w-[5vw] 2xl:w-[5vw] 3xl:w-[5vw]"
+              }}`}
             >
               <select
                 value={unit}
                 onChange={(e) => handleUnitChange(e.target.value)}
-                className="w-[100px] text-center cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none mt-1.5 font-bold text-sm bg-sky-600 text-white"
+                className="w-[50px] text-center cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none mt-1.5 font-bold text-sm bg-sky-600 text-white"
               >
                 <option value="">Unit</option>
                 {units.map((unit, index) => (
@@ -568,22 +604,22 @@ const CombinedWidget = ({
               <input
                 ref={quantityRef}
                 type="number"
-                value={quantity}
-                onChange={handleQuantityChange}
-                className="w-full py-1 mt-2 pl-2 rounded-sm border-b focus:outline-none"
+                value={quantity2}
+                onChange={handleQuantity2Change}
+                className="w-full py-1 mt-2 rounded-sm border-b focus:outline-none"
               />
             </div>
             <div
               className={`${
                 open
-                  ? "sm:w-[5vw] md:w-[5vw] lg:w-[5vw] xl:w-[7vw] 2xl:w-[6vw] 3xl:w-[6vw] "
-                  : "sm:w-[5vw] md:w-[5vw] lg:w-[5vw] xl:w-[7vw] 2xl:w-[5vw] 3xl:w-[5vw]"
-              }} mx-2`}
+                  ? "sm:w-[5vw] md:w-[5vw] lg:w-[5vw] xl:w-[5vw] 2xl:w-[6vw] 3xl:w-[6vw] "
+                  : "sm:w-[5vw] md:w-[5vw] lg:w-[5vw] xl:w-[5vw] 2xl:w-[5vw] 3xl:w-[5vw]"
+              }}`}
             >
               <select
-                value={unit}
-                onChange={(e) => handleUnitChange(e.target.value)}
-                className="w-[100px] text-center cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none mt-1.5 font-bold text-sm bg-sky-600 text-white"
+                value={unit2}
+                onChange={(e) => handleUnit2Change(e.target.value)}
+                className="w-[50px] text-center cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none mt-1.5 font-bold text-sm bg-sky-600 text-white"
               >
                 <option value="">Unit</option>
                 {units.map((unit, index) => (
@@ -599,8 +635,8 @@ const CombinedWidget = ({
             <div
               className={`${
                 open
-                  ? "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[12vw] 2xl:w-[13vw] 3xl:w-[13vw] "
-                  : "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[12vw] 2xl:w-[16vw] 3xl:w-[16vw]"
+                  ? "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[21vw] 2xl:w-[13vw] 3xl:w-[13vw] "
+                  : "sm:w-[5vw] md:w-[10vw] lg:w-[10vw] xl:w-[26vw] 2xl:w-[16vw] 3xl:w-[16vw]"
               }} mx-2 mt-2 sm:mt-0`}
             >
               <input
@@ -614,14 +650,14 @@ const CombinedWidget = ({
             <div
               className={`${
                 open
-                  ? "sm:w-[5vw] md:w-[5vw] lg:w-[5vw] xl:w-[7vw] 2xl:w-[6vw] 3xl:w-[6vw] "
-                  : "sm:w-[5vw] md:w-[5vw] lg:w-[5vw] xl:w-[7vw] 2xl:w-[5vw] 3xl:w-[5vw]"
-              }} mx-2`}
+                  ? "sm:w-[5vw] md:w-[5vw] lg:w-[5vw] xl:w-[5vw] 2xl:w-[6vw] 3xl:w-[6vw] "
+                  : "sm:w-[5vw] md:w-[5vw] lg:w-[5vw] xl:w-[5vw] 2xl:w-[5vw] 3xl:w-[5vw]"
+              }}`}
             >
               <select
                 value={unit}
                 onChange={(e) => handleUnitChange(e.target.value)}
-                className="w-[100px] text-center cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none mt-1.5 font-bold text-sm bg-sky-600 text-white"
+                className="w-[50px] text-center cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none mt-1.5 font-bold text-sm bg-sky-600 text-white"
               >
                 <option value="">Unit</option>
                 {units.map((unit, index) => (
@@ -632,7 +668,7 @@ const CombinedWidget = ({
               </select>
             </div>
           </>
-        )} */}
+        )}
       </div>
     </div>
   );
