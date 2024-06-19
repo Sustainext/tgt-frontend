@@ -361,7 +361,7 @@ const CombinedWidget = ({ value = {}, onChange, scope, year, countryCode, activi
       type: "Quantity",
       value,
     });
-  }, 300), [category, subcategory, activity, unit, activity_id, unit_type, onChange]);
+  }, 3000), [category, subcategory, activity, unit, activity_id, unit_type, onChange]);
 
   const handleQuantityChange = (e) => {
     const value = e.target.value;
