@@ -267,17 +267,26 @@ const CombinedWidget = ({
     }
   }, [activities, value.Activity]);
 
-  // useEffect(() => {
-  //   const unitConfig = unitTypes.find((u) => u.unit_type === unit_type);
-  //   setUnits(unitConfig ? Object.values(unitConfig.units).flat() : []);
-  // }, [unit_type]);
-
   useEffect(() => {
-    const unitConfig = unitTypes.find((u) => u.unit_type === unit_type);
-    setUnits(unitConfig ? Object.values(unitConfig.units).flat() : []);
-    setUnits2(unitConfig ? Object.values(unitConfig.units).flat() : []);
-}, [unit_type]);
-
+    console.log("Unit type changed:", unit_type);
+    const unitConfig = unitTypes.find(u => u.unit_type === unit_type);
+    console.log("Unit config found:", unitConfig);
+  
+    if (unitConfig && unitConfig.units) {
+      const unitKeys = Object.keys(unitConfig.units);
+      console.log("Unit keys:", unitKeys);
+      const units1 = unitKeys.length > 0 ? unitConfig.units[unitKeys[0]] : [];
+      const units2 = unitKeys.length > 1 ? unitConfig.units[unitKeys[1]] : [];
+  
+      setUnits(units1);
+      setUnits2(units2);
+    } else {
+      setUnits([]);
+      setUnits2([]);
+    }
+  }, [unit_type]);
+  
+  
 
   const handleCategoryChange = useCallback(
     (value) => {
@@ -328,7 +337,6 @@ const CombinedWidget = ({
         const unitConfig = unitTypes.find(
           (u) => u.unit_type === foundActivity.unit_type
         );
-        setUnits(unitConfig ? Object.values(unitConfig.units).flat() : []);
       } else {
         setActivityId("");
         setUnitType("");
@@ -345,16 +353,28 @@ const CombinedWidget = ({
     [category, subcategory, activities, onChange]
   );
 
-  const debouncedHandleQuantityChange = useCallback(
-    debounce((value) => {
-      setQuantity(value);
-      onChange({
-        type: "Quantity",
-        value,
-      });
-    }, 300),
-    [category, subcategory, activity, unit, activity_id, unit_type, onChange]
-  );
+const debouncedHandleQuantityChange = useCallback(
+  debounce((nextValue) => {
+    setQuantity(nextValue);
+    onChange({
+      type: "Quantity",
+      value: nextValue,
+    });
+  }, 3000),
+  [onChange]
+);
+
+const debouncedHandleQuantity2Change = useCallback(
+  debounce((nextValue) => {
+    setQuantity2(nextValue);
+    onChange({
+      type: "Quantity2",
+      value: nextValue,
+    });
+  }, 3000),
+  [onChange]
+);
+
 
   const handleQuantityChange = (e) => {
     const value = e.target.value;
@@ -362,15 +382,13 @@ const CombinedWidget = ({
     debouncedHandleQuantityChange(value);
   };
 
-const handleQuantity2Change = useCallback((e) => {
-  const newQuantity2 = e.target.value;
-  setQuantity2(newQuantity2);
-  onChange({
-      type: "Quantity2",
-      value: newQuantity2,
-  });
-}, [onChange]);
-
+  const handleQuantity2Change = useCallback((e) => {
+    const value = e.target.value;
+    setQuantity2(value);
+    debouncedHandleQuantity2Change(value);
+  }, [debouncedHandleQuantity2Change]);
+  
+  
   const handleUnitChange = useCallback(
     (value) => {
       setUnit(value);
@@ -390,14 +408,24 @@ const handleQuantity2Change = useCallback((e) => {
     ]
   );
 
-  const handleUnit2Change = useCallback((e) => {
-    const newUnit2 = e.target.value;
-    setUnit2(newUnit2);
-    onChange({
+  const handleUnit2Change = useCallback(
+    (value) => {
+      setUnit2(value);
+      onChange({
         type: "Unit2",
-        value: newUnit2,
-    });
-  }, [onChange]);
+        value,
+      });
+    },
+    [
+      category,
+      subcategory,
+      activity,
+      quantity,
+      activity_id,
+      unit_type,
+      onChange,
+    ]
+  );
   
 
   const toggleDropdown = useCallback(() => {
@@ -622,7 +650,7 @@ const handleQuantity2Change = useCallback((e) => {
                 className="w-[50px] text-center cursor-pointer appearance-none px-2 py-1 rounded-md leading-tight outline-none mt-1.5 font-bold text-sm bg-sky-600 text-white"
               >
                 <option value="">Unit</option>
-                {units.map((unit, index) => (
+                {units2.map((unit, index) => (
                   <option key={index} value={unit}>
                     {unit}
                   </option>
@@ -675,3 +703,4 @@ const handleQuantity2Change = useCallback((e) => {
 };
 
 export default CombinedWidget;
+
