@@ -7,6 +7,7 @@ import axios from "axios";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import debounce from "lodash/debounce";
 import { GlobalState } from "@/Context/page";
+import {toast} from 'react-toastify'
 
 const CombinedWidget = ({
   value = {},
@@ -41,6 +42,27 @@ const CombinedWidget = ({
   const dropdownRef = useRef(null);
   const inputRef = useRef(null);
   const quantityRef = useRef(null);
+
+  // Unit validation
+
+  const [quantityError, setQuantityError] = useState("");
+  const [quantity2Error, setQuantity2Error] = useState("");
+
+  const requiresNumericValidation = (unit) => [
+    "Number of items",
+    "Number of flights",
+    "passengers",
+    "Number of vehicles",
+    "number of Nights",
+  ].includes(unit);
+
+  const validateQuantity = (value, unit) => {
+    if (requiresNumericValidation(unit) && !/^\d+$/.test(value)) {
+      return "This field must be a positive integer.";
+    }
+    return "";
+  };
+  
 
   const { open } = GlobalState();
 
@@ -269,15 +291,15 @@ const CombinedWidget = ({
 
   useEffect(() => {
     console.log("Unit type changed:", unit_type);
-    const unitConfig = unitTypes.find(u => u.unit_type === unit_type);
+    const unitConfig = unitTypes.find((u) => u.unit_type === unit_type);
     console.log("Unit config found:", unitConfig);
-  
+
     if (unitConfig && unitConfig.units) {
       const unitKeys = Object.keys(unitConfig.units);
       console.log("Unit keys:", unitKeys);
       const units1 = unitKeys.length > 0 ? unitConfig.units[unitKeys[0]] : [];
       const units2 = unitKeys.length > 1 ? unitConfig.units[unitKeys[1]] : [];
-  
+
       setUnits(units1);
       setUnits2(units2);
     } else {
@@ -285,8 +307,6 @@ const CombinedWidget = ({
       setUnits2([]);
     }
   }, [unit_type]);
-  
-  
 
   const handleCategoryChange = useCallback(
     (value) => {
@@ -353,42 +373,93 @@ const CombinedWidget = ({
     [category, subcategory, activities, onChange]
   );
 
-const debouncedHandleQuantityChange = useCallback(
-  debounce((nextValue) => {
-    setQuantity(nextValue);
-    onChange({
-      type: "Quantity",
-      value: nextValue,
-    });
-  }, 3000),
-  [onChange]
-);
+  const debouncedHandleQuantityChange = useCallback(
+    debounce((nextValue) => {
+      setQuantity(nextValue);
+      onChange({
+        type: "Quantity",
+        value: nextValue,
+      });
+    }, 300),
+    [onChange]
+  );
 
-const debouncedHandleQuantity2Change = useCallback(
-  debounce((nextValue) => {
-    setQuantity2(nextValue);
-    onChange({
-      type: "Quantity2",
-      value: nextValue,
-    });
-  }, 3000),
-  [onChange]
-);
+  const debouncedHandleQuantity2Change = useCallback(
+    debounce((nextValue) => {
+      setQuantity2(nextValue);
+      onChange({
+        type: "Quantity2",
+        value: nextValue,
+      });
+    }, 2000),
+    [onChange]
+  );
 
+  // const handleQuantityChange = (e) => {
+  //   const value = e.target.value;
+  //   setQuantity(value);
+  //   debouncedHandleQuantityChange(value);
+  // };
 
-  const handleQuantityChange = (e) => {
-    const value = e.target.value;
-    setQuantity(value);
-    debouncedHandleQuantityChange(value);
-  };
+  // const handleQuantity2Change = useCallback((e) => {
+  //   const value = e.target.value;
+  //   setQuantity2(value);
+  //   debouncedHandleQuantity2Change(value);
+  // }, [debouncedHandleQuantity2Change]);
 
-  const handleQuantity2Change = useCallback((e) => {
-    const value = e.target.value;
-    setQuantity2(value);
-    debouncedHandleQuantity2Change(value);
-  }, [debouncedHandleQuantity2Change]);
+  const handleQuantityChange = useCallback(
+    (e) => {
+      const value = e.target.value;
+      setQuantity(value);
+      const error = validateQuantity(value, unit);
+      setQuantityError(error);
+      if (error) {
+        toast.error(error);
+      }
+    },
+    [unit]
+  );
+
+  const handleQuantity2Change = useCallback(
+    (e) => {
+      const value = e.target.value;
+      setQuantity2(value);
+      debouncedHandleQuantity2Change(value);
+      const error = validateQuantity(value, unit2);
+      setQuantity2Error(error);
+      if (error) {
+        toast.error(error);
+      }
+    },
+    [unit2]
+  );
+
+  useEffect(() => {
+    if (unit && requiresNumericValidation(unit)) {
+      const newQuantity = Math.floor(Number(quantity));
+      if (newQuantity !== Number(quantity)) {
+        setQuantity(newQuantity);
+        const error = validateQuantity(newQuantity, unit);
+        setQuantityError(error);
+        debouncedHandleQuantityChange(newQuantity);
+          toast.error('This field cannot have decimal value');
+      }
+    }
+  }, [unit, quantity]); 
   
-  
+  useEffect(() => {
+    if (unit2 && requiresNumericValidation(unit2)) {
+      const newQuantity2 = Math.floor(Number(quantity2));
+      if (newQuantity2.toString() !== quantity2) {
+        setQuantity2(newQuantity2);
+        debouncedHandleQuantityChange(newQuantity);
+        const error = validateQuantity(newQuantity2, unit2);
+        setQuantity2Error(error);
+          toast.error('This field cannot have decimal value');
+      }
+    }
+  }, [unit2, quantity2]); 
+
   const handleUnitChange = useCallback(
     (value) => {
       setUnit(value);
@@ -426,7 +497,6 @@ const debouncedHandleQuantity2Change = useCallback(
       onChange,
     ]
   );
-  
 
   const toggleDropdown = useCallback(() => {
     setIsDropdownActive(!isDropdownActive);
@@ -600,6 +670,8 @@ const debouncedHandleQuantity2Change = useCallback(
                 value={quantity}
                 onChange={handleQuantityChange}
                 className="w-full py-1 mt-2 rounded-sm border-b focus:outline-none"
+                step="1"
+                min="0"
               />
             </div>
             <div
@@ -703,4 +775,3 @@ const debouncedHandleQuantity2Change = useCallback(
 };
 
 export default CombinedWidget;
-
