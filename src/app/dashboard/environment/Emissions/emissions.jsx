@@ -10,6 +10,7 @@ const Emissions = ({ open }) => {
   const [year, setYear] = useState("");
   const [countryCode, setCountryCode] = useState('');
   const [locationError, setLocationError] = useState('');
+  const [yearError,setYearError] = useState('');
 
   return (
     <EmissionsProvider>
@@ -43,6 +44,8 @@ const Emissions = ({ open }) => {
           setCountryCode={setCountryCode}
           locationError={locationError}
           setLocationError={setLocationError}
+          yearError={yearError}
+          setYearError={setYearError}
         />
         <Emissionsnbody
           open={open}
@@ -51,6 +54,7 @@ const Emissions = ({ open }) => {
           month={activeMonth}
           countryCode={countryCode}
           setLocationError={setLocationError}
+          setYearError={setYearError}
         />
       </>
     </EmissionsProvider>

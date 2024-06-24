@@ -1,30 +1,44 @@
-'use client';
+"use client";
 import { useEffect, useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { yearInfo, months } from "@/app/shared/data/yearInfo";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import { useEmissions } from './EmissionsContext';
+import { useEmissions } from "./EmissionsContext";
 
 const monthMapping = {
-  "Jan": 1,
-  "Feb": 2,
-  "Mar": 3,
-  "Apr": 4,
-  "May": 5,
-  "Jun": 6,
-  "Jul": 7,
-  "Aug": 8,
-  "Sep": 9,
-  "Oct": 10,
-  "Nov": 11,
-  "Dec": 12
+  Jan: 1,
+  Feb: 2,
+  Mar: 3,
+  Apr: 4,
+  May: 5,
+  Jun: 6,
+  Jul: 7,
+  Aug: 8,
+  Sep: 9,
+  Oct: 10,
+  Nov: 11,
+  Dec: 12,
 };
 
 const getMonthString = (monthNumber) => {
-  return Object.keys(monthMapping).find(key => monthMapping[key] === monthNumber);
+  return Object.keys(monthMapping).find(
+    (key) => monthMapping[key] === monthNumber
+  );
 };
 
-const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, year, setYear, setCountryCode, locationError, setLocationError }) => {
+const EmissionsHeader = ({
+  activeMonth,
+  setActiveMonth,
+  location,
+  setLocation,
+  year,
+  setYear,
+  setCountryCode,
+  locationError,
+  setLocationError,
+  yearError,
+  setYearError,
+}) => {
   const [formState, setFormState] = useState({
     location: location,
     year: year,
@@ -35,7 +49,7 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, y
 
   const [locations, setLocations] = useState([]);
   const [localClimatiq, setlocalClimatiq] = useState(0);
-  const [countryCode, setCountryCodeState] = useState('');
+  const [countryCode, setCountryCodeState] = useState("");
 
   useEffect(() => {
     const fetchLocations = async () => {
@@ -51,7 +65,7 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, y
   }, []);
 
   useEffect(() => {
-    console.log('Got the climatiqData in header --- ');
+    console.log("Got the climatiqData in header --- ");
     if (climatiqData?.result?.[0]) {
       let sum = 0;
       for (const item of climatiqData.result) {
@@ -69,12 +83,13 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, y
       [name]: value,
     }));
 
-    setLocationError(""); // Clear any existing location error
+    setLocationError("");
+    setYearError("");
 
     if (name === "month") {
       setActiveMonth(monthMapping[value]);
     } else if (name === "location") {
-      const selectedLocation = locations.find(loc => loc.name === value);
+      const selectedLocation = locations.find((loc) => loc.name === value);
       if (selectedLocation) {
         setCountryCodeState(selectedLocation.country);
         setCountryCode(selectedLocation.country);
@@ -111,13 +126,20 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, y
                 </option>
               ))}
             </select>
-            <div className="absolute inset-y-0 right-2 flex items-center pl-3 pointer-events-none">
+            <div
+              className="absolute inset-y-0 right-2 flex items-center pointer-events-none"
+              style={{ top: "50%", transform: "translateY(-50%)" }}
+            >
               <MdKeyboardArrowDown
                 className="text-neutral-500"
                 style={{ fontSize: "16px" }}
               />
             </div>
-            {locationError && <p className="text-red-500 text-sm ps-2">{locationError}</p>}
+            {locationError && (
+              <p className="text-red-500 text-sm absolute top-9 left-0 pl-3">
+                {locationError}
+              </p>
+            )}
           </div>
           <div className="ml-3 relative">
             <select
@@ -133,18 +155,29 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, y
                 </option>
               ))}
             </select>
-            <div className="absolute inset-y-0 right-2 flex items-center pl-3 pointer-events-none">
+            <div
+              className="absolute inset-y-0 right-2 flex items-center pointer-events-none"
+              style={{ top: "50%", transform: "translateY(-50%)" }}
+            >
               <MdKeyboardArrowDown
                 className="text-neutral-500"
                 style={{ fontSize: "16px" }}
               />
             </div>
+            {yearError && (
+              <p className="text-red-500 text-sm absolute top-9 left-0 pl-3">
+                {yearError}
+              </p>
+            )}
           </div>
+
           <div className="w-full flex items-center justify-end">
             <div className="float-end">
               <p className="text-[12px]">
                 GHG Emissions for the month ={" "}
-                <span className="text-[#6adf23]">{localClimatiq} - kg - tCO2e </span>
+                <span className="text-[#6adf23]">
+                  {localClimatiq} - kg - tCO2e{" "}
+                </span>
               </p>
             </div>
           </div>
@@ -155,9 +188,13 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, y
               <button
                 key={index}
                 className={`text-[12px] border-r mx-1 ${
-                  formState.month === monthMapping[month] ? "bg-white shadow-md rounded-lg" : ""
+                  formState.month === monthMapping[month]
+                    ? "bg-white shadow-md rounded-lg"
+                    : ""
                 }`}
-                onClick={() => handleChange({ target: { name: "month", value: month } })}
+                onClick={() =>
+                  handleChange({ target: { name: "month", value: month } })
+                }
               >
                 <p
                   className={`text-center ${

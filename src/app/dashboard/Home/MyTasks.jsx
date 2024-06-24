@@ -83,6 +83,7 @@ const MyTask = () => {
         selectedActivityName
     );
     setSelectedActivity(activity || {});
+    console.log('activity found',activity);
   }, [selectedActivityName, activitiesList]);
 
   const handleFileUpload = (file) => {
@@ -141,7 +142,7 @@ const MyTask = () => {
     const resultsPerPage = 500;
     const axiosConfig = {
       headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_CLIMATIQ_KEY}`,
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_APP_CLIMATIQ_KEY}`,
         Accept: "application/json",
         "Content-type": "application/json",
       },
@@ -164,7 +165,7 @@ const MyTask = () => {
 
     try {
       if (!wildcard) {
-        const url = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${currentYear}&region=${region}*&category=${category}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_CLIMATIQ_DATAVERSION}`;
+        const url = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${currentYear}&region=${region}*&category=${category}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;
 
         const response = await axios.get(url, axiosConfig);
         activitiesData = response.data.results;
@@ -184,7 +185,7 @@ const MyTask = () => {
       }
       if (wildcard) {
         const wildcardResponse = await axios.get(
-          `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${currentYear}&region=*&category=${category}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_CLIMATIQ_DATAVERSION}`,
+          `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${currentYear}&region=*&category=${category}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`,
           axiosConfig
         );
         wildcardActivitiesData = wildcardResponse.data.results;
@@ -196,7 +197,7 @@ const MyTask = () => {
       if (wildcardResultZero) {
         for (let i = currentYear - 1; i >= 2019; i--) {
           const yearlyResponse = await axios.get(
-            `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${i}&region=${region}*&category=${category}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_CLIMATIQ_DATAVERSION}`,
+            `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${i}&region=${region}*&category=${category}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`,
             axiosConfig
           );
           const yearlyActivitiesData = yearlyResponse.data.results;
@@ -287,7 +288,7 @@ const MyTask = () => {
           const source = entry.source;
           const year = entry.year;
 
-          const url = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&source=${source}&year=${year}&region=*&category=${category}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_CLIMATIQ_DATAVERSION}`;
+          const url = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&source=${source}&year=${year}&region=*&category=${category}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;
           const response = await axios.get(url, axiosConfig);
           customFetchData = customFetchData.concat(response.data.results);
           finalActivitiesData = [
@@ -1743,7 +1744,7 @@ const MyTask = () => {
                 <div className="w-[80%] mb-4">
                   <h5 className="text-left text-black text-sm mb-1">Scope</h5>
                   <p className="text-left text-sm text-gray-500 ">
-                    scope {taskassigndata.scope}
+                    {taskassigndata.scope}
                   </p>
                 </div>
                 <div className="w-[80%] mb-4">
@@ -2210,7 +2211,7 @@ const MyTask = () => {
               <div className="w-[80%] mb-4">
                 <h5 className="text-left text-black text-sm mb-1">Scope</h5>
                 <p className="text-left text-sm text-gray-500 ">
-                  scope {taskassigndata.scope}
+                  {taskassigndata.scope}
                 </p>
               </div>
               <div className="w-[80%] mb-4">

@@ -411,6 +411,7 @@ const CombinedWidget = ({
     (e) => {
       const value = e.target.value;
       setQuantity(value);
+      debouncedHandleQuantityChange(value);
       const error = validateQuantity(value, unit);
       setQuantityError(error);
       if (error) {

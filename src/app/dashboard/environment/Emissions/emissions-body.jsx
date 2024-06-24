@@ -70,7 +70,7 @@ const AccordionItem = ({
   );
 };
 
-const Emissionsnbody = ({ location, year, month, countryCode, locationError, setLocationError }) => {
+const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setLocationError }) => {
 
   const { setClimatiqData } = useEmissions();
 
@@ -88,7 +88,6 @@ const Emissionsnbody = ({ location, year, month, countryCode, locationError, set
         console.log(response.data, " is the response data");
         console.log(' This is the climatiq computed result')
         setClimatiqData(response.data)
-        // setFormData(response.data.form[0].form_data)
       })
       .catch((error) => {
         console.log(error, ' -got error')
@@ -100,7 +99,12 @@ const Emissionsnbody = ({ location, year, month, countryCode, locationError, set
       setLocationError("Please select a location");
       return false;
     }
+    if (!year) {
+      setYearError("Please select a year");
+      return false;
+    }
     setLocationError("");
+    setYearError("");
     return true;
   };
 
