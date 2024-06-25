@@ -36,12 +36,12 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
   const [localClimatiq, setlocalClimatiq] = useState(0);
   const [activityCache, setActivityCache] = useState({});
 
-  useEffect(() => {
-    if (climatiqData?.result?.length > 0) {
-      const sum = climatiqData.result.reduce((acc, item) => acc + item.co2e, 0);
-      setlocalClimatiq(sum);
-    }
-  }, [climatiqData]);
+  // useEffect(() => {
+  //   if (climatiqData?.result?.length > 0) {
+  //     const sum = climatiqData.result.reduce((acc, item) => acc + item.co2e, 0);
+  //     setlocalClimatiq(sum);
+  //   }
+  // }, [climatiqData]);
 
   useEffect(() => {
     setScope1Data(formData);
@@ -146,6 +146,7 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
   };
 
   const loadFormData = async () => {
+    setFormData([{}]);
     LoaderOpen();
     const base_url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=`;
     const url = `${base_url}${view_path}&&client_id=${client_id}&&user_id=${user_id}&&location=${location}&&year=${year}&&month=${month}`;

@@ -65,13 +65,16 @@ const EmissionsHeader = ({
   }, []);
 
   useEffect(() => {
-    console.log("Got the climatiqData in header --- ");
-    if (climatiqData?.result?.[0]) {
+    console.log("Got the climatiqData in header --- ",climatiqData);
+    if (climatiqData.result?.[0]) {
       let sum = 0;
       for (const item of climatiqData.result) {
         sum += item.co2e;
       }
       setlocalClimatiq(sum);
+    }
+    else{
+      setlocalClimatiq(0)
     }
   }, [climatiqData]);
 
@@ -111,7 +114,7 @@ const EmissionsHeader = ({
   return (
     <>
       <div className="ml-2 mb-5">
-        <div className="flex gap-4 mb-5">
+        <div className="flex gap-4 mb-8">
           <div className="relative">
             <select
               name="location"
@@ -176,7 +179,7 @@ const EmissionsHeader = ({
               <p className="text-[12px]">
                 GHG Emissions for the month ={" "}
                 <span className="text-[#6adf23]">
-                  {localClimatiq} - kg - tCO2e{" "}
+                  {localClimatiq} tCO2e{" "}
                 </span>
               </p>
             </div>

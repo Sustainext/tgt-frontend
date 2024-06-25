@@ -75,21 +75,21 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
   const { setClimatiqData } = useEmissions();
 
   const getLatestComputedData = () => {
-    console.log('Climatiq is success !!!! -----------****************')
     const base_url = `${process.env.BACKEND_API_URL}/datametric/get-climatiq-score?`;
     const url = `${base_url}location=${location}&&year=${year}&&month=${month}`;
-    console.log(url, "is the url to be fired from getLatestComputedData");
 
-    // Make the GET request
     axiosInstance
       .get(url)
       .then((response) => {
-        // Handle successful response
-        console.log(response.data, " is the response data");
-        console.log(' This is the climatiq computed result')
+        if(response.status==200){
         setClimatiqData(response.data)
+        }
+        else{
+          setClimatiqData(0)
+        }
       })
       .catch((error) => {
+        setClimatiqData({})
         console.log(error, ' -got error')
       });
   }

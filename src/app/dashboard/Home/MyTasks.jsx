@@ -437,7 +437,9 @@ const MyTask = () => {
     unit2,
     file,
     filename,
-    status
+    status,
+    assign_to_email
+    
   ) => {
     if (activity !== "") {
       setIsActivityReceived(true);
@@ -471,11 +473,33 @@ const MyTask = () => {
       file,
       filename,
       status,
+      assign_to_email
     });
 
     let page = 1;
     let customFetchExecuted = false;
 
+    console.log('task assign data on click',id,
+      task_name,
+      assign_to_user_name,
+      assign_by_user_name,
+      assign_by_email,
+      category,
+      deadline,
+      factor_id,
+      location,
+      month,
+      scope,
+      subcategory,
+      year,
+      activity,
+      value1,
+      value2,
+      unit1,
+      unit2,
+      file,
+      filename,
+      status,);
     try {
       if (activity !== "") {
         let unitTypeExtractedArray = activity?.split("-");
@@ -963,6 +987,7 @@ const MyTask = () => {
         }
       });
   };
+  
 
   const SubmitFilledData = async (e, id) => {
     e.preventDefault();
@@ -1185,7 +1210,8 @@ const MyTask = () => {
                                           task.unit2,
                                           task.file,
                                           task.filename,
-                                          task.task_status
+                                          task.task_status,
+                                          task.assign_to_email
                                         );
                                       }}
                                     >
@@ -1309,7 +1335,8 @@ const MyTask = () => {
                                           task.unit1,
                                           task.unit2,
                                           task.file,
-                                          task.filename
+                                          task.filename,
+                                          task.assign_to_email
                                         );
                                       }}
                                     >
