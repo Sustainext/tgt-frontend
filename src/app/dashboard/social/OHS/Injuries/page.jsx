@@ -44,7 +44,7 @@ const Injuries = () => {
                             <p className="text-sm">Social</p>
                             <div className='flex'>
                                 <div>
-                                    <p className="gradient-text text-[22px] font-bold">
+                                    <p className="gradient-text text-[22px] font-bold pt-1">
                                     Ocupational Health and Safety 2018
                                     </p>
                                 </div>
@@ -104,7 +104,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
 
                 </div>
             </div>
-            <Socialheader 
+            <Socialheader
             activeMonth={activeMonth}
             setActiveMonth={setActiveMonth}
             location={location}

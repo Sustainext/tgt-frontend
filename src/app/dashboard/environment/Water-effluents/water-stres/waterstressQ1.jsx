@@ -51,7 +51,7 @@ const schema = {
             },
             Unit: {
                 type: "string",
-                title: "Total water storage at the beginning of the reporting period",
+                title: "Unit",
                 enum: ['Litre', 'Megalitre','Cubic meter','Kilolitre','Million litres per day'],
                 tooltiptext: "Select the correct unit corresponding to the quantity of water withdrawal/discharge."
             },

@@ -34,7 +34,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,tooltipblock
 
         <div className="flex items-center justify-center relative">
           <MdInfoOutline
-            data-tooltip-id={`tooltip-${title.replace(/\s+/g, '-')}`} data-tooltip-content={tooltiptext} className="mt-1 text-[14px]" style={{display:display}} />
+            data-tooltip-id={`tooltip-${title.replace(/\s+/g, '-')}`} data-tooltip-content={tooltiptext} className="mt-1 text-[14px]" style={{display:tooltipblock}} />
           {/* Tooltip */}
           <ReactTooltip id={`tooltip-${title.replace(/\s+/g, '-')}`} place="top" effect="solid" style={{
             width: "300px", backgroundColor: "#000",

@@ -84,7 +84,7 @@ const schema = {
             },
             Typesofrecycledmaterials: {
                 type: "string",
-                title: "Recycled materials used ",
+                title: "Types of recycled materials",
                 enum: ['Cardboard', 'Folding carton', 'Glass Bottles', 'Glass Jars', 'Metal cans', 'Paper', 'Plastic', 'Wooden crates', 'Wood', 'Bamboo', 'Cellulose', 'Corn starch', 'Mushroom packaging', 'Organic Fabric', 'Others'],
                 tooltiptext: "Does the company use recycled materials in its packaging?",
                 display: "block",
@@ -93,14 +93,6 @@ const schema = {
                 type: "string",
                 title: "Amounts of product and packaging materials recycled",
                 tooltiptext: "Please specify the amount of material the company recycled during the reporting period.",
-                display: "block",
-            },
-
-
-            Amountofrecycledinputmaterialused: {
-                type: "string",
-                title: "Amount of recycled input material used ",
-                tooltiptext: "How much recycled material is used for the production of goods or services? Recycled Input Materials: Materials that have been used and then processed into new materials. ",
                 display: "block",
             },
 
@@ -140,7 +132,7 @@ const uiSchema = {
     items: {
         classNames: 'fieldset',
         'ui:order': [
-            'Typesofproducts', 'Productclassification', 'Productcode', 'Productname','Amountofproducts', 'Unit', 'Recycledmaterialsused','Typesofrecycledmaterials','Amountsproduct','Amountofrecycledinputmaterialused', 'Unit2','Datacollectionmethod', 'AssignTo', 'FileUpload', 'Remove'
+            'Typesofproducts', 'Productclassification', 'Productcode', 'Productname','Amountofproducts', 'Unit', 'Recycledmaterialsused','Typesofrecycledmaterials','Amountsproduct', 'Unit2','Datacollectionmethod', 'AssignTo', 'FileUpload', 'Remove'
         ],
         Typesofproducts: {
             'ui:widget': 'inputWidget',
@@ -205,13 +197,7 @@ const uiSchema = {
                 label: false // This disables the label for this field
             },
         },
-        Amountofrecycledinputmaterialused: {
-            'ui:widget': 'inputWidget',
-            'ui:horizontal': true,
-            'ui:options': {
-                label: false // This disables the label for this field
-            },
-        },
+
         Unit2: {
             'ui:widget': 'selectWidget',
             'ui:horizontal': true,

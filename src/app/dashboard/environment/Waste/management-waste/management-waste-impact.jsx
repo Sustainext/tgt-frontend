@@ -51,7 +51,7 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
             "ui:titlediplay": "block",
             "ui:haddingtooltipdisplay": "block",
             "ui:titletooltipdisplay": "none",
-            "ui:Gri": "GRI 306-1a",
+            "ui:Gri": "GRI 306-2a",
             'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
             'ui:options': {
                 label: false // This disables the label for this field
@@ -66,7 +66,7 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
             "ui:titlediplay": "block",
             "ui:haddingtooltipdisplay": "block",
             "ui:titletooltipdisplay": "block",
-            "ui:Gri": "GRI 306-1b",
+            "ui:Gri": "GRI 306-2b",
             'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
             'ui:options': {
                 label: false // This disables the label for this field
@@ -81,7 +81,7 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
             "ui:titlediplay": "block",
             "ui:haddingtooltipdisplay": "block",
             "ui:titletooltipdisplay": "block",
-            "ui:Gri": "GRI 306-1b",
+            "ui:Gri": "GRI 306-2c",
             'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
             'ui:options': {
                 label: false // This disables the label for this field

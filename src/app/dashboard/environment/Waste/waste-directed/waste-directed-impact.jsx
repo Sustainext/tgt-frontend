@@ -65,7 +65,7 @@ const schema = {
       Methodofdisposal: {
         type: "string",
         title: "Method of disposal",
-        enum: ['Inceneration (with energy recovery) for reuse', 'Inceneration (without energy recovery)', 'Landfilling','Other (please specify)','External Vendor'],
+        enum: ['Inceneration (with energy recovery)', 'Inceneration (without energy recovery)', 'Landfilling','Other (please specify)','External Vendor'],
         tooltiptext: "Disposal: Any operation which is not recovery, even where the operation has as a secondary consequence the recovery of energy Landfilling: Final depositing of solid waste at, below, or above ground level at engineered disposal sites Incineration: Controlled burning of waste at high temperatures",
         display:"block",
       },

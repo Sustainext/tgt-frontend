@@ -45,7 +45,7 @@ const Childlabour = () => {
                             <p className="text-sm">Social</p>
                             <div className='flex'>
                                 <div>
-                                    <p className="gradient-text text-[22px] font-bold">
+                                    <p className="gradient-text text-[22px] font-bold pt-1">
                                         Operations and suppliers at significant risk for incidents of child labor
                                     </p>
                                 </div>
@@ -105,8 +105,8 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
                     ))}
 
                 </div>
-            </div> 
-            <Socialheader 
+            </div>
+            <Socialheader
             activeMonth={activeMonth}
             setActiveMonth={setActiveMonth}
             location={location}

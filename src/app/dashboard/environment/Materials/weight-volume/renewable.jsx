@@ -47,7 +47,7 @@ const schema = {
         type: "string",
         title: "Materials used",
         enum: ['Cardboard', 'Glass','Hemp','Kenaf','Natural Rubber','Paper','Timber','Wool','Others'],
-        tooltiptext: "What materials does the compa use to produce its goods or services?",
+        tooltiptext: "What materials does the company use to produce its goods or services?",
         display: "block",
       },
       Source: {

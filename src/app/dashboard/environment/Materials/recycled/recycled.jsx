@@ -45,7 +45,7 @@ const Recycled = () => {
                             <p className="text-sm">Environment</p>
                             <div className='flex'>
                                 <div>
-                                    <p className="gradient-text text-[22px] font-bold">
+                                    <p className="gradient-text text-[22px] font-bold pt-1">
                                         Materials
                                     </p>
                                 </div>
