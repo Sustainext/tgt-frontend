@@ -1,8 +1,7 @@
 'use client';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoHomeOutline } from "react-icons/io5";
-import { ToastContainer, toast } from "react-toastify";
 import axiosInstance, { post } from "@/app/utils/axiosMiddleware";
 import { useEmissions } from './EmissionsContext';
 
@@ -74,6 +73,10 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
 
   const { setClimatiqData } = useEmissions();
 
+  const scope1Ref = useRef();
+  const scope2Ref = useRef();
+  const scope3Ref = useRef();
+
   const getLatestComputedData = () => {
     const base_url = `${process.env.BACKEND_API_URL}/datametric/get-climatiq-score?`;
     const url = `${base_url}location=${location}&&year=${year}&&month=${month}`;
@@ -112,6 +115,24 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
     getLatestComputedData();
   },[year,location,month])
 
+  const handleCalculate = () => {
+    console.log('Calculate triggered!');
+    console.log('Scope1 Ref:', scope1Ref.current);
+    console.log('Scope2 Ref:', scope2Ref.current);
+    console.log('Scope3 Ref:', scope3Ref.current);
+  
+    // if (scope1Ref.current) {
+    //   scope1Ref.current.updateFormData();
+    // }
+    // if (scope2Ref.current) {
+    //   scope2Ref.current.updateFormData();
+    // }
+    // if (scope3Ref.current) {
+    //   scope3Ref.current.updateFormData();
+    // }
+  };
+  
+
   return (
     <>
       <div className="mx-3">
@@ -121,7 +142,7 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
           icons={<IoHomeOutline />}
           onAccordionClick={handleAccordionClick}
         >
-          <Scope1 location={location} year={year} month={month} countryCode={countryCode} successCallback={getLatestComputedData} />
+          <Scope1 ref={scope1Ref} location={location} year={year} month={month} countryCode={countryCode} successCallback={getLatestComputedData} />
         </AccordionItem>
 
         <AccordionItem
@@ -130,7 +151,7 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
           icons={<IoHomeOutline />}
           onAccordionClick={handleAccordionClick}
         >
-          <Scope2 location={location} year={year} month={month} countryCode={countryCode} successCallback={getLatestComputedData}/>
+          <Scope2 ref={scope2Ref} location={location} year={year} month={month} countryCode={countryCode} successCallback={getLatestComputedData}/>
         </AccordionItem>
 
         <AccordionItem
@@ -139,17 +160,15 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
           icons={<IoHomeOutline />}
           onAccordionClick={handleAccordionClick}
         >
-          <Scope3 location={location} year={year} month={month} countryCode={countryCode} successCallback={getLatestComputedData}/>
+          <Scope3 ref={scope3Ref} location={location} year={year} month={month} countryCode={countryCode} successCallback={getLatestComputedData}/>
         </AccordionItem>
       </div>
       <div className="flex justify-end items-center mt-[24] me-5">
         <button
-          // onClick={handleCalculate}
-          className="w-[172px] h-8 px-[22px] py-2 bg-sky-600 rounded shadow flex-col justify-center items-center inline-flex text-white text-xs font-bold leading-[15px]"
+          onClick={handleCalculate}
+          className="w-[172px] h-8 px-[22px] py-2 bg-sky-600 rounded shadow flex-col justify-center items-center inline-flex text-white text-xs font-bold leading-[15px] cursor-pointer"
         >
-          <div className="cursor-pointer">
             Calculate
-          </div>
         </button>
       </div>
     </>
