@@ -9,7 +9,7 @@ import 'react-tooltip/dist/react-tooltip.css'
 import EnergyConsumptionBody from './energy-consumption-body';
 
 const Energyconsumption = () => {
-    const [activeMonth, setActiveMonth] = useState("Jan");
+    const [activeMonth, setActiveMonth] = useState(1);
     const [location, setLocation] = useState("");
     const [year, setYear] = useState("");
     const [data, setData] = useState();
@@ -44,9 +44,9 @@ const Energyconsumption = () => {
                     <div className='w-full'>
                         <div className="text-left mb-4 ml-3 pt-5">
                             <p className="text-sm">Environment</p>
-                            <div className='flex'>
-                                <div>
-                                    <p className="gradient-text text-[22px] font-bold">
+                           <div className='flex h-[28px]'>
+                                <div className='h-[28px]'>
+                                    <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
                                         Energy
                                     </p>
                                 </div>
@@ -134,8 +134,8 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
 
                 </div>
             </div>
-            <EnvironmentHeader 
-            activeMonth={activeMonth} 
+            <EnvironmentHeader
+            activeMonth={activeMonth}
                 setActiveMonth={setActiveMonth}
                 location={location}
                 setLocation={setLocation}

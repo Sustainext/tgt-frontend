@@ -2,10 +2,12 @@
 import React, { useState, useEffect,useRef } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
-import inputWidget2 from '../../../../shared/widgets/Input/inputWidget2';
+import inputWidget2 from '../../../shared/widgets/Input/inputWidget2';
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
+import RadioWidget from '../../../shared/widgets/Input/radioWidget';
+import RadioWidget2 from '../../../shared/widgets/Input/radioWidget2';
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,9 +15,11 @@ import { Oval } from 'react-loader-spinner';
 
 const widgets = {
     inputWidget: inputWidget2,
+    RadioWidget: RadioWidget,
+    RadioWidget2:RadioWidget2,
 };
 
-const view_path = 'gri-social-benefits-401-2b-significant_loc'
+const view_path = 'gri-social-ohs-403-3a-ohs_functions'
 const client_id = 1
 const user_id = 1
 
@@ -27,7 +31,7 @@ const schema = {
 
             Q1: {
                 type: "string",
-                title: "How does the organization define Significant locations of operation for reporting purposes?",
+                title: "List of legal requirements (if applicable)",
 
             },
 
@@ -39,8 +43,8 @@ const uiSchema = {
     items: {
         'ui:order': ['Q1'],
         Q1: {
-            "ui:title": "How does the organization define Significant locations of operation for reporting purposes?",
-            "ui:tooltip": "Please clarify how the organization defines and identifies its significant locations for reporting purposes.",
+            "ui:title": "Describe the occupational health services’ functions that contribute to the identification and elimination of hazards and minimization of risks.",
+            "ui:tooltip": "Specify the occupational health services’ functions that contribute to the identification and elimination of hazards and minimization of risks.",
             "ui:tooltipdisplay": "block",
             'ui:widget': 'inputWidget',
             'ui:horizontal': true,
@@ -58,7 +62,7 @@ const uiSchema = {
     },
 };
 
-const Significantlocations = ({location, year, month}) => {
+const Screen1 = ({location, year, month}) => {
     const [formData, setFormData] = useState([{}]);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
@@ -71,6 +75,7 @@ const Significantlocations = ({location, year, month}) => {
         return '';
     };
     const token = getAuthToken();
+
     const LoaderOpen = () => {
         setLoOpen(true);
       };
@@ -79,60 +84,115 @@ const Significantlocations = ({location, year, month}) => {
       };
 
     const handleChange = (e) => {
-        setFormData(e.formData); // Ensure you are extracting formData from the event
+        setFormData(e.formData);
     };
 
     // The below code on updateFormData
     let axiosConfig = {
-        headers: {
-          Authorization: 'Bearer ' + token,
-        },
-      };
-      const updateFormData = async () => {
-        LoaderOpen();
-        const data = {
-            client_id: client_id,
-            user_id: user_id,
-            path: view_path,
-            form_data: formData,
-            location,
-            year,
-            month
-        }
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    };
+  const updateFormData = async () => {
+    LoaderOpen();
+    const data = {
+      client_id : client_id,
+      user_id : user_id,
+      path: view_path,
+      form_data: formData,
+      location,
+      year,
+      month
+    }
 
-        const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
-        try {
-            const response = await axios.post(url, data, axiosConfig);
-            if (response.status === 200) {
-                toast.success("Data added successfully", {
-                    position: "top-right",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
-                LoaderClose();
-                loadFormData();
-            } else {
-                toast.error("Oops, something went wrong", {
-                    position: "top-right",
-                    autoClose: 1000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
-                LoaderClose();
-            }
-        } catch (error) {
-            toast.error("Oops, something went wrong", {
+    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
+    try{
+      const response = await axios.post(url,data, axiosConfig);
+      if (response.status === 200) {
+        toast.success("Data added successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        LoaderClose();
+        loadFormData();
+
+      }else {
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        LoaderClose();
+      }
+    } catch (error) {
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      LoaderClose();
+    }
+    //   console.log('Response:', response.data);
+    // } catch (error) {
+    //   console.error('Error:', error);
+    // }
+  };
+
+  const loadFormData = async () => {
+    LoaderOpen();
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    try {
+        const response = await axios.get(url, axiosConfig);
+        console.log('API called successfully:', response.data);
+        setRemoteSchema(response.data.form[0].schema);
+        setRemoteUiSchema(response.data.form[0].ui_schema);
+        if (response.data.form_data.length > 0) {
+            setFormData(response.data.form_data[0].data);
+        } else {
+            setFormData([{}]);
+        }
+    } catch (error) {
+        setFormData([{}]);
+    } finally {
+        LoaderClose();
+    }
+};
+  useEffect(() => {
+    //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
+  },[r_schema, r_ui_schema])
+
+  // console log the form data change
+  useEffect(() => {
+    console.log('Form data is changed -', formData)
+  },[formData])
+
+  // fetch backend and replace initialized forms
+  useEffect (()=> {
+    if (location && year && month) {
+        loadFormData();
+        toastShown.current = false; // Reset the flag when valid data is present
+    } else {
+        // Only show the toast if it has not been shown already
+        if (!toastShown.current) {
+            toast.warn("Please select location, year, and month first", {
                 position: "top-right",
-                autoClose: 1000,
+                autoClose: 5000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -140,71 +200,28 @@ const Significantlocations = ({location, year, month}) => {
                 progress: undefined,
                 theme: "colored",
             });
-            LoaderClose();
+            toastShown.current = true; // Set the flag to true after showing the toast
         }
-    };
-
-    const loadFormData = async () => {
-        LoaderOpen();
-        const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
-        try {
-            const response = await axios.get(url, axiosConfig);
-            console.log('API called successfully:', response.data);
-            setRemoteSchema(response.data.form[0].schema);
-            setRemoteUiSchema(response.data.form[0].ui_schema);
-            if (response.data.form_data.length > 0) {
-                setFormData(response.data.form_data[0].data);
-            } else {
-                setFormData([{}]);
-            }
-        } catch (error) {
-            setFormData([{}]);
-        } finally {
-            LoaderClose();
-        }
-    };
-
-    //Reloading the forms -- White Beard
-    useEffect(() => {
-        //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-    },[r_schema, r_ui_schema])
-
-    // console log the form data change
-    useEffect(() => {
-        console.log('Form data is changed -', formData)
-    },[formData])
-
-    // fetch backend and replace initialized forms
-    useEffect(() => {
-        if (location && year && month) {
-            loadFormData();
-            toastShown.current = false; // Reset the flag when valid data is present
-        } else {
-            // Only show the toast if it has not been shown already
-            if (!toastShown.current) {
-                toastShown.current = true; // Set the flag to true after showing the toast
-            }
-        }
-    }, [location, year, month]); // Dependencies // React only triggers this effect if these dependencies change
-
+    }
+  },[location, year, month])
 
 
     const handleSubmit = (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Prevent the default form submission
         console.log('Form data:', formData);
         updateFormData()
     };
 
     return (
         <>
-           <ToastContainer style={{ fontSize: "12px" }} />
             <div className="mx-2  p-3 mb-6 pb-6 rounded-md" style={{boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px"}}>
                 <div className='mb-4 flex'>
                     <div className='w-[80%]'>
                     <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold'>
-                    Significant locations of operation
+                    Occupational health services’ functions
                         <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
-                            data-tooltip-content="This section documents data corresponding to the organization's definition of significant locations of operation" className="mt-1.5 ml-2 text-[14px]" />
+                            data-tooltip-content="For employees and for workers who are not employees
+                            but whose work and/or workplace is controlled by the organization" className="mt-1.5 ml-2 text-[14px]" />
                         <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
                             width: "290px", backgroundColor: "#000",
                             color: "white",
@@ -220,7 +237,7 @@ const Significantlocations = ({location, year, month}) => {
                     <div   className='w-[20%]'>
             <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
               <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-              GRI 401-2b
+              GRI 403-3a
               </p>
             </div>
           </div>
@@ -255,4 +272,4 @@ const Significantlocations = ({location, year, month}) => {
     );
 };
 
-export default Significantlocations;
+export default Screen1;

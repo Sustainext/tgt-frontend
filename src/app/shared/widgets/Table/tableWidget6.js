@@ -13,8 +13,11 @@ const CustomTableWidget6 = ({
   formContext,
   onChange,
 }) => {
-  const [localValue, setLocalValue] = useState(value || []);
+  const [localValue, setLocalValue] = useState(value);
 
+  useEffect(() => {
+    setLocalValue(value);
+  }, [value]);
   // Check if the current month is January
   const isJanuary = formContext.newMonth === "January";
 

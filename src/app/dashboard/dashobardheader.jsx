@@ -17,7 +17,7 @@ const DashboardHeader = () => {
     setDropdownVisible(!dropdownVisible);
   };
 
-  const handleLogout = async () => {  
+  const handleLogout = async () => {
     try {
       await logout();
       router.push('/');

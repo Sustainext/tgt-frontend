@@ -1,6 +1,6 @@
 
 'use client'
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { MdInfoOutline,MdOutlineDeleteOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -95,7 +95,9 @@ const CustomTableWidget = ({
 // Component to handle individual input fields
 const InputField = ({ type, required, value, onChange }) => {
   const [inputValue, setInputValue] = useState(value);
-
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
   const handleInputChange = (e) => {
     const newValue = e.target.value;
     setInputValue(newValue);

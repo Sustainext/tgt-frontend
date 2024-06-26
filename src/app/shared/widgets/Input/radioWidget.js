@@ -1,19 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MdInfoOutline } from 'react-icons/md';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 
 const RadioWidget = ({
   options,
-  value = { selected: '', otherValue: '' }, // Default value provided
+  value = {}, // Default to an empty object
   autofocus,
   onChange,
   uiSchema = {},
 }) => {
+  const defaultState = {
+    selected: '',
+    otherValue: ''
+  };
+
+  // Initialize state
   const [inputState, setInputState] = useState({
-    selected: value.selected,
-    otherValue: value.otherValue
+    selected: value.selected || defaultState.selected,
+    otherValue: value.otherValue || defaultState.otherValue
   });
+
+  // Update state when value prop changes
+  useEffect(() => {
+    setInputState({
+      selected: value.selected || defaultState.selected,
+      otherValue: value.otherValue || defaultState.otherValue
+    });
+  }, [value]);
 
   const otherOptionValue = "Other, please specify:";
 
@@ -96,3 +110,4 @@ const RadioWidget = ({
 };
 
 export default RadioWidget;
+

@@ -48,13 +48,13 @@ const schema = {
       Source: {
         type: "string",
         title: "Source",
-        enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro', 'Natural', 'Electricity', 'Cooling', 'Steam', 'Heating', 'Wood Biomas', 'Biogas', 'Other'],
+        enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro', 'Natural gas', 'Electricity', 'Cooling', 'Steam', 'Heating', 'Wood Biomas', 'Biogas', 'Other'],
         tooltiptext: "Indicate where the energy comes from"
       },
       Purpose: {
         type: "string",
         title: "Purpose",
-        tooltiptext: "Indicate the purpose it's being used for.ex: Furnace Heat Generation, Steam Generation"
+        tooltiptext: "Indicate the purpose it's being used for.E.g. Manufacturing, packaging, combustion "
       },
       Renewable: {
         type: "string",

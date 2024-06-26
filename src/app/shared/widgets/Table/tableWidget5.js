@@ -15,6 +15,10 @@ const CustomTableWidget5 = ({
 }) => {
   const [localValue, setLocalValue] = useState(value);
 
+  useEffect(() => {
+    setLocalValue(value);
+  }, [value]);
+
 
   const handleFieldChange = (index, key, newValue) => {
     const updatedValues = [...localValue];

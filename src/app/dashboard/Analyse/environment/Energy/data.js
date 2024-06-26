@@ -1,7 +1,7 @@
 export const columns1 = [
     {
       label: "Energy Type",
-      dataIndex: "type",
+      dataIndex: "Energy_type",
       headerClass:
         "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
@@ -9,21 +9,21 @@ export const columns1 = [
     },
     {
       label: "Source",
-      dataIndex: "source",
+      dataIndex: "Source",
       headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
     },
     {
       label: "Energy Consumption",
-      dataIndex: "consumption",
+      dataIndex: "Quantity",
       headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
     },
     {
       label: "Units",
-      dataIndex: "units",
+      dataIndex: "Unit",
       headerClass:
         "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
@@ -31,38 +31,66 @@ export const columns1 = [
     },
   ];
   
-  export const data1 = [
-    {
-      type: "Electricity Consumption",
-      source: "Wind",
-      consumption: 212123545,
-      units: "GJ",
-    },
-    {
-      type: "Heating Consumption",
-      source: "Solar",
-      consumption: 212123545,
-      units: "GJ",
-    },
-    {
-      type: "Cooling Consumption",
-      source: "Hydro",
-      consumption: 212123545,
-      units: "GJ",
-    },
-    {
-      type: "Steam Consumption",
-      source: "Wind",
-      consumption: 212123545,
-      units: "GJ",
-    },
-    {
-      type: "Total Energy Consumption",
-      source: "",
-      consumption: 212123545,
-      units: "GJ",
-    },
-  ];
+//   export const data1 = [
+//     {
+//         "Energy_type": "Electricity",
+//         "Source": "Hydro",
+//         "Quantity_GJ": 0.0,
+//         "Units_GJ": "GJ"
+//     },
+//     {
+//         "Energy_type": "Steam",
+//         "Source": "Solar",
+//         "Quantity_GJ": 0.0,
+//         "Units_GJ": "GJ"
+//     },
+//     {
+//         "Energy_type": "Electricity",
+//         "Source": "Solar",
+//         "Quantity_GJ": 0.119,
+//         "Units_GJ": "GJ"
+//     },
+//     {
+//         "Energy_type": "Heating",
+//         "Source": "Wood Biomas",
+//         "Quantity_GJ": 3.0,
+//         "Units_GJ": "GJ"
+//     },
+//     {
+//         "Energy_type": "Electricity",
+//         "Source": "LPG",
+//         "Quantity_GJ": 0.0,
+//         "Units_GJ": "GJ"
+//     },
+//     {
+//         "Energy_type": "Heating",
+//         "Source": "Coal",
+//         "Quantity_GJ": 0.117,
+//         "Units_GJ": "GJ"
+//     },
+//     {
+//         "Energy_type": "Cooling",
+//         "Source": "Other",
+//         "Quantity_GJ": 45.54,
+//         "Units_GJ": "GJ"
+//     },
+//     {
+//         "Energy_type": "Electricity",
+//         "Source": "Wood Biomas",
+//         "Quantity_GJ": 0.079,
+//         "Units_GJ": "GJ"
+//     },
+//     // {
+//     //     "Total": 48.856,
+//     //     "Units": "GJ"
+//     // },
+//     {
+//       "Energy_type": "Total Renewable Energy consumption",
+//       "Source": "",
+//       "Quantity_GJ": 212123545,
+//       "Units_GJ": "GJ",
+//     },
+// ]
   
   // ------------------------Fuel Consumption within the organisation from Non-renewable sources
   

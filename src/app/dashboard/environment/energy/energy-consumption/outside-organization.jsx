@@ -40,7 +40,7 @@ const schema = {
       EnergyType: {
         type: "string",
         title: "Energy Type",
-        enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro', 'Natural', 'Electricity', 'Cooling', 'Steam', 'Heating', 'Wood Biomas', 'Biogas', 'Other'],
+        enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro', 'Natural gas', 'Electricity', 'Cooling', 'Steam', 'Heating', 'Wood Biomas', 'Biogas', 'Other'],
         tooltiptext: "Indicate the type of energy or fuel consumed for activities outside the organization"
 
       },
@@ -305,7 +305,7 @@ const Outsideorganization = ({location, year, month}) => {
       LoaderClose();
   }
   }
-  //Reloading the forms 
+  //Reloading the forms
   useEffect(() => {
     //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
   },[r_schema, r_ui_schema])

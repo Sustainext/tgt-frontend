@@ -51,13 +51,10 @@ const TextareaWidget2 = (props) => {
               </div>
             </div>
             <div className="flex">
-              <div>
+              <div className=" relative">
                 <h6 className="text-sm text-[#727272] w-[560px] flex">
                   {uiSchema["ui:title"]} <MdInfoOutline
-                  data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(
-                    /\s+/g,
-                    "-"
-                  )}`}
+                  data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(/\s+/g, "-")}`}
                   data-tooltip-content={uiSchema["ui:tooltipstitle"]}
                   className="mt-1 ml-2 w-[30px] text-[#344054] text-[14px]"
                   style={{ display: uiSchema["ui:titletooltipdisplay"] }}
@@ -67,6 +64,8 @@ const TextareaWidget2 = (props) => {
                   id={`tooltip-${uiSchema["ui:title"].replace(/\s+/g, "-")}`}
                   place="top"
                   effect="solid"
+                   scrollHide={true}
+                  globalEventOff="scroll"
                   style={{
                     width: "300px",
                     backgroundColor: "#000",
@@ -74,6 +73,7 @@ const TextareaWidget2 = (props) => {
                     fontSize: "12px",
                     boxShadow: 3,
                     borderRadius: "8px",
+
                   }}
                 ></ReactTooltip>
 
@@ -82,7 +82,7 @@ const TextareaWidget2 = (props) => {
 
             </div>
           </div>
-          <div className={`${open ? "w-[20%]" : "w-[20%]"}`}   style={{ display: uiSchema["ui:gridisplay"] }}>
+          <div className={`${open ? "w-[16%]" : "w-[16%]"}`}   style={{ display: uiSchema["ui:gridisplay"] }}>
             <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2">
               <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
                 {uiSchema["ui:Gri"]}

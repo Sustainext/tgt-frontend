@@ -1,6 +1,6 @@
 
 'use client'
-import React, { useState, useEffect,useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { debounce } from 'lodash';
 import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
@@ -26,8 +26,11 @@ const CustomTableWidget2 = ({ id, options, value, required, onChange }) => {
         debouncedUpdate(localValue);
     }, [localValue, debouncedUpdate]);
 
+    useEffect(() => {
+        setLocalValue(value);
+      }, [value]);
     return (
-        <div style={{ overflowX: "auto", maxHeight: "400px" }}>
+        <div style={{ overflowX: "auto", maxHeight: "400px" }} className='mb-2'>
             <table id={id} className="rounded-md border border-gray-300 w-full">
                 <thead className="gradient-background">
                     <tr>

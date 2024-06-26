@@ -9,7 +9,7 @@ import 'react-tooltip/dist/react-tooltip.css'
 import Energyintensitybody from './energy-Intensity-body';
 
 const Energyintensity = () => {
-    const [activeMonth, setActiveMonth] = useState("Jan");
+    const [activeMonth, setActiveMonth] = useState(1);
     const [location, setLocation] = useState("");
     const [year, setYear] = useState("");
     const [data, setData] = useState();
@@ -42,11 +42,11 @@ const Energyintensity = () => {
             <div className="flex flex-col justify-start overflow-x-hidden ">
                 <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
                     <div className='w-full'>
-                        <div className="text-left mb-4 ml-3 pt-5">
+                        <div className="text-left mb-4 ml-3 pt-5 mb-3">
                             <p className="text-sm">Environment</p>
-                            <div className='flex'>
-                                <div>
-                                    <p className="gradient-text text-[22px] font-bold">
+                            <div className='flex h-[28px]'>
+                                <div className='h-[28px]'>
+                                    <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
                                         Energy
                                     </p>
                                 </div>
@@ -69,19 +69,20 @@ const Energyintensity = () => {
                 </div>
 
 
-                <div className="ml-3 flex">
+                <div className="ml-3 flex mt-2">
                     <h6 className="text-[17px] mb-4 font-semibold flex">
 
                         Energy Intensity
                         <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section is dedicated to the calculation of Energy Intensity Ratios based on organizational metrics. These ratios quantify the energy demand per unit of activity, output, or any other organization-specific metric" className="mt-1.5 ml-2 text-[14px]" />
-                        <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
+                        <ReactTooltip id={`tooltip-$e1`} place="bottom" effect="solid" style={{
                             width: "290px", backgroundColor: "#000",
                             color: "white",
                             fontSize: "12px",
                             boxShadow: 3,
                             borderRadius: "8px",
                             textAlign: 'left',
+                            zIndex: 100,
                         }}>
 
                         </ReactTooltip>
@@ -109,8 +110,8 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
 
                 </div>
             </div>
-            <EnvironmentHeader 
-            activeMonth={activeMonth} 
+            <EnvironmentHeader
+            activeMonth={activeMonth}
             setActiveMonth={setActiveMonth}
             location={location}
             setLocation={setLocation}

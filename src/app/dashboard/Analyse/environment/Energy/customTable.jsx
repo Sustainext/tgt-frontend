@@ -10,29 +10,35 @@ function DynamicTable({ columns, data }) {
   };
 
   const renderRows = () => {
-    return data.map((row, rowIndex) => (
-      <tr key={rowIndex}>
-        {row.type.includes('Total') ? (
-          <>
+    return data.map((row, rowIndex) => {
+      const isTotalRow = row['Energy_type']?.toString().includes('Total');
+
+      if (isTotalRow) {
+        return (
+          <tr key={rowIndex}>
             <td colSpan={columns.length - 2} className="h-14 gradient-text px-4 py-2 border-y text-right font-bold text-sm">
-              {row.type}
+              {row['Energy_type']}
             </td>
             <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-sm">
-              {row.consumption}
+              {row['Quantity']}
             </td>
             <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-sm">
-              {row.units}
+              {row['Unit']}
             </td>
-          </>
-        ) : (
-          columns.map((column, columnIndex) => (
-            <td key={columnIndex} className={column.cellClass}>
-              {column.render ? column.render(row[column.dataIndex], row) : row[column.dataIndex]}
-            </td>
-          ))
-        )}
-      </tr>
-    ));
+          </tr>
+        );
+      } else {
+        return (
+          <tr key={rowIndex}>
+            {columns.map((column, columnIndex) => (
+              <td key={columnIndex} className={column.cellClass}>
+                {column.render ? column.render(row[column.dataIndex], row) : row[column.dataIndex]}
+              </td>
+            ))}
+          </tr>
+        );
+      }
+    });
   };
 
   return (

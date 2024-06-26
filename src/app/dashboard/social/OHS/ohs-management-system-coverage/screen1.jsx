@@ -1,3 +1,5 @@
+
+'use client'
 import React, { useState, useEffect, useRef } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
@@ -44,12 +46,13 @@ const uiSchema = {
     },
 };
 
-const Screen1 = ({location, year, month}) => {
-    const [formData, setFormData] = useState([
-        { coveredbythesystem: "", internallyaudited: "", externalparty: "" },
-        { coveredbythesystem: "", internallyaudited: "", externalparty: "" },
-        { coveredbythesystem: "", internallyaudited: "", externalparty: "" }
-    ]);
+const Screen1 = ({ location, year, month }) => {
+    const initialFormData = [
+        { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 },
+        { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 },
+        { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 },
+    ];
+    const [formData, setFormData] = useState(initialFormData);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
     const [loopen, setLoOpen] = useState(false);
@@ -63,13 +66,13 @@ const Screen1 = ({location, year, month}) => {
     const token = getAuthToken();
 
     // const token = localStorage.getItem('token')?.replace(/"/g, "");
-    console.log(token,"token chke")
+    console.log(token, "token chke")
     const LoaderOpen = () => {
         setLoOpen(true);
-      };
-      const LoaderClose = () => {
+    };
+    const LoaderClose = () => {
         setLoOpen(false);
-      };
+    };
 
 
     const handleChange = (e) => {
@@ -78,10 +81,10 @@ const Screen1 = ({location, year, month}) => {
     // The below code on updateFormData
     let axiosConfig = {
         headers: {
-          Authorization: 'Bearer ' + token,
+            Authorization: 'Bearer ' + token,
         },
-      };
-      const updateFormData = async () => {
+    };
+    const updateFormData = async () => {
         LoaderOpen();
         const data = {
             client_id: client_id,
@@ -141,35 +144,44 @@ const Screen1 = ({location, year, month}) => {
     const loadFormData = async () => {
         LoaderOpen();
         const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
-        
         try {
             const response = await axios.get(url, axiosConfig);
             console.log('API called successfully:', response.data);
             setRemoteSchema(response.data.form[0].schema);
             setRemoteUiSchema(response.data.form[0].ui_schema);
-            const form_parent = response.data.form_data;
-            setFormData(form_parent[0].data);
-            // const f_data = form_parent[0].data
-            // setFormData(f_data)
+
+
+            if (response.data.form_data.length > 0) {
+
+                setFormData(response.data.form_data[0].data);
+
+
+                // Assumes form_data is wrapped in an object under 'data'
+            } else {
+                // Handle empty response by either keeping the default state or resetting to default
+                setFormData(initialFormData);
+            }
+
+
         } catch (error) {
-            console.error('API call failed:', error);
+            setFormData(initialFormData);
         } finally {
             LoaderClose();
         }
-    }
+    };
 
     //Reloading the forms
     useEffect(() => {
         //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-    },[r_schema, r_ui_schema])
+    }, [r_schema, r_ui_schema])
 
     // console log the form data change
     useEffect(() => {
         console.log('Form data is changed -', formData)
-    },[formData])
+    }, [formData])
 
     // fetch backend and replace initialized forms
-    useEffect (()=> {
+    useEffect(() => {
         if (location && year && month) {
             loadFormData();
             toastShown.current = false; // Reset the flag when valid data is present
@@ -189,7 +201,7 @@ const Screen1 = ({location, year, month}) => {
                 toastShown.current = true; // Set the flag to true after showing the toast
             }
         }
-    },[location, year, month])
+    }, [location, year, month])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -199,7 +211,8 @@ const Screen1 = ({location, year, month}) => {
 
     return (
         <>
-            <div className="mx-2 p-3 mb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+
+            <div className="mx-2 p-3 mb-6 pb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
                 <div className='mb-4 flex'>
                     <div className='w-[80%]'>
                         <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold mb-2'>
@@ -238,16 +251,16 @@ const Screen1 = ({location, year, month}) => {
                 </div>
             </div>
             {loopen && (
-            <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-                <Oval
-                height={50}
-                width={50}
-                color="#00BFFF"
-                secondaryColor="#f3f3f3"
-                strokeWidth={2}
-                strokeWidthSecondary={2}
-                />
-            </div>
+                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                    <Oval
+                        height={50}
+                        width={50}
+                        color="#00BFFF"
+                        secondaryColor="#f3f3f3"
+                        strokeWidth={2}
+                        strokeWidthSecondary={2}
+                    />
+                </div>
             )}
         </>
     );

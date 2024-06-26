@@ -56,7 +56,7 @@ const schema = {
       Organizationmetric: {
         type: "string",
         title: "Organization Metric",
-        enum: ['Production volume', 'size', 'number of full time employees', 'monetary units such as revenue or sales)', 'Production units', 'MMBtu'],
+        enum: ['Production volume', 'size', 'number of full time employees', 'monetary units (such as revenue or sales)', 'Production units', 'MMBtu'],
         tooltiptext: "Select the organization metric for the corresponding Energy Intensity metric "
       },
       Metricquantity: {

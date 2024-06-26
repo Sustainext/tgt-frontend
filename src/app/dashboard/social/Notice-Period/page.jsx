@@ -1,20 +1,18 @@
-
 'use client'
 import React, { useState, useEffect } from 'react';
-import EnvironmentHeader from '../../environmentheader';
 import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
-import { Energydata } from '../../data/griinfo';
+import {Socialdata} from "../data/socialgriinfo"
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
-import Waterstoragebody from './water-storage-body';
-const Waterstorage = () => {
+import Socialheader from "../socialheader"
+import Noticeperiodmain from "./notice-period"
+const Noticeperiod = () => {
     const [activeMonth, setActiveMonth] = useState(1);
     const [location, setLocation] = useState("");
     const [year, setYear] = useState("");
     const [data, setData] = useState();
     const [category, setCategory] = useState("");
     const [isOpen, setIsOpen] = useState(false);
-    const [locationMessage, setLocationMessage] = useState("");
 
     const toggleDrawerclose = () => {
         setIsOpen(!isOpen);
@@ -25,7 +23,7 @@ const Waterstorage = () => {
     };
     useEffect(() => {
         var newData = [];
-        Energydata.map((program) => {
+        Socialdata.map((program) => {
             program.category.map((tag) => {
                 if (tag === category) {
                     newData.push(program);
@@ -42,25 +40,22 @@ const Waterstorage = () => {
                 <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
                     <div className='w-full'>
                         <div className="text-left mb-4 ml-3 pt-5">
-                            <p className="text-sm">Environment</p>
+                            <p className="text-sm">Social</p>
                             <div className='flex'>
                                 <div>
                                     <p className="gradient-text text-[22px] font-bold">
-                                    Water and effluents
+                                    Labor/Management Relations 2016
                                     </p>
                                 </div>
-                                <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md" >
-                                    <p className="text-gray-500 text-[12px] pt-0.5 px-2">Material Topic</p>
-                                </div>
+
                             </div>
 
                         </div>
                     </div>
                     <div className='w-full float-end '>
                         <div className="flex float-end border-l">
-
-              <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('50')}>GRI 303 - 5</button>
-              <button className="text-[#fff] bg-cyan-500 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('29')}>SDG 6</button>
+                            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('25')}>GRI 402 - 1</button>
+                            <button className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('26')}>SDG 8</button>
                         </div>
                     </div>
                 </div>
@@ -69,10 +64,10 @@ const Waterstorage = () => {
                 <div className="ml-3 flex">
                     <h6 className="text-[17px] mb-4 font-semibold flex">
 
-                    Change in Water Storage
-                        <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
-                            data-tooltip-content="This section documents data corresponding to change in water storage where water storage
-                            has been identified as having a significant water-related impact." className="mt-1.5 ml-2 text-[14px]" />
+                    Minimum notice periods regarding operational changes
+                        {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
+                            data-tooltip-content="This section documents data corresponding to total water
+                            withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[14px]" />
                         <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
                             width: "290px", backgroundColor: "#000",
                             color: "white",
@@ -82,7 +77,7 @@ const Waterstorage = () => {
                             textAlign: 'left',
                         }}>
 
-                        </ReactTooltip>
+                        </ReactTooltip> */}
                     </h6>
                 </div>
                 <div className={`${isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"}
@@ -107,17 +102,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
 
                 </div>
             </div>
-            <EnvironmentHeader
+            <Socialheader
             activeMonth={activeMonth}
-                setActiveMonth={setActiveMonth}
-                location={location}
-                setLocation={setLocation}
-                year={year}
-                setYear={setYear}
-                locationMessage={locationMessage}
-                setLocationMessage={setLocationMessage} />
-            <Waterstoragebody location={location} year={year} month={activeMonth} setLocationMessage={setLocationMessage}/>
+            setActiveMonth={setActiveMonth}
+            location={location}
+            setLocation={setLocation}
+            year={year}
+            setYear={setYear} />
+            <Noticeperiodmain location={location} year={year} month={activeMonth} />
+
         </>
     );
 };
-export default Waterstorage;
+export default Noticeperiod;
