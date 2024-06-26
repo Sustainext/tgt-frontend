@@ -1,6 +1,6 @@
 
 'use client'
-import React, { useState,useEffect,useRef  } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
 import { MdInfoOutline } from "react-icons/md";
@@ -39,27 +39,27 @@ const uiSchema = {
     "ui:widget": "TableWidget",
     'ui:options': {
         titles: [
-            { key: "yearsold30", title: "< 30 years old", tooltip:"Please mention the total  employees <30 years old who has left the organisation. Employee Turnover definition: employees who leave the organization voluntarily or due to dismissal, retirement, or death in service."},
-            { key: "yearsold30to50", title: "30 - 50 years old", tooltip:"Please mention the total  employees 30-50 years old who has left the organisation. Employee Turnover definition: employees who leave the organization voluntarily or due to dismissal, retirement, or death in service."},
-            { key: "yearsold50", title: "> 50 years old", tooltip:"Please mention the total  employees >50 years old who has left the organisation. Employee Turnover definition: employees who leave the organization voluntarily or due to dismissal, retirement, or death in service."},
+            { key: "yearsold30", title: "< 30 years old", tooltip: "Please mention the total  employees <30 years old who has left the organisation. Employee Turnover definition: employees who leave the organization voluntarily or due to dismissal, retirement, or death in service." },
+            { key: "yearsold30to50", title: "30 - 50 years old", tooltip: "Please mention the total  employees 30-50 years old who has left the organisation. Employee Turnover definition: employees who leave the organization voluntarily or due to dismissal, retirement, or death in service." },
+            { key: "yearsold50", title: "> 50 years old", tooltip: "Please mention the total  employees >50 years old who has left the organisation. Employee Turnover definition: employees who leave the organization voluntarily or due to dismissal, retirement, or death in service." },
 
         ],
         rowLabels: [
-            {title:"Male", tooltip:"Please mention the total male employee who has left the organisation. Employees Turnover definition: employees who leave the organization voluntarily or due to dismissal, retirement, or death in service."},
-            {title:"Female",tooltip:"Please mention the total female employees who left the organization. Employee Turnover definition: employees who leave the organization voluntarily or due to dismissal, retirement, or death in service."},
-            {title:"Others",tooltip:"Please mention the total non-binary employees who has left the organisation. Employee Turnover definition: employees who leave the organization voluntarily or due to dismissal, retirement, or death in service."},
+            { title: "Male", tooltip: "Please mention the total male employee who has left the organisation. Employees Turnover definition: employees who leave the organization voluntarily or due to dismissal, retirement, or death in service." },
+            { title: "Female", tooltip: "Please mention the total female employees who left the organization. Employee Turnover definition: employees who leave the organization voluntarily or due to dismissal, retirement, or death in service." },
+            { title: "Others", tooltip: "Please mention the total non-binary employees who has left the organisation. Employee Turnover definition: employees who leave the organization voluntarily or due to dismissal, retirement, or death in service." },
 
         ]
     },
 };
 
-const Tab1 = ({fullName,location, year, month}) => {
-
-    const [formData, setFormData] = useState([
-        { yearsold30: "", yearsold30to50: "", yearsold50: "", beginning:"", end:"" },
-        { yearsold30: "", yearsold30to50: "", yearsold50: "", beginning:"", end:"" },
-        { yearsold30: "", yearsold30to50: "", yearsold50: "", beginning:"", end:'' },
-    ]);
+const Tab1 = ({ fullName, location, year, month }) => {
+    const initialFormData = [
+        { yearsold30: "", yearsold30to50: "", yearsold50: "", beginning: "", end: "" },
+        { yearsold30: "", yearsold30to50: "", yearsold50: "", beginning: "", end: "" },
+        { yearsold30: "", yearsold30to50: "", yearsold50: "", beginning: "", end: '' },
+    ];
+    const [formData, setFormData] = useState(initialFormData);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
     const [loopen, setLoOpen] = useState(false);
@@ -73,10 +73,10 @@ const Tab1 = ({fullName,location, year, month}) => {
     const token = getAuthToken();
     const LoaderOpen = () => {
         setLoOpen(true);
-      };
-      const LoaderClose = () => {
+    };
+    const LoaderClose = () => {
         setLoOpen(false);
-      };
+    };
 
     const handleChange = (e) => {
         setFormData(e.formData); // Ensure you are extracting formData from the event
@@ -85,10 +85,10 @@ const Tab1 = ({fullName,location, year, month}) => {
     // The below code on updateFormData
     let axiosConfig = {
         headers: {
-          Authorization: 'Bearer ' + token,
+            Authorization: 'Bearer ' + token,
         },
-      };
-      const updateFormData = async () => {
+    };
+    const updateFormData = async () => {
         LoaderOpen();
         const data = {
             client_id: client_id,
@@ -144,7 +144,6 @@ const Tab1 = ({fullName,location, year, month}) => {
         }
     };
 
-
     const loadFormData = async () => {
         LoaderOpen();
         const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
@@ -153,10 +152,20 @@ const Tab1 = ({fullName,location, year, month}) => {
             console.log('API called successfully:', response.data);
             setRemoteSchema(response.data.form[0].schema);
             setRemoteUiSchema(response.data.form[0].ui_schema);
-            const form_parent = response.data.form_data;
-            setFormData(form_parent[0].data);
+
+
+            if (response.data.form_data.length > 0) {
+
+                setFormData(response.data.form_data[0].data);
+
+            } else {
+                // Handle empty response by either keeping the default state or resetting to default
+                setFormData(initialFormData);
+            }
+
+
         } catch (error) {
-            console.error('API call failed:', error);
+            setFormData(initialFormData);
         } finally {
             LoaderClose();
         }
@@ -164,12 +173,12 @@ const Tab1 = ({fullName,location, year, month}) => {
     //Reloading the forms -- White Beard
     useEffect(() => {
         //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-    },[r_schema, r_ui_schema])
+    }, [r_schema, r_ui_schema])
 
     // console log the form data change
     useEffect(() => {
         console.log('Form data is changed -', formData)
-    },[formData])
+    }, [formData])
 
     // fetch backend and replace initialized forms
     useEffect(() => {
@@ -192,7 +201,7 @@ const Tab1 = ({fullName,location, year, month}) => {
         updateFormData()
     };
     return (
-        <>
+        <> <ToastContainer style={{ fontSize: "12px" }} />
             <div className="mx-2 p-3 mb-6 rounded-md">
 
                 <Form
@@ -209,16 +218,16 @@ const Tab1 = ({fullName,location, year, month}) => {
                 </div>
             </div>
             {loopen && (
-            <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-                <Oval
-                height={50}
-                width={50}
-                color="#00BFFF"
-                secondaryColor="#f3f3f3"
-                strokeWidth={2}
-                strokeWidthSecondary={2}
-                />
-            </div>
+                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                    <Oval
+                        height={50}
+                        width={50}
+                        color="#00BFFF"
+                        secondaryColor="#f3f3f3"
+                        strokeWidth={2}
+                        strokeWidthSecondary={2}
+                    />
+                </div>
             )}
         </>
     );

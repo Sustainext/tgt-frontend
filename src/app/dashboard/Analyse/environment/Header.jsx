@@ -121,8 +121,8 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
           Environment
         </div>
         <div className="h-[30px]">
-          <div className="h-[26px] flex justify-start items-end gap-3">
-            <div className="gradient-text text-opacity-20 text-[22px] font-medium font-['Manrope'] leading-[1.425rem]">
+          <div className=" flex justify-start items-end gap-3">
+            <div className="h-[28px] gradient-text text-opacity-20 text-[22px] font-medium font-['Manrope'] leading-[1.425rem] pt-1">
               {activeTab}
             </div>
             <div className="w-[95px] pl-1 pr-0.5 bg-slate-200 rounded justify-center items-center flex">

@@ -30,7 +30,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
         </div>
 
 
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center relative">
           <MdInfoOutline
             data-tooltip-id={`tooltip-${title.replace(/\s+/g, '-')}`} data-tooltip-content={tooltiptext} className="mt-1 text-[14px]" style={{display:display}} />
           {/* Tooltip */}

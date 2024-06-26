@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
 import { MdInfoOutline } from "react-icons/md";
@@ -9,7 +9,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
-
+import { GlobalState } from '@/Context/page';
 const widgets = {
     TableWidget: CustomTableWidget3,
 };
@@ -35,26 +35,28 @@ const uiSchema = {
     "ui:widget": "TableWidget",
     'ui:options': {
         titles: [
-            { key: "male", title: "Male"},
-            { key: "female", title: "Female"},
+            { key: "male", title: "Male" },
+            { key: "female", title: "Female" },
 
         ],
         rowLabels: [
-            {title:"Parental Leave Entitlement",tooltip:"This section refers to the total number of employees who meet the eligibility criteria for parental leave within the organization, regardless of whether they actually took leave."},
-            {title:"Taking parental leave",tooltip:"This section refers to the total number of employees who used their parental leave entitlement during the reporting period."},
-            {title:"Returning to Work Post-Leave",tooltip:"This section refers to the total number of employees who returned to work after their parental leave ended within the reporting period."},
-            {title:"Retained 12 Months After Leave",tooltip:"This section refers to the total number of employees who used their parental leave entitlement during the reporting period."},
+            { title: "Parental Leave Entitlement", tooltip: "This section refers to the total number of employees who meet the eligibility criteria for parental leave within the organization, regardless of whether they actually took leave." },
+            { title: "Taking parental leave", tooltip: "This section refers to the total number of employees who used their parental leave entitlement during the reporting period." },
+            { title: "Returning to Work Post-Leave", tooltip: "This section refers to the total number of employees who returned to work after their parental leave ended within the reporting period." },
+            { title: "Retained 12 Months After Leave", tooltip: "This section refers to the total number of employees who used their parental leave entitlement during the reporting period." },
         ]
     },
 };
 
-const Parentaleavescreen = ({location, year, month}) => {
-    const [formData, setFormData] = useState([
+const Parentaleavescreen = ({ location, year, month }) => {
+    const { open } = GlobalState();
+    const initialFormData = [
         { male: "", female: "", total: 0 },
         { male: "", female: "", total: 0 },
         { male: "", female: "", total: 0 },
         { male: "", female: "", total: 0 },
-    ]);
+    ];
+    const [formData, setFormData] = useState(initialFormData);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
     const [loopen, setLoOpen] = useState(false);
@@ -68,10 +70,10 @@ const Parentaleavescreen = ({location, year, month}) => {
     const token = getAuthToken();
     const LoaderOpen = () => {
         setLoOpen(true);
-      };
-      const LoaderClose = () => {
+    };
+    const LoaderClose = () => {
         setLoOpen(false);
-      };
+    };
 
     const handleChange = (e) => {
         setFormData(e.formData); // Ensure you are extracting formData from the event
@@ -80,10 +82,10 @@ const Parentaleavescreen = ({location, year, month}) => {
     // The below code on updateFormData
     let axiosConfig = {
         headers: {
-          Authorization: 'Bearer ' + token,
+            Authorization: 'Bearer ' + token,
         },
-      };
-      const updateFormData = async () => {
+    };
+    const updateFormData = async () => {
         LoaderOpen();
         const data = {
             client_id: client_id,
@@ -148,10 +150,22 @@ const Parentaleavescreen = ({location, year, month}) => {
             console.log('API called successfully:', response.data);
             setRemoteSchema(response.data.form[0].schema);
             setRemoteUiSchema(response.data.form[0].ui_schema);
-            const form_parent = response.data.form_data;
-            setFormData(form_parent[0].data);
+
+
+            if (response.data.form_data.length > 0) {
+
+                setFormData(response.data.form_data[0].data);
+
+
+                // Assumes form_data is wrapped in an object under 'data'
+            } else {
+                // Handle empty response by either keeping the default state or resetting to default
+                setFormData(initialFormData);
+            }
+
+
         } catch (error) {
-            console.error('API call failed:', error);
+            setFormData(initialFormData);
         } finally {
             LoaderClose();
         }
@@ -159,12 +173,12 @@ const Parentaleavescreen = ({location, year, month}) => {
     //Reloading the forms -- White Beard
     useEffect(() => {
         //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-    },[r_schema, r_ui_schema])
+    }, [r_schema, r_ui_schema])
 
     // console log the form data change
     useEffect(() => {
         console.log('Form data is changed -', formData)
-    },[formData])
+    }, [formData])
 
     // fetch backend and replace initialized forms
     useEffect(() => {
@@ -198,11 +212,12 @@ const Parentaleavescreen = ({location, year, month}) => {
     };
     return (
         <>
-            <div className="mx-2 p-3 mb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+            <ToastContainer style={{ fontSize: "12px" }} />
+            <div className="mx-2 p-3 mb-6 pb-4 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
                 <div className='mb-4 flex'>
                     <div className='w-[80%]'>
                         <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold mb-2'>
-                        Parental leave
+                            Parental leave
                             <MdInfoOutline data-tooltip-id={`tooltip-employees`}
                                 data-tooltip-content="This section documents data corresponding
                                 to the number of employees entitled to, taking,
@@ -219,7 +234,7 @@ const Parentaleavescreen = ({location, year, month}) => {
                             </ReactTooltip>
                         </h2>
                     </div>
-                    <div className='w-[40%] flex'>
+                    <div className={`flex ${open ? "w-[32%]" : "w-[25%]"}`}>
                         <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
                             <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
                                 GRI 401-3a
@@ -255,16 +270,16 @@ const Parentaleavescreen = ({location, year, month}) => {
                 </div>
             </div>
             {loopen && (
-            <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-                <Oval
-                height={50}
-                width={50}
-                color="#00BFFF"
-                secondaryColor="#f3f3f3"
-                strokeWidth={2}
-                strokeWidthSecondary={2}
-                />
-            </div>
+                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                    <Oval
+                        height={50}
+                        width={50}
+                        color="#00BFFF"
+                        secondaryColor="#f3f3f3"
+                        strokeWidth={2}
+                        strokeWidthSecondary={2}
+                    />
+                </div>
             )}
         </>
     );

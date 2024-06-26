@@ -1,6 +1,6 @@
 
 'use client'
-import React, { useState,useEffect,useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
 import { MdInfoOutline } from "react-icons/md";
@@ -38,27 +38,27 @@ const uiSchema = {
     "ui:widget": "TableWidget",
     'ui:options': {
         titles: [
-            { key: "yearsold30", title: "< 30 years old"},
-            { key: "yearsold30to50", title: "30 - 50 years old"},
-            { key: "yearsold50", title: "> 50 years old"},
+            { key: "yearsold30", title: "< 30 years old" },
+            { key: "yearsold30to50", title: "30 - 50 years old" },
+            { key: "yearsold50", title: "> 50 years old" },
 
         ],
         rowLabels: [
-            {title:"Male"},
-            {title:"Female"},
-            {title:"Others"},
+            { title: "Male" },
+            { title: "Female" },
+            { title: "Others" },
 
         ]
     },
 };
 
-const Tab1 = ({fullName,location, year, month}) => {
-
-    const [formData, setFormData] = useState([
+const Tab1 = ({ fullName, location, year, month }) => {
+    const initialFormData = [
         { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 },
         { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 },
         { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 },
-    ]);
+    ];
+    const [formData, setFormData] = useState(initialFormData);
     // const [formData, setFormData] = useState([]);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
@@ -73,10 +73,10 @@ const Tab1 = ({fullName,location, year, month}) => {
     const token = getAuthToken();
     const LoaderOpen = () => {
         setLoOpen(true);
-      };
-      const LoaderClose = () => {
+    };
+    const LoaderClose = () => {
         setLoOpen(false);
-      };
+    };
 
     const handleChange = (e) => {
         setFormData(e.formData); // Ensure you are extracting formData from the event
@@ -85,10 +85,10 @@ const Tab1 = ({fullName,location, year, month}) => {
     // The below code on updateFormData
     let axiosConfig = {
         headers: {
-          Authorization: 'Bearer ' + token,
+            Authorization: 'Bearer ' + token,
         },
-      };
-      const updateFormData = async () => {
+    };
+    const updateFormData = async () => {
         LoaderOpen();
         const data = {
             client_id: client_id,
@@ -156,30 +156,23 @@ const Tab1 = ({fullName,location, year, month}) => {
 
 
             if (response.data.form_data.length > 0) {
-                setFormData(response.data.form_data[0].data); // Assumes form_data is wrapped in an object under 'data'
+
+                setFormData(response.data.form_data[0].data);
+
+
+                // Assumes form_data is wrapped in an object under 'data'
             } else {
                 // Handle empty response by either keeping the default state or resetting to default
-                setFormData([
-                    { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 },
-                    { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 },
-                    { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 }
-                ]);
+                setFormData(initialFormData);
             }
 
 
         } catch (error) {
-            setFormData([
-                { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 },
-                { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 },
-                { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 }
-            ]);
+            setFormData(initialFormData);
         } finally {
             LoaderClose();
         }
     };
-
-
-
 
     useEffect(() => {
         if (location && year && month) {
@@ -212,11 +205,11 @@ const Tab1 = ({fullName,location, year, month}) => {
     };
 
     return (
-        <>
+        <> <ToastContainer style={{ fontSize: "12px" }} />
             <div className="mx-2 p-3 mb-6 rounded-md">
 
                 <Form
-                    key={`${location}-${year}-${month}`}
+
                     schema={r_schema}
                     uiSchema={r_ui_schema}
                     formData={formData}
@@ -229,17 +222,17 @@ const Tab1 = ({fullName,location, year, month}) => {
                     <button type="button" className="text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
                 </div>
             </div>
-                {loopen && (
-            <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-                <Oval
-                height={50}
-                width={50}
-                color="#00BFFF"
-                secondaryColor="#f3f3f3"
-                strokeWidth={2}
-                strokeWidthSecondary={2}
-                />
-            </div>
+            {loopen && (
+                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                    <Oval
+                        height={50}
+                        width={50}
+                        color="#00BFFF"
+                        secondaryColor="#f3f3f3"
+                        strokeWidth={2}
+                        strokeWidthSecondary={2}
+                    />
+                </div>
             )}
         </>
     );

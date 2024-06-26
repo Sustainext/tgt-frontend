@@ -52,13 +52,14 @@ const uiSchema = {
     },
 };
 
-const Tab5 = ({fullName,location, year, month}) => {
-
-    const [formData, setFormData] = useState([
+const Tab5 = ({ fullName, location, year, month }) => {
+    const initialFormData = [
         { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 },
         { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 },
         { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 },
-    ]);
+    ];
+    const [formData, setFormData] = useState(initialFormData);
+    // const [formData, setFormData] = useState([]);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
     const [loopen, setLoOpen] = useState(false);
@@ -72,10 +73,10 @@ const Tab5 = ({fullName,location, year, month}) => {
     const token = getAuthToken();
     const LoaderOpen = () => {
         setLoOpen(true);
-      };
-      const LoaderClose = () => {
+    };
+    const LoaderClose = () => {
         setLoOpen(false);
-      };
+    };
 
     const handleChange = (e) => {
         setFormData(e.formData); // Ensure you are extracting formData from the event
@@ -84,10 +85,10 @@ const Tab5 = ({fullName,location, year, month}) => {
     // The below code on updateFormData
     let axiosConfig = {
         headers: {
-          Authorization: 'Bearer ' + token,
+            Authorization: 'Bearer ' + token,
         },
-      };
-      const updateFormData = async () => {
+    };
+    const updateFormData = async () => {
         LoaderOpen();
         const data = {
             client_id: client_id,
@@ -152,25 +153,27 @@ const Tab5 = ({fullName,location, year, month}) => {
             console.log('API called successfully:', response.data);
             setRemoteSchema(response.data.form[0].schema);
             setRemoteUiSchema(response.data.form[0].ui_schema);
-            const form_parent = response.data.form_data;
-            setFormData(form_parent[0].data);
+
+
+            if (response.data.form_data.length > 0) {
+
+                setFormData(response.data.form_data[0].data);
+
+
+                // Assumes form_data is wrapped in an object under 'data'
+            } else {
+                // Handle empty response by either keeping the default state or resetting to default
+                setFormData(initialFormData);
+            }
+
+
         } catch (error) {
-            console.error('API call failed:', error);
+            setFormData(initialFormData);
         } finally {
             LoaderClose();
         }
     };
-    //Reloading the forms -- White Beard
-    useEffect(() => {
-        //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-    },[r_schema, r_ui_schema])
 
-    // console log the form data change
-    useEffect(() => {
-        console.log('Form data is changed -', formData)
-    },[formData])
-
-    // fetch backend and replace initialized forms
     useEffect(() => {
         if (location && year && month) {
             loadFormData();
@@ -202,10 +205,11 @@ const Tab5 = ({fullName,location, year, month}) => {
     };
 
     return (
-        <>
+        <> <ToastContainer style={{ fontSize: "12px" }} />
             <div className="mx-2 p-3 mb-6 rounded-md">
 
                 <Form
+
                     schema={r_schema}
                     uiSchema={r_ui_schema}
                     formData={formData}
@@ -218,17 +222,17 @@ const Tab5 = ({fullName,location, year, month}) => {
                     <button type="button" className="text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
                 </div>
             </div>
-                {loopen && (
-            <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-                <Oval
-                height={50}
-                width={50}
-                color="#00BFFF"
-                secondaryColor="#f3f3f3"
-                strokeWidth={2}
-                strokeWidthSecondary={2}
-                />
-            </div>
+            {loopen && (
+                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                    <Oval
+                        height={50}
+                        width={50}
+                        color="#00BFFF"
+                        secondaryColor="#f3f3f3"
+                        strokeWidth={2}
+                        strokeWidthSecondary={2}
+                    />
+                </div>
             )}
         </>
     );

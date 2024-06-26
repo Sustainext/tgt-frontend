@@ -1,21 +1,18 @@
-
 'use client'
 import React, { useState, useEffect } from 'react';
-import EnvironmentHeader from '../../environmentheader';
 import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
-import { Energydata } from '../../data/griinfo';
+import {Socialdata} from "../data/socialgriinfo"
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
-import Reductionenergyconsumptionbody from './energy-products-services-body';
-
-const Energyproductsservices = () => {
+import Socialheader from "../socialheader"
+import Noticeperiodmain from "./notice-period"
+const Noticeperiod = () => {
     const [activeMonth, setActiveMonth] = useState(1);
     const [location, setLocation] = useState("");
     const [year, setYear] = useState("");
     const [data, setData] = useState();
     const [category, setCategory] = useState("");
     const [isOpen, setIsOpen] = useState(false);
-    const [locationMessage, setLocationMessage] = useState("");
 
     const toggleDrawerclose = () => {
         setIsOpen(!isOpen);
@@ -26,7 +23,7 @@ const Energyproductsservices = () => {
     };
     useEffect(() => {
         var newData = [];
-        Energydata.map((program) => {
+        Socialdata.map((program) => {
             program.category.map((tag) => {
                 if (tag === category) {
                     newData.push(program);
@@ -43,27 +40,22 @@ const Energyproductsservices = () => {
                 <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
                     <div className='w-full'>
                         <div className="text-left mb-4 ml-3 pt-5">
-                            <p className="text-sm">Environment</p>
-                           <div className='flex h-[28px]'>
-                                <div className='h-[28px]'>
-                                    <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
-                                        Energy
+                            <p className="text-sm">Social</p>
+                            <div className='flex'>
+                                <div>
+                                    <p className="gradient-text text-[22px] font-bold">
+                                    Labor/Management Relations 2016
                                     </p>
                                 </div>
-                                <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md" >
-                                    <p className="text-gray-500 text-[12px] pt-0.5 px-2">Material Topic</p>
-                                </div>
+
                             </div>
 
                         </div>
                     </div>
                     <div className='w-full float-end '>
                         <div className="flex float-end border-l">
-                        <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('18')}>GRI 302-5</button>
-              <button className="text-[#fff] bg-amber-400 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 " onClick={() => toggleDrawer('2')}>SDG 7</button>
-              <button className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('3')}>SDG 8</button>
-              <button className="text-[#fff] bg-yellow-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 " onClick={() => toggleDrawer('4')}>SDG 12</button>
-              <button className="text-[#fff] bg-lime-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('5')}>SDG 13</button>
+                            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('25')}>GRI 402 - 1</button>
+                            <button className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('26')}>SDG 8</button>
                         </div>
                     </div>
                 </div>
@@ -72,22 +64,20 @@ const Energyproductsservices = () => {
                 <div className="ml-3 flex">
                     <h6 className="text-[17px] mb-4 font-semibold flex">
 
-                    Reductions in energy requirements of products and services
-                        <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
-                            data-tooltip-content="This section documents data related to the reduction in energy
-                            requirements of a product or service. Please mention the
-                            approach for choosing the standards utilized for calculation." className="mt-1.5 ml-2 text-[14px]" />
-                        <ReactTooltip id={`tooltip-$e1`} place="bottom" effect="solid" style={{
+                    Minimum notice periods regarding operational changes
+                        {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
+                            data-tooltip-content="This section documents data corresponding to total water
+                            withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[14px]" />
+                        <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
                             width: "290px", backgroundColor: "#000",
                             color: "white",
                             fontSize: "12px",
                             boxShadow: 3,
                             borderRadius: "8px",
                             textAlign: 'left',
-                            zIndex:100,
                         }}>
 
-                        </ReactTooltip>
+                        </ReactTooltip> */}
                     </h6>
                 </div>
                 <div className={`${isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"}
@@ -112,17 +102,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
 
                 </div>
             </div>
-            <EnvironmentHeader
+            <Socialheader
             activeMonth={activeMonth}
             setActiveMonth={setActiveMonth}
             location={location}
             setLocation={setLocation}
             year={year}
-            setYear={setYear}
-            locationMessage={locationMessage}
-            setLocationMessage={setLocationMessage} />
-            <Reductionenergyconsumptionbody location={location} year={year} month={activeMonth} setLocationMessage={setLocationMessage}/>
+            setYear={setYear} />
+            <Noticeperiodmain location={location} year={year} month={activeMonth} />
+
         </>
     );
 };
-export default Energyproductsservices;
+export default Noticeperiod;

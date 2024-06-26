@@ -7,7 +7,9 @@ import { Tooltip as ReactTooltip } from 'react-tooltip';
 
 const CustomTableWidget3 = ({ id, options, value, required, onChange }) => {
     const [localValue, setLocalValue] = useState(value);
-
+    useEffect(() => {
+        setLocalValue(value);
+      }, [value]);
     const handleFieldChange = (index, key, newValue) => {
         const updatedValues = [...localValue];
         if (!updatedValues[index]) {

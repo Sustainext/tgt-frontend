@@ -24,11 +24,14 @@ h1,h2,h3,h4,h5,h6,p,div {
     }
   }
   .gradient-text {
-    background: -webkit-linear-gradient(#0165BF, #22B6CC);
+    background: linear-gradient(90deg, #007EEF 7.92%, #2AE4FF 89.75%);
+    font-style: normal;
+    font-weight:bold;
+    line-height: 20px;
     background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 500;
+    color: transparent;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
   }
   .custom-gradient-text {
     background: linear-gradient(90deg, #00AEEF 7.92%, #6ADF23 89.75%);

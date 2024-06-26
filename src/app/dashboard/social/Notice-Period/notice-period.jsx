@@ -1,7 +1,7 @@
 import Screen1 from "./screen1";
 import Screen2 from "./screen2";
 
-const Ohsservicesmain = ({ location, year, month}) => {
+const Noticeperiodmain = ({ location, year, month}) => {
 
     return (
         <>
@@ -9,8 +9,10 @@ const Ohsservicesmain = ({ location, year, month}) => {
           <Screen1 location={location} year={year} month={month}/>
           <Screen2 location={location} year={year} month={month}/>
 
+
+
         </>
     );
 };
 
-export default Ohsservicesmain;
+export default Noticeperiodmain;

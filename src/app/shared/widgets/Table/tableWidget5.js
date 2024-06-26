@@ -13,10 +13,10 @@ const CustomTableWidget5 = ({
   formContext,
   onChange,
 }) => {
-  const [localValue, setLocalValue] = useState(value || []);
+  const [localValue, setLocalValue] = useState(value);
 
   useEffect(() => {
-    setLocalValue(value || []);
+    setLocalValue(value);
   }, [value]);
 
 

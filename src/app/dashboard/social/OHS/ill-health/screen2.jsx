@@ -51,13 +51,16 @@ const uiSchema = {
     },
 };
 const Screen2 = ({location, year, month}) => {
-    const [formData, setFormData] = useState([{
-        employeeCategory: "",
-        fatalities: "",
-        highconsequence: "",
-        recordable: "",
+    const initialFormData = [
+        {
+            employeeCategory: "",
+            fatalities: "",
+            highconsequence: "",
+            recordable: "",
 
-    }]);
+        }
+    ];
+    const [formData, setFormData] = useState(initialFormData);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
     const [loopen, setLoOpen] = useState(false);
@@ -69,7 +72,7 @@ const Screen2 = ({location, year, month}) => {
         return '';
     };
     const token = getAuthToken();
-    
+
     const LoaderOpen = () => {
         setLoOpen(true);
       };
@@ -115,7 +118,7 @@ const Screen2 = ({location, year, month}) => {
             });
             LoaderClose();
             loadFormData();
-    
+
           }else {
             toast.error("Oops, something went wrong", {
               position: "top-right",
@@ -151,22 +154,31 @@ const Screen2 = ({location, year, month}) => {
     const loadFormData = async () => {
         LoaderOpen();
         const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
-        
         try {
             const response = await axios.get(url, axiosConfig);
             console.log('API called successfully:', response.data);
             setRemoteSchema(response.data.form[0].schema);
             setRemoteUiSchema(response.data.form[0].ui_schema);
-            const form_parent = response.data.form_data;
-            setFormData(form_parent[0].data);
-            // const f_data = form_parent[0].data
-            // setFormData(f_data)
+
+
+            if (response.data.form_data.length > 0) {
+
+                setFormData(response.data.form_data[0].data);
+
+
+                // Assumes form_data is wrapped in an object under 'data'
+            } else {
+                // Handle empty response by either keeping the default state or resetting to default
+                setFormData(initialFormData);
+            }
+
+
         } catch (error) {
-            console.error('API call failed:', error);
+            setFormData(initialFormData);
         } finally {
             LoaderClose();
         }
-    }
+    };
     //Reloading the forms
     useEffect(() => {
         //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
@@ -214,7 +226,7 @@ const Screen2 = ({location, year, month}) => {
 
     return (
         <>
-            <div className="mx-2 p-3 mb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+            <div className="mx-2 p-3 mb-6 pb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
                 <div className='mb-4 flex'>
                     <div className='w-[80%]'>
                         <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold mb-2'>

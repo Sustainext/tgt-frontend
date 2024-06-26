@@ -17,7 +17,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
 import axios from 'axios';
-
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
@@ -50,7 +49,7 @@ const schema = {
       Source: {
         type: "string",
         title: "Source",
-        enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro', 'Natural', 'Electricity', 'Cooling', 'Steam', 'Heating', 'Wood Biomas', 'Biogas', 'Other'],
+        enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro', 'Natural gas', 'Electricity', 'Cooling', 'Steam', 'Heating', 'Wood Biomas', 'Biogas', 'Other'],
         tooltiptext: "Indicate where the energy comes from"
       },
       Purpose: {
@@ -296,9 +295,9 @@ const Purchased = ({location, year, month}) => {
       }
   };
 
-
   const loadFormData = async () => {
       LoaderOpen();
+      setFormData([{}])
       const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
       try {
           const response = await axios.get(url, axiosConfig);
@@ -314,14 +313,7 @@ const Purchased = ({location, year, month}) => {
       }
   };
   //Reloading the forms
-  useEffect(() => {
-      //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-  },[r_schema, r_ui_schema])
 
-  // console log the form data change
-  useEffect(() => {
-      console.log('Form data is changed -', formData)
-  },[formData])
 
   // fetch backend and replace initialized forms
   useEffect(() => {
@@ -357,7 +349,7 @@ const Purchased = ({location, year, month}) => {
   const handleAddNew = () => {
     const newData = [...formData, {}];
     setFormData(newData);
-
+    console.log('Form data newData:', newData);
   };
   //The below code on updateFormData is by White Beard
 
@@ -399,13 +391,17 @@ const Purchased = ({location, year, month}) => {
             validator={validator}
             widgets={{
               ...widgets,
-              RemoveWidget: (props) => (
-                <RemoveWidget
+              RemoveWidget: (props) => {
+                // Assuming the widget framework passes a unique ID that includes the index
+             // Make sure this ID fetching logic is correct
+                return (
+                  <RemoveWidget
                   {...props}
-                  index={props.id} // Pass the index
+                  index={props.id.split('_')[1]} // Pass the index
                   onRemove={handleRemove}
-                />
-              ),
+                  />
+                );
+              },
               FileUploadWidget: (props) => (
                 <CustomFileUploadWidget
                   {...props}

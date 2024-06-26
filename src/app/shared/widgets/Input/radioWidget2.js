@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { MdInfoOutline } from 'react-icons/md';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
@@ -11,6 +11,9 @@ const RadioWidget2 = ({
   uiSchema = {},
 }) => {
   const [inputState, setInputState] = useState(value); // Initialize state with the provided value
+  useEffect(() => {
+    setInputState(value);
+  }, [value]);
 
   const handleChange = (event) => {
     const newValue = event.target.value;
@@ -20,7 +23,7 @@ const RadioWidget2 = ({
 
   return (
 
-    <div className='mb-6'>
+    <div className='mb-6 pb-4'>
           <div className='flex mb-2 items-center'>
         <p className='text-[15px] text-gray-700 w-full mb-2'>
           {uiSchema['ui:title']}

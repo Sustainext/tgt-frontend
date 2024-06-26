@@ -33,7 +33,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
         </div>
 
 
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center relative">
           <MdInfoOutline
             data-tooltip-id={`tooltip-${title.replace(/\s+/g, '-')}`} data-tooltip-content={tooltiptext} className="mt-1 text-[14px]" style={{display:display}} />
           {/* Tooltip */}
@@ -98,7 +98,7 @@ const Energyproductsservicesbody = ({location, year, month,setLocationMessage}) 
           title="Base year or baseline"
           tooltiptext={`This section is dedicated to reporting the reduction in energy consumption within an organization. While calculating
           Reduction in Energy Consumption exclude reductions resulting from reduced production capacity or outsourcing.`}
-          sdg={['GRI 302-4c']}
+          sdg={['GRI 302-5b']}
           display="none"
           location={location}
           setLocationMessage={setLocationMessage}
@@ -109,7 +109,7 @@ const Energyproductsservicesbody = ({location, year, month,setLocationMessage}) 
           title="Standards, methodologies, assumptions and calculation tools used"
           tooltiptext={`This section is dedicated to reporting the reduction in energy consumption within an organization. While calculating
           Reduction in Energy Consumption exclude reductions resulting from reduced production capacity or outsourcing.`}
-          sdg={['GRI 302-4c']}
+          sdg={['GRI 302-5c']}
           display="none"
           location={location}
           setLocationMessage={setLocationMessage}
