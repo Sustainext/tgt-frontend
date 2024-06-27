@@ -44,9 +44,6 @@ const uiSchema = {
                 { title: "Number of Security Personnel", tooltip: "Please specify the total number of security personnel whether they have received training or not." },
                 { title: "Employees of the Organization", tooltip: "Indicate the number of security personnel which are employees of the organization and who have received formal training." },
                 { title: "Employees of third-party organizations", tooltip: "Indicate the number of security personnel  which are employees of third-party organizations and who have received formal training." },
-
-
-
             ],
 
     },
@@ -70,7 +67,7 @@ const Screen1 = ({location, year, month}) => {
         return '';
     };
     const token = getAuthToken();
-    
+
     const LoaderOpen = () => {
         setLoOpen(true);
       };
@@ -116,7 +113,7 @@ const Screen1 = ({location, year, month}) => {
             });
             LoaderClose();
             loadFormData();
-    
+
           }else {
             toast.error("Oops, something went wrong", {
               position: "top-right",
@@ -152,7 +149,7 @@ const Screen1 = ({location, year, month}) => {
     const loadFormData = async () => {
         LoaderOpen();
         const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
-        
+
         try {
             const response = await axios.get(url, axiosConfig);
             console.log('API called successfully:', response.data);

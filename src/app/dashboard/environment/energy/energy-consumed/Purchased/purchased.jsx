@@ -11,6 +11,8 @@ import CustomFileUploadWidget from '../../../../../shared/widgets/CustomFileUplo
 import AssignToWidget from '../../../../../shared/widgets/assignToWidget';
 import CustomSelectInputWidget from '../../../../../shared/widgets/CustomSelectInputWidget';
 import RemoveWidget from '../../../../../shared/widgets/RemoveWidget';
+import selectWidget3 from '../../../../../shared/widgets/Select/selectWidget3';
+import inputnumberWidget from "../../../../../shared/widgets/Input/inputnumberWidget"
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 import { ToastContainer, toast } from "react-toastify";
@@ -25,6 +27,8 @@ const widgets = {
   AssignTobutton: AssignToWidget,
   CustomSelectInputWidget: CustomSelectInputWidget,
   RemoveWidget: RemoveWidget,
+  selectWidget3:selectWidget3,
+  inputnumberWidget:inputnumberWidget,
 };
 
 const view_path = 'gri-environment-energy-302-1a-1b-direct_purchased'
@@ -37,7 +41,6 @@ const schema = {
   items: {
     type: 'object',
     properties: {
-
       EnergyType: {
         type: "string",
         title: "Energy Type",
@@ -133,14 +136,14 @@ const uiSchema = {
 
     },
     Quantity: {
-      'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
+      'ui:widget': 'inputnumberWidget', // Use your custom widget for QuantityUnit
       'ui:options': {
         label: false // This disables the label for this field
       },
     },
 
     Unit: {
-      'ui:widget': 'selectWidget',
+      'ui:widget': 'selectWidget3',
       'ui:horizontal': true,
       'ui:options': {
         label: false // This disables the label for this field
@@ -182,8 +185,8 @@ const generateTooltip = (field, title, tooltipText) => {
   }
 
   return (
-    <div className='mx-2 flex w-[20vw]'>
-      <label className="text-[13px] leading-5 text-gray-700 flex">{title}</label>
+    <div className={`mx-2 flex  ${field === 'Quantity' ? 'w-[15vw] justify-start' : 'w-[20vw]'}`}>
+      <label className={`text-[13px] leading-5 text-gray-700 flex `}>{title}</label>
       <MdInfoOutline
         data-tooltip-id={field}
         data-tooltip-content={tooltipText}
@@ -377,7 +380,7 @@ const Purchased = ({location, year, month}) => {
       <div className={`overflow-auto custom-scrollbar flex`}>
         <div>
           <div>
-            <div className='flex'>
+            <div className='flex '>
               {renderFields()} {/* Render dynamic fields with tooltips */}
             </div>
           </div>

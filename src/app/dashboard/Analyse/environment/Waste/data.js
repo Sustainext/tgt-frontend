@@ -1,7 +1,7 @@
 export const columns1 = [
     {
       label: "Material Type",
-      dataIndex: "type",
+      dataIndex: "material_type",
       headerClass:
         "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
@@ -16,7 +16,7 @@ export const columns1 = [
     },
     {
       label: "Total in Qt",
-      dataIndex: "total",
+      dataIndex: "total_waste",
       headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
@@ -31,41 +31,7 @@ export const columns1 = [
     },
   ];
 
-  export const data1 = [
 
-    {
-      type: "Chemical",
-      contribution: "x%",
-      total: 212123545,
-      units: "Metric tons (t)",
-    },
-    {
-      type: "Paper",
-      contribution: "x%",
-      total: 212123545,
-      units: "Metric tons (t)",
-    },
-    {
-      type: "Organic",
-      contribution: "x%",
-      total: 212123545,
-      units: "Metric tons (t)",
-    },
-    {
-      type: "Oil",
-      contribution: "x%",
-      total: 212123545,
-      units: "Metric tons (t)",
-    },
-
-    {
-      type: "Total",
-      source: "",
-      totalrow: 2,
-      total: 212123545,
-      units: "Metric tons (t)",
-    },
-  ];
 
   // ------------------------Fuel Consumption within the organisation from Non-renewable sources
 
@@ -80,7 +46,7 @@ export const columns1 = [
     },
     {
       label: "Material Type",
-      dataIndex: "type",
+      dataIndex: "material_type",
       headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
@@ -94,7 +60,7 @@ export const columns1 = [
     },
     {
       label: "Qty of total waste",
-      dataIndex: "total",
+      dataIndex: "total_waste",
       headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
@@ -109,51 +75,14 @@ export const columns1 = [
     },
   ];
 
-  export const data2 = [
-    {
-      location: "Bengaluru",
-      type: "Chemical",
-      contribution:"x%",
-      total:"X",
-      units: "Metric tons (t)",
-    },
-    {
-      location: "Ludhiana",
-      type: "Solar",
-      contribution:"x%",
-      total:"X",
-      units: "Metric tons (t)",
-    },
-    {
-      location: "Mumbai",
-      type: "Hydro",
-      contribution:"x%",
-      total:"X",
-      units: "Metric tons (t)",
-    },
-    {
-      location: "Kochi",
-      type: "Wind",
-      contribution:"x%",
-      total:"X",
-      units: "Metric tons (t)",
-    },
-    {
-      type: "Total",
-      location: "",
-      totalrow: 2,
-      contribution:"x%",
-      total:"X",
-      units: "Metric tons (t)",
-    },
-  ];
+
 
   // ------------------------------------Energy Consumption Within the organisation
 
   export const columns3 = [
     {
       label: "Total Waste by Category",
-      dataIndex: "type",
+      dataIndex: "material_type",
       headerClass:
         "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
@@ -168,7 +97,7 @@ export const columns1 = [
     },
     {
       label: "Total in Qty",
-      dataIndex: "total",
+      dataIndex: "total_waste",
       headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
@@ -183,35 +112,14 @@ export const columns1 = [
     },
   ];
 
-  export const data3 = [
-    {
-      type: "Hazardous",
-      contribution: "x%",
-      total:"212123545",
-      units: "Metric tons (t)",
-    },
-    {
-      type: "Non Hazardous",
-      contribution: "x%",
-      total:"212123545",
-      units: "Metric tons (t)",
-    },
 
-    {
-      type: "Total",
-      contribution: "",
-      totalrow: 2,
-      total:"212123545",
-      units: "Metric tons (t)",
-    },
-  ];
 
   // ------------------------------Direct Purchased Heating, Cooling, Electricity and Steam from renewable sources
 
   export const columns4 = [
     {
       label: "Disposal Method",
-      dataIndex: "method",
+      dataIndex: "disposal_method",
       headerClass:
         "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
@@ -219,14 +127,14 @@ export const columns1 = [
     },
     {
       label: "Material Type",
-      dataIndex: "type",
+      dataIndex: "material_type",
       headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
     },
     {
       label: "Qty of total waste",
-      dataIndex: "total",
+      dataIndex: "total_waste",
       headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",

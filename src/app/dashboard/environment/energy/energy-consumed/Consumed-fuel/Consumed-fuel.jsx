@@ -103,8 +103,6 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
         label: false,
         // Include tooltiptext in uiSchema
       },
-
-
     },
     Source: {
       'ui:widget': 'selectWidget',
