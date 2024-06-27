@@ -220,7 +220,7 @@ const Significantwasteimpact = ({location, year, month}) => {
 
   return (
     <>
-      <div >
+      <div>
         <div>
         <Form
           schema={r_schema}

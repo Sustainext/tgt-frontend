@@ -364,7 +364,8 @@ const Outsideorganization = ({location, year, month}) => {
   return (
     <>
 
-<div className={`overflow-auto custom-scrollbar flex`}>
+<ToastContainer style={{ fontSize: "12px" }} />
+        <div className={`overflow-auto custom-scrollbar flex`}>
         <div>
           <div>
             <div className='flex'>

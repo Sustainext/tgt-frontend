@@ -240,7 +240,8 @@ const Managementwasteimpact = ({location, year, month}) => {
 
     return (
       <>
-        <div >
+   <ToastContainer style={{ fontSize: "12px" }} />
+     <div >
           <div>
           <Form
             schema={r_schema}

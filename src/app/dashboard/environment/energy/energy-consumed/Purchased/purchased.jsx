@@ -136,14 +136,14 @@ const uiSchema = {
 
     },
     Quantity: {
-      'ui:widget': 'inputnumberWidget', // Use your custom widget for QuantityUnit
+      'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
       'ui:options': {
         label: false // This disables the label for this field
       },
     },
 
     Unit: {
-      'ui:widget': 'selectWidget3',
+      'ui:widget': 'selectWidget',
       'ui:horizontal': true,
       'ui:options': {
         label: false // This disables the label for this field
@@ -185,7 +185,7 @@ const generateTooltip = (field, title, tooltipText) => {
   }
 
   return (
-    <div className={`mx-2 flex  ${field === 'Quantity' ? 'w-[15vw] justify-start' : 'w-[20vw]'}`}>
+    <div className={`mx-2 flex w-[20vw]`}>
       <label className={`text-[13px] leading-5 text-gray-700 flex `}>{title}</label>
       <MdInfoOutline
         data-tooltip-id={field}
@@ -377,7 +377,8 @@ const Purchased = ({location, year, month}) => {
   return (
     <>
 
-      <div className={`overflow-auto custom-scrollbar flex`}>
+        <ToastContainer style={{ fontSize: "12px" }} />
+        <div className={`overflow-auto custom-scrollbar flex`}>
         <div>
           <div>
             <div className='flex '>

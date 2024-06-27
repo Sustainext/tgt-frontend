@@ -156,50 +156,14 @@ export const columns1 = [
     },
   ];
 
-  export const data4 = [
-    {
-      method: "Incineration",
-      type: "Chemical",
-      total: "x",
-      contribution: "X%",
-      units: "Metric tons (t)",
-    },
-    {
-      method: "Landfiling",
-      type: "Organic",
-      total: "x",
-      contribution: "X%",
-      units: "Metric tons (t)",
-    },
-    {
-      method: "Other",
-      type: "Oil",
-      total: "x",
-      contribution: "X%",
-      units: "Metric tons (t)",
-    },
-    {
-      type: "E-Waste",
-      total: "x",
-      contribution: "X%",
-      units: "Metric tons (t)",
-    },
-    {
-      type: "Total",
-      contribution: "X%",
-      total: "x",
-      totalrow: 3,
-      maprow:1,
-      units: "Metric tons (t)",
-    },
-  ];
+
 
   // -------------------Direct Purchased Heating, Cooling, Electricity and Steam from non-renewable sources
 
   export const columns5 = [
     {
       label: "Recovery operation",
-      dataIndex: "method",
+      dataIndex: "recovery_operation",
       headerClass:
         "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
@@ -207,14 +171,14 @@ export const columns1 = [
     },
     {
       label: "Material Type",
-      dataIndex: "type",
+      dataIndex: "material_type",
       headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
     },
     {
       label: "Qty of total waste",
-      dataIndex: "total",
+      dataIndex: "total_waste",
       headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
@@ -279,7 +243,7 @@ export const columns1 = [
   export const columns6 = [
     {
       label: "Waste Type",
-      dataIndex: "type",
+      dataIndex: "material_type",
       headerClass:
         "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
@@ -287,7 +251,7 @@ export const columns1 = [
     },
     {
       label: "Quantity",
-      dataIndex: "total",
+      dataIndex: "total_waste",
       headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
@@ -302,7 +266,7 @@ export const columns1 = [
     },
     {
       label: "Recycled %",
-      dataIndex: "recycled",
+      dataIndex: "recycled_percentage",
       headerClass:
         "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
@@ -310,7 +274,7 @@ export const columns1 = [
     },
     {
       label: "Preparation of reuse %",
-      dataIndex: "preparation",
+      dataIndex: "preparation_of_reuse_percentage",
       headerClass:
         "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
@@ -318,7 +282,7 @@ export const columns1 = [
     },
     {
       label: "Other recovery options  %",
-      dataIndex: "otherrecovery",
+      dataIndex: "other_percentage",
       headerClass:
         "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
@@ -334,57 +298,14 @@ export const columns1 = [
     },
   ];
 
-  export const data6 = [
-    {
-      type: "Chemical Waste",
-      total:"x",
-      units: "Metric tons (t)",
-      recycled: "x%",
-      preparation: "x%",
-      otherrecovery:"x%",
-      site:"On-site",
 
-
-    },
-    {
-      type: "Used Oil",
-      total:"x",
-      units: "Metric tons (t)",
-      recycled: "x%",
-      preparation: "x%",
-      otherrecovery:"x%",
-      site:"On-site",
-
-    },
-    {
-      type: "E-Waste",
-      total:"x",
-      units: "Metric tons (t)",
-      recycled: "x%",
-      preparation: "x%",
-      otherrecovery:"x%",
-      site:"On-site",
-
-    },
-    {
-      type: "Total",
-      total: "212123545",
-      units: "Metric tons (t)",
-      totalrow: 6,
-      recycled: "x%",
-      preparation: "x%",
-      otherrecovery:"x%",
-      site:"On-site",
-
-    },
-  ];
 
   //Self Generated Energy - not consumed or sold (non-renewable Energy)
 
   export const columns7 = [
     {
       label: "Waste Type",
-      dataIndex: "type",
+      dataIndex: "material_type",
       headerClass:
         "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
@@ -392,7 +313,7 @@ export const columns1 = [
     },
     {
       label: "Quantity",
-      dataIndex: "total",
+      dataIndex: "total_waste",
       headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
@@ -407,7 +328,7 @@ export const columns1 = [
     },
     {
       label: "Recycled %",
-      dataIndex: "recycled",
+      dataIndex: "recycled_percentage",
       headerClass:
         "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
@@ -415,7 +336,7 @@ export const columns1 = [
     },
     {
       label: "Preparation of reuse %",
-      dataIndex: "preparation",
+      dataIndex: "preparation_of_reuse_percentage",
       headerClass:
         "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
@@ -423,7 +344,7 @@ export const columns1 = [
     },
     {
       label: "Other recovery options  %",
-      dataIndex: "otherrecovery",
+      dataIndex: "other_percentage",
       headerClass:
         "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
@@ -439,56 +360,13 @@ export const columns1 = [
     },
   ];
 
-  export const data7 = [
-    {
-      type: "Paper",
-      total:"x",
-      units: "Metric tons (t)",
-      recycled: "x%",
-      preparation: "x%",
-      otherrecovery:"x%",
-      site:"On-site",
 
-
-    },
-    {
-      type: "Paper",
-      total:"x",
-      units: "Metric tons (t)",
-      recycled: "x%",
-      preparation: "x%",
-      otherrecovery:"x%",
-      site:"On-site",
-
-    },
-    {
-      type: "waste3",
-      total:"x",
-      units: "Metric tons (t)",
-      recycled: "x%",
-      preparation: "x%",
-      otherrecovery:"x%",
-      site:"On-site",
-
-    },
-    {
-      type: "Total",
-      total: "212123545",
-      units: "Metric tons (t)",
-      totalrow: 6,
-      recycled: "x%",
-      preparation: "x%",
-      otherrecovery:"x%",
-      site:"On-site",
-
-    },
-  ];
   // -------------------------Energy Sold (Renewable energy)
 
   export const columns8 = [
     {
       label: "Waste Type",
-      dataIndex: "type",
+      dataIndex: "material_type",
       headerClass:
         "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
@@ -496,7 +374,7 @@ export const columns1 = [
     },
     {
       label: "Quantity",
-      dataIndex: "total",
+      dataIndex: "total_waste",
       headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
@@ -511,7 +389,7 @@ export const columns1 = [
     },
     {
       label: "Incineration (with energy) %",
-      dataIndex: "incinerationwithenergy",
+      dataIndex: "inceneration_with_energy_percentage",
       headerClass:
         "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
@@ -519,7 +397,7 @@ export const columns1 = [
     },
     {
       label: "Incineration (without energy) %",
-      dataIndex: "incinerationwithoutenergy",
+      dataIndex: "inceneration_without_energy_percentage",
       headerClass:
         "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
@@ -527,7 +405,7 @@ export const columns1 = [
     },
     {
       label: "Landfill %",
-      dataIndex: "landfill",
+      dataIndex: "landfill_percentage",
       headerClass:
         "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
@@ -535,7 +413,7 @@ export const columns1 = [
     },
     {
       label: "Other disposal method  %",
-      dataIndex: "otherdisposal",
+      dataIndex: "other_disposal_percentage",
       headerClass:
         "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
@@ -543,7 +421,7 @@ export const columns1 = [
     },
     {
       label: "External Vendor",
-      dataIndex: "externalvendor",
+      dataIndex: "external_percentage",
       headerClass:
         "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
@@ -559,65 +437,14 @@ export const columns1 = [
     },
   ];
 
-  export const data8 = [
-    {
-      type: "Paper",
-      total:"x",
-      units: "Metric tons (t)",
-      incinerationwithenergy: "x%",
-      incinerationwithoutenergy: "x%",
-      landfill:"x%",
-      otherdisposal:"x%",
-      externalvendor:"x%",
-      site:"On-site",
 
-
-    },
-    {
-      type: "Paper",
-      total:"x",
-      units: "Metric tons (t)",
-      incinerationwithenergy: "x%",
-      incinerationwithoutenergy: "x%",
-      landfill:"x%",
-      otherdisposal:"x%",
-      externalvendor:"x%",
-      site:"On-site",
-
-    },
-    {
-      type: "waste3",
-      total:"x",
-      units: "Metric tons (t)",
-      incinerationwithenergy: "x%",
-      incinerationwithoutenergy: "x%",
-      landfill:"x%",
-      otherdisposal:"x%",
-      externalvendor:"x%",
-      site:"On-site",
-
-    },
-    {
-      type: "Total",
-      total: "212123545",
-      units: "Metric tons (t)",
-      totalrow: 9,
-      incinerationwithenergy: "x%",
-      incinerationwithoutenergy: "x%",
-      landfill:"x%",
-      otherdisposal:"x%",
-      externalvendor:"x%",
-      site:"On-site",
-
-    },
-  ];
 
   // --------------------- Energy Sold (non-renewable energy)
 
   export const columns9 = [
     {
       label: "Waste Type",
-      dataIndex: "type",
+      dataIndex: "material_type",
       headerClass:
         "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
@@ -625,7 +452,7 @@ export const columns1 = [
     },
     {
       label: "Quantity",
-      dataIndex: "total",
+      dataIndex: "total_waste",
       headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
       cellClass:
         "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
@@ -640,7 +467,7 @@ export const columns1 = [
     },
     {
       label: "Incineration (with energy) %",
-      dataIndex: "incinerationwithenergy",
+      dataIndex: "inceneration_with_energy_percentage",
       headerClass:
         "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
@@ -648,7 +475,7 @@ export const columns1 = [
     },
     {
       label: "Incineration (without energy) %",
-      dataIndex: "incinerationwithoutenergy",
+      dataIndex: "inceneration_without_energy_percentage",
       headerClass:
         "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
@@ -656,7 +483,7 @@ export const columns1 = [
     },
     {
       label: "Landfill %",
-      dataIndex: "landfill",
+      dataIndex: "landfill_percentage",
       headerClass:
         "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
@@ -664,7 +491,7 @@ export const columns1 = [
     },
     {
       label: "Other disposal method  %",
-      dataIndex: "otherdisposal",
+      dataIndex: "other_disposal_percentage",
       headerClass:
         "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
@@ -672,7 +499,7 @@ export const columns1 = [
     },
     {
       label: "External Vendor",
-      dataIndex: "externalvendor",
+      dataIndex: "external_percentage",
       headerClass:
         "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
@@ -688,58 +515,7 @@ export const columns1 = [
     },
   ];
 
-  export const data9 = [
-    {
-      type: "Paper",
-      total:"x",
-      units: "Metric tons (t)",
-      incinerationwithenergy: "x%",
-      incinerationwithoutenergy: "x%",
-      landfill:"x%",
-      otherdisposal:"x%",
-      externalvendor:"x%",
-      site:"On-site",
 
-
-    },
-    {
-      type: "Paper",
-      total:"x",
-      units: "Metric tons (t)",
-      incinerationwithenergy: "x%",
-      incinerationwithoutenergy: "x%",
-      landfill:"x%",
-      otherdisposal:"x%",
-      externalvendor:"x%",
-      site:"On-site",
-
-    },
-    {
-      type: "waste3",
-      total:"x",
-      units: "Metric tons (t)",
-      incinerationwithenergy: "x%",
-      incinerationwithoutenergy: "x%",
-      landfill:"x%",
-      otherdisposal:"x%",
-      externalvendor:"x%",
-      site:"On-site",
-
-    },
-    {
-      type: "Total",
-      total: "212123545",
-      units: "Metric tons (t)",
-      totalrow: 9,
-      incinerationwithenergy: "x%",
-      incinerationwithoutenergy: "x%",
-      landfill:"x%",
-      otherdisposal:"x%",
-      externalvendor:"x%",
-      site:"On-site",
-
-    },
-  ];
 
 
 
