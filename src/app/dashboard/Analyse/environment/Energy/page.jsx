@@ -6,35 +6,21 @@ import DateRangePicker from "@/app/utils/DatePickerComponent";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import {
   columns1,
-  data1,
   columns2,
-  data2,
   columns3,
-  data3,
   columns4,
-  data4,
   columns5,
-  data5,
   columns6,
-  data6,
   columns7,
-  data7,
   columns8,
-  data8,
   columns9,
-  data9,
   columns10,
-  data10,
   columns11,
-  data11,
   columns12,
-  data12,
   columns13,
-  data13,
 } from "./data";
 
 const AnalyseEnergy = ({ isBoxOpen }) => {
-  const [analyseData, setAnalyseData] = useState([]);
   const [organisations, setOrganisations] = useState([]);
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
@@ -43,10 +29,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
   const [corporates, setCorporates] = useState([]);
   const [reportType, setReportType] = useState("Organization");
   const [loopen, setLoOpen] = useState(false);
-  const [dateRange, setDateRange] = useState({
-    start: null,
-    end: null,
-  });
+  const [dateRange, setDateRange] = useState({end: "", start: ""});
   const [isDateRangeValid, setIsDateRangeValid] = useState(true);
   const [datasetparams, setDatasetparams] = useState({
     organisation: "",
@@ -115,7 +98,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
         energy_consumption_outside_the_org,
         energy_intensity,
         reduction_of_ene_consump,
-        reduction_of_ene_prod_and_services
+        reduction_of_ene_prod_and_services,
       } = data;
 
       const removeAndStoreLastObject = (array) => {
@@ -126,46 +109,179 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
         }
       };
 
+      // Handle fuel consumption from renewable
       const fuel_consumption_from_renewable_total = removeAndStoreLastObject(
         fuel_consumption_from_renewable
       );
       fuel_consumption_from_renewable.push({
-        "Energy_type": "Total Renewable Energy consumption",
-        "Source": "",
-        "Quantity": fuel_consumption_from_renewable_total.Total,
-        "Unit": fuel_consumption_from_renewable_total.Unit
+        Energy_type: "Total Renewable Energy consumption",
+        Source: "",
+        Quantity: fuel_consumption_from_renewable_total.Total,
+        Unit: fuel_consumption_from_renewable_total.Unit,
       });
       setFuelConsumptionRenewable(fuel_consumption_from_renewable);
-      
 
+      // Handle fuel consumption from non-renewable
       const fuel_consumption_from_non_renewable_total =
         removeAndStoreLastObject(fuel_consumption_from_non_renewable);
+      fuel_consumption_from_non_renewable.push({
+        Energy_type: "Total Non-Renewable Energy consumption",
+        Source: "",
+        Quantity: fuel_consumption_from_non_renewable_total.Total,
+        Unit: fuel_consumption_from_non_renewable_total.Unit,
+      });
+      setFuelConsumptionNonRenewable(fuel_consumption_from_non_renewable);
+
+      // Handle energy consumption within the organization
       const energy_consumption_within_the_org_total = removeAndStoreLastObject(
         energy_consumption_within_the_org
       );
+      const updatedArray = energy_consumption_within_the_org.map(item => {
+        return {
+          ...item,
+          Energy_type: item.type_of_energy_consumed,
+          consumption: item.consumption,
+          unit: item.unit,
+        };
+      });
+      updatedArray.push({
+        Energy_type:
+          "Total Energy Consumption Within the Organization",
+        Quantity: energy_consumption_within_the_org_total.Total,
+        Unit: energy_consumption_within_the_org_total.unit,
+      });
+      setEnergyWithinOrganization(updatedArray);
+
+      // Handle direct purchase from renewable
       const direct_purchased_from_renewable_total = removeAndStoreLastObject(
         direct_purchased_from_renewable
       );
+      direct_purchased_from_renewable.push({
+        Energy_type: "Total Direct Purchase from Renewable",
+        Source: "",
+        Quantity: direct_purchased_from_renewable_total.Total,
+        Unit: direct_purchased_from_renewable_total.Unit,
+      });
+      setDirectFromRenewable(direct_purchased_from_renewable);
+
+      // Handle direct purchase from non-renewable
       const direct_purchased_from_non_renewable_total =
         removeAndStoreLastObject(direct_purchased_from_non_renewable);
+      direct_purchased_from_non_renewable.push({
+        Energy_type: "Total Direct Purchase from Non-Renewable",
+        Source: "",
+        purpose: "",
+        Quantity: direct_purchased_from_non_renewable_total.Total,
+        Unit: direct_purchased_from_non_renewable_total.Unit,
+      });
+      setDirectFromNonRenewable(direct_purchased_from_non_renewable);
+
+      // Handle self-generated from renewable
       const self_generated_from_renewable_total = removeAndStoreLastObject(
         self_generated_from_renewable
       );
+      self_generated_from_renewable.push({
+        Energy_type: "Total Self-Generated from Renewable",
+        Source: "",
+        purpose: "",
+        Quantity: self_generated_from_renewable_total.Total,
+        Unit: self_generated_from_renewable_total.Unit,
+      });
+      setSelfGenFromRenewable(self_generated_from_renewable);
+
+      // Handle self-generated from non-renewable
       const self_generated_from_non_renewable_total = removeAndStoreLastObject(
         self_generated_from_non_renewable
       );
+      self_generated_from_non_renewable.push({
+        Energy_type: "Total Self-Generated from Non-Renewable",
+        Source: "",
+        Quantity: self_generated_from_non_renewable_total.Total,
+        Unit: self_generated_from_non_renewable_total.Unit,
+      });
+      setSelfGenFromNonRenewable(self_generated_from_non_renewable);
+
+      // Handle energy sold from renewable
       const energy_sold_from_renewable_total = removeAndStoreLastObject(
         energy_sold_from_renewable
       );
+      energy_sold_from_renewable.push({
+        Energy_type: "Total Energy Sold from Renewable",
+        Source: "",
+        Entity_type: "",
+        Entity_name: "",
+        Quantity: energy_sold_from_renewable_total.Total,
+        Unit: energy_sold_from_renewable_total.Unit,
+      });
+      setEnergySoldRenewable(energy_sold_from_renewable);
+
+      // Handle energy sold from non-renewable
       const energy_sold_from_non_renewable_total = removeAndStoreLastObject(
         energy_sold_from_non_renewable
       );
+      energy_sold_from_non_renewable.push({
+        Energy_type: "Total Energy Sold from Non-Renewable",
+        Source: "",
+        Entity_type: "",
+        Entity_name: "",
+        Quantity: energy_sold_from_non_renewable_total.Total,
+        Unit: energy_sold_from_non_renewable_total.Unit,
+      });
+      setEnergySoldNonRenewable(energy_sold_from_non_renewable);
+
+      // Handle energy consumption outside the organization
       const energy_consumption_outside_the_org_total = removeAndStoreLastObject(
         energy_consumption_outside_the_org
       );
-      const energy_intensity_total = removeAndStoreLastObject(energy_intensity);
-      const reduction_of_ene_consump_total = removeAndStoreLastObject(reduction_of_ene_consump);
-      const reduction_of_ene_prod_and_services_total = removeAndStoreLastObject(reduction_of_ene_prod_and_services);
+      energy_consumption_outside_the_org.push({
+        Energy_type: "Total Energy Consumption Outside the Organization",
+        Source: "",
+        Quantity: energy_consumption_outside_the_org_total.Total,
+        Unit: energy_consumption_outside_the_org_total.Unit,
+      });
+      setEnergyOutsideOrganization(energy_consumption_outside_the_org);
+
+      // Handle energy intensity
+      // const energy_intensity_total = removeAndStoreLastObject(energy_intensity);
+      // energy_intensity.push({
+      //   Energy_type: "Total Energy Intensity",
+      //   Organization_metric: "",
+      //   Energy_intensity1: "",
+      //   Unit1: "",
+      //   Energy_intensity2: energy_intensity_total.Total,
+      //   Unit2: energy_intensity_total.Unit,
+      // });
+      setEnergyIntensity(energy_intensity);
+
+      // Handle reduction of energy consumption
+      const reduction_of_ene_consump_total = removeAndStoreLastObject(
+        reduction_of_ene_consump
+      );
+      reduction_of_ene_consump.push({
+        Type_of_intervention: "",
+        Energy_type: "Total Reduction of Energy Consumption",
+        Energy_reduction: "",
+        Base_year: "",
+        Methodology: "",
+        Quantity1: reduction_of_ene_consump_total.Total1,
+        Unit1: reduction_of_ene_consump_total.Unit1,
+        Quantity2: reduction_of_ene_consump_total.Total2,
+        Unit2: reduction_of_ene_consump_total.Unit2,
+      });
+      setReductionOfEnergy(reduction_of_ene_consump);
+
+      // Handle reduction of energy in production and services
+      const reduction_of_ene_prod_and_services_total = removeAndStoreLastObject(
+        reduction_of_ene_prod_and_services
+      );
+      reduction_of_ene_prod_and_services.push({
+        Energy_type: "Total Reduction of Energy in Production and Services",
+        Quantity1: reduction_of_ene_prod_and_services_total.Total1,
+        Unit1: reduction_of_ene_prod_and_services_total.Unit1,
+        Quantity2: reduction_of_ene_prod_and_services_total.Total2,
+        Unit2: reduction_of_ene_prod_and_services_total.Unit2,
+      });
+      setReductionInEnergyOfPS(reduction_of_ene_prod_and_services);
 
       LoaderClose();
     } catch (error) {
@@ -463,7 +579,10 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
                 </div>
               </div>
             </div>
-            <DynamicTable columns={columns2} data={data2} />
+            <DynamicTable
+              columns={columns2}
+              data={fuelConsumptionNonRenewable}
+            />
           </div>
           <div className="mb-6">
             <div
@@ -477,7 +596,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
                 </div>
               </div>
             </div>
-            <DynamicTable columns={columns3} data={data3} />
+            <DynamicTable columns={columns3} data={energyWithinOrganization} />
           </div>
           <div className="mb-6">
             <div
@@ -494,7 +613,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
                 </div>
               </div>
             </div>
-            <DynamicTable columns={columns4} data={data4} />
+            <DynamicTable columns={columns4} data={directFromRenewable} />
           </div>
           <div className="mb-6">
             <div
@@ -511,7 +630,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
                 </div>
               </div>
             </div>
-            <DynamicTable columns={columns5} data={data5} />
+            <DynamicTable columns={columns5} data={directFromNonRenewable} />
           </div>
           <div className="mb-6">
             <div
@@ -527,7 +646,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
                 </div>
               </div>
             </div>
-            <DynamicTable columns={columns6} data={data6} />
+            <DynamicTable columns={columns6} data={selfGenFromRenewable} />
           </div>
           <div className="mb-6">
             <div
@@ -544,7 +663,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
                 </div>
               </div>
             </div>
-            <DynamicTable columns={columns7} data={data7} />
+            <DynamicTable columns={columns7} data={selfGenFromNonRenewable} />
           </div>
           <div className="mb-6">
             <div
@@ -558,7 +677,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
                 </div>
               </div>
             </div>
-            <DynamicTable columns={columns8} data={data8} />
+            <DynamicTable columns={columns8} data={energySoldRenewable} />
           </div>
           <div className="mb-6">
             <div
@@ -572,7 +691,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
                 </div>
               </div>
             </div>
-            <DynamicTable columns={columns9} data={data9} />
+            <DynamicTable columns={columns9} data={energySoldNonRenewable} />
           </div>
           <div className="mb-6">
             <div
@@ -586,7 +705,10 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
                 </div>
               </div>
             </div>
-            <DynamicTable columns={columns10} data={data10} />
+            <DynamicTable
+              columns={columns10}
+              data={energyOutsideOrganization}
+            />
           </div>
           <div className="mb-6">
             <div
@@ -600,7 +722,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
                 </div>
               </div>
             </div>
-            <DynamicTable columns={columns13} data={data13} />
+            <DynamicTable columns={columns13} data={energyIntensity} />
           </div>
           <div className="mb-6">
             <div
@@ -621,7 +743,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
                 </div>
               </div>
             </div>
-            <DynamicTable columns={columns11} data={data11} />
+            <DynamicTable columns={columns11} data={reductionOfEnergy} />
           </div>
           <div className="mb-6">
             <div
@@ -642,7 +764,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
                 </div>
               </div>
             </div>
-            <DynamicTable columns={columns12} data={data12} />
+            <DynamicTable columns={columns12} data={reductionInEnergyOfPS} />
           </div>
         </div>
         <div

@@ -12,21 +12,52 @@ function DynamicTable({ columns, data }) {
   const renderRows = () => {
     return data.map((row, rowIndex) => {
       const isTotalRow = row['Energy_type']?.toString().includes('Total');
+      const hasDoubleTotals = row.hasOwnProperty('Quantity2') && row.hasOwnProperty('Unit2');
 
       if (isTotalRow) {
-        return (
-          <tr key={rowIndex}>
-            <td colSpan={columns.length - 2} className="h-14 gradient-text px-4 py-2 border-y text-right font-bold text-sm">
-              {row['Energy_type']}
-            </td>
-            <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-sm">
-              {row['Quantity']}
-            </td>
-            <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-sm">
-              {row['Unit']}
-            </td>
-          </tr>
-        );
+        const colSpanValue = columns.length - (hasDoubleTotals ? 4 : 2);
+
+        if (hasDoubleTotals) {
+          return (
+            <tr key={rowIndex}>
+              <td
+                colSpan={colSpanValue}
+                className="h-14 gradient-text px-4 py-2 border-y text-right font-bold text-sm"
+              >
+                {row['Energy_type']}
+              </td>
+              <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-sm">
+                {row['Quantity1']}
+              </td>
+              <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-sm">
+                {row['Unit1']}
+              </td>
+              <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-sm">
+                {row['Quantity2']}
+              </td>
+              <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-sm">
+                {row['Unit2']}
+              </td>
+            </tr>
+          );
+        } else {
+          return (
+            <tr key={rowIndex}>
+              <td
+                colSpan={colSpanValue}
+                className="h-14 gradient-text px-4 py-2 border-y text-right font-bold text-sm"
+              >
+                {row['Energy_type']}
+              </td>
+              <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-sm">
+                {row['Quantity']}
+              </td>
+              <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-sm">
+                {row['Unit']}
+              </td>
+            </tr>
+          );
+        }
       } else {
         return (
           <tr key={rowIndex}>
