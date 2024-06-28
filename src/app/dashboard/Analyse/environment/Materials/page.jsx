@@ -58,6 +58,10 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
       setIsDateRangeValid(true);
     }
     LoaderOpen();
+    setMaterialdata1([]);
+    setMaterialdata2([]);
+    setMaterialdata3([]);
+    setMaterialdata4([]);
     try {
       const response = await axiosInstance.get(
         `/sustainapp/get_material_analysis`,

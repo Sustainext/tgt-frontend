@@ -1110,11 +1110,11 @@ const MyTask = () => {
                   <div className="justify-center items-center ">
                     <div className="flex justify-center items-center pb-5">
                       <FiCheckCircle
-                        sx={{ color: "#ACACAC", fontSize: "36px" }}
+                       style={{ color: '#ACACAC', fontSize: '36px' }}
                       />
                     </div>
                     <div>
-                      <p className="text-[13px] text-[#101828] font-bold text-center">
+                      <p className="text-[14px] text-[#101828] font-bold text-center">
                         Start by creating a task
                       </p>
                     </div>
@@ -1155,7 +1155,7 @@ const MyTask = () => {
                                       }}
                                     />
                                   )}
-                                  
+
                                 </div>
                                 <div className="w-72 truncate text-wrap text-neutral-800 text-[13px] font-normal leading-none ml-3 ">
                                   {task.roles === 1 ? (

@@ -12,25 +12,11 @@ import {
   columns2,
   columns3,
   columns4,
-  data4,
   columns5,
-  data5,
   columns6,
-  data6,
   columns7,
-  data7,
   columns8,
-  data8,
   columns9,
-  data9,
-  columns10,
-  data10,
-  columns11,
-  data11,
-  columns12,
-  data12,
-  columns13,
-  data13,
 } from "./data";
 
 const AnalyseWaste = ({ isBoxOpen }) => {
@@ -748,7 +734,7 @@ const AnalyseWaste = ({ isBoxOpen }) => {
         </div>
       </div>
       {loopen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 z-[100]">
+        <div className="fixed inset-0 flex items-center justify-center  bg-black bg-opacity-50 z-[100]">
           <Oval
             height={50}
             width={50}
