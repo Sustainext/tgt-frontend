@@ -33,7 +33,12 @@ function DynamicTable({ columns, data }) {
           ) : (
             columns.map((column, columnIndex) => (
               <td key={columnIndex} className={column.cellClass}>
-                {column.render ? column.render(row[column.dataIndex], row) : row[column.dataIndex]}
+                {column.render ? column.render(row[column.dataIndex], row) : (
+                <>
+                {row[column.dataIndex]}
+                {column.dataIndex === 'contribution' && <span>%</span>}
+              </>
+                )}
               </td>
             ))
           )}

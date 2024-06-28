@@ -200,43 +200,7 @@ export const columns1 = [
     },
   ];
 
-  export const data5 = [
-    {
-      method: "Reuse ",
-      type: "Chemical",
-      total: "x",
-      contribution: "X%",
-      units: "Metric tons (t)",
-    },
-    {
-      method: "Recycle",
-      type: "Organic",
-      total: "x",
-      contribution: "X%",
-      units: "Metric tons (t)",
-    },
-    {
-      method: "Other",
-      type: "Oil",
-      total: "x",
-      contribution: "X%",
-      units: "Metric tons (t)",
-    },
-    {
-      type: "E-Waste",
-      total: "x",
-      contribution: "X%",
-      units: "Metric tons (t)",
-    },
-    {
-      type: "Total",
-      contribution: "X%",
-      total: "x",
-      totalrow: 3,
-      maprow:1,
-      units: "Metric tons (t)",
-    },
-  ];
+
 
   // --------------------Self Generated Energy - not consumed or sold (Renewable Energy)
 
