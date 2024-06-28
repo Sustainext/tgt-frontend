@@ -17,6 +17,7 @@ import Securitypersonnel from "./Human-Rights/security-personnel/page";
 import Parentalleave from "./Employment/Parental-Leave/page";
 import Benefits from "./Employment/Benefits/page";
 import EmployeeHiresTurnover from "./Employment/Employee-Hires-Turnover/page";
+// import Noticeperiod from "./Notice-Period/page";
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -269,7 +270,73 @@ const Social = () => {
                     </li>
                   </AccordionItem>
 
+                  {/* <AccordionItem title="Labor Relations">
+                    <li
+                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+                      onClick={() => activeSteps(4)}
+                    >
+                      {isStepCompleted(4) ? (
+                        <>
+                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              className="bi bi-circle-fill fill-sky-800  font-bold "
+                              viewBox="0 0 16 16"
+                            >
+                              <circle cx="8" cy="8" r="8" />
+                            </svg>
+                          </div>
+                        </>
+                      ) : (
+                        <div
+                          className={`${activeStep === 4
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            className={`${activeStep === 4
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
+                            viewBox="0 0 16 16"
+                          >
+                            <circle cx="8" cy="8" r="8" />
+                          </svg>
+                        </div>
+                      )}
 
+                      <div className="flex items-center">
+                        {isStepCompleted(4) ? (
+                          <>
+                            <p className="text-[12px] text-sky-800  font-bold">
+                            Notice Period
+                            </p>
+                            <img
+                              src={doubleicon}
+                              className="ml-[0.15rem] h-[17px]"
+                              alt="Completed"
+                            />
+                          </>
+                        ) : (
+                          <p
+                            className={`${activeStep === 4
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[12px]  text-gray-600"
+                              } `}
+                          >
+                          Notice Period
+                          </p>
+                        )}
+                      </div>
+                    </li>
+
+                  </AccordionItem> */}
                   <AccordionItem title="Occupational health and safety">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
@@ -1129,6 +1196,13 @@ const Social = () => {
                 </div>
               </>
             )}
+                {/* {activeStep === 4 && (
+              <>
+                <div>
+                  <Noticeperiod />
+                </div>
+              </>
+            )} */}
             {activeStep === 5 && (
               <>
                 <div>

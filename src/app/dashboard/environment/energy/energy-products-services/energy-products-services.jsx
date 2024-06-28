@@ -44,9 +44,9 @@ const Energyproductsservices = () => {
                     <div className='w-full'>
                         <div className="text-left mb-4 ml-3 pt-5">
                             <p className="text-sm">Environment</p>
-                            <div className='flex'>
-                                <div>
-                                    <p className="gradient-text text-[22px] font-bold">
+                           <div className='flex h-[28px]'>
+                                <div className='h-[28px]'>
+                                    <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
                                         Energy
                                     </p>
                                 </div>
@@ -77,13 +77,14 @@ const Energyproductsservices = () => {
                             data-tooltip-content="This section documents data related to the reduction in energy
                             requirements of a product or service. Please mention the
                             approach for choosing the standards utilized for calculation." className="mt-1.5 ml-2 text-[14px]" />
-                        <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
+                        <ReactTooltip id={`tooltip-$e1`} place="bottom" effect="solid" style={{
                             width: "290px", backgroundColor: "#000",
                             color: "white",
                             fontSize: "12px",
                             boxShadow: 3,
                             borderRadius: "8px",
                             textAlign: 'left',
+                            zIndex:100,
                         }}>
 
                         </ReactTooltip>

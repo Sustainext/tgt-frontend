@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
@@ -27,7 +27,7 @@ const schema = {
             fulltime: { type: "boolean", title: "Full-Time Employees" },
             parttime: { type: "boolean", title: "Part-Time Employees" },
             temporary: { type: "boolean", title: "Temporary Employees" },
-            location: { type: "string", title: "Significant location of operations" }
+            significantlocation: { type: "string", title: "Significant location of operations" }
         },
     },
 };
@@ -40,7 +40,7 @@ const uiSchema = {
             fulltime: "boolean",
             parttime: "boolean",
             temporary: "boolean",
-            location: "string"
+            significantlocation: "string"
         },
         titles: [
             { title: "Benefits", tooltip: "benefit definition: direct benefit provided in the form of financial contributions, care paid for by the organization, or the reimbursement of expenses borne by the employee. Example: Life Insurance, Health Care, Coverage, Parental Leave, Retirement Provision, Stock Ownership etc. " },
@@ -52,14 +52,14 @@ const uiSchema = {
     },
 };
 const initialBenefits = [
-    { benefits: "Life Insurance", fulltime: false, parttime: false, temporary: false, location: "" },
-    { benefits: "Disability & Invalidity Coverage", fulltime: false, parttime: false, temporary: false, location: "" },
-    { benefits: "Parental Leave", fulltime: false, parttime: false, temporary: false, location: "" },
-    { benefits: "Retirement Provision", fulltime: false, parttime: false, temporary: false, location: "" },
-    { benefits: "Stock Ownership", fulltime: false, parttime: false, temporary: false, location: "" },
-    { benefits: "Others", fulltime: false, parttime: false, temporary: false, location: "" }
+    { benefits: "Life Insurance", fulltime: false, parttime: false, temporary: false, significantlocation: "" },
+    { benefits: "Disability & Invalidity Coverage", fulltime: false, parttime: false, temporary: false, significantlocation: "" },
+    { benefits: "Parental Leave", fulltime: false, parttime: false, temporary: false, significantlocation: "" },
+    { benefits: "Retirement Provision", fulltime: false, parttime: false, temporary: false, significantlocation: "" },
+    { benefits: "Stock Ownership", fulltime: false, parttime: false, temporary: false, significantlocation: "" },
+    { benefits: "Others", fulltime: false, parttime: false, temporary: false, significantlocation: "" }
 ];
-const Benefitsscreen = ({location, year, month}) => {
+const Benefitsscreen = ({ location, year, month }) => {
     const [formData, setFormData] = useState(initialBenefits);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
@@ -74,10 +74,10 @@ const Benefitsscreen = ({location, year, month}) => {
     const token = getAuthToken();
     const LoaderOpen = () => {
         setLoOpen(true);
-      };
-      const LoaderClose = () => {
+    };
+    const LoaderClose = () => {
         setLoOpen(false);
-      };
+    };
 
     const handleChange = (e) => {
         setFormData(e.formData); // Ensure you are extracting formData from the event
@@ -86,10 +86,10 @@ const Benefitsscreen = ({location, year, month}) => {
     // The below code on updateFormData
     let axiosConfig = {
         headers: {
-          Authorization: 'Bearer ' + token,
+            Authorization: 'Bearer ' + token,
         },
-      };
-      const updateFormData = async () => {
+    };
+    const updateFormData = async () => {
         LoaderOpen();
         const data = {
             client_id: client_id,
@@ -145,32 +145,32 @@ const Benefitsscreen = ({location, year, month}) => {
         }
     };
 
-
     const loadFormData = async () => {
         LoaderOpen();
+        setFormData(initialBenefits);
         const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
         try {
             const response = await axios.get(url, axiosConfig);
             console.log('API called successfully:', response.data);
             setRemoteSchema(response.data.form[0].schema);
             setRemoteUiSchema(response.data.form[0].ui_schema);
-            const form_parent = response.data.form_data;
-            setFormData(form_parent[0].data);
+            setFormData(response.data.form_data[0].data);
         } catch (error) {
-            console.error('API call failed:', error);
+            setFormData(initialBenefits);
         } finally {
             LoaderClose();
         }
     };
-    //Reloading the forms -- White Beard
+
+
     useEffect(() => {
         //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-    },[r_schema, r_ui_schema])
+    }, [r_schema, r_ui_schema])
 
     // console log the form data change
     useEffect(() => {
         console.log('Form data is changed -', formData)
-    },[formData])
+    }, [formData])
 
     // fetch backend and replace initialized forms
     useEffect(() => {
@@ -204,7 +204,7 @@ const Benefitsscreen = ({location, year, month}) => {
     };
 
     const handleAddCommittee = () => {
-        const newEntry = { benefits: "", fulltime: false, parttime: false, temporary: false, location: "" };
+        const newEntry = { benefits: "", fulltime: false, parttime: false, temporary: false, significantlocation: "" };
         setFormData(formData => [...formData, newEntry]); // Use a functional update to ensure the latest state
     };
 
@@ -212,11 +212,12 @@ const Benefitsscreen = ({location, year, month}) => {
 
     return (
         <>
+        <ToastContainer style={{ fontSize: "12px" }} />
             <div className="mx-2 p-3 mb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
-            <div className='mb-4 flex'>
+                <div className='mb-4 flex'>
                     <div className='w-[80%]'>
                         <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold mb-2'>
-                        Benefits provided to full-time employees that are not provided to temporary or part-time employees
+                            Benefits provided to full-time employees that are not provided to temporary or part-time employees
                             <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                                 data-tooltip-content="This table documents data corresponding to the standard benefits offered to full-time employees
                                 of the organization, which are generally not available to temporary or part-time employees." className="mt-1.5 ml-2 text-[14px]" />
@@ -254,9 +255,9 @@ const Benefitsscreen = ({location, year, month}) => {
                     widgets={widgets}
                     formContext={{ onRemove: handleRemoveCommittee }}
                 />
-                        <div className="flex right-1 mx-2">
+                <div className="flex right-1 mx-2">
                     <button type="button" className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5" onClick={handleAddCommittee}>
-                    Add more  <MdAdd className='text-lg' />
+                        Add more  <MdAdd className='text-lg' />
                     </button>
                 </div>
 
@@ -266,16 +267,16 @@ const Benefitsscreen = ({location, year, month}) => {
 
             </div>
             {loopen && (
-            <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-                <Oval
-                height={50}
-                width={50}
-                color="#00BFFF"
-                secondaryColor="#f3f3f3"
-                strokeWidth={2}
-                strokeWidthSecondary={2}
-                />
-            </div>
+                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                    <Oval
+                        height={50}
+                        width={50}
+                        color="#00BFFF"
+                        secondaryColor="#f3f3f3"
+                        strokeWidth={2}
+                        strokeWidthSecondary={2}
+                    />
+                </div>
             )}
         </>
     );

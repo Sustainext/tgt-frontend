@@ -83,6 +83,7 @@ const MyTask = () => {
         selectedActivityName
     );
     setSelectedActivity(activity || {});
+    console.log('activity found',activity);
   }, [selectedActivityName, activitiesList]);
 
   const handleFileUpload = (file) => {
@@ -141,7 +142,7 @@ const MyTask = () => {
     const resultsPerPage = 500;
     const axiosConfig = {
       headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_CLIMATIQ_KEY}`,
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_APP_CLIMATIQ_KEY}`,
         Accept: "application/json",
         "Content-type": "application/json",
       },
@@ -164,7 +165,7 @@ const MyTask = () => {
 
     try {
       if (!wildcard) {
-        const url = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${currentYear}&region=${region}*&category=${category}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_CLIMATIQ_DATAVERSION}`;
+        const url = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${currentYear}&region=${region}*&category=${category}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;
 
         const response = await axios.get(url, axiosConfig);
         activitiesData = response.data.results;
@@ -184,7 +185,7 @@ const MyTask = () => {
       }
       if (wildcard) {
         const wildcardResponse = await axios.get(
-          `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${currentYear}&region=*&category=${category}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_CLIMATIQ_DATAVERSION}`,
+          `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${currentYear}&region=*&category=${category}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`,
           axiosConfig
         );
         wildcardActivitiesData = wildcardResponse.data.results;
@@ -196,7 +197,7 @@ const MyTask = () => {
       if (wildcardResultZero) {
         for (let i = currentYear - 1; i >= 2019; i--) {
           const yearlyResponse = await axios.get(
-            `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${i}&region=${region}*&category=${category}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_CLIMATIQ_DATAVERSION}`,
+            `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${i}&region=${region}*&category=${category}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`,
             axiosConfig
           );
           const yearlyActivitiesData = yearlyResponse.data.results;
@@ -287,7 +288,7 @@ const MyTask = () => {
           const source = entry.source;
           const year = entry.year;
 
-          const url = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&source=${source}&year=${year}&region=*&category=${category}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_CLIMATIQ_DATAVERSION}`;
+          const url = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&source=${source}&year=${year}&region=*&category=${category}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;
           const response = await axios.get(url, axiosConfig);
           customFetchData = customFetchData.concat(response.data.results);
           finalActivitiesData = [
@@ -436,7 +437,9 @@ const MyTask = () => {
     unit2,
     file,
     filename,
-    status
+    status,
+    assign_to_email
+    
   ) => {
     if (activity !== "") {
       setIsActivityReceived(true);
@@ -470,11 +473,33 @@ const MyTask = () => {
       file,
       filename,
       status,
+      assign_to_email
     });
 
     let page = 1;
     let customFetchExecuted = false;
 
+    console.log('task assign data on click',id,
+      task_name,
+      assign_to_user_name,
+      assign_by_user_name,
+      assign_by_email,
+      category,
+      deadline,
+      factor_id,
+      location,
+      month,
+      scope,
+      subcategory,
+      year,
+      activity,
+      value1,
+      value2,
+      unit1,
+      unit2,
+      file,
+      filename,
+      status,);
     try {
       if (activity !== "") {
         let unitTypeExtractedArray = activity?.split("-");
@@ -962,6 +987,7 @@ const MyTask = () => {
         }
       });
   };
+  
 
   const SubmitFilledData = async (e, id) => {
     e.preventDefault();
@@ -1110,11 +1136,11 @@ const MyTask = () => {
                   <div className="justify-center items-center ">
                     <div className="flex justify-center items-center pb-5">
                       <FiCheckCircle
-                        sx={{ color: "#ACACAC", fontSize: "36px" }}
+                       style={{ color: '#ACACAC', fontSize: '36px' }}
                       />
                     </div>
                     <div>
-                      <p className="text-[13px] text-[#101828] font-bold text-center">
+                      <p className="text-[14px] text-[#101828] font-bold text-center">
                         Start by creating a task
                       </p>
                     </div>
@@ -1155,7 +1181,7 @@ const MyTask = () => {
                                       }}
                                     />
                                   )}
-                                  
+
                                 </div>
                                 <div className="w-72 truncate text-wrap text-neutral-800 text-[13px] font-normal leading-none ml-3 ">
                                   {task.roles === 1 ? (
@@ -1184,7 +1210,8 @@ const MyTask = () => {
                                           task.unit2,
                                           task.file,
                                           task.filename,
-                                          task.task_status
+                                          task.task_status,
+                                          task.assign_to_email
                                         );
                                       }}
                                     >
@@ -1308,7 +1335,8 @@ const MyTask = () => {
                                           task.unit1,
                                           task.unit2,
                                           task.file,
-                                          task.filename
+                                          task.filename,
+                                          task.assign_to_email
                                         );
                                       }}
                                     >
@@ -1743,7 +1771,7 @@ const MyTask = () => {
                 <div className="w-[80%] mb-4">
                   <h5 className="text-left text-black text-sm mb-1">Scope</h5>
                   <p className="text-left text-sm text-gray-500 ">
-                    scope {taskassigndata.scope}
+                    {taskassigndata.scope}
                   </p>
                 </div>
                 <div className="w-[80%] mb-4">
@@ -2210,7 +2238,7 @@ const MyTask = () => {
               <div className="w-[80%] mb-4">
                 <h5 className="text-left text-black text-sm mb-1">Scope</h5>
                 <p className="text-left text-sm text-gray-500 ">
-                  scope {taskassigndata.scope}
+                  {taskassigndata.scope}
                 </p>
               </div>
               <div className="w-[80%] mb-4">

@@ -56,7 +56,7 @@ const schema = {
       Organizationmetric: {
         type: "string",
         title: "Organization Metric",
-        enum: ['Production volume', 'size', 'number of full time employees', 'monetary units such as revenue or sales)', 'Production units', 'MMBtu'],
+        enum: ['Production volume', 'size', 'number of full time employees', 'monetary units (such as revenue or sales)', 'Production units', 'MMBtu'],
         tooltiptext: "Select the organization metric for the corresponding Energy Intensity metric "
       },
       Metricquantity: {
@@ -291,21 +291,22 @@ const Intensity = ({location, year, month}) => {
   };
 
   const loadFormData = async () => {
-    LoaderOpen();
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
-    try {
-        const response = await axios.get(url, axiosConfig);
-        console.log('API called successfully:', response.data);
-        setRemoteSchema(response.data.form[0].schema);
-        setRemoteUiSchema(response.data.form[0].ui_schema);
-        const form_parent = response.data.form_data;
-        setFormData(form_parent[0].data);
-    } catch (error) {
-        console.error('API call failed:', error);
-    } finally {
-        LoaderClose();
-    }
-};
+      LoaderOpen();
+      setFormData([{}])
+      const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+      try {
+          const response = await axios.get(url, axiosConfig);
+          console.log('API called successfully:', response.data);
+          setRemoteSchema(response.data.form[0].schema);
+          setRemoteUiSchema(response.data.form[0].ui_schema);
+          const form_parent = response.data.form_data;
+          setFormData(form_parent[0].data);
+      } catch (error) {
+          console.error('API call failed:', error);
+      } finally {
+          LoaderClose();
+      }
+  };
   //Reloading the forms -- White Beard
   useEffect(() => {
     //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
@@ -365,7 +366,8 @@ const Intensity = ({location, year, month}) => {
   return (
     <>
 
-<div className={`overflow-auto custom-scrollbar flex`}>
+<ToastContainer style={{ fontSize: "12px" }} />
+        <div className={`overflow-auto custom-scrollbar flex`}>
         <div>
           <div>
             <div className='flex'>

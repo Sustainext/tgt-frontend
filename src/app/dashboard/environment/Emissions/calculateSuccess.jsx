@@ -11,6 +11,11 @@ const CalculateSuccess = ({ onClose, data }) => {
   const { climatiqData } = useEmissions();
   const [localClimatiq, setlocalClimatiq] = useState(0);
 
+  const getMonthName = (monthNumber) => {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    return months[monthNumber - 1];
+  };
+
   useEffect(() => {
     if (climatiqData?.result?.length > 0) {
       const sum = climatiqData.result.reduce((acc, item) => acc + item.co2e, 0);
@@ -57,7 +62,7 @@ const CalculateSuccess = ({ onClose, data }) => {
                     Month ={' '}
                   </span>
                   <span className="text-sky-500 text-[15px] font-bold font-['Manrope'] leading-normal">
-                    {data.month}
+                    {getMonthName(data.month)}
                   </span>
                 </div>
                 <div className='w-[359px]'>

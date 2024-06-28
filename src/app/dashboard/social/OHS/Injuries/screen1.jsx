@@ -52,15 +52,18 @@ const uiSchema = {
 
     },
 };
-const Screen1 = ({location, year, month}) => {
-    const [formData, setFormData] = useState([{
-        employeeCategory: "",
-        fatalities: "",
-        highconsequence: "",
-        recordable: "",
-        maintypes: "",
-        numberofhoursworked: "",
-    }]);
+const Screen1 = ({ location, year, month }) => {
+    const initialFormData = [
+        {
+            employeeCategory: "",
+            fatalities: "",
+            highconsequence: "",
+            recordable: "",
+            maintypes: "",
+            numberofhoursworked: "",
+        }
+    ];
+    const [formData, setFormData] = useState(initialFormData);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
     const [loopen, setLoOpen] = useState(false);
@@ -72,13 +75,13 @@ const Screen1 = ({location, year, month}) => {
         return '';
     };
     const token = getAuthToken();
-    
+
     const LoaderOpen = () => {
         setLoOpen(true);
-      };
-      const LoaderClose = () => {
+    };
+    const LoaderClose = () => {
         setLoOpen(false);
-      };
+    };
 
     const handleChange = (e) => {
         setFormData(e.formData);
@@ -87,63 +90,63 @@ const Screen1 = ({location, year, month}) => {
     // The below code on updateFormData
     let axiosConfig = {
         headers: {
-          Authorization: 'Bearer ' + token,
+            Authorization: 'Bearer ' + token,
         },
-      };
+    };
     const updateFormData = async () => {
         LoaderOpen();
         const data = {
-        client_id : client_id,
-        user_id : user_id,
-        path: view_path,
-        form_data: formData,
-        location,
-        year,
-        month
+            client_id: client_id,
+            user_id: user_id,
+            path: view_path,
+            form_data: formData,
+            location,
+            year,
+            month
         }
 
         const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
-        try{
-        const response = await axios.post(url, data, axiosConfig);
-        if (response.status === 200) {
-            toast.success("Data added successfully", {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
-            LoaderClose();
-            loadFormData();
-    
-          }else {
-            toast.error("Oops, something went wrong", {
-              position: "top-right",
-              autoClose: 1000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "colored",
-            });
-            LoaderClose();
-          }
+        try {
+            const response = await axios.post(url, data, axiosConfig);
+            if (response.status === 200) {
+                toast.success("Data added successfully", {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+                LoaderClose();
+                loadFormData();
+
+            } else {
+                toast.error("Oops, something went wrong", {
+                    position: "top-right",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+                LoaderClose();
+            }
         } catch (error) {
-          toast.error("Oops, something went wrong", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          LoaderClose();
+            toast.error("Oops, something went wrong", {
+                position: "top-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+            LoaderClose();
         }
         // console.log('Response:', response.data);
         // } catch (error) {
@@ -153,35 +156,32 @@ const Screen1 = ({location, year, month}) => {
 
     const loadFormData = async () => {
         LoaderOpen();
+        setFormData(initialFormData);
         const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
-        
         try {
             const response = await axios.get(url, axiosConfig);
             console.log('API called successfully:', response.data);
             setRemoteSchema(response.data.form[0].schema);
             setRemoteUiSchema(response.data.form[0].ui_schema);
-            const form_parent = response.data.form_data;
-            setFormData(form_parent[0].data);
-            // const f_data = form_parent[0].data
-            // setFormData(f_data)
+            setFormData(response.data.form_data[0].data);
         } catch (error) {
-            console.error('API call failed:', error);
+            setFormData(initialFormData);
         } finally {
             LoaderClose();
         }
-    }
+    };
     //Reloading the forms
     useEffect(() => {
         //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-    },[r_schema, r_ui_schema])
+    }, [r_schema, r_ui_schema])
 
     // console log the form data change
     useEffect(() => {
         console.log('Form data is changed -', formData)
-    },[formData])
+    }, [formData])
 
     // fetch backend and replace initialized forms
-    useEffect (()=> {
+    useEffect(() => {
         if (location && year && month) {
             loadFormData();
             toastShown.current = false; // Reset the flag when valid data is present
@@ -201,7 +201,7 @@ const Screen1 = ({location, year, month}) => {
                 toastShown.current = true; // Set the flag to true after showing the toast
             }
         }
-    },[location, year, month])
+    }, [location, year, month])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -232,7 +232,7 @@ const Screen1 = ({location, year, month}) => {
                 <div className='mb-4 flex'>
                     <div className='w-[80%]'>
                         <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold mb-2'>
-                        The Number of Injuries
+                            The Number of Injuries
                             <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                                 data-tooltip-content="This section documents data corresponding to the number of
                                 fatalities as a result of a work-related injury, high-consequence
@@ -249,7 +249,7 @@ const Screen1 = ({location, year, month}) => {
                             </ReactTooltip>
                         </h2>
                         <h2 className='flex mx-2 text-[11px] text-gray-500 font-semibold mb-2'>
-                        For all employees, please report the following
+                            For all employees, please report the following
 
                         </h2>
                     </div>
@@ -277,7 +277,7 @@ const Screen1 = ({location, year, month}) => {
                 </div>
                 <div className="flex right-1 mx-2">
                     <button type="button" className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5" onClick={handleAddCommittee}>
-                    Add category  <MdAdd className='text-lg' />
+                        Add category  <MdAdd className='text-lg' />
                     </button>
                 </div>
 
@@ -286,16 +286,16 @@ const Screen1 = ({location, year, month}) => {
                 </div>
             </div>
             {loopen && (
-            <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-                <Oval
-                height={50}
-                width={50}
-                color="#00BFFF"
-                secondaryColor="#f3f3f3"
-                strokeWidth={2}
-                strokeWidthSecondary={2}
-                />
-            </div>
+                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                    <Oval
+                        height={50}
+                        width={50}
+                        color="#00BFFF"
+                        secondaryColor="#f3f3f3"
+                        strokeWidth={2}
+                        strokeWidthSecondary={2}
+                    />
+                </div>
             )}
         </>
     );

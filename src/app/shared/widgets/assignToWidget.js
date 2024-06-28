@@ -108,7 +108,7 @@ const AssignToWidget = ({ id, scope, location, year, month, data, countryCode })
     <>
       <div className="flex justify-center items-center mt-2">
         <button
-          className="text-center py-1 text-sm w-[100px] bg-sky-600 text-white rounded focus:outline-none focus:shadow-outline"
+          className="text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded focus:outline-none focus:shadow-outline"
           type="button"
           onClick={openModal}
         >

@@ -15,7 +15,7 @@ const TextareaWidget = (props) => {
         <div>
           <h6 className="text-sm text-[#727272]">{uiSchema["ui:title"]}</h6>
         </div>
-        <div className={`${open ? 'w-[20%]' : 'w-[20%]'}`}>
+        <div className={`${open ? 'w-[16%]' : 'w-[16%]'}`}>
           <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2">
             <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
               {uiSchema["ui:Gri"]}

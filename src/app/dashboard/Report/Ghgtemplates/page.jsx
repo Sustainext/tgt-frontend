@@ -305,7 +305,7 @@ let axiosConfig = {
       <ToastContainer style={{ fontSize: "12px" }} />
 
       <div   className={`${open ? " w-[105vw]" :" w-[115vw]" } flex` } >
-        <div className="bg-[#f2f2f2] items-start py-4 px-3 min-w-[270px] min-h-[100vh] rounded-lg text-sm">
+        <div className="bg-[#f2f2f2] items-start py-4 px-3 ml-1 min-w-[270px] min-h-[100vh] rounded-lg text-sm">
           <section className="flex min-h-screen justify-center">
             <div className="w-80">
               <h2 className="text-xl text-[#727272] mb-2 text-left">

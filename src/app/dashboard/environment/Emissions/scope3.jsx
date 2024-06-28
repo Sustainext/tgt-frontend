@@ -40,15 +40,15 @@ const Scope3 = ({ location, year, month, successCallback, countryCode }) => {
     setScope3Data(formData)
   },[formData])
 
-  useEffect(() => {
-    if (climatiqData?.result?.[0]) {
-      let sum = 0;
-      for (const item of climatiqData.result) {
-        sum += item.co2e;
-      }
-      setLocalClimatiq(sum);
-    }
-  }, [climatiqData]);
+  // useEffect(() => {
+  //   if (climatiqData?.result?.[0]) {
+  //     let sum = 0;
+  //     for (const item of climatiqData.result) {
+  //       sum += item.co2e;
+  //     }
+  //     setLocalClimatiq(sum);
+  //   }
+  // }, [climatiqData]);
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -149,6 +149,7 @@ const Scope3 = ({ location, year, month, successCallback, countryCode }) => {
 
   const loadFormData = async () => {
     LoaderOpen();
+    setFormData([{}]);
     const base_url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=`;
     const url = `${base_url}${view_path}&&client_id=${client_id}&&user_id=${user_id}&&location=${location}&&year=${year}&&month=${month}`;
 

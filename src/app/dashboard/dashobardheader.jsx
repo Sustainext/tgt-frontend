@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../../Context/auth";
 import { useRouter } from "next/navigation";
 import { loadFromLocalStorage } from "../utils/storage";
-
+import Link from "next/link";
 const DashboardHeader = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [username, setUsername] = useState('');
@@ -17,7 +17,7 @@ const DashboardHeader = () => {
     setDropdownVisible(!dropdownVisible);
   };
 
-  const handleLogout = async () => {  
+  const handleLogout = async () => {
     try {
       await logout();
       router.push('/');
@@ -50,9 +50,11 @@ const DashboardHeader = () => {
     <>
       <div className="flex justify-between bg-white sticky top-0 right-0 border-b border-sky-600 border-opacity-50 pt-1 w-full mx-2 -z--1000">
         <div className="flex justify-start items-center my-4 gap-1 px-2">
-          <a href="/home">
-            <span className="text-[#007EEF] hover:text-[#0057A5]">Home</span>
-          </a>
+        <Link href="/dashboard">
+        <span className="text-[#007EEF] hover:text-[#0057A5]">Home</span>
+        </Link>
+
+
           <span className="text-[#222222] mx-1">&gt;</span>
           <a href="/home/sustainextHQ">
             <span className="text-[#222222] hover:text-[#0057A5] mx-2">

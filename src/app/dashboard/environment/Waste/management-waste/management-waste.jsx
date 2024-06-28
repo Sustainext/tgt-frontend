@@ -45,7 +45,7 @@ const Managementwaste = () => {
                             <p className="text-sm">Environment</p>
                             <div className='flex'>
                                 <div>
-                                    <p className="gradient-text text-[22px] font-bold">
+                                    <p className="gradient-text text-[22px] font-bold pt-2">
                                     Waste
                                     </p>
                                 </div>

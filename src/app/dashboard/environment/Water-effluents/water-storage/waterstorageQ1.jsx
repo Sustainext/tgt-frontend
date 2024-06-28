@@ -386,7 +386,7 @@ const WaterstorageQ1 = ({location, year, month}) => {
             </div>
             {selectedOption === 'yes' && (
                 <>
-                <div className={`overflow-auto custom-scrollbar flex justify-between  ${open ? "xl:w-[768px] 2xl:w-[1100px]" : "xl:w-[940px] 2xl:w-[1348px]"}`}>
+                <div className="overflow-auto custom-scrollbar flex">
                     <div>
                         <div>
                             <div className='flex'>

@@ -44,7 +44,7 @@ const Riskassessment = () => {
                             <p className="text-sm">Social</p>
                             <div className='flex'>
                                 <div>
-                                    <p className="gradient-text text-[22px] font-bold">
+                                    <p className="gradient-text text-[22px] font-bold pt-1">
                                     Hazard identification, risk assessment, and incident investigation
                                     </p>
                                 </div>

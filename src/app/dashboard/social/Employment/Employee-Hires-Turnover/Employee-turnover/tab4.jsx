@@ -52,13 +52,13 @@ const uiSchema = {
     },
 };
 
-const Tab4 = ({fullName,location, year, month}) => {
-
-    const [formData, setFormData] = useState([
-        { yearsold30: "", yearsold30to50: "", yearsold50: "", beginning:"", end:"" },
-        { yearsold30: "", yearsold30to50: "", yearsold50: "", beginning:"", end:"" },
-        { yearsold30: "", yearsold30to50: "", yearsold50: "", beginning:"", end:'' },
-    ]);
+const Tab4 = ({ fullName, location, year, month }) => {
+    const initialFormData = [
+        { yearsold30: "", yearsold30to50: "", yearsold50: "", beginning: "", end: "" },
+        { yearsold30: "", yearsold30to50: "", yearsold50: "", beginning: "", end: "" },
+        { yearsold30: "", yearsold30to50: "", yearsold50: "", beginning: "", end: '' },
+    ];
+    const [formData, setFormData] = useState(initialFormData);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
     const [loopen, setLoOpen] = useState(false);
@@ -72,10 +72,10 @@ const Tab4 = ({fullName,location, year, month}) => {
     const token = getAuthToken();
     const LoaderOpen = () => {
         setLoOpen(true);
-      };
-      const LoaderClose = () => {
+    };
+    const LoaderClose = () => {
         setLoOpen(false);
-      };
+    };
 
     const handleChange = (e) => {
         setFormData(e.formData); // Ensure you are extracting formData from the event
@@ -84,10 +84,10 @@ const Tab4 = ({fullName,location, year, month}) => {
     // The below code on updateFormData
     let axiosConfig = {
         headers: {
-          Authorization: 'Bearer ' + token,
+            Authorization: 'Bearer ' + token,
         },
-      };
-      const updateFormData = async () => {
+    };
+    const updateFormData = async () => {
         LoaderOpen();
         const data = {
             client_id: client_id,
@@ -143,19 +143,18 @@ const Tab4 = ({fullName,location, year, month}) => {
         }
     };
 
-
     const loadFormData = async () => {
         LoaderOpen();
+        setFormData(initialFormData);
         const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
         try {
             const response = await axios.get(url, axiosConfig);
             console.log('API called successfully:', response.data);
             setRemoteSchema(response.data.form[0].schema);
             setRemoteUiSchema(response.data.form[0].ui_schema);
-            const form_parent = response.data.form_data;
-            setFormData(form_parent[0].data);
+            setFormData(response.data.form_data[0].data);
         } catch (error) {
-            console.error('API call failed:', error);
+            setFormData(initialFormData);
         } finally {
             LoaderClose();
         }
@@ -163,12 +162,12 @@ const Tab4 = ({fullName,location, year, month}) => {
     //Reloading the forms -- White Beard
     useEffect(() => {
         //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-    },[r_schema, r_ui_schema])
+    }, [r_schema, r_ui_schema])
 
     // console log the form data change
     useEffect(() => {
         console.log('Form data is changed -', formData)
-    },[formData])
+    }, [formData])
 
     // fetch backend and replace initialized forms
     useEffect(() => {
@@ -178,16 +177,6 @@ const Tab4 = ({fullName,location, year, month}) => {
         } else {
             // Only show the toast if it has not been shown already
             if (!toastShown.current) {
-                toast.warn("Please select location, year, and month first", {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
                 toastShown.current = true; // Set the flag to true after showing the toast
             }
         }
@@ -198,11 +187,10 @@ const Tab4 = ({fullName,location, year, month}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Form data:', formData);
-        updateFormD
+        updateFormData()
     };
-
     return (
-        <>
+        <> <ToastContainer style={{ fontSize: "12px" }} />
             <div className="mx-2 p-3 mb-6 rounded-md">
 
                 <Form
@@ -219,16 +207,16 @@ const Tab4 = ({fullName,location, year, month}) => {
                 </div>
             </div>
             {loopen && (
-            <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-                <Oval
-                height={50}
-                width={50}
-                color="#00BFFF"
-                secondaryColor="#f3f3f3"
-                strokeWidth={2}
-                strokeWidthSecondary={2}
-                />
-            </div>
+                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                    <Oval
+                        height={50}
+                        width={50}
+                        color="#00BFFF"
+                        secondaryColor="#f3f3f3"
+                        strokeWidth={2}
+                        strokeWidthSecondary={2}
+                    />
+                </div>
             )}
         </>
     );

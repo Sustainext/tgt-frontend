@@ -25,12 +25,13 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
         onClick={handleClick}// Unique ID for the tooltip, spaces replaced by dashes
       >
        <div className="flex justify-between">
-        <div className="flex w-[65vw]">
+        <div className={`flex ${open ? "w-[65vw]" : "w-[74vw]"}`}>
         <div className="flex items-center">
           <h5 className="text-[14px] text-[#344054] px-3">{title}</h5>
         </div>
 
-        <div className="flex items-center justify-center">
+
+        <div className="flex items-center justify-center relative">
           <MdInfoOutline
             data-tooltip-id={`tooltip-${title.replace(/\s+/g, '-')}`} data-tooltip-content={tooltiptext} className="mt-1 text-[14px]" style={{display:display}} />
           {/* Tooltip */}

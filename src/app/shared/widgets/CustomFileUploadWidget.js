@@ -119,14 +119,6 @@ const uploadFileToAzure = async (file, newFileName) => {
     setShowModal(false);
   };
 
-  // const handleDelete = (id, scopes) => {
-  //   setFileName(null);
-  //   setPreviewData(null);
-  //   onChange(null); // Clear the selected file for the specific id and scopes
-  //   setShowModal(false);
-  //   setFormData(value) // Close the modal after deletion
-  // };
-
   const handleDelete = () => {
     const resetValue = {
         name: '',
@@ -143,7 +135,7 @@ const uploadFileToAzure = async (file, newFileName) => {
 };
 
   return (
-    <div className="w-[120px] flex justify-center items-center mx-2">
+    <div className="w-[120px] flex justify-center items-center">
       <input
         type="file"
         id={id + scopes}

@@ -81,7 +81,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
             <IoWaterOutline className="w-5 h-5 mr-5" />
             <span className="">Water and effluents</span>
           </button>
-          <button
+          {/* <button
             className={`flex items-center justify-start  px-2 py-2 mb-2 focus:outline-none ${
               activeTab === "Bio diversity"
                 ? "text-[#007EEF] border-l-4 border-[#007EEF]"
@@ -91,7 +91,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
           >
             <IoLeafOutline className="w-5 h-5 mr-5" />
             <span className="mr-4">Bio diversity</span>
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

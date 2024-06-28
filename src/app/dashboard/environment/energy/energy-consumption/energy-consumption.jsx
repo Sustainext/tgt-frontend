@@ -44,9 +44,9 @@ const Energyconsumption = () => {
                     <div className='w-full'>
                         <div className="text-left mb-4 ml-3 pt-5">
                             <p className="text-sm">Environment</p>
-                            <div className='flex'>
-                                <div>
-                                    <p className="gradient-text text-[22px] font-bold">
+                           <div className='flex h-[28px]'>
+                                <div className='h-[28px]'>
+                                    <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
                                         Energy
                                     </p>
                                 </div>

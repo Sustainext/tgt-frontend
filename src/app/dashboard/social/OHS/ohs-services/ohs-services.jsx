@@ -9,8 +9,6 @@ const Ohsservicesmain = ({ location, year, month}) => {
           <Screen1 location={location} year={year} month={month}/>
           <Screen2 location={location} year={year} month={month}/>
 
-
-
         </>
     );
 };

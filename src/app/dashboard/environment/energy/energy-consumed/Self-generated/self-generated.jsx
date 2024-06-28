@@ -47,7 +47,7 @@ const schema = {
       Source: {
         type: "string",
         title: "Source",
-        enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro', 'Natural', 'Electricity', 'Cooling', 'Steam', 'Heating', 'Wood Biomas', 'Biogas', 'Other'],
+        enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro', 'Natural gas', 'Electricity', 'Cooling', 'Steam', 'Heating', 'Wood Biomas', 'Biogas', 'Other'],
         tooltiptext: "Indicate where the energy comes from"
       },
       Renewable: {
@@ -285,23 +285,22 @@ const Selfgenerated = ({location, year, month}) => {
     }
   };
 
-  const loadFormData = async () => {
-    LoaderOpen();
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
-
-    //making the GET request
-    try {
-      const response = await axios.get(url, axiosConfig);
-      console.log('API called successfully:', response.data);
-      setRemoteSchema(response.data.form[0].schema);
-      setRemoteUiSchema(response.data.form[0].ui_schema);
-      const form_parent = response.data.form_data;
-      setFormData(form_parent[0].data);
-    } catch (error) {
-        console.error('API call failed:', error);
-    } finally {
-        LoaderClose();
-    }
+   const loadFormData = async () => {
+      LoaderOpen();
+      setFormData([{}])
+      const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+      try {
+          const response = await axios.get(url, axiosConfig);
+          console.log('API called successfully:', response.data);
+          setRemoteSchema(response.data.form[0].schema);
+          setRemoteUiSchema(response.data.form[0].ui_schema);
+          const form_parent = response.data.form_data;
+          setFormData(form_parent[0].data);
+      } catch (error) {
+          console.error('API call failed:', error);
+      } finally {
+          LoaderClose();
+      }
   };
   //Reloading the forms -- White Beard
   useEffect(() => {
@@ -364,7 +363,9 @@ const Selfgenerated = ({location, year, month}) => {
   return (
     <>
 
-      <div className={`overflow-auto custom-scrollbar flex`}>
+       <ToastContainer style={{ fontSize: "12px" }} />
+        <ToastContainer style={{ fontSize: "12px" }} />
+        <div className={`overflow-auto custom-scrollbar flex`}>
         <div>
           <div>
             <div className='flex'>
