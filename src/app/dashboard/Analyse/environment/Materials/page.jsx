@@ -12,7 +12,6 @@ import {
   columns2,
   columns3,
   columns4,
-
 } from "./data";
 
 const AnalyseMaterials = ({ isBoxOpen }) => {

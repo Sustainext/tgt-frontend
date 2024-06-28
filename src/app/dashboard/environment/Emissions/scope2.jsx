@@ -36,21 +36,22 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
   const [modalData, setModalData] = useState(null);
   const { climatiqData, setScope2Data } = useEmissions();
   const [localClimatiq, setlocalClimatiq] = useState(0);
+  const [activityCache, setActivityCache] = useState({});
 
   useEffect(()=>{
     setScope2Data(formData)
   },[formData])
 
-  useEffect(() => {
-    console.log('Got the climatiqData in header --- ');
-    if (climatiqData?.result?.[0]) {
-      let sum = 0;
-      for (const item of climatiqData.result) {
-        sum += item.co2e;
-      }
-      setlocalClimatiq(sum);
-    }
-  }, [climatiqData]);
+  // useEffect(() => {
+  //   console.log('Got the climatiqData in header --- ');
+  //   if (climatiqData?.result?.[0]) {
+  //     let sum = 0;
+  //     for (const item of climatiqData.result) {
+  //       sum += item.co2e;
+  //     }
+  //     setlocalClimatiq(sum);
+  //   }
+  // }, [climatiqData]);
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -64,9 +65,50 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
     setFormData(e.formData);
   };
 
+  const handleCombinedWidgetChange = (index, field, value, activityId, unitType) => {
+    setFormData(prevFormData => {
+      const updatedFormData = [...prevFormData];
+      const currentEmission = updatedFormData[index]?.Emission || {};
+  
+      updatedFormData[index] = {
+        ...updatedFormData[index],
+        Emission: {
+          ...currentEmission,
+          [field]: value,
+          ...(activityId !== undefined && { activity_id: activityId }),
+          ...(unitType !== undefined && { unit_type: unitType })
+        }
+      };
+  
+      return updatedFormData;
+    });
+  };
+  
+
+  const handleFileWidgetChange = (index, name, url, type, size, uploadDateTime) => {
+    setFormData(prevFormData => {
+      const updatedFormData = [...prevFormData];
+      const currentEmission = updatedFormData[index]?.Emission || {};
+      
+      updatedFormData[index] = {
+        ...updatedFormData[index],
+        Emission: currentEmission,
+        FileUpload: {
+          name: name,
+          url: url,
+          type: type,
+          size: size,
+          uploadDateTime: uploadDateTime
+        }
+      };
+  
+      console.log('Updated form data:', updatedFormData);
+      return updatedFormData;
+    });
+  };
+
   const handleAddNew = () => {
-    const newData = [...formData, {}];
-    setFormData(newData);
+    setFormData((prevFormData) => [...prevFormData, { Emission: {} }]);
   };
 
   const updateFormData = async () => {
@@ -112,6 +154,7 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
 
   const loadFormData = async () => {
     LoaderOpen();
+    setFormData([{}]);
     const base_url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=`;
     const url = `${base_url}${view_path}&&client_id=${client_id}&&user_id=${user_id}&&location=${location}&&year=${year}&&month=${month}`;
 
@@ -160,6 +203,13 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
     setModalData(null);
   };
 
+  const updateCache = (subcategory, activities) => {
+    setActivityCache((prevCache) => ({
+      ...prevCache,
+      [subcategory]: activities,
+    }));
+  };
+
   return (
     <>
       <div className={`overflow-y-visible custom-scrollbar flex`} style={{ position: 'relative' }}>
@@ -183,12 +233,34 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
               FileUploadWidget: (props) => (
                 <CustomFileUploadWidget
                   {...props}
-                  scopes="scope2"
+                  scopes="scope1"
                   setFormData={updateFormDatanew}
+                  onChange={({ name,url,type,size,uploadDateTime }) =>
+                    handleFileWidgetChange(
+                      props.id.split("_")[1],
+                      name,url,type,size,uploadDateTime
+                    )
+                  }
                 />
               ),
               EmissonCombinedWidget: (props) => (
-                <CombinedWidget {...props} scope="scope2" year={year} countryCode={countryCode} />
+                <CombinedWidget
+                  {...props}
+                  scope="scope2"
+                  year={year}
+                  countryCode={countryCode}
+                  onChange={({ type, value, activityId, unitType }) =>
+                    handleCombinedWidgetChange(
+                      props.id.split("_")[1],
+                      type,
+                      value,
+                      activityId,
+                      unitType
+                    )
+                  }
+                  activityCache={activityCache}
+                  updateCache={updateCache}
+                />
               ),
               AssignTobutton : (props) => (
                 <AssignToWidgetEmission {...props} scope="scope2" location={location} year={year} month={month} data={formData} />

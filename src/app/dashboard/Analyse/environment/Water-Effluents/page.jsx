@@ -49,6 +49,233 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [reportType, setReportType] = useState("Organization");
 
+  const [waterConsumption, setWaterConsumption] = useState([]);
+  const [waterConsumptionInWaterStress, setWaterConsumptionInWaterStress] = useState([]);
+  const [waterConsumptionByBusinessOperation, setWaterConsumptionByBusinessOperation] = useState([]);
+  const [waterConsumptionByLocation, setWaterConsumptionByLocation] = useState([]);
+  const [waterConsumptionBySource, setWaterConsumptionBySource] = useState([]);
+  const [freshWaterWithdrawalByBusinessOperation, setFreshWaterWithdrawalByBusinessOperation] = useState([]);
+  const [freshWaterWithdrawalBySourceInWaterStress, setFreshWaterWithdrawalBySourceInWaterStress] = useState([]);
+  const [freshWaterWithdrawalByLocation, setFreshWaterWithdrawalByLocation] = useState([]);
+  const [waterWithdrawalByWaterType, setWaterWithdrawalByWaterType] = useState([]);
+  const [waterWithdrawalFromThirdParties, setWaterWithdrawalFromThirdParties] = useState([]);
+  const [waterDischargeByLocation, setWaterDischargeByLocation] = useState([]);
+  const [waterDischargeBySourceAndType, setWaterDischargeBySourceAndType] = useState([]);
+  const [waterDischargeFromWaterStressByBusinessOperation, setWaterDischargeFromWaterStressByBusinessOperation] = useState([]);
+  const [waterDischargeByBusinessOperation, setWaterDischargeByBusinessOperation] = useState([]);
+  const [waterDischargeByWaterTypeFromWaterStress, setWaterDischargeByWaterTypeFromWaterStress] = useState([]);
+  const [thirdPartyWaterDischargeForOtherOrganizations, setThirdPartyWaterDischargeForOtherOrganizations] = useState([]);
+  const [changeInWaterStorage, setChangeInWaterStorage] = useState([]);
+
+  const fetchData = async (params) => {
+    if (!params.start || !params.end) {
+      setIsDateRangeValid(false);
+      console.error("Invalid date range selected");
+      return;
+    } else {
+      setIsDateRangeValid(true);
+    }
+    LoaderOpen();
+    try {
+      const response = await axiosInstance.get(
+        `/sustainapp/get_water_analysis`,
+        {
+          params: params,
+        }
+      );
+  
+      const data = response.data;
+      console.log(data, "testing");
+  
+      const {
+        water_consumption_by_location,
+        water_consumption_by_source,
+        fresh_water_withdrawal_by_business_operation,
+        fresh_water_withdrawal_by_source_in_water_stress,
+        fresh_water_withdrawal_by_location,
+        water_withdrawal_by_water_type,
+        water_withdrawal_from_third_parties,
+        water_discharge_by_location,
+        water_discharge_by_source_and_type,
+        water_discharge_from_water_stress_by_business_operation,
+        water_discharge_by_business_operation,
+        water_discharge_by_water_type_from_water_stress,
+        third_party_water_discharge_for_other_organizations,
+        change_in_water_storage,
+      } = data;
+  
+      const removeAndStoreLastObject = (array) => {
+        if (array.length > 0) {
+          return array.pop();
+        } else {
+          return null;
+        }
+      };
+  
+      // Handle water consumption by location
+      const water_consumption_by_location_total = removeAndStoreLastObject(
+        water_consumption_by_location
+      );
+      water_consumption_by_location.push({
+        Location: "Total",
+        Quantity: water_consumption_by_location_total.Total,
+        Unit: water_consumption_by_location_total.Unit,
+      });
+      setWaterConsumptionByLocation(water_consumption_by_location);
+  
+      // Handle water consumption by source
+      const water_consumption_by_source_total = removeAndStoreLastObject(
+        water_consumption_by_source
+      );
+      water_consumption_by_source.push({
+        Source: "Total",
+        Quantity: water_consumption_by_source_total.Total,
+        Unit: water_consumption_by_source_total.Unit,
+      });
+      setWaterConsumptionBySource(water_consumption_by_source);
+  
+      // Handle fresh water withdrawal by business operation
+      const fresh_water_withdrawal_by_business_operation_total =
+        removeAndStoreLastObject(fresh_water_withdrawal_by_business_operation);
+      fresh_water_withdrawal_by_business_operation.push({
+        Business_Operation: "Total",
+        Quantity: fresh_water_withdrawal_by_business_operation_total.Total,
+        Unit: fresh_water_withdrawal_by_business_operation_total.Unit,
+      });
+      setFreshWaterWithdrawalByBusinessOperation(fresh_water_withdrawal_by_business_operation);
+  
+      // Handle fresh water withdrawal by source in water-stressed areas
+      const fresh_water_withdrawal_by_source_in_water_stress_total =
+        removeAndStoreLastObject(fresh_water_withdrawal_by_source_in_water_stress);
+      fresh_water_withdrawal_by_source_in_water_stress.push({
+        Source: "Total",
+        Quantity: fresh_water_withdrawal_by_source_in_water_stress_total.Total,
+        Unit: fresh_water_withdrawal_by_source_in_water_stress_total.Unit,
+      });
+      setFreshWaterWithdrawalBySourceInWaterStress(fresh_water_withdrawal_by_source_in_water_stress);
+  
+      // Handle fresh water withdrawal by location
+      const fresh_water_withdrawal_by_location_total =
+        removeAndStoreLastObject(fresh_water_withdrawal_by_location);
+      fresh_water_withdrawal_by_location.push({
+        Location: "Total",
+        Quantity: fresh_water_withdrawal_by_location_total.Total,
+        Unit: fresh_water_withdrawal_by_location_total.Unit,
+      });
+      setFreshWaterWithdrawalByLocation(fresh_water_withdrawal_by_location);
+  
+      // Handle water withdrawal by water type
+      const water_withdrawal_by_water_type_total = removeAndStoreLastObject(
+        water_withdrawal_by_water_type
+      );
+      water_withdrawal_by_water_type.push({
+        Water_Type: "Total",
+        Quantity: water_withdrawal_by_water_type_total.Total,
+        Unit: water_withdrawal_by_water_type_total.Unit,
+      });
+      setWaterWithdrawalByWaterType(water_withdrawal_by_water_type);
+  
+      // Handle water withdrawal from third parties
+      const water_withdrawal_from_third_parties_total = removeAndStoreLastObject(
+        water_withdrawal_from_third_parties
+      );
+      water_withdrawal_from_third_parties.push({
+        Source: "Total",
+        Quantity: water_withdrawal_from_third_parties_total.Total,
+        Unit: water_withdrawal_from_third_parties_total.Unit,
+      });
+      setWaterWithdrawalFromThirdParties(water_withdrawal_from_third_parties);
+  
+      // Handle water discharge by location
+      const water_discharge_by_location_total = removeAndStoreLastObject(
+        water_discharge_by_location
+      );
+      water_discharge_by_location.push({
+        Location: "Total",
+        Quantity: water_discharge_by_location_total.Total,
+        Unit: water_discharge_by_location_total.Unit,
+      });
+      setWaterDischargeByLocation(water_discharge_by_location);
+  
+      // Handle water discharge by source and type of water
+      const water_discharge_by_source_and_type_total = removeAndStoreLastObject(
+        water_discharge_by_source_and_type
+      );
+      water_discharge_by_source_and_type.push({
+        Source: "Total",
+        Type: "Total",
+        Quantity: water_discharge_by_source_and_type_total.Total,
+        Unit: water_discharge_by_source_and_type_total.Unit,
+      });
+      setWaterDischargeBySourceAndType(water_discharge_by_source_and_type);
+  
+      // Handle water discharge from water-stressed areas by business operation
+      const water_discharge_from_water_stress_by_business_operation_total =
+        removeAndStoreLastObject(
+          water_discharge_from_water_stress_by_business_operation
+        );
+      water_discharge_from_water_stress_by_business_operation.push({
+        Business_Operation: "Total",
+        Quantity: water_discharge_from_water_stress_by_business_operation_total.Total,
+        Unit: water_discharge_from_water_stress_by_business_operation_total.Unit,
+      });
+      setWaterDischargeFromWaterStressByBusinessOperation(
+        water_discharge_from_water_stress_by_business_operation
+      );
+  
+      // Handle water discharge by business operation
+      const water_discharge_by_business_operation_total = removeAndStoreLastObject(
+        water_discharge_by_business_operation
+      );
+      water_discharge_by_business_operation.push({
+        Business_Operation: "Total",
+        Quantity: water_discharge_by_business_operation_total.Total,
+        Unit: water_discharge_by_business_operation_total.Unit,
+      });
+      setWaterDischargeByBusinessOperation(water_discharge_by_business_operation);
+  
+      // Handle water discharge by water type from water-stressed areas
+      const water_discharge_by_water_type_from_water_stress_total =
+        removeAndStoreLastObject(water_discharge_by_water_type_from_water_stress);
+      water_discharge_by_water_type_from_water_stress.push({
+        Water_Type: "Total",
+        Quantity: water_discharge_by_water_type_from_water_stress_total.Total,
+        Unit: water_discharge_by_water_type_from_water_stress_total.Unit,
+      });
+      setWaterDischargeByWaterTypeFromWaterStress(water_discharge_by_water_type_from_water_stress);
+  
+      // Handle third-party water discharge for other organizations
+      const third_party_water_discharge_for_other_organizations_total =
+        removeAndStoreLastObject(third_party_water_discharge_for_other_organizations);
+      third_party_water_discharge_for_other_organizations.push({
+        Organization: "Total",
+        Quantity: third_party_water_discharge_for_other_organizations_total.Total,
+        Unit: third_party_water_discharge_for_other_organizations_total.Unit,
+      });
+      setThirdPartyWaterDischargeForOtherOrganizations(
+        third_party_water_discharge_for_other_organizations
+      );
+  
+      // Handle change in water storage
+      const change_in_water_storage_total = removeAndStoreLastObject(
+        change_in_water_storage
+      );
+      change_in_water_storage.push({
+        Change_Type: "Total",
+        Quantity: change_in_water_storage_total.Total,
+        Unit: change_in_water_storage_total.Unit,
+      });
+      setChangeInWaterStorage(change_in_water_storage);
+  
+      LoaderClose();
+    } catch (error) {
+      console.error("There was a problem with the fetch operation:", error);
+      LoaderClose();
+    }
+  };
+  
+
+
   // Fetching organisations and corporates
   useEffect(() => {
     const fetchOrganisations = async () => {

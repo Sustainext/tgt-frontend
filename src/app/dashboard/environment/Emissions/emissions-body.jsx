@@ -1,8 +1,7 @@
 'use client';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoHomeOutline } from "react-icons/io5";
-import { ToastContainer, toast } from "react-toastify";
 import axiosInstance, { post } from "@/app/utils/axiosMiddleware";
 import { useEmissions } from './EmissionsContext';
 
@@ -63,31 +62,37 @@ const AccordionItem = ({
         </div>
       </button>
       {isOpen && <div className="p-4">{children}</div>}
+      {/* <div className={`p-4 transition-all duration-200 ${isOpen ? 'block' : 'hidden'}`}>
+        {children}
+      </div> */}
     </div>
   );
 };
 
-const Emissionsnbody = ({ location, year, month, countryCode, locationError, setLocationError }) => {
+const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setLocationError }) => {
 
   const { setClimatiqData } = useEmissions();
 
+  const scope1Ref = useRef();
+  const scope2Ref = useRef();
+  const scope3Ref = useRef();
+
   const getLatestComputedData = () => {
-    console.log('Climatiq is success !!!! -----------****************')
     const base_url = `${process.env.BACKEND_API_URL}/datametric/get-climatiq-score?`;
     const url = `${base_url}location=${location}&&year=${year}&&month=${month}`;
-    console.log(url, "is the url to be fired from getLatestComputedData");
 
-    // Make the GET request
     axiosInstance
       .get(url)
       .then((response) => {
-        // Handle successful response
-        console.log(response.data, " is the response data");
-        console.log(' This is the climatiq computed result')
+        if(response.status==200){
         setClimatiqData(response.data)
-        // setFormData(response.data.form[0].form_data)
+        }
+        else{
+          setClimatiqData(0)
+        }
       })
       .catch((error) => {
+        setClimatiqData({})
         console.log(error, ' -got error')
       });
   }
@@ -97,13 +102,36 @@ const Emissionsnbody = ({ location, year, month, countryCode, locationError, set
       setLocationError("Please select a location");
       return false;
     }
+    if (!year) {
+      setYearError("Please select a year");
+      return false;
+    }
     setLocationError("");
+    setYearError("");
     return true;
   };
 
   useEffect(()=>{
     getLatestComputedData();
   },[year,location,month])
+
+  const handleCalculate = () => {
+    console.log('Calculate triggered!');
+    console.log('Scope1 Ref:', scope1Ref.current);
+    console.log('Scope2 Ref:', scope2Ref.current);
+    console.log('Scope3 Ref:', scope3Ref.current);
+  
+    // if (scope1Ref.current) {
+    //   scope1Ref.current.updateFormData();
+    // }
+    // if (scope2Ref.current) {
+    //   scope2Ref.current.updateFormData();
+    // }
+    // if (scope3Ref.current) {
+    //   scope3Ref.current.updateFormData();
+    // }
+  };
+  
 
   return (
     <>
@@ -114,7 +142,7 @@ const Emissionsnbody = ({ location, year, month, countryCode, locationError, set
           icons={<IoHomeOutline />}
           onAccordionClick={handleAccordionClick}
         >
-          <Scope1 location={location} year={year} month={month} countryCode={countryCode} successCallback={getLatestComputedData} />
+          <Scope1 ref={scope1Ref} location={location} year={year} month={month} countryCode={countryCode} successCallback={getLatestComputedData} />
         </AccordionItem>
 
         <AccordionItem
@@ -123,7 +151,7 @@ const Emissionsnbody = ({ location, year, month, countryCode, locationError, set
           icons={<IoHomeOutline />}
           onAccordionClick={handleAccordionClick}
         >
-          <Scope2 location={location} year={year} month={month} countryCode={countryCode} successCallback={getLatestComputedData}/>
+          <Scope2 ref={scope2Ref} location={location} year={year} month={month} countryCode={countryCode} successCallback={getLatestComputedData}/>
         </AccordionItem>
 
         <AccordionItem
@@ -132,17 +160,15 @@ const Emissionsnbody = ({ location, year, month, countryCode, locationError, set
           icons={<IoHomeOutline />}
           onAccordionClick={handleAccordionClick}
         >
-          <Scope3 location={location} year={year} month={month} countryCode={countryCode} successCallback={getLatestComputedData}/>
+          <Scope3 ref={scope3Ref} location={location} year={year} month={month} countryCode={countryCode} successCallback={getLatestComputedData}/>
         </AccordionItem>
       </div>
       <div className="flex justify-end items-center mt-[24] me-5">
         <button
-          // onClick={handleCalculate}
-          className="w-[172px] h-8 px-[22px] py-2 bg-sky-600 rounded shadow flex-col justify-center items-center inline-flex text-white text-xs font-bold leading-[15px]"
+          onClick={handleCalculate}
+          className="w-[172px] h-8 px-[22px] py-2 bg-sky-600 rounded shadow flex-col justify-center items-center inline-flex text-white text-xs font-bold leading-[15px] cursor-pointer"
         >
-          <div className="cursor-pointer">
             Calculate
-          </div>
         </button>
       </div>
     </>
