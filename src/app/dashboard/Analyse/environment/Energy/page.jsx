@@ -360,9 +360,6 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
     setSelectedOrg(newOrg);
     setSelectedCorp("");
     setSelectedSetLocation("");
-    // setScopeData([]);
-    // setSourceData([]);
-    // setLocationData([]);
 
     setDatasetparams((prevParams) => ({
       ...prevParams,
