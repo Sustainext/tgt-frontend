@@ -78,9 +78,9 @@ const AssignToWidgetEmission = ({ id, scope, location, year, month, data, countr
     const sendData = {
       location,
       year,
-      subcategory: rowData?.Subcategory,
-      activity: rowData?.Activity,
-      task_name: rowData?.Activity ? `${location}-${monthStr}-${rowData.Activity}` : `${location}-${monthStr}-${rowData.Subcategory}`,
+      subcategory: data[0]?.Emission?.Subcategory,
+      activity: data[0]?.Emission?.Activity,
+      task_name: data[0]?.Emission?.Activity ? `${location}-${monthStr}-${data[0]?.Emission?.Activity}` : `${location}-${monthStr}-${data[0]?.Emission?.Subcategory}`,
       scope,
       month: monthStr,
       roles: 1,
@@ -88,8 +88,8 @@ const AssignToWidgetEmission = ({ id, scope, location, year, month, data, countr
       assigned_by: parseInt(localStorage.getItem("user_id")),
       assigned_to: parseInt(selectedUser),
       user_client: 1,
-      category: rowData?.Category,
-      factor_id: rowData?.activity_id,
+      category: data[0]?.Emission?.Category,
+      factor_id: data[0]?.Emission?.activity_id,
       region: countryCode,
     };
 
@@ -151,11 +151,11 @@ const AssignToWidgetEmission = ({ id, scope, location, year, month, data, countr
                 </div>
                 <div className="mb-5">
                   <h5 className="text-left text-sm">Subcategory</h5>
-                  <p className="text-left text-sm text-gray-500">{rowData?.Subcategory}</p>
+                  <p className="text-left text-sm text-gray-500">{data[0]?.Emission?.Subcategory}</p>
                 </div>
                 <div className="mb-5">
                   <h5 className="text-left text-sm">Activity</h5>
-                  <p className="text-left text-sm text-gray-500">{rowData?.Activity || 'No activity selected'}</p>
+                  <p className="text-left text-sm text-gray-500">{data[0]?.Emission?.Activity || 'No activity selected'}</p>
                 </div>
                 <div className="mb-5">
                   <div className="mr-2">
