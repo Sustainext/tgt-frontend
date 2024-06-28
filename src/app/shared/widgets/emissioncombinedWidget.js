@@ -89,173 +89,410 @@ const CombinedWidget = ({
     fetchBaseCategories();
   }, []);
 
+  // const fetchActivities = debounce(async (initialPage = 1, customFetchExecuted = false) => {
+  //     if (isFetching.current) return; 
+  //     isFetching.current = true;
+  
+  //     if (activityCache[subcategory]) {
+  //       setActivities(activityCache[subcategory]);
+  //       isFetching.current = false;
+  //       return;
+  //     }
+  
+  //     if (!category || !subcategory || !year || !countryCode) {
+  //       console.warn("All fields (Category, Subcategory, Year, CountryCode) are required");
+  //       isFetching.current = false;
+  //       return;
+  //     }
+  
+  //     const baseURL = "https://api.climatiq.io";
+  //     const resultsPerPage = 500;
+  //     const axiosConfig = {
+  //       headers: {
+  //         Authorization: `Bearer ${process.env.NEXT_PUBLIC_APP_CLIMATIQ_KEY}`,
+  //         Accept: "application/json",
+  //         "Content-type": "application/json",
+  //       },
+  //     };
+      
+  //     let currentYear = year === "2024" ? "2023" : year;
+  //     const region = countryCode || "*";
+  //     let wildcard = false;
+  //     let page = initialPage;
+  
+  //     let activitiesData = [];
+  //     let totalResults = 0;
+  //     let totalPrivateResults = 0;
+  //     let totalPages = 1;
+  
+  //     try {
+  //       const fetchPageData = async (currentPage, isWildcard = false) => {
+  //         const url = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${currentYear}&region=${isWildcard ? '*' : region+'*'}&category=${subcategory}&page=${currentPage}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;
+  //         console.log(`Fetching ${isWildcard ? 'wildcard ' : ''}page ${currentPage}: ${url}`);
+        
+  //         const response = await axios.get(url, axiosConfig);
+  //         // console.log('response object',response.data);
+  //         const fetchedData = response.data.results;
+        
+  //         totalPages = response.data.last_page;
+  //         totalResults += fetchedData.length;
+        
+  //         if (totalPages === 0) {
+  //           console.log(`No more pages to fetch. Stopping further API calls.`);
+  //           return totalPages;
+  //         }
+        
+  //         if (isWildcard) {
+  //           activitiesData = activitiesData.concat(fetchedData);
+  //         } else {
+  //           activitiesData = activitiesData.concat(fetchedData);
+  //           totalPrivateResults += fetchedData.filter(activity => activity.access_type === 'private').length;
+  //         }
+  //       };
+        
+  
+  //       while (page <= totalPages) {
+  //         console.log('normal while loop triggered for page and total page',page, totalPages)
+  //         await fetchPageData(page);
+  //         page++;
+  
+  //         if (!wildcard && (totalResults - totalPrivateResults <= 5)) {
+  //           wildcard = true;
+  //           page = 1;
+  //         }
+  //       }
+  
+  //       if (wildcard) {
+  //         page = 1;
+  //         totalPages = 1;
+  //         while (page <= totalPages) {
+  //           const lastPage = await fetchPageData(page);
+  //           console.log('Wildcard search, current page and totalPage, lastPage', page,totalPages, lastPage);
+  //           if(lastPage===0) break;
+  //           page++;
+  //         }
+  
+  //         if (activitiesData.length === 0) {
+  //           for (let pastYear = currentYear - 1; pastYear >= 2019; pastYear--) {
+  //             page = 1;
+  //             totalPages = 1;
+  //             while (page <= totalPages) {
+  //               await fetchPageData(page, true);
+  //               page++;
+  //             }
+  //             if (activitiesData.length > 0) break; 
+  //           }
+  //         }
+  //       }
+  
+  //       if (categoriesToAppend.includes(subcategory) && categoryMappings[subcategory] && !customFetchExecuted) {
+  //         for (const entry of categoryMappings[subcategory]) {
+  //           const customUrl = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&source=${entry.source}&year=${entry.year}&region=*&category=${subcategory}&page=1&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;
+  //           console.log(`Fetching custom data: ${customUrl}`);
+  
+  //           const customResponse = await axios.get(customUrl, axiosConfig);
+  //           const customData = customResponse.data.results;
+  
+  //           activitiesData = activitiesData.concat(customData);
+  //         }
+  //         customFetchExecuted = true;
+  //       }
+  
+  //       setActivities(activitiesData);
+  //       updateCache(subcategory, activitiesData);
+  //     } catch (error) {
+  //       console.error("Error fetching activities:", error);
+  //     } finally {
+  //       isFetching.current = false;
+  //     }
+  //   }, 800);
+
+// let currentRequest = null;
+
+// const fetchActivities = async (initialPage = 1, customFetchExecuted = false) => {
+//   // if (currentRequest) {
+//   //   currentRequest.cancel();
+//   // }
+
+//   const CancelToken = axios.CancelToken;
+//   const source = CancelToken.source();
+//   currentRequest = source;
+
+//   try {
+//     if (activityCache[subcategory]) {
+//       setActivities(activityCache[subcategory]);
+//       return;
+//     }
+
+//     if (!category || !subcategory || !year || !countryCode) {
+//       console.warn("All fields (Category, Subcategory, Year, CountryCode) are required");
+//       return;
+//     }
+
+//     const baseURL = "https://api.climatiq.io";
+//     const resultsPerPage = 500;
+//     const axiosConfig = {
+//       headers: {
+//         Authorization: `Bearer ${process.env.NEXT_PUBLIC_APP_CLIMATIQ_KEY}`,
+//         Accept: "application/json",
+//         "Content-type": "application/json",
+//       },
+//       cancelToken: source.token
+//     };
+
+//     let currentYear = year === "2024" ? "2023" : year;
+//     const region = countryCode || "*";
+//     let wildcard = false;
+//     let page = initialPage;
+
+//     let activitiesData = [];
+//     let totalResults = 0;
+//     let totalPrivateResults = 0;
+//     let totalPages = 1;
+
+//     const fetchPageData = async (currentPage, isWildcard = false) => {
+//       const url = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${currentYear}&region=${isWildcard ? '*' : region+'*'}&category=${subcategory}&page=${currentPage}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;      
+//       const response = await axios.get(url, axiosConfig);
+//       const fetchedData = response.data.results;
+
+//       totalPages = response.data.last_page;
+//       totalResults += fetchedData.length;
+
+//       if (totalPages === 0) {
+//         console.log(`No more pages to fetch. Stopping further API calls.`);
+//         return totalPages;
+//       }
+
+//       if (isWildcard) {
+//         activitiesData = activitiesData.concat(fetchedData);
+//       } else {
+//         activitiesData = activitiesData.concat(fetchedData);
+//         totalPrivateResults += fetchedData.filter(activity => activity.access_type === 'private').length;
+//       }
+
+//       return totalPages;
+//     };
+
+//     while (page <= totalPages) {
+//       const lastPage = await fetchPageData(page);
+
+//       if (lastPage === 0 && !wildcard) {
+//         wildcard = true;
+//         page = 1;
+//       } else {
+//         page++;
+//       }
+
+//       if (!wildcard && (totalResults - totalPrivateResults <= 5)) {
+//         wildcard = true;
+//         page = 1;
+//       }
+//     }
+
+//     if (wildcard && activitiesData.length === 0) {
+//       for (let pastYear = currentYear - 1; pastYear >= 2019; pastYear--) {
+//         page = 1;
+//         totalPages = 1;
+//         currentYear = pastYear;
+//         while (page <= totalPages) {
+//           await fetchPageData(page, true);
+//           page++;
+//         }
+//         if (activitiesData.length > 0) break;
+//       }
+//     }
+
+//     if (categoriesToAppend.includes(subcategory) && categoryMappings[subcategory] && !customFetchExecuted) {
+//       for (const entry of categoryMappings[subcategory]) {
+//         const customUrl = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&source=${entry.source}&year=${entry.year}&region=*&category=${subcategory}&page=1&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;
+//         console.log(`Fetching custom data: ${customUrl}`);
+
+//         const customResponse = await axios.get(customUrl, axiosConfig);
+//         const customData = customResponse.data.results;
+
+//         activitiesData = activitiesData.concat(customData);
+//       }
+//       customFetchExecuted = true;
+//     }
+
+//     setActivities(activitiesData);
+//     activityCache[subcategory] = activitiesData;
+
+//   } catch (error) {
+//     if (axios.isCancel(error)) {
+//       console.log('Request canceled:', error.message);
+//     } else {
+//       console.error("Error fetching activities:", error);
+//     }
+//   } finally {
+//     currentRequest = null;
+//   }
+// }
+
   let wildcard = false;
+const fetchActivities = async (page = 1, customFetchExecuted = false) => {
+    if (isFetching.current) return;
+    isFetching.current = true;
 
-  const fetchActivities = useCallback(
-    async (page = 1, customFetchExecuted = false) => {
-      if (isFetching.current) return;
-      isFetching.current = true;
+    // Check cache first
+    if (activityCache[subcategory]) {
+      setActivities(activityCache[subcategory]);
+      isFetching.current = false;
+      return;
+    }
 
-      // Check cache first
-      if (activityCache[subcategory]) {
-        setActivities(activityCache[subcategory]);
-        isFetching.current = false;
-        return;
-      }
+    const baseURL = "https://api.climatiq.io";
+    const resultsPerPage = 500;
+    const axiosConfig = {
+      headers: {
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_APP_CLIMATIQ_KEY}`,
+        Accept: "application/json",
+        "Content-type": "application/json",
+      },
+    };
 
-      const baseURL = "https://api.climatiq.io";
-      const resultsPerPage = 500;
-      const axiosConfig = {
-        headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_APP_CLIMATIQ_KEY}`,
-          Accept: "application/json",
-          "Content-type": "application/json",
-        },
-      };
+    if (!category) {
+      console.warn("Category is required");
+      isFetching.current = false;
+      return;
+    }
+    if (!subcategory) {
+      console.warn("Subcategory is required");
+      isFetching.current = false;
+      return;
+    }
+    if (!year) {
+      console.warn("Year is required");
+      isFetching.current = false;
+      return;
+    }
+    if (!countryCode) {
+      console.warn("CountryCode is required");
+      isFetching.current = false;
+      return;
+    }
 
-      if (!category) {
-        console.warn("Category is required");
-        isFetching.current = false;
-        return;
-      }
-      if (!subcategory) {
-        console.warn("Subcategory is required");
-        isFetching.current = false;
-        return;
-      }
-      if (!year) {
-        console.warn("Year is required");
-        isFetching.current = false;
-        return;
-      }
-      if (!countryCode) {
-        console.warn("CountryCode is required");
-        isFetching.current = false;
-        return;
-      }
+    const region = countryCode || "*";
+    let currentYear = year;
+    if (year == "2024") currentYear = "2023";
+    let wildcardResultZero = false;
 
-      const region = countryCode || "*";
-      let currentYear = year;
-      if (year == "2024") currentYear = "2023";
-      let wildcardResultZero = false;
+    let activitiesData = [];
+    let totalResults = 0;
+    let totalPrivateResults = 0;
+    let totalPages = 1;
+    let totalPagesCustom = 0;
+    let wildcardActivitiesData = [];
+    let yearlyResponseData = [];
+    let newActivitiesData = [];
+    let customFetchData = [];
+    let multipleSourceData = [];
+    let finalActivitiesData = [];
 
-      let activitiesData = [];
-      let totalResults = 0;
-      let totalPrivateResults = 0;
-      let totalPages = 1;
-      let totalPagesCustom = 0;
-      let wildcardActivitiesData = [];
-      let yearlyResponseData = [];
-      let newActivitiesData = [];
-      let customFetchData = [];
-      let multipleSourceData = [];
-      let finalActivitiesData = [];
+    try {
+      while (page <= totalPages) {
+        console.log('Fetching page', page, 'of', totalPages);
+        if (!wildcard) {
+          console.log("Performing initial API call...");
+          const url = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${currentYear}&region=${region}*&category=${subcategory}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;
+          console.log(`API URL: ${url}`);
 
-      try {
-        while (page <= totalPages) {
-          if (!wildcard) {
-            console.log("Performing initial API call...");
-            const url = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${currentYear}&region=${region}*&category=${subcategory}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;
-            console.log(`API URL: ${url}`);
-
-            const response = await axios.get(url, axiosConfig);
-            activitiesData = [...activitiesData, ...response.data.results];
-            totalResults = response.data.results.length;
-            totalPages = response.data.last_page;
-            totalPrivateResults = activitiesData.reduce((count, activity) => {
-              if (activity.access_type === "private") {
-                count += 1;
-              }
-              return count;
-            }, 0);
-          }
-
-          const effectiveCount = totalResults - totalPrivateResults;
-          if (effectiveCount <= 5) {
-            wildcard = true;
-          }
-
-          if (wildcard) {
-            const wildcardResponse = await axios.get(
-              `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${currentYear}&region=*&category=${subcategory}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`,
-              axiosConfig
-            );
-
-            wildcardActivitiesData = [
-              ...wildcardActivitiesData,
-              ...wildcardResponse.data.results,
-            ];
-            totalPages = wildcardResponse.data.last_page;
-
-            if (totalPages === 0) wildcardResultZero = true;
-
-            if (wildcardResultZero) {
-              for (let i = currentYear - 1; i >= 2019; i--) {
-                const yearlyResponse = await axios.get(
-                  `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${i}&region=${region}*&category=${subcategory}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`,
-                  axiosConfig
-                );
-                const yearlyActivitiesData = yearlyResponse.data.results;
-                totalPages = yearlyResponse.data.last_page;
-                yearlyResponseData = [
-                  ...yearlyResponseData,
-                  ...yearlyActivitiesData,
-                ];
-                if (yearlyActivitiesData.length !== 0) break;
-              }
+          const response = await axios.get(url, axiosConfig);
+          activitiesData = [...activitiesData, ...response.data.results];
+          totalResults = response.data.results.length;
+          totalPages = response.data.last_page;
+          totalPrivateResults = activitiesData.reduce((count, activity) => {
+            if (activity.access_type === "private") {
+              count += 1;
             }
-
-            newActivitiesData = wildcardActivitiesData.filter(
-              (activity) => activity.access_type !== "private"
-            );
-
-            const CombinedActivitiesData = [
-              ...activitiesData,
-              ...newActivitiesData,
-              ...yearlyResponseData,
-            ];
-
-            if (
-              categoriesToAppend.includes(subcategory) &&
-              categoryMappings[subcategory] &&
-              !customFetchExecuted
-            ) {
-              for (const entry of categoryMappings[subcategory]) {
-                const source = entry.source;
-                const year = entry.year;
-
-                const url = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&source=${source}&year=${year}&region=*&category=${subcategory}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;
-
-                const response = await axios.get(url, axiosConfig);
-                customFetchData = customFetchData.concat(response.data.results);
-                finalActivitiesData = [
-                  ...customFetchData,
-                  ...activitiesData,
-                  ...newActivitiesData,
-                  ...yearlyResponseData,
-                ];
-                totalPagesCustom = response.data.last_page;
-              }
-              customFetchExecuted = true;
-            }
-
-            setActivities([...CombinedActivitiesData, ...customFetchData]);
-            // Cache activities
-            updateCache(subcategory, [
-              ...CombinedActivitiesData,
-              ...customFetchData,
-            ]);
-            page++;
-          }
+            return count;
+          }, 0);
         }
-      } catch (error) {
-        console.error("Error fetching data from different regions: ", error);
-      } finally {
-        isFetching.current = false;
+
+        const effectiveCount = totalResults - totalPrivateResults;
+        if (effectiveCount <= 5) {
+          wildcard = true;
+        }
+
+        if (wildcard) {
+          const wildcardResponse = await axios.get(
+            `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${currentYear}&region=*&category=${subcategory}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`,
+            axiosConfig
+          );
+
+          wildcardActivitiesData = [
+            ...wildcardActivitiesData,
+            ...wildcardResponse.data.results,
+          ];
+          totalPages = wildcardResponse.data.last_page;
+
+          if (totalPages === 0) wildcardResultZero = true;
+
+          if (wildcardResultZero) {
+            for (let i = currentYear - 1; i >= 2019; i--) {
+              const yearlyResponse = await axios.get(
+                `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&year=${i}&region=${region}*&category=${subcategory}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`,
+                axiosConfig
+              );
+              const yearlyActivitiesData = yearlyResponse.data.results;
+              totalPages = yearlyResponse.data.last_page;
+              yearlyResponseData = [
+                ...yearlyResponseData,
+                ...yearlyActivitiesData,
+              ];
+              if (yearlyActivitiesData.length !== 0) break;
+            }
+          }
+
+          newActivitiesData = wildcardActivitiesData.filter(
+            (activity) => activity.access_type !== "private"
+          );
+
+          const CombinedActivitiesData = [
+            ...activitiesData,
+            ...newActivitiesData,
+            ...yearlyResponseData,
+          ];
+
+          if (
+            categoriesToAppend.includes(subcategory) &&
+            categoryMappings[subcategory] &&
+            !customFetchExecuted
+          ) {
+            for (const entry of categoryMappings[subcategory]) {
+              const source = entry.source;
+              const year = entry.year;
+
+              const url = `${baseURL}/data/v1/search?results_per_page=${resultsPerPage}&source=${source}&year=${year}&region=*&category=${subcategory}&page=${page}&data_version=^${process.env.NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION}`;
+
+              const response = await axios.get(url, axiosConfig);
+              customFetchData = customFetchData.concat(response.data.results);
+              finalActivitiesData = [
+                ...customFetchData,
+                ...activitiesData,
+                ...newActivitiesData,
+                ...yearlyResponseData,
+              ];
+              totalPagesCustom = response.data.last_page;
+            }
+            customFetchExecuted = true;
+          }
+
+          setActivities([...CombinedActivitiesData, ...customFetchData]);
+          // Cache activities
+          updateCache(subcategory, [
+            ...CombinedActivitiesData,
+            ...customFetchData,
+          ]);
+          page++;
+        }
       }
-    },
-    [category, subcategory, year, countryCode, activityCache, updateCache]
-  );
+    } catch (error) {
+      console.error("Error fetching data from different regions: ", error);
+    } finally {
+      isFetching.current = false;
+    }
+  }
 
   const fetchSubcategories = useCallback(async () => {
     const selectedCategory = scopeMappings[scope].find((info) =>
@@ -265,14 +502,16 @@ const CombinedWidget = ({
       ? selectedCategory.Category.find((c) => c.name === category).SubCategory
       : [];
     setSubcategories(newSubcategories);
-    fetchActivities();
-  }, [category, scope, value.Subcategory, fetchActivities]);
+    if (subcategory) {
+      fetchActivities();
+    }
+  }, [category]);
 
   useEffect(() => {
     if (category) {
       fetchSubcategories();
     }
-  }, [category, fetchSubcategories]);
+  }, [category]);
 
   useEffect(() => {
     if (activities.length > 0 && value.Activity) {
@@ -394,18 +633,6 @@ const CombinedWidget = ({
     }, 2000),
     [onChange]
   );
-
-  // const handleQuantityChange = (e) => {
-  //   const value = e.target.value;
-  //   setQuantity(value);
-  //   debouncedHandleQuantityChange(value);
-  // };
-
-  // const handleQuantity2Change = useCallback((e) => {
-  //   const value = e.target.value;
-  //   setQuantity2(value);
-  //   debouncedHandleQuantity2Change(value);
-  // }, [debouncedHandleQuantity2Change]);
 
   const handleQuantityChange = useCallback(
     (e) => {

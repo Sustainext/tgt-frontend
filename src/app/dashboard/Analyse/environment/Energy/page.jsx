@@ -105,7 +105,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
         if (array.length > 0) {
           return array.pop();
         } else {
-          return null;
+          return {}; 
         }
       };
 
@@ -183,10 +183,10 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
       self_generated_from_renewable.push({
         Energy_type: "Total Self-Generated from Renewable",
         Source: "",
-        purpose: "",
         Quantity: self_generated_from_renewable_total.Total,
         Unit: self_generated_from_renewable_total.Unit,
       });
+      console.log('self generated',self_generated_from_renewable);
       setSelfGenFromRenewable(self_generated_from_renewable);
 
       // Handle self-generated from non-renewable
