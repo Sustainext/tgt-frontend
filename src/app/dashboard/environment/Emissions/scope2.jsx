@@ -182,7 +182,7 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
 
   useEffect(() => {
     loadFormData();
-  }, []);
+  }, [year,month,location]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

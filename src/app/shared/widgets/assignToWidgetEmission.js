@@ -30,6 +30,7 @@ const AssignToWidgetEmission = ({ id, scope, location, year, month, data, countr
   const rowData = useMemo(() => getScopeData(scope).find(item => item.id === parseInt(id.split('_')[1], 10)), [id, scope, scope1Data, scope2Data, scope3Data]);
 
   const openModal = () => setModalOpen(true);
+  
   const closeModal = () => {
     setModalOpen(false);
     setSelectedUser('');

@@ -28,26 +28,22 @@ const uploadFileToAzure = async (file, newFileName) => {
   );
 
   const containerClient = blobServiceClient.getContainerClient(containerName);
-  const blobName = newFileName || file.name; // Use newFileName or fallback to file name
+  const blobName = newFileName || file.name;
   const blobClient = containerClient.getBlockBlobClient(blobName);
 
   try {
     // Upload the blob to Azure Blob Storage
-
     const uploadOptions = {
       blobHTTPHeaders: {
-        blobContentType: file.type // Set the content type
+        blobContentType: file.type
       }
     };
 
-
     await blobClient.uploadData(blob,uploadOptions);
     const url = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}`;
-
     return url;
   } catch (error) {
     console.error('Error uploading file:', error.message);
-    alert('Error uploading file. Please check the console for more details.');
     return null;
   }
 };
