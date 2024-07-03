@@ -31,132 +31,132 @@ const view_path = 'gri-environment-water-303-4d-substances_of_concern'
 const client_id = 1
 const user_id = 1
 
-const schema = {
-  type: 'array',
-  items: {
-    type: 'object',
-    properties: {
-        Discharge: {
-        type: "string",
-        title: "Do you discharge any substances of concern",
-        enum: ['Yes', 'No'],
-        tooltiptext: "Do you withdraw water from third parties? if yes then please provide a breakdown of the total third party-water withdrawn by the withdrawal sources. Third-party water: municipal water suppliers and municipal wastewater treatment plants, public or private utilities, and other organizations involved in the provision, transport, treatment, disposal, or use of water and effluent",
-        display:"none",
-      },
-      Substanceconcern: {
-        type: "string",
-        title: "Substance of concern",
-        tooltiptext: "Mention the substances of concern for which discharges are treated.In the context of GRI Standard, substances of concern are those that cause irreversible damage to the waterbody,ecosystem, or human health. For example: chemicals, pollutants, heavy metals, contaminants or any toxic substances.",
-        display:"block",
-      },
-      Priority: {
-        type: "string",
-        title: "Method used to define priority",
-        enum: ['international standard', 'authoritative list','others'],
-        tooltiptext: "Indicate how does the company define the priority substances of concern",
-        display:"block",
-      },
-      Noncompliance: {
-        type: "string",
-        title: "No of noncompliance incident",
-        tooltiptext: "Indicate the number of times the organization has engaged in unauthorized discharges (non-compliance incidents) exceeding compliance limits? (if any)",
-        display:"block",
-      },
-      Approach: {
-        type: "string",
-        title: "Approach for setting discharge limits for priority substances of concern",
-        tooltiptext: "Provide a description of the approach used for setting discharge limits for priority substances of concern.",
-        display:"block",
-      },
+// const schema = {
+//   type: 'array',
+//   items: {
+//     type: 'object',
+//     properties: {
+//         Discharge: {
+//         type: "string",
+//         title: "Do you discharge any substances of concern",
+//         enum: ['Yes', 'No'],
+//         tooltiptext: "Do you withdraw water from third parties? if yes then please provide a breakdown of the total third party-water withdrawn by the withdrawal sources. Third-party water: municipal water suppliers and municipal wastewater treatment plants, public or private utilities, and other organizations involved in the provision, transport, treatment, disposal, or use of water and effluent",
+//         display:"none",
+//       },
+//       Substanceconcern: {
+//         type: "string",
+//         title: "Substance of concern",
+//         tooltiptext: "Mention the substances of concern for which discharges are treated.In the context of GRI Standard, substances of concern are those that cause irreversible damage to the waterbody,ecosystem, or human health. For example: chemicals, pollutants, heavy metals, contaminants or any toxic substances.",
+//         display:"block",
+//       },
+//       Priority: {
+//         type: "string",
+//         title: "Method used to define priority",
+//         enum: ['international standard', 'authoritative list','others'],
+//         tooltiptext: "Indicate how does the company define the priority substances of concern",
+//         display:"block",
+//       },
+//       Noncompliance: {
+//         type: "string",
+//         title: "No of noncompliance incident",
+//         tooltiptext: "Indicate the number of times the organization has engaged in unauthorized discharges (non-compliance incidents) exceeding compliance limits? (if any)",
+//         display:"block",
+//       },
+//       Approach: {
+//         type: "string",
+//         title: "Approach for setting discharge limits for priority substances of concern",
+//         tooltiptext: "Provide a description of the approach used for setting discharge limits for priority substances of concern.",
+//         display:"block",
+//       },
 
-      AssignTo: {
-        type: "string",
-        title: "Assign To",
-      },
-      FileUpload: {
-        type: "string",
-        format: "data-url",
-        title: "File Upload",
-      },
-      Remove: {
-        type: "string",
-        title: "Remove",
-      },
-      // Define other properties as needed
-    }
-  }
-};
+//       AssignTo: {
+//         type: "string",
+//         title: "Assign To",
+//       },
+//       FileUpload: {
+//         type: "string",
+//         format: "data-url",
+//         title: "File Upload",
+//       },
+//       Remove: {
+//         type: "string",
+//         title: "Remove",
+//       },
+//       // Define other properties as needed
+//     }
+//   }
+// };
 
-const uiSchema = {
- // Add flex-wrap to wrap fields to the next line
-  items: {
-    classNames: 'fieldset',
-    'ui:order': [
-      'Discharge','Substanceconcern', 'Priority', 'Noncompliance','Approach',  'AssignTo', 'FileUpload', 'Remove'
-    ],
-    Discharge: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false,
-      },
-    },
-    Substanceconcern: {
-        'ui:widget': 'inputWidget',
-        'ui:horizontal': true,
-        'ui:options': {
-          label: false,
-        },
-      },
-      Priority: {
-        'ui:widget': 'selectWidget', // Use your custom widget for QuantityUnit
-        'ui:options': {
-          label: false // This disables the label for this field
-        },
-      },
-      Noncompliance: {
-        'ui:widget': 'inputWidget',
-        'ui:horizontal': true,
-        'ui:options': {
-          label: false,
-        },
-    },
-    Approach: {
-        'ui:widget': 'inputWidget',
-        'ui:horizontal': true,
-        'ui:options': {
-          label: false,
-        },
-    },
+// const uiSchema = {
+//  // Add flex-wrap to wrap fields to the next line
+//   items: {
+//     classNames: 'fieldset',
+//     'ui:order': [
+//       'Discharge','Substanceconcern', 'Priority', 'Noncompliance','Approach',  'AssignTo', 'FileUpload', 'Remove'
+//     ],
+//     Discharge: {
+//       'ui:widget': 'selectWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false,
+//       },
+//     },
+//     Substanceconcern: {
+//         'ui:widget': 'inputWidget',
+//         'ui:horizontal': true,
+//         'ui:options': {
+//           label: false,
+//         },
+//       },
+//       Priority: {
+//         'ui:widget': 'selectWidget', // Use your custom widget for QuantityUnit
+//         'ui:options': {
+//           label: false // This disables the label for this field
+//         },
+//       },
+//       Noncompliance: {
+//         'ui:widget': 'inputWidget',
+//         'ui:horizontal': true,
+//         'ui:options': {
+//           label: false,
+//         },
+//     },
+//     Approach: {
+//         'ui:widget': 'inputWidget',
+//         'ui:horizontal': true,
+//         'ui:options': {
+//           label: false,
+//         },
+//     },
 
-    AssignTo: {
-      "ui:widget": "AssignTobutton",
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    FileUpload: {
-      'ui:widget': 'FileUploadWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    Remove: {
-      "ui:widget": "RemoveWidget",
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    'ui:options': {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: 'horizontal', // Set layout to horizontal
-    }
-  }
-};
+//     AssignTo: {
+//       "ui:widget": "AssignTobutton",
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     FileUpload: {
+//       'ui:widget': 'FileUploadWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     Remove: {
+//       "ui:widget": "RemoveWidget",
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     'ui:options': {
+//       orderable: false, // Prevent reordering of items
+//       addable: false, // Prevent adding items from UI
+//       removable: false, // Prevent removing items from UI
+//       layout: 'horizontal', // Set layout to horizontal
+//     }
+//   }
+// };
 
 const generateTooltip = (field, title, tooltipText,display) => {
   if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
@@ -350,10 +350,13 @@ const SubstancesconcernQ1 = ({location, year, month}) => {
     setFormData(updatedData);
   };
   const renderFields = () => {
-    const fields = Object.keys(schema.items.properties);
+    if (!r_schema || !r_schema.items || !r_schema.items.properties) {
+      return null;
+    }
+    const fields = Object.keys(r_schema.items.properties);
     return fields.map((field, index) => (
       <div key={index}>
-        {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext,schema.items.properties[field].display)}
+        {generateTooltip(field, r_schema.items.properties[field].title, r_schema.items.properties[field].tooltiptext, r_schema.items.properties[field].display)}
       </div>
     ));
   };

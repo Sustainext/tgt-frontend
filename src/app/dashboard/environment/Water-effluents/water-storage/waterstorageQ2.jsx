@@ -31,134 +31,134 @@ const view_path = 'gri-environment-water-303-5d-sma'
 const client_id = 1
 const user_id = 1
 
-const schema = {
-  type: 'array',
-  items: {
-    type: 'object',
-    properties: {
+// const schema = {
+//   type: 'array',
+//   items: {
+//     type: 'object',
+//     properties: {
 
-        StandardsUsed: {
-        type: "string",
-        title: "Standards Used",
-        tooltiptext: "The answer could include any contextual information necessary to understand how the data have been compiled, such as any standards used. methodologies,and assumptions used.",
-        display:"block",
-      },
-      Methodologiesused: {
-        type: "string",
-        title: "Methodologies used",
-        tooltiptext: "The answer could include the description of methodologies used to compile data. ",
-        display:"block",
-      },
-      Assumptionsconsidered: {
-        type: "string",
-        title: "Assumptions considered",
-        tooltiptext: "The answer could include the description of assumptions  considered to compile data",
-        display:"block",
-      },
+//         StandardsUsed: {
+//         type: "string",
+//         title: "Standards Used",
+//         tooltiptext: "The answer could include any contextual information necessary to understand how the data have been compiled, such as any standards used. methodologies,and assumptions used.",
+//         display:"block",
+//       },
+//       Methodologiesused: {
+//         type: "string",
+//         title: "Methodologies used",
+//         tooltiptext: "The answer could include the description of methodologies used to compile data. ",
+//         display:"block",
+//       },
+//       Assumptionsconsidered: {
+//         type: "string",
+//         title: "Assumptions considered",
+//         tooltiptext: "The answer could include the description of assumptions  considered to compile data",
+//         display:"block",
+//       },
 
-      DataSource: {
-        type: "string",
-        title: "Data Source",
-        enum: ['Calculated', 'Estimated', 'Modelled', 'Sourced from direct measurements', 'others please specify'],
-        tooltiptext: "Please specify whether the information is calculated, estimated, modeled, or sourced from direct measurements."
-      },
-      Approachconsidered: {
-        type: "string",
-        title: "Approach considered",
-        tooltiptext: "Describe the approach taken to compile the information e.g. any sector-specific factor used.",
-        display:"block",
-      },
-      AssignTo: {
-        type: "string",
-        title: "Assign To",
-      },
+//       DataSource: {
+//         type: "string",
+//         title: "Data Source",
+//         enum: ['Calculated', 'Estimated', 'Modelled', 'Sourced from direct measurements', 'others please specify'],
+//         tooltiptext: "Please specify whether the information is calculated, estimated, modeled, or sourced from direct measurements."
+//       },
+//       Approachconsidered: {
+//         type: "string",
+//         title: "Approach considered",
+//         tooltiptext: "Describe the approach taken to compile the information e.g. any sector-specific factor used.",
+//         display:"block",
+//       },
+//       AssignTo: {
+//         type: "string",
+//         title: "Assign To",
+//       },
 
-      FileUpload: {
-        type: "string",
-        format: "data-url",
-        title: "File Upload",
-      },
-      Remove: {
-        type: "string",
-        title: "Remove",
-      },
-      // Define other properties as needed
-    }
-  }
-};
+//       FileUpload: {
+//         type: "string",
+//         format: "data-url",
+//         title: "File Upload",
+//       },
+//       Remove: {
+//         type: "string",
+//         title: "Remove",
+//       },
+//       // Define other properties as needed
+//     }
+//   }
+// };
 
-const uiSchema = {
- // Add flex-wrap to wrap fields to the next line
-  items: {
-    classNames: 'fieldset',
-    'ui:order': [
-      'StandardsUsed','Methodologiesused', 'Assumptionsconsidered','DataSource','Approachconsidered' ,'AssignTo', 'FileUpload', 'Remove'
-    ],
+// const uiSchema = {
+//  // Add flex-wrap to wrap fields to the next line
+//   items: {
+//     classNames: 'fieldset',
+//     'ui:order': [
+//       'StandardsUsed','Methodologiesused', 'Assumptionsconsidered','DataSource','Approachconsidered' ,'AssignTo', 'FileUpload', 'Remove'
+//     ],
 
-    StandardsUsed: {
-        'ui:widget': 'inputWidget',
-        'ui:horizontal': true,
-        'ui:options': {
-          label: false,
-        },
-      },
-      Methodologiesused: {
-        'ui:widget': 'inputWidget',
-        'ui:horizontal': true,
-        'ui:options': {
-          label: false,
-        },
-      },
-      Assumptionsconsidered: {
-        'ui:widget': 'inputWidget',
-        'ui:horizontal': true,
-        'ui:options': {
-          label: false,
-        },
-      },
-      DataSource:{
-        'ui:widget': 'selectWidget',
-        'ui:horizontal': true,
-        'ui:options': {
-          label: false,
-        },
-      },
-      Approachconsidered: {
-        'ui:widget': 'inputWidget',
-        'ui:horizontal': true,
-        'ui:options': {
-          label: false,
-        },
-      },
+//     StandardsUsed: {
+//         'ui:widget': 'inputWidget',
+//         'ui:horizontal': true,
+//         'ui:options': {
+//           label: false,
+//         },
+//       },
+//       Methodologiesused: {
+//         'ui:widget': 'inputWidget',
+//         'ui:horizontal': true,
+//         'ui:options': {
+//           label: false,
+//         },
+//       },
+//       Assumptionsconsidered: {
+//         'ui:widget': 'inputWidget',
+//         'ui:horizontal': true,
+//         'ui:options': {
+//           label: false,
+//         },
+//       },
+//       DataSource:{
+//         'ui:widget': 'selectWidget',
+//         'ui:horizontal': true,
+//         'ui:options': {
+//           label: false,
+//         },
+//       },
+//       Approachconsidered: {
+//         'ui:widget': 'inputWidget',
+//         'ui:horizontal': true,
+//         'ui:options': {
+//           label: false,
+//         },
+//       },
 
-    AssignTo: {
-      "ui:widget": "AssignTobutton",
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    FileUpload: {
-      'ui:widget': 'FileUploadWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    Remove: {
-      "ui:widget": "RemoveWidget",
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    'ui:options': {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: 'horizontal', // Set layout to horizontal
-    }
-  }
-};
+//     AssignTo: {
+//       "ui:widget": "AssignTobutton",
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     FileUpload: {
+//       'ui:widget': 'FileUploadWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     Remove: {
+//       "ui:widget": "RemoveWidget",
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     'ui:options': {
+//       orderable: false, // Prevent reordering of items
+//       addable: false, // Prevent adding items from UI
+//       removable: false, // Prevent removing items from UI
+//       layout: 'horizontal', // Set layout to horizontal
+//     }
+//   }
+// };
 
 
 const generateTooltip = (field, title, tooltipText) => {
@@ -352,10 +352,13 @@ const WaterstorageQ2 = ({location, year, month}) => {
     setFormData(updatedData);
   };
   const renderFields = () => {
-    const fields = Object.keys(schema.items.properties);
+    if (!r_schema || !r_schema.items || !r_schema.items.properties) {
+      return null;
+    }
+    const fields = Object.keys(r_schema.items.properties);
     return fields.map((field, index) => (
       <div key={index}>
-        {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext)}
+        {generateTooltip(field, r_schema.items.properties[field].title, r_schema.items.properties[field].tooltiptext)}
       </div>
     ));
   };

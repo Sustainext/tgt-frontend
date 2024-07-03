@@ -31,116 +31,116 @@ const view_path = 'gri-environment-water-303-3b-water_withdrawal_areas_water_str
 const client_id = 1
 const user_id = 1
 
-const schema = {
-  type: 'array',
-  items: {
-    type: 'object',
-    properties: {
-        Discharge: {
-        type: "string",
-        title: "Do you withdraw water from third-parties?",
-        enum: ['Yes', 'No'],
-        tooltiptext: "Do you withdraw water from third parties? if yes then please provide a breakdown of the total third party-water withdrawn by the withdrawal sources. Third-party water: municipal water suppliers and municipal wastewater treatment plants, public or private utilities, and other organizations involved in the provision, transport, treatment, disposal, or use of water and effluent",
-      },
-      Source: {
-        type: "string",
-        title: "Source",
-        enum: ['Surface Water', 'Ground water','Sea water','Municipal water','Third party water','Other'],
-        tooltiptext: "Indicate where does the third-party withdraw water from? ",
-      },
-      Quantity: {
-        type: "string",
-        title: "Quantity",
-        tooltiptext: "Please specify the amount of water withdrawal from third-parties"
-      },
-      Unit: {
-        type: "string",
-        title: "Unit",
-        enum: ['Litre', 'Megalitre', 'Cubic meter', 'Kilolitre', 'Million litres  per day'],
-        tooltiptext: "Select the correct unit corresponding to the quantity of water withdrawal/discharge."
-      },
+// const schema = {
+//   type: 'array',
+//   items: {
+//     type: 'object',
+//     properties: {
+//         Discharge: {
+//         type: "string",
+//         title: "Do you withdraw water from third-parties?",
+//         enum: ['Yes', 'No'],
+//         tooltiptext: "Do you withdraw water from third parties? if yes then please provide a breakdown of the total third party-water withdrawn by the withdrawal sources. Third-party water: municipal water suppliers and municipal wastewater treatment plants, public or private utilities, and other organizations involved in the provision, transport, treatment, disposal, or use of water and effluent",
+//       },
+//       Source: {
+//         type: "string",
+//         title: "Source",
+//         enum: ['Surface Water', 'Ground water','Sea water','Municipal water','Third party water','Other'],
+//         tooltiptext: "Indicate where does the third-party withdraw water from? ",
+//       },
+//       Quantity: {
+//         type: "string",
+//         title: "Quantity",
+//         tooltiptext: "Please specify the amount of water withdrawal from third-parties"
+//       },
+//       Unit: {
+//         type: "string",
+//         title: "Unit",
+//         enum: ['Litre', 'Megalitre', 'Cubic meter', 'Kilolitre', 'Million litres  per day'],
+//         tooltiptext: "Select the correct unit corresponding to the quantity of water withdrawal/discharge."
+//       },
 
-      AssignTo: {
-        type: "string",
-        title: "Assign To",
-      },
-      FileUpload: {
-        type: "string",
-        format: "data-url",
-        title: "File Upload",
-      },
-      Remove: {
-        type: "string",
-        title: "Remove",
-      },
-      // Define other properties as needed
-    }
-  }
-};
+//       AssignTo: {
+//         type: "string",
+//         title: "Assign To",
+//       },
+//       FileUpload: {
+//         type: "string",
+//         format: "data-url",
+//         title: "File Upload",
+//       },
+//       Remove: {
+//         type: "string",
+//         title: "Remove",
+//       },
+//       // Define other properties as needed
+//     }
+//   }
+// };
 
-const uiSchema = {
- // Add flex-wrap to wrap fields to the next line
-  items: {
-    classNames: 'fieldset',
-    'ui:order': [
-      'Discharge','Source', 'Quantity', 'Unit',  'AssignTo', 'FileUpload', 'Remove'
-    ],
-    Discharge: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false,
-      },
-    },
-    Source: {
-        'ui:widget': 'selectWidget',
-        'ui:horizontal': true,
-        'ui:options': {
-          label: false,
-        },
-      },
-      Quantity: {
-        'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
-        'ui:options': {
-          label: false // This disables the label for this field
-        },
-      },
-    Unit: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
+// const uiSchema = {
+//  // Add flex-wrap to wrap fields to the next line
+//   items: {
+//     classNames: 'fieldset',
+//     'ui:order': [
+//       'Discharge','Source', 'Quantity', 'Unit',  'AssignTo', 'FileUpload', 'Remove'
+//     ],
+//     Discharge: {
+//       'ui:widget': 'selectWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false,
+//       },
+//     },
+//     Source: {
+//         'ui:widget': 'selectWidget',
+//         'ui:horizontal': true,
+//         'ui:options': {
+//           label: false,
+//         },
+//       },
+//       Quantity: {
+//         'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
+//         'ui:options': {
+//           label: false // This disables the label for this field
+//         },
+//       },
+//     Unit: {
+//       'ui:widget': 'selectWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
 
-    AssignTo: {
-      "ui:widget": "AssignTobutton",
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    FileUpload: {
-      'ui:widget': 'FileUploadWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    Remove: {
-      "ui:widget": "RemoveWidget",
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    'ui:options': {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: 'horizontal', // Set layout to horizontal
-    }
-  }
-};
+//     AssignTo: {
+//       "ui:widget": "AssignTobutton",
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     FileUpload: {
+//       'ui:widget': 'FileUploadWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     Remove: {
+//       "ui:widget": "RemoveWidget",
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     'ui:options': {
+//       orderable: false, // Prevent reordering of items
+//       addable: false, // Prevent adding items from UI
+//       removable: false, // Prevent removing items from UI
+//       layout: 'horizontal', // Set layout to horizontal
+//     }
+//   }
+// };
 
 const generateTooltip = (field, title, tooltipText) => {
   if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
@@ -333,10 +333,13 @@ const WaterstressQ2 = ({location, year, month}) => {
     setFormData(updatedData);
   };
   const renderFields = () => {
-    const fields = Object.keys(schema.items.properties);
+    if (!r_schema || !r_schema.items || !r_schema.items.properties) {
+      return null;
+    }
+    const fields = Object.keys(r_schema.items.properties);
     return fields.map((field, index) => (
       <div key={index}>
-        {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext)}
+        {generateTooltip(field, r_schema.items.properties[field].title, r_schema.items.properties[field].tooltiptext)}
       </div>
     ));
   };

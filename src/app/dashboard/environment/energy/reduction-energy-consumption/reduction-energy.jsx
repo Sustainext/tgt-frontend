@@ -31,149 +31,149 @@ const view_path = 'gri-environment-energy-302-4a-4b-reduction_of_energy_consumpt
 const client_id = 1
 const user_id = 1
 
-const schema = {
-  type: 'array',
-  items: {
-    type: 'object',
-    properties: {
-        Typeofintervention: {
-        type: "string",
-        title: "Type of intervention",
-        enum: ['Switching to LEDs', 'Changing fuels', 'Process changes', 'Energy Efficiency measure', 'Renewable Energy Adoption','others'],
-        tooltiptext: "From the dropdown, please Indicate the type of intervention  that resulted in a reduction in Energy Consumption.",
-      },
-      Quantitysavedduetointervention: {
-        type: "string",
-        title: "Quantity saved due to intervention",
-        tooltiptext: "Indicate the quantity of energy savings due to the intervention"
-      },
-      Unit: {
-        type: "string",
-        title: "Unit",
-        enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
-        tooltiptext: "Select the correct unit corresponding to the quantity"
-      },
-      Energytypereduced: {
-        type: "string",
-        title: "Energy type reduced",
-        enum: ['Fuel', 'heating', 'electricity', 'cooling', 'steam', 'Others'],
-        tooltiptext: "Select the correct unit corresponding to the quantity"
-      },
-      Baseyear: {
-        type: "string",
-        title: "Base year",
-        tooltiptext: "Indicate the base year used for comparing energy saved before the intervention"
-      },
-      Energyreductionis: {
-        type: "string",
-        title: "Energy reduction is",
-        enum: ['estimated', 'modeled', 'sourced from direct measurement', 'others'],
-        tooltiptext: "Indicate whether the Energy reduction measurement is Estimated, Modeled or directly measured"
-      },
-      Methodologyused: {
-        type: "string",
-        title: "Methodology used",
-        tooltiptext: "Indicate the methodology used for calculating energy reduction."
-      },
-      AssignTo: {
-        type: "string",
-        title: "Assign To",
-      },
-      FileUpload: {
-        type: "string",
-        format: "data-url",
-        title: "File Upload",
-      },
-      Remove: {
-        type: "string",
-        title: "Remove",
-      },
-      // Define other properties as needed
-    }
-  }
-};
+// const schema = {
+//   type: 'array',
+//   items: {
+//     type: 'object',
+//     properties: {
+//         Typeofintervention: {
+//         type: "string",
+//         title: "Type of intervention",
+//         enum: ['Switching to LEDs', 'Changing fuels', 'Process changes', 'Energy Efficiency measure', 'Renewable Energy Adoption','others'],
+//         tooltiptext: "From the dropdown, please Indicate the type of intervention  that resulted in a reduction in Energy Consumption.",
+//       },
+//       Quantitysavedduetointervention: {
+//         type: "string",
+//         title: "Quantity saved due to intervention",
+//         tooltiptext: "Indicate the quantity of energy savings due to the intervention"
+//       },
+//       Unit: {
+//         type: "string",
+//         title: "Unit",
+//         enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
+//         tooltiptext: "Select the correct unit corresponding to the quantity"
+//       },
+//       Energytypereduced: {
+//         type: "string",
+//         title: "Energy type reduced",
+//         enum: ['Fuel', 'heating', 'electricity', 'cooling', 'steam', 'Others'],
+//         tooltiptext: "Select the correct unit corresponding to the quantity"
+//       },
+//       Baseyear: {
+//         type: "string",
+//         title: "Base year",
+//         tooltiptext: "Indicate the base year used for comparing energy saved before the intervention"
+//       },
+//       Energyreductionis: {
+//         type: "string",
+//         title: "Energy reduction is",
+//         enum: ['estimated', 'modeled', 'sourced from direct measurement', 'others'],
+//         tooltiptext: "Indicate whether the Energy reduction measurement is Estimated, Modeled or directly measured"
+//       },
+//       Methodologyused: {
+//         type: "string",
+//         title: "Methodology used",
+//         tooltiptext: "Indicate the methodology used for calculating energy reduction."
+//       },
+//       AssignTo: {
+//         type: "string",
+//         title: "Assign To",
+//       },
+//       FileUpload: {
+//         type: "string",
+//         format: "data-url",
+//         title: "File Upload",
+//       },
+//       Remove: {
+//         type: "string",
+//         title: "Remove",
+//       },
+//       // Define other properties as needed
+//     }
+//   }
+// };
 
-const uiSchema = {
-// Add flex-wrap to wrap fields to the next line
-  items: {
-    classNames: 'fieldset',
-    'ui:order': [
-      'Typeofintervention', 'Quantitysavedduetointervention', 'Unit', 'Energytypereduced','Baseyear','Energyreductionis','Methodologyused','AssignTo', 'FileUpload', 'Remove'
-    ],
-    Typeofintervention: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false,
-      },
-    },
-    Quantitysavedduetointervention: {
-      'ui:widget': 'inputWidget',
-      'ui:options': {
-        label: false
-      },
-    },
-    Unit: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
-      },
-    },
-    Energytypereduced: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
-      },
-    },
-    Baseyear: {
-      'ui:widget': 'inputWidget',
-      'ui:options': {
-        label: false
-      },
-    },
-    Energyreductionis: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
-      },
-    },
-    Methodologyused: {
-        'ui:widget': 'inputWidget',
-        'ui:options': {
-          label: false
-        },
-      },
-    AssignTo: {
-      "ui:widget": "AssignTobutton",
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    FileUpload: {
-      'ui:widget': 'FileUploadWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    Remove: {
-      "ui:widget": "RemoveWidget",
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    'ui:options': {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: 'horizontal', // Set layout to horizontal
-    }
-  }
-};
+// const uiSchema = {
+// // Add flex-wrap to wrap fields to the next line
+//   items: {
+//     classNames: 'fieldset',
+//     'ui:order': [
+//       'Typeofintervention', 'Quantitysavedduetointervention', 'Unit', 'Energytypereduced','Baseyear','Energyreductionis','Methodologyused','AssignTo', 'FileUpload', 'Remove'
+//     ],
+//     Typeofintervention: {
+//       'ui:widget': 'selectWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false,
+//       },
+//     },
+//     Quantitysavedduetointervention: {
+//       'ui:widget': 'inputWidget',
+//       'ui:options': {
+//         label: false
+//       },
+//     },
+//     Unit: {
+//       'ui:widget': 'selectWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false
+//       },
+//     },
+//     Energytypereduced: {
+//       'ui:widget': 'selectWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false
+//       },
+//     },
+//     Baseyear: {
+//       'ui:widget': 'inputWidget',
+//       'ui:options': {
+//         label: false
+//       },
+//     },
+//     Energyreductionis: {
+//       'ui:widget': 'selectWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false
+//       },
+//     },
+//     Methodologyused: {
+//         'ui:widget': 'inputWidget',
+//         'ui:options': {
+//           label: false
+//         },
+//       },
+//     AssignTo: {
+//       "ui:widget": "AssignTobutton",
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     FileUpload: {
+//       'ui:widget': 'FileUploadWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     Remove: {
+//       "ui:widget": "RemoveWidget",
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     'ui:options': {
+//       orderable: false, // Prevent reordering of items
+//       addable: false, // Prevent adding items from UI
+//       removable: false, // Prevent removing items from UI
+//       layout: 'horizontal', // Set layout to horizontal
+//     }
+//   }
+// };
 
 const generateTooltip = (field, title, tooltipText) => {
   if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
@@ -366,10 +366,13 @@ const Reductionenergy = ({location, year, month}) => {
     setFormData(updatedData);
   }
   const renderFields = () => {
-    const fields = Object.keys(schema.items.properties);
+    if (!r_schema || !r_schema.items || !r_schema.items.properties) {
+      return null;
+    }
+    const fields = Object.keys(r_schema.items.properties);
     return fields.map((field, index) => (
       <div key={index}>
-        {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext)}
+        {generateTooltip(field, r_schema.items.properties[field].title, r_schema.items.properties[field].tooltiptext)}
       </div>
     ));
   };

@@ -31,115 +31,115 @@ const view_path = 'gri-environment-water-303-5c-change_in_water_storage'
 const client_id = 1
 const user_id = 1
 
-const schema = {
-    type: 'array',
-    items: {
-        type: 'object',
-        properties: {
-            Unit: {
-                type: "string",
-                title: "Unit",
-                enum: ['Litre', 'Megalitre','Cubic meter','Kilolitre','Million litrse per day'],
-                tooltiptext: "Select the correct unit corresponding to the change in water storage.",
-            },
+// const schema = {
+//     type: 'array',
+//     items: {
+//         type: 'object',
+//         properties: {
+//             Unit: {
+//                 type: "string",
+//                 title: "Unit",
+//                 enum: ['Litre', 'Megalitre','Cubic meter','Kilolitre','Million litrse per day'],
+//                 tooltiptext: "Select the correct unit corresponding to the change in water storage.",
+//             },
 
-            Reporting1: {
-                type: "string",
-                title: "Total water storage at the end of the reporting period",
-                tooltiptext: "What was the water storage capacity of the company at the end of the reporting period?"
-            },
-                Reporting2: {
-                type: "string",
-                title: "Total water storage at the beginning of the reporting period",
-                tooltiptext: "What was the water storage capacity of the company at the beginning of the reporting period?"
-            },
-             Reporting3: {
-                type: "string",
-                title: "Change in water storage",
-                tooltiptext: "Change in water storage = Total water storage at the end of the reporting period - Total water storage at the beginning of the reporting period"
-            },
+//             Reporting1: {
+//                 type: "string",
+//                 title: "Total water storage at the end of the reporting period",
+//                 tooltiptext: "What was the water storage capacity of the company at the end of the reporting period?"
+//             },
+//                 Reporting2: {
+//                 type: "string",
+//                 title: "Total water storage at the beginning of the reporting period",
+//                 tooltiptext: "What was the water storage capacity of the company at the beginning of the reporting period?"
+//             },
+//              Reporting3: {
+//                 type: "string",
+//                 title: "Change in water storage",
+//                 tooltiptext: "Change in water storage = Total water storage at the end of the reporting period - Total water storage at the beginning of the reporting period"
+//             },
 
-            AssignTo: {
-                type: "string",
-                title: "Assign To",
-            },
-            FileUpload: {
-                type: "string",
-                format: "data-url",
-                title: "File Upload",
-            },
-            Remove: {
-                type: "string",
-                title: "Remove",
-            },
-            // Define other properties as needed
-        }
-    }
-};
+//             AssignTo: {
+//                 type: "string",
+//                 title: "Assign To",
+//             },
+//             FileUpload: {
+//                 type: "string",
+//                 format: "data-url",
+//                 title: "File Upload",
+//             },
+//             Remove: {
+//                 type: "string",
+//                 title: "Remove",
+//             },
+//             // Define other properties as needed
+//         }
+//     }
+// };
 
-const uiSchema = {
-    // Add flex-wrap to wrap fields to the next line
-    items: {
-        classNames: 'fieldset',
-        'ui:order': [
-            'Unit', 'Reporting1', 'Reporting2', 'Reporting3', 'AssignTo', 'FileUpload', 'Remove'
-        ],
-        Unit: {
-            'ui:widget': 'selectWidget',
-            'ui:horizontal': true,
-            'ui:options': {
-                label: false,
-            },
-        },
-        Reporting1: {
-            'ui:widget': 'inputWidget',
-            'ui:horizontal': true,
-            'ui:options': {
-                label: false,
-            },
-        },
-        Reporting2: {
-            'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
-            'ui:options': {
-                label: false // This disables the label for this field
-            },
-        },
-        Reporting3: {
-            'ui:widget': 'inputWidget',
-            'ui:horizontal': true,
-            'ui:options': {
-                label: false // This disables the label for this field
-            },
-        },
+// const uiSchema = {
+//     // Add flex-wrap to wrap fields to the next line
+//     items: {
+//         classNames: 'fieldset',
+//         'ui:order': [
+//             'Unit', 'Reporting1', 'Reporting2', 'Reporting3', 'AssignTo', 'FileUpload', 'Remove'
+//         ],
+//         Unit: {
+//             'ui:widget': 'selectWidget',
+//             'ui:horizontal': true,
+//             'ui:options': {
+//                 label: false,
+//             },
+//         },
+//         Reporting1: {
+//             'ui:widget': 'inputWidget',
+//             'ui:horizontal': true,
+//             'ui:options': {
+//                 label: false,
+//             },
+//         },
+//         Reporting2: {
+//             'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
+//             'ui:options': {
+//                 label: false // This disables the label for this field
+//             },
+//         },
+//         Reporting3: {
+//             'ui:widget': 'inputWidget',
+//             'ui:horizontal': true,
+//             'ui:options': {
+//                 label: false // This disables the label for this field
+//             },
+//         },
 
-        AssignTo: {
-            "ui:widget": "AssignTobutton",
-            'ui:horizontal': true,
-            'ui:options': {
-                label: false // This disables the label for this field
-            },
-        },
-        FileUpload: {
-            'ui:widget': 'FileUploadWidget',
-            'ui:horizontal': true,
-            'ui:options': {
-                label: false // This disables the label for this field
-            },
-        },
-        Remove: {
-            "ui:widget": "RemoveWidget",
-            'ui:options': {
-                label: false // This disables the label for this field
-            },
-        },
-        'ui:options': {
-            orderable: false, // Prevent reordering of items
-            addable: false, // Prevent adding items from UI
-            removable: false, // Prevent removing items from UI
-            layout: 'horizontal', // Set layout to horizontal
-        }
-    }
-};
+//         AssignTo: {
+//             "ui:widget": "AssignTobutton",
+//             'ui:horizontal': true,
+//             'ui:options': {
+//                 label: false // This disables the label for this field
+//             },
+//         },
+//         FileUpload: {
+//             'ui:widget': 'FileUploadWidget',
+//             'ui:horizontal': true,
+//             'ui:options': {
+//                 label: false // This disables the label for this field
+//             },
+//         },
+//         Remove: {
+//             "ui:widget": "RemoveWidget",
+//             'ui:options': {
+//                 label: false // This disables the label for this field
+//             },
+//         },
+//         'ui:options': {
+//             orderable: false, // Prevent reordering of items
+//             addable: false, // Prevent adding items from UI
+//             removable: false, // Prevent removing items from UI
+//             layout: 'horizontal', // Set layout to horizontal
+//         }
+//     }
+// };
 
 const generateTooltip = (field, title, tooltipText) => {
     if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
@@ -347,13 +347,16 @@ const WaterstorageQ1 = ({location, year, month}) => {
         setFormData(updatedData);
     };
     const renderFields = () => {
-        const fields = Object.keys(schema.items.properties);
+        if (!r_schema || !r_schema.items || !r_schema.items.properties) {
+          return null;
+        }
+        const fields = Object.keys(r_schema.items.properties);
         return fields.map((field, index) => (
-            <div key={index}>
-                {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext)}
-            </div>
+          <div key={index}>
+            {generateTooltip(field, r_schema.items.properties[field].title, r_schema.items.properties[field].tooltiptext)}
+          </div>
         ));
-    };
+      };
     return (
         <>
             <div className="w-full max-w-xs mb-2">

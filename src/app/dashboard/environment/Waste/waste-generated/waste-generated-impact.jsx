@@ -31,121 +31,121 @@ const view_path = 'gri-environment-waste-306-3a-3b-waste_generated'
 const client_id = 1
 const user_id = 1
 
-const schema = {
-  type: 'array',
-  items: {
-    type: 'object',
-    properties: {
-        Wastecategory: {
-        type: "string",
-        title: "Waste category",
-        enum: ['Hazardous', 'Non Hazardous'],
-        tooltiptext: "Select the waste category from the given dropdown.",
-        display:"block",
-      },
-      WasteType: {
-        type: "string",
-        title: "Waste Type",
-        tooltiptext: "Please specify the type of waste. e.g. Paper waste, E-waste, chemical waste etc. ",
-        display:"block",
-      },
-      Unit: {
-        type: "string",
-        title: "Unit",
-        enum: ['g', 'Kgs', 't (metric tons)', 'ton (US short ton)', 'lbs'],
-        tooltiptext: "Use 1000 kilograms as the measure for a metric ton.",
-        display:"block",
-      },
-      Wastegenerated: {
-        type: "string",
-        title: "Waste generated",
-        display:"none",
+// const schema = {
+//   type: 'array',
+//   items: {
+//     type: 'object',
+//     properties: {
+//         Wastecategory: {
+//         type: "string",
+//         title: "Waste category",
+//         enum: ['Hazardous', 'Non Hazardous'],
+//         tooltiptext: "Select the waste category from the given dropdown.",
+//         display:"block",
+//       },
+//       WasteType: {
+//         type: "string",
+//         title: "Waste Type",
+//         tooltiptext: "Please specify the type of waste. e.g. Paper waste, E-waste, chemical waste etc. ",
+//         display:"block",
+//       },
+//       Unit: {
+//         type: "string",
+//         title: "Unit",
+//         enum: ['g', 'Kgs', 't (metric tons)', 'ton (US short ton)', 'lbs'],
+//         tooltiptext: "Use 1000 kilograms as the measure for a metric ton.",
+//         display:"block",
+//       },
+//       Wastegenerated: {
+//         type: "string",
+//         title: "Waste generated",
+//         display:"none",
 
-      },
-
-
-      AssignTo: {
-        type: "string",
-        title: "Assign To",
-      },
-      FileUpload: {
-        type: "string",
-        format: "data-url",
-        title: "File Upload",
-      },
-      Remove: {
-        type: "string",
-        title: "Remove",
-      },
-      // Define other properties as needed
-    }
-  }
-};
-
-const uiSchema = {
- // Add flex-wrap to wrap fields to the next line
-  items: {
-    classNames: 'fieldset',
-    'ui:order': [
-      'Wastecategory', 'WasteType', 'Unit', 'Wastegenerated','AssignTo', 'FileUpload', 'Remove'
-    ],
-    Wastecategory: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false,
-      },
-    },
-    WasteType: {
-      'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    Unit: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    Wastegenerated: {
-      'ui:widget': 'inputWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
+//       },
 
 
-    AssignTo: {
-      "ui:widget": "AssignTobutton",
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    FileUpload: {
-      'ui:widget': 'FileUploadWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    Remove: {
-      "ui:widget": "RemoveWidget",
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    'ui:options': {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: 'horizontal', // Set layout to horizontal
-    }
-  }
-};
+//       AssignTo: {
+//         type: "string",
+//         title: "Assign To",
+//       },
+//       FileUpload: {
+//         type: "string",
+//         format: "data-url",
+//         title: "File Upload",
+//       },
+//       Remove: {
+//         type: "string",
+//         title: "Remove",
+//       },
+//       // Define other properties as needed
+//     }
+//   }
+// };
+
+// const uiSchema = {
+//  // Add flex-wrap to wrap fields to the next line
+//   items: {
+//     classNames: 'fieldset',
+//     'ui:order': [
+//       'Wastecategory', 'WasteType', 'Unit', 'Wastegenerated','AssignTo', 'FileUpload', 'Remove'
+//     ],
+//     Wastecategory: {
+//       'ui:widget': 'selectWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false,
+//       },
+//     },
+//     WasteType: {
+//       'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     Unit: {
+//       'ui:widget': 'selectWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     Wastegenerated: {
+//       'ui:widget': 'inputWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+
+
+//     AssignTo: {
+//       "ui:widget": "AssignTobutton",
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     FileUpload: {
+//       'ui:widget': 'FileUploadWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     Remove: {
+//       "ui:widget": "RemoveWidget",
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     'ui:options': {
+//       orderable: false, // Prevent reordering of items
+//       addable: false, // Prevent adding items from UI
+//       removable: false, // Prevent removing items from UI
+//       layout: 'horizontal', // Set layout to horizontal
+//     }
+//   }
+// };
 
 const generateTooltip = (field, title, tooltipText, display) => {
   if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
@@ -338,11 +338,22 @@ const Wastegeneratedeimpact = ({location, year, month}) => {
     updatedData.splice(index, 1);
     setFormData(updatedData);
   };
+  // const renderFields = () => {
+  //   const fields = Object.keys(schema.items.properties);
+  //   return fields.map((field, index) => (
+  //     <div key={index}>
+  //       {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext, schema.items.properties[field].display)}
+  //     </div>
+  //   ));
+  // };
   const renderFields = () => {
-    const fields = Object.keys(schema.items.properties);
+    if (!r_schema || !r_schema.items || !r_schema.items.properties) {
+      return null;
+    }
+    const fields = Object.keys(r_schema.items.properties);
     return fields.map((field, index) => (
       <div key={index}>
-        {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext, schema.items.properties[field].display)}
+        {generateTooltip(field, r_schema.items.properties[field].title, r_schema.items.properties[field].tooltiptext, r_schema.items.properties[field].display)}
       </div>
     ));
   };

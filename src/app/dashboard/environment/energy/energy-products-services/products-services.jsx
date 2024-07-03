@@ -31,114 +31,114 @@ const view_path = 'gri-environment-energy-302-5a-5b-reduction_in_energy_in_produ
 const client_id = 1
 const user_id = 1
 
-const schema = {
-  type: 'array',
-  items: {
-    type: 'object',
-    properties: {
+// const schema = {
+//   type: 'array',
+//   items: {
+//     type: 'object',
+//     properties: {
 
-      ProductServices: {
-        type: "string",
-        title: "Product / Services",
-        tooltiptext: "Indicate the product or service for which Energy Requirements have been reduced."
-      },
+//       ProductServices: {
+//         type: "string",
+//         title: "Product / Services",
+//         tooltiptext: "Indicate the product or service for which Energy Requirements have been reduced."
+//       },
 
-      Quantity: {
-        type: "string",
-        title: "Quantity",
-        tooltiptext: "Indicate the quantity of reduced energy requirement"
-      },
-      Unit: {
-        type: "string",
-        title: "Unit",
-        enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
-        tooltiptext: "Select the correct unit corresponding to the quantity"
-      },
-      Baseyear: {
-        type: "string",
-        title: "Base year",
-        tooltiptext: "Indicate the base year used for comparing energy saved before the intervention"
-      },
+//       Quantity: {
+//         type: "string",
+//         title: "Quantity",
+//         tooltiptext: "Indicate the quantity of reduced energy requirement"
+//       },
+//       Unit: {
+//         type: "string",
+//         title: "Unit",
+//         enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
+//         tooltiptext: "Select the correct unit corresponding to the quantity"
+//       },
+//       Baseyear: {
+//         type: "string",
+//         title: "Base year",
+//         tooltiptext: "Indicate the base year used for comparing energy saved before the intervention"
+//       },
 
-      AssignTo: {
-        type: "string",
-        title: "Assign To",
-      },
-      FileUpload: {
-        type: "string",
-        format: "data-url",
-        title: "File Upload",
-      },
-      Remove: {
-        type: "string",
-        title: "Remove",
-      },
-      // Define other properties as needed
-    }
-  }
-};
+//       AssignTo: {
+//         type: "string",
+//         title: "Assign To",
+//       },
+//       FileUpload: {
+//         type: "string",
+//         format: "data-url",
+//         title: "File Upload",
+//       },
+//       Remove: {
+//         type: "string",
+//         title: "Remove",
+//       },
+//       // Define other properties as needed
+//     }
+//   }
+// };
 
-const uiSchema = {
-  items: {
-    classNames: 'fieldset',
-    'ui:order': [
-      'ProductServices', 'Quantity', 'Unit', 'Baseyear','AssignTo', 'FileUpload', 'Remove'
-    ],
+// const uiSchema = {
+//   items: {
+//     classNames: 'fieldset',
+//     'ui:order': [
+//       'ProductServices', 'Quantity', 'Unit', 'Baseyear','AssignTo', 'FileUpload', 'Remove'
+//     ],
 
-    ProductServices: {
-      'ui:widget': 'inputWidget',
-      'ui:options': {
-        label: false
-      },
-    },
-    Quantity: {
-      'ui:widget': 'inputWidget',
-      'ui:options': {
-        label: false
-      },
-    },
-    Unit: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
-      },
-    },
-    Baseyear: {
-      'ui:widget': 'inputWidget',
-      'ui:options': {
-        label: false
-      },
-    },
+//     ProductServices: {
+//       'ui:widget': 'inputWidget',
+//       'ui:options': {
+//         label: false
+//       },
+//     },
+//     Quantity: {
+//       'ui:widget': 'inputWidget',
+//       'ui:options': {
+//         label: false
+//       },
+//     },
+//     Unit: {
+//       'ui:widget': 'selectWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false
+//       },
+//     },
+//     Baseyear: {
+//       'ui:widget': 'inputWidget',
+//       'ui:options': {
+//         label: false
+//       },
+//     },
 
-    AssignTo: {
-      "ui:widget": "AssignTobutton",
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    FileUpload: {
-      'ui:widget': 'FileUploadWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    Remove: {
-      "ui:widget": "RemoveWidget",
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    'ui:options': {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: 'horizontal', // Set layout to horizontal
-    }
-  }
-};
+//     AssignTo: {
+//       "ui:widget": "AssignTobutton",
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     FileUpload: {
+//       'ui:widget': 'FileUploadWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     Remove: {
+//       "ui:widget": "RemoveWidget",
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     'ui:options': {
+//       orderable: false, // Prevent reordering of items
+//       addable: false, // Prevent adding items from UI
+//       removable: false, // Prevent removing items from UI
+//       layout: 'horizontal', // Set layout to horizontal
+//     }
+//   }
+// };
 
 const generateTooltip = (field, title, tooltipText) => {
   if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
@@ -330,10 +330,13 @@ const Productsservices = ({location, year, month}) => {
     setFormData(updatedData);
   }
   const renderFields = () => {
-    const fields = Object.keys(schema.items.properties);
+    if (!r_schema || !r_schema.items || !r_schema.items.properties) {
+      return null;
+    }
+    const fields = Object.keys(r_schema.items.properties);
     return fields.map((field, index) => (
       <div key={index}>
-        {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext)}
+        {generateTooltip(field, r_schema.items.properties[field].title, r_schema.items.properties[field].tooltiptext)}
       </div>
     ));
   };

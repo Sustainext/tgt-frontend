@@ -32,136 +32,136 @@ const view_path = 'gri-environment-energy-302-2a-energy_consumption_outside_orga
 const client_id = 1
 const user_id = 1
 
-const schema = {
-  type: 'array',
-  items: {
-    type: 'object',
-    properties: {
-      EnergyType: {
-        type: "string",
-        title: "Energy Type",
-        enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro', 'Natural gas', 'Electricity', 'Cooling', 'Steam', 'Heating', 'Wood Biomas', 'Biogas', 'Other'],
-        tooltiptext: "Indicate the type of energy or fuel consumed for activities outside the organization"
+// const schema = {
+//   type: 'array',
+//   items: {
+//     type: 'object',
+//     properties: {
+//       EnergyType: {
+//         type: "string",
+//         title: "Energy Type",
+//         enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro', 'Natural gas', 'Electricity', 'Cooling', 'Steam', 'Heating', 'Wood Biomas', 'Biogas', 'Other'],
+//         tooltiptext: "Indicate the type of energy or fuel consumed for activities outside the organization"
 
-      },
+//       },
 
-      Purpose: {
-        type: "string",
-        title: "Purpose",
-        tooltiptext: "Indicate the purpose it is being used for E.g. Upstream Transport, Purchased Goods ,Business Travel etc"
-      },
+//       Purpose: {
+//         type: "string",
+//         title: "Purpose",
+//         tooltiptext: "Indicate the purpose it is being used for E.g. Upstream Transport, Purchased Goods ,Business Travel etc"
+//       },
 
-      Quantity: {
-        type: "string",
-        title: "Quantity",
-        tooltiptext: "Indicate the quantity of energy consumed"
-      },
-      Unit: {
-        type: "string",
-        title: "Unit",
-        enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
-        tooltiptext: "Select the correct unit corresponding to the quantity purchased."
-      },
-      AssignTo: {
-        type: "string",
+//       Quantity: {
+//         type: "string",
+//         title: "Quantity",
+//         tooltiptext: "Indicate the quantity of energy consumed"
+//       },
+//       Unit: {
+//         type: "string",
+//         title: "Unit",
+//         enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
+//         tooltiptext: "Select the correct unit corresponding to the quantity purchased."
+//       },
+//       AssignTo: {
+//         type: "string",
 
-      },
-      FileUpload: {
-        type: "string",
-        format: "data-url",
-      },
+//       },
+//       FileUpload: {
+//         type: "string",
+//         format: "data-url",
+//       },
 
-      Remove: {
-        type: "string",
+//       Remove: {
+//         type: "string",
 
-      },
-      // Define other properties as needed
-    }
-  }
-};
+//       },
+//       // Define other properties as needed
+//     }
+//   }
+// };
 
-const uiSchema = {
-  // Add flex-wrap to wrap fields to the next line
-  items: {
-    classNames: 'fieldset',
-    'ui:order': [
-      'EnergyType', 'Source', 'Purpose', 'Renewable', 'Quantity', 'Unit', 'AssignTo', 'FileUpload', 'Remove'
-    ],
-    EnergyType: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false,
-        // Include tooltiptext in uiSchema
-      },
+// const uiSchema = {
+//   // Add flex-wrap to wrap fields to the next line
+//   items: {
+//     classNames: 'fieldset',
+//     'ui:order': [
+//       'EnergyType', 'Source', 'Purpose', 'Renewable', 'Quantity', 'Unit', 'AssignTo', 'FileUpload', 'Remove'
+//     ],
+//     EnergyType: {
+//       'ui:widget': 'selectWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false,
+//         // Include tooltiptext in uiSchema
+//       },
 
 
-    },
-    Source: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
+//     },
+//     Source: {
+//       'ui:widget': 'selectWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
 
-    },
-    Purpose: {
-      'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    Renewable: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
+//     },
+//     Purpose: {
+//       'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     Renewable: {
+//       'ui:widget': 'selectWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
 
-    },
-    Quantity: {
-      'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
+//     },
+//     Quantity: {
+//       'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
 
-    Unit: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
+//     Unit: {
+//       'ui:widget': 'selectWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
 
-    },
-    AssignTo: {
-      "ui:widget": "AssignTobutton",
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    FileUpload: {
-      'ui:widget': 'FileUploadWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    Remove: {
-      "ui:widget": "RemoveWidget",
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    'ui:options': {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: 'horizontal', // Set layout to horizontal
-    }
-  }
-};
+//     },
+//     AssignTo: {
+//       "ui:widget": "AssignTobutton",
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     FileUpload: {
+//       'ui:widget': 'FileUploadWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     Remove: {
+//       "ui:widget": "RemoveWidget",
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     'ui:options': {
+//       orderable: false, // Prevent reordering of items
+//       addable: false, // Prevent adding items from UI
+//       removable: false, // Prevent removing items from UI
+//       layout: 'horizontal', // Set layout to horizontal
+//     }
+//   }
+// };
 const generateTooltip = (field, title, tooltipText) => {
   if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
     return null; // Return null to skip rendering tooltip for these fields
@@ -353,13 +353,16 @@ const Outsideorganization = ({location, year, month}) => {
     setFormData(updatedData);
   };
   const renderFields = () => {
-    const fields = Object.keys(schema.items.properties);
+    if (!r_schema || !r_schema.items || !r_schema.items.properties) {
+      return null;
+    }
+    const fields = Object.keys(r_schema.items.properties);
     return fields.map((field, index) => (
       <div key={index}>
-        {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext)}
+        {generateTooltip(field, r_schema.items.properties[field].title, r_schema.items.properties[field].tooltiptext)}
       </div>
     ));
-  };
+  };  
   return (
     <>
 

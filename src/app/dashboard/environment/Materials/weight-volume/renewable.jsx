@@ -31,149 +31,149 @@ const view_path = 'gri-environment-materials-301-1a-renewable_materials'
 const client_id = 1
 const user_id = 1
 
-const schema = {
-  type: 'array',
-  items: {
-    type: 'object',
-    properties: {
-      Typeofmaterial: {
-        type: "string",
-        title: "Type of material",
-        enum: ['Raw materials', 'Associated process materials','Semi-manufactured goods or parts','Materials for packaging purposes'],
-        tooltiptext: "Select the waste category from the given dropdown.",
-        display: "none",
-      },
-      Materialsused: {
-        type: "string",
-        title: "Materials used",
-        enum: ['Cardboard', 'Glass','Hemp','Kenaf','Natural Rubber','Paper','Timber','Wool','Others'],
-        tooltiptext: "What materials does the company use to produce its goods or services?",
-        display: "block",
-      },
-      Source: {
-        type: "string",
-        title: "Source",
-        enum: ['Externally sourced', 'Internally sourced'],
-        tooltiptext: "Where does the company get its materials from? Internally sourced materials: Materials that the company makes itself.Externally sourced materials: Materials that the company buys from other companies.",
-        display: "block",
-      },
-      Totalweight: {
-        type: "string",
-        title: "Total weight/volume",
-        tooltiptext: "How much material is used for the production of goods or services?(Please specify the total weight or volume.)",
-        display: "block",
+// const schema = {
+//   type: 'array',
+//   items: {
+//     type: 'object',
+//     properties: {
+//       Typeofmaterial: {
+//         type: "string",
+//         title: "Type of material",
+//         enum: ['Raw materials', 'Associated process materials','Semi-manufactured goods or parts','Materials for packaging purposes'],
+//         tooltiptext: "Select the waste category from the given dropdown.",
+//         display: "none",
+//       },
+//       Materialsused: {
+//         type: "string",
+//         title: "Materials used",
+//         enum: ['Cardboard', 'Glass','Hemp','Kenaf','Natural Rubber','Paper','Timber','Wool','Others'],
+//         tooltiptext: "What materials does the company use to produce its goods or services?",
+//         display: "block",
+//       },
+//       Source: {
+//         type: "string",
+//         title: "Source",
+//         enum: ['Externally sourced', 'Internally sourced'],
+//         tooltiptext: "Where does the company get its materials from? Internally sourced materials: Materials that the company makes itself.Externally sourced materials: Materials that the company buys from other companies.",
+//         display: "block",
+//       },
+//       Totalweight: {
+//         type: "string",
+//         title: "Total weight/volume",
+//         tooltiptext: "How much material is used for the production of goods or services?(Please specify the total weight or volume.)",
+//         display: "block",
 
-      },
-      Unit: {
-        type: "string",
-        title: "Unit",
-        enum: ['Cubic centimeter cm3', 'Cubic decimeter dm3', 'Cubic meter m3', 'Gram', 'Kilogram Kg','Liter','Milligram','Milliliter','Fluid Ounce fl Oz','Gallon Gal','Pint Pt','Pound Lb','Quart Qt','Cubic foot ft3','Metric ton','US short ton (tn)'],
-        tooltiptext: "Use 1000 kilograms as the measure for a metric ton.",
-        display: "none",
-      },
-      Datasource: {
-        type: "string",
-        title: "Data source",
-        enum: ['Estimated', 'Direct measurement'],
-        tooltiptext: "What is the source of the data for the total weight or volume of materials used? Estimation: process of making an approximate calculation of something.Direct measurement: process of measuring something directly. For example, a company might directly measure the total weight or volume of materials used by weighing or measuring each batch of materials used.",
-        display: "block",
+//       },
+//       Unit: {
+//         type: "string",
+//         title: "Unit",
+//         enum: ['Cubic centimeter cm3', 'Cubic decimeter dm3', 'Cubic meter m3', 'Gram', 'Kilogram Kg','Liter','Milligram','Milliliter','Fluid Ounce fl Oz','Gallon Gal','Pint Pt','Pound Lb','Quart Qt','Cubic foot ft3','Metric ton','US short ton (tn)'],
+//         tooltiptext: "Use 1000 kilograms as the measure for a metric ton.",
+//         display: "none",
+//       },
+//       Datasource: {
+//         type: "string",
+//         title: "Data source",
+//         enum: ['Estimated', 'Direct measurement'],
+//         tooltiptext: "What is the source of the data for the total weight or volume of materials used? Estimation: process of making an approximate calculation of something.Direct measurement: process of measuring something directly. For example, a company might directly measure the total weight or volume of materials used by weighing or measuring each batch of materials used.",
+//         display: "block",
 
-      },
-      AssignTo: {
-        type: "string",
-        title: "Assign To",
-      },
-      FileUpload: {
-        type: "string",
-        format: "data-url",
-        title: "File Upload",
-      },
-      Remove: {
-        type: "string",
-        title: "Remove",
-      },
-      // Define other properties as needed
-    }
-  }
-};
+//       },
+//       AssignTo: {
+//         type: "string",
+//         title: "Assign To",
+//       },
+//       FileUpload: {
+//         type: "string",
+//         format: "data-url",
+//         title: "File Upload",
+//       },
+//       Remove: {
+//         type: "string",
+//         title: "Remove",
+//       },
+//       // Define other properties as needed
+//     }
+//   }
+// };
 
-const uiSchema = {
-  // Add flex-wrap to wrap fields to the next line
-  items: {
-    classNames: 'fieldset',
-    'ui:order': [
-      'Typeofmaterial', 'Materialsused', 'Source', 'Totalweight','Unit','Datasource','AssignTo', 'FileUpload', 'Remove'
-    ],
-    Typeofmaterial: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false,
-      },
-    },
-    Materialsused: {
-      'ui:widget': 'selectWidget', // Use your custom widget for QuantityUnit
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    Source: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    Totalweight: {
-      'ui:widget': 'inputWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
+// const uiSchema = {
+//   // Add flex-wrap to wrap fields to the next line
+//   items: {
+//     classNames: 'fieldset',
+//     'ui:order': [
+//       'Typeofmaterial', 'Materialsused', 'Source', 'Totalweight','Unit','Datasource','AssignTo', 'FileUpload', 'Remove'
+//     ],
+//     Typeofmaterial: {
+//       'ui:widget': 'selectWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false,
+//       },
+//     },
+//     Materialsused: {
+//       'ui:widget': 'selectWidget', // Use your custom widget for QuantityUnit
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     Source: {
+//       'ui:widget': 'selectWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     Totalweight: {
+//       'ui:widget': 'inputWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
 
-    Unit: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    Datasource: {
-      'ui:widget': 'selectWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    AssignTo: {
-      "ui:widget": "AssignTobutton",
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    FileUpload: {
-      'ui:widget': 'FileUploadWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    Remove: {
-      "ui:widget": "RemoveWidget",
-      'ui:options': {
-        label: false // This disables the label for this field
-      },
-    },
-    'ui:options': {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: 'horizontal', // Set layout to horizontal
-    }
-  }
-};
+//     Unit: {
+//       'ui:widget': 'selectWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     Datasource: {
+//       'ui:widget': 'selectWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     AssignTo: {
+//       "ui:widget": "AssignTobutton",
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     FileUpload: {
+//       'ui:widget': 'FileUploadWidget',
+//       'ui:horizontal': true,
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     Remove: {
+//       "ui:widget": "RemoveWidget",
+//       'ui:options': {
+//         label: false // This disables the label for this field
+//       },
+//     },
+//     'ui:options': {
+//       orderable: false, // Prevent reordering of items
+//       addable: false, // Prevent adding items from UI
+//       removable: false, // Prevent removing items from UI
+//       layout: 'horizontal', // Set layout to horizontal
+//     }
+//   }
+// };
 
 const generateTooltip = (field, title, tooltipText, display) => {
   if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
@@ -368,10 +368,13 @@ const Renewable = ({location, year, month}) => {
     setFormData(updatedData);
   };
   const renderFields = () => {
-    const fields = Object.keys(schema.items.properties);
+    if (!r_schema || !r_schema.items || !r_schema.items.properties) {
+      return null;
+    }
+    const fields = Object.keys(r_schema.items.properties);
     return fields.map((field, index) => (
       <div key={index}>
-        {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext, schema.items.properties[field].display)}
+        {generateTooltip(field, r_schema.items.properties[field].title, r_schema.items.properties[field].tooltiptext, r_schema.items.properties[field].display)}
       </div>
     ));
   };
