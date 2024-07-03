@@ -6,39 +6,22 @@ import DateRangePicker from "@/app/utils/DatePickerComponent";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import {
   columns1,
-  data1,
   columns2,
-  data2,
   columns3,
-  data3,
   columns4,
-  data4,
   columns5,
-  data5,
   columns6,
-  data6,
   columns7,
-  data7,
   columns8,
-  data8,
   columns9,
-  data9,
   columns10,
-  data10,
   columns11,
-  data11,
   columns12,
-  data12,
   columns13,
-  data13,
   columns14,
-  data14,
   columns15,
-  data15,
   columns16,
-  data16,
   columns17,
-  data17,
 } from "./data";
 
 const AnalyseWaterEffluents = ({ isBoxOpen }) => {
@@ -156,228 +139,42 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
         change_in_water_storage,
       } = data;
 
-      // const removeAndStoreLastObject = (array) => {
-      //   if (array.length > 0) {
-      //     // return array.pop();
-      //     return array;
-      //   } else {
-      //     return {};
-      //   }
-      // };
-
-      // Handle total water consumption
-      // const totalWaterConsumption = removeAndStoreLastObject(
-      //   total_water_consumption
-      // );
-      // total_water_consumption.push({
-      //   Category: "Total",
-      //   Quantity: totalWaterConsumption.Total,
-      //   Unit: totalWaterConsumption.Unit,
-      // });
       setWaterConsumption(total_water_consumption);
-
-      // Handle total water consumption in water-stressed areas
-      // const totalWaterConsumptionInWaterStressAreas = removeAndStoreLastObject(
-      //   total_water_consumption_in_water_stress_areas
-      // );
-      // total_water_consumption_in_water_stress_areas.push({
-      //   Category: "Total",
-      //   Quantity: totalWaterConsumptionInWaterStressAreas.Total,
-      //   Unit: totalWaterConsumptionInWaterStressAreas.Unit,
-      // });
       setWaterConsumptionInWaterStress(
         total_water_consumption_in_water_stress_areas
       );
-
-      // Handle total water consumption by business operation
-      // const totalWaterConsumptionByBusinessOperation = removeAndStoreLastObject(
-      //   total_water_consumption_by_business_operation
-      // );
-      // total_water_consumption_by_business_operation.push({
-      //   Business_Operation: "Total",
-      //   Quantity: totalWaterConsumptionByBusinessOperation.Total,
-      //   Unit: totalWaterConsumptionByBusinessOperation.Unit,
-      // });
       setWaterConsumptionByBusinessOperation(
         total_water_consumption_by_business_operation
       );
-
-      // Handle water consumption by location
-      // const totalWaterConsumptionByLocation = removeAndStoreLastObject(
-      //   total_water_consumption_by_location
-      // );
-      // total_water_consumption_by_location.push({
-      //   Location: "Total",
-      //   Quantity: totalWaterConsumptionByLocation.Total,
-      //   Unit: totalWaterConsumptionByLocation.Unit,
-      // });
       setWaterConsumptionByLocation(total_water_consumption_by_location);
-
-      // Handle water consumption by source
-      // const totalWaterConsumptionBySource = removeAndStoreLastObject(
-      //   total_water_consumption_by_source
-      // );
-      // total_water_consumption_by_source.push({
-      //   Source: "Total",
-      //   Quantity: totalWaterConsumptionBySource.Total,
-      //   Unit: totalWaterConsumptionBySource.Unit,
-      // });
       setWaterConsumptionBySource(total_water_consumption_by_source);
-
-      // Handle fresh water withdrawal by business operation
-      // const totalFreshWaterWithdrawalByBusinessOperation =
-      //   removeAndStoreLastObject(
-      //     total_fresh_water_withdrawal_by_business_operation
-      //   );
-      // total_fresh_water_withdrawal_by_business_operation.push({
-      //   Business_Operation: "Total",
-      //   Quantity: totalFreshWaterWithdrawalByBusinessOperation.Total,
-      //   Unit: totalFreshWaterWithdrawalByBusinessOperation.Unit,
-      // });
       setFreshWaterWithdrawalByBusinessOperation(
         total_fresh_water_withdrawal_by_business_operation
       );
-
-      // Handle fresh water withdrawal by source in water-stressed areas
-      // const totalFreshWaterWithdrawalBySourceFromWaterStress =
-      //   removeAndStoreLastObject(
-      //     total_fresh_water_withdrawal_by_source_from_water_stress_area
-      //   );
-      // total_fresh_water_withdrawal_by_source_from_water_stress_area.push({
-      //   Source: "Total",
-      //   Quantity: totalFreshWaterWithdrawalBySourceFromWaterStress.Total,
-      //   Unit: totalFreshWaterWithdrawalBySourceFromWaterStress.Unit,
-      // });
       setFreshWaterWithdrawalBySourceInWaterStress(
         total_fresh_water_withdrawal_by_source_from_water_stress_area
       );
-
-      // Handle fresh water withdrawal by location
-      // const totalFreshWaterWithdrawalByLocationCountry =
-      //   removeAndStoreLastObject(
-      //     total_fresh_water_withdrawal_by_location_country
-      //   );
-      // total_fresh_water_withdrawal_by_location_country.push({
-      //   Location: "Total",
-      //   Quantity: totalFreshWaterWithdrawalByLocationCountry.Total,
-      //   Unit: totalFreshWaterWithdrawalByLocationCountry.Unit,
-      // });
       setFreshWaterWithdrawalByLocation(
         total_fresh_water_withdrawal_by_location_country
       );
-
-      // Handle water withdrawal by water type
-      // const totalWaterWithdrawalByWaterType = removeAndStoreLastObject(
-      //   total_water_withdrawal_by_water_type
-      // );
-      // total_water_withdrawal_by_water_type.push({
-      //   Water_Type: "Total",
-      //   Quantity: totalWaterWithdrawalByWaterType.Total,
-      //   Unit: totalWaterWithdrawalByWaterType.Unit,
-      // });
       setWaterWithdrawalByWaterType(total_water_withdrawal_by_water_type);
-
-      // Handle water withdrawal from third parties
-      // const totalWaterWithdrawalFromThirdParties = removeAndStoreLastObject(
-      //   water_withdrawal_from_third_parties
-      // );
-      // water_withdrawal_from_third_parties.push({
-      //   Source: "Total",
-      //   Quantity: totalWaterWithdrawalFromThirdParties.Total,
-      //   Unit: totalWaterWithdrawalFromThirdParties.Unit,
-      // });
       setWaterWithdrawalFromThirdParties(water_withdrawal_from_third_parties);
-
-      // Handle water discharge by location
-      // const totalWaterDischargeByLocation = removeAndStoreLastObject(
-      //   total_water_discharge_by_location
-      // );
-      // total_water_discharge_by_location.push({
-      //   Location: "Total",
-      //   Quantity: totalWaterDischargeByLocation.Total,
-      //   Unit: totalWaterDischargeByLocation.Unit,
-      // });
       setWaterDischargeByLocation(total_water_discharge_by_location);
-
-      // Handle water discharge by source and type of water
-      // const totalWaterDischargeBySourceAndType = removeAndStoreLastObject(
-      //   total_water_discharge_by_source_and_type_of_water
-      // );
-      // total_water_discharge_by_source_and_type_of_water.push({
-      //   Source: "Total",
-      //   Type: "Total",
-      //   Quantity: totalWaterDischargeBySourceAndType.Total,
-      //   Unit: totalWaterDischargeBySourceAndType.Unit,
-      // });
       setWaterDischargeBySourceAndType(
         total_water_discharge_by_source_and_type_of_water
       );
-
-      // Handle water discharge from water-stressed areas by business operation
-      // const totalWaterDischargeFromWaterStressByBusinessOperation =
-      //   removeAndStoreLastObject(
-      //     total_water_discharge_from_water_stress_area_by_business_operation
-      //   );
-      // total_water_discharge_from_water_stress_area_by_business_operation.push({
-      //   Business_Operation: "Total",
-      //   Quantity: totalWaterDischargeFromWaterStressByBusinessOperation.Total,
-      //   Unit: totalWaterDischargeFromWaterStressByBusinessOperation.Unit,
-      // });
       setWaterDischargeFromWaterStressByBusinessOperation(
         total_water_discharge_from_water_stress_area_by_business_operation
       );
-
-      // Handle water discharge by business operation
-      // const totalWaterDischargeByBusinessOperation = removeAndStoreLastObject(
-      //   total_water_discharge_by_business_operation
-      // );
-      // total_water_discharge_by_business_operation.push({
-      //   Business_Operation: "Total",
-      //   Quantity: totalWaterDischargeByBusinessOperation.Total,
-      //   Unit: totalWaterDischargeByBusinessOperation.Unit,
-      // });
       setWaterDischargeByBusinessOperation(
         total_water_discharge_by_business_operation
       );
-
-      // Handle water discharge by water type from water-stressed areas
-      // const totalWaterDischargeByWaterTypeFromWaterStress =
-      //   removeAndStoreLastObject(
-      //     total_water_discharge_by_water_type_from_water_stress_area
-      //   );
-      // total_water_discharge_by_water_type_from_water_stress_area.push({
-      //   Water_Type: "Total",
-      //   Quantity: totalWaterDischargeByWaterTypeFromWaterStress.Total,
-      //   Unit: totalWaterDischargeByWaterTypeFromWaterStress.Unit,
-      // });
       setWaterDischargeByWaterTypeFromWaterStress(
         total_water_discharge_by_water_type_from_water_stress_area
       );
-
-      // Handle third-party water discharge for other organizations
-      // const totalThirdPartyWaterDischargeSentToUseForOtherOrganizations =
-      //   removeAndStoreLastObject(
-      //     third_party_water_discharge_sent_to_use_for_other_organizations
-      //   );
-      // third_party_water_discharge_sent_to_use_for_other_organizations.push({
-      //   Organization: "Total",
-      //   Quantity:
-      //     totalThirdPartyWaterDischargeSentToUseForOtherOrganizations.Total,
-      //   Unit: totalThirdPartyWaterDischargeSentToUseForOtherOrganizations.Unit,
-      // });
       setThirdPartyWaterDischargeForOtherOrganizations(
         third_party_water_discharge_sent_to_use_for_other_organizations
       );
-
-      // Handle change in water storage
-      // const totalChangeInWaterStorage = removeAndStoreLastObject(
-      //   change_in_water_storage
-      // );
-      // change_in_water_storage.push({
-      //   Change_Type: "Total",
-      //   Quantity: totalChangeInWaterStorage.Total,
-      //   Unit: totalChangeInWaterStorage.Unit,
-      // });
       setChangeInWaterStorage(change_in_water_storage);
 
       LoaderClose();
