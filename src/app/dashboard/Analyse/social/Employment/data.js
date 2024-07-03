@@ -18,7 +18,7 @@ export const columns1 = [
       ageAbove50: 'x%',
     },
     {
-      type: 'col3 Employees',
+      type: 'Temporary Employees',
       male: 'x%',
       female: 'x%',
       nonBinary: 'x%',
@@ -74,7 +74,7 @@ export const columns1 = [
         ageAbove50: 'x%',
       },
       {
-        type: 'col3 Employees',
+        type: 'Temporary Employees',
         male: 'x%',
         female: 'x%',
         nonBinary: 'x%',
