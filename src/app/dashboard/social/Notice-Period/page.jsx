@@ -43,7 +43,7 @@ const Noticeperiod = () => {
                             <p className="text-sm">Social</p>
                             <div className='flex'>
                                 <div>
-                                    <p className="gradient-text text-[22px] font-bold">
+                                    <p className="gradient-text text-[22px] font-bold pt-1">
                                     Labor/Management Relations 2016
                                     </p>
                                 </div>

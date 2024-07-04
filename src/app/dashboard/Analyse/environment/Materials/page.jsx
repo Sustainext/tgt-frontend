@@ -70,6 +70,10 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
       }
   }
     LoaderOpen();
+    setMaterialdata1([]);
+    setMaterialdata2([]);
+    setMaterialdata3([]);
+    setMaterialdata4([]);
     try {
       const response = await axiosInstance.get(
         `/sustainapp/get_material_analysis`,
@@ -140,7 +144,7 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
       try {
         const response = await axiosInstance.get(`/orggetonly`);
         setOrganisations(response.data);
-        setSelectedOrg(response.data[0].id);
+        // setSelectedOrg(response.data[0].id);
         setDatasetparams((prevParams) => ({
           ...prevParams,
           organisation: response.data[0].id

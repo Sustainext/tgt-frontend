@@ -51,7 +51,7 @@ const schema = {
             },
             Unit: {
                 type: "string",
-                title: "Total water storage at the beginning of the reporting period",
+                title: "Unit",
                 enum: ['Litre', 'Megalitre','Cubic meter','Kilolitre','Million litres per day'],
                 tooltiptext: "Select the correct unit corresponding to the quantity of water withdrawal/discharge."
             },
@@ -435,7 +435,9 @@ const WaterstressQ1 = ({location, year, month}) => {
             </div>
             {selectedOption === 'yes' && (
                 <>
-                <div className={`overflow-auto custom-scrollbar flex`}>
+                 <ToastContainer style={{ fontSize: "12px" }} />
+        <ToastContainer style={{ fontSize: "12px" }} />
+        <div className={`overflow-auto custom-scrollbar flex`}>
                     <div>
                         <div>
                             <div className='flex'>

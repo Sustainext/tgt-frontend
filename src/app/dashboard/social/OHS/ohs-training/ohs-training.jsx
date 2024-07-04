@@ -152,23 +152,16 @@ const Ohstrainingscreen = ({location, year, month}) => {
         // }
     };
 
-    const loadFormData = async () => {
+   const loadFormData = async () => {
         LoaderOpen();
+        setFormData(initialFormData);
         const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
         try {
             const response = await axios.get(url, axiosConfig);
             console.log('API called successfully:', response.data);
             setRemoteSchema(response.data.form[0].schema);
             setRemoteUiSchema(response.data.form[0].ui_schema);
-            if (response.data.form_data.length > 0) {
-                setFormData(response.data.form_data[0].data);
-
-            } else {
-                // Handle empty response by either keeping the default state or resetting to default
-                setFormData(initialFormData);
-            }
-
-
+            setFormData(response.data.form_data[0].data);
         } catch (error) {
             setFormData(initialFormData);
         } finally {

@@ -21,7 +21,7 @@ const Emissions = ({ open }) => {
               <div className="text-left mb-4 ml-3 pt-5">
                 <div className="flex">
                   <div>
-                    <p className="gradient-text text-[22px] font-bold">
+                    <p className="gradient-text text-[22px] font-bold pt-1">
                       Emissions
                     </p>
                     <p className="text-[10px]">

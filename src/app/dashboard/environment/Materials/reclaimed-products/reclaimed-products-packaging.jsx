@@ -84,7 +84,7 @@ const schema = {
             },
             Typesofrecycledmaterials: {
                 type: "string",
-                title: "Recycled materials used ",
+                title: "Types of recycled materials",
                 enum: ['Cardboard', 'Folding carton', 'Glass Bottles', 'Glass Jars', 'Metal cans', 'Paper', 'Plastic', 'Wooden crates', 'Wood', 'Bamboo', 'Cellulose', 'Corn starch', 'Mushroom packaging', 'Organic Fabric', 'Others'],
                 tooltiptext: "Does the company use recycled materials in its packaging?",
                 display: "block",
@@ -93,14 +93,6 @@ const schema = {
                 type: "string",
                 title: "Amounts of product and packaging materials recycled",
                 tooltiptext: "Please specify the amount of material the company recycled during the reporting period.",
-                display: "block",
-            },
-
-
-            Amountofrecycledinputmaterialused: {
-                type: "string",
-                title: "Amount of recycled input material used ",
-                tooltiptext: "How much recycled material is used for the production of goods or services? Recycled Input Materials: Materials that have been used and then processed into new materials. ",
                 display: "block",
             },
 
@@ -140,7 +132,7 @@ const uiSchema = {
     items: {
         classNames: 'fieldset',
         'ui:order': [
-            'Typesofproducts', 'Productclassification', 'Productcode', 'Productname','Amountofproducts', 'Unit', 'Recycledmaterialsused','Typesofrecycledmaterials','Amountsproduct','Amountofrecycledinputmaterialused', 'Unit2','Datacollectionmethod', 'AssignTo', 'FileUpload', 'Remove'
+            'Typesofproducts', 'Productclassification', 'Productcode', 'Productname','Amountofproducts', 'Unit', 'Recycledmaterialsused','Typesofrecycledmaterials','Amountsproduct', 'Unit2','Datacollectionmethod', 'AssignTo', 'FileUpload', 'Remove'
         ],
         Typesofproducts: {
             'ui:widget': 'inputWidget',
@@ -205,13 +197,7 @@ const uiSchema = {
                 label: false // This disables the label for this field
             },
         },
-        Amountofrecycledinputmaterialused: {
-            'ui:widget': 'inputWidget',
-            'ui:horizontal': true,
-            'ui:options': {
-                label: false // This disables the label for this field
-            },
-        },
+
         Unit2: {
             'ui:widget': 'selectWidget',
             'ui:horizontal': true,
@@ -381,22 +367,23 @@ const Reclaimedproductspackdging = ({location, year, month}) => {
     }
   };
 
-  const loadFormData = async () => {
-    LoaderOpen();
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
-    try {
-        const response = await axios.get(url, axiosConfig);
-        console.log('API called successfully:', response.data);
-        setRemoteSchema(response.data.form[0].schema);
-        setRemoteUiSchema(response.data.form[0].ui_schema);
-        const form_parent = response.data.form_data;
-        setFormData(form_parent[0].data);
-    } catch (error) {
-        console.error('API call failed:', error);
-    } finally {
-        LoaderClose();
-    }
-  }
+    const loadFormData = async () => {
+      LoaderOpen();
+      setFormData([{}])
+      const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+      try {
+          const response = await axios.get(url, axiosConfig);
+          console.log('API called successfully:', response.data);
+          setRemoteSchema(response.data.form[0].schema);
+          setRemoteUiSchema(response.data.form[0].ui_schema);
+          const form_parent = response.data.form_data;
+          setFormData(form_parent[0].data);
+      } catch (error) {
+          console.error('API call failed:', error);
+      } finally {
+          LoaderClose();
+      }
+  };
   //Reloading the forms -- White Beard
   useEffect(() => {
     //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
@@ -455,7 +442,9 @@ const Reclaimedproductspackdging = ({location, year, month}) => {
     return (
         <>
 
-            <div className={`overflow-auto custom-scrollbar flex`}>
+             <ToastContainer style={{ fontSize: "12px" }} />
+        <ToastContainer style={{ fontSize: "12px" }} />
+        <div className={`overflow-auto custom-scrollbar flex`}>
                 <div>
                     <div>
                         <div className='flex'>

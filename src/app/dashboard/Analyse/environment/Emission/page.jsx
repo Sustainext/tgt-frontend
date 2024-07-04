@@ -122,7 +122,7 @@ const AnalyseEmission = () => {
       try {
         const response = await axiosInstance.get(`/orggetonly`);
         setOrganisations(response.data);
-        setSelectedOrg(response.data[0].id);
+        // setSelectedOrg(response.data[0].id);
         setDatasetparams((prevParams) => ({
           ...prevParams,
           organisation: response.data[0].id

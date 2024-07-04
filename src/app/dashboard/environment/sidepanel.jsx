@@ -297,7 +297,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
               </>
             )}
           </div>
-          <button
+          {/* <button
             className={`flex items-center justify-between  px-2 py-2 mb-2 focus:outline-none ${activeTab === "Bio diversity"
               ? "text-[#007EEF] border-l-4 border-[#007EEF]"
               : "bg-transparent text-[#727272] "
@@ -311,7 +311,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                 className="text-lg text-neutral-500"
               />
             </div>
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

@@ -17,7 +17,7 @@ import Securitypersonnel from "./Human-Rights/security-personnel/page";
 import Parentalleave from "./Employment/Parental-Leave/page";
 import Benefits from "./Employment/Benefits/page";
 import EmployeeHiresTurnover from "./Employment/Employee-Hires-Turnover/page";
-import Noticeperiod from "./Notice-Period/page";
+// import Noticeperiod from "./Notice-Period/page";
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -270,7 +270,7 @@ const Social = () => {
                     </li>
                   </AccordionItem>
 
-                  <AccordionItem title="Labor Relations">
+                  {/* <AccordionItem title="Labor Relations">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(4)}
@@ -336,7 +336,7 @@ const Social = () => {
                       </div>
                     </li>
 
-                  </AccordionItem>
+                  </AccordionItem> */}
                   <AccordionItem title="Occupational health and safety">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
@@ -1196,13 +1196,13 @@ const Social = () => {
                 </div>
               </>
             )}
-                {activeStep === 4 && (
+                {/* {activeStep === 4 && (
               <>
                 <div>
                   <Noticeperiod />
                 </div>
               </>
-            )}
+            )} */}
             {activeStep === 5 && (
               <>
                 <div>

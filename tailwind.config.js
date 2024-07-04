@@ -32,6 +32,12 @@ module.exports = {
     },
   },
   plugins: [
-
+    function({ addUtilities }) {
+      addUtilities({
+        '.placeholder-left::placeholder': {
+          'text-align': 'left',
+        },
+      });
+    },
   ],
 };

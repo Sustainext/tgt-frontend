@@ -46,11 +46,11 @@ const Energyconsumed = ({ open }) => {
           <div className='w-full'>
             <div className="text-left mb-4 ml-3 pt-5">
               <p className="text-sm">Environment</p>
-              <div className='flex'>
-                <div>
-                  <p className="gradient-text text-[22px] font-bold">
-                    Energy
-                  </p>
+                 <div className='flex h-[28px]'>
+                                <div className='h-[28px]'>
+                                    <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
+                                        Energy
+                                    </p>
                 </div>
                 <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md" >
                   <p className="text-gray-500 text-[12px] pt-0.5 px-2">Material Topic</p>
