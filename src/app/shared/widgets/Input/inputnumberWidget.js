@@ -6,7 +6,7 @@ const inputnumberWidget = (props) => {
   };
       return (
         <input
-        className="block w-[15vw] py-2 mx-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300 mb-3 text-right placeholder-left pr-2"
+        className="block w-[20vw] py-2 mx-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300 mb-3 text-right placeholder-left pr-2"
               placeholder={props.placeholder || `Enter ${props.label || props.title}`}
               type="number"
               value={value}

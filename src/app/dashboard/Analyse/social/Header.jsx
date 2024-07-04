@@ -40,34 +40,31 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
     },
     {
       category: "Tab2",
-      tag: "GRI 306",
+      tag: "GRI 403",
       data: [
-        { tagid: "1", infoid: "6" },
-        { tagid: "2", infoid: "7" },
-        { tagid: "3", infoid: "8" },
-        { tagid: "4", infoid: "9" },
-        { tagid: "5", infoid: "10" },
+        { tagid: "4", infoid: "22" },
+        { tagid: "8", infoid: "23" },
+        { tagid: "9", infoid: "24" },
+        { tagid: "10", infoid: "25"},
+
       ]
     },
     {
       category: "Tab3",
-      tag: "GRI 301",
+      tag: "GRI 408",
       data: [
-        { tagid: "1", infoid: "11" },
-        { tagid: "2", infoid: "12" },
-        { tagid: "3", infoid: "13" },
+        { tagid: "1", infoid: "26" },
+
+
 
       ]
     },
     {
       category: "Tab4",
-      tag: "GRI 303",
+      tag: "GRI 409",
       data: [
-        { tagid: "1", infoid: "14" },
-        { tagid: "2", infoid: "15" },
-        { tagid: "3", infoid: "16" },
-        { tagid: "4", infoid: "17" },
-        { tagid: "5", infoid: "18" },
+        { tagid: "1", infoid: "27" },
+
 
       ]
     }
@@ -85,20 +82,17 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
     {
       category: "Tab2",
       data: [
-        { id: 'sd5', label: 'SDG 3', bgColor: 'bg-[#4C9F38]' },
-        { id: 'sd6', label: 'SDG 6', bgColor: 'bg-cyan-500' },
-        { id: 'sd2', label: 'SDG 8', bgColor: 'bg-red-900' },
-        { id: 'sd7', label: 'SDG 11', bgColor: 'bg-amber-400' },
-        { id: 'sd3', label: 'SDG 12', bgColor: 'bg-yellow-600' },
-        { id: 'sd8', label: 'SDG 15', bgColor: 'bg-[#56C02B]' },
+        { id: 'sd14', label: 'SDG 3', bgColor: 'bg-[#4C9F38]'},
+        { id: 'sd15', label: 'SDG 8', bgColor: 'bg-red-900' },
+        { id: 'sd16', label: 'SDG 16', bgColor: 'bg-blue-950' },
       ]
     },
     {
       category: "Tab3",
       data: [
-
-        { id: 'sd2', label: 'SDG 8', bgColor: 'bg-red-900' },
-        { id: 'sd9', label: 'SDG 12', bgColor: 'bg-yellow-600' },
+        { id: 'sd11', label: 'SDG 5', bgColor: 'bg-orange-600' },
+        { id: 'sd18', label: 'SDG 8', bgColor: 'bg-red-900' },
+        { id: 'sd17', label: 'SDG 16', bgColor: 'bg-blue-950' },
 
       ]
     },
@@ -106,7 +100,8 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       category: "Tab4",
       data: [
 
-        { id: 'sd6', label: 'SDG 6', bgColor: 'bg-cyan-500' },
+        { id: 'sd11', label: 'SDG 5', bgColor: 'bg-orange-600' },
+        { id: 'sd18', label: 'SDG 8', bgColor: 'bg-red-900' },
 
 
       ]
@@ -115,11 +110,11 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
   return (
     <>
       <div className="flex justify-between items-center border-b border-gray-200 pb-4 z-[100] relative">
-        <div className="h-[46px] flex-col justify-start items-start gap-0.5 inline-flex ms-8 mt-8">
+        <div className="h-[46px] flex-col justify-start items-start gap-0.5 inline-flex ms-4 mt-8">
           <div className="text-black text-opacity-50 text-[11px] font-semibold font-['Manrope'] capitalize leading-[14px]">
             Social
           </div>
-          <div className="h-[30px]">
+          <div className="h-[35px]">
             <div className="h-[26px] flex justify-start items-end gap-3">
               <div className="gradient-text text-opacity-20 text-[22px] font-medium font-['Manrope'] leading-[1.425rem]">
                 {activeTab === "Tab1" ? "Employment 2016" :

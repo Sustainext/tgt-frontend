@@ -15,6 +15,7 @@ const Energyconsumed = ({ open }) => {
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [locationMessage, setLocationMessage] = useState("");
+  const [yearError, setYearError] = useState('');
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   }
@@ -45,11 +46,11 @@ const Energyconsumed = ({ open }) => {
           <div className='w-full'>
             <div className="text-left mb-4 ml-3 pt-5">
               <p className="text-sm">Environment</p>
-                 <div className='flex h-[28px]'>
-                                <div className='h-[28px]'>
-                                    <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
-                                        Energy
-                                    </p>
+              <div className='flex h-[28px]'>
+                <div className='h-[28px]'>
+                  <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
+                    Energy
+                  </p>
                 </div>
                 <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md" >
                   <p className="text-gray-500 text-[12px] pt-0.5 px-2">Material Topic</p>
@@ -111,15 +112,18 @@ const Energyconsumed = ({ open }) => {
         </div>
       </div>
       <EnvironmentHeader
-      activeMonth={activeMonth}
-            setActiveMonth={setActiveMonth}
-            location={location}
-            setLocation={setLocation}
-            year={year}
-            setYear={setYear}
-            locationMessage={locationMessage}
-            setLocationMessage={setLocationMessage}/>
-      <EnergyConsumedBody  location={location} year={year} month={activeMonth} setLocationMessage={setLocationMessage}/>
+        activeMonth={activeMonth}
+        setActiveMonth={setActiveMonth}
+        location={location}
+        setLocation={setLocation}
+        year={year}
+        setYear={setYear}
+        locationMessage={locationMessage}
+        setLocationMessage={setLocationMessage}
+        yearError={yearError}
+        setYearError={setYearError}
+      />
+      <EnergyConsumedBody location={location} year={year} month={activeMonth} setLocationMessage={setLocationMessage} setYearError={setYearError} />
 
 
 

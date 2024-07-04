@@ -1,37 +1,41 @@
 'use client'
 import { useState, useEffect } from "react";
-import { yearInfo } from "../../../../shared/data/yearInfo";
 import { AiOutlineCalendar } from "react-icons/ai";
 import TableSidebar from "./TableSidebar";
-import DynamicTable from "./customTable";
-import DateRangePicker from "@/app/utils/DatePickerComponent";
-import { Oval } from 'react-loader-spinner';
+import DynamicTable2 from "./customTable2";
+import DateRangePicker from "../../../../utils/DatePickerComponent";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import {
   columns1,
+  data1,
   columns2,
-  columns3,
-  columns4,
+  data2,
+
 } from "./data";
 
-const AnalyseMaterials = ({ isBoxOpen }) => {
+const AnalyseCompulsorylabour = ({ isBoxOpen }) => {
   const [analyseData, setAnalyseData] = useState([]);
   const [organisations, setOrganisations] = useState([]);
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
   const [selectedsetLocation, setSelectedSetLocation] = useState("");
-  const [materialdata1, setMaterialdata1] = useState([]);
-  const [materialdata2, setMaterialdata2] = useState([]);
-  const [materialdata3, setMaterialdata3] = useState([]);
-  const [materialdata4, setMaterialdata4] = useState([]);
+  const [wastedata1, setWastedata1] = useState([]);
+  const [wastedata2, setWastedata2] = useState([]);
+  const [wastedata3, setWastedata3] = useState([]);
+  const [wastedata4, setWastedata4] = useState([]);
+  const [wastedata5, setWastedata5] = useState([]);
+  const [wastedata6, setWastedata6] = useState([]);
+  const [wastedata7, setWastedata7] = useState([]);
+  const [wastedata8, setWastedata8] = useState([]);
+  const [wastedata9, setWastedata9] = useState([]);
   const [selectedYear, setSelectedYear] = useState("2023");
   const [corporates, setCorporates] = useState([]);
   const [reportType, setReportType] = useState("Organization");
   const [loopen, setLoOpen] = useState(false);
   const [dateRange, setDateRange] = useState({
     start: null,
-    end: null
+    end: null,
   });
 
   const [isDateRangeValid, setIsDateRangeValid] = useState(true);
@@ -40,7 +44,7 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
     corporate: "",
     location: "",
     start: null,
-    end: null
+    end: null,
   });
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -57,58 +61,238 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
       setIsDateRangeValid(true);
     }
     LoaderOpen();
-    setMaterialdata1([]);
-    setMaterialdata2([]);
-    setMaterialdata3([]);
-    setMaterialdata4([]);
+    setWastedata1([]);
+    setWastedata2([]);
+    setWastedata3([]);
+    setWastedata4([]);
+    setWastedata5([]);
+    setWastedata6([]);
+    setWastedata7([]);
+    setWastedata8([]);
+    setWastedata9([]);
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_material_analysis`,
+        `/sustainapp/get_waste_analysis`,
         {
-          params: params
+          params: params,
         }
       );
 
       const data = response.data;
       console.log(data, "testing");
 
-      const { non_renewable_materials, reclaimed_materials, recycled_materials,renewable_materials } = data;
-      const Nonrenewablematerials = non_renewable_materials.filter(item => item.material_type).map((Noremat, index) => ({
-        type: Noremat.material_type,
-        materialcategory: Noremat.material_category,
-        source: Noremat.source,
-        total: Noremat.total_quantity,
-        units: Noremat.units,
-        datasource: Noremat.data_source,
-      }));
-      Nonrenewablematerials.push({ type: "Total Weight", total: non_renewable_materials.find(item => item.total_weight)?.total_weight });
+      const {
+        waste_generated_by_material,
+        waste_generated_by_location,
+        hazardous_and_non_hazardous_waste_composition,
+        waste_directed_to_disposal_by_material_type,
+        waste_diverted_from_disposal_by_material_type,
+        hazardous_waste_diverted_form_disposal,
+        non_hazardeous_waste_diverted_from_disposal,
+        hazardeous_waste_directed_to_disposal,
+        non_hazardeous_waste_directed_to_disposal,
+      } = data;
+      const removeAndStoreLastObject = (array) => {
+        if (array.length > 0) {
+          return array.pop();
+        } else {
+          return null;
+        }
+      };
 
-      const renewablematerials = renewable_materials.filter(item => item.material_type).map((renemat, index) => ({
-        type: renemat.material_type,
-        materialcategory: renemat.material_category,
-        source: renemat.source,
-        total: renemat.total_quantity,
-        units: renemat.units,
-        datasource: renemat.data_source,
-      }));
-      renewablematerials.push({ type: "Total Weight", total: renewable_materials.find(item => item.total_weight)?.total_weight });
+      const waste_generated_by_material_total = removeAndStoreLastObject(
+        waste_generated_by_material
+      );
+      const roundedWasteGeneratedByMaterial = waste_generated_by_material.map(
+        (item) => ({
+          ...item,
+          total_waste: item.total_waste.toFixed(2),
+        })
+      );
+      roundedWasteGeneratedByMaterial.push({
+        material_type: "Total",
+        contribution: "",
+        totalrow: 2,
+        total_waste:
+          waste_generated_by_material_total.total_waste_generated.toFixed(2),
+        units: "t (metric tons)",
+      });
+      setWastedata1(roundedWasteGeneratedByMaterial);
+      //---table1--//
+      const waste_generated_by_location_total = removeAndStoreLastObject(
+        waste_generated_by_location
+      );
+      const wastegeneratedbylocation = waste_generated_by_location.map(
+        (item) => ({
+          ...item,
+          total_waste: item.total_waste.toFixed(2),
+        })
+      );
+      wastegeneratedbylocation.push({
+        material_type: "Total",
+        location: "",
+        contribution: "",
+        totalrow: 2,
+        total_waste:
+          waste_generated_by_location_total.total_waste_generated.toFixed(2),
+        units: "t (metric tons)",
+      });
+      setWastedata2(wastegeneratedbylocation);
+      //---table2--//
+      const nonhazardous_total = removeAndStoreLastObject(
+        hazardous_and_non_hazardous_waste_composition
+      );
+      const wastegeneratedbycategory =
+        hazardous_and_non_hazardous_waste_composition.map((item) => ({
+          ...item,
+          total_waste: item.total_waste.toFixed(2),
+        }));
+      wastegeneratedbycategory.push({
+        material_type: "Total",
+        contribution: "",
+        totalrow: 2,
+        total_waste: nonhazardous_total.total_waste_generated.toFixed(2),
+        units: "t (metric tons)",
+      });
+      setWastedata3(wastegeneratedbycategory);
 
-      const recycledmaterials = recycled_materials.map((recyled, index) => ({
-        type: recyled.type_of_recycled_material_used,
-        consumption: recyled.percentage_of_recycled_input_materials_used,
-      }));
+      //---table3--//
+      const waste_directed_to_disposal_by_material_total =
+        removeAndStoreLastObject(waste_directed_to_disposal_by_material_type);
+      const wastedirectedtodisposalbymaterialtype =
+        waste_directed_to_disposal_by_material_type.map((item) => ({
+          ...item,
+          total_waste: item.total_waste.toFixed(2),
+        }));
+      wastedirectedtodisposalbymaterialtype.push({
+        disposal_method: "",
+        material_type: "Total",
+        contribution: "",
+        totalrow: 3,
+        maprow: 1,
+        total_waste:
+          waste_directed_to_disposal_by_material_total.total_waste_generated.toFixed(
+            2
+          ),
+        units: "t (metric tons)",
+      });
+      setWastedata4(wastedirectedtodisposalbymaterialtype);
 
-      const reclaimedmaterials = reclaimed_materials.map((reclaimed, index) => ({
-        type: reclaimed.type_of_product,
-        code: reclaimed.product_code,
-        productname: reclaimed.product_name,
-        total: reclaimed.total_quantity,
-      }));
-      setMaterialdata1(Nonrenewablematerials);
-      setMaterialdata2(renewablematerials);
-      setMaterialdata3(recycledmaterials);
-      setMaterialdata4(reclaimedmaterials);
+      //---table4--//
+      const waste_diverted_from_disposal_by_material_type_total =
+        removeAndStoreLastObject(waste_diverted_from_disposal_by_material_type);
+      const wastedivertedfromdisposalbymaterialtype =
+        waste_diverted_from_disposal_by_material_type.map((item) => ({
+          ...item,
+          total_waste: item.total_waste.toFixed(2),
+        }));
+      wastedivertedfromdisposalbymaterialtype.push({
+        recovery_operation: "",
+        material_type: "Total",
+        contribution: "",
+        totalrow: 3,
+        maprow: 1,
+        total_waste:
+          waste_diverted_from_disposal_by_material_type_total.total_waste_generated.toFixed(
+            2
+          ),
+        units: "t (metric tons)",
+      });
+      setWastedata5(wastedivertedfromdisposalbymaterialtype);
+      //---table5--//
+      const hazardous_waste_diverted_form_disposal_total = removeAndStoreLastObject(hazardous_waste_diverted_form_disposal);
+      const hazardouswastedivertedformdisposaltotal =
+        hazardous_waste_diverted_form_disposal.map((item) => ({
+          ...item,
+          total_waste: item.total_waste.toFixed(2),
+        }));
+      hazardouswastedivertedformdisposaltotal.push({
+        material_type: "Total",
+        total_waste:
+          hazardous_waste_diverted_form_disposal_total.total_waste_generated.toFixed(
+            2
+          ),
 
+        units: "t (metric tons)",
+        recycled_percentage: "",
+        preparation_of_reuse_percentage: "",
+        other_percentage: "",
+        site: "",
+        totalrow: 6,
+
+      });
+      setWastedata6(hazardouswastedivertedformdisposaltotal);
+      //---table6--//
+      const hnon_hazardeous_waste_diverted_from_disposal_total = removeAndStoreLastObject(non_hazardeous_waste_diverted_from_disposal);
+      const non_hazardeouswastedivertedfromdisposal =
+        non_hazardeous_waste_diverted_from_disposal.map((item) => ({
+          ...item,
+          total_waste: item.total_waste.toFixed(2),
+        }));
+      non_hazardeouswastedivertedfromdisposal.push({
+        material_type: "Total",
+        total_waste:
+          hnon_hazardeous_waste_diverted_from_disposal_total.total_waste_generated.toFixed(
+            2
+          ),
+
+        units: "t (metric tons)",
+        recycled_percentage: "",
+        preparation_of_reuse_percentage: "",
+        other_percentage: "",
+        site: "",
+        totalrow: 6,
+
+      });
+      setWastedata7(non_hazardeouswastedivertedfromdisposal);
+      //---table7--//
+      const hazardeous_waste_directed_to_disposal_total = removeAndStoreLastObject(hazardeous_waste_directed_to_disposal);
+      const hazardeous_wastedirectedtodisposal =
+        hazardeous_waste_directed_to_disposal.map((item) => ({
+          ...item,
+          total_waste: item.total_waste.toFixed(2),
+        }));
+      hazardeous_wastedirectedtodisposal.push({
+        material_type: "Total",
+        total_waste:
+          hazardeous_waste_directed_to_disposal_total.total_waste_generated.toFixed(
+            2
+          ),
+
+        units: "t (metric tons)",
+        inceneration_with_energy_percentage: "",
+        inceneration_without_energy_percentage: "",
+        landfill_percentage: "",
+        other_disposal_percentage: "",
+        external_percentage: "",
+        site: "",
+        totalrow: 9,
+
+      });
+      setWastedata8(hazardeous_wastedirectedtodisposal);
+      //---table8--//
+      const non_hazardeous_waste_directed_to_disposal_total = removeAndStoreLastObject(non_hazardeous_waste_directed_to_disposal);
+      const non_hazardeouswastedirectedtodisposal =
+        non_hazardeous_waste_directed_to_disposal.map((item) => ({
+          ...item,
+          total_waste: item.total_waste.toFixed(2),
+        }));
+      non_hazardeouswastedirectedtodisposal.push({
+        material_type: "Total",
+        total_waste: non_hazardeous_waste_directed_to_disposal_total.total_waste_generated.toFixed(2),
+
+        units: "t (metric tons)",
+        inceneration_with_energy_percentage: "",
+        inceneration_without_energy_percentage: "",
+        landfill_percentage: "",
+        other_disposal_percentage: "",
+        external_percentage: "",
+        site: "",
+        totalrow: 9,
+
+      });
+      setWastedata9(non_hazardeouswastedirectedtodisposal);
+      //---table9--//
       const resultArray = Object.keys(data).map((key) => ({
         key: key,
         value: data[key],
@@ -131,10 +315,10 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
       try {
         const response = await axiosInstance.get(`/orggetonly`);
         setOrganisations(response.data);
-        // setSelectedOrg(response.data[0].id);
+        // // setSelectedOrg(response.data[0].id);
         setDatasetparams((prevParams) => ({
           ...prevParams,
-          organisation: response.data[0].id
+          organisation: response.data[0].id,
         }));
       } catch (e) {
         console.error("Failed fetching organization:", e);
@@ -148,12 +332,9 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
     const fetchCorporates = async () => {
       if (selectedOrg) {
         try {
-          const response = await axiosInstance.get(
-            `/corporate/`,
-            {
-              params: { organization_id: selectedOrg },
-            }
-          );
+          const response = await axiosInstance.get(`/corporate/`, {
+            params: { organization_id: selectedOrg },
+          });
           setCorporates(response.data);
         } catch (e) {
           console.error("Failed fetching corporates:", e);
@@ -195,16 +376,21 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
     setSelectedOrg(newOrg);
     setSelectedCorp("");
     setSelectedSetLocation("");
-    setMaterialdata1([]);
-    setMaterialdata2([]);
-    setMaterialdata3([]);
-    setMaterialdata4([]);
+    setWastedata1([]);
+    setWastedata2([]);
+    setWastedata3([]);
+    setWastedata4([]);
+    setWastedata5([]);
+    setWastedata6([]);
+    setWastedata7([]);
+    setWastedata8([]);
+    setWastedata9([]);
 
     setDatasetparams((prevParams) => ({
       ...prevParams,
       organisation: newOrg,
       corporate: "",
-      location: ""
+      location: "",
     }));
   };
 
@@ -216,7 +402,7 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
     setDatasetparams((prevParams) => ({
       ...prevParams,
       corporate: newCorp,
-      location: ""
+      location: "",
     }));
   };
 
@@ -226,7 +412,7 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
 
     setDatasetparams((prevParams) => ({
       ...prevParams,
-      location: newLocation
+      location: newLocation,
     }));
   };
 
@@ -236,14 +422,13 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
     setDatasetparams((prevParams) => ({
       ...prevParams,
       start: newRange.start,
-      end: newRange.end
+      end: newRange.end,
     }));
   };
 
   return (
-    <>
     <div>
-    <div className="mb-2 flex-col items-center pt-4  gap-6">
+      <div className="mb-2 flex-col items-center pt-4  gap-6">
         <div className="mt-4 pb-3 mx-5 text-left">
           <div className="mb-2 flex-col items-center pt-2  gap-6">
             <div className="justify-start items-center gap-4 inline-flex">
@@ -383,82 +568,58 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
 
       </div>
       <div className="flex justify-between">
-        <div className="ps-8  w-[78%] me-4 ">
+        <div className={`ps-4  w-[78%] me-4`}>
           <div className="mb-6">
-          <p className="text-black text-[16px] ">Materials used by weight or volume</p>
-            <div
-              id="materials1"
-              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
 
-              <p>
-              Non-Renewable materials used
-              </p>
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 301-1a
-                </div>
-              </div>
-            </div>
-            <DynamicTable columns={columns1} data={materialdata1} />
-          </div>
-          <div className="mb-6">
             <div
-              id="materials2"
-              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+              id="ep1"
+              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
             >
-              <p>
-              Renewable materials used
-              </p>
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 301-1a
-                </div>
-              </div>
-            </div>
-            <DynamicTable columns={columns2} data={materialdata2} />
-          </div>
-          <div className="mb-6">
-          <p className="text-black text-[16px]">Recycled input materials used</p>
-            <div
-              id="materials3"
-              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
-            >
+              <div className="flex justify-between items-center mb-2">
+                <p>
+                Operations considered to have significant risk for incidents of forced or compulsary labor
+                </p>
 
-              <p>Percentage of recycled materials used (Production)</p>
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 301-2a
-                </div>
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 409-1a
+                    </div>
+                  </div>
+
+
+
+              </div>
+              <div className="mb-4">
+                <DynamicTable2 columns={columns1} data={data1} />
               </div>
             </div>
-            <DynamicTable columns={columns3} data={materialdata3} />
           </div>
           <div className="mb-6">
             <div
-              id="materials4"
-              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+              id="ep2"
+              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
             >
-              <p>
-              Reclaimed products and their packaging materials
-              </p>
-              <div className="flex gap-2">
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 301-3a
+              <div className="flex justify-between items-center mb-2">
+                <p>
+                Suppliers at significant risk for incidents of forced or compulsory labor
+                </p>
+
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 409-1a
+                    </div>
+                  </div>
+
+
                 </div>
               </div>
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 301-3b
-                </div>
-              </div>
+              <div className="mb-4">
+                <DynamicTable2 columns={columns2} data={data2} />
               </div>
             </div>
-            <DynamicTable columns={columns4} data={materialdata4} />
           </div>
 
-        </div>
+
         <div
           style={{
             position: `${isBoxOpen ? "unset" : "sticky"}`,
@@ -474,20 +635,7 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
         </div>
       </div>
     </div>
-       {loopen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 z-[100]">
-          <Oval
-            height={50}
-            width={50}
-            color="#00BFFF"
-            secondaryColor="#f3f3f3"
-            strokeWidth={2}
-            strokeWidthSecondary={2}
-          />
-        </div>
-      )}
-      </>
   );
 };
 
-export default AnalyseMaterials;
+export default AnalyseCompulsorylabour;

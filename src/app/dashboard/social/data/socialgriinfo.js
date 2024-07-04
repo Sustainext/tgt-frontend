@@ -2024,7 +2024,7 @@ export const Socialdata = [
             management system
           </p>
           <div className="h-[320px] overflow-y-auto custom-scrollbar">
-            <p className="text-[11px] text-black mb-2">GRI Guidance 403-7:</p>
+            <p className="text-[11px] text-black mb-2">GRI Guidance 403-8a:</p>
             <p className="text-[11px] text-[#727272] mb-4">
               This disclosure indicates what proportion of an organization’s
               employees, and workers who are not employees but whose work and/or

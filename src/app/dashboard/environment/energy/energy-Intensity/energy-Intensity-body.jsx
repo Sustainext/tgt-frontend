@@ -5,23 +5,21 @@ import { GlobalState } from "../../../../../Context/page";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import Intensity from "./intensity";
-const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year }) => {
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,onAccordionClick,year }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
-  const handleClick = () => {
-    if (!location) {
-      setLocationMessage("Please select a location and year")
-
-      return;
+  const handleAccordionClick = () => {
+    const canExpand = onAccordionClick();
+    if (canExpand) {
+      setIsOpen(!isOpen);
     }
-    setIsOpen(!isOpen);
   };
 
   return (
     <div className={`shadow-md py-1 mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200 ${open ? "w-[100%]" : "w-[100%]"}`}>
       <button
         className="py-3 w-[100%] text-left flex"
-        onClick={handleClick}// Unique ID for the tooltip, spaces replaced by dashes
+        onClick={handleAccordionClick}// Unique ID for the tooltip, spaces replaced by dashes
       >
      <div className="flex justify-between">
         <div className={`flex ${open ? "w-[65vw]" : "w-[74vw]"}`}>
@@ -74,7 +72,20 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
   );
 };
 
-const Energyintensitybody = ({location, year, month,setLocationMessage}) => {
+const Energyintensitybody = ({location, year, month,setLocationMessage,setYearError}) => {
+  const handleAccordionClick = () => {
+    if (!location) {
+      setLocationMessage("Please select a location");
+      return false;
+    }
+    if (!year) {
+      setYearError("Please select a year");
+      return false;
+    }
+    setLocationMessage("");
+    setYearError("");
+    return true;
+  };
   return (
     <>
       <div className="mx-3">
@@ -85,7 +96,7 @@ const Energyintensitybody = ({location, year, month,setLocationMessage}) => {
           sdg={['GRI 302-3d']}
           display="block"
           location={location}
-          setLocationMessage={setLocationMessage}
+            onAccordionClick={handleAccordionClick}
         >
 
           <Intensity location={location} year={year} month={month}/>

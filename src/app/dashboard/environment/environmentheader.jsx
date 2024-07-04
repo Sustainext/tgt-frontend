@@ -23,7 +23,7 @@ const getMonthString = (monthNumber) => {
   return Object.keys(monthMapping).find(key => monthMapping[key] === monthNumber);
 };
 
-const EnvironmentHeader = ({ activeMonth, setActiveMonth, location, setLocation, year, setYear,locationMessage,setLocationMessage }) => {
+const EnvironmentHeader = ({ activeMonth, setActiveMonth, location, setLocation, year, setYear,locationMessage,setLocationMessage,setYearError,yearError }) => {
   const [formState, setFormState] = useState({
     location: location,
     year: year,
@@ -48,6 +48,7 @@ const EnvironmentHeader = ({ activeMonth, setActiveMonth, location, setLocation,
   const handleChange = (event) => {
     const { name, value } = event.target;
     setLocationMessage();
+    setYearError("");
     setFormState((prevState) => ({
       ...prevState,
       [name]: value,
@@ -117,12 +118,20 @@ const EnvironmentHeader = ({ activeMonth, setActiveMonth, location, setLocation,
                 </option>
               ))}
             </select>
-            <div className="absolute inset-y-0 right-2 flex items-center pl-3 pointer-events-none">
+            <div
+              className="absolute inset-y-0 right-2 flex items-center pointer-events-none"
+              style={{ top: "50%", transform: "translateY(-50%)" }}
+            >
               <MdKeyboardArrowDown
                 className="text-neutral-500"
                 style={{ fontSize: "16px" }}
               />
             </div>
+            {yearError && (
+              <p className="text-red-500 text-sm absolute top-9 left-0 pl-3">
+                {yearError}
+              </p>
+            )}
           </div>
 </div>
 

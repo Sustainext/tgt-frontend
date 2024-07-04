@@ -16,7 +16,7 @@ const Energyproductsservices = () => {
     const [category, setCategory] = useState("");
     const [isOpen, setIsOpen] = useState(false);
     const [locationMessage, setLocationMessage] = useState("");
-
+    const [yearError, setYearError] = useState('');
     const toggleDrawerclose = () => {
         setIsOpen(!isOpen);
     }
@@ -120,8 +120,11 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
             year={year}
             setYear={setYear}
             locationMessage={locationMessage}
-            setLocationMessage={setLocationMessage} />
-            <Reductionenergyconsumptionbody location={location} year={year} month={activeMonth} setLocationMessage={setLocationMessage}/>
+            setLocationMessage={setLocationMessage}
+            yearError={yearError}
+            setYearError={setYearError}
+            />
+            <Reductionenergyconsumptionbody location={location} year={year} month={activeMonth} setLocationMessage={setLocationMessage} setYearError={setYearError}/>
         </>
     );
 };
