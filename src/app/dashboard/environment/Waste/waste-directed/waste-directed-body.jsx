@@ -7,12 +7,17 @@ import 'react-tooltip/dist/react-tooltip.css'
 import Wastedirectedimpact from "./waste-directed-impact";
 import Wastedirectedcontextualinformation from "./waste-directed-contextual-information";
 
-const AccordionItem = ({ title, children, tooltiptext, sdg, display,tooltipblock,location,setLocationMessage,year }) => {
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,tooltipblock,location,setLocationMessage,year, setYearMessage }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
   const handleClick = () => {
     if (!location) {
-      setLocationMessage("Please select a location and year")
+      setLocationMessage("Please select a location")
+
+      return;
+    }
+    if (!year) {
+      setYearMessage("Please select a year")
 
       return;
     }
@@ -76,7 +81,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,tooltipblock
   );
 };
 
-const Wastedirectedbody = ({location, year, month,setLocationMessage}) => {
+const Wastedirectedbody = ({location, year, month,setLocationMessage,setYearMessage}) => {
 
 
   return (
@@ -91,6 +96,8 @@ const Wastedirectedbody = ({location, year, month,setLocationMessage}) => {
           tooltipblock="none"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
 
           <Wastedirectedimpact location={location} year={year} month={month}/>
@@ -104,6 +111,8 @@ const Wastedirectedbody = ({location, year, month,setLocationMessage}) => {
           tooltipblock="block"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
 
           <Wastedirectedcontextualinformation location={location} year={year} month={month}/>

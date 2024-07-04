@@ -216,9 +216,8 @@ const CombinedWidget = React.memo(
                 updateCacheAndActivities(customFetchData);
                 customFetchExecuted = true;
               }
-    
-              page++;
             }
+            page++;
           }
         } catch (error) {
           console.error("Error fetching data from different regions: ", error);

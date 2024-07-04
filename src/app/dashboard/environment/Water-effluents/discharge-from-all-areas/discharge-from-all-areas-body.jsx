@@ -6,12 +6,20 @@ import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import Waterwithdrawal from "./water-withdrawal";
 import Waterdischarge from "./Water-discharge";
-const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year }) => {
+
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year, setYearMessage }) => {
+
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
+
   const handleClick = () => {
     if (!location) {
-      setLocationMessage("Please select a location and year")
+      setLocationMessage("Please select a location")
+
+      return;
+    }
+    if (!year) {
+      setYearMessage("Please select a year")
 
       return;
     }
@@ -68,7 +76,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
   );
 };
 
-const Dischargefromareasbody = ({location, year, month,setLocationMessage}) => {
+const Dischargefromareasbody = ({location, year, month,setLocationMessage, setYearMessage}) => {
 
 
   return (
@@ -82,6 +90,8 @@ const Dischargefromareasbody = ({location, year, month,setLocationMessage}) => {
           display="block"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
 
           <Waterwithdrawal location={location} year={year} month={month}/>
@@ -95,6 +105,8 @@ const Dischargefromareasbody = ({location, year, month,setLocationMessage}) => {
           display="none"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
 
           <Waterdischarge location={location} year={year} month={month}/>

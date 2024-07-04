@@ -5,12 +5,18 @@ import { GlobalState } from "../../../../../Context/page";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import Recycledinput from "./recycled-input";
-const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year }) => {
+import { setYear } from "date-fns";
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year, setYearMessage }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
   const handleClick = () => {
     if (!location) {
-      setLocationMessage("Please select a location and year")
+      setLocationMessage("Please select a location")
+
+      return;
+    }
+    if (!year) {
+      setYearMessage("Please select a year")
 
       return;
     }
@@ -74,7 +80,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
   );
 };
 
-const Recycledbody = ({location, year, month,setLocationMessage}) => {
+const Recycledbody = ({location, year, month,setLocationMessage, setYearMessage}) => {
   return (
     <>
       <div className="mx-3">
@@ -87,6 +93,8 @@ const Recycledbody = ({location, year, month,setLocationMessage}) => {
           display="block"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
 
           <Recycledinput location={location} year={year} month={month}/>

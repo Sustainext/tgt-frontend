@@ -6,12 +6,17 @@ import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import WaterstressQ2 from "./waterstressQ2"
 import WaterstressQ1 from "./waterstressQ1"
-const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year }) => {
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year,setYearMessage }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
   const handleClick = () => {
     if (!location) {
-      setLocationMessage("Please select a location and year")
+      setLocationMessage("Please select a location")
+
+      return;
+    }
+    if (!year) {
+      setYearMessage("Please select ayear")
 
       return;
     }
@@ -60,7 +65,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
   );
 };
 
-const Waterstresbody = ({location, year, month,setLocationMessage}) => {
+const Waterstresbody = ({location, year, month,setLocationMessage,setYearMessage}) => {
 
 
   return (
@@ -73,6 +78,8 @@ const Waterstresbody = ({location, year, month,setLocationMessage}) => {
           display="block"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
 
           <WaterstressQ1 location={location} year={year} month={month}/>
@@ -86,6 +93,8 @@ const Waterstresbody = ({location, year, month,setLocationMessage}) => {
           display="block"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
 
           <WaterstressQ2 location={location} year={year} month={month}/>

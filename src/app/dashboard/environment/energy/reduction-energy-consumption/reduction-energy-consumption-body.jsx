@@ -7,12 +7,17 @@ import 'react-tooltip/dist/react-tooltip.css'
 import Reductionenergy from "./reduction-energy";
 import Baseyearenergy from "./base-year";
 import Standardsenergy from "./standards-energy"
-const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year }) => {
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year, setYearMessage }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
   const handleClick = () => {
     if (!location) {
-      setLocationMessage("Please select a location and year")
+      setLocationMessage("Please select a location")
+
+      return;
+    }
+    if (!year) {
+      setYearMessage("Please select a year")
 
       return;
     }
@@ -76,7 +81,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
   );
 };
 
-const Reductionenergyconsumptionbody = ({location, year, month,setLocationMessage}) => {
+const Reductionenergyconsumptionbody = ({location, year, month,setLocationMessage, setYearMessage}) => {
   return (
     <>
       <div className="mx-3">
@@ -88,6 +93,8 @@ const Reductionenergyconsumptionbody = ({location, year, month,setLocationMessag
           display="block"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
           <Reductionenergy location={location} year={year} month={month}/>
         </AccordionItem>
@@ -100,6 +107,8 @@ const Reductionenergyconsumptionbody = ({location, year, month,setLocationMessag
           display="none"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
           <Baseyearenergy location={location} year={year} month={month}/>
         </AccordionItem>
@@ -111,6 +120,8 @@ const Reductionenergyconsumptionbody = ({location, year, month,setLocationMessag
           display="none"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
           <Standardsenergy  location={location} year={year} month={month}/>
         </AccordionItem>

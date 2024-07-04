@@ -15,6 +15,7 @@ const Significantwaste = () => {
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [locationMessage, setLocationMessage] = useState("");
+  const [yearMessage, setYearMessage] = useState("");
 
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
@@ -144,12 +145,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         setYear={setYear}
         locationMessage={locationMessage}
         setLocationMessage={setLocationMessage}
+        yearMessage={yearMessage}
+        setYearMessage={setYearMessage}
       />
       <Significantwastebody
         location={location}
         year={year}
         month={activeMonth}
         setLocationMessage={setLocationMessage}
+        yearMessage={yearMessage}
+        setYearMessage={setYearMessage}
       />
     </>
   );

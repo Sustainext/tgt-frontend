@@ -7,12 +7,17 @@ import 'react-tooltip/dist/react-tooltip.css'
 import Outsideorganization from "./outside-organization";
 import OutsideStandards from"./outside-standards";
 import OutsideSource from'./outside-source';
-const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year }) => {
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year, setYearMessage }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
   const handleClick = () => {
     if (!location) {
-      setLocationMessage("Please select a location and year")
+      setLocationMessage("Please select a location")
+
+      return;
+    }
+    if (!year) {
+      setYearMessage("Please select a year")
 
       return;
     }
@@ -76,7 +81,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
   );
 };
 
-const EnergyConsumptionBody = ({location, year, month,setLocationMessage}) => {
+const EnergyConsumptionBody = ({location, year, month,setLocationMessage, setYearMessage}) => {
   return (
     <>
       <div className="mx-3">
@@ -90,6 +95,8 @@ const EnergyConsumptionBody = ({location, year, month,setLocationMessage}) => {
           display="block"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
 
           <Outsideorganization location={location} year={year} month={month}/>
@@ -101,6 +108,8 @@ const EnergyConsumptionBody = ({location, year, month,setLocationMessage}) => {
           display="none"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
           <OutsideStandards location={location} year={year} month={month}/>
         </AccordionItem>
@@ -111,6 +120,8 @@ const EnergyConsumptionBody = ({location, year, month,setLocationMessage}) => {
           display="none"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
           <OutsideSource location={location} year={year} month={month}/>
         </AccordionItem>

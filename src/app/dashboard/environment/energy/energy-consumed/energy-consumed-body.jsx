@@ -10,12 +10,17 @@ import Selfgenerated from "./Self-generated/self-generated"
 import Energysold from "./Energy-sold/energy-sold"
 import Standards from "./Standards/standards"
 import Source from "./Source/source";
-const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year  }) => {
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year, setYearMessage  }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
   const handleClick = () => {
     if (!location) {
-      setLocationMessage("Please select a location and year")
+      setLocationMessage("Please select a location")
+
+      return;
+    }
+    if (!year) {
+      setYearMessage("Please select a year")
 
       return;
     }
@@ -79,7 +84,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
   );
 };
 
-const EnergyConsumedBody = ({location, year, month,setLocationMessage}) => {
+const EnergyConsumedBody = ({location, year, month,setLocationMessage, setYearMessage}) => {
 
   return (
     <>
@@ -94,6 +99,8 @@ const EnergyConsumedBody = ({location, year, month,setLocationMessage}) => {
           display="block"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
           <Purchased  location={location} year={year} month={month}/>
         </AccordionItem>
@@ -107,6 +114,8 @@ const EnergyConsumedBody = ({location, year, month,setLocationMessage}) => {
           display="block"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
           <ConsumedFuel location={location} year={year} month={month}/>
         </AccordionItem>
@@ -119,6 +128,8 @@ const EnergyConsumedBody = ({location, year, month,setLocationMessage}) => {
            display="block"
            location={location}
            setLocationMessage={setLocationMessage}
+           year={year}
+          setYearMessage={setYearMessage}
         >
           <Selfgenerated location={location} year={year} month={month}/>
         </AccordionItem>
@@ -131,6 +142,8 @@ const EnergyConsumedBody = ({location, year, month,setLocationMessage}) => {
           display="block"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
           <Energysold location={location} year={year} month={month}/>
         </AccordionItem>
@@ -141,6 +154,8 @@ const EnergyConsumedBody = ({location, year, month,setLocationMessage}) => {
           display="none"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
           <Standards location={location} year={year} month={month}/>
         </AccordionItem>
@@ -151,6 +166,8 @@ const EnergyConsumedBody = ({location, year, month,setLocationMessage}) => {
           display="none"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
           <Source  location={location} year={year} month={month}/>
         </AccordionItem>
