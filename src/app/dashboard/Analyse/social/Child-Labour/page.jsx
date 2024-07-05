@@ -60,9 +60,22 @@ const AnalyseChildlabour = ({ isBoxOpen }) => {
       setIsDateRangeValid(false);
       console.error("Invalid date range selected");
       return;
-    } else {
-      setIsDateRangeValid(true);
-    }
+  } else {
+      const startDate = new Date(params.start);
+      const endDate = new Date(params.end);
+  
+      if (endDate < startDate) {
+          setIsDateRangeValid(false);
+          setDateRange({
+            start: null,
+            end: null
+          });
+          console.error("End date cannot be before start date");
+          return;
+      } else {
+          setIsDateRangeValid(true);
+      }
+  }
     LoaderOpen();
     setWastedata1([]);
     setWastedata2([]);
