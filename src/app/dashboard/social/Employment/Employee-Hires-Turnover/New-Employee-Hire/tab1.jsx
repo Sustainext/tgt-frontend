@@ -8,7 +8,7 @@ import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 import CustomTableWidget5 from '../../../../../shared/widgets/Table/tableWidget5';
 import axios from 'axios';
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
 
@@ -59,11 +59,11 @@ const Tab1 = ({ fullName, location, year, month }) => {
         { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 },
     ];
     const [formData, setFormData] = useState(initialFormData);
-    // const [formData, setFormData] = useState([]);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
     const [loopen, setLoOpen] = useState(false);
     const toastShown = useRef(false);
+
     const getAuthToken = () => {
         if (typeof window !== 'undefined') {
             return localStorage.getItem('token')?.replace(/"/g, "");
@@ -169,16 +169,7 @@ const Tab1 = ({ fullName, location, year, month }) => {
         } else {
             // Only show the toast if it has not been shown already
             if (!toastShown.current) {
-                toast.warn("Please select location, year, and month first", {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
+
                 toastShown.current = true; // Set the flag to true after showing the toast
             }
         }
@@ -193,11 +184,9 @@ const Tab1 = ({ fullName, location, year, month }) => {
     };
 
     return (
-        <> <ToastContainer style={{ fontSize: "12px" }} />
+        <>
             <div className="mx-2 p-3 mb-6 rounded-md">
-
                 <Form
-
                     schema={r_schema}
                     uiSchema={r_ui_schema}
                     formData={formData}
@@ -207,7 +196,14 @@ const Tab1 = ({ fullName, location, year, month }) => {
                     widgets={widgets}
                 />
                 <div className='mb-8'>
-                    <button type="button" className="text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
+
+                    <button type="button"
+                        className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? 'cursor-not-allowed' : ''}`}
+                        onClick={handleSubmit}
+                        disabled={!location || !year}>
+                        Submit
+                    </button>
+
                 </div>
             </div>
             {loopen && (

@@ -17,6 +17,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
+import selectWidget3 from '../../../../shared/widgets/Select/selectWidget3';
 const widgets = {
     inputWidget: inputWidget,
     dateWidget: dateWidget,
@@ -25,6 +26,7 @@ const widgets = {
     AssignTobutton: AssignToWidget,
     CustomSelectInputWidget: CustomSelectInputWidget,
     RemoveWidget: RemoveWidget,
+    selectWidget3: selectWidget3,
 };
 
 const view_path = 'gri-environment-water-303-3b-4c-water_withdrawal/discharge_areas_water_stress'
@@ -94,13 +96,12 @@ const schema = {
                 type: "string",
                 title: "Remove",
             },
-            // Define other properties as needed
         }
     }
 };
 
 const uiSchema = {
-    // Add flex-wrap to wrap fields to the next line
+
     items: {
         classNames: 'fieldset',
         'ui:order': [
@@ -121,105 +122,110 @@ const uiSchema = {
             },
         },
         Unit: {
-            'ui:widget': 'selectWidget', // Use your custom widget for QuantityUnit
+            'ui:widget': 'selectWidget3',
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Businessoperations: {
             'ui:widget': 'selectWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         waterstress: {
             'ui:widget': 'inputWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Pincode: {
             'ui:widget': 'inputWidget',
+            'ui:inputtype':'number',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Waterwithdrawal: {
             'ui:widget': 'inputWidget',
+            'ui:inputtype':'number',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Waterdischarge: {
             'ui:widget': 'inputWidget',
+            'ui:inputtype':'number',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         AssignTo: {
             "ui:widget": "AssignTobutton",
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         FileUpload: {
             'ui:widget': 'FileUploadWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Remove: {
             "ui:widget": "RemoveWidget",
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         'ui:options': {
-            orderable: false, // Prevent reordering of items
-            addable: false, // Prevent adding items from UI
-            removable: false, // Prevent removing items from UI
-            layout: 'horizontal', // Set layout to horizontal
+            orderable: false,
+            addable: false,
+            removable: false,
+            layout: 'horizontal',
         }
     }
 };
 
-const generateTooltip = (field, title, tooltipText) => {
+const generateTooltip = (field, title, tooltipText, display) => {
     if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
-        return null; // Return null to skip rendering tooltip for these fields
+      return null; // Return null to skip rendering tooltip for these fields
     }
 
     return (
-        <div className='mx-2 flex w-[20vw]'>
-            <label className="text-[13px] leading-5 text-gray-700 flex">{title}</label>
-            <MdInfoOutline
-                data-tooltip-id={field}
-                data-tooltip-content={tooltipText}
-                className="mt-1 ml-2 w-[30px] text-[12px]"
-            />
-            <ReactTooltip
-                id={field}
-                place="top"
-                effect="solid"
-                style={{
-                    width: "290px",
-                    backgroundColor: "#000",
-                    color: "white",
-                    fontSize: "12px",
-                    boxShadow: 3,
-                    borderRadius: "8px",
-                    textAlign: 'left',
-                }}
-            />
-        </div>
+      <div className={`mx-2 flex ${field === 'Watertype' ? 'w-[22vw]' :   field === 'Unit' ? 'w-[5.2vw]' : 'w-[20vw]'
+      }`}>
+          <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
+        <MdInfoOutline
+          data-tooltip-id={field}
+          data-tooltip-content={tooltipText}
+          className="mt-1 ml-2 text-[12px]"
+          style={{display:display}}
+        />
+        <ReactTooltip
+          id={field}
+          place="top"
+          effect="solid"
+          style={{
+            width: "290px",
+            backgroundColor: "#000",
+            color: "white",
+            fontSize: "12px",
+            boxShadow: 3,
+            borderRadius: "8px",
+            textAlign: 'left',
+          }}
+        />
+      </div>
     );
-};
+  };
 
 const WaterstressQ1 = ({location, year, month}) => {
     const { open } = GlobalState();
@@ -325,6 +331,8 @@ const WaterstressQ1 = ({location, year, month}) => {
 
   const loadFormData = async () => {
     LoaderOpen();
+    setFormData([{}]);
+    setSelectedOption('');
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
     try {
         const response = await axios.get(url, axiosConfig);
@@ -405,6 +413,7 @@ const WaterstressQ1 = ({location, year, month}) => {
     };
     return (
         <>
+             <ToastContainer style={{ fontSize: "12px" }} />
             <div className="w-full max-w-xs mb-2">
                 <label className="text-sm leading-5 text-gray-700 flex">
                 Do you withdraw/discharge water from water stress areas?
@@ -435,8 +444,8 @@ const WaterstressQ1 = ({location, year, month}) => {
             </div>
             {selectedOption === 'yes' && (
                 <>
-                 <ToastContainer style={{ fontSize: "12px" }} />
-        <ToastContainer style={{ fontSize: "12px" }} />
+
+
         <div className={`overflow-auto custom-scrollbar flex`}>
                     <div>
                         <div>
@@ -448,7 +457,7 @@ const WaterstressQ1 = ({location, year, month}) => {
                         <Form
                             className='flex'
                             schema={r_schema}
-                            uiSchema={r_ui_schema}
+                            uiSchema={uiSchema}
                             formData={formData}
                             onChange={handleChange}
                             validator={validator}

@@ -3,6 +3,9 @@ import React, { useState } from "react";
 import Header from "./Header";
 import Aside from "./Aside";
 import AnalyseEmployment from "./Employment/page";
+import AnalyseOHS from "./OHS/page";
+import AnalyseChildlabour from "./Child-Labour/page";
+import AnalyseCompulsorylabour from "./Compulsory-Labour/page";
 
 const social = () => {
   const [activeTab, setActiveTab] = useState("Tab1");
@@ -22,7 +25,9 @@ const social = () => {
           <Header activeTab={activeTab} setIsBoxOpen={setIsBoxOpen} />
         </div>
         {activeTab === "Tab1" && <AnalyseEmployment />}
-
+        {activeTab === "Tab2" && <AnalyseOHS />}
+        {activeTab === "Tab3" && <AnalyseChildlabour />}
+        {activeTab === "Tab4" && <AnalyseCompulsorylabour />}
 
       </div>
     </div>

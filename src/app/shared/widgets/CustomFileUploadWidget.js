@@ -134,7 +134,7 @@ const CustomFileUploadWidget = ({
   };
 
   return (
-    <div className="w-[120px] flex justify-center items-center">
+    <div className="flex justify-center items-center mx-2  w-[80px]">
       <input
         type="file"
         id={id + scopes}
@@ -143,20 +143,27 @@ const CustomFileUploadWidget = ({
       />
 
       {fileName ? (
-        <label className="flex cursor-pointer">
-          <div className="flex items-center mt-2" onClick={handlePreview}>
-            <MdFilePresent className="w-6 h-6 mr-1 text-green-500" />
-            <div className="w-[90px] truncate text-sky-600 text-sm">
+        <label className="flex cursor-pointer ml-1">
+          <div
+            className="flex items-center mt-2 px-2"
+            onClick={handlePreview}
+          >
+            <MdFilePresent
+              className="w-6 h-6 mr-1 text-green-500"
+            />
+            <div className="w-[60px] truncate text-sky-600 text-sm">
               {fileName}
             </div>
           </div>
         </label>
       ) : (
-        <label htmlFor={id + scopes} className="flex cursor-pointer">
-          <div className="flex items-center mt-2">
-            <MdOutlineFileUpload className="w-6 h-6 mr-1 text-[#007EEF]" />
-            <div className="w-[90px] truncate text-[#007EEF] text-sm">
-              Upload File
+        <label htmlFor={id + scopes} className="flex cursor-pointer ml-1">
+          <div className="flex items-center mt-2 ">
+            <MdOutlineFileUpload
+              className="w-6 h-6 mr-1 text-[#007EEF]"
+            />
+            <div className="w-[60px] truncate text-[#007EEF] text-sm ml-1">
+              Upload
             </div>
           </div>
         </label>

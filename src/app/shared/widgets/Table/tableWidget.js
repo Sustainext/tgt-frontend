@@ -28,7 +28,9 @@ const CustomTableWidget = ({
     newData[index][key] = newValue;
     handleInputChange(newData);
   };
-
+  useEffect(() => {
+    console.log('CustomTableWidget value:', value);
+  }, [value]);
 
   return (
     <div style={{ overflowY: "auto", maxHeight: "400px" }}>

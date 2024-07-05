@@ -51,7 +51,7 @@ const uiSchema = {
       "ui:Gri": "GRI 302-5c",
       'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     textareaQ2: {
@@ -59,7 +59,7 @@ const uiSchema = {
         "ui:Gri": "GRI 302-5c",
         'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
         'ui:options': {
-          label: false // This disables the label for this field
+          label: false
         },
       },
       textareaQ3: {
@@ -67,7 +67,7 @@ const uiSchema = {
         "ui:Gri": "GRI 302-5c",
         'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
         'ui:options': {
-          label: false // This disables the label for this field
+          label: false
         },
       },
       textareaQ4: {
@@ -75,14 +75,14 @@ const uiSchema = {
         "ui:Gri": "GRI 302-5c",
         'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
         'ui:options': {
-          label: false // This disables the label for this field
+          label: false
         },
       },
-    'ui:options': {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: 'horizontal', // Set layout to horizontal
+      'ui:options': {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: 'horizontal',
     }
   }
 };

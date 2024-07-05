@@ -6,10 +6,9 @@ import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 import CustomTableWidget4 from '../../../../shared/widgets/Table/tableWidget4';
 import axios from 'axios';
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
-
+import {  toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const widgets = {
     TableWidget: CustomTableWidget4,
 };
@@ -180,16 +179,7 @@ const Benefitsscreen = ({ location, year, month }) => {
         } else {
             // Only show the toast if it has not been shown already
             if (!toastShown.current) {
-                toast.warn("Please select location, year, and month first", {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
+
                 toastShown.current = true; // Set the flag to true after showing the toast
             }
         }
@@ -212,7 +202,7 @@ const Benefitsscreen = ({ location, year, month }) => {
 
     return (
         <>
-        <ToastContainer style={{ fontSize: "12px" }} />
+
             <div className="mx-2 p-3 mb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
                 <div className='mb-4 flex'>
                     <div className='w-[80%]'>
@@ -256,15 +246,22 @@ const Benefitsscreen = ({ location, year, month }) => {
                     formContext={{ onRemove: handleRemoveCommittee }}
                 />
                 <div className="flex right-1 mx-2">
-                    <button type="button" className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5" onClick={handleAddCommittee}>
-                        Add more  <MdAdd className='text-lg' />
+                {location && year && (
+   <button type="button" className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5" onClick={handleAddCommittee}>
+   Add more  <MdAdd className='text-lg' />
+</button>
+)}
+
+                </div>
+
+               <div className='mb-6'>
+                <button type="button"
+                        className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? 'cursor-not-allowed' : ''}`}
+                        onClick={handleSubmit}
+                        disabled={!location || !year}>
+                        Submit
                     </button>
                 </div>
-
-                <div className='mb-6'>
-                    <button type="button" className="text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
-                </div>
-
             </div>
             {loopen && (
                 <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

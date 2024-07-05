@@ -448,17 +448,17 @@ const AnalyseWaste = ({ isBoxOpen }) => {
   return (
     <>
       <div>
+      <div className="mb-2 flex-col items-center pt-4  gap-6">
         <div className="mt-4 pb-3 mx-5 text-left">
-          <div className="mb-2 flex-col items-center py-4 px-3 gap-6">
-            <div className="justify-start items-center gap-4 inline-flex my-6">
-              <div className="text-zinc-600 text-[13px] font-semibold font-['Manrope']">
+          <div className="mb-2 flex-col items-center pt-2  gap-6">
+            <div className="justify-start items-center gap-4 inline-flex">
+              <div className="text-zinc-600 text-[15px] font-semibold font-['Manrope']">
                 View By:
               </div>
               <div className="rounded-lg shadow border border-gray-300 justify-start items-start flex">
                 <div
-                  className={`w-[111px] px-4 py-2.5 border-r rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
-                    reportType === "Organization" ? "bg-sky-100" : "bg-white"
-                  }`}
+                  className={`w-[111px] px-4 py-2.5 border-r rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Organization" ? "bg-sky-100" : "bg-white"
+                    }`}
                   onClick={() => handleReportTypeChange("Organization")}
                 >
                   <div className="text-slate-800 text-[13px] font-medium font-['Manrope'] leading-tight">
@@ -466,9 +466,8 @@ const AnalyseWaste = ({ isBoxOpen }) => {
                   </div>
                 </div>
                 <div
-                  className={`w-[111px] px-4 py-2.5 border-r border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
-                    reportType === "Corporate" ? "bg-sky-100" : "bg-white"
-                  }`}
+                  className={`w-[111px] px-4 py-2.5 border-r border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Corporate" ? "bg-sky-100" : "bg-white"
+                    }`}
                   onClick={() => handleReportTypeChange("Corporate")}
                 >
                   <div className="text-slate-700 text-[13px] font-medium font-['Manrope'] leading-tight">
@@ -476,9 +475,8 @@ const AnalyseWaste = ({ isBoxOpen }) => {
                   </div>
                 </div>
                 <div
-                  className={`w-[111px] px-4 py-2.5 border-r rounded-r-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
-                    reportType === "Location" ? "bg-sky-100" : "bg-white"
-                  }`}
+                  className={`w-[111px] px-4 py-2.5 border-r rounded-r-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Location" ? "bg-sky-100" : "bg-white"
+                    }`}
                   onClick={() => handleReportTypeChange("Location")}
                 >
                   <div className="text-slate-700 text-[13px] font-medium font-['Manrope'] leading-tight">
@@ -488,9 +486,8 @@ const AnalyseWaste = ({ isBoxOpen }) => {
               </div>
             </div>
             <div
-              className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-4 p-4 ${
-                reportType !== "" ? "visible" : "hidden"
-              }`}
+              className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${reportType !== "" ? "visible" : "hidden"
+                }`}
             >
               <div className="mr-2">
                 <label
@@ -505,7 +502,7 @@ const AnalyseWaste = ({ isBoxOpen }) => {
                     value={selectedOrg}
                     onChange={handleOrganizationChange}
                   >
-                    <option value="">--Select Organization--- </option>
+                    <option value="01">--Select Organization--- </option>
                     {organisations &&
                       organisations.map((org) => (
                         <option key={org.id} value={org.id}>
@@ -588,6 +585,8 @@ const AnalyseWaste = ({ isBoxOpen }) => {
             </div>
           </div>
         </div>
+
+      </div>
         <div className="flex justify-between">
           <div className="ps-8  w-[78%] me-4 ">
             <div className="mb-6">

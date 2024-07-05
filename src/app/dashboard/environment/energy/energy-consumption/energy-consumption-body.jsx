@@ -1,5 +1,5 @@
 'use client';
-import { useState,useCallback } from "react";
+import { useState, useCallback } from "react";
 import { MdKeyboardArrowDown, MdInfoOutline } from "react-icons/md";
 import { GlobalState } from "../../../../../Context/page";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
@@ -30,50 +30,50 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
         className="py-3 w-[100%] text-left flex"
         onClick={handleClick}// Unique ID for the tooltip, spaces replaced by dashes
       >
-     <div className="flex justify-between">
-        <div className={`flex ${open ? "w-[65vw]" : "w-[74vw]"}`}>
-        <div className="flex items-center">
-          <h5 className="text-[14px] text-[#344054] px-3">{title}</h5>
-        </div>
+        <div className="flex justify-between">
+          <div className={`flex ${open ? "w-[65vw]" : "w-[74vw]"}`}>
+            <div className="flex items-center">
+              <h5 className="text-[14px] text-[#344054] px-3">{title}</h5>
+            </div>
 
 
-        <div className="flex items-center justify-center relative">
-          <MdInfoOutline
-            data-tooltip-id={`tooltip-${title.replace(/\s+/g, '-')}`} data-tooltip-content={tooltiptext} className="mt-1 text-[14px]" style={{display:display}} />
-          {/* Tooltip */}
-          <ReactTooltip id={`tooltip-${title.replace(/\s+/g, '-')}`} place="top" effect="solid" style={{
-            width: "300px", backgroundColor: "#000",
-            color: "white",
-            fontSize: "12px",
-            boxShadow: 3,
-            borderRadius: "8px",
-          }}>
+            <div className="flex items-center justify-center relative">
+              <MdInfoOutline
+                data-tooltip-id={`tooltip-${title.replace(/\s+/g, '-')}`} data-tooltip-content={tooltiptext} className="mt-1 text-[14px]" style={{ display: display }} />
+              {/* Tooltip */}
+              <ReactTooltip id={`tooltip-${title.replace(/\s+/g, '-')}`} place="top" effect="solid" style={{
+                width: "300px", backgroundColor: "#000",
+                color: "white",
+                fontSize: "12px",
+                boxShadow: 3,
+                borderRadius: "8px",
+              }}>
 
-          </ReactTooltip>
-        </div>
-        </div>
-       <div className=" w-[20vw] ">
-       <div className={`flex float-end`}>
-        {isOpen ? (
-            <>
-              {sdg && sdg.map((sdgItem, index) => (
-                <div key={index} className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2" style={{ display: display }} >
-                  <p className="text-[#0057A5] text-[10px] inline-block align-middle px-2 font-semibold">{sdgItem}</p>
-                </div>
-              ))}
-            </>
-          ) : (
-            <>
-              {sdg && sdg.map((sdgItem, index) => (
-                <div key={index} className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2">
-                  <p className="text-[#0057A5] text-[10px] inline-block align-middle px-2 font-semibold">{sdgItem}</p>
-                </div>
-              ))}
-            </>
-          )}
-          <MdKeyboardArrowDown className={`text-2xl ${isOpen ? "rotate-180" : ""}`} />
-        </div>
-       </div>
+              </ReactTooltip>
+            </div>
+          </div>
+          <div className=" w-[20vw] ">
+            <div className={`flex float-end`}>
+              {isOpen ? (
+                <>
+                  {sdg && sdg.map((sdgItem, index) => (
+                    <div key={index} className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2" style={{ display: display }} >
+                      <p className="text-[#0057A5] text-[10px] inline-block align-middle px-2 font-semibold">{sdgItem}</p>
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <>
+                  {sdg && sdg.map((sdgItem, index) => (
+                    <div key={index} className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2">
+                      <p className="text-[#0057A5] text-[10px] inline-block align-middle px-2 font-semibold">{sdgItem}</p>
+                    </div>
+                  ))}
+                </>
+              )}
+              <MdKeyboardArrowDown className={`text-2xl ${isOpen ? "rotate-180" : ""}`} />
+            </div>
+          </div>
         </div>
       </button>
       {isOpen && <div className="p-4">{children}</div>}
@@ -85,7 +85,7 @@ const EnergyConsumptionBody = ({location, year, month,setLocationMessage, setYea
   return (
     <>
       <div className="mx-3">
-      <AccordionItem
+        <AccordionItem
           title="Energy consumption outside organization"
           tooltiptext={`This section documents data corresponding to Energy Consumption  outside the Organization.
           Include: Input data related to fuel and energy consumed outside the organization.
@@ -99,7 +99,7 @@ const EnergyConsumptionBody = ({location, year, month,setLocationMessage, setYea
           setYearMessage={setYearMessage}
         >
 
-          <Outsideorganization location={location} year={year} month={month}/>
+          <Outsideorganization location={location} year={year} month={month} />
         </AccordionItem>
         <AccordionItem
           title="Standards, methodologies, assumptions and calculation tools used"
@@ -111,7 +111,7 @@ const EnergyConsumptionBody = ({location, year, month,setLocationMessage, setYea
           year={year}
           setYearMessage={setYearMessage}
         >
-          <OutsideStandards location={location} year={year} month={month}/>
+          <OutsideStandards location={location} year={year} month={month} />
         </AccordionItem>
         <AccordionItem
           title="Source of conversion factor"
@@ -123,9 +123,8 @@ const EnergyConsumptionBody = ({location, year, month,setLocationMessage, setYea
           year={year}
           setYearMessage={setYearMessage}
         >
-          <OutsideSource location={location} year={year} month={month}/>
+          <OutsideSource location={location} year={year} month={month} />
         </AccordionItem>
-
         {/* Add more accordion items here */}
       </div>
     </>
