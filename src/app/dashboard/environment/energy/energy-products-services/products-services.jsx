@@ -17,6 +17,8 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
+import selectWidget3 from '../../../../shared/widgets/Select/selectWidget3';
+import inputnumberWidget from "../../../../shared/widgets/Input/inputnumberWidget";
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
@@ -25,138 +27,160 @@ const widgets = {
   AssignTobutton: AssignToWidget,
   CustomSelectInputWidget: CustomSelectInputWidget,
   RemoveWidget: RemoveWidget,
+  selectWidget3: selectWidget3,
+  inputnumberWidget: inputnumberWidget,
 };
 
 const view_path = 'gri-environment-energy-302-5a-5b-reduction_in_energy_in_products_and_servies'
 const client_id = 1
 const user_id = 1
+const getCurrentYear = () => new Date().getFullYear();
+const generateYearRange = (startYear) => {
+  const currentYear = getCurrentYear();
+  let years = [];
+  for (let year = startYear; year <= currentYear; year++) {
+    years.push(year.toString()); // Convert years to string if needed
+  }
+  return years;
+};
 
-// const schema = {
-//   type: 'array',
-//   items: {
-//     type: 'object',
-//     properties: {
+// Generate the year range before defining the schema
+const yearRange = generateYearRange(1991);
+const schema = {
+  type: 'array',
+  items: {
+    type: 'object',
+    properties: {
 
-//       ProductServices: {
-//         type: "string",
-//         title: "Product / Services",
-//         tooltiptext: "Indicate the product or service for which Energy Requirements have been reduced."
-//       },
+      ProductServices: {
+        type: "string",
+        title: "Product / Services",
+        tooltiptext: "Indicate the product or service for which Energy Requirements have been reduced."
+      },
 
-//       Quantity: {
-//         type: "string",
-//         title: "Quantity",
-//         tooltiptext: "Indicate the quantity of reduced energy requirement"
-//       },
-//       Unit: {
-//         type: "string",
-//         title: "Unit",
-//         enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
-//         tooltiptext: "Select the correct unit corresponding to the quantity"
-//       },
-//       Baseyear: {
-//         type: "string",
-//         title: "Base year",
-//         tooltiptext: "Indicate the base year used for comparing energy saved before the intervention"
-//       },
+      Quantity: {
+        type: "string",
+        title: "Quantity",
+        tooltiptext: "Indicate the quantity of reduced energy requirement"
+      },
+      Unit: {
+        type: "string",
+        title: "Unit",
+        enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
+        tooltiptext: "Select the correct unit corresponding to the quantity"
+      },
+      Baseyear: {
+        type: "string",
+        title: "Base year",
+        enum: yearRange,
+        tooltiptext: "Indicate the base year used for comparing energy saved before the intervention"
+      },
 
-//       AssignTo: {
-//         type: "string",
-//         title: "Assign To",
-//       },
-//       FileUpload: {
-//         type: "string",
-//         format: "data-url",
-//         title: "File Upload",
-//       },
-//       Remove: {
-//         type: "string",
-//         title: "Remove",
-//       },
-//       // Define other properties as needed
-//     }
-//   }
-// };
+      AssignTo: {
+        type: "string",
+        title: "Assign To",
+      },
+      FileUpload: {
+        type: "string",
+        format: "data-url",
+        title: "File Upload",
+      },
+      Remove: {
+        type: "string",
+        title: "Remove",
+      },
+    }
+  }
+};
 
-// const uiSchema = {
-//   items: {
-//     classNames: 'fieldset',
-//     'ui:order': [
-//       'ProductServices', 'Quantity', 'Unit', 'Baseyear','AssignTo', 'FileUpload', 'Remove'
-//     ],
+const uiSchema = {
+  items: {
+    classNames: 'fieldset',
+    'ui:order': [
+      'ProductServices', 'Quantity', 'Unit', 'Baseyear','AssignTo', 'FileUpload', 'Remove'
+    ],
 
-//     ProductServices: {
-//       'ui:widget': 'inputWidget',
-//       'ui:options': {
-//         label: false
-//       },
-//     },
-//     Quantity: {
-//       'ui:widget': 'inputWidget',
-//       'ui:options': {
-//         label: false
-//       },
-//     },
-//     Unit: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false
-//       },
-//     },
-//     Baseyear: {
-//       'ui:widget': 'inputWidget',
-//       'ui:options': {
-//         label: false
-//       },
-//     },
+    ProductServices: {
+      'ui:widget': 'inputWidget',
+      'ui:options': {
+        label: false
+      },
+    },
+    Quantity: {
+      'ui:widget': 'inputnumberWidget',
+      'ui:options': {
+        label: false
+      },
+    },
+    Unit: {
+      'ui:widget': 'selectWidget3',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    Baseyear: {
+      'ui:widget': 'selectWidget',
+      'ui:inputtype':'number',
+      'ui:options': {
+        label: false
+      },
+    },
 
-//     AssignTo: {
-//       "ui:widget": "AssignTobutton",
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     FileUpload: {
-//       'ui:widget': 'FileUploadWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     Remove: {
-//       "ui:widget": "RemoveWidget",
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     'ui:options': {
-//       orderable: false, // Prevent reordering of items
-//       addable: false, // Prevent adding items from UI
-//       removable: false, // Prevent removing items from UI
-//       layout: 'horizontal', // Set layout to horizontal
-//     }
-//   }
-// };
+    AssignTo: {
+      "ui:widget": "AssignTobutton",
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    FileUpload: {
+      'ui:widget': 'FileUploadWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    Remove: {
+      "ui:widget": "RemoveWidget",
+      'ui:options': {
+        label: false
+      },
+    },
+      'ui:options': {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: 'horizontal',
+    }
+  }
+};
 
+const generateUniqueId = (field) => {
+  return `${field}-${new Date().getTime()}`;
+};
 const generateTooltip = (field, title, tooltipText) => {
   if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
     return null; // Return null to skip rendering tooltip for these fields
   }
-
+  const uniqueId = generateUniqueId(field);
   return (
-    <div className='mx-2 flex w-[20vw]'>
-      <label className="text-[13px] leading-5 text-gray-700 flex">{title}</label>
+    <div className={`mx-2 flex ${field === 'Quantity' ? 'w-[22vw]' :   field === 'Unit' ? 'w-[5.2vw]' : 'w-[20vw]'
+    }`}>
+
+      <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
+      <div className='relative'>
       <MdInfoOutline
-        data-tooltip-id={field}
+        data-tooltip-id={uniqueId}
         data-tooltip-content={tooltipText}
         className="mt-1 ml-2 text-[12px]"
       />
       <ReactTooltip
-        id={field}
+        id={uniqueId}
         place="top"
         effect="solid"
+      delayHide={200}
+        globalEventOff="scroll"
         style={{
           width: "290px",
           backgroundColor: "#000",
@@ -165,12 +189,15 @@ const generateTooltip = (field, title, tooltipText) => {
           boxShadow: 3,
           borderRadius: "8px",
           textAlign: 'left',
+
         }}
+
       />
+      </div>
+
     </div>
   );
 };
-
 const Productsservices = ({location, year, month}) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
@@ -356,8 +383,8 @@ const Productsservices = ({location, year, month}) => {
 
           <Form
           className='flex'
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+            schema={schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

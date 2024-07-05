@@ -65,7 +65,7 @@ const Screen2 = ({location, year, month}) => {
         return '';
     };
     const token = getAuthToken();
-    
+
     const LoaderOpen = () => {
         setLoOpen(true);
       };
@@ -111,7 +111,7 @@ const Screen2 = ({location, year, month}) => {
             });
             LoaderClose();
             loadFormData();
-    
+
           }else {
             toast.error("Oops, something went wrong", {
               position: "top-right",
@@ -147,7 +147,7 @@ const Screen2 = ({location, year, month}) => {
     const loadFormData = async () => {
         LoaderOpen();
         const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
-        
+
         try {
             const response = await axios.get(url, axiosConfig);
             console.log('API called successfully:', response.data);
@@ -235,7 +235,7 @@ const Screen2 = ({location, year, month}) => {
                         </h2> */}
                     </div>
 
-                    <div className='w-[25%] flex'>
+                    <div className='w-[20%] '>
                         <div className="bg-sky-100 h-[25px] w-[75px] rounded-md mx-2 float-end">
                             <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
                                 GRI 409-1a
@@ -258,13 +258,21 @@ const Screen2 = ({location, year, month}) => {
                     />
                 </div>
                 <div className="flex right-1 mx-2">
-                    <button type="button" className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5" onClick={handleAddCommittee}>
-                    Add category  <MdAdd className='text-lg' />
-                    </button>
+                {location && year && (
+                        <button type="button" className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5" onClick={handleAddCommittee}>
+                        Add category  <MdAdd className='text-lg' />
+                        </button>
+                    )}
+
                 </div>
 
                 <div className='mb-6'>
-                    <button type="button" className="text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
+                    <button type="button"
+                        className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? 'cursor-not-allowed' : ''}`}
+                        onClick={handleSubmit}
+                        disabled={!location || !year}>
+                        Submit
+                    </button>
                 </div>
             </div>
             {loopen && (

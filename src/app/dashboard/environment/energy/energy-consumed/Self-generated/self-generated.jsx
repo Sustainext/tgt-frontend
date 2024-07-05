@@ -17,6 +17,8 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
+import selectWidget3 from '../../../../../shared/widgets/Select/selectWidget3';
+import inputnumberWidget from "../../../../../shared/widgets/Input/inputnumberWidget"
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
@@ -25,157 +27,164 @@ const widgets = {
   AssignTobutton: AssignToWidget,
   CustomSelectInputWidget: CustomSelectInputWidget,
   RemoveWidget: RemoveWidget,
+  selectWidget3: selectWidget3,
+  inputnumberWidget: inputnumberWidget,
 };
 
 const view_path = 'gri-environment-energy-302-1-self_generated'
 const client_id = 1
 const user_id = 1
 
-// const schema = {
-//   type: 'array',
-//   items: {
-//     type: 'object',
-//     properties: {
-//       EnergyType: {
-//         type: "string",
-//         title: "Energy Type",
-//         tooltiptext: "Indicate type of energy from the drop down",
-//         enum: ['Electricity', 'Heating', 'Cooling', 'Steam'],
-//         tooltiptext: "Indicate the type of energy generated from the drop down"
+const schema = {
+  type: 'array',
+  items: {
+    type: 'object',
+    properties: {
+      EnergyType: {
+        type: "string",
+        title: "Energy Type",
+        tooltiptext: "Indicate type of energy from the drop down",
+        enum: ['Electricity', 'Heating', 'Cooling', 'Steam'],
+        tooltiptext: "Indicate the type of energy generated from the drop down"
 
-//       },
-//       Source: {
-//         type: "string",
-//         title: "Source",
-//         enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro', 'Natural gas', 'Electricity', 'Cooling', 'Steam', 'Heating', 'Wood Biomas', 'Biogas', 'Other'],
-//         tooltiptext: "Indicate where the energy comes from"
-//       },
-//       Renewable: {
-//         type: "string",
-//         title: "Renewable/ Non-renewable",
-//         enum: ['Renewable', 'Non-renewable'],
-//         tooltiptext: "Select from the dropdown to indicate whether it's Renewable or Non-Renewable Energy"
-//       },
+      },
+      Source: {
+        type: "string",
+        title: "Source",
+        enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro', 'Natural gas', 'Electricity', 'Cooling', 'Steam', 'Heating', 'Wood Biomas', 'Biogas', 'Other'],
+        tooltiptext: "Indicate where the energy comes from"
+      },
+      Renewable: {
+        type: "string",
+        title: "Renewable/ Non-renewable",
+        enum: ['Renewable', 'Non-renewable'],
+        tooltiptext: "Select from the dropdown to indicate whether it's Renewable or Non-Renewable Energy"
+      },
 
-//       Quantity: {
-//         type: "string",
-//         title: "Quantity",
-//         tooltiptext: "Indicate the quantity that is self-generated but not consumed"
-//       },
-//       Unit: {
-//         type: "string",
-//         title: "Unit",
-//         enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
-//         tooltiptext: "Select the correct unit corresponding to the quantity of self-generated but not consumed."
-//       },
-//       AssignTo: {
-//         type: "string",
-//       },
-//       FileUpload: {
-//         type: "string",
-//         format: "data-url",
-//       },
+      Quantity: {
+        type: "string",
+        title: "Quantity",
+        tooltiptext: "Indicate the quantity that is self-generated but not consumed"
+      },
+      Unit: {
+        type: "string",
+        title: "Unit",
+        enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
+        tooltiptext: "Select the correct unit corresponding to the quantity of self-generated but not consumed."
+      },
+      AssignTo: {
+        type: "string",
+      },
+      FileUpload: {
+        type: "string",
+        format: "data-url",
+      },
 
-//       Remove: {
-//         type: "string",
+      Remove: {
+        type: "string",
 
-//       },
-//       // Define other properties as needed
-//     }
-//   }
-// };
+      },
+    }
+  }
+};
 
-// const uiSchema = { // Add flex-wrap to wrap fields to the next line
-//   items: {
-//     'ui:order': [
-//       'EnergyType', 'Source', 'Renewable', 'Quantity', 'Unit', 'AssignTo', 'FileUpload', 'Remove'
-//     ],
-//     EnergyType: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false,
-//         // Include tooltiptext in uiSchema
-//       },
+const uiSchema = {
+  items: {
+    'ui:order': [
+      'EnergyType', 'Source', 'Renewable', 'Quantity', 'Unit', 'AssignTo', 'FileUpload', 'Remove'
+    ],
+    EnergyType: {
+      'ui:widget': 'selectWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false,
+      },
 
 
-//     },
-//     Source: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
+    },
+    Source: {
+      'ui:widget': 'selectWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
 
-//     },
-//     Renewable: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
+    },
+    Renewable: {
+      'ui:widget': 'selectWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
 
-//     },
-//     Quantity: {
-//       'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
+    },
+   Quantity: {
+      'ui:widget': 'inputnumberWidget',
+      'ui:inputtype':'number',
+      'ui:options': {
+        label: false,
+      },
+    },
 
-//     Unit: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
+    Unit: {
+      'ui:widget': 'selectWidget3',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
 
-//     },
-//     AssignTo: {
-//       "ui:widget": "AssignTobutton",
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     FileUpload: {
-//       'ui:widget': 'FileUploadWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     Remove: {
-//       "ui:widget": "RemoveWidget",
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     classNames: 'fieldset',
-//     'ui:options': {
-//       orderable: false, // Prevent reordering of items
-//       addable: false, // Prevent adding items from UI
-//       removable: false, // Prevent removing items from UI
-//       layout: 'horizontal', // Set layout to horizontal
-//     }
-//   }
-// };
+    },
+    AssignTo: {
+      "ui:widget": "AssignTobutton",
+      'ui:options': {
+        label: false
+      },
+    },
+    FileUpload: {
+      'ui:widget': 'FileUploadWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    Remove: {
+      "ui:widget": "RemoveWidget",
+      'ui:options': {
+        label: false
+      },
+    },
+    classNames: 'fieldset',
+      'ui:options': {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: 'horizontal',
+    }
+  }
+};
+const generateUniqueId = (field) => {
+  return `${field}-${new Date().getTime()}`;
+};
 const generateTooltip = (field, title, tooltipText) => {
   if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
     return null; // Return null to skip rendering tooltip for these fields
   }
-
+  const uniqueId = generateUniqueId(field);
   return (
-    <div className='mx-2 flex w-[20vw]'>
-      <label className="text-[13px] leading-5 text-gray-700 flex">{title}</label>
+    <div className={`mx-2 flex  ${field === 'Quantity' ? ' w-[22vw]' : ' w-[20vw]'}`}>
+      <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
+      <div className='relative'>
       <MdInfoOutline
-        data-tooltip-id={field}
+        data-tooltip-id={uniqueId}
         data-tooltip-content={tooltipText}
         className="mt-1 ml-2 text-[12px]"
       />
       <ReactTooltip
-        id={field}
+        id={uniqueId}
         place="top"
         effect="solid"
+      delayHide={200}
+        globalEventOff="scroll"
         style={{
           width: "290px",
           backgroundColor: "#000",
@@ -184,8 +193,12 @@ const generateTooltip = (field, title, tooltipText) => {
           boxShadow: 3,
           borderRadius: "8px",
           textAlign: 'left',
+
         }}
+
       />
+      </div>
+
     </div>
   );
 };
@@ -367,7 +380,6 @@ const Selfgenerated = ({location, year, month}) => {
     <>
 
        <ToastContainer style={{ fontSize: "12px" }} />
-        <ToastContainer style={{ fontSize: "12px" }} />
         <div className={`overflow-auto custom-scrollbar flex`}>
         <div>
           <div>

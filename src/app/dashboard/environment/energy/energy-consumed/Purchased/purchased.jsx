@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect,useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
@@ -18,7 +18,7 @@ import 'react-tooltip/dist/react-tooltip.css';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
-import axios from 'axios';
+import axiosInstance from '../../../../../utils/axiosMiddleware';
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
@@ -27,8 +27,8 @@ const widgets = {
   AssignTobutton: AssignToWidget,
   CustomSelectInputWidget: CustomSelectInputWidget,
   RemoveWidget: RemoveWidget,
-  selectWidget3:selectWidget3,
-  inputnumberWidget:inputnumberWidget,
+  selectWidget3: selectWidget3,
+  inputnumberWidget: inputnumberWidget,
 };
 
 const view_path = 'gri-environment-energy-302-1a-1b-direct_purchased'
@@ -36,166 +36,171 @@ const client_id = 1
 const user_id = 1
 
 
-// const schema = {
-//   type: 'array',
-//   items: {
-//     type: 'object',
-//     properties: {
-//       EnergyType: {
-//         type: "string",
-//         title: "Energy Type",
-//         tooltiptext: "Indicate type of energy from the drop down",
-//         enum: ['Electricity', 'Heating', 'Cooling', 'Steam'],
-//         tooltiptext: "Indicate the type of energy purchased from the drop down"
+const schema = {
+  type: 'array',
+  items: {
+    type: 'object',
+    properties: {
+      EnergyType: {
+        type: "string",
+        title: "Energy Type",
+        enum: ['Electricity', 'Heating', 'Cooling', 'Steam'],
+        tooltiptext: "Indicate the type of energy purchased from the drop down"
 
-//       },
-//       Source: {
-//         type: "string",
-//         title: "Source",
-//         enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro', 'Natural gas', 'Electricity', 'Cooling', 'Steam', 'Heating', 'Wood Biomas', 'Biogas', 'Other'],
-//         tooltiptext: "Indicate where the energy comes from"
-//       },
-//       Purpose: {
-//         type: "string",
-//         title: "Purpose",
-//         tooltiptext: "Indicate where the energy comes fromIndicate the purpose it's being used for.E.g. Manufacturing, packaging, combustion"
-//       },
-//       Renewable: {
-//         type: "string",
-//         title: "Renewable/ Non-renewable",
-//         enum: ['Renewable', 'Non-renewable'],
-//         tooltiptext: "Select from the dropdown to indicate whether it's Renewable or Non-Renewable Energy"
-//       },
+      },
+      Source: {
+        type: "string",
+        title: "Source",
+        enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro', 'Natural gas', 'Electricity', 'Cooling', 'Steam', 'Heating', 'Wood Biomas', 'Biogas', 'Other'],
+        tooltiptext: "Indicate where the energy comes from"
+      },
+      Purpose: {
+        type: "string",
+        title: "Purpose",
+        required: true,
+        tooltiptext: "Indicate where the energy comes fromIndicate the purpose it's being used for.E.g. Manufacturing, packaging, combustion"
+      },
+      Renewable: {
+        type: "string",
+        title: "Renewable/ Non-renewable",
+        enum: ['Renewable', 'Non-renewable'],
+        tooltiptext: "Select from the dropdown to indicate whether it's Renewable or Non-Renewable Energy"
+      },
 
-//       Quantity: {
-//         type: "string",
-//         title: "Quantity",
-//         tooltiptext: "Indicate the purchased quantity"
-//       },
-//       Unit: {
-//         type: "string",
-//         title: "Unit",
-//         enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
-//         tooltiptext: "Select the correct unit corresponding to the quantity purchased."
-//       },
-//       AssignTo: {
-//         type: "string",
+      Quantity: {
+        type: "string",
+        title: "Quantity",
+        tooltiptext: "Indicate the purchased quantity"
+      },
+      Unit: {
+        type: "string",
+        title: "Unit",
+        enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
+        tooltiptext: "Select the correct unit corresponding to the quantity purchased."
+      },
+      AssignTo: {
+        type: "string",
 
-//       },
-//       FileUpload: {
-//         type: "string",
-//         format: "data-url",
-//       },
+      },
+      FileUpload: {
+        type: "string",
+        format: "data-url",
+      },
 
-//       Remove: {
-//         type: "string",
+      Remove: {
+        type: "string",
 
-//       },
-//       // Define other properties as needed
-//     }
-//   }
-// };
+      },
+      // Define other properties as needed
+    },
 
-// const uiSchema = {
-//   // Add flex-wrap to wrap fields to the next line
-//   items: {
+  }
+};
 
-//     'ui:order': [
-//       'EnergyType', 'Source', 'Purpose', 'Renewable', 'Quantity', 'Unit', 'AssignTo', 'FileUpload', 'Remove'
-//     ],
-//     EnergyType: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false,
-//         // Include tooltiptext in uiSchema
-//       },
+const uiSchema = {
 
+  items: {
+    'ui:order': [
+      'EnergyType', 'Source', 'Purpose', 'Renewable', 'Quantity', 'Unit', 'AssignTo', 'FileUpload', 'Remove'
+    ],
+    EnergyType: {
+      'ui:widget': 'selectWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false,
 
-//     },
-//     Source: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
+      },
 
-//     },
-//     Purpose: {
-//       'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     Renewable: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
+    },
+    Source: {
+      'ui:widget': 'selectWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false,
+      },
 
-//     },
-//     Quantity: {
-//       'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
+    },
+    Purpose: {
+      'ui:widget': 'inputWidget',
+      'ui:options': {
+        label: false,
+      },
+    },
+    Renewable: {
+      'ui:widget': 'selectWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false,
+      },
 
-//     Unit: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
+    },
+    Quantity: {
+      'ui:widget': 'inputnumberWidget',
+      'ui:options': {
+        label: false,
+      },
+    },
 
-//     },
-//     AssignTo: {
-//       "ui:widget": "AssignTobutton",
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     FileUpload: {
-//       'ui:widget': 'FileUploadWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     Remove: {
-//       "ui:widget": "RemoveWidget",
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     classNames: 'fieldset',
-//     'ui:options': {
-//       orderable: false, // Prevent reordering of items
-//       addable: false, // Prevent adding items from UI
-//       removable: false, // Prevent removing items from UI
-//       layout: 'horizontal', // Set layout to horizontal
-//     }
-//   }
-// };
+    Unit: {
+      'ui:widget': 'selectWidget3',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false,
+      },
+
+    },
+    AssignTo: {
+      "ui:widget": "AssignTobutton",
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    FileUpload: {
+      'ui:widget': 'FileUploadWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    Remove: {
+      "ui:widget": "RemoveWidget",
+      'ui:options': {
+        label: false
+      },
+    },
+    classNames: 'fieldset',
+    'ui:options': {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: 'horizontal',
+    }
+  }
+};
+const generateUniqueId = (field) => {
+  return `${field}-${new Date().getTime()}`;
+};
 const generateTooltip = (field, title, tooltipText) => {
   if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
     return null; // Return null to skip rendering tooltip for these fields
   }
-
+  const uniqueId = generateUniqueId(field);
   return (
-    <div className={`mx-2 flex w-[20vw]`}>
-      <label className={`text-[13px] leading-5 text-gray-700 flex `}>{title}</label>
+    <div className={`mx-2 flex  ${field === 'Quantity' ? ' w-[22vw]' : ' w-[20vw]'}`}>
+      <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
+      <div className='relative'>
       <MdInfoOutline
-        data-tooltip-id={field}
+        data-tooltip-id={uniqueId}
         data-tooltip-content={tooltipText}
         className="mt-1 ml-2 text-[12px]"
       />
       <ReactTooltip
-        id={field}
+        id={uniqueId}
         place="top"
         effect="solid"
+      delayHide={200}
+        globalEventOff="scroll"
         style={{
           width: "290px",
           backgroundColor: "#000",
@@ -204,149 +209,132 @@ const generateTooltip = (field, title, tooltipText) => {
           boxShadow: 3,
           borderRadius: "8px",
           textAlign: 'left',
+
         }}
+
       />
+      </div>
+
     </div>
   );
 };
 
-const Purchased = ({location, year, month}) => {
+
+const Purchased = ({ location, year, month }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({})
   const [r_ui_schema, setRemoteUiSchema] = useState({})
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-
-  const getAuthToken = () => {
-      if (typeof window !== 'undefined') {
-          return localStorage.getItem('token')?.replace(/"/g, "");
-      }
-      return '';
-  };
-  const token = getAuthToken();
   const LoaderOpen = () => {
-      setLoOpen(true);
-    };
-    const LoaderClose = () => {
-      setLoOpen(false);
-    };
-
+    setLoOpen(true);
+  };
+  const LoaderClose = () => {
+    setLoOpen(false);
+  };
   const handleChange = (e) => {
-      setFormData(e.formData); // Ensure you are extracting formData from the event
+    setFormData(e.formData); // Validate data on change
   };
 
-  // The below code on updateFormData
-  let axiosConfig = {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    };
-    const updateFormData = async () => {
-      LoaderOpen();
-      const data = {
-          client_id: client_id,
-          user_id: user_id,
-          path: view_path,
-          form_data: formData,
-          location,
-          year,
-          month
-      }
 
-      const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
-      try {
-          const response = await axios.post(url, data, axiosConfig);
-          if (response.status === 200) {
-              toast.success("Data added successfully", {
-                  position: "top-right",
-                  autoClose: 3000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  theme: "light",
-              });
-              LoaderClose();
-              loadFormData();
-          } else {
-              toast.error("Oops, something went wrong", {
-                  position: "top-right",
-                  autoClose: 1000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  theme: "colored",
-              });
-              LoaderClose();
-          }
-      } catch (error) {
-          toast.error("Oops, something went wrong", {
-              position: "top-right",
-              autoClose: 1000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "colored",
-          });
-          LoaderClose();
+
+  const updateFormData = async () => {
+    LoaderOpen();
+    const data = {
+      client_id: client_id,
+      user_id: user_id,
+      path: view_path,
+      form_data: formData,
+      location,
+      year,
+      month
+    }
+
+    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
+    try {
+      const response = await axiosInstance.post(url, data);
+      if (response.status === 200) {
+        toast.success("Data added successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        LoaderClose();
+        loadFormData();
+      } else {
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        LoaderClose();
       }
+    } catch (error) {
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      LoaderClose();
+    }
   };
 
   const loadFormData = async () => {
-      LoaderOpen();
-      setFormData([{}])
-      const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
-      try {
-          const response = await axios.get(url, axiosConfig);
-          console.log('API called successfully:', response.data);
-          setRemoteSchema(response.data.form[0].schema);
-          setRemoteUiSchema(response.data.form[0].ui_schema);
-          const form_parent = response.data.form_data;
-          setFormData(form_parent[0].data);
-      } catch (error) {
-          console.error('API call failed:', error);
-      } finally {
-          LoaderClose();
-      }
+    LoaderOpen();
+    setFormData([{}])
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    try {
+      const response = await axiosInstance.get(url);
+      console.log('API called successfully:', response.data);
+      setRemoteSchema(response.data.form[0].schema);
+      setRemoteUiSchema(response.data.form[0].ui_schema);
+      const form_parent = response.data.form_data;
+      setFormData(form_parent[0].data);
+    } catch (error) {
+      console.error('API call failed:', error);
+    } finally {
+      LoaderClose();
+    }
   };
   //Reloading the forms
 
 
   // fetch backend and replace initialized forms
   useEffect(() => {
-      if (location && year && month) {
-          loadFormData();
-          toastShown.current = false; // Reset the flag when valid data is present
-      } else {
-          // Only show the toast if it has not been shown already
-          if (!toastShown.current) {
-              toast.warn("Please select location, year, and month first", {
-                  position: "top-right",
-                  autoClose: 5000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  theme: "colored",
-              });
-              toastShown.current = true; // Set the flag to true after showing the toast
-          }
+    if (location && year && month) {
+      loadFormData();
+      toastShown.current = false; // Reset the flag when valid data is present
+    } else {
+      // Only show the toast if it has not been shown already
+      if (!toastShown.current) {
+
+        toastShown.current = true; // Set the flag to true after showing the toast
       }
+    }
   }, [location, year, month]); // Dependencies // React only triggers this effect if these dependencies change
 
 
 
   const handleSubmit = (e) => {
-      e.preventDefault();
-      console.log('Form data:', formData);
-      updateFormData()
+    e.preventDefault();
+    updateFormData();
+
   };
 
   const handleAddNew = () => {
@@ -376,14 +364,15 @@ const Purchased = ({location, year, month}) => {
       </div>
     ));
   };
+
+
   return (
     <>
-
-        <ToastContainer style={{ fontSize: "12px" }} />
-        <div className={`overflow-auto custom-scrollbar flex`}>
+      <ToastContainer style={{ fontSize: "12px" }} />
+      <div className={`overflow-auto custom-scrollbar flex`}>
         <div>
           <div>
-            <div className='flex '>
+            <div className='flex'>
               {renderFields()} {/* Render dynamic fields with tooltips */}
             </div>
           </div>
@@ -396,15 +385,17 @@ const Purchased = ({location, year, month}) => {
             onChange={handleChange}
             validator={validator}
             widgets={{
+
               ...widgets,
+
               RemoveWidget: (props) => {
                 // Assuming the widget framework passes a unique ID that includes the index
-             // Make sure this ID fetching logic is correct
+                // Make sure this ID fetching logic is correct
                 return (
                   <RemoveWidget
-                  {...props}
-                  index={props.id.split('_')[1]} // Pass the index
-                  onRemove={handleRemove}
+                    {...props}
+                    index={props.id.split('_')[1]} // Pass the index
+                    onRemove={handleRemove}
                   />
                 );
               },
@@ -414,11 +405,14 @@ const Purchased = ({location, year, month}) => {
                   scopes="ec1"
                   setFormData={updateFormDatanew}
                 />
-              )
+              ),
 
             }}
+            onError={(errors) => setErrorMessages(errors)}
+          >
+          </Form>
 
-          />
+
         </div>
 
         {loopen && (
@@ -433,6 +427,9 @@ const Purchased = ({location, year, month}) => {
             />
           </div>
         )}
+      </div>
+      <div>
+
       </div>
 
       <div className="flex justify-start mt-4 right-1">

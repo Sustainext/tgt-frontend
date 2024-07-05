@@ -17,6 +17,8 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
+import selectWidget3 from '../../../../shared/widgets/Select/selectWidget3';
+import inputnumberWidget from "../../../../shared/widgets/Input/inputnumberWidget"
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
@@ -25,162 +27,170 @@ const widgets = {
   AssignTobutton: AssignToWidget,
   CustomSelectInputWidget: CustomSelectInputWidget,
   RemoveWidget: RemoveWidget,
+  selectWidget3: selectWidget3,
+  inputnumberWidget: inputnumberWidget,
 };
 
 const view_path = 'gri-environment-energy-302-3a-3b-3c-3d-energy_intensity'
 const client_id = 1
 const user_id = 1
 
-// const schema = {
-//   type: 'array',
-//   items: {
-//     type: 'object',
-//     properties: {
-//       EnergyType: {
-//         type: "string",
-//         title: "Energy Type",
-//         enum: ['heating', 'cooling', 'steam', 'electricity', 'Fuel', 'Energy inside the organization (302-1)', 'Energy outside the organization (302-2)', 'Total Energy (302-1+302-2)', 'others'],
-//         tooltiptext: "Indicate the type of energy for which energy intensity should be calculated",
-//       },
-//       EnergyQuantity: {
-//         type: "string",
-//         title: "Energy Quantity",
-//         tooltiptext: "Indicate the quantity of Energy Type"
-//       },
-//       Unit: {
-//         type: "string",
-//         title: "Unit",
-//         enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
-//         tooltiptext: "Select the correct unit corresponding to the quantity"
-//       },
-//       Organizationmetric: {
-//         type: "string",
-//         title: "Organization Metric",
-//         enum: ['Production volume', 'size', 'number of full time employees', 'monetary units (such as revenue or sales)', 'Production units', 'MMBtu'],
-//         tooltiptext: "Select the organization metric for the corresponding Energy Intensity metric "
-//       },
-//       Metricquantity: {
-//         type: "string",
-//         title: "Metric Quantity",
-//         tooltiptext: "Indicate the quantity for Organization metric"
-//       },
-//       Metricunit: {
-//         type: "string",
-//         title: "Metric Unit",
-//         enum: ['Tonne', 'meter square', 'sales unit', 'liters', 'MWh', 'Revenue','FTE','Others'],
-//         tooltiptext: "Select the correct unit corresponding to the metric quantity."
-//       },
-//       AssignTo: {
-//         type: "string",
-//         title: "Assign To",
-//       },
-//       FileUpload: {
-//         type: "string",
-//         format: "data-url",
-//         title: "File Upload",
-//       },
-//       Remove: {
-//         type: "string",
-//         title: "Remove",
-//       },
-//       // Define other properties as needed
-//     }
-//   }
-// };
+const schema = {
+  type: 'array',
+  items: {
+    type: 'object',
+    properties: {
+      EnergyType: {
+        type: "string",
+        title: "Energy Type",
+        enum: ['heating', 'cooling', 'steam', 'electricity', 'Fuel', 'Energy inside the organization (302-1)', 'Energy outside the organization (302-2)', 'Total Energy (302-1+302-2)', 'others'],
+        tooltiptext: "Indicate the type of energy for which energy intensity should be calculated",
+      },
+      EnergyQuantity: {
+        type: "string",
+        title: "Energy Quantity",
+        tooltiptext: "Indicate the quantity of Energy Type"
+      },
+      Unit: {
+        type: "string",
+        title: "Unit",
+        enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
+        tooltiptext: "Select the correct unit corresponding to the quantity"
+      },
+      Organizationmetric: {
+        type: "string",
+        title: "Organization Metric",
+        enum: ['Production volume', 'size', 'number of full time employees', 'monetary units (such as revenue or sales)', 'Production units', 'MMBtu'],
+        tooltiptext: "Select the organization metric for the corresponding Energy Intensity metric "
+      },
+      Metricquantity: {
+        type: "string",
+        title: "Metric Quantity",
+        tooltiptext: "Indicate the quantity for Organization metric"
+      },
+      Metricunit: {
+        type: "string",
+        title: "Metric Unit",
+        enum: ['Tonne', 'meter square', 'sales unit', 'liters', 'MWh', 'Revenue','FTE','Others'],
+        tooltiptext: "Select the correct unit corresponding to the metric quantity."
+      },
+      AssignTo: {
+        type: "string",
+        title: "Assign To",
+      },
+      FileUpload: {
+        type: "string",
+        format: "data-url",
+        title: "File Upload",
+      },
+      Remove: {
+        type: "string",
+        title: "Remove",
+      },
+    }
+  }
+};
 
-// const uiSchema = {
-//  // Add flex-wrap to wrap fields to the next line
-//   items: {
-//     classNames: 'fieldset',
-//     'ui:order': [
-//       'EnergyType', 'EnergyQuantity', 'Unit', 'Organizationmetric', 'Metricquantity', 'Metricunit', 'AssignTo', 'FileUpload', 'Remove'
-//     ],
-//     EnergyType: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false,
-//       },
-//     },
-//     EnergyQuantity: {
-//       'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     Unit: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     Organizationmetric: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     Metricquantity: {
-//       'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     Metricunit: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     AssignTo: {
-//       "ui:widget": "AssignTobutton",
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     FileUpload: {
-//       'ui:widget': 'FileUploadWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     Remove: {
-//       "ui:widget": "RemoveWidget",
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     'ui:options': {
-//       orderable: false, // Prevent reordering of items
-//       addable: false, // Prevent adding items from UI
-//       removable: false, // Prevent removing items from UI
-//       layout: 'horizontal', // Set layout to horizontal
-//     }
-//   }
-// };
+const uiSchema = {
 
+  items: {
+    classNames: 'fieldset',
+    'ui:order': [
+      'EnergyType', 'EnergyQuantity', 'Unit', 'Organizationmetric', 'Metricquantity', 'Metricunit', 'AssignTo', 'FileUpload', 'Remove'
+    ],
+    EnergyType: {
+      'ui:widget': 'selectWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false,
+      },
+    },
+    EnergyQuantity: {
+      'ui:widget': 'inputnumberWidget',
+      'ui:options': {
+        label: false
+      },
+    },
+    Unit: {
+      'ui:widget': 'selectWidget3',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    Organizationmetric: {
+      'ui:widget': 'selectWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    Metricquantity: {
+      'ui:widget': 'inputnumberWidget',
+      'ui:options': {
+        label: false
+      },
+    },
+    Metricunit: {
+      'ui:widget': 'selectWidget3',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    AssignTo: {
+      "ui:widget": "AssignTobutton",
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    FileUpload: {
+      'ui:widget': 'FileUploadWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    Remove: {
+      "ui:widget": "RemoveWidget",
+      'ui:options': {
+        label: false
+      },
+    },
+      'ui:options': {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: 'horizontal',
+    }
+  }
+};
+
+const generateUniqueId = (field) => {
+  return `${field}-${new Date().getTime()}`;
+};
 const generateTooltip = (field, title, tooltipText) => {
   if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
     return null; // Return null to skip rendering tooltip for these fields
   }
-
+  const uniqueId = generateUniqueId(field);
   return (
-    <div className='mx-2 flex w-[20vw]'>
-      <label className="text-[13px] leading-5 text-gray-700 flex">{title}</label>
+    <div className={`mx-2 flex ${field === 'EnergyQuantity' ? 'w-[22vw]' :  field === 'Metricquantity'? 'w-[21vw]' : field === 'Unit' || field === 'MetricUnit' ? 'w-[5.2vw]' : 'w-[20vw]'
+    }`}>
+      <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
+      <div className='relative'>
       <MdInfoOutline
-        data-tooltip-id={field}
+        data-tooltip-id={uniqueId}
         data-tooltip-content={tooltipText}
         className="mt-1 ml-2 text-[12px]"
       />
       <ReactTooltip
-        id={field}
+        id={uniqueId}
         place="top"
         effect="solid"
+      delayHide={200}
+        globalEventOff="scroll"
         style={{
           width: "290px",
           backgroundColor: "#000",
@@ -189,8 +199,12 @@ const generateTooltip = (field, title, tooltipText) => {
           boxShadow: 3,
           borderRadius: "8px",
           textAlign: 'left',
+
         }}
+
       />
+      </div>
+
     </div>
   );
 };
@@ -381,7 +395,7 @@ const Intensity = ({location, year, month}) => {
           <Form
           className='flex'
             schema={r_schema}
-            uiSchema={r_ui_schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

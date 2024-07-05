@@ -6,12 +6,18 @@ import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import Reclaimedproductspackdging from "./reclaimed-products-packaging";
 import Datacollection from "./data-collection"
-const AccordionItem = ({ title, children, tooltiptext, sdg, display,sdgdiplay,location,setLocationMessage,year }) => {
+
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,sdgdiplay,location,setLocationMessage,year, setYearMessage }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
   const handleClick = () => {
     if (!location) {
-      setLocationMessage("Please select a location and year")
+      setLocationMessage("Please select a location")
+
+      return;
+    }
+    if (!year) {
+      setYearMessage("Please select a location")
 
       return;
     }
@@ -76,7 +82,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,sdgdiplay,lo
   );
 };
 
-const Reclaimedproductsbody = ({location, year, month,setLocationMessage}) => {
+const Reclaimedproductsbody = ({location, year, month,setLocationMessage, setYearMessage}) => {
   return (
     <>
       <div className="mx-3">
@@ -96,6 +102,8 @@ const Reclaimedproductsbody = ({location, year, month,setLocationMessage}) => {
           sdgdiplay="block"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
 
           <Reclaimedproductspackdging location={location} year={year} month={month}/>
@@ -109,6 +117,8 @@ const Reclaimedproductsbody = ({location, year, month,setLocationMessage}) => {
           sdgdiplay="none"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
 
           <Datacollection location={location} year={year} month={month}/>

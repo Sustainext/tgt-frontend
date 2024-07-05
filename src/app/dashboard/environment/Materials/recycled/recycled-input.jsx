@@ -17,6 +17,8 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
+import selectWidget3 from '../../../../shared/widgets/Select/selectWidget3';
+import inputnumberWidget from "../../../../shared/widgets/Input/inputnumberWidget"
 const widgets = {
     inputWidget: inputWidget,
     dateWidget: dateWidget,
@@ -25,202 +27,214 @@ const widgets = {
     AssignTobutton: AssignToWidget,
     CustomSelectInputWidget: CustomSelectInputWidget,
     RemoveWidget: RemoveWidget,
+    selectWidget3: selectWidget3,
+    inputnumberWidget: inputnumberWidget,
 };
 
 const view_path = 'gri-environment-materials-301-2a-recycled_input_materials'
 const client_id = 1
 const user_id = 1
 
-// const schema = {
-//     type: 'array',
-//     items: {
-//         type: 'object',
-//         properties: {
-//             Totalweight: {
-//                 type: "string",
-//                 title: "Total weight/volume",
-//                 tooltiptext: "Use the total weight or volume of materials used as specified in Disclosure 301-1",
-//                 display: "block",
+const schema = {
+    type: 'array',
+    items: {
+        type: 'object',
+        properties: {
+            Totalweight: {
+                type: "string",
+                title: "Total weight/volume",
+                tooltiptext: "Use the total weight or volume of materials used as specified in Disclosure 301-1",
+                display: "block",
 
-//             },
-//             Recycledmaterialsused: {
-//                 type: "string",
-//                 title: "Recycled materials used",
-//                 enum: ['Yes', 'No'],
-//                 tooltiptext: "Does the company use recycled materials in its production process?",
-//                 display: "block",
-//             },
-//             Typeofrecycledmaterialused: {
-//                 type: "string",
-//                 title: "Type of recycled material used",
-//                 enum: ['Recycled plastic', 'Recycled metal', 'Recycled paper products', 'Recycled Glass', 'Natural materials', 'Others'],
-//                 tooltiptext: "What types of recycled materials does the company use?",
-//                 display: "block",
-//             },
-//             Amountofmaterialrecycled: {
-//                 type: "string",
-//                 title: "Amount of material recycled ",
-//                 tooltiptext: "Please specify the amount of material the company recycled during the reporting period.",
-//                 display: "block",
-//             },
+            },
+            Recycledmaterialsused: {
+                type: "string",
+                title: "Recycled materials used",
+                enum: ['Yes', 'No'],
+                tooltiptext: "Does the company use recycled materials in its production process?",
+                display: "block",
+            },
+            Typeofrecycledmaterialused: {
+                type: "string",
+                title: "Type of recycled material used",
+                enum: ['Recycled plastic', 'Recycled metal', 'Recycled paper products', 'Recycled Glass', 'Natural materials', 'Others'],
+                tooltiptext: "What types of recycled materials does the company use?",
+                display: "block",
+            },
+            Amountofmaterialrecycled: {
+                type: "string",
+                title: "Amount of material recycled ",
+                tooltiptext: "Please specify the amount of material the company recycled during the reporting period.",
+                display: "block",
+            },
 
-//             Unit: {
-//                 type: "string",
-//                 title: "Unit",
-//                 enum: ['Cubic centimeter cm3', 'Cubic decimeter dm3', 'Cubic meter m3', 'Gram', 'Kilogram Kg', 'Liter', 'Milligram', 'Milliliter', 'Fluid Ounce fl Oz', 'Gallon Gal', 'Pint Pt', 'Pound Lb', 'Quart Qt', 'Cubic foot ft3', 'Metric ton', 'US short ton (tn)'],
-//                 tooltiptext: "Use 1000 kilograms as the measure for a metric ton.",
-//                 display: "none",
-//             },
-//             Amountofrecycledinputmaterialused: {
-//                 type: "string",
-//                 title: "Amount of recycled input material used ",
-//                 tooltiptext: "How much recycled material is used for the production of goods or services? Recycled Input Materials: Materials that have been used and then processed into new materials. ",
-//                 display: "block",
-//             },
+            Unit: {
+                type: "string",
+                title: "Unit",
+                enum: ['Cubic centimeter cm3', 'Cubic decimeter dm3', 'Cubic meter m3', 'Gram', 'Kilogram Kg', 'Liter', 'Milligram', 'Milliliter', 'Fluid Ounce fl Oz', 'Gallon Gal', 'Pint Pt', 'Pound Lb', 'Quart Qt', 'Cubic foot ft3', 'Metric ton', 'US short ton (tn)'],
+                tooltiptext: "Use 1000 kilograms as the measure for a metric ton.",
+                display: "none",
+            },
+            Amountofrecycledinputmaterialused: {
+                type: "string",
+                title: "Amount of recycled input material used ",
+                tooltiptext: "How much recycled material is used for the production of goods or services? Recycled Input Materials: Materials that have been used and then processed into new materials. ",
+                display: "block",
+            },
 
-//             Unit2: {
-//                 type: "string",
-//                 title: "Unit",
-//                 enum: ['Cubic centimeter cm3', 'Cubic decimeter dm3', 'Cubic meter m3', 'Gram', 'Kilogram Kg', 'Liter', 'Milligram', 'Milliliter', 'Fluid Ounce fl Oz', 'Gallon Gal', 'Pint Pt', 'Pound Lb', 'Quart Qt', 'Cubic foot ft3', 'Metric ton', 'US short ton (tn)'],
-//                 tooltiptext: "Use 1000 kilograms as the measure for a metric ton.",
-//                 display: "none",
-//             },
-//             AssignTo: {
-//                 type: "string",
-//                 title: "Assign To",
-//             },
-//             FileUpload: {
-//                 type: "string",
-//                 format: "data-url",
-//                 title: "File Upload",
-//             },
-//             Remove: {
-//                 type: "string",
-//                 title: "Remove",
-//             },
-//             // Define other properties as needed
-//         }
-//     }
-// };
+            Unit2: {
+                type: "string",
+                title: "Unit",
+                enum: ['Cubic centimeter cm3', 'Cubic decimeter dm3', 'Cubic meter m3', 'Gram', 'Kilogram Kg', 'Liter', 'Milligram', 'Milliliter', 'Fluid Ounce fl Oz', 'Gallon Gal', 'Pint Pt', 'Pound Lb', 'Quart Qt', 'Cubic foot ft3', 'Metric ton', 'US short ton (tn)'],
+                tooltiptext: "Use 1000 kilograms as the measure for a metric ton.",
+                display: "none",
+            },
+            AssignTo: {
+                type: "string",
+                title: "Assign To",
+            },
+            FileUpload: {
+                type: "string",
+                format: "data-url",
+                title: "File Upload",
+            },
+            Remove: {
+                type: "string",
+                title: "Remove",
+            },
 
-// const uiSchema = {
-//     // Add flex-wrap to wrap fields to the next line
-//     items: {
-//         classNames: 'fieldset',
-//         'ui:order': [
-//             'Totalweight', 'Recycledmaterialsused', 'Typeofrecycledmaterialused', 'Amountofmaterialrecycled', 'Unit', 'Amountofrecycledinputmaterialused', 'Unit2', 'AssignTo', 'FileUpload', 'Remove'
-//         ],
-//         Totalweight: {
-//             'ui:widget': 'inputWidget',
-//             'ui:horizontal': true,
-//             'ui:options': {
-//                 label: false // This disables the label for this field
-//             },
-//         },
-//         Recycledmaterialsused: {
-//             'ui:widget': 'selectWidget',
-//             'ui:horizontal': true,
-//             'ui:options': {
-//                 label: false,
-//             },
-//         },
-//         Typeofrecycledmaterialused: {
-//             'ui:widget': 'selectWidget', // Use your custom widget for QuantityUnit
-//             'ui:options': {
-//                 label: false // This disables the label for this field
-//             },
-//         },
-//         Amountofmaterialrecycled: {
-//             'ui:widget': 'inputWidget',
-//             'ui:horizontal': true,
-//             'ui:options': {
-//                 label: false // This disables the label for this field
-//             },
-//         },
-
-
-//         Unit: {
-//             'ui:widget': 'selectWidget',
-//             'ui:horizontal': true,
-//             'ui:options': {
-//                 label: false // This disables the label for this field
-//             },
-//         },
-//         Amountofrecycledinputmaterialused: {
-//             'ui:widget': 'inputWidget',
-//             'ui:horizontal': true,
-//             'ui:options': {
-//                 label: false // This disables the label for this field
-//             },
-//         },
-//         Unit2: {
-//             'ui:widget': 'selectWidget',
-//             'ui:horizontal': true,
-//             'ui:options': {
-//                 label: false // This disables the label for this field
-//             },
-//         },
-//         AssignTo: {
-//             "ui:widget": "AssignTobutton",
-//             'ui:horizontal': true,
-//             'ui:options': {
-//                 label: false // This disables the label for this field
-//             },
-//         },
-//         FileUpload: {
-//             'ui:widget': 'FileUploadWidget',
-//             'ui:horizontal': true,
-//             'ui:options': {
-//                 label: false // This disables the label for this field
-//             },
-//         },
-//         Remove: {
-//             "ui:widget": "RemoveWidget",
-//             'ui:options': {
-//                 label: false // This disables the label for this field
-//             },
-//         },
-//         'ui:options': {
-//             orderable: false, // Prevent reordering of items
-//             addable: false, // Prevent adding items from UI
-//             removable: false, // Prevent removing items from UI
-//             layout: 'horizontal', // Set layout to horizontal
-//         }
-//     }
-// };
-
-const generateTooltip = (field, title, tooltipText, display) => {
-    if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
-        return null; // Return null to skip rendering tooltip for these fields
+        }
     }
-
-    return (
-        <div className='mx-2 flex w-[20vw]'>
-            <label className="text-[13px] leading-5 text-gray-700 flex">{title}</label>
-            <MdInfoOutline
-                data-tooltip-id={field}
-                data-tooltip-content={tooltipText}
-                className="mt-1 ml-2 text-[12px]"
-                style={{ display: display }}
-            />
-            <ReactTooltip
-                id={field}
-                place="top"
-                effect="solid"
-                style={{
-                    width: "290px",
-                    backgroundColor: "#000",
-                    color: "white",
-                    fontSize: "12px",
-                    boxShadow: 3,
-                    borderRadius: "8px",
-                    textAlign: 'left',
-                }}
-            />
-        </div>
-    );
 };
 
+const uiSchema = {
+
+    items: {
+        classNames: 'fieldset',
+        'ui:order': [
+            'Totalweight', 'Recycledmaterialsused', 'Typeofrecycledmaterialused', 'Amountofmaterialrecycled', 'Unit', 'Amountofrecycledinputmaterialused', 'Unit2', 'AssignTo', 'FileUpload', 'Remove'
+        ],
+        Totalweight: {
+            'ui:widget': 'inputWidget',
+            'ui:inputtype':'number',
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false
+            },
+        },
+        Recycledmaterialsused: {
+            'ui:widget': 'selectWidget',
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false,
+            },
+        },
+        Typeofrecycledmaterialused: {
+            'ui:widget': 'selectWidget',
+            'ui:options': {
+                label: false
+            },
+        },
+        Amountofmaterialrecycled: {
+            'ui:widget': 'inputnumberWidget',
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false
+            },
+        },
+
+
+        Unit: {
+            'ui:widget': 'selectWidget3',
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false
+            },
+        },
+        Amountofrecycledinputmaterialused: {
+            'ui:widget': 'inputnumberWidget',
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false
+            },
+        },
+        Unit2: {
+            'ui:widget': 'selectWidget3',
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false
+            },
+        },
+        AssignTo: {
+            "ui:widget": "AssignTobutton",
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false
+            },
+        },
+        FileUpload: {
+            'ui:widget': 'FileUploadWidget',
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false
+            },
+        },
+        Remove: {
+            "ui:widget": "RemoveWidget",
+            'ui:options': {
+                label: false
+            },
+        },
+        'ui:options': {
+            orderable: false,
+            addable: false,
+            removable: false,
+            layout: 'horizontal',
+        }
+    }
+};
+
+const generateUniqueId = (field) => {
+    return `${field}-${new Date().getTime()}`;
+  };
+  const generateTooltip = (field, title, tooltipText) => {
+    if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
+      return null; // Return null to skip rendering tooltip for these fields
+    }
+    const uniqueId = generateUniqueId(field);
+    return (
+      <div className={`mx-2 flex ${field === 'Amountofmaterialrecycled' || field === 'Amountofrecycledinputmaterialused'   ? 'w-[22vw]' :   field === 'Unit' || field === 'Unit2' ? 'w-[5.2vw]' : 'w-[20vw]'
+      }`}>
+        <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
+        <div className='relative'>
+        <MdInfoOutline
+          data-tooltip-id={uniqueId}
+          data-tooltip-content={tooltipText}
+          className="mt-1 ml-2 text-[12px]"
+        />
+        <ReactTooltip
+          id={uniqueId}
+          place="top"
+          effect="solid"
+        delayHide={200}
+          globalEventOff="scroll"
+          style={{
+            width: "290px",
+            backgroundColor: "#000",
+            color: "white",
+            fontSize: "12px",
+            boxShadow: 3,
+            borderRadius: "8px",
+            textAlign: 'left',
+
+          }}
+
+        />
+        </div>
+
+      </div>
+    );
+  };
 const Recycledinput = ({location, year, month}) => {
     const { open } = GlobalState();
     const [formData, setFormData] = useState([{}]);
@@ -393,8 +407,6 @@ const Recycledinput = ({location, year, month}) => {
       };
     return (
         <>
-
-             <ToastContainer style={{ fontSize: "12px" }} />
         <ToastContainer style={{ fontSize: "12px" }} />
         <div className={`overflow-auto custom-scrollbar flex`}>
                 <div>

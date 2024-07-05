@@ -36,7 +36,7 @@ const schema = {
 };
 
 
-const uiSchema = { // Add flex-wrap to wrap fields to the next line
+const uiSchema = {
     items: {
         Q1: {
             "ui:hadding": "Impact Analysis: Inputs, Activities, Outputs",
@@ -49,7 +49,7 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
             "ui:Gri": "GRI 306-1a",
             'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Q2: {
@@ -63,7 +63,7 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
             "ui:Gri": "GRI 306-1b",
             'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         'ui:options': {

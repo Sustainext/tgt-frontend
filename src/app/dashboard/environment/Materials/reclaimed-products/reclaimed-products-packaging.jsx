@@ -17,6 +17,8 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
+import selectWidget3 from '../../../../shared/widgets/Select/selectWidget3';
+import inputnumberWidget from "../../../../shared/widgets/Input/inputnumberWidget"
 const widgets = {
     inputWidget: inputWidget,
     dateWidget: dateWidget,
@@ -25,253 +27,264 @@ const widgets = {
     AssignTobutton: AssignToWidget,
     CustomSelectInputWidget: CustomSelectInputWidget,
     RemoveWidget: RemoveWidget,
+    selectWidget3: selectWidget3,
+    inputnumberWidget: inputnumberWidget,
 };
 
-const view_path = '	gri-environment-materials-301-3a-3b-reclaimed_products'
+const view_path = 'gri-environment-materials-301-3a-3b-reclaimed_products'
 const client_id = 1
 const user_id = 1
 
-// const schema = {
-//     type: 'array',
-//     items: {
-//         type: 'object',
-//         properties: {
-//             Typesofproducts: {
-//                 type: "string",
-//                 title: "Types of products sold ",
-//                 tooltiptext: "What types of products did the company sell in the reporting period?",
-//                 display: "block",
+const schema = {
+    type: 'array',
+    items: {
+        type: 'object',
+        properties: {
+            Typesofproducts: {
+                type: "string",
+                title: "Types of products sold ",
+                tooltiptext: "What types of products did the company sell in the reporting period?",
+                display: "block",
 
-//             },
-//             Productclassification: {
-//                 type: "string",
-//                 title: "Product classification",
-//                 enum: ['ASIN', 'DOI', 'EAN', 'GPC', 'ISBN', 'ISMN', 'ISRC', 'MPN', 'UPC', 'UNSPSC', 'Others'],
-//                 tooltiptext: "Which type of global product classification code applies to this product?For example: ISSN, UNSPSC, GPC, etc.",
-//                 display: "block",
-//             },
-//             Productcode: {
-//                 type: "string",
-//                 title: "Product code",
-//                 tooltiptext: "Does the product have a globally recognized product classification code? If yes, please mention the product code. For example: ISSN number, GPC code, Global trade item number (GTIN), etc.",
-//                 display: "block",
-//             },
-//             Productname: {
-//                 type: "string",
-//                 title: "Product name",
-//                 tooltiptext: "Please mention the actual name of the product.",
-//                 display: "block",
-//             },
-//             Amountofproducts: {
-//                 type: "string",
-//                 title: "Amount of products sold",
-//                 tooltiptext: "Please specify the total amount of products sold by the company during the reporting period.",
-//                 display: "block",
-//             },
-//             Unit: {
-//                 type: "string",
-//                 title: "Unit",
-//                 enum: ['Cubic centimeter cm3', 'Cubic decimeter dm3', 'Cubic meter m3', 'Gram', 'Kilogram Kg', 'Liter', 'Milligram', 'Milliliter', 'Fluid Ounce fl Oz', 'Gallon Gal', 'Pint Pt', 'Pound Lb', 'Quart Qt', 'Cubic foot ft3', 'Metric ton', 'US short ton (tn)'],
-//                 tooltiptext: "Use 1000 kilograms as the measure for a metric ton.",
-//                 display: "none",
-//             },
-//             Recycledmaterialsused: {
-//                 type: "string",
-//                 title: "Recycled materials used ",
-//                 enum: ['Yes', 'No'],
-//                 tooltiptext: "Does the company use recycled materials in its packaging?",
-//                 display: "block",
-//             },
-//             Typesofrecycledmaterials: {
-//                 type: "string",
-//                 title: "Types of recycled materials",
-//                 enum: ['Cardboard', 'Folding carton', 'Glass Bottles', 'Glass Jars', 'Metal cans', 'Paper', 'Plastic', 'Wooden crates', 'Wood', 'Bamboo', 'Cellulose', 'Corn starch', 'Mushroom packaging', 'Organic Fabric', 'Others'],
-//                 tooltiptext: "Does the company use recycled materials in its packaging?",
-//                 display: "block",
-//             },
-//             Amountsproduct: {
-//                 type: "string",
-//                 title: "Amounts of product and packaging materials recycled",
-//                 tooltiptext: "Please specify the amount of material the company recycled during the reporting period.",
-//                 display: "block",
-//             },
+            },
+            Productclassification: {
+                type: "string",
+                title: "Product classification",
+                enum: ['ASIN', 'DOI', 'EAN', 'GPC', 'ISBN', 'ISMN', 'ISRC', 'MPN', 'UPC', 'UNSPSC', 'Others'],
+                tooltiptext: "Which type of global product classification code applies to this product?For example: ISSN, UNSPSC, GPC, etc.",
+                display: "block",
+            },
+            Productcode: {
+                type: "string",
+                title: "Product code",
+                tooltiptext: "Does the product have a globally recognized product classification code? If yes, please mention the product code. For example: ISSN number, GPC code, Global trade item number (GTIN), etc.",
+                display: "block",
+            },
+            Productname: {
+                type: "string",
+                title: "Product name",
+                tooltiptext: "Please mention the actual name of the product.",
+                display: "block",
+            },
+            Amountofproducts: {
+                type: "string",
+                title: "Amount of products sold",
+                tooltiptext: "Please specify the total amount of products sold by the company during the reporting period.",
+                display: "block",
+            },
+            Unit: {
+                type: "string",
+                title: "Unit",
+                enum: ['Cubic centimeter cm3', 'Cubic decimeter dm3', 'Cubic meter m3', 'Gram', 'Kilogram Kg', 'Liter', 'Milligram', 'Milliliter', 'Fluid Ounce fl Oz', 'Gallon Gal', 'Pint Pt', 'Pound Lb', 'Quart Qt', 'Cubic foot ft3', 'Metric ton', 'US short ton (tn)'],
+                tooltiptext: "Use 1000 kilograms as the measure for a metric ton.",
+                display: "none",
+            },
+            Recycledmaterialsused: {
+                type: "string",
+                title: "Recycled materials used ",
+                enum: ['Yes', 'No'],
+                tooltiptext: "Does the company use recycled materials in its packaging?",
+                display: "block",
+            },
+            Typesofrecycledmaterials: {
+                type: "string",
+                title: "Types of recycled materials",
+                enum: ['Cardboard', 'Folding carton', 'Glass Bottles', 'Glass Jars', 'Metal cans', 'Paper', 'Plastic', 'Wooden crates', 'Wood', 'Bamboo', 'Cellulose', 'Corn starch', 'Mushroom packaging', 'Organic Fabric', 'Others'],
+                tooltiptext: "Does the company use recycled materials in its packaging?",
+                display: "block",
+            },
+            Amountsproduct: {
+                type: "string",
+                title: "Amounts of product and packaging materials recycled",
+                tooltiptext: "Please specify the amount of material the company recycled during the reporting period.",
+                display: "block",
+            },
 
-//             Unit2: {
-//                 type: "string",
-//                 title: "Unit",
-//                 enum: ['Cubic centimeter cm3', 'Cubic decimeter dm3', 'Cubic meter m3', 'Gram', 'Kilogram Kg', 'Liter', 'Milligram', 'Milliliter', 'Fluid Ounce fl Oz', 'Gallon Gal', 'Pint Pt', 'Pound Lb', 'Quart Qt', 'Cubic foot ft3', 'Metric ton', 'US short ton (tn)'],
-//                 tooltiptext: "Please specify the total weight or volume of recycled packaging material that the company used in the reporting period.",
-//                 display: "block",
-//             },
-//             Datacollectionmethod: {
-//                 type: "string",
-//                 title: "Data collection method",
-//                 tooltiptext: "Please specify how the data for the recycled materials was collected.",
-//                 display: "block",
-//             },
-//             AssignTo: {
-//                 type: "string",
-//                 title: "Assign To",
-//             },
-//             FileUpload: {
-//                 type: "string",
-//                 format: "data-url",
-//                 title: "File Upload",
-//             },
-//             Remove: {
-//                 type: "string",
-//                 title: "Remove",
-//             },
-//             // Define other properties as needed
-//         }
-//     }
-// };
+            Unit2: {
+                type: "string",
+                title: "Unit",
+                enum: ['Cubic centimeter cm3', 'Cubic decimeter dm3', 'Cubic meter m3', 'Gram', 'Kilogram Kg', 'Liter', 'Milligram', 'Milliliter', 'Fluid Ounce fl Oz', 'Gallon Gal', 'Pint Pt', 'Pound Lb', 'Quart Qt', 'Cubic foot ft3', 'Metric ton', 'US short ton (tn)'],
+                tooltiptext: "Please specify the total weight or volume of recycled packaging material that the company used in the reporting period.",
+                display: "block",
+            },
+            Datacollectionmethod: {
+                type: "string",
+                title: "Data collection method",
+                tooltiptext: "Please specify how the data for the recycled materials was collected.",
+                display: "block",
+            },
+            AssignTo: {
+                type: "string",
+                title: "Assign To",
+            },
+            FileUpload: {
+                type: "string",
+                format: "data-url",
+                title: "File Upload",
+            },
+            Remove: {
+                type: "string",
+                title: "Remove",
+            },
 
-// const uiSchema = {
-//     // Add flex-wrap to wrap fields to the next line
-//     items: {
-//         classNames: 'fieldset',
-//         'ui:order': [
-//             'Typesofproducts', 'Productclassification', 'Productcode', 'Productname','Amountofproducts', 'Unit', 'Recycledmaterialsused','Typesofrecycledmaterials','Amountsproduct', 'Unit2','Datacollectionmethod', 'AssignTo', 'FileUpload', 'Remove'
-//         ],
-//         Typesofproducts: {
-//             'ui:widget': 'inputWidget',
-//             'ui:horizontal': true,
-//             'ui:options': {
-//                 label: false // This disables the label for this field
-//             },
-//         },
-//         Productclassification: {
-//             'ui:widget': 'selectWidget',
-//             'ui:horizontal': true,
-//             'ui:options': {
-//                 label: false,
-//             },
-//         },
-//         Productcode: {
-//             'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
-//             'ui:options': {
-//                 label: false // This disables the label for this field
-//             },
-//         },
-//         Productname: {
-//             'ui:widget': 'inputWidget',
-//             'ui:horizontal': true,
-//             'ui:options': {
-//                 label: false // This disables the label for this field
-//             },
-//         },
-//         Amountofproducts: {
-//             'ui:widget': 'inputWidget',
-//             'ui:horizontal': true,
-//             'ui:options': {
-//                 label: false // This disables the label for this field
-//             },
-//         },
-
-//         Unit: {
-//             'ui:widget': 'selectWidget',
-//             'ui:horizontal': true,
-//             'ui:options': {
-//                 label: false // This disables the label for this field
-//             },
-//         },
-//         Recycledmaterialsused: {
-//             'ui:widget': 'selectWidget',
-//             'ui:horizontal': true,
-//             'ui:options': {
-//                 label: false // This disables the label for this field
-//             },
-//         },
-//         Typesofrecycledmaterials: {
-//             'ui:widget': 'selectWidget',
-//             'ui:horizontal': true,
-//             'ui:options': {
-//                 label: false // This disables the label for this field
-//             },
-//         },
-//         Amountsproduct: {
-//             'ui:widget': 'inputWidget',
-//             'ui:horizontal': true,
-//             'ui:options': {
-//                 label: false // This disables the label for this field
-//             },
-//         },
-
-//         Unit2: {
-//             'ui:widget': 'selectWidget',
-//             'ui:horizontal': true,
-//             'ui:options': {
-//                 label: false // This disables the label for this field
-//             },
-//         },
-//         Datacollectionmethod: {
-//             'ui:widget': 'inputWidget',
-//             'ui:horizontal': true,
-//             'ui:options': {
-//                 label: false // This disables the label for this field
-//             },
-//         },
-//         AssignTo: {
-//             "ui:widget": "AssignTobutton",
-//             'ui:horizontal': true,
-//             'ui:options': {
-//                 label: false // This disables the label for this field
-//             },
-//         },
-//         FileUpload: {
-//             'ui:widget': 'FileUploadWidget',
-//             'ui:horizontal': true,
-//             'ui:options': {
-//                 label: false // This disables the label for this field
-//             },
-//         },
-//         Remove: {
-//             "ui:widget": "RemoveWidget",
-//             'ui:options': {
-//                 label: false // This disables the label for this field
-//             },
-//         },
-//         'ui:options': {
-//             orderable: false, // Prevent reordering of items
-//             addable: false, // Prevent adding items from UI
-//             removable: false, // Prevent removing items from UI
-//             layout: 'horizontal', // Set layout to horizontal
-//         }
-//     }
-// };
-
-const generateTooltip = (field, title, tooltipText, display) => {
-    if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
-        return null; // Return null to skip rendering tooltip for these fields
+        }
     }
-
-    return (
-        <div className='mx-2 flex w-[20vw]'>
-            <label className="text-[13px] leading-5 text-gray-700 flex">{title}</label>
-            <MdInfoOutline
-                data-tooltip-id={field}
-                data-tooltip-content={tooltipText}
-                className="mt-1 ml-1 text-[12px]"
-                style={{ display: display }}
-            />
-            <ReactTooltip
-                id={field}
-                place="top"
-                effect="solid"
-                style={{
-                    width: "290px",
-                    backgroundColor: "#000",
-                    color: "white",
-                    fontSize: "12px",
-                    boxShadow: 3,
-                    borderRadius: "8px",
-                    textAlign: 'left',
-                }}
-            />
-        </div>
-    );
 };
+
+const uiSchema = {
+
+    items: {
+        classNames: 'fieldset',
+        'ui:order': [
+            'Typesofproducts', 'Productclassification', 'Productcode', 'Productname','Amountofproducts', 'Unit', 'Recycledmaterialsused','Typesofrecycledmaterials','Amountsproduct', 'Unit2','Datacollectionmethod', 'AssignTo', 'FileUpload', 'Remove'
+        ],
+        Typesofproducts: {
+            'ui:widget': 'inputWidget',
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false
+            },
+        },
+        Productclassification: {
+            'ui:widget': 'selectWidget',
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false,
+            },
+        },
+        Productcode: {
+            'ui:widget': 'inputWidget',
+            'ui:options': {
+                label: false
+            },
+        },
+        Productname: {
+            'ui:widget': 'inputWidget',
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false
+            },
+        },
+        Amountofproducts: {
+            'ui:widget': 'inputnumberWidget',
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false
+            },
+        },
+
+        Unit: {
+            'ui:widget': 'selectWidget3',
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false
+            },
+        },
+        Recycledmaterialsused: {
+            'ui:widget': 'selectWidget',
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false
+            },
+        },
+        Typesofrecycledmaterials: {
+            'ui:widget': 'selectWidget',
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false
+            },
+        },
+        Amountsproduct: {
+            'ui:widget': 'inputnumberWidget',
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false
+            },
+        },
+
+        Unit2: {
+            'ui:widget': 'selectWidget3',
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false
+            },
+        },
+        Datacollectionmethod: {
+            'ui:widget': 'inputWidget',
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false
+            },
+        },
+        AssignTo: {
+            "ui:widget": "AssignTobutton",
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false
+            },
+        },
+        FileUpload: {
+            'ui:widget': 'FileUploadWidget',
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false
+            },
+        },
+        Remove: {
+            "ui:widget": "RemoveWidget",
+            'ui:options': {
+                label: false
+            },
+        },
+        'ui:options': {
+            orderable: false,
+            addable: false,
+            removable: false,
+            layout: 'horizontal',
+        }
+    }
+};
+
+const generateUniqueId = (field) => {
+    return `${field}-${new Date().getTime()}`;
+  };
+  const generateTooltip = (field, title, tooltipText) => {
+    if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
+      return null; // Return null to skip rendering tooltip for these fields
+    }
+    const uniqueId = generateUniqueId(field);
+    return (
+      <div className={`mx-2 flex ${field === 'Amountofproducts' || field === 'Amountsproduct'   ? 'w-[22vw]' :   field === 'Unit' || field === 'Unit2' ? 'w-[5.2vw]' : 'w-[20vw]'
+      }`}>
+        <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
+        <div className='relative'>
+        <MdInfoOutline
+          data-tooltip-id={uniqueId}
+          data-tooltip-content={tooltipText}
+          className="mt-1 ml-2 text-[12px]"
+        />
+        <ReactTooltip
+          id={uniqueId}
+          place="top"
+          effect="solid"
+
+          style={{
+            width: "290px",
+            backgroundColor: "#000",
+            color: "white",
+            fontSize: "12px",
+            boxShadow: 3,
+            borderRadius: "8px",
+            textAlign: 'left',
+
+          }}
+
+        />
+        </div>
+
+      </div>
+    );
+  };
 
 const Reclaimedproductspackdging = ({location, year, month}) => {
     const { open } = GlobalState();
@@ -445,7 +458,6 @@ const Reclaimedproductspackdging = ({location, year, month}) => {
     return (
         <>
 
-             <ToastContainer style={{ fontSize: "12px" }} />
         <ToastContainer style={{ fontSize: "12px" }} />
         <div className={`overflow-auto custom-scrollbar flex`}>
                 <div>
@@ -457,8 +469,8 @@ const Reclaimedproductspackdging = ({location, year, month}) => {
 
                     <Form
                         className='flex'
-                        schema={r_schema}
-                        uiSchema={r_ui_schema}
+                        schema={schema}
+                        uiSchema={uiSchema}
                         formData={formData}
                         onChange={handleChange}
                         validator={validator}

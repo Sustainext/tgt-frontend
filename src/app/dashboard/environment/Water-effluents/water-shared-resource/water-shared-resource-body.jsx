@@ -8,12 +8,17 @@ import Watersharedresourceimpact from "./water-shared-resource-impect";
 import Sharedresource from "./shared-resource";
 import Receivingwaterbody from "./receiving-waterbody"
 import { handleClientScriptLoad } from "next/script";
-const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year }) => {
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year,setYearMessage }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
   const handleClick = () => {
     if (!location) {
-      setLocationMessage("Please select a location and year")
+      setLocationMessage("Please select a location")
+
+      return;
+    }
+    if (!year) {
+      setYearMessage("Please select a year")
 
       return;
     }
@@ -77,7 +82,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
   );
 };
 
-const Watersharedresourcebody = ({location, year, month,setLocationMessage}) => {
+const Watersharedresourcebody = ({location, year, month,setLocationMessage,setYearMessage}) => {
 
 
   return (
@@ -90,6 +95,8 @@ const Watersharedresourcebody = ({location, year, month,setLocationMessage}) => 
           display="block"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
 
           <Watersharedresourceimpact location={location} year={year} month={month}/>
@@ -103,6 +110,8 @@ const Watersharedresourcebody = ({location, year, month,setLocationMessage}) => 
           display="block"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
 
           <Sharedresource location={location} year={year} month={month}/>
@@ -115,6 +124,8 @@ const Watersharedresourcebody = ({location, year, month,setLocationMessage}) => 
           display="block"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
 
           <Receivingwaterbody location={location} year={year} month={month}/>

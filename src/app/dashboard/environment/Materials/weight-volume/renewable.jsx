@@ -17,6 +17,8 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
+import selectWidget3 from '../../../../shared/widgets/Select/selectWidget3';
+import inputnumberWidget from "../../../../shared/widgets/Input/inputnumberWidget"
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
@@ -25,174 +27,180 @@ const widgets = {
   AssignTobutton: AssignToWidget,
   CustomSelectInputWidget: CustomSelectInputWidget,
   RemoveWidget: RemoveWidget,
+  selectWidget3: selectWidget3,
+  inputnumberWidget: inputnumberWidget,
 };
 
 const view_path = 'gri-environment-materials-301-1a-renewable_materials'
 const client_id = 1
 const user_id = 1
 
-// const schema = {
-//   type: 'array',
-//   items: {
-//     type: 'object',
-//     properties: {
-//       Typeofmaterial: {
-//         type: "string",
-//         title: "Type of material",
-//         enum: ['Raw materials', 'Associated process materials','Semi-manufactured goods or parts','Materials for packaging purposes'],
-//         tooltiptext: "Select the waste category from the given dropdown.",
-//         display: "none",
-//       },
-//       Materialsused: {
-//         type: "string",
-//         title: "Materials used",
-//         enum: ['Cardboard', 'Glass','Hemp','Kenaf','Natural Rubber','Paper','Timber','Wool','Others'],
-//         tooltiptext: "What materials does the company use to produce its goods or services?",
-//         display: "block",
-//       },
-//       Source: {
-//         type: "string",
-//         title: "Source",
-//         enum: ['Externally sourced', 'Internally sourced'],
-//         tooltiptext: "Where does the company get its materials from? Internally sourced materials: Materials that the company makes itself.Externally sourced materials: Materials that the company buys from other companies.",
-//         display: "block",
-//       },
-//       Totalweight: {
-//         type: "string",
-//         title: "Total weight/volume",
-//         tooltiptext: "How much material is used for the production of goods or services?(Please specify the total weight or volume.)",
-//         display: "block",
+const schema = {
+  type: 'array',
+  items: {
+    type: 'object',
+    properties: {
+      Typeofmaterial: {
+        type: "string",
+        title: "Type of material",
+        enum: ['Raw materials', 'Associated process materials','Semi-manufactured goods or parts','Materials for packaging purposes'],
+        tooltiptext: "Select the waste category from the given dropdown.",
+        display: "none",
+      },
+      Materialsused: {
+        type: "string",
+        title: "Materials used",
+        enum: ['Cardboard', 'Glass','Hemp','Kenaf','Natural Rubber','Paper','Timber','Wool','Others'],
+        tooltiptext: "What materials does the company use to produce its goods or services?",
+        display: "block",
+      },
+      Source: {
+        type: "string",
+        title: "Source",
+        enum: ['Externally sourced', 'Internally sourced'],
+        tooltiptext: "Where does the company get its materials from? Internally sourced materials: Materials that the company makes itself.Externally sourced materials: Materials that the company buys from other companies.",
+        display: "block",
+      },
+      Totalweight: {
+        type: "string",
+        title: "Total weight/volume",
+        tooltiptext: "How much material is used for the production of goods or services?(Please specify the total weight or volume.)",
+        display: "block",
 
-//       },
-//       Unit: {
-//         type: "string",
-//         title: "Unit",
-//         enum: ['Cubic centimeter cm3', 'Cubic decimeter dm3', 'Cubic meter m3', 'Gram', 'Kilogram Kg','Liter','Milligram','Milliliter','Fluid Ounce fl Oz','Gallon Gal','Pint Pt','Pound Lb','Quart Qt','Cubic foot ft3','Metric ton','US short ton (tn)'],
-//         tooltiptext: "Use 1000 kilograms as the measure for a metric ton.",
-//         display: "none",
-//       },
-//       Datasource: {
-//         type: "string",
-//         title: "Data source",
-//         enum: ['Estimated', 'Direct measurement'],
-//         tooltiptext: "What is the source of the data for the total weight or volume of materials used? Estimation: process of making an approximate calculation of something.Direct measurement: process of measuring something directly. For example, a company might directly measure the total weight or volume of materials used by weighing or measuring each batch of materials used.",
-//         display: "block",
+      },
+      Unit: {
+        type: "string",
+        title: "Unit",
+        enum: ['Cubic centimeter cm3', 'Cubic decimeter dm3', 'Cubic meter m3', 'Gram', 'Kilogram Kg','Liter','Milligram','Milliliter','Fluid Ounce fl Oz','Gallon Gal','Pint Pt','Pound Lb','Quart Qt','Cubic foot ft3','Metric ton','US short ton (tn)'],
+        tooltiptext: "Use 1000 kilograms as the measure for a metric ton.",
+        display: "none",
+      },
+      Datasource: {
+        type: "string",
+        title: "Data source",
+        enum: ['Estimated', 'Direct measurement'],
+        tooltiptext: "What is the source of the data for the total weight or volume of materials used? Estimation: process of making an approximate calculation of something.Direct measurement: process of measuring something directly. For example, a company might directly measure the total weight or volume of materials used by weighing or measuring each batch of materials used.",
+        display: "block",
 
-//       },
-//       AssignTo: {
-//         type: "string",
-//         title: "Assign To",
-//       },
-//       FileUpload: {
-//         type: "string",
-//         format: "data-url",
-//         title: "File Upload",
-//       },
-//       Remove: {
-//         type: "string",
-//         title: "Remove",
-//       },
-//       // Define other properties as needed
-//     }
-//   }
-// };
+      },
+      AssignTo: {
+        type: "string",
+        title: "Assign To",
+      },
+      FileUpload: {
+        type: "string",
+        format: "data-url",
+        title: "File Upload",
+      },
+      Remove: {
+        type: "string",
+        title: "Remove",
+      },
 
-// const uiSchema = {
-//   // Add flex-wrap to wrap fields to the next line
-//   items: {
-//     classNames: 'fieldset',
-//     'ui:order': [
-//       'Typeofmaterial', 'Materialsused', 'Source', 'Totalweight','Unit','Datasource','AssignTo', 'FileUpload', 'Remove'
-//     ],
-//     Typeofmaterial: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false,
-//       },
-//     },
-//     Materialsused: {
-//       'ui:widget': 'selectWidget', // Use your custom widget for QuantityUnit
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     Source: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     Totalweight: {
-//       'ui:widget': 'inputWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
+    }
+  }
+};
 
-//     Unit: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     Datasource: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     AssignTo: {
-//       "ui:widget": "AssignTobutton",
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     FileUpload: {
-//       'ui:widget': 'FileUploadWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     Remove: {
-//       "ui:widget": "RemoveWidget",
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     'ui:options': {
-//       orderable: false, // Prevent reordering of items
-//       addable: false, // Prevent adding items from UI
-//       removable: false, // Prevent removing items from UI
-//       layout: 'horizontal', // Set layout to horizontal
-//     }
-//   }
-// };
+const uiSchema = {
+  items: {
+    classNames: 'fieldset',
+    'ui:order': [
+      'Typeofmaterial', 'Materialsused', 'Source', 'Totalweight','Unit','Datasource','AssignTo', 'FileUpload', 'Remove'
+    ],
+    Typeofmaterial: {
+      'ui:widget': 'selectWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false,
+      },
+    },
+    Materialsused: {
+      'ui:widget': 'selectWidget',
+      'ui:options': {
+        label: false
+      },
+    },
+    Source: {
+      'ui:widget': 'selectWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    Totalweight: {
+      'ui:widget': 'inputnumberWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
 
-const generateTooltip = (field, title, tooltipText, display) => {
+    Unit: {
+      'ui:widget': 'selectWidget3',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    Datasource: {
+      'ui:widget': 'selectWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    AssignTo: {
+      "ui:widget": "AssignTobutton",
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    FileUpload: {
+      'ui:widget': 'FileUploadWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    Remove: {
+      "ui:widget": "RemoveWidget",
+      'ui:options': {
+        label: false
+      },
+    },
+      'ui:options': {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: 'horizontal',
+    }
+  }
+};
+const generateUniqueId = (field) => {
+  return `${field}-${new Date().getTime()}`;
+};
+const generateTooltip = (field, title, tooltipText) => {
   if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
     return null; // Return null to skip rendering tooltip for these fields
   }
-
+  const uniqueId = generateUniqueId(field);
   return (
-    <div className='mx-2 flex w-[20vw]'>
-      <label className="text-[13px] leading-5 text-gray-700 flex">{title}</label>
+    <div className={`mx-2 flex ${field === 'Totalweight' ? 'w-[22vw]' :   field === 'Unit' ? 'w-[5.2vw]' : 'w-[20vw]'
+    }`}>
+      <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
+      <div className='relative'>
       <MdInfoOutline
-        data-tooltip-id={field}
+        data-tooltip-id={uniqueId}
         data-tooltip-content={tooltipText}
         className="mt-1 ml-2 text-[12px]"
-        style={{ display: display }}
       />
       <ReactTooltip
-        id={field}
+        id={uniqueId}
         place="top"
         effect="solid"
+      delayHide={200}
+        globalEventOff="scroll"
         style={{
           width: "290px",
           backgroundColor: "#000",
@@ -201,11 +209,16 @@ const generateTooltip = (field, title, tooltipText, display) => {
           boxShadow: 3,
           borderRadius: "8px",
           textAlign: 'left',
+
         }}
+
       />
+      </div>
+
     </div>
   );
 };
+
 
 const Renewable = ({location, year, month}) => {
   const { open } = GlobalState();
@@ -381,7 +394,6 @@ const Renewable = ({location, year, month}) => {
   return (
     <>
 
-       <ToastContainer style={{ fontSize: "12px" }} />
         <ToastContainer style={{ fontSize: "12px" }} />
         <div className={`overflow-auto custom-scrollbar flex`}>
         <div>

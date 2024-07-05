@@ -2,11 +2,9 @@
 import React, { useState, useEffect,useRef } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
-import inputWidget2 from '../../../../shared/widgets/Input/inputWidget2';
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
-import RadioWidget2 from '../../../../shared/widgets/Input/radioWidget2';
 import selectWidget2 from '../../../../shared/widgets/Select/selectWidget2';
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
@@ -46,7 +44,7 @@ const uiSchema = {
 
             "ui:widget": "selectWidget",
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
 
@@ -258,7 +256,12 @@ const Screen3 = ({location, year, month}) => {
                     />
                 </div>
                 <div className='mb-6'>
-                    <button type="button" className="text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
+                <button type="button"
+                        className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? 'cursor-not-allowed' : ''}`}
+                        onClick={handleSubmit}
+                        disabled={!location || !year}>
+                        Submit
+                    </button>
                 </div>
             </div>
             {loopen && (

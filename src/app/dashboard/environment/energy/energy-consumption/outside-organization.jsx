@@ -17,7 +17,8 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
-
+import selectWidget3 from '../../../../shared/widgets/Select/selectWidget3';
+import inputnumberWidget from "../../../../shared/widgets/Input/inputnumberWidget"
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
@@ -26,159 +27,168 @@ const widgets = {
   AssignTobutton: AssignToWidget,
   CustomSelectInputWidget: CustomSelectInputWidget,
   RemoveWidget: RemoveWidget,
+  selectWidget3: selectWidget3,
+  inputnumberWidget: inputnumberWidget,
 };
 
 const view_path = 'gri-environment-energy-302-2a-energy_consumption_outside_organization'
 const client_id = 1
 const user_id = 1
 
-// const schema = {
-//   type: 'array',
-//   items: {
-//     type: 'object',
-//     properties: {
-//       EnergyType: {
-//         type: "string",
-//         title: "Energy Type",
-//         enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro', 'Natural gas', 'Electricity', 'Cooling', 'Steam', 'Heating', 'Wood Biomas', 'Biogas', 'Other'],
-//         tooltiptext: "Indicate the type of energy or fuel consumed for activities outside the organization"
+const schema = {
+  type: 'array',
+  items: {
+    type: 'object',
+    properties: {
+      EnergyType: {
+        type: "string",
+        title: "Energy Type",
+        enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro', 'Natural gas', 'Electricity', 'Cooling', 'Steam', 'Heating', 'Wood Biomas', 'Biogas', 'Other'],
+        tooltiptext: "Indicate the type of energy or fuel consumed for activities outside the organization"
 
-//       },
+      },
 
-//       Purpose: {
-//         type: "string",
-//         title: "Purpose",
-//         tooltiptext: "Indicate the purpose it is being used for E.g. Upstream Transport, Purchased Goods ,Business Travel etc"
-//       },
+      Purpose: {
+        type: "string",
+        title: "Purpose",
+        tooltiptext: "Indicate the purpose it is being used for E.g. Upstream Transport, Purchased Goods ,Business Travel etc"
+      },
 
-//       Quantity: {
-//         type: "string",
-//         title: "Quantity",
-//         tooltiptext: "Indicate the quantity of energy consumed"
-//       },
-//       Unit: {
-//         type: "string",
-//         title: "Unit",
-//         enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
-//         tooltiptext: "Select the correct unit corresponding to the quantity purchased."
-//       },
-//       AssignTo: {
-//         type: "string",
+      Quantity: {
+        type: "string",
+        title: "Quantity",
+        tooltiptext: "Indicate the quantity of energy consumed"
+      },
+      Unit: {
+        type: "string",
+        title: "Unit",
+        enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
+        tooltiptext: "Select the correct unit corresponding to the quantity purchased."
+      },
+      AssignTo: {
+        type: "string",
 
-//       },
-//       FileUpload: {
-//         type: "string",
-//         format: "data-url",
-//       },
+      },
+      FileUpload: {
+        type: "string",
+        format: "data-url",
+      },
 
-//       Remove: {
-//         type: "string",
+      Remove: {
+        type: "string",
 
-//       },
-//       // Define other properties as needed
-//     }
-//   }
-// };
+      },
 
-// const uiSchema = {
-//   // Add flex-wrap to wrap fields to the next line
-//   items: {
-//     classNames: 'fieldset',
-//     'ui:order': [
-//       'EnergyType', 'Source', 'Purpose', 'Renewable', 'Quantity', 'Unit', 'AssignTo', 'FileUpload', 'Remove'
-//     ],
-//     EnergyType: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false,
-//         // Include tooltiptext in uiSchema
-//       },
+    }
+  }
+};
+
+const uiSchema = {
+
+  items: {
+    classNames: 'fieldset',
+    'ui:order': [
+      'EnergyType', 'Source', 'Purpose', 'Renewable', 'Quantity', 'Unit', 'AssignTo', 'FileUpload', 'Remove'
+    ],
+    EnergyType: {
+      'ui:widget': 'selectWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false,
+
+      },
 
 
-//     },
-//     Source: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
+    },
+    Source: {
+      'ui:widget': 'selectWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
 
-//     },
-//     Purpose: {
-//       'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     Renewable: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
+    },
+    Purpose: {
+      'ui:widget': 'inputWidget',
+      'ui:options': {
+        label: false
+      },
+    },
+    Renewable: {
+      'ui:widget': 'selectWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
 
-//     },
-//     Quantity: {
-//       'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
+    },
+    Quantity: {
+      'ui:widget': 'inputnumberWidget',
+      'ui:inputtype':'number',
+      'ui:options': {
+        label: false,
+      },
+    },
 
-//     Unit: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
+    Unit: {
+      'ui:widget': 'selectWidget3',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
 
-//     },
-//     AssignTo: {
-//       "ui:widget": "AssignTobutton",
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     FileUpload: {
-//       'ui:widget': 'FileUploadWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     Remove: {
-//       "ui:widget": "RemoveWidget",
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     'ui:options': {
-//       orderable: false, // Prevent reordering of items
-//       addable: false, // Prevent adding items from UI
-//       removable: false, // Prevent removing items from UI
-//       layout: 'horizontal', // Set layout to horizontal
-//     }
-//   }
-// };
+    },
+    AssignTo: {
+      "ui:widget": "AssignTobutton",
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    FileUpload: {
+      'ui:widget': 'FileUploadWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    Remove: {
+      "ui:widget": "RemoveWidget",
+      'ui:options': {
+        label: false
+      },
+    },
+      'ui:options': {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: 'horizontal',
+    }
+  }
+};
+const generateUniqueId = (field) => {
+  return `${field}-${new Date().getTime()}`;
+};
 const generateTooltip = (field, title, tooltipText) => {
   if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
     return null; // Return null to skip rendering tooltip for these fields
   }
-
+  const uniqueId = generateUniqueId(field);
   return (
-    <div className='mx-2 flex w-[20vw]'>
-      <label className="text-[13px] leading-5 text-gray-700 flex">{title}</label>
+    <div className={`mx-2 flex  ${field === 'Quantity' ? ' w-[22vw]' : ' w-[20vw]'}`}>
+      <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
+      <div className='relative'>
       <MdInfoOutline
-        data-tooltip-id={field}
+        data-tooltip-id={uniqueId}
         data-tooltip-content={tooltipText}
         className="mt-1 ml-2 text-[12px]"
       />
       <ReactTooltip
-        id={field}
+        id={uniqueId}
         place="top"
         effect="solid"
+      delayHide={200}
+        globalEventOff="scroll"
         style={{
           width: "290px",
           backgroundColor: "#000",
@@ -187,8 +197,12 @@ const generateTooltip = (field, title, tooltipText) => {
           boxShadow: 3,
           borderRadius: "8px",
           textAlign: 'left',
+
         }}
+
       />
+      </div>
+
     </div>
   );
 };
@@ -378,7 +392,7 @@ const Outsideorganization = ({location, year, month}) => {
           <Form
           className='flex'
             schema={r_schema}
-            uiSchema={r_ui_schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

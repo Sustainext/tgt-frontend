@@ -2,7 +2,7 @@ import axiosInstance, { post } from "@/app/utils/axiosMiddleware";
 import React, { useEffect, useState, useMemo } from "react";
 import { toast } from "react-toastify";
 import { useEmissions } from "@/app/dashboard/environment/Emissions/EmissionsContext";
-
+import { FiChevronDown } from 'react-icons/fi';
 const monthMapping = [
   "Jan", "Feb", "Mar", "Apr", "May", "Jun",
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
@@ -20,19 +20,19 @@ const AssignToWidget = ({ id, scope, location, year, month, data, countryCode })
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
-  const fetchUserList = async () => {
-    try {
-      const response = await axiosInstance.get('/sustainapp/user_client/');
-      setUsersList(response.data);
-    } catch (error) {
-      console.error('Error fetching user list:', error);
-      setUsersList([]);
-    }
-  };
+  // const fetchUserList = async () => {
+  //   try {
+  //     const response = await axiosInstance.get('/sustainapp/user_client/');
+  //     setUsersList(response.data);
+  //   } catch (error) {
+  //     console.error('Error fetching user list:', error);
+  //     setUsersList([]);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchUserList();
-  }, []);
+  // useEffect(() => {
+  //   fetchUserList();
+  // }, []);
 
   const memoizedUsersList = useMemo(() => usersList, [usersList]);
 
@@ -106,15 +106,15 @@ const AssignToWidget = ({ id, scope, location, year, month, data, countryCode })
 
   return (
     <>
-      <div className="flex justify-center items-center mt-2">
-        <button
-          className="text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded focus:outline-none focus:shadow-outline"
-          type="button"
-          onClick={openModal}
-        >
-          Assign To
-        </button>
-      </div>
+  <div className="flex justify-center items-center mt-2 mx-2">
+      <button
+        className="text-center py-1 pl-2 text-sm w-[100px] bg-blue-500 text-white rounded focus:outline-none focus:shadow-outline flex items-center justify-center"
+        type="button"
+        onClick={openModal}
+      >
+        Assign To <FiChevronDown className="ml-2 text-[20px]" />
+      </button>
+    </div>
     </>
   );
 };

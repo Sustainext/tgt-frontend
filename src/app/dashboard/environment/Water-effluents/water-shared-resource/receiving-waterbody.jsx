@@ -42,7 +42,7 @@ const uiSchema = {
 
         "ui:widget": "selectWidget",
         'ui:options': {
-            label: false // This disables the label for this field
+            label: false
         },
     },
     'ui:options': {
@@ -156,6 +156,7 @@ const Receivingwaterbody = ({location, year, month}) => {
 
     const loadFormData = async () => {
         LoaderOpen();
+        setFormData([{ Q1: '', details: '' }])
         const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
         try {
             const response = await axios.get(url, axiosConfig);
@@ -192,16 +193,7 @@ const Receivingwaterbody = ({location, year, month}) => {
         } else {
             // Only show the toast if it has not been shown already
             if (!toastShown.current) {
-                toast.warn("Please select location, year, and month first", {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
+
                 toastShown.current = true; // Set the flag to true after showing the toast
             }
         }

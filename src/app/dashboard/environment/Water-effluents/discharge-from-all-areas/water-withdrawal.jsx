@@ -17,6 +17,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
+import selectWidget3 from '../../../../shared/widgets/Select/selectWidget3';
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
@@ -25,158 +26,162 @@ const widgets = {
   AssignTobutton: AssignToWidget,
   CustomSelectInputWidget: CustomSelectInputWidget,
   RemoveWidget: RemoveWidget,
+  selectWidget3: selectWidget3,
 };
 
 const view_path = 'gri-environment-water-303-3a-3b-3c-3d-water_withdrawal/discharge_all_areas'
 const client_id = 1
 const user_id = 1
 
-// const schema = {
-//   type: 'array',
-//   items: {
-//     type: 'object',
-//     properties: {
-//         Source: {
-//         type: "string",
-//         title: "Source",
-//         enum: ['Surface Water', 'Ground water', 'Sea water', 'Municipal water', 'Third party water', 'Other '],
-//         tooltiptext: "Indicate where the company withdraws water from or Where the company discharges water into.Include (where applicable)the breakdown od water withdrawal and discharge data by: Surface Water; Ground water; Seawater; Produced water Third-party water",
-//       },
-//       Watertype: {
-//         type: "string",
-//         title: "Water type",
-//         enum: ['Freshwater (Below or equal to 1000 mg/L Total Dissolved Solids)', 'other water (>1000 mg/L Total Dissolved Solids)'],
-//         tooltiptext: "Provide a breakdown of total water withdrawal/discharge  from each of \ the sources by following categories of water: 1) Freshwater: water with concentration of total dissolved solids equal to or below 1,000 mg/L. 2) Other water: Other water constitutes any water that has a concentration of total dissolved solids higher than 1,000 mg/L."
-//       },
-//       Unit: {
-//         type: "string",
-//         title: "Unit",
-//         enum: ['Litre', 'Megalitre', 'Cubic meter', 'Kilolitre', 'Million litres  per day'],
-//         tooltiptext: "Select the correct unit corresponding to the quantity of water withdrawal/discharge"
-//       },
-//       Businessoperations: {
-//         type: "string",
-//         title: "Business operations",
-//         enum: ['Upstream operations', 'onsite water usage', 'Downstream operations'],
-//         tooltiptext: "Indicate the business operations for which water is withdrawn or discharged Include: Upstream operations - Upstream operations include identifying, extracting, or producing materials. For example, raw material extraction & transportation. Downstream operations - It refer to the final processes in the production and sale of goods, where finished products are created and sold to consumers. For example, logistic and packaging, distribution of product etc. Onsite water usage - For example, in service based companies water is used onsite for cleaning and maintenance, general sanitation etc. "
-//       },
+const schema = {
+  type: 'array',
+  items: {
+    type: 'object',
+    properties: {
+        Source: {
+        type: "string",
+        title: "Source",
+        enum: ['Surface Water', 'Ground water', 'Sea water', 'Municipal water', 'Third party water', 'Other '],
+        tooltiptext: "Indicate where the company withdraws water from or Where the company discharges water into.Include (where applicable)the breakdown od water withdrawal and discharge data by: Surface Water; Ground water; Seawater; Produced water Third-party water",
+      },
+      Watertype: {
+        type: "string",
+        title: "Water type",
+        enum: ['Freshwater (Below or equal to 1000 mg/L Total Dissolved Solids)', 'other water (>1000 mg/L Total Dissolved Solids)'],
+        tooltiptext: "Provide a breakdown of total water withdrawal/discharge  from each of \ the sources by following categories of water: 1) Freshwater: water with concentration of total dissolved solids equal to or below 1,000 mg/L. 2) Other water: Other water constitutes any water that has a concentration of total dissolved solids higher than 1,000 mg/L."
+      },
+      Unit: {
+        type: "string",
+        title: "Unit",
+        enum: ['Litre', 'Megalitre', 'Cubic meter', 'Kilolitre', 'Million litres  per day'],
+        tooltiptext: "Select the correct unit corresponding to the quantity of water withdrawal/discharge"
+      },
+      Businessoperations: {
+        type: "string",
+        title: "Business operations",
+        enum: ['Upstream operations', 'onsite water usage', 'Downstream operations'],
+        tooltiptext: "Indicate the business operations for which water is withdrawn or discharged Include: Upstream operations - Upstream operations include identifying, extracting, or producing materials. For example, raw material extraction & transportation. Downstream operations - It refer to the final processes in the production and sale of goods, where finished products are created and sold to consumers. For example, logistic and packaging, distribution of product etc. Onsite water usage - For example, in service based companies water is used onsite for cleaning and maintenance, general sanitation etc. "
+      },
 
-//       withdrawal: {
-//         type: "string",
-//         title: "Total water withdrawal",
-//         tooltiptext: "Indicate the total amount of water withdrawn "
-//       },
-//       discharge: {
-//         type: "string",
-//         title: "Total water discharge",
-//         tooltiptext: "Indicate the total amount of water discharged "
-//       },
-//       AssignTo: {
-//         type: "string",
-//         title: "Assign To",
-//       },
-//       FileUpload: {
-//         type: "string",
-//         format: "data-url",
-//         title: "File Upload",
-//       },
-//       Remove: {
-//         type: "string",
-//         title: "Remove",
-//       },
-//       // Define other properties as needed
-//     }
-//   }
-// };
+      withdrawal: {
+        type: "string",
+        title: "Total water withdrawal",
+        tooltiptext: "Indicate the total amount of water withdrawn "
+      },
+      discharge: {
+        type: "string",
+        title: "Total water discharge",
+        tooltiptext: "Indicate the total amount of water discharged "
+      },
+      AssignTo: {
+        type: "string",
+        title: "Assign To",
+      },
+      FileUpload: {
+        type: "string",
+        format: "data-url",
+        title: "File Upload",
+      },
+      Remove: {
+        type: "string",
+        title: "Remove",
+      },
+    }
+  }
+};
 
-// const uiSchema = {
-//  // Add flex-wrap to wrap fields to the next line
-//   items: {
-//     classNames: 'fieldset',
-//     'ui:order': [
-//       'Source', 'Watertype', 'Unit', 'Businessoperations', 'withdrawal', 'discharge', 'AssignTo', 'FileUpload', 'Remove'
-//     ],
-//     Source: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false,
-//       },
-//     },
-//     Watertype: {
-//       'ui:widget': 'selectWidget', // Use your custom widget for QuantityUnit
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     Unit: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     Businessoperations: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     withdrawal: {
-//       'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     discharge: {
-//       'ui:widget': 'inputWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     AssignTo: {
-//       "ui:widget": "AssignTobutton",
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     FileUpload: {
-//       'ui:widget': 'FileUploadWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     Remove: {
-//       "ui:widget": "RemoveWidget",
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     'ui:options': {
-//       orderable: false, // Prevent reordering of items
-//       addable: false, // Prevent adding items from UI
-//       removable: false, // Prevent removing items from UI
-//       layout: 'horizontal', // Set layout to horizontal
-//     }
-//   }
-// };
+const uiSchema = {
 
-const generateTooltip = (field, title, tooltipText) => {
+  items: {
+    classNames: 'fieldset',
+    'ui:order': [
+      'Source', 'Watertype', 'Unit', 'Businessoperations', 'withdrawal', 'discharge', 'AssignTo', 'FileUpload', 'Remove'
+    ],
+    Source: {
+      'ui:widget': 'selectWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false,
+      },
+    },
+    Watertype: {
+      'ui:widget': 'selectWidget',
+      'ui:options': {
+        label: false
+      },
+    },
+    Unit: {
+      'ui:widget': 'selectWidget3',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    Businessoperations: {
+      'ui:widget': 'selectWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    withdrawal: {
+      'ui:widget': 'inputWidget',
+      'ui:inputtype':'number',
+      'ui:options': {
+        label: false
+      },
+    },
+    discharge: {
+      'ui:widget': 'inputWidget',
+      'ui:inputtype':'number',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    AssignTo: {
+      "ui:widget": "AssignTobutton",
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    FileUpload: {
+      'ui:widget': 'FileUploadWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    Remove: {
+      "ui:widget": "RemoveWidget",
+      'ui:options': {
+        label: false
+      },
+    },
+      'ui:options': {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: 'horizontal',
+    }
+  }
+};
+
+const generateTooltip = (field, title, tooltipText, display) => {
   if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
     return null; // Return null to skip rendering tooltip for these fields
   }
 
   return (
-    <div className='mx-2 flex w-[20vw]'>
-      <label className="text-[13px] leading-5 text-gray-700 flex">{title}</label>
+    <div className={`mx-2 flex ${field === 'Watertype' ? 'w-[22vw]' :   field === 'Unit' ? 'w-[5.2vw]' : 'w-[20vw]'
+    }`}>
+        <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
       <MdInfoOutline
         data-tooltip-id={field}
         data-tooltip-content={tooltipText}
         className="mt-1 ml-2 text-[12px]"
+        style={{display:display}}
       />
       <ReactTooltip
         id={field}

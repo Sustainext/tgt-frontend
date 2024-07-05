@@ -16,6 +16,7 @@ const Energyconsumption = () => {
     const [category, setCategory] = useState("");
     const [isOpen, setIsOpen] = useState(false);
     const [locationMessage, setLocationMessage] = useState("");
+    const [yearMessage, setYearMessage ]= useState('')
 
     const toggleDrawerclose = () => {
         setIsOpen(!isOpen);
@@ -142,8 +143,11 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
                 year={year}
                 setYear={setYear}
                 locationMessage={locationMessage}
-                setLocationMessage={setLocationMessage} />
-            <EnergyConsumptionBody location={location} year={year} month={activeMonth} setLocationMessage={setLocationMessage}/>
+                setLocationMessage={setLocationMessage}
+                yearMessage={yearMessage}
+                setYearMessage={setYearMessage}
+                 />
+            <EnergyConsumptionBody location={location} year={year} month={activeMonth} setLocationMessage={setLocationMessage} setYearMessage={setYearMessage} />
         </>
     );
 };

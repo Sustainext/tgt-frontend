@@ -49,7 +49,7 @@ const uiSchema = {
             'ui:widget': 'inputWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
 

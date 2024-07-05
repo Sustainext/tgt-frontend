@@ -6,12 +6,18 @@ import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import SubstancesconcernQ1 from "./substances-concernQ1"
 import SubstancesconcernQ2 from "./substances-concernQ2"
-const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year }) => {
+
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year, setYearMessage }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
   const handleClick = () => {
     if (!location) {
-      setLocationMessage("Please select a location and year")
+      setLocationMessage("Please select a location")
+
+      return;
+    }
+    if (!year) {
+      setYearMessage("Please select a year")
 
       return;
     }
@@ -60,7 +66,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
   );
 };
 
-const Substancesconcernbody = ({location, year, month,setLocationMessage}) => {
+const Substancesconcernbody = ({location, year, month,setLocationMessage,setYearMessage}) => {
 
 
   return (
@@ -73,6 +79,8 @@ const Substancesconcernbody = ({location, year, month,setLocationMessage}) => {
           display="block"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
 
           <SubstancesconcernQ1 location={location} year={year} month={month}/>
@@ -86,6 +94,8 @@ const Substancesconcernbody = ({location, year, month,setLocationMessage}) => {
           display="block"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
 
           <SubstancesconcernQ2 location={location} year={year} month={month}/>

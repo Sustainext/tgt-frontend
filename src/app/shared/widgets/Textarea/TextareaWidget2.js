@@ -39,6 +39,8 @@ const TextareaWidget2 = (props) => {
                   id={`tooltip-${uiSchema["ui:hadding"].replace(/\s+/g, "-")}`}
                   place="top"
                   effect="solid"
+                   scrollHide={true}
+                  globalEventOff="scroll"
                   style={{
                     width: "300px",
                     backgroundColor: "#000",

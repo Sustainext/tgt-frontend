@@ -17,6 +17,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
+import selectWidget3 from '../../../../shared/widgets/Select/selectWidget3';
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
@@ -25,152 +26,153 @@ const widgets = {
   AssignTobutton: AssignToWidget,
   CustomSelectInputWidget: CustomSelectInputWidget,
   RemoveWidget: RemoveWidget,
+  selectWidget3: selectWidget3,
 };
 
 const view_path = 'gri-environment-waste-306-5a-5b-5c-5d-5e-waste_diverted_to_disposal'
 const client_id = 1
 const user_id = 1
 
-// const schema = {
-//   type: 'array',
-//   items: {
-//     type: 'object',
-//     properties: {
-//         Wastecategory: {
-//         type: "string",
-//         title: "Waste category",
-//         enum: ['Hazardous', 'Non Hazardous'],
-//         tooltiptext: "Select the waste category from the given dropdown.",
-//         display:"block",
-//       },
-//       WasteType: {
-//         type: "string",
-//         title: "Waste Type",
-//         tooltiptext: "Please specify the type of waste. e.g. Paper waste, E-waste, chemical waste etc. ",
-//         display:"block",
-//       },
-//       Unit: {
-//         type: "string",
-//         title: "Unit",
-//         enum: ['g', 'Kgs', 't (metric tons)', 'ton (US short ton)', 'lbs'],
-//         tooltiptext: "Use 1000 kilograms as the measure for a metric ton.",
-//         display:"block",
-//       },
-//       Wastedisposed: {
-//         type: "string",
-//         title: "Waste disposed (No.)",
-//         display:"none",
+const schema = {
+  type: 'array',
+  items: {
+    type: 'object',
+    properties: {
+        Wastecategory: {
+        type: "string",
+        title: "Waste category",
+        enum: ['Hazardous', 'Non Hazardous'],
+        tooltiptext: "Select the waste category from the given dropdown.",
+        display:"block",
+      },
+      WasteType: {
+        type: "string",
+        title: "Waste Type",
+        tooltiptext: "Please specify the type of waste. e.g. Paper waste, E-waste, chemical waste etc. ",
+        display:"block",
+      },
+      Unit: {
+        type: "string",
+        title: "Unit",
+        enum: ['g', 'Kgs', 't (metric tons)', 'ton (US short ton)', 'lbs'],
+        tooltiptext: "Use 1000 kilograms as the measure for a metric ton.",
+        display:"block",
+      },
+      Wastedisposed: {
+        type: "string",
+        title: "Waste disposed (No.)",
+        display:"none",
 
-//       },
-//       Methodofdisposal: {
-//         type: "string",
-//         title: "Method of disposal",
-//         enum: ['Inceneration (with energy recovery)', 'Inceneration (without energy recovery)', 'Landfilling','Other (please specify)','External Vendor'],
-//         tooltiptext: "Disposal: Any operation which is not recovery, even where the operation has as a secondary consequence the recovery of energy Landfilling: Final depositing of solid waste at, below, or above ground level at engineered disposal sites Incineration: Controlled burning of waste at high temperatures",
-//         display:"block",
-//       },
-//       Site: {
-//         type: "string",
-//         title: "Site",
-//         enum: ['Onsite', 'Offsite'],
-//         tooltiptext: "On-site: ‘Onsite’ means within the physical boundary  or administrative control of the reporting organization Off-site: ‘Offsite’ means outside the physical boundary \ or administrative control of the reporting organization",
-//         display:"block",
-//       },
-//       AssignTo: {
-//         type: "string",
-//         title: "Assign To",
-//       },
-//       FileUpload: {
-//         type: "string",
-//         format: "data-url",
-//         title: "File Upload",
-//       },
-//       Remove: {
-//         type: "string",
-//         title: "Remove",
-//       },
-//       // Define other properties as needed
-//     }
-//   }
-// };
+      },
+      Methodofdisposal: {
+        type: "string",
+        title: "Method of disposal",
+        enum: ['Inceneration (with energy recovery)', 'Inceneration (without energy recovery)', 'Landfilling','Other (please specify)','External Vendor'],
+        tooltiptext: "Disposal: Any operation which is not recovery, even where the operation has as a secondary consequence the recovery of energy Landfilling: Final depositing of solid waste at, below, or above ground level at engineered disposal sites Incineration: Controlled burning of waste at high temperatures",
+        display:"block",
+      },
+      Site: {
+        type: "string",
+        title: "Site",
+        enum: ['Onsite', 'Offsite'],
+        tooltiptext: "On-site: ‘Onsite’ means within the physical boundary  or administrative control of the reporting organization Off-site: ‘Offsite’ means outside the physical boundary \ or administrative control of the reporting organization",
+        display:"block",
+      },
+      AssignTo: {
+        type: "string",
+        title: "Assign To",
+      },
+      FileUpload: {
+        type: "string",
+        format: "data-url",
+        title: "File Upload",
+      },
+      Remove: {
+        type: "string",
+        title: "Remove",
+      },
+    }
+  }
+};
 
-// const uiSchema = {
-//  // Add flex-wrap to wrap fields to the next line
-//   items: {
-//     classNames: 'fieldset',
-//     'ui:order': [
-//       'Wastecategory', 'WasteType', 'Unit', 'Wastedisposed','Methodofdisposal','Site','AssignTo', 'FileUpload', 'Remove'
-//     ],
-//     Wastecategory: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false,
-//       },
-//     },
-//     WasteType: {
-//       'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     Unit: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     Wastedisposed: {
-//       'ui:widget': 'inputWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
+const uiSchema = {
 
-//     Methodofdisposal: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     Site: {
-//       'ui:widget': 'selectWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     AssignTo: {
-//       "ui:widget": "AssignTobutton",
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     FileUpload: {
-//       'ui:widget': 'FileUploadWidget',
-//       'ui:horizontal': true,
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     Remove: {
-//       "ui:widget": "RemoveWidget",
-//       'ui:options': {
-//         label: false // This disables the label for this field
-//       },
-//     },
-//     'ui:options': {
-//       orderable: false, // Prevent reordering of items
-//       addable: false, // Prevent adding items from UI
-//       removable: false, // Prevent removing items from UI
-//       layout: 'horizontal', // Set layout to horizontal
-//     }
-//   }
-// };
+  items: {
+    classNames: 'fieldset',
+    'ui:order': [
+      'Wastecategory', 'WasteType', 'Unit', 'Wastedisposed','Methodofdisposal','Site','AssignTo', 'FileUpload', 'Remove'
+    ],
+    Wastecategory: {
+      'ui:widget': 'selectWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false,
+      },
+    },
+    WasteType: {
+      'ui:widget': 'inputWidget',
+      'ui:options': {
+        label: false
+      },
+    },
+    Unit: {
+      'ui:widget': 'selectWidget3',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    Wastedisposed: {
+      'ui:widget': 'inputWidget',
+      'ui:inputtype':'number',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+
+    Methodofdisposal: {
+      'ui:widget': 'selectWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    Site: {
+      'ui:widget': 'selectWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    AssignTo: {
+      "ui:widget": "AssignTobutton",
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    FileUpload: {
+      'ui:widget': 'FileUploadWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    Remove: {
+      "ui:widget": "RemoveWidget",
+      'ui:options': {
+        label: false
+      },
+    },
+      'ui:options': {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: 'horizontal',
+    }
+  }
+};
 
 const generateTooltip = (field, title, tooltipText, display) => {
   if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
@@ -178,8 +180,9 @@ const generateTooltip = (field, title, tooltipText, display) => {
   }
 
   return (
-    <div className='mx-2 flex w-[20vw]'>
-      <label className="text-[13px] leading-5 text-gray-700 flex">{title}</label>
+    <div className={`mx-2 flex ${field === 'WasteType' ? 'w-[22vw]' :   field === 'Unit' ? 'w-[5.2vw]' : 'w-[20vw]'
+    }`}>
+        <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
       <MdInfoOutline
         data-tooltip-id={field}
         data-tooltip-content={tooltipText}

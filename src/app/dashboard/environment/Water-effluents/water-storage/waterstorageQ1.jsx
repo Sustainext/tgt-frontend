@@ -17,6 +17,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
+import selectWidget3 from '../../../../shared/widgets/Select/selectWidget3';
 const widgets = {
     inputWidget: inputWidget,
     dateWidget: dateWidget,
@@ -25,152 +26,166 @@ const widgets = {
     AssignTobutton: AssignToWidget,
     CustomSelectInputWidget: CustomSelectInputWidget,
     RemoveWidget: RemoveWidget,
+    selectWidget3: selectWidget3,
 };
 
 const view_path = 'gri-environment-water-303-5c-change_in_water_storage'
 const client_id = 1
 const user_id = 1
 
-// const schema = {
-//     type: 'array',
-//     items: {
-//         type: 'object',
-//         properties: {
-//             Unit: {
-//                 type: "string",
-//                 title: "Unit",
-//                 enum: ['Litre', 'Megalitre','Cubic meter','Kilolitre','Million litrse per day'],
-//                 tooltiptext: "Select the correct unit corresponding to the change in water storage.",
-//             },
+const schema = {
+    type: 'array',
+    items: {
+        type: 'object',
+        properties: {
+            Unit: {
+                type: "string",
+                title: "Unit",
+                enum: ['Litre', 'Megalitre','Cubic meter','Kilolitre','Million litrse per day'],
+                tooltiptext: "Select the correct unit corresponding to the change in water storage.",
+            },
 
-//             Reporting1: {
-//                 type: "string",
-//                 title: "Total water storage at the end of the reporting period",
-//                 tooltiptext: "What was the water storage capacity of the company at the end of the reporting period?"
-//             },
-//                 Reporting2: {
-//                 type: "string",
-//                 title: "Total water storage at the beginning of the reporting period",
-//                 tooltiptext: "What was the water storage capacity of the company at the beginning of the reporting period?"
-//             },
-//              Reporting3: {
-//                 type: "string",
-//                 title: "Change in water storage",
-//                 tooltiptext: "Change in water storage = Total water storage at the end of the reporting period - Total water storage at the beginning of the reporting period"
-//             },
+            Reporting1: {
+                type: "string",
+                title: "Total water storage at the end of the reporting period",
+                tooltiptext: "What was the water storage capacity of the company at the end of the reporting period?"
+            },
+                Reporting2: {
+                type: "string",
+                title: "Total water storage at the beginning of the reporting period",
+                tooltiptext: "What was the water storage capacity of the company at the beginning of the reporting period?"
+            },
+             Reporting3: {
+                type: "string",
+                title: "Change in water storage",
+                tooltiptext: "Change in water storage = Total water storage at the end of the reporting period - Total water storage at the beginning of the reporting period"
+            },
 
-//             AssignTo: {
-//                 type: "string",
-//                 title: "Assign To",
-//             },
-//             FileUpload: {
-//                 type: "string",
-//                 format: "data-url",
-//                 title: "File Upload",
-//             },
-//             Remove: {
-//                 type: "string",
-//                 title: "Remove",
-//             },
-//             // Define other properties as needed
-//         }
-//     }
-// };
+            AssignTo: {
+                type: "string",
+                title: "Assign To",
+            },
+            FileUpload: {
+                type: "string",
+                format: "data-url",
+                title: "File Upload",
+            },
+            Remove: {
+                type: "string",
+                title: "Remove",
+            },
 
-// const uiSchema = {
-//     // Add flex-wrap to wrap fields to the next line
-//     items: {
-//         classNames: 'fieldset',
-//         'ui:order': [
-//             'Unit', 'Reporting1', 'Reporting2', 'Reporting3', 'AssignTo', 'FileUpload', 'Remove'
-//         ],
-//         Unit: {
-//             'ui:widget': 'selectWidget',
-//             'ui:horizontal': true,
-//             'ui:options': {
-//                 label: false,
-//             },
-//         },
-//         Reporting1: {
-//             'ui:widget': 'inputWidget',
-//             'ui:horizontal': true,
-//             'ui:options': {
-//                 label: false,
-//             },
-//         },
-//         Reporting2: {
-//             'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
-//             'ui:options': {
-//                 label: false // This disables the label for this field
-//             },
-//         },
-//         Reporting3: {
-//             'ui:widget': 'inputWidget',
-//             'ui:horizontal': true,
-//             'ui:options': {
-//                 label: false // This disables the label for this field
-//             },
-//         },
-
-//         AssignTo: {
-//             "ui:widget": "AssignTobutton",
-//             'ui:horizontal': true,
-//             'ui:options': {
-//                 label: false // This disables the label for this field
-//             },
-//         },
-//         FileUpload: {
-//             'ui:widget': 'FileUploadWidget',
-//             'ui:horizontal': true,
-//             'ui:options': {
-//                 label: false // This disables the label for this field
-//             },
-//         },
-//         Remove: {
-//             "ui:widget": "RemoveWidget",
-//             'ui:options': {
-//                 label: false // This disables the label for this field
-//             },
-//         },
-//         'ui:options': {
-//             orderable: false, // Prevent reordering of items
-//             addable: false, // Prevent adding items from UI
-//             removable: false, // Prevent removing items from UI
-//             layout: 'horizontal', // Set layout to horizontal
-//         }
-//     }
-// };
-
-const generateTooltip = (field, title, tooltipText) => {
-    if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
-        return null; // Return null to skip rendering tooltip for these fields
+        }
     }
-
-    return (
-        <div className='mx-2 flex w-[20vw]'>
-            <label className="text-[13px] leading-5 text-gray-700 flex">{title}</label>
-            <MdInfoOutline
-                data-tooltip-id={field}
-                data-tooltip-content={tooltipText}
-                className="mt-1 ml-2 w-[30px] text-[12px]"
-            />
-            <ReactTooltip
-                id={field}
-                place="top"
-                effect="solid"
-                style={{
-                    width: "290px",
-                    backgroundColor: "#000",
-                    color: "white",
-                    fontSize: "12px",
-                    boxShadow: 3,
-                    borderRadius: "8px",
-                    textAlign: 'left',
-                }}
-            />
-        </div>
-    );
 };
+
+const uiSchema = {
+
+    items: {
+        classNames: 'fieldset',
+        'ui:order': [
+            'Unit', 'Reporting1', 'Reporting2', 'Reporting3', 'AssignTo', 'FileUpload', 'Remove'
+        ],
+        Unit: {
+            'ui:widget': 'selectWidget3',
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false,
+            },
+        },
+        Reporting1: {
+            'ui:widget': 'inputWidget',
+            'ui:inputtype':'number',
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false,
+            },
+        },
+        Reporting2: {
+            'ui:widget': 'inputWidget',
+            'ui:inputtype':'number',
+            'ui:options': {
+                label: false
+            },
+        },
+        Reporting3: {
+            'ui:widget': 'inputWidget',
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false
+            },
+        },
+
+        AssignTo: {
+            "ui:widget": "AssignTobutton",
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false
+            },
+        },
+        FileUpload: {
+            'ui:widget': 'FileUploadWidget',
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false
+            },
+        },
+        Remove: {
+            "ui:widget": "RemoveWidget",
+            'ui:options': {
+                label: false
+            },
+        },
+        'ui:options': {
+            orderable: false,
+            addable: false,
+            removable: false,
+            layout: 'horizontal',
+        }
+    }
+};
+
+const generateUniqueId = (field) => {
+    return `${field}-${new Date().getTime()}`;
+  };
+  const generateTooltip = (field, title, tooltipText) => {
+    if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
+      return null; // Return null to skip rendering tooltip for these fields
+    }
+    const uniqueId = generateUniqueId(field);
+    return (
+        <div className={`mx-2 flex ${field === 'Unit' ? 'w-[7.2vw]' : 'w-[20vw]'
+        }`}>
+        <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
+        <div className='relative'>
+        <MdInfoOutline
+          data-tooltip-id={uniqueId}
+          data-tooltip-content={tooltipText}
+          className="mt-1 ml-2 text-[12px]"
+        />
+        <ReactTooltip
+          id={uniqueId}
+          place="top"
+          effect="solid"
+        delayHide={200}
+          globalEventOff="scroll"
+          style={{
+            width: "290px",
+            backgroundColor: "#000",
+            color: "white",
+            fontSize: "12px",
+            boxShadow: 3,
+            borderRadius: "8px",
+            textAlign: 'left',
+
+          }}
+
+        />
+        </div>
+
+      </div>
+    );
+  };
 
 const WaterstorageQ1 = ({location, year, month}) => {
     const { open } = GlobalState();
@@ -276,6 +291,8 @@ const WaterstorageQ1 = ({location, year, month}) => {
 
   const loadFormData = async () => {
     LoaderOpen();
+    setFormData([{}]);
+    setSelectedOption('');
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
     try {
         const response = await axios.get(url, axiosConfig);
@@ -311,16 +328,7 @@ const WaterstorageQ1 = ({location, year, month}) => {
     } else {
         // Only show the toast if it has not been shown already
         if (!toastShown.current) {
-            toast.warn("Please select location, year, and month first", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
+
             toastShown.current = true; // Set the flag to true after showing the toast
         }
     }
