@@ -15,7 +15,6 @@ const AnalyseCompulsorylabour = ({ isBoxOpen }) => {
   const [selectedsetLocation, setSelectedSetLocation] = useState("");
   const [compulsaryLabour1, setCompulsaryLabour1] = useState([]);
   const [compulsaryLabour2, setCompulsaryLabour2] = useState([]);
-  const [selectedYear, setSelectedYear] = useState("2023");
   const [corporates, setCorporates] = useState([]);
   const [reportType, setReportType] = useState("Organization");
   const [loopen, setLoOpen] = useState(false);
@@ -84,7 +83,7 @@ const AnalyseCompulsorylabour = ({ isBoxOpen }) => {
       function formatArray2(operations) {
         return operations.map((operation, index) => ({
           "Suppliers considered to have significant risk for incidents of forced or compulsory labor": operation.compulsorylabor,
-          "Type of Operation": operation.TypeofOperation,
+          "Type of Supplier": operation.TypeofOperation,
           "Countries or Geographic Areas": operation.geographicareas,
         }));
       }
