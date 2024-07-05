@@ -68,7 +68,7 @@ const schema = {
       },
 
       Quantity: {
-        type: "integer",
+        type: "string",
         title: "Quantity",
         tooltiptext: "Indicate the purchased quantity"
       },
@@ -93,22 +93,12 @@ const schema = {
       },
       // Define other properties as needed
     },
-    required: ['EnergyType', 'Source', 'Renewable', 'Quantity', 'Unit', 'Purpose'],
-    errorMessage: {
-      required: {
-        Purpose: "Purpose is required.",
-        EnergyType: "Energy Type is required.",
-        Source: "Source is required.",
-        Renewable: "Renewable/Non-renewable is required.",
-        Quantity: "Quantity is required.",
-        Unit: "Unit is required."
-      }
-    }
+
   }
 };
 
 const uiSchema = {
-  // Add flex-wrap to wrap fields to the next line
+
   items: {
     'ui:order': [
       'EnergyType', 'Source', 'Purpose', 'Renewable', 'Quantity', 'Unit', 'AssignTo', 'FileUpload', 'Remove'
@@ -119,37 +109,33 @@ const uiSchema = {
       'ui:options': {
         label: false,
 
-        // Include tooltiptext in uiSchema
       },
-
 
     },
     Source: {
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
       'ui:options': {
-        label: false, // This disables the label for this field
+        label: false,
       },
 
     },
     Purpose: {
-      'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
+      'ui:widget': 'inputWidget',
       'ui:options': {
         label: false,
-        required: true, // This disables the label for this field
       },
     },
     Renewable: {
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
       'ui:options': {
-        label: false,// This disables the label for this field
+        label: false,
       },
 
     },
     Quantity: {
       'ui:widget': 'inputnumberWidget',
-      'ui:inputtype': 'number',
       'ui:options': {
         label: false,
       },
@@ -159,7 +145,7 @@ const uiSchema = {
       'ui:widget': 'selectWidget3',
       'ui:horizontal': true,
       'ui:options': {
-        label: false, // This disables the label for this field
+        label: false,
       },
 
     },
@@ -167,28 +153,28 @@ const uiSchema = {
       "ui:widget": "AssignTobutton",
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     FileUpload: {
       'ui:widget': 'FileUploadWidget',
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     Remove: {
       "ui:widget": "RemoveWidget",
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     classNames: 'fieldset',
     'ui:options': {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: 'horizontal', // Set layout to horizontal
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: 'horizontal',
     }
   }
 };
@@ -202,7 +188,7 @@ const generateTooltip = (field, title, tooltipText) => {
   const uniqueId = generateUniqueId(field);
   return (
     <div className={`mx-2 flex  ${field === 'Quantity' ? ' w-[22vw]' : ' w-[20vw]'}`}>
-      <label className={`text-[13px] leading-5 text-gray-700 flex `}>{title}</label>
+      <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
       <div className='relative'>
       <MdInfoOutline
         data-tooltip-id={uniqueId}
@@ -232,30 +218,7 @@ const generateTooltip = (field, title, tooltipText) => {
     </div>
   );
 };
-const validateFormData = (data) => {
-  let errors = {};
-  data.forEach((item, index) => {
-    if (!item.Purpose) {
-      errors[`items[${index}].Purpose`] = "Purpose is required.";
-    }
-    if (!item.EnergyType) {
-      errors[`items[${index}].EnergyType`] = "Energy Type is required.";
-    }
-    if (!item.Source) {
-      errors[`items[${index}].Source`] = "Source is required.";
-    }
-    if (!item.Renewable) {
-      errors[`items[${index}].Renewable`] = "Renewable/Non-renewable is required.";
-    }
-    if (!item.Quantity) {
-      errors[`items[${index}].Quantity`] = "Quantity is required.";
-    }
-    if (!item.Unit) {
-      errors[`items[${index}].Unit`] = "Unit is required.";
-    }
-  });
-  return errors;
-};
+
 
 const Purchased = ({ location, year, month }) => {
   const { open } = GlobalState();
@@ -263,7 +226,6 @@ const Purchased = ({ location, year, month }) => {
   const [r_schema, setRemoteSchema] = useState({})
   const [r_ui_schema, setRemoteUiSchema] = useState({})
   const [loopen, setLoOpen] = useState(false);
-  const [errorMessages, setErrorMessages] = useState({});
   const toastShown = useRef(false);
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -371,17 +333,8 @@ const Purchased = ({ location, year, month }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Perform validation
-    const errors = validateFormData(formData);
-    if (Object.keys(errors).length > 0) {
-      setErrorMessages(errors);
-      console.log(errors, "seterror");
-      return;
-    }
-
     updateFormData();
-    setErrorMessages({});
+
   };
 
   const handleAddNew = () => {
@@ -412,7 +365,6 @@ const Purchased = ({ location, year, month }) => {
 
   return (
     <>
-
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className={`overflow-auto custom-scrollbar flex`}>
         <div>
@@ -428,7 +380,6 @@ const Purchased = ({ location, year, month }) => {
             formData={formData}
             onChange={handleChange}
             validator={validator}
-            validate={validateFormData}
             widgets={{
 
               ...widgets,
@@ -457,11 +408,7 @@ const Purchased = ({ location, year, month }) => {
           >
           </Form>
 
-          {Object.keys(errorMessages).map((key) => (
-            <div key={key} className="mt-2 p-2 bg-red-100 text-red-600">
-              {errorMessages[key]}
-            </div>
-          ))}
+
         </div>
 
         {loopen && (

@@ -6,6 +6,9 @@ const SelectWidget = (props) => {
     props.onChange(e.target.value);
   };
 
+  // Function to extract the first word from the label
+
+
   return (
     <div className="mb-3">
       <select
@@ -14,17 +17,21 @@ const SelectWidget = (props) => {
         }`}
         value={props.value || ''}
         onChange={handleChange}
+
       >
-        <option value="" disabled={!props.value}>{`Select ${props.label || '...'}`}</option>
-        {props.options.enumOptions.map((option) => (
+         <option
+          value=""
+          disabled={!!props.value}
+          className="text-gray-500"  // Add Tailwind CSS class for gray text
+        >
+          {`Select ${props.label}` || "Select..."}
+        </option>
+        {(props.options?.enumOptions || []).map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>
         ))}
       </select>
-      {props.error && (
-        <p className="text-red-500 text-sm">{props.error.message}</p>
-      )}
     </div>
   );
 };

@@ -88,7 +88,7 @@ const schema = {
 };
 
 const uiSchema = {
- // Add flex-wrap to wrap fields to the next line
+
   items: {
     classNames: 'fieldset',
     'ui:order': [
@@ -135,27 +135,27 @@ const uiSchema = {
       "ui:widget": "AssignTobutton",
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     FileUpload: {
       'ui:widget': 'FileUploadWidget',
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     Remove: {
       "ui:widget": "RemoveWidget",
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
-    'ui:options': {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: 'horizontal', // Set layout to horizontal
+      'ui:options': {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: 'horizontal',
     }
   }
 };
@@ -168,7 +168,7 @@ const generateTooltip = (field, title, tooltipText) => {
 
   return (
     <div className='mx-2 flex w-[20vw]'>
-      <label className="text-[13px] leading-5 text-gray-700 flex">{title}</label>
+        <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
       <MdInfoOutline
         data-tooltip-id={field}
         data-tooltip-content={tooltipText}

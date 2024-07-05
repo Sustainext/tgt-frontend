@@ -84,12 +84,11 @@ const schema = {
         type: "string",
 
       },
-      // Define other properties as needed
     }
   }
 };
 
-const uiSchema = { // Add flex-wrap to wrap fields to the next line
+const uiSchema = {
   items: {
     'ui:order': [
       'EnergyType', 'Source', 'Renewable', 'Quantity', 'Unit', 'AssignTo', 'FileUpload', 'Remove'
@@ -99,7 +98,6 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
       'ui:horizontal': true,
       'ui:options': {
         label: false,
-        // Include tooltiptext in uiSchema
       },
 
 
@@ -108,7 +106,7 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
 
     },
@@ -116,7 +114,7 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
 
     },
@@ -132,35 +130,35 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
       'ui:widget': 'selectWidget3',
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
 
     },
     AssignTo: {
       "ui:widget": "AssignTobutton",
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     FileUpload: {
       'ui:widget': 'FileUploadWidget',
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     Remove: {
       "ui:widget": "RemoveWidget",
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     classNames: 'fieldset',
-    'ui:options': {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: 'horizontal', // Set layout to horizontal
+      'ui:options': {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: 'horizontal',
     }
   }
 };
@@ -174,7 +172,7 @@ const generateTooltip = (field, title, tooltipText) => {
   const uniqueId = generateUniqueId(field);
   return (
     <div className={`mx-2 flex  ${field === 'Quantity' ? ' w-[22vw]' : ' w-[20vw]'}`}>
-      <label className={`text-[13px] leading-5 text-gray-700 flex `}>{title}</label>
+      <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
       <div className='relative'>
       <MdInfoOutline
         data-tooltip-id={uniqueId}

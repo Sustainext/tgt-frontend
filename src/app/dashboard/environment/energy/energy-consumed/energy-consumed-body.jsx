@@ -10,20 +10,27 @@ import Selfgenerated from "./Self-generated/self-generated"
 import Energysold from "./Energy-sold/energy-sold"
 import Standards from "./Standards/standards"
 import Source from "./Source/source";
-const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,onAccordionClick,year  }) => {
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year, setYearMessage  }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
-  const handleAccordionClick = () => {
-    const canExpand = onAccordionClick();
-    if (canExpand) {
-      setIsOpen(!isOpen);
+  const handleClick = () => {
+    if (!location) {
+      setLocationMessage("Please select a location")
+
+      return;
     }
+    if (!year) {
+      setYearMessage("Please select a year")
+
+      return;
+    }
+    setIsOpen(!isOpen);
   };
   return (
     <div className={`shadow-md py-1 mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200 ${open ? "w-[100%]" : "w-[100%]"}`}>
       <button
         className="py-3 w-[100%] text-left flex"
-        onClick={handleAccordionClick}// Unique ID for the tooltip, spaces replaced by dashes
+        onClick={handleClick}// Unique ID for the tooltip, spaces replaced by dashes
       >
         <div className="flex justify-between">
         <div className={`flex ${open ? "w-[65vw]" : "w-[74vw]"}`}>
@@ -77,20 +84,8 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,onA
   );
 };
 
-const EnergyConsumedBody = ({location, year, month,setLocationMessage,setYearError}) => {
-  const handleAccordionClick = () => {
-    if (!location) {
-      setLocationMessage("Please select a location");
-      return false;
-    }
-    if (!year) {
-      setYearError("Please select a year");
-      return false;
-    }
-    setLocationMessage("");
-    setYearError("");
-    return true;
-  };
+const EnergyConsumedBody = ({location, year, month,setLocationMessage, setYearMessage}) => {
+
   return (
     <>
       <div className="mx-3">
@@ -103,7 +98,9 @@ const EnergyConsumedBody = ({location, year, month,setLocationMessage,setYearErr
           sdg={['GRI 302-1a', 'GRI 302-1b']}
           display="block"
           location={location}
-          onAccordionClick={handleAccordionClick}
+          setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
           <Purchased  location={location} year={year} month={month}/>
         </AccordionItem>
@@ -116,7 +113,9 @@ const EnergyConsumedBody = ({location, year, month,setLocationMessage,setYearErr
           sdg={['GRI 302-1c', 'GRI 302-1e']}
           display="block"
           location={location}
-          onAccordionClick={handleAccordionClick}
+          setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
           <ConsumedFuel location={location} year={year} month={month}/>
         </AccordionItem>
@@ -128,7 +127,9 @@ const EnergyConsumedBody = ({location, year, month,setLocationMessage,setYearErr
            sdg={['GRI 302-1']}
            display="block"
            location={location}
-           onAccordionClick={handleAccordionClick}
+           setLocationMessage={setLocationMessage}
+           year={year}
+          setYearMessage={setYearMessage}
         >
           <Selfgenerated location={location} year={year} month={month}/>
         </AccordionItem>
@@ -140,7 +141,9 @@ const EnergyConsumedBody = ({location, year, month,setLocationMessage,setYearErr
           sdg={['GRI 302-1d']}
           display="block"
           location={location}
-          onAccordionClick={handleAccordionClick}
+          setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
           <Energysold location={location} year={year} month={month}/>
         </AccordionItem>
@@ -150,7 +153,9 @@ const EnergyConsumedBody = ({location, year, month,setLocationMessage,setYearErr
           sdg={['GRI 302-1f']}
           display="none"
           location={location}
-          onAccordionClick={handleAccordionClick}
+          setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
           <Standards location={location} year={year} month={month}/>
         </AccordionItem>
@@ -160,7 +165,9 @@ const EnergyConsumedBody = ({location, year, month,setLocationMessage,setYearErr
           sdg={['GRI 302-1g']}
           display="none"
           location={location}
-          onAccordionClick={handleAccordionClick}
+          setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
           <Source  location={location} year={year} month={month}/>
         </AccordionItem>

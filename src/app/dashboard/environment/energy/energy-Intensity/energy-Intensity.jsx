@@ -16,7 +16,8 @@ const Energyintensity = () => {
     const [category, setCategory] = useState("");
     const [isOpen, setIsOpen] = useState(false);
     const [locationMessage, setLocationMessage] = useState("");
-    const [yearError, setYearError] = useState('');
+    const [yearMessage, setYearMessage] = useState('')
+
     const toggleDrawerclose = () => {
         setIsOpen(!isOpen);
     }
@@ -42,7 +43,7 @@ const Energyintensity = () => {
             <div className="flex flex-col justify-start overflow-x-hidden ">
                 <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
                     <div className='w-full'>
-                        <div className="text-left mb-4 ml-3 pt-5 mb-3">
+                        <div className="text-left ml-3 pt-5 mb-3">
                             <p className="text-sm">Environment</p>
                             <div className='flex h-[28px]'>
                                 <div className='h-[28px]'>
@@ -119,10 +120,10 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
             setYear={setYear}
             locationMessage={locationMessage}
             setLocationMessage={setLocationMessage}
-            yearError={yearError}
-            setYearError={setYearError}
-            />
-            <Energyintensitybody location={location} year={year} month={activeMonth} setLocationMessage={setLocationMessage} setYearError={setYearError}/>
+            yearMessage={yearMessage}
+            setYearMessage={setYearMessage}
+             />
+            <Energyintensitybody location={location} year={year} month={activeMonth} setLocationMessage={setLocationMessage} setYearMessage={setYearMessage} />
         </>
     );
 };

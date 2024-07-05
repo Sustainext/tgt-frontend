@@ -17,6 +17,8 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
+import selectWidget3 from '../../../../shared/widgets/Select/selectWidget3';
+import inputnumberWidget from "../../../../shared/widgets/Input/inputnumberWidget"
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
@@ -25,6 +27,8 @@ const widgets = {
   AssignTobutton: AssignToWidget,
   CustomSelectInputWidget: CustomSelectInputWidget,
   RemoveWidget: RemoveWidget,
+  selectWidget3: selectWidget3,
+  inputnumberWidget: inputnumberWidget,
 };
 
 const view_path = 'gri-environment-materials-301-1a-renewable_materials'
@@ -92,13 +96,12 @@ const schema = {
         type: "string",
         title: "Remove",
       },
-      // Define other properties as needed
+
     }
   }
 };
 
 const uiSchema = {
-  // Add flex-wrap to wrap fields to the next line
   items: {
     classNames: 'fieldset',
     'ui:order': [
@@ -112,87 +115,92 @@ const uiSchema = {
       },
     },
     Materialsused: {
-      'ui:widget': 'selectWidget', // Use your custom widget for QuantityUnit
+      'ui:widget': 'selectWidget',
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     Source: {
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     Totalweight: {
-      'ui:widget': 'inputWidget',
+      'ui:widget': 'inputnumberWidget',
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
 
     Unit: {
-      'ui:widget': 'selectWidget',
+      'ui:widget': 'selectWidget3',
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     Datasource: {
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     AssignTo: {
       "ui:widget": "AssignTobutton",
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     FileUpload: {
       'ui:widget': 'FileUploadWidget',
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     Remove: {
       "ui:widget": "RemoveWidget",
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
-    'ui:options': {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: 'horizontal', // Set layout to horizontal
+      'ui:options': {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: 'horizontal',
     }
   }
 };
-
-const generateTooltip = (field, title, tooltipText, display) => {
+const generateUniqueId = (field) => {
+  return `${field}-${new Date().getTime()}`;
+};
+const generateTooltip = (field, title, tooltipText) => {
   if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
     return null; // Return null to skip rendering tooltip for these fields
   }
-
+  const uniqueId = generateUniqueId(field);
   return (
-    <div className='mx-2 flex w-[20vw]'>
-      <label className="text-[13px] leading-5 text-gray-700 flex">{title}</label>
+    <div className={`mx-2 flex ${field === 'Totalweight' ? 'w-[22vw]' :   field === 'Unit' ? 'w-[5.2vw]' : 'w-[20vw]'
+    }`}>
+      <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
+      <div className='relative'>
       <MdInfoOutline
-        data-tooltip-id={field}
+        data-tooltip-id={uniqueId}
         data-tooltip-content={tooltipText}
         className="mt-1 ml-2 text-[12px]"
-        style={{ display: display }}
       />
       <ReactTooltip
-        id={field}
+        id={uniqueId}
         place="top"
         effect="solid"
+      delayHide={200}
+        globalEventOff="scroll"
         style={{
           width: "290px",
           backgroundColor: "#000",
@@ -201,11 +209,16 @@ const generateTooltip = (field, title, tooltipText, display) => {
           boxShadow: 3,
           borderRadius: "8px",
           textAlign: 'left',
+
         }}
+
       />
+      </div>
+
     </div>
   );
 };
+
 
 const Renewable = ({location, year, month}) => {
   const { open } = GlobalState();
@@ -378,7 +391,6 @@ const Renewable = ({location, year, month}) => {
   return (
     <>
 
-       <ToastContainer style={{ fontSize: "12px" }} />
         <ToastContainer style={{ fontSize: "12px" }} />
         <div className={`overflow-auto custom-scrollbar flex`}>
         <div>
@@ -391,7 +403,7 @@ const Renewable = ({location, year, month}) => {
           <Form
             className='flex'
             schema={r_schema}
-            uiSchema={r_ui_schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

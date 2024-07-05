@@ -34,7 +34,16 @@ const widgets = {
 const view_path = 'gri-environment-energy-302-4a-4b-reduction_of_energy_consumption'
 const client_id = 1
 const user_id = 1
-
+const getCurrentYear = () => new Date().getFullYear();
+const generateYearRange = (startYear) => {
+  const currentYear = getCurrentYear();
+  let years = [];
+  for (let year = startYear; year <= currentYear; year++) {
+    years.push(year.toString()); // Convert years to string if needed
+  }
+  return years;
+};
+const yearRange = generateYearRange(1991);
 const schema = {
   type: 'array',
   items: {
@@ -66,8 +75,10 @@ const schema = {
       Baseyear: {
         type: "string",
         title: "Base year",
+        enum: yearRange,
         tooltiptext: "Indicate the base year used for comparing energy saved before the intervention"
       },
+
       Energyreductionis: {
         type: "string",
         title: "Energy reduction is",
@@ -92,13 +103,12 @@ const schema = {
         type: "string",
         title: "Remove",
       },
-      // Define other properties as needed
     }
   }
 };
 
 const uiSchema = {
-// Add flex-wrap to wrap fields to the next line
+
   items: {
     classNames: 'fieldset',
     'ui:order': [
@@ -132,7 +142,7 @@ const uiSchema = {
       },
     },
     Baseyear: {
-      'ui:widget': 'inputWidget',
+      'ui:widget': 'selectWidget',
       'ui:inputtype':'number',
       'ui:options': {
         label: false
@@ -155,27 +165,27 @@ const uiSchema = {
       "ui:widget": "AssignTobutton",
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     FileUpload: {
       'ui:widget': 'FileUploadWidget',
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     Remove: {
       "ui:widget": "RemoveWidget",
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
-    'ui:options': {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: 'horizontal', // Set layout to horizontal
+      'ui:options': {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: 'horizontal',
     }
   }
 };
@@ -191,7 +201,7 @@ const generateTooltip = (field, title, tooltipText) => {
   return (
      <div className={`mx-2 flex ${field === 'Quantitysavedduetointervention' ? 'w-[22vw]' : field === 'Unit'  ? 'w-[5.2vw]' : 'w-[20vw]'}`}>
 
-      <label className={`text-[13px] leading-5 text-gray-700 flex `}>{title}</label>
+      <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
       <div className='relative'>
       <MdInfoOutline
         data-tooltip-id={uniqueId}
@@ -404,7 +414,7 @@ const Reductionenergy = ({location, year, month}) => {
 
           <Form
           className='flex'
-            schema={r_schema}
+            schema={schema}
             uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}

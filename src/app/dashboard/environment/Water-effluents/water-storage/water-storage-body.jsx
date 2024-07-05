@@ -6,12 +6,17 @@ import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import WaterstorageQ1 from "./waterstorageQ1";
 import WaterstorageQ2 from "./waterstorageQ2";
-const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year }) => {
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year, setYearMessage }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
   const handleClick = () => {
     if (!location) {
-      setLocationMessage("Please select a location and year")
+      setLocationMessage("Please select a location")
+
+      return;
+    }
+    if (!year) {
+      setYearMessage("Please select ayear")
 
       return;
     }
@@ -69,7 +74,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
   );
 };
 
-const Waterstoragebody = ({location, year, month,setLocationMessage}) => {
+const Waterstoragebody = ({location, year, month,setLocationMessage, setYearMessage}) => {
 
 
   return (
@@ -83,6 +88,8 @@ const Waterstoragebody = ({location, year, month,setLocationMessage}) => {
           display="block"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
 
           <WaterstorageQ1 location={location} year={year} month={month}/>
@@ -96,6 +103,8 @@ const Waterstoragebody = ({location, year, month,setLocationMessage}) => {
           display="block"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
 
           <WaterstorageQ2 location={location} year={year} month={month}/>

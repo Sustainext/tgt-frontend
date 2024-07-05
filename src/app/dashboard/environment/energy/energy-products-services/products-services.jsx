@@ -39,10 +39,13 @@ const generateYearRange = (startYear) => {
   const currentYear = getCurrentYear();
   let years = [];
   for (let year = startYear; year <= currentYear; year++) {
-    years.push(year);
+    years.push(year.toString()); // Convert years to string if needed
   }
   return years;
 };
+
+// Generate the year range before defining the schema
+const yearRange = generateYearRange(1991);
 const schema = {
   type: 'array',
   items: {
@@ -69,7 +72,7 @@ const schema = {
       Baseyear: {
         type: "string",
         title: "Base year",
-        enum: generateYearRange(1991),
+        enum: yearRange,
         tooltiptext: "Indicate the base year used for comparing energy saved before the intervention"
       },
 
@@ -86,7 +89,6 @@ const schema = {
         type: "string",
         title: "Remove",
       },
-      // Define other properties as needed
     }
   }
 };
@@ -129,27 +131,27 @@ const uiSchema = {
       "ui:widget": "AssignTobutton",
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     FileUpload: {
       'ui:widget': 'FileUploadWidget',
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     Remove: {
       "ui:widget": "RemoveWidget",
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
-    'ui:options': {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: 'horizontal', // Set layout to horizontal
+      'ui:options': {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: 'horizontal',
     }
   }
 };
@@ -166,7 +168,7 @@ const generateTooltip = (field, title, tooltipText) => {
     <div className={`mx-2 flex ${field === 'Quantity' ? 'w-[22vw]' :   field === 'Unit' ? 'w-[5.2vw]' : 'w-[20vw]'
     }`}>
 
-      <label className={`text-[13px] leading-5 text-gray-700 flex `}>{title}</label>
+      <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
       <div className='relative'>
       <MdInfoOutline
         data-tooltip-id={uniqueId}
@@ -378,7 +380,7 @@ const Productsservices = ({location, year, month}) => {
 
           <Form
           className='flex'
-            schema={r_schema}
+            schema={schema}
             uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
