@@ -35,70 +35,70 @@ const view_path = 'gri-environment-energy-302-1d-energy_sold'
 const client_id = 1
 const user_id = 1
 
-const schema = {
-  type: 'array',
-  items: {
-    type: 'object',
-    properties: {
-      EnergyType: {
-        type: "string",
-        title: "Energy Type",
-        tooltiptext: "Indicate type of energy from the drop down",
-        enum: ['Electricity', 'Heating', 'Cooling', 'Steam'],
-        tooltiptext: "Indicate the type of energy that is sold from the drop down including both purchased and self-generated."
+// const schema = {
+//   type: 'array',
+//   items: {
+//     type: 'object',
+//     properties: {
+//       EnergyType: {
+//         type: "string",
+//         title: "Energy Type",
+//         tooltiptext: "Indicate type of energy from the drop down",
+//         enum: ['Electricity', 'Heating', 'Cooling', 'Steam'],
+//         tooltiptext: "Indicate the type of energy that is sold from the drop down including both purchased and self-generated."
 
-      },
-      Source: {
-        type: "string",
-        title: "Source",
-        enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro'],
-        tooltiptext: "Indicate where the energy comes from"
-      },
-      Typeofentity: {
-        type: "string",
-        title: "Type of entity",
-        enum: ['Generator', 'Aggregator', 'Distributor', 'TSO'],
-        tooltiptext: "Indicate the type of Entity the energy is being sold to to. E.g. TSO, Generator, Aggregator"
-      },
-      Nameofentity: {
-        type: "string",
-        title: "Name of entity",
-        tooltiptext: "Indicate the name of the Entity  to which Energy is being sold to."
-      },
-      Renewable: {
-        type: "string",
-        title: "Renewable/ Non-renewable",
-        enum: ['Renewable', 'Non-renewable'],
-        tooltiptext: "Select from the dropdown to indicate whether it's Renewable or Non-Renewable Energy"
-      },
+//       },
+//       Source: {
+//         type: "string",
+//         title: "Source",
+//         enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro'],
+//         tooltiptext: "Indicate where the energy comes from"
+//       },
+//       Typeofentity: {
+//         type: "string",
+//         title: "Type of entity",
+//         enum: ['Generator', 'Aggregator', 'Distributor', 'TSO'],
+//         tooltiptext: "Indicate the type of Entity the energy is being sold to to. E.g. TSO, Generator, Aggregator"
+//       },
+//       Nameofentity: {
+//         type: "string",
+//         title: "Name of entity",
+//         tooltiptext: "Indicate the name of the Entity  to which Energy is being sold to."
+//       },
+//       Renewable: {
+//         type: "string",
+//         title: "Renewable/ Non-renewable",
+//         enum: ['Renewable', 'Non-renewable'],
+//         tooltiptext: "Select from the dropdown to indicate whether it's Renewable or Non-Renewable Energy"
+//       },
 
-      Quantity: {
-        type: "string",
-        title: "Quantity",
-        tooltiptext: "Indicate the quantity that is sold"
-      },
-      Unit: {
-        type: "string",
-        title: "Unit",
-        enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
-        tooltiptext: "Select the correct unit corresponding to the quantity sold."
-      },
-      AssignTo: {
-        type: "string",
-      },
-      FileUpload: {
-        type: "string",
-        format: "data-url",
-      },
+//       Quantity: {
+//         type: "string",
+//         title: "Quantity",
+//         tooltiptext: "Indicate the quantity that is sold"
+//       },
+//       Unit: {
+//         type: "string",
+//         title: "Unit",
+//         enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
+//         tooltiptext: "Select the correct unit corresponding to the quantity sold."
+//       },
+//       AssignTo: {
+//         type: "string",
+//       },
+//       FileUpload: {
+//         type: "string",
+//         format: "data-url",
+//       },
 
-      Remove: {
-        type: "string",
+//       Remove: {
+//         type: "string",
 
-      },
-      // Define other properties as needed
-    }
-  }
-};
+//       },
+//       // Define other properties as needed
+//     }
+//   }
+// };
 
 const uiSchema = {
   items: {
@@ -200,7 +200,7 @@ const generateTooltip = (field, title, tooltipText) => {
   return (
     <div className={`mx-2 flex  ${field === 'Quantity' ? ' w-[22vw]' : ' w-[20vw]'}`}>
       <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
-      <div className='relative'>
+      <div>
       <MdInfoOutline
         data-tooltip-id={uniqueId}
         data-tooltip-content={tooltipText}
@@ -392,10 +392,13 @@ const Energysold = ({location, year, month}) => {
     setFormData(updatedData);
   };
   const renderFields = () => {
-    const fields = Object.keys(schema.items.properties);
+    if (!r_schema || !r_schema.items || !r_schema.items.properties) {
+      return null;
+    }
+    const fields = Object.keys(r_schema.items.properties);
     return fields.map((field, index) => (
       <div key={index}>
-        {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext)}
+        {generateTooltip(field, r_schema.items.properties[field].title, r_schema.items.properties[field].tooltiptext)}
       </div>
     ));
   };
@@ -414,7 +417,7 @@ const Energysold = ({location, year, month}) => {
           <Form
           className='flex'
             schema={r_schema}
-            uiSchema={uiSchema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

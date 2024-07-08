@@ -115,7 +115,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
         if (array.length > 0) {
           return array.pop();
         } else {
-          return {}; 
+          return {};
         }
       };
 

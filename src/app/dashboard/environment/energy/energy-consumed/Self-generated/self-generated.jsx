@@ -173,7 +173,7 @@ const generateTooltip = (field, title, tooltipText) => {
   return (
     <div className={`mx-2 flex  ${field === 'Quantity' ? ' w-[22vw]' : ' w-[20vw]'}`}>
       <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
-      <div className='relative'>
+      <div>
       <MdInfoOutline
         data-tooltip-id={uniqueId}
         data-tooltip-content={tooltipText}
@@ -365,10 +365,13 @@ const Selfgenerated = ({location, year, month}) => {
     setFormData(updatedData);
   };
   const renderFields = () => {
-    const fields = Object.keys(schema.items.properties);
+    if (!r_schema || !r_schema.items || !r_schema.items.properties) {
+      return null;
+    }
+    const fields = Object.keys(r_schema.items.properties);
     return fields.map((field, index) => (
       <div key={index}>
-        {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext)}
+        {generateTooltip(field, r_schema.items.properties[field].title, r_schema.items.properties[field].tooltiptext)}
       </div>
     ));
   };
@@ -387,7 +390,7 @@ const Selfgenerated = ({location, year, month}) => {
           <Form
             className='flex'
             schema={r_schema}
-            uiSchema={uiSchema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

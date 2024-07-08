@@ -63,10 +63,10 @@ const Employeeturnover = ({ location, year, month,activeMonth }) => {
                     {tabs.map((tab, index) => (
                         <li
                             key={index}
-                            className={`flex-1 text-center border-b-2 py-2 text-[12px] ${activeTabIndex === index ? 'border-blue-500 text-blue-600' : 'border-gray-300 text-gray-600'} `}
+                            className={`flex-1 text-center relative border-b-2 py-2 text-[12px] ${activeTabIndex === index ? 'border-blue-500 text-blue-600' : 'border-gray-300 text-gray-600'} `}
                             onClick={() => setActiveTabIndex(index)}
                         >
-                            <div className='flex justify-center items-center space-x-1'>
+                            <div className='flex justify-center items-center space-x-1 '>
                                 <span>{tab.title}</span>
                                 <MdInfoOutline data-tooltip-id={`tooltip-${tab.title.replace(/\s+/g, '-')}`}
                                     data-tooltip-content={tab.tooltip}

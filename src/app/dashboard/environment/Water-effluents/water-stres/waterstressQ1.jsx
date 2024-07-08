@@ -404,13 +404,16 @@ const WaterstressQ1 = ({location, year, month}) => {
         setFormData(updatedData);
     };
     const renderFields = () => {
-        const fields = Object.keys(schema.items.properties);
+        if (!r_schema || !r_schema.items || !r_schema.items.properties) {
+          return null;
+        }
+        const fields = Object.keys(r_schema.items.properties);
         return fields.map((field, index) => (
-            <div key={index}>
-                {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext)}
-            </div>
+          <div key={index}>
+            {generateTooltip(field, r_schema.items.properties[field].title, r_schema.items.properties[field].tooltiptext)}
+          </div>
         ));
-    };
+      };
     return (
         <>
              <ToastContainer style={{ fontSize: "12px" }} />
@@ -457,7 +460,7 @@ const WaterstressQ1 = ({location, year, month}) => {
                         <Form
                             className='flex'
                             schema={r_schema}
-                            uiSchema={uiSchema}
+                            uiSchema={r_ui_schema}
                             formData={formData}
                             onChange={handleChange}
                             validator={validator}

@@ -197,7 +197,7 @@ const generateTooltip = (field, title, tooltipText) => {
       <label className={`text-[15px] leading-5 text-gray-700 flex`}>{title}</label>
       </div>
 
-      <div className=''>
+      <div>
         <MdInfoOutline
              data-tooltip-id={uniqueId}
              data-tooltip-content={tooltipText}
@@ -216,15 +216,7 @@ const generateTooltip = (field, title, tooltipText) => {
             textAlign: 'left',
             zIndex: 9999, // Ensure the tooltip is above other elements
           }}
-          overridePosition={({ left, top }, currentEvent, currentTarget, node) => {
-            // Adjust the tooltip position here if needed
-            const d = document.documentElement;
-            left = Math.min(d.clientWidth - node.clientWidth, left);
-            top = Math.min(d.clientHeight - node.clientHeight, top);
-            left = Math.max(0, left);
-            top = Math.max(0, top);
-            return { top, left };
-          }}
+
         />
       </div>
     </div>
@@ -367,10 +359,13 @@ const Purchased = ({ location, year, month }) => {
     setFormData(updatedData);
   };
   const renderFields = () => {
-    const fields = Object.keys(schema.items.properties);
+    if (!r_schema || !r_schema.items || !r_schema.items.properties) {
+      return null;
+    }
+    const fields = Object.keys(r_schema.items.properties);
     return fields.map((field, index) => (
-      <div key={index} className='px-2'>
-        {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext)}
+      <div key={index}>
+        {generateTooltip(field, r_schema.items.properties[field].title, r_schema.items.properties[field].tooltiptext)}
       </div>
     ));
   };
@@ -388,6 +383,7 @@ const Purchased = ({ location, year, month }) => {
 
 
           <Form
+            className='flex'
             schema={r_schema}
             uiSchema={r_ui_schema}
             formData={formData}

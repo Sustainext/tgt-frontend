@@ -94,7 +94,10 @@ const Screen3 = ({location, year, month}) => {
         client_id : client_id,
         user_id : user_id,
         path: view_path,
-        form_data: formData
+        form_data: formData,
+        location,
+        year,
+        month
         }
 
         const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`

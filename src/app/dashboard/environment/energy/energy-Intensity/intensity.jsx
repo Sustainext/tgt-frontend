@@ -179,7 +179,7 @@ const generateTooltip = (field, title, tooltipText) => {
     <div className={`mx-2 flex ${field === 'EnergyQuantity' ? 'w-[22vw]' :  field === 'Metricquantity'? 'w-[21vw]' : field === 'Unit' || field === 'MetricUnit' ? 'w-[5.2vw]' : 'w-[20vw]'
     }`}>
       <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
-      <div className='relative'>
+      <div>
       <MdInfoOutline
         data-tooltip-id={uniqueId}
         data-tooltip-content={tooltipText}
@@ -369,10 +369,13 @@ const Intensity = ({location, year, month}) => {
     setFormData(updatedData);
   };
   const renderFields = () => {
-    const fields = Object.keys(schema.items.properties);
+    if (!r_schema || !r_schema.items || !r_schema.items.properties) {
+      return null;
+    }
+    const fields = Object.keys(r_schema.items.properties);
     return fields.map((field, index) => (
       <div key={index}>
-        {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext)}
+        {generateTooltip(field, r_schema.items.properties[field].title, r_schema.items.properties[field].tooltiptext)}
       </div>
     ));
   };

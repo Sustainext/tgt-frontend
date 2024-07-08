@@ -269,7 +269,7 @@ const Table = ({ data, labels, currentIndex, rawData }) => {
         <td className='py-4 h-12 flex justify-center items-center'>
           {data.children ? (
             expanded ? (
-              <div className='relative'>
+              <div>
                 <div onClick={handleExpand}>
                   <FaAngleDown />
                 </div>
