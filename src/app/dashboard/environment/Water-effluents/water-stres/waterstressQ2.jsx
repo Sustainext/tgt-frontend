@@ -167,8 +167,7 @@ const generateTooltip = (field, title, tooltipText) => {
         id={uniqueId}
         place="top"
         effect="solid"
-      delayHide={200}
-        globalEventOff="scroll"
+
         style={{
           width: "290px",
           backgroundColor: "#000",

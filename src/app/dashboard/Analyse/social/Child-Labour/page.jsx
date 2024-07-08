@@ -7,13 +7,9 @@ import DateRangePicker from "../../../../utils/DatePickerComponent";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import {
   columns1,
-  data1,
   columns2,
-  data2,
   columns3,
-  data3,
   columns4,
-  data4,
 } from "./data";
 
 const AnalyseChildlabour = ({ isBoxOpen }) => {
@@ -23,16 +19,10 @@ const AnalyseChildlabour = ({ isBoxOpen }) => {
   const [selectedCorp, setSelectedCorp] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
   const [selectedsetLocation, setSelectedSetLocation] = useState("");
-  const [wastedata1, setWastedata1] = useState([]);
-  const [wastedata2, setWastedata2] = useState([]);
-  const [wastedata3, setWastedata3] = useState([]);
-  const [wastedata4, setWastedata4] = useState([]);
-  const [wastedata5, setWastedata5] = useState([]);
-  const [wastedata6, setWastedata6] = useState([]);
-  const [wastedata7, setWastedata7] = useState([]);
-  const [wastedata8, setWastedata8] = useState([]);
-  const [wastedata9, setWastedata9] = useState([]);
-  const [selectedYear, setSelectedYear] = useState("2023");
+  const [childdata1, setChilddata1] = useState([]);
+  const [childdata2, setChilddata2] = useState([]);
+  const [childdata3, setChilddata3] = useState([]);
+  const [childdata4, setChilddata4] = useState([]);
   const [corporates, setCorporates] = useState([]);
   const [reportType, setReportType] = useState("Organization");
   const [loopen, setLoOpen] = useState(false);
@@ -63,7 +53,7 @@ const AnalyseChildlabour = ({ isBoxOpen }) => {
   } else {
       const startDate = new Date(params.start);
       const endDate = new Date(params.end);
-  
+
       if (endDate < startDate) {
           setIsDateRangeValid(false);
           setDateRange({
@@ -76,239 +66,47 @@ const AnalyseChildlabour = ({ isBoxOpen }) => {
           setIsDateRangeValid(true);
       }
   }
+  setChilddata1([]);
+  setChilddata2([]);
+  setChilddata3([]);
+  setChilddata4([]);
     LoaderOpen();
-    setWastedata1([]);
-    setWastedata2([]);
-    setWastedata3([]);
-    setWastedata4([]);
-    setWastedata5([]);
-    setWastedata6([]);
-    setWastedata7([]);
-    setWastedata8([]);
-    setWastedata9([]);
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_waste_analysis`,
+        `/sustainapp/get_child_labor_analysis`,
         {
-          params: params,
+          params: params
         }
       );
 
       const data = response.data;
       console.log(data, "testing");
 
-      const {
-        waste_generated_by_material,
-        waste_generated_by_location,
-        hazardous_and_non_hazardous_waste_composition,
-        waste_directed_to_disposal_by_material_type,
-        waste_diverted_from_disposal_by_material_type,
-        hazardous_waste_diverted_form_disposal,
-        non_hazardeous_waste_diverted_from_disposal,
-        hazardeous_waste_directed_to_disposal,
-        non_hazardeous_waste_directed_to_disposal,
-      } = data;
-      const removeAndStoreLastObject = (array) => {
-        if (array.length > 0) {
-          return array.pop();
-        } else {
-          return null;
-        }
-      };
-
-      const waste_generated_by_material_total = removeAndStoreLastObject(
-        waste_generated_by_material
-      );
-      const roundedWasteGeneratedByMaterial = waste_generated_by_material.map(
-        (item) => ({
-          ...item,
-          total_waste: item.total_waste.toFixed(2),
-        })
-      );
-      roundedWasteGeneratedByMaterial.push({
-        material_type: "Total",
-        contribution: "",
-        totalrow: 2,
-        total_waste:
-          waste_generated_by_material_total.total_waste_generated.toFixed(2),
-        units: "t (metric tons)",
-      });
-      setWastedata1(roundedWasteGeneratedByMaterial);
-      //---table1--//
-      const waste_generated_by_location_total = removeAndStoreLastObject(
-        waste_generated_by_location
-      );
-      const wastegeneratedbylocation = waste_generated_by_location.map(
-        (item) => ({
-          ...item,
-          total_waste: item.total_waste.toFixed(2),
-        })
-      );
-      wastegeneratedbylocation.push({
-        material_type: "Total",
-        location: "",
-        contribution: "",
-        totalrow: 2,
-        total_waste:
-          waste_generated_by_location_total.total_waste_generated.toFixed(2),
-        units: "t (metric tons)",
-      });
-      setWastedata2(wastegeneratedbylocation);
-      //---table2--//
-      const nonhazardous_total = removeAndStoreLastObject(
-        hazardous_and_non_hazardous_waste_composition
-      );
-      const wastegeneratedbycategory =
-        hazardous_and_non_hazardous_waste_composition.map((item) => ({
-          ...item,
-          total_waste: item.total_waste.toFixed(2),
-        }));
-      wastegeneratedbycategory.push({
-        material_type: "Total",
-        contribution: "",
-        totalrow: 2,
-        total_waste: nonhazardous_total.total_waste_generated.toFixed(2),
-        units: "t (metric tons)",
-      });
-      setWastedata3(wastegeneratedbycategory);
-
-      //---table3--//
-      const waste_directed_to_disposal_by_material_total =
-        removeAndStoreLastObject(waste_directed_to_disposal_by_material_type);
-      const wastedirectedtodisposalbymaterialtype =
-        waste_directed_to_disposal_by_material_type.map((item) => ({
-          ...item,
-          total_waste: item.total_waste.toFixed(2),
-        }));
-      wastedirectedtodisposalbymaterialtype.push({
-        disposal_method: "",
-        material_type: "Total",
-        contribution: "",
-        totalrow: 3,
-        maprow: 1,
-        total_waste:
-          waste_directed_to_disposal_by_material_total.total_waste_generated.toFixed(
-            2
-          ),
-        units: "t (metric tons)",
-      });
-      setWastedata4(wastedirectedtodisposalbymaterialtype);
-
-      //---table4--//
-      const waste_diverted_from_disposal_by_material_type_total =
-        removeAndStoreLastObject(waste_diverted_from_disposal_by_material_type);
-      const wastedivertedfromdisposalbymaterialtype =
-        waste_diverted_from_disposal_by_material_type.map((item) => ({
-          ...item,
-          total_waste: item.total_waste.toFixed(2),
-        }));
-      wastedivertedfromdisposalbymaterialtype.push({
-        recovery_operation: "",
-        material_type: "Total",
-        contribution: "",
-        totalrow: 3,
-        maprow: 1,
-        total_waste:
-          waste_diverted_from_disposal_by_material_type_total.total_waste_generated.toFixed(
-            2
-          ),
-        units: "t (metric tons)",
-      });
-      setWastedata5(wastedivertedfromdisposalbymaterialtype);
-      //---table5--//
-      const hazardous_waste_diverted_form_disposal_total = removeAndStoreLastObject(hazardous_waste_diverted_form_disposal);
-      const hazardouswastedivertedformdisposaltotal =
-        hazardous_waste_diverted_form_disposal.map((item) => ({
-          ...item,
-          total_waste: item.total_waste.toFixed(2),
-        }));
-      hazardouswastedivertedformdisposaltotal.push({
-        material_type: "Total",
-        total_waste:
-          hazardous_waste_diverted_form_disposal_total.total_waste_generated.toFixed(
-            2
-          ),
-
-        units: "t (metric tons)",
-        recycled_percentage: "",
-        preparation_of_reuse_percentage: "",
-        other_percentage: "",
-        site: "",
-        totalrow: 6,
-
-      });
-      setWastedata6(hazardouswastedivertedformdisposaltotal);
-      //---table6--//
-      const hnon_hazardeous_waste_diverted_from_disposal_total = removeAndStoreLastObject(non_hazardeous_waste_diverted_from_disposal);
-      const non_hazardeouswastedivertedfromdisposal =
-        non_hazardeous_waste_diverted_from_disposal.map((item) => ({
-          ...item,
-          total_waste: item.total_waste.toFixed(2),
-        }));
-      non_hazardeouswastedivertedfromdisposal.push({
-        material_type: "Total",
-        total_waste:
-          hnon_hazardeous_waste_diverted_from_disposal_total.total_waste_generated.toFixed(
-            2
-          ),
-
-        units: "t (metric tons)",
-        recycled_percentage: "",
-        preparation_of_reuse_percentage: "",
-        other_percentage: "",
-        site: "",
-        totalrow: 6,
-
-      });
-      setWastedata7(non_hazardeouswastedivertedfromdisposal);
-      //---table7--//
-      const hazardeous_waste_directed_to_disposal_total = removeAndStoreLastObject(hazardeous_waste_directed_to_disposal);
-      const hazardeous_wastedirectedtodisposal =
-        hazardeous_waste_directed_to_disposal.map((item) => ({
-          ...item,
-          total_waste: item.total_waste.toFixed(2),
-        }));
-      hazardeous_wastedirectedtodisposal.push({
-        material_type: "Total",
-        total_waste:
-          hazardeous_waste_directed_to_disposal_total.total_waste_generated.toFixed(
-            2
-          ),
-
-        units: "t (metric tons)",
-        inceneration_with_energy_percentage: "",
-        inceneration_without_energy_percentage: "",
-        landfill_percentage: "",
-        other_disposal_percentage: "",
-        external_percentage: "",
-        site: "",
-        totalrow: 9,
-
-      });
-      setWastedata8(hazardeous_wastedirectedtodisposal);
-      //---table8--//
-      const non_hazardeous_waste_directed_to_disposal_total = removeAndStoreLastObject(non_hazardeous_waste_directed_to_disposal);
-      const non_hazardeouswastedirectedtodisposal =
-        non_hazardeous_waste_directed_to_disposal.map((item) => ({
-          ...item,
-          total_waste: item.total_waste.toFixed(2),
-        }));
-      non_hazardeouswastedirectedtodisposal.push({
-        material_type: "Total",
-        total_waste: non_hazardeous_waste_directed_to_disposal_total.total_waste_generated.toFixed(2),
-
-        units: "t (metric tons)",
-        inceneration_with_energy_percentage: "",
-        inceneration_without_energy_percentage: "",
-        landfill_percentage: "",
-        other_disposal_percentage: "",
-        external_percentage: "",
-        site: "",
-        totalrow: 9,
-
-      });
-      setWastedata9(non_hazardeouswastedirectedtodisposal);
-      //---table9--//
+      const { operation_significant_risk_of_child_labor, operation_significant_risk_of_young_workers, suppliers_significant_risk_of_child_labor,suppliers_significant_risk_of_young_workers } = data;
+      const formattedLocation = operation_significant_risk_of_child_labor.map((osrcl) => ({
+        childlabor: osrcl.childlabor,
+        TypeofOperation: osrcl.TypeofOperation,
+        geographicareas: osrcl.geographicareas,
+      }));
+      const formattedScope = operation_significant_risk_of_young_workers.map((osroyw) => ({
+        hazardouswork: osroyw.hazardouswork,
+        TypeofOperation1: osroyw.TypeofOperation,
+        geographicareas1: osroyw.geographicareas,
+      }));
+      const formattedSource = suppliers_significant_risk_of_child_labor.map((ssrocl) => ({
+        childlabor1: ssrocl.childlabor,
+        TypeofOperation2: ssrocl.TypeofOperation,
+        geographicareas2: ssrocl.geographicareas,
+      }));
+      const formattedSuppliers = suppliers_significant_risk_of_young_workers.map((ssroyw) => ({
+        hazardouswork1: ssroyw.hazardouswork,
+        TypeofOperation3: ssroyw.TypeofOperation,
+        geographicareas3: ssroyw.geographicareas,
+      }));
+      setChilddata1(formattedLocation);
+      setChilddata2(formattedScope);
+      setChilddata3(formattedSource);
+      setChilddata4(formattedSuppliers);
       const resultArray = Object.keys(data).map((key) => ({
         key: key,
         value: data[key],
@@ -392,15 +190,11 @@ const AnalyseChildlabour = ({ isBoxOpen }) => {
     setSelectedOrg(newOrg);
     setSelectedCorp("");
     setSelectedSetLocation("");
-    setWastedata1([]);
-    setWastedata2([]);
-    setWastedata3([]);
-    setWastedata4([]);
-    setWastedata5([]);
-    setWastedata6([]);
-    setWastedata7([]);
-    setWastedata8([]);
-    setWastedata9([]);
+    setChilddata1([]);
+    setChilddata2([]);
+    setChilddata3([]);
+    setChilddata4([]);
+
 
     setDatasetparams((prevParams) => ({
       ...prevParams,
@@ -610,7 +404,7 @@ const AnalyseChildlabour = ({ isBoxOpen }) => {
 
               </div>
               <div className="mb-4">
-                <DynamicTable2 columns={columns1} data={data1} />
+                <DynamicTable2 columns={columns1} data={childdata1} />
               </div>
             </div>
           </div>
@@ -638,7 +432,7 @@ const AnalyseChildlabour = ({ isBoxOpen }) => {
                 </div>
               </div>
               <div className="mb-4">
-                <DynamicTable2 columns={columns2} data={data2} />
+                <DynamicTable2 columns={columns2} data={childdata2} />
               </div>
             </div>
           </div>
@@ -666,7 +460,7 @@ const AnalyseChildlabour = ({ isBoxOpen }) => {
                 </div>
               </div>
               <div className="mb-4">
-                <DynamicTable2 columns={columns3} data={data3} />
+                <DynamicTable2 columns={columns3} data={childdata3} />
               </div>
             </div>
           </div>
@@ -676,7 +470,7 @@ const AnalyseChildlabour = ({ isBoxOpen }) => {
               className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
             >
               <div className="mb-4">
-                <DynamicTable2 columns={columns4} data={data4} />
+                <DynamicTable2 columns={columns4} data={childdata4} />
               </div>
             </div>
           </div>

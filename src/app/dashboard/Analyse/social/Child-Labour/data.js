@@ -1,23 +1,58 @@
 
-    export const columns1 = ['Operations considered to have significant risk of child labors', 'Type of Operation', 'Countries or Geographic Areas'];
-    export const data1 = [
-      { 'Operations considered to have significant risk of child labors': 'Operation 1', 'Type of Operation': "", 'Countries or Geographic Areas': ""},
-      { 'Operations considered to have significant risk of child labors': 'Operation 2', 'Type of Operation': "", 'Countries or Geographic Areas': ""},
-    ];
+export const columns1 = [
+  {
+    Header: "Operations considered to have significant risk of child labors",
+    accessor: "childlabor",
+  },
+  {
+    Header: "Type of Operation",
+    accessor: "TypeofOperation",
+  },
+  {
+    Header: "Countries or Geographic Areas",
+    accessor: "geographicareas",
+  },
+];
+export const columns2 = [
+  {
+    Header: "Operations considered to have significant risk of young workers exposed to hazardous work",
+    accessor: "hazardouswork",
+  },
+  {
+    Header: "Type of Operation",
+    accessor: "TypeofOperation1",
+  },
+  {
+    Header: "Countries or Geographic Areas",
+    accessor: "geographicareas1",
+  },
+];
+export const columns3 = [
+  {
+    Header: "Suppliers considered to have significant risk of child labor",
+    accessor: "childlabor1",
+  },
+  {
+    Header: "Type of Operation",
+    accessor: "TypeofOperation2",
+  },
+  {
+    Header: "Countries or Geographic Areas",
+    accessor: "geographicareas2",
+  },
+];
+export const columns4 = [
+  {
+    Header: "Suppliers considered to have significant risk of young workers exposed to hazardous work",
+    accessor: "hazardouswork1",
+  },
+  {
+    Header: "Type of Operation",
+    accessor: "TypeofOperation3",
+  },
+  {
+    Header: "Countries or Geographic Areas",
+    accessor: "geographicareas3",
+  },
+];
 
-    // Updated data4 to match column names
-    export const columns2 = ['Operations considered to have significant risk of young workers exposed to hazardous work', 'Type of Operation', 'Countries or Geographic Areas'];
-    export const data2 = [
-      { 'Operations considered to have significant risk of young workers exposed to hazardous work': 'Operation 1', 'Type of Operation': "", 'Countries or Geographic Areas': ""},
-      { 'Operations considered to have significant risk of young workers exposed to hazardous work': 'Operation 2', 'Type of Operation': "", 'Countries or Geographic Areas': ""},
-    ];
-    export const columns3 = ['Suppliers considered to have significant risk of child labor', 'Type of Supplier', 'Countries or Geographic Areas'];
-    export const data3 = [
-      { 'Suppliers considered to have significant risk of child labor': 'Supplier 1', 'Type of Supplier': "", 'Countries or Geographic Areas': ""},
-      { 'Suppliers considered to have significant risk of child labor': 'Supplier 2', 'Type of Supplier': "", 'Countries or Geographic Areas': ""},
-    ];
-    export const columns4 = ['Suppliers considered to have significant risk of young workers exposed to hazardous work', 'Type of Supplier', 'Countries or Geographic Areas'];
-    export const data4 = [
-      { 'Suppliers considered to have significant risk of young workers exposed to hazardous work': 'Supplier 1', 'Type of Supplier': "", 'Countries or Geographic Areas': ""},
-      { 'Suppliers considered to have significant risk of young workers exposed to hazardous work': 'Supplier 2', 'Type of Supplier': "", 'Countries or Geographic Areas': ""},
-    ];

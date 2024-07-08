@@ -7,7 +7,7 @@ const inputWidget = (props) => {
   const inputType = uiSchema['ui:inputtype'] || "text";
 
   // Define restricted keys based on input type
-  const restrictedKeysNumber = ["e", "E", "+", "-", "."];
+  const restrictedKeysNumber = ["e", "E", "+", "-",];
   const restrictedKeysText = uiSchema.restrictedKeysText || [];  // Configurable for text inputs
 
   const handleChange = (event) => {

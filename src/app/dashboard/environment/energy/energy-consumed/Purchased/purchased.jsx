@@ -19,6 +19,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
 import axiosInstance from '../../../../../utils/axiosMiddleware';
+import { debounce } from 'lodash';
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
@@ -181,43 +182,55 @@ const uiSchema = {
 const generateUniqueId = (field) => {
   return `${field}-${new Date().getTime()}`;
 };
+
 const generateTooltip = (field, title, tooltipText) => {
-  if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
+  if (field === 'FileUpload' || field === 'AssignTo' || field === 'Remove') {
     return null; // Return null to skip rendering tooltip for these fields
   }
   const uniqueId = generateUniqueId(field);
+
+
+
   return (
-    <div className={`mx-2 flex  ${field === 'Quantity' ? ' w-[22vw]' : ' w-[20vw]'}`}>
-      <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
-      <div className='relative'>
-      <MdInfoOutline
-        data-tooltip-id={uniqueId}
-        data-tooltip-content={tooltipText}
-        className="mt-1 ml-2 text-[12px]"
-      />
-      <ReactTooltip
-        id={uniqueId}
-        place="top"
-        effect="solid"
-      delayHide={200}
-        globalEventOff="scroll"
-        style={{
-          width: "290px",
-          backgroundColor: "#000",
-          color: "white",
-          fontSize: "12px",
-          boxShadow: 3,
-          borderRadius: "8px",
-          textAlign: 'left',
-
-        }}
-
-      />
+    <div className={`flex ${field === 'Quantity' ? 'w-[22vw]' : 'w-[20vw]'}`}>
+      <div>
+      <label className={`text-[15px] leading-5 text-gray-700 flex`}>{title}</label>
       </div>
 
+      <div className=''>
+        <MdInfoOutline
+             data-tooltip-id={uniqueId}
+             data-tooltip-content={tooltipText}
+          className="mt-1 ml-2 text-[12px]"
+        />
+        <ReactTooltip
+          id={uniqueId}
+          effect="solid"
+          style={{
+            width: '290px',
+            backgroundColor: '#000',
+            color: 'white',
+            fontSize: '12px',
+            boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.3)',
+            borderRadius: '8px',
+            textAlign: 'left',
+            zIndex: 9999, // Ensure the tooltip is above other elements
+          }}
+          overridePosition={({ left, top }, currentEvent, currentTarget, node) => {
+            // Adjust the tooltip position here if needed
+            const d = document.documentElement;
+            left = Math.min(d.clientWidth - node.clientWidth, left);
+            top = Math.min(d.clientHeight - node.clientHeight, top);
+            left = Math.max(0, left);
+            top = Math.max(0, top);
+            return { top, left };
+          }}
+        />
+      </div>
     </div>
   );
 };
+
 
 
 const Purchased = ({ location, year, month }) => {
@@ -356,7 +369,7 @@ const Purchased = ({ location, year, month }) => {
   const renderFields = () => {
     const fields = Object.keys(schema.items.properties);
     return fields.map((field, index) => (
-      <div key={index}>
+      <div key={index} className='px-2'>
         {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext)}
       </div>
     ));
@@ -368,15 +381,15 @@ const Purchased = ({ location, year, month }) => {
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className={`overflow-auto custom-scrollbar flex`}>
         <div>
-          <div>
+
             <div className='flex'>
-              {renderFields()} {/* Render dynamic fields with tooltips */}
+              {renderFields()}
             </div>
-          </div>
+
 
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -404,7 +417,6 @@ const Purchased = ({ location, year, month }) => {
               ),
 
             }}
-            onError={(errors) => setErrorMessages(errors)}
           >
           </Form>
 
