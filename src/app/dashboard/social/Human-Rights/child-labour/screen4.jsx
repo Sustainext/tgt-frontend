@@ -49,12 +49,15 @@ const uiSchema = {
     },
 };
 const Screen4 = ({ location, year, month }) => {
-    const [formData, setFormData] = useState([{
-        hazardouswork: "",
-        TypeofOperation: "",
-        geographicareas: "",
+    const initialFormData = [
+        {
+            hazardouswork: "",
+            TypeofOperation: "",
+            geographicareas: "",
 
-    }]);
+        },
+    ];
+    const [formData, setFormData] = useState(initialFormData);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
     const [loopen, setLoOpen] = useState(false);
@@ -149,6 +152,7 @@ const Screen4 = ({ location, year, month }) => {
 
     const loadFormData = async () => {
         LoaderOpen();
+        setFormData(initialFormData);
         const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
 
         try {
@@ -156,12 +160,10 @@ const Screen4 = ({ location, year, month }) => {
             console.log('API called successfully:', response.data);
             setRemoteSchema(response.data.form[0].schema);
             setRemoteUiSchema(response.data.form[0].ui_schema);
-            const form_parent = response.data.form_data;
-            setFormData(form_parent[0].data);
-            const f_data = form_parent[0].data
-            setFormData(f_data)
+            setFormData(response.data.form_data[0].data);
         } catch (error) {
             console.error('API call failed:', error);
+            setFormData(initialFormData);
         } finally {
             LoaderClose();
         }
