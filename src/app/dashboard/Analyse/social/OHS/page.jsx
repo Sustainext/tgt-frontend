@@ -18,6 +18,7 @@ import {
 const AnalyseOHS = ({ isBoxOpen }) => {
   const [analyseData, setAnalyseData] = useState([]);
   const [organisations, setOrganisations] = useState([]);
+  const [corporates, setCorporates] = useState([]);
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
@@ -108,16 +109,6 @@ const AnalyseOHS = ({ isBoxOpen }) => {
             operation.exclusions,
         }));
       }
-
-      // to be worked
-      // function formatArray2(operations) {
-      //   return operations.map((operation, index) => ({
-      //     ...operation,
-      //     "Percentage of all Employees": operation.TypeofOperation,
-      //     "Percentage of workers who are not employees but whose work and/or workplace is controlled by the organization":
-      //       operation.geographicareas,
-      //   }));
-      // }
 
       function formatArray3(operations) {
         return operations.map((operation, index) => ({
