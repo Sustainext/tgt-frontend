@@ -192,7 +192,7 @@ const generateTooltip = (field, title, tooltipText) => {
 
 
   return (
-    <div className={`flex ${field === 'Quantity' ? 'w-[22vw]' : 'w-[20vw]'}`}>
+    <div className={`mx-2 flex ${field === 'Quantity' ? 'w-[22vw]' : 'w-[20vw]'}`}>
       <div>
       <label className={`text-[15px] leading-5 text-gray-700 flex`}>{title}</label>
       </div>
