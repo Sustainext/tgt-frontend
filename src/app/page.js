@@ -3,8 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../Context/auth';
 import { useRouter } from 'next/navigation';
-import Image from "next/image";
-import Link from "next/link";
 
 export default function Home() {
 
@@ -108,7 +106,7 @@ export default function Home() {
                   </div>
                   <div className="text-sm">
                     <a
-                      href="#"
+                      href="/forgot-password"
                       className="font-medium text-indigo-600 hover:text-indigo-500"
                     >
                       Forgot your password?
