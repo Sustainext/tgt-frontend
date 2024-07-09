@@ -6,7 +6,7 @@ const inputnumberWidget = (props) => {
   };
   const handleKeyDown = (event) => {
     // Prevent 'e', '+', '-', and '.' from being entered
-    if (["e", "E", "+", "-", "."].includes(event.key)) {
+    if (["e", "E", "+", "-"].includes(event.key)) {
       event.preventDefault();
     }
   };
