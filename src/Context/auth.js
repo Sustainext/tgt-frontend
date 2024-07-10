@@ -83,7 +83,10 @@ export function AuthProvider({ children }) {
           'Authorization': `Bearer ${token}`,
         },
       });
-
+      const isFirstLogin = response.data.has_login_first;
+      if (isFirstLogin) {
+        router.push('/reset-password');
+      }
       return response.data;
     } catch (error) {
       console.error('Fetch user details error:', error);

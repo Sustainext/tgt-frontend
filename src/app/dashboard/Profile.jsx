@@ -3,7 +3,6 @@ import dynamic from "next/dynamic";
 import { IoClose } from "react-icons/io5";
 import { AiOutlineEdit, AiOutlineWarning } from "react-icons/ai";
 import ProfileImage from "@/app/shared/components/ProfileImage";
-import axios from "axios";
 import { Oval } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -32,7 +31,7 @@ const Profile = ({ onClose }) => {
       setLoading(true);
       try {
         const response = await axiosInstance.get(
-          `/sustainapp/user_profile/${user_id}/`
+          `/api/auth/user_profile/${user_id}/`
         );
         const { first_name, last_name, designation, department, phone } =
           response.data;
@@ -87,11 +86,11 @@ const Profile = ({ onClose }) => {
     };
     try {
       await patch(
-        `/sustainapp/user_profile/${user_id}`,
+        `/api/auth/user_profile/${user_id}/`,
         userData
       );
       toast.success("Profile updated successfully");
-      onClose();
+      setIsShow(false);
     } catch (error) {
       toast.error("Error updating profile");
       console.error("Error updating profile:", error);
@@ -100,8 +99,9 @@ const Profile = ({ onClose }) => {
   };
 
   return (
-    <Modal onClose={onClose}>
-      <ToastContainer style={{ fontSize: "12px" }} />
+    <>
+      {/* <ToastContainer style={{ fontSize: "12px", zIndex:1000 }} /> */}
+      <Modal onClose={onClose}>
       <div className="fixed top-0 left-0 w-full h-full bg-gray-900 opacity-60 z-40"></div>
       <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 welcome-screen">
         {isModalOpen ? (
@@ -271,6 +271,7 @@ const Profile = ({ onClose }) => {
         </div>
       )}
     </Modal>
+    </>
   );
 };
 
