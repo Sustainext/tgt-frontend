@@ -16,8 +16,9 @@ import Forcedorcompulsorylabour from "./Human-Rights/forced-or-compulsory-labour
 import Securitypersonnel from "./Human-Rights/security-personnel/page";
 import Parentalleave from "./Employment/Parental-Leave/page";
 import Benefits from "./Employment/Benefits/page";
-import EmployeeHiresTurnover from "./Employment/Employee-Hires-Turnover/page";
+import EmployeeHiresTurnover from "./Employment/Employee-Hires-Turnover/page"
 // import Noticeperiod from "./Notice-Period/page";
+import Skillupgrade from "./Training/skill-upgrade/page";
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -975,7 +976,197 @@ const Social = () => {
                       </div>
                     </li>
                   </AccordionItem>
+                  <AccordionItem title="Training">
+                    <li
+                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+                      onClick={() => activeSteps(15)}
+                    >
+                      {isStepCompleted(15) ? (
+                        <>
+                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              className="bi bi-circle-fill fill-sky-800  font-bold "
+                              viewBox="0 0 16 16"
+                            >
+                              <circle cx="8" cy="8" r="8" />
+                            </svg>
+                          </div>
+                        </>
+                      ) : (
+                        <div
+                          className={`${activeStep === 22
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            className={`${activeStep === 15
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
+                            viewBox="0 0 16 16"
+                          >
+                            <circle cx="8" cy="8" r="8" />
+                          </svg>
+                        </div>
+                      )}
 
+                      <div className="flex items-center">
+                        {isStepCompleted(15) ? (
+                          <>
+                            <p className="text-[12px] text-sky-800  font-bold">
+                            Training hours
+                            </p>
+                            <img
+                              src={doubleicon}
+                              className="ml-[0.15rem] h-[17px]"
+                              alt="Completed"
+                            />
+                          </>
+                        ) : (
+                          <p
+                            className={`${activeStep === 15
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[12px]  text-gray-600"
+                              } `}
+                          >
+                           Training hours
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                    <li
+                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+                      onClick={() => activeSteps(16)}
+                    >
+                      {isStepCompleted(16) ? (
+                        <>
+                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              className="bi bi-circle-fill fill-sky-800  font-bold "
+                              viewBox="0 0 16 16"
+                            >
+                              <circle cx="8" cy="8" r="8" />
+                            </svg>
+                          </div>
+                        </>
+                      ) : (
+                        <div
+                          className={`${activeStep === 16
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            className={`${activeStep === 16
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
+                            viewBox="0 0 16 16"
+                          >
+                            <circle cx="8" cy="8" r="8" />
+                          </svg>
+                        </div>
+                      )}
+
+                      <div className="flex items-center">
+                        {isStepCompleted(16) ? (
+                          <>
+                            <p className="text-[12px] text-sky-800  font-bold">
+                            Skill Upgrade
+                            </p>
+                            <img
+                              src={doubleicon}
+                              className="ml-[0.15rem] h-[17px]"
+                              alt="Completed"
+                            />
+                          </>
+                        ) : (
+                          <p
+                            className={`${activeStep === 16
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[12px]  text-gray-600"
+                              } `}
+                          >
+                            Skill Upgrade
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                    <li
+                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+                      onClick={() => activeSteps(17)}
+                    >
+                      {isStepCompleted(17) ? (
+                        <>
+                          <div className="before:bg-sky-800  font-bold">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              className="bi bi-circle-fill fill-sky-800  font-bold "
+                              viewBox="0 0 16 16"
+                            >
+                              <circle cx="8" cy="8" r="8" />
+                            </svg>
+                          </div>
+                        </>
+                      ) : (
+                        <div>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            className={`${activeStep === 17
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
+                            viewBox="0 0 16 16"
+                          >
+                            <circle cx="8" cy="8" r="8" />
+                          </svg>
+                        </div>
+                      )}
+
+                      <div className="flex items-center">
+                        {isStepCompleted(17) ? (
+                          <>
+                            <p className="text-[12px] text-sky-800  font-bold">
+                            Performance & Career
+                            Development
+                            </p>
+                            <img
+                              src={doubleicon}
+                              className="ml-[0.15rem] h-[17px]"
+                              alt="Completed"
+                            />
+                          </>
+                        ) : (
+                          <p
+                            className={`${activeStep === 17
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[12px]  text-gray-600"
+                              } `}
+                          >
+                           Performance & Career
+                           Development
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                  </AccordionItem>
 
                   <AccordionItem title="Human Rights">
                     <li
@@ -1167,6 +1358,7 @@ const Social = () => {
                     </li>
                   </AccordionItem>
 
+
                 </ul>
               </div>
             </section>
@@ -1273,6 +1465,14 @@ const Social = () => {
                 </div>
               </>
             )}
+              {activeStep === 16 && (
+              <>
+                <div>
+                  < Skillupgrade />
+                </div>
+              </>
+            )}
+
             {activeStep === 22 && (
               <>
                 <div>
