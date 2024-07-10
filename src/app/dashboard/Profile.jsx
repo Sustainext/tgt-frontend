@@ -7,6 +7,7 @@ import axios from "axios";
 import { Oval } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axiosInstance, { patch } from "../utils/axiosMiddleware";
 
 const Modal = dynamic(() => import("@/app/shared/components/Modal"), {
   ssr: false,
@@ -30,8 +31,8 @@ const Profile = ({ onClose }) => {
     const fetchUserDetails = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(
-          `${process.env.BACKEND_API_URL}/sustainapp/user_profile/${user_id}`
+        const response = await axiosInstance.get(
+          `/sustainapp/user_profile/${user_id}/`
         );
         const { first_name, last_name, designation, department, phone } =
           response.data;
@@ -75,6 +76,7 @@ const Profile = ({ onClose }) => {
   const handleDesignation = (e) => setDesignation(e.target.value);
 
   const submitForm = async (e) => {
+    const user_id = parseInt(localStorage.getItem("user_id") || "0");
     e.preventDefault();
     setLoading(true);
     const userData = {
@@ -84,8 +86,8 @@ const Profile = ({ onClose }) => {
       phone,
     };
     try {
-      await axios.put(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/sustainapp/user_profile/`,
+      await patch(
+        `/sustainapp/user_profile/${user_id}`,
         userData
       );
       toast.success("Profile updated successfully");
