@@ -26,23 +26,13 @@ const Profile = ({ onClose }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
+    const user_id = parseInt(localStorage.getItem("user_id") || "0");
     const fetchUserDetails = async () => {
       setLoading(true);
       try {
-        // const response = await axios.get(
-        //   `${process.env.NEXT_PUBLIC_BACKEND_URL}/user_details/?user_id=${id}`
-        // );
-        const response = {
-          data: {
-            id: 2,
-            first_name: "Utsav",
-            last_name: "",
-            designation: null,
-            department: null,
-            phone: null,
-            profile_picture: null,
-          },
-        };
+        const response = await axios.get(
+          `${process.env.BACKEND_API_URL}/sustainapp/user_profile/${user_id}`
+        );
         const { first_name, last_name, designation, department, phone } =
           response.data;
         setFirstName(first_name);
