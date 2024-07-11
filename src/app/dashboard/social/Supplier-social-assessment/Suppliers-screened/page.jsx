@@ -5,8 +5,9 @@ import {Socialdata} from "../../data/socialgriinfo"
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import Socialheader2 from '../../socialheader2';
-import Screen1 from "./skill-upgrade"
-const Skillupgrade = () => {
+import Screen1 from './Screen1'
+
+const Impactsactionstaken = () => {
     const [activeMonth, setActiveMonth] = useState(1);
     const [location, setLocation] = useState("");
     const [year, setYear] = useState("");
@@ -45,7 +46,7 @@ const Skillupgrade = () => {
                             <div className='flex'>
                                 <div>
                                     <p className="gradient-text text-[22px] font-bold pt-1">
-                                    Training and Education 2018
+                                    Supplier Social Assessment 2016
                                     </p>
                                 </div>
 
@@ -55,8 +56,10 @@ const Skillupgrade = () => {
                     </div>
                     <div className='w-full float-end '>
                         <div className="flex float-end border-l">
-                            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('46')}>GRI 404 - 2</button>
-                            <button className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('47')}>SDG 8</button>
+                            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('25')}>GRI 414 - 1</button>
+                            <button className="text-[#fff] bg-orange-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('26')}>SDG 5</button>
+                            <button className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('26')}>SDG 8</button>
+                            <button className="text-[#fff] bg-blue-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('26')}>SDG 16</button>
                         </div>
                     </div>
                 </div>
@@ -65,7 +68,7 @@ const Skillupgrade = () => {
                 <div className="ml-3 flex">
                     <h6 className="text-[17px] mb-4 font-semibold flex">
 
-                    Programs for upgrading employee skills and transition assistance programs
+                    New suppliers that were screened using social criteria
                         {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[14px]" />
@@ -117,4 +120,4 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
         </>
     );
 };
-export default Skillupgrade;
+export default Impactsactionstaken;

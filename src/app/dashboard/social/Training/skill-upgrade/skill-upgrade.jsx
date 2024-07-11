@@ -134,22 +134,16 @@ const Screen1 = ({year, month}) => {
       };
 
       const handleChange = (e) => {
-        // Update the form data based on the input change
-        let newFormData = {...e.formData[0]}; // assuming formData is an array with one object
 
-        // Check if Q1 has been answered 'No'
+        let newFormData = {...e.formData[0]};
         if (newFormData.Q1 === 'No') {
-            // Clear Q2, Q3, Q4 if Q1 is 'No'
             newFormData.Q2 = '';
             newFormData.Q3 = '';
             newFormData.Q4 = '';
         }
-
-        // Update the state with the new form data
         setFormData([newFormData]);
     };
 
-    // The below code on updateFormData
     let axiosConfig = {
       headers: {
         Authorization: 'Bearer ' + token,
