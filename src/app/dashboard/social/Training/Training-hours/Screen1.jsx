@@ -41,12 +41,12 @@ const uiSchema = {
   "ui:widget": "TableWidget",
   'ui:options': {
     titles: [
-      { title: "Employee Category", tooltip: "Please specify the category.", colSpan: 1 },
-      { title: "Number of training hours provided to employees", tooltip: "Please specify the training hours.", colSpan: 4 },
-      { title: "Number of Employees", tooltip: "Please specify the number of employees.", colSpan: 4 },
+      { title: "Employee Category", tooltip: "Please specify the employee category. Employee category:breakdown of employees by level (such as senior management, middle management) and function (such as technical, administrative, production).", colSpan: 1 },
+      { title: "Number of training hours provided to employees", tooltip: "Please specify the number of training hours provided to employees.", colSpan: 4 },
+      { title: "Number of Employees", tooltip: "Specify the number of employee to which training has been provided. ", colSpan: 4 },
     ],
     tbtilte:[
-      { title: "", tooltip: "Please specify the category.", colSpan: 1 },
+
       { title: "Gender", tooltip: "Please specify the training hours.", colSpan: 4 },
       { title: "Gender", tooltip: "Please specify the number of employees.", colSpan: 4 },
     ],
@@ -229,7 +229,7 @@ const Screen1 = ({ location, year, month }) => {
           <div className='w-[20%]'>
             <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
               <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 405-2a
+                GRI 404-1a
               </p>
             </div>
           </div>

@@ -1,7 +1,9 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { MdOutlineDeleteOutline, MdAdd } from "react-icons/md";
 import { debounce } from "lodash";
-
+import { MdInfoOutline } from "react-icons/md";
+import { Tooltip as ReactTooltip } from 'react-tooltip';
+import 'react-tooltip/dist/react-tooltip.css'
 const CustomTableWidget9 = ({
   id,
   options,
@@ -10,6 +12,7 @@ const CustomTableWidget9 = ({
   onChange,
   formContext,
 }) => {
+  // Debounced input change handler
   const handleInputChange = useCallback(
     debounce((newData) => {
       onChange(newData);
@@ -17,9 +20,21 @@ const CustomTableWidget9 = ({
     []
   );
 
+  // Update fields and automatically compute totals
   const updateField = (index, key, newValue) => {
     const newData = [...value];
     newData[index][key] = newValue;
+
+    // Automatically compute totals if relevant fields are modified
+    if (['male', 'female', 'others'].includes(key)) {
+      newData[index]['totalEmployees'] = [newData[index]['male'], newData[index]['female'], newData[index]['others']]
+        .reduce((sum, value) => sum + (Number(value) || 0), 0);
+    }
+    if (['male1', 'female2', 'others3'].includes(key)) {
+      newData[index]['totalTrainingHours'] = [newData[index]['male1'], newData[index]['female2'], newData[index]['others3']]
+        .reduce((sum, value) => sum + (Number(value) || 0), 0);
+    }
+
     handleInputChange(newData);
   };
 
@@ -30,15 +45,15 @@ const CustomTableWidget9 = ({
 
   const handleAddRow = () => {
     const newRow = {
-        category: "",
-        male: "",
-        female: "",
-        others: "",
-        totalEmployees: "",
-        male1: "",
-        female2: "",
-        others3: "",
-        totalTrainingHours: "",
+      category: "",
+      male: "",
+      female: "",
+      others: "",
+      totalEmployees: "",
+      male1: "",
+      female2: "",
+      others3: "",
+      totalTrainingHours: "",
     };
     const newData = [...value, newRow];
     onChange(newData);
@@ -53,20 +68,65 @@ const CustomTableWidget9 = ({
     <div style={{ overflowY: "auto", maxHeight: "400px" }}>
       <table id={id} className="rounded-md border border-gray-300 w-full">
         <thead className="gradient-background">
-          <tr>
-            {options.titles.map((item, idx) => (
-              <th
-                key={`header-${idx}`}
-                className={`text-[12px]  px-2 py-2 ${idx === 0 ? 'text-left' : 'text-center border border-gray-300'}`}
-                colSpan={item.colSpan}
-              >
-                <div className="">
-                  <p className={`${idx === 0 ? 'text-left' : 'text-center'}`}>{item.title}</p>
-                </div>
-              </th>
-            ))}
-            <th></th>
-          </tr>
+        <tr>
+  {options.titles.map((item, idx) => {
+    // Check if the title is "Employee Category"
+    if (item.title === "Employee Category") {
+      return (
+        // This header will span 2 rows if the condition is met
+        <th
+          key={`header-${idx}`}
+          className={`text-[12px] px-2 py-2 text-left`}
+
+          rowSpan={2}  // Spanning two rows
+        >
+
+            <div className="flex items-center">
+                                    <p>{item.title}</p>
+                                    <MdInfoOutline
+                                        data-tooltip-id={`tooltip-${item.title.replace(/\s+/g, '-')}`}
+                                        data-tooltip-content={item.tooltip}
+                                        className="ml-2 cursor-pointer w-[20%]"
+                                    />
+                                    <ReactTooltip
+                                        id={`tooltip-${item.title.replace(/\s+/g, '-')}`}
+                                        place="top"
+                                        effect="solid"
+                                        className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
+                                    />
+                                </div>
+
+        </th>
+      );
+    } else {
+      // Normal rendering for other headers
+      return (
+        <th
+          key={`header-${idx}`}
+          className={`text-[12px] px-2 py-2 ${idx === 0 ? 'text-left' : 'text-center border border-gray-300'}`}
+          colSpan={item.colSpan}
+        >
+               <div className="flex items-center justify-center">
+                                    <p>{item.title}</p>
+                                    <MdInfoOutline
+                                        data-tooltip-id={`tooltip-${item.title.replace(/\s+/g, '-')}`}
+                                        data-tooltip-content={item.tooltip}
+                                        className="ml-2 cursor-pointer w-[20%]"
+                                    />
+                                    <ReactTooltip
+                                        id={`tooltip-${item.title.replace(/\s+/g, '-')}`}
+                                        place="top"
+                                        effect="solid"
+                                        className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
+                                    />
+                                </div>
+
+        </th>
+      );
+    }
+  })}
+  <th></th>
+</tr>
           <tr>
             {options.tbtilte.map((item, idx) => (
               <th
@@ -105,7 +165,8 @@ const CustomTableWidget9 = ({
                 <td key={`cell-${rowIndex}-${cellIndex}`} className="border border-gray-300 p-3">
                   <InputField
                     type={getInputType(key)}
-                    required={required}
+                    required={required && key !== 'totalEmployees' && key !== 'totalTrainingHours'}
+                    readOnly={key === 'totalEmployees' || key === 'totalTrainingHours'}
                     value={item[key]}
                     onChange={(newValue) => updateField(rowIndex, key, newValue)}
                   />
@@ -136,7 +197,7 @@ const CustomTableWidget9 = ({
   );
 };
 
-const InputField = ({ type, required, value, onChange }) => {
+const InputField = ({ type, required, readOnly, value, onChange }) => {
   const [inputValue, setInputValue] = useState(value);
 
   useEffect(() => {
@@ -144,15 +205,18 @@ const InputField = ({ type, required, value, onChange }) => {
   }, [value]);
 
   const handleInputChange = (e) => {
-    const newValue = e.target.value;
-    setInputValue(newValue);
-    onChange(newValue);
+    if (!readOnly) {
+      const newValue = e.target.value;
+      setInputValue(newValue);
+      onChange(newValue);
+    }
   };
 
   return (
     <input
       type={type}
       required={required}
+      readOnly={readOnly}
       value={inputValue}
       onChange={handleInputChange}
       style={{ width: "100%" }}
@@ -163,6 +227,3 @@ const InputField = ({ type, required, value, onChange }) => {
 };
 
 export default CustomTableWidget9;
-
-
-

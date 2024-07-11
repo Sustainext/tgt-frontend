@@ -5,7 +5,7 @@ import {Socialdata} from "../../data/socialgriinfo"
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import Socialheader2 from '../../socialheader2';
-
+import Screen1 from "./Screen1"
 const Performancedevelopment = () => {
     const [activeMonth, setActiveMonth] = useState(1);
     const [location, setLocation] = useState("");
@@ -112,7 +112,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
             setSelectedCorp={setSelectedCorp}
             year={year}
             setYear={setYear} />
-            {/* <Screen1 year={year} month={activeMonth} /> */}
+            <Screen1 year={year} month={activeMonth} />
 
         </>
     );
