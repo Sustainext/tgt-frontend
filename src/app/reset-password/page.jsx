@@ -5,9 +5,9 @@ import { MdVpnKey, MdKeyboardBackspace } from 'react-icons/md';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import PasswordChecklist from 'react-password-checklist';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
 import 'react-tooltip/dist/react-tooltip.css';
 import { post } from '../utils/axiosMiddleware';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const ClientPasswordReset = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -51,7 +51,7 @@ const ClientPasswordReset = () => {
 
     try {
       const response = await post(
-        `${process.env.BACKEND_API_URL}/sustainapp/change_password/`,
+        `${process.env.BACKEND_API_URL}/api/auth/change_password/`,
         data,
       );
       if (response.status === 200) {
@@ -119,7 +119,7 @@ const ClientPasswordReset = () => {
                     />
                     <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
                       <button type="button" onClick={handleClickShowPassword}>
-                        {showPassword ? <MdVpnKey /> : <MdVpnKey />}
+                        {showPassword ? <FaEye /> : <FaEyeSlash />}
                       </button>
                     </div>
                   </div>

@@ -136,12 +136,12 @@ const Profile = ({ onClose }) => {
               <IoClose />
             </button>
             <div className=" ps-8 w-full">
-              <h5
+              <button
                 className="text-black text-[18px] font-medium leading-relaxed cursor-pointer flex justify-start gap-3 mb-5 items-center"
                 onClick={handleShow}
               >
                 <AiOutlineEdit /> Edit Profile
-              </h5>
+              </button>
               <div className="flex space-x-[60px] ps-4 h-[329px]">
                 <ProfileImage
                   firstName={firstName}
