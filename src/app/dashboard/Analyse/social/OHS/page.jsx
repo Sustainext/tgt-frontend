@@ -30,7 +30,6 @@ const AnalyseOHS = ({ isBoxOpen }) => {
   const [OHSdata5, setOHSData5] = useState([]);
   const [OHSdata6, setOHSData6] = useState([]);
   const [reportType, setReportType] = useState("Organization");
-  const [corporates, setCorporates] = useState([]);
   const [loopen, setLoOpen] = useState(false);
   const [dateRange, setDateRange] = useState({
     start: null,
