@@ -331,11 +331,6 @@ const AnalyseChildlabour = ({ isBoxOpen }) => {
       try {
         const response = await axiosInstance.get(`/orggetonly`);
         setOrganisations(response.data);
-        // // setSelectedOrg(response.data[0].id);
-        setDatasetparams((prevParams) => ({
-          ...prevParams,
-          organisation: response.data[0].id,
-        }));
       } catch (e) {
         console.error("Failed fetching organization:", e);
       }
