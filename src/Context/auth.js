@@ -84,6 +84,7 @@ export function AuthProvider({ children }) {
         },
       });
       const isFirstLogin = response.data.has_login_first;
+      // const isFirstLogin = 0;
       if (isFirstLogin) {
         router.push('/reset-password');
       }

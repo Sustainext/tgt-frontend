@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { MdVpnKey, MdKeyboardBackspace } from 'react-icons/md';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import PasswordChecklist from 'react-password-checklist';
@@ -15,7 +16,12 @@ const ClientPasswordReset = () => {
   const [messageColor, setMessageColor] = useState('');
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleClickShowPasswordCon = () => setConshowPassword((show) => !show);
@@ -38,7 +44,7 @@ const ClientPasswordReset = () => {
     setLoading(true);
 
     const stringWithQuotes = localStorage.getItem('authTokens');
-    const stringWithoutQuotes = stringWithQuotes.replace(/"/g, '');
+    const stringWithoutQuotes = stringWithQuotes?.replace(/"/g, '') || '';
     const options = {
       headers: {
         Authorization: `token ${stringWithoutQuotes}`,
@@ -66,15 +72,16 @@ const ClientPasswordReset = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('user_id');
-    localStorage.removeItem('authTokens');
-    localStorage.removeItem('orgName');
-    localStorage.removeItem('auth');
+    localStorage.clear()
     router.push('/login');
   };
 
+  if (!isMounted) {
+    return null;
+  }
+
   return (
-    <div className="min-h-screen grid place-items-center bg-[#f2f2f2]">
+    <div className="min-h-[125vh] grid place-items-center bg-[#f2f2f2]">
       <div className="bg-white w-80 rounded-md">
         <div className="w-12 h-12 bg-purple-50 rounded-full mx-auto mt-8">
           <MdVpnKey className="mx-auto py-2" size={48} />

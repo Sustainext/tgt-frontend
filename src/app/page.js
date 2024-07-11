@@ -14,6 +14,7 @@ export default function Home() {
 
   useEffect(() => {
     setIsMounted(true);
+    localStorage.clear();
   }, []);
 
   const handleLogin = async (event) => {
