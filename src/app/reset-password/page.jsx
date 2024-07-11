@@ -43,13 +43,6 @@ const ClientPasswordReset = () => {
     e.preventDefault();
     setLoading(true);
 
-    const stringWithQuotes = localStorage.getItem('authTokens');
-    const stringWithoutQuotes = stringWithQuotes?.replace(/"/g, '') || '';
-    const options = {
-      headers: {
-        Authorization: `token ${stringWithoutQuotes}`,
-      },
-    };
     const data = {
       password1: password,
       password2: password,
@@ -57,7 +50,7 @@ const ClientPasswordReset = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/sustainapp/change_password/`,
+        `${process.env.BACKEND_API_URL}/sustainapp/change_password/`,
         data,
         options
       );
