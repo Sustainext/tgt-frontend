@@ -66,7 +66,7 @@ const ClientPasswordReset = () => {
 
   const handleLogout = () => {
     localStorage.clear()
-    router.push('/login');
+    router.push('/');
   };
 
   if (!isMounted) {
