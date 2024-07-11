@@ -47,9 +47,13 @@ const DashboardHeader = () => {
   };
 
   useEffect(() => {
-    setUsername(extractUsername(userDetails?.user_detail[0].username));
-    setEmail(userDetails?.user_detail[0].username);
-    setInitials(getInitials(userDetails?.user_detail[0].username));
+    const userDetails = loadFromLocalStorage("userData");
+    if (userDetails) {
+      const userEmail = userDetails.user_detail[0].username;
+      setUsername(extractUsername(userEmail));
+      setEmail(userEmail);
+      setInitials(getInitials(userEmail));
+    }
 
     const handleClickOutside = (event) => {
       if (profileRef.current && !profileRef.current.contains(event.target)) {
@@ -61,7 +65,7 @@ const DashboardHeader = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [userDetails]);
 
   const handleProfileClick = (e) => {
     e.stopPropagation();
