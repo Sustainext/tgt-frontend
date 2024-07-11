@@ -7,6 +7,7 @@ import PasswordChecklist from 'react-password-checklist';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import 'react-tooltip/dist/react-tooltip.css';
+import { post } from '../utils/axiosMiddleware';
 
 const ClientPasswordReset = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -49,10 +50,9 @@ const ClientPasswordReset = () => {
     };
 
     try {
-      const response = await axios.post(
+      const response = await post(
         `${process.env.BACKEND_API_URL}/sustainapp/change_password/`,
         data,
-        options
       );
       if (response.status === 200) {
         setSuccess(true);
