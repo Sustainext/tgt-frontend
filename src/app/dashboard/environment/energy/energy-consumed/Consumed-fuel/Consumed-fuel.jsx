@@ -36,64 +36,64 @@ const view_path = 'gri-environment-energy-302-1c-1e-consumed_fuel'
 const client_id = 1
 const user_id = 1
 
-const schema = {
-  type: 'array',
-  items: {
-    type: 'object',
-    properties: {
-      EnergyType: {
-        type: "string",
-        title: "Energy Type",
-        tooltiptext: "Indicate type of energy from the drop down",
-        enum: ['Electricity', 'Heating', 'Cooling', 'Steam'],
-        tooltiptext: "Indicate the type of energy purchased from the drop down"
+// const schema = {
+//   type: 'array',
+//   items: {
+//     type: 'object',
+//     properties: {
+//       EnergyType: {
+//         type: "string",
+//         title: "Energy Type",
+//         tooltiptext: "Indicate type of energy from the drop down",
+//         enum: ['Electricity', 'Heating', 'Cooling', 'Steam'],
+//         tooltiptext: "Indicate the type of energy purchased from the drop down"
 
-      },
-      Source: {
-        type: "string",
-        title: "Source",
-        enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro', 'Natural gas', 'Electricity', 'Cooling', 'Steam', 'Heating', 'Wood Biomas', 'Biogas', 'Other'],
-        tooltiptext: "Indicate where the energy comes from"
-      },
-      Purpose: {
-        type: "string",
-        title: "Purpose",
-        tooltiptext: "Indicate the purpose it's being used for.E.g. Manufacturing, packaging, combustion "
-      },
-      Renewable: {
-        type: "string",
-        title: "Renewable/ Non-renewable",
-        enum: ['Renewable', 'Non-renewable'],
-        tooltiptext: "Select from the dropdown to indicate whether it's Renewable or Non-Renewable Energy"
-      },
+//       },
+//       Source: {
+//         type: "string",
+//         title: "Source",
+//         enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro', 'Natural gas', 'Electricity', 'Cooling', 'Steam', 'Heating', 'Wood Biomas', 'Biogas', 'Other'],
+//         tooltiptext: "Indicate where the energy comes from"
+//       },
+//       Purpose: {
+//         type: "string",
+//         title: "Purpose",
+//         tooltiptext: "Indicate the purpose it's being used for.E.g. Manufacturing, packaging, combustion "
+//       },
+//       Renewable: {
+//         type: "string",
+//         title: "Renewable/ Non-renewable",
+//         enum: ['Renewable', 'Non-renewable'],
+//         tooltiptext: "Select from the dropdown to indicate whether it's Renewable or Non-Renewable Energy"
+//       },
 
-      Quantity: {
-        type: "string",
-        title: "Quantity",
-        tooltiptext: "Indicate the purchased quantity"
-      },
-      Unit: {
-        type: "string",
-        title: "Unit",
-        enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
-        tooltiptext: "Indicate the purchased consumed"
-      },
-      AssignTo: {
-        type: "string",
-      },
-      FileUpload: {
-        type: "string",
-        format: "data-url",
-      },
+//       Quantity: {
+//         type: "string",
+//         title: "Quantity",
+//         tooltiptext: "Indicate the purchased quantity"
+//       },
+//       Unit: {
+//         type: "string",
+//         title: "Unit",
+//         enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
+//         tooltiptext: "Indicate the purchased consumed"
+//       },
+//       AssignTo: {
+//         type: "string",
+//       },
+//       FileUpload: {
+//         type: "string",
+//         format: "data-url",
+//       },
 
-      Remove: {
-        type: "string",
+//       Remove: {
+//         type: "string",
 
-      },
-      // Define other properties as needed
-    }
-  }
-};
+//       },
+//       // Define other properties as needed
+//     }
+//   }
+// };
 
 const uiSchema = {
   items: {
@@ -185,7 +185,7 @@ const generateTooltip = (field, title, tooltipText) => {
   return (
     <div className={`mx-2 flex  ${field === 'Quantity' ? ' w-[22vw]' : ' w-[20vw]'}`}>
       <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
-      <div className='relative'>
+      <div>
       <MdInfoOutline
         data-tooltip-id={uniqueId}
         data-tooltip-content={tooltipText}
@@ -195,8 +195,7 @@ const generateTooltip = (field, title, tooltipText) => {
         id={uniqueId}
         place="top"
         effect="solid"
-      delayHide={200}
-        globalEventOff="scroll"
+
         style={{
           width: "290px",
           backgroundColor: "#000",
@@ -344,17 +343,8 @@ const Consumedfuel = ({location, year, month}) => {
         toastShown.current = false; // Reset the flag when valid data is present
     } else {
         // Only show the toast if it has not been shown already
-        if (!toastShown.current) {
-            toast.warn("Please select location, year, and month first", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
+       if (!toastShown.current) {
+
             toastShown.current = true; // Set the flag to true after showing the toast
         }
     }
@@ -379,10 +369,13 @@ const Consumedfuel = ({location, year, month}) => {
     setFormData(updatedData);
   };
   const renderFields = () => {
-    const fields = Object.keys(schema.items.properties);
+    if (!r_schema || !r_schema.items || !r_schema.items.properties) {
+      return null;
+    }
+    const fields = Object.keys(r_schema.items.properties);
     return fields.map((field, index) => (
       <div key={index}>
-        {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext)}
+        {generateTooltip(field, r_schema.items.properties[field].title, r_schema.items.properties[field].tooltiptext)}
       </div>
     ));
   };
@@ -401,7 +394,7 @@ const Consumedfuel = ({location, year, month}) => {
           <Form
           className='flex'
             schema={r_schema}
-            uiSchema={uiSchema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

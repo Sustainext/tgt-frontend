@@ -17,7 +17,7 @@ const TextareaWidget2 = (props) => {
       <div className="mb-6">
         <div className="flex justify-between items-center mb-2">
           <div>
-            <div className="flex">
+            <div className="flex relative">
               <div>
                 <h6 className="text-sm font-medium text-[#344054] flex" style={{ display: uiSchema["ui:haddingdisplay"] }}>
                   {uiSchema["ui:hadding"]}

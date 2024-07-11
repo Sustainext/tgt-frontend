@@ -107,7 +107,7 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
   } else {
       const startDate = new Date(params.start);
       const endDate = new Date(params.end);
-  
+
       if (endDate < startDate) {
           setIsDateRangeValid(false);
           setDateRange({

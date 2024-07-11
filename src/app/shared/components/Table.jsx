@@ -8,7 +8,7 @@ const Table = ({ columns, data }) => {
           <tr className="border border-gray-300 md:table-row gradient-background">
             {columns.map((column, index) => (
               <th
-                key={column.accessor}
+                key={column.accessor} // Ensure `accessor` is unique for each column
                 className={`px-2 py-3 font-semibold text-gray-600 block md:table-cell text-sm ${
                   index === 0 ? 'text-left' : 'text-center'
                 }`}
@@ -19,20 +19,28 @@ const Table = ({ columns, data }) => {
           </tr>
         </thead>
         <tbody className="block md:table-row-group">
-          {data.map((row, rowIndex) => (
-            <tr key={rowIndex} className="border border-gray-300 md:table-row">
-              {columns.map((column, colIndex) => (
-                <td
-                  key={colIndex}
-                  className={`p-2 block md:table-cell ${
-                    colIndex === 0 ? 'text-left font-bold' : 'text-center'
-                  } text-sm`}
-                >
-                  {row[column.accessor]}
-                </td>
-              ))}
+          {data.length > 0 ? (
+            data.map((row, rowIndex) => (
+              <tr key={rowIndex} className="border border-gray-300 md:table-row">
+                {columns.map((column, colIndex) => (
+                  <td
+                    key={colIndex}
+                    className={`p-2 block md:table-cell ${
+                      colIndex === 0 ? 'text-left font-bold' : 'text-center'
+                    } text-sm`}
+                  >
+                    {row[column.accessor]}
+                  </td>
+                ))}
+              </tr>
+            ))
+          ) : (
+            <tr className="border border-gray-300 md:table-row">
+              <td colSpan={columns.length} className="p-2 text-center text-sm font-bold block md:table-cell">
+                No data available
+              </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </div>

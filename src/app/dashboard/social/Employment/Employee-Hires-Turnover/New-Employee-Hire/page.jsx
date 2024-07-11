@@ -9,7 +9,7 @@ import Tab2 from "./tab2";
 import Tab3 from "./tab3";
 import Tab4 from "./tab4";
 import Tab5 from "./tab5";
-import { ToastContainer} from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 function convertShortNameToFullName(shortName) {
     const shortMonthNames = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -58,7 +58,7 @@ const NewEmployeeHire = ({ location, year, month,activeMonth }) => {
                         {tabs.map((tab, index) => (
                             <li
                                 key={index}
-                                className={`flex-1 text-center border-b-2 py-2 text-[12px] ${activeTabIndex === index ? 'border-blue-500 text-blue-600' : 'border-gray-300 text-gray-600'} `}
+                                className={`flex-1 text-center relative border-b-2 py-2 text-[12px] ${activeTabIndex === index ? 'border-blue-500 text-blue-600' : 'border-gray-300 text-gray-600'} `}
                                 onClick={() => setActiveTabIndex(index)}
                             >
                                 <div className='flex justify-center items-center space-x-1'>

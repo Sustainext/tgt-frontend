@@ -24,7 +24,7 @@ const widgets = {
 const view_path = "gri-environment-emissions-301-a-scope-3";
 const client_id = 1;
 const user_id = 1;
-
+const schema = { "type": "array", "items": { "type": "object", "properties": { "Remove": { "type": "string" }, "AssignTo": { "type": "string", "title": "Assign To" }, "Emission": { "type": "string", "title": "Emission" }, "FileUpload": { "type": "string", "format": "data-url" } } } }
 const Scope3 = ({ location, year, month, successCallback, countryCode }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
@@ -66,7 +66,7 @@ const Scope3 = ({ location, year, month, successCallback, countryCode }) => {
     setFormData(prevFormData => {
       const updatedFormData = [...prevFormData];
       const currentEmission = updatedFormData[index]?.Emission || {};
-  
+
       updatedFormData[index] = {
         ...updatedFormData[index],
         Emission: {
@@ -76,17 +76,17 @@ const Scope3 = ({ location, year, month, successCallback, countryCode }) => {
           ...(unitType !== undefined && { unit_type: unitType })
         }
       };
-  
+
       return updatedFormData;
     });
   };
-  
+
 
   const handleFileWidgetChange = (index, name, url, type, size, uploadDateTime) => {
     setFormData(prevFormData => {
       const updatedFormData = [...prevFormData];
       const currentEmission = updatedFormData[index]?.Emission || {};
-      
+
       updatedFormData[index] = {
         ...updatedFormData[index],
         Emission: currentEmission,
@@ -98,7 +98,7 @@ const Scope3 = ({ location, year, month, successCallback, countryCode }) => {
           uploadDateTime: uploadDateTime
         }
       };
-  
+
       console.log('Updated form data:', updatedFormData);
       return updatedFormData;
     });
@@ -201,7 +201,7 @@ const Scope3 = ({ location, year, month, successCallback, countryCode }) => {
         <div>
           <Form
             className="flex"
-            schema={r_schema}
+            schema={schema}
             uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
@@ -272,7 +272,7 @@ const Scope3 = ({ location, year, month, successCallback, countryCode }) => {
           Submit
         </button>
       </div>
-      
+
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <Oval

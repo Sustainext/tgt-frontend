@@ -19,6 +19,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
 import axiosInstance from '../../../../../utils/axiosMiddleware';
+import { debounce } from 'lodash';
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
@@ -181,43 +182,47 @@ const uiSchema = {
 const generateUniqueId = (field) => {
   return `${field}-${new Date().getTime()}`;
 };
+
 const generateTooltip = (field, title, tooltipText) => {
-  if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
+  if (field === 'FileUpload' || field === 'AssignTo' || field === 'Remove') {
     return null; // Return null to skip rendering tooltip for these fields
   }
   const uniqueId = generateUniqueId(field);
+
+
+
   return (
-    <div className={`mx-2 flex  ${field === 'Quantity' ? ' w-[22vw]' : ' w-[20vw]'}`}>
-      <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
-      <div className='relative'>
-      <MdInfoOutline
-        data-tooltip-id={uniqueId}
-        data-tooltip-content={tooltipText}
-        className="mt-1 ml-2 text-[12px]"
-      />
-      <ReactTooltip
-        id={uniqueId}
-        place="top"
-        effect="solid"
-      delayHide={200}
-        globalEventOff="scroll"
-        style={{
-          width: "290px",
-          backgroundColor: "#000",
-          color: "white",
-          fontSize: "12px",
-          boxShadow: 3,
-          borderRadius: "8px",
-          textAlign: 'left',
-
-        }}
-
-      />
+    <div className={`mx-2 flex ${field === 'Quantity' ? 'w-[22vw]' : 'w-[20vw]'}`}>
+      <div>
+      <label className={`text-[15px] leading-5 text-gray-700 flex`}>{title}</label>
       </div>
 
+      <div>
+        <MdInfoOutline
+             data-tooltip-id={uniqueId}
+             data-tooltip-content={tooltipText}
+          className="mt-1 ml-2 text-[12px]"
+        />
+        <ReactTooltip
+          id={uniqueId}
+          effect="solid"
+          style={{
+            width: '290px',
+            backgroundColor: '#000',
+            color: 'white',
+            fontSize: '12px',
+            boxShadow: '3px 3px 5px rgba(0, 0, 0, 0.3)',
+            borderRadius: '8px',
+            textAlign: 'left',
+            zIndex: 9999, // Ensure the tooltip is above other elements
+          }}
+
+        />
+      </div>
     </div>
   );
 };
+
 
 
 const Purchased = ({ location, year, month }) => {
@@ -354,10 +359,13 @@ const Purchased = ({ location, year, month }) => {
     setFormData(updatedData);
   };
   const renderFields = () => {
-    const fields = Object.keys(schema.items.properties);
+    if (!r_schema || !r_schema.items || !r_schema.items.properties) {
+      return null;
+    }
+    const fields = Object.keys(r_schema.items.properties);
     return fields.map((field, index) => (
       <div key={index}>
-        {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext)}
+        {generateTooltip(field, r_schema.items.properties[field].title, r_schema.items.properties[field].tooltiptext)}
       </div>
     ));
   };
@@ -368,15 +376,16 @@ const Purchased = ({ location, year, month }) => {
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className={`overflow-auto custom-scrollbar flex`}>
         <div>
-          <div>
+
             <div className='flex'>
-              {renderFields()} {/* Render dynamic fields with tooltips */}
+              {renderFields()}
             </div>
-          </div>
+
 
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            className='flex'
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -404,7 +413,6 @@ const Purchased = ({ location, year, month }) => {
               ),
 
             }}
-            onError={(errors) => setErrorMessages(errors)}
           >
           </Form>
 

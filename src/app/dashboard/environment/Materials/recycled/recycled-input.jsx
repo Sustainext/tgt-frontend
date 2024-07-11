@@ -116,6 +116,7 @@ const uiSchema = {
         ],
         Totalweight: {
             'ui:widget': 'inputWidget',
+            'ui:inputtype':'number',
             'ui:horizontal': true,
             'ui:options': {
                 label: false
@@ -205,7 +206,7 @@ const generateUniqueId = (field) => {
       <div className={`mx-2 flex ${field === 'Amountofmaterialrecycled' || field === 'Amountofrecycledinputmaterialused'   ? 'w-[22vw]' :   field === 'Unit' || field === 'Unit2' ? 'w-[5.2vw]' : 'w-[20vw]'
       }`}>
         <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
-        <div className='relative'>
+        <div>
         <MdInfoOutline
           data-tooltip-id={uniqueId}
           data-tooltip-content={tooltipText}
@@ -363,17 +364,8 @@ const Recycledinput = ({location, year, month}) => {
         toastShown.current = false; // Reset the flag when valid data is present
     } else {
         // Only show the toast if it has not been shown already
-        if (!toastShown.current) {
-            toast.warn("Please select location, year, and month first", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
+       if (!toastShown.current) {
+
             toastShown.current = true; // Set the flag to true after showing the toast
         }
     }
@@ -394,13 +386,16 @@ const Recycledinput = ({location, year, month}) => {
         setFormData(updatedData);
     };
     const renderFields = () => {
-        const fields = Object.keys(schema.items.properties);
+        if (!r_schema || !r_schema.items || !r_schema.items.properties) {
+          return null;
+        }
+        const fields = Object.keys(r_schema.items.properties);
         return fields.map((field, index) => (
-            <div key={index}>
-                {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext, schema.items.properties[field].display)}
-            </div>
+          <div key={index}>
+            {generateTooltip(field, r_schema.items.properties[field].title, r_schema.items.properties[field].tooltiptext, r_schema.items.properties[field].display)}
+          </div>
         ));
-    };
+      };
     return (
         <>
         <ToastContainer style={{ fontSize: "12px" }} />
@@ -415,7 +410,7 @@ const Recycledinput = ({location, year, month}) => {
                     <Form
                         className='flex'
                         schema={r_schema}
-                        uiSchema={uiSchema}
+                        uiSchema={r_ui_schema}
                         formData={formData}
                         onChange={handleChange}
                         validator={validator}

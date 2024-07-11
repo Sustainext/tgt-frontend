@@ -52,10 +52,10 @@ const CustomTableWidget6 = ({
               Age group
             </th>
             {options.titles.map((item, idx) => (
-              <th key={idx} className="text-[12px] border border-gray-300 px-2 py-2 text-center">
+              <th key={idx} className="text-[12px] border border-gray-300 px-2 py-2 text-center relative">
                 <div className="flex items-center justify-center">
                   <p>{item.title}</p>
-                  <p>
+                  <p className=" relative">
                   <MdInfoOutline
                     data-tooltip-id={`tooltip-${item.title.replace(/\s+/g, '-')}`}
                     data-tooltip-content={item.tooltip}

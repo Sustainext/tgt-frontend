@@ -94,7 +94,10 @@ const Screen3 = ({location, year, month}) => {
         client_id : client_id,
         user_id : user_id,
         path: view_path,
-        form_data: formData
+        form_data: formData,
+        location,
+        year,
+        month
         }
 
         const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
@@ -148,6 +151,7 @@ const Screen3 = ({location, year, month}) => {
 
     const loadFormData = async () => {
         LoaderOpen();
+        setFormData([{}]);
         const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
 
         try {
@@ -155,12 +159,10 @@ const Screen3 = ({location, year, month}) => {
             console.log('API called successfully:', response.data);
             setRemoteSchema(response.data.form[0].schema);
             setRemoteUiSchema(response.data.form[0].ui_schema);
-            const form_parent = response.data.form_data;
-            setFormData(form_parent[0].data);
-            // const f_data = form_parent[0].data
-            // setFormData(f_data)
+            setFormData(response.data.form_data[0].data);
         } catch (error) {
             console.error('API call failed:', error);
+            setFormData([{}]);
         } finally {
             LoaderClose();
         }

@@ -189,7 +189,7 @@ const generateTooltip = (field, title, tooltipText) => {
     <div className={`mx-2 flex ${field === 'Totalweight' ? 'w-[22vw]' :   field === 'Unit' ? 'w-[5.2vw]' : 'w-[20vw]'
     }`}>
       <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
-      <div className='relative'>
+      <div>
       <MdInfoOutline
         data-tooltip-id={uniqueId}
         data-tooltip-content={tooltipText}
@@ -199,8 +199,7 @@ const generateTooltip = (field, title, tooltipText) => {
         id={uniqueId}
         place="top"
         effect="solid"
-      delayHide={200}
-        globalEventOff="scroll"
+
         style={{
           width: "290px",
           backgroundColor: "#000",
@@ -348,17 +347,8 @@ const NonRenewable = ({location, year, month}) => {
         toastShown.current = false; // Reset the flag when valid data is present
     } else {
         // Only show the toast if it has not been shown already
-        if (!toastShown.current) {
-            toast.warn("Please select location, year, and month first", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
+       if (!toastShown.current) {
+
             toastShown.current = true; // Set the flag to true after showing the toast
         }
     }
@@ -379,10 +369,13 @@ const NonRenewable = ({location, year, month}) => {
     setFormData(updatedData);
   };
   const renderFields = () => {
-    const fields = Object.keys(schema.items.properties);
+    if (!r_schema || !r_schema.items || !r_schema.items.properties) {
+      return null;
+    }
+    const fields = Object.keys(r_schema.items.properties);
     return fields.map((field, index) => (
       <div key={index}>
-        {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext, schema.items.properties[field].display)}
+        {generateTooltip(field, r_schema.items.properties[field].title, r_schema.items.properties[field].tooltiptext, r_schema.items.properties[field].display)}
       </div>
     ));
   };
@@ -401,7 +394,7 @@ const NonRenewable = ({location, year, month}) => {
           <Form
             className='flex'
             schema={r_schema}
-            uiSchema={uiSchema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
