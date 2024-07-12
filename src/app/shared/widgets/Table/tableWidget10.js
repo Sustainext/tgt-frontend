@@ -34,8 +34,11 @@ const CustomTableWidget10 = ({
       numberperformancereview: "",
       numberdevelopmentreview: "",
       male: "",
+      male2: "",
       female: "",
-      others: "",
+      female2: "",
+      nonBinary: "",
+      nonBinary2: "",
       totalTrainingHours: "",
     };
     const newData = [...value, newRow];
@@ -107,10 +110,10 @@ const CustomTableWidget10 = ({
             </td>
             <td className="py-2 px-4 border-b border-gray-300">
             <InputField
-                type={getInputType("male")}
+                type={getInputType("male2")}
                 required={required}
-                value={value[0]?.male || ""}
-                onChange={(newValue) => updateField(0, "male", newValue)}
+                value={value[0]?.male2 || ""}
+                onChange={(newValue) => updateField(0, "male2", newValue)}
               />
             </td>
           </tr>
@@ -126,10 +129,10 @@ const CustomTableWidget10 = ({
             </td>
             <td className="py-2 px-4 border-b border-gray-300">
             <InputField
-                type={getInputType("female")}
+                type={getInputType("female2")}
                 required={required}
-                value={value[0]?.female || ""}
-                onChange={(newValue) => updateField(0, "female", newValue)}
+                value={value[0]?.female2 || ""}
+                onChange={(newValue) => updateField(0, "female2", newValue)}
               />
             </td>
           </tr>
@@ -137,18 +140,18 @@ const CustomTableWidget10 = ({
             <td className="py-2 px-4 border-r border-b border-gray-300">Others</td>
             <td className="py-2 px-4 border-b border-gray-300">
               <InputField
-                type={getInputType("others")}
+                type={getInputType("nonBinary")}
                 required={required}
-                value={value[0]?.others || ""}
-                onChange={(newValue) => updateField(0, "others", newValue)}
+                value={value[0]?.nonBinary || ""}
+                onChange={(newValue) => updateField(0, "nonBinary", newValue)}
               />
             </td>
             <td className="py-2 px-4 border-b border-gray-300">
             <InputField
-                type={getInputType("others")}
+                type={getInputType("nonBinary2")}
                 required={required}
-                value={value[0]?.others || ""}
-                onChange={(newValue) => updateField(0, "others", newValue)}
+                value={value[0]?.nonBinary2 || ""}
+                onChange={(newValue) => updateField(0, "nonBinary2", newValue)}
               />
             </td>
           </tr>

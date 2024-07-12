@@ -29,12 +29,12 @@ const schema = {
         category: { type: "string", title: "Category" },
         numberperformancereview: { type: "number", title: "Number Performance Review" },
         numberdevelopmentreview: { type: "number", title: "Number Development Review" },
-        male1: { type: "number", title: "Male 1" },
+        male: { type: "number", title: "Male 1" },
         male2: { type: "number", title: "Male 2" },
-        female1: { type: "number", title: "Female 1" },
+        female: { type: "number", title: "Female 1" },
         female2: { type: "number", title: "Female 2" },
-        others1: { type: "number", title: "Others 1" },
-        others2: { type: "number", title: "Others 2" },
+        nonBinary: { type: "number", title: "Others 1" },
+        nonBinary2: { type: "number", title: "Others 2" },
         totalTrainingHours: { type: "number", title: "Total Training Hours" },
       },
 
@@ -55,12 +55,12 @@ const schema = {
         { title: "Gender Details", tooltip: "Please specify detailed data for genders.", rowSpan: 2 }
       ],
       subTitles: [
-        { title: "Male 1", tooltip: "Number of male employees.", colSpan: 1, type: "number" },
+        { title: "Male", tooltip: "Number of male employees.", colSpan: 1, type: "number" },
         { title: "Male 2", tooltip: "Number of male employees.", colSpan: 1, type: "number" },
-        { title: "Female 1", tooltip: "Number of female employees.", colSpan: 1, type: "number" },
+        { title: "Female", tooltip: "Number of female employees.", colSpan: 1, type: "number" },
         { title: "Female 2", tooltip: "Number of female employees.", colSpan: 1, type: "number" },
-        { title: "Others 1", tooltip: "Number of other gender employees.", colSpan: 1, type: "number" },
-        { title: "Others 2", tooltip: "Number of other gender employees.", colSpan: 1, type: "number" },
+        { title: "nonBinary", tooltip: "Number of other gender employees.", colSpan: 1, type: "number" },
+        { title: "nonBinary 2", tooltip: "Number of other gender employees.", colSpan: 1, type: "number" },
         { title: "Total number of Employee", tooltip: "Please specify the total number of employees.", colSpan: 1, type: "number" }
       ],
     }
@@ -71,12 +71,12 @@ const Screen1 = ({ location, year, month }) => {
           category: "",
           numberperformancereview: "",
           numberdevelopmentreview: "",
-          male1: "",
+          male: "",
           male2: "",
-          female1: "",
+          female: "",
           female2: "",
-          others1: "",
-          others2: "",
+          nonBinary: "",
+          nonBinary2: "",
           totalTrainingHours: "",
         }
       ];
