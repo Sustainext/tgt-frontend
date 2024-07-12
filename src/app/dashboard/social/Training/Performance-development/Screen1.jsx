@@ -36,6 +36,7 @@ const schema = {
         nonBinary: { type: "number", title: "Others 1" },
         nonBinary2: { type: "number", title: "Others 2" },
         totalTrainingHours: { type: "number", title: "Total Training Hours" },
+        totalTrainingHours2: { type: "number", title: "Total Training Hours2" },
       },
 
     }
@@ -78,6 +79,7 @@ const Screen1 = ({ location, year, month }) => {
           nonBinary: "",
           nonBinary2: "",
           totalTrainingHours: "",
+          totalTrainingHours2:"",
         }
       ];
     const [formData, setFormData] = useState(initialFormData);

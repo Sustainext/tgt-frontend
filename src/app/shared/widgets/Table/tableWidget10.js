@@ -10,6 +10,8 @@ const CustomTableWidget10 = ({
   onChange,
   formContext,
 }) => {
+  const [rowSpan, setRowSpan] = useState(4);
+
   const handleInputChange = useCallback(
     debounce((newData) => {
       onChange(newData);
@@ -33,21 +35,28 @@ const CustomTableWidget10 = ({
       category: "",
       numberperformancereview: "",
       numberdevelopmentreview: "",
-      male: "",
-      male2: "",
-      female: "",
-      female2: "",
-      nonBinary: "",
-      nonBinary2: "",
-      totalTrainingHours: "",
     };
     const newData = [...value, newRow];
     onChange(newData);
+    setRowSpan(rowSpan + 1); // Update rowSpan when a row is added
+  };
+
+  const handleRemoveRow = (rowIndex) => {
+    const newData = value.filter((_, index) => index !== rowIndex);
+    onChange(newData);
+    setRowSpan(rowSpan - 1); // Update rowSpan when a row is removed
   };
 
   useEffect(() => {
     console.log("CustomTableWidget value:", value);
   }, [value]);
+
+  const calculateTotal = (key) => {
+    return value.reduce((acc, item) => acc + (parseFloat(item[key]) || 0), 0);
+  };
+
+  const totalTrainingHours = calculateTotal("numberperformancereview") + calculateTotal("male") + calculateTotal("female") + calculateTotal("nonBinary");
+  const totalTrainingHours2 = calculateTotal("numberdevelopmentreview") + calculateTotal("male2") + calculateTotal("female2") + calculateTotal("nonBinary2");
 
   return (
     <div className="container mx-auto p-4">
@@ -90,7 +99,7 @@ const CustomTableWidget10 = ({
                   />
                 </td>
                 <td className="py-2 px-4 border-b border-gray-300">
-                  <button onClick={() => formContext.onRemove(rowIndex)}>
+                  <button onClick={() => handleRemoveRow(rowIndex)}>
                     <MdOutlineDeleteOutline className="text-[23px] text-red-600" />
                   </button>
                 </td>
@@ -99,7 +108,7 @@ const CustomTableWidget10 = ({
           ))}
           <tr>
             <td className="py-2 px-4 border-r border-b border-gray-300" rowSpan="4">Gender</td>
-            <td className="py-2 px-4 border-r border-b border-gray-300">Male</td>
+            <td className="py-2 px-4 border-r border-b border-gray-300 text-center">Male</td>
             <td className="py-2 px-4 border-b border-gray-300">
               <InputField
                 type={getInputType("male")}
@@ -109,7 +118,7 @@ const CustomTableWidget10 = ({
               />
             </td>
             <td className="py-2 px-4 border-b border-gray-300">
-            <InputField
+              <InputField
                 type={getInputType("male2")}
                 required={required}
                 value={value[0]?.male2 || ""}
@@ -118,7 +127,7 @@ const CustomTableWidget10 = ({
             </td>
           </tr>
           <tr>
-            <td className="py-2 px-4 border-r border-b border-gray-300">Female</td>
+            <td className="py-2 px-4 border-r border-b border-gray-300 text-center">Female</td>
             <td className="py-2 px-4 border-b border-gray-300">
               <InputField
                 type={getInputType("female")}
@@ -128,7 +137,7 @@ const CustomTableWidget10 = ({
               />
             </td>
             <td className="py-2 px-4 border-b border-gray-300">
-            <InputField
+              <InputField
                 type={getInputType("female2")}
                 required={required}
                 value={value[0]?.female2 || ""}
@@ -137,7 +146,7 @@ const CustomTableWidget10 = ({
             </td>
           </tr>
           <tr>
-            <td className="py-2 px-4 border-r border-b border-gray-300">Others</td>
+            <td className="py-2 px-4 border-r border-b border-gray-300 text-center">Non Binary</td>
             <td className="py-2 px-4 border-b border-gray-300">
               <InputField
                 type={getInputType("nonBinary")}
@@ -147,7 +156,7 @@ const CustomTableWidget10 = ({
               />
             </td>
             <td className="py-2 px-4 border-b border-gray-300">
-            <InputField
+              <InputField
                 type={getInputType("nonBinary2")}
                 required={required}
                 value={value[0]?.nonBinary2 || ""}
@@ -156,23 +165,9 @@ const CustomTableWidget10 = ({
             </td>
           </tr>
           <tr>
-            <td className="py-2 px-4 border-r border-b border-gray-300">Total employee</td>
-            <td className="py-2 px-4 border-b border-gray-300">
-              <InputField
-                type={getInputType("totalTrainingHours")}
-                required={required}
-                value={value[0]?.totalTrainingHours || ""}
-                onChange={(newValue) => updateField(0, "totalTrainingHours", newValue)}
-              />
-            </td>
-            <td className="py-2 px-4 border-b border-gray-300">
-              <InputField
-                type={getInputType("numberdevelopmentreview")}
-                required={required}
-                value={value[0]?.numberdevelopmentreview || ""}
-                onChange={(newValue) => updateField(0, "numberdevelopmentreview", newValue)}
-              />
-            </td>
+            <td className="py-2 px-4 border-r border-b border-gray-300 text-center">Total employee</td>
+            <td className="py-2 px-4 border-b border-gray-300 text-center">{totalTrainingHours}</td>
+            <td className="py-2 px-4 border-b border-gray-300 text-center">{totalTrainingHours2}</td>
           </tr>
         </tbody>
       </table>
