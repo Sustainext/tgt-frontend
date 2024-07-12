@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, useCallback, useEffect } from "react";
 import { debounce } from "lodash";
 import { MdOutlineDeleteOutline, MdAdd } from "react-icons/md";
@@ -74,7 +75,11 @@ const CustomTableWidget10 = ({
           {value.map((item, rowIndex) => (
             <React.Fragment key={rowIndex}>
               <tr>
-                <td className="py-2 px-4 border-r border-b border-gray-300" rowSpan={1}>{rowIndex === 0 ? "Employee Category" : ""}</td>
+              {rowIndex === 0 && (
+                  <td className="py-2 px-4 border-r  border-gray-300 gradient-background text-center" rowSpan={value.length}>
+                    Employee Category
+                  </td>
+                )}
                 <td className="py-2 px-4 border-r border-b border-gray-300">
                   <InputField
                     type={getInputType("category")}
@@ -108,7 +113,7 @@ const CustomTableWidget10 = ({
             </React.Fragment>
           ))}
           <tr>
-            <td className=""></td>
+            <td className="gradient-background"></td>
             <td className="py-2 px-4 border border-gray-300">
             <div className="flex items-center justify-center right-1 mx-2">
         <button
@@ -124,7 +129,7 @@ const CustomTableWidget10 = ({
           </tr>
 
           <tr>
-            <td className="py-2 px-4 border-r border-b border-gray-300" rowSpan="4">Gender</td>
+            <td className="py-2 px-4 border-t border-r border-b text-center border-gray-300 gradient-background" rowSpan="4">Gender</td>
             <td className="py-2 px-4 border-r border-b border-gray-300 text-center">Male</td>
             <td className="py-2 px-4 border border-gray-300">
               <InputField

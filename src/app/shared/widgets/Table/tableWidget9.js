@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, useCallback, useEffect } from "react";
 import { MdOutlineDeleteOutline, MdAdd } from "react-icons/md";
 import { debounce } from "lodash";
