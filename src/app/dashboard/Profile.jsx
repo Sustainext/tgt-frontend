@@ -81,7 +81,8 @@ const Profile = ({ onClose }) => {
     const userData = {
       designation,
       department,
-      name,
+      first_name: name.split(" ")[0],
+      last_name: name.split(" ").length > 1? name.split(" ").slice(1).join(" ") : "",
       phone,
     };
     try {
