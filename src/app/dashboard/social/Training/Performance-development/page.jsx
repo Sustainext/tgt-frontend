@@ -5,8 +5,8 @@ import {Socialdata} from "../../data/socialgriinfo"
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import Socialheader2 from '../../socialheader2';
-import Screen1 from "./skill-upgrade"
-const Skillupgrade = () => {
+import Screen1 from "./Screen1"
+const Performancedevelopment = () => {
     const [activeMonth, setActiveMonth] = useState(1);
     const [location, setLocation] = useState("");
     const [year, setYear] = useState("");
@@ -65,7 +65,7 @@ const Skillupgrade = () => {
                 <div className="ml-3 flex">
                     <h6 className="text-[17px] mb-4 font-semibold flex">
 
-                    Programs for upgrading employee skills and transition assistance programs
+                    Percentage of employees receiving regular performance and career development reviews
                         {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[14px]" />
@@ -117,4 +117,4 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
         </>
     );
 };
-export default Skillupgrade;
+export default Performancedevelopment;

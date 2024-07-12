@@ -2908,4 +2908,137 @@ If the organization does not follow the ILO code of practice, it can indicate wh
       </>,
     ],
   },
+  {
+    category: ["46"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+       GRI 404: Training and Education 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 404-2: Programs for upgrading employee skills and transition assistance programs
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+            Guidance for Disclosure 404-2
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Employee training programs that aim to upgrade skills can include:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+              Internal training courses
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+              Funding support for external training or education
+              </li>
+              <li className="text-[11px] text-[#727272]">
+              The provision of sabbatical periods with guaranteed return to employment.
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Transition assistance programs provided to support employees who are retiring or who have been terminated can include:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+              Pre-retirement planning for intended retirees
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+              Retraining for those intending to continue working
+              </li>
+              <li className="text-[11px] text-[#727272]">
+              Severance pay, which can take into account employee age and years of service
+              </li>
+              <li className="text-[11px] text-[#727272]">
+              Job placement services
+              </li>
+              <li className="text-[11px] text-[#727272]">
+              Assistance (such as training, counselling) on transitioning to a non-working life
+              </li>
+            </ul>
+
+            <p className="text-[11px] text-black mb-2">
+            Guidance for Disclosure 404-2
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-4">
+            Programs for upgrading employee skills allow an organization to plan skills acquisition that equips employees to meet strategic targets in a changing work environment. More skilled employees enhance the organization’s human capital and contribute to employee satisfaction, which correlates strongly with improved performance. For those facing retirement, confidence and quality of work relations is improved by the knowledge that they are supported in their transition from work to retirement.
+         </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12677&page=9"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["47"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-08.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-red-900 text-[17px] font-bold ml-2">SDG 8</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Sustainable Development Goal 8: Decent work and economic growth
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <p className="text-[13px] text-[#222222] mb-2">Target 8.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Achieve higher levels of economic productivity through diversification, technological upgrading and innovation, including through a focus on high-value added and labour-intensive sectors.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.2.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Annual growth rate of real GDP per employed person.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 8.5</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2030, achieve full and productive employment and decent work for all women and men, including for young people and persons with disabilities, and equal pay for work of equal value.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.5.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Average hourly earnings of female and male employees, by occupation, age and persons with disabilities.
+            </p>
+
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.5.2</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            Unemployment rate, by sex, age and persons with disabilities.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal8"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
 ];
