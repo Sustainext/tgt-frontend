@@ -4,7 +4,7 @@ import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
 import {Socialdata} from "../../data/socialgriinfo"
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
-import Socialheader2 from '../../socialheader2';
+import Socialheader4 from '../../socialheader4';
 import Screen1 from "./skill-upgrade"
 const Skillupgrade = () => {
     const [activeMonth, setActiveMonth] = useState(1);
@@ -103,7 +103,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
 
                 </div>
             </div>
-            <Socialheader2
+            <Socialheader4
             activeMonth={activeMonth}
             setActiveMonth={setActiveMonth}
             selectedOrg={selectedOrg}

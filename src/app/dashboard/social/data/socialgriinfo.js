@@ -3291,8 +3291,163 @@ If the organization does not follow the ILO code of practice, it can indicate wh
             </p>
           </div>
           <div>
-            <a className="text-[14px] text-[#2196F3] mt-3">
-              Learn more <MdChevronRight />
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+                href="https://sdgs.un.org/goals/goal10"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["54"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+     GRI 404: Training and Education 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 404-1: Average hours of training per year per employee
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <p className="text-[11px] text-black mb-2">
+          Guidance for Disclosure 404-1
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            This disclosure provides insight into the scale of an organization’s investment in training, and the degree to which the investment is made across the entire employee base.
+In the context of this Standard, ‘training’ refers to:
+
+            </p>
+            <p className="text-[11px] text-black mb-2">
+            To calculate the information in Disclosure 404-1, the reporting organization can use the following formulas:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Average training hours per employee = Total number of training hours provided to employees / Total number of employees
+
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Average training hours per female = Total number of training hours provided to female employees / Total number of female employees
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Average training hours per male =Total number of training hours provided to male employees / Total number of male employees
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+Average training hours peremployee category =Total number of training hours provided to each category of employees / Total number of employees in category
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12576&page=7"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["55"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-4.png"
+            className="w-[32px] h-[32px]"
+          />{" "}
+          <h5 className="text-[#C22033] text-[17px] font-bold ml-2">SDG 4</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Ensure inclusive and equitable quality education and promote lifelong learning opportunities for all
+          </p>
+          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 4.3</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2030, ensure equal access for all women and men to affordable and quality technical, vocational and tertiary education, including university.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">4.3.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Participation rate of youth and adults in formal and non-formal education and training in the previous 12 months, by sex.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 4.4</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2030, substantially increase the number of youth and adults who have relevant skills, including technical and vocational skills, for employment, decent jobs and entrepreneurship.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">4.4.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of youth and adults with information and communications technology (ICT) skills, by type of skill.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 4.5</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2030, eliminate gender disparities in education and ensure equal access to all levels of education and vocational training for the vulnerable, including persons with disabilities, indigenous peoples and children in vulnerable situations.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">4.5.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Parity indices (female/male, rural/urban, bottom/top wealth quintile and others such as disability status, indigenous peoples and conflict-affected, as data become available) for all education indicators on this list that can be disaggregated.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+                href="https://sdgs.un.org/goals/goal4"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["56"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+    GRI 404: Training and Education 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 404-3: Percentage of employees receiving regular performance and career development reviews
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <p className="text-[11px] text-black mb-2">
+          Background
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            This disclosure measures the extent to which an organization regularly appraises employee performance. This aids the personal development of individual employees. It also contributes to skills management and to the development of human capital within the organization. This disclosure also demonstrates the extent to which this system is applied throughout the organization, and whether there is inequity of access to these opportunities.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+            Regular performance and career development reviews can also enhance employee satisfaction, which correlates with improved organizational performance. This disclosure helps demonstrate how an organization works to monitor and maintain the skill sets of its employees. When reported in conjunction with Disclosure 404-2, the disclosure also helps to illustrate how the organization approaches skills enhancement.
+            </p>
+
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12576&page=7"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
             </a>
           </div>
         </div>
