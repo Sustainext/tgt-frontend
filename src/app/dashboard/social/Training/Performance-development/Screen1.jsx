@@ -29,13 +29,14 @@ const schema = {
         category: { type: "string", title: "Category" },
         numberperformancereview: { type: "number", title: "Number Performance Review" },
         numberdevelopmentreview: { type: "number", title: "Number Development Review" },
-        male1: { type: "number", title: "Male 1" },
+        male: { type: "number", title: "Male 1" },
         male2: { type: "number", title: "Male 2" },
-        female1: { type: "number", title: "Female 1" },
+        female: { type: "number", title: "Female 1" },
         female2: { type: "number", title: "Female 2" },
-        others1: { type: "number", title: "Others 1" },
-        others2: { type: "number", title: "Others 2" },
+        nonBinary: { type: "number", title: "Others 1" },
+        nonBinary2: { type: "number", title: "Others 2" },
         totalTrainingHours: { type: "number", title: "Total Training Hours" },
+        totalTrainingHours2: { type: "number", title: "Total Training Hours2" },
       },
 
     }
@@ -55,12 +56,12 @@ const schema = {
         { title: "Gender Details", tooltip: "Please specify detailed data for genders.", rowSpan: 2 }
       ],
       subTitles: [
-        { title: "Male 1", tooltip: "Number of male employees.", colSpan: 1, type: "number" },
+        { title: "Male", tooltip: "Number of male employees.", colSpan: 1, type: "number" },
         { title: "Male 2", tooltip: "Number of male employees.", colSpan: 1, type: "number" },
-        { title: "Female 1", tooltip: "Number of female employees.", colSpan: 1, type: "number" },
+        { title: "Female", tooltip: "Number of female employees.", colSpan: 1, type: "number" },
         { title: "Female 2", tooltip: "Number of female employees.", colSpan: 1, type: "number" },
-        { title: "Others 1", tooltip: "Number of other gender employees.", colSpan: 1, type: "number" },
-        { title: "Others 2", tooltip: "Number of other gender employees.", colSpan: 1, type: "number" },
+        { title: "nonBinary", tooltip: "Number of other gender employees.", colSpan: 1, type: "number" },
+        { title: "nonBinary 2", tooltip: "Number of other gender employees.", colSpan: 1, type: "number" },
         { title: "Total number of Employee", tooltip: "Please specify the total number of employees.", colSpan: 1, type: "number" }
       ],
     }
@@ -71,13 +72,14 @@ const Screen1 = ({ location, year, month }) => {
           category: "",
           numberperformancereview: "",
           numberdevelopmentreview: "",
-          male1: "",
+          male: "",
           male2: "",
-          female1: "",
+          female: "",
           female2: "",
-          others1: "",
-          others2: "",
+          nonBinary: "",
+          nonBinary2: "",
           totalTrainingHours: "",
+          totalTrainingHours2:"",
         }
       ];
     const [formData, setFormData] = useState(initialFormData);
@@ -181,59 +183,6 @@ negative social impacts." className="mt-1.5 ml-2 text-[14px]" />
                     />
                 </div>
             )}
-
-
-        <div className="container mx-auto p-4">
-            <table className="min-w-full bg-white border border-gray-300">
-                <thead className="bg-gray-100">
-                    <tr>
-                        <th className="py-2 px-4 border-r border-b border-gray-300"></th>
-                        <th className="py-2 px-4 border-r border-b border-gray-300"></th>
-                        <th className="py-2 px-4 border-r border-b border-gray-300">Number of employees who received regular performance review</th>
-                        <th className="py-2 px-4 border-b border-gray-300">Number of employees who received regular career development review</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td className="py-2 px-4 border-r border-b border-gray-300" rowSpan="1">Employee Category</td>
-                        <td className="py-2 px-4 border-r border-b border-gray-300">Category A</td>
-                        <td className="py-2 px-4 border-b border-gray-300">10</td>
-                        <td className="py-2 px-4 border-b border-gray-300">10</td>
-                    </tr>
-                    <tr>
-                        <td className="py-2 px-4 border-r border-b border-gray-300" rowSpan="1"></td>
-                        <td className="py-2 px-4 border-r border-b border-gray-300">Category A</td>
-                        <td className="py-2 px-4 border-b border-gray-300">10</td>
-                        <td className="py-2 px-4 border-b border-gray-300">10</td>
-                    </tr>
-                    <tr>
-                    <td className="py-2 px-4 border-r border-b border-gray-300" rowSpan="1"></td>
-                        Add category row rpted uper tr
-                    </tr>
-                    <tr>
-                        <td className="py-2 px-4 border-r border-b border-gray-300" rowSpan="4">Gender</td>
-                        <td className="py-2 px-4 border-r border-b border-gray-300">Male</td>
-                        <td className="py-2 px-4 border-b border-gray-300">10</td>
-                        <td className="py-2 px-4 border-b border-gray-300">10</td>
-                    </tr>
-                    <tr>
-                        <td className="py-2 px-4 border-r border-b border-gray-300">Female</td>
-                        <td className="py-2 px-4 border-b border-gray-300">10</td>
-                        <td className="py-2 px-4 border-b border-gray-300">10</td>
-                    </tr>
-                    <tr>
-                        <td className="py-2 px-4 border-r border-b border-gray-300">Non Binary</td>
-                        <td className="py-2 px-4 border-b border-gray-300">10</td>
-                        <td className="py-2 px-4 border-b border-gray-300">10</td>
-                    </tr>
-                    <tr>
-                        <td className="py-2 px-4 border-r border-b border-gray-300">Total employee</td>
-                        <td className="py-2 px-4 border-b border-gray-300">10</td>
-                        <td className="py-2 px-4 border-b border-gray-300">10</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
 
 
         </>

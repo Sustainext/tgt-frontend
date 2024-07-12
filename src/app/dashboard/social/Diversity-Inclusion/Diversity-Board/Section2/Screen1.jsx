@@ -128,11 +128,10 @@ const Screen1 = ({ location, year, month }) => {
                 <div className='mb-4 flex'>
                     <div className='w-[80%]'>
                         <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold mb-2'>
-                        GRI 405-1-a Number of employee per employee category 
+                        Number of employee per employee category 
                             <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
-                                data-tooltip-content="This section documents the data corresponding to the number of
-individuals within the organization’s governance bodies by gender,
-age group and diversity group. " className="mt-1.5 ml-2 text-[14px]" />
+                                data-tooltip-content="This section documents the data corresponding to the number of individuals
+within the organization’s governance bodies by gender, age group and diversity group." className="mt-1.5 ml-2 text-[14px]" />
                             <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
                                 width: "290px", backgroundColor: "#000",
                                 color: "white",

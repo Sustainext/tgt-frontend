@@ -4,7 +4,7 @@ import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
 import {Socialdata} from "../../data/socialgriinfo"
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
-import Socialheader2 from '../../socialheader2';
+import Socialheader4 from '../../socialheader4';
 import Screen1 from "./Screen1"
 const Performancedevelopment = () => {
     const [activeMonth, setActiveMonth] = useState(1);
@@ -55,8 +55,10 @@ const Performancedevelopment = () => {
                     </div>
                     <div className='w-full float-end '>
                         <div className="flex float-end border-l">
-                            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('46')}>GRI 404 - 2</button>
-                            <button className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('47')}>SDG 8</button>
+                        <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('56')}>GRI 404 - 3</button>
+                            <button className="text-[#fff] bg-orange-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('2')}>SDG 5</button>
+                            <button className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('8')}>SDG 8</button>
+                            <button className="text-[#fff] bg-[#E01A83] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('53')}>SDG 10</button>
                         </div>
                     </div>
                 </div>
@@ -103,7 +105,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
 
                 </div>
             </div>
-            <Socialheader2
+            <Socialheader4
             activeMonth={activeMonth}
             setActiveMonth={setActiveMonth}
             selectedOrg={selectedOrg}

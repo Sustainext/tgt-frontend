@@ -3041,4 +3041,417 @@ If the organization does not follow the ILO code of practice, it can indicate wh
       </>,
     ],
   },
+  {
+    category: ["48"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+      GRI 414: Supplier Social Assessment 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 414-1: New suppliers that were screened using social criteria
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+            Guidance for Disclosure 414-1
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Social criteria can include the topics covered in other GRI Topic Standards (e.g., GRI 401: Employment 2016, GRI 403: Occupational Health and Safety 2018, GRI 408: Child Labor 2016, GRI 409: Forced or Compulsory Labor 2016)
+            </p>
+            <p className="text-[11px] text-black mb-2">
+            Background
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            This disclosure informs stakeholders about the percentage of suppliers selected or contracted subject to due diligence processes for social impacts. An organization is expected to initiate due diligence as early as possible in the development of a new relationship with a supplier. Impacts may be prevented or mitigated at the stage of structuring contracts or other agreements, as well as via ongoing collaboration with suppliers.
+            </p>
+
+
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12677&page=9"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["49"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+      GRI 414: Supplier Social Assessment 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 414-2 Negative social impacts in the supply chain and actions taken
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+            Guidance for Disclosure 414-2
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Negative impacts include those that are either caused or contributed to by an organization, or that are directly linked to its activities, products, or services by its relationship with a supplier. Assessments for social impacts can include the topics in the 400 series (Social topics). Assessments can be made against agreed performance expectations that are set and communicated to the suppliers prior to the assessment. Assessments can be informed by audits, contractual reviews, two-way engagement, and complaint and grievance mechanisms. Improvements can include changing an organization’s procurement practices, the adjustment of performance expectations, capacity building, training, and changes to processes.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+            Background
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            This disclosure informs stakeholders about an  organization’s awareness of significant actual and  potential negative social impacts in the supply chain
+            </p>
+
+
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12677&page=9"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["50"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+      GRI 405: Diversity and Equal Opportunity 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 405-1: Diversity of governance bodies and employees
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            {/* <p className="text-[11px] text-black mb-2">
+            Guidance for Disclosure 414-2
+            </p> */}
+            <p className="text-[11px] text-[#727272] mb-4">
+            Examples of governance bodies that exist within an organization can be the board of directors, management committee, or a similar body for a non-corporate organization.
+            An organization can identify any other indicators of diversity used in its own monitoring and recording that are relevant for reporting.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+            Background
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            This disclosure provides a quantitative measure of diversity within an organization and can be used in conjunction with sectoral or regional benchmarks. Comparisons between broad employee diversity and management team diversity offer information on equal opportunity. Information reported in this disclosure also helps in assessing which issues can be of particular relevance to certain segments of the governance bodies or employees.
+            </p>
+
+
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12587"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["51"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-05.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-orange-600 text-[17px] font-bold ml-2">SDG 5</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Sustainable Development Goal 5: Achieve gender equality and empower all women and girls
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 5.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              End all forms of discrimination against all women and girls
+              everywhere.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#727272] mb-2">5.1.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Whether or not legal frameworks are in place to promote, enforce and monitor equality and non‑discrimination on the basis of sex.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 5.5</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Ensure women’s full and effective participation and equal opportunities for leadership at all levels of decision-making in political, economic and public life.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#727272] mb-2">5.5.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of seats held by women in (a) national parliaments and (b) local governments.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">5.5.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of seats held by women in (a) national parliaments and (b) local governments.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal5"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["52"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+     GRI 405: Diversity and Equal Opportunity 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 405-2: Diversity and Equal Opportunity 2016
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+
+            <p className="text-[11px] text-[#727272] mb-4">
+            The reporting organization can draw from the information used for Disclosure 405-1 to identify the total number of employees in each employee category bygender.
+            </p>
+
+
+
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12587"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["53"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-10.png"
+            className="w-[32px] h-[32px]"
+          />{" "}
+          <h5 className="text-[#DD1367] text-[17px] font-bold ml-2">SDG 10</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Sustainable Development Goal 10: Reduce inequality within and among countries
+          </p>
+          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 10.3</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Ensure equal opportunity and reduce inequalities of outcome, including by eliminating discriminatory laws, policies and practices and promoting appropriate legislation, policies and action in this regard.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">10.3.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of population reporting having personally felt discriminated against or harassed within the previous 12 months on the basis of a ground of discrimination prohibited under international human rights law.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+                href="https://sdgs.un.org/goals/goal10"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["54"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+     GRI 404: Training and Education 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 404-1: Average hours of training per year per employee
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <p className="text-[11px] text-black mb-2">
+          Guidance for Disclosure 404-1
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            This disclosure provides insight into the scale of an organization’s investment in training, and the degree to which the investment is made across the entire employee base.
+In the context of this Standard, ‘training’ refers to:
+
+            </p>
+            <p className="text-[11px] text-black mb-2">
+            To calculate the information in Disclosure 404-1, the reporting organization can use the following formulas:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Average training hours per employee = Total number of training hours provided to employees / Total number of employees
+
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Average training hours per female = Total number of training hours provided to female employees / Total number of female employees
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Average training hours per male =Total number of training hours provided to male employees / Total number of male employees
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+Average training hours peremployee category =Total number of training hours provided to each category of employees / Total number of employees in category
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12576&page=7"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["55"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-4.png"
+            className="w-[32px] h-[32px]"
+          />{" "}
+          <h5 className="text-[#C22033] text-[17px] font-bold ml-2">SDG 4</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Ensure inclusive and equitable quality education and promote lifelong learning opportunities for all
+          </p>
+          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 4.3</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2030, ensure equal access for all women and men to affordable and quality technical, vocational and tertiary education, including university.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">4.3.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Participation rate of youth and adults in formal and non-formal education and training in the previous 12 months, by sex.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 4.4</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2030, substantially increase the number of youth and adults who have relevant skills, including technical and vocational skills, for employment, decent jobs and entrepreneurship.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">4.4.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of youth and adults with information and communications technology (ICT) skills, by type of skill.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 4.5</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2030, eliminate gender disparities in education and ensure equal access to all levels of education and vocational training for the vulnerable, including persons with disabilities, indigenous peoples and children in vulnerable situations.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">4.5.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Parity indices (female/male, rural/urban, bottom/top wealth quintile and others such as disability status, indigenous peoples and conflict-affected, as data become available) for all education indicators on this list that can be disaggregated.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+                href="https://sdgs.un.org/goals/goal4"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["56"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+    GRI 404: Training and Education 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 404-3: Percentage of employees receiving regular performance and career development reviews
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <p className="text-[11px] text-black mb-2">
+          Background
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            This disclosure measures the extent to which an organization regularly appraises employee performance. This aids the personal development of individual employees. It also contributes to skills management and to the development of human capital within the organization. This disclosure also demonstrates the extent to which this system is applied throughout the organization, and whether there is inequity of access to these opportunities.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+            Regular performance and career development reviews can also enhance employee satisfaction, which correlates with improved organizational performance. This disclosure helps demonstrate how an organization works to monitor and maintain the skill sets of its employees. When reported in conjunction with Disclosure 404-2, the disclosure also helps to illustrate how the organization approaches skills enhancement.
+            </p>
+
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12576&page=7"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
 ];
