@@ -4,7 +4,26 @@ import { useEffect, useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { yearInfo, months } from "@/app/shared/data/yearInfo";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-const Socialheader2 = ({ activeMonth, setActiveMonth, selectedOrg, setSelectedOrg, selectedCorp, setSelectedCorp, year, setYear }) => {
+const monthMapping = {
+    "Jan": 1,
+    "Feb": 2,
+    "Mar": 3,
+    "Apr": 4,
+    "May": 5,
+    "Jun": 6,
+    "Jul": 7,
+    "Aug": 8,
+    "Sep": 9,
+    "Oct": 10,
+    "Nov": 11,
+    "Dec": 12
+  };
+
+  const getMonthString = (monthNumber) => {
+    return Object.keys(monthMapping).find(key => monthMapping[key] === monthNumber);
+  };
+
+const Socialheader4 = ({ activeMonth, setActiveMonth, selectedOrg, setSelectedOrg, selectedCorp, setSelectedCorp, year, setYear }) => {
     const [formState, setFormState] = useState({
         selectedCorp: selectedCorp,
         selectedOrg: selectedOrg,
@@ -232,6 +251,31 @@ const Socialheader2 = ({ activeMonth, setActiveMonth, selectedOrg, setSelectedOr
                     </div>
 
                 </div>
+                <div className="flex justify-between mb-4 ml-3">
+          <div className="flex bg-[#f7f7f7] py-1 rounded-lg">
+            {months.map((month, index) => (
+              <button
+                key={index}
+                className={`text-[12px] border-r mx-1 ${
+                  formState.month === monthMapping[month] ? "bg-white shadow-md rounded-lg" : ""
+                }`}
+                onClick={() => handleChange({ target: { name: "month", value: month } })}
+              >
+                <p
+                  className={`text-center ${
+                    formState.month === monthMapping[month]
+                      ? "custom-gradient-text"
+                      : "text-[#A1A1A1]"
+                  } hover:bg-[#f7f7f7] py-1 w-[55px] ${
+                    index === 0 ? "rounded-l" : ""
+                  } ${index === months.length - 1 ? "rounded-r" : ""}`}
+                >
+                  {month}
+                </p>
+              </button>
+            ))}
+          </div>
+        </div>
             </div>
 
 
@@ -239,4 +283,4 @@ const Socialheader2 = ({ activeMonth, setActiveMonth, selectedOrg, setSelectedOr
     );
 };
 
-export default Socialheader2;
+export default Socialheader4;
