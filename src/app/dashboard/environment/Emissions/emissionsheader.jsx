@@ -92,12 +92,12 @@ const EmissionsHeader = ({
     if (name === "month") {
       setActiveMonth(monthMapping[value]);
     } else if (name === "location") {
-      const selectedLocation = locations.find((loc) => loc.name === value);
+      const selectedLocation = locations.find((loc) => loc.id === Number(value));
       if (selectedLocation) {
         setCountryCodeState(selectedLocation.country);
         setCountryCode(selectedLocation.country);
       }
-      setLocation(value);
+      setLocation(Number(value));
     } else if (name === "year") {
       setYear(value);
     }
@@ -124,7 +124,7 @@ const EmissionsHeader = ({
             >
               <option value="">Select location</option>
               {locations.map((location, index) => (
-                <option key={index} value={location.name}>
+                <option key={index} value={location.id}>
                   {location.name}
                 </option>
               ))}
