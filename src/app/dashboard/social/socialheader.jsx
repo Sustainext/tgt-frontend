@@ -61,7 +61,7 @@ const Socialheader = ({ activeMonth, setActiveMonth, location, setLocation, year
     if (name === "month") {
       setActiveMonth(monthMapping[value]);
     } else if (name === "location") {
-      setLocation(value);
+      setLocation(Number(value));
       setErrors((prevErrors) => ({
         ...prevErrors,
         location: value ? "" : "Please select a location",
@@ -96,7 +96,7 @@ const Socialheader = ({ activeMonth, setActiveMonth, location, setLocation, year
             >
               <option value="">Select location</option>
               {locations.map((location, index) => (
-                <option key={index} value={location.name}>
+                <option key={index} value={location.id}>
                   {location.name}
                 </option>
               ))}
