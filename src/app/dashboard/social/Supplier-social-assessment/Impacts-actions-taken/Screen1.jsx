@@ -6,19 +6,18 @@ import inputWidget3 from '../../../../shared/widgets/Input/inputWidget3';
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
-import axios from 'axios';
 import { update } from 'lodash';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
 import { GlobalState } from '@/Context/page';
-
+import axiosInstance from '@/app/utils/axiosMiddleware';
 const widgets = {
     inputWidget: inputWidget3,
 
 };
 
-const view_path = 'gri-social-ohs-403-8c-sma'
+const view_path = 'gri-social-impacts_and_actions-414-2a-2d-2e-negative_social_impacts'
 const client_id = 1
 const user_id = 1
 
@@ -93,20 +92,14 @@ const uiSchema = {
     },
 };
 
-const Screen1 = ({ location, year, month }) => {
+const Screen1 = ({ selectedOrg,selectedCorp,location,year, month }) => {
     const [formData, setFormData] = useState([{}]);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
     const [loopen, setLoOpen] = useState(false);
     const toastShown = useRef(false);
     const { open } = GlobalState();
-    const getAuthToken = () => {
-        if (typeof window !== 'undefined') {
-            return localStorage.getItem('token')?.replace(/"/g, "");
-        }
-        return '';
-    };
-    const token = getAuthToken();
+
 
     const LoaderOpen = () => {
         setLoOpen(true);
@@ -119,26 +112,20 @@ const Screen1 = ({ location, year, month }) => {
         setFormData(e.formData);
     };
 
-    // The below code on updateFormData
-    let axiosConfig = {
-        headers: {
-            Authorization: 'Bearer ' + token,
-        },
-    };
     const updateFormData = async () => {
         const data = {
             client_id: client_id,
             user_id: user_id,
             path: view_path,
             form_data: formData,
-            location,
-            year,
-            month
-        }
+            corporate:selectedCorp,
+            organisation:selectedOrg,
+            year
 
+        }
         const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
         try {
-            const response = await axios.post(url, data, axiosConfig);
+            const response = await axiosInstance.post(url, data);
             if (response.status === 200) {
                 toast.success("Data added successfully", {
                     position: "top-right",
@@ -188,9 +175,9 @@ const Screen1 = ({ location, year, month }) => {
     const loadFormData = async () => {
         LoaderOpen();
         setFormData([{}]);
-        const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+        const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
         try {
-            const response = await axios.get(url, axiosConfig);
+            const response = await axiosInstance.get(url);
             console.log('API called successfully:', response.data);
             setRemoteSchema(response.data.form[0].schema);
             setRemoteUiSchema(response.data.form[0].ui_schema);
@@ -204,17 +191,17 @@ const Screen1 = ({ location, year, month }) => {
 
 
     // fetch backend and replace initialized forms
-    // useEffect (()=> {
-    //     if (location && year && month) {
-    //         loadFormData();
-    //         toastShown.current = false; // Reset the flag when valid data is present
-    //     } else {
-    //         // Only show the toast if it has not been shown already
-    //         if (!toastShown.current) {
-    //             toastShown.current = true; // Set the flag to true after showing the toast
-    //         }
-    //     }
-    // },[location, year, month])
+    useEffect (()=> {
+        if (selectedOrg && year) {
+            loadFormData();
+            toastShown.current = false; // Reset the flag when valid data is present
+        } else {
+            // Only show the toast if it has not been shown already
+            if (!toastShown.current) {
+                toastShown.current = true; // Set the flag to true after showing the toast
+            }
+        }
+    },[selectedOrg, year])
 
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent the default form submission
@@ -269,8 +256,8 @@ to the negative social impacts in the supply chain
                 </div>
                 <div className='mx-2'>
                     <Form
-                        schema={schema}
-                        uiSchema={uiSchema}
+                        schema={r_schema}
+                        uiSchema={r_ui_schema}
                         formData={formData}
                         onChange={handleChange}
                         validator={validator}
@@ -279,9 +266,9 @@ to the negative social impacts in the supply chain
                 </div>
                 <div className='mb-6'>
                     <button type="button"
-                        className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? 'cursor-not-allowed' : ''}`}
+                        className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year ? 'cursor-not-allowed' : ''}`}
                         onClick={handleSubmit}
-                        disabled={!location || !year}>
+                        disabled={!selectedOrg || !year}>
                         Submit
                     </button>
                 </div>

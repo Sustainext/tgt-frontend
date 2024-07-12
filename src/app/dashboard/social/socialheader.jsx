@@ -96,7 +96,7 @@ const Socialheader = ({ activeMonth, setActiveMonth, location, setLocation, year
             >
               <option value="">Select location</option>
               {locations.map((location, index) => (
-                <option key={index} value={location.name}>
+                <option key={index} value={location.id}>
                   {location.name}
                 </option>
               ))}
