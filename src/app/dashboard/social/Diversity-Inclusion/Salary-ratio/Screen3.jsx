@@ -1,0 +1,161 @@
+'use client'
+import React, { useState, useEffect,useRef  } from 'react';
+import Form from '@rjsf/core';
+import validator from '@rjsf/validator-ajv8';
+import inputWidget2 from '../../../../shared/widgets/Input/inputWidget2';
+import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
+import { Tooltip as ReactTooltip } from 'react-tooltip';
+import 'react-tooltip/dist/react-tooltip.css';
+import RadioWidget from '../../../../shared/widgets/Input/radioWidget';
+import axios from 'axios';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Oval } from 'react-loader-spinner';
+
+const widgets = {
+    inputWidget: inputWidget2,
+    RadioWidget: RadioWidget,
+};
+
+const view_path = 'gri-social-ohs-403-1b-scope_of_workers'
+const client_id = 1
+const user_id = 1
+
+const schema = {
+    type: 'array',
+    items: {
+        type: 'object',
+        properties: {
+            Q1: {
+                type: "string",
+                title: "How does the organization define Significant locations of operation for reporting purposes?",
+            },
+
+        },
+    },
+};
+
+const uiSchema = {
+    items: {
+        'ui:order': ['Q1'],
+        Q1: {
+            "ui:title": "How does the organization define Significant locations of operation for reporting purposes?",
+            "ui:tooltip": "Please clarify how the organization defines and identifies its significant locations for reporting purposes.",
+            "ui:tooltipdisplay": "block",
+            'ui:widget': 'inputWidget',
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false
+            },
+        },
+
+        'ui:options': {
+            orderable: false, // Prevent reordering of items
+            addable: false, // Prevent adding items from UI
+            removable: false, // Prevent removing items from UI
+            layout: 'horizontal', // Set layout to horizontal
+        },
+    },
+};
+
+const Screen3 = ({location, year, month}) => {
+    const [formData, setFormData] = useState([{}]);
+    const [r_schema, setRemoteSchema] = useState({})
+    const [r_ui_schema, setRemoteUiSchema] = useState({})
+    const [loopen, setLoOpen] = useState(false);
+    const toastShown = useRef(false);
+    const getAuthToken = () => {
+        if (typeof window !== 'undefined') {
+            return localStorage.getItem('token')?.replace(/"/g, "");
+        }
+        return '';
+    };
+    const token = getAuthToken();
+
+    const LoaderOpen = () => {
+        setLoOpen(true);
+      };
+      const LoaderClose = () => {
+        setLoOpen(false);
+      };
+
+
+    const handleChange = (e) => {
+        setFormData(e.formData);
+    };
+
+    // The below code on updateFormData
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault(); // Prevent the default form submission
+        console.log('Form data:', formData);
+
+    };
+
+    return (
+        <>
+
+               <div className="mx-2  p-3 mb-6 pb-6 rounded-md" style={{boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px"}}>
+                <div className='mb-4 flex'>
+                    <div className='w-[80%]'>
+                    <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold'>
+                    Define "Significant Locations of Operation"
+                        <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
+                            data-tooltip-content="This section documents data corresponding to the organization's definition of significant locations of operation" className="mt-1.5 ml-2 text-[14px]" />
+                        <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
+                            width: "290px", backgroundColor: "#000",
+                            color: "white",
+                            fontSize: "12px",
+                            boxShadow: 3,
+                            borderRadius: "8px",
+                            textAlign: 'left',
+                        }}>
+                        </ReactTooltip>
+                    </h2>
+                    </div>
+
+                    <div   className='w-[20%]'>
+            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
+              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
+              GRI 405-2b
+              </p>
+            </div>
+          </div>
+                </div>
+                <div className='mx-2'>
+                    <Form
+                        schema={schema}
+                        uiSchema={uiSchema}
+                        formData={formData}
+                        onChange={handleChange}
+                        validator={validator}
+                        widgets={widgets}
+                    />
+                </div>
+               <div className='mb-6'>
+                <button type="button"
+                        className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? 'cursor-not-allowed' : ''}`}
+                        onClick={handleSubmit}
+                        disabled={!location || !year}>
+                        Submit
+                    </button>
+                </div>
+            </div>
+            {loopen && (
+            <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                <Oval
+                height={50}
+                width={50}
+                color="#00BFFF"
+                secondaryColor="#f3f3f3"
+                strokeWidth={2}
+                strokeWidthSecondary={2}
+                />
+            </div>
+            )}
+        </>
+    );
+};
+
+export default Screen3;
