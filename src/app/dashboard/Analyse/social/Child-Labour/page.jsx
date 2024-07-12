@@ -439,8 +439,7 @@ const AnalyseChildlabour = ({ isBoxOpen }) => {
             >
               <div className="flex justify-between items-center mb-2">
                 <p>
-                  Suppliers at significant risk for incidents of young workers exposed to hazardous work
-                </p>
+                Suppliers at significant risk for incidents of child labor                </p>
                 <div className="flex justify-between gap-2">
                   <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                     <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
@@ -464,6 +463,22 @@ const AnalyseChildlabour = ({ isBoxOpen }) => {
               id="ep4"
               className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
             >
+            <div className="flex justify-between items-center mb-2">
+                <p>
+                Suppliers at significant risk for incidents of young workers exposed to hazardous work             </p>
+                <div className="flex justify-between gap-2">
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 408-1a
+                    </div>
+                  </div>
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 408-1b
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div className="mb-4">
                 <DynamicTable2 columns={columns4} data={childdata4} />
               </div>

@@ -562,7 +562,7 @@ const AnalyseOHS = ({ isBoxOpen }) => {
               </div>
 
               <div className="mb-4">
-                <DynamicTable2 columns={columns6} data={OHSdata5} />
+                <DynamicTable2 columns={columns6} data={OHSdata6} />
               </div>
             </div>
           </div>
