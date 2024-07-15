@@ -116,9 +116,9 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
             setSelectedCorp={setSelectedCorp}
             year={year}
             setYear={setYear} />
-            <Screen1 year={year} month={activeMonth} />
-            <Screen2 year={year} month={activeMonth} />
-            <Screen3 year={year} month={activeMonth} />
+            <Screen1 selectedOrg={selectedOrg} selectedCorp={selectedCorp} location={location}  year={year} month={activeMonth}  />
+            <Screen2 selectedOrg={selectedOrg} selectedCorp={selectedCorp} location={location}  year={year} month={activeMonth} />
+            <Screen3 selectedOrg={selectedOrg} selectedCorp={selectedCorp} location={location}  year={year} month={activeMonth} />
         </>
     );
 };

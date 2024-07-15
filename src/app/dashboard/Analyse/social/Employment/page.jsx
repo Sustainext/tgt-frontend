@@ -84,7 +84,7 @@ const AnalyseEmployment = ({ isBoxOpen }) => {
       const data = response.data.data;
       console.log(data, "testing");
 
-      const { new_employee_hires, employee_turnover, benefits, parental_leave } = data;
+      const { new_employee_hires, employee_turnover, benefits, parental_leave,return_to_work_rate_and_retention_rate_of_employee} = data;
       const formattedLocation = new_employee_hires.map((neh) => ({
         type: neh.type_of_employee,
         male: neh.percentage_of_male_employee,
@@ -116,10 +116,16 @@ const AnalyseEmployment = ({ isBoxOpen }) => {
         Female:  pl.female,
         Total:  pl.total,
       }));
+      const returnemployee = return_to_work_rate_and_retention_rate_of_employee.map((rt) => ({
+        'Employee category': rt.employee_category,
+        Male:  rt.male,
+        Female:  rt.female,
+      }));
       setChilddata1(formattedLocation);
       setChilddata2(formattedScope);
       setChilddata3(formattedSource);
       setChilddata4(formattedSuppliers);
+      setChilddata5(returnemployee);
       const resultArray = Object.keys(data).map((key) => ({
         key: key,
         value: data[key],
