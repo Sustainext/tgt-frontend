@@ -17,7 +17,7 @@ const widgets = {
     RadioWidget2:RadioWidget2,
 };
 
-const view_path = 'gri-social-ohs-403-2b-quality_of_services'
+const view_path = 'gri-social-skillupgrade-403-9c-9d-programs'
 const client_id = 1
 const user_id = 1
 
@@ -214,6 +214,7 @@ const Screen1 = ({year, month}) => {
         setFormData([{}]);
         const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&year=${year}&month=${month}`;
         try {
+            console.log('starting to call api',url);
             const response = await axios.get(url, axiosConfig);
             console.log('API called successfully:', response.data);
             setRemoteSchema(response.data.form[0].schema);
@@ -226,13 +227,32 @@ const Screen1 = ({year, month}) => {
         }
     };
 
+    useEffect(() => {
+        //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
+    },[r_schema, r_ui_schema])
 
+    // console log the form data change
+    useEffect(() => {
+        console.log('Form data is changed -', formData)
+    },[formData])
 
+    useEffect (()=> {
+        if ( year && month) {
+            loadFormData();
+            toastShown.current = false; // Reset the flag when valid data is present
+        } else {
+            // Only show the toast if it has not been shown already
+            if (!toastShown.current) {
+
+                toastShown.current = true; // Set the flag to true after showing the toast
+            }
+        }
+    },[year, month])
 
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent the default form submission
         console.log('Form data:', formData);
-
+        updateFormData();
     };
 
     return (
@@ -276,8 +296,8 @@ provided to upgrade employee skills." className="mt-1.5 ml-2 text-[14px]" />
                 </div>
                 <div className='mx-2'>
                     <Form
-                        schema={schema}
-                        uiSchema={uiSchema}
+                        schema={r_schema}
+                        uiSchema={r_ui_schema}
                         formData={formData}
                         onChange={handleChange}
                         validator={validator}
