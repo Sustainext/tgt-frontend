@@ -17,7 +17,7 @@ const widgets = {
     RadioWidget2:RadioWidget2,
 };
 
-const view_path = 'gri-social-ohs-403-2b-quality_of_services'
+const view_path = 'gri-social-skill_upgrade-403-9c-9d-programs'
 const client_id = 1
 const user_id = 1
 

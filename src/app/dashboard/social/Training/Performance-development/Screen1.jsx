@@ -17,7 +17,7 @@ const widgets = {
 
 };
 
-const view_path = 'gri-social-ohs-403-5a-ohs_training'
+const view_path = 'gri-social-performance_and_career-414-2b-number_of_suppliers'
 const client_id = 1
 const user_id = 1
 

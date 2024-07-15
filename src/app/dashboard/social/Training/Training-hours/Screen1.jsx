@@ -10,12 +10,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
 import { BlobServiceClient } from "@azure/storage-blob";
+import axiosInstance from '@/app/utils/axiosMiddleware'
 
 const widgets = {
   TableWidget: CustomTableWidget9,
 };
 
-const view_path = 'gri-social-ohs-403-5a-ohs_training'
+const view_path = 'gri-social-training_hours-404-1a-number_of_hours'
 const client_id = 1
 const user_id = 1
 
@@ -64,7 +65,7 @@ const uiSchema = {
   }
 };
 
-const Screen1 = ({ location, year, month }) => {
+const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const initialFormData = [
     {
       category: "",
@@ -92,15 +93,6 @@ const Screen1 = ({ location, year, month }) => {
   const [uploadDateTime, setUploadDateTime] = useState("");
   const [file, setFile] = useState(null);
 
-  const getAuthToken = () => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('token')?.replace(/"/g, "");
-    }
-    return '';
-  };
-
-  const token = getAuthToken();
-
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -111,6 +103,100 @@ const Screen1 = ({ location, year, month }) => {
 
   const handleChange = (e) => {
     setFormData(e.formData);
+  };
+
+  const updateFormData = async () => {
+    const data = {
+      client_id: client_id,
+      user_id: user_id,
+      path: view_path,
+      form_data: formData,
+      corporate: selectedCorp,
+      organisation: selectedOrg,
+      year,
+    };
+    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
+    try {
+      const response = await axiosInstance.post(url, data);
+      if (response.status === 200) {
+        toast.success("Data added successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        LoaderClose();
+        loadFormData();
+      } else {
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        LoaderClose();
+      }
+    } catch (error) {
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      LoaderClose();
+    }
+    // console.log('Response:', response.data);
+    // } catch (error) {
+    // console.error('Error:', error);
+    // }
+  };
+
+  const loadFormData = async () => {
+    LoaderOpen();
+    setFormData([{}]);
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
+    try {
+      const response = await axiosInstance.get(url);
+      console.log("API called successfully:", response.data);
+      setRemoteSchema(response.data.form[0].schema);
+      setRemoteUiSchema(response.data.form[0].ui_schema);
+      setFormData(response.data.form_data[0].data);
+    } catch (error) {
+      setFormData([{}]);
+    } finally {
+      LoaderClose();
+    }
+  };
+
+  // fetch backend and replace initialized forms
+  useEffect(() => {
+    if (selectedOrg && year) {
+      loadFormData();
+      toastShown.current = false; // Reset the flag when valid data is present
+    } else {
+      // Only show the toast if it has not been shown already
+      if (!toastShown.current) {
+        toastShown.current = true; // Set the flag to true after showing the toast
+      }
+    }
+  }, [selectedOrg, year]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent the default form submission
+    console.log("Form data:", formData);
+    updateFormData();
   };
 
   const uploadFileToAzure = async (file, newFileName) => {
@@ -236,8 +322,8 @@ const Screen1 = ({ location, year, month }) => {
         </div>
         <div className='mx-2'>
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -290,7 +376,7 @@ const Screen1 = ({ location, year, month }) => {
         <div className='mb-6'>
           <button type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end`}
-            onClick={handleFormSubmit}
+            onClick={handleSubmit}
           >
             Submit
           </button>
