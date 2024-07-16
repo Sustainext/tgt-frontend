@@ -92,6 +92,7 @@ const Profile = ({ onClose }) => {
       );
       toast.success("Profile updated successfully");
       setIsShow(false);
+      onClose();
     } catch (error) {
       toast.error("Error updating profile");
       console.error("Error updating profile:", error);

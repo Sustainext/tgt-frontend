@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { useAuth } from '../Context/auth';
-import { useRouter } from 'next/navigation';
+import React, { useState, useEffect } from "react";
+import { useAuth } from "../Context/auth";
+import { useRouter } from "next/navigation";
+import { ToastContainer } from "react-toastify";
 
 export default function Home() {
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { login } = useAuth();
   const router = useRouter();
   const [isMounted, setIsMounted] = useState(false);
@@ -21,9 +21,8 @@ export default function Home() {
     event.preventDefault();
     try {
       await login(email, password);
-      
     } catch (e) {
-      console.log('Could not login');
+      console.log("Could not login");
     }
   };
 
@@ -33,6 +32,7 @@ export default function Home() {
 
   return (
     <>
+      <ToastContainer style={{ fontSize: "12px", zIndex: 1000 }} />
       <main>
         <div
           className="min-h-[135vh] bg-cover bg-center"
@@ -70,7 +70,8 @@ export default function Home() {
                 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500
                 focus:border-indigo-500 focus:z-10 sm:text-sm"
                     placeholder="Email address"
-                    value={email} onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
                 <div className="mb-6">
@@ -87,7 +88,8 @@ export default function Home() {
                 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500
                 focus:border-indigo-500 focus:z-10 sm:text-sm"
                     placeholder="Password"
-                    value={password} onChange={(e) => setPassword(e.target.value)}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
                 <div className="flex items-center justify-between mb-6">
@@ -116,13 +118,13 @@ export default function Home() {
                 </div>
                 <div>
                   {/* <Link href="/dashboard"> */}
-                    <button
-                      type="button"
-                      onClick={handleLogin}
-                      className="group relative flex w-full justify-center rounded-md  bg-gradient-to-r from-[#007EEF] to-[#2AE4FF] hover:bg-gradient-to-r hover:from-[#00aeef] hover:to-[#6adf23] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    >
-                      Login
-                    </button>
+                  <button
+                    type="button"
+                    onClick={handleLogin}
+                    className="group relative flex w-full justify-center rounded-md  bg-gradient-to-r from-[#007EEF] to-[#2AE4FF] hover:bg-gradient-to-r hover:from-[#00aeef] hover:to-[#6adf23] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
+                    Login
+                  </button>
                   {/* </Link> */}
                 </div>
               </form>

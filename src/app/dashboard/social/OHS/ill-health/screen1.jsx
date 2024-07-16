@@ -56,9 +56,8 @@ const Screen1 = ({ location, year, month }) => {
         {
             employeeCategory: "",
             fatalities: "",
-            highconsequence: "",
             recordable: "",
-
+            highconsequence: "",
         }
     ];
     const [formData, setFormData] = useState(initialFormData);
@@ -203,9 +202,8 @@ const Screen1 = ({ location, year, month }) => {
         const newCommittee = {
             employeeCategory: "",
             fatalities: "",
-            highconsequence: "",
             recordable: "",
-
+            highconsequence: "",
         };
         setFormData([...formData, newCommittee]);
     };
