@@ -119,12 +119,6 @@ const Screen4 = ({location, year, month}) => {
         setFormData(e.formData);
     };
 
-    // The below code on updateFormData
-    let axiosConfig = {
-        headers: {
-          Authorization: 'Bearer ' + token,
-        },
-      };
     const updateFormData = async () => {
         LoaderOpen();
         const data = {
@@ -139,7 +133,7 @@ const Screen4 = ({location, year, month}) => {
 
         const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
         try{
-        const response = await axios.post(url, data, axiosConfig);
+        const response = await axios.post(url, data);
         if (response.status === 200) {
             toast.success("Data added successfully", {
               position: "top-right",
