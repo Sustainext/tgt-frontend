@@ -14,7 +14,6 @@ import { Oval } from 'react-loader-spinner';
 // Simple Custom Table Widget
 const widgets = {
     TableWidget: CustomTableWidget10,
-
 };
 
 const view_path = 'gri-social-performance_and_career-414-2b-number_of_suppliers'
@@ -22,13 +21,22 @@ const client_id = 1
 const user_id = 1
 
 const schema = {
-    type: "array",
-    items: {
+  type: "object",
+  properties: {
+    categories: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          category: { type: "string", title: "Category" },
+          numberperformancereview: { type: "number", title: "Number Performance Review" },
+          numberdevelopmentreview: { type: "number", title: "Number Development Review" },
+        }
+      }
+    },
+    genderData: {
       type: "object",
       properties: {
-        category: { type: "string", title: "Category" },
-        numberperformancereview: { type: "number", title: "Number Performance Review" },
-        numberdevelopmentreview: { type: "number", title: "Number Development Review" },
         male: { type: "number", title: "Male 1" },
         male2: { type: "number", title: "Male 2" },
         female: { type: "number", title: "Female 1" },
@@ -37,22 +45,32 @@ const schema = {
         nonBinary2: { type: "number", title: "Others 2" },
         totalTrainingHours: { type: "number", title: "Total Training Hours" },
         totalTrainingHours2: { type: "number", title: "Total Training Hours2" },
-      },
-
+      }
     }
-  };
+  }
+};
 
-  const uiSchema = {
+const uiSchema = {
+  categories: {
     "ui:widget": "TableWidget",
     "ui:options": {
       titles: [
         { title: "Employee Details", tooltip: "Please specify the category." },
         { title: "Performance Reviews", tooltip: "Details on performance reviews." },
         { title: "Development Reviews", tooltip: "Details on development reviews." },
-        { title: "Gender-Specific Data", tooltip: "Please provide detailed gender data." }
       ],
       tbtilte: [
         { title: "Employee Category", tooltip: "Please specify the category.", rowSpan: 2 },
+      ],
+    }
+  },
+  genderData: {
+    "ui:widget": "TableWidget",
+    "ui:options": {
+      titles: [
+        { title: "Gender-Specific Data", tooltip: "Please provide detailed gender data." }
+      ],
+      tbtilte: [
         { title: "Gender Details", tooltip: "Please specify detailed data for genders.", rowSpan: 2 }
       ],
       subTitles: [
@@ -65,29 +83,35 @@ const schema = {
         { title: "Total number of Employee", tooltip: "Please specify the total number of employees.", colSpan: 1, type: "number" }
       ],
     }
-  };
+  }
+};
+
 const Screen1 = ({ location, year, month }) => {
-    const initialFormData = [
+    const initialFormData = {
+      categories: [
         {
           category: "",
           numberperformancereview: "",
           numberdevelopmentreview: "",
-          male: "",
-          male2: "",
-          female: "",
-          female2: "",
-          nonBinary: "",
-          nonBinary2: "",
-          totalTrainingHours: "",
-          totalTrainingHours2:"",
         }
-      ];
+      ],
+      genderData: {
+        male: "",
+        male2: "",
+        female: "",
+        female2: "",
+        nonBinary: "",
+        nonBinary2: "",
+        totalTrainingHours: "",
+        totalTrainingHours2: "",
+      }
+    };
+
     const [formData, setFormData] = useState(initialFormData);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
     const [loopen, setLoOpen] = useState(false);
     const toastShown = useRef(false);
-
 
     const LoaderOpen = () => {
         setLoOpen(true);
@@ -100,19 +124,30 @@ const Screen1 = ({ location, year, month }) => {
         setFormData(e.formData);
     };
 
-    // The below code on updateFormData
-
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Form data:', formData);
-
     };
 
+    const handleAddCategory = () => {
+      setFormData(prevData => ({
+        ...prevData,
+        categories: [
+          ...prevData.categories,
+          {
+            category: "",
+            numberperformancereview: "",
+            numberdevelopmentreview: "",
+          }
+        ]
+      }));
+    };
 
-
-    const handleRemoveCommittee = (index) => {
-        const newFormData = formData.filter((_, i) => i !== index);
-        setFormData(newFormData);
+    const handleRemoveCategory = (index) => {
+      setFormData(prevData => ({
+        ...prevData,
+        categories: prevData.categories.filter((_, i) => i !== index)
+      }));
     };
 
     return (
@@ -122,11 +157,11 @@ const Screen1 = ({ location, year, month }) => {
                     <div className='w-[80%]'>
                         <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold mb-2'>
                             Number of suppliers identified having significant actual and potential negative social impacts.
-                            <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
+                            <MdInfoOutline data-tooltip-id="tooltip-e1"
                                 data-tooltip-content="This section documents the data corresponding to the number of
 suppliers identified as having significant actual and potential
 negative social impacts." className="mt-1.5 ml-2 text-[14px]" />
-                            <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
+                            <ReactTooltip id="tooltip-e1" place="top" effect="solid" style={{
                                 width: "290px", backgroundColor: "#000",
                                 color: "white",
                                 fontSize: "12px",
@@ -136,7 +171,6 @@ negative social impacts." className="mt-1.5 ml-2 text-[14px]" />
                             }}>
                             </ReactTooltip>
                         </h2>
-
                     </div>
 
                     <div className='w-[20%]'>
@@ -156,15 +190,15 @@ negative social impacts." className="mt-1.5 ml-2 text-[14px]" />
                         validator={validator}
                         widgets={widgets}
                         formContext={{
-                            onRemove: handleRemoveCommittee
+                            onRemove: handleRemoveCategory,
+                            onAdd: handleAddCategory
                         }}
                     />
                 </div>
 
-
                 <div className='mb-6'>
                     <button type="button"
-                        className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end`}
+                        className="text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end"
                         onClick={handleSubmit}
                     >
                         Submit
@@ -183,8 +217,6 @@ negative social impacts." className="mt-1.5 ml-2 text-[14px]" />
                     />
                 </div>
             )}
-
-
         </>
     );
 };

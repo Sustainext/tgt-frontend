@@ -91,6 +91,7 @@ export function AuthProvider({ children }) {
       return response.data;
     } catch (error) {
       console.error('Fetch user details error:', error);
+      router.replace('/');
       return null;
     }
   };

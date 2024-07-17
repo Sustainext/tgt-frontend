@@ -10,6 +10,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
+import axiosInstance from "@/app/utils/axiosMiddleware";
 
 // Simple Custom Table Widget
 const widgets = {
@@ -17,7 +18,7 @@ const widgets = {
 
 };
 
-const view_path = 'gri-social-ohs-403-5a-ohs_training'
+const view_path = 'gri-social-impacts_and_actions-414-2b-number_of_suppliers'
 const client_id = 1
 const user_id = 1
 
@@ -49,7 +50,7 @@ const uiSchema = {
 
     },
 };
-const Screen2 = ({ location, year, month }) => {
+const Screen2 = ({ selectedOrg, selectedCorp,location, year, month }) => {
     const initialFormData = [
         {
             Suppliers: "",
@@ -76,14 +77,99 @@ const Screen2 = ({ location, year, month }) => {
         setFormData(e.formData);
     };
 
-    // The below code on updateFormData
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Form data:', formData);
-
-    };
-
+    const updateFormData = async () => {
+        const data = {
+          client_id: client_id,
+          user_id: user_id,
+          path: view_path,
+          form_data: formData,
+          corporate: selectedCorp,
+          organisation: selectedOrg,
+          year,
+        };
+        const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
+        try {
+          const response = await axiosInstance.post(url, data);
+          if (response.status === 200) {
+            toast.success("Data added successfully", {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+            LoaderClose();
+            loadFormData();
+          } else {
+            toast.error("Oops, something went wrong", {
+              position: "top-right",
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+            LoaderClose();
+          }
+        } catch (error) {
+          toast.error("Oops, something went wrong", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          LoaderClose();
+        }
+        // console.log('Response:', response.data);
+        // } catch (error) {
+        // console.error('Error:', error);
+        // }
+      };
+    
+      const loadFormData = async () => {
+        console.log("loadFormData screen 2");
+        LoaderOpen();
+        setFormData([{}]);
+        const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
+        try {
+          const response = await axiosInstance.get(url);
+          console.log("API called successfully:", response.data);
+          setRemoteSchema(response.data.form[0].schema);
+          setRemoteUiSchema(response.data.form[0].ui_schema);
+          setFormData(response.data.form_data[0].data);
+        } catch (error) {
+          setFormData([{}]);
+        } finally {
+          LoaderClose();
+        }
+      };
+    
+      useEffect(() => {
+        if (selectedOrg && year) {
+          loadFormData();
+          toastShown.current = false;
+        } else {
+          if (!toastShown.current) {
+            toastShown.current = true;
+          }
+        }
+      }, [selectedOrg, year]);
+    
+      const handleSubmit = (e) => {
+        e.preventDefault(); // Prevent the default form submission
+        console.log("Form data:", formData);
+        updateFormData();
+      };
+      
     const handleAddCommittee = () => {
         const newCommittee = {
             Suppliers: "",
@@ -132,8 +218,8 @@ negative social impacts." className="mt-1.5 ml-2 text-[14px]" />
                 </div>
                 <div className='mx-2'>
                     <Form
-                        schema={schema}
-                        uiSchema={uiSchema}
+                        schema={r_schema}
+                        uiSchema={r_ui_schema}
                         formData={formData}
                         onChange={handleChange}
                         validator={validator}

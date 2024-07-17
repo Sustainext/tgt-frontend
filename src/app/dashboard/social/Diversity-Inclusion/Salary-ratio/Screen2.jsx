@@ -10,6 +10,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
+import axiosInstance from "@/app/utils/axiosMiddleware";
 
 // Simple Custom Table Widget
 const widgets = {
@@ -17,7 +18,7 @@ const widgets = {
 
 };
 
-const view_path = 'gri-social-ohs-403-5a-ohs_training'
+const view_path = 'gri-social-salary_ratio-405-2a-ratio_of_remuneration'
 const client_id = 1
 const user_id = 1
 
@@ -70,13 +71,6 @@ const Screen2 = ({ location, year, month }) => {
     const [r_ui_schema, setRemoteUiSchema] = useState({})
     const [loopen, setLoOpen] = useState(false);
     const toastShown = useRef(false);
-    const getAuthToken = () => {
-        if (typeof window !== 'undefined') {
-            return localStorage.getItem('token')?.replace(/"/g, "");
-        }
-        return '';
-    };
-    const token = getAuthToken();
 
     const LoaderOpen = () => {
         setLoOpen(true);
@@ -89,14 +83,96 @@ const Screen2 = ({ location, year, month }) => {
         setFormData(e.formData);
     };
 
-
-
-
-    const handleSubmit = (e) => {
+    const updateFormData = async () => {
+        const data = {
+          client_id: client_id,
+          user_id: user_id,
+          path: view_path,
+          form_data: formData,
+          location: location,
+          year,
+        };
+        const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
+        try {
+          const response = await axiosInstance.post(url, data);
+          if (response.status === 200) {
+            toast.success("Data added successfully", {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+            LoaderClose();
+            loadFormData();
+          } else {
+            toast.error("Oops, something went wrong", {
+              position: "top-right",
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+            LoaderClose();
+          }
+        } catch (error) {
+          toast.error("Oops, something went wrong", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          LoaderClose();
+        }
+        // console.log('Response:', response.data);
+        // } catch (error) {
+        // console.error('Error:', error);
+        // }
+      };
+    
+      const loadFormData = async () => {
+        LoaderOpen();
+        setFormData([{}]);
+        const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
+        try {
+          const response = await axiosInstance.get(url);
+          console.log("API called successfully:", response.data);
+          setRemoteSchema(response.data.form[0].schema);
+          setRemoteUiSchema(response.data.form[0].ui_schema);
+          setFormData(response.data.form_data[0].data);
+        } catch (error) {
+          setFormData([{}]);
+        } finally {
+          LoaderClose();
+        }
+      };
+    
+      useEffect(() => {
+        if (location && year) {
+          loadFormData();
+          toastShown.current = false;
+        } else {
+          if (!toastShown.current) {
+            toastShown.current = true;
+          }
+        }
+      }, [location, year]);
+    
+      const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Form data:', formData);
-    };
-
+        console.log("Form data:", formData);
+        updateFormData();
+      };
 
     const handleRemoveCommittee = (index) => {
         const newFormData = formData.filter((_, i) => i !== index);
@@ -137,8 +213,8 @@ by significant locations of operation. " className="mt-1.5 ml-2 text-[14px]" />
                 </div>
                 <div className='mx-2'>
                     <Form
-                        schema={schema}
-                        uiSchema={uiSchema}
+                        schema={r_schema}
+                        uiSchema={r_ui_schema}
                         formData={formData}
                         onChange={handleChange}
                         validator={validator}
@@ -148,7 +224,6 @@ by significant locations of operation. " className="mt-1.5 ml-2 text-[14px]" />
                         }}
                     />
                 </div>
-
 
                 <div className='mb-6'>
                     <button type="button"
