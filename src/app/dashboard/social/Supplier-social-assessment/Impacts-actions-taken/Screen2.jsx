@@ -134,11 +134,11 @@ const Screen2 = ({ selectedOrg, selectedCorp,location, year, month }) => {
         // console.error('Error:', error);
         // }
       };
-    
+
       const loadFormData = async () => {
         console.log("loadFormData screen 2");
         LoaderOpen();
-        setFormData([{}]);
+        setFormData(initialFormData);
         const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
         try {
           const response = await axiosInstance.get(url);
@@ -147,12 +147,12 @@ const Screen2 = ({ selectedOrg, selectedCorp,location, year, month }) => {
           setRemoteUiSchema(response.data.form[0].ui_schema);
           setFormData(response.data.form_data[0].data);
         } catch (error) {
-          setFormData([{}]);
+          setFormData(initialFormData);
         } finally {
           LoaderClose();
         }
       };
-    
+
       useEffect(() => {
         if (selectedOrg && year) {
           loadFormData();
@@ -163,13 +163,13 @@ const Screen2 = ({ selectedOrg, selectedCorp,location, year, month }) => {
           }
         }
       }, [selectedOrg, year]);
-    
+
       const handleSubmit = (e) => {
         e.preventDefault(); // Prevent the default form submission
         console.log("Form data:", formData);
         updateFormData();
       };
-      
+
     const handleAddCommittee = () => {
         const newCommittee = {
             Suppliers: "",
@@ -230,18 +230,22 @@ negative social impacts." className="mt-1.5 ml-2 text-[14px]" />
                     />
                 </div>
                 <div className="flex right-1 mx-2">
-
-                    <button type="button" className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5" onClick={handleAddCommittee}>
-                        Add category  <MdAdd className='text-lg' />
-                    </button>
-
+                    {selectedOrg  && year && (
+                        <button type="button" className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5" onClick={handleAddCommittee}>
+                            Add category  <MdAdd className='text-lg' />
+                        </button>
+                    )}
 
                 </div>
 
+
                 <div className='mb-6'>
                     <button type="button"
-                        className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end`}
+   className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+    !selectedOrg || !year ? "cursor-not-allowed" : ""
+  }`}
                         onClick={handleSubmit}
+                        disabled={!selectedOrg || !year}
                     >
                         Submit
                     </button>

@@ -246,7 +246,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([{}]);
+    setFormData(initialFormData);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
@@ -255,7 +255,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData([{}]);
+      setFormData(initialFormData);
     } finally {
       LoaderClose();
     }
@@ -286,7 +286,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   return (
     <>
       <div
-        className="mx-2 p-3 mb-6 rounded-md"
+        className="mx-2 p-3 mb-6 pb-6 rounded-md"
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",

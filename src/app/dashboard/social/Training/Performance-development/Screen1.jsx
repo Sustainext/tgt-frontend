@@ -10,8 +10,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
-
-// Simple Custom Table Widget
+import axiosInstance from '@/app/utils/axiosMiddleware'
 const widgets = {
     TableWidget: CustomTableWidget10,
 
@@ -66,7 +65,7 @@ const schema = {
       ],
     }
   };
-const Screen1 = ({ location, year, month }) => {
+const Screen1 = ({ selectedOrg, selectedCorp, year, month }) => {
     const initialFormData = [
         {
           category: "",
@@ -100,24 +99,102 @@ const Screen1 = ({ location, year, month }) => {
         setFormData(e.formData);
     };
 
-    // The below code on updateFormData
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Form data:', formData);
-
-    };
-
-
 
     const handleRemoveCommittee = (index) => {
         const newFormData = formData.filter((_, i) => i !== index);
         setFormData(newFormData);
     };
+    const loadFormData = async () => {
+        LoaderOpen();
+        setFormData(initialFormData);
+        const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}&month=${month}`;
+        try {
+          const response = await axiosInstance.get(url);
+          console.log("API called successfully:", response.data);
+          setRemoteSchema(response.data.form[0].schema);
+          setRemoteUiSchema(response.data.form[0].ui_schema);
+          setFormData(response.data.form_data[0].data);
+        } catch (error) {
+          setFormData(initialFormData);
+        } finally {
+          LoaderClose();
+        }
+      };
 
+      const updateFormData = async () => {
+        const data = {
+          client_id: client_id,
+          user_id: user_id,
+          path: view_path,
+          form_data: formData,
+          corporate: selectedCorp,
+          organisation: selectedOrg,
+          year,
+          month,
+        };
+        const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
+        try {
+          const response = await axiosInstance.post(url, data);
+          if (response.status === 200) {
+            toast.success("Data added successfully", {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+            LoaderClose();
+            loadFormData();
+          } else {
+            toast.error("Oops, something went wrong", {
+              position: "top-right",
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+            LoaderClose();
+          }
+        } catch (error) {
+          toast.error("Oops, something went wrong", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          LoaderClose();
+        }
+
+      };
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('Form data:', formData);
+        updateFormData();
+    };
+    useEffect(() => {
+        if (selectedOrg && year && month) {
+          loadFormData();
+          toastShown.current = false; // Reset the flag when valid data is present
+        } else {
+          // Only show the toast if it has not been shown already
+          if (!toastShown.current) {
+            toastShown.current = true; // Set the flag to true after showing the toast
+          }
+        }
+      }, [selectedOrg, year,month]);
     return (
         <>
-            <div className="mx-2 p-3 mb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+            <div className="mx-2 p-3 mb-6 pb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
                 <div className='mb-4 flex'>
                     <div className='w-[80%]'>
                         <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold mb-2'>
@@ -149,8 +226,8 @@ negative social impacts." className="mt-1.5 ml-2 text-[14px]" />
                 </div>
                 <div className='mx-2'>
                     <Form
-                        schema={schema}
-                        uiSchema={uiSchema}
+                        schema={r_schema}
+                        uiSchema={r_ui_schema}
                         formData={formData}
                         onChange={handleChange}
                         validator={validator}

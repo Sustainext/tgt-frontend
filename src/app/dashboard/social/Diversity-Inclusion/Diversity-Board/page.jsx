@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 
 import Section1 from "./Section1/page";
 import Section2 from "./Section2/page";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const DiversityBoard = () => {
     // State to track the current section
     const [currentSection, setCurrentSection] = useState(1);
 
     return (
         <>
+           <ToastContainer style={{ fontSize: "12px" }} />
             {/* Conditionally render sections based on the current state */}
             {currentSection === 1 && <Section1 />}
             {currentSection === 2 && <Section2 />}

@@ -46,7 +46,7 @@ const uiSchema = {
       { title: "Number of training hours provided to employees", tooltip: "Please specify the number of training hours provided to employees.", colSpan: 4 },
       { title: "Number of Employees", tooltip: "Specify the number of employee to which training has been provided. ", colSpan: 4 },
     ],
-    tbtilte:[
+    tbtilte: [
 
       { title: "Gender", tooltip: "Please specify the training hours.", colSpan: 4 },
       { title: "Gender", tooltip: "Please specify the number of employees.", colSpan: 4 },
@@ -114,6 +114,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       corporate: selectedCorp,
       organisation: selectedOrg,
       year,
+      month,
     };
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
@@ -166,7 +167,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}&month=${month}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -182,7 +183,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
 
   // fetch backend and replace initialized forms
   useEffect(() => {
-    if (selectedOrg && year) {
+    if (selectedOrg && year && month) {
       loadFormData();
       toastShown.current = false; // Reset the flag when valid data is present
     } else {
@@ -191,7 +192,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [selectedOrg, year]);
+  }, [selectedOrg, year, month]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -252,26 +253,94 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   };
 
   const handleFormSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent the default form submission
+
+    // Show loader
+    LoaderOpen();
+
     let uploadedFileUrl = "";
 
+    // Handle file upload if a file is selected
     if (file) {
       uploadedFileUrl = await uploadFileToAzure(file, fileName);
+      if (!uploadedFileUrl) {
+        toast.error("File upload failed", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        LoaderClose();
+        return; // Exit if the file upload fails
+      }
     }
 
+    // Prepare updated form data including the file URL
     const updatedFormData = {
       ...formData,
       fileUrl: uploadedFileUrl,
-      fileName: fileName,
-      fileType: fileType,
-      fileSize: fileSize,
-      uploadDateTime: uploadDateTime,
+      fileName,
+      fileType,
+      fileSize,
+      uploadDateTime,
     };
 
-    console.log('Form data:', updatedFormData);
-    // Perform your form submission logic here with updatedFormData
+    // Update form data state
+    setFormData(updatedFormData);
+
+    // Prepare data payload for the backend
+    const data = {
+      client_id: client_id,
+      user_id: user_id,
+      path: view_path,
+      form_data: updatedFormData,
+      corporate: selectedCorp,
+      organisation: selectedOrg,
+      year,
+      month,
+    };
+
+    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
+
+    // Make API request to update backend data
+    try {
+      const response = await axiosInstance.post(url, data);
+      if (response.status === 200) {
+        toast.success("Data added successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      } else {
+        throw new Error("Failed to update data");
+      }
+    } catch (error) {
+      toast.error(`Oops, something went wrong: ${error.message}`, {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    } finally {
+      LoaderClose(); // Hide loader regardless of the outcome
+    }
   };
 
+  // Button click handler uses the form submission function
+  const buttonClickHandler = (e) => handleFormSubmit(e);
   const handlePreview = () => {
     setShowModal(true);
   };
@@ -292,7 +361,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
 
   return (
     <>
-      <div className="mx-2 p-3 mb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div className="mx-2 p-3 mb-6 pb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
         <div className='mb-4 flex'>
           <div className='w-[80%]'>
             <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold mb-2'>
@@ -336,50 +405,55 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
             }}
           />
         </div>
+
+
         <div className='-mt-12 float-end'>
-        <div className="flex right-1 mx-2 ">
-          <input
-            type="file"
-            id="fileInput"
-            onChange={handleFileChange}
-            style={{ display: "none" }}
-          />
-          {fileName ? (
-            <label className="flex cursor-pointer ml-1">
-              <div
-                className="flex items-center mt-2 px-2"
+        {selectedOrg && year && (
+          <div className="flex right-1 mx-2 ">
+            <input
+              type="file"
+              id="fileInput"
+              onChange={handleFileChange}
+              style={{ display: "none" }}
+            />
+            {fileName ? (
+              <label className="flex cursor-pointer justify-center">
+                <div
+                  className="flex items-center justify-center mt-2 px-2"
                 // onClick={handlePreview}
-              >
-                <MdFilePresent
-                  className="w-6 h-6 mr-1 text-green-500"
-                />
-                <div className="w-[150px] truncate text-sky-600 text-sm">
-                  {fileName}
+                >
+                  <MdFilePresent
+                    className="w-6 h-6 mr-1 text-green-500"
+                  />
+                  <div className="w-[150px] truncate text-center text-sky-600 text-sm">
+                    {fileName}
+                  </div>
                 </div>
-              </div>
-            </label>
-          ) : (
-            <label htmlFor="fileInput" className="flex cursor-pointer ml-1">
-              <div className="flex items-center mt-2">
-                <MdOutlineFileUpload
-                  className="w-6 h-6 mr-1 text-[#007EEF]"
-                />
-                <div className="w-[150px] truncate text-[#007EEF] text-sm ml-1">
-                  Upload Documentation
+              </label>
+            ) : (
+              <label htmlFor="fileInput" className="flex cursor-pointer ml-1">
+                <div className="flex items-center mt-2">
+                  <MdOutlineFileUpload
+                    className="w-6 h-6 mr-1 text-[#007EEF]"
+                  />
+                  <div className="w-[150px] truncate text-[#007EEF] text-sm ml-1">
+                    Upload Documentation
+                  </div>
                 </div>
-              </div>
-            </label>
-          )}
-        </div>
+              </label>
+            )}
+          </div>
+           )}
         </div>
 
         <div className='mb-6'>
-          <button type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end`}
-            onClick={handleSubmit}
-          >
-            Submit
-          </button>
+        <button type="button"
+  className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year || !month ? "cursor-not-allowed" : ""}`}
+  onClick={buttonClickHandler}
+  disabled={!selectedOrg || !year || !month}
+>
+  Submit
+</button>
         </div>
       </div>
       {loopen && (

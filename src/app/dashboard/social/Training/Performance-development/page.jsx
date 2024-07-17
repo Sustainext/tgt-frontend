@@ -4,6 +4,8 @@ import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
 import {Socialdata} from "../../data/socialgriinfo"
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Socialheader4 from '../../socialheader4';
 import Screen1 from "./Screen1"
 const Performancedevelopment = () => {
@@ -37,6 +39,7 @@ const Performancedevelopment = () => {
 
     return (
         <>
+         <ToastContainer style={{ fontSize: "12px" }} />
             <div className="flex flex-col justify-start overflow-x-hidden ">
                 <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
                     <div className='w-full'>
@@ -114,7 +117,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
             setSelectedCorp={setSelectedCorp}
             year={year}
             setYear={setYear} />
-            <Screen1 year={year} month={activeMonth} />
+            <Screen1 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year} month={activeMonth} />
 
         </>
     );

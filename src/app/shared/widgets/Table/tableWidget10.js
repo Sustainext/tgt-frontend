@@ -22,7 +22,11 @@ const CustomTableWidget10 = ({
 
   const updateField = (index, key, newValue) => {
     const newData = [...value];
-    newData[index][key] = newValue;
+    if (['male', 'male2', 'female', 'female2', 'nonBinary', 'nonBinary2', 'totalTrainingHours', 'totalTrainingHours2'].includes(key)) {
+      newData[0][key] = newValue; // Update first object for specified fields
+    } else {
+      newData[index][key] = newValue; // Update specific index for other fields
+    }
     handleInputChange(newData);
   };
 
@@ -39,13 +43,13 @@ const CustomTableWidget10 = ({
     };
     const newData = [...value, newRow];
     onChange(newData);
-    setRowSpan(rowSpan + 1); // Update rowSpan when a row is added
+    setRowSpan(rowSpan + 1);
   };
 
   const handleRemoveRow = (rowIndex) => {
     const newData = value.filter((_, index) => index !== rowIndex);
     onChange(newData);
-    setRowSpan(rowSpan - 1); // Update rowSpan when a row is removed
+    setRowSpan(rowSpan - 1);
   };
 
   useEffect(() => {
@@ -56,9 +60,18 @@ const CustomTableWidget10 = ({
     return value.reduce((acc, item) => acc + (parseFloat(item[key]) || 0), 0);
   };
 
+  // Calculate totals when the component mounts and whenever relevant data changes
   const totalTrainingHours = calculateTotal("numberperformancereview") + calculateTotal("male") + calculateTotal("female") + calculateTotal("nonBinary");
   const totalTrainingHours2 = calculateTotal("numberdevelopmentreview") + calculateTotal("male2") + calculateTotal("female2") + calculateTotal("nonBinary2");
 
+  useEffect(() => {
+    const newData = [...value];
+    if (newData[0]) {
+      newData[0].totalTrainingHours = totalTrainingHours;
+      newData[0].totalTrainingHours2 = totalTrainingHours2;
+      handleInputChange(newData);
+    }
+  }, [totalTrainingHours, totalTrainingHours2]);
   return (
     <div className="container mx-auto p-4">
       <table className="min-w-full bg-white border border-gray-300">

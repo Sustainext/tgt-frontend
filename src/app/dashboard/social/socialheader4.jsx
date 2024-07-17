@@ -34,7 +34,7 @@ const Socialheader4 = ({ activeMonth, setActiveMonth, selectedOrg, setSelectedOr
     const handleReportTypeChange = (type) => {
         setReportType(type);
     };
-    const [locations, setLocations] = useState([]);
+ console.log(activeMonth,"test month value chnages");
     const [errors, setErrors] = useState({
         organization: "Please select an organization",
         corporate: "Please select a corporate",
@@ -112,7 +112,7 @@ const Socialheader4 = ({ activeMonth, setActiveMonth, selectedOrg, setSelectedOr
             year: year,
             month: activeMonth,
         });
-    }, [selectedOrg, selectedCorp, year]);
+    }, [selectedOrg, selectedCorp, year, activeMonth]);
 
     const handleOrgChange = (e) => {
         const newOrg = e.target.value;
@@ -254,25 +254,32 @@ const Socialheader4 = ({ activeMonth, setActiveMonth, selectedOrg, setSelectedOr
                 <div className="flex justify-between mb-4 ml-3">
           <div className="flex bg-[#f7f7f7] py-1 rounded-lg">
             {months.map((month, index) => (
-              <button
-                key={index}
-                className={`text-[12px] border-r mx-1 ${
-                  formState.month === monthMapping[month] ? "bg-white shadow-md rounded-lg" : ""
-                }`}
-                onClick={() => handleChange({ target: { name: "month", value: month } })}
-              >
-                <p
-                  className={`text-center ${
-                    formState.month === monthMapping[month]
-                      ? "custom-gradient-text"
-                      : "text-[#A1A1A1]"
-                  } hover:bg-[#f7f7f7] py-1 w-[55px] ${
-                    index === 0 ? "rounded-l" : ""
-                  } ${index === months.length - 1 ? "rounded-r" : ""}`}
-                >
-                  {month}
-                </p>
-              </button>
+
+<button
+key={index}
+className={`text-[12px] border-r mx-1 ${
+  formState.month === monthMapping[month] ? "bg-white shadow-md rounded-lg" : ""
+}`}
+onClick={() => handleChange({
+  target: {
+    name: "month",
+    value: month // assuming 'month' here is the string representation like "Jan", "Feb", etc.
+  }
+})}
+>
+<p
+  className={`text-center ${
+    formState.month === monthMapping[month]
+      ? "custom-gradient-text"
+      : "text-[#A1A1A1]"
+  } hover:bg-[#f7f7f7] py-1 w-[55px] ${
+    index === 0 ? "rounded-l" : ""
+  } ${index === months.length - 1 ? "rounded-r" : ""}`}
+>
+  {month}
+</p>
+</button>
+
             ))}
           </div>
         </div>

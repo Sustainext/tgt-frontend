@@ -147,6 +147,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year, month }) => {
       corporate: selectedCorp,
       organisation: selectedOrg,
       year,
+      month,
     };
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
@@ -199,7 +200,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}&month=${month}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -215,7 +216,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year, month }) => {
 
   // fetch backend and replace initialized forms
   useEffect(() => {
-    if (selectedOrg && year) {
+    if (selectedOrg && year && month) {
       loadFormData();
       toastShown.current = false; // Reset the flag when valid data is present
     } else {
@@ -224,7 +225,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year, month }) => {
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [selectedOrg, year]);
+  }, [selectedOrg, year, month]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -287,7 +288,7 @@ provided to upgrade employee skills."
         <div className="mx-2">
           <Form
             schema={r_schema}
-            uiSchema={r_ui_schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

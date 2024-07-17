@@ -5,6 +5,8 @@ import { Socialdata } from "../../data/socialgriinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import Socialheader4 from "../../socialheader4";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Screen1 from "./Screen1";
 const Traininghours = () => {
   const [activeMonth, setActiveMonth] = useState(1);
@@ -37,6 +39,7 @@ const Traininghours = () => {
 
   return (
     <>
+     <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
