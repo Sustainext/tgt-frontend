@@ -226,12 +226,13 @@ by significant locations of operation. " className="mt-1.5 ml-2 text-[14px]" />
                 </div>
 
                 <div className='mb-6'>
-                    <button type="button"
-                        className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end`}
-                        onClick={handleSubmit}
-                    >
-                        Submit
-                    </button>
+                <button type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year  ? "cursor-not-allowed" : ""}`}
+            onClick={handleSubmit}
+            disabled={!location || !year }
+          >
+            Submit
+          </button>
                 </div>
             </div>
             {loopen && (

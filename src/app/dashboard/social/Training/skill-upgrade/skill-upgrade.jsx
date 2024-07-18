@@ -296,10 +296,10 @@ provided to upgrade employee skills."
           />
         </div>
         <div className="mb-6">
-          <button
-            type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end`}
+        <button type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year || !month ? "cursor-not-allowed" : ""}`}
             onClick={handleSubmit}
+            disabled={!selectedOrg || !year || !month}
           >
             Submit
           </button>

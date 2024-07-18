@@ -14,6 +14,12 @@ const CustomTableWidget9 = ({
   formContext,
 }) => {
   // Debounced input change handler
+  const visibleKeys = [
+    'category', 'male', 'female', 'others', 'totalEmployees',
+    'male1', 'female2', 'others3', 'totalTrainingHours'
+  ];
+
+  // Debounced input change handler
   const handleInputChange = useCallback(
     debounce((newData) => {
       onChange(newData);
@@ -39,11 +45,9 @@ const CustomTableWidget9 = ({
     handleInputChange(newData);
   };
 
-  const getInputType = (key) => {
-    const field = options.subTitles.find(item => item.title.toLowerCase().replace(/ /g, '') === key.toLowerCase());
-    return field ? field.type : 'text';
-  };
 
+
+  // Function to add a new row in the table
   const handleAddRow = () => {
     const newRow = {
       category: "",
@@ -60,6 +64,7 @@ const CustomTableWidget9 = ({
     onChange(newData);
   };
 
+  // Log value changes for debugging
   useEffect(() => {
     console.log('CustomTableWidget value:', value);
   }, [value]);
@@ -160,18 +165,20 @@ const CustomTableWidget9 = ({
           </tr>
         </thead>
         <tbody>
-          {value.map((item, rowIndex) => (
+        {value.map((item, rowIndex) => (
             <tr key={`row-${rowIndex}`}>
-              {Object.keys(item).map((key, cellIndex) => (
-                <td key={`cell-${rowIndex}-${cellIndex}`} className="border border-gray-300 p-3">
-                  <InputField
-                    type={getInputType(key)}
-                    required={required && key !== 'totalEmployees' && key !== 'totalTrainingHours'}
-                    readOnly={key === 'totalEmployees' || key === 'totalTrainingHours'}
-                    value={item[key]}
-                    onChange={(newValue) => updateField(rowIndex, key, newValue)}
-                  />
-                </td>
+              {Object.keys(item)
+                .filter(key => visibleKeys.includes(key)) // Only display specified keys
+                .map((key, cellIndex) => (
+                  <td key={`cell-${rowIndex}-${cellIndex}`} className="border border-gray-300 p-3">
+                    <InputField
+                      type={options.subTitles.find(sub => sub.title.toLowerCase() === key.toLowerCase())?.type || 'text'}
+                      required={required && key !== 'totalEmployees' && key !== 'totalTrainingHours'}
+                      readOnly={key === 'totalEmployees' || key === 'totalTrainingHours'}
+                      value={item[key]}
+                      onChange={(newValue) => updateField(rowIndex, key, newValue)}
+                    />
+                  </td>
               ))}
               <td className="border border-gray-300 p-3">
                 <button onClick={() => formContext.onRemove(rowIndex)}>

@@ -10,22 +10,22 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
 import { BlobServiceClient } from "@azure/storage-blob";
-import axiosInstance from '@/app/utils/axiosMiddleware'
+import axiosInstance from '@/app/utils/axiosMiddleware';
 
 const widgets = {
   TableWidget: CustomTableWidget9,
 };
 
-const view_path = 'gri-social-training_hours-404-1a-number_of_hours'
-const client_id = 1
-const user_id = 1
+const view_path = 'gri-social-training_hours-404-1a-number_of_hours';
+const client_id = 1;
+const user_id = 1;
 
 const schema = {
   type: 'array',
   items: {
     type: 'object',
     properties: {
-      category: { type: "string", title: "Category" },
+      category: { type: "integer", title: "Category" },
       male: { type: "integer", title: "Male" },
       female: { type: "integer", title: "Female" },
       others: { type: "integer", title: "Others" },
@@ -34,6 +34,16 @@ const schema = {
       others3: { type: "integer", title: "Others" },
       totalEmployees: { type: "integer", title: "Total number of Employee" },
       totalTrainingHours: { type: "integer", title: "Total number of Employee" },
+      fileMetadata: {
+        type: "object",
+        properties: {
+          fileUrl: { type: "string", title: "File URL" },
+          fileName: { type: "string", title: "File Name" },
+          fileType: { type: "string", title: "File Type" },
+          fileSize: { type: "number", title: "File Size" },
+          uploadDateTime: { type: "string", title: "Upload Date & Time" },
+        }
+      }
     }
   }
 };
@@ -65,7 +75,7 @@ const uiSchema = {
   }
 };
 
-const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
+const bavkup = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const initialFormData = [
     {
       category: "",
@@ -77,6 +87,13 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       female2: "",
       others3: "",
       totalTrainingHours: "",
+      fileMetadata: {
+        fileUrl: "",
+        fileName: "",
+        fileType: "",
+        fileSize: "",
+        uploadDateTime: ""
+      }
     }
   ];
 
@@ -92,7 +109,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const [fileSize, setFileSize] = useState("");
   const [uploadDateTime, setUploadDateTime] = useState("");
   const [file, setFile] = useState(null);
-const [fleg ,setfleg] = useState(null);
+
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -158,21 +175,12 @@ const [fleg ,setfleg] = useState(null);
       });
       LoaderClose();
     }
-    // console.log('Response:', response.data);
-    // } catch (error) {
-    // console.error('Error:', error);
-    // }
   };
 
   const loadFormData = async () => {
     LoaderOpen();
     setFormData(initialFormData);
     setFileName(null);
-    setPreviewData(null);
-    setFileType("");
-    setFileSize("");
-    setUploadDateTime("");
-    setfleg("");
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}&month=${month}`;
     try {
       const response = await axiosInstance.get(url);
@@ -180,20 +188,11 @@ const [fleg ,setfleg] = useState(null);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
-      setFileName(response.data.form_data[0].data[0].fileName);
-      setFile(response.data.form_data[0].data[0].fileUrl);
-      setFileType(response.data.form_data[0].data[0].fileType)
-      setFileSize(response.data.form_data[0].data[0].fileSize)
-      setUploadDateTime(response.data.form_data[0].data[0].uploadDateTime)
-      setfleg(response.data.form_data[0].data[0].fileName);
+      setFileName(response.data.form_data[0].data[0].fileMetadata.fileName);
+      setFile(response.data.form_data[0].data[0].fileMetadata.fileUrl);
     } catch (error) {
       setFormData(initialFormData);
       setFileName(null);
-      setPreviewData(null);
-      setFileType("");
-      setFileSize("");
-      setUploadDateTime("");
-      setFile("");
     } finally {
       LoaderClose();
     }
@@ -211,12 +210,6 @@ const [fleg ,setfleg] = useState(null);
       }
     }
   }, [selectedOrg, year, month]);
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault(); // Prevent the default form submission
-  //   console.log("Form data:", formData);
-  //   updateFormData();
-  // };
 
   const uploadFileToAzure = async (file, newFileName) => {
     const arrayBuffer = await file.arrayBuffer();
@@ -266,6 +259,19 @@ const [fleg ,setfleg] = useState(null);
         setFileType(selectedFile.type);
         setFileSize(selectedFile.size);
         setUploadDateTime(new Date().toLocaleString());
+
+        const updatedFormData = formData.map(item => ({
+          ...item,
+          fileMetadata: {
+            fileUrl: "",
+            fileName: newFileName,
+            fileType: selectedFile.type,
+            fileSize: selectedFile.size,
+            uploadDateTime: new Date().toLocaleString()
+          }
+        }));
+
+        setFormData(updatedFormData);
       };
     }
   };
@@ -295,38 +301,31 @@ const [fleg ,setfleg] = useState(null);
         LoaderClose();
         return; // Exit if the file upload fails
       }
-    }
 
-    // Prepare updated form data including the file URL
-    const updatedFormData = formData.map((item, index) => {
-      if (index === 0) { // Check if it's the first item
-        return {
-          ...item,
-          fileUrl: uploadedFileUrl,  // Only the first item gets the new file URL
-          fileName,                  // and other file properties
-          fileType,
-          fileSize,
-          uploadDateTime,
-        };
-      } else {
-        return item; // Other items remain unchanged
-      }
-    });
-    // Update form data state
-    setFormData(updatedFormData);
+      const updatedFormData = formData.map(item => ({
+        ...item,
+        fileMetadata: {
+          ...item.fileMetadata,
+          fileUrl: uploadedFileUrl,
+        }
+      }));
+
+      setFormData(updatedFormData);
+      console.log(updatedFormData,"test all data update data ");
+    }
 
     // Prepare data payload for the backend
     const data = {
       client_id: client_id,
       user_id: user_id,
       path: view_path,
-      form_data: updatedFormData, // This should be an array of objects
+      form_data: formData,
       corporate: selectedCorp,
       organisation: selectedOrg,
       year,
       month,
     };
-
+    console.log(data,"test all data ");
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
 
     // Make API request to update backend data
@@ -363,7 +362,6 @@ const [fleg ,setfleg] = useState(null);
     }
   };
 
-
   // Button click handler uses the form submission function
   const buttonClickHandler = (e) => handleFormSubmit(e);
   const handlePreview = () => {
@@ -381,9 +379,20 @@ const [fleg ,setfleg] = useState(null);
     setFileSize("");
     setUploadDateTime("");
     setFile(null);
+
+    const updatedFormData = formData.map(item => ({
+      ...item,
+      fileMetadata: {
+        fileUrl: "",
+        fileName: "",
+        fileType: "",
+        fileSize: "",
+        uploadDateTime: ""
+      }
+    }));
+
+    setFormData(updatedFormData);
     setShowModal(false);
-    setFile(null);
-    setfleg(null);
   };
 
   return (
@@ -444,17 +453,19 @@ const [fleg ,setfleg] = useState(null);
                 style={{ display: "none" }}
               />
               {fileName ? (
-                <label className="flex cursor-pointer float-end">
+                <label className="flex cursor-pointer">
                   <div
-                    className="flex items-center text-center mt-2"
+                    className="flex items-center text-center mt-2 px-6"
                   onClick={handlePreview}
                   >
-                    <MdFilePresent
-                      className="w-6 h-6 mr-1 text-green-500 "
-                    />
-                    <div className="w-[150px] truncate  text-sky-600 text-sm">
-                      {fileName}
+
+                       <div className="truncate  text-sky-600 text-sm flex text-center ">
+                       <MdFilePresent
+                      className="w-6 h-6 mr-1 text-green-500"
+                    /> {fileName}
                     </div>
+
+
                   </div>
                 </label>
               ) : (
@@ -495,7 +506,7 @@ const [fleg ,setfleg] = useState(null);
           />
         </div>
       )}
-      {showModal  && (
+      {showModal && previewData && (
         <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-1 rounded-lg w-[60%] h-[90%] mt-12">
             <div className="flex justify-between mt-4 mb-4">
@@ -522,27 +533,23 @@ const [fleg ,setfleg] = useState(null);
               </div>
             </div>
             <div className="flex justify-between">
-              <div className="relative w-[760px] h-[580px]">
-              {fleg ? (
-    fileType.startsWith("image") ? (
-      <img src={file} alt="Preview" className="max-w-full max-h-full object-contain" />
-    ) : fileType === "application/pdf" ? (
-      <iframe src={file} title="PDF Preview" className="w-full h-full" />
-    ) : (
-      <p>File preview not available. Please download and verify</p>
-    )
-  ) : (
-    fileType.startsWith("image") ? (
-      <img src={previewData} alt="Preview" className="max-w-full max-h-full object-contain" />
-    ) : fileType === "application/pdf" ? (
-      <iframe src={previewData} title="PDF Preview" className="w-full h-full" />
-    ) : (
-      <p>File preview not available. Please download and verify</p>
-    )
-  )}
-</div>
-
-
+              <div className="relative w-[760px] h-[550px]">
+                {fileType.startsWith("image") ? (
+                  <img
+                    src={previewData}
+                    alt="Preview"
+                    className="max-w-full max-h-full object-contain"
+                  />
+                ) : fileType === "application/pdf" ? (
+                  <iframe
+                    src={previewData}
+                    title="PDF Preview"
+                    className="w-full h-full"
+                  />
+                ) : (
+                  <p>File preview not available. Please download and verify</p>
+                )}
+              </div>
               <div className="w-[211px]">
                 <div className="mb-4 mt-2">
                   <h2 className="text-neutral-500 text-[15px] font-semibold leading-relaxed tracking-wide">
@@ -553,7 +560,7 @@ const [fleg ,setfleg] = useState(null);
                   <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
                     FILE NAME
                   </h2>
-                  <h2 className="text-[14px] truncate leading-relaxed tracking-wide">
+                  <h2 className="text-[14px] leading-relaxed tracking-wide">
                     {fileName}
                   </h2>
                 </div>
@@ -590,4 +597,4 @@ const [fleg ,setfleg] = useState(null);
   );
 };
 
-export default Screen1;
+export default bavkup;
