@@ -26,14 +26,14 @@ const schema = {
     type: 'object',
     properties: {
       category: { type: "string", title: "Category" },
-      male: { type: "integer", title: "Male" },
-      female: { type: "integer", title: "Female" },
-      others: { type: "integer", title: "Others" },
-      male1: { type: "integer", title: "Male" },
-      female2: { type: "integer", title: "Female" },
-      others3: { type: "integer", title: "Others" },
-      totalEmployees: { type: "integer", title: "Total number of Employee" },
-      totalTrainingHours: { type: "integer", title: "Total number of Employee" },
+      male: { type: "string", title: "Male" },
+      female: { type: "string", title: "Female" },
+      others: { type: "string", title: "Others" },
+      male1: { type: "string", title: "Male" },
+      female1: { type: "string", title: "Female" },
+      others2: { type: "string", title: "Others" },
+      totalEmployees: { type: "string", title: "Total number of Employee" },
+      totalTrainingHours: { type: "string", title: "Total number of Employee" },
     }
   }
 };
@@ -52,15 +52,15 @@ const uiSchema = {
       { title: "Gender", tooltip: "Please specify the number of employees.", colSpan: 4 },
     ],
     subTitles: [
-      { title: "", tooltip: "Please specify the category.", colSpan: 1, type: "text" },
-      { title: "Male", tooltip: "Please specify the number of male individuals.", colSpan: 1, type: "number" },
-      { title: "Female", tooltip: "Please specify the number of female individuals.", colSpan: 1, type: "number" },
-      { title: "Others", tooltip: "Please specify the number of others individuals.", colSpan: 1, type: "number" },
-      { title: "Total number of Employee", tooltip: "Please specify the total number of employees.", colSpan: 1, type: "number" },
-      { title: "Male", tooltip: "Please specify the number of male individuals.", colSpan: 1, type: "number" },
-      { title: "Female", tooltip: "Please specify the number of female individuals.", colSpan: 1, type: "number" },
-      { title: "Others", tooltip: "Please specify the number of others individuals.", colSpan: 1, type: "number" },
-      { title: "Total number of Employee", tooltip: "Please specify the total number of employees.", colSpan: 1, type: "number" },
+      { title: "", title2:"", tooltip: "Please specify the category.", colSpan: 1, type: "text" },
+      { title: "Male",title2:"Male", tooltip: "Please specify the number of male individuals.", colSpan: 1, type: "number" },
+      { title: "Female",title2:"Female", tooltip: "Please specify the number of female individuals.", colSpan: 1, type: "number" },
+      { title: "Others",title2:"Others", tooltip: "Please specify the number of others individuals.", colSpan: 1, type: "number" },
+      { title: "Total number of Employee",title2:"Total number of Employee", tooltip: "Please specify the total number of employees.", colSpan: 1, type: "number" },
+      { title: "Male", title2:"Male1", tooltip: "Please specify the number of male individuals.", colSpan: 1, type: "number" },
+      { title: "Female", title2:"Female1", tooltip: "Please specify the number of female individuals.", colSpan: 1, type: "number" },
+      { title: "Others", title2:"Others1", tooltip: "Please specify the number of others individuals.", colSpan: 1, type: "number" },
+      { title: "Total number of Employee", title2:"Total number of Employee", tooltip: "Please specify the total number of employees.", colSpan: 1, type: "number" },
     ]
   }
 };
@@ -74,8 +74,8 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       others: "",
       totalEmployees: "",
       male1: "",
-      female2: "",
-      others3: "",
+      female1: "",
+      others1: "",
       totalTrainingHours: "",
     }
   ];
@@ -92,6 +92,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const [fileSize, setFileSize] = useState("");
   const [uploadDateTime, setUploadDateTime] = useState("");
   const [file, setFile] = useState(null);
+  const [newfile, setNewfile] = useState(null);
 const [fleg ,setfleg] = useState(null);
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -104,7 +105,13 @@ const [fleg ,setfleg] = useState(null);
   const handleChange = (e) => {
     setFormData(e.formData);
   };
-
+  const handleRemoveCommittee = (index) => {
+    const newFormData = formData.filter((_, i) => i !== index);
+    setFormData(newFormData);
+    if (index === 0) { // if the first row is removed
+        setFile(null); // Reset or handle file object accordingly
+    }
+};
   const updateFormData = async () => {
     const data = {
       client_id: client_id,
@@ -173,6 +180,7 @@ const [fleg ,setfleg] = useState(null);
     setFileSize("");
     setUploadDateTime("");
     setfleg("");
+    setNewfile("");
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}&month=${month}`;
     try {
       const response = await axiosInstance.get(url);
@@ -181,11 +189,11 @@ const [fleg ,setfleg] = useState(null);
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
       setFileName(response.data.form_data[0].data[0].fileName);
-      setFile(response.data.form_data[0].data[0].fileUrl);
       setFileType(response.data.form_data[0].data[0].fileType)
       setFileSize(response.data.form_data[0].data[0].fileSize)
       setUploadDateTime(response.data.form_data[0].data[0].uploadDateTime)
       setfleg(response.data.form_data[0].data[0].fileName);
+      setNewfile(response.data.form_data[0].data[0].fileUrl);
     } catch (error) {
       setFormData(initialFormData);
       setFileName(null);
@@ -194,6 +202,7 @@ const [fleg ,setfleg] = useState(null);
       setFileSize("");
       setUploadDateTime("");
       setFile("");
+      setNewfile("");
     } finally {
       LoaderClose();
     }
@@ -276,7 +285,7 @@ const [fleg ,setfleg] = useState(null);
     // Show loader
     LoaderOpen();
 
-    let uploadedFileUrl = "";
+    let uploadedFileUrl = newfile;
 
     // Handle file upload if a file is selected
     if (file) {
@@ -384,6 +393,7 @@ const [fleg ,setfleg] = useState(null);
     setShowModal(false);
     setFile(null);
     setfleg(null);
+    setNewfile("");
   };
 
   return (
@@ -418,17 +428,14 @@ const [fleg ,setfleg] = useState(null);
         </div>
         <div className='mx-2'>
           <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+             schema={r_schema}
+             uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
             formContext={{
-              onRemove: (index) => {
-                const newFormData = formData.filter((_, i) => i !== index);
-                setFormData(newFormData);
-              }
+              onRemove: handleRemoveCommittee
             }}
           />
         </div>
@@ -525,9 +532,9 @@ const [fleg ,setfleg] = useState(null);
               <div className="relative w-[760px] h-[580px]">
               {fleg ? (
     fileType.startsWith("image") ? (
-      <img src={file} alt="Preview" className="max-w-full max-h-full object-contain" />
+      <img src={newfile} alt="Preview" className="max-w-full max-h-full object-contain" />
     ) : fileType === "application/pdf" ? (
-      <iframe src={file} title="PDF Preview" className="w-full h-full" />
+      <iframe src={newfile} title="PDF Preview" className="w-full h-full" />
     ) : (
       <p>File preview not available. Please download and verify</p>
     )
