@@ -60,7 +60,7 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
     {
       category: "Tab5",
       tag: "GRI 405",
-      data: [{ tagid: "1", infoid: "27" }],
+      data: [{ tagid: "1", infoid: "28" }],
     },
     {
       category: "Tab6",

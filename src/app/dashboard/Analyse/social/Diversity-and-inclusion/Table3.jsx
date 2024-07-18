@@ -46,7 +46,7 @@ const Table3 = ({ data }) => {
           </tr>
         </thead>
         <tbody className="block md:table-row-group">
-          {data.length === 0 ? (
+          {data?.length === 0 ? (
             <tr className="border border-gray-300 md:table-row">
               <td
                 colSpan={columns.length}
@@ -56,7 +56,7 @@ const Table3 = ({ data }) => {
               </td>
             </tr>
           ) : (
-            data.map((row, rowIndex) => (
+            data?.map((row, rowIndex) => (
               <tr key={rowIndex} className="border border-gray-300 md:table-row">
                 <td className="p-2 block md:table-cell h-20 text-center font-bold text-sm border-r border-gray-300">
                   {row.category}
@@ -71,7 +71,7 @@ const Table3 = ({ data }) => {
                   {row.nonBinary}
                 </td>
                 <td className="p-2 block md:table-cell h-20 text-center text-sm border-r border-gray-300">
-                  {row.location}
+                  {row.locationandoperation}
                 </td>
               </tr>
             ))

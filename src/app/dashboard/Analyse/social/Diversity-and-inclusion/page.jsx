@@ -5,20 +5,29 @@ import axiosInstance from "../../../../utils/axiosMiddleware";
 import Table1 from "./Table1";
 import Table2 from "./Table2";
 import Table3 from "./Table3";
-import { column1, data1, data2, data3 } from "./data";
+import { column1 } from "./data";
 import NavigationButtons from "./NavigationButtons";
 import { yearInfo } from "@/app/shared/data/yearInfo";
 
 const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
-  const [analyseData, setAnalyseData] = useState([]);
+  const [
+    percentageOfEmployeesWithinGovernmentBodies,
+    setPercentageOfEmployeesWithinGovernmentBodies,
+  ] = useState([]);
+  const [
+    numberOfEmployeesPerEmployeeCategory,
+    setNumberOfEmployeesPerEmployeeCategory,
+  ] = useState([]);
+  const [ratioOfBasicSalaryOfWomenToMen, setRatioOfBasicSalaryOfWomenToMen] =
+    useState([]);
+  const [ratioOfRemunerationOfWomenToMen, setRatioOfRemunerationOfWomenToMen] =
+    useState([]);
   const [organisations, setOrganisations] = useState([]);
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
-  const [selectedLocation, setSelectedLocation] = useState("");
-  const [selectedsetLocation, setSelectedSetLocation] = useState("");
-  const [selectedYear, setSelectedYear] = useState(""); // State for selected year
-  const [compulsaryLabour1, setCompulsaryLabour1] = useState([]);
-  const [compulsaryLabour2, setCompulsaryLabour2] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState([]);
+  const [selectedSetLocation, setSelectedSetLocation] = useState("");
+  const [selectedYear, setSelectedYear] = useState("");
   const [corporates, setCorporates] = useState([]);
   const [reportType, setReportType] = useState("Organization");
   const [loopen, setLoOpen] = useState(false);
@@ -26,76 +35,111 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
     organisation: "",
     corporate: "",
     location: "",
-    year: "",
+    start: "",
+    end: "",
   });
   const [activeScreen, setActiveScreen] = useState(1);
+  const [errors, setErrors] = useState({
+    selectedOrg: "Organization is required",
+    selectedLocation: "Location is required",
+    selectedYear: "Year is required",
+  });
 
   const LoaderOpen = () => {
     setLoOpen(true);
   };
+
   const LoaderClose = () => {
     setLoOpen(false);
   };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!selectedOrg && activeScreen === 1) {
+      newErrors.selectedOrg = "Organization is required";
+    }
+    if (!selectedSetLocation && activeScreen === 2) {
+      newErrors.selectedLocation = "Location is required";
+    }
+    if (!selectedYear) {
+      newErrors.selectedYear = "Year is required";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const fetchData = async (params) => {
+    if (!validateForm()) return;
+
     LoaderOpen();
-    setCompulsaryLabour1([]);
-    setCompulsaryLabour2([]);
+    setPercentageOfEmployeesWithinGovernmentBodies([]);
+    setNumberOfEmployeesPerEmployeeCategory([]);
+    setRatioOfBasicSalaryOfWomenToMen([]);
+    setRatioOfRemunerationOfWomenToMen([]);
     try {
       const response = await axiosInstance.get(
-        `sustainapp/get_forced_labor_analysis`,
-        {
-          params: params,
-        }
+        `/sustainapp/get_diversity_inclusion_analysis/`,
+        { params: params }
       );
-
       const data = response.data;
-      console.log(data, "testing");
-
-      function formatArray1(operations) {
-        return operations.map((operation, index) => ({
-          "Operations considered to have significant risk for incidents of forced or compulsory labor":
-            operation.childlabor,
-          "Type of Operation": operation.TypeofOperation,
-          "Countries or Geographic Areas": operation.geographicareas,
-        }));
-      }
-
-      function formatArray2(operations) {
-        return operations.map((operation, index) => ({
-          "Suppliers considered to have significant risk for incidents of forced or compulsory labor":
-            operation.compulsorylabor,
-          "Type of Supplier": operation.TypeofOperation,
-          "Countries or Geographic Areas": operation.geographicareas,
-        }));
-      }
 
       const {
-        operations_considered_to_have_significant_risk_for_incidents_of_forced_or_compulsary_labor,
-        suppliers_at_significant_risk_for_incidents_of_forced_or_compulsory_labor,
+        percentage_of_employees_within_government_bodies,
+        number_of_employee_per_employee_category,
+        ratio_of_basic_salary_of_women_to_men,
+        ratio_of_remuneration_of_women_to_men,
       } = data;
 
-      const operations_considered_to_have_significant_risk_for_incidents_of_forced_or_compulsary_labor_formatted =
-        formatArray1(
-          operations_considered_to_have_significant_risk_for_incidents_of_forced_or_compulsary_labor
+      const formatGovernanceBodiesData = (data) => {
+        return data.map((item) => ({
+          "Percentage of female within organisation's governance bodies":
+            item.percentage_of_female_with_org_governance,
+          "Percentage of male within organisation's governance bodies":
+            item.percentage_of_male_with_org_governance,
+          "Percentage of Non-binary within organisation's governance bodies":
+            item.percentage_of_non_binary_with_org_governance,
+          "Percentage of employee within age group of (under 30 years old) organisation's governance bodies":
+            item.percentage_of_employees_within_30_age_group,
+          "Percentage of employee within age group of (30-50 years old) organisation's governance bodies":
+            item.percentage_of_employees_within_30_to_50_age_group,
+          "Percentage of employee within age group of (over 50 years old) organisation's governance bodies":
+            item.percentage_of_employees_more_than_50_age_group,
+          "Percentage of minority group of organisation's governance bodies":
+            item.percentage_of_employees_in_minority_group,
+        }));
+      };
+
+      const formatEmployeeCategoryData = (data) => {
+        return data.map((item) => ({
+          Category: item.Category,
+          Male: item.percentage_of_male_with_org_governance,
+          Female: item.percentage_of_female_with_org_governance,
+          "Non-Binary": item.percentage_of_non_binary_with_org_governance,
+          "<30 years": item.percentage_of_employees_within_30_age_group,
+          "30-50 years": item.percentage_of_employees_within_30_to_50_age_group,
+          ">50 years": item.percentage_of_employees_more_than_50_age_group,
+          "Minority group": item.percentage_of_employees_in_minority_group,
+        }));
+      };
+
+        setPercentageOfEmployeesWithinGovernmentBodies(
+          formatGovernanceBodiesData(
+            percentage_of_employees_within_government_bodies
+          )
         );
-      setCompulsaryLabour1(
-        operations_considered_to_have_significant_risk_for_incidents_of_forced_or_compulsary_labor_formatted
-      );
-
-      const suppliers_at_significant_risk_for_incidents_of_forced_or_compulsory_labor_formatted =
-        formatArray2(
-          suppliers_at_significant_risk_for_incidents_of_forced_or_compulsory_labor
+        setNumberOfEmployeesPerEmployeeCategory(
+          formatEmployeeCategoryData(number_of_employee_per_employee_category)
         );
-      setCompulsaryLabour2(
-        suppliers_at_significant_risk_for_incidents_of_forced_or_compulsory_labor_formatted
-      );
+        setRatioOfBasicSalaryOfWomenToMen(
+          ratio_of_basic_salary_of_women_to_men
+        );
+        setRatioOfRemunerationOfWomenToMen(
+          ratio_of_remuneration_of_women_to_men
+        );
+    
 
-      const resultArray = Object.keys(data).map((key) => ({
-        key: key,
-        value: data[key],
-      }));
-
-      setAnalyseData(resultArray);
       LoaderClose();
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
@@ -104,8 +148,10 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
   };
 
   useEffect(() => {
-    fetchData(datasetparams);
-  }, [datasetparams]);
+    if (validateForm()) {
+      fetchData(datasetparams);
+    }
+  }, [datasetparams, activeScreen]);
 
   useEffect(() => {
     const fetchOrg = async () => {
@@ -117,7 +163,9 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
       }
     };
 
-    fetchOrg();
+    if (organisations.length === 0) {
+      fetchOrg();
+    }
   }, []);
 
   useEffect(() => {
@@ -139,24 +187,17 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
 
   useEffect(() => {
     const fetchLocation = async () => {
-      if (selectedCorp) {
-        try {
-          const response = await axiosInstance.get(
-            `/sustainapp/get_location_as_per_corporate/`,
-            {
-              params: { corporate: selectedCorp },
-            }
-          );
-          setSelectedLocation(response.data || []);
-          console.log(response.data, "location test");
-        } catch (e) {
-          console.error("Failed fetching locations:", e);
-          setSelectedLocation([]);
-        }
+      try {
+        const response = await axiosInstance.get(`/sustainapp/get_location/`);
+        setSelectedLocation(response.data || []);
+      } catch (e) {
+        console.error("Failed fetching locations:", e);
+        setSelectedLocation([]);
       }
     };
-
-    fetchLocation();
+    if (selectedLocation.length === 0) {
+      fetchLocation();
+    }
   }, [selectedCorp]);
 
   const handleReportTypeChange = (type) => {
@@ -169,16 +210,18 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
     setSelectedCorp("");
     setSelectedSetLocation("");
     setSelectedYear("");
-    setCompulsaryLabour1([]);
-    setCompulsaryLabour2([]);
+    setPercentageOfEmployeesWithinGovernmentBodies([]);
+    setNumberOfEmployeesPerEmployeeCategory([]);
+    setRatioOfBasicSalaryOfWomenToMen([]);
+    setRatioOfRemunerationOfWomenToMen([]);
 
-    setDatasetparams((prevParams) => ({
-      ...prevParams,
+    setDatasetparams({
       organisation: newOrg,
       corporate: "",
       location: "",
-      year: "",
-    }));
+      start: "",
+      end: "",
+    });
   };
 
   const handleOrgChange = (e) => {
@@ -191,19 +234,23 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
       ...prevParams,
       corporate: newCorp,
       location: "",
-      year: "",
+      start: prevParams.start,
+      end: prevParams.end,
     }));
   };
 
   const handleLocationChange = (e) => {
     const newLocation = e.target.value;
     setSelectedSetLocation(newLocation);
-    setSelectedYear("");
+    // setSelectedYear("");
 
     setDatasetparams((prevParams) => ({
       ...prevParams,
       location: newLocation,
-      year: "",
+      organisation: "",
+      corporate: "",
+      start: prevParams.start,
+      end: prevParams.end,
     }));
   };
 
@@ -213,18 +260,29 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
 
     setDatasetparams((prevParams) => ({
       ...prevParams,
-      year: newYear,
+      start: `${newYear}-01-01`,
+      end: `${newYear}-12-31`,
     }));
   };
 
   const handleNextScreen = () => {
+    if(selectedSetLocation === ""){
+      setNumberOfEmployeesPerEmployeeCategory([]);
+      setRatioOfBasicSalaryOfWomenToMen([]);
+      setRatioOfRemunerationOfWomenToMen([]);    }
+    
     setActiveScreen(2);
   };
 
   const handlePreviousScreen = () => {
+    setDatasetparams({
+      ...datasetparams,
+      organisation: selectedOrg,
+      corporate: selectedCorp,
+      location: "",
+    });
     setActiveScreen(1);
   };
-
   return (
     <div>
       {activeScreen === 1 && (
@@ -288,6 +346,11 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
                             </option>
                           ))}
                       </select>
+                      {errors.selectedOrg && (
+                        <div className="text-red-600 text-sm">
+                          {errors.selectedOrg}
+                        </div>
+                      )}
                     </div>
                   </div>
                   {(reportType === "Corporate" ||
@@ -337,6 +400,11 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
                           </option>
                         ))}
                       </select>
+                      {errors.selectedYear && (
+                        <div className="text-red-600 text-sm">
+                          {errors.selectedYear}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -363,7 +431,10 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
                     </div>
                   </div>
                   <div className="mb-4">
-                    <Table1 columns={column1} data={data1} />
+                    <Table1
+                      columns={column1}
+                      data={percentageOfEmployeesWithinGovernmentBodies}
+                    />
                   </div>
                 </div>
               </div>
@@ -402,7 +473,7 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
                     <div className="mt-2">
                       <select
                         className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        value={selectedsetLocation}
+                        value={selectedSetLocation}
                         onChange={handleLocationChange}
                       >
                         <option value="">--Select Location--- </option>
@@ -413,6 +484,11 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
                             </option>
                           ))}
                       </select>
+                      {errors.selectedLocation && (
+                        <div className="text-red-600 text-sm">
+                          {errors.selectedLocation}
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="mr-2">
@@ -436,6 +512,11 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
                           </option>
                         ))}
                       </select>
+                      {errors.selectedYear && (
+                        <div className="text-red-600 text-sm">
+                          {errors.selectedYear}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -463,7 +544,7 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
                   </div>
                 </div>
                 <div className="mb-4">
-                  <Table2 data={data2} />
+                  <Table2 data={numberOfEmployeesPerEmployeeCategory} />
                 </div>
               </div>
               <div className="mb-6">
@@ -481,7 +562,7 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
                     </div>
                   </div>
                   <div className="mb-4">
-                    <Table3 data={data3} />
+                    <Table3 data={ratioOfBasicSalaryOfWomenToMen} />
                   </div>
                 </div>
               </div>
@@ -501,7 +582,7 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
                   </div>
                 </div>
                 <div className="mb-4">
-                <Table3 data={data3} />
+                  <Table3 data={ratioOfRemunerationOfWomenToMen} />
                 </div>
               </div>
             </div>
