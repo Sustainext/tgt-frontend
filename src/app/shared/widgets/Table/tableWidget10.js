@@ -45,9 +45,19 @@ const CustomTableWidget10 = ({
     onChange(newData);
     setRowSpan(rowSpan + 1);
   };
-
   const handleRemoveRow = (rowIndex) => {
-    const newData = value.filter((_, index) => index !== rowIndex);
+    const newData = [...value];
+
+    if (newData.length > 1 && rowIndex < newData.length - 1) {
+      // Transfer data to the next row if not the last row
+      const fieldsToTransfer = ['male', 'male2', 'female', 'female2', 'nonBinary', 'nonBinary2', 'totalTrainingHours', 'totalTrainingHours2'];
+      fieldsToTransfer.forEach(field => {
+        newData[rowIndex + 1][field] = newData[rowIndex][field];
+      });
+    }
+
+    // Remove the row after transferring data
+    newData.splice(rowIndex, 1);
     onChange(newData);
     setRowSpan(rowSpan - 1);
   };
@@ -95,7 +105,7 @@ const CustomTableWidget10 = ({
                 )}
                 <td className="py-2 px-4 border-r border-b border-gray-300">
                   <InputField
-                    type={getInputType("category")}
+                    type="text"
                     required={required}
                     value={item.category}
                     onChange={(newValue) => updateField(rowIndex, "category", newValue)}
@@ -103,7 +113,7 @@ const CustomTableWidget10 = ({
                 </td>
                 <td className="py-2 px-4 border border-gray-300">
                   <InputField
-                    type={getInputType("numberperformancereview")}
+                    type="number"
                     required={required}
                     value={item.numberperformancereview}
                     onChange={(newValue) => updateField(rowIndex, "numberperformancereview", newValue)}
@@ -111,7 +121,7 @@ const CustomTableWidget10 = ({
                 </td>
                 <td className="py-2 px-4 border border-gray-300">
                   <InputField
-                    type={getInputType("numberdevelopmentreview")}
+                     type="number"
                     required={required}
                     value={item.numberdevelopmentreview}
                     onChange={(newValue) => updateField(rowIndex, "numberdevelopmentreview", newValue)}

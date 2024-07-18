@@ -100,10 +100,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year, month }) => {
     };
 
 
-    const handleRemoveCommittee = (index) => {
-        const newFormData = formData.filter((_, i) => i !== index);
-        setFormData(newFormData);
-    };
+
     const loadFormData = async () => {
         LoaderOpen();
         setFormData(initialFormData);
@@ -232,9 +229,7 @@ negative social impacts." className="mt-1.5 ml-2 text-[14px]" />
                         onChange={handleChange}
                         validator={validator}
                         widgets={widgets}
-                        formContext={{
-                            onRemove: handleRemoveCommittee
-                        }}
+
                     />
                 </div>
 

@@ -22,151 +22,68 @@ const client_id = 1;
 const user_id = 1;
 
 const schema = {
-  type: "array",
+  type: 'array',
   items: {
-    type: "object",
+    type: 'object',
     properties: {
-      category: { type: "integer", title: "Category" },
-      male: { type: "integer ", title: "Male" },
-      female: { type: "integer ", title: "Female" },
-      nonBinary: { type: "integer ", title: "Non-Binary" },
-      totalGender: {
-        type: "integer ",
-        title:
-          "Total number of individuals with the organisation's governance bodies",
-      },
+      category: { type: "string", title: "Category" },
+      male: { type: "integer", title: "Male" },
+      female: { type: "integer", title: "Female" },
+      nonBinary: { type: "integer", title: "Non-Binary" },
+      totalGender: { type: "integer", title: "Total number of individuals within the organisation's governance bodies" },
       lessThan30: { type: "integer", title: "< 30 years" },
       between30and50: { type: "integer", title: "30-50 years" },
       moreThan50: { type: "integer", title: "> 50 years" },
-      totalAge: {
-        type: "integer",
-        title:
-          "Total number of individuals with the organisation's governance bodies",
-      },
+      totalAge: { type: "integer", title: "Total number of individuals within the organisation's governance bodies" },
       minorityGroup: { type: "integer", title: "Minority group" },
-      vulnerableCommunities: {
-        type: "string",
-        title: "Vulnerable Communities",
-      },
+      vulnerableCommunities: { type: "integer", title: "Vulnerable Communities" },
     },
-  },
+    required: ["category", "male", "female", "nonBinary", "totalGender", "lessThan30", "between30and50", "moreThan50", "totalAge", "minorityGroup", "vulnerableCommunities"]
+  }
 };
+
+
 
 const uiSchema = {
   "ui:widget": "TableWidget",
-  "ui:options": {
+  'ui:options': {
     titles: [
-      {
-        title:
-          "Number of individuals within the organization’s governance bodies",
-        tooltip: "Please specify the category.",
-        colSpan: 1,
-      },
-      {
-        title: "Gender",
-        tooltip: "Please specify the gender of individuals.",
-        colSpan: 4,
-      },
-      {
-        title: "Age Group",
-        tooltip: "Please specify the age group of individuals.",
-        colSpan: 4,
-      },
-      {
-        title: "Diversity groups",
-        tooltip: "Please specify the diversity groups of individuals.",
-        colSpan: 2,
-      },
+      { title: "Number of employees per employee category", tooltip: "Please specify the category.", colSpan: 1 },
+      { title: "Gender", tooltip: "Please specify the gender of individuals.", colSpan: 4 },
+      { title: "Age Group", tooltip: "Please specify the age group of individuals.", colSpan: 4 },
+      { title: "Diversity groups", tooltip: "Please specify the diversity groups of individuals.", colSpan: 2 },
     ],
     subTitles: [
-      {
-        title: "",
-        tooltip: "Please specify the category.",
-        colSpan: 1,
-        type: "text",
-      },
-      {
-        title: "Male",
-        tooltip: "Please specify the number of male individuals.",
-        colSpan: 1,
-        type: "number",
-      },
-      {
-        title: "Female",
-        tooltip: "Please specify the number of female individuals.",
-        colSpan: 1,
-        type: "number",
-      },
-      {
-        title: "Non-Binary",
-        tooltip: "Please specify the number of non-binary individuals.",
-        colSpan: 1,
-        type: "number",
-      },
-      {
-        title:
-          "Total number of individuals with the organisation's governance bodies",
-        tooltip: "Please specify the total number of individuals.",
-        colSpan: 1,
-        type: "number",
-      },
-      {
-        title: "< 30 years",
-        tooltip: "Please specify the number of individuals under 30 years old.",
-        colSpan: 1,
-        type: "number",
-      },
-      {
-        title: "30-50 years",
-        tooltip:
-          "Please specify the number of individuals between 30 and 50 years old.",
-        colSpan: 1,
-        type: "number",
-      },
-      {
-        title: "> 50 years",
-        tooltip: "Please specify the number of individuals over 50 years old.",
-        colSpan: 1,
-        type: "number",
-      },
-      {
-        title:
-          "Total number of individuals with the organisation's governance bodies",
-        tooltip: "Please specify the total number of individuals.",
-        colSpan: 1,
-        type: "number",
-      },
-      {
-        title: "Minority group",
-        tooltip: "Please specify the number of minority group individuals.",
-        colSpan: 1,
-        type: "number",
-      },
-      {
-        title: "Vulnerable Communities",
-        tooltip:
-          "Please specify the number of vulnerable community individuals.",
-        colSpan: 1,
-        type: "text",
-      },
-    ],
-  },
+      { title: "", title2: "category",tooltip: "Please specify the category.", colSpan: 1, type: "text" },
+      { title: "Male", title2: "Male",tooltip: "Please specify the number of male individuals.", colSpan: 1, type: "number" },
+      { title: "Female", title2: "Female",tooltip: "Please specify the number of female individuals.", colSpan: 1, type: "number" },
+      { title: "Non-Binary",title2: "NonBinary", tooltip: "Please specify the number of non-binary individuals.", colSpan: 1, type: "number" },
+      { title: "Total number of employee",title2: "totalGender", tooltip: "Please specify the total number of individuals.", colSpan: 1, type: "number" },
+      { title: "< 30 years", title2: "LessThan30", tooltip: "Please specify the number of individuals under 30 years old.", colSpan: 1, type: "number" },
+      { title: "30-50 years", title2: "Between30and50", tooltip: "Please specify the number of individuals between 30 and 50 years old.", colSpan: 1, type: "number" },
+      { title: "> 50 years", title2: "MoreThan50", tooltip: "Please specify the number of individuals over 50 years old.", colSpan: 1, type: "number" },
+      { title: "Total number of employee", title2: "totalAge", tooltip: "Please specify the total number of individuals.", colSpan: 1, type: "number" },
+      { title: "Minority group", title2: "Minoritygroup",tooltip: "Please specify the number of minority group individuals.", colSpan: 1, type: "number" },
+      { title: "Vulnerable Communities", title2: "vulnerableCommunities", tooltip: "Please specify the number of vulnerable community individuals.", colSpan: 1, type: "number" },
+
+    ]
+  }
 };
 
 const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const initialFormData = [
     {
       category: "",
-      male: "",
-      female: "",
-      nonBinary: "",
-      totalGender: "",
-      lessThan30: "",
-      between30and50: "",
-      moreThan50: "",
-      totalAge: "",
-      minorityGroup: "",
-      vulnerableCommunities: "",
+      male: 0,
+      female: 0,
+      nonBinary: 0,
+      totalGender: 0,
+      lessThan30: 0,
+      between30and50: 0,
+      moreThan50: 0,
+      totalAge: 0,
+      minorityGroup: 0,
+      vulnerableCommunities: 0,
     },
   ];
   const [formData, setFormData] = useState(initialFormData);
@@ -330,8 +247,8 @@ age group and diversity group. "
         </div>
         <div className="mx-2">
           <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+            schema={schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

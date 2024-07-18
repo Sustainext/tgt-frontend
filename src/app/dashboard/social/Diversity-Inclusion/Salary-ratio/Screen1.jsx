@@ -26,7 +26,7 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      category: { type: "integer", title: "Category" },
+      category: { type: "string", title: "Category" },
       male: { type: "integer", title: "Male" },
       female: { type: "integer", title: "Female" },
       nonBinary: { type: "integer", title: "Non-Binary" },
@@ -64,24 +64,28 @@ const uiSchema = {
         tooltip: "Please specify the category.",
         colSpan: 1,
         type: "text",
+        title2 :"Category",
       },
       {
         title: "Male",
         tooltip: "Please specify the number of male individuals.",
         colSpan: 1,
         type: "number",
+        title2 :"Male",
       },
       {
         title: "Female",
         tooltip: "Please specify the number of female individuals.",
         colSpan: 1,
         type: "number",
+        title2 :"Female",
       },
       {
         title: "Non-Binary",
         tooltip: "Please specify the number of non-binary individuals.",
         colSpan: 1,
         type: "number",
+        title2 :"NonBinary",
       },
       {
         title: "",
@@ -89,6 +93,7 @@ const uiSchema = {
           "Please specify the number of vulnerable community individuals.",
         colSpan: 1,
         type: "text",
+        title2 :"locationandoperation",
       },
     ],
   },
@@ -98,9 +103,9 @@ const Screen1 = ({ location, year, month }) => {
   const initialFormData = [
     {
       category: "",
-      male: "",
-      female: "",
-      nonBinary: "",
+      male: 0,
+      female: 0,
+      nonBinary: 0,
       locationandoperation: "",
     },
   ];
@@ -271,8 +276,8 @@ age group and diversity group. "
         </div>
         <div className="mx-2">
           <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+            schema={schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

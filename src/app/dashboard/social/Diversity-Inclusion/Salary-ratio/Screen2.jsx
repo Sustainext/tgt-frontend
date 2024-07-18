@@ -27,7 +27,7 @@ const schema = {
     items: {
       type: 'object',
       properties: {
-        category: { type: "integer", title: "Category" },
+        category: { type: "string", title: "Category" },
         male: { type: "integer", title: "Male" },
         female: { type: "integer", title: "Female" },
         nonBinary: { type: "integer", title: "Non-Binary" },
@@ -46,24 +46,54 @@ const schema = {
         { title: "Significant Location of Operation", tooltip: "Please specify the diversity groups of individuals.", colSpan: 1 },
       ],
       subTitles: [
-        { title: "", tooltip: "Please specify the category.", colSpan: 1, type:"text" },
-        { title: "Male", tooltip: "Please specify the number of male individuals.", colSpan: 1, type:"number" },
-        { title: "Female", tooltip: "Please specify the number of female individuals.", colSpan: 1, type:"number" },
-        { title: "Non-Binary", tooltip: "Please specify the number of non-binary individuals.", colSpan: 1, type:"number" },
-         { title: "", tooltip: "Please specify the number of vulnerable community individuals.", colSpan: 1, type:"text" },
-
-      ]
+        {
+          title: "",
+          tooltip: "Please specify the category.",
+          colSpan: 1,
+          type: "text",
+          title2 :"Category",
+        },
+        {
+          title: "Male",
+          tooltip: "Please specify the number of male individuals.",
+          colSpan: 1,
+          type: "number",
+          title2 :"Male",
+        },
+        {
+          title: "Female",
+          tooltip: "Please specify the number of female individuals.",
+          colSpan: 1,
+          type: "number",
+          title2 :"Female",
+        },
+        {
+          title: "Non-Binary",
+          tooltip: "Please specify the number of non-binary individuals.",
+          colSpan: 1,
+          type: "number",
+          title2 :"NonBinary",
+        },
+        {
+          title: "",
+          tooltip:
+            "Please specify the number of vulnerable community individuals.",
+          colSpan: 1,
+          type: "text",
+          title2 :"locationandoperation",
+        },
+      ],
     }
   };
 
 const Screen2 = ({ location, year, month }) => {
     const initialFormData = [
         {
-     category: "",
-      male: "",
-      female: "",
-      nonBinary: "",
-      locationandoperation: "",
+          category: "",
+          male: 0,
+          female: 0,
+          nonBinary: 0,
+          locationandoperation: "",
         }
     ];
     const [formData, setFormData] = useState(initialFormData);
@@ -213,8 +243,8 @@ by significant locations of operation. " className="mt-1.5 ml-2 text-[14px]" />
                 </div>
                 <div className='mx-2'>
                     <Form
-                        schema={r_schema}
-                        uiSchema={r_ui_schema}
+                        schema={schema}
+                        uiSchema={uiSchema}
                         formData={formData}
                         onChange={handleChange}
                         validator={validator}
