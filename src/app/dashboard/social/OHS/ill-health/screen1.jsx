@@ -29,8 +29,9 @@ const schema = {
         properties: {
             employeeCategory: { type: "string", title: "employeeCategory" },
             fatalities: { type: "string", title: "fatalities" },
-            highconsequence: { type: "string", title: "highconsequence" },
             recordable: { type: "string", title: "recordable" },
+            highconsequence: { type: "string", title: "highconsequence" },
+
 
         },
     },
@@ -92,7 +93,7 @@ const Screen1 = ({ location, year, month }) => {
         console.log('CustomTableWidget value test', data);
         const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
         try {
-            const response = await axiosInstance.post(url, data, axiosConfig);
+            const response = await axiosInstance.post(url, data);
             if (response.status === 200) {
                 toast.success("Data added successfully", {
                     position: "top-right",
