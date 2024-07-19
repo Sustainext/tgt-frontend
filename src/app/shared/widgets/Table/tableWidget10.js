@@ -22,7 +22,11 @@ const CustomTableWidget10 = ({
 
   const updateField = (index, key, newValue) => {
     const newData = [...value];
-    newData[index][key] = newValue;
+    if (['male', 'male2', 'female', 'female2', 'nonBinary', 'nonBinary2', 'totalTrainingHours', 'totalTrainingHours2'].includes(key)) {
+      newData[0][key] = newValue; // Update first object for specified fields
+    } else {
+      newData[index][key] = newValue; // Update specific index for other fields
+    }
     handleInputChange(newData);
   };
 
@@ -39,13 +43,23 @@ const CustomTableWidget10 = ({
     };
     const newData = [...value, newRow];
     onChange(newData);
-    setRowSpan(rowSpan + 1); // Update rowSpan when a row is added
+    setRowSpan(rowSpan + 1);
   };
-
   const handleRemoveRow = (rowIndex) => {
-    const newData = value.filter((_, index) => index !== rowIndex);
+    const newData = [...value];
+
+    if (newData.length > 1 && rowIndex < newData.length - 1) {
+      // Transfer data to the next row if not the last row
+      const fieldsToTransfer = ['male', 'male2', 'female', 'female2', 'nonBinary', 'nonBinary2', 'totalTrainingHours', 'totalTrainingHours2'];
+      fieldsToTransfer.forEach(field => {
+        newData[rowIndex + 1][field] = newData[rowIndex][field];
+      });
+    }
+
+    // Remove the row after transferring data
+    newData.splice(rowIndex, 1);
     onChange(newData);
-    setRowSpan(rowSpan - 1); // Update rowSpan when a row is removed
+    setRowSpan(rowSpan - 1);
   };
 
   useEffect(() => {
@@ -56,9 +70,18 @@ const CustomTableWidget10 = ({
     return value.reduce((acc, item) => acc + (parseFloat(item[key]) || 0), 0);
   };
 
+  // Calculate totals when the component mounts and whenever relevant data changes
   const totalTrainingHours = calculateTotal("numberperformancereview") + calculateTotal("male") + calculateTotal("female") + calculateTotal("nonBinary");
   const totalTrainingHours2 = calculateTotal("numberdevelopmentreview") + calculateTotal("male2") + calculateTotal("female2") + calculateTotal("nonBinary2");
 
+  useEffect(() => {
+    const newData = [...value];
+    if (newData[0]) {
+      newData[0].totalTrainingHours = totalTrainingHours;
+      newData[0].totalTrainingHours2 = totalTrainingHours2;
+      handleInputChange(newData);
+    }
+  }, [totalTrainingHours, totalTrainingHours2]);
   return (
     <div className="container mx-auto p-4">
       <table className="min-w-full bg-white border border-gray-300">
@@ -82,7 +105,7 @@ const CustomTableWidget10 = ({
                 )}
                 <td className="py-2 px-4 border-r border-b border-gray-300">
                   <InputField
-                    type={getInputType("category")}
+                    type="text"
                     required={required}
                     value={item.category}
                     onChange={(newValue) => updateField(rowIndex, "category", newValue)}
@@ -90,7 +113,7 @@ const CustomTableWidget10 = ({
                 </td>
                 <td className="py-2 px-4 border border-gray-300">
                   <InputField
-                    type={getInputType("numberperformancereview")}
+                    type="number"
                     required={required}
                     value={item.numberperformancereview}
                     onChange={(newValue) => updateField(rowIndex, "numberperformancereview", newValue)}
@@ -98,7 +121,7 @@ const CustomTableWidget10 = ({
                 </td>
                 <td className="py-2 px-4 border border-gray-300">
                   <InputField
-                    type={getInputType("numberdevelopmentreview")}
+                     type="number"
                     required={required}
                     value={item.numberdevelopmentreview}
                     onChange={(newValue) => updateField(rowIndex, "numberdevelopmentreview", newValue)}

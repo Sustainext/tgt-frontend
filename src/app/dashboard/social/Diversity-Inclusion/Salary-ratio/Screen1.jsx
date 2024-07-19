@@ -26,7 +26,7 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      category: { type: "integer", title: "Category" },
+      category: { type: "string", title: "Category" },
       male: { type: "integer", title: "Male" },
       female: { type: "integer", title: "Female" },
       nonBinary: { type: "integer", title: "Non-Binary" },
@@ -64,24 +64,28 @@ const uiSchema = {
         tooltip: "Please specify the category.",
         colSpan: 1,
         type: "text",
+        title2 :"Category",
       },
       {
         title: "Male",
         tooltip: "Please specify the number of male individuals.",
         colSpan: 1,
         type: "number",
+        title2 :"Male",
       },
       {
         title: "Female",
         tooltip: "Please specify the number of female individuals.",
         colSpan: 1,
         type: "number",
+        title2 :"Female",
       },
       {
         title: "Non-Binary",
         tooltip: "Please specify the number of non-binary individuals.",
         colSpan: 1,
         type: "number",
+        title2 :"NonBinary",
       },
       {
         title: "",
@@ -89,6 +93,7 @@ const uiSchema = {
           "Please specify the number of vulnerable community individuals.",
         colSpan: 1,
         type: "text",
+        title2 :"locationandoperation",
       },
     ],
   },
@@ -98,9 +103,9 @@ const Screen1 = ({ location, year, month }) => {
   const initialFormData = [
     {
       category: "",
-      male: "",
-      female: "",
-      nonBinary: "",
+      male: 0,
+      female: 0,
+      nonBinary: 0,
       locationandoperation: "",
     },
   ];
@@ -187,7 +192,7 @@ const Screen1 = ({ location, year, month }) => {
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([{}]);
+    setFormData(initialFormData);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
@@ -196,7 +201,7 @@ const Screen1 = ({ location, year, month }) => {
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData([{}]);
+      setFormData(initialFormData);
     } finally {
       LoaderClose();
     }
@@ -227,7 +232,7 @@ const Screen1 = ({ location, year, month }) => {
   return (
     <>
       <div
-        className="mx-2 p-3 mb-6 rounded-md"
+        className="mx-2 p-3 mb-6 pb-6 rounded-md"
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
@@ -284,10 +289,10 @@ age group and diversity group. "
         </div>
 
         <div className="mb-6">
-          <button
-            type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end`}
+        <button type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year  ? "cursor-not-allowed" : ""}`}
             onClick={handleSubmit}
+            disabled={!location || !year }
           >
             Submit
           </button>

@@ -2,23 +2,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
-import CustomTableWidget10 from "../../../../shared/widgets/Table/tableWidget10"
-import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
+import CustomTableWidget10 from "../../../../shared/widgets/Table/tableWidget10";
+import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
-import axios from 'axios';
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
 
 // Simple Custom Table Widget
 const widgets = {
     TableWidget: CustomTableWidget10,
 };
-
-const view_path = 'gri-social-performance_and_career-414-2b-number_of_suppliers'
-const client_id = 1
-const user_id = 1
 
 const schema = {
   type: "object",
@@ -86,7 +79,7 @@ const uiSchema = {
   }
 };
 
-const Screen1 = ({ location, year, month }) => {
+const ScreenTemp = ({ location, year, month }) => {
     const initialFormData = {
       categories: [
         {
@@ -108,8 +101,6 @@ const Screen1 = ({ location, year, month }) => {
     };
 
     const [formData, setFormData] = useState(initialFormData);
-    const [r_schema, setRemoteSchema] = useState({})
-    const [r_ui_schema, setRemoteUiSchema] = useState({})
     const [loopen, setLoOpen] = useState(false);
     const toastShown = useRef(false);
 
@@ -127,20 +118,6 @@ const Screen1 = ({ location, year, month }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Form data:', formData);
-    };
-
-    const handleAddCategory = () => {
-      setFormData(prevData => ({
-        ...prevData,
-        categories: [
-          ...prevData.categories,
-          {
-            category: "",
-            numberperformancereview: "",
-            numberdevelopmentreview: "",
-          }
-        ]
-      }));
     };
 
     const handleRemoveCategory = (index) => {
@@ -191,7 +168,6 @@ negative social impacts." className="mt-1.5 ml-2 text-[14px]" />
                         widgets={widgets}
                         formContext={{
                             onRemove: handleRemoveCategory,
-                            onAdd: handleAddCategory
                         }}
                     />
                 </div>
@@ -221,4 +197,4 @@ negative social impacts." className="mt-1.5 ml-2 text-[14px]" />
     );
 };
 
-export default Screen1;
+export default ScreenTemp;
