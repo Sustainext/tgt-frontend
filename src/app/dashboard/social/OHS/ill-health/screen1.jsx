@@ -10,6 +10,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
+import axiosInstance from "@/app/utils/axiosMiddleware";
 
 // Simple Custom Table Widget
 const widgets = {
@@ -28,8 +29,9 @@ const schema = {
         properties: {
             employeeCategory: { type: "string", title: "employeeCategory" },
             fatalities: { type: "string", title: "fatalities" },
-            highconsequence: { type: "string", title: "highconsequence" },
             recordable: { type: "string", title: "recordable" },
+            highconsequence: { type: "string", title: "highconsequence" },
+
 
         },
     },
@@ -56,9 +58,8 @@ const Screen1 = ({ location, year, month }) => {
         {
             employeeCategory: "",
             fatalities: "",
-            highconsequence: "",
             recordable: "",
-
+            highconsequence: "",
         }
     ];
     const [formData, setFormData] = useState(initialFormData);
@@ -66,13 +67,6 @@ const Screen1 = ({ location, year, month }) => {
     const [r_ui_schema, setRemoteUiSchema] = useState({})
     const [loopen, setLoOpen] = useState(false);
     const toastShown = useRef(false);
-    const getAuthToken = () => {
-        if (typeof window !== 'undefined') {
-            return localStorage.getItem('token')?.replace(/"/g, "");
-        }
-        return '';
-    };
-    const token = getAuthToken();
 
     const LoaderOpen = () => {
         setLoOpen(true);
@@ -85,12 +79,6 @@ const Screen1 = ({ location, year, month }) => {
         setFormData(e.formData);
     };
 
-    // The below code on updateFormData
-    let axiosConfig = {
-        headers: {
-            Authorization: 'Bearer ' + token,
-        },
-    };
     const updateFormData = async () => {
         LoaderOpen();
         const data = {
@@ -105,7 +93,7 @@ const Screen1 = ({ location, year, month }) => {
         console.log('CustomTableWidget value test', data);
         const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
         try {
-            const response = await axios.post(url, data, axiosConfig);
+            const response = await axiosInstance.post(url, data);
             if (response.status === 200) {
                 toast.success("Data added successfully", {
                     position: "top-right",
@@ -157,7 +145,7 @@ const Screen1 = ({ location, year, month }) => {
         setFormData(initialFormData);
         const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
         try {
-            const response = await axios.get(url, axiosConfig);
+            const response = await axiosInstance.get(url);
             console.log('API called successfully:', response.data);
             setRemoteSchema(response.data.form[0].schema);
             setRemoteUiSchema(response.data.form[0].ui_schema);
@@ -203,9 +191,8 @@ const Screen1 = ({ location, year, month }) => {
         const newCommittee = {
             employeeCategory: "",
             fatalities: "",
-            highconsequence: "",
             recordable: "",
-
+            highconsequence: "",
         };
         setFormData([...formData, newCommittee]);
     };

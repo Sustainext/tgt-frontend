@@ -23,10 +23,7 @@ const CustomTableWidget8 = ({
     newData[index][key] = newValue;
     handleInputChange(newData);
   };
-  const getInputType = (key) => {
-    const field = options.subTitles.find(item => item.title.toLowerCase().replace(/ /g, '') === key.toLowerCase());
-    return field ? field.type : 'text';
-  };
+
   const handleAddRow = () => {
     const newRow = {
         category: "",
@@ -78,25 +75,30 @@ const CustomTableWidget8 = ({
           </tr>
         </thead>
         <tbody>
-          {value.map((item, rowIndex) => (
-            <tr key={`row-${rowIndex}`}>
-              {Object.keys(item).map((key, cellIndex) => (
-                <td key={`cell-${rowIndex}-${cellIndex}`} className="border border-gray-300 p-3">
-                  <InputField
-                  type={getInputType(key)}
-                    required={required}
-                    value={item[key]}
-                    onChange={(newValue) => updateField(rowIndex, key, newValue)}
-                  />
-                </td>
-              ))}
-              <td className="border border-gray-300 p-3">
-                <button onClick={() => formContext.onRemove(rowIndex)}>
-                  <MdOutlineDeleteOutline className='text-[23px] text-red-600' />
-                </button>
-              </td>
-            </tr>
-          ))}
+        {value.map((item, rowIndex) => (
+  <tr key={`row-${rowIndex}`}>
+    {Object.keys(item).map((key, cellIndex) => (
+      <td key={`cell-${rowIndex}-${cellIndex}`} className="border border-gray-300 p-3">
+        <InputField
+          type={
+            options.subTitles.find(
+              (sub) =>
+                sub.title2.toLowerCase() === key.toLowerCase()
+            )?.type || "text"
+          }
+          required={required}
+          value={item[key]}
+          onChange={(newValue) => updateField(rowIndex, key, newValue)}
+        />
+      </td>
+    ))}
+    <td className="border border-gray-300 p-3">
+      <button onClick={() => formContext.onRemove(rowIndex)}>
+        <MdOutlineDeleteOutline className='text-[23px] text-red-600' />
+      </button>
+    </td>
+  </tr>
+))}
         </tbody>
       </table>
       <div className="flex right-1 mx-2">
@@ -111,7 +113,6 @@ const CustomTableWidget8 = ({
     </div>
   );
 };
-
 const InputField = ({ type, required, value, onChange }) => {
   const [inputValue, setInputValue] = useState(value);
 
@@ -120,14 +121,17 @@ const InputField = ({ type, required, value, onChange }) => {
   }, [value]);
 
   const handleInputChange = (e) => {
-    const newValue = e.target.value;
+    let newValue = e.target.value;
+    if (type === 'number') {
+      newValue = parseInt(newValue, 10) || 0; // Convert to integer, default to 0 if NaN
+    }
     setInputValue(newValue);
-    onChange(newValue);
+    onChange(newValue); // Update with converted value
   };
 
   return (
     <input
-      type={type}
+      type={type === 'number' ? 'number' : 'text'}
       required={required}
       value={inputValue}
       onChange={handleInputChange}
@@ -137,5 +141,6 @@ const InputField = ({ type, required, value, onChange }) => {
     />
   );
 };
+
 
 export default CustomTableWidget8;

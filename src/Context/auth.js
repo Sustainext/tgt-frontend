@@ -50,6 +50,13 @@ export function AuthProvider({ children }) {
       setToken(receivedToken);
       saveToLocalStorage('token', receivedToken);
       saveToLocalStorage('refresh',refreshToken)
+
+      const isFirstLogin = userData.needs_password_reset;
+      // const isFirstLogin = 1;
+      if (isFirstLogin) {
+        router.push('/reset-password');
+        return;
+      }
       router.push('/dashboard');
   
       // Fetch user details
@@ -83,14 +90,15 @@ export function AuthProvider({ children }) {
           'Authorization': `Bearer ${token}`,
         },
       });
-      const isFirstLogin = response.data.has_login_first;
-      // const isFirstLogin = 1;
-      if (isFirstLogin) {
-        router.push('/reset-password');
-      }
+      // const isFirstLogin = response.data.has_login_first;
+      // // const isFirstLogin = 1;
+      // if (isFirstLogin) {
+      //   router.push('/reset-password');
+      // }
       return response.data;
     } catch (error) {
       console.error('Fetch user details error:', error);
+      router.replace('/');
       return null;
     }
   };
