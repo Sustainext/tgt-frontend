@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { MdChevronRight, MdChevronLeft } from "react-icons/md";
 import Section1 from "./Section1/page";

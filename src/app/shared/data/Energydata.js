@@ -2363,6 +2363,38 @@ If the organization does not follow the ILO code of practice, it can indicate wh
       </>,
     ],
   },
+  {
+    category: ["28"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+       GRI 405: Diversity and Equal Opportunity 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 405-1: Diversity of governance bodies and employees
+          </p>
+          <div className="overflow-y-auto custom-scrollbar">
+          <div className="w-[232px] text-neutral-500 text-[11px] font-normal font-['Manrope'] leading-[14px] mb-5">Examples of governance bodies that exist within an organization can be the board of directors, management committee, or a similar body for a non-corporate organization.<br/>An organization can identify any other indicators of diversity used in its own monitoring and recording that are relevant for reporting.</div>
+          
+          </div>
+          <div className="text-neutral-800 text-[13px] font-normal font-['Manrope'] leading-none mb-5">Background</div>
+          <div className="w-[232px] text-neutral-500 text-[11px] font-normal font-['Manrope'] leading-[14px] mb-5">This disclosure provides a quantitative measure of diversity within an organization and can be used in conjunction with sectoral or regional benchmarks. Comparisons between broad employee diversity and management team diversity offer information on equal opportunity. Information reported in this disclosure also helps in assessing which issues can be of particular relevance to certain segments of the governance bodies or employees.</div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
   //  sdg contet start//
   {
     category: ["sd1"],
