@@ -40,6 +40,19 @@ const nextConfig = {
     experimental: {
         missingSuspenseWithCSRBailout: false,
       },
+    async headers() {
+      return [
+        {
+          source: '/(.*)', // Match all routes
+          headers: [
+            {
+              key: 'X-Frame-Options',
+              value: 'DENY', // or 'SAMEORIGIN'
+            },
+          ],
+        },
+      ];
+    },
 };
 
 export default nextConfig;
