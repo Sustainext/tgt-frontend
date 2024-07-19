@@ -179,7 +179,7 @@ const Screen4 = ({location, year, month}) => {
         setFormData([{}]);
         const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
         try {
-            const response = await axiosInstance.get(url, axiosConfig);
+            const response = await axiosInstance.get(url);
             console.log('API called successfully:', response.data);
             setRemoteSchema(response.data.form[0].schema);
             setRemoteUiSchema(response.data.form[0].ui_schema);
