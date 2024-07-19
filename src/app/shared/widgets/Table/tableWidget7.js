@@ -157,7 +157,7 @@ const CustomTableWidget7 = ({
   );
 };
 
-const InputField = ({ type, required, value, onChange }) => {
+const InputField = ({ type, required, value, onChange,readOnly }) => {
   const [inputValue, setInputValue] = useState(value);
 
   useEffect(() => {
@@ -177,6 +177,7 @@ const InputField = ({ type, required, value, onChange }) => {
     <input
       type={type === 'number' ? 'number' : 'text'}
       required={required}
+      readOnly={readOnly}
       value={inputValue}
       onChange={handleInputChange}
       style={{ width: "100%" }}
