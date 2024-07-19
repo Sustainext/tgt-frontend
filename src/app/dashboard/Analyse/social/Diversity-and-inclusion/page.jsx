@@ -1,3 +1,4 @@
+'use client'
 import { useState, useEffect } from "react";
 import TableSidebar1 from "./TableSidebar1";
 import TableSidebar2 from "./TableSidebar2";
