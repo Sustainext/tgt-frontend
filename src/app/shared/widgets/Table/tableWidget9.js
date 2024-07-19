@@ -198,11 +198,7 @@ const CustomTableWidget9 = ({
                               sub.title2.toLowerCase() === key.toLowerCase()
                           )?.type || "text"
                         }
-                        required={
-                          required &&
-                          key !== "totalEmployees" &&
-                          key !== "totalTrainingHours"
-                        }
+
                         readOnly={
                           key === "totalEmployees" ||
                           key === "totalTrainingHours"
@@ -256,7 +252,6 @@ const InputField = ({ type, required, readOnly, value, onChange }) => {
   return (
     <input
       type={type}
-      required={required}
       readOnly={readOnly}
       value={inputValue}
       onChange={handleInputChange}

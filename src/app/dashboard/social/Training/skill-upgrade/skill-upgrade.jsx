@@ -225,7 +225,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year, month }) => {
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [selectedOrg, year, month]);
+  }, [selectedOrg, year, month,selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission

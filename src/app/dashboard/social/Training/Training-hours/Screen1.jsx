@@ -26,14 +26,14 @@ const schema = {
     type: 'object',
     properties: {
       category: { type: "string", title: "Category" },
-      male: { type: "string", title: "Male" },
-      female: { type: "string", title: "Female" },
-      others: { type: "string", title: "Others" },
-      male1: { type: "string", title: "Male" },
-      female1: { type: "string", title: "Female" },
-      others2: { type: "string", title: "Others" },
-      totalEmployees: { type: "string", title: "Total number of Employee" },
-      totalTrainingHours: { type: "string", title: "Total number of Employee" },
+      male: { type: "integer", title: "Male" },
+      female: { type: "integer", title: "Female" },
+      others: { type: "integer", title: "Others" },
+      male1: { type: "integer", title: "Male" },
+      female1: { type: "integer", title: "Female" },
+      others2: { type: "integer", title: "Others" },
+      totalEmployees: { type: "integer", title: "Total number of Employee" },
+      totalTrainingHours: { type: "integer", title: "Total number of Employee" },
     }
   }
 };
@@ -52,15 +52,15 @@ const uiSchema = {
       { title: "Gender", tooltip: "Please specify the number of employees.", colSpan: 4 },
     ],
     subTitles: [
-      { title: "", title2:"", tooltip: "Please specify the category.", colSpan: 1, type: "text" },
+      { title: "", title2:"Category", tooltip: "Please specify the category.", colSpan: 1, type: "text" },
       { title: "Male",title2:"Male", tooltip: "Please specify the number of male individuals.", colSpan: 1, type: "number" },
       { title: "Female",title2:"Female", tooltip: "Please specify the number of female individuals.", colSpan: 1, type: "number" },
       { title: "Others",title2:"Others", tooltip: "Please specify the number of others individuals.", colSpan: 1, type: "number" },
-      { title: "Total number of Employee",title2:"Total number of Employee", tooltip: "Please specify the total number of employees.", colSpan: 1, type: "number" },
+      { title: "Total number of Employee",title2:"totalEmployees", tooltip: "Please specify the total number of employees.", colSpan: 1, type: "number" },
       { title: "Male", title2:"Male1", tooltip: "Please specify the number of male individuals.", colSpan: 1, type: "number" },
       { title: "Female", title2:"Female1", tooltip: "Please specify the number of female individuals.", colSpan: 1, type: "number" },
       { title: "Others", title2:"Others1", tooltip: "Please specify the number of others individuals.", colSpan: 1, type: "number" },
-      { title: "Total number of Employee", title2:"Total number of Employee", tooltip: "Please specify the total number of employees.", colSpan: 1, type: "number" },
+      { title: "Total number of Employee", title2:"totalTrainingHours", tooltip: "Please specify the total number of employees.", colSpan: 1, type: "number" },
     ]
   }
 };
@@ -69,14 +69,14 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const initialFormData = [
     {
       category: "",
-      male: "",
-      female: "",
-      others: "",
-      totalEmployees: "",
-      male1: "",
-      female1: "",
-      others1: "",
-      totalTrainingHours: "",
+      male: 0,
+      female: 0,
+      others: 0,
+      totalEmployees: 0,
+      male1: 0,
+      female1: 0,
+      others1: 0,
+      totalTrainingHours: 0,
     }
   ];
 
@@ -219,7 +219,7 @@ const [fleg ,setfleg] = useState(null);
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [selectedOrg, year, month]);
+  }, [selectedOrg, year, month,selectedCorp]);
 
   // const handleSubmit = (e) => {
   //   e.preventDefault(); // Prevent the default form submission

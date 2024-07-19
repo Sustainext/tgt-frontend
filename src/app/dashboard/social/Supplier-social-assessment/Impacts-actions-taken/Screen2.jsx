@@ -162,7 +162,7 @@ const Screen2 = ({ selectedOrg, selectedCorp,location, year, month }) => {
             toastShown.current = true;
           }
         }
-      }, [selectedOrg, year]);
+      }, [selectedOrg, year,selectedCorp]);
 
       const handleSubmit = (e) => {
         e.preventDefault(); // Prevent the default form submission

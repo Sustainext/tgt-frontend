@@ -54,17 +54,17 @@ const uiSchema = {
       { title: "Diversity groups", tooltip: "Please specify the diversity groups of individuals.", colSpan: 2 },
     ],
     subTitles: [
-      { title: "", title2: "ca",tooltip: "Please specify the category.", colSpan: 1, type: "text" },
+      { title: "", title2: "category",tooltip: "Please specify the category.", colSpan: 1, type: "text" },
       { title: "Male", title2: "Male",tooltip: "Please specify the number of male individuals.", colSpan: 1, type: "number" },
       { title: "Female", title2: "Female",tooltip: "Please specify the number of female individuals.", colSpan: 1, type: "number" },
       { title: "Non-Binary",title2: "NonBinary", tooltip: "Please specify the number of non-binary individuals.", colSpan: 1, type: "number" },
-      { title: "Total number of employee",title2: "totnolem", tooltip: "Please specify the total number of individuals.", colSpan: 1, type: "number" },
-      { title: "< 30 years", title2: "Years3", tooltip: "Please specify the number of individuals under 30 years old.", colSpan: 1, type: "number" },
-      { title: "30-50 years", title2: "Years5", tooltip: "Please specify the number of individuals between 30 and 50 years old.", colSpan: 1, type: "number" },
-      { title: "> 50 years", title2: "Years6", tooltip: "Please specify the number of individuals over 50 years old.", colSpan: 1, type: "number" },
-      { title: "Total number of employee", title2: "totalem", tooltip: "Please specify the total number of individuals.", colSpan: 1, type: "number" },
+      { title: "Total number of employee",title2: "totalGender", tooltip: "Please specify the total number of individuals.", colSpan: 1, type: "number" },
+      { title: "< 30 years", title2: "LessThan30", tooltip: "Please specify the number of individuals under 30 years old.", colSpan: 1, type: "number" },
+      { title: "30-50 years", title2: "Between30and50", tooltip: "Please specify the number of individuals between 30 and 50 years old.", colSpan: 1, type: "number" },
+      { title: "> 50 years", title2: "MoreThan50", tooltip: "Please specify the number of individuals over 50 years old.", colSpan: 1, type: "number" },
+      { title: "Total number of employee", title2: "totalAge", tooltip: "Please specify the total number of individuals.", colSpan: 1, type: "number" },
       { title: "Minority group", title2: "Minoritygroup",tooltip: "Please specify the number of minority group individuals.", colSpan: 1, type: "number" },
-      { title: "Vulnerable Communities", title2: "Vulnerable", tooltip: "Please specify the number of vulnerable community individuals.", colSpan: 1, type: "number" },
+      { title: "Vulnerable Communities", title2: "vulnerableCommunities", tooltip: "Please specify the number of vulnerable community individuals.", colSpan: 1, type: "number" },
 
     ]
   }
@@ -74,16 +74,16 @@ const Screen1 = ({ location, year }) => {
   const initialFormData = [
     {
       category: "",
-      male: 0,
-      female: 0,
-      nonBinary: 0,
-      totalGender: 0,
-      lessThan30: 0,
-      between30and50: 0,
-      moreThan50: 0,
-      totalAge: 0,
-      minorityGroup: 0,
-      vulnerableCommunities: 0,
+      male: "",
+      female: "",
+      nonBinary: "",
+      totalGender: "",
+      lessThan30: "",
+      between30and50: "",
+      moreThan50: "",
+      totalAge: "",
+      minorityGroup: "",
+      vulnerableCommunities: "",
     }
   ];
   const [formData, setFormData] = useState(initialFormData);
@@ -233,8 +233,8 @@ within the organization’s governance bodies by gender, age group and diversity
         </div>
         <div className='mx-2'>
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

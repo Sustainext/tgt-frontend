@@ -74,16 +74,16 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const initialFormData = [
     {
       category: "",
-      male: 0,
-      female: 0,
-      nonBinary: 0,
-      totalGender: 0,
-      lessThan30: 0,
-      between30and50: 0,
-      moreThan50: 0,
-      totalAge: 0,
-      minorityGroup: 0,
-      vulnerableCommunities: 0,
+      male: "",
+      female: "",
+      nonBinary: "",
+      totalGender: "",
+      lessThan30: "",
+      between30and50: "",
+      moreThan50: "",
+      totalAge: "",
+      minorityGroup: "",
+      vulnerableCommunities: "",
     },
   ];
   const [formData, setFormData] = useState(initialFormData);
@@ -187,7 +187,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year]);
+  }, [selectedOrg, year,selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -247,8 +247,8 @@ age group and diversity group. "
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
