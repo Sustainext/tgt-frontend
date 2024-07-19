@@ -11,7 +11,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
-
+import axiosInstance from "@/app/utils/axiosMiddleware";
 const widgets = {
     inputWidget: inputWidget2,
     RadioWidget2:RadioWidget2,
@@ -126,7 +126,7 @@ const Screen3 = ({location, year, month}) => {
 
         const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
         try{
-        const response = await axios.post(url, data);
+        const response = await axiosInstance.post(url, data);
         if (response.status === 200) {
             toast.success("Data added successfully", {
               position: "top-right",
@@ -178,7 +178,7 @@ const Screen3 = ({location, year, month}) => {
         setFormData([{}]);
         const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
         try {
-            const response = await axios.get(url, axiosConfig);
+            const response = await axiosInstance.get(url, axiosConfig);
             console.log('API called successfully:', response.data);
             setRemoteSchema(response.data.form[0].schema);
             setRemoteUiSchema(response.data.form[0].ui_schema);
