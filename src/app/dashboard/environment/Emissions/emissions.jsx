@@ -7,7 +7,7 @@ import { EmissionsProvider } from "./EmissionsContext";
 const Emissions = ({ open }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
-  const [year, setYear] = useState("");
+  const [year, setYear] = useState(new Date().getFullYear());
   const [countryCode, setCountryCode] = useState('');
   const [locationError, setLocationError] = useState('');
   const [yearError,setYearError] = useState('');

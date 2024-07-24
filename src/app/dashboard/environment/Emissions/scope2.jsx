@@ -12,7 +12,6 @@ import axiosInstance, { post } from '@/app/utils/axiosMiddleware';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
-import CalculateSuccess from "./calculateSuccess";
 import { useEmissions } from "./EmissionsContext";
 import AssignToWidgetEmission from "@/app/shared/widgets/assignToWidgetEmission";
 
@@ -276,6 +275,16 @@ const Scope2 = forwardRef(({ location, year, month, successCallback, countryCode
         </div>
       </div>
 
+      <div className="flex justify-between right-1 mt-5">
+        <button
+          type="button"
+          className="text-[#007EEF] text-[12px] flex cursor-pointer my-auto"
+          onClick={handleAddNew}
+        >
+          <MdAdd className="text-lg" /> Add Row
+        </button>
+      </div>
+
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <Oval
@@ -288,13 +297,6 @@ const Scope2 = forwardRef(({ location, year, month, successCallback, countryCode
           />
         </div>
       )}
-
-      {/* {modalData && (
-        <CalculateSuccess
-          data={modalData}
-          onClose={handleCloseModal}
-        />
-      )} */}
 
       <ToastContainer />
     </>
