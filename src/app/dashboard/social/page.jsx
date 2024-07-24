@@ -1617,66 +1617,66 @@ const Social = () => {
                   </AccordionItem>
                   <AccordionItem title="Indigenous People">
 
-<li
-  className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-  onClick={() => activeSteps(25)}
->
-  {isStepCompleted(25) ? (
-    <>
-      <div className="before:bg-sky-800  font-bold">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="12"
-          height="12"
-          className="bi bi-circle-fill fill-sky-800  font-bold "
-          viewBox="0 0 16 16"
-        >
-          <circle cx="8" cy="8" r="8" />
-        </svg>
-      </div>
-    </>
-  ) : (
-    <div>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="12"
-        height="12"
-        className={`${activeStep === 25
-          ? "bi bi-circle-fill fill-sky-800  font-bold "
-          : " bi bi-circle-fill fill-gray-400"
-          } `}
-        viewBox="0 0 16 16"
-      >
-        <circle cx="8" cy="8" r="8" />
-      </svg>
-    </div>
-  )}
+                    <li
+                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+                      onClick={() => activeSteps(25)}
+                    >
+                      {isStepCompleted(25) ? (
+                        <>
+                          <div className="before:bg-sky-800  font-bold">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              className="bi bi-circle-fill fill-sky-800  font-bold "
+                              viewBox="0 0 16 16"
+                            >
+                              <circle cx="8" cy="8" r="8" />
+                            </svg>
+                          </div>
+                        </>
+                      ) : (
+                        <div>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            className={`${activeStep === 25
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
+                            viewBox="0 0 16 16"
+                          >
+                            <circle cx="8" cy="8" r="8" />
+                          </svg>
+                        </div>
+                      )}
 
-  <div className="flex items-center">
-    {isStepCompleted(25) ? (
-      <>
-        <p className="text-[12px] text-sky-800  font-bold">
-        Indigenous People
-        </p>
-        <img
-          src={doubleicon}
-          className="ml-[0.15rem] h-[17px]"
-          alt="Completed"
-        />
-      </>
-    ) : (
-      <p
-        className={`${activeStep === 25
-          ? "text-[12px] text-sky-800  font-bold w-[166px]"
-          : " text-[12px]  text-gray-600"
-          } `}
-      >
-        Indigenous People
-      </p>
-    )}
-  </div>
-</li>
-</AccordionItem>
+                      <div className="flex items-center">
+                        {isStepCompleted(25) ? (
+                          <>
+                            <p className="text-[12px] text-sky-800  font-bold">
+                              Indigenous People
+                            </p>
+                            <img
+                              src={doubleicon}
+                              className="ml-[0.15rem] h-[17px]"
+                              alt="Completed"
+                            />
+                          </>
+                        ) : (
+                          <p
+                            className={`${activeStep === 25
+                              ? "text-[12px] text-sky-800  font-bold w-[166px]"
+                              : " text-[12px]  text-gray-600"
+                              } `}
+                          >
+                            Indigenous People
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                  </AccordionItem>
                   <AccordionItem title="Supplier Social Assessment">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
@@ -1810,8 +1810,6 @@ const Social = () => {
             </section>
           </div>
           <div className="w-full ms-3">
-
-
             {activeStep === 1 && (
               <>
                 <div>
@@ -1952,7 +1950,7 @@ const Social = () => {
                 </div>
               </>
             )}
-               {activeStep === 21 && (
+            {activeStep === 21 && (
               <>
                 <div>
                   <CollectiveBargaining />
@@ -1980,7 +1978,7 @@ const Social = () => {
                 </div>
               </>
             )}
-               {activeStep === 25 && (
+            {activeStep === 25 && (
               <>
                 <div>
                   <IndigenousPeople />
@@ -2001,6 +1999,38 @@ const Social = () => {
                 </div>
               </>
             )}
+            <div>
+
+              <div className="w-full mb-5">
+                <div className="absolute right-5">
+                  <div className="flex  me-2  mb-5">
+                    <button
+                      className={`${activeStep === 1 ? "text-gray-500" : "text-blue-500"
+                        } px-3 py-1.5 rounded font-bold `}
+                      // onClick={handlePrevious}
+                      disabled={activeStep === 1}
+                    >
+                      &lt; Previous
+                    </button>
+
+                    {activeStep < 27 && (
+                      <button
+                        className={`${activeStep === 27
+                            ? "bg-gray-300"
+                            : "bg-blue-500 text-white"
+                          } px-3 py-1.5 rounded ml-2 font-bold w-[100px]`}
+                        // onClick={handleNext}
+                        disabled={activeStep === 27}
+                      >
+                        Next &gt;
+                      </button>
+                    )}
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
       </div>
