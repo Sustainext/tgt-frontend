@@ -2,22 +2,22 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
-import inputWidget2 from '../../../../shared/widgets/Input/inputWidget2';
+import CustomTableWidget11 from "../../../../shared/widgets/Table/tableWidget11"
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
-import RadioWidget2 from '../../../../shared/widgets/Input/radioWidget2';
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
-import { GlobalState } from '@/Context/page';
+import axiosInstance from '@/app/utils/axiosMiddleware'
+// Simple Custom Table Widget
 const widgets = {
-    inputWidget: inputWidget2,
-    RadioWidget2: RadioWidget2,
+    TableWidget: CustomTableWidget11,
+
 };
 
-const view_path = 'gri-social-ohs-403-9c-9d-work_related_hazards'
+const view_path = 'gri-social-incidents_of_discrimination-406-1a-incidents_of_discrimination'
 const client_id = 1
 const user_id = 1
 
@@ -26,88 +26,42 @@ const schema = {
     items: {
         type: 'object',
         properties: {
-            Q1: {
-                type: "string",
-                title: "Are there work-related hazards that pose a risk of high-consequence injury?",
-                enum: [
-                    'Yes',
-                    'No',
-
-                ],
-            },
-            Q2: {
-                type: "string",
-                title: "How these hazards have been determined?",
-
-            },
-            Q3: {
-                type: "string",
-                title: "Actions taken or underway to eliminate these hazards and minimize risk",
-
-            },
-
+            typeofincident: { type: "string", title: "Type of Incident", enum: ['Gender', 'Race', 'Colour', 'Religion','Political Opinion','National Extraction','Social Origin','Others'], },
+            totalnumberofincidentsofdiscrimination: { type: "string", title: "Total number of Incidents of discrimination" },
+            describetheincident: { type: "string", title: "Describe the incident" },
 
         },
     },
 };
 
 const uiSchema = {
-    items: {
-        'ui:order': ['Q1', 'Q2', 'Q3'],
-        Q1: {
-            "ui:title": "Are there work-related hazards that pose a risk of high-consequence injury?",
-            "ui:tooltip": "Indicate whether any workers have been excluded by the occupational health and safety management system",
-            "ui:tooltipdisplay": "block",
-            'ui:widget': 'RadioWidget2',
-            'ui:horizontal': true,
-            'ui:options': {
-                label: false
-            },
-        },
-        Q2: {
-            "ui:title": "How these hazards have been determined?",
-            "ui:tooltip": "Please specify the hazards that have caused high-consequence injuries. ",
-            "ui:tooltipdisplay": "block",
-            'ui:widget': 'inputWidget',
-            'ui:horizontal': true,
-            'ui:options': {
-                label: false
-            },
-        },
-        Q3: {
-            "ui:title": "Actions taken or underway to eliminate these hazards and minimize risk",
-            "ui:tooltip": "Please provide description of actions taken or underway to eliminate these hazards and minimize risks using the hierarchy of controls. Hierarchy of controls systematic approach to enhance occupational health and safety, eliminate hazards, and minimize risks. ",
-            "ui:tooltipdisplay": "block",
-            'ui:widget': 'inputWidget',
-            'ui:horizontal': true,
-            'ui:options': {
-                label: false
-            },
-        },
+    "ui:widget": "TableWidget",
+    'ui:options': {
+        titles:
+            [
+                { title: "Type of Incident",title2:"typeofincident", tooltip: "Provide a description of formal joint management-worker health and safety committees1",display:"none"},
+                { title: "Total number of Incidents of discrimination",title2:"totalnumberofincidentsofdiscrimination", tooltip: "Please specify the total number of incidents of discrimination on grounds  of race, color, sex, religion, political opinion, national extraction and social origin. ",display:"block",type: "number" },
+                { title: "Describe the incident",title2:"describetheincident", tooltip: "Please specify the meeting frequency",display:"none",type: "text"  },
 
-     'ui:options': {
-            orderable: false,
-            addable: false,
-            removable: false,
-            layout: 'horizontal',
-        },
+            ],
+
     },
 };
+const Screen1 = ({ location, year, month }) => {
+    const initialFormData = [
+        {
+            typeofincident: "Gender",
+            totalnumberofincidentsofdiscrimination: "",
+            describetheincident: "",
 
-const Screen3 = ({ location, year, month }) => {
-    const [formData, setFormData] = useState([{}]);
+        }
+    ];
+    const [formData, setFormData] = useState(initialFormData);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
     const [loopen, setLoOpen] = useState(false);
-    const { open } = GlobalState();
     const toastShown = useRef(false);
-    const getAuthToken = () => {
-        if (typeof window !== 'undefined') {
-            return localStorage.getItem('token')?.replace(/"/g, "");
-        }
-        return '';
-    };
-    const token = getAuthToken();
+
 
     const LoaderOpen = () => {
         setLoOpen(true);
@@ -116,15 +70,9 @@ const Screen3 = ({ location, year, month }) => {
         setLoOpen(false);
     };
 
+
     const handleChange = (e) => {
         setFormData(e.formData);
-    };
-
-    // The below code on updateFormData
-    let axiosConfig = {
-        headers: {
-            Authorization: 'Bearer ' + token,
-        },
     };
     const updateFormData = async () => {
         LoaderOpen();
@@ -140,7 +88,7 @@ const Screen3 = ({ location, year, month }) => {
 
         const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
         try {
-            const response = await axios.post(url, data, axiosConfig);
+            const response = await axiosInstance.post(url, data);
             if (response.status === 200) {
                 toast.success("Data added successfully", {
                     position: "top-right",
@@ -181,39 +129,28 @@ const Screen3 = ({ location, year, month }) => {
             });
             LoaderClose();
         }
-        // console.log('Response:', response.data);
+        //   console.log('Response:', response.data);
         // } catch (error) {
-        // console.error('Error:', error);
+        //   console.error('Error:', error);
         // }
     };
-
     const loadFormData = async () => {
         LoaderOpen();
-        setFormData([{}]);
+        setFormData(initialFormData);
         const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
         try {
-            const response = await axios.get(url, axiosConfig);
+            const response = await axiosInstance.get(url);
             console.log('API called successfully:', response.data);
             setRemoteSchema(response.data.form[0].schema);
             setRemoteUiSchema(response.data.form[0].ui_schema);
             setFormData(response.data.form_data[0].data);
         } catch (error) {
-            setFormData([{}]);
+            setFormData(initialFormData);
         } finally {
             LoaderClose();
         }
     };
-    //Reloading the forms
-    useEffect(() => {
-        //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-    }, [r_schema, r_ui_schema])
 
-    // console log the form data change
-    useEffect(() => {
-        console.log('Form data is changed -', formData)
-    }, [formData])
-
-    // fetch backend and replace initialized forms
     useEffect(() => {
         if (location && year && month) {
             loadFormData();
@@ -225,23 +162,29 @@ const Screen3 = ({ location, year, month }) => {
             }
         }
     }, [location, year, month])
-
     const handleSubmit = (e) => {
-        e.preventDefault(); // Prevent the default form submission
+        e.preventDefault();
         console.log('Form data:', formData);
-        updateFormData()
+        updateFormData();
+    };
+
+
+    const handleRemoveCommittee = (index) => {
+        const newFormData = formData.filter((_, i) => i !== index);
+        setFormData(newFormData);
     };
 
     return (
         <>
-            <div className="mx-2  p-3 mb-6 pb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+            <div className="mx-2 p-3 mb-6 rounded-md pb-6" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
                 <div className='mb-4 flex'>
                     <div className='w-[80%]'>
-                        <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold'>
-                            Work-related hazards that pose a risk of high-consequence injury
+                        <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold mb-2'>
+                        Incidents of discrimination
                             <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
-                                data-tooltip-content="This section documents the data corresponding
-                            to the work-related hazards that pose a risk of high-consequence injury.  " className="mt-1.5 ml-2 text-[14px]" />
+                                data-tooltip-content="This section documents the data corresponding to the
+total number of incidents of discrimination during the
+reporting period" className="mt-1.5 ml-2 text-[14px]" />
                             <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
                                 width: "290px", backgroundColor: "#000",
                                 color: "white",
@@ -252,22 +195,15 @@ const Screen3 = ({ location, year, month }) => {
                             }}>
                             </ReactTooltip>
                         </h2>
+
                     </div>
 
-                    <div className={`${open ? "w-[20%]" : "w-[20%]"}`}>
-                        <div className={`flex float-end`}>
-                            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 ">
-                                <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                                    GRI 403-9c
-                                </p>
-                            </div>
-                            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2">
-                                <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                                    GRI 403-9d
-                                </p>
-                            </div>
+                    <div className='w-[20%]'>
+                        <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
+                            <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
+                                GRI 406-1a
+                            </p>
                         </div>
-
                     </div>
                 </div>
                 <div className='mx-2'>
@@ -278,13 +214,19 @@ const Screen3 = ({ location, year, month }) => {
                         onChange={handleChange}
                         validator={validator}
                         widgets={widgets}
+                        formContext={{
+                            onRemove: handleRemoveCommittee
+                        }}
                     />
                 </div>
-                <div className='mb-6'>
+
+
+                  <div className='mb-6'>
                 <button type="button"
                         className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? 'cursor-not-allowed' : ''}`}
                         onClick={handleSubmit}
-                        disabled={!location || !year}>
+                        disabled={!location || !year}
+                      >
                         Submit
                     </button>
                 </div>
@@ -305,4 +247,4 @@ const Screen3 = ({ location, year, month }) => {
     );
 };
 
-export default Screen3;
+export default Screen1;

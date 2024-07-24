@@ -25,6 +25,8 @@ import DiversityBoard from "./Diversity-Inclusion/Diversity-Board/page"
 import Salaryratio from "./Diversity-Inclusion/Salary-ratio/page"
 import Traininghours from "./Training/Training-hours/page"
 import Performancedevelopment from "./Training/Performance-development/page"
+import IncidentsofDiscrimination from "./Non-Discrimination/Incidents-of-Discrimination/page"
+import CollectiveBargaining from "./Collective-Bargaining/page"
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -1027,7 +1029,7 @@ const Social = () => {
                         {isStepCompleted(15) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                            Training hours
+                              Training hours
                             </p>
                             <img
                               src={doubleicon}
@@ -1042,7 +1044,7 @@ const Social = () => {
                               : " text-[12px]  text-gray-600"
                               } `}
                           >
-                           Training hours
+                            Training hours
                           </p>
                         )}
                       </div>
@@ -1091,7 +1093,7 @@ const Social = () => {
                         {isStepCompleted(16) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                            Skill Upgrade
+                              Skill Upgrade
                             </p>
                             <img
                               src={doubleicon}
@@ -1150,8 +1152,8 @@ const Social = () => {
                         {isStepCompleted(17) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                            Performance & Career
-                            Development
+                              Performance & Career
+                              Development
                             </p>
                             <img
                               src={doubleicon}
@@ -1166,8 +1168,8 @@ const Social = () => {
                               : " text-[12px]  text-gray-600"
                               } `}
                           >
-                           Performance & Career
-                           Development
+                            Performance & Career
+                            Development
                           </p>
                         )}
                       </div>
@@ -1218,7 +1220,7 @@ const Social = () => {
                         {isStepCompleted(18) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                            Diversity of the Board
+                              Diversity of the Board
                             </p>
                             <img
                               src={doubleicon}
@@ -1233,7 +1235,7 @@ const Social = () => {
                               : " text-[12px]  text-gray-600"
                               } `}
                           >
-                           Diversity of the Board
+                            Diversity of the Board
                           </p>
                         )}
                       </div>
@@ -1278,7 +1280,7 @@ const Social = () => {
                         {isStepCompleted(19) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                            Salary Ratio
+                              Salary Ratio
                             </p>
                             <img
                               src={doubleicon}
@@ -1293,7 +1295,131 @@ const Social = () => {
                               : " text-[12px]  text-gray-600"
                               } `}
                           >
-                       Salary Ratio
+                            Salary Ratio
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                  </AccordionItem>
+                  <AccordionItem title="Non - Discrimination">
+
+                    <li
+                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+                      onClick={() => activeSteps(20)}
+                    >
+                      {isStepCompleted(20) ? (
+                        <>
+                          <div className="before:bg-sky-800  font-bold">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              className="bi bi-circle-fill fill-sky-800  font-bold "
+                              viewBox="0 0 16 16"
+                            >
+                              <circle cx="8" cy="8" r="8" />
+                            </svg>
+                          </div>
+                        </>
+                      ) : (
+                        <div>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            className={`${activeStep === 20
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
+                            viewBox="0 0 16 16"
+                          >
+                            <circle cx="8" cy="8" r="8" />
+                          </svg>
+                        </div>
+                      )}
+
+                      <div className="flex items-center">
+                        {isStepCompleted(20) ? (
+                          <>
+                            <p className="text-[12px] text-sky-800  font-bold">
+                              Incidents of Discrimination
+                            </p>
+                            <img
+                              src={doubleicon}
+                              className="ml-[0.15rem] h-[17px]"
+                              alt="Completed"
+                            />
+                          </>
+                        ) : (
+                          <p
+                            className={`${activeStep === 20
+                              ? "text-[12px] text-sky-800  font-bold w-[166px]"
+                              : " text-[12px]  text-gray-600"
+                              } `}
+                          >
+                            Incidents of Discrimination
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                  </AccordionItem>
+                  <AccordionItem title="Collective Bargaining">
+
+                    <li
+                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+                      onClick={() => activeSteps(21)}
+                    >
+                      {isStepCompleted(21) ? (
+                        <>
+                          <div className="before:bg-sky-800  font-bold">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              className="bi bi-circle-fill fill-sky-800  font-bold "
+                              viewBox="0 0 16 16"
+                            >
+                              <circle cx="8" cy="8" r="8" />
+                            </svg>
+                          </div>
+                        </>
+                      ) : (
+                        <div>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            className={`${activeStep === 21
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
+                            viewBox="0 0 16 16"
+                          >
+                            <circle cx="8" cy="8" r="8" />
+                          </svg>
+                        </div>
+                      )}
+
+                      <div className="flex items-center">
+                        {isStepCompleted(21) ? (
+                          <>
+                            <p className="text-[12px] text-sky-800  font-bold">
+                              Collective Bargaining
+                            </p>
+                            <img
+                              src={doubleicon}
+                              className="ml-[0.15rem] h-[17px]"
+                              alt="Completed"
+                            />
+                          </>
+                        ) : (
+                          <p
+                            className={`${activeStep === 21
+                              ? "text-[12px] text-sky-800  font-bold w-[166px]"
+                              : " text-[12px]  text-gray-600"
+                              } `}
+                          >
+                            Collective Bargaining
                           </p>
                         )}
                       </div>
@@ -1533,7 +1659,7 @@ const Social = () => {
                         {isStepCompleted(25) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                            Suppliers Screened
+                              Suppliers Screened
                             </p>
                             <img
                               src={doubleicon}
@@ -1548,7 +1674,7 @@ const Social = () => {
                               : " text-[12px]  text-gray-600"
                               } `}
                           >
-                           Suppliers Screened
+                            Suppliers Screened
                           </p>
                         )}
                       </div>
@@ -1592,7 +1718,7 @@ const Social = () => {
                         {isStepCompleted(26) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                            Impacts & Actions Taken
+                              Impacts & Actions Taken
                             </p>
                             <img
                               src={doubleicon}
@@ -1607,7 +1733,7 @@ const Social = () => {
                               : " text-[12px]  text-gray-600"
                               } `}
                           >
-                           Impacts & Actions Taken
+                            Impacts & Actions Taken
                           </p>
                         )}
                       </div>
@@ -1623,14 +1749,14 @@ const Social = () => {
           <div className="w-full ms-3">
 
 
-          {activeStep === 1 && (
+            {activeStep === 1 && (
               <>
                 <div>
                   <EmployeeHiresTurnover />
                 </div>
               </>
             )}
-          {activeStep === 2 && (
+            {activeStep === 2 && (
               <>
                 <div>
                   <Benefits />
@@ -1638,14 +1764,14 @@ const Social = () => {
               </>
             )}
 
-          {activeStep === 3 && (
+            {activeStep === 3 && (
               <>
                 <div>
                   <Parentalleave />
                 </div>
               </>
             )}
-                {/* {activeStep === 4 && (
+            {/* {activeStep === 4 && (
               <>
                 <div>
                   <Noticeperiod />
@@ -1728,14 +1854,14 @@ const Social = () => {
                 </div>
               </>
             )}
-              {activeStep === 16 && (
+            {activeStep === 16 && (
               <>
                 <div>
                   < Skillupgrade />
                 </div>
               </>
             )}
-              {activeStep === 17 && (
+            {activeStep === 17 && (
               <>
                 <div>
                   <Performancedevelopment />
@@ -1743,16 +1869,30 @@ const Social = () => {
               </>
             )}
 
-  {activeStep === 18 && (
+            {activeStep === 18 && (
               <>
                 <div>
-                  <DiversityBoard/>
+                  <DiversityBoard />
                 </div>
               </>
             )}   {activeStep === 19 && (
               <>
                 <div>
-                  <Salaryratio/>
+                  <Salaryratio />
+                </div>
+              </>
+            )}
+            {activeStep === 20 && (
+              <>
+                <div>
+                  <IncidentsofDiscrimination />
+                </div>
+              </>
+            )}
+               {activeStep === 21 && (
+              <>
+                <div>
+                  <CollectiveBargaining />
                 </div>
               </>
             )}
@@ -1770,21 +1910,21 @@ const Social = () => {
                 </div>
               </>
             )}
-                 {activeStep === 24 && (
+            {activeStep === 24 && (
               <>
                 <div>
                   <Securitypersonnel />
                 </div>
               </>
             )}
-      {activeStep === 25 && (
+            {activeStep === 25 && (
               <>
                 <div>
                   <Suppliersscreened />
                 </div>
               </>
             )}
-                {activeStep === 26 && (
+            {activeStep === 26 && (
               <>
                 <div>
                   <Impactsactionstaken />

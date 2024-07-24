@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
-import inputWidget2 from '../../../../shared/widgets/Input/inputWidget2';
+import CustomTableWidget from "../../../shared/widgets/Table/tableWidget"
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
@@ -10,12 +10,14 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
-
+import axiosInstance from '@/app/utils/axiosMiddleware'
+// Simple Custom Table Widget
 const widgets = {
-    inputWidget: inputWidget2,
+    TableWidget: CustomTableWidget,
+
 };
 
-const view_path = 'gri-social-benefits-401-2b-significant_loc'
+const view_path = 'gri-social-human_rights-409-1a-operations_forced_labor'
 const client_id = 1
 const user_id = 1
 
@@ -24,53 +26,44 @@ const schema = {
     items: {
         type: 'object',
         properties: {
+            significantrisk: { type: "string", title: "significantrisk" },
+            TypeofOperation: { type: "string", title: "TypeofOperation" },
+            geographicareas: { type: "string", title: "geographicareas" },
 
-            Q1: {
-                type: "string",
-                title: "How does the organization define Significant locations of operation for reporting purposes?",
-
-            },
 
         },
     },
 };
 
 const uiSchema = {
-    items: {
-        'ui:order': ['Q1'],
-        Q1: {
-            "ui:title": "How does the organization define Significant locations of operation for reporting purposes?",
-            "ui:tooltip": "Please clarify how the organization defines and identifies its significant locations for reporting purposes.",
-            "ui:tooltipdisplay": "block",
-            'ui:widget': 'inputWidget',
-            'ui:horizontal': true,
-            'ui:options': {
-                label: false
-            },
-        },
+    "ui:widget": "TableWidget",
+    'ui:options': {
+        titles:
+            [
+                { title: "Operations in which workers’ rights to exercise freedom of association or collective bargaining may be violated or at significant risk", tooltip: "Please specify the name and type of operations in which workers’ rights to exercise freedom of association or collective bargaining may be violated or at significant risk." },
+                { title: "Type of Operation", tooltip: "This section allows you to enter the type of operation in which workers’ rights to exercise freedom of association or collective bargaining may be violated or at significant risk. " },
+                { title: "Countries or Geographic Areas", tooltip: "This section allows you to enter the countries or geographic area with operations considered at risk." },
 
-     'ui:options': {
-            orderable: false,
-            addable: false,
-            removable: false,
-            layout: 'horizontal',
-        },
+            ],
+
     },
 };
+const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
+    const initialFormData = [
+        {
+            significantrisk: "",
+            TypeofOperation: "",
+            geographicareas: "",
 
-const Significantlocations = ({ location, year, month }) => {
-    const [formData, setFormData] = useState([{}]);
+        },
+    ];
+    const [formData, setFormData] = useState(initialFormData);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
     const [loopen, setLoOpen] = useState(false);
     const toastShown = useRef(false);
-    const getAuthToken = () => {
-        if (typeof window !== 'undefined') {
-            return localStorage.getItem('token')?.replace(/"/g, "");
-        }
-        return '';
-    };
-    const token = getAuthToken();
+
+
     const LoaderOpen = () => {
         setLoOpen(true);
     };
@@ -79,15 +72,10 @@ const Significantlocations = ({ location, year, month }) => {
     };
 
     const handleChange = (e) => {
-        setFormData(e.formData); // Ensure you are extracting formData from the event
+        setFormData(e.formData);
     };
 
-    // The below code on updateFormData
-    let axiosConfig = {
-        headers: {
-            Authorization: 'Bearer ' + token,
-        },
-    };
+
     const updateFormData = async () => {
         LoaderOpen();
         const data = {
@@ -95,14 +83,14 @@ const Significantlocations = ({ location, year, month }) => {
             user_id: user_id,
             path: view_path,
             form_data: formData,
-            location,
+            corporate: selectedCorp,
+            organisation: selectedOrg,
             year,
-            month
         }
 
         const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
         try {
-            const response = await axios.post(url, data, axiosConfig);
+            const response = await axiosInstance.post(url, data);
             if (response.status === 200) {
                 toast.success("Data added successfully", {
                     position: "top-right",
@@ -116,6 +104,7 @@ const Significantlocations = ({ location, year, month }) => {
                 });
                 LoaderClose();
                 loadFormData();
+
             } else {
                 toast.error("Oops, something went wrong", {
                     position: "top-right",
@@ -142,38 +131,33 @@ const Significantlocations = ({ location, year, month }) => {
             });
             LoaderClose();
         }
+        // console.log('Response:', response.data);
+        // } catch (error) {
+        // console.error('Error:', error);
+        // }
     };
 
     const loadFormData = async () => {
         LoaderOpen();
-        setFormData([{}]);
-        const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+        setFormData(initialFormData);
+        const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
+
         try {
-            const response = await axios.get(url, axiosConfig);
+            const response = await axiosInstance.get(url);
             console.log('API called successfully:', response.data);
             setRemoteSchema(response.data.form[0].schema);
             setRemoteUiSchema(response.data.form[0].ui_schema);
             setFormData(response.data.form_data[0].data);
+
         } catch (error) {
-            setFormData([{}]);
+            console.error('API call failed:', error);
+            setFormData(initialFormData);
         } finally {
             LoaderClose();
         }
-    };
-
-    //Reloading the forms -- White Beard
+    }
     useEffect(() => {
-        //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-    }, [r_schema, r_ui_schema])
-
-    // console log the form data change
-    useEffect(() => {
-        console.log('Form data is changed -', formData)
-    }, [formData])
-
-    // fetch backend and replace initialized forms
-    useEffect(() => {
-        if (location && year && month) {
+        if (selectedOrg && year && month) {
             loadFormData();
             toastShown.current = false; // Reset the flag when valid data is present
         } else {
@@ -182,25 +166,41 @@ const Significantlocations = ({ location, year, month }) => {
                 toastShown.current = true; // Set the flag to true after showing the toast
             }
         }
-    }, [location, year, month]); // Dependencies // React only triggers this effect if these dependencies change
-
-
+    }, [selectedOrg, year, selectedCorp]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Form data:', formData);
-        updateFormData()
+        updateFormData();
+    };
+
+    const handleAddCommittee = () => {
+        const newCommittee = {
+            significantrisk: "",
+            TypeofOperation: "",
+            geographicareas: "",
+
+
+        };
+        setFormData([...formData, newCommittee]);
+    };
+
+    const handleRemoveCommittee = (index) => {
+        const newFormData = formData.filter((_, i) => i !== index);
+        setFormData(newFormData);
     };
 
     return (
         <>
-            <div className="mx-2  p-3 mb-6 pb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+            <div className="mx-2 p-3 mb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
                 <div className='mb-4 flex'>
                     <div className='w-[80%]'>
-                        <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold'>
-                            Significant locations of operation
+                        <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold mb-2'>
+                            Operations where workers' freedom of association or collective bargaining is at risk
                             <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
-                                data-tooltip-content="This section documents data corresponding to the organization's definition of significant locations of operation" className="mt-1.5 ml-2 text-[14px]" />
+                                data-tooltip-content="This section documents the data corresponding to the operations
+ in which workers’ rights to exercise freedom of association
+or collective bargaining may be violated or at significant risk." className="mt-1.5 ml-2 text-[14px]" />
                             <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
                                 width: "290px", backgroundColor: "#000",
                                 color: "white",
@@ -211,49 +211,63 @@ const Significantlocations = ({ location, year, month }) => {
                             }}>
                             </ReactTooltip>
                         </h2>
+
                     </div>
 
                     <div className='w-[20%]'>
-                        <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
+                        <div className="bg-sky-100 h-[25px] w-[75px] rounded-md mx-2 float-end">
                             <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                                GRI 401-2b
+                                GRI 407-1a
                             </p>
                         </div>
+
                     </div>
                 </div>
                 <div className='mx-2'>
                     <Form
-                        schema={r_schema}
-                        uiSchema={r_ui_schema}
+                        schema={schema}
+                        uiSchema={uiSchema}
                         formData={formData}
                         onChange={handleChange}
                         validator={validator}
                         widgets={widgets}
+                        formContext={{
+                            onRemove: handleRemoveCommittee
+                        }}
                     />
                 </div>
-                  <div className='mb-6'>
-                <button type="button"
-                        className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? 'cursor-not-allowed' : ''}`}
+                <div className="flex right-1 mx-2">
+                    {selectedOrg && year && (
+                        <button type="button" className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5" onClick={handleAddCommittee}>
+                            Add category  <MdAdd className='text-lg' />
+                        </button>
+                    )}
+
+                </div>
+
+                <div className='mb-6'>
+                    <button type="button"
+                        className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year ? 'cursor-not-allowed' : ''}`}
                         onClick={handleSubmit}
-                        disabled={!location || !year}>
+                        disabled={!selectedOrg || !year}>
                         Submit
                     </button>
                 </div>
             </div>
-                {loopen && (
-                    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-                        <Oval
-                            height={50}
-                            width={50}
-                            color="#00BFFF"
-                            secondaryColor="#f3f3f3"
-                            strokeWidth={2}
-                            strokeWidthSecondary={2}
-                        />
-                    </div>
-                )}
-            </>
-            );
+            {loopen && (
+                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                    <Oval
+                        height={50}
+                        width={50}
+                        color="#00BFFF"
+                        secondaryColor="#f3f3f3"
+                        strokeWidth={2}
+                        strokeWidthSecondary={2}
+                    />
+                </div>
+            )}
+        </>
+    );
 };
 
-            export default Significantlocations;
+export default Screen1;

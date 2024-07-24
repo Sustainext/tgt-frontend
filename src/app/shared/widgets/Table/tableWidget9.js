@@ -198,7 +198,7 @@ const CustomTableWidget9 = ({
                               sub.title2.toLowerCase() === key.toLowerCase()
                           )?.type || "text"
                         }
-
+                        required={required}
                         readOnly={
                           key === "totalEmployees" ||
                           key === "totalTrainingHours"
@@ -234,7 +234,7 @@ const CustomTableWidget9 = ({
   );
 };
 
-const InputField = ({ type, required, readOnly, value, onChange }) => {
+const InputField = ({ type, required, value, onChange }) => {
   const [inputValue, setInputValue] = useState(value);
 
   useEffect(() => {
@@ -242,17 +242,18 @@ const InputField = ({ type, required, readOnly, value, onChange }) => {
   }, [value]);
 
   const handleInputChange = (e) => {
-    if (!readOnly) {
-      const newValue = e.target.value;
-      setInputValue(newValue);
-      onChange(newValue);
+    let newValue = e.target.value;
+    if (type === 'number') {
+      newValue = parseInt(newValue, 10) || 0; // Convert to integer, default to 0 if NaN
     }
+    setInputValue(newValue);
+    onChange(newValue); // Update with converted value
   };
 
   return (
     <input
-      type={type}
-      readOnly={readOnly}
+      type={type === 'number' ? 'number' : 'text'}
+      required={required}
       value={inputValue}
       onChange={handleInputChange}
       style={{ width: "100%" }}

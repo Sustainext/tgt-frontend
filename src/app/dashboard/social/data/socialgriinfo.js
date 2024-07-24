@@ -3454,4 +3454,42 @@ Average training hours peremployee category =Total number of training hours prov
       </>,
     ],
   },
+  {
+    category: ["57"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+    GRI 406: Non-discrimination 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 406-1: Incidents of discrimination and corrective actions taken
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <p className="text-[11px] text-black mb-2">
+          Compilation Requirements:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            2.1When compiling the information specified in Disclosure 406-1, the reporting
+organization shall include incidents of discrimination on grounds of race, color, sex, religion, political opinion, national extraction, or social origin as defined by the ILO, or other relevant forms of discrimination involving internal and/or external stakeholders across operations in the reporting period.
+In the context of this disclosure, an ‘incident’ refers to a legal action or complaint registered with the reporting organization or competent authorities through a formal process, or an instance of non-compliance identified by the organization through established procedures.  Established procedures to identify instances of non-compliance can include management system audits, formal monitoring programs, or grievance mechanisms.
+An incident is no longer subject to action if it is resolved, the case is completed, or no further action is required by the organization. For example, an incident for which no further action is required can include cases that were withdrawn or where the underlying circumstances that led to the incident no longer exist.
+            </p>
+
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12598&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
 ];

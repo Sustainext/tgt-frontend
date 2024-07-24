@@ -7,7 +7,7 @@ import AnalyseOHS from "./OHS/page";
 import AnalyseChildlabour from "./Child-Labour/page";
 import AnalyseCompulsorylabour from "./Compulsory-Labour/page";
 import AnalyseDiversityInclusion from "./Diversity-and-inclusion/page";
-
+import AnalyseSuppliersocialassessment from "./Supplier-social-assessment/page";
 const social = () => {
   const [activeTab, setActiveTab] = useState("Tab1");
   const [isBoxOpen, setIsBoxOpen] = useState(false);
@@ -30,7 +30,7 @@ const social = () => {
         {activeTab === "Tab3" && <AnalyseChildlabour />}
         {activeTab === "Tab4" && <AnalyseCompulsorylabour />}
         {activeTab === "Tab5" && <AnalyseDiversityInclusion /> }
-        {activeTab === "Tab6" && "Supplier Social assessment"}
+        {activeTab === "Tab6" && <AnalyseSuppliersocialassessment/>}
         {activeTab === "Tab7" && "Training"}
       </div>
     </div>

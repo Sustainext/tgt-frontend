@@ -2378,7 +2378,7 @@ If the organization does not follow the ILO code of practice, it can indicate wh
           </p>
           <div className="overflow-y-auto custom-scrollbar">
           <div className="w-[232px] text-neutral-500 text-[11px] font-normal font-['Manrope'] leading-[14px] mb-5">Examples of governance bodies that exist within an organization can be the board of directors, management committee, or a similar body for a non-corporate organization.<br/>An organization can identify any other indicators of diversity used in its own monitoring and recording that are relevant for reporting.</div>
-          
+
           </div>
           <div className="text-neutral-800 text-[13px] font-normal font-['Manrope'] leading-none mb-5">Background</div>
           <div className="w-[232px] text-neutral-500 text-[11px] font-normal font-['Manrope'] leading-[14px] mb-5">This disclosure provides a quantitative measure of diversity within an organization and can be used in conjunction with sectoral or regional benchmarks. Comparisons between broad employee diversity and management team diversity offer information on equal opportunity. Information reported in this disclosure also helps in assessing which issues can be of particular relevance to certain segments of the governance bodies or employees.</div>
@@ -2386,6 +2386,88 @@ If the organization does not follow the ILO code of practice, it can indicate wh
             <a
               className="text-[14px] text-[#2196F3]  flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["29"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+       GRI 414: Supplier Social Assessment 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 414-1: New suppliers that were screened using social criteria
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+            Guidance for Disclosure 414-1
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Social criteria can include the topics covered in other GRI Topic Standards(e.g., GRI 401:Employment 2016, GRI 403: Occupational Health and Safety 2018, GRI 408: Child Labor 2016,GRI 409: Forced or Compulsory Labor 2016)
+            </p>
+            <p className="text-[11px] text-black mb-2">
+            Background
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            This disclosure informs stakeholders about the percentage of suppliers selected or contracted subject to due diligence processes for social impacts. An organization is expected to initiate due diligence as early as possible in the development of a new relationship with a supplier. Impacts may be prevented or mitigated at the stage of structuring contracts or other agreements, as well as via ongoing collaboration with suppliers.
+            </p>
+
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12677&page=9"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["30"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+       GRI 414: Supplier Social Assessment 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 414-2 Negative social impacts in the supply chain and actions taken
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+            Guidance for Disclosure 414-2
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Negative impacts include those that are either caused or contributed to by an organization, or that are directly linked to its activities, products, or services by its relationship with a supplier. Assessments for social impacts can include the topics in the 400 series (Social topics). Assessments can be made against agreed performance expectations that are set and communicated to the suppliers prior to the assessment. Assessments can be informed by audits, contractual reviews, two-way engagement, and complaint and grievance mechanisms. Improvements can include changing an organization’s procurement practices, the adjustment of performance expectations, capacity building, training, and changes to processes.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+            Background
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            This disclosure informs stakeholders about an  organization’s awareness of significant actual and  potential negative social impacts in the supply chain
+            </p>
+
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12677&page=9"
               target="_blank"
             >
               Learn more <MdChevronRight className="text-lg mt-1" />

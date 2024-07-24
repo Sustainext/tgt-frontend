@@ -1,20 +1,22 @@
 'use client'
-import React, { useState, useEffect,useRef } from 'react';
+import React, { useState, useEffect,useRef  } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
+import inputWidget2 from '../../../../shared/widgets/Input/inputWidget2';
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
-import selectWidget2 from '../../../../shared/widgets/Select/selectWidget2';
+import RadioWidget from '../../../../shared/widgets/Input/radioWidget';
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
+import axiosInstance from '@/app/utils/axiosMiddleware'
 const widgets = {
-    selectWidget: selectWidget2,
+    inputWidget: inputWidget2,
 };
 
-const view_path = 'gri-social-human_rights-410-1b-training_requirements'
+const view_path = 'gri-social-incidents_of_discrimination-406-1b-status'
 const client_id = 1
 const user_id = 1
 
@@ -23,32 +25,73 @@ const schema = {
     items: {
         type: 'object',
         properties: {
-
             Q1: {
                 type: "string",
-                title: "Specify if training requirements apply to third-party organizations providing security personnel.",
-                enum: ['Yes', 'No'],
+                title: "Please provide details about the incident being reviewed by the organization",
+            },
+            Q2: {
+                type: "string",
+                title: "If Any remediation plans are being implemented",
 
             },
+            Q3: {
+                type: "string",
+                title: "Specify the results of the remediation plans implemented with results reviewed through routine internal management review processes",
+            },
 
-
+            Q4: {
+                type: "string",
+                title: "List which Incidents are no longer subject to action",
+            },
         },
     },
 };
 
 const uiSchema = {
     items: {
-        'ui:order': ['Q1'],
-
+        'ui:order': ['Q1', 'Q2', 'Q3', 'Q4'],
         Q1: {
-
-            "ui:widget": "selectWidget",
+            "ui:title": "1.Please provide details about the incident being reviewed by the organization",
+            "ui:tooltip": "How many number of incidents are reviewed by the organization. Please provide the details of the incidents reviewed. ",
+            "ui:tooltipdisplay": "block",
+            'ui:widget': 'inputWidget',
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false
+            },
+        },
+        Q2: {
+            "ui:title": "2.If Any remediation plans are being implemented",
+            "ui:tooltip": "Please describe the remediation plans that are being implemented (if any). ",
+            "ui:tooltipdisplay": "block",
+            'ui:widget': 'inputWidget',
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false
+            },
+        },
+        Q3: {
+            "ui:title": "3.Specify the results of the remediation plans implemented with results reviewed through routine internal management review processes",
+            "ui:tooltip": "Please specify the remediation plans that have been implemented, with results reviewed through routine internal management review processes.",
+            "ui:tooltipdisplay": "block",
+            'ui:widget': 'inputWidget',
+            'ui:horizontal': true,
+            'ui:options': {
+                label: false
+            },
+        },
+        Q4: {
+            "ui:title": "4.List which Incidents are no longer subject to action",
+            "ui:tooltip": "Provide the list of incidents that are no longer subject to action. ",
+            "ui:tooltipdisplay": "block",
+            'ui:widget': 'inputWidget',
+            'ui:horizontal': true,
             'ui:options': {
                 label: false
             },
         },
 
-     'ui:options': {
+        'ui:options': {
             orderable: false,
             addable: false,
             removable: false,
@@ -57,19 +100,13 @@ const uiSchema = {
     },
 };
 
-const Screen3 = ({location, year, month}) => {
+const Screen2 = ({location, year, month}) => {
     const [formData, setFormData] = useState([{}]);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
     const [loopen, setLoOpen] = useState(false);
     const toastShown = useRef(false);
-    const getAuthToken = () => {
-        if (typeof window !== 'undefined') {
-            return localStorage.getItem('token')?.replace(/"/g, "");
-        }
-        return '';
-    };
-    const token = getAuthToken();
+
 
     const LoaderOpen = () => {
         setLoOpen(true);
@@ -78,16 +115,12 @@ const Screen3 = ({location, year, month}) => {
         setLoOpen(false);
       };
 
+
     const handleChange = (e) => {
         setFormData(e.formData);
     };
 
-    // The below code on updateFormData
-    let axiosConfig = {
-        headers: {
-          Authorization: 'Bearer ' + token,
-        },
-      };
+
     const updateFormData = async () => {
         LoaderOpen();
         const data = {
@@ -102,7 +135,7 @@ const Screen3 = ({location, year, month}) => {
 
         const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
         try{
-        const response = await axios.post(url,data, axiosConfig);
+        const response = await axiosInstance.post(url,data);
         if (response.status === 200) {
             toast.success("Data added successfully", {
               position: "top-right",
@@ -153,29 +186,19 @@ const Screen3 = ({location, year, month}) => {
         LoaderOpen();
         setFormData([{}]);
         const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
-
         try {
-            const response = await axios.get(url, axiosConfig);
+            const response = await axiosInstance.get(url);
             console.log('API called successfully:', response.data);
             setRemoteSchema(response.data.form[0].schema);
             setRemoteUiSchema(response.data.form[0].ui_schema);
             setFormData(response.data.form_data[0].data);
         } catch (error) {
-            console.error('API call failed:', error);
             setFormData([{}]);
         } finally {
             LoaderClose();
         }
-    }
-    //Reloading the forms
-    useEffect(() => {
-        //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-    },[r_schema, r_ui_schema])
+    };
 
-    // console log the form data change
-    useEffect(() => {
-        console.log('Form data is changed -', formData)
-    },[formData])
 
     // fetch backend and replace initialized forms
     useEffect (()=> {
@@ -191,22 +214,22 @@ const Screen3 = ({location, year, month}) => {
     },[location, year, month])
 
     const handleSubmit = (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Prevent the default form submission
         console.log('Form data:', formData);
         updateFormData();
     };
 
     return (
         <>
+
                <div className="mx-2  p-3 mb-6 pb-6 rounded-md" style={{boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px"}}>
                 <div className='mb-4 flex'>
                     <div className='w-[80%]'>
-                    <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold mb-2'>
-                    Training requirements apply to third party organisations. 
+                    <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold'>
+                    Status of the incidents and actions taken
                         <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
-                            data-tooltip-content="This section documents the data corresponding to whether
-                            training requirements also apply to third-party organizations
-                            providing security personnel." className="mt-1.5 ml-2 text-[14px]" />
+                            data-tooltip-content="This section documents the data corresponding
+to the status of the incidents and actions taken." className="mt-1.5 ml-2 text-[14px]" />
                         <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
                             width: "290px", backgroundColor: "#000",
                             color: "white",
@@ -217,29 +240,12 @@ const Screen3 = ({location, year, month}) => {
                         }}>
                         </ReactTooltip>
                     </h2>
-                    <p className='text-sm mx-2  w-[560px] flex'>Specify if training requirements apply to third-party organizations providing security personnel.
-                            <MdInfoOutline data-tooltip-id={`tooltip-$e2`}
-                                data-tooltip-content="Please select 'Yes' if  the training requirements
-                                apply to third-party organizations providing security
-                                personnel and select 'No' if not." className="mt-1 ml-2 text-[14px]" />
-                            <ReactTooltip id={`tooltip-$e2`} place="top" effect="solid" style={{
-                                width: "290px", backgroundColor: "#000",
-                                color: "white",
-                                fontSize: "12px",
-                                boxShadow: 3,
-                                borderRadius: "8px",
-                                textAlign: 'left',
-                            }}>
-
-                            </ReactTooltip>
-                        </p>
-
                     </div>
 
                     <div   className='w-[20%]'>
             <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
               <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-              GRI 410-1b
+              GRI 406-1b
               </p>
             </div>
           </div>
@@ -254,7 +260,7 @@ const Screen3 = ({location, year, month}) => {
                         widgets={widgets}
                     />
                 </div>
-                <div className='mb-6'>
+               <div className='mb-6'>
                 <button type="button"
                         className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? 'cursor-not-allowed' : ''}`}
                         onClick={handleSubmit}
@@ -279,4 +285,4 @@ const Screen3 = ({location, year, month}) => {
     );
 };
 
-export default Screen3;
+export default Screen2;
