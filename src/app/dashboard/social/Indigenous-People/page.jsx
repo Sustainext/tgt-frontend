@@ -2,14 +2,15 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
-import {Socialdata} from "../../data/socialgriinfo"
+import {Socialdata} from "../data/socialgriinfo"
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
-import Socialheader from "../../socialheader"
-import Childlabourscreen from "./childlabour"
-import { ToastContainer, toast } from "react-toastify";
+import Socialheader from "../socialheader"
+import { ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const Childlabour = () => {
+import Screen1 from "./screen1"
+import Screen2 from "./screen2"
+const IndigenousPeople = () => {
     const [activeMonth, setActiveMonth] = useState(1);
     const [location, setLocation] = useState("");
     const [year, setYear] = useState("");
@@ -48,7 +49,7 @@ const Childlabour = () => {
                             <div className='flex'>
                                 <div>
                                     <p className="gradient-text text-[22px] font-bold pt-1">
-                                        Operations and suppliers at significant risk for incidents of child labor
+                                    Rights of Indigenous Peoples 2016
                                     </p>
                                 </div>
 
@@ -58,10 +59,8 @@ const Childlabour = () => {
                     </div>
                     <div className='w-full float-end '>
                         <div className="flex float-end border-l">
-                            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('12')}>GRI 408 - 1</button>
-                            <button className="text-[#fff] bg-orange-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('13')}>SDG 5</button>
-                            <button className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('14')}>SDG 8</button>
-                            <button className="text-[#fff] bg-blue-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('15')}>SDG 16</button>
+                            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('12')}>GRI 411 - 1</button>
+                            <button className="text-[#fff] bg-yellow-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('13')}>SDG 2</button>
                         </div>
                     </div>
                 </div>
@@ -70,7 +69,7 @@ const Childlabour = () => {
                 <div className="ml-3 flex">
                     <h6 className="text-[17px] mb-4 font-semibold flex">
 
-                        Operations and suppliers at significant risk for incidents of child labor
+                    Incidents of violations involving rights of indigenous peoples
                         {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[14px]" />
@@ -115,8 +114,9 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
             setLocation={setLocation}
             year={year}
             setYear={setYear} />
-            <Childlabourscreen location={location} year={year} month={activeMonth} />
+            <Screen1 location={location} year={year} month={activeMonth} />
+            <Screen2 location={location} year={year} month={activeMonth} />
         </>
     );
 };
-export default Childlabour;
+export default IndigenousPeople;

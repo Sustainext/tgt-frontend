@@ -27,6 +27,7 @@ import Traininghours from "./Training/Training-hours/page"
 import Performancedevelopment from "./Training/Performance-development/page"
 import IncidentsofDiscrimination from "./Non-Discrimination/Incidents-of-Discrimination/page"
 import CollectiveBargaining from "./Collective-Bargaining/page"
+import IndigenousPeople from "./Indigenous-People/page"
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -1614,12 +1615,74 @@ const Social = () => {
                       </div>
                     </li>
                   </AccordionItem>
+                  <AccordionItem title="Indigenous People">
+
+<li
+  className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+  onClick={() => activeSteps(25)}
+>
+  {isStepCompleted(25) ? (
+    <>
+      <div className="before:bg-sky-800  font-bold">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="12"
+          height="12"
+          className="bi bi-circle-fill fill-sky-800  font-bold "
+          viewBox="0 0 16 16"
+        >
+          <circle cx="8" cy="8" r="8" />
+        </svg>
+      </div>
+    </>
+  ) : (
+    <div>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="12"
+        height="12"
+        className={`${activeStep === 25
+          ? "bi bi-circle-fill fill-sky-800  font-bold "
+          : " bi bi-circle-fill fill-gray-400"
+          } `}
+        viewBox="0 0 16 16"
+      >
+        <circle cx="8" cy="8" r="8" />
+      </svg>
+    </div>
+  )}
+
+  <div className="flex items-center">
+    {isStepCompleted(25) ? (
+      <>
+        <p className="text-[12px] text-sky-800  font-bold">
+        Indigenous People
+        </p>
+        <img
+          src={doubleicon}
+          className="ml-[0.15rem] h-[17px]"
+          alt="Completed"
+        />
+      </>
+    ) : (
+      <p
+        className={`${activeStep === 25
+          ? "text-[12px] text-sky-800  font-bold w-[166px]"
+          : " text-[12px]  text-gray-600"
+          } `}
+      >
+        Indigenous People
+      </p>
+    )}
+  </div>
+</li>
+</AccordionItem>
                   <AccordionItem title="Supplier Social Assessment">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(25)}
+                      onClick={() => activeSteps(26)}
                     >
-                      {isStepCompleted(25) ? (
+                      {isStepCompleted(26) ? (
                         <>
                           <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
                             <svg
@@ -1635,70 +1698,11 @@ const Social = () => {
                         </>
                       ) : (
                         <div
-                          className={`${activeStep === 25
+                          className={`${activeStep === 26
                             ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
                             : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
                             } `}
                         >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 25
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(25) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Suppliers Screened
-                            </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 25
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Suppliers Screened
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(26)}
-                    >
-                      {isStepCompleted(26) ? (
-                        <>
-                          <div className="before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
@@ -1718,7 +1722,7 @@ const Social = () => {
                         {isStepCompleted(26) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Impacts & Actions Taken
+                              Suppliers Screened
                             </p>
                             <img
                               src={doubleicon}
@@ -1729,6 +1733,65 @@ const Social = () => {
                         ) : (
                           <p
                             className={`${activeStep === 26
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[12px]  text-gray-600"
+                              } `}
+                          >
+                            Suppliers Screened
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                    <li
+                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+                      onClick={() => activeSteps(27)}
+                    >
+                      {isStepCompleted(27) ? (
+                        <>
+                          <div className="before:bg-sky-800  font-bold">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              className="bi bi-circle-fill fill-sky-800  font-bold "
+                              viewBox="0 0 16 16"
+                            >
+                              <circle cx="8" cy="8" r="8" />
+                            </svg>
+                          </div>
+                        </>
+                      ) : (
+                        <div>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            className={`${activeStep === 27
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
+                            viewBox="0 0 16 16"
+                          >
+                            <circle cx="8" cy="8" r="8" />
+                          </svg>
+                        </div>
+                      )}
+
+                      <div className="flex items-center">
+                        {isStepCompleted(27) ? (
+                          <>
+                            <p className="text-[12px] text-sky-800  font-bold">
+                              Impacts & Actions Taken
+                            </p>
+                            <img
+                              src={doubleicon}
+                              className="ml-[0.15rem] h-[17px]"
+                              alt="Completed"
+                            />
+                          </>
+                        ) : (
+                          <p
+                            className={`${activeStep === 27
                               ? "text-[12px] text-sky-800  font-bold"
                               : " text-[12px]  text-gray-600"
                               } `}
@@ -1917,14 +1980,21 @@ const Social = () => {
                 </div>
               </>
             )}
-            {activeStep === 25 && (
+               {activeStep === 25 && (
+              <>
+                <div>
+                  <IndigenousPeople />
+                </div>
+              </>
+            )}
+            {activeStep === 26 && (
               <>
                 <div>
                   <Suppliersscreened />
                 </div>
               </>
             )}
-            {activeStep === 26 && (
+            {activeStep === 27 && (
               <>
                 <div>
                   <Impactsactionstaken />

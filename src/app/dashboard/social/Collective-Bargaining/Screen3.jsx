@@ -14,7 +14,7 @@ const widgets = {
     inputWidget: inputWidget2,
 };
 
-const view_path = 'gri-social-human_rights-409-1b-measures_taken'
+const view_path = 'gri-social-collective_bargaining-407-1b-measures'
 const client_id = 1
 const user_id = 1
 
@@ -51,7 +51,7 @@ const uiSchema = {
         },
 
 
-     'ui:options': {
+        'ui:options': {
             orderable: false,
             addable: false,
             removable: false,
@@ -159,19 +159,9 @@ const Screen3 = ({ selectedOrg, selectedCorp, year }) => {
             LoaderClose();
         }
     }
-    //Reloading the forms
-    useEffect(() => {
-        //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-    }, [r_schema, r_ui_schema])
 
-    // console log the form data change
     useEffect(() => {
-        console.log('Form data is changed -', formData)
-    }, [formData])
-
-    // fetch backend and replace initialized forms
-    useEffect(() => {
-        if (location && year && month) {
+        if (location && year) {
             loadFormData();
             toastShown.current = false; // Reset the flag when valid data is present
         } else {
@@ -192,16 +182,16 @@ const Screen3 = ({ selectedOrg, selectedCorp, year }) => {
         <>
             <div className="mx-2  p-3 mb-6 pb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
                 <div className='mb-4 flex'>
-                    <div className='w-[80%]'>
+                    <div className='w-[80%] relative'>
                         <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold'>
-                        Measures taken by the organization
-                            <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
+                            Measures taken by the organization
+                            <MdInfoOutline data-tooltip-id={`tooltip-$e6`}
                                 data-tooltip-content="This section documents the data corresponding to the
 measures taken by the organization
 in the reporting period intended to support
 rights to exercise freedom of association
 and collective bargaining." className="mt-1.5 ml-2 text-[14px]" />
-                            <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
+                            <ReactTooltip id={`tooltip-$e6`} place="top" effect="solid" style={{
                                 width: "290px", backgroundColor: "#000",
                                 color: "white",
                                 fontSize: "12px",
@@ -223,8 +213,8 @@ and collective bargaining." className="mt-1.5 ml-2 text-[14px]" />
                 </div>
                 <div className='mx-2'>
                     <Form
-                        schema={schema}
-                        uiSchema={uiSchema}
+                        schema={r_schema}
+                        uiSchema={r_ui_schema}
                         formData={formData}
                         onChange={handleChange}
                         validator={validator}
