@@ -1,3 +1,4 @@
+'use client';
 import React, { useState, useEffect } from "react";
 import TableSidebar from "./TableSidebar";
 import DynamicTable2 from "./customTable2";
