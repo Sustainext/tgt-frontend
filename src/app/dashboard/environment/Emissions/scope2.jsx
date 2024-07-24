@@ -1,5 +1,5 @@
-"use client";
-import React, { useState, useEffect } from "react";
+'use client';
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import { MdAdd } from "react-icons/md";
@@ -26,8 +26,20 @@ const widgets = {
 const view_path = "gri-environment-emissions-301-a-scope-2";
 const client_id = 1;
 const user_id = 1;
-const schema = { "type": "array", "items": { "type": "object", "properties": { "Remove": { "type": "string" }, "AssignTo": { "type": "string", "title": "Assign To" }, "Emission": { "type": "string", "title": "Emission" }, "FileUpload": { "type": "string", "format": "data-url" } } } }
-const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
+const schema = {
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "Remove": { "type": "string" },
+      "AssignTo": { "type": "string", "title": "Assign To" },
+      "Emission": { "type": "string", "title": "Emission" },
+      "FileUpload": { "type": "string", "format": "data-url" }
+    }
+  }
+};
+
+const Scope2 = forwardRef(({ location, year, month, successCallback, countryCode }, ref) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -38,20 +50,15 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
   const [localClimatiq, setlocalClimatiq] = useState(0);
   const [activityCache, setActivityCache] = useState({});
 
-  useEffect(() => {
-    setScope2Data(formData)
-  }, [formData])
+  useImperativeHandle(ref, () => ({
+    updateFormData() {
+      return updateFormData(); // Return the promise
+    }
+  }));
 
-  // useEffect(() => {
-  //   console.log('Got the climatiqData in header --- ');
-  //   if (climatiqData?.result?.[0]) {
-  //     let sum = 0;
-  //     for (const item of climatiqData.result) {
-  //       sum += item.co2e;
-  //     }
-  //     setlocalClimatiq(sum);
-  //   }
-  // }, [climatiqData]);
+  useEffect(() => {
+    setScope2Data(formData);
+  }, [formData]);
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -83,7 +90,6 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
       return updatedFormData;
     });
   };
-
 
   const handleFileWidgetChange = (index, name, url, type, size, uploadDateTime) => {
     setFormData(prevFormData => {
@@ -129,20 +135,20 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
         ...data,
       });
 
-      successCallback();
-      if (response.status === 200) {
-        setModalData({
-          location,
-          month,
-          message: "Emission has been created",
-          monthly_emissions: localClimatiq
-        });
-        loadFormData();
-      } else {
-        setModalData({
-          message: "Oops, something went wrong"
-        });
-      }
+      // successCallback();
+      // if (response.status === 200) {
+      //   setModalData({
+      //     location,
+      //     month,
+      //     message: "Emission has been created",
+      //     monthly_emissions: localClimatiq
+      //   });
+      //   loadFormData();
+      // } else {
+      //   setModalData({
+      //     message: "Oops, something went wrong"
+      //   });
+      // }
     } catch (error) {
       setModalData({
         message: "Oops, something went wrong"
@@ -233,7 +239,7 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
               FileUploadWidget: (props) => (
                 <CustomFileUploadWidget
                   {...props}
-                  scopes="scope1"
+                  scopes="scope2"
                   setFormData={updateFormDatanew}
                   onChange={({ name, url, type, size, uploadDateTime }) =>
                     handleFileWidgetChange(
@@ -270,24 +276,6 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
         </div>
       </div>
 
-      <div className="flex justify-between right-1 mt-5">
-        <button
-          type="button"
-          className="text-[#007EEF] text-[12px] flex cursor-pointer my-auto"
-          onClick={handleAddNew}
-        >
-          <MdAdd className="text-lg" /> Add Row
-        </button>
-
-        <button
-          type="button"
-          className="h-8 text-center py-1 text-sm w-[100px] bg-[rgb(2,132,199)] text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline"
-          onClick={handleSubmit}
-        >
-          Submit
-        </button>
-      </div>
-
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <Oval
@@ -301,14 +289,16 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
         </div>
       )}
 
-      {modalData && (
+      {/* {modalData && (
         <CalculateSuccess
           data={modalData}
           onClose={handleCloseModal}
         />
-      )}
+      )} */}
+
+      <ToastContainer />
     </>
   );
-};
+});
 
 export default Scope2;
