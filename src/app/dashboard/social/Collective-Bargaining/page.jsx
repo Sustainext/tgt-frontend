@@ -60,13 +60,13 @@ const CollectiveBargaining = () => {
             <div className="flex float-end border-l">
               <button
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("54")}
+                onClick={() => toggleDrawer("58")}
               >
                 GRI 407 - 1
               </button>
               <button
                 className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("47")}
+                onClick={() => toggleDrawer("22")}
               >
                 SDG 8
               </button>

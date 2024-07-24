@@ -69,7 +69,7 @@ const AccordionItem = ({
   );
 };
 
-const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setLocationError }) => {
+const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setLocationError,locationname }) => {
 
   const { setClimatiqData } = useEmissions();
 
@@ -120,7 +120,7 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
     console.log('Scope1 Ref:', scope1Ref.current);
     console.log('Scope2 Ref:', scope2Ref.current);
     console.log('Scope3 Ref:', scope3Ref.current);
-  
+
     // if (scope1Ref.current) {
     //   scope1Ref.current.updateFormData();
     // }
@@ -131,7 +131,7 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
     //   scope3Ref.current.updateFormData();
     // }
   };
-  
+
 
   return (
     <>
@@ -142,7 +142,7 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
           icons={<IoHomeOutline />}
           onAccordionClick={handleAccordionClick}
         >
-          <Scope1 ref={scope1Ref} location={location} year={year} month={month} countryCode={countryCode} successCallback={getLatestComputedData} />
+          <Scope1 ref={scope1Ref} location={location} year={year} month={month} locationname={locationname} countryCode={countryCode} successCallback={getLatestComputedData} />
         </AccordionItem>
 
         <AccordionItem
@@ -151,7 +151,7 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
           icons={<IoHomeOutline />}
           onAccordionClick={handleAccordionClick}
         >
-          <Scope2 ref={scope2Ref} location={location} year={year} month={month} countryCode={countryCode} successCallback={getLatestComputedData}/>
+          <Scope2 ref={scope2Ref} location={location} year={year} month={month} locationname={locationname} countryCode={countryCode} successCallback={getLatestComputedData}/>
         </AccordionItem>
 
         <AccordionItem
@@ -160,7 +160,7 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
           icons={<IoHomeOutline />}
           onAccordionClick={handleAccordionClick}
         >
-          <Scope3 ref={scope3Ref} location={location} year={year} month={month} countryCode={countryCode} successCallback={getLatestComputedData}/>
+          <Scope3 ref={scope3Ref} location={location} year={year} month={month} locationname={locationname} countryCode={countryCode} successCallback={getLatestComputedData}/>
         </AccordionItem>
       </div>
       <div className="flex justify-end items-center mt-[24] me-5">

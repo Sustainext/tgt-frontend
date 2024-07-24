@@ -26,7 +26,7 @@ const view_path = "gri-environment-emissions-301-a-scope-1";
 const client_id = 1;
 const user_id = 1;
 
-const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
+const Scope1 = ({ location, year, month, successCallback, countryCode,locationname }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -117,6 +117,7 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
       successCallback();
       if (response.status === 200) {
         setModalData({
+          locationname,
           location,
           month,
           message: "Emission has been created",

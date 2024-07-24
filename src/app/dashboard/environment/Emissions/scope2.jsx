@@ -27,7 +27,7 @@ const view_path = "gri-environment-emissions-301-a-scope-2";
 const client_id = 1;
 const user_id = 1;
 const schema = { "type": "array", "items": { "type": "object", "properties": { "Remove": { "type": "string" }, "AssignTo": { "type": "string", "title": "Assign To" }, "Emission": { "type": "string", "title": "Emission" }, "FileUpload": { "type": "string", "format": "data-url" } } } }
-const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
+const Scope2 = ({ location, year, month, successCallback, countryCode,locationname }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -132,6 +132,7 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
       successCallback();
       if (response.status === 200) {
         setModalData({
+          locationname,
           location,
           month,
           message: "Emission has been created",

@@ -38,6 +38,7 @@ const EmissionsHeader = ({
   setLocationError,
   yearError,
   setYearError,
+  setLocationname
 }) => {
   const [formState, setFormState] = useState({
     location: location,
@@ -71,7 +72,7 @@ const EmissionsHeader = ({
       for (const item of climatiqData.result) {
         sum += item.co2e;
       }
-      setlocalClimatiq((sum / 1000));
+      setlocalClimatiq((sum / 1000).toFixed(3));
     } else {
       setlocalClimatiq(0);
     }
@@ -96,6 +97,7 @@ const EmissionsHeader = ({
       if (selectedLocation) {
         setCountryCodeState(selectedLocation.country);
         setCountryCode(selectedLocation.country);
+        setLocationname(selectedLocation.name);
       }
       setLocation(Number(value));
     } else if (name === "year") {

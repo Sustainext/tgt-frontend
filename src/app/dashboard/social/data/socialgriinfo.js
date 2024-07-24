@@ -3492,4 +3492,124 @@ An incident is no longer subject to action if it is resolved, the case is comple
       </>,
     ],
   },
+  {
+    category: ["58"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+   GRI 407: Freedom of Association and Collective Bargaining 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 407-1: Operations and suppliers in which the right to freedom of association and collective bargaining may be at risk
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <p className="text-[11px] text-black mb-2">
+          Compilation Requirements:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            The process for identifying operations and suppliers, as specified in Disclosure 407-1, can reflect the reporting organization’s approach to risk assessment on this issue. It can also draw from recognized international data sources, such as the various outcomes of the ILO Supervisory bodies and the recommendations of the ILO Committee of Freedom of Association (see reference [4] in the Bibliography). When reporting the measures taken, the organization can refer to the ILO ‘Tripartite Declaration of Principles Concerning Multinational Enterprises and Social Policy’ and Organization for Economic Co-operation and Development (OECD) OECD Guidelines for Multinational  Enterprises for further guidance.
+            </p>
+
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12610"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["59"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+GRI 411: Rights of Indigenous Peoples 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 411-1 Incidents of violations involving rights of indigenous peoples
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <p className="text-[11px] text-black mb-2">
+          Guidance for Disclosure 411-1
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            In the context of this disclosure, an ‘incident’ refers to a legal action or complaint registered with the reporting organization or competent authorities through a formal process, or an instance of non-compliance identified by the organization through established procedures. Established procedures to identify instances of non-compliance can include management system audits, formal monitoring programs, or grievance mechanisms.
+            </p>
+
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12655"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["60"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-02.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-yellow-600 text-[17px] font-bold ml-2">SDG 2</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          End hunger, achieve food security and improved nutrition and promote sustainable agriculture
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 2.3</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2030, double the agricultural productivity and incomes of small-scale food producers, in particular women, indigenous peoples, family farmers, pastoralists and fishers, including through secure and equal access to land, other productive resources and inputs, knowledge, financial services, markets and opportunities for value addition and non-farm employment.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">2.3.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Volume of production per labour unit by classes of farming/pastoral/forestry enterprise size.
+            </p>
+
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">2.3.2</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            Average income of small-scale food producers, by sex and indigenous status.
+            </p>
+
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal2"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
 ];

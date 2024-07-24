@@ -19,7 +19,7 @@ const widgets = {
   RadioWidget2: RadioWidget2,
 };
 
-const view_path = "gri-social-skill_upgrade-403-9c-9d-programs";
+const view_path = "gri-social-indigenous_people-411-1a-incidents";
 const client_id = 1;
 const user_id = 1;
 
@@ -196,7 +196,7 @@ const Screen1 = ({ location, year, month }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // updateFormData();
+    updateFormData();
     console.log("test form data",formData);
   };
 
@@ -247,8 +247,8 @@ const Screen1 = ({ location, year, month }) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

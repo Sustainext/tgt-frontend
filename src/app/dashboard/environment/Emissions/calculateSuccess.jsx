@@ -19,7 +19,7 @@ const CalculateSuccess = ({ onClose, data }) => {
   useEffect(() => {
     if (climatiqData?.result?.length > 0) {
       const sum = climatiqData.result.reduce((acc, item) => acc + item.co2e, 0);
-      setlocalClimatiq((sum / 1000));
+      setlocalClimatiq((sum / 1000).toFixed(3));
     }
   }, [climatiqData]);
 
@@ -54,7 +54,7 @@ const CalculateSuccess = ({ onClose, data }) => {
                     Location={' '}
                   </span>
                   <span className="text-sky-500 text-[15px] font-bold font-['Manrope'] leading-normal">
-                    {data.location}
+                    {data.locationname}
                   </span>
                 </div>
                 <div className='w-[359px]'>

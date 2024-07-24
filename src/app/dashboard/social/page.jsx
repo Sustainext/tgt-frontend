@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from "react";
 import { MdKeyboardArrowDown, MdInfoOutline } from "react-icons/md";
+import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import Ohsmanagment from "./OHS/ohs-management/page"
 import Riskassessment from "./OHS/risk-assessment/page";
 import Ohsservices from "./OHS/ohs-services/page";
@@ -137,11 +138,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Employee Hires & Turnover
                             </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
+                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
                           </>
                         ) : (
                           <p
@@ -201,11 +198,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Benefits
                             </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
+                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
                           </>
                         ) : (
                           <p
@@ -260,11 +253,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Parental Leave
                             </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
+                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
                           </>
                         ) : (
                           <p
@@ -327,11 +316,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                             Notice Period
                             </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
+                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
                           </>
                         ) : (
                           <p
@@ -394,11 +379,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               OHS Management
                             </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
+                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
                           </>
                         ) : (
                           <p
@@ -458,11 +439,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Risk Assessment
                             </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
+                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
                           </>
                         ) : (
                           <p
@@ -522,11 +499,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               OHS Sevices
                             </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
+                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
                           </>
                         ) : (
                           <p
@@ -586,11 +559,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Worker Involvement in OHS
                             </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
+                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
                           </>
                         ) : (
                           <p
@@ -650,11 +619,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               OHS Training
                             </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
+                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
                           </>
                         ) : (
                           <p
@@ -715,11 +680,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Promotion of Health
                             </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
+                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
                           </>
                         ) : (
                           <p
@@ -779,11 +740,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Prevention of OHS Impact
                             </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
+                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
                           </>
                         ) : (
                           <p
@@ -843,11 +800,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               OHS Management System Coverage
                             </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
+                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
                           </>
                         ) : (
                           <p
@@ -907,11 +860,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Injuries
                             </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
+                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
                           </>
                         ) : (
                           <p
@@ -966,11 +915,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Ill-health
                             </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
+                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
                           </>
                         ) : (
                           <p
@@ -1032,11 +977,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Training hours
                             </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
+                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
                           </>
                         ) : (
                           <p
@@ -1096,11 +1037,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Skill Upgrade
                             </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
+                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
                           </>
                         ) : (
                           <p
@@ -1156,11 +1093,7 @@ const Social = () => {
                               Performance & Career
                               Development
                             </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
+                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
                           </>
                         ) : (
                           <p
@@ -1223,11 +1156,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Diversity of the Board
                             </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
+                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
                           </>
                         ) : (
                           <p
@@ -1283,11 +1212,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Salary Ratio
                             </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
+                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
                           </>
                         ) : (
                           <p
@@ -1345,11 +1270,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Incidents of Discrimination
                             </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
+                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
                           </>
                         ) : (
                           <p
@@ -1407,11 +1328,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Collective Bargaining
                             </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
+                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
                           </>
                         ) : (
                           <p
@@ -1473,11 +1390,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Child Labour
                             </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
+                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
                           </>
                         ) : (
                           <p
@@ -1537,11 +1450,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Forced or Compulsory Labour
                             </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
+                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
                           </>
                         ) : (
                           <p
@@ -1596,11 +1505,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Security Personnel
                             </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
+                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
                           </>
                         ) : (
                           <p
@@ -1658,11 +1563,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Indigenous People
                             </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
+                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
                           </>
                         ) : (
                           <p
@@ -1724,11 +1625,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Suppliers Screened
                             </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
+                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
                           </>
                         ) : (
                           <p
@@ -1783,11 +1680,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Impacts & Actions Taken
                             </p>
-                            <img
-                              src={doubleicon}
-                              className="ml-[0.15rem] h-[17px]"
-                              alt="Completed"
-                            />
+                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
                           </>
                         ) : (
                           <p
