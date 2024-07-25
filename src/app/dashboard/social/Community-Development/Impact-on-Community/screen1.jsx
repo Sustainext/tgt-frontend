@@ -17,7 +17,7 @@ const widgets = {
 
 };
 
-const view_path = 'gri-social-collective_bargaining-407-1a-operations'
+const view_path = 'gri-social-impact_on_community-407-1a-operations'
 const client_id = 1
 const user_id = 1
 
@@ -217,7 +217,7 @@ significant actual and potential negative impacts on local communities." classNa
                     <div className='w-[20%]'>
                         <div className="bg-sky-100 h-[25px] w-[75px] rounded-md mx-2 float-end">
                             <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                                GRI 407-1a
+                                GRI 413-2a
                             </p>
                         </div>
 
@@ -225,8 +225,8 @@ significant actual and potential negative impacts on local communities." classNa
                 </div>
                 <div className='mx-2'>
                     <Form
-                        schema={schema}
-                        uiSchema={uiSchema}
+                        schema={r_schema}
+                        uiSchema={r_ui_schema}
                         formData={formData}
                         onChange={handleChange}
                         validator={validator}

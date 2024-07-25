@@ -2,7 +2,7 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
-import {Socialdata} from "../../data/socialgriinfo"
+import { Socialdata } from "../../data/socialgriinfo"
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import Socialheader from "../../socialheader"
@@ -39,7 +39,7 @@ const ImpactonCommunity = () => {
 
     return (
         <>
-          <ToastContainer style={{ fontSize: "12px" }} />
+            <ToastContainer style={{ fontSize: "12px" }} />
             <div className="flex flex-col justify-start overflow-x-hidden ">
                 <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
                     <div className='w-full'>
@@ -48,7 +48,7 @@ const ImpactonCommunity = () => {
                             <div className='flex'>
                                 <div>
                                     <p className="gradient-text text-[22px] font-bold pt-1">
-                                    Local Communities 2016
+                                        Local Communities 2016
                                     </p>
                                 </div>
 
@@ -58,8 +58,19 @@ const ImpactonCommunity = () => {
                     </div>
                     <div className='w-full float-end '>
                         <div className="flex float-end border-l">
-                            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('5')}>GRI 413 - 2</button>
-
+                            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('62')}>GRI 413 - 2</button>
+                            <button
+                                className="text-[#fff] bg-[#EA1D2D] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                                onClick={() => toggleDrawer("63")}
+                            >
+                                SDG 1
+                            </button>
+                            <button
+                                className="text-[#fff] bg-[#D19F2A] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                                onClick={() => toggleDrawer("60")}
+                            >
+                                SDG 2
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -68,7 +79,7 @@ const ImpactonCommunity = () => {
                 <div className="ml-3 flex">
                     <h6 className="text-[17px] mb-4 font-semibold flex">
 
-                    Operations with significant actual and  potential negative impacts on local communities
+                        Operations with significant actual and  potential negative impacts on local communities
                         {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[14px]" />
@@ -107,14 +118,14 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
                 </div>
             </div>
             <Socialheader
-            activeMonth={activeMonth}
-            setActiveMonth={setActiveMonth}
-            location={location}
-            setLocation={setLocation}
-            year={year}
-            setYear={setYear}
+                activeMonth={activeMonth}
+                setActiveMonth={setActiveMonth}
+                location={location}
+                setLocation={setLocation}
+                year={year}
+                setYear={setYear}
             />
-        <Screen1 location={location} year={year} month={activeMonth}/>
+            <Screen1 location={location} year={year} month={activeMonth} />
 
         </>
     );

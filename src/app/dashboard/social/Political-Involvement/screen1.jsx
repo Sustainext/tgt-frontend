@@ -19,7 +19,7 @@ const widgets = {
   RadioWidget2: RadioWidget2,
 };
 
-const view_path = "gri-social-indigenous_people-411-1a-incidents";
+const view_path = "gri-social-political_involvement-415-1-financial";
 const client_id = 1;
 const user_id = 1;
 
@@ -71,7 +71,7 @@ const uiSchema = {
     Q2: {
       "ui:hadding": "Estimation of monetary value of in-kind contributions",
       "ui:title": "Specify the monetary value ",
-      "ui:tooltipshadding" :"This section documents the data corresponding to the total monetary value of financial and in-kind political contributions made directly and indirectly by the organization by country and recipient/beneficiary and how the monetary value of in-kind contributions was estimated.",
+      "ui:tooltipshadding": "This section documents the data corresponding to the total monetary value of financial and in-kind political contributions made directly and indirectly by the organization by country and recipient/beneficiary and how the monetary value of in-kind contributions was estimated.",
       "ui:tooltipstitle": "Please specify the monetary value by the organization by country and recipient/beneficiary and describe how the monetary value of in-kind contributions was estimated?",
       "ui:haddingdisplay": "block",
       "ui:titlediplay": "block",
@@ -80,9 +80,9 @@ const uiSchema = {
       "ui:Gri": "GRI 415-1b",
       'ui:widget': 'inputWidget',
       'ui:options': {
-          label: false
+        label: false
       },
-  },
+    },
 
     "ui:options": {
       orderable: false, // Prevent reordering of items
@@ -190,20 +190,20 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
 
   useEffect(() => {
     if (selectedOrg && year) {
-        loadFormData();
-        toastShown.current = false; // Reset the flag when valid data is present
+      loadFormData();
+      toastShown.current = false; // Reset the flag when valid data is present
     } else {
-        // Only show the toast if it has not been shown already
-        if (!toastShown.current) {
-            toastShown.current = true; // Set the flag to true after showing the toast
-        }
+      // Only show the toast if it has not been shown already
+      if (!toastShown.current) {
+        toastShown.current = true; // Set the flag to true after showing the toast
+      }
     }
-}, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     updateFormData();
-    console.log("test form data",formData);
+    console.log("test form data", formData);
   };
 
   return (
@@ -218,7 +218,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
-            Financial and in-kind political contributions made directly or indirectly by the organization
+              Financial and in-kind political contributions made directly or indirectly by the organization
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e15`}
                 data-tooltip-content="This section documents the data corresponding to the total monetary value of financial and in-kind political contributions made directly and indirectly by the organization by country and recipient/beneficiary."
@@ -253,8 +253,8 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -262,12 +262,12 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
           />
         </div>
         <div className="mb-6">
-        <button type="button"
-                        className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year ? 'cursor-not-allowed' : ''}`}
-                        onClick={handleSubmit}
-                        disabled={!selectedOrg || !year}>
-                        Submit
-                    </button>
+          <button type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year ? 'cursor-not-allowed' : ''}`}
+            onClick={handleSubmit}
+            disabled={!selectedOrg || !year}>
+            Submit
+          </button>
         </div>
       </div>
       {loopen && (

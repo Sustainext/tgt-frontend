@@ -3703,4 +3703,143 @@ GRI 413: Local Communities 2016
       </>,
     ],
   },
+  {
+    category: ["63"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-01.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-[#EA1D2D] text-[17px] font-bold ml-2">SDG 1</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          End poverty in all its forms everywhere
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 1.4</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2030, ensure that all men and women, in particular the poor and the vulnerable, have equal rights to economic resources, as well as access to basic services, ownership and control over land and other forms of property, inheritance, natural resources, appropriate new technology and financial services, including microfinance.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">1.4.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of population living in households with access to basic services.
+            </p>
+
+            <p className="text-[11px] text-[#222222] mb-2">1.4.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of total adult population with secure tenure rights to land, (a) with legally recognized documentation, and (b) who perceive their rights to land as secure, by sex and by type of tenure.
+            </p>
+
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["64"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+GRI 415: Public Policy 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 415-1 Political contributions
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <p className="text-[11px] text-black mb-2">
+          Compilation Requirements
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            2.1 When compiling the information specified in Disclosure 415-1, the reporting organization shall calculate financial political contributions in compliance with national accounting rules, where these exist.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+            Background
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            The purpose of this disclosure is to identify an organization’s support for political causes. This disclosure can provide an indication of the extent to which an organization’s political contributions are in line with its stated policies, goals, or other public positions. Direct or indirect contributions to political causes can also present corruption risks, because they can be used to exert undue influence on the political process. Many countries have legislation that limits the amount an organization can spend on political parties and candidates for campaigning purposes. If an organization channels contributions indirectly through intermediaries, such as lobbyists or organizations linked to political causes, it can improperly circumvent such legislation.
+            </p>
+
+
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12688"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["65"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-16.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-blue-900 text-[17px] font-bold ml-2">SDG 16</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Promote peaceful and inclusive societies for sustainable development, provide access to justice for all and build effective, accountable and inclusive institutions at all levels
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 16.5.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Substantially reduce corruption and bribery in all their forms
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.5.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of persons who had at least one contact with a public official and who paid a bribe to a public official, or were asked for a bribe by those public officials, during the previous 12 months
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.5.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of businesses that had at least one contact with a public official and that paid a bribe to a public official, or were asked for a bribe by those public officials during the previous 12 months
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal16"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
 ];

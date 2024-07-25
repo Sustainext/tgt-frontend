@@ -15,7 +15,7 @@ const widgets = {
     TableWidget: CustomTableWidget12,
 };
 
-const view_path = 'gri-social-parental_leave-401-3a-3b-3c-3d-parental_leave'
+const view_path = 'gri-social-community_engagement-413-1a-number_of_operations'
 const client_id = 1
 const user_id = 1
 
@@ -85,12 +85,7 @@ const Screen1 = ({ location, year, month }) => {
         setFormData(e.formData); // Ensure you are extracting formData from the event
     };
 
-    // The below code on updateFormData
-    let axiosConfig = {
-        headers: {
-            Authorization: 'Bearer ' + token,
-        },
-    };
+
     const updateFormData = async () => {
         LoaderOpen();
         const data = {
@@ -189,7 +184,7 @@ const Screen1 = ({ location, year, month }) => {
     };
     return (
         <>
-            <ToastContainer style={{ fontSize: "12px" }} />
+
             <div className="mx-2 p-3 mb-6 pb-4 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
                 <div className='mb-4 flex'>
                     <div className='w-[80%] relative'>
@@ -211,7 +206,7 @@ impact assessments, and/or development programs. " className="mt-1.5 ml-2 text-[
                             </ReactTooltip>
                         </h2>
                     </div>
-                    <div className={`flex ${open ? "w-[32%]" : "w-[25%]"}`}>
+                    <div className='w-[20%]'>
                         <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
                             <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
                                 GRI 413-1a
@@ -221,8 +216,8 @@ impact assessments, and/or development programs. " className="mt-1.5 ml-2 text-[
                     </div>
                 </div>
                 <Form
-                    schema={schema}
-                    uiSchema={uiSchema}
+                    schema={r_schema}
+                    uiSchema={r_ui_schema}
                     formData={formData}
                     onChange={handleChange}
                     validator={validator}
