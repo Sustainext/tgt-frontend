@@ -4,14 +4,19 @@ import { MdKeyboardArrowDown, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
-const TextareaWidget3 = (props) => {
+const InputWidget4 = (props) => {
   const { open } = GlobalState();
   const { onChange, value = "", uiSchema = {} } = props;
 
   const handleChange = (event) => {
     onChange(event.target.value);
   };
-
+  const handleKeyDown = (event) => {
+    // Prevent 'e', '+', '-', and '.' from being entered
+    if (["e", "E", "+", "-"].includes(event.key)) {
+      event.preventDefault();
+    }
+  };
   return (
     <>
       <div className="mb-6">
@@ -93,16 +98,17 @@ const TextareaWidget3 = (props) => {
           </div>
         </div>
 
-        <textarea
-          placeholder="Enter a description..."
-          className={`backdrop:before:w-[48rem] border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
-          value={value}
-          onChange={handleChange}
-          rows={4}
-        />
+        <input
+        className="backdrop:before:w-[48rem] border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
+              placeholder={props.placeholder || `Enter ${props.label || props.title}`}
+              type="number"
+              value={value}
+              onChange={handleChange}
+              onKeyDown={handleKeyDown}
+          />
       </div>
     </>
   );
 };
 
-export default TextareaWidget3;
+export default InputWidget4;

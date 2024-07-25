@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import TextareaWidget3 from "../../../shared/widgets/Textarea/TextareaWidget3";
+import InputWidget4 from "../../../shared/widgets/Input/inputWidget4";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -15,7 +15,7 @@ import { GlobalState } from "@/Context/page";
 import axiosInstance from '@/app/utils/axiosMiddleware'
 
 const widgets = {
-  TextareaWidget: TextareaWidget3,
+  inputWidget: InputWidget4,
   RadioWidget2: RadioWidget2,
 };
 
@@ -78,7 +78,7 @@ const uiSchema = {
       "ui:haddingtooltipdisplay": "block",
       "ui:titletooltipdisplay": "block",
       "ui:Gri": "GRI 415-1b",
-      'ui:widget': 'TextareaWidget',
+      'ui:widget': 'inputWidget',
       'ui:options': {
           label: false
       },
