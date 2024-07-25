@@ -4,8 +4,6 @@ import TableSidebar from "./TableSidebar";
 import DynamicTable from "./customTable";
 import DateRangePicker from "@/app/utils/DatePickerComponent";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import DateRangePicker from "@/app/utils/DatePickerComponent";
-import axiosInstance from "@/app/utils/axiosMiddleware";
 import {
   columns1,
   columns2,
