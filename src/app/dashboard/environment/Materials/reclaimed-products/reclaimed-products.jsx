@@ -10,7 +10,7 @@ import Reclaimedproductsbody from "./reclaimed-products-body"
 const Reclaimedproducts = () => {
     const [activeMonth, setActiveMonth] = useState(1);
     const [location, setLocation] = useState("");
-    const [year, setYear] = useState("");
+    const [year, setYear] = useState(2024);
     const [data, setData] = useState();
     const [category, setCategory] = useState("");
     const [isOpen, setIsOpen] = useState(false);
@@ -125,7 +125,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
             locationMessage={locationMessage}
             setLocationMessage={setLocationMessage}
             yearMessage={yearMessage}
-            setYearMessage={setYearMessage}    
+            setYearMessage={setYearMessage}
             />
             <Reclaimedproductsbody location={location} year={year} month={activeMonth} setLocationMessage={setLocationMessage} setYearMessage={setYearMessage} />
         </>

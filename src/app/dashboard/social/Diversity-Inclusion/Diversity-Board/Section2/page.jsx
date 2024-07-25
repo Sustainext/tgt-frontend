@@ -10,7 +10,7 @@ import Screen1 from "./Screen1";
 const Section2 = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
-  const [year, setYear] = useState("");
+  const [year, setYear] = useState(2024);
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);

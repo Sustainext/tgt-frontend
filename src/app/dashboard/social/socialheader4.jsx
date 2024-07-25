@@ -35,12 +35,11 @@ const Socialheader4 = ({ activeMonth, setActiveMonth, selectedOrg, setSelectedOr
         setReportType(type);
     };
  console.log(activeMonth,"test month value chnages");
-    const [errors, setErrors] = useState({
-        organization: "Please select an organization",
-        corporate: "Please select a corporate",
-        year: "Please select a year"
-    });
-
+ const [errors, setErrors] = useState({
+    organization:  "Please select an organization",
+    corporate:  "Please select a location",
+    year: year ? "" : "Please select a year"
+  });
     const [organisations, setOrganisations] = useState([]);
     const [corporates, setCorporates] = useState([]);
 
