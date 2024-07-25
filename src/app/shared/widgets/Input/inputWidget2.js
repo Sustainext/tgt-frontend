@@ -11,7 +11,7 @@ const inputWidget2 = (props) => {
     <>
       <div className="mb-6">
         <div className="flex mb-2">
-          <div>
+          <div className=" relative">
             <p className="text-sm text-gray-700 flex">
               {uiSchema["ui:title"]}
               <MdInfoOutline

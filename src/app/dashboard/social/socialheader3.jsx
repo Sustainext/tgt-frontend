@@ -33,8 +33,8 @@ const Socialheader3 = ({ activeMonth, setActiveMonth, location, setLocation, yea
 
   const [locations, setLocations] = useState([]);
   const [errors, setErrors] = useState({
-    location: "Please select a location",
-    year: "Please select a year"
+    location: location ? "" : "Please select a location",
+    year: year ? "" : "Please select a year"
   });
 
   useEffect(() => {

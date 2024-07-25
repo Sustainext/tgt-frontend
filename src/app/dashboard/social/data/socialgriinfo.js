@@ -3454,4 +3454,392 @@ Average training hours peremployee category =Total number of training hours prov
       </>,
     ],
   },
+  {
+    category: ["57"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+    GRI 406: Non-discrimination 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 406-1: Incidents of discrimination and corrective actions taken
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <p className="text-[11px] text-black mb-2">
+          Compilation Requirements:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            2.1When compiling the information specified in Disclosure 406-1, the reporting
+organization shall include incidents of discrimination on grounds of race, color, sex, religion, political opinion, national extraction, or social origin as defined by the ILO, or other relevant forms of discrimination involving internal and/or external stakeholders across operations in the reporting period.
+In the context of this disclosure, an ‘incident’ refers to a legal action or complaint registered with the reporting organization or competent authorities through a formal process, or an instance of non-compliance identified by the organization through established procedures.  Established procedures to identify instances of non-compliance can include management system audits, formal monitoring programs, or grievance mechanisms.
+An incident is no longer subject to action if it is resolved, the case is completed, or no further action is required by the organization. For example, an incident for which no further action is required can include cases that were withdrawn or where the underlying circumstances that led to the incident no longer exist.
+            </p>
+
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12598&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["58"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+   GRI 407: Freedom of Association and Collective Bargaining 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 407-1: Operations and suppliers in which the right to freedom of association and collective bargaining may be at risk
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <p className="text-[11px] text-black mb-2">
+          Compilation Requirements:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            The process for identifying operations and suppliers, as specified in Disclosure 407-1, can reflect the reporting organization’s approach to risk assessment on this issue. It can also draw from recognized international data sources, such as the various outcomes of the ILO Supervisory bodies and the recommendations of the ILO Committee of Freedom of Association (see reference [4] in the Bibliography). When reporting the measures taken, the organization can refer to the ILO ‘Tripartite Declaration of Principles Concerning Multinational Enterprises and Social Policy’ and Organization for Economic Co-operation and Development (OECD) OECD Guidelines for Multinational  Enterprises for further guidance.
+            </p>
+
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12610"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["59"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+GRI 411: Rights of Indigenous Peoples 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 411-1 Incidents of violations involving rights of indigenous peoples
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <p className="text-[11px] text-black mb-2">
+          Guidance for Disclosure 411-1
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            In the context of this disclosure, an ‘incident’ refers to a legal action or complaint registered with the reporting organization or competent authorities through a formal process, or an instance of non-compliance identified by the organization through established procedures. Established procedures to identify instances of non-compliance can include management system audits, formal monitoring programs, or grievance mechanisms.
+            </p>
+
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12655"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["60"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-02.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-yellow-600 text-[17px] font-bold ml-2">SDG 2</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          End hunger, achieve food security and improved nutrition and promote sustainable agriculture
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 2.3</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2030, double the agricultural productivity and incomes of small-scale food producers, in particular women, indigenous peoples, family farmers, pastoralists and fishers, including through secure and equal access to land, other productive resources and inputs, knowledge, financial services, markets and opportunities for value addition and non-farm employment.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">2.3.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Volume of production per labour unit by classes of farming/pastoral/forestry enterprise size.
+            </p>
+
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">2.3.2</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            Average income of small-scale food producers, by sex and indigenous status.
+            </p>
+
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal2"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["61"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+GRI 413: Local Communities 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 413-1: Operations with local community engagement, impact assessments, and development programs
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <p className="text-[11px] text-black mb-2">
+          Guidance for Disclosure 413-1
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+
+            A key element in managing impacts on people in local communities is assessment and planning in order to understand the actual and potential impacts, and strong engagement with local communities to understand their expectations and needs. There are many elements that can be incorporated into local community engagement, impact assessments, and development programs. This disclosure seeks to identify which elements have been consistently applied, organization-wide. 
+            Where possible, organizations are expected to anticipate and avoid negative impacts on local communities. Where this is not possible, or where residual impacts remain, organizations are expected to manage those impacts appropriately, including grievances, and to compensate local communities for negative impacts. 
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Establishing a timely and effective stakeholder identification and engagement process is important to help organizations understand the vulnerability of local communities and how these might be affected by the organization’s activities. A stakeholder engagement process both in early planning stages as well as during operations, can help establish lines of communication between an organization’s various departments (planning, finance, environment, production, etc.) and key stakeholder interest groups in the community. This enables an organization to consider the views of community stakeholders in its decisions, and to address its potential impacts on local communities in a timely manner. 
+
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Organizations can utilize a number of useful tools to engage communities, including social and human rights impact assessments, which include a diverse set of approaches for proper identification of stakeholders and community characteristics. These can be based on issues such as ethnic background, indigenous descent, gender, age, migrant status, socioeconomic status, literacy levels, disabilities, income level, infrastructure availability or specific human health vulnerabilities which may exist within stakeholder communities. 
+
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            An organization is expected to consider the differentiated nature of local communities and to take specific action to identify and engage vulnerable groups. This might require adopting differentiated measures to allow the effective participation of vulnerable groups, such as making information available in alternate languages or format for those who are not literate or who do not have access to printed materials. Where necessary, organizations are expected to establish additional or separate processes so that negative impacts on vulnerable or disadvantaged groups are avoided, minimized, mitigated or compensated
+
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12666"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["62"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+GRI 413: Local Communities 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 413-2: Operations with significant actual and potential negative impacts on local communities
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <p className="text-[11px] text-black mb-2">
+          Guidance for Disclosure 413-2
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+
+            Internal sources of information about actual and potential negative impacts of operations on local communities can include:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+              Actual performance data
+              </li>
+
+              <li className="text-[11px] text-[#727272]">Internal investment plans and associated risk assessments</li>
+              <li className="text-[11px] text-[#727272]">All data collected with topic disclosures as they relate to individual communities. For example: GRI 203: Indirect Economic Impacts 2016, GRI 301: Materials 2016, GRI 302:Energy 2016, GRI 303: Water and Effluents 2018, GRI 304: Biodiversity 2016, GRI 305:Emissions 2016, GRI 306: Waste 2020, GRI 403: Occupational Health and Safety 2018, GRI408: Child Labor 2016, GRI 409: Forced or Compulsory Labor 2016, GRI 410: Security Practices 2016, GRI 411: Rights of Indigenous Peoples 2016, and GRI 416: Customer Health and Safety 2016</li>
+            </ul>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12666"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["63"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-01.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-[#EA1D2D] text-[17px] font-bold ml-2">SDG 1</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          End poverty in all its forms everywhere
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 1.4</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2030, ensure that all men and women, in particular the poor and the vulnerable, have equal rights to economic resources, as well as access to basic services, ownership and control over land and other forms of property, inheritance, natural resources, appropriate new technology and financial services, including microfinance.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">1.4.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of population living in households with access to basic services.
+            </p>
+
+            <p className="text-[11px] text-[#222222] mb-2">1.4.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of total adult population with secure tenure rights to land, (a) with legally recognized documentation, and (b) who perceive their rights to land as secure, by sex and by type of tenure.
+            </p>
+
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["64"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+GRI 415: Public Policy 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 415-1 Political contributions
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <p className="text-[11px] text-black mb-2">
+          Compilation Requirements
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            2.1 When compiling the information specified in Disclosure 415-1, the reporting organization shall calculate financial political contributions in compliance with national accounting rules, where these exist.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+            Background
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            The purpose of this disclosure is to identify an organization’s support for political causes. This disclosure can provide an indication of the extent to which an organization’s political contributions are in line with its stated policies, goals, or other public positions. Direct or indirect contributions to political causes can also present corruption risks, because they can be used to exert undue influence on the political process. Many countries have legislation that limits the amount an organization can spend on political parties and candidates for campaigning purposes. If an organization channels contributions indirectly through intermediaries, such as lobbyists or organizations linked to political causes, it can improperly circumvent such legislation.
+            </p>
+
+
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12688"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["65"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-16.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-blue-900 text-[17px] font-bold ml-2">SDG 16</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Promote peaceful and inclusive societies for sustainable development, provide access to justice for all and build effective, accountable and inclusive institutions at all levels
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 16.5.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Substantially reduce corruption and bribery in all their forms
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.5.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of persons who had at least one contact with a public official and who paid a bribe to a public official, or were asked for a bribe by those public officials, during the previous 12 months
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.5.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of businesses that had at least one contact with a public official and that paid a bribe to a public official, or were asked for a bribe by those public officials during the previous 12 months
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal16"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
 ];

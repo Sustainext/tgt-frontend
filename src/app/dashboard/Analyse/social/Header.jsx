@@ -64,13 +64,16 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
     },
     {
       category: "Tab6",
-      tag: "GRI 410",
-      data: [{ tagid: "1", infoid: "28" }],
+      tag: "GRI 414",
+      data: [
+        { tagid: "1", infoid: "29" },
+        { tagid: "2", infoid: "30" },
+      ],
     },
     {
       category: "Tab7",
       tag: "GRI 409",
-      data: [{ tagid: "1", infoid: "27" }],
+      data: [{ tagid: "1", infoid: "31" }],
     },
   ];
   const sdg = [
@@ -117,7 +120,8 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       category: "Tab6",
       data: [
         { id: "sd11", label: "SDG 5", bgColor: "bg-orange-600" },
-        { id: "sd18", label: "SDG 8", bgColor: "bg-red-900" },
+        { id: "sd15", label: "SDG 8", bgColor: "bg-red-900" },
+        { id: "sd16", label: "SDG 16", bgColor: "bg-blue-950" },
       ],
     },
     {
@@ -149,7 +153,7 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
                   : activeTab === "Tab5"
                   ? "Diversity of the Board"
                   : activeTab === "Tab6"
-                  ? "Supplier Social assessment"
+                  ? "Supplier Social Assessment 2016"
                   : activeTab === "Tab7"
                   ? "Training"
                   : ""}

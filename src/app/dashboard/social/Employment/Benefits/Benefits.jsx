@@ -52,6 +52,7 @@ const uiSchema = {
 };
 const initialBenefits = [
     { benefits: "Life Insurance", fulltime: false, parttime: false, temporary: false, significantlocation: "" },
+    { benefits: "Health Care", fulltime: false, parttime: false, temporary: false, significantlocation: "" },
     { benefits: "Disability & Invalidity Coverage", fulltime: false, parttime: false, temporary: false, significantlocation: "" },
     { benefits: "Parental Leave", fulltime: false, parttime: false, temporary: false, significantlocation: "" },
     { benefits: "Retirement Provision", fulltime: false, parttime: false, temporary: false, significantlocation: "" },

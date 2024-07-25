@@ -10,7 +10,7 @@ const AuthContext = createContext(null);
 
 export const useAuth = () => useContext(AuthContext);
 
-export function AuthProvider({ children }) {  
+export function AuthProvider({ children }) {
   const [token, setToken] = useState(loadFromLocalStorage('token'));
   const [userDetails, setUserDetails] = useState(loadFromLocalStorage('userData'));
   const router = useRouter();
@@ -24,7 +24,7 @@ export function AuthProvider({ children }) {
   const login = async (username, password) => {
     const backendUrl = process.env.BACKEND_API_URL;
     const loginUrl = `${backendUrl}/api/auth/login/`;
-  
+
     try {
       const response = await fetch(loginUrl, {
         method: 'POST',
@@ -33,7 +33,7 @@ export function AuthProvider({ children }) {
         },
         body: JSON.stringify({ username, password }),
       });
-  
+
       if (!response.ok) {
         // Handle specific status codes
         if (response.status === 400) {
@@ -42,11 +42,11 @@ export function AuthProvider({ children }) {
           throw new Error('Failed to login');
         }
       }
-  
+
       const userData = await response.json();
       const receivedToken = userData.key.access;
       const refreshToken = userData.key.refresh;
-  
+
       setToken(receivedToken);
       saveToLocalStorage('token', receivedToken);
       saveToLocalStorage('refresh',refreshToken)
@@ -58,13 +58,13 @@ export function AuthProvider({ children }) {
         return;
       }
       router.push('/dashboard');
-  
+
       // Fetch user details
       const userDetails = await fetchUserDetails(receivedToken);
       setUserDetails(userDetails);
       saveToLocalStorage('userData', userDetails);
       saveToLocalStorage('user_id', userDetails.user_detail[0].id);
-  
+
     } catch (error) {
       console.error('Login error:', error);
       toast.error('Failed to login: ' + error.message, {
@@ -93,6 +93,7 @@ export function AuthProvider({ children }) {
       return response.data;
     } catch (error) {
       console.error('Fetch user details error:', error);
+      // router.replace('/');
       return null;
     }
   };

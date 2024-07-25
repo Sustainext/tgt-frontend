@@ -17,10 +17,11 @@ const Socialheader2 = ({ activeMonth, setActiveMonth, selectedOrg, setSelectedOr
     };
     const [locations, setLocations] = useState([]);
     const [errors, setErrors] = useState({
-        organization: "Please select an organization",
-        corporate: "Please select a corporate",
-        year: "Please select a year"
-    });
+        organization:  "Please select an organization",
+        corporate:  "Please select a location",
+        year: year ? "" : "Please select a year"
+      });
+
 
     const [organisations, setOrganisations] = useState([]);
     const [corporates, setCorporates] = useState([]);

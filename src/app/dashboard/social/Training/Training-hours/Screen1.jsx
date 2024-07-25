@@ -26,15 +26,16 @@ const schema = {
     type: 'object',
     properties: {
       category: { type: "string", title: "Category" },
-      male: { type: "integer", title: "Male" },
-      female: { type: "integer", title: "Female" },
-      others: { type: "integer", title: "Others" },
-      male1: { type: "integer", title: "Male" },
-      female1: { type: "integer", title: "Female" },
-      others2: { type: "integer", title: "Others" },
-      totalEmployees: { type: "integer", title: "Total number of Employee" },
-      totalTrainingHours: { type: "integer", title: "Total number of Employee" },
-    }
+      male: { type: "string", title: "Male" },
+      female: { type: "string", title: "Female" },
+      others: { type: "string", title: "Others" },
+      male1: { type: "string", title: "Male" },
+      female1: { type: "string", title: "Female" },
+      others2: { type: "string", title: "Others" },
+      totalEmployees: { type: "string", title: "Total number of Employee" },
+      totalTrainingHours: { type: "string", title: "Total number of Employee" },
+    },
+
   }
 };
 
@@ -69,14 +70,14 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const initialFormData = [
     {
       category: "",
-      male: 0,
-      female: 0,
-      others: 0,
-      totalEmployees: 0,
-      male1: 0,
-      female1: 0,
-      others1: 0,
-      totalTrainingHours: 0,
+      male: "",
+      female: "",
+      others: "",
+      totalEmployees: "",
+      male1: "",
+      female1: "",
+      others1: "",
+      totalTrainingHours: "",
     }
   ];
 
@@ -530,23 +531,23 @@ const [fleg ,setfleg] = useState(null);
             </div>
             <div className="flex justify-between">
               <div className="relative w-[760px] h-[580px]">
-              {fleg ? (
-    fileType.startsWith("image") ? (
-      <img src={newfile} alt="Preview" className="max-w-full max-h-full object-contain" />
-    ) : fileType === "application/pdf" ? (
-      <iframe src={newfile} title="PDF Preview" className="w-full h-full" />
-    ) : (
-      <p>File preview not available. Please download and verify</p>
-    )
-  ) : (
-    fileType.startsWith("image") ? (
-      <img src={previewData} alt="Preview" className="max-w-full max-h-full object-contain" />
-    ) : fileType === "application/pdf" ? (
-      <iframe src={previewData} title="PDF Preview" className="w-full h-full" />
-    ) : (
-      <p>File preview not available. Please download and verify</p>
-    )
-  )}
+                    {fleg ? (
+                    fileType.startsWith("image") ? (
+                    <img src={newfile} alt="Preview" className="max-w-full max-h-full object-contain" />
+                    ) : fileType === "application/pdf" ? (
+                    <iframe src={newfile} title="PDF Preview" className="w-full h-full" />
+                    ) : (
+                    <p>File preview not available. Please download and verify</p>
+                    )
+                    ) : (
+                    fileType.startsWith("image") ? (
+                    <img src={previewData} alt="Preview" className="max-w-full max-h-full object-contain" />
+                    ) : fileType === "application/pdf" ? (
+                    <iframe src={previewData} title="PDF Preview" className="w-full h-full" />
+                    ) : (
+                    <p>File preview not available. Please download and verify</p>
+                    )
+                    )}
 </div>
 
 

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+'use client';
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import { MdAdd } from "react-icons/md";
@@ -12,7 +13,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
 import { useEmissions } from "./EmissionsContext";
-import CalculateSuccess from "./calculateSuccess";
 
 const widgets = {
   EmissonCombinedWidget: CombinedWidget,
@@ -24,8 +24,20 @@ const widgets = {
 const view_path = "gri-environment-emissions-301-a-scope-3";
 const client_id = 1;
 const user_id = 1;
-const schema = { "type": "array", "items": { "type": "object", "properties": { "Remove": { "type": "string" }, "AssignTo": { "type": "string", "title": "Assign To" }, "Emission": { "type": "string", "title": "Emission" }, "FileUpload": { "type": "string", "format": "data-url" } } } }
-const Scope3 = ({ location, year, month, successCallback, countryCode }) => {
+const schema = {
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "Remove": { "type": "string" },
+      "AssignTo": { "type": "string", "title": "Assign To" },
+      "Emission": { "type": "string", "title": "Emission" },
+      "FileUpload": { "type": "string", "format": "data-url" }
+    }
+  }
+};
+
+const Scope3 = forwardRef(({ location, year, month, successCallback, countryCode }, ref) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -36,19 +48,15 @@ const Scope3 = ({ location, year, month, successCallback, countryCode }) => {
   const [localClimatiq, setLocalClimatiq] = useState(0);
   const [activityCache, setActivityCache] = useState({});
 
-  useEffect(()=>{
-    setScope3Data(formData)
-  },[formData])
+  useImperativeHandle(ref, () => ({
+    updateFormData() {
+      return updateFormData(); // Return the promise
+    }
+  }));
 
-  // useEffect(() => {
-  //   if (climatiqData?.result?.[0]) {
-  //     let sum = 0;
-  //     for (const item of climatiqData.result) {
-  //       sum += item.co2e;
-  //     }
-  //     setLocalClimatiq(sum);
-  //   }
-  // }, [climatiqData]);
+  useEffect(() => {
+    setScope3Data(formData);
+  }, [formData]);
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -80,7 +88,6 @@ const Scope3 = ({ location, year, month, successCallback, countryCode }) => {
       return updatedFormData;
     });
   };
-
 
   const handleFileWidgetChange = (index, name, url, type, size, uploadDateTime) => {
     setFormData(prevFormData => {
@@ -124,20 +131,20 @@ const Scope3 = ({ location, year, month, successCallback, countryCode }) => {
     try {
       const response = await post(url, { ...data });
 
-      successCallback();
-      if (response.status === 200) {
-        setModalData({
-          location,
-          month,
-          message: "Emission has been created",
-          monthly_emissions: localClimatiq
-        });
-        loadFormData();
-      } else {
-        setModalData({
-          message: "Oops, something went wrong"
-        });
-      }
+      // successCallback();
+      // if (response.status === 200) {
+      //   setModalData({
+      //     location,
+      //     month,
+      //     message: "Emission has been created",
+      //     monthly_emissions: localClimatiq
+      //   });
+      //   loadFormData();
+      // } else {
+      //   setModalData({
+      //     message: "Oops, something went wrong"
+      //   });
+      // }
     } catch (error) {
       setModalData({
         message: "Oops, something went wrong"
@@ -171,7 +178,7 @@ const Scope3 = ({ location, year, month, successCallback, countryCode }) => {
 
   useEffect(() => {
     loadFormData();
-  }, [year,month,location]);
+  }, [year, month, location]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -218,12 +225,12 @@ const Scope3 = ({ location, year, month, successCallback, countryCode }) => {
               FileUploadWidget: (props) => (
                 <CustomFileUploadWidget
                   {...props}
-                  scopes="scope1"
+                  scopes="scope3"
                   setFormData={updateFormDatanew}
-                  onChange={({ name,url,type,size,uploadDateTime }) =>
+                  onChange={({ name, url, type, size, uploadDateTime }) =>
                     handleFileWidgetChange(
                       props.id.split("_")[1],
-                      name,url,type,size,uploadDateTime
+                      name, url, type, size, uploadDateTime
                     )
                   }
                 />
@@ -247,7 +254,7 @@ const Scope3 = ({ location, year, month, successCallback, countryCode }) => {
                   updateCache={updateCache}
                 />
               ),
-              AssignTobutton : (props) => (
+              AssignTobutton: (props) => (
                 <AssignToWidgetEmission {...props} scope="scope3" location={location} year={year} month={month} data={formData} />
               ),
             }}
@@ -262,14 +269,6 @@ const Scope3 = ({ location, year, month, successCallback, countryCode }) => {
           onClick={handleAddNew}
         >
           <MdAdd className="text-lg" /> Add Row
-        </button>
-
-        <button
-          type="button"
-          className="h-8 text-center py-1 text-sm w-[100px] bg-[rgb(2,132,199)] text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline"
-          onClick={handleSubmit}
-        >
-          Submit
         </button>
       </div>
 
@@ -286,16 +285,16 @@ const Scope3 = ({ location, year, month, successCallback, countryCode }) => {
         </div>
       )}
 
-      {modalData && (
+      {/* {modalData && (
         <CalculateSuccess
           data={modalData}
           onClose={() => setModalData(null)}
         />
-      )}
+      )} */}
 
       <ToastContainer />
     </>
   );
-};
+});
 
 export default Scope3;
