@@ -3612,4 +3612,95 @@ GRI 411: Rights of Indigenous Peoples 2016
       </>,
     ],
   },
+  {
+    category: ["61"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+GRI 413: Local Communities 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 413-1: Operations with local community engagement, impact assessments, and development programs
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <p className="text-[11px] text-black mb-2">
+          Guidance for Disclosure 413-1
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+
+            A key element in managing impacts on people in local communities is assessment and planning in order to understand the actual and potential impacts, and strong engagement with local communities to understand their expectations and needs. There are many elements that can be incorporated into local community engagement, impact assessments, and development programs. This disclosure seeks to identify which elements have been consistently applied, organization-wide. 
+            Where possible, organizations are expected to anticipate and avoid negative impacts on local communities. Where this is not possible, or where residual impacts remain, organizations are expected to manage those impacts appropriately, including grievances, and to compensate local communities for negative impacts. 
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Establishing a timely and effective stakeholder identification and engagement process is important to help organizations understand the vulnerability of local communities and how these might be affected by the organization’s activities. A stakeholder engagement process both in early planning stages as well as during operations, can help establish lines of communication between an organization’s various departments (planning, finance, environment, production, etc.) and key stakeholder interest groups in the community. This enables an organization to consider the views of community stakeholders in its decisions, and to address its potential impacts on local communities in a timely manner. 
+
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Organizations can utilize a number of useful tools to engage communities, including social and human rights impact assessments, which include a diverse set of approaches for proper identification of stakeholders and community characteristics. These can be based on issues such as ethnic background, indigenous descent, gender, age, migrant status, socioeconomic status, literacy levels, disabilities, income level, infrastructure availability or specific human health vulnerabilities which may exist within stakeholder communities. 
+
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            An organization is expected to consider the differentiated nature of local communities and to take specific action to identify and engage vulnerable groups. This might require adopting differentiated measures to allow the effective participation of vulnerable groups, such as making information available in alternate languages or format for those who are not literate or who do not have access to printed materials. Where necessary, organizations are expected to establish additional or separate processes so that negative impacts on vulnerable or disadvantaged groups are avoided, minimized, mitigated or compensated
+
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12666"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["62"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+GRI 413: Local Communities 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 413-2: Operations with significant actual and potential negative impacts on local communities
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <p className="text-[11px] text-black mb-2">
+          Guidance for Disclosure 413-2
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+
+            Internal sources of information about actual and potential negative impacts of operations on local communities can include:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+              Actual performance data
+              </li>
+
+              <li className="text-[11px] text-[#727272]">Internal investment plans and associated risk assessments</li>
+              <li className="text-[11px] text-[#727272]">All data collected with topic disclosures as they relate to individual communities. For example: GRI 203: Indirect Economic Impacts 2016, GRI 301: Materials 2016, GRI 302:Energy 2016, GRI 303: Water and Effluents 2018, GRI 304: Biodiversity 2016, GRI 305:Emissions 2016, GRI 306: Waste 2020, GRI 403: Occupational Health and Safety 2018, GRI408: Child Labor 2016, GRI 409: Forced or Compulsory Labor 2016, GRI 410: Security Practices 2016, GRI 411: Rights of Indigenous Peoples 2016, and GRI 416: Customer Health and Safety 2016</li>
+            </ul>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12666"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
 ];
