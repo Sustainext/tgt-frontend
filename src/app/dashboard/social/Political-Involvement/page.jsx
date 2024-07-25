@@ -7,7 +7,7 @@ import "react-tooltip/dist/react-tooltip.css";
 import Socialheader2 from "../socialheader2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Screen1 from "./Screen1";
+import Screen1 from "./screen1";
 // import Screen2 from "./Screen2";
 // import Screen3 from "./Screen3";
 const PoliticalInvolvement = () => {
