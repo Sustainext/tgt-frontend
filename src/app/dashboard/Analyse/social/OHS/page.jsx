@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useState, useEffect } from "react";
 import { AiOutlineCalendar } from "react-icons/ai";
 import TableSidebar from "./TableSidebar";
@@ -7,37 +7,28 @@ import DateRangePicker from "../../../../utils/DatePickerComponent";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import {
   columns1,
-  data1,
   columns2,
-  data2,
   columns3,
-  data3,
   columns4,
-  data4,
   columns5,
-  data5,
   columns6,
-  data6,
+  data2,
 } from "./data";
 
 const AnalyseOHS = ({ isBoxOpen }) => {
   const [analyseData, setAnalyseData] = useState([]);
   const [organisations, setOrganisations] = useState([]);
+  const [corporates, setCorporates] = useState([]);
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
   const [selectedsetLocation, setSelectedSetLocation] = useState("");
-  const [wastedata1, setWastedata1] = useState([]);
-  const [wastedata2, setWastedata2] = useState([]);
-  const [wastedata3, setWastedata3] = useState([]);
-  const [wastedata4, setWastedata4] = useState([]);
-  const [wastedata5, setWastedata5] = useState([]);
-  const [wastedata6, setWastedata6] = useState([]);
-  const [wastedata7, setWastedata7] = useState([]);
-  const [wastedata8, setWastedata8] = useState([]);
-  const [wastedata9, setWastedata9] = useState([]);
-  const [selectedYear, setSelectedYear] = useState("2023");
-  const [corporates, setCorporates] = useState([]);
+  const [OHSdata1, setOHSData1] = useState([]);
+  const [OHSdata2, setOHSData2] = useState([]);
+  const [OHSdata3, setOHSData3] = useState([]);
+  const [OHSdata4, setOHSData4] = useState([]);
+  const [OHSdata5, setOHSData5] = useState([]);
+  const [OHSdata6, setOHSData6] = useState([]);
   const [reportType, setReportType] = useState("Organization");
   const [loopen, setLoOpen] = useState(false);
   const [dateRange, setDateRange] = useState({
@@ -65,21 +56,31 @@ const AnalyseOHS = ({ isBoxOpen }) => {
       console.error("Invalid date range selected");
       return;
     } else {
-      setIsDateRangeValid(true);
+      const startDate = new Date(params.start);
+      const endDate = new Date(params.end);
+
+      if (endDate < startDate) {
+        setIsDateRangeValid(false);
+        setDateRange({
+          start: null,
+          end: null,
+        });
+        console.error("End date cannot be before start date");
+        return;
+      } else {
+        setIsDateRangeValid(true);
+      }
     }
     LoaderOpen();
-    setWastedata1([]);
-    setWastedata2([]);
-    setWastedata3([]);
-    setWastedata4([]);
-    setWastedata5([]);
-    setWastedata6([]);
-    setWastedata7([]);
-    setWastedata8([]);
-    setWastedata9([]);
+    setOHSData1([]);
+    setOHSData2([]);
+    setOHSData3([]);
+    setOHSData4([]);
+    setOHSData5([]);
+    setOHSData6([]);
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_waste_analysis`,
+        `/sustainapp/get_ohs_analysis/`,
         {
           params: params,
         }
@@ -89,217 +90,75 @@ const AnalyseOHS = ({ isBoxOpen }) => {
       console.log(data, "testing");
 
       const {
-        waste_generated_by_material,
-        waste_generated_by_location,
-        hazardous_and_non_hazardous_waste_composition,
-        waste_directed_to_disposal_by_material_type,
-        waste_diverted_from_disposal_by_material_type,
-        hazardous_waste_diverted_form_disposal,
-        non_hazardeous_waste_diverted_from_disposal,
-        hazardeous_waste_directed_to_disposal,
-        non_hazardeous_waste_directed_to_disposal,
+        formal_joint_management,
+        workers_covered_by_an_occupational_health_and_safety_management_system,
+        rate_of_injuries_for_all_employees,
+        rate_of_injuries_for_not_included_in_company_employees,
+        ill_health_for_all_employees_analysis,
+        ill_health_for_all_workers_who_are_not_employees_analysis,
       } = data;
-      const removeAndStoreLastObject = (array) => {
-        if (array.length > 0) {
-          return array.pop();
-        } else {
-          return null;
-        }
-      };
 
-      const waste_generated_by_material_total = removeAndStoreLastObject(
-        waste_generated_by_material
-      );
-      const roundedWasteGeneratedByMaterial = waste_generated_by_material.map(
-        (item) => ({
-          ...item,
-          total_waste: item.total_waste.toFixed(2),
-        })
-      );
-      roundedWasteGeneratedByMaterial.push({
-        material_type: "Total",
-        contribution: "",
-        totalrow: 2,
-        total_waste:
-          waste_generated_by_material_total.total_waste_generated.toFixed(2),
-        units: "t (metric tons)",
-      });
-      setWastedata1(roundedWasteGeneratedByMaterial);
-      //---table1--//
-      const waste_generated_by_location_total = removeAndStoreLastObject(
-        waste_generated_by_location
-      );
-      const wastegeneratedbylocation = waste_generated_by_location.map(
-        (item) => ({
-          ...item,
-          total_waste: item.total_waste.toFixed(2),
-        })
-      );
-      wastegeneratedbylocation.push({
-        material_type: "Total",
-        location: "",
-        contribution: "",
-        totalrow: 2,
-        total_waste:
-          waste_generated_by_location_total.total_waste_generated.toFixed(2),
-        units: "t (metric tons)",
-      });
-      setWastedata2(wastegeneratedbylocation);
-      //---table2--//
-      const nonhazardous_total = removeAndStoreLastObject(
-        hazardous_and_non_hazardous_waste_composition
-      );
-      const wastegeneratedbycategory =
-        hazardous_and_non_hazardous_waste_composition.map((item) => ({
-          ...item,
-          total_waste: item.total_waste.toFixed(2),
+      function formatArray1(operations) {
+        return operations.map((operation, index) => ({
+          "Formal joint management-worker health and safety committees":
+            operation.committeeName,
+          Responsibilities: operation.responsibilities,
+          "Meeting Frequency": operation.meetingFrequency,
+          "Decision-making authority": operation.decisionMaking,
+          "Exclusions (if any) & Reason for Exclusions":
+            operation.exclusions,
         }));
-      wastegeneratedbycategory.push({
-        material_type: "Total",
-        contribution: "",
-        totalrow: 2,
-        total_waste: nonhazardous_total.total_waste_generated.toFixed(2),
-        units: "t (metric tons)",
-      });
-      setWastedata3(wastegeneratedbycategory);
+      }
 
-      //---table3--//
-      const waste_directed_to_disposal_by_material_total =
-        removeAndStoreLastObject(waste_directed_to_disposal_by_material_type);
-      const wastedirectedtodisposalbymaterialtype =
-        waste_directed_to_disposal_by_material_type.map((item) => ({
-          ...item,
-          total_waste: item.total_waste.toFixed(2),
+      function formatArray3(operations) {
+        return operations.map((operation, index) => ({
+          "Rate of fatalities as a result of work-related injury": Number(operation.rate_of_fatalities_as_a_result_of_work_related_injury.toFixed(2)),
+          "Rate of high-consequence work-related injuries (excluding fatalities)":
+           Number(operation.rate_of_high_consequence_work_related_injuries_excluding_fatalities.toFixed(2)) ,
+          "Rate  of recordable work-related injuries":
+            Number(operation.rate_of_recordable_work_related_injuries.toFixed(2)),
         }));
-      wastedirectedtodisposalbymaterialtype.push({
-        disposal_method: "",
-        material_type: "Total",
-        contribution: "",
-        totalrow: 3,
-        maprow: 1,
-        total_waste:
-          waste_directed_to_disposal_by_material_total.total_waste_generated.toFixed(
-            2
-          ),
-        units: "t (metric tons)",
-      });
-      setWastedata4(wastedirectedtodisposalbymaterialtype);
+      }
 
-      //---table4--//
-      const waste_diverted_from_disposal_by_material_type_total =
-        removeAndStoreLastObject(waste_diverted_from_disposal_by_material_type);
-      const wastedivertedfromdisposalbymaterialtype =
-        waste_diverted_from_disposal_by_material_type.map((item) => ({
-          ...item,
-          total_waste: item.total_waste.toFixed(2),
+      function formatArray4(operations) {
+        return operations.map((operation, index) => ({
+          "Rate of fatalities as a result of work-related injury": Number(operation.rate_of_fatalities_as_a_result_of_work_related_injury.toFixed(2)),
+          "Rate of high-consequence work-related injuries (excluding fatalities)":
+            Number(operation.rate_of_high_consequence_work_related_injuries_excluding_fatalities.toFixed(2)),
+          "Rate  of recordable work-related injuries":
+            Number(operation.rate_of_recordable_work_related_injuries.toFixed(2)),
         }));
-      wastedivertedfromdisposalbymaterialtype.push({
-        recovery_operation: "",
-        material_type: "Total",
-        contribution: "",
-        totalrow: 3,
-        maprow: 1,
-        total_waste:
-          waste_diverted_from_disposal_by_material_type_total.total_waste_generated.toFixed(
-            2
-          ),
-        units: "t (metric tons)",
-      });
-      setWastedata5(wastedivertedfromdisposalbymaterialtype);
-      //---table5--//
-      const hazardous_waste_diverted_form_disposal_total = removeAndStoreLastObject(hazardous_waste_diverted_form_disposal);
-      const hazardouswastedivertedformdisposaltotal =
-        hazardous_waste_diverted_form_disposal.map((item) => ({
-          ...item,
-          total_waste: item.total_waste.toFixed(2),
+      }
+
+      function formatArray5(operations) {
+        return operations.map((operation, index) => ({
+          "Employee Category": operation.employeeCategory,
+          "Number of fatalities as a result of work-related ill health":
+            operation.fatalities,
+          "Number of cases of recordable work-related ill health":
+            operation.recordable,
+          "Main types of work-related ill health": operation.highconsequence,
         }));
-      hazardouswastedivertedformdisposaltotal.push({
-        material_type: "Total",
-        total_waste:
-          hazardous_waste_diverted_form_disposal_total.total_waste_generated.toFixed(
-            2
-          ),
+      }
 
-        units: "t (metric tons)",
-        recycled_percentage: "",
-        preparation_of_reuse_percentage: "",
-        other_percentage: "",
-        site: "",
-        totalrow: 6,
-
-      });
-      setWastedata6(hazardouswastedivertedformdisposaltotal);
-      //---table6--//
-      const hnon_hazardeous_waste_diverted_from_disposal_total = removeAndStoreLastObject(non_hazardeous_waste_diverted_from_disposal);
-      const non_hazardeouswastedivertedfromdisposal =
-        non_hazardeous_waste_diverted_from_disposal.map((item) => ({
-          ...item,
-          total_waste: item.total_waste.toFixed(2),
+      function formatArray6(operations) {
+        return operations.map((operation, index) => ({
+          "Employee Category": operation.employeeCategory,
+          "Number of fatalities as a result of work-related ill health":
+            operation.fatalities,
+          "Number of cases of recordable work-related ill health":
+            operation.recordable,
+          "Main types of work-related ill health": operation.highconsequence,
         }));
-      non_hazardeouswastedivertedfromdisposal.push({
-        material_type: "Total",
-        total_waste:
-          hnon_hazardeous_waste_diverted_from_disposal_total.total_waste_generated.toFixed(
-            2
-          ),
+      }
 
-        units: "t (metric tons)",
-        recycled_percentage: "",
-        preparation_of_reuse_percentage: "",
-        other_percentage: "",
-        site: "",
-        totalrow: 6,
+      setOHSData1(formatArray1(formal_joint_management));
+      setOHSData2(workers_covered_by_an_occupational_health_and_safety_management_system);
+      setOHSData3(formatArray3(rate_of_injuries_for_all_employees));
+      setOHSData4(formatArray4(rate_of_injuries_for_not_included_in_company_employees));
+      setOHSData5(formatArray5(ill_health_for_all_employees_analysis));
+      setOHSData6(formatArray6(ill_health_for_all_workers_who_are_not_employees_analysis));
 
-      });
-      setWastedata7(non_hazardeouswastedivertedfromdisposal);
-      //---table7--//
-      const hazardeous_waste_directed_to_disposal_total = removeAndStoreLastObject(hazardeous_waste_directed_to_disposal);
-      const hazardeous_wastedirectedtodisposal =
-        hazardeous_waste_directed_to_disposal.map((item) => ({
-          ...item,
-          total_waste: item.total_waste.toFixed(2),
-        }));
-      hazardeous_wastedirectedtodisposal.push({
-        material_type: "Total",
-        total_waste:
-          hazardeous_waste_directed_to_disposal_total.total_waste_generated.toFixed(
-            2
-          ),
-
-        units: "t (metric tons)",
-        inceneration_with_energy_percentage: "",
-        inceneration_without_energy_percentage: "",
-        landfill_percentage: "",
-        other_disposal_percentage: "",
-        external_percentage: "",
-        site: "",
-        totalrow: 9,
-
-      });
-      setWastedata8(hazardeous_wastedirectedtodisposal);
-      //---table8--//
-      const non_hazardeous_waste_directed_to_disposal_total = removeAndStoreLastObject(non_hazardeous_waste_directed_to_disposal);
-      const non_hazardeouswastedirectedtodisposal =
-        non_hazardeous_waste_directed_to_disposal.map((item) => ({
-          ...item,
-          total_waste: item.total_waste.toFixed(2),
-        }));
-      non_hazardeouswastedirectedtodisposal.push({
-        material_type: "Total",
-        total_waste: non_hazardeous_waste_directed_to_disposal_total.total_waste_generated.toFixed(2),
-
-        units: "t (metric tons)",
-        inceneration_with_energy_percentage: "",
-        inceneration_without_energy_percentage: "",
-        landfill_percentage: "",
-        other_disposal_percentage: "",
-        external_percentage: "",
-        site: "",
-        totalrow: 9,
-
-      });
-      setWastedata9(non_hazardeouswastedirectedtodisposal);
-      //---table9--//
       const resultArray = Object.keys(data).map((key) => ({
         key: key,
         value: data[key],
@@ -322,11 +181,6 @@ const AnalyseOHS = ({ isBoxOpen }) => {
       try {
         const response = await axiosInstance.get(`/orggetonly`);
         setOrganisations(response.data);
-        // // setSelectedOrg(response.data[0].id);
-        setDatasetparams((prevParams) => ({
-          ...prevParams,
-          organisation: response.data[0].id,
-        }));
       } catch (e) {
         console.error("Failed fetching organization:", e);
       }
@@ -383,15 +237,12 @@ const AnalyseOHS = ({ isBoxOpen }) => {
     setSelectedOrg(newOrg);
     setSelectedCorp("");
     setSelectedSetLocation("");
-    setWastedata1([]);
-    setWastedata2([]);
-    setWastedata3([]);
-    setWastedata4([]);
-    setWastedata5([]);
-    setWastedata6([]);
-    setWastedata7([]);
-    setWastedata8([]);
-    setWastedata9([]);
+    setOHSData1([]);
+    setOHSData2([]);
+    setOHSData3([]);
+    setOHSData4([]);
+    setOHSData5([]);
+    setOHSData6([]);
 
     setDatasetparams((prevParams) => ({
       ...prevParams,
@@ -435,7 +286,7 @@ const AnalyseOHS = ({ isBoxOpen }) => {
 
   return (
     <div>
-     <div className="mb-2 flex-col items-center pt-4  gap-6">
+      <div className="mb-2 flex-col items-center pt-4  gap-6">
         <div className="mt-4 pb-3 mx-5 text-left">
           <div className="mb-2 flex-col items-center pt-2  gap-6">
             <div className="justify-start items-center gap-4 inline-flex">
@@ -444,8 +295,9 @@ const AnalyseOHS = ({ isBoxOpen }) => {
               </div>
               <div className="rounded-lg shadow border border-gray-300 justify-start items-start flex">
                 <div
-                  className={`w-[111px] px-4 py-2.5 border-r rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Organization" ? "bg-sky-100" : "bg-white"
-                    }`}
+                  className={`w-[111px] px-4 py-2.5 border-r rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                    reportType === "Organization" ? "bg-sky-100" : "bg-white"
+                  }`}
                   onClick={() => handleReportTypeChange("Organization")}
                 >
                   <div className="text-slate-800 text-[13px] font-medium font-['Manrope'] leading-tight">
@@ -453,8 +305,9 @@ const AnalyseOHS = ({ isBoxOpen }) => {
                   </div>
                 </div>
                 <div
-                  className={`w-[111px] px-4 py-2.5 border-r border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Corporate" ? "bg-sky-100" : "bg-white"
-                    }`}
+                  className={`w-[111px] px-4 py-2.5 border-r border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                    reportType === "Corporate" ? "bg-sky-100" : "bg-white"
+                  }`}
                   onClick={() => handleReportTypeChange("Corporate")}
                 >
                   <div className="text-slate-700 text-[13px] font-medium font-['Manrope'] leading-tight">
@@ -462,8 +315,9 @@ const AnalyseOHS = ({ isBoxOpen }) => {
                   </div>
                 </div>
                 <div
-                  className={`w-[111px] px-4 py-2.5 border-r rounded-r-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Location" ? "bg-sky-100" : "bg-white"
-                    }`}
+                  className={`w-[111px] px-4 py-2.5 border-r rounded-r-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                    reportType === "Location" ? "bg-sky-100" : "bg-white"
+                  }`}
                   onClick={() => handleReportTypeChange("Location")}
                 >
                   <div className="text-slate-700 text-[13px] font-medium font-['Manrope'] leading-tight">
@@ -473,8 +327,9 @@ const AnalyseOHS = ({ isBoxOpen }) => {
               </div>
             </div>
             <div
-              className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${reportType !== "" ? "visible" : "hidden"
-                }`}
+              className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${
+                reportType !== "" ? "visible" : "hidden"
+              }`}
             >
               <div className="mr-2">
                 <label
@@ -572,12 +427,13 @@ const AnalyseOHS = ({ isBoxOpen }) => {
             </div>
           </div>
         </div>
-
       </div>
       <div className="flex justify-between">
         <div className={`ps-4  w-[78%] me-4`}>
           <div className="mb-6">
-            <p className="text-black text-[16px] ">Formal joint management-worker health and safety committees</p>
+            <p className="text-black text-[16px] ">
+              Formal joint management-worker health and safety committees
+            </p>
             <div
               id="ep1"
               className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
@@ -594,25 +450,22 @@ const AnalyseOHS = ({ isBoxOpen }) => {
               </div>
 
               <div className="mb-4">
-                <DynamicTable2 columns={columns1} data={data1} />
+                <DynamicTable2 columns={columns1} data={OHSdata1} />
               </div>
-
-
-
             </div>
-
           </div>
 
           <div className="mb-6">
-            <p className="text-black text-[16px] ">Workers covered by an occupational health and safety management system </p>
+            <p className="text-black text-[16px] ">
+              Workers covered by an occupational health and safety management
+              system 
+            </p>
             <div
               id="ep2"
               className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
             >
               <div className="flex justify-between items-center mb-2">
-                <p>
-                  Percentage of employees/workers who are not employees
-                </p>
+                <p>Percentage of employees/workers who are not employees</p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 403-8a
@@ -621,13 +474,9 @@ const AnalyseOHS = ({ isBoxOpen }) => {
               </div>
 
               <div className="mb-4">
-                <DynamicTable2 columns={columns2} data={data2} />
+                <DynamicTable2 columns={columns2} data={OHSdata2} />
               </div>
-
-
-
             </div>
-
           </div>
           <div className="mb-6">
             <p className="text-black text-[16px] ">Work related ill health  </p>
@@ -637,14 +486,9 @@ const AnalyseOHS = ({ isBoxOpen }) => {
             >
               <div className="flex justify-between items-center mb-2">
                 <div>
-                  <p>
-                    Rate of injuries
-                  </p>
-                  <p>
-                    For all employees
-                  </p>
+                  <p>Rate of injuries</p>
+                  <p>For all employees</p>
                 </div>
-
 
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
@@ -654,16 +498,15 @@ const AnalyseOHS = ({ isBoxOpen }) => {
               </div>
 
               <div className="mb-4">
-                <DynamicTable2 columns={columns3} data={data3} />
+                <DynamicTable2 columns={columns3} data={OHSdata3} />
               </div>
 
               <div className="flex justify-between items-center mb-2">
                 <div>
+                  <p>Rate of injuries</p>
                   <p>
-                    Rate of injuries
-                  </p>
-                  <p>
-                    For all workers who are not employees but whose work and/or workplace is controlled by the organization
+                    For all workers who are not employees but whose work and/or
+                    workplace is controlled by the organization
                   </p>
                 </div>
 
@@ -675,11 +518,9 @@ const AnalyseOHS = ({ isBoxOpen }) => {
               </div>
 
               <div className="mb-4">
-                <DynamicTable2 columns={columns4} data={data4} />
+                <DynamicTable2 columns={columns4} data={OHSdata4} />
               </div>
-
             </div>
-
           </div>
           <div className="mb-6">
             <p className="text-black text-[16px] ">Ill Health  </p>
@@ -689,14 +530,9 @@ const AnalyseOHS = ({ isBoxOpen }) => {
             >
               <div className="flex justify-between items-center mb-2">
                 <div>
-                  <p>
-                  Ill health
-                  </p>
-                  <p>
-                    For all employees
-                  </p>
+                  <p>Ill health</p>
+                  <p>For all employees</p>
                 </div>
-
 
                 <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
@@ -706,16 +542,15 @@ const AnalyseOHS = ({ isBoxOpen }) => {
               </div>
 
               <div className="mb-4">
-                <DynamicTable2 columns={columns5} data={data5} />
+                <DynamicTable2 columns={columns5} data={OHSdata5} />
               </div>
 
               <div className="flex justify-between items-center mb-2">
                 <div>
+                  <p>Ill health</p>
                   <p>
-                  Ill health
-                  </p>
-                  <p>
-                  for workers who are not employees but whose work and workplace is controlled by the organization
+                    for workers who are not employees but whose work and
+                    workplace is controlled by the organization
                   </p>
                 </div>
 
@@ -727,11 +562,9 @@ const AnalyseOHS = ({ isBoxOpen }) => {
               </div>
 
               <div className="mb-4">
-                <DynamicTable2 columns={columns6} data={data6} />
+                <DynamicTable2 columns={columns6} data={OHSdata6} />
               </div>
-
             </div>
-
           </div>
         </div>
         <div

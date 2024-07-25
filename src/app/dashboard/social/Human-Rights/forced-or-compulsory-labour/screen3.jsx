@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect,useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
 import inputWidget2 from '../../../../shared/widgets/Input/inputWidget2';
@@ -14,7 +14,7 @@ import { Oval } from 'react-loader-spinner';
 
 const widgets = {
     inputWidget: inputWidget2,
-    RadioWidget2:RadioWidget2,
+    RadioWidget2: RadioWidget2,
 };
 
 const view_path = 'gri-social-human_rights-409-1b-measures_taken'
@@ -49,21 +49,21 @@ const uiSchema = {
             'ui:widget': 'inputWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
 
 
-        'ui:options': {
-            orderable: false, // Prevent reordering of items
-            addable: false, // Prevent adding items from UI
-            removable: false, // Prevent removing items from UI
-            layout: 'horizontal', // Set layout to horizontal
+     'ui:options': {
+            orderable: false,
+            addable: false,
+            removable: false,
+            layout: 'horizontal',
         },
     },
 };
 
-const Screen3 = ({location, year, month}) => {
+const Screen3 = ({ location, year, month }) => {
     const [formData, setFormData] = useState([{}]);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
@@ -79,10 +79,10 @@ const Screen3 = ({location, year, month}) => {
 
     const LoaderOpen = () => {
         setLoOpen(true);
-      };
-      const LoaderClose = () => {
+    };
+    const LoaderClose = () => {
         setLoOpen(false);
-      };
+    };
 
     const handleChange = (e) => {
         setFormData(e.formData);
@@ -91,63 +91,63 @@ const Screen3 = ({location, year, month}) => {
     // The below code on updateFormData
     let axiosConfig = {
         headers: {
-          Authorization: 'Bearer ' + token,
+            Authorization: 'Bearer ' + token,
         },
-      };
+    };
     const updateFormData = async () => {
         LoaderOpen();
         const data = {
-        client_id : client_id,
-        user_id : user_id,
-        path: view_path,
-        form_data: formData,
-        location,
-        year,
-        month
+            client_id: client_id,
+            user_id: user_id,
+            path: view_path,
+            form_data: formData,
+            location,
+            year,
+            month
         }
 
         const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
-        try{
-        const response = await axios.post(url,data, axiosConfig);
-        if (response.status === 200) {
-            toast.success("Data added successfully", {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
-            LoaderClose();
-            loadFormData();
+        try {
+            const response = await axios.post(url, data, axiosConfig);
+            if (response.status === 200) {
+                toast.success("Data added successfully", {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+                LoaderClose();
+                loadFormData();
 
-          }else {
+            } else {
+                toast.error("Oops, something went wrong", {
+                    position: "top-right",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+                LoaderClose();
+            }
+        } catch (error) {
             toast.error("Oops, something went wrong", {
-              position: "top-right",
-              autoClose: 1000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "colored",
+                position: "top-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
             });
             LoaderClose();
-          }
-        } catch (error) {
-          toast.error("Oops, something went wrong", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          LoaderClose();
         }
         // console.log('Response:', response.data);
         // } catch (error) {
@@ -157,6 +157,7 @@ const Screen3 = ({location, year, month}) => {
 
     const loadFormData = async () => {
         LoaderOpen();
+        setFormData([{}]);
         const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
 
         try {
@@ -164,12 +165,10 @@ const Screen3 = ({location, year, month}) => {
             console.log('API called successfully:', response.data);
             setRemoteSchema(response.data.form[0].schema);
             setRemoteUiSchema(response.data.form[0].ui_schema);
-            const form_parent = response.data.form_data;
-            setFormData(form_parent[0].data);
-            // const f_data = form_parent[0].data
-            // setFormData(f_data)
+            setFormData(response.data.form_data[0].data);
         } catch (error) {
             console.error('API call failed:', error);
+            setFormData([{}]);
         } finally {
             LoaderClose();
         }
@@ -177,15 +176,15 @@ const Screen3 = ({location, year, month}) => {
     //Reloading the forms
     useEffect(() => {
         //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-    },[r_schema, r_ui_schema])
+    }, [r_schema, r_ui_schema])
 
     // console log the form data change
     useEffect(() => {
         console.log('Form data is changed -', formData)
-    },[formData])
+    }, [formData])
 
     // fetch backend and replace initialized forms
-    useEffect (()=> {
+    useEffect(() => {
         if (location && year && month) {
             loadFormData();
             toastShown.current = false; // Reset the flag when valid data is present
@@ -195,7 +194,7 @@ const Screen3 = ({location, year, month}) => {
                 toastShown.current = true; // Set the flag to true after showing the toast
             }
         }
-    },[location, year, month])
+    }, [location, year, month])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -205,34 +204,34 @@ const Screen3 = ({location, year, month}) => {
 
     return (
         <>
-               <div className="mx-2  p-3 mb-6 pb-6 rounded-md" style={{boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px"}}>
+            <div className="mx-2  p-3 mb-6 pb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
                 <div className='mb-4 flex'>
                     <div className='w-[80%]'>
-                    <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold'>
-                    Measures taken by the organization
-                        <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
-                            data-tooltip-content="This section documents the data corresponding measures
+                        <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold'>
+                            Measures taken by the organization
+                            <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
+                                data-tooltip-content="This section documents the data corresponding measures
                             taken by the organization in the reporting period intended to contribute to the
                             elimination of all forms of forced or compulsory labor. " className="mt-1.5 ml-2 text-[14px]" />
-                        <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
-                            width: "290px", backgroundColor: "#000",
-                            color: "white",
-                            fontSize: "12px",
-                            boxShadow: 3,
-                            borderRadius: "8px",
-                            textAlign: 'left',
-                        }}>
-                        </ReactTooltip>
-                    </h2>
+                            <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
+                                width: "290px", backgroundColor: "#000",
+                                color: "white",
+                                fontSize: "12px",
+                                boxShadow: 3,
+                                borderRadius: "8px",
+                                textAlign: 'left',
+                            }}>
+                            </ReactTooltip>
+                        </h2>
                     </div>
 
-                    <div   className='w-[20%]'>
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-              GRI 409-1b
-              </p>
-            </div>
-          </div>
+                    <div className='w-[20%]'>
+                        <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
+                            <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
+                                GRI 409-1b
+                            </p>
+                        </div>
+                    </div>
                 </div>
                 <div className='mx-2'>
                     <Form
@@ -245,20 +244,25 @@ const Screen3 = ({location, year, month}) => {
                     />
                 </div>
                 <div className='mb-6'>
-                    <button type="button" className="text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
+                    <button type="button"
+                        className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? 'cursor-not-allowed' : ''}`}
+                        onClick={handleSubmit}
+                        disabled={!location || !year}>
+                        Submit
+                    </button>
                 </div>
             </div>
             {loopen && (
-            <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-                <Oval
-                height={50}
-                width={50}
-                color="#00BFFF"
-                secondaryColor="#f3f3f3"
-                strokeWidth={2}
-                strokeWidthSecondary={2}
-                />
-            </div>
+                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                    <Oval
+                        height={50}
+                        width={50}
+                        color="#00BFFF"
+                        secondaryColor="#f3f3f3"
+                        strokeWidth={2}
+                        strokeWidthSecondary={2}
+                    />
+                </div>
             )}
         </>
     );

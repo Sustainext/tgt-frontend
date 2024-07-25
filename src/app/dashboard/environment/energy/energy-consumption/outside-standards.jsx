@@ -48,14 +48,14 @@ const schema = {
 };
 
 
-const uiSchema = { // Add flex-wrap to wrap fields to the next line
+const uiSchema = {
   items: {
     textareaQ1: {
       "ui:title": "Please report the standards used while compiling the information for Energy Consumption outside the organization.",
       "ui:Gri": "GRI 302-2b",
       'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     textareaQ2: {
@@ -63,7 +63,7 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
       "ui:Gri": "GRI 302-2b",
       'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     textareaQ3: {
@@ -71,7 +71,7 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
       "ui:Gri": "GRI 302-2b",
       'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
 
@@ -80,15 +80,15 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
       "ui:Gri": "GRI 302-2b",
       'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
 
-    'ui:options': {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: 'horizontal', // Set layout to horizontal
+      'ui:options': {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: 'horizontal',
     }
   }
 };
@@ -211,17 +211,8 @@ const OutsideStandards = ({location, year, month}) => {
         toastShown.current = false; // Reset the flag when valid data is present
     } else {
         // Only show the toast if it has not been shown already
-        if (!toastShown.current) {
-            toast.warn("Please select location, year, and month first", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
+       if (!toastShown.current) {
+
             toastShown.current = true; // Set the flag to true after showing the toast
         }
     }

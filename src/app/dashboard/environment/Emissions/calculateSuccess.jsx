@@ -19,7 +19,7 @@ const CalculateSuccess = ({ onClose, data }) => {
   useEffect(() => {
     if (climatiqData?.result?.length > 0) {
       const sum = climatiqData.result.reduce((acc, item) => acc + item.co2e, 0);
-      setlocalClimatiq(sum);
+      setlocalClimatiq((sum / 1000).toFixed(3));
     }
   }, [climatiqData]);
 
@@ -32,7 +32,7 @@ const CalculateSuccess = ({ onClose, data }) => {
       clearTimeout(timeoutId);
     };
   }, []);
-  
+
   return (
     <div className='fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 bg-black bg-opacity-50'>
       {/* {isLoading && <div className='text-white text-2xl'>Calculating...</div>} */}
@@ -54,7 +54,7 @@ const CalculateSuccess = ({ onClose, data }) => {
                     Location={' '}
                   </span>
                   <span className="text-sky-500 text-[15px] font-bold font-['Manrope'] leading-normal">
-                    {data.location}
+                    {data.locationname}
                   </span>
                 </div>
                 <div className='w-[359px]'>

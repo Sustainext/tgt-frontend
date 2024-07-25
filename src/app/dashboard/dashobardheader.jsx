@@ -1,17 +1,21 @@
-'use client'
-import React, { useEffect, useState } from "react";
+"use client";
+import React, { useEffect, useState, useRef } from "react";
 import { useAuth } from "../../Context/auth";
 import { useRouter } from "next/navigation";
 import { loadFromLocalStorage } from "../utils/storage";
 import Link from "next/link";
+import Profile from "./Profile";
+
 const DashboardHeader = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const [username, setUsername] = useState('');
-  const [email,setEmail]= useState('');
-  const [initials,setInitials] = useState('');
+  const [profileVisible, setProfileVisible] = useState(false);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [initials, setInitials] = useState("");
   const { logout } = useAuth();
   const router = useRouter();
-  const userDetails = loadFromLocalStorage('userData')
+  const userDetails = loadFromLocalStorage("userData");
+  const profileRef = useRef(null);
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
@@ -20,40 +24,62 @@ const DashboardHeader = () => {
   const handleLogout = async () => {
     try {
       await logout();
-      router.push('/');
+      router.push("/");
     } catch (error) {
       console.error("Logout failed:", error);
     }
   };
 
   const getInitials = (email) => {
-    const username = email?.split('@')[0];
-    const nameParts = username?.split('.');
-    const initials = nameParts?.map(part => part.charAt(0).toUpperCase()).join('');
+    const username = email?.split("@")[0];
+    const nameParts = username?.split(".");
+    const initials = nameParts
+      ?.map((part) => part.charAt(0).toUpperCase())
+      .join("");
     return initials;
   };
 
   const extractUsername = (input) => {
-    if (input?.includes('@')) {
-      return input.split('@')[0];
+    if (input?.includes("@")) {
+      return input.split("@")[0];
     }
     return input;
   };
 
-  useEffect(()=>{
-    setUsername(extractUsername(userDetails?.user_detail[0].username));
-    setEmail(userDetails?.user_detail[0].username);
-    setInitials(getInitials(userDetails?.user_detail[0].username))
-  },[])
+  useEffect(() => {
+    const userDetails = loadFromLocalStorage("userData");
+    if (userDetails) {
+      const userEmail = userDetails.user_detail[0].username;
+      setUsername(extractUsername(userEmail));
+      setEmail(userEmail);
+      setInitials(getInitials(userEmail));
+    }
+
+    const handleClickOutside = (event) => {
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setProfileVisible(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [userDetails]);
+
+  const handleProfileClick = (e) => {
+    e.stopPropagation();
+    setProfileVisible(true);
+    setDropdownVisible(false);
+  };
 
   return (
     <>
       <div className="flex justify-between bg-white sticky top-0 right-0 border-b border-sky-600 border-opacity-50 pt-1 w-full mx-2 -z--1000">
         <div className="flex justify-start items-center my-4 gap-1 px-2">
-        <Link href="/dashboard">
-        <span className="text-[#007EEF] hover:text-[#0057A5]">Home</span>
-        </Link>
-
+          <Link href="/dashboard">
+            <span className="text-[#007EEF] hover:text-[#0057A5]">Home</span>
+          </Link>
 
           <span className="text-[#222222] mx-1">&gt;</span>
           <a href="/home/sustainextHQ">
@@ -122,9 +148,12 @@ const DashboardHeader = () => {
                       <div className="self-stretch h-[85px] py-1 flex-col justify-start items-start flex">
                         <div className="self-stretch h-9 flex-col justify-center items-start flex">
                           <div className="self-stretch px-4 py-1.5 justify-start items-center inline-flex">
-                          <div className="grow shrink basis-0 h-4 justify-start items-center flex">
-                              <div className="grow shrink basis-0 text-black/opacity-90 text-[13px] font-normal font-['Manrope'] leading-none">
-                                Profile{" "}
+                            <div className="grow shrink basis-0 h-4 justify-start items-center flex">
+                              <div
+                                className="grow shrink basis-0 text-black/opacity-90 text-[13px] font-normal font-['Manrope'] leading-none cursor-pointer"
+                                onClick={handleProfileClick}
+                              >
+                                Profile
                               </div>
                             </div>
                           </div>
@@ -136,11 +165,14 @@ const DashboardHeader = () => {
                         <div className="self-stretch flex-col justify-center items-start flex">
                           <div className="self-stretch px-4 py-1.5 justify-start items-center inline-flex">
                             <div className="pr-8 flex-col justify-start items-start inline-flex">
-                            <div className="grow shrink basis-0 h-4 justify-start items-center flex">
-                              <button onClick={handleLogout} className="grow shrink basis-0 text-red-600 text-[13px] font-normal font-['Manrope'] leading-none">
-                                Log out
-                              </button>
-                            </div>
+                              <div className="grow shrink basis-0 h-4 justify-start items-center flex">
+                                <button
+                                  onClick={handleLogout}
+                                  className="grow shrink basis-0 text-red-600 text-[13px] font-normal font-['Manrope'] leading-none"
+                                >
+                                  Log out
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -153,6 +185,14 @@ const DashboardHeader = () => {
           </div>
         </div>
       </div>
+      {profileVisible && (
+        <div
+          ref={profileRef}
+          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+        >
+          <Profile onClose={() => setProfileVisible(false)} />
+        </div>
+      )}
     </>
   );
 };

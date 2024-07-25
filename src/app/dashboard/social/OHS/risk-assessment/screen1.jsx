@@ -114,7 +114,7 @@ const uiSchema = {
             'ui:widget': 'RadioWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Q2: {
@@ -124,7 +124,7 @@ const uiSchema = {
             'ui:widget': 'RadioWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Q3: {
@@ -134,7 +134,7 @@ const uiSchema = {
             'ui:widget': 'RadioWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Q4: {
@@ -144,7 +144,7 @@ const uiSchema = {
             'ui:widget': 'RadioWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Q5: {
@@ -154,7 +154,7 @@ const uiSchema = {
             'ui:widget': 'RadioWidget2',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Q6: {
@@ -164,7 +164,7 @@ const uiSchema = {
             'ui:widget': 'inputWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Q7: {
@@ -174,14 +174,14 @@ const uiSchema = {
             'ui:widget': 'RadioWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
-        'ui:options': {
-            orderable: false, // Prevent reordering of items
-            addable: false, // Prevent adding items from UI
-            removable: false, // Prevent removing items from UI
-            layout: 'horizontal', // Set layout to horizontal
+     'ui:options': {
+            orderable: false,
+            addable: false,
+            removable: false,
+            layout: 'horizontal',
         },
     },
 };
@@ -312,16 +312,7 @@ const Screen1 = ({ location, year, month }) => {
         } else {
             // Only show the toast if it has not been shown already
             if (!toastShown.current) {
-                toast.warn("Please select location, year, and month first", {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
+
                 toastShown.current = true; // Set the flag to true after showing the toast
             }
         }
@@ -376,8 +367,13 @@ const Screen1 = ({ location, year, month }) => {
                         widgets={widgets}
                     />
                 </div>
-                <div className='mb-6'>
-                    <button type="button" className="text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
+               <div className='mb-6'>
+                <button type="button"
+                        className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? 'cursor-not-allowed' : ''}`}
+                        onClick={handleSubmit}
+                        disabled={!location || !year}>
+                        Submit
+                    </button>
                 </div>
             </div>
             {loopen && (

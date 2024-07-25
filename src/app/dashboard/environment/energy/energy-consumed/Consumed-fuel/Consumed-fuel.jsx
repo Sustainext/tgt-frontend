@@ -17,6 +17,8 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
+import selectWidget3 from '../../../../../shared/widgets/Select/selectWidget3';
+import inputnumberWidget from "../../../../../shared/widgets/Input/inputnumberWidget"
 
 const widgets = {
   inputWidget: inputWidget,
@@ -26,72 +28,74 @@ const widgets = {
   AssignTobutton: AssignToWidget,
   CustomSelectInputWidget: CustomSelectInputWidget,
   RemoveWidget: RemoveWidget,
+  selectWidget3: selectWidget3,
+  inputnumberWidget: inputnumberWidget,
 };
 
 const view_path = 'gri-environment-energy-302-1c-1e-consumed_fuel'
 const client_id = 1
 const user_id = 1
 
-const schema = {
-  type: 'array',
-  items: {
-    type: 'object',
-    properties: {
-      EnergyType: {
-        type: "string",
-        title: "Energy Type",
-        tooltiptext: "Indicate type of energy from the drop down",
-        enum: ['Electricity', 'Heating', 'Cooling', 'Steam'],
-        tooltiptext: "Indicate the type of energy purchased from the drop down"
+// const schema = {
+//   type: 'array',
+//   items: {
+//     type: 'object',
+//     properties: {
+//       EnergyType: {
+//         type: "string",
+//         title: "Energy Type",
+//         tooltiptext: "Indicate type of energy from the drop down",
+//         enum: ['Electricity', 'Heating', 'Cooling', 'Steam'],
+//         tooltiptext: "Indicate the type of energy purchased from the drop down"
 
-      },
-      Source: {
-        type: "string",
-        title: "Source",
-        enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro', 'Natural gas', 'Electricity', 'Cooling', 'Steam', 'Heating', 'Wood Biomas', 'Biogas', 'Other'],
-        tooltiptext: "Indicate where the energy comes from"
-      },
-      Purpose: {
-        type: "string",
-        title: "Purpose",
-        tooltiptext: "Indicate the purpose it's being used for.E.g. Manufacturing, packaging, combustion "
-      },
-      Renewable: {
-        type: "string",
-        title: "Renewable/ Non-renewable",
-        enum: ['Renewable', 'Non-renewable'],
-        tooltiptext: "Select from the dropdown to indicate whether it's Renewable or Non-Renewable Energy"
-      },
+//       },
+//       Source: {
+//         type: "string",
+//         title: "Source",
+//         enum: ['Coal', 'Solar', 'LPG', 'Diesel', 'Wind', 'Hydro', 'Natural gas', 'Electricity', 'Cooling', 'Steam', 'Heating', 'Wood Biomas', 'Biogas', 'Other'],
+//         tooltiptext: "Indicate where the energy comes from"
+//       },
+//       Purpose: {
+//         type: "string",
+//         title: "Purpose",
+//         tooltiptext: "Indicate the purpose it's being used for.E.g. Manufacturing, packaging, combustion "
+//       },
+//       Renewable: {
+//         type: "string",
+//         title: "Renewable/ Non-renewable",
+//         enum: ['Renewable', 'Non-renewable'],
+//         tooltiptext: "Select from the dropdown to indicate whether it's Renewable or Non-Renewable Energy"
+//       },
 
-      Quantity: {
-        type: "string",
-        title: "Quantity",
-        tooltiptext: "Indicate the purchased quantity"
-      },
-      Unit: {
-        type: "string",
-        title: "Unit",
-        enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
-        tooltiptext: "Indicate the purchased consumed"
-      },
-      AssignTo: {
-        type: "string",
-      },
-      FileUpload: {
-        type: "string",
-        format: "data-url",
-      },
+//       Quantity: {
+//         type: "string",
+//         title: "Quantity",
+//         tooltiptext: "Indicate the purchased quantity"
+//       },
+//       Unit: {
+//         type: "string",
+//         title: "Unit",
+//         enum: ['Joules', 'KJ', 'Wh', 'KWh', 'GJ', 'MMBtu'],
+//         tooltiptext: "Indicate the purchased consumed"
+//       },
+//       AssignTo: {
+//         type: "string",
+//       },
+//       FileUpload: {
+//         type: "string",
+//         format: "data-url",
+//       },
 
-      Remove: {
-        type: "string",
+//       Remove: {
+//         type: "string",
 
-      },
-      // Define other properties as needed
-    }
-  }
-};
+//       },
+//       // Define other properties as needed
+//     }
+//   }
+// };
 
-const uiSchema = { // Add flex-wrap to wrap fields to the next line
+const uiSchema = {
   items: {
     'ui:order': [
       'EnergyType', 'Source', 'Purpose', 'Renewable', 'Quantity', 'Unit', 'AssignTo', 'FileUpload', 'Remove'
@@ -108,84 +112,90 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
 
     },
     Purpose: {
       'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     Renewable: {
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
 
     },
-    Quantity: {
-      'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
+   Quantity: {
+      'ui:widget': 'inputnumberWidget',
+      'ui:inputtype':'number',
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false,
       },
     },
 
     Unit: {
-      'ui:widget': 'selectWidget',
+      'ui:widget': 'selectWidget3',
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
 
     },
     AssignTo: {
       "ui:widget": "AssignTobutton",
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     FileUpload: {
       'ui:widget': 'FileUploadWidget',
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     Remove: {
       "ui:widget": "RemoveWidget",
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     classNames: 'fieldset',
-    'ui:options': {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: 'horizontal', // Set layout to horizontal
+      'ui:options': {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: 'horizontal',
     }
   }
+};
+const generateUniqueId = (field) => {
+  return `${field}-${new Date().getTime()}`;
 };
 const generateTooltip = (field, title, tooltipText) => {
   if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
     return null; // Return null to skip rendering tooltip for these fields
   }
-
+  const uniqueId = generateUniqueId(field);
   return (
-    <div className='mx-2 flex w-[20vw]'>
-      <label className="text-[13px] leading-5 text-gray-700 flex">{title}</label>
+    <div className={`mx-2 flex  ${field === 'Quantity' ? ' w-[22vw]' : ' w-[20vw]'}`}>
+      <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
+      <div>
       <MdInfoOutline
-        data-tooltip-id={field}
+        data-tooltip-id={uniqueId}
         data-tooltip-content={tooltipText}
         className="mt-1 ml-2 text-[12px]"
       />
       <ReactTooltip
-        id={field}
+        id={uniqueId}
         place="top"
         effect="solid"
+
         style={{
           width: "290px",
           backgroundColor: "#000",
@@ -194,8 +204,12 @@ const generateTooltip = (field, title, tooltipText) => {
           boxShadow: 3,
           borderRadius: "8px",
           textAlign: 'left',
+
         }}
+
       />
+      </div>
+
     </div>
   );
 };
@@ -329,17 +343,8 @@ const Consumedfuel = ({location, year, month}) => {
         toastShown.current = false; // Reset the flag when valid data is present
     } else {
         // Only show the toast if it has not been shown already
-        if (!toastShown.current) {
-            toast.warn("Please select location, year, and month first", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
+       if (!toastShown.current) {
+
             toastShown.current = true; // Set the flag to true after showing the toast
         }
     }
@@ -364,10 +369,13 @@ const Consumedfuel = ({location, year, month}) => {
     setFormData(updatedData);
   };
   const renderFields = () => {
-    const fields = Object.keys(schema.items.properties);
+    if (!r_schema || !r_schema.items || !r_schema.items.properties) {
+      return null;
+    }
+    const fields = Object.keys(r_schema.items.properties);
     return fields.map((field, index) => (
       <div key={index}>
-        {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext)}
+        {generateTooltip(field, r_schema.items.properties[field].title, r_schema.items.properties[field].tooltiptext)}
       </div>
     ));
   };

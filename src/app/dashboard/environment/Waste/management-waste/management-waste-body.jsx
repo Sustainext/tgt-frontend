@@ -5,13 +5,17 @@ import { GlobalState } from "../../../../../Context/page";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import Managementwasteimpact from "./management-waste-impact";
-const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year }) => {
+
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year, setYearMessage }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
   const handleClick = () => {
     if (!location) {
-      setLocationMessage("Please select a location and year")
-
+      setLocationMessage("Please select a location")
+      return;
+    }
+    if (!year) {
+      setYearMessage("Please select a year")
       return;
     }
     setIsOpen(!isOpen);
@@ -74,7 +78,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
   );
 };
 
-const Managementwastebody = ({location, year, month,setLocationMessage}) => {
+const Managementwastebody = ({location, year, month,setLocationMessage,setYearMessage}) => {
 
 
   return (
@@ -86,7 +90,9 @@ const Managementwastebody = ({location, year, month,setLocationMessage}) => {
           sdg={['GRI 306-2a']}
           display="block"
           location={location}
+          year={year}
           setLocationMessage={setLocationMessage}
+          setYearMessage={setYearMessage}
         >
 
           <Managementwasteimpact location={location} year={year} month={month}/>

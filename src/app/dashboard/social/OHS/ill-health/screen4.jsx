@@ -11,7 +11,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
-
+import axiosInstance from "@/app/utils/axiosMiddleware";
 const widgets = {
     inputWidget: inputWidget2,
     RadioWidget2:RadioWidget2,
@@ -61,7 +61,7 @@ const uiSchema = {
             'ui:widget': 'RadioWidget2',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Q2: {
@@ -71,7 +71,7 @@ const uiSchema = {
             'ui:widget': 'inputWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Q3: {
@@ -81,15 +81,15 @@ const uiSchema = {
             'ui:widget': 'inputWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
 
-        'ui:options': {
-            orderable: false, // Prevent reordering of items
-            addable: false, // Prevent adding items from UI
-            removable: false, // Prevent removing items from UI
-            layout: 'horizontal', // Set layout to horizontal
+     'ui:options': {
+            orderable: false,
+            addable: false,
+            removable: false,
+            layout: 'horizontal',
         },
     },
 };
@@ -100,13 +100,7 @@ const Screen4 = ({location, year, month}) => {
     const [r_ui_schema, setRemoteUiSchema] = useState({})
     const [loopen, setLoOpen] = useState(false);
     const toastShown = useRef(false);
-    const getAuthToken = () => {
-        if (typeof window !== 'undefined') {
-            return localStorage.getItem('token')?.replace(/"/g, "");
-        }
-        return '';
-    };
-    const token = getAuthToken();
+
 
     const LoaderOpen = () => {
         setLoOpen(true);
@@ -119,12 +113,6 @@ const Screen4 = ({location, year, month}) => {
         setFormData(e.formData);
     };
 
-    // The below code on updateFormData
-    let axiosConfig = {
-        headers: {
-          Authorization: 'Bearer ' + token,
-        },
-      };
     const updateFormData = async () => {
         LoaderOpen();
         const data = {
@@ -139,7 +127,7 @@ const Screen4 = ({location, year, month}) => {
 
         const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
         try{
-        const response = await axios.post(url, data, axiosConfig);
+        const response = await axiosInstance.post(url, data);
         if (response.status === 200) {
             toast.success("Data added successfully", {
               position: "top-right",
@@ -191,7 +179,7 @@ const Screen4 = ({location, year, month}) => {
         setFormData([{}]);
         const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
         try {
-            const response = await axios.get(url, axiosConfig);
+            const response = await axiosInstance.get(url);
             console.log('API called successfully:', response.data);
             setRemoteSchema(response.data.form[0].schema);
             setRemoteUiSchema(response.data.form[0].ui_schema);
@@ -273,7 +261,12 @@ const Screen4 = ({location, year, month}) => {
                     />
                 </div>
                 <div className='mb-6'>
-                    <button type="button" className="text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
+                <button type="button"
+                        className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? 'cursor-not-allowed' : ''}`}
+                        onClick={handleSubmit}
+                        disabled={!location || !year}>
+                        Submit
+                    </button>
                 </div>
             </div>
             {loopen && (

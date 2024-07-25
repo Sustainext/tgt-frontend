@@ -33,7 +33,7 @@ const schema = {
 };
 
 
-const uiSchema = { // Add flex-wrap to wrap fields to the next line
+const uiSchema = {
     items: {
         Q1: {
             "ui:hadding": "Impact Analysis: Inputs, Activities, Outputs",
@@ -48,7 +48,7 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
              "ui:gridisplay" :"none",
             'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
 
@@ -182,17 +182,8 @@ const Wastedivertedcontextualinformation = ({location, year, month}) => {
         toastShown.current = false; // Reset the flag when valid data is present
     } else {
         // Only show the toast if it has not been shown already
-        if (!toastShown.current) {
-            toast.warn("Please select location, year, and month first", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
+       if (!toastShown.current) {
+
             toastShown.current = true; // Set the flag to true after showing the toast
         }
     }

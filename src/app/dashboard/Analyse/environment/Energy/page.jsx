@@ -67,9 +67,22 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
       setIsDateRangeValid(false);
       console.error("Invalid date range selected");
       return;
-    } else {
-      setIsDateRangeValid(true);
-    }
+  } else {
+      const startDate = new Date(params.start);
+      const endDate = new Date(params.end);
+  
+      if (endDate < startDate) {
+          setIsDateRangeValid(false);
+          setDateRange({
+            start: null,
+            end: null
+          });
+          console.error("End date cannot be before start date");
+          return;
+      } else {
+          setIsDateRangeValid(true);
+      }
+  }
     LoaderOpen();
     try {
       const response = await axiosInstance.get(
@@ -102,7 +115,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
         if (array.length > 0) {
           return array.pop();
         } else {
-          return null;
+          return {};
         }
       };
 
@@ -180,10 +193,10 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
       self_generated_from_renewable.push({
         Energy_type: "Total Self-Generated from Renewable",
         Source: "",
-        purpose: "",
         Quantity: self_generated_from_renewable_total.Total,
         Unit: self_generated_from_renewable_total.Unit,
       });
+      console.log('self generated',self_generated_from_renewable);
       setSelfGenFromRenewable(self_generated_from_renewable);
 
       // Handle self-generated from non-renewable

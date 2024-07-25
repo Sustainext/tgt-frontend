@@ -43,7 +43,7 @@ const schema = {
 };
 
 
-const uiSchema = { // Add flex-wrap to wrap fields to the next line
+const uiSchema = {
     items: {
         Q1: {
             "ui:hadding": "Discharge Standards Used",
@@ -56,7 +56,7 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
             "ui:Gri": "GRI 303-2a",
             'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Q2: {
@@ -70,7 +70,7 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
             "ui:Gri": "GRI 303-2a",
             'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Q3: {
@@ -84,7 +84,7 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
             "ui:Gri": "GRI 303-2a",
             'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Q4: {
@@ -98,7 +98,7 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
             "ui:Gri": "GRI 303-2a",
             'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         'ui:options': {
@@ -232,17 +232,8 @@ const Sharedresource = ({location, year, month}) => {
         toastShown.current = false; // Reset the flag when valid data is present
     } else {
         // Only show the toast if it has not been shown already
-        if (!toastShown.current) {
-            toast.warn("Please select location, year, and month first", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
+       if (!toastShown.current) {
+
             toastShown.current = true; // Set the flag to true after showing the toast
         }
     }
@@ -257,6 +248,7 @@ const Sharedresource = ({location, year, month}) => {
 
   return (
     <>
+    <ToastContainer style={{ fontSize: "12px" }} />
       <div >
         <div>
         <Form

@@ -17,7 +17,7 @@ const TextareaWidget2 = (props) => {
       <div className="mb-6">
         <div className="flex justify-between items-center mb-2">
           <div>
-            <div className="flex">
+            <div className="flex relative">
               <div>
                 <h6 className="text-sm font-medium text-[#344054] flex" style={{ display: uiSchema["ui:haddingdisplay"] }}>
                   {uiSchema["ui:hadding"]}
@@ -39,6 +39,8 @@ const TextareaWidget2 = (props) => {
                   id={`tooltip-${uiSchema["ui:hadding"].replace(/\s+/g, "-")}`}
                   place="top"
                   effect="solid"
+                   scrollHide={true}
+                  globalEventOff="scroll"
                   style={{
                     width: "300px",
                     backgroundColor: "#000",

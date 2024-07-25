@@ -1,5 +1,5 @@
-"use client";
-import React, { useState, useEffect } from "react";
+'use client';
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import { MdAdd } from "react-icons/md";
@@ -26,7 +26,7 @@ const view_path = "gri-environment-emissions-301-a-scope-1";
 const client_id = 1;
 const user_id = 1;
 
-const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
+const Scope1 = forwardRef(({ location, year, month, successCallback, countryCode }, ref) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -36,6 +36,12 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
   const { climatiqData, setScope1Data } = useEmissions();
   const [localClimatiq, setLocalClimatiq] = useState(0);
   const [activityCache, setActivityCache] = useState({});
+
+  useImperativeHandle(ref, () => ({
+    updateFormData() {
+      return updateFormData(); // Return the promise
+    }
+  }));
 
   useEffect(() => {
     setScope1Data(formData);
@@ -114,20 +120,20 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
     try {
       const response = await post(url, { ...data });
 
-      successCallback();
-      if (response.status === 200) {
-        setModalData({
-          location,
-          month,
-          message: "Emission has been created",
-          monthly_emissions: localClimatiq
-        });
-        loadFormData();
-      } else {
-        setModalData({
-          message: "Oops, something went wrong"
-        });
-      }
+      // successCallback();
+      // if (response.status === 200) {
+      //   setModalData({
+      //     location,
+      //     month,
+      //     message: "Emission has been created",
+      //     monthly_emissions: localClimatiq
+      //   });
+      //   loadFormData();
+      // } else {
+      //   setModalData({
+      //     message: "Oops, something went wrong"
+      //   });
+      // }
     } catch (error) {
       setModalData({
         message: "Oops, something went wrong"
@@ -161,7 +167,7 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
 
   useEffect(() => {
     loadFormData();
-  }, []);
+  }, [year, month, location]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -254,13 +260,6 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
           <MdAdd className="text-lg" /> Add Row
         </button>
 
-        <button
-          type="button"
-          className="h-8 text-center py-1 text-sm w-[100px] bg-[rgb(2,132,199)] text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline"
-          onClick={handleSubmit}
-        >
-          Submit
-        </button>
       </div>
 
       {loopen && (
@@ -286,6 +285,6 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
       <ToastContainer />
     </>
   );
-};
+});
 
 export default Scope1;

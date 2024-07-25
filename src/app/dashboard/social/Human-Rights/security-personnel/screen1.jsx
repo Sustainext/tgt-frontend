@@ -49,13 +49,16 @@ const uiSchema = {
     },
 };
 const Screen1 = ({location, year, month}) => {
-    const [formData, setFormData] = useState([{
-        category: "",
-        securitypersonnel: "",
-        organization: "",
-        thirdpartyorganizations: "",
+    const initialFormData = [
+        {
+                category: "",
+                securitypersonnel: "",
+                organization: "",
+                thirdpartyorganizations: "",
 
-    }]);
+        },
+    ];
+    const [formData, setFormData] = useState(initialFormData);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
     const [loopen, setLoOpen] = useState(false);
@@ -148,6 +151,7 @@ const Screen1 = ({location, year, month}) => {
 
     const loadFormData = async () => {
         LoaderOpen();
+        setFormData(initialFormData);
         const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
 
         try {
@@ -155,12 +159,10 @@ const Screen1 = ({location, year, month}) => {
             console.log('API called successfully:', response.data);
             setRemoteSchema(response.data.form[0].schema);
             setRemoteUiSchema(response.data.form[0].ui_schema);
-            const form_parent = response.data.form_data;
-            setFormData(form_parent[0].data);
-            // const f_data = form_parent[0].data
-            // setFormData(f_data)
+            setFormData(response.data.form_data[0].data);
         } catch (error) {
             console.error('API call failed:', error);
+            setFormData(initialFormData);
         } finally {
             LoaderClose();
         }
@@ -183,16 +185,7 @@ const Screen1 = ({location, year, month}) => {
         } else {
             // Only show the toast if it has not been shown already
             if (!toastShown.current) {
-                toast.warn("Please select location, year, and month first", {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
+
                 toastShown.current = true; // Set the flag to true after showing the toast
             }
         }
@@ -271,13 +264,21 @@ const Screen1 = ({location, year, month}) => {
                     />
                 </div>
                 <div className="flex right-1 mx-2">
-                    <button type="button" className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5" onClick={handleAddCommittee}>
-                    Add category  <MdAdd className='text-lg' />
-                    </button>
+                {location && year && (
+                         <button type="button" className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5" onClick={handleAddCommittee}>
+                         Add category  <MdAdd className='text-lg' />
+                         </button>
+                    )}
+
                 </div>
 
                 <div className='mb-6'>
-                    <button type="button" className="text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
+                <button type="button"
+                        className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? 'cursor-not-allowed' : ''}`}
+                        onClick={handleSubmit}
+                        disabled={!location || !year}>
+                        Submit
+                    </button>
                 </div>
             </div>
             {loopen && (

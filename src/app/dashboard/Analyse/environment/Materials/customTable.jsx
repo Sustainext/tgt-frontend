@@ -10,6 +10,16 @@ function DynamicTable({ columns, data }) {
   };
 
   const renderRows = () => {
+    if (data.length === 0) {
+      // Return a row with a message that there is no data, spanning all columns
+      return (
+        <tr className='border'>
+          <td colSpan={columns.length} className="text-center py-4">
+            No data available
+          </td>
+        </tr>
+      );
+    }
     return data.map((row, rowIndex) => (
       <tr key={rowIndex}>
         {row.type.includes('Total') ? (

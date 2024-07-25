@@ -8,12 +8,17 @@ import Productsservices from"./products-services";
 import Baseyearenergybaseline from "./base-year-baseline";
 import ProductsStandardsenergy from "./products-standards-energy";
 
-const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year }) => {
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year, setYearMessage }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
   const handleClick = () => {
     if (!location) {
-      setLocationMessage("Please select a location and year")
+      setLocationMessage("Please select a location")
+
+      return;
+    }
+    if (!year) {
+      setYearMessage("Please select a year")
 
       return;
     }
@@ -77,7 +82,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
   );
 };
 
-const Energyproductsservicesbody = ({location, year, month,setLocationMessage}) => {
+const Energyproductsservicesbody = ({location, year, month,setLocationMessage, setYearMessage}) => {
   return (
     <>
       <div className="mx-3">
@@ -90,6 +95,8 @@ const Energyproductsservicesbody = ({location, year, month,setLocationMessage}) 
           display="block"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
           <Productsservices location={location} year={year} month={month}/>
         </AccordionItem>
@@ -102,6 +109,8 @@ const Energyproductsservicesbody = ({location, year, month,setLocationMessage}) 
           display="none"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
           <Baseyearenergybaseline location={location} year={year} month={month} />
         </AccordionItem>
@@ -113,6 +122,8 @@ const Energyproductsservicesbody = ({location, year, month,setLocationMessage}) 
           display="none"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
           <ProductsStandardsenergy location={location} year={year} month={month}/>
         </AccordionItem>

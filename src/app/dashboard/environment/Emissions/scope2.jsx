@@ -1,5 +1,5 @@
-"use client";
-import React, { useState, useEffect } from "react";
+'use client';
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import { MdAdd } from "react-icons/md";
@@ -12,7 +12,6 @@ import axiosInstance, { post } from '@/app/utils/axiosMiddleware';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
-import CalculateSuccess from "./calculateSuccess";
 import { useEmissions } from "./EmissionsContext";
 import AssignToWidgetEmission from "@/app/shared/widgets/assignToWidgetEmission";
 
@@ -26,8 +25,20 @@ const widgets = {
 const view_path = "gri-environment-emissions-301-a-scope-2";
 const client_id = 1;
 const user_id = 1;
+const schema = {
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "Remove": { "type": "string" },
+      "AssignTo": { "type": "string", "title": "Assign To" },
+      "Emission": { "type": "string", "title": "Emission" },
+      "FileUpload": { "type": "string", "format": "data-url" }
+    }
+  }
+};
 
-const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
+const Scope2 = forwardRef(({ location, year, month, successCallback, countryCode }, ref) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -38,20 +49,15 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
   const [localClimatiq, setlocalClimatiq] = useState(0);
   const [activityCache, setActivityCache] = useState({});
 
-  useEffect(()=>{
-    setScope2Data(formData)
-  },[formData])
+  useImperativeHandle(ref, () => ({
+    updateFormData() {
+      return updateFormData(); // Return the promise
+    }
+  }));
 
-  // useEffect(() => {
-  //   console.log('Got the climatiqData in header --- ');
-  //   if (climatiqData?.result?.[0]) {
-  //     let sum = 0;
-  //     for (const item of climatiqData.result) {
-  //       sum += item.co2e;
-  //     }
-  //     setlocalClimatiq(sum);
-  //   }
-  // }, [climatiqData]);
+  useEffect(() => {
+    setScope2Data(formData);
+  }, [formData]);
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -69,7 +75,7 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
     setFormData(prevFormData => {
       const updatedFormData = [...prevFormData];
       const currentEmission = updatedFormData[index]?.Emission || {};
-  
+
       updatedFormData[index] = {
         ...updatedFormData[index],
         Emission: {
@@ -79,17 +85,16 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
           ...(unitType !== undefined && { unit_type: unitType })
         }
       };
-  
+
       return updatedFormData;
     });
   };
-  
 
   const handleFileWidgetChange = (index, name, url, type, size, uploadDateTime) => {
     setFormData(prevFormData => {
       const updatedFormData = [...prevFormData];
       const currentEmission = updatedFormData[index]?.Emission || {};
-      
+
       updatedFormData[index] = {
         ...updatedFormData[index],
         Emission: currentEmission,
@@ -101,7 +106,7 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
           uploadDateTime: uploadDateTime
         }
       };
-  
+
       console.log('Updated form data:', updatedFormData);
       return updatedFormData;
     });
@@ -129,20 +134,20 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
         ...data,
       });
 
-      successCallback();
-        if (response.status === 200) {
-          setModalData({
-            location,
-            month,
-            message: "Emission has been created",
-            monthly_emissions: localClimatiq
-          });
-        loadFormData();
-      } else {
-        setModalData({
-          message: "Oops, something went wrong"
-        });
-      }
+      // successCallback();
+      // if (response.status === 200) {
+      //   setModalData({
+      //     location,
+      //     month,
+      //     message: "Emission has been created",
+      //     monthly_emissions: localClimatiq
+      //   });
+      //   loadFormData();
+      // } else {
+      //   setModalData({
+      //     message: "Oops, something went wrong"
+      //   });
+      // }
     } catch (error) {
       setModalData({
         message: "Oops, something went wrong"
@@ -174,7 +179,7 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
       });
   };
 
-  useEffect(() => {}, [r_schema, r_ui_schema]);
+  useEffect(() => { }, [r_schema, r_ui_schema]);
 
   useEffect(() => {
     console.log("formdata is changed - ", formData);
@@ -182,7 +187,7 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
 
   useEffect(() => {
     loadFormData();
-  }, []);
+  }, [year, month, location]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -216,7 +221,7 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
         <div>
           <Form
             className="flex"
-            schema={r_schema}
+            schema={schema}
             uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
@@ -233,12 +238,12 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
               FileUploadWidget: (props) => (
                 <CustomFileUploadWidget
                   {...props}
-                  scopes="scope1"
+                  scopes="scope2"
                   setFormData={updateFormDatanew}
-                  onChange={({ name,url,type,size,uploadDateTime }) =>
+                  onChange={({ name, url, type, size, uploadDateTime }) =>
                     handleFileWidgetChange(
                       props.id.split("_")[1],
-                      name,url,type,size,uploadDateTime
+                      name, url, type, size, uploadDateTime
                     )
                   }
                 />
@@ -262,7 +267,7 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
                   updateCache={updateCache}
                 />
               ),
-              AssignTobutton : (props) => (
+              AssignTobutton: (props) => (
                 <AssignToWidgetEmission {...props} scope="scope2" location={location} year={year} month={month} data={formData} />
               ),
             }}
@@ -278,16 +283,8 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
         >
           <MdAdd className="text-lg" /> Add Row
         </button>
-
-        <button
-          type="button"
-          className="h-8 text-center py-1 text-sm w-[100px] bg-[rgb(2,132,199)] text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline"
-          onClick={handleSubmit}
-        >
-          Submit
-        </button>
       </div>
-      
+
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <Oval
@@ -301,14 +298,9 @@ const Scope2 = ({ location, year, month, successCallback, countryCode }) => {
         </div>
       )}
 
-      {modalData && (
-        <CalculateSuccess
-          data={modalData}
-          onClose={handleCloseModal}
-        />
-      )}
+      <ToastContainer />
     </>
   );
-};
+});
 
 export default Scope2;
