@@ -2092,15 +2092,14 @@ const Social = () => {
                 </div>
               </>
             )}
-            <div>
-
+            {/* <div>
               <div className="w-full mb-5">
                 <div className="absolute right-5">
                   <div className="flex  me-2  mb-5">
                     <button
                       className={`${activeStep === 1 ? "text-gray-500" : "text-blue-500"
                         } px-3 py-1.5 rounded font-bold `}
-                      // onClick={handlePrevious}
+                      onClick={handlePrevious}
                       disabled={activeStep === 1}
                     >
                       &lt; Previous
@@ -2112,8 +2111,8 @@ const Social = () => {
                           ? "bg-gray-300"
                           : "bg-blue-500 text-white"
                           } px-3 py-1.5 rounded ml-2 font-bold w-[100px]`}
-                        // onClick={handleNext}
-                        disabled={activeStep === 35}
+                        onClick={handleNext}
+                        disabled={activeStep === }
                       >
                         Next &gt;
                       </button>
@@ -2122,8 +2121,7 @@ const Social = () => {
                   </div>
                 </div>
               </div>
-
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
