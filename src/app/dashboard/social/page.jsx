@@ -18,7 +18,7 @@ import Securitypersonnel from "./Human-Rights/security-personnel/page";
 import Parentalleave from "./Employment/Parental-Leave/page";
 import Benefits from "./Employment/Benefits/page";
 import EmployeeHiresTurnover from "./Employment/Employee-Hires-Turnover/page"
-// import Noticeperiod from "./Notice-Period/page";
+import Noticeperiod from "./Notice-Period/page";
 import Skillupgrade from "./Training/skill-upgrade/page";
 import Suppliersscreened from "./Supplier-social-assessment/Suppliers-screened/page"
 import Impactsactionstaken from "./Supplier-social-assessment/Impacts-actions-taken/page"
@@ -32,6 +32,9 @@ import IndigenousPeople from "./Indigenous-People/page"
 import CommunityEngagement from "./Community-Development/Community-Engagement/page"
 import ImpactonCommunity from "./Community-Development/Impact-on-Community/page"
 import PoliticalInvolvement from "./Political-Involvement/page"
+import ProductServiceSafety from "./Customer-Health-Safety/Product-Service-Safety/page"
+import Compliance from "./Customer-Health-Safety/Compliance/page"
+import CustomerPrivacy from "./Customer-Privacy/page"
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -272,7 +275,7 @@ const Social = () => {
                     </li>
                   </AccordionItem>
 
-                  {/* <AccordionItem title="Labor Relations">
+               <AccordionItem title="Labor Relations">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(4)}
@@ -334,7 +337,7 @@ const Social = () => {
                       </div>
                     </li>
 
-                  </AccordionItem> */}
+                  </AccordionItem>
                   <AccordionItem title="Occupational health and safety">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
@@ -1877,6 +1880,183 @@ const Social = () => {
                       </div>
                     </li>
                   </AccordionItem>
+                  <AccordionItem title="Customer Health and Safety">
+                    <li
+                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+                      onClick={() => activeSteps(31)}
+                    >
+                      {isStepCompleted(31) ? (
+                        <>
+                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              className="bi bi-circle-fill fill-sky-800  font-bold "
+                              viewBox="0 0 16 16"
+                            >
+                              <circle cx="8" cy="8" r="8" />
+                            </svg>
+                          </div>
+                        </>
+                      ) : (
+                        <div
+                          className={`${activeStep === 31
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            className={`${activeStep === 31
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
+                            viewBox="0 0 16 16"
+                          >
+                            <circle cx="8" cy="8" r="8" />
+                          </svg>
+                        </div>
+                      )}
+
+                      <div className="flex items-center">
+                        {isStepCompleted(31) ? (
+                          <>
+                            <p className="text-[12px] text-sky-800  font-bold">
+                            Product/Service Safety
+                            </p>
+                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] ext-green-600" />
+                          </>
+                        ) : (
+                          <p
+                            className={`${activeStep === 31
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[12px]  text-gray-600"
+                              } `}
+                          >
+                            Product/Service Safety
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                    <li
+                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+                      onClick={() => activeSteps(32)}
+                    >
+                      {isStepCompleted(32) ? (
+                        <>
+                          <div className="before:bg-sky-800  font-bold">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              className="bi bi-circle-fill fill-sky-800  font-bold "
+                              viewBox="0 0 16 16"
+                            >
+                              <circle cx="8" cy="8" r="8" />
+                            </svg>
+                          </div>
+                        </>
+                      ) : (
+                        <div>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            className={`${activeStep === 32
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
+                            viewBox="0 0 16 16"
+                          >
+                            <circle cx="8" cy="8" r="8" />
+                          </svg>
+                        </div>
+                      )}
+
+                      <div className="flex items-center">
+                        {isStepCompleted(32) ? (
+                          <>
+                            <p className="text-[12px] text-sky-800  font-bold">
+                            Compliance
+                            </p>
+                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] ext-green-600" />
+                          </>
+                        ) : (
+                          <p
+                            className={`${activeStep === 32
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[12px]  text-gray-600"
+                              } `}
+                          >
+                           Compliance
+                          </p>
+                        )}
+                      </div>
+                    </li>
+
+
+                  </AccordionItem>
+                  <AccordionItem title="Customer Privacy">
+
+<li
+  className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+  onClick={() => activeSteps(36)}
+>
+  {isStepCompleted(36) ? (
+    <>
+      <div className="before:bg-sky-800  font-bold">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="12"
+          height="12"
+          className="bi bi-circle-fill fill-sky-800  font-bold "
+          viewBox="0 0 16 16"
+        >
+          <circle cx="8" cy="8" r="8" />
+        </svg>
+      </div>
+    </>
+  ) : (
+    <div>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="12"
+        height="12"
+        className={`${activeStep === 36
+          ? "bi bi-circle-fill fill-sky-800  font-bold "
+          : " bi bi-circle-fill fill-gray-400"
+          } `}
+        viewBox="0 0 16 16"
+      >
+        <circle cx="8" cy="8" r="8" />
+      </svg>
+    </div>
+  )}
+
+  <div className="flex items-center">
+    {isStepCompleted(36) ? (
+      <>
+        <p className="text-[12px] text-sky-800  font-bold">
+        Customer Privacy
+        </p>
+        <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] ext-green-600" />
+      </>
+    ) : (
+      <p
+        className={`${activeStep === 36
+          ? "text-[12px] text-sky-800  font-bold w-[166px]"
+          : " text-[12px]  text-gray-600"
+          } `}
+      >
+    Customer Privacy
+      </p>
+    )}
+  </div>
+</li>
+</AccordionItem>
                 </ul>
               </div>
             </section>
@@ -1904,13 +2084,13 @@ const Social = () => {
                 </div>
               </>
             )}
-            {/* {activeStep === 4 && (
+            {activeStep === 4 && (
               <>
                 <div>
                   <Noticeperiod />
                 </div>
               </>
-            )} */}
+            )}
             {activeStep === 5 && (
               <>
                 <div>
@@ -2089,6 +2269,27 @@ const Social = () => {
               <>
                 <div>
                   <PoliticalInvolvement />
+                </div>
+              </>
+            )}
+              {activeStep === 31 && (
+              <>
+                <div>
+                  <ProductServiceSafety />
+                </div>
+              </>
+            )}
+             {activeStep === 32 && (
+              <>
+                <div>
+                  <Compliance />
+                </div>
+              </>
+            )}
+             {activeStep === 36 && (
+              <>
+                <div>
+                  <CustomerPrivacy />
                 </div>
               </>
             )}

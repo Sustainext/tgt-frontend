@@ -24,7 +24,7 @@ const RadioWidget2 = ({
   return (
 
     <div className='mb-6 pb-4'>
-          <div className='flex mb-2 items-center'>
+          <div className='flex mb-2 items-center relative'>
         <p className='text-[15px] text-gray-700 w-full mb-2'>
           {uiSchema['ui:title']}
           <MdInfoOutline
