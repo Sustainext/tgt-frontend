@@ -17,7 +17,7 @@ const widgets = {
   RadioWidget2: RadioWidget2,
 };
 
-const view_path = 'gri-social-ohs-403-2b-quality_of_services'
+const view_path = 'gri-social-notice_period-402-1a-collective_bargaining'
 const client_id = 1
 const user_id = 1
 
@@ -146,7 +146,6 @@ const Screen2 = ({ location, year, month }) => {
       form_data: formData,
       location,
       year,
-      month
     }
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
@@ -269,8 +268,8 @@ periods, consultation, and negotiation procedures for major operational changes.
         </div>
         <div className='mx-2'>
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

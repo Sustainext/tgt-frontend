@@ -16,7 +16,7 @@ const widgets = {
 
 };
 
-const view_path = 'gri-social-ohs-403-3a-ohs_functions'
+const view_path = 'gri-social-notice_period-402-1a-minimum'
 const client_id = 1
 const user_id = 1
 
@@ -65,13 +65,7 @@ const Screen1 = ({ location, year, month }) => {
   const [r_ui_schema, setRemoteUiSchema] = useState({})
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-  const getAuthToken = () => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('token')?.replace(/"/g, "");
-    }
-    return '';
-  };
-  const token = getAuthToken();
+
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -94,7 +88,6 @@ const Screen1 = ({ location, year, month }) => {
       form_data: formData,
       location,
       year,
-
     }
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
@@ -149,7 +142,7 @@ const Screen1 = ({ location, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log('API called successfully:', response.data);
@@ -220,8 +213,8 @@ significant positive or negative impacts on workers performing the organizationâ
         </div>
         <div className='mx-2'>
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

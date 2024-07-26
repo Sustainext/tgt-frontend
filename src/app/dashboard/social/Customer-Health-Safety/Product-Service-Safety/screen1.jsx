@@ -19,7 +19,7 @@ const widgets = {
   RadioWidget2: RadioWidget2,
 };
 
-const view_path = "gri-social-political_involvement-415-1-financial";
+const view_path = "gri-social-product_safety-416-1a-number";
 const client_id = 1;
 const user_id = 1;
 
@@ -249,8 +249,8 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

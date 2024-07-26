@@ -18,7 +18,7 @@ const widgets = {
 
 };
 
-const view_path = 'gri-social-impacts_and_actions-414-2b-number_of_suppliers'
+const view_path = 'gri-social-customer_privacy-418-1a-total_number'
 const client_id = 1
 const user_id = 1
 
@@ -51,9 +51,9 @@ const uiSchema = {
 const Screen1 = ({ selectedOrg, selectedCorp,location, year, month }) => {
     const initialFormData = [
         {
-            Suppliers: "",
-            Locationofsupplier: "",
-            Significantsocialimpacts: "",
+            customerprivacy: "",
+            substantiatedorganization: "",
+            regulatorybodies: "",
 
         }
     ];
@@ -171,9 +171,9 @@ const Screen1 = ({ selectedOrg, selectedCorp,location, year, month }) => {
 
     const handleAddCommittee = () => {
         const newCommittee = {
-            Suppliers: "",
-            Locationofsupplier: "",
-            Significantsocialimpacts: "",
+            customerprivacy: "",
+            substantiatedorganization: "",
+            regulatorybodies: "",
         };
         setFormData([...formData, newCommittee]);
     };
@@ -219,8 +219,8 @@ const Screen1 = ({ selectedOrg, selectedCorp,location, year, month }) => {
                 </div>
                 <div className='mx-2'>
                     <Form
-                        schema={schema}
-                        uiSchema={uiSchema}
+                        schema={r_schema}
+                        uiSchema={r_ui_schema}
                         formData={formData}
                         onChange={handleChange}
                         validator={validator}

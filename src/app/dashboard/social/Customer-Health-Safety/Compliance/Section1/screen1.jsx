@@ -17,7 +17,7 @@ const widgets = {
   inputWidget: inputWidget3,
 };
 
-const view_path = "gri-social-supplier_screened-414-1a-number_of_new_suppliers";
+const view_path = "gri-social-compliance-416-2a-total_number";
 const client_id = 1;
 const user_id = 1;
 
@@ -256,8 +256,8 @@ period"
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

@@ -16,7 +16,7 @@ const widgets = {
   inputWidget: inputWidget3,
 };
 
-const view_path = "gri-social-impacts_and_actions-414-2c-significant_actual";
+const view_path = "gri-social-customer_privacy-418-1b-identified_leaks";
 const client_id = 1;
 const user_id = 1;
 
@@ -222,8 +222,8 @@ total number of identified leaks, thefts, or losses of customer data."
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

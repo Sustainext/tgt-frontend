@@ -275,14 +275,14 @@ const Social = () => {
                     </li>
                   </AccordionItem>
 
-               <AccordionItem title="Labor Relations">
+                  <AccordionItem title="Labor Relations">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(4)}
                     >
                       {isStepCompleted(4) ? (
                         <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
+                          <div className="before:bg-sky-800  font-bold">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="12"
@@ -295,12 +295,7 @@ const Social = () => {
                           </div>
                         </>
                       ) : (
-                        <div
-                          className={`${activeStep === 4
-                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                            } `}
-                        >
+                        <div>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
@@ -320,22 +315,23 @@ const Social = () => {
                         {isStepCompleted(4) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                            Notice Period
+                              Notice Period
                             </p>
-                           <IoCheckmarkDoneSharp  className="ml-[0.15rem] h-[17px] ext-green-600"/>
+                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] ext-green-600" />
                           </>
                         ) : (
                           <p
                             className={`${activeStep === 4
-                              ? "text-[12px] text-sky-800  font-bold"
+                              ? "text-[12px] text-sky-800  font-bold w-[166px]"
                               : " text-[12px]  text-gray-600"
                               } `}
                           >
-                          Notice Period
+                            Notice Period
                           </p>
                         )}
                       </div>
                     </li>
+
 
                   </AccordionItem>
                   <AccordionItem title="Occupational health and safety">
@@ -937,6 +933,7 @@ const Social = () => {
                     </li>
                   </AccordionItem>
                   <AccordionItem title="Training">
+
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(15)}
@@ -1925,7 +1922,7 @@ const Social = () => {
                         {isStepCompleted(31) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                            Product/Service Safety
+                              Product/Service Safety
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] ext-green-600" />
                           </>
@@ -1980,7 +1977,7 @@ const Social = () => {
                         {isStepCompleted(32) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                            Compliance
+                              Compliance
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] ext-green-600" />
                           </>
@@ -1991,7 +1988,7 @@ const Social = () => {
                               : " text-[12px]  text-gray-600"
                               } `}
                           >
-                           Compliance
+                            Compliance
                           </p>
                         )}
                       </div>
@@ -2001,62 +1998,62 @@ const Social = () => {
                   </AccordionItem>
                   <AccordionItem title="Customer Privacy">
 
-<li
-  className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-  onClick={() => activeSteps(36)}
->
-  {isStepCompleted(36) ? (
-    <>
-      <div className="before:bg-sky-800  font-bold">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="12"
-          height="12"
-          className="bi bi-circle-fill fill-sky-800  font-bold "
-          viewBox="0 0 16 16"
-        >
-          <circle cx="8" cy="8" r="8" />
-        </svg>
-      </div>
-    </>
-  ) : (
-    <div>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="12"
-        height="12"
-        className={`${activeStep === 36
-          ? "bi bi-circle-fill fill-sky-800  font-bold "
-          : " bi bi-circle-fill fill-gray-400"
-          } `}
-        viewBox="0 0 16 16"
-      >
-        <circle cx="8" cy="8" r="8" />
-      </svg>
-    </div>
-  )}
+                    <li
+                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+                      onClick={() => activeSteps(36)}
+                    >
+                      {isStepCompleted(36) ? (
+                        <>
+                          <div className="before:bg-sky-800  font-bold">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              className="bi bi-circle-fill fill-sky-800  font-bold "
+                              viewBox="0 0 16 16"
+                            >
+                              <circle cx="8" cy="8" r="8" />
+                            </svg>
+                          </div>
+                        </>
+                      ) : (
+                        <div>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            className={`${activeStep === 36
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
+                            viewBox="0 0 16 16"
+                          >
+                            <circle cx="8" cy="8" r="8" />
+                          </svg>
+                        </div>
+                      )}
 
-  <div className="flex items-center">
-    {isStepCompleted(36) ? (
-      <>
-        <p className="text-[12px] text-sky-800  font-bold">
-        Customer Privacy
-        </p>
-        <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] ext-green-600" />
-      </>
-    ) : (
-      <p
-        className={`${activeStep === 36
-          ? "text-[12px] text-sky-800  font-bold w-[166px]"
-          : " text-[12px]  text-gray-600"
-          } `}
-      >
-    Customer Privacy
-      </p>
-    )}
-  </div>
-</li>
-</AccordionItem>
+                      <div className="flex items-center">
+                        {isStepCompleted(36) ? (
+                          <>
+                            <p className="text-[12px] text-sky-800  font-bold">
+                              Customer Privacy
+                            </p>
+                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] ext-green-600" />
+                          </>
+                        ) : (
+                          <p
+                            className={`${activeStep === 36
+                              ? "text-[12px] text-sky-800  font-bold w-[166px]"
+                              : " text-[12px]  text-gray-600"
+                              } `}
+                          >
+                            Customer Privacy
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                  </AccordionItem>
                 </ul>
               </div>
             </section>
@@ -2272,21 +2269,21 @@ const Social = () => {
                 </div>
               </>
             )}
-              {activeStep === 31 && (
+            {activeStep === 31 && (
               <>
                 <div>
                   <ProductServiceSafety />
                 </div>
               </>
             )}
-             {activeStep === 32 && (
+            {activeStep === 32 && (
               <>
                 <div>
                   <Compliance />
                 </div>
               </>
             )}
-             {activeStep === 36 && (
+            {activeStep === 36 && (
               <>
                 <div>
                   <CustomerPrivacy />
