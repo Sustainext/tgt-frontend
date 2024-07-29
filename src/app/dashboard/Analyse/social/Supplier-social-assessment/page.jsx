@@ -14,7 +14,7 @@ const AnalyseSuppliersocialassessment = ({ isBoxOpen }) => {
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
-  const [corporates, setCorporates] = useState([]);
+  const [corporate, setCorporates] = useState([]);
   const [reportType, setReportType] = useState("Organization");
   const [loopen, setLoOpen] = useState(false);
   const [datasetparams, setDatasetparams] = useState({
@@ -164,7 +164,7 @@ const AnalyseSuppliersocialassessment = ({ isBoxOpen }) => {
   const handleOrgChange = (e) => {
     const newCorp = e.target.value;
     setSelectedCorp(newCorp);
-    setSelectedSetLocation("");
+
     setSelectedYear("");
 
     setDatasetparams((prevParams) => ({
@@ -268,8 +268,8 @@ const AnalyseSuppliersocialassessment = ({ isBoxOpen }) => {
                         onChange={handleOrgChange}
                       >
                         <option value="">--Select Corporate--- </option>
-                        {corporates &&
-                          corporates.map((corp) => (
+                        {corporate &&
+                          corporate.map((corp) => (
                             <option key={corp.id} value={corp.id}>
                               {corp.name}
                             </option>

@@ -1,19 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
-import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
+import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
-import CustomTableWidget4 from '../../../../shared/widgets/Table/tableWidget4';
+import CustomTableWidget12 from '../../../../shared/widgets/Table/tableWidget12';
 import axios from 'axios';
-import { Oval } from 'react-loader-spinner';
-import {  toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Oval } from 'react-loader-spinner';
+import { GlobalState } from '@/Context/page';
+import axiosInstance from '@/app/utils/axiosMiddleware'
 const widgets = {
-    TableWidget: CustomTableWidget4,
+    TableWidget: CustomTableWidget12,
 };
 
-const view_path = 'gri-social-benefits-401-2a-benefits_provided'
+const view_path = 'gri-social-community_engagement-413-1a-number_of_operations'
 const client_id = 1
 const user_id = 1
 
@@ -22,11 +24,9 @@ const schema = {
     items: {
         type: 'object',
         properties: {
-            benefits: { type: "string", title: "Benefits" },
-            fulltime: { type: "boolean", title: "Full-Time Employees" },
-            parttime: { type: "boolean", title: "Part-Time Employees" },
-            temporary: { type: "boolean", title: "Temporary Employees" },
-            significantlocation: { type: "string", title: "Significant location of operations" }
+            operations: { type: "string", title: "No. of operations implemented by engaging local communities" },
+            totaloperations: { type: "string", title: "Total no. of operations" },
+
         },
     },
 };
@@ -34,33 +34,35 @@ const schema = {
 const uiSchema = {
     "ui:widget": "TableWidget",
     'ui:options': {
-        types: {
-            benefits: "string",
-            fulltime: "boolean",
-            parttime: "boolean",
-            temporary: "boolean",
-            significantlocation: "string"
-        },
         titles: [
-            { title: "Benefits", tooltip: "benefit definition: direct benefit provided in the form of financial contributions, care paid for by the organization, or the reimbursement of expenses borne by the employee. Example: Life Insurance, Health Care, Coverage, Parental Leave, Retirement Provision, Stock Ownership etc. " },
-            { title: "Full-Time Employees", tooltip: "Please select if this benefit is standard for all full-time employees. Unselect if it's not offered." },
-            { title: "Part-Time Employees", tooltip: "Please select if this benefit is standard for all Part-time employees. Unselect if it's not offered." },
-            { title: "Temporary Employees", tooltip: "Please select if this benefit is standard for all Temporary employees. Unselect if it's not offered." },
-            { title: "Significant location of operations", tooltip: "This section allows you to enter the organization's significant locations of operation where the listed benefit is offered to full-time or part-time employees." },
+            { key: "operations", title: "No. of operations implemented by engaging local communities", type:"number" },
+            { key: "totaloperations", title: "Total no. of operations",type:"number" },
+
         ],
+        rowLabels: [
+            { title: "Social impact assessments", tooltip: "Mention the number of operations that include the use of social impact assessments, including gender impact assessments, based on participatory processes." },
+            { title: "Environmental impact assessments", tooltip: "Mention the number of operations that include the use of environmental impact assessments and ongoing monitoring." },
+            { title: "Public disclosure", tooltip: "Mention the number of operations that include the use of public disclosure of results of environmental and social impact assessments" },
+            { title: "Stakeholder engagement plans", tooltip: "Mention the number of operations that include the use of stakeholder engagement plans based on stakeholder mapping." },
+            { title: "Local community consultation committes", tooltip: "Mention the number of operations that include the use of  broad based local community consultation committees and processes that includevulnerable groups." },
+            { title: "Works councils, occupational health and safety committees", tooltip: "Mention the number of operations that include the use of works councils, occupational health and safety committees and other worker representation bodies to deal with impacts." },
+            { title: "Community grievance processes", tooltip: "Mention the number of operations that include the use of formal local community grievance processes." },
+        ]
     },
 };
-const initialBenefits = [
-    { benefits: "Life Insurance", fulltime: false, parttime: false, temporary: false, significantlocation: "" },
-    { benefits: "Health Care", fulltime: false, parttime: false, temporary: false, significantlocation: "" },
-    { benefits: "Disability & Invalidity Coverage", fulltime: false, parttime: false, temporary: false, significantlocation: "" },
-    { benefits: "Parental Leave", fulltime: false, parttime: false, temporary: false, significantlocation: "" },
-    { benefits: "Retirement Provision", fulltime: false, parttime: false, temporary: false, significantlocation: "" },
-    { benefits: "Stock Ownership", fulltime: false, parttime: false, temporary: false, significantlocation: "" },
-    { benefits: "Others", fulltime: false, parttime: false, temporary: false, significantlocation: "" }
-];
-const Benefitsscreen = ({ location, year, month }) => {
-    const [formData, setFormData] = useState(initialBenefits);
+
+const Screen1 = ({ location, year, month }) => {
+    const { open } = GlobalState();
+    const initialFormData = [
+        { operations: "", totaloperations: "" },
+        { operations: "", totaloperations: "" },
+        { operations: "", totaloperations: "" },
+        { operations: "", totaloperations: "" },
+        { operations: "", totaloperations: "" },
+        { operations: "", totaloperations: "" },
+        { operations: "", totaloperations: "" },
+    ];
+    const [formData, setFormData] = useState(initialFormData);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
     const [loopen, setLoOpen] = useState(false);
@@ -83,12 +85,7 @@ const Benefitsscreen = ({ location, year, month }) => {
         setFormData(e.formData); // Ensure you are extracting formData from the event
     };
 
-    // The below code on updateFormData
-    let axiosConfig = {
-        headers: {
-            Authorization: 'Bearer ' + token,
-        },
-    };
+
     const updateFormData = async () => {
         LoaderOpen();
         const data = {
@@ -103,7 +100,7 @@ const Benefitsscreen = ({ location, year, month }) => {
 
         const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
         try {
-            const response = await axios.post(url, data, axiosConfig);
+            const response = await axiosInstance.post(url, data);
             if (response.status === 200) {
                 toast.success("Data added successfully", {
                     position: "top-right",
@@ -145,32 +142,24 @@ const Benefitsscreen = ({ location, year, month }) => {
         }
     };
 
+
     const loadFormData = async () => {
         LoaderOpen();
-        setFormData(initialBenefits);
+        setFormData(initialFormData);
         const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
         try {
-            const response = await axios.get(url, axiosConfig);
+            const response = await axiosInstance.get(url);
             console.log('API called successfully:', response.data);
             setRemoteSchema(response.data.form[0].schema);
             setRemoteUiSchema(response.data.form[0].ui_schema);
             setFormData(response.data.form_data[0].data);
         } catch (error) {
-            setFormData(initialBenefits);
+            setFormData(initialFormData);
         } finally {
             LoaderClose();
         }
     };
 
-
-    useEffect(() => {
-        //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-    }, [r_schema, r_ui_schema])
-
-    // console log the form data change
-    useEffect(() => {
-        console.log('Form data is changed -', formData)
-    }, [formData])
 
     // fetch backend and replace initialized forms
     useEffect(() => {
@@ -193,26 +182,20 @@ const Benefitsscreen = ({ location, year, month }) => {
         console.log('Form data:', formData);
         updateFormData()
     };
-
-    const handleAddCommittee = () => {
-        const newEntry = { benefits: "", fulltime: false, parttime: false, temporary: false, significantlocation: "" };
-        setFormData(formData => [...formData, newEntry]); // Use a functional update to ensure the latest state
-    };
-
-    const handleRemoveCommittee = (index) => setFormData(formData.filter((_, i) => i !== index));
-
     return (
         <>
 
-            <div className="mx-2 p-3 mb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+            <div className="mx-2 p-3 mb-6 pb-4 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
                 <div className='mb-4 flex'>
-                    <div className='w-[80%]'>
+                    <div className='w-[80%] relative'>
                         <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold mb-2'>
-                            Benefits provided to full-time employees that are not provided to temporary or part-time employees
-                            <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
-                                data-tooltip-content="This table documents data corresponding to the standard benefits offered to full-time employees
-                                of the organization, which are generally not available to temporary or part-time employees." className="mt-1.5 ml-2 text-[14px]" />
-                            <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
+                        Number of operations
+                            <MdInfoOutline data-tooltip-id={`tooltip-employees`}
+                                data-tooltip-content="This section documents the data
+corresponding to the number operations with
+implemented local community engagement,
+impact assessments, and/or development programs. " className="mt-1.5 ml-2 text-[14px]" />
+                            <ReactTooltip id={`tooltip-employees`} place="top" effect="solid" style={{
                                 width: "290px", backgroundColor: "#000",
                                 color: "white",
                                 fontSize: "12px",
@@ -222,16 +205,11 @@ const Benefitsscreen = ({ location, year, month }) => {
                             }}>
                             </ReactTooltip>
                         </h2>
-                        {/* <h2 className='flex mx-2 text-[11px] text-gray-500 font-semibold mb-2'>
-                        For all employees, please report the following
-
-                        </h2> */}
                     </div>
-
                     <div className='w-[20%]'>
-                        <div className="bg-sky-100 h-[25px] w-[75px] rounded-md mx-2 float-end">
+                        <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
                             <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                                GRI 401-2a
+                                GRI 413-1a
                             </p>
                         </div>
 
@@ -244,18 +222,8 @@ const Benefitsscreen = ({ location, year, month }) => {
                     onChange={handleChange}
                     validator={validator}
                     widgets={widgets}
-                    formContext={{ onRemove: handleRemoveCommittee }}
                 />
-                <div className="flex right-1 mx-2">
-                {location && year && (
-   <button type="button" className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5" onClick={handleAddCommittee}>
-   Add more  <MdAdd className='text-lg' />
-</button>
-)}
-
-                </div>
-
-               <div className='mb-6'>
+                <div className='mb-8'>
                 <button type="button"
                         className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? 'cursor-not-allowed' : ''}`}
                         onClick={handleSubmit}
@@ -280,4 +248,4 @@ const Benefitsscreen = ({ location, year, month }) => {
     );
 };
 
-export default Benefitsscreen;
+export default Screen1;

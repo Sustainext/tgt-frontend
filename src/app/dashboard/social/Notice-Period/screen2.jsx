@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect,useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
 import inputWidget2 from '../../../shared/widgets/Input/inputWidget2';
@@ -11,121 +11,146 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
-
+import axiosInstance from '@/app/utils/axiosMiddleware'
 const widgets = {
-    inputWidget: inputWidget2,
-    RadioWidget2:RadioWidget2,
+  inputWidget: inputWidget2,
+  RadioWidget2: RadioWidget2,
 };
 
-const view_path = 'gri-social-ohs-403-2b-quality_of_services'
+const view_path = 'gri-social-notice_period-402-1a-collective_bargaining'
 const client_id = 1
 const user_id = 1
 
 const schema = {
-    type: 'array',
-    items: {
-        type: 'object',
-        properties: {
-            Q1: {
-                type: "string",
-                title: "Does the organization ensure the quality of these services and facilitate workers access",
-                enum: [
-                    'Yes',
-                    'No',
+  type: 'array',
+  items: {
+    type: 'object',
+    properties: {
+      Q1: {
+        type: "string",
+        title: "Collective bargaining agreements",
 
-                ],
-            },
-            Q2: {
-                type: "string",
-                title: "How the organization ensure the quality of these services and facilitate workers access",
+      },
+      Q2: {
+        type: "string",
+        title: "Notice Period Specified",
+        enum: [
+          'Yes',
+          'No',
 
-            },
+        ],
+      },
 
+      Q3: {
+        type: "string",
+        title: "Consultation Provisions",
+        enum: [
+          'Yes',
+          'No',
 
-        },
+        ],
+      },
+
+      Q4: {
+        type: "string",
+        title: "Negotiation Provisions",
+        enum: [
+          'Yes',
+          'No',
+
+        ],
+      },
     },
+  },
 };
 
 const uiSchema = {
-    items: {
-        'ui:order': ['Q1', 'Q2'],
-        Q1: {
-            "ui:title": "Does the organization ensure the quality of these services and facilitate workers access",
-            "ui:tooltip": "Indicate whether the organization ensures the quality of the services and facilitates worker access.",
-            "ui:tooltipdisplay": "block",
-            'ui:widget': 'RadioWidget2',
-            'ui:horizontal': true,
-            'ui:options': {
-                label: false
-            },
-        },
-        Q2: {
-            "ui:title": "How the organization ensure the quality of these services and facilitate workers access",
-            "ui:tooltip": "Describe how the organization ensures the quality of the services and facilitates worker access.Include:  1) How the organization maintains the confidentiality of workers’ personal health related information. 2)How the organization ensures that workers’ personal health-related information and their participation in any occupational health services is not used for any favorable or unfavorable treatment of workers",
-            "ui:tooltipdisplay": "block",
-            'ui:widget': 'inputWidget',
-            'ui:horizontal': true,
-            'ui:options': {
-                label: false
-            },
-        },
-
-
-     'ui:options': {
-            orderable: false,
-            addable: false,
-            removable: false,
-            layout: 'horizontal',
-        },
+  items: {
+    'ui:order': ['Q1', 'Q2', 'Q3', 'Q4'],
+    Q1: {
+      "ui:title": "Collective bargaining agreements",
+      "ui:tooltip": "Please enter the name of the relevant Collective Bargaining Agreement (CBA).Collective bargaining definition:all negotiations that take place between one or more employers or employers' organizations, on the one hand, and one or more workers' organizations (e.g., trade unions), on the other, for determining working conditions and terms of employment or for regulating relations between employers and workers",
+      "ui:tooltipdisplay": "block",
+      'ui:widget': 'inputWidget',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
     },
+
+    Q2: {
+      "ui:title": "Notice Period Specified",
+      "ui:tooltip": "Select Yes if your collective bargaining agreements address this provision (notice period).Select No if it is not addressed.",
+      "ui:tooltipdisplay": "block",
+      'ui:widget': 'RadioWidget2',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    Q3: {
+      "ui:title": "Consultation Provisions",
+      "ui:tooltip": "Select Yes if your collective bargaining agreements address this provision (consultation).Select No if it is not addressed.",
+      "ui:tooltipdisplay": "block",
+      'ui:widget': 'RadioWidget2',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    Q4: {
+      "ui:title": "Negotiation Provisions",
+      "ui:tooltip": "Select Yes if your collective bargaining agreements address this provision (negotiation).Select No if it is not addressed.",
+      "ui:tooltipdisplay": "block",
+      'ui:widget': 'RadioWidget2',
+      'ui:horizontal': true,
+      'ui:options': {
+        label: false
+      },
+    },
+    'ui:options': {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: 'horizontal',
+    },
+  },
 };
 
-const Screen2 = ({location, year, month}) => {
-    const [formData, setFormData] = useState([{}]);
-    const [r_schema, setRemoteSchema] = useState({})
-    const [r_ui_schema, setRemoteUiSchema] = useState({})
-    const [loopen, setLoOpen] = useState(false);
-    const toastShown = useRef(false);
-    const getAuthToken = () => {
-        if (typeof window !== 'undefined') {
-            return localStorage.getItem('token')?.replace(/"/g, "");
-        }
-        return '';
-    };
-    const token = getAuthToken();
+const Screen2 = ({ location, year, month }) => {
+  const [formData, setFormData] = useState([{}]);
+  const [r_schema, setRemoteSchema] = useState({})
+  const [r_ui_schema, setRemoteUiSchema] = useState({})
+  const [loopen, setLoOpen] = useState(false);
+  const toastShown = useRef(false);
 
-    const LoaderOpen = () => {
-        setLoOpen(true);
-      };
-      const LoaderClose = () => {
-        setLoOpen(false);
-      };
 
-    const handleChange = (e) => {
-        setFormData(e.formData);
-    };
+  const LoaderOpen = () => {
+    setLoOpen(true);
+  };
+  const LoaderClose = () => {
+    setLoOpen(false);
+  };
 
-    // The below code on updateFormData
-    let axiosConfig = {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    };
+  const handleChange = (e) => {
+    setFormData(e.formData);
+  };
+
+
   const updateFormData = async () => {
     LoaderOpen();
     const data = {
-      client_id : client_id,
-      user_id : user_id,
+      client_id: client_id,
+      user_id: user_id,
       path: view_path,
       form_data: formData,
       location,
       year,
-      month
     }
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
-    try{
-      const response = await axios.post(url,data, axiosConfig);
+    try {
+      const response = await axiosInstance.post(url, data);
       if (response.status === 200) {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -140,7 +165,7 @@ const Screen2 = ({location, year, month}) => {
         LoaderClose();
         loadFormData();
 
-      }else {
+      } else {
         toast.error("Oops, something went wrong", {
           position: "top-right",
           autoClose: 1000,
@@ -172,110 +197,112 @@ const Screen2 = ({location, year, month}) => {
     // }
   };
 
- const loadFormData = async () => {
-        LoaderOpen();
-        setFormData([{}]);
-        const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
-        try {
-            const response = await axios.get(url, axiosConfig);
-            console.log('API called successfully:', response.data);
-            setRemoteSchema(response.data.form[0].schema);
-            setRemoteUiSchema(response.data.form[0].ui_schema);
-            setFormData(response.data.form_data[0].data);
-        } catch (error) {
-            setFormData([{}]);
-        } finally {
-            LoaderClose();
-        }
-    };
-  //Reloading the forms -- White Beard
-  useEffect(() => {
-    //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-  },[r_schema, r_ui_schema])
+  const loadFormData = async () => {
+    LoaderOpen();
+    setFormData([{}]);
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
+    try {
+      const response = await axiosInstance.get(url);
+      console.log('API called successfully:', response.data);
+      setRemoteSchema(response.data.form[0].schema);
+      setRemoteUiSchema(response.data.form[0].ui_schema);
+      setFormData(response.data.form_data[0].data);
+    } catch (error) {
+      setFormData([{}]);
+    } finally {
+      LoaderClose();
+    }
+  };
 
-  // console log the form data change
-  useEffect(() => {
-    console.log('Form data is changed -', formData)
-  },[formData])
 
   // fetch backend and replace initialized forms
-  useEffect (()=> {
-    if (location && year && month) {
-        loadFormData();
-        toastShown.current = false; // Reset the flag when valid data is present
+  useEffect(() => {
+    if (location && year) {
+      loadFormData();
+      toastShown.current = false; // Reset the flag when valid data is present
     } else {
-        // Only show the toast if it has not been shown already
-        if (!toastShown.current) {
-            toastShown.current = true; // Set the flag to true after showing the toast
-        }
+      // Only show the toast if it has not been shown already
+      if (!toastShown.current) {
+        toastShown.current = true; // Set the flag to true after showing the toast
+      }
     }
-  },[location, year, month])
+  }, [location, year])
 
-    const handleSubmit = (e) => {
-        e.preventDefault(); // Prevent the default form submission
-        console.log('Form data:', formData);
-        updateFormData();
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent the default form submission
+    console.log('Form data:', formData);
+    updateFormData();
+  };
 
-    return (
-        <>
-               <div className="mx-2  p-3 mb-6 pb-6 rounded-md" style={{boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px"}}>
-                <div className='mb-4 flex'>
-                    <div className='w-[80%]'>
-                    <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold'>
-                    Quality of services and facilitation of workers access
-                        <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
-                            data-tooltip-content="This section documents data corresponding to the
-                            quality of the services and facilitation of workers access.
-                            " className="mt-1.5 ml-2 text-[14px]" />
-                        <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
-                            width: "290px", backgroundColor: "#000",
-                            color: "white",
-                            fontSize: "12px",
-                            boxShadow: 3,
-                            borderRadius: "8px",
-                            textAlign: 'left',
-                        }}>
-                        </ReactTooltip>
-                    </h2>
-                    </div>
+  return (
+    <>
+      <div className="mx-2  p-3 mb-6 pb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+        <div className='mb-4 flex'>
+          <div className='w-[80%]'>
+            <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold'>
+              Collective bargaining agreements
+              <MdInfoOutline data-tooltip-id={`tooltip-$e25`}
+                data-tooltip-content="This section documents data corresponding to the presence or
+absence of provisions within your organization's
+collective bargaining agreements regarding employee notice
+periods, consultation, and negotiation procedures for major operational changes." className="mt-1.5 ml-2 text-[14px]" />
+              <ReactTooltip id={`tooltip-$e22`} place="top" effect="solid" style={{
+                width: "290px", backgroundColor: "#000",
+                color: "white",
+                fontSize: "12px",
+                boxShadow: 3,
+                borderRadius: "8px",
+                textAlign: 'left',
+              }}>
+              </ReactTooltip>
+            </h2>
+          </div>
 
-                    <div   className='w-[20%]'>
+          <div className='w-[20%]'>
             <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
               <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-              GRI 403-2b
+                GRI 402-1a
               </p>
             </div>
           </div>
-                </div>
-                <div className='mx-2'>
-                    <Form
-                        schema={r_schema}
-                        uiSchema={r_ui_schema}
-                        formData={formData}
-                        onChange={handleChange}
-                        validator={validator}
-                        widgets={widgets}
-                    />
-                </div>
-                <div className='mb-6'>
-                    <button type="button" className="text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
-                </div>
-            </div>
-            {loopen && (
-            <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-                <Oval
-                height={50}
-                width={50}
-                color="#00BFFF"
-                secondaryColor="#f3f3f3"
-                strokeWidth={2}
-                strokeWidthSecondary={2}
-                />
-            </div>
-            )}
-        </>
-    );
+        </div>
+        <div className='mx-2'>
+          <Form
+            schema={r_schema}
+            uiSchema={r_ui_schema}
+            formData={formData}
+            onChange={handleChange}
+            validator={validator}
+            widgets={widgets}
+          />
+        </div>
+        <div className='mb-6'>
+          <button
+            type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? "cursor-not-allowed" : ""
+              }`}
+            onClick={handleSubmit}
+            disabled={!location || !year}
+          >
+            Submit
+          </button>
+
+        </div>
+      </div>
+      {loopen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
+    </>
+  );
 };
 
 export default Screen2;

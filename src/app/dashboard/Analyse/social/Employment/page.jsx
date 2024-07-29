@@ -105,8 +105,8 @@ const AnalyseEmployment = ({ isBoxOpen }) => {
       }));
       const formattedSource = benefits.map((bf) => ({
         Benefit: bf.benefits,
-        'Full-Time Employees': bf.fulltime,
-       'Part-Time Employees': bf.parttime,
+        'Full-Time Employees': bf.full_time,
+       'Part-Time Employees': bf.part_time,
        'Temporary Employees': bf.temporary,
 
       }));

@@ -1,21 +1,23 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
-import {Socialdata} from "../data/socialgriinfo"
+import {Socialdata} from "../../data/socialgriinfo"
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
-import Socialheader3 from "../socialheader3"
-import Noticeperiodmain from "./notice-period"
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const Noticeperiod = () => {
+import Socialheader4 from '../../socialheader4';
+import Screen1 from "./screen1"
+import Screen2 from "./screen2"
+const Section1 = () => {
     const [activeMonth, setActiveMonth] = useState(1);
     const [location, setLocation] = useState("");
     const [year, setYear] = useState(2024);
     const [data, setData] = useState();
     const [category, setCategory] = useState("");
     const [isOpen, setIsOpen] = useState(false);
-
+    const [selectedOrg, setSelectedOrg] = useState("");
+    const [selectedCorp, setSelectedCorp] = useState("");
     const toggleDrawerclose = () => {
         setIsOpen(!isOpen);
     }
@@ -47,7 +49,7 @@ const Noticeperiod = () => {
                             <div className='flex'>
                                 <div>
                                     <p className="gradient-text text-[22px] font-bold pt-1">
-                                    Labor/Management Relations 2016
+                                    Customer Privacy
                                     </p>
                                 </div>
 
@@ -57,8 +59,9 @@ const Noticeperiod = () => {
                     </div>
                     <div className='w-full float-end '>
                         <div className="flex float-end border-l">
-                            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('66')}>GRI 402 - 1</button>
-                            <button className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('14')}>SDG 8</button>
+                        <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('70')}>GRI 418 - 1</button>
+                            <button className="text-[#fff] bg-[#00558A] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('71')}>SDG 16</button>
+
                         </div>
                     </div>
                 </div>
@@ -67,7 +70,7 @@ const Noticeperiod = () => {
                 <div className="ml-3 flex">
                     <h6 className="text-[17px] mb-4 font-semibold flex">
 
-                    Minimum notice periods regarding operational changes
+                    Substantiated complaints concerning breaches of customer privacy and losses of customer data (1/2)
                         {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[14px]" />
@@ -105,16 +108,19 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
 
                 </div>
             </div>
-            <Socialheader3
+            <Socialheader4
             activeMonth={activeMonth}
             setActiveMonth={setActiveMonth}
-            location={location}
-            setLocation={setLocation}
+            selectedOrg={selectedOrg}
+            setSelectedOrg={setSelectedOrg}
+            selectedCorp={selectedCorp}
+            setSelectedCorp={setSelectedCorp}
             year={year}
             setYear={setYear} />
-            <Noticeperiodmain location={location} year={year} month={activeMonth} />
+            <Screen1 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year} month={activeMonth} />
+            <Screen2 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year} month={activeMonth} />
 
         </>
     );
 };
-export default Noticeperiod;
+export default Section1;
