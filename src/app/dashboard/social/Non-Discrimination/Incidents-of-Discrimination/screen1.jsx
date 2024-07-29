@@ -50,9 +50,10 @@ const uiSchema = {
 const Screen1 = ({ location, year, month }) => {
     const initialFormData = [
         {
-            typeofincident: "Gender",
+            typeofincident: "",
             totalnumberofincidentsofdiscrimination: "",
             describetheincident: "",
+
 
         }
     ];
@@ -165,7 +166,7 @@ const Screen1 = ({ location, year, month }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Form data:', formData);
-        updateFormData();
+        // updateFormData();
     };
 
 
@@ -208,8 +209,8 @@ reporting period" className="mt-1.5 ml-2 text-[14px]" />
                 </div>
                 <div className='mx-2'>
                     <Form
-                        schema={r_schema}
-                        uiSchema={r_ui_schema}
+                        schema={schema}
+                        uiSchema={uiSchema}
                         formData={formData}
                         onChange={handleChange}
                         validator={validator}

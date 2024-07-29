@@ -35,6 +35,11 @@ import PoliticalInvolvement from "./Political-Involvement/page"
 import ProductServiceSafety from "./Customer-Health-Safety/Product-Service-Safety/page"
 import Compliance from "./Customer-Health-Safety/Compliance/page"
 import CustomerPrivacy from "./Customer-Privacy/page"
+import ProductServicelabelling from "./Marketing-Labeling/Product-Service-labelling/page"
+import NoncomplianceincidentsLabelling from "./Marketing-Labeling/Non-compliance-incidents-Labelling/page"
+import StatementnoncomplianceLabeling from "./Marketing-Labeling/Statement-non-compliance-Labeling/page"
+import NoncomplianceincidentsMarketing from "./Marketing-Labeling/Non-compliance-incidents-Marketing/page"
+import StatementnoncomplianceMarketing from "./Marketing-Labeling/Statement-non-compliance-Marketing/page"
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -1996,15 +2001,14 @@ const Social = () => {
 
 
                   </AccordionItem>
-                  <AccordionItem title="Customer Privacy">
-
+                  <AccordionItem title="Marketing and Labeling">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(36)}
+                      onClick={() => activeSteps(33)}
                     >
-                      {isStepCompleted(36) ? (
+                      {isStepCompleted(33) ? (
                         <>
-                          <div className="before:bg-sky-800  font-bold">
+                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="12"
@@ -2017,7 +2021,192 @@ const Social = () => {
                           </div>
                         </>
                       ) : (
-                        <div>
+                        <div
+                          className={`${activeStep === 33
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            className={`${activeStep === 33
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
+                            viewBox="0 0 16 16"
+                          >
+                            <circle cx="8" cy="8" r="8" />
+                          </svg>
+                        </div>
+                      )}
+
+                      <div className="flex items-center">
+                        {isStepCompleted(33) ? (
+                          <>
+                            <p className="text-[12px] text-sky-800  font-bold">
+                              Product/Service labelling
+                            </p>
+                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] ext-green-600" />
+                          </>
+                        ) : (
+                          <p
+                            className={`${activeStep === 33
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[12px]  text-gray-600"
+                              } `}
+                          >
+                            Product/Service labelling
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                    <li
+                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+                      onClick={() => activeSteps(34)}
+                    >
+                      {isStepCompleted(34) ? (
+                        <>
+                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              className="bi bi-circle-fill fill-sky-800  font-bold "
+                              viewBox="0 0 16 16"
+                            >
+                              <circle cx="8" cy="8" r="8" />
+                            </svg>
+                          </div>
+                        </>
+                      ) : (
+                        <div
+                          className={`${activeStep === 34
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            className={`${activeStep === 34
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
+                            viewBox="0 0 16 16"
+                          >
+                            <circle cx="8" cy="8" r="8" />
+                          </svg>
+                        </div>
+                      )}
+
+                      <div className="flex items-center">
+                        {isStepCompleted(34) ? (
+                          <>
+                            <p className="text-[12px] text-sky-800  font-bold">
+                              Non compliance incidents- Labelling
+                            </p>
+                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] ext-green-600" />
+                          </>
+                        ) : (
+                          <p
+                            className={`${activeStep === 34
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[12px]  text-gray-600"
+                              } `}
+                          >
+                            Non compliance incidents- Labelling
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                    <li
+                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+                      onClick={() => activeSteps(35)}
+                    >
+                      {isStepCompleted(35) ? (
+                        <>
+                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              className="bi bi-circle-fill fill-sky-800  font-bold "
+                              viewBox="0 0 16 16"
+                            >
+                              <circle cx="8" cy="8" r="8" />
+                            </svg>
+                          </div>
+                        </>
+                      ) : (
+                        <div
+                          className={`${activeStep === 35
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            className={`${activeStep === 35
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
+                            viewBox="0 0 16 16"
+                          >
+                            <circle cx="8" cy="8" r="8" />
+                          </svg>
+                        </div>
+                      )}
+
+                      <div className="flex items-center">
+                        {isStepCompleted(35) ? (
+                          <>
+                            <p className="text-[12px] text-sky-800  font-bold">
+                            Statement of non compliance - Labeling
+                            </p>
+                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] ext-green-600" />
+                          </>
+                        ) : (
+                          <p
+                            className={`${activeStep === 35
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[12px]  text-gray-600"
+                              } `}
+                          >
+                              Statement of non compliance - Labeling
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                    <li
+                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+                      onClick={() => activeSteps(36)}
+                    >
+                      {isStepCompleted(36) ? (
+                        <>
+                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              className="bi bi-circle-fill fill-sky-800  font-bold "
+                              viewBox="0 0 16 16"
+                            >
+                              <circle cx="8" cy="8" r="8" />
+                            </svg>
+                          </div>
+                        </>
+                      ) : (
+                        <div
+                          className={`${activeStep === 36
+                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                            } `}
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
@@ -2037,13 +2226,126 @@ const Social = () => {
                         {isStepCompleted(36) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Customer Privacy
+                            Non compliance incidents  - Marketing
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] ext-green-600" />
                           </>
                         ) : (
                           <p
                             className={`${activeStep === 36
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[12px]  text-gray-600"
+                              } `}
+                          >
+                              Non compliance incidents  - Marketing
+                          </p>
+                        )}
+                      </div>
+                    </li>
+
+                    <li
+                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+                      onClick={() => activeSteps(37)}
+                    >
+                      {isStepCompleted(37) ? (
+                        <>
+                          <div className=" before:bg-sky-800  font-bold">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              className="bi bi-circle-fill fill-sky-800  font-bold "
+                              viewBox="0 0 16 16"
+                            >
+                              <circle cx="8" cy="8" r="8" />
+                            </svg>
+                          </div>
+                        </>
+                      ) : (
+                        <div>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            className={`${activeStep === 37
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
+                            viewBox="0 0 16 16"
+                          >
+                            <circle cx="8" cy="8" r="8" />
+                          </svg>
+                        </div>
+                      )}
+
+                      <div className="flex items-center">
+                        {isStepCompleted(37) ? (
+                          <>
+                            <p className="text-[12px] text-sky-800  font-bold">
+                              Statement of non compliance - Marketing
+                            </p>
+                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] ext-green-600" />
+                          </>
+                        ) : (
+                          <p
+                            className={`${activeStep === 37
+                              ? "text-[12px] text-sky-800  font-bold"
+                              : " text-[12px]  text-gray-600"
+                              } `}
+                          >
+                            Statement of non compliance - Marketing
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                  </AccordionItem>
+                  <AccordionItem title="Customer Privacy">
+                    <li
+                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+                      onClick={() => activeSteps(38)}
+                    >
+                      {isStepCompleted(38) ? (
+                        <>
+                          <div className="before:bg-sky-800  font-bold">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              className="bi bi-circle-fill fill-sky-800  font-bold "
+                              viewBox="0 0 16 16"
+                            >
+                              <circle cx="8" cy="8" r="8" />
+                            </svg>
+                          </div>
+                        </>
+                      ) : (
+                        <div>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            className={`${activeStep === 38
+                              ? "bi bi-circle-fill fill-sky-800  font-bold "
+                              : " bi bi-circle-fill fill-gray-400"
+                              } `}
+                            viewBox="0 0 16 16"
+                          >
+                            <circle cx="8" cy="8" r="8" />
+                          </svg>
+                        </div>
+                      )}
+
+                      <div className="flex items-center">
+                        {isStepCompleted(38) ? (
+                          <>
+                            <p className="text-[12px] text-sky-800  font-bold">
+                              Customer Privacy
+                            </p>
+                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] ext-green-600" />
+                          </>
+                        ) : (
+                          <p
+                            className={`${activeStep === 38
                               ? "text-[12px] text-sky-800  font-bold w-[166px]"
                               : " text-[12px]  text-gray-600"
                               } `}
@@ -2283,14 +2585,49 @@ const Social = () => {
                 </div>
               </>
             )}
+            {activeStep === 33 && (
+              <>
+                <div>
+                  <ProductServicelabelling />
+                </div>
+              </>
+            )}
+            {activeStep === 34 && (
+              <>
+                <div>
+                  <NoncomplianceincidentsLabelling />
+                </div>
+              </>
+            )}
+            {activeStep === 35 && (
+              <>
+                <div>
+                  <StatementnoncomplianceLabeling />
+                </div>
+              </>
+            )}
             {activeStep === 36 && (
+              <>
+                <div>
+                  <NoncomplianceincidentsMarketing />
+                </div>
+              </>
+            )}
+            {activeStep === 37 && (
+              <>
+                <div>
+                  <StatementnoncomplianceMarketing />
+                </div>
+              </>
+            )}
+            {activeStep === 38 && (
               <>
                 <div>
                   <CustomerPrivacy />
                 </div>
               </>
             )}
-            {/* <div>
+            <div>
               <div className="w-full mb-5">
                 <div className="absolute right-5">
                   <div className="flex  me-2  mb-5">
@@ -2303,14 +2640,14 @@ const Social = () => {
                       &lt; Previous
                     </button>
 
-                    {activeStep < 35 && (
+                    {activeStep < 38 && (
                       <button
-                        className={`${activeStep === 35
+                        className={`${activeStep === 38
                           ? "bg-gray-300"
                           : "bg-blue-500 text-white"
                           } px-3 py-1.5 rounded ml-2 font-bold w-[100px]`}
                         onClick={handleNext}
-                        disabled={activeStep === }
+                        disabled={activeStep === 38}
                       >
                         Next &gt;
                       </button>
@@ -2319,7 +2656,7 @@ const Social = () => {
                   </div>
                 </div>
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
       </div>
