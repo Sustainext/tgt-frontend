@@ -1,16 +1,16 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
-import { Socialdata } from "../data/socialgriinfo";
+import { Socialdata } from "../../data/socialgriinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import Socialheader2 from "../socialheader2";
+import Socialheader2 from "../../socialheader2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Screen1 from "./Screen1";
-import Screen2 from "./Screen2";
-import Screen3 from "./Screen3";
-const CollectiveBargaining = () => {
+import Screen1 from "./screen1";
+// import Screen2 from "./Screen2";
+// import Screen3 from "./Screen3";
+const ProductServiceSafety = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState(2024);
@@ -44,32 +44,27 @@ const CollectiveBargaining = () => {
      <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-          <div className="w-[80%]">
+          <div className="w-full">
             <div className="text-left mb-4 ml-3 pt-5">
               <p className="text-sm">Social</p>
               <div className="flex">
-                <div >
+                <div>
                   <p className="gradient-text text-[22px] h-[30px] font-bold pt-1">
-                  Freedom of Association and Collective Bargaining 2016
+                  Customer Health and Safety 2016
                   </p>
                 </div>
               </div>
             </div>
           </div>
-          <div className="w-[20%] mt-2 float-end ">
+          <div className="w-full float-end ">
             <div className="flex float-end border-l">
               <button
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("58")}
+                onClick={() => toggleDrawer("67")}
               >
-                GRI 407 - 1
+                GRI 416 - 1
               </button>
-              <button
-                className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("22")}
-              >
-                SDG 8
-              </button>
+
 
             </div>
           </div>
@@ -77,20 +72,7 @@ const CollectiveBargaining = () => {
 
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Freedom of Association and Collective Bargaining 2016
-            {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
-                            data-tooltip-content="This section documents data corresponding to total water
-                            withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[14px]" />
-                        <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
-                            width: "290px", backgroundColor: "#000",
-                            color: "white",
-                            fontSize: "12px",
-                            boxShadow: 3,
-                            borderRadius: "8px",
-                            textAlign: 'left',
-                        }}>
-
-                        </ReactTooltip> */}
+          Assessment of the health and safety impacts of product and service categories
           </h6>
         </div>
         <div
@@ -130,12 +112,10 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         setYear={setYear}
       />
-      <Screen1 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year}  />
-      <Screen2 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year}  />
-      <Screen3 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year}  />
-      {/* <Screen2 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year} month={activeMonth} />
-      <Screen3 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year} month={activeMonth} /> */}
+    <Screen1 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year}  />
+
+
     </>
   );
 };
-export default CollectiveBargaining;
+export default ProductServiceSafety;

@@ -2,24 +2,22 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import inputWidget3 from "../../../shared/widgets/Input/inputWidget3";
+import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import RadioWidget2 from "../../../shared/widgets/Input/radioWidget2";
 import axios from "axios";
+import { update } from "lodash";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
-import axiosInstance from '@/app/utils/axiosMiddleware'
-
+import axiosInstance from "@/app/utils/axiosMiddleware";
 const widgets = {
-  inputWidget: inputWidget3,
-  RadioWidget2: RadioWidget2,
+  inputWidget: inputWidget2,
 };
 
-const view_path = "gri-social-indigenous_people-411-1a-incidents";
+const view_path = "gri-social-customer_privacy-418-1c-statement";
 const client_id = 1;
 const user_id = 1;
 
@@ -30,55 +28,32 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Are there any identified incidents of violations involving the rights of indigenous peoples?",
-        enum: ["Yes", "No"],
+        title:
+          " If the organization has not identified any substantiated complaints, a brief statement of this fact is sufficient.",
       },
-    },
-    dependencies: {
-      Q1: {
-        oneOf: [
-          {
-            properties: {
-              Q1: {
-                enum: ["Yes"],
-              },
-              Q2: {
-                type: "string",
-                title: "Specify the total number of incident violations involving the rights of indigenous peoples",
-              },
-            },
-          },
-        ],
-      },
+
     },
   },
 };
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1", "Q2"],
+    "ui:order": ["Q1"],
+
     Q1: {
-      "ui:title": "Are there any identified incidents of violations involving the rights of indigenous peoples?",
+      "ui:title":
+        " If the organization has not identified any substantiated complaints, a brief statement of this fact is sufficient.",
       "ui:tooltip":
-        "Indicate if there are any identified incidents of violations involving the rights of indigenous peoples.",
-      "ui:tooltipdisplay": "block",
-      "ui:widget": "RadioWidget2",
-      "ui:horizontal": true,
-      "ui:options": {
-        label: false,
-      },
-    },
-    Q2: {
-      "ui:title": "Specify the total number of incident violations involving the rights of indigenous peoples",
-      "ui:tooltip":
-        "Include: Number of  workers performing the organization’s activities and number of communities likely to be affected by existing or planned activities of the organization.",
-      "ui:tooltipdisplay": "block",
+        "Please provide a brief statement if the organization has not identified any non-compliance with regulations and/or voluntary codes",
+      "ui:tooltipdisplay": "none",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
       "ui:options": {
         label: false,
       },
     },
+
+
     "ui:options": {
       orderable: false, // Prevent reordering of items
       addable: false, // Prevent adding items from UI
@@ -88,7 +63,7 @@ const uiSchema = {
   },
 };
 
-const Screen1 = ({ location, year, month }) => {
+const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -99,17 +74,12 @@ const Screen1 = ({ location, year, month }) => {
   const LoaderOpen = () => {
     setLoOpen(true);
   };
-
   const LoaderClose = () => {
     setLoOpen(false);
   };
 
   const handleChange = (e) => {
-    let newFormData = { ...e.formData[0] };
-    if (newFormData.Q1 === "No") {
-      newFormData.Q2 = "";
-    }
-    setFormData([newFormData]);
+    setFormData(e.formData);
   };
 
   const updateFormData = async () => {
@@ -118,9 +88,9 @@ const Screen1 = ({ location, year, month }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      location,
+      corporate: selectedCorp,
+      organisation: selectedOrg,
       year,
-      month,
     };
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
@@ -164,12 +134,16 @@ const Screen1 = ({ location, year, month }) => {
       });
       LoaderClose();
     }
+    // console.log('Response:', response.data);
+    // } catch (error) {
+    // console.error('Error:', error);
+    // }
   };
 
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -183,43 +157,49 @@ const Screen1 = ({ location, year, month }) => {
     }
   };
 
+  // fetch backend and replace initialized forms
   useEffect(() => {
-    if (location && year && month) {
+    if (selectedOrg && year) {
       loadFormData();
-      toastShown.current = false;
+      toastShown.current = false; // Reset the flag when valid data is present
     } else {
+      // Only show the toast if it has not been shown already
       if (!toastShown.current) {
-        toastShown.current = true;
+        toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [location, year, month]);
+  }, [selectedOrg, year,selectedCorp]);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent the default form submission
+    console.log("Form data:", formData);
     updateFormData();
-    console.log("test form data",formData);
   };
 
   return (
     <>
       <div
-        className="mx-2  p-3 mb-6 pb-6 rounded-md"
+        className="mx-2 mt-2  p-3 mb-6 pb-6 rounded-md"
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
         }}
       >
         <div className="mb-4 flex">
-          <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
-              Incidents of violations involving the rights of indigenous people
+          <div className="w-[80%]">
+            <h2 className="flex mx-2 mb-2 text-[17px] text-gray-500 font-semibold">
+            Statement of fact
               <MdInfoOutline
-                data-tooltip-id={`tooltip-$e11`}
-                data-tooltip-content="This section documents the data corresponding to the identified incidents of violations involving the rights of indigenous peoples during the reporting period."
+                data-tooltip-id={`tooltip-$e20`}
+                data-tooltip-content="This section documents the data corresponding
+ to whether the organization
+has  identified any substantiated complaints,
+and if not then a brief statement of
+this fact is sufficient. "
                 className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip
-                id={`tooltip-$e11`}
+                id={`tooltip-$e20`}
                 place="top"
                 effect="solid"
                 style={{
@@ -239,7 +219,7 @@ const Screen1 = ({ location, year, month }) => {
             <div className={`flex float-end`}>
               <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 ">
                 <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                  GRI 411-1a
+                  GRI 418-1c
                 </p>
               </div>
             </div>
@@ -258,9 +238,11 @@ const Screen1 = ({ location, year, month }) => {
         <div className="mb-6">
           <button
             type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year || !month ? "cursor-not-allowed" : ""}`}
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              !selectedOrg || !year ? "cursor-not-allowed" : ""
+            }`}
             onClick={handleSubmit}
-            disabled={!location || !year || !month}
+            disabled={!selectedOrg || !year }
           >
             Submit
           </button>

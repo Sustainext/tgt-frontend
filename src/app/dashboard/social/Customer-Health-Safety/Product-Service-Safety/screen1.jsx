@@ -2,11 +2,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import inputWidget3 from "../../../shared/widgets/Input/inputWidget3";
+import inputWidget3 from "../../../../shared/widgets/Input/inputWidget3";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import RadioWidget2 from "../../../shared/widgets/Input/radioWidget2";
+import RadioWidget2 from "../../../../shared/widgets/Input/radioWidget2";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -19,7 +19,7 @@ const widgets = {
   RadioWidget2: RadioWidget2,
 };
 
-const view_path = "gri-social-indigenous_people-411-1a-incidents";
+const view_path = "gri-social-product_safety-416-1a-number";
 const client_id = 1;
 const user_id = 1;
 
@@ -30,7 +30,7 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Are there any identified incidents of violations involving the rights of indigenous peoples?",
+        title: "Are there any product and service categories for which health and safety impacts are assessed for improvement?",
         enum: ["Yes", "No"],
       },
     },
@@ -44,7 +44,11 @@ const schema = {
               },
               Q2: {
                 type: "string",
-                title: "Specify the total number of incident violations involving the rights of indigenous peoples",
+                title: "Specify the number of product and service categories",
+              },
+              Q3: {
+                type: "string",
+                title: "Number of product and service categories for which health and safety impacts are assessed for improvement.",
               },
             },
           },
@@ -56,11 +60,11 @@ const schema = {
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1", "Q2"],
+    "ui:order": ["Q1", "Q2","Q3"],
     Q1: {
-      "ui:title": "Are there any identified incidents of violations involving the rights of indigenous peoples?",
+      "ui:title": "Are there any product and service categories for which health and safety impacts are assessed for improvement?",
       "ui:tooltip":
-        "Indicate if there are any identified incidents of violations involving the rights of indigenous peoples.",
+        "This section documents the data corresponding to the significant product and service categories for which health and safety impacts are assessed for improvement.Product or service category - group of related products or services sharing a common, managed set of features that satisfy the specific needs of a selected market.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "RadioWidget2",
       "ui:horizontal": true,
@@ -69,9 +73,22 @@ const uiSchema = {
       },
     },
     Q2: {
-      "ui:title": "Specify the total number of incident violations involving the rights of indigenous peoples",
+        "ui:title":
+        "Specify the number of categories",
       "ui:tooltip":
-        "Include: Number of  workers performing the organization’s activities and number of communities likely to be affected by existing or planned activities of the organization.",
+        "Please specify the total number of product and service categories.  ",
+      "ui:tooltipdisplay": "block",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
+    },
+    Q3: {
+        "ui:title":
+        "Number of product and service categories",
+      "ui:tooltip":
+        "Please mention the number of product and service categories for which health and safety impacts are assessed for improvement.  ",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -88,7 +105,7 @@ const uiSchema = {
   },
 };
 
-const Screen1 = ({ location, year, month }) => {
+const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -108,6 +125,7 @@ const Screen1 = ({ location, year, month }) => {
     let newFormData = { ...e.formData[0] };
     if (newFormData.Q1 === "No") {
       newFormData.Q2 = "";
+      newFormData.Q3 = "";
     }
     setFormData([newFormData]);
   };
@@ -118,9 +136,9 @@ const Screen1 = ({ location, year, month }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      location,
+      corporate: selectedCorp,
+      organisation: selectedOrg,
       year,
-      month,
     };
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
@@ -169,7 +187,7 @@ const Screen1 = ({ location, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -184,20 +202,21 @@ const Screen1 = ({ location, year, month }) => {
   };
 
   useEffect(() => {
-    if (location && year && month) {
+    if (selectedOrg && year) {
       loadFormData();
-      toastShown.current = false;
+      toastShown.current = false; // Reset the flag when valid data is present
     } else {
+      // Only show the toast if it has not been shown already
       if (!toastShown.current) {
-        toastShown.current = true;
+        toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [location, year, month]);
+  }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     updateFormData();
-    console.log("test form data",formData);
+    console.log("test form data", formData);
   };
 
   return (
@@ -212,26 +231,9 @@ const Screen1 = ({ location, year, month }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
-              Incidents of violations involving the rights of indigenous people
-              <MdInfoOutline
-                data-tooltip-id={`tooltip-$e11`}
-                data-tooltip-content="This section documents the data corresponding to the identified incidents of violations involving the rights of indigenous peoples during the reporting period."
-                className="mt-1.5 ml-2 text-[14px]"
-              />
-              <ReactTooltip
-                id={`tooltip-$e11`}
-                place="top"
-                effect="solid"
-                style={{
-                  width: "290px",
-                  backgroundColor: "#000",
-                  color: "white",
-                  fontSize: "12px",
-                  boxShadow: 3,
-                  borderRadius: "8px",
-                  textAlign: "left",
-                }}
-              ></ReactTooltip>
+            Number of  product and service categories for which health and safety impacts are assessed
+            for improvement
+
             </h2>
           </div>
 
@@ -239,7 +241,7 @@ const Screen1 = ({ location, year, month }) => {
             <div className={`flex float-end`}>
               <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 ">
                 <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                  GRI 411-1a
+                  GRI 416-1a
                 </p>
               </div>
             </div>
@@ -256,12 +258,10 @@ const Screen1 = ({ location, year, month }) => {
           />
         </div>
         <div className="mb-6">
-          <button
-            type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year || !month ? "cursor-not-allowed" : ""}`}
+          <button type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year ? 'cursor-not-allowed' : ''}`}
             onClick={handleSubmit}
-            disabled={!location || !year || !month}
-          >
+            disabled={!selectedOrg || !year}>
             Submit
           </button>
         </div>

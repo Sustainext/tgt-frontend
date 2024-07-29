@@ -50,9 +50,10 @@ const uiSchema = {
 const Screen1 = ({ location, year, month }) => {
     const initialFormData = [
         {
-            typeofincident: "Gender",
+            typeofincident: "",
             totalnumberofincidentsofdiscrimination: "",
             describetheincident: "",
+
 
         }
     ];
@@ -165,7 +166,7 @@ const Screen1 = ({ location, year, month }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Form data:', formData);
-        updateFormData();
+        // updateFormData();
     };
 
 

@@ -75,6 +75,16 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       tag: "GRI 409",
       data: [{ tagid: "1", infoid: "31" }],
     },
+    {
+      category: "Tab12",
+      tag: "GRI 416",
+      data: [{ tagid: "1", infoid: "31" }],
+    },
+    {
+      category: "Tab13",
+      tag: "GRI 417",
+      data: [{ tagid: "1", infoid: "31" }],
+    },
   ];
   const sdg = [
     {
@@ -132,6 +142,12 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       ],
     },
     {
+      category: "Tab13",
+      data: [
+        { id: "sd11", label: "SDG 12", bgColor: "bg-[#CD8B2A]" },
+      ],
+    },
+    {
       category: "Tab8",
       data: [
         { id: "sd11", label: "SDG 5", bgColor: "bg-orange-600" },
@@ -177,6 +193,10 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
                   ? "Supplier Social Assessment 2016"
                   : activeTab === "Tab7"
                   ? "Training"
+                  : activeTab === "Tab12"
+                  ? "Customer Health and Safety 2016"
+                  : activeTab === "Tab13"
+                  ? "Marketing and labeling"
                   : activeTab === "Tab8"
                   ? "Non-Discrimination 2016"
                   : activeTab === "Tab9"

@@ -29,6 +29,7 @@ const schema = {
             localcommunities: { type: "string", title: "localcommunities" },
             locationofoperations: { type: "string", title: "locationofoperations" },
             potentialnegative: { type: "string", title: "potentialnegative" },
+            impactsoftheOperation: { type: "string", title: "impactsoftheOperation" },
 
 
         },
@@ -43,6 +44,7 @@ const uiSchema = {
                 { title: "Operations with significant actual and potential negative impacts on local communities", tooltip: "Specify the name of operations with significant actual and potential negative impacts on local communities." },
                 { title: "Location of Operations", tooltip: "Please specify the location of operation.  " },
                 { title: "Potential Negative Impacts of the Operation", tooltip: "Please specify the potential negative impacts of the operation. Examples of negative impacts on local communities can include impacts to local community health and safety." },
+                { title: "Actual Negative Impacts of the Operation", tooltip: "Please specify the actual negative impacts of the oeration." },
 
             ],
 
@@ -54,6 +56,7 @@ const Screen1 = ({ location, year, month }) => {
             localcommunities: "",
             locationofoperations: "",
             potentialnegative: "",
+            impactsoftheOperation:"",
 
         },
     ];

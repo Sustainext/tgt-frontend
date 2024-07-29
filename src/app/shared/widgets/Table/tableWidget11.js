@@ -1,5 +1,3 @@
-
-'use client'
 import React from 'react';
 import { debounce } from 'lodash';
 import { MdInfoOutline, MdOutlineDeleteOutline, MdAdd } from 'react-icons/md';
@@ -40,22 +38,21 @@ const CustomTableWidget11 = ({ id, schema, uiSchema, value, required, onChange, 
                 <thead className="gradient-background">
                     <tr>
                         {uiSchema['ui:options'].titles.map((item, idx) => (
-                            <th key={idx} style={{ minWidth: '120px', textAlign: 'left' }} className="text-[12px] border border-gray-300 px-2 py-2 ">
-                              <div className='flex'>
-                                <p>{item.title}</p>
-                                <MdInfoOutline
-                                    data-tooltip-id={`tooltip-${item.title2}`}
-                                    data-tooltip-content={item.tooltip}
-                                    style={{ display: `${item.display}` }}
-                                    className="ml-2 cursor-pointer mt-0.5" />
-                                <ReactTooltip
-                                    id={`tooltip-${item.title2}`}
-                                    place="top"
-                                    effect="solid"
-                                    className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
-                                />
+                            <th key={idx} style={{ minWidth: '120px', textAlign: 'left' }} className="text-[12px] border border-gray-300 px-2 py-2">
+                                <div className='flex'>
+                                    <p>{item.title}</p>
+                                    <MdInfoOutline
+                                        data-tooltip-id={`tooltip-${item.title2}`}
+                                        data-tooltip-content={item.tooltip}
+                                        style={{ display: `${item.display}` }}
+                                        className="ml-2 cursor-pointer mt-0.5" />
+                                    <ReactTooltip
+                                        id={`tooltip-${item.title2}`}
+                                        place="top"
+                                        effect="solid"
+                                        className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
+                                    />
                                 </div>
-
                             </th>
                         ))}
                         <th className="text-center">Actions</th>
@@ -65,52 +62,58 @@ const CustomTableWidget11 = ({ id, schema, uiSchema, value, required, onChange, 
                     {value.map((item, rowIndex) => (
                         <tr key={rowIndex}>
                             {Object.keys(item).map((key, cellIndex) => {
-                                const isEnum = schema.items.properties[key].hasOwnProperty('enum');
-                                const inputType = uiSchema['ui:options'].titles.find(t => t.title2 === key)?.type || 'text'; // Dynamically set input type based on uiSchema
+                                const propertySchema = schema.items.properties[key];
+                                const isEnum = propertySchema && propertySchema.hasOwnProperty('enum');
+                                const inputType = uiSchema['ui:options'].titles.find(t => t.title2 === key)?.type || 'text';
 
                                 return (
                                     <td key={cellIndex} className="border border-gray-300 p-3">
                                         {isEnum ? (
-                                            <select
-                                                value={item[key]}
-                                                onChange={(e) => updateField(rowIndex, key, e.target.value, isEnum)}
-                                                className="text-sm pl-2 py-2 w-full"
-                                                required={required}>
-                                                {schema.items.properties[key].enum.map((option) => (
-                                                    <option key={option} value={option}>{option}</option>
-                                                ))}
-                                            </select>
+                                            <>
+                                                <select
+                                                    value={item[key]}
+                                                    onChange={(e) => updateField(rowIndex, key, e.target.value, isEnum)}
+                                                    className="text-sm pl-2 py-2 w-full"
+                                                    required={required}>
+                                                    <option>Select</option>
+                                                    {schema.items.properties[key].enum.map((option) => (
+                                                        <option key={option} value={option}>{option}</option>
+                                                    ))}
+                                                </select>
+
+                                            </>
                                         ) : (
                                             <input
-                                                type={inputType} // Use the type from uiSchema or default to text
+                                                type={inputType}
                                                 required={required}
                                                 value={item[key]}
                                                 onChange={(e) => updateField(rowIndex, key, e.target.value, false)}
-                                                className="text-sm pl-2 py-2 w-full"
+                                                className="text-sm pl-2 py-2 w-full border"
                                             />
                                         )}
                                     </td>
                                 );
                             })}
-                            <td className="text-center border border-gray-300 p-3">
-                                <button onClick={() => formContext.onRemove(rowIndex)} title="Remove row">
-                                    <MdOutlineDeleteOutline className='text-[23px] text-red-600' />
-                                </button>
-                            </td>
+
+                                <td className="text-center border border-gray-300 p-3">
+                                    <button onClick={() => formContext.onRemove(rowIndex)} title="Remove row">
+                                        <MdOutlineDeleteOutline className='text-[23px] text-red-600' />
+                                    </button>
+                                </td>
+
                         </tr>
                     ))}
                 </tbody>
-
             </table>
             <div className="flex right-1 mx-2">
-        <button
-          type="button"
-          className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
-          onClick={addNewRow}
-        >
-          Add incident <MdAdd className='text-lg' />
-        </button>
-      </div>
+                <button
+                    type="button"
+                    className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
+                    onClick={addNewRow}
+                >
+                    Add incident <MdAdd className='text-lg' />
+                </button>
+            </div>
         </div>
     );
 };
