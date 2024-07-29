@@ -11,6 +11,7 @@ import AnalyseSuppliersocialassessment from "./Supplier-social-assessment/page";
 import AnalyseTraining from "./Training/page";
 import AnalyseNonDiscrimination from "./NonDiscrimination/page";
 import AnalyseCollectiveBargaining from "./Collective-Bargaining/page";
+import AnalyseCommunityDevelopment from "./Community-Development/page";
 
 const social = () => {
   const [activeTab, setActiveTab] = useState("Tab1");
@@ -38,6 +39,7 @@ const social = () => {
         {activeTab === "Tab7" && <AnalyseTraining /> }
         {activeTab === "Tab8" && <AnalyseNonDiscrimination /> }
         {activeTab === "Tab9" && <AnalyseCollectiveBargaining /> }
+        {activeTab === "Tab10" && <AnalyseCommunityDevelopment /> }
       </div>
     </div>
   );
