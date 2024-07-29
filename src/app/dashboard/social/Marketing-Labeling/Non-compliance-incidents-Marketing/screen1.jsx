@@ -17,7 +17,7 @@ const widgets = {
   inputWidget: inputWidget3,
 };
 
-const view_path = "gri-social-supplier_screened-414-1a-number_of_new_suppliers";
+const view_path = "gri-social-non_compliance_marketing-417-3a-incidents";
 const client_id = 1;
 const user_id = 1;
 
@@ -252,8 +252,8 @@ sponsorship."
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

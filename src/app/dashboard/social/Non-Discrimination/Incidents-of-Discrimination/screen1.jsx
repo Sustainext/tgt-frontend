@@ -209,8 +209,8 @@ reporting period" className="mt-1.5 ml-2 text-[14px]" />
                 </div>
                 <div className='mx-2'>
                     <Form
-                        schema={schema}
-                        uiSchema={uiSchema}
+                        schema={r_schema}
+                        uiSchema={r_ui_schema}
                         formData={formData}
                         onChange={handleChange}
                         validator={validator}

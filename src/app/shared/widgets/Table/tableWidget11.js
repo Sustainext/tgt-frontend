@@ -80,17 +80,7 @@ const CustomTableWidget11 = ({ id, schema, uiSchema, value, required, onChange, 
                                                         <option key={option} value={option}>{option}</option>
                                                     ))}
                                                 </select>
-                                                {key === 'typeofincident' && item[key] === 'Others' && (
-                                                    <div className="flex items-center mt-2">
-                                                        <input
-                                                            type="text"
-                                                            placeholder="Please specify"
-                                                            value={item['otherDetails'] || ''}
-                                                            onChange={(e) => updateField(rowIndex, 'otherDetails', e.target.value, false)}
-                                                            className="text-sm pl-2 py-2 w-full border"
-                                                        />
-                                                    </div>
-                                                )}
+
                                             </>
                                         ) : (
                                             <input

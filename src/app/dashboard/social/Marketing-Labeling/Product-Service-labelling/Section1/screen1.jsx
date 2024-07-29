@@ -18,7 +18,7 @@ const widgets = {
   RadioWidget2: RadioWidget2,
 };
 
-const view_path = "gri-social-product_safety-416-1a-number";
+const view_path = "gri-social-product_labeling-417-1a-required";
 const client_id = 1;
 const user_id = 1;
 
@@ -316,8 +316,8 @@ iv. Disposal of the product and environmental or social impacts.
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

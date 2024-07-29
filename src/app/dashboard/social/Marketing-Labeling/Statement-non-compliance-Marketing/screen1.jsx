@@ -14,7 +14,7 @@ const widgets = {
     inputWidget: inputWidget2,
 };
 
-const view_path = 'gri-social-indigenous_people-411-1b-status'
+const view_path = 'gri-social-statement_marketing-417-3b-statement'
 const client_id = 1
 const user_id = 1
 
@@ -210,8 +210,8 @@ voluntary codes and if not then a brief statement of this fact is sufficient." c
                 </div>
                 <div className='mx-2'>
                     <Form
-                        schema={schema}
-                        uiSchema={uiSchema}
+                        schema={r_schema}
+                        uiSchema={r_ui_schema}
                         formData={formData}
                         onChange={handleChange}
                         validator={validator}

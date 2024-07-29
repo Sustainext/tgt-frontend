@@ -2361,6 +2361,7 @@ const Social = () => {
             </section>
           </div>
           <div className="w-full ms-3">
+            <div>
             {activeStep === 1 && (
               <>
                 <div>
@@ -2627,6 +2628,7 @@ const Social = () => {
                 </div>
               </>
             )}
+             </div>
             <div>
               <div className="w-full mb-5">
                 <div className="absolute right-5">
