@@ -79,21 +79,21 @@ const AnalyseEmission = () => {
         sno: String(index + 1),
         location: loc.location,
         ageContribution: `${loc.contribution}%`,
-        totalemissions: String(loc.total),
+        totalemissions: String((loc.total/1000).toFixed(3)),
         units: "tCO₂e"
       }));
       const formattedScope = top_emission_by_scope.map((s, index) => ({
         sno: String(index + 1),
         scope: s.scope,
         ageContribution: `${s.contribution}%`,
-        totalemissions: String(s.total),
+        totalemissions: String((s.total/1000).toFixed(3)),
         units: "tCO₂e"
       }));
       const formattedSource = top_emission_by_source.map((src, index) => ({
         sno: String(index + 1),
         source: src.source,
         ageContribution: `${src.contribution}%`,
-        totalemissions: String(src.total),
+        totalemissions: String((src.total/1000).toFixed(3)),
         units: "tCO₂e"
       }));
       setScopeData(formattedScope);
@@ -371,6 +371,12 @@ const AnalyseEmission = () => {
         </div>
 
       </div>
+      <div className="mt-8">
+        <div className="mx-4">
+          <h2 className="font-bold text-[15px]">Top Emissions by Scope</h2>
+        </div>
+        <ScopeTable data={scopeData} />
+      </div>
       <div className="mt-4">
         <div className="mx-4">
           <h2 className="font-bold text-[15px]">Top Emissions by Source</h2>
@@ -383,12 +389,6 @@ const AnalyseEmission = () => {
           <h2 className="font-bold text-[15px]">Top Emissions by Location</h2>
         </div>
         <LocationTable data={locationData} />
-      </div>
-      <div className="mt-8">
-        <div className="mx-4">
-          <h2 className="font-bold text-[15px]">Top Emissions by Scope</h2>
-        </div>
-        <ScopeTable data={scopeData} />
       </div>
       {loopen && (
           <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 z-[100]">
