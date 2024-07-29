@@ -142,6 +142,27 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       ],
     },
     {
+      category: "Tab8",
+      data: [
+        { id: "sd11", label: "SDG 5", bgColor: "bg-orange-600" },
+        { id: "sd18", label: "SDG 8", bgColor: "bg-red-900" },
+      ],
+    },
+    {
+      category: "Tab9",
+      data: [
+        { id: "sd11", label: "SDG 5", bgColor: "bg-orange-600" },
+        { id: "sd18", label: "SDG 8", bgColor: "bg-red-900" },
+      ],
+    },
+    {
+      category: "Tab10",
+      data: [
+        { id: "sd11", label: "SDG 5", bgColor: "bg-orange-600" },
+        { id: "sd18", label: "SDG 8", bgColor: "bg-red-900" },
+      ],
+    },
+    {
       category: "Tab13",
       data: [
         { id: "sd11", label: "SDG 12", bgColor: "bg-[#CD8B2A]" },
@@ -172,6 +193,12 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
                   ? "Supplier Social Assessment 2016"
                   : activeTab === "Tab7"
                   ? "Training"
+                  : activeTab === "Tab8"
+                  ? "Non-Discrimination 2016"
+                  : activeTab === "Tab9"
+                  ? "Collective Bargaining"
+                  : activeTab === "Tab10"
+                  ? "Community Development"
                   : activeTab === "Tab12"
                   ? "Customer Health and Safety 2016"
                   : activeTab === "Tab13"
