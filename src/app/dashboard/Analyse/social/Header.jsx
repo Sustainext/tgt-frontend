@@ -131,6 +131,27 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
         { id: "sd18", label: "SDG 8", bgColor: "bg-red-900" },
       ],
     },
+    {
+      category: "Tab8",
+      data: [
+        { id: "sd11", label: "SDG 5", bgColor: "bg-orange-600" },
+        { id: "sd18", label: "SDG 8", bgColor: "bg-red-900" },
+      ],
+    },
+    {
+      category: "Tab9",
+      data: [
+        { id: "sd11", label: "SDG 5", bgColor: "bg-orange-600" },
+        { id: "sd18", label: "SDG 8", bgColor: "bg-red-900" },
+      ],
+    },
+    {
+      category: "Tab10",
+      data: [
+        { id: "sd11", label: "SDG 5", bgColor: "bg-orange-600" },
+        { id: "sd18", label: "SDG 8", bgColor: "bg-red-900" },
+      ],
+    },
   ];
   return (
     <>
@@ -156,6 +177,12 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
                   ? "Supplier Social Assessment 2016"
                   : activeTab === "Tab7"
                   ? "Training"
+                  : activeTab === "Tab8"
+                  ? "Non-Discrimination 2016"
+                  : activeTab === "Tab9"
+                  ? "Collective Bargaining"
+                  : activeTab === "Tab10"
+                  ? "Community Development"
                   : ""}
               </div>
               {activeTab === "Tab1" && (

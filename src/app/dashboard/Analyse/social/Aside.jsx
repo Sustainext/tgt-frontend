@@ -95,6 +95,42 @@ const Aside = ({ activeTab, handleTabClick }) => {
             <span className="mr-8 text-left">Training</span>
           </button>
 
+          <button
+            className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
+              activeTab === "Tab8"
+                ? "text-[#007EEF] "
+                : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
+            }`}
+            onClick={() => handleTabClick("Tab8")}
+          >
+
+            <span className="mr-8 text-left">Non-Discrimination</span>
+          </button>
+
+          <button
+            className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
+              activeTab === "Tab9"
+                ? "text-[#007EEF] "
+                : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
+            }`}
+            onClick={() => handleTabClick("Tab9")}
+          >
+
+            <span className="mr-8 text-left">Collective Bargaining</span>
+          </button>
+
+          <button
+            className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
+              activeTab === "Tab10"
+                ? "text-[#007EEF] "
+                : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
+            }`}
+            onClick={() => handleTabClick("Tab10")}
+          >
+
+            <span className="mr-8 text-left">Community Development</span>
+          </button>
+
         </div>
       </div>
     </div>
