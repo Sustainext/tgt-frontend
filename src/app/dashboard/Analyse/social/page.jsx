@@ -9,6 +9,8 @@ import AnalyseCompulsorylabour from "./Compulsory-Labour/page";
 import AnalyseDiversityInclusion from "./Diversity-and-inclusion/page";
 import AnalyseSuppliersocialassessment from "./Supplier-social-assessment/page";
 import AnalyseTraining from "./Training/page";
+import AnalyseCustomerHealthSafety from "./Customer-Health-Safety/page"
+import AnalyseMarketingLabeling from "./Marketing-Labeling/page"
 
 const social = () => {
   const [activeTab, setActiveTab] = useState("Tab1");
@@ -34,6 +36,8 @@ const social = () => {
         {activeTab === "Tab5" && <AnalyseDiversityInclusion /> }
         {activeTab === "Tab6" && <AnalyseSuppliersocialassessment/>}
         {activeTab === "Tab7" && <AnalyseTraining /> }
+        {activeTab === "Tab12" && <AnalyseCustomerHealthSafety /> }
+        {activeTab === "Tab13" && <AnalyseMarketingLabeling /> }
       </div>
     </div>
   );
