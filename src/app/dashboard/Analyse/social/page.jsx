@@ -13,7 +13,7 @@ import AnalyseNonDiscrimination from "./NonDiscrimination/page";
 import AnalyseCollectiveBargaining from "./Collective-Bargaining/page";
 import AnalyseCustomerHealthSafety from "./Customer-Health-Safety/page"
 import AnalyseMarketingLabeling from "./Marketing-Labeling/page"
-
+import AnalyseCustomerprivacy from "./Customer-Privacy/page"
 const social = () => {
   const [activeTab, setActiveTab] = useState("Tab1");
   const [isBoxOpen, setIsBoxOpen] = useState(false);
@@ -42,6 +42,7 @@ const social = () => {
         {activeTab === "Tab9" && <AnalyseCollectiveBargaining /> }
         {activeTab === "Tab12" && <AnalyseCustomerHealthSafety /> }
         {activeTab === "Tab13" && <AnalyseMarketingLabeling /> }
+        {activeTab === "Tab14" && <AnalyseCustomerprivacy /> }
       </div>
     </div>
   );

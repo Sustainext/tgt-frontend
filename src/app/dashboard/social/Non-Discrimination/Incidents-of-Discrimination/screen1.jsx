@@ -29,7 +29,7 @@ const schema = {
             typeofincident: { type: "string", title: "Type of Incident", enum: ['Gender', 'Race', 'Colour', 'Religion','Political Opinion','National Extraction','Social Origin','Others'], },
             totalnumberofincidentsofdiscrimination: { type: "string", title: "Total number of Incidents of discrimination" },
             describetheincident: { type: "string", title: "Describe the incident" },
-
+            otherDetails : { type: "string", title: "otherDetails " },
         },
     },
 };
@@ -43,6 +43,7 @@ const uiSchema = {
                 { title: "Total number of Incidents of discrimination",title2:"totalnumberofincidentsofdiscrimination", tooltip: "Please specify the total number of incidents of discrimination on grounds  of race, color, sex, religion, political opinion, national extraction and social origin. ",display:"block",type: "number" },
                 { title: "Describe the incident",title2:"describetheincident", tooltip: "Please specify the meeting frequency",display:"none",type: "text"  },
 
+
             ],
 
     },
@@ -53,7 +54,7 @@ const Screen1 = ({ location, year, month }) => {
             typeofincident: "",
             totalnumberofincidentsofdiscrimination: "",
             describetheincident: "",
-
+            otherDetails:"",
 
         }
     ];
@@ -166,7 +167,7 @@ const Screen1 = ({ location, year, month }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Form data:', formData);
-        // updateFormData();
+        updateFormData();
     };
 
 

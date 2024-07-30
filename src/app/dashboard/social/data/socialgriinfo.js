@@ -30,7 +30,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -76,7 +76,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal5"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -141,7 +141,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal8"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -188,10 +188,10 @@ export const Socialdata = [
           <div>
             <a
               className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal12"
+              href="https://sdgs.un.org/goals/goal10"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -234,7 +234,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -286,7 +286,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal3"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -342,7 +342,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal5"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -396,7 +396,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal8"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -427,7 +427,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -485,7 +485,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal5"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -537,7 +537,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal8"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -590,7 +590,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12622&page=7"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -646,7 +646,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal5"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -694,7 +694,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal8"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -760,7 +760,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal16"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -806,7 +806,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12633&page=7"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -862,7 +862,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal5"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -910,7 +910,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal8"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -950,7 +950,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12644&page=1"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -1016,7 +1016,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal16"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -1066,7 +1066,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -1120,7 +1120,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal8"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -1178,7 +1178,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -1232,7 +1232,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal8"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -1293,7 +1293,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -1347,7 +1347,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal8"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -1445,7 +1445,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -1499,7 +1499,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal8"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -1554,7 +1554,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal16"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -1613,7 +1613,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -1667,7 +1667,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal8"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -1786,7 +1786,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -1909,7 +1909,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal3"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -1949,7 +1949,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -2003,7 +2003,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal8"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -2085,7 +2085,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -2139,7 +2139,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal8"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -2415,7 +2415,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -2483,7 +2483,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal3"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -2537,7 +2537,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal8"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -2603,7 +2603,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal16"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -2755,7 +2755,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -2856,7 +2856,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal3"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -2910,7 +2910,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal8"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -2976,7 +2976,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal16"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -3063,7 +3063,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12677&page=9"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -3126,7 +3126,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal8"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -3173,7 +3173,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12677&page=9"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -3225,7 +3225,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12677&page=9"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -3273,7 +3273,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12587"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -3336,7 +3336,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal5"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -3369,7 +3369,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12587"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -3419,7 +3419,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal10"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -3477,7 +3477,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12576&page=7"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -3551,7 +3551,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal4"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -3599,7 +3599,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12576&page=7"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -3650,7 +3650,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12598&page=1"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -3696,7 +3696,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12610"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -3737,7 +3737,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12655"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -3794,7 +3794,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal2"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -3877,7 +3877,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12666"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -3933,7 +3933,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12666"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -3990,7 +3990,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal1"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -4043,7 +4043,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12688"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -4099,7 +4099,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal16"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -4133,7 +4133,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12554&page=7"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -4195,7 +4195,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12699&page=8"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -4257,7 +4257,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12699&page=8"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -4310,7 +4310,7 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal16"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -4349,7 +4349,7 @@ export const Socialdata = [
               href="https://www.globalreporting.org/pdf.ashx?id=12721"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -4414,7 +4414,173 @@ export const Socialdata = [
               href="https://sdgs.un.org/goals/goal16"
               target="_blank"
             >
-              Learn more <MdChevronRight className="text-lg mt-1" />
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["72"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+    GRI 417: Marketing and Labeling 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 417-1: Requirements for product and service information and labeling
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+            Background:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Customers and end users need accessible and  adequate information about the positive and negative environmental and social impacts of products and  services. This can include information on the safe use  of a product or service, the disposal of the product,  or the sourcing of its components. Access to this  information helps customers to make informed   purchasing choices.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12710&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["73"],
+    header: [
+      <>
+        <div className="flex w-[100px]">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-12.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-[#CD8B2A] text-[17px] font-bold ml-2">SDG 12</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Ensure sustainable consumption and production patterns
+          </p>
+          <div className="h-[280px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 12.8</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2030, ensure that people everywhere have the relevant information and awareness for sustainable development and lifestyles in harmony with nature.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">12.8.1</p>
+            <p className="text-[11px] text-[#727272] mb-1">
+            Extent to which
+            </p>
+            <p className="text-[11px] text-[#727272] mb-1">
+            (i) global citizenship education and
+            </p>
+            <p className="text-[11px] text-[#727272] mb-1">
+            (ii) education for sustainable development are mainstreamed in
+            </p>
+            <p className="text-[11px] text-[#727272] mb-1">
+            (a) national education policies; (b) curricula; (c) teacher education; and (d) student assessment.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal12"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["74"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+    GRI 417: Marketing and Labeling 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 417-2: Incidents of non-compliance concerning product and service information and labeling
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+            Compilation Requirements
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            2.1 When compiling the information specified in Disclosure 417-2, the reporting organization shall:2.1.1 exclude incidents of non-compliance in which the organization was determined not to be at fault;2.1.2 if applicable, identify any incidents of non-compliance that relate to events in periods prior to the reporting period.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+            Guidance
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            The incidents of non-compliance that occur within the reporting period can relate to incidents formally resolved during the reporting period, whether they occurred in periods prior to the reporting period or not.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12710&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["75"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+    GRI 417: Marketing and Labeling 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 417-3: Incidents of non-compliance concerning marketing communications
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+            Compilation Requirements
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            2.2 When compiling the information specified in Disclosure 417-3, the reporting organization shall:2.2.1 exclude incidents of non-compliance in which the organization was determined not  to be at fault.2.2.2 if applicable, identify any incidents of non-compliance that relate to events in periods  prior to the reporting period.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+            Guidance
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            The incidents of non-compliance that occur within  the reporting period can relate to incidents formally resolved during the reporting period, whether they  occurred in periods prior to the reporting period  or not.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12710&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>

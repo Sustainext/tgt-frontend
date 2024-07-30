@@ -5,7 +5,7 @@ import DynamicTable2 from "./customTable2";
 import DateRangePicker from "../../../../utils/DatePickerComponent";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import { columns1 } from "./data";
-const AnalyseCustomerHealthSafety = ({ isBoxOpen }) => {
+const AnalyseCustomerprivacy = ({ isBoxOpen }) => {
   const [organisations, setOrganisations] = useState([]);
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
@@ -72,7 +72,9 @@ const AnalyseCustomerHealthSafety = ({ isBoxOpen }) => {
       const formatcustomerhealth = (data) => {
         return [
           {
-            "Percentage of significant product and service categories for which health and safety impacts are assessed for improvement": data.percentage.toFixed(2),
+            "Number of substantiated complaints received concerning breaches of customer privacy": data.percentage.toFixed(2),
+            "Complaints received from outside parties and substantiated by the organization": data.percentage.toFixed(2),
+            "Complaints from regulatory bodies": data.percentage.toFixed(2),
           },
         ];
       };
@@ -281,17 +283,17 @@ const AnalyseCustomerHealthSafety = ({ isBoxOpen }) => {
               >
                 <div>
                   <p className="text-[18px] font-semibold">
-                  Assessment of the health and safety impacts of product and service categories
+                  Substantiated complaints concerning breaches of customer privacy and losses of customer data
                   </p>
                 </div>
                 <div className="flex justify-between items-center mb-2">
                   <p className="text-gray-500">
-                  Percentage of significant product and service categories
+                  Total number of substantiated complaints received concerning breaches of customer privacy
                   </p>
 
                   <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                     <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                      GRI 416-1a
+                      GRI 418-1b
                     </div>
                   </div>
                 </div>
@@ -323,4 +325,4 @@ const AnalyseCustomerHealthSafety = ({ isBoxOpen }) => {
   );
 };
 
-export default AnalyseCustomerHealthSafety;
+export default AnalyseCustomerprivacy;

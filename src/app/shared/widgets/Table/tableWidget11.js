@@ -26,12 +26,12 @@ const CustomTableWidget11 = ({ id, schema, uiSchema, value, required, onChange, 
 
     const addNewRow = () => {
         const newRow = Object.keys(schema.items.properties).reduce((acc, key) => {
-            acc[key] = schema.items.properties[key].enum ? schema.items.properties[key].enum[0] : '';
+            // Set the default value for enum fields to an empty string
+            acc[key] = schema.items.properties[key].enum ? '' : '';
             return acc;
         }, {});
         onChange([...value, newRow]);
     };
-
     return (
         <div style={{ overflowY: 'auto', maxHeight: '400px' }}>
             <table id={id} className="rounded-md border border-gray-300 w-full">
@@ -55,7 +55,7 @@ const CustomTableWidget11 = ({ id, schema, uiSchema, value, required, onChange, 
                                 </div>
                             </th>
                         ))}
-                        <th className="text-center">Actions</th>
+                        <th className="text-[12px] border border-gray-300 px-2 py-2">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,7 +67,7 @@ const CustomTableWidget11 = ({ id, schema, uiSchema, value, required, onChange, 
                                 const inputType = uiSchema['ui:options'].titles.find(t => t.title2 === key)?.type || 'text';
 
                                 return (
-                                    <td key={cellIndex} className="border border-gray-300 p-3">
+                                    <td key={cellIndex} className="border border-gray-300 p-3 text-center">
                                         {isEnum ? (
                                             <>
                                                 <select
@@ -75,31 +75,44 @@ const CustomTableWidget11 = ({ id, schema, uiSchema, value, required, onChange, 
                                                     onChange={(e) => updateField(rowIndex, key, e.target.value, isEnum)}
                                                     className="text-sm pl-2 py-2 w-full"
                                                     required={required}>
-                                                    <option>Select</option>
+                                                    <option value="">Select Type of Incident</option>
                                                     {schema.items.properties[key].enum.map((option) => (
                                                         <option key={option} value={option}>{option}</option>
                                                     ))}
                                                 </select>
-
+                                                {key === 'typeofincident' && item[key] === 'Others' && (
+                                                    <div className="flex items-center mt-2">
+                                                        <input
+                                                            type="text"
+                                                            placeholder="Please specify"
+                                                            value={item['otherDetails'] || ''}
+                                                            onChange={(e) => updateField(rowIndex, 'otherDetails', e.target.value, false)}
+                                                            className="text-sm pl-2 py-2 w-full border"
+                                                        />
+                                                    </div>
+                                                )}
                                             </>
                                         ) : (
-                                            <input
-                                                type={inputType}
-                                                required={required}
-                                                value={item[key]}
-                                                onChange={(e) => updateField(rowIndex, key, e.target.value, false)}
-                                                className="text-sm pl-2 py-2 w-full border"
-                                            />
+                                            <>
+
+                                                {(key === 'totalnumberofincidentsofdiscrimination' || key === 'describetheincident') ? (
+                                                    <input
+                                                        type={inputType}
+                                                        required={required}
+                                                        value={item[key]}
+                                                        onChange={(e) => updateField(rowIndex, key, e.target.value, false)}
+                                                        className="text-sm pl-2 py-2 w-full border"
+                                                    />
+                                                ) : (
+                                                    <button onClick={() => formContext.onRemove(rowIndex)} title="Remove row" className='text-center mx-auto'>
+                                                        <MdOutlineDeleteOutline className='text-[23px] text-red-600' />
+                                                    </button>
+                                                )}
+                                            </>
                                         )}
                                     </td>
                                 );
                             })}
-
-                                <td className="text-center border border-gray-300 p-3">
-                                    <button onClick={() => formContext.onRemove(rowIndex)} title="Remove row">
-                                        <MdOutlineDeleteOutline className='text-[23px] text-red-600' />
-                                    </button>
-                                </td>
 
                         </tr>
                     ))}

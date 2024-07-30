@@ -78,12 +78,17 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
     {
       category: "Tab12",
       tag: "GRI 416",
-      data: [{ tagid: "1", infoid: "31" }],
+      data: [{ tagid: "1", infoid: "32" }],
     },
     {
       category: "Tab13",
       tag: "GRI 417",
-      data: [{ tagid: "1", infoid: "31" }],
+      data: [{ tagid: "1", infoid: "33" }],
+    },
+    {
+      category: "Tab14",
+      tag: "GRI 418",
+      data: [{ tagid: "1", infoid: "34" }],
     },
   ];
   const sdg = [
@@ -165,7 +170,13 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
     {
       category: "Tab13",
       data: [
-        { id: "sd11", label: "SDG 12", bgColor: "bg-[#CD8B2A]" },
+        { id: "sd19", label: "SDG 12", bgColor: "bg-[#CD8B2A]" },
+      ],
+    },
+    {
+      category: "Tab14",
+      data: [
+        { id: "sd20", label: "SDG 16", bgColor: "bg-blue-950" },
       ],
     },
   ];
@@ -203,6 +214,8 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
                   ? "Customer Health and Safety 2016"
                   : activeTab === "Tab13"
                   ? "Marketing and labeling"
+                   : activeTab === "Tab14"
+                  ? "Customer Privacy"
                   : ""}
               </div>
               {activeTab === "Tab1" && (
