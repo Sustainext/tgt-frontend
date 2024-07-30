@@ -4,6 +4,7 @@ import TableSidebar from "./TableSidebar";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import Table1 from "./Table"; // Ensure this is the correct import path
 import { yearInfo } from "@/app/shared/data/yearInfo";
+import { columns1,columns2,data1 } from "./data";
 
 const AnalyseCollectiveBargaining = ({ isBoxOpen }) => {
   const [selectedOrg, setSelectedOrg] = useState("");
@@ -28,26 +29,6 @@ const AnalyseCollectiveBargaining = ({ isBoxOpen }) => {
     selectedLocation: "Location is required",
     selectedYear: "Year is required",
   });
-
-  const columns1 = [
-    "Operations in which workers' rights to exercise freedom of association or collective bargaining may be violated or at significant risk",
-    "Type of Operation",
-    "Countries or Geographic Areas"
-  ];
-
-  const data1 = [
-    {
-      "Operations in which workers' rights to exercise freedom of association or collective bargaining may be violated or at significant risk": "Operation 1",
-      "Type of Operation": "",
-      "Countries or Geographic Areas": ""
-    },
-    {
-      "Operations in which workers' rights to exercise freedom of association or collective bargaining may be violated or at significant risk": "Operation 2",
-      "Type of Operation": "",
-      "Countries or Geographic Areas": ""
-    }
-  ];
-
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -207,9 +188,9 @@ const AnalyseCollectiveBargaining = ({ isBoxOpen }) => {
   return (
     <div>
       <div>
-        <div className="mb-2 flex-col items-center pt-4 gap-6">
+        <div className="mb-2 flex-col items-center gap-6">
           <div className="mt-4 pb-3 mx-5 text-left">
-            <div className="mb-2 flex-col items-center pt-2 gap-6">
+            <div className="mb-2 flex-col items-center gap-6">
               <div className="justify-start items-center gap-4 inline-flex mt-4">
                 <div className="text-zinc-600 text-[15px] font-semibold font-['Manrope']">
                   View By:
@@ -365,7 +346,7 @@ const AnalyseCollectiveBargaining = ({ isBoxOpen }) => {
                   </div>
                 </div>
                 <div className="mb-4">
-                  <Table1 columns={columns1} data={data1} />
+                  <Table1 columns={columns2} data={data1} />
                 </div>
               </div>
             </div>

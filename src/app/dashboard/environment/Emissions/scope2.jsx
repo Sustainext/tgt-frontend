@@ -45,18 +45,18 @@ const Scope2 = forwardRef(({ location, year, month, successCallback, countryCode
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
-  const { climatiqData, setScope2Data } = useEmissions();
-  const [localClimatiq, setlocalClimatiq] = useState(0);
+  const { climatiqData, setScope1Data } = useEmissions();
+  const [localClimatiq, setLocalClimatiq] = useState(0);
   const [activityCache, setActivityCache] = useState({});
 
   useImperativeHandle(ref, () => ({
     updateFormData() {
-      return updateFormData(); // Return the promise
+      return updateFormData(formData); 
     }
   }));
 
   useEffect(() => {
-    setScope2Data(formData);
+    setScope1Data(formData);
   }, [formData]);
 
   const LoaderOpen = () => {
@@ -116,38 +116,22 @@ const Scope2 = forwardRef(({ location, year, month, successCallback, countryCode
     setFormData((prevFormData) => [...prevFormData, { Emission: {} }]);
   };
 
-  const updateFormData = async () => {
+  const updateFormData = async (form_data) => {
     LoaderOpen();
     const data = {
       client_id: client_id,
       user_id: user_id,
       path: view_path,
-      form_data: formData,
+      form_data: form_data,
       location,
       year,
-      month
+      month,
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
-      const response = await post(url, {
-        ...data,
-      });
+      const response = await post(url, { ...data });
 
-      // successCallback();
-      // if (response.status === 200) {
-      //   setModalData({
-      //     location,
-      //     month,
-      //     message: "Emission has been created",
-      //     monthly_emissions: localClimatiq
-      //   });
-      //   loadFormData();
-      // } else {
-      //   setModalData({
-      //     message: "Oops, something went wrong"
-      //   });
-      // }
     } catch (error) {
       setModalData({
         message: "Oops, something went wrong"
@@ -179,34 +163,40 @@ const Scope2 = forwardRef(({ location, year, month, successCallback, countryCode
       });
   };
 
-  useEffect(() => { }, [r_schema, r_ui_schema]);
-
-  useEffect(() => {
-    console.log("formdata is changed - ", formData);
-  }, [formData]);
-
   useEffect(() => {
     loadFormData();
   }, [year, month, location]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
+    updateFormData(formData);
   };
 
   const updateFormDatanew = (updatedData) => {
     setFormData(updatedData);
   };
 
-  const handleRemove = (index) => {
+  // const handleRemove = (index) => {
+  //   const updatedData = [...formData];
+  //   updatedData.splice(index, 1);
+  //   setFormData(updatedData);
+  //   // updateFormData();
+  //   // successCallback();
+  // };
+
+  const handleRemove = async (index) => {
     const updatedData = [...formData];
     updatedData.splice(index, 1);
-    setFormData(updatedData);
+    
+    try {
+      await setFormData(updatedData);
+      await updateFormData(updatedData);
+      successCallback();
+    } catch (error) {
+      console.error("Failed to update form data:", error);
+    }
   };
-
-  const handleCloseModal = () => {
-    setModalData(null);
-  };
+  
 
   const updateCache = (subcategory, activities) => {
     setActivityCache((prevCache) => ({

@@ -145,7 +145,7 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
           icons={<IoHomeOutline />}
           onAccordionClick={handleAccordionClick}
         >
-          <Scope1 ref={scope1Ref} location={location} year={year} month={month} countryCode={countryCode} successCallback={() => {}} />
+          <Scope1 ref={scope1Ref} location={location} year={year} month={month} countryCode={countryCode} successCallback={getLatestComputedData} />
         </AccordionItem>
 
         <AccordionItem
@@ -154,7 +154,7 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
           icons={<IoHomeOutline />}
           onAccordionClick={handleAccordionClick}
         >
-          <Scope2 ref={scope2Ref} location={location} year={year} month={month} countryCode={countryCode} successCallback={() => {}}/>
+          <Scope2 ref={scope2Ref} location={location} year={year} month={month} countryCode={countryCode} successCallback={getLatestComputedData}/>
         </AccordionItem>
 
         <AccordionItem
@@ -163,7 +163,7 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
           icons={<IoHomeOutline />}
           onAccordionClick={handleAccordionClick}
         >
-          <Scope3 ref={scope3Ref} location={location} year={year} month={month} countryCode={countryCode} successCallback={() => {}}/>
+          <Scope3 ref={scope3Ref} location={location} year={year} month={month} countryCode={countryCode} successCallback={getLatestComputedData}/>
         </AccordionItem>
       </div>
       <div className="flex justify-end items-center mt-[24] me-5">

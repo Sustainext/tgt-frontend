@@ -40,10 +40,10 @@ const social = () => {
         {activeTab === "Tab6" && <AnalyseSuppliersocialassessment/>}
         {activeTab === "Tab7" && <AnalyseTraining /> }
         {activeTab === "Tab12" && <AnalyseCustomerHealthSafety /> }
-        {/* {activeTab === "Tab13" && <AnalyseMarketingLabeling /> } */}
+        {activeTab === "Tab13" && <AnalyseMarketingLabeling /> }
         {activeTab === "Tab8" && <AnalyseNonDiscrimination /> }
         {activeTab === "Tab9" && <AnalyseCollectiveBargaining /> }
-        {/* {activeTab === "Tab10" && <AnalyseCommunityDevelopment /> } */}
+        {activeTab === "Tab10" && <AnalyseCommunityDevelopment /> }
       </div>
     </div>
   );

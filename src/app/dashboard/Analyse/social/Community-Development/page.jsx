@@ -124,9 +124,9 @@ const AnalyseCommunityDevelopment = ({ isBoxOpen }) => {
 
   return (
     <div>
-      <div className="mb-2 flex-col items-center pt-4 gap-6">
-        <div className="mt-4 pb-3 mx-5 text-left">
-          <div className="mb-2 flex-col items-center pt-2 gap-6">
+      <div className="mb-2 flex-col items-center gap-6">
+        <div className="pb-3 mx-5 text-left">
+          <div className="mb-2 flex-col items-center gap-6">
             <div className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4`}>
               <div className="mr-2">
                 <label htmlFor="cname" className="text-neutral-800 text-[13px] font-normal">

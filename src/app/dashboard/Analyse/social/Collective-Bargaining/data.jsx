@@ -17,4 +17,10 @@ export  const columns1 = [
     "Type of Operation",
     "Countries or Geographic Areas"
   ]
+
+  export  const columns2 = [
+    "Suppliers in which workers' rights to exercise freedom of association or collective bargaining may be violated or at significant risk",
+    "Type of Supplier",
+    "Countries or Geographic Areas"
+  ]
   
