@@ -95,41 +95,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const [file, setFile] = useState(null);
   const [newfile, setNewfile] = useState(null);
 const [fleg ,setfleg] = useState(null);
-const [validationErrors, setValidationErrors] = useState([]);
-const validateRows = (data) => {
-  const errors = [];
 
-  data.forEach((row, index) => {
-    const rowErrors = [];
-    if (!row.category) {
-      rowErrors.push("Category");
-    }
-    if (!row.male) {
-      rowErrors.push("Male");
-    }
-    if (!row.female) {
-      rowErrors.push("Female");
-    }
-    if (!row.others) {
-      rowErrors.push("Others");
-    }
-    if (!row.male1) {
-      rowErrors.push("Male");
-    }
-    if (!row.female1) {
-      rowErrors.push("Female");
-    }
-    if (!row.others1) {
-      rowErrors.push("Others");
-    }
-
-    if (rowErrors.length > 0) {
-      errors.push(`Row ${index + 1}: ${rowErrors.join(", ")} are required.`);
-    }
-  });
-
-  return errors;
-};
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -319,12 +285,7 @@ const validateRows = (data) => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault(); // Prevent the default form submission
- // Validate rows
- const errors = validateRows(formData);
- if (errors.length > 0) {
-   setValidationErrors(errors);
-   return;
- }
+
     // Show loader
     LoaderOpen();
 
