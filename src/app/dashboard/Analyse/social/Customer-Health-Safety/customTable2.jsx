@@ -12,9 +12,7 @@ const DynamicTable2 = ({ data, columns }) => {
             {columns.map((column, index) => (
               <th
                 key={column}
-                className={`px-2 py-3 font-semibold text-gray-600 block md:table-cell text-sm ${
-                  column === 'Percentage of significant product and service categories for which health and safety impacts are assessed for improvement' ? 'text-center' : 'text-left'
-                }`}
+                className={`px-2 py-3 font-semibold text-gray-600 block md:table-cell text-sm text-left`}
               >
                 {column}
               </th>
@@ -41,7 +39,9 @@ const DynamicTable2 = ({ data, columns }) => {
                       colIndex === 0 ? 'text-center' : 'text-center'
                     } text-sm`}
                   >
-                    {row[column] || 'N/A'}
+                       {row[column] !== undefined && row[column] !== null
+                      ? colIndex === 0 ? row[column] : `${row[column]}%`
+                      : 'N/A'}
                   </td>
                 ))}
               </tr>

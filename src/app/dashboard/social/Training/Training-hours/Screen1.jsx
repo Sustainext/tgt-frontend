@@ -483,13 +483,7 @@ const [fleg ,setfleg] = useState(null);
             </div>
           )}
         </div>
-        {validationErrors.length > 0 && (
-          <div className="text-red-500">
-            {validationErrors.map((error, index) => (
-              <p key={index}>{error}</p>
-            ))}
-          </div>
-        )}
+
         <div className='mb-6'>
           <button type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year || !month ? "cursor-not-allowed" : ""}`}

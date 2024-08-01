@@ -22,7 +22,6 @@ const AnalyseCustomerHealthSafety = ({ isBoxOpen }) => {
   const [datasetparams, setDatasetparams] = useState({
     organisation: "",
     corporate: "",
-    location: "",
     start: null,
     end: null,
   });
@@ -57,7 +56,7 @@ const AnalyseCustomerHealthSafety = ({ isBoxOpen }) => {
     LoaderOpen();
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_child_labor_analysis`,
+        `/sustainapp/get_customer_health_safety_analysis`,
         {
           params: params
         }
@@ -65,23 +64,22 @@ const AnalyseCustomerHealthSafety = ({ isBoxOpen }) => {
 
       const data = response.data;
 
-      const {
-        new_suppliers_that_were_screened_using_social_criteria,
-      } = data;
+      const {customer_health_percent} = data;
 
       const formatcustomerhealth = (data) => {
-        return [
-          {
-            "Percentage of significant product and service categories for which health and safety impacts are assessed for improvement": data.percentage.toFixed(2),
-          },
-        ];
+        return data.map((data, index) => {
+          const percentage = parseFloat(data.percentage).toFixed(2);
+          const formattedPercentage = percentage.endsWith('.00') ? percentage.slice(0, -3) : percentage;
+          return {
+            "Organisation/Corporation": data.org_or_corp,
+            "Percentage of significant product and service categories for which health and safety impacts are assessed for improvement": formattedPercentage,
+          };
+        });
+
       };
-
-
-
       setCustomerhealth(
         formatcustomerhealth(
-          new_suppliers_that_were_screened_using_social_criteria
+          customer_health_percent
         )
       );
       LoaderClose();
@@ -137,7 +135,6 @@ const AnalyseCustomerHealthSafety = ({ isBoxOpen }) => {
       ...prevParams,
       organisation: newOrg,
       corporate: "",
-      location: "",
     }));
   };
 
@@ -148,7 +145,6 @@ const AnalyseCustomerHealthSafety = ({ isBoxOpen }) => {
     setDatasetparams((prevParams) => ({
       ...prevParams,
       corporate: newCorp,
-      location: "",
     }));
   };
 
@@ -161,7 +157,6 @@ const AnalyseCustomerHealthSafety = ({ isBoxOpen }) => {
       end: newRange.end,
     }));
   };
-
   return (
     <div>
       <div>
