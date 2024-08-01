@@ -22,7 +22,6 @@ const AnalyseCustomerprivacy = ({ isBoxOpen }) => {
   const [datasetparams, setDatasetparams] = useState({
     organisation: "",
     corporate: "",
-    location: "",
     start: null,
     end: null,
   });
@@ -57,7 +56,7 @@ const AnalyseCustomerprivacy = ({ isBoxOpen }) => {
     LoaderOpen();
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_child_labor_analysis`,
+        `/sustainapp/get_customer_privacy_analysis`,
         {
           params: params
         }
@@ -65,25 +64,23 @@ const AnalyseCustomerprivacy = ({ isBoxOpen }) => {
 
       const data = response.data;
 
-      const {
-        new_suppliers_that_were_screened_using_social_criteria,
-      } = data;
+      const {customer_privacy_data} = data;
 
       const formatcustomerhealth = (data) => {
-        return [
-          {
-            "Number of substantiated complaints received concerning breaches of customer privacy": data.percentage.toFixed(2),
-            "Complaints received from outside parties and substantiated by the organization": data.percentage.toFixed(2),
-            "Complaints from regulatory bodies": data.percentage.toFixed(2),
-          },
-        ];
+        console.log(data,"test loacl data");
+        return data.map((data, index) => ({
+          "Number of substantiated complaints received concerning breaches of customer privacy": data.customerprivacy,
+          "Complaints received from outside parties and substantiated by the organization": data.substantiatedorganization,
+          "Complaints from regulatory bodies": data.regulatorybodies,
+        }));
+
       };
 
 
 
       setCustomerhealth(
         formatcustomerhealth(
-          new_suppliers_that_were_screened_using_social_criteria
+          customer_privacy_data
         )
       );
       LoaderClose();
@@ -139,7 +136,6 @@ const AnalyseCustomerprivacy = ({ isBoxOpen }) => {
       ...prevParams,
       organisation: newOrg,
       corporate: "",
-      location: "",
     }));
   };
 
@@ -150,7 +146,6 @@ const AnalyseCustomerprivacy = ({ isBoxOpen }) => {
     setDatasetparams((prevParams) => ({
       ...prevParams,
       corporate: newCorp,
-      location: "",
     }));
   };
 
@@ -163,7 +158,7 @@ const AnalyseCustomerprivacy = ({ isBoxOpen }) => {
       end: newRange.end,
     }));
   };
-
+console.log(customerhealth,"test data customerhealth");
   return (
     <div>
       <div>

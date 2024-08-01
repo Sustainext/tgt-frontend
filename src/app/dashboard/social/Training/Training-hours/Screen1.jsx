@@ -95,6 +95,42 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const [file, setFile] = useState(null);
   const [newfile, setNewfile] = useState(null);
 const [fleg ,setfleg] = useState(null);
+const [validationErrors, setValidationErrors] = useState([]);
+const validateRows = (data) => {
+  const errors = [];
+
+  data.forEach((row, index) => {
+    const rowErrors = [];
+    if (!row.category) {
+      rowErrors.push("Category");
+    }
+    if (!row.male) {
+      rowErrors.push("Male");
+    }
+    if (!row.female) {
+      rowErrors.push("Female");
+    }
+    if (!row.others) {
+      rowErrors.push("Others");
+    }
+    if (!row.male1) {
+      rowErrors.push("Male");
+    }
+    if (!row.female1) {
+      rowErrors.push("Female");
+    }
+    if (!row.others1) {
+      rowErrors.push("Others");
+    }
+
+    if (rowErrors.length > 0) {
+      errors.push(`Row ${index + 1}: ${rowErrors.join(", ")} are required.`);
+    }
+  });
+
+  return errors;
+};
+
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -182,6 +218,7 @@ const [fleg ,setfleg] = useState(null);
     setUploadDateTime("");
     setfleg("");
     setNewfile("");
+    setValidationErrors([]);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}&month=${month}`;
     try {
       const response = await axiosInstance.get(url);
@@ -282,7 +319,12 @@ const [fleg ,setfleg] = useState(null);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault(); // Prevent the default form submission
-
+ // Validate rows
+ const errors = validateRows(formData);
+ if (errors.length > 0) {
+   setValidationErrors(errors);
+   return;
+ }
     // Show loader
     LoaderOpen();
 
@@ -480,7 +522,13 @@ const [fleg ,setfleg] = useState(null);
             </div>
           )}
         </div>
-
+        {validationErrors.length > 0 && (
+          <div className="text-red-500">
+            {validationErrors.map((error, index) => (
+              <p key={index}>{error}</p>
+            ))}
+          </div>
+        )}
         <div className='mb-6'>
           <button type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year || !month ? "cursor-not-allowed" : ""}`}
@@ -490,6 +538,7 @@ const [fleg ,setfleg] = useState(null);
             Submit
           </button>
         </div>
+
       </div>
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

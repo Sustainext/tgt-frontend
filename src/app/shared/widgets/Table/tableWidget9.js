@@ -1,10 +1,9 @@
 "use client";
-import React, { useState, useCallback, useEffect } from "react";
-import { MdOutlineDeleteOutline, MdAdd } from "react-icons/md";
-import { debounce } from "lodash";
-import { MdInfoOutline } from "react-icons/md";
+import React, { useState, useEffect } from "react";
+import { MdOutlineDeleteOutline, MdAdd, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+
 const CustomTableWidget9 = ({
   id,
   options,
@@ -13,7 +12,12 @@ const CustomTableWidget9 = ({
   onChange,
   formContext,
 }) => {
-  // Debounced input change handler
+  const [tableData, setTableData] = useState(value);
+
+  useEffect(() => {
+    setTableData(value);
+  }, [value]);
+
   const visibleKeys = [
     "category",
     "male",
@@ -26,17 +30,9 @@ const CustomTableWidget9 = ({
     "totalTrainingHours",
   ];
 
-  // Debounced input change handler
-  const handleInputChange = useCallback(
-    debounce((newData) => {
-      onChange(newData);
-    }, 200),
-    []
-  );
-
   // Update fields and automatically compute totals
   const updateField = (index, key, newValue) => {
-    const newData = [...value];
+    const newData = [...tableData];
     newData[index][key] = newValue;
 
     // Automatically compute totals if relevant fields are modified
@@ -45,17 +41,22 @@ const CustomTableWidget9 = ({
         newData[index]["male"],
         newData[index]["female"],
         newData[index]["others"],
-      ].reduce((sum, value) => sum + (Number(value) || 0), 0);
+      ]
+        .reduce((sum, value) => sum + (Number(value) || 0), 0)
+        .toString();
     }
     if (["male1", "female1", "others1"].includes(key)) {
       newData[index]["totalTrainingHours"] = [
         newData[index]["male1"],
         newData[index]["female1"],
         newData[index]["others1"],
-      ].reduce((sum, value) => sum + (Number(value) || 0), 0);
+      ]
+        .reduce((sum, value) => sum + (Number(value) || 0), 0)
+        .toString();
     }
 
-    handleInputChange(newData);
+    setTableData(newData);
+    onChange(newData);
   };
 
   // Function to add a new row in the table
@@ -71,14 +72,17 @@ const CustomTableWidget9 = ({
       others1: "",
       totalTrainingHours: "",
     };
-    const newData = [...value, newRow];
+    const newData = [...tableData, newRow];
+    setTableData(newData);
     onChange(newData);
   };
 
-  // Log value changes for debugging
-  useEffect(() => {
-    console.log("CustomTableWidget value:", value);
-  }, [value]);
+  // Function to remove a row in the table
+  const handleRemoveRow = (index) => {
+    const newData = tableData.filter((_, rowIndex) => rowIndex !== index);
+    setTableData(newData);
+    onChange(newData);
+  };
 
   return (
     <>
@@ -182,7 +186,7 @@ const CustomTableWidget9 = ({
             </tr>
           </thead>
           <tbody>
-            {value.map((item, rowIndex) => (
+            {tableData.map((item, rowIndex) => (
               <tr key={`row-${rowIndex}`}>
                 {Object.keys(item)
                   .filter((key) => visibleKeys.includes(key)) // Only display specified keys
@@ -211,7 +215,7 @@ const CustomTableWidget9 = ({
                     </td>
                   ))}
                 <td className="border border-gray-300 p-3">
-                  <button onClick={() => formContext.onRemove(rowIndex)}>
+                  <button onClick={() => handleRemoveRow(rowIndex)}>
                     <MdOutlineDeleteOutline className="text-[23px] text-red-600" />
                   </button>
                 </td>
@@ -243,8 +247,8 @@ const InputField = ({ type, required, value, onChange }) => {
 
   const handleInputChange = (e) => {
     let newValue = e.target.value;
-    if (type === 'number') {
-      newValue = parseInt(newValue, 10) || 0; // Convert to integer, default to 0 if NaN
+    if (type === "number") {
+      newValue = e.target.value.toString(); // Ensure newValue is a string
     }
     setInputValue(newValue);
     onChange(newValue); // Update with converted value
@@ -252,7 +256,7 @@ const InputField = ({ type, required, value, onChange }) => {
 
   return (
     <input
-      type={type === 'number' ? 'number' : 'text'}
+      type={type === "number" ? "number" : "text"}
       required={required}
       value={inputValue}
       onChange={handleInputChange}
