@@ -22,7 +22,6 @@ const AnalyseMarketingLabeling = ({ isBoxOpen }) => {
   const [datasetparams, setDatasetparams] = useState({
     organisation: "",
     corporate: "",
-    location: "",
     start: null,
     end: null,
   });
@@ -57,7 +56,7 @@ const AnalyseMarketingLabeling = ({ isBoxOpen }) => {
     LoaderOpen();
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_child_labor_analysis`,
+        `/sustainapp/get_marketing_and_labeling_analysis`,
         {
           params: params
         }
@@ -65,24 +64,22 @@ const AnalyseMarketingLabeling = ({ isBoxOpen }) => {
 
       const data = response.data;
 
-      const {
-        new_suppliers_that_were_screened_using_social_criteria,
-      } = data;
+      const {marketing_labeling} = data;
 
       const formatcustomerhealth = (data) => {
-        return [
-          {
-            "Location": data.percentage.toFixed(2),
-            "Percentage of significant product or service categories covered by and assessed for compliance with such procedures": data.percentage.toFixed(2),
-          },
-        ];
+        return data.map((data, index) => {
+          const percentage = parseFloat(data.percentage).toFixed(2);
+          const formattedPercentage = percentage.endsWith('.00') ? percentage.slice(0, -3) : percentage;
+          return {
+            "Organisation/Corporation": data.org_or_corp,
+            "Percentage of significant product or service categories covered by and assessed for compliance with such procedures": formattedPercentage,
+          };
+        });
+
       };
-
-
-
       setCustomerhealth(
         formatcustomerhealth(
-          new_suppliers_that_were_screened_using_social_criteria
+          marketing_labeling
         )
       );
       LoaderClose();
@@ -138,7 +135,6 @@ const AnalyseMarketingLabeling = ({ isBoxOpen }) => {
       ...prevParams,
       organisation: newOrg,
       corporate: "",
-      location: "",
     }));
   };
 
@@ -149,7 +145,6 @@ const AnalyseMarketingLabeling = ({ isBoxOpen }) => {
     setDatasetparams((prevParams) => ({
       ...prevParams,
       corporate: newCorp,
-      location: "",
     }));
   };
 
