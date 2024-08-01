@@ -1,3 +1,4 @@
+'use client';
 import { useState, useEffect } from "react";
 import TableSidebar from "./TableSidebar";
 import axiosInstance from "../../../../utils/axiosMiddleware";
