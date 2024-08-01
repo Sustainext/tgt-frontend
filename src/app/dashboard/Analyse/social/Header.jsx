@@ -76,6 +76,21 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       data: [{ tagid: "1", infoid: "31" }],
     },
     {
+      category: "Tab8",
+      tag: "GRI 406",
+      data: [{ tagid: "1", infoid: "35" }],
+    },
+    {
+      category: "Tab9",
+      tag: "GRI 407",
+      data: [{ tagid: "1", infoid: "36" }],
+    },
+    {
+      category: "Tab10",
+      tag: "GRI 413",
+      data: [{ tagid: "1", infoid: "37" }],
+    },
+    {
       category: "Tab12",
       tag: "GRI 416",
       data: [{ tagid: "1", infoid: "31" }],
@@ -157,17 +172,16 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
     {
       category: "Tab9",
       data: [
-        { id: "sd11", label: "SDG 5", bgColor: "bg-orange-600" },
         { id: "sd18", label: "SDG 8", bgColor: "bg-red-900" },
       ],
     },
-    {
-      category: "Tab10",
-      data: [
-        { id: "sd11", label: "SDG 5", bgColor: "bg-orange-600" },
-        { id: "sd18", label: "SDG 8", bgColor: "bg-red-900" },
-      ],
-    },
+    // {
+    //   category: "Tab10",
+    //   data: [
+    //     { id: "sd11", label: "SDG 5", bgColor: "bg-orange-600" },
+    //     { id: "sd18", label: "SDG 8", bgColor: "bg-red-900" },
+    //   ],
+    // },
   ];
   return (
     <>
