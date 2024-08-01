@@ -1,6 +1,10 @@
 export const data = [
-    { "Type of Incident": "Race", "Total number of Incidents of discrimination": "" },
-    { "Type of Incident": "Gender", "Total number of Incidents of discrimination": "" }
+    { "": "Percentage of Security Personnel (in organisation)", "Percentage of operations implemented by engaging local communities": "" },
+    { "": "Environmental impact assessments", "Percentage of operations implemented by engaging local communities": "" },
+    { "": "Public disclosure", "Percentage of operations implemented by engaging local communities": "" },
+    { "": "Community development programs", "Percentage of operations implemented by engaging local communities": "" },
+    { "": "Stakeholder engagement plans", "Percentage of operations implemented by engaging local communities": "" },
+    { "": "Local community consultation committes", "Percentage of operations implemented by engaging local communities": "" }
   ];
   
-export  const columns = ["Type of Incident", "Total number of Incidents of discrimination"];
+export  const columns = ["", "Percentage of operations implemented by engaging local communities"];

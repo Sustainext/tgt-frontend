@@ -38,7 +38,7 @@ const Table1 = ({ data, columns }) => {
                   <td
                     key={colIndex}
                     className={`p-2 block md:table-cell h-20 ${
-                      colIndex === 0 ? 'text-center font-bold' : 'text-center'
+                      colIndex === 0 ? 'text-left font-bold' : 'text-center'
                     } text-sm`}
                   >
                     {row[column] || 'N/A'}

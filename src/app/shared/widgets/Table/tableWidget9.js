@@ -195,7 +195,7 @@ const CustomTableWidget9 = ({
                       key={`cell-${rowIndex}-${cellIndex}`}
                       className="border border-gray-300 p-3"
                     >
-                      <InputField
+                             <InputField
                         type={
                           options.subTitles.find(
                             (sub) =>

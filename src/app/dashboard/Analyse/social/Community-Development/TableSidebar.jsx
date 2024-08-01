@@ -50,7 +50,7 @@ const TableSidebar = () => {
       {[
         {
           id: "ep1",
-          name: " Incidents of discrimination and corrective actions taken",
+          name: "Percentage of operations implemented by engaging local communities",
         },
       ].map((link) => (
         <div key={link.id} className="self-stretch justify-end items-center gap-2 inline-flex">
