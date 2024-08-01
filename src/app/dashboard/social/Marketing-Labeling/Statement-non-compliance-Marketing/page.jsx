@@ -56,7 +56,7 @@ const StatementnoncomplianceMarketing = () => {
           </div>
           <div className="w-full float-end ">
             <div className="flex float-end border-l">
-            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('68')}>GRI 417 - 3</button>
+            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('75')}>GRI 417 - 3</button>
             <button className="text-[#fff] bg-[#00558A] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('69')}>SDG 16</button>
 
 

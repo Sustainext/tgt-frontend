@@ -134,7 +134,7 @@ const AnalyseCollectiveBargaining = ({ isBoxOpen }) => {
     setSelectedOrg(newOrg);
     setSelectedCorp("");
     setSelectedSetLocation("");
-    setDatasetparams({ organisation: newOrg, corporate: "", location: "", start: null, end: null });
+    setDatasetparams({...datasetparams, organisation: newOrg, corporate: "", location: "" });
     validateForm(); // Validate after setting state
   };
 

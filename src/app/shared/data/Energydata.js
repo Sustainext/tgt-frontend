@@ -2478,6 +2478,142 @@ If the organization does not follow the ILO code of practice, it can indicate wh
     ],
   },
   {
+    category: ["32"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 416: Customer Health and Safety 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            GRI 416-1 Assessment of the health and safety impacts of product and
+            service categories
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+
+            <p className="text-[11px] text-black mb-2">
+              Compilation Requirements
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              2.1 When compiling the information specified in Disclosure 416-2,
+              the reporting organization shall:2.1.1 exclude incidents of
+              non-compliance in which the organization was determined not to be
+              at fault;2.1.2 exclude incidents of non-compliance related to
+              labeling. Incidents related to labeling are reported in Disclosure
+              417-2 of GRI 417: Marketing and Labeling;2.1.3 if applicable,
+              identify any incidents of non-compliance that relate to events in
+              periods prior to the reporting period.
+            </p>
+            <p className="text-[11px] text-black mb-2">Guidance:-</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The incidents of non-compliance that occur within the reporting
+              period can relate to incidents formally resolved during the
+              reporting period, whether they occurred in periods prior to the
+              reporting period or not.
+            </p>
+            <p className="text-[11px] text-black mb-2">Background</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Protection of health and safety is a recognized goal of many
+              national and international regulations. Customers expect products
+              and services to perform their intended functions satisfactorily,
+              and not pose a risk to health and safety. Customers have a right
+              to non-hazardous products. Where their health and safety is
+              affected, customers also have the right to seek redress. This
+              disclosure addresses the life cycle of the product or service once
+              it is available for use, and therefore subject to regulations and
+              voluntary codes concerning the health and safety of products and
+              services.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12699&page=8"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["33"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+    GRI 417: Marketing and Labeling 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 417-1: Requirements for product and service information and labeling
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+            Background:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Customers and end users need accessible and  adequate information about the positive and negative environmental and social impacts of products and  services. This can include information on the safe use  of a product or service, the disposal of the product,  or the sourcing of its components. Access to this  information helps customers to make informed   purchasing choices.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12710&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["34"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 418: Customer Privacy 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          GRI 418-1: Substantiated complaints concerning breaches of customer privacy and losses of customer data
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+              Compilation Requirements
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            2.1 When compiling the information specified in Disclosure 418-1, the reporting organization  shall indicate if a substantial number of these breaches relate to events in preceding years.
+            </p>
+
+            <p className="text-[11px] text-black mb-2">Background</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Protection of customer privacy is a generally  recognized goal in national regulations and organizational  policies. As set out in the Organisation for Economic  Co-operation and Development (OECD) OECD  Guidelines for Multinational Enterprises, organizations  are expected to ‘respect consumer privacy and take  reasonable measures to ensure the security of personal  data that they collect, store, process or disseminate’. To protect customer privacy, an organization is  expected to limit its collection of personal data, to  collect data by lawful means, and to be transparent.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12721"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
     category: ["35"],
     header: [
       <h5 className="text-sky-600 text-[17px] font-bold">
@@ -3732,6 +3868,111 @@ If the organization does not follow the ILO code of practice, it can indicate wh
               target="_blank"
             >
               Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["sd19"],
+    header: [
+      <>
+        <div className="flex w-[100px]">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-12.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-[#CD8B2A] text-[17px] font-bold ml-2">SDG 12</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Ensure sustainable consumption and production patterns
+          </p>
+          <div className="h-[280px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 12.8</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2030, ensure that people everywhere have the relevant information and awareness for sustainable development and lifestyles in harmony with nature.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">12.8.1</p>
+            <p className="text-[11px] text-[#727272] mb-1">
+            Extent to which
+            </p>
+            <p className="text-[11px] text-[#727272] mb-1">
+            (i) global citizenship education and
+            </p>
+            <p className="text-[11px] text-[#727272] mb-1">
+            (ii) education for sustainable development are mainstreamed in
+            </p>
+            <p className="text-[11px] text-[#727272] mb-1">
+            (a) national education policies; (b) curricula; (c) teacher education; and (d) student assessment.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal12"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["sd20"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-16.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-blue-900 text-[17px] font-bold ml-2">SDG 16</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Promote peaceful and inclusive societies for sustainable development, provide access to justice for all and build effective, accountable and inclusive institutions at all levels
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 16.3</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Promote the rule of law at the national and international levels and ensure equal access to justice for all.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.3.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of victims of violence in the previous 12 months who reported their victimization to competent authorities or other officially recognized conflict resolution mechanisms.
+            </p>
+
+            <p className="text-[11px] text-[#222222] mb-2">16.3.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Unsentenced detainees as a proportion of overall prison population.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">16.3.3</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of the population who have experienced a dispute in the past two years and who accessed a formal or informal dispute resolution mechanism, by type of mechanism.
+            </p>
+
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal16"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>

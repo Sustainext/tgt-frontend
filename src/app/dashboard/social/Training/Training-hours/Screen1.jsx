@@ -95,6 +95,8 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const [file, setFile] = useState(null);
   const [newfile, setNewfile] = useState(null);
 const [fleg ,setfleg] = useState(null);
+
+
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -182,6 +184,7 @@ const [fleg ,setfleg] = useState(null);
     setUploadDateTime("");
     setfleg("");
     setNewfile("");
+
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}&month=${month}`;
     try {
       const response = await axiosInstance.get(url);
@@ -490,6 +493,7 @@ const [fleg ,setfleg] = useState(null);
             Submit
           </button>
         </div>
+
       </div>
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

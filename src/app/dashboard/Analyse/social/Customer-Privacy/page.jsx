@@ -5,7 +5,7 @@ import DynamicTable2 from "./customTable2";
 import DateRangePicker from "../../../../utils/DatePickerComponent";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import { columns1 } from "./data";
-const AnalyseMarketingLabeling = ({ isBoxOpen }) => {
+const AnalyseCustomerprivacy = ({ isBoxOpen }) => {
   const [organisations, setOrganisations] = useState([]);
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
@@ -22,7 +22,6 @@ const AnalyseMarketingLabeling = ({ isBoxOpen }) => {
   const [datasetparams, setDatasetparams] = useState({
     organisation: "",
     corporate: "",
-    location: "",
     start: null,
     end: null,
   });
@@ -57,7 +56,7 @@ const AnalyseMarketingLabeling = ({ isBoxOpen }) => {
     LoaderOpen();
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_child_labor_analysis`,
+        `/sustainapp/get_customer_privacy_analysis`,
         {
           params: params
         }
@@ -65,24 +64,23 @@ const AnalyseMarketingLabeling = ({ isBoxOpen }) => {
 
       const data = response.data;
 
-      const {
-        new_suppliers_that_were_screened_using_social_criteria,
-      } = data;
+      const {customer_privacy_data} = data;
 
       const formatcustomerhealth = (data) => {
-        return [
-          {
-            "Location": data.percentage.toFixed(2),
-            "Percentage of significant product or service categories covered by and assessed for compliance with such procedures": data.percentage.toFixed(2),
-          },
-        ];
+        console.log(data,"test loacl data");
+        return data.map((data, index) => ({
+          "Number of substantiated complaints received concerning breaches of customer privacy": data.customerprivacy,
+          "Complaints received from outside parties and substantiated by the organization": data.substantiatedorganization,
+          "Complaints from regulatory bodies": data.regulatorybodies,
+        }));
+
       };
 
 
 
       setCustomerhealth(
         formatcustomerhealth(
-          new_suppliers_that_were_screened_using_social_criteria
+          customer_privacy_data
         )
       );
       LoaderClose();
@@ -138,7 +136,6 @@ const AnalyseMarketingLabeling = ({ isBoxOpen }) => {
       ...prevParams,
       organisation: newOrg,
       corporate: "",
-      location: "",
     }));
   };
 
@@ -149,7 +146,6 @@ const AnalyseMarketingLabeling = ({ isBoxOpen }) => {
     setDatasetparams((prevParams) => ({
       ...prevParams,
       corporate: newCorp,
-      location: "",
     }));
   };
 
@@ -162,7 +158,7 @@ const AnalyseMarketingLabeling = ({ isBoxOpen }) => {
       end: newRange.end,
     }));
   };
-
+console.log(customerhealth,"test data customerhealth");
   return (
     <div>
       <div>
@@ -282,17 +278,17 @@ const AnalyseMarketingLabeling = ({ isBoxOpen }) => {
               >
                 <div>
                   <p className="text-[18px] font-semibold">
-                  Requirements for product and service information and labeling
+                  Substantiated complaints concerning breaches of customer privacy and losses of customer data
                   </p>
                 </div>
                 <div className="flex justify-between items-center mb-2">
                   <p className="text-gray-500">
-                  Percentage of significant product or service categories covered by and assessed
+                  Total number of substantiated complaints received concerning breaches of customer privacy
                   </p>
 
                   <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                     <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                      GRI 417-1b
+                      GRI 418-1b
                     </div>
                   </div>
                 </div>
@@ -324,4 +320,4 @@ const AnalyseMarketingLabeling = ({ isBoxOpen }) => {
   );
 };
 
-export default AnalyseMarketingLabeling;
+export default AnalyseCustomerprivacy;

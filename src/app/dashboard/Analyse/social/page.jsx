@@ -9,12 +9,12 @@ import AnalyseCompulsorylabour from "./Compulsory-Labour/page";
 import AnalyseDiversityInclusion from "./Diversity-and-inclusion/page";
 import AnalyseSuppliersocialassessment from "./Supplier-social-assessment/page";
 import AnalyseTraining from "./Training/page";
-import AnalyseCustomerHealthSafety from "./Customer-Health-Safety/page"
-import AnalyseMarketingLabeling from "./Marketing-Labeling/page"
 import AnalyseNonDiscrimination from "./NonDiscrimination/page";
 import AnalyseCollectiveBargaining from "./Collective-Bargaining/page";
+import AnalyseCustomerHealthSafety from "./Customer-Health-Safety/page"
+import AnalyseMarketingLabeling from "./Marketing-Labeling/page"
 import AnalyseCommunityDevelopment from "./Community-Development/page";
-
+import AnalyseCustomerprivacy from "./Customer-Privacy/page"
 const social = () => {
   const [activeTab, setActiveTab] = useState("Tab1");
   const [isBoxOpen, setIsBoxOpen] = useState(false);
@@ -39,11 +39,12 @@ const social = () => {
         {activeTab === "Tab5" && <AnalyseDiversityInclusion /> }
         {activeTab === "Tab6" && <AnalyseSuppliersocialassessment/>}
         {activeTab === "Tab7" && <AnalyseTraining /> }
-        {activeTab === "Tab12" && <AnalyseCustomerHealthSafety /> }
-        {activeTab === "Tab13" && <AnalyseMarketingLabeling /> }
         {activeTab === "Tab8" && <AnalyseNonDiscrimination /> }
         {activeTab === "Tab9" && <AnalyseCollectiveBargaining /> }
         {activeTab === "Tab10" && <AnalyseCommunityDevelopment /> }
+        {activeTab === "Tab12" && <AnalyseCustomerHealthSafety /> }
+        {activeTab === "Tab13" && <AnalyseMarketingLabeling /> }
+        {activeTab === "Tab14" && <AnalyseCustomerprivacy /> }
       </div>
     </div>
   );

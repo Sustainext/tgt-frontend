@@ -13,7 +13,7 @@ const DynamicTable2 = ({ data, columns }) => {
               <th
                 key={column}
                 className={`px-2 py-3 font-semibold text-gray-600 block md:table-cell text-sm ${
-                  column === 'Percentage of suppliers screened using social criteria' ? 'text-center' : 'text-left'
+                  column === 'Percentage of significant product or service categories covered by and assessed for compliance with such procedures' ? 'text-center' : 'text-left'
                 }`}
               >
                 {column}
@@ -41,7 +41,7 @@ const DynamicTable2 = ({ data, columns }) => {
                       colIndex === 0 ? 'text-center' : 'text-center'
                     } text-sm`}
                   >
-                        {row[column] !== undefined && row[column] !== null ? `${row[column]}%` : 'N/A'}
+                  {row[column] !== undefined && row[column] !== null ? `${row[column]}%` : 'N/A'}
                   </td>
                 ))}
               </tr>

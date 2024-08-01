@@ -28,13 +28,14 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title:
-          "Total number of product or service categories covered by and assessed for compliance with such procedures.",
+        title: "Total number of product or service categories",
       },
       Q2: {
         type: "string",
-        title: "Total number of product or service categories",
+        title:
+          "Total number of product or service categories covered by and assessed for compliance with such procedures.",
       },
+
     },
   },
 };
@@ -42,8 +43,17 @@ const schema = {
 const uiSchema = {
   items: {
     "ui:order": ["Q1", "Q2"],
-
     Q1: {
+      "ui:title": "Total number of product or service categories",
+      "ui:tooltip": "Please specify the total number of product or services categories.",
+      "ui:tooltipdisplay": "block",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
+    },
+    Q2: {
       "ui:title":
         "Total number of product or service categories covered by and assessed for compliance with such procedures.",
       "ui:tooltip":
@@ -55,16 +65,7 @@ const uiSchema = {
         label: false,
       },
     },
-    Q2: {
-      "ui:title": "Total number of product or service categories",
-      "ui:tooltip": "Please specify the total number of product or services categories.",
-      "ui:tooltipdisplay": "block",
-      "ui:widget": "inputWidget",
-      "ui:horizontal": true,
-      "ui:options": {
-        label: false,
-      },
-    },
+
 
     "ui:options": {
       orderable: false, // Prevent reordering of items
