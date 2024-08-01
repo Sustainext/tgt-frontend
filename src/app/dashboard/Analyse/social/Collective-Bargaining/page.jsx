@@ -136,22 +136,22 @@ const AnalyseCollectiveBargaining = ({ isBoxOpen }) => {
     setSelectedCorp("");
     setSelectedSetLocation("");
     setDatasetparams({...datasetparams, organisation: newOrg, corporate: "", location: "" });
-    validateForm(); // Validate after setting state
+    validateForm(); 
   };
 
-  const handleOrgChange = (e) => {
+  const handleCorpChange = (e) => {
     const newCorp = e.target.value;
     setSelectedCorp(newCorp);
     setSelectedSetLocation("");
-    setDatasetparams(prev => ({ ...prev, corporate: newCorp, location: "" }));
-    validateForm(); // Validate after setting state
+    setDatasetparams({...datasetparams, corporate: newCorp, location: "" });
+    validateForm(); 
   };
 
   const handleLocationChange = (e) => {
     const newLocation = e.target.value;
     setSelectedSetLocation(newLocation);
     setDatasetparams(prev => ({ ...prev, location: newLocation }));
-    validateForm(); // Validate after setting state
+    validateForm(); 
   };
 
   const handleDateChange = (newRange) => {
@@ -240,7 +240,7 @@ const AnalyseCollectiveBargaining = ({ isBoxOpen }) => {
                     <select
                       className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       value={selectedCorp}
-                      onChange={handleOrgChange}
+                      onChange={handleCorpChange}
                     >
                       <option value="">--Select Corporate--- </option>
                       {corporates.map((corp) => (
