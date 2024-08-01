@@ -143,14 +143,7 @@ const AnalyseCollectiveBargaining = ({ isBoxOpen }) => {
     const newCorp = e.target.value;
     setSelectedCorp(newCorp);
     setSelectedSetLocation("");
-    setDatasetparams({...datasetparams, corporate: newCorp, location: "" });
-    validateForm(); 
-  };
-
-  const handleLocationChange = (e) => {
-    const newLocation = e.target.value;
-    setSelectedSetLocation(newLocation);
-    setDatasetparams(prev => ({ ...prev, location: newLocation }));
+    setDatasetparams((prev)=> ({ ...prev, corporate: newCorp,start: dateRange.start, end: dateRange.end }));
     validateForm(); 
   };
 
