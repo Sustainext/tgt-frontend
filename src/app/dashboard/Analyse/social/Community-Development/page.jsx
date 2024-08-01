@@ -6,7 +6,7 @@ import DateRangePicker from "../../../../utils/DatePickerComponent"; // Ensure t
 import { columns, data } from "./data";
 
 const AnalyseCommunityDevelopment = ({ isBoxOpen }) => {
-  const [incidentsOfDiscrimination, setIncidentsOfDiscrimination] = useState(
+  const [OperationsWithLocalCommunity, setOperationsWithLocalCommunity] = useState(
     []
   );
   const [selectedLocation, setSelectedLocation] = useState([]);
@@ -53,27 +53,17 @@ const AnalyseCommunityDevelopment = ({ isBoxOpen }) => {
     if (!validateForm()) return;
 
     LoaderOpen();
-    setIncidentsOfDiscrimination([]);
+    setOperationsWithLocalCommunity([]);
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_diversity_inclusion_analysis/`,
+        `/sustainapp/get_community_development_analysis/`,
         { params: datasetparams }
       );
       const data = response.data;
 
-      const { incidents_of_discrimination } = data;
+      const { community_engagement } = data;
 
-      const formatDiscriminationData = (data) => {
-        return data.map((item) => ({
-          "Type of Incident": item.type_of_incident,
-          "Total number of Incidents of discrimination":
-            item.total_number_of_incidents,
-        }));
-      };
-
-      setIncidentsOfDiscrimination(
-        formatDiscriminationData(incidents_of_discrimination)
-      );
+      setOperationsWithLocalCommunity(community_engagement);
       LoaderClose();
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
@@ -189,15 +179,15 @@ const AnalyseCommunityDevelopment = ({ isBoxOpen }) => {
               className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3"
             >
               <div className="flex justify-between items-center mb-2">
-                <p>Incidents of discrimination and corrective actions taken</p>
+                <p>Operations with local community engagement, impact assessments, and development programs</p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                    GRI 406-1a
+                    GRI 413-1a
                   </div>
                 </div>
               </div>
               <div className="mb-4">
-                <Table1 data={data} columns={columns} />
+                <Table1 data={OperationsWithLocalCommunity} columns={columns} />
               </div>
             </div>
           </div>
