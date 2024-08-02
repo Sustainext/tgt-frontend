@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Table1 = ({ data, columns }) => {
+const DynamicTable2 = ({ data, columns }) => {
   // Check if all rows are empty objects
   const isEmptyData = data.every(row => Object.keys(row).length === 0);
 
@@ -12,9 +12,7 @@ const Table1 = ({ data, columns }) => {
             {columns.map((column, index) => (
               <th
                 key={column}
-                className={`px-2 py-3 font-semibold text-gray-600 block md:table-cell text-sm ${
-                  index === 0 ? 'text-left' : 'text-center'
-                }`}
+                className={`px-2 py-3 font-semibold text-gray-600 block md:table-cell text-sm text-left`}
               >
                 {column}
               </th>
@@ -26,7 +24,7 @@ const Table1 = ({ data, columns }) => {
             <tr className="border border-gray-300 md:table-row">
               <td
                 colSpan={columns.length}
-                className="text-center p-2 block md:table-cell text-sm h-20"
+                className="text-center p-2 block md:table-cell text-sm"
               >
                 No data available
               </td>
@@ -37,11 +35,13 @@ const Table1 = ({ data, columns }) => {
                 {columns.map((column, colIndex) => (
                   <td
                     key={colIndex}
-                    className={`p-2 block md:table-cell h-20 ${
-                      colIndex === 0 ? 'text-center font-bold' : 'text-center'
+                    className={`p-2 block md:table-cell ${
+                      colIndex === 0 ? 'text-center' : 'text-center'
                     } text-sm`}
                   >
-                    {row[column] || 'N/A'}
+                       {row[column] !== undefined && row[column] !== null
+                      ? colIndex === 0 ? row[column] : `${row[column]}%`
+                      : 'N/A'}
                   </td>
                 ))}
               </tr>
@@ -53,4 +53,4 @@ const Table1 = ({ data, columns }) => {
   );
 };
 
-export default Table1;
+export default DynamicTable2;

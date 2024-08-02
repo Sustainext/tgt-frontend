@@ -1,7 +1,8 @@
-'use client'
-import React, { useState, useCallback, useEffect } from "react";
-import { debounce } from "lodash";
-import { MdOutlineDeleteOutline, MdAdd } from "react-icons/md";
+"use client";
+import React, { useState, useEffect } from "react";
+import { MdOutlineDeleteOutline, MdAdd, MdInfoOutline } from "react-icons/md";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 const CustomTableWidget10 = ({
   id,
@@ -11,217 +12,229 @@ const CustomTableWidget10 = ({
   onChange,
   formContext,
 }) => {
-  const [rowSpan, setRowSpan] = useState(1);
+  const [tableData, setTableData] = useState(value);
 
-  const handleInputChange = useCallback(
-    debounce((newData) => {
-      onChange(newData);
-    }, 200),
-    []
-  );
+  useEffect(() => {
+    setTableData(value);
+  }, [value]);
 
+  const visibleKeys = [
+    "category",
+    "male",
+    "female",
+    "others",
+    "totalTrainingHours",
+    "male1",
+    "female1",
+    "others1",
+    "totalEmployees",
+  ];
+
+  // Update fields and automatically compute totals
   const updateField = (index, key, newValue) => {
-    const newData = [...value];
-    if (['male', 'male2', 'female', 'female2', 'nonBinary', 'nonBinary2', 'totalTrainingHours', 'totalTrainingHours2'].includes(key)) {
-      newData[0][key] = newValue; // Update first object for specified fields
-    } else {
-      newData[index][key] = newValue; // Update specific index for other fields
+    const newData = [...tableData];
+    newData[index][key] = newValue;
+
+    // Automatically compute totals if relevant fields are modified
+    if (["male", "female", "others"].includes(key)) {
+      newData[index]["totalTrainingHours"] = [
+        newData[index]["male"],
+        newData[index]["female"],
+        newData[index]["others"],
+      ]
+        .reduce((sum, value) => sum + (Number(value) || 0), 0)
+        .toString();
     }
-    handleInputChange(newData);
+    if (["male1", "female1", "others1"].includes(key)) {
+      newData[index]["totalEmployees"] = [
+        newData[index]["male1"],
+        newData[index]["female1"],
+        newData[index]["others1"],
+      ]
+        .reduce((sum, value) => sum + (Number(value) || 0), 0)
+        .toString();
+    }
+
+    setTableData(newData);
+    onChange(newData);
   };
 
-  const getInputType = (key) => {
-    const field = options.subTitles.find((item) => item.title.toLowerCase().replace(/ /g, "") === key.toLowerCase());
-    return field ? field.type : "text";
-  };
-
+  // Function to add a new row in the table
   const handleAddRow = () => {
     const newRow = {
       category: "",
-      numberperformancereview: "",
-      numberdevelopmentreview: "",
+      male: "",
+      female: "",
+      others: "",
+      totalTrainingHours: "",
+      male1: "",
+      female1: "",
+      others1: "",
+      totalEmployees: "",
     };
-    const newData = [...value, newRow];
+    const newData = [...tableData, newRow];
+    setTableData(newData);
     onChange(newData);
-    setRowSpan(rowSpan + 1);
   };
-  const handleRemoveRow = (rowIndex) => {
-    const newData = [...value];
 
-    if (newData.length > 1 && rowIndex < newData.length - 1) {
-      // Transfer data to the next row if not the last row
-      const fieldsToTransfer = ['male', 'male2', 'female', 'female2', 'nonBinary', 'nonBinary2', 'totalTrainingHours', 'totalTrainingHours2'];
-      fieldsToTransfer.forEach(field => {
-        newData[rowIndex + 1][field] = newData[rowIndex][field];
-      });
-    }
-
-    // Remove the row after transferring data
-    newData.splice(rowIndex, 1);
+  // Function to remove a row in the table
+  const handleRemoveRow = (index) => {
+    const newData = tableData.filter((_, rowIndex) => rowIndex !== index);
+    setTableData(newData);
     onChange(newData);
-    setRowSpan(rowSpan - 1);
   };
 
-  useEffect(() => {
-    console.log("CustomTableWidget value:", value);
-  }, [value]);
-
-  const calculateTotal = (key) => {
-    return value.reduce((acc, item) => acc + (parseFloat(item[key]) || 0), 0);
-  };
-
-  // Calculate totals when the component mounts and whenever relevant data changes
-  const totalTrainingHours = calculateTotal("numberperformancereview") + calculateTotal("male") + calculateTotal("female") + calculateTotal("nonBinary");
-  const totalTrainingHours2 = calculateTotal("numberdevelopmentreview") + calculateTotal("male2") + calculateTotal("female2") + calculateTotal("nonBinary2");
-
-  useEffect(() => {
-    const newData = [...value];
-    if (newData[0]) {
-      newData[0].totalTrainingHours = totalTrainingHours;
-      newData[0].totalTrainingHours2 = totalTrainingHours2;
-      handleInputChange(newData);
-    }
-  }, [totalTrainingHours, totalTrainingHours2]);
   return (
-    <div className="container mx-auto p-4">
-      <table className="min-w-full bg-white border border-gray-300">
-        <thead className="gradient-background">
-          <tr>
-            <th className="py-2 px-4 border-r border-b border-gray-300"></th>
-            <th className="py-2 px-4 border-r border-b border-gray-300"></th>
-            <th className="py-2 px-4 border-r border-b border-gray-300">Number of employees who received regular performance review</th>
-            <th className="py-2 px-4 border-b border-gray-300">Number of employees who received regular career development review</th>
-            <th className="py-2 px-4 border-r border-b border-gray-300"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {value.map((item, rowIndex) => (
-            <React.Fragment key={rowIndex}>
-              <tr>
-              {rowIndex === 0 && (
-                  <td className="py-2 px-4 border-r  border-gray-300 gradient-background text-center" rowSpan={value.length}>
-                    Employee Category
-                  </td>
-                )}
-                <td className="py-2 px-4 border-r border-b border-gray-300">
-                  <InputField
-                    type="text"
-                    required={required}
-                    value={item.category}
-                    onChange={(newValue) => updateField(rowIndex, "category", newValue)}
-                  />
-                </td>
-                <td className="py-2 px-4 border border-gray-300">
-                  <InputField
-                    type="number"
-                    required={required}
-                    value={item.numberperformancereview}
-                    onChange={(newValue) => updateField(rowIndex, "numberperformancereview", newValue)}
-                  />
-                </td>
-                <td className="py-2 px-4 border border-gray-300">
-                  <InputField
-                     type="number"
-                    required={required}
-                    value={item.numberdevelopmentreview}
-                    onChange={(newValue) => updateField(rowIndex, "numberdevelopmentreview", newValue)}
-                  />
-                </td>
-                <td className="py-2 px-4 border border-gray-300">
+    <>
+      <div style={{ overflowY: "auto", maxHeight: "400px" }}>
+        <table id={id} className="rounded-md border border-gray-300 w-full">
+          <thead className="gradient-background">
+            <tr>
+              {options.titles.map((item, idx) => {
+                // Check if the title is "Employee Category"
+                if (item.title === "Employee Category") {
+                  return (
+                    // This header will span 2 rows if the condition is met
+                    <th
+                      key={`header-${idx}`}
+                      className={`text-[12px] px-2 py-2 text-left`}
+                      rowSpan={2} // Spanning two rows
+                    >
+                      <div className="flex items-center relative">
+                        <p>{item.title}</p>
+                        {/* <MdInfoOutline
+                          data-tooltip-id={`tooltip-${item.title.replace(
+                            /\s+/g,
+                            "-"
+                          )}`}
+                          data-tooltip-content={item.tooltip}
+                          className="ml-2 cursor-pointer w-[20%]"
+                        />
+                        <ReactTooltip
+                          id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
+                          place="top"
+                          effect="solid"
+                          className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
+                        /> */}
+                      </div>
+                    </th>
+                  );
+                } else {
+                  // Normal rendering for other headers
+                  return (
+                    <th
+                      key={`header-${idx}`}
+                      className={`text-[12px] px-2 py-2 ${
+                        idx === 0
+                          ? "text-left"
+                          : "text-center border border-gray-300"
+                      }`}
+                      colSpan={item.colSpan}
+                    >
+                      <div className="flex items-center justify-center">
+                        <p>{item.title}</p>
+                        <MdInfoOutline
+                          data-tooltip-id={`tooltip-${item.title.replace(
+                            /\s+/g,
+                            "-"
+                          )}`}
+                          data-tooltip-content={item.tooltip}
+                          className="ml-2 cursor-pointer"
+                        />
+                        <ReactTooltip
+                          id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
+                          place="top"
+                          effect="solid"
+                          className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
+                        />
+                      </div>
+                    </th>
+                  );
+                }
+              })}
+              <th></th>
+            </tr>
+            <tr>
+              {options.tbtilte.map((item, idx) => (
+                <th
+                  key={`tbtitle-${idx}`}
+                  style={{ textAlign: "center" }}
+                  className="text-[12px] border border-gray-300 px-2 py-2"
+                  colSpan={item.colSpan}
+                >
+                  <div className="">
+                    <p>{item.title}</p>
+                  </div>
+                </th>
+              ))}
+              <th></th>
+            </tr>
+            <tr>
+              {options.subTitles.map((item, idx) => (
+                <th
+                  key={`sub-header-${idx}`}
+                  style={{ textAlign: "center" }}
+                  className="text-[12px] border border-gray-300 px-2 py-2"
+                  colSpan={item.colSpan}
+                >
+                  <div className="">
+                    <p>{item.title}</p>
+                  </div>
+                </th>
+              ))}
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {tableData.map((item, rowIndex) => (
+              <tr key={`row-${rowIndex}`}>
+                {Object.keys(item)
+                  .filter((key) => visibleKeys.includes(key)) // Only display specified keys
+                  .map((key, cellIndex) => (
+                    <td
+                      key={`cell-${rowIndex}-${cellIndex}`}
+                      className="border border-gray-300 p-3"
+                    >
+                             <InputField
+                        type={
+                          options.subTitles.find(
+                            (sub) =>
+                              sub.title2.toLowerCase() === key.toLowerCase()
+                          )?.type || "text"
+                        }
+                        required={required}
+                        readOnly={
+                          key === "totalEmployees" ||
+                          key === "totalTrainingHours"
+                        }
+                        value={item[key]}
+                        onChange={(newValue) =>
+                          updateField(rowIndex, key, newValue)
+                        }
+                      />
+                    </td>
+                  ))}
+                <td className="border border-gray-300 p-3">
                   <button onClick={() => handleRemoveRow(rowIndex)}>
                     <MdOutlineDeleteOutline className="text-[23px] text-red-600" />
                   </button>
                 </td>
               </tr>
-            </React.Fragment>
-          ))}
-          <tr>
-            <td className="gradient-background"></td>
-            <td className="py-2 px-4 border border-gray-300">
-            <div className="flex items-center justify-center right-1 mx-2">
-        <button
-          type="button"
-          className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
-          onClick={handleAddRow}
-        >
-          Add category <MdAdd className="text-lg" />
-        </button>
+            ))}
+          </tbody>
+        </table>
+
+        <div className="flex right-1 mx-2">
+          <button
+            type="button"
+            className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
+            onClick={handleAddRow}
+          >
+            Add category <MdAdd className="text-lg" />
+          </button>
+        </div>
       </div>
-            </td>
-
-          </tr>
-
-          <tr>
-            <td className="py-2 px-4 border-t border-r border-b text-center border-gray-300 gradient-background" rowSpan="4">Gender</td>
-            <td className="py-2 px-4 border-r border-b border-gray-300 text-center">Male</td>
-            <td className="py-2 px-4 border border-gray-300">
-              <InputField
-                type={getInputType("male")}
-                required={required}
-                value={value[0]?.male || ""}
-                onChange={(newValue) => updateField(0, "male", newValue)}
-              />
-            </td>
-            <td className="py-2 px-4 border border-gray-300">
-              <InputField
-                type={getInputType("male2")}
-                required={required}
-                value={value[0]?.male2 || ""}
-                onChange={(newValue) => updateField(0, "male2", newValue)}
-              />
-            </td>
-            <td className="border-t border-gray-300"></td>
-          </tr>
-          <tr>
-            <td className="py-2 px-4 border-r border-b border-gray-300 text-center">Female</td>
-            <td className="py-2 px-4 border border-gray-300">
-              <InputField
-                type={getInputType("female")}
-                required={required}
-                value={value[0]?.female || ""}
-                onChange={(newValue) => updateField(0, "female", newValue)}
-              />
-            </td>
-            <td className="py-2 px-4 border border-gray-300">
-              <InputField
-                type={getInputType("female2")}
-                required={required}
-                value={value[0]?.female2 || ""}
-                onChange={(newValue) => updateField(0, "female2", newValue)}
-              />
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <td className="py-2 px-4 border-r border-b border-gray-300 text-center">Non Binary</td>
-            <td className="py-2 px-4 border border-gray-300">
-              <InputField
-                type={getInputType("nonBinary")}
-                required={required}
-                value={value[0]?.nonBinary || ""}
-                onChange={(newValue) => updateField(0, "nonBinary", newValue)}
-              />
-            </td>
-            <td className="py-2 px-4 border border-gray-300">
-              <InputField
-                type={getInputType("nonBinary2")}
-                required={required}
-                value={value[0]?.nonBinary2 || ""}
-                onChange={(newValue) => updateField(0, "nonBinary2", newValue)}
-              />
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <td className="py-2 px-4 border-r border-b border-gray-300 text-center">Total employee</td>
-            <td className="py-2 px-4 border border-gray-300 text-center">{totalTrainingHours}</td>
-            <td className="py-2 px-4 border border-gray-300 text-center">{totalTrainingHours2}</td>
-            <td className="border-b border-gray-300"></td>
-          </tr>
-        </tbody>
-      </table>
-
-    </div>
+    </>
   );
 };
 
@@ -233,14 +246,17 @@ const InputField = ({ type, required, value, onChange }) => {
   }, [value]);
 
   const handleInputChange = (e) => {
-    const newValue = e.target.value;
+    let newValue = e.target.value;
+    if (type === "number") {
+      newValue = e.target.value.toString(); // Ensure newValue is a string
+    }
     setInputValue(newValue);
-    onChange(newValue);
+    onChange(newValue); // Update with converted value
   };
 
   return (
     <input
-      type={type}
+      type={type === "number" ? "number" : "text"}
       required={required}
       value={inputValue}
       onChange={handleInputChange}

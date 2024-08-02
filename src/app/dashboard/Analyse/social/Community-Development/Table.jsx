@@ -41,7 +41,7 @@ const Table1 = ({ data, columns }) => {
                       colIndex === 0 ? 'text-left font-bold' : 'text-center'
                     } text-sm`}
                   >
-                    {row[column] || 'N/A'}
+                    {row[column]}
                   </td>
                 ))}
               </tr>

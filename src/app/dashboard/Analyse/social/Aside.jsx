@@ -93,7 +93,6 @@ const Aside = ({ activeTab, handleTabClick }) => {
 
             <span className="mr-8 text-left">Training</span>
           </button>
-
           <button
             className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
               activeTab === "Tab8"

@@ -2,15 +2,16 @@
 import { useState, useEffect } from "react";
 import TableSidebar from "./TableSidebar";
 import axiosInstance from "../../../../utils/axiosMiddleware";
-import Table1 from "./Table"; // Ensure this is the correct import path
-import { yearInfo } from "@/app/shared/data/yearInfo";
-
+import Table1 from "./Table";
+import DateRangePicker from "../../../../utils/DatePickerComponent"; // Ensure the correct path
+import { columns1, columns2 } from "./data"; // Assuming these are correct
+import { Oval } from 'react-loader-spinner';
 const AnalyseCollectiveBargaining = ({ isBoxOpen }) => {
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
   const [selectedLocation, setSelectedLocation] = useState([]);
   const [selectedSetLocation, setSelectedSetLocation] = useState("");
-  const [selectedYear, setSelectedYear] = useState("");
+  const [dateRange, setDateRange] = useState({ start: null, end: null });
   const [organisations, setOrganisations] = useState([]);
   const [corporates, setCorporates] = useState([]);
   const [reportType, setReportType] = useState("Organization");
@@ -19,84 +20,60 @@ const AnalyseCollectiveBargaining = ({ isBoxOpen }) => {
     organisation: "",
     corporate: "",
     location: "",
-    start: "",
-    end: "",
+    start: null,
+    end: null,
   });
-  const [activeScreen, setActiveScreen] = useState(1);
-  const [errors, setErrors] = useState({
-    selectedOrg: "Organization is required",
-    selectedLocation: "Location is required",
-    selectedYear: "Year is required",
-  });
+  const [errors, setErrors] = useState({});
+  const [operationBargainingData, setOperationBargainingData] = useState([]);
+  const [supplierBargainingData, setSupplierBargainingData] = useState([]);
 
-  const columns1 = [
-    "Operations in which workers' rights to exercise freedom of association or collective bargaining may be violated or at significant risk",
-    "Type of Operation",
-    "Countries or Geographic Areas"
-  ];
-
-  const data1 = [
-    {
-      "Operations in which workers' rights to exercise freedom of association or collective bargaining may be violated or at significant risk": "Operation 1",
-      "Type of Operation": "",
-      "Countries or Geographic Areas": ""
-    },
-    {
-      "Operations in which workers' rights to exercise freedom of association or collective bargaining may be violated or at significant risk": "Operation 2",
-      "Type of Operation": "",
-      "Countries or Geographic Areas": ""
-    }
-  ];
-
-  const LoaderOpen = () => {
-    setLoOpen(true);
-  };
-
-  const LoaderClose = () => {
-    setLoOpen(false);
-  };
+  const LoaderOpen = () => setLoOpen(true);
+  const LoaderClose = () => setLoOpen(false);
 
   const validateForm = () => {
     const newErrors = {};
 
-    if (!selectedOrg && activeScreen === 1) {
+    if (!selectedOrg && (reportType === "Organization" || reportType === "Corporate")) {
       newErrors.selectedOrg = "Organization is required";
     }
-    if (!selectedSetLocation && activeScreen === 2) {
+    if (!selectedCorp && reportType === "Corporate") {
+      newErrors.selectedCorp = "Corporate is required";
+    }
+    if (!selectedSetLocation && reportType === "Location") {
       newErrors.selectedLocation = "Location is required";
     }
-    if (!selectedYear) {
-      newErrors.selectedYear = "Year is required";
+    if (!dateRange.start || !dateRange.end) {
+      newErrors.dateRange = "Please select a valid date range";
+    } else if (new Date(dateRange.start) >= new Date(dateRange.end)) {
+      newErrors.dateRange = "Start date must be before the end date";
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const fetchData = async (params) => {
+  const fetchData = async () => {
     if (!validateForm()) return;
-
     LoaderOpen();
     try {
-      const response = await axiosInstance.get(
-        `/sustainapp/get_training_social_analysis/`,
-        { params: params }
-      );
-      const data = response.data;
-      console.log('analyse data', data);
-
-      LoaderClose();
+      const response = await axiosInstance.get(`sustainapp/get_collective_bargaining_analysis`, {
+        params: datasetparams
+      });
+      const { operation_bargaining, supplier_bargaining } = response.data;
+      setOperationBargainingData(operation_bargaining);
+      setSupplierBargainingData(supplier_bargaining);
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
+    } finally {
       LoaderClose();
     }
   };
 
   useEffect(() => {
     if (validateForm()) {
-      fetchData(datasetparams);
+      fetchData();
     }
-  }, [datasetparams, activeScreen]);
+  }, [datasetparams]);
 
   useEffect(() => {
     const fetchOrg = async () => {
@@ -114,39 +91,43 @@ const AnalyseCollectiveBargaining = ({ isBoxOpen }) => {
   }, []);
 
   useEffect(() => {
-    const fetchCorporates = async () => {
-      if (selectedOrg) {
+    if (selectedOrg) {
+      const fetchCorporates = async () => {
         try {
-          const response = await axiosInstance.get(`/corporate/`, {
-            params: { organization_id: selectedOrg },
-          });
+          const response = await axiosInstance.get(`/corporate/`, { params: { organization_id: selectedOrg }});
           setCorporates(response.data);
         } catch (e) {
           console.error("Failed fetching corporates:", e);
         }
-      }
-    };
+      };
 
-    fetchCorporates();
+      fetchCorporates();
+    }
   }, [selectedOrg]);
 
   useEffect(() => {
-    const fetchLocation = async () => {
-      try {
-        const response = await axiosInstance.get(`/sustainapp/get_location/`);
-        setSelectedLocation(response.data || []);
-      } catch (e) {
-        console.error("Failed fetching locations:", e);
-        setSelectedLocation([]);
-      }
-    };
-    if (selectedLocation.length === 0) {
+    if (selectedCorp) {
+      const fetchLocation = async () => {
+        try {
+          const response = await axiosInstance.get(`/sustainapp/get_location/`);
+          setSelectedLocation(response.data || []);
+        } catch (e) {
+          console.error("Failed fetching locations:", e);
+          setSelectedLocation([]);
+        }
+      };
+
       fetchLocation();
     }
   }, [selectedCorp]);
 
   const handleReportTypeChange = (type) => {
     setReportType(type);
+    setDatasetparams({ organisation: selectedOrg, corporate: "", location: "", start: null, end: null });
+    if (type === "Organization") {
+      setSelectedCorp("");
+      setSelectedSetLocation("");
+    }
   };
 
   const handleOrganizationChange = (e) => {
@@ -154,174 +135,134 @@ const AnalyseCollectiveBargaining = ({ isBoxOpen }) => {
     setSelectedOrg(newOrg);
     setSelectedCorp("");
     setSelectedSetLocation("");
-    setSelectedYear("");
-
-    setDatasetparams({
-      organisation: newOrg,
-      corporate: "",
-      location: "",
-      start: "",
-      end: "",
-    });
+    setDatasetparams({...datasetparams, organisation: newOrg, corporate: "", location: "" });
+    validateForm();
   };
 
-  const handleOrgChange = (e) => {
+  const handleCorpChange = (e) => {
     const newCorp = e.target.value;
     setSelectedCorp(newCorp);
     setSelectedSetLocation("");
-    setSelectedYear("");
-
-    setDatasetparams((prevParams) => ({
-      ...prevParams,
-      corporate: newCorp,
-      location: "",
-      start: prevParams.start,
-      end: prevParams.end,
-    }));
+    setDatasetparams((prev)=> ({ ...prev, corporate: newCorp,start: dateRange.start, end: dateRange.end }));
+    validateForm();
   };
 
-  const handleLocationChange = (e) => {
-    const newLocation = e.target.value;
-    setSelectedSetLocation(newLocation);
-    setDatasetparams((prevParams) => ({
-      ...prevParams,
-      location: newLocation,
-      organisation: "",
-      corporate: "",
-      start: prevParams.start,
-      end: prevParams.end,
+  const handleDateChange = (newRange) => {
+    setDateRange(newRange);
+    setDatasetparams(prev => ({
+      ...prev,
+      start: newRange.start,
+      end: newRange.end
     }));
-  };
-
-  const handleYearChange = (e) => {
-    const newYear = e.target.value;
-    setSelectedYear(newYear);
-
-    setDatasetparams((prevParams) => ({
-      ...prevParams,
-      start: `${newYear}-01-01`,
-      end: `${newYear}-12-31`,
-    }));
+    validateForm(); // Validate after updating the dates
   };
 
   return (
     <div>
-      <div>
-        <div className="mb-2 flex-col items-center pt-4 gap-6">
-          <div className="mt-4 pb-3 mx-5 text-left">
-            <div className="mb-2 flex-col items-center pt-2 gap-6">
-              <div className="justify-start items-center gap-4 inline-flex mt-4">
-                <div className="text-zinc-600 text-[15px] font-semibold font-['Manrope']">
-                  View By:
-                </div>
-                <div className="rounded-lg shadow border border-gray-300 justify-start items-start flex">
-                  <div
-                    className={`w-[111px] px-4 py-2.5 border-r rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
-                      reportType === "Organization" ? "bg-sky-100" : "bg-white"
-                    }`}
-                    onClick={() => handleReportTypeChange("Organization")}
-                  >
-                    <div className="text-slate-800 text-[13px] font-medium font-['Manrope'] leading-tight">
-                      Organization
-                    </div>
+      <div className="mb-2 flex-col items-center gap-6">
+        <div className="mt-4 pb-3 mx-5 text-left">
+          <div className="mb-2 flex-col items-center gap-6">
+            <div className="justify-start items-center gap-4 inline-flex mt-4">
+              <div className="text-zinc-600 text-[15px] font-semibold font-['Manrope']">
+                View By:
+              </div>
+              <div className="rounded-lg shadow border border-gray-300 justify-start items-start flex">
+                <div
+                  className={`w-[111px] px-4 py-2.5 border-r rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                    reportType === "Organization" ? "bg-sky-100" : "bg-white"
+                  }`}
+                  onClick={() => handleReportTypeChange("Organization")}
+                >
+                  <div className="text-slate-800 text-[13px] font-medium font-['Manrope'] leading-tight">
+                    Organization
                   </div>
-                  <div
-                    className={`w-[111px] px-4 py-2.5 border-r rounded-r-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
-                      reportType === "Corporate" ? "bg-sky-100" : "bg-white"
-                    }`}
-                    onClick={() => handleReportTypeChange("Corporate")}
-                  >
-                    <div className="text-slate-700 text-[13px] font-medium font-['Manrope'] leading-tight">
-                      Corporate
-                    </div>
+                </div>
+                <div
+                  className={`w-[111px] px-4 py-2.5 border-r rounded-r-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                    reportType === "Corporate" ? "bg-sky-100" : "bg-white"
+                  }`}
+                  onClick={() => handleReportTypeChange("Corporate")}
+                >
+                  <div className="text-slate-700 text-[13px] font-medium font-['Manrope'] leading-tight">
+                    Corporate
                   </div>
                 </div>
               </div>
-              <div
-                className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${
-                  reportType !== "" ? "visible" : "hidden"
-                }`}
-              >
-                <div className="mr-2">
-                  <label
-                    htmlFor="cname"
-                    className="text-neutral-800 text-[13px] font-normal"
+            </div>
+            <div
+              className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${
+                reportType !== "" ? "visible" : "hidden"
+              }`}
+            >
+              <div className="mr-2">
+                <label
+                  htmlFor="cname"
+                  className="text-neutral-800 text-[13px] font-normal"
+                >
+                  Select Organization*
+                </label>
+                <div className="mt-2">
+                  <select
+                    className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    value={selectedOrg}
+                    onChange={handleOrganizationChange}
                   >
-                    Select Organization*
-                  </label>
-                  <div className="mt-2">
-                    <select
-                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      value={selectedOrg}
-                      onChange={handleOrganizationChange}
-                    >
-                      <option value="01">--Select Organization--- </option>
-                      {organisations &&
-                        organisations.map((org) => (
-                          <option key={org.id} value={org.id}>
-                            {org.name}
-                          </option>
-                        ))}
-                    </select>
-                    {errors.selectedOrg && (
-                      <div className="text-red-600 text-sm">
-                        {errors.selectedOrg}
-                      </div>
-                    )}
-                  </div>
-                </div>
-                {(reportType === "Corporate" || reportType === "Location") && (
-                  <div className="mr-2">
-                    <label
-                      htmlFor="cname"
-                      className="text-neutral-800 text-[13px] font-normal"
-                    >
-                      Select Corporate
-                    </label>
-                    <div className="mt-2">
-                      <select
-                        className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        value={selectedCorp}
-                        onChange={handleOrgChange}
-                      >
-                        <option value="">--Select Corporate--- </option>
-                        {corporates &&
-                          corporates.map((corp) => (
-                            <option key={corp.id} value={corp.id}>
-                              {corp.name}
-                            </option>
-                          ))}
-                      </select>
+                    <option value="">--Select Organization--- </option>
+                    {organisations.map((org) => (
+                      <option key={org.id} value={org.id}>
+                        {org.name}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.selectedOrg && (
+                    <div className="text-red-600 text-sm">
+                      {errors.selectedOrg}
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
+              </div>
+              {(reportType === "Corporate" || reportType === "Location") && (
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
                     className="text-neutral-800 text-[13px] font-normal"
                   >
-                    Select Year
+                    Select Corporate
                   </label>
                   <div className="mt-2">
                     <select
-                      name="year"
                       className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      value={selectedYear}
-                      onChange={handleYearChange}
+                      value={selectedCorp}
+                      onChange={handleCorpChange}
                     >
-                      <option value="">Select year</option>
-                      {yearInfo.map((item) => (
-                        <option value={item.slice(0, 4)} key={item}>
-                          {item.slice(0, 4)}
+                      <option value="">--Select Corporate--- </option>
+                      {corporates.map((corp) => (
+                        <option key={corp.id} value={corp.id}>
+                          {corp.name}
                         </option>
                       ))}
                     </select>
-                    {errors.selectedYear && (
-                      <div className="text-red-600 text-sm">
-                        {errors.selectedYear}
-                      </div>
-                    )}
                   </div>
+                </div>
+              )}
+              <div className="mr-2">
+                <label
+                  htmlFor="cname"
+                  className="text-neutral-800 text-[13px] font-normal"
+                >
+                  Select Date Range
+                </label>
+                <div className="mt-2">
+                  <DateRangePicker
+                    startDate={dateRange.start}
+                    endDate={dateRange.end}
+                    onDateChange={handleDateChange}
+                  />
+                  {errors.dateRange && (
+                    <div className="text-red-600 text-xs mt-2">
+                      {errors.dateRange}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -345,7 +286,7 @@ const AnalyseCollectiveBargaining = ({ isBoxOpen }) => {
                   </div>
                 </div>
                 <div className="mb-4">
-                  <Table1 columns={columns1} data={data1} />
+                  <Table1 columns={columns1} data={operationBargainingData} />
                 </div>
               </div>
             </div>
@@ -365,7 +306,7 @@ const AnalyseCollectiveBargaining = ({ isBoxOpen }) => {
                   </div>
                 </div>
                 <div className="mb-4">
-                  <Table1 columns={columns1} data={data1} />
+                  <Table1 columns={columns2} data={supplierBargainingData} />
                 </div>
               </div>
             </div>
@@ -384,6 +325,18 @@ const AnalyseCollectiveBargaining = ({ isBoxOpen }) => {
           </div>
         </div>
       </div>
+      {loopen && (
+          <div className=" fixed inset-0 flex items-center justify-center z-[100] bg-black bg-opacity-50">
+            <Oval
+              height={50}
+              width={50}
+              color="#00BFFF"
+              secondaryColor="#f3f3f3"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
+          </div>
+        )}
     </div>
   );
 };

@@ -5,7 +5,7 @@ import DynamicTable2 from "./customTable2";
 import DateRangePicker from "../../../../utils/DatePickerComponent";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import { columns1, columns2 } from "./data";
-
+import { Oval } from 'react-loader-spinner';
 const AnalyseCompulsorylabour = ({ isBoxOpen }) => {
   const [analyseData, setAnalyseData] = useState([]);
   const [organisations, setOrganisations] = useState([]);
@@ -435,6 +435,18 @@ const AnalyseCompulsorylabour = ({ isBoxOpen }) => {
           <TableSidebar />
         </div>
       </div>
+      {loopen && (
+          <div className=" fixed inset-0 flex items-center justify-center z-[100] bg-black bg-opacity-50">
+            <Oval
+              height={50}
+              width={50}
+              color="#00BFFF"
+              secondaryColor="#f3f3f3"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
+          </div>
+        )}
     </div>
   );
 };

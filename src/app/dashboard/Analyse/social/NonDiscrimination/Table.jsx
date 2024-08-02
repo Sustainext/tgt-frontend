@@ -13,7 +13,7 @@ const Table1 = ({ data, columns }) => {
               <th
                 key={column}
                 className={`px-2 py-3 font-semibold text-gray-600 block md:table-cell text-sm ${
-                  index === 0 ? 'text-left' : 'text-center'
+                  index === 0 ? 'text-center' : 'text-center'
                 }`}
               >
                 {column}
@@ -38,7 +38,7 @@ const Table1 = ({ data, columns }) => {
                   <td
                     key={colIndex}
                     className={`p-2 block md:table-cell h-20 ${
-                      colIndex === 0 ? 'text-center font-bold' : 'text-center'
+                      colIndex === 0 ? 'text-left font-bold ms-4' : 'text-center'
                     } text-sm`}
                   >
                     {row[column] || 'N/A'}

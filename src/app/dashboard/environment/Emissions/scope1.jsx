@@ -39,7 +39,7 @@ const Scope1 = forwardRef(({ location, year, month, successCallback, countryCode
 
   useImperativeHandle(ref, () => ({
     updateFormData() {
-      return updateFormData(); // Return the promise
+      return updateFormData(formData); 
     }
   }));
 
@@ -104,13 +104,13 @@ const Scope1 = forwardRef(({ location, year, month, successCallback, countryCode
     setFormData((prevFormData) => [...prevFormData, { Emission: {} }]);
   };
 
-  const updateFormData = async () => {
+  const updateFormData = async (form_data) => {
     LoaderOpen();
     const data = {
       client_id: client_id,
       user_id: user_id,
       path: view_path,
-      form_data: formData,
+      form_data: form_data,
       location,
       year,
       month,
@@ -120,20 +120,6 @@ const Scope1 = forwardRef(({ location, year, month, successCallback, countryCode
     try {
       const response = await post(url, { ...data });
 
-      // successCallback();
-      // if (response.status === 200) {
-      //   setModalData({
-      //     location,
-      //     month,
-      //     message: "Emission has been created",
-      //     monthly_emissions: localClimatiq
-      //   });
-      //   loadFormData();
-      // } else {
-      //   setModalData({
-      //     message: "Oops, something went wrong"
-      //   });
-      // }
     } catch (error) {
       setModalData({
         message: "Oops, something went wrong"
@@ -171,18 +157,34 @@ const Scope1 = forwardRef(({ location, year, month, successCallback, countryCode
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
+    updateFormData(formData);
   };
 
   const updateFormDatanew = (updatedData) => {
     setFormData(updatedData);
   };
 
-  const handleRemove = (index) => {
+  // const handleRemove = (index) => {
+  //   const updatedData = [...formData];
+  //   updatedData.splice(index, 1);
+  //   setFormData(updatedData);
+  //   // updateFormData();
+  //   // successCallback();
+  // };
+
+  const handleRemove = async (index) => {
     const updatedData = [...formData];
     updatedData.splice(index, 1);
-    setFormData(updatedData);
+    
+    try {
+      await setFormData(updatedData);
+      await updateFormData(updatedData);
+      successCallback();
+    } catch (error) {
+      console.error("Failed to update form data:", error);
+    }
   };
+  
 
   const updateCache = (subcategory, activities) => {
     setActivityCache((prevCache) => ({

@@ -13,6 +13,7 @@ import AnalyseNonDiscrimination from "./NonDiscrimination/page";
 import AnalyseCollectiveBargaining from "./Collective-Bargaining/page";
 import AnalyseCustomerHealthSafety from "./Customer-Health-Safety/page"
 import AnalyseMarketingLabeling from "./Marketing-Labeling/page"
+import AnalyseCommunityDevelopment from "./Community-Development/page";
 import AnalyseCustomerprivacy from "./Customer-Privacy/page"
 const social = () => {
   const [activeTab, setActiveTab] = useState("Tab1");
@@ -40,6 +41,7 @@ const social = () => {
         {activeTab === "Tab7" && <AnalyseTraining /> }
         {activeTab === "Tab8" && <AnalyseNonDiscrimination /> }
         {activeTab === "Tab9" && <AnalyseCollectiveBargaining /> }
+        {activeTab === "Tab10" && <AnalyseCommunityDevelopment /> }
         {activeTab === "Tab12" && <AnalyseCustomerHealthSafety /> }
         {activeTab === "Tab13" && <AnalyseMarketingLabeling /> }
         {activeTab === "Tab14" && <AnalyseCustomerprivacy /> }

@@ -6,7 +6,7 @@ import DateRangePicker from "../../../../utils/DatePickerComponent";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import { columns1, columns2 } from "./data";
 import { yearInfo } from "@/app/shared/data/yearInfo";
-
+import { Oval } from 'react-loader-spinner';
 const AnalyseSuppliersocialassessment = ({ isBoxOpen }) => {
   const [Suppliersocialassessment1, setSuppliersocialassessment1] = useState([]);
   const [Suppliersocialassessment2, setSuppliersocialassessment2] = useState([]);
@@ -391,6 +391,18 @@ const AnalyseSuppliersocialassessment = ({ isBoxOpen }) => {
             <TableSidebar />
           </div>
         </div>
+        {loopen && (
+          <div className=" fixed inset-0 flex items-center justify-center z-[100] bg-black bg-opacity-50">
+            <Oval
+              height={50}
+              width={50}
+              color="#00BFFF"
+              secondaryColor="#f3f3f3"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
