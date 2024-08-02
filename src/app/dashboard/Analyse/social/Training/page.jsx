@@ -4,7 +4,7 @@ import TableSidebar from "./TableSidebar";
 import DynamicTable2 from "./customTable2";
 import DateRangePicker from "../../../../utils/DatePickerComponent";
 import axiosInstance from "../../../../utils/axiosMiddleware";
-import { columns1,columns2,columns3,columns4 } from "./data";
+import { columns1, columns2, columns3, columns4 } from "./data";
 import { yearInfo } from "@/app/shared/data/yearInfo";
 import { Oval } from 'react-loader-spinner';
 const AnalyseTraining = ({ isBoxOpen }) => {
@@ -71,7 +71,11 @@ const AnalyseTraining = ({ isBoxOpen }) => {
 
       const data = response.data;
 
-      const { average_hours_of_training_provided_to_employees,average_training_hours_per_employee_category,percentage_of_employees_receiving_regular_performance_and_career_development_reviews,percentage_of_employees_receiving_regular_performance_and_career_development_reviews_by_gender } = data;
+      const { average_hours_of_training_provided_to_employees,
+        average_training_hours_per_employee_category,
+        percentage_of_employees_receiving_regular_performance_and_career_development_reviews,
+        percentage_of_employees_receiving_regular_performance_and_career_development_reviews_by_gender
+      } = data;
 
       const formatTable1 = (data) => {
         return data.map((data, index) => {
@@ -115,10 +119,10 @@ const AnalyseTraining = ({ isBoxOpen }) => {
           const percentage_of_employees_who_received_regular_performance_reviews = parseFloat(data.percentage_of_employees_who_received_regular_performance_reviews).toFixed(2);
           const formattedPercentage1 = percentage_of_employees_who_received_regular_performance_reviews.endsWith('.00') ? percentage_of_employees_who_received_regular_performance_reviews.slice(0, -3) : percentage_of_employees_who_received_regular_performance_reviews;
           const percentage_of_employees_who_received_regular_career_development_reviews = parseFloat(data.percentage_of_employees_who_received_regular_career_development_reviews).toFixed(2);
-          const formattedPercentage2 = average_training_hours_per_female_employee.endsWith('.00') ? percentage_of_employees_who_received_regular_career_development_reviews.slice(0, -3) : percentage_of_employees_who_received_regular_career_development_reviews;
+          const formattedPercentage2 = percentage_of_employees_who_received_regular_career_development_reviews.endsWith('.00') ? percentage_of_employees_who_received_regular_career_development_reviews.slice(0, -3) : percentage_of_employees_who_received_regular_career_development_reviews;
 
           return {
-            "Employee Category": data.category,
+            "Employee Category": data.Category,
             "Percentage of employees who received regular performance review": formattedPercentage1,
             "Percentage of employees who received regular career development review": formattedPercentage2,
 
@@ -384,12 +388,12 @@ const AnalyseTraining = ({ isBoxOpen }) => {
               >
                 <div>
                   <p className="text-[18px] font-semibold">
-                  Average hours of training provided to employees
+                    Average hours of training provided to employees
                   </p>
                 </div>
                 <div className="flex justify-between items-center mb-2">
                   <p className="text-gray-500">
-                  Average hours of training provided to employees
+                    Average hours of training provided to employees
                   </p>
 
                   <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
@@ -413,12 +417,12 @@ const AnalyseTraining = ({ isBoxOpen }) => {
               >
                 <div>
                   <p className="text-[18px] font-semibold">
-                  Average hours of training provided to employees
+                    Average hours of training provided to employees
                   </p>
                 </div>
                 <div className="flex justify-between items-center mb-2">
                   <p className="text-gray-500">
-                  Average hours of training provided to employees
+                    Average hours of training provided to employees
                   </p>
 
                   <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
@@ -442,12 +446,12 @@ const AnalyseTraining = ({ isBoxOpen }) => {
               >
                 <div>
                   <p className="text-[18px] font-semibold">
-                  Percentage of employees receiving regular performance and career development reviews
+                    Percentage of employees receiving regular performance and career development reviews
                   </p>
                 </div>
                 <div className="flex justify-between items-center mb-2">
                   <p className="text-gray-500">
-                  Percentage of employees receiving regular performance and career development reviews by employee category
+                    Percentage of employees receiving regular performance and career development reviews by employee category
                   </p>
 
                   <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
@@ -472,7 +476,7 @@ const AnalyseTraining = ({ isBoxOpen }) => {
 
                 <div className="flex justify-between items-center mb-2">
                   <p className="text-[18px] font-semibold">
-                  Percentage of employees receiving regular performance and career development reviews by gender
+                    Percentage of employees receiving regular performance and career development reviews by gender
                   </p>
 
                   <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
