@@ -21,21 +21,19 @@ const client_id = 1
 const user_id = 1
 
 const schema = {
-  type: "array",
+  type: 'array',
   items: {
-    type: "object",
+    type: 'object',
     properties: {
       category: { type: "string", title: "Category" },
-      numberperformancereview: { type: "number", title: "Number Performance Review" },
-      numberdevelopmentreview: { type: "number", title: "Number Development Review" },
-      male: { type: "number", title: "Male 1" },
-      male2: { type: "number", title: "Male 2" },
-      female: { type: "number", title: "Female 1" },
-      female2: { type: "number", title: "Female 2" },
-      nonBinary: { type: "number", title: "Others 1" },
-      nonBinary2: { type: "number", title: "Others 2" },
-      totalTrainingHours: { type: "number", title: "Total Training Hours" },
-      totalTrainingHours2: { type: "number", title: "Total Training Hours2" },
+      male: { type: "string", title: "Male" },
+      female: { type: "string", title: "Female" },
+      others: { type: "string", title: "Others" },
+      male1: { type: "string", title: "Male" },
+      female1: { type: "string", title: "Female" },
+      others2: { type: "string", title: "Others" },
+      totalEmployees: { type: "string", title: "Total number of Employee" },
+      totalTrainingHours: { type: "string", title: "Total number of Employee" },
     },
 
   }
@@ -43,42 +41,42 @@ const schema = {
 
 const uiSchema = {
   "ui:widget": "TableWidget",
-  "ui:options": {
+  'ui:options': {
     titles: [
-      { title: "Employee Details", tooltip: "Please specify the category." },
-      { title: "Performance Reviews", tooltip: "Details on performance reviews." },
-      { title: "Development Reviews", tooltip: "Details on development reviews." },
-      { title: "Gender-Specific Data", tooltip: "Please provide detailed gender data." }
+      { title: "Employee Category", tooltip: "Please specify the employee category. Employee category:breakdown of employees by level (such as senior management, middle management) and function (such as technical, administrative, production).", colSpan: 1 },
+      { title: "Number of employees who received regular performance review", tooltip: "Regular performance and career development review: Review based on criteria known to the employee and his or her superior..", colSpan: 4 },
+      { title: "Number of employees who received regular career development review", tooltip: "Regular performance and career development review: Review based on criteria known to the employee and his or her superior. ", colSpan: 4 },
     ],
     tbtilte: [
-      { title: "Employee Category", tooltip: "Please specify the category.", rowSpan: 2 },
-      { title: "Gender Details", tooltip: "Please specify detailed data for genders.", rowSpan: 2 }
+
+      { title: "Gender", tooltip: "Please specify the training hours.", colSpan: 4 },
+      { title: "Gender", tooltip: "Please specify the number of employees.", colSpan: 4 },
     ],
     subTitles: [
-      { title: "Male", tooltip: "Number of male employees.", colSpan: 1, type: "number" },
-      { title: "Male 2", tooltip: "Number of male employees.", colSpan: 1, type: "number" },
-      { title: "Female", tooltip: "Number of female employees.", colSpan: 1, type: "number" },
-      { title: "Female 2", tooltip: "Number of female employees.", colSpan: 1, type: "number" },
-      { title: "nonBinary", tooltip: "Number of other gender employees.", colSpan: 1, type: "number" },
-      { title: "nonBinary 2", tooltip: "Number of other gender employees.", colSpan: 1, type: "number" },
-      { title: "Total number of Employee", tooltip: "Please specify the total number of employees.", colSpan: 1, type: "number" }
-    ],
+      { title: "", title2:"Category", tooltip: "Please specify the category.", colSpan: 1, type: "text" },
+      { title: "Male",title2:"Male", tooltip: "Please specify the number of male individuals.", colSpan: 1, type: "number" },
+      { title: "Female",title2:"Female", tooltip: "Please specify the number of female individuals.", colSpan: 1, type: "number" },
+      { title: "Others",title2:"Others", tooltip: "Please specify the number of others individuals.", colSpan: 1, type: "number" },
+      { title: "Total  Number of Training Hours",title2:"totalTrainingHours", tooltip: "Please specify the total number of employees.", colSpan: 1, type: "number" },
+      { title: "Male", title2:"Male1", tooltip: "Please specify the number of male individuals.", colSpan: 1, type: "number" },
+      { title: "Female", title2:"Female1", tooltip: "Please specify the number of female individuals.", colSpan: 1, type: "number" },
+      { title: "Others", title2:"Others1", tooltip: "Please specify the number of others individuals.", colSpan: 1, type: "number" },
+      { title: "Total  number of Employee", title2:"totalEmployees", tooltip: "Please specify the total number of employees.", colSpan: 1, type: "number" },
+    ]
   }
 };
 const Screen1 = ({ selectedOrg, selectedCorp, year, month }) => {
   const initialFormData = [
     {
       category: "",
-      numberperformancereview: "",
-      numberdevelopmentreview: "",
       male: "",
-      male2: "",
       female: "",
-      female2: "",
-      nonBinary: "",
-      nonBinary2: "",
+      others: "",
       totalTrainingHours: "",
-      totalTrainingHours2: "",
+      male1: "",
+      female1: "",
+      others1: "",
+      totalEmployees: "",
     }
   ];
   const [formData, setFormData] = useState(initialFormData);
@@ -232,8 +230,6 @@ negative social impacts." className="mt-1.5 ml-2 text-[14px]" />
 
           />
         </div>
-
-
         <div className='mb-6'>
           <button type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year || !month ? "cursor-not-allowed" : ""}`}
@@ -257,8 +253,6 @@ negative social impacts." className="mt-1.5 ml-2 text-[14px]" />
           />
         </div>
       )}
-
-
     </>
   );
 };

@@ -5,7 +5,7 @@ import axiosInstance from "../../../../utils/axiosMiddleware";
 import Table1 from "./Table";
 import DateRangePicker from "../../../../utils/DatePickerComponent"; // Ensure the correct path
 import { columns1, columns2 } from "./data"; // Assuming these are correct
-
+import { Oval } from 'react-loader-spinner';
 const AnalyseCollectiveBargaining = ({ isBoxOpen }) => {
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
@@ -136,7 +136,7 @@ const AnalyseCollectiveBargaining = ({ isBoxOpen }) => {
     setSelectedCorp("");
     setSelectedSetLocation("");
     setDatasetparams({...datasetparams, organisation: newOrg, corporate: "", location: "" });
-    validateForm(); 
+    validateForm();
   };
 
   const handleCorpChange = (e) => {
@@ -144,7 +144,7 @@ const AnalyseCollectiveBargaining = ({ isBoxOpen }) => {
     setSelectedCorp(newCorp);
     setSelectedSetLocation("");
     setDatasetparams((prev)=> ({ ...prev, corporate: newCorp,start: dateRange.start, end: dateRange.end }));
-    validateForm(); 
+    validateForm();
   };
 
   const handleDateChange = (newRange) => {
@@ -325,6 +325,18 @@ const AnalyseCollectiveBargaining = ({ isBoxOpen }) => {
           </div>
         </div>
       </div>
+      {loopen && (
+          <div className=" fixed inset-0 flex items-center justify-center z-[100] bg-black bg-opacity-50">
+            <Oval
+              height={50}
+              width={50}
+              color="#00BFFF"
+              secondaryColor="#f3f3f3"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
+          </div>
+        )}
     </div>
   );
 };

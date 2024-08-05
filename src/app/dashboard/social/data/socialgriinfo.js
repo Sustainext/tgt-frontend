@@ -3490,7 +3490,7 @@ export const Socialdata = [
       <>
         <div className="flex">
           <img
-            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-4.png"
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-04.png"
             className="w-[32px] h-[32px]"
           />{" "}
           <h5 className="text-[#C22033] text-[17px] font-bold ml-2">SDG 4</h5>

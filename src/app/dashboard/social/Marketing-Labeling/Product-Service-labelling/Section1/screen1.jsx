@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import inputWidget3 from "../../../../../shared/widgets/Input/inputWidget3";
+import inputWidget2 from "../../../../../shared/widgets/Input/inputWidget2";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -14,7 +14,7 @@ import { GlobalState } from "@/Context/page";
 import axiosInstance from '@/app/utils/axiosMiddleware'
 
 const widgets = {
-  inputWidget: inputWidget3,
+  inputWidget: inputWidget2,
   RadioWidget2: RadioWidget2,
 };
 
@@ -71,7 +71,7 @@ const schema = {
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1", "Q2","Q3","Q4","Q5","Q6"],
+    "ui:order": ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6"],
     Q1: {
       "ui:title": "Does the organization have specific procedures for product and service information and labeling?",
       "ui:tooltip":
@@ -84,7 +84,7 @@ const uiSchema = {
       },
     },
     Q2: {
-        "ui:title":
+      "ui:title":
         "Specify source of components",
       "ui:tooltip":
         "Specify the sourcing of components of the product or service  ",
@@ -96,7 +96,7 @@ const uiSchema = {
       },
     },
     Q3: {
-        "ui:title":
+      "ui:title":
         "Substances that might produce an environmental or social impact",
       "ui:tooltip":
         "Please specify substances that might produce an environmental or social impact. ",
@@ -108,7 +108,7 @@ const uiSchema = {
       },
     },
     Q4: {
-        "ui:title":
+      "ui:title":
         "Safe use of the product or service",
       "ui:tooltip":
         "PDescribe about the safe use of the product or service.",
@@ -120,7 +120,7 @@ const uiSchema = {
       },
     },
     Q5: {
-        "ui:title":
+      "ui:title":
         "Disposal of the product",
       "ui:tooltip":
         "Describe how the product can be disposed?",
@@ -132,7 +132,7 @@ const uiSchema = {
       },
     },
     Q6: {
-        "ui:title":
+      "ui:title":
         "Other (explain)",
       "ui:tooltip":
         "Describe how the product can be disposed?",
@@ -281,9 +281,9 @@ const Screen1 = ({ location, year, month }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
-            Required information: product and service information and labeling
-            <MdInfoOutline data-tooltip-id={`tooltip-employees`}
-                                data-tooltip-content="This section documents the data corresponding to the r product and
+              Required information: product and service information and labeling
+              <MdInfoOutline data-tooltip-id={`tooltip-employees`}
+                data-tooltip-content="This section documents the data corresponding to the r product and
 service information and labeling.
 Include:
 i.The sourcing of components of the product or service;
@@ -292,15 +292,15 @@ environmental or social impact;
 iii. Safe use of the product or service;
 iv. Disposal of the product and environmental or social impacts.
  " className="mt-1.5 ml-2 text-[14px]" />
-                            <ReactTooltip id={`tooltip-employees`} place="top" effect="solid" style={{
-                                width: "290px", backgroundColor: "#000",
-                                color: "white",
-                                fontSize: "12px",
-                                boxShadow: 3,
-                                borderRadius: "8px",
-                                textAlign: 'left',
-                            }}>
-                            </ReactTooltip>
+              <ReactTooltip id={`tooltip-employees`} place="top" effect="solid" style={{
+                width: "290px", backgroundColor: "#000",
+                color: "white",
+                fontSize: "12px",
+                boxShadow: 3,
+                borderRadius: "8px",
+                textAlign: 'left',
+              }}>
+              </ReactTooltip>
             </h2>
           </div>
 

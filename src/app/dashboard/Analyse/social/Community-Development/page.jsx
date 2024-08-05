@@ -5,7 +5,7 @@ import axiosInstance from "../../../../utils/axiosMiddleware";
 import Table1 from "./Table";
 import DateRangePicker from "../../../../utils/DatePickerComponent"; // Ensure this is the correct import path
 import { columns, data } from "./data";
-
+import { Oval } from 'react-loader-spinner';
 const AnalyseCommunityDevelopment = ({ isBoxOpen }) => {
   const [OperationsWithLocalCommunity, setOperationsWithLocalCommunity] = useState(
     []
@@ -206,6 +206,18 @@ const AnalyseCommunityDevelopment = ({ isBoxOpen }) => {
           <TableSidebar />
         </div>
       </div>
+      {loopen && (
+          <div className=" fixed inset-0 flex items-center justify-center z-[100] bg-black bg-opacity-50">
+            <Oval
+              height={50}
+              width={50}
+              color="#00BFFF"
+              secondaryColor="#f3f3f3"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
+          </div>
+        )}
     </div>
   );
 };

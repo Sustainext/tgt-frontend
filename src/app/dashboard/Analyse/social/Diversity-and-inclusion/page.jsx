@@ -9,7 +9,7 @@ import Table3 from "./Table3";
 import { column1 } from "./data";
 import NavigationButtons from "./NavigationButtons";
 import { yearInfo } from "@/app/shared/data/yearInfo";
-
+import { Oval } from 'react-loader-spinner';
 const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
   const [
     percentageOfEmployeesWithinGovernmentBodies,
@@ -139,7 +139,7 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
         setRatioOfRemunerationOfWomenToMen(
           ratio_of_remuneration_of_women_to_men
         );
-    
+
 
       LoaderClose();
     } catch (error) {
@@ -271,7 +271,7 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
       setNumberOfEmployeesPerEmployeeCategory([]);
       setRatioOfBasicSalaryOfWomenToMen([]);
       setRatioOfRemunerationOfWomenToMen([]);    }
-    
+
     setActiveScreen(2);
   };
 
@@ -607,6 +607,18 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
         handleNextScreen={handleNextScreen}
         handlePreviousScreen={handlePreviousScreen}
       />
+         {loopen && (
+          <div className=" fixed inset-0 flex items-center justify-center z-[100] bg-black bg-opacity-50">
+            <Oval
+              height={50}
+              width={50}
+              color="#00BFFF"
+              secondaryColor="#f3f3f3"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
+          </div>
+        )}
     </div>
   );
 };
