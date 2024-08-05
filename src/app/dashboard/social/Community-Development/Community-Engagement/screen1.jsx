@@ -4,7 +4,7 @@ import validator from '@rjsf/validator-ajv8';
 import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
-import CustomTableWidget12 from '../../../../shared/widgets/Table/tableWidget12';
+import CustomTableWidget13 from '../../../../shared/widgets/Table/tableWidget13';
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -12,7 +12,7 @@ import { Oval } from 'react-loader-spinner';
 import { GlobalState } from '@/Context/page';
 import axiosInstance from '@/app/utils/axiosMiddleware'
 const widgets = {
-    TableWidget: CustomTableWidget12,
+    TableWidget: CustomTableWidget13,
 };
 
 const view_path = 'gri-social-community_engagement-413-1a-number_of_operations'

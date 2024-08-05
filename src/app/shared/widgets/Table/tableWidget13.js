@@ -1,122 +1,83 @@
-
 'use client'
-import React, { useState, useCallback, useEffect } from "react";
-import { MdInfoOutline,MdOutlineDeleteOutline } from "react-icons/md";
-import { Tooltip as ReactTooltip } from "react-tooltip";
-import "react-tooltip/dist/react-tooltip.css";
-import { debounce } from "lodash";
+import React, { useState, useEffect, useCallback } from 'react';
+import { debounce } from 'lodash';
+import { MdInfoOutline } from "react-icons/md";
+import { Tooltip as ReactTooltip } from 'react-tooltip';
 
-const CustomTableWidget13 = ({
-  id,
-  options,
-  value,
-  required,
-  onChange,
-  formContext,
-}) => {
-  // Debounced function to update form's state
-  const handleInputChange = useCallback(
-    debounce((newData) => {
-      onChange(newData);
-    }, 200),
-    []
-  );
+const CustomTableWidget13 = ({ id, options, value, required, onChange }) => {
+    const [localValue, setLocalValue] = useState(value);
 
-  // Updates the local input and calls the debounced onChange
-  const updateField = (index, key, newValue) => {
-    const newData = [...value];
-    newData[index][key] = newValue;
-    handleInputChange(newData);
-  };
-  useEffect(() => {
-    console.log('CustomTableWidget value:', value);
-  }, [value]);
+    useEffect(() => {
+        setLocalValue(value);
+    }, [value]);
 
-  return (
-    <div style={{ overflowY: "auto", maxHeight: "400px" }}>
-      <table id={id}  className="rounded-md border border-gray-300 w-full">
-        <thead className="gradient-background">
-          <tr>
-            {options.titles.map((item, idx) => (
-              <th
-                key={idx}
-                style={{ minWidth: "120px", textAlign: "left" }}
-                className="text-[12px] border border-gray-300 px-2 py-2"
-              >
-                <div className="flex items-center">
-                  <p>{item.title}
-                    </p>
-                    <p>
-                    <MdInfoOutline
-                   data-tooltip-id={`tooltip-${item.title.replace(/\s+/g, '-')}`}
-                   data-tooltip-content={item.tooltip}
-                   style={{display:`${item.display}`}}
+    const handleFieldChange = (index, key, newValue) => {
+        const updatedValues = [...localValue];
+        if (!updatedValues[index]) {
+            updatedValues[index] = {};
+        }
+        updatedValues[index][key] = newValue;
 
-                  className="ml-2 cursor-pointer" />
-                  <ReactTooltip
-                    id={`tooltip-${item.title.replace(/\s+/g, '-')}`}
-                    place="top"
-                    effect="solid"
-                    className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
-                  />
-                    </p>
+        setLocalValue(updatedValues);
+    };
 
+    const debouncedUpdate = useCallback(debounce(onChange, 200), [onChange]);
 
-                </div>
-              </th>
-            ))}
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {value.map((item, rowIndex) => (
-            <tr key={rowIndex}>
-              {Object.keys(item).map((key, cellIndex) => (
-                <td key={cellIndex} className="border border-gray-300 p-3">
-                  <InputField
-                  type={options.titles[cellIndex].type || 'text'}
-                    required={required}
-                    value={item[key]}
-                    onChange={(newValue) => updateField(rowIndex, key, newValue)}
-                  />
-                </td>
-              ))}
-              <td className="border border-gray-300 p-3">
-                <button onClick={() => formContext.onRemove(rowIndex)}>
-                <MdOutlineDeleteOutline className='text-[23px] text-red-600' />
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-};
+    useEffect(() => {
+        debouncedUpdate(localValue);
+    }, [localValue, debouncedUpdate]);
 
-// Component to handle individual input fields
-const InputField = ({ type, required, value, onChange }) => {
-  const [inputValue, setInputValue] = useState(value);
-  useEffect(() => {
-    setInputValue(value);
-  }, [value]);
-  const handleInputChange = (e) => {
-    const newValue = e.target.value;
-    setInputValue(newValue);
-    onChange(newValue);
-  };
+    return (
+        <div style={{ maxHeight: "400px" }} className='mb-2'>
+            <table id={id} className="rounded-md border border-gray-300 w-full">
+                <thead className="gradient-background">
+                    <tr>
+                        <th className="text-[12px] border border-gray-300 px-2 py-2 w-auto text-left"> </th>
+                        {options.titles.map((item, idx) => (
+                            <th key={idx} className="text-[12px] border border-gray-300 px-2 py-2 w-auto text-center">
+                                {item.title}
+                            </th>
+                        ))}
 
-  return (
-    <input
-      type={type}
-      required={required}
-      value={inputValue}
-      onChange={handleInputChange}
-      style={{ width: "100%" }}
-      placeholder="Enter data"
-      className="text-sm pl-2 py-2" // Ensures input field uses the full width of its container
-    />
-  );
+                    </tr>
+                </thead>
+                <tbody>
+                    {options.rowLabels.map((rowLabel, rowIndex) => (
+                        <tr key={rowIndex}>
+                            <td className="border-t flex border-gray-300 py-2 px-2 text-[13px]">
+                                <p className='w-[80%]'>
+                                    {rowLabel.title}
+                                </p>
+                                <MdInfoOutline
+                                    data-tooltip-id={`tooltip-${rowLabel.title.replace(/\s+/g, '-')}`}
+                                    data-tooltip-content={rowLabel.tooltip}
+                                    className="ml-2 cursor-pointer w-[20%]"
+                                />
+                                <ReactTooltip
+                                    id={`tooltip-${rowLabel.title.replace(/\s+/g, '-')}`}
+                                    place="top"
+                                    effect="solid"
+                                    className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
+                                />
+                            </td>
+                            {options.titles.map((column, columnIndex) => (
+                                <td key={columnIndex} className="border border-gray-300">
+                                    <input
+                                        type={column.type}
+                                        required={required}
+                                        value={localValue[rowIndex] && localValue[rowIndex][column.key] || ""}
+                                        onChange={(e) => handleFieldChange(rowIndex, column.key, e.target.value)}
+                                        className="text-sm pl-2 py-2 w-full text-center"
+                                        placeholder="Enter"
+                                    />
+                                </td>
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    );
 };
 
 export default CustomTableWidget13;
