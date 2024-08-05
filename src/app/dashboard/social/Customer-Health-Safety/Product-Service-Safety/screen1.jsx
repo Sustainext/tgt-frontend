@@ -86,7 +86,7 @@ const uiSchema = {
     },
     Q3: {
         "ui:title":
-        "Number of product and service categories",
+        "Number of product and service categories for which health and safety impacts are assessed for improvement",
       "ui:tooltip":
         "Please mention the number of product and service categories for which health and safety impacts are assessed for improvement.  ",
       "ui:tooltipdisplay": "block",

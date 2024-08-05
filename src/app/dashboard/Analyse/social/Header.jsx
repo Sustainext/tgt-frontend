@@ -72,8 +72,11 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
     },
     {
       category: "Tab7",
-      tag: "GRI 409",
-      data: [{ tagid: "1", infoid: "31" }],
+      tag: "GRI 404",
+      data: [
+        { tagid: "1", infoid: "38" },
+        { tagid: "3", infoid: "39" }
+      ],
     },
     {
       category: "Tab8",
@@ -157,8 +160,10 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
     {
       category: "Tab7",
       data: [
-        { id: "sd11", label: "SDG 5", bgColor: "bg-orange-600" },
-        { id: "sd18", label: "SDG 8", bgColor: "bg-red-900" },
+        { id: "sd21", label: "SDG 4", bgColor: "bg-[#C22033]"},
+        { id: "sd22", label: "SDG 5", bgColor: "bg-orange-600"},
+        { id: "sd23", label: "SDG 8", bgColor: "bg-red-900"},
+        { id: "sd13", label: "SDG 10", bgColor: "bg-[#E01A83]"},
       ],
     },
     {

@@ -41,7 +41,7 @@ const DynamicTable2 = ({ data, columns }) => {
                       colIndex === 0 ? 'text-center' : 'text-center'
                     } text-sm`}
                   >
-                  {row[column] !== undefined && row[column] !== null ? `${row[column]}%` : 'N/A'}
+                  {row[column] !== undefined && row[column] !== null ? `${row[column]}` : 'N/A'}
                   </td>
                 ))}
               </tr>
