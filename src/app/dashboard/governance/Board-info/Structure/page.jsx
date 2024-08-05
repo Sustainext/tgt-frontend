@@ -3,12 +3,12 @@ import React, { useState, useEffect } from "react";
 import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import Socialheader from "../../socialheader";
-import NewEmployeeHire from "./New-Employee-Hire/page";
-import Employeeturnover from "./Employee-turnover/page";
-// import {Socialdata} from "../../data/socialgriinfo"
-import { Socialdata } from "../../data/socialgriinfo";
-const EmployeeHiresTurnover = () => {
+import GovernanceHeader2 from "../../GovernanceHeader2";
+import {Socialdata} from "@/app/dashboard/Social/data/socialgriinfo"
+import GovernanceStructure from "./governance-structure/page";
+import CommitteeOfHighestGovernanceBody from "./committees/page";
+
+const BoardInfo = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState(2024);
@@ -58,7 +58,7 @@ const EmployeeHiresTurnover = () => {
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
                 onClick={() => toggleDrawer("1")}
               >
-                GRI 401 - 1
+                GRI 2 - 9
               </button>
               <button
                 className="text-[#fff] bg-orange-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
@@ -67,16 +67,10 @@ const EmployeeHiresTurnover = () => {
                 SDG 5
               </button>
               <button
-                className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("3")}
-              >
-                SDG 8
-              </button>
-              <button
                 className="text-[#fff] bg-pink-500 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
                 onClick={() => toggleDrawer("4")}
               >
-                SDG 10
+                SDG 16
               </button>
             </div>
           </div>
@@ -84,28 +78,12 @@ const EmployeeHiresTurnover = () => {
 
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-            New employee hires and employee turnover
-            {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
-                            data-tooltip-content="This section documents data corresponding to total water
-                            withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[14px]" />
-                        <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
-                            width: "290px", backgroundColor: "#000",
-                            color: "white",
-                            fontSize: "12px",
-                            boxShadow: 3,
-                            borderRadius: "8px",
-                            textAlign: 'left',
-                        }}>
-
-                        </ReactTooltip> */}
+          Governance Structure and Composition
           </h6>
         </div>
         <div
           className={`${
-            isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"
-          }
-fixed right-[51px]  w-[340px] h-full bg-white  rounded-md
-transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
+            isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"} fixed right-[51px]  w-[340px] h-full bg-white  rounded-md transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         >
           {data &&
             data.map((program) => (
@@ -127,7 +105,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
             ))}
         </div>
       </div>
-      <Socialheader
+      <GovernanceHeader2
         activeMonth={activeMonth}
         setActiveMonth={setActiveMonth}
         location={location}
@@ -135,18 +113,13 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         setYear={setYear}
       />
-      <p className="mt-6 mx-4 text-[12px] mb-3">
-        {" "}
-        Please ensure that data added in this section corresponds to the
-        location selected above
-      </p>
-      <NewEmployeeHire
+      <GovernanceStructure
         location={location}
         year={year}
         month={activeMonth}
         activeMonth={activeMonth}
       />
-      <Employeeturnover
+      <CommitteeOfHighestGovernanceBody
         location={location}
         year={year}
         month={activeMonth}
@@ -155,4 +128,4 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
     </>
   );
 };
-export default EmployeeHiresTurnover;
+export default BoardInfo;
