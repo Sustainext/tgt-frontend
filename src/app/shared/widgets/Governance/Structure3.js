@@ -1,8 +1,18 @@
-import React from 'react';
+'use client'
+import React,{useState,useEffect} from 'react';
 import { MdInfoOutline } from 'react-icons/md';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 
-const GovernanceRowWidget = ({ value, onChange, options, id }) => {
+const GovernanceRowWidget = ({ value, onChange, options }) => {
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  if (!hydrated) {
+    return null; 
+  }
   const handleChange = (index, field, newValue) => {
     const updatedValue = [...value];
     updatedValue[index] = { ...updatedValue[index], [field]: newValue };
@@ -13,13 +23,13 @@ const GovernanceRowWidget = ({ value, onChange, options, id }) => {
     <div className="flex max-w-[90vw] overflow-x-auto pb-3 mb-4 custom-scrollbar">
       {value.map((item, index) => (
         <div key={index} className="flex">
-        <InputField
+          <InputField
             label="Name"
             value={item.name}
             onChange={(e) => handleChange(index, 'name', e.target.value)}
             options={options}
           />
-          <SelectField
+          <SelectField2
             label="Executive Power"
             value={item.executivePower}
             onChange={(e) => handleChange(index, 'executivePower', e.target.value)}
@@ -106,11 +116,35 @@ const InputField = ({ label, value, onChange, options }) => {
   );
 };
 
-const SelectField = ({ label, value, onChange, options, handleChange, otherValue }) => {
+const SelectField = ({ label, value, onChange, options }) => {
   const tooltipContent = options.titles.find(item => item.title === label)?.tooltip || '';
-  console.log('tooltip content',label,tooltipContent);
+  const selectOptions = options[label.toLowerCase()]?.options || [];
   
+  return (
+    <div className="w-[175px] sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6 px-2 mb-4">
+      <label className="text-black/60 text-sm font-bold mb-2 flex items-center h-14">
+        {label}
+        <InfoTooltip id={label} content={tooltipContent} />
+      </label>
+      <select
+        className="appearance-none border-b rounded w-[175px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        value={value || ''}
+        onChange={onChange}
+      >
+        <option value="">Select {label}</option>
+        {selectOptions.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};
 
+const SelectField2 = ({ label, value, onChange, options, handleChange, otherValue }) => {
+  const tooltipContent = options.titles.find(item => item.title === label)?.tooltip || '';
+  
   return (
     <div className="w-[175px] sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6 px-2 mb-4">
       <label className="block text-black/60 text-sm font-bold mb-2 flex items-center h-14">
@@ -133,17 +167,17 @@ const SelectField = ({ label, value, onChange, options, handleChange, otherValue
         ))}
       </select>
       {value === 'Others (Please specify)' && (
-        <InputField
-          label={`Specify ${label}`}
-          value={otherValue}
+        <input
+        className="appearance-none border-b rounded w-[175px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        type="text"
+        value={otherValue}
           onChange={(e) => handleChange('otherExecutivePower', e.target.value)}
           options={options}
-        />
+      />
       )}
     </div>
   );
 };
-
 
 const InfoTooltip = ({ id, content }) => (
   <>

@@ -88,29 +88,29 @@ const uiSchema = {
           "Indicate whether the highest governance body members are considered as independent or non-independent.‘Independence’ refers to conditions that enable the <br/>members of the highest governance body toexercise independent judgment free from any external <br/>influence or conflicts of interest.",
       },
       {
-        title: "Tenure on the governance body",
+        title: "Tenure On The Governance Body",
         tooltip: "Specify the tenure of members <br/>on the governance body",
       },
       {
-        title: "Number of significant positions",
+        title: "Number Of Significant Positions",
         tooltip: " Provide an information on number of significant positions.",
       },
       {
-        title: "Commitments held by member",
+        title: "Commitments Held By Member",
         tooltip:
           "Describe the commitments held by member of the highest governance body.",
       },
       {
-        title: "The nature of  commitments",
+        title: "The Nature Of Commitments",
         tooltip: "Describe the nature of commitments",
       },
       {
-        title: "Under-represented social groups",
+        title: "Under-Represented Social Groups",
         tooltip:
           "Specify the number of members of the highest governance <br/>body who identify as under-represented groups represented on the board.(e.g., any minority groups etc.).",
       },
       {
-        title: "Competencies relevant to the impacts of the organization",
+        title: "Competencies Relevant To The Impacts Of The Organization",
         tooltip:
           "Describe competencies relevant to the impacts of the organization",
       },
