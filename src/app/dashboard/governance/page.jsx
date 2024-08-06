@@ -5,6 +5,7 @@ import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import BoardInfo from "./Board-info/structure/page";
 import ManagementImpact from './Board-Involvement-Sustainability/Management-Impact/page'
 import DelegationResponsibility from "./Board-Involvement-Sustainability/Delegation-Responsibility/page"
+import SustainabilityReporting from "./Board-Involvement-Sustainability/Sustainability-Reporting/page"
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -577,6 +578,11 @@ const Governance = () => {
                 {activeStep === 5 && (
                 <>
                   <div><DelegationResponsibility/> </div>
+                </>
+              )}
+              {activeStep === 6 && (
+                <>
+                  <div><SustainabilityReporting/> </div>
                 </>
               )}
             </div>
