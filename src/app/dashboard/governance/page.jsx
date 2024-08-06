@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { MdKeyboardArrowDown, MdInfoOutline } from "react-icons/md";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import BoardInfo from "./Board-info/structure/page";
-
+import ManagementImpact from './Board-Involvement-Sustainability/Management-Impact/page'
+import DelegationResponsibility from "./Board-Involvement-Sustainability/Delegation-Responsibility/page"
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -566,6 +567,16 @@ const Governance = () => {
               {activeStep === 1 && (
                 <>
                   <div><BoardInfo/> </div>
+                </>
+              )}
+              {activeStep === 4 && (
+                <>
+                  <div><ManagementImpact/> </div>
+                </>
+              )}
+                {activeStep === 5 && (
+                <>
+                  <div><DelegationResponsibility/> </div>
                 </>
               )}
             </div>

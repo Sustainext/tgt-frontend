@@ -64,7 +64,9 @@ const CustomTableWidget = ({
                 </div>
               </th>
             ))}
+                   {formContext.view !== "0" && (
             <th></th>
+          )}
           </tr>
         </thead>
         <tbody>
@@ -82,11 +84,13 @@ const CustomTableWidget = ({
                   />
                 </td>
               ))}
-              <td className="border border-gray-300 p-3">
-                <button onClick={() => formContext.onRemove(rowIndex)}>
-                  <MdOutlineDeleteOutline className="text-[23px] text-red-600" />
-                </button>
-              </td>
+               {formContext.view !== "0" && (
+                <td className="border border-gray-300 p-3">
+                  <button onClick={() => formContext.onRemove(rowIndex)}>
+                    <MdOutlineDeleteOutline className="text-[23px] text-red-600" />
+                  </button>
+                </td>
+              )}
             </tr>
           ))}
         </tbody>
