@@ -15,7 +15,7 @@ const widgets = {
   inputWidget: InputWidget5,
 };
 
-const view_path = "gri-social-benefits-401-2b-significant_loc";
+const view_path = "";
 const client_id = 1;
 const user_id = 1;
 
@@ -187,7 +187,7 @@ const GovernanceStructure = ({ location, year, month }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form data:", formData);
-    updateFormData();
+    // updateFormData();
   };
 
   return (

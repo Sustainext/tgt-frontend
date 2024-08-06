@@ -4,35 +4,37 @@ import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import GovernanceHeader2 from "../../GovernanceHeader2";
-import {Socialdata} from "@/app/dashboard/Social/data/socialgriinfo"
+import { Socialdata } from "@/app/dashboard/Social/data/socialgriinfo";
 import GovernanceStructure from "./governance-structure/page";
 import CommitteeOfHighestGovernanceBody from "./committees/page";
 
 const BoardInfo = () => {
   const [activeMonth, setActiveMonth] = useState(1);
-  const [location, setLocation] = useState("");
   const [year, setYear] = useState(2024);
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedOrg, setSelectedOrg] = useState("");
+  const [selectedCorp, setSelectedCorp] = useState("");
 
   const toggleDrawerclose = () => {
-    setIsOpen(!isOpen);
+    setIsOpen(false);
   };
+
   const toggleDrawer = (selected) => {
-    setIsOpen(!isOpen);
+    setIsOpen(true);
     setCategory(selected);
   };
+
   useEffect(() => {
-    var newData = [];
-    Socialdata.map((program) => {
-      program.category.map((tag) => {
+    const newData = [];
+    Socialdata.forEach((program) => {
+      program.category.forEach((tag) => {
         if (tag === category) {
           newData.push(program);
         }
       });
     });
-    // //console.log(newData);
     setData(newData);
   }, [category]);
 
@@ -78,19 +80,19 @@ const BoardInfo = () => {
 
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Governance Structure and Composition
+            Governance Structure and Composition
           </h6>
         </div>
         <div
           className={`${
-            isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"} fixed right-[51px]  w-[340px] h-full bg-white  rounded-md transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
+            isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"
+          } fixed right-[51px] w-[340px] h-full bg-white rounded-md transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         >
           {data &&
-            data.map((program) => (
-              <>
+            data.map((program, index) => (
+              <div key={index}>
                 <div className="flex justify-between p-2 pt-5 pb-4 border-b-2 ">
                   <div className="ml-2">{program.header}</div>
-
                   <div className="ml-2 float-right">
                     <h5
                       className="text-[#727272] text-[17px] font-bold cursor-pointer"
@@ -101,31 +103,34 @@ const BoardInfo = () => {
                   </div>
                 </div>
                 <div> {program.data}</div>
-              </>
+              </div>
             ))}
         </div>
       </div>
       <GovernanceHeader2
         activeMonth={activeMonth}
         setActiveMonth={setActiveMonth}
-        location={location}
-        setLocation={setLocation}
+        selectedOrg={selectedOrg}
+        setSelectedOrg={setSelectedOrg}
+        selectedCorp={selectedCorp}
+        setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
       />
       <GovernanceStructure
-        location={location}
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
         year={year}
         month={activeMonth}
-        activeMonth={activeMonth}
       />
       <CommitteeOfHighestGovernanceBody
-        location={location}
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
         year={year}
         month={activeMonth}
-        activeMonth={activeMonth}
       />
     </>
   );
 };
+
 export default BoardInfo;

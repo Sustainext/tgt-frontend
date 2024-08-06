@@ -1,8 +1,9 @@
 "use client";
+
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import InputWidget5 from "../../../../../shared/widgets/Input/InputWidget5";
+import GovernanceWidget from "../../../../../shared/widgets/Governance/Structure2";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -12,7 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 
 const widgets = {
-  inputWidget: InputWidget5,
+  inputWidget: GovernanceWidget,
 };
 
 const view_path = "gri-social-benefits-401-2b-significant_loc";
@@ -25,9 +26,15 @@ const schema = {
     type: "object",
     properties: {
       Q1: {
-        type: "string",
+        type: "array",
         title:
           "List the committees of the highest governance body that are responsible for decision-making on and overseeing the management of the organization's impacts on the economy, environment and people",
+        items: {
+          type: "array",
+          items: {
+            type: "string",
+          },
+        },
       },
     },
   },
@@ -58,7 +65,7 @@ const uiSchema = {
   },
 };
 
-const CommitteeOfHighestGovernanceBody = ({ location, year, month }) => {
+const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year, month }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -79,10 +86,9 @@ const CommitteeOfHighestGovernanceBody = ({ location, year, month }) => {
   };
 
   const handleChange = (e) => {
-    setFormData(e.formData); // Ensure you are extracting formData from the event
+    setFormData(e.formData);
   };
 
-  // The below code on updateFormData
   let axiosConfig = {
     headers: {
       Authorization: "Bearer " + token,
@@ -95,7 +101,8 @@ const CommitteeOfHighestGovernanceBody = ({ location, year, month }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      location,
+      organisation: selectedOrg,
+      corporate: selectedCorp,
       year,
       month,
     };
@@ -103,6 +110,8 @@ const CommitteeOfHighestGovernanceBody = ({ location, year, month }) => {
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
       const response = await axios.post(url, data, axiosConfig);
+      console.log('structure formdata', formData);
+      
       if (response.status === 200) {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -161,39 +170,35 @@ const CommitteeOfHighestGovernanceBody = ({ location, year, month }) => {
     }
   };
 
-  //Reloading the forms -- White Beard
   useEffect(() => {
-    //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
+    //console.log(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
   }, [r_schema, r_ui_schema]);
 
-  // console log the form data change
   useEffect(() => {
     console.log("Form data is changed -", formData);
   }, [formData]);
 
-  // fetch backend and replace initialized forms
   useEffect(() => {
     if (location && year && month) {
       loadFormData();
       toastShown.current = false; // Reset the flag when valid data is present
     } else {
-      // Only show the toast if it has not been shown already
       if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
+        toastShown.current = true;
       }
     }
-  }, [location, year, month]); // Dependencies // React only triggers this effect if these dependencies change
+  }, [location, year, month]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form data:", formData);
-    updateFormData();
+    // updateFormData();
   };
 
   return (
     <>
       <div
-        className="mx-2  p-3 mb-6 pb-6 rounded-md"
+        className="mx-2 p-3 mb-6 pb-6 rounded-md"
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
@@ -202,7 +207,7 @@ const CommitteeOfHighestGovernanceBody = ({ location, year, month }) => {
         <div className="mb-4 flex">
           <div className="w-[80%]">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
-            Committees of the highest governance body
+              Committees of the highest governance body
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
                 data-tooltip-content="This section documents data corresponding to the committees of the highest governance body that are responsible for decision making on and overseeing the management of the organization’s impacts on the economy, environment, and people."
@@ -221,14 +226,14 @@ const CommitteeOfHighestGovernanceBody = ({ location, year, month }) => {
                   borderRadius: "8px",
                   textAlign: "left",
                 }}
-              ></ReactTooltip>
+              />
             </h2>
           </div>
 
           <div className="w-[20%]">
             <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
               <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-9-a
+                GRI 2-9-b
               </p>
             </div>
           </div>
@@ -250,7 +255,7 @@ const CommitteeOfHighestGovernanceBody = ({ location, year, month }) => {
               !location || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            disabled={!location || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>
@@ -268,6 +273,7 @@ const CommitteeOfHighestGovernanceBody = ({ location, year, month }) => {
           />
         </div>
       )}
+      <ToastContainer />
     </>
   );
 };
