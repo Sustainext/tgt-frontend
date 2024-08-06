@@ -27,7 +27,11 @@ const schema = {
       executivePower: {
         type: "string",
         title: "Executive Power",
-        enum: ["Executive Member", "Non-Executive Member","Others (Please specify)"],
+        enum: [
+          "Executive Member",
+          "Non-Executive Member",
+          "Others (Please specify)",
+        ],
       },
       independence: {
         type: "string",
@@ -35,17 +39,32 @@ const schema = {
         enum: ["Independent", "Non-Independent"],
       },
       tenure: { type: "string", title: "Tenure On The Governance Body" },
-      significantPositions: { type: "string", title: "Number Of Significant Positions" },
+      significantPositions: {
+        type: "string",
+        title: "Number Of Significant Positions",
+      },
       commitmentsHeld: { type: "string", title: "Commitments Held By Member" },
-      natureOfCommitments: { type: "string", title: "The Nature Of Commitments" },
+      natureOfCommitments: {
+        type: "string",
+        title: "The Nature Of Commitments",
+      },
       gender: {
         type: "string",
         title: "Gender",
         enum: ["Male", "Female", "Other"],
       },
-      underRepresentedGroups: { type: "string", title: "Under-Represented Social Groups" },
-      competencies: { type: "string", title: "Competencies Relevant To The Impacts Of The Organization" },
-      stakeholderRepresentation: { type: "string", title: "Stakeholder Representation" },
+      underRepresentedGroups: {
+        type: "string",
+        title: "Under-Represented Social Groups",
+      },
+      competencies: {
+        type: "string",
+        title: "Competencies Relevant To The Impacts Of The Organization",
+      },
+      stakeholderRepresentation: {
+        type: "string",
+        title: "Stakeholder Representation",
+      },
     },
   },
 };
@@ -54,6 +73,48 @@ const uiSchema = {
   "ui:widget": "GovernanceRowWidget",
   "ui:options": {
     orderable: false,
+    titles: [
+      {
+        title: "Name",
+        tooltip: "Mention name of the member of the governance body.",
+      },
+      {
+        title: "Executive Power",
+        tooltip: "Please indicate the executive power. ",
+      },
+      {
+        title: "Independence",
+        tooltip:
+          "Indicate whether the highest governance body members are considered as independent or non-independent.‘Independence’ refers to conditions that enable the <br/>members of the highest governance body toexercise independent judgment free from any external <br/>influence or conflicts of interest.",
+      },
+      {
+        title: "Tenure on the governance body",
+        tooltip: "Specify the tenure of members <br/>on the governance body",
+      },
+      {
+        title: "Number of significant positions",
+        tooltip: " Provide an information on number of significant positions.",
+      },
+      {
+        title: "Commitments held by member",
+        tooltip:
+          "Describe the commitments held by member of the highest governance body.",
+      },
+      {
+        title: "The nature of  commitments",
+        tooltip: "Describe the nature of commitments",
+      },
+      {
+        title: "Under-represented social groups",
+        tooltip:
+          "Specify the number of members of the highest governance <br/>body who identify as under-represented groups represented on the board.(e.g., any minority groups etc.).",
+      },
+      {
+        title: "Competencies relevant to the impacts of the organization",
+        tooltip:
+          "Describe competencies relevant to the impacts of the organization",
+      },
+    ],
     executivePower: {
       options: [
         { label: "Executive Member", value: "Executive Member" },
@@ -72,12 +133,17 @@ const uiSchema = {
         { label: "Male", value: "Male" },
         { label: "Female", value: "Female" },
         { label: "Other", value: "Other" },
-      ]
-    }
+      ],
+    },
   },
 };
 
-const CompositionOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year, month }) => {
+const CompositionOfHighestGovernanceBody = ({
+  selectedOrg,
+  selectedCorp,
+  year,
+  month,
+}) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -180,8 +246,8 @@ const CompositionOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year, m
     // updateFormData();
   };
 
-  const handleChange = ({ formData }) => {
-    setFormData(formData);
+  const handleChange = (e) => {
+    setFormData(e.formData);
   };
 
   return (
