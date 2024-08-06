@@ -1,12 +1,19 @@
 "use client";
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MdKeyboardArrowDown, MdInfoOutline, MdAdd, MdDelete } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
 const GovernanceWidget = ({ onChange, value = [], uiSchema = {} }) => {
-  const [data, setData] = useState(value);
+  const [data, setData] = useState(value.length > 0 ? value : [[""]]);
+
+  useEffect(() => {
+    if (data.length === 0) {
+      const defaultFirstRow = new Array(data[0]?.length || 1).fill("");
+      setData([defaultFirstRow]);
+      onChange([defaultFirstRow]);
+    }
+  }, [data, onChange]);
 
   const handleCellChange = (rowIndex, colIndex, event) => {
     const newData = [...data];
@@ -75,7 +82,7 @@ const GovernanceWidget = ({ onChange, value = [], uiSchema = {} }) => {
                 <textarea
                   key={colIndex}
                   placeholder="Enter data"
-                  className="border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-1 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
+                  className="border appearance-none text-xs py-4 border-gray-400 text-neutral-600 pl-2 rounded-md  leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
                   value={cell}
                   onChange={(e) => handleCellChange(rowIndex, colIndex, e)}
                   rows={1}
