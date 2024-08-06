@@ -3,12 +3,12 @@ import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import InputWidget5 from "../../../../../shared/widgets/Input/InputWidget5";
-import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
+import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+// import "react-toastify/dist/react-toastify.css";
 import { Oval } from "react-loader-spinner";
 
 const widgets = {
@@ -48,7 +48,6 @@ const uiSchema = {
         label: false,
       },
     },
-
     "ui:options": {
       orderable: false,
       addable: false,
@@ -58,7 +57,7 @@ const uiSchema = {
   },
 };
 
-const GovernanceStructure = ({ location, year, month }) => {
+const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -82,12 +81,12 @@ const GovernanceStructure = ({ location, year, month }) => {
     setFormData(e.formData); // Ensure you are extracting formData from the event
   };
 
-  // The below code on updateFormData
   let axiosConfig = {
     headers: {
       Authorization: "Bearer " + token,
     },
   };
+
   const updateFormData = async () => {
     LoaderOpen();
     const data = {
@@ -95,7 +94,7 @@ const GovernanceStructure = ({ location, year, month }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      location,
+      selectedOrg,
       year,
       month,
     };
@@ -147,7 +146,7 @@ const GovernanceStructure = ({ location, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&selectedOrg=${selectedOrg}&year=${year}&month=${month}`;
     try {
       const response = await axios.get(url, axiosConfig);
       console.log("API called successfully:", response.data);
@@ -161,28 +160,16 @@ const GovernanceStructure = ({ location, year, month }) => {
     }
   };
 
-  //Reloading the forms -- White Beard
   useEffect(() => {
-    //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-  }, [r_schema, r_ui_schema]);
-
-  // console log the form data change
-  useEffect(() => {
-    console.log("Form data is changed -", formData);
-  }, [formData]);
-
-  // fetch backend and replace initialized forms
-  useEffect(() => {
-    if (location && year && month) {
+    if (selectedOrg && year && month) {
       loadFormData();
-      toastShown.current = false; // Reset the flag when valid data is present
+      toastShown.current = false;
     } else {
-      // Only show the toast if it has not been shown already
       if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
+        toastShown.current = true;
       }
     }
-  }, [location, year, month]); // Dependencies // React only triggers this effect if these dependencies change
+  }, [selectedOrg, year, month]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -202,7 +189,7 @@ const GovernanceStructure = ({ location, year, month }) => {
         <div className="mb-4 flex">
           <div className="w-[80%]">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
-            Governance Structure
+              Governance Structure
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
                 data-tooltip-content="This section documents data corresponding to the organisation's governance structure, including the committees of the highest governance body."
@@ -247,10 +234,10 @@ const GovernanceStructure = ({ location, year, month }) => {
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !location || !year ? "cursor-not-allowed" : ""
+              !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            disabled={!location || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

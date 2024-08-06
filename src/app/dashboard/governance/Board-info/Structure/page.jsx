@@ -1,12 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
-import { Tooltip as ReactTooltip } from "react-tooltip";
+import { MdOutlineClear } from "react-icons/md";
 import "react-tooltip/dist/react-tooltip.css";
 import GovernanceHeader2 from "../../GovernanceHeader2";
 import { Socialdata } from "@/app/dashboard/Social/data/socialgriinfo";
 import GovernanceStructure from "./governance-structure/page";
 import CommitteeOfHighestGovernanceBody from "./committees/page";
+import CompositionOfHighestGovernanceBody from "./composition/page";
 
 const BoardInfo = () => {
   const [activeMonth, setActiveMonth] = useState(1);
@@ -40,7 +40,7 @@ const BoardInfo = () => {
 
   return (
     <>
-      <div className="flex flex-col justify-start overflow-x-hidden ">
+      <div className="flex flex-col justify-start overflow-x-hidden">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
             <div className="text-left mb-4 ml-3 pt-5">
@@ -54,7 +54,7 @@ const BoardInfo = () => {
               </div>
             </div>
           </div>
-          <div className="w-full float-end ">
+          <div className="w-full float-end">
             <div className="flex float-end border-l">
               <button
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
@@ -91,7 +91,7 @@ const BoardInfo = () => {
           {data &&
             data.map((program, index) => (
               <div key={index}>
-                <div className="flex justify-between p-2 pt-5 pb-4 border-b-2 ">
+                <div className="flex justify-between p-2 pt-5 pb-4 border-b-2">
                   <div className="ml-2">{program.header}</div>
                   <div className="ml-2 float-right">
                     <h5
@@ -102,7 +102,7 @@ const BoardInfo = () => {
                     </h5>
                   </div>
                 </div>
-                <div> {program.data}</div>
+                <div>{program.data}</div>
               </div>
             ))}
         </div>
@@ -124,6 +124,12 @@ const BoardInfo = () => {
         month={activeMonth}
       />
       <CommitteeOfHighestGovernanceBody
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        year={year}
+        month={activeMonth}
+      />
+      <CompositionOfHighestGovernanceBody
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}

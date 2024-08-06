@@ -45,7 +45,7 @@ const InputWidget5 = (props) => {
           className={`backdrop:before:w-[48rem] border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
           value={value}
           onChange={handleChange}
-          rows={1}
+          rows={4}
         />
       </div>
     </>
