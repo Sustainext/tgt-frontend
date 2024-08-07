@@ -37,7 +37,7 @@ const uiSchema = {
     'ui:options': {
         titles: [
             { key: "Criteria", title: "Criteria", type:"number", display:"none" },
-            { key: "Whether taken into consideration?", title: "Whether taken into consideration?", type:"number",display:"block"  },
+            { key: "Whethertakenintoconsideration", title: "Whether taken into consideration?", type:"number",display:"block"  },
             { key: "How", title: "How?",type:"number", display:"block" },
 
         ],

@@ -24,9 +24,9 @@ const schema = {
     items: {
         type: 'object',
         properties: {
-            Criteria: { type: "string", title: "Criteria" },
-            Whethertakenintoconsideration: { type: "string",enum: ['Yes', 'No', 'NA'], title: "No. of operations implemented by engaging local communities" },
-            How: { type: "string", title: "Total no. of operations" },
+            Criteria: { type: "string", title: "Conflict of interest relating to:" },
+            Disclosed: { type: "string",enum: ['Yes', 'No', 'NA'], title: "Disclosed?" },
+
 
         },
     },
@@ -36,16 +36,17 @@ const uiSchema = {
     "ui:widget": "TableWidget",
     'ui:options': {
         titles: [
-            { key: "Criteria", title: "Criteria", type:"number", display:"none" },
-            { key: "Whether taken into consideration?", title: "Whether taken into consideration?", type:"number",display:"block"  },
-            { key: "How", title: "How?",type:"number", display:"block" },
+            { key: "Criteria", title: "Conflict of interest relating to:", type:"number", display:"none" },
+            { key: "Disclosed", title: "Whether taken into consideration?", type:"number",display:"block"  },
+
 
         ],
         rowLabels: [
-            { title: "Views of stakeholders (including shareholders)", tooltip: "Mention the number of operations that include the use of social impact assessments, including gender impact assessments, based on participatory processes.",display:"none" },
-            { title: "Diversity", tooltip: "Mention the number of operations that include the use of environmental impact assessments and ongoing monitoring.",display:"none" },
-            { title: "Independence", tooltip: "Mention the number of operations that include the use of public disclosure of results of environmental and social impact assessments",display:"none" },
-            { title: "Competencies relevant to the impacts of the organization", tooltip: "Mention the number of operations that include the use of local community development programs based on local communities’ needs.",display:"none" },
+            { title: "Cross-board membership", tooltip: "Mention the number of operations that include the use of social impact assessments, including gender impact assessments, based on participatory processes.",display:"none" },
+            { title: "Cross-shareholding with suppliers and other stakeholders", tooltip: "Mention the number of operations that include the use of environmental impact assessments and ongoing monitoring.",display:"none" },
+            { title: "Existence of controlling shareholders", tooltip: "Mention the number of operations that include the use of public disclosure of results of environmental and social impact assessments",display:"none" },
+            { title: "Related parties, theri relationships, transactions, and outstanding balances", tooltip: "Mention the number of operations that include the use of local community development programs based on local communities’ needs.",display:"none" },
+            { title: "Others", tooltip: "Mention the number of operations that include the use of local community development programs based on local communities’ needs.",display:"none" },
 
         ]
     },
@@ -54,23 +55,18 @@ const uiSchema = {
 const Screen2 = ({ location, year, month }) => {
     const { open } = GlobalState();
     const initialFormData = [
-        { Whethertakenintoconsideration: "", How: "" },
-        { Whethertakenintoconsideration: "", How: "" },
-        { Whethertakenintoconsideration: "", How: "" },
-        { Whethertakenintoconsideration: "", How: "" },
+        { Disclosed: ""},
+        { Disclosed: ""},
+        { Disclosed: ""},
+        { Disclosed: ""},
+        { Disclosed: ""},
     ];
     const [formData, setFormData] = useState(initialFormData);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
     const [loopen, setLoOpen] = useState(false);
     const toastShown = useRef(false);
-    const getAuthToken = () => {
-        if (typeof window !== 'undefined') {
-            return localStorage.getItem('token')?.replace(/"/g, "");
-        }
-        return '';
-    };
-    const token = getAuthToken();
+
     const LoaderOpen = () => {
         setLoOpen(true);
     };
