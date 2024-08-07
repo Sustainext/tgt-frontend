@@ -47,7 +47,7 @@ const NominationAndSelection = () => {
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] font-bold pt-1">
-                    Structure
+                    Nomination and Selection
                   </p>
                 </div>
               </div>

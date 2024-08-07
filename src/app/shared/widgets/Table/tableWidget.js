@@ -70,7 +70,7 @@ const CustomTableWidget = ({
           </tr>
         </thead>
         <tbody>
-          {value.map((item, rowIndex) => (
+          {value?.map((item, rowIndex) => (
             <tr key={rowIndex}>
               {Object.keys(item).map((key, cellIndex) => (
                 <td key={cellIndex} className="border border-gray-300 p-3">

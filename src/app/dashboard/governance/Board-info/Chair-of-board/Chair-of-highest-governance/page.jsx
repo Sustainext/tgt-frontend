@@ -2,20 +2,20 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import inputWidget2 from "@/app/shared/widgets/Input/inputWidget2";
+import RadioWidget2 from "@/app/shared/widgets/Input/RadioWidget2"; // Ensure this path is correct
 import "react-tooltip/dist/react-tooltip.css";
-import RadioWidget2 from "@/app/shared/widgets/Input/RadioWidget2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import { MdInfoOutline } from "react-icons/md";
-import ReactTooltip from "react-tooltip";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import CustomTableWidget from "@/app/shared/widgets/Table/tableWidget";
 
 const widgets = {
-  inputWidget: inputWidget2,
   RadioWidget2: RadioWidget2,
+  TableWidget: CustomTableWidget,
 };
 
 const view_path = "gri-social-product_labeling-417-1a-required";
@@ -23,74 +23,111 @@ const client_id = 1;
 const user_id = 1;
 
 const schema = {
-  type: "array",
-  items: {
-    type: "object",
-    properties: {
-      Q2: {
-        type: "string",
-        title:
-          "Is the chair of the highest governance body also a senior executive in the organization?",
-        enum: ["Yes", "No"],
+    type: "array",
+    items: {
+      type: "object",
+      properties: {
+        Q2: {
+          type: "string",
+          title: "Is the chair of the highest governance body also a senior executive in the organization?",
+          enum: ["Yes", "No"],
+        },
       },
-    },
-    dependencies: {
-      Q2: {
-        oneOf: [
-          {
-            properties: {
-              Q2: {
-                enum: ["Yes"],
-              },
-              Q3: {
-                type: "string",
-                title: "",
+      dependencies: {
+        Q2: {
+          oneOf: [
+            {
+              properties: {
+                Q2: {
+                  enum: ["Yes"],
+                },
+                Q3: {
+                  type: "array",
+                  title: "If yes, please explain the following:",
+                  items: {
+                    type: "object",
+                    properties: {
+                      TheirFunctionWithinTheOrganization: {
+                        type: "string",
+                        title: "Their function within the organization",
+                      },
+                      ReasonsForThisArrangement: {
+                        type: "string",
+                        title: "Reasons for this arrangement",
+                      },
+                      HowConFlictsArePrevented: { type: "string", title: "How conflicts of interest are prevented and mitigated" },
+                    },
+                  },
+                },
               },
             },
-          },
-        ],
+            {
+              properties: {
+                Q2: {
+                  enum: ["No"],
+                },
+              },
+            },
+          ],
+        },
       },
     },
-  },
-};
+  };
 
-const uiSchema = {
-  items: {
-    "ui:order": ["Q2", "Q3"],
-    Q2: {
-      "ui:title":
-        "Is the chair of the highest governance body also a senior executive in the organization?",
-      "ui:tooltip":
-        "Indicate whether the chair of the highest governance body is also a senior executive in the organization.",
-      "ui:tooltipdisplay": "block",
-      "ui:widget": "RadioWidget2",
-      "ui:horizontal": true,
+  const uiSchema = {
+    items: {
+      "ui:order": ["Q2", "Q3"],
+      Q2: {
+        "ui:title": "Is the chair of the highest governance body also a senior executive in the organization?",
+        "ui:tooltip": "Indicate whether the chair of the highest governance body is also a senior executive in the organization.",
+        "ui:tooltipdisplay": "block",
+        "ui:widget": "RadioWidget2",
+        "ui:horizontal": true,
+        "ui:options": {
+          label: false,
+        },
+      },
+      Q3: {
+        "ui:widget": "TableWidget",
+        "ui:options": {
+          titles: [
+            {
+              title: "Their function within the organization",
+              tooltip: "Provide an explanation on the function of the senior executive within the organization’s management.",
+            },
+            {
+              title: "Reasons for this arrangement",
+              tooltip: "If the chair of the highest governance body is also a senior executive in the organization; explain the reason for this arrangement.",
+            },
+            {
+              title: "How conflicts of interest are prevented and mitigated",
+              tooltip: "Conflict of interest:situation where an individual is confronted with choosing between the requirements of their function in the organization and their other personal or professional interests or responsibilities",
+            },
+          ],
+        },
+        "ui:description": " ", // Add this line
+        "ui:descriptionClassNames": "mb-4", // Add this line
+      },
       "ui:options": {
-        label: false,
+        orderable: false,
+        addable: false,
+        removable: false,
+        layout: "horizontal",
       },
     },
-    Q3: {
-      "ui:title": "",
-      "ui:tooltip":
-        "Provide an explanation of how the highest governance body engages with stakeholders to support these processes? ",
-      "ui:tooltipdisplay": "none",
-      "ui:widget": "inputWidget",
-      "ui:horizontal": true,
-      "ui:options": {
-        label: false,
-      },
-    },
-    "ui:options": {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: "horizontal", // Set layout to horizontal
-    },
-  },
-};
+  };
 
 const ChairOfHighestGovernance = ({ selectedOrg, year, selectedCorp }) => {
-  const [formData, setFormData] = useState([{}]);
+  const [formData, setFormData] = useState([{
+    Q2: "",
+    Q3: [
+      {
+        TheirFunctionWithinTheOrganization: "",
+        ReasonsForThisArrangement: "",
+        HowConFlictsArePrevented: "",
+      }
+    ]
+  }]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
@@ -107,11 +144,18 @@ const ChairOfHighestGovernance = ({ selectedOrg, year, selectedCorp }) => {
 
   const handleChange = (e) => {
     let newFormData = { ...e.formData[0] };
-    if (newFormData.Q2 === "No") {
-      newFormData.Q3 = "";
-    }
-    if (newFormData.Q4 === "No") {
-      newFormData.Q5 = "";
+    if (newFormData.Q2 === "Yes") {
+      // Initialize Q3 as an array with one object if it doesn't exist
+      if (!Array.isArray(newFormData.Q3) || newFormData.Q3.length === 0) {
+        newFormData.Q3 = [{
+            TheirFunctionWithinTheOrganization: "",
+            ReasonsForThisArrangement: "",
+            HowConFlictsArePrevented: "",
+          }];
+      }
+    } else {
+      // If "No" is selected, remove Q3
+      delete newFormData.Q3;
     }
     setFormData([newFormData]);
   };
@@ -186,6 +230,7 @@ const ChairOfHighestGovernance = ({ selectedOrg, year, selectedCorp }) => {
       LoaderClose();
     }
   };
+
   useEffect(() => {
     if (selectedOrg && year) {
       loadFormData();
@@ -212,31 +257,31 @@ const ChairOfHighestGovernance = ({ selectedOrg, year, selectedCorp }) => {
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
         }}
       >
+        <div className="w-[80%]">
+          <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
+            Governance Structure
+            <MdInfoOutline
+              data-tooltip-id={`tooltip-$e1`}
+              data-tooltip-content="This section documents data corresponding to the organisation's governance structure, including the committees of the highest governance body."
+              className="mt-1.5 ml-2 text-[14px]"
+            />
+            <ReactTooltip
+              id={`tooltip-$e1`}
+              place="top"
+              effect="solid"
+              style={{
+                width: "290px",
+                backgroundColor: "#000",
+                color: "white",
+                fontSize: "12px",
+                boxShadow: 3,
+                borderRadius: "8px",
+                textAlign: "left",
+              }}
+            ></ReactTooltip>
+          </h2>
+        </div>
         <div className="mx-2 flex">
-          <div className="w-[80%]">
-            <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
-              Governance Structure
-              <MdInfoOutline
-                data-tooltip-id={`tooltip-$e1`}
-                data-tooltip-content="This section documents data corresponding to the organisation's governance structure, including the committees of the highest governance body."
-                className="mt-1.5 ml-2 text-[14px]"
-              />
-              <ReactTooltip
-                id={`tooltip-$e1`}
-                place="top"
-                effect="solid"
-                style={{
-                  width: "290px",
-                  backgroundColor: "#000",
-                  color: "white",
-                  fontSize: "12px",
-                  boxShadow: 3,
-                  borderRadius: "8px",
-                  textAlign: "left",
-                }}
-              ></ReactTooltip>
-            </h2>
-          </div>
           <div className="w-[92%] relative">
             <Form
               schema={schema}
@@ -251,7 +296,7 @@ const ChairOfHighestGovernance = ({ selectedOrg, year, selectedCorp }) => {
             <div className={`flex float-end`}>
               <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 ">
                 <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                  GRI 2-13-a
+                  GRI 2-11-b
                 </p>
               </div>
             </div>
