@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { MdKeyboardArrowDown, MdInfoOutline } from "react-icons/md";
+import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import BoardInfo from "./Board-info/structure/page";
 import ManagementImpact from './Board-Involvement-Sustainability/Management-Impact/page'

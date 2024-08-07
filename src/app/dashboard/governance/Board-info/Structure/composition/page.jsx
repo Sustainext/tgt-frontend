@@ -2,17 +2,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import InputWidget5 from "../../../../../shared/widgets/Input/InputWidget5";
+import GovernanceRowWidget from "../../../../../shared/widgets/Governance/Structure3";
 import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import axios from "axios";
 import { toast } from "react-toastify";
-// import "react-toastify/dist/react-toastify.css";
 import { Oval } from "react-loader-spinner";
-
+import axiosInstance from "@/app/utils/axiosMiddleware";
 const widgets = {
-  inputWidget: InputWidget5,
+  GovernanceRowWidget: GovernanceRowWidget,
 };
 
 const view_path = "";
@@ -24,74 +23,139 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      Q1: {
+      name: { type: "string", title: "Name" },
+      executivePower: {
         type: "string",
-        title:
-          "Describe the governance structure, including the committees of the highest governance body",
+        title: "Executive Power",
+        enum: [
+          "Executive Member",
+          "Non-Executive Member",
+          "Others (Please specify)",
+        ],
+      },
+      independence: {
+        type: "string",
+        title: "Independence",
+        enum: ["Independent", "Non-Independent"],
+      },
+      tenure: { type: "string", title: "Tenure On The Governance Body" },
+      significantPositions: {
+        type: "string",
+        title: "Number Of Significant Positions",
+      },
+      commitmentsHeld: { type: "string", title: "Commitments Held By Member" },
+      natureOfCommitments: {
+        type: "string",
+        title: "The Nature Of Commitments",
+      },
+      gender: {
+        type: "string",
+        title: "Gender",
+        enum: ["Male", "Female", "Other"],
+      },
+      underRepresentedGroups: {
+        type: "string",
+        title: "Under-Represented Social Groups",
+      },
+      competencies: {
+        type: "string",
+        title: "Competencies Relevant To The Impacts Of The Organization",
+      },
+      stakeholderRepresentation: {
+        type: "string",
+        title: "Stakeholder Representation",
       },
     },
   },
 };
 
 const uiSchema = {
-  items: {
-    "ui:order": ["Q1"],
-    Q1: {
-      "ui:title":
-        "Describe the governance structure, including the committees of the highest governance body",
-      "ui:tooltip":
-        "Provide a description of governance structure of the organisation, including the committees of the highest governance body Highest governance body: governance body with the highest authority in the organization.",
-      "ui:tooltipdisplay": "block",
-      "ui:widget": "inputWidget",
-      "ui:horizontal": true,
-      "ui:options": {
-        label: false,
+  "ui:widget": "GovernanceRowWidget",
+  "ui:options": {
+    orderable: false,
+    titles: [
+      {
+        title: "Name",
+        tooltip: "Mention name of the member of the governance body.",
       },
+      {
+        title: "Executive Power",
+        tooltip: "Please indicate the executive power. ",
+      },
+      {
+        title: "Independence",
+        tooltip:
+          "Indicate whether the highest governance body members are considered as independent or non-independent.‘Independence’ refers to conditions that enable the <br/>members of the highest governance body toexercise independent judgment free from any external <br/>influence or conflicts of interest.",
+      },
+      {
+        title: "Tenure On The Governance Body",
+        tooltip: "Specify the tenure of members <br/>on the governance body",
+      },
+      {
+        title: "Number Of Significant Positions",
+        tooltip: " Provide an information on number of significant positions.",
+      },
+      {
+        title: "Commitments Held By Member",
+        tooltip:
+          "Describe the commitments held by member of the highest governance body.",
+      },
+      {
+        title: "The Nature Of Commitments",
+        tooltip: "Describe the nature of commitments",
+      },
+      {
+        title: "Under-Represented Social Groups",
+        tooltip:
+          "Specify the number of members of the highest governance <br/>body who identify as under-represented groups represented on the board.(e.g., any minority groups etc.).",
+      },
+      {
+        title: "Competencies Relevant To The Impacts Of The Organization",
+        tooltip:
+          "Describe competencies relevant to the impacts of the organization",
+      },
+    ],
+    executivePower: {
+      options: [
+        { label: "Executive Member", value: "Executive Member" },
+        { label: "Non-Executive Member", value: "Non-Executive Member" },
+        { label: "Others (Please specify)", value: "Others (Please specify)" },
+      ],
     },
-    "ui:options": {
-      orderable: false,
-      addable: false,
-      removable: false,
-      layout: "horizontal",
+    independence: {
+      options: [
+        { label: "Independent", value: "Independent" },
+        { label: "Non-Independent", value: "Non-Independent" },
+      ],
+    },
+    gender: {
+      options: [
+        { label: "Male", value: "Male" },
+        { label: "Female", value: "Female" },
+        { label: "Other", value: "Other" },
+      ],
     },
   },
 };
 
-const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
+const CompositionOfHighestGovernanceBody = ({
+  selectedOrg,
+  selectedCorp,
+  year,
+  month,
+}) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
-  const LoaderOpen = () => {
-    setLoOpen(true);
-  };
-  const LoaderClose = () => {
-    setLoOpen(false);
-  };
-
-  const handleChange = (e) => {
-    setFormData(e.formData); // Ensure you are extracting formData from the event
-  };
-
-  let axiosConfig = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
-
+  const LoaderOpen = () => setLoOpen(true);
+  const LoaderClose = () => setLoOpen(false);
   const updateFormData = async () => {
     LoaderOpen();
     const data = {
-      client_id: client_id,
-      user_id: user_id,
+      client_id,
+      user_id,
       path: view_path,
       form_data: formData,
       selectedOrg,
@@ -101,7 +165,7 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
-      const response = await axios.post(url, data, axiosConfig);
+      const response = await axiosInstance.post(url, data);
       if (response.status === 200) {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -116,17 +180,7 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
         LoaderClose();
         loadFormData();
       } else {
-        toast.error("Oops, something went wrong", {
-          position: "top-right",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-        LoaderClose();
+        throw new Error("Failed to update data");
       }
     } catch (error) {
       toast.error("Oops, something went wrong", {
@@ -148,7 +202,7 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
     setFormData([{}]);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&selectedOrg=${selectedOrg}&year=${year}&month=${month}`;
     try {
-      const response = await axios.get(url, axiosConfig);
+      const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
@@ -171,16 +225,19 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
     }
   }, [selectedOrg, year, month]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = ({ formData }) => {
     console.log("Form data:", formData);
     // updateFormData();
+  };
+
+  const handleChange = (e) => {
+    setFormData(e.formData);
   };
 
   return (
     <>
       <div
-        className="mx-2  p-3 mb-6 pb-6 rounded-md"
+        className="mx-2 p-3 mb-6 pb-6 rounded-md"
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
@@ -208,14 +265,13 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
                   borderRadius: "8px",
                   textAlign: "left",
                 }}
-              ></ReactTooltip>
+              />
             </h2>
           </div>
-
           <div className="w-[20%]">
             <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
               <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-9-a
+                GRI 2-9-c
               </p>
             </div>
           </div>
@@ -226,21 +282,22 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
             uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
+            onSubmit={handleSubmit}
             validator={validator}
             widgets={widgets}
-          />
-        </div>
-        <div className="mb-6">
-          <button
-            type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
-            }`}
-            onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
           >
-            Submit
-          </button>
+            <div className="mb-6">
+              <button
+                type="submit"
+                className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+                  !selectedOrg || !year ? "cursor-not-allowed" : ""
+                }`}
+                disabled={!selectedOrg || !year}
+              >
+                Submit
+              </button>
+            </div>
+          </Form>
         </div>
       </div>
       {loopen && (
@@ -259,4 +316,4 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
   );
 };
 
-export default GovernanceStructure;
+export default CompositionOfHighestGovernanceBody;

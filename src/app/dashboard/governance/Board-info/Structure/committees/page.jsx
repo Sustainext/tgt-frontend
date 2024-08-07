@@ -4,19 +4,18 @@ import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import GovernanceWidget from "../../../../../shared/widgets/Governance/Structure2";
-import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
+import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
-
+import axiosInstance from "@/app/utils/axiosMiddleware";
 const widgets = {
   inputWidget: GovernanceWidget,
 };
 
-const view_path = "gri-social-benefits-401-2b-significant_loc";
+const view_path = "";
 const client_id = 1;
 const user_id = 1;
 
@@ -66,18 +65,11 @@ const uiSchema = {
 };
 
 const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year, month }) => {
-  const [formData, setFormData] = useState([{}]);
+  const [formData, setFormData] = useState([]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -89,11 +81,8 @@ const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year, mon
     setFormData(e.formData);
   };
 
-  let axiosConfig = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
+
+
   const updateFormData = async () => {
     LoaderOpen();
     const data = {
@@ -109,7 +98,7 @@ const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year, mon
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
-      const response = await axios.post(url, data, axiosConfig);
+      const response = await axiosInstance.post(url, data);
       console.log('structure formdata', formData);
 
       if (response.status === 200) {
@@ -156,9 +145,9 @@ const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year, mon
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&year=${year}&month=${month}`;
     try {
-      const response = await axios.get(url, axiosConfig);
+      const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
@@ -171,15 +160,7 @@ const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year, mon
   };
 
   useEffect(() => {
-    //console.log(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-  }, [r_schema, r_ui_schema]);
-
-  useEffect(() => {
-    console.log("Form data is changed -", formData);
-  }, [formData]);
-
-  useEffect(() => {
-    if (location && year && month) {
+    if (selectedOrg && year) {
       loadFormData();
       toastShown.current = false; // Reset the flag when valid data is present
     } else {
@@ -187,7 +168,7 @@ const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year, mon
         toastShown.current = true;
       }
     }
-  }, [location, year, month]);
+  }, [selectedOrg, year,selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -252,7 +233,7 @@ const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year, mon
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !location || !year ? "cursor-not-allowed" : ""
+              !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
             disabled={!selectedOrg || !year}
