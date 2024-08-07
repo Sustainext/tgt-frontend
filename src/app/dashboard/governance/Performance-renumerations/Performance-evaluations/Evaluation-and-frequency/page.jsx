@@ -10,6 +10,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from '@/app/utils/axiosMiddleware'
+import { MdInfoOutline } from "react-icons/md";
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
 const widgets = {
     inputWidget: inputWidget2,
@@ -41,10 +43,8 @@ const schema = {
                             },
                             Q3: {
                                 type: "string",
-                                title: "",
+                                title: "Report the frequency of the evaluations",
                             },
-
-
                         },
                     },
                 ],
@@ -69,22 +69,22 @@ const uiSchema = {
             },
         },
         Q3: {
-            "ui:title":
-                "",
+            "ui:title": "Report the frequency of the evaluations",
+            "ui:description": " ",
+            "ui:descriptionClassNames": "mb-2", 
             "ui:tooltip":
-                "Provide an explanation of how the highest governance body engages with stakeholders to support these processes? ",
+                "Provide an explanation of how the highest governance body engages with stakeholders to support these processes? ",
             "ui:tooltipdisplay": "none",
             "ui:widget": "inputWidget",
-            "ui:horizontal": true,
             "ui:options": {
                 label: false,
             },
         },
         "ui:options": {
-            orderable: false, // Prevent reordering of items
-            addable: false, // Prevent adding items from UI
-            removable: false, // Prevent removing items from UI
-            layout: "horizontal", // Set layout to horizontal
+            orderable: false,
+            addable: false,
+            removable: false,
+            layout: "horizontal",
         },
     },
 };
@@ -212,6 +212,40 @@ const EvaluationAndFrequency = ({ selectedOrg, year, selectedCorp }) => {
                         "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
                 }}
             >
+            <div className="mb-4 flex">
+          <div className="w-[80%]">
+            <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
+            Evaluation and frequency of the evaluation
+              <MdInfoOutline
+                data-tooltip-id={`tooltip-$e1`}
+                data-tooltip-content="This section documents the data corresponding to whether the evaluations are independent or not and frequency of the evaluations."
+                className="mt-1.5 ml-2 text-[14px]"
+              />
+              <ReactTooltip
+                id={`tooltip-$e1`}
+                place="top"
+                effect="solid"
+                style={{
+                  width: "290px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  textAlign: "left",
+                }}
+              ></ReactTooltip>
+            </h2>
+          </div>
+
+          <div className="w-[20%]">
+            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
+              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
+                GRI 2-18-a
+              </p>
+            </div>
+          </div>
+        </div>
 
                 <div className="mx-2 flex">
                     <div className="w-[92%] relative">
