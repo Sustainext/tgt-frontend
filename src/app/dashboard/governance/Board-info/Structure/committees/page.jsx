@@ -15,7 +15,7 @@ const widgets = {
   inputWidget: GovernanceWidget,
 };
 
-const view_path = "";
+const view_path = "gri-governance-structure-2-9-b-committees";
 const client_id = 1;
 const user_id = 1;
 
@@ -145,7 +145,7 @@ const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year, mon
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -173,7 +173,7 @@ const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year, mon
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form data:", formData);
-    // updateFormData();
+    updateFormData();
   };
 
   return (
@@ -221,8 +221,8 @@ const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year, mon
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

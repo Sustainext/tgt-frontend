@@ -2,21 +2,23 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import InputWidget2 from "../../../../../shared/widgets/Input/InputWidget2";
-import { MdInfoOutline } from "react-icons/md";
-import { Tooltip as ReactTooltip } from "react-tooltip";
+import inputWidget2 from "@/app/shared/widgets/Input/inputWidget2";
 import "react-tooltip/dist/react-tooltip.css";
-import axios from "axios";
-import { toast } from "react-toastify";
-// import "react-toastify/dist/react-toastify.css";
+import RadioWidget2 from "@/app/shared/widgets/Input/RadioWidget2";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
-import axiosInstance from "@/app/utils/axiosMiddleware"
+import { GlobalState } from "@/Context/page";
+import axiosInstance from "@/app/utils/axiosMiddleware";
+import { MdInfoOutline } from "react-icons/md";
+import ReactTooltip from "react-tooltip";
 
 const widgets = {
-  inputWidget: InputWidget2,
+  inputWidget: inputWidget2,
+  RadioWidget2: RadioWidget2,
 };
 
-const view_path = "gri-governance-structure-2-9-a-governance_structure";
+const view_path = "gri-social-product_labeling-417-1a-required";
 const client_id = 1;
 const user_id = 1;
 
@@ -25,10 +27,28 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      Q1: {
+      Q2: {
         type: "string",
         title:
-          "Describe the governance structure, including the committees of the highest governance body",
+          "Is the chair of the highest governance body also a senior executive in the organization?",
+        enum: ["Yes", "No"],
+      },
+    },
+    dependencies: {
+      Q2: {
+        oneOf: [
+          {
+            properties: {
+              Q2: {
+                enum: ["Yes"],
+              },
+              Q3: {
+                type: "string",
+                title: "",
+              },
+            },
+          },
+        ],
       },
     },
   },
@@ -36,13 +56,24 @@ const schema = {
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1"],
-    Q1: {
+    "ui:order": ["Q2", "Q3"],
+    Q2: {
       "ui:title":
-        "Describe the governance structure, including the committees of the highest governance body",
+        "Is the chair of the highest governance body also a senior executive in the organization?",
       "ui:tooltip":
-        "Provide a description of governance structure of the organisation, including the committees of the highest governance body Highest governance body: governance body with the highest authority in the organization.",
+        "Indicate whether the chair of the highest governance body is also a senior executive in the organization.",
       "ui:tooltipdisplay": "block",
+      "ui:widget": "RadioWidget2",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
+    },
+    Q3: {
+      "ui:title": "",
+      "ui:tooltip":
+        "Provide an explanation of how the highest governance body engages with stakeholders to support these processes? ",
+      "ui:tooltipdisplay": "none",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
       "ui:options": {
@@ -50,60 +81,54 @@ const uiSchema = {
       },
     },
     "ui:options": {
-      orderable: false,
-      addable: false,
-      removable: false,
-      layout: "horizontal",
+      orderable: false, // Prevent reordering of items
+      addable: false, // Prevent adding items from UI
+      removable: false, // Prevent removing items from UI
+      layout: "horizontal", // Set layout to horizontal
     },
   },
 };
 
-const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
+const ChairOfHighestGovernance = ({ selectedOrg, year, selectedCorp }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
+  const { open } = GlobalState();
+
   const LoaderOpen = () => {
     setLoOpen(true);
   };
+
   const LoaderClose = () => {
     setLoOpen(false);
   };
 
   const handleChange = (e) => {
-    setFormData(e.formData);
-  };
-
-  let axiosConfig = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
+    let newFormData = { ...e.formData[0] };
+    if (newFormData.Q2 === "No") {
+      newFormData.Q3 = "";
+    }
+    if (newFormData.Q4 === "No") {
+      newFormData.Q5 = "";
+    }
+    setFormData([newFormData]);
   };
 
   const updateFormData = async () => {
-    LoaderOpen();
     const data = {
       client_id: client_id,
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      organisation:selectedOrg,
-      corporate:selectedCorp,
+      corporate: selectedCorp,
+      organisation: selectedOrg,
       year,
-      month,
     };
-
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
-      const response = await axiosInstance.post(url, data, axiosConfig);
+      const response = await axiosInstance.post(url, data);
       if (response.status === 200) {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -146,10 +171,9 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
   };
 
   const loadFormData = async () => {
-    const path_slug = "gri-governance-structure-2-9-a-governance_structure";
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${path_slug}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&year=${year}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -162,9 +186,8 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
       LoaderClose();
     }
   };
-
   useEffect(() => {
-    if (selectedOrg && year && month) {
+    if (selectedOrg && year) {
       loadFormData();
       toastShown.current = false;
     } else {
@@ -172,12 +195,12 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, month]);
+  }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form data:", formData);
-    updateFormData();
+    // updateFormData();
+    console.log("test form data", formData);
   };
 
   return (
@@ -189,7 +212,7 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
         }}
       >
-        <div className="mb-4 flex">
+        <div className="mx-2 flex">
           <div className="w-[80%]">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
               Governance Structure
@@ -214,24 +237,25 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
               ></ReactTooltip>
             </h2>
           </div>
-
-          <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-9-a
-              </p>
+          <div className="w-[92%] relative">
+            <Form
+              schema={schema}
+              uiSchema={uiSchema}
+              formData={formData}
+              onChange={handleChange}
+              validator={validator}
+              widgets={widgets}
+            />
+          </div>
+          <div className={`${open ? "w-[8%]" : "w-[8%]"}`}>
+            <div className={`flex float-end`}>
+              <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 ">
+                <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
+                  GRI 2-13-a
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="mx-2">
-          <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
-            formData={formData}
-            onChange={handleChange}
-            validator={validator}
-            widgets={widgets}
-          />
         </div>
         <div className="mb-6">
           <button
@@ -240,7 +264,7 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            // disabled={!selectedOrg || !year}
           >
             Submit
           </button>
@@ -262,4 +286,4 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
   );
 };
 
-export default GovernanceStructure;
+export default ChairOfHighestGovernance;

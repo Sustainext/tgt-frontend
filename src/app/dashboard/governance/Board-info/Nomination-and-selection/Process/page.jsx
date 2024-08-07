@@ -2,21 +2,19 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import InputWidget2 from "../../../../../shared/widgets/Input/InputWidget2";
+import InputWidget5 from "../../../../../shared/widgets/Input/InputWidget5";
 import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import axios from "axios";
 import { toast } from "react-toastify";
-// import "react-toastify/dist/react-toastify.css";
 import { Oval } from "react-loader-spinner";
-import axiosInstance from "@/app/utils/axiosMiddleware"
 
 const widgets = {
-  inputWidget: InputWidget2,
+  inputWidget: InputWidget5,
 };
 
-const view_path = "gri-governance-structure-2-9-a-governance_structure";
+const view_path = "";
 const client_id = 1;
 const user_id = 1;
 
@@ -27,8 +25,7 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title:
-          "Describe the governance structure, including the committees of the highest governance body",
+        title: "Describe the nomination and selection process for the highest governance body and its committees",
       },
     },
   },
@@ -38,10 +35,8 @@ const uiSchema = {
   items: {
     "ui:order": ["Q1"],
     Q1: {
-      "ui:title":
-        "Describe the governance structure, including the committees of the highest governance body",
-      "ui:tooltip":
-        "Provide a description of governance structure of the organisation, including the committees of the highest governance body Highest governance body: governance body with the highest authority in the organization.",
+      "ui:title": "Describe the nomination and selection process for the highest governance body and its committees",
+      "ui:tooltip": "This section documents data corresponding to the nomination & selection process of the highest governance body and committees.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -58,8 +53,8 @@ const uiSchema = {
   },
 };
 
-const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
-  const [formData, setFormData] = useState([{}]);
+const Process = ({ selectedOrg, selectedCorp, year, month }) => {
+  const [formData, setFormData] = useState([{ Q1: {Q1: "",fileName:"",fileURL:"" } }]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
@@ -95,15 +90,14 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      organisation:selectedOrg,
-      corporate:selectedCorp,
+      selectedOrg,
       year,
       month,
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
-      const response = await axiosInstance.post(url, data, axiosConfig);
+      const response = await axios.post(url, data, axiosConfig);
       if (response.status === 200) {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -146,12 +140,11 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
   };
 
   const loadFormData = async () => {
-    const path_slug = "gri-governance-structure-2-9-a-governance_structure";
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${path_slug}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&year=${year}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&selectedOrg=${selectedOrg}&year=${year}&month=${month}`;
     try {
-      const response = await axiosInstance.get(url);
+      const response = await axios.get(url, axiosConfig);
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
@@ -177,7 +170,7 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form data:", formData);
-    updateFormData();
+    // updateFormData();
   };
 
   return (
@@ -192,7 +185,7 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
         <div className="mb-4 flex">
           <div className="w-[80%]">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
-              Governance Structure
+            Nomination and selection processes for the highest governance body
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
                 data-tooltip-content="This section documents data corresponding to the organisation's governance structure, including the committees of the highest governance body."
@@ -213,20 +206,21 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
                 }}
               ></ReactTooltip>
             </h2>
+            {/* <p className="text-[12px] text-gray-500">Describe the governance structure, including the committees of the highest governance body</p> */}
           </div>
 
           <div className="w-[20%]">
             <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
               <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-9-a
+                GRI 2-10-a
               </p>
             </div>
           </div>
         </div>
         <div className="mx-2">
           <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+            schema={schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -262,4 +256,4 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
   );
 };
 
-export default GovernanceStructure;
+export default Process;
