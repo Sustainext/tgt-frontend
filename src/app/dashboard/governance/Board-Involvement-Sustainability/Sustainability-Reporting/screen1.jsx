@@ -18,50 +18,53 @@ const widgets = {
     RadioWidget2: RadioWidget2,
 };
 
-const view_path = "gri-social-product_labeling-417-1a-required";
+const view_path = "gri-governance-sustainability_reporting-2-14-role";
 const client_id = 1;
 const user_id = 1;
-
 const schema = {
-    type: "object",
-    properties: {
-        Q1: {
-            type: "string",
-            title: "Report whether the highest governance body is responsible for reviewing and approving the reported information, including the organization’s material topics",
-            enum: ["Yes", "No"],
-        }
-    },
-    dependencies: {
-        Q1: {
-            oneOf: [
-                {
-                    properties: {
-                        Q1: {
-                            enum: ["Yes"],
-                        },
-                        Q2: {
-                            type: "string",
-                            title: "If yes, please describe the process for reviewing and approving the information",
-                        },
-                    },
-                },
-                {
-                    properties: {
-                        Q1: {
-                            enum: ["No"],
-                        },
-                        Q3: {
-                            type: "string",
-                            title: "If no, explain the reason",
+    type: "array",
+    items: {
+        type: "object",
+        properties: {
+            Q1: {
+                type: "string",
+                title: "Report whether the highest governance body is responsible for reviewing and approving the reported information, including the organization’s material topics",
+                enum: ["Yes", "No"],
+            }
+        },
+        dependencies: {
+            Q1: {
+                oneOf: [
+                    {
+                        properties: {
+                            Q1: {
+                                enum: ["Yes"],
+                            },
+                            Q2: {
+                                type: "string",
+                                title: "If yes, please describe the process for reviewing and approving the information",
+                            },
                         },
                     },
-                },
-            ],
+                    {
+                        properties: {
+                            Q1: {
+                                enum: ["No"],
+                            },
+                            Q3: {
+                                type: "string",
+                                title: "If no, explain the reason",
+                            },
+                        },
+                    },
+                ],
+            },
         },
     },
 };
 
 const uiSchema = {
+    items: {
     "ui:order": ["Q1", "Q2", "Q3"],
     Q1: {
         "ui:title": "Report whether the highest governance body is responsible for reviewing and approving the reported information, including the organization’s material topics",
@@ -93,10 +96,17 @@ const uiSchema = {
             label: false,
         },
     },
+    "ui:options": {
+            orderable: false, // Prevent reordering of items
+            addable: false, // Prevent adding items from UI
+            removable: false, // Prevent removing items from UI
+            layout: "horizontal", // Set layout to horizontal
+        },
+    },
 };
 
 const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
-    const [formData, setFormData] = useState({});
+    const [formData, setFormData] = useState([{}]);
     const [r_schema, setRemoteSchema] = useState({});
     const [r_ui_schema, setRemoteUiSchema] = useState({});
     const [loopen, setLoOpen] = useState(false);
@@ -110,15 +120,14 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
     const LoaderClose = () => {
         setLoOpen(false);
     };
-
     const handleChange = (e) => {
-        let newFormData = { ...e.formData };
+        let newFormData = { ...e.formData[0] };
         if (newFormData.Q1 === "Yes") {
             newFormData.Q3 = "";
         } else if (newFormData.Q1 === "No") {
             newFormData.Q2 = "";
         }
-        setFormData(newFormData);
+        setFormData([newFormData]);
     };
 
     const updateFormData = async () => {
@@ -177,8 +186,8 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
     const loadFormData = async () => {
         LoaderOpen();
-        setFormData({});
-        const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+        setFormData([{}]);
+        const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
         try {
             const response = await axiosInstance.get(url);
             console.log("API called successfully:", response.data);
@@ -186,7 +195,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
             setRemoteUiSchema(response.data.form[0].ui_schema);
             setFormData(response.data.form_data[0].data);
         } catch (error) {
-            setFormData({});
+            setFormData([{}]);
         } finally {
             LoaderClose();
         }
@@ -204,7 +213,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // updateFormData();
+        updateFormData();
         console.log("test form data", formData);
     };
 
@@ -241,8 +250,8 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
                 </div>
                 <div className="mx-2">
                     <Form
-                        schema={schema}
-                        uiSchema={uiSchema}
+                        schema={r_schema}
+                        uiSchema={r_ui_schema}
                         formData={formData}
                         onChange={handleChange}
                         validator={validator}
@@ -253,7 +262,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
                     <button type="button"
                         className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year ? 'cursor-not-allowed' : ''}`}
                         onClick={handleSubmit}
-                        // disabled={!selectedOrg || !year}
+                        disabled={!selectedOrg || !year}
                         >
                         Submit
                     </button>

@@ -205,7 +205,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
                     <button type="button"
                         className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year ? 'cursor-not-allowed' : ''}`}
                         onClick={handleSubmit}
-                    // disabled={!selectedOrg || !year}
+                    disabled={!selectedOrg || !year}
                     >
                         Submit
                     </button>

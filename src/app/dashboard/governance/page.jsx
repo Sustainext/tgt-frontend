@@ -6,6 +6,7 @@ import BoardInfo from "./Board-info/structure/page";
 import ManagementImpact from './Board-Involvement-Sustainability/Management-Impact/page'
 import DelegationResponsibility from "./Board-Involvement-Sustainability/Delegation-Responsibility/page"
 import SustainabilityReporting from "./Board-Involvement-Sustainability/Sustainability-Reporting/page"
+import ConflictInterest from "./Governances/Conflict-Interest/page"
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -585,6 +586,12 @@ const Governance = () => {
                   <div><SustainabilityReporting/> </div>
                 </>
               )}
+                 {activeStep === 7 && (
+                <>
+                  <div><ConflictInterest/> </div>
+                </>
+              )}
+
             </div>
             <div>
               <div className="w-full mb-5">

@@ -8,7 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import GovernanceHeader2 from "../../GovernanceHeader2";
 import { Socialdata } from "@/app/dashboard/Social/data/socialgriinfo"
 import Screen1 from "./screen1"
-const SustainabilityReporting = () => {
+import Screen2 from "./screen2"
+const ConflictInterest = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState(2024);
@@ -49,7 +50,7 @@ const SustainabilityReporting = () => {
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] font-bold pt-1">
-                  Sustainability Reporting
+                  Conflict of Interest
                   </p>
                 </div>
               </div>
@@ -61,18 +62,23 @@ const SustainabilityReporting = () => {
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
                 onClick={() => toggleDrawer("1")}
               >
-                GRI 2 - 14
+                GRI 2 - 15
               </button>
-
+              <button
+                className="text-[#fff] bg-[#00558A] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                onClick={() => toggleDrawer("4")}
+              >
+                SDG 16
+              </button>
             </div>
           </div>
         </div>
 
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Role of highest governance body in sustainability reporting
+          Conflicts of Interest
             <MdInfoOutline data-tooltip-id={`tooltip-$e10`}
-              data-tooltip-content="This section documents the data corresponding to  the role of the highest governance bodyin sustainability reporting." className="mt-1.5 ml-2 text-[14px]" />
+              data-tooltip-content="This section documents the data corresponding to the conflicts of interest." className="mt-1.5 ml-2 text-[14px]" />
             <ReactTooltip id={`tooltip-$e10`} place="top" effect="solid" style={{
               width: "290px", backgroundColor: "#000",
               color: "white",
@@ -118,7 +124,7 @@ const SustainabilityReporting = () => {
         year={year}
         setYear={setYear}
       />
-    <Screen1
+      <Screen1
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         location={location}
@@ -126,8 +132,14 @@ const SustainabilityReporting = () => {
         month={activeMonth}
       />
 
-
+           <Screen2
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        location={location}
+        year={year}
+        month={activeMonth}
+      />
     </>
   );
 };
-export default SustainabilityReporting;
+export default ConflictInterest;
