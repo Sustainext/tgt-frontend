@@ -6,6 +6,7 @@ import BoardInfo from "./Board-info/structure/page";
 import ManagementImpact from './Board-Involvement-Sustainability/Management-Impact/page'
 import DelegationResponsibility from "./Board-Involvement-Sustainability/Delegation-Responsibility/page"
 import SustainabilityReporting from "./Board-Involvement-Sustainability/Sustainability-Reporting/page"
+import ConflictInterest from "./Governances/Conflict-Interest/page"
 import NominationAndSelection from "./Board-info/Nomination-and-selection/page";
 import ChairOfBoard from "./Board-info/Chair-of-board/page";
 import PerformanceEvaluations from "./Performance-renumerations/Performance-evaluations/page";
@@ -890,6 +891,12 @@ const Governance = () => {
                   <div><SustainabilityReporting/> </div>
                 </>
               )}
+                 {activeStep === 7 && (
+                <>
+                  <div><ConflictInterest/> </div>
+                </>
+              )}
+
               {activeStep === 10 && (
                 <>
                   <div><PerformanceEvaluations/> </div>

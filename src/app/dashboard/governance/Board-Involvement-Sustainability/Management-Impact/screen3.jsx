@@ -16,7 +16,7 @@ const widgets = {
     inputWidget: inputWidget2,
 };
 
-const view_path = "gri-social-product_labeling-417-1a-required";
+const view_path = "gri-governance-management_of_impact-2-12-c-effectiveness";
 const client_id = 1;
 const user_id = 1;
 
@@ -138,7 +138,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
     const loadFormData = async () => {
         LoaderOpen();
         setFormData([{}]);
-        const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+        const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
         try {
             const response = await axiosInstance.get(url);
             console.log("API called successfully:", response.data);
@@ -164,7 +164,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // updateFormData();
+        updateFormData();
         console.log("test form data", formData);
     };
 
@@ -181,8 +181,8 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
                 <div className="mx-2 flex">
                     <div className="w-[80%] relative">
                         <Form
-                            schema={schema}
-                            uiSchema={uiSchema}
+                            schema={r_schema}
+                            uiSchema={r_ui_schema}
                             formData={formData}
                             onChange={handleChange}
                             validator={validator}
@@ -205,7 +205,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
                     <button type="button"
                         className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year ? 'cursor-not-allowed' : ''}`}
                         onClick={handleSubmit}
-                    // disabled={!selectedOrg || !year}
+                    disabled={!selectedOrg || !year}
                     >
                         Submit
                     </button>

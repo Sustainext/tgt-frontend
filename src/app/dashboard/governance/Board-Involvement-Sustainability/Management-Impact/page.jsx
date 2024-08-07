@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import GovernanceHeader2 from "../../GovernanceHeader2";
 import { Socialdata } from "@/app/dashboard/Social/data/socialgriinfo"
 import Screen1 from "./screen1"
@@ -40,6 +42,7 @@ const ManagementImpact = () => {
 
   return (
     <>
+      <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">

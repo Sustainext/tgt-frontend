@@ -18,7 +18,7 @@ const widgets = {
 
 };
 
-const view_path = 'gri-social-impacts_and_actions-414-2b-number_of_suppliers'
+const view_path = 'gri-governance-management_of_impact-2-12-a-senior_executives'
 const client_id = 1
 const user_id = 1
 
@@ -140,7 +140,6 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
     };
 
     const loadFormData = async () => {
-        console.log("loadFormData screen 2");
         LoaderOpen();
         setFormData(initialFormData);
         const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
@@ -215,8 +214,8 @@ statements, strategies, policies, and goals related to sustainable development."
                 </div>
                 <div className='mx-2 mb-3'>
                     <Form
-                        schema={schema}
-                        uiSchema={uiSchema}
+                        schema={r_schema}
+                        uiSchema={r_ui_schema}
                         formData={formData}
                         onChange={handleChange}
                         validator={validator}

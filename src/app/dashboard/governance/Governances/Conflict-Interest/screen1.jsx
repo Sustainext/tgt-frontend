@@ -6,7 +6,6 @@ import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import RadioWidget2 from "../../../../shared/widgets/Input/radioWidget2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
@@ -15,10 +14,9 @@ import axiosInstance from '@/app/utils/axiosMiddleware'
 
 const widgets = {
     inputWidget: inputWidget2,
-    RadioWidget2: RadioWidget2,
 };
 
-const view_path = "gri-governance-delegation-2-13-a-managing";
+const view_path = "gri-governance-management_of_impact-2-12-c-effectiveness";
 const client_id = 1;
 const user_id = 1;
 
@@ -29,114 +27,22 @@ const schema = {
         properties: {
             Q1: {
                 type: "string",
-                title: "Describe how the highest governance body delegates responsibility for managing the organization's impacts on economy, environment and people:",
+                title: "Describe the processes for the highest governance body to ensure that conflicts of interest are prevented and mitigated",
 
             },
-            Q2: {
-                type: "string",
-                title: "Whether it has appointed any senior executives with responsibility for the management of impacts",
-                enum: ["Yes", "No"],
-            },
-            Q4: {
-                type: "string",
-                title: "Whether it has delegated responsibility for the management of impacts to other employees",
-                enum: ["Yes", "No"],
-            },
+
         },
-        dependencies: {
-            Q2: {
-                oneOf: [
-                    {
-                        properties: {
-                            Q2: {
-                                enum: ["Yes"],
-                            },
-                            Q3: {
-                                type: "string",
-                                title: "",
-                            },
 
-
-                        },
-                    },
-                ],
-            },
-            Q4: {
-                oneOf: [
-                    {
-                        properties: {
-                            Q4: {
-                                enum: ["Yes"],
-                            },
-                            Q5: {
-                                type: "string",
-                                title: "",
-                            },
-
-
-                        },
-                    },
-                ],
-            },
-        },
     },
 };
 
 const uiSchema = {
     items: {
-        "ui:order": ["Q1", "Q2", "Q3", "Q4", "Q5"],
+        "ui:order": ["Q1"],
         Q1: {
-            "ui:title": "Describe how the highest governance body delegates responsibility for managing the organization's impacts on economy, environment and people:",
+            "ui:title": "Describe the processes for the highest governance body to ensure that conflicts of interest are prevented and mitigated",
             "ui:tooltip":
-                "Due diligence:process to identify, prevent, mitigate, and account for how the organization addresses its actual and potential negative impacts",
-            "ui:tooltipdisplay": "none",
-            "ui:widget": "inputWidget",
-            "ui:horizontal": true,
-            "ui:options": {
-                label: false,
-            },
-        },
-        Q2: {
-            "ui:title":
-                "Whether it has appointed any senior executives with responsibility for the management of impacts",
-            "ui:tooltip":
-                "Indicate whether highest governance body has appointed any senior executives with responsibility for the management of impacts. If yes then provide an explanation. ",
-            "ui:tooltipdisplay": "block",
-            "ui:widget": "RadioWidget2",
-            "ui:horizontal": true,
-            "ui:options": {
-                label: false,
-            },
-        },
-        Q3: {
-            "ui:title":
-                "",
-            "ui:tooltip":
-                "Provide an explanation of how the highest governance body engages with stakeholders to support these processes? ",
-            "ui:tooltipdisplay": "none",
-            "ui:widget": "inputWidget",
-            "ui:horizontal": true,
-            "ui:options": {
-                label: false,
-            },
-        },
-        Q4: {
-            "ui:title":
-                "Whether it has delegated responsibility for the management of impacts to other employees",
-            "ui:tooltip":
-                "Indicate whether highest governance body has delegated responsibility for the management of impacts to other employees. If yes then provide an explanation.",
-            "ui:tooltipdisplay": "block",
-            "ui:widget": "RadioWidget2",
-            "ui:horizontal": true,
-            "ui:options": {
-                label: false,
-            },
-        },
-        Q5: {
-            "ui:title":
-                "If yes, ",
-            "ui:tooltip":
-                "Provide an explanation of how the highest governance body engages with stakeholders to support these processes?",
+                "Conflict of interest: situation where an individual is confronted with choosing between the requirements of their function in the organization and their other personal or professional interests or responsibilities",
             "ui:tooltipdisplay": "block",
             "ui:widget": "inputWidget",
             "ui:horizontal": true,
@@ -144,6 +50,8 @@ const uiSchema = {
                 label: false,
             },
         },
+
+
         "ui:options": {
             orderable: false, // Prevent reordering of items
             addable: false, // Prevent adding items from UI
@@ -170,14 +78,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
     };
 
     const handleChange = (e) => {
-        let newFormData = { ...e.formData[0] };
-        if (newFormData.Q2 === "No") {
-            newFormData.Q3 = "";
-        }
-        if (newFormData.Q4 === "No") {
-            newFormData.Q5 = "";
-        }
-        setFormData([newFormData]);
+        setFormData(e.formData);
     };
 
     const updateFormData = async () => {
@@ -269,41 +170,54 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
     return (
         <>
-            <div
-                className="mx-2  p-3 mb-6 pb-6 rounded-md"
-                style={{
-                    boxShadow:
-                        "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
-                }}
-            >
+             <div className="mx-2 p-3 mb-6 pb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+                <div className='mb-4 flex'>
+                    <div className='w-[80%]'>
+                        <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold mb-2'>
+                        Highest governance body processes to prevent conflict of interest
+                            <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
+                                data-tooltip-content="This section documents the data corresponding to the processes for the highest governance body to ensure that conflicts of
+interest are prevented and mitigated." className="mt-1.5 ml-2 text-[14px]" />
+                            <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
+                                width: "290px", backgroundColor: "#000",
+                                color: "white",
+                                fontSize: "12px",
+                                boxShadow: 3,
+                                borderRadius: "8px",
+                                textAlign: 'left',
+                            }}>
+                            </ReactTooltip>
+                        </h2>
 
-                <div className="mx-2 flex">
-                    <div className="w-[92%] relative">
-                        <Form
-                            schema={r_schema}
-                            uiSchema={r_ui_schema}
-                            formData={formData}
-                            onChange={handleChange}
-                            validator={validator}
-                            widgets={widgets}
-                        />
+
                     </div>
-                    <div className={`${open ? "w-[8%]" : "w-[8%]"}`}>
-                        <div className={`flex float-end`}>
-                            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 ">
-                                <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                                    GRI 2-13-a
-                                </p>
-                            </div>
+
+                    <div className='w-[20%]'>
+                        <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
+                            <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
+                                GRI 2-15-a
+                            </p>
                         </div>
                     </div>
-
                 </div>
-                <div className="mb-6">
+                <div className='mx-2 mb-3'>
+                    <Form
+                        schema={schema}
+                        uiSchema={uiSchema}
+                        formData={formData}
+                        onChange={handleChange}
+                        validator={validator}
+                        widgets={widgets}
+
+                    />
+                </div>
+
+                <div className='mb-6'>
                     <button type="button"
-                        className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year ? 'cursor-not-allowed' : ''}`}
+                        className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year ? "cursor-not-allowed" : ""
+                            }`}
                         onClick={handleSubmit}
-                    disabled={!selectedOrg || !year}
+                        disabled={!selectedOrg || !year}
                     >
                         Submit
                     </button>
