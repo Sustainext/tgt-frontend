@@ -10,7 +10,6 @@ import ConflictInterest from "./Governances/Conflict-Interest/page"
 import NominationAndSelection from "./Board-info/Nomination-and-selection/page";
 import ChairOfBoard from "./Board-info/Chair-of-board/page";
 import Criticalconcerns from "./Governances/Critical-Concerns/page"
-import PerformanceEvaluations from "./Performance-renumerations/Performance-evaluations/page";
 
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -633,7 +632,7 @@ const Governance = () => {
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(10)}
                     >
-                      {isStepCompleted(8) ? (
+                      {isStepCompleted(10) ? (
                         <>
                           <div className="before:bg-sky-800  font-bold">
                             <svg
@@ -669,7 +668,7 @@ const Governance = () => {
                         {isStepCompleted(10) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Critical Concerns
+                            Performance Evaluations
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
