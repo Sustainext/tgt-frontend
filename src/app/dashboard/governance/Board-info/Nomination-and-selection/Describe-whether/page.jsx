@@ -4,7 +4,7 @@ import validator from '@rjsf/validator-ajv8';
 import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
-import GovernancetableWidget from '../../../../shared/widgets/Governance/governancetableWidget'
+import GovernancetableWidget from '../../../../../shared/widgets/Governance/governancetableWidget'
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -51,7 +51,7 @@ const uiSchema = {
     },
 };
 
-const Screen2 = ({ location, year, month }) => {
+const Describewhether = ({ location, year, month }) => {
     const { open } = GlobalState();
     const initialFormData = [
         { Whethertakenintoconsideration: "", How: "" },
@@ -64,13 +64,7 @@ const Screen2 = ({ location, year, month }) => {
     const [r_ui_schema, setRemoteUiSchema] = useState({})
     const [loopen, setLoOpen] = useState(false);
     const toastShown = useRef(false);
-    const getAuthToken = () => {
-        if (typeof window !== 'undefined') {
-            return localStorage.getItem('token')?.replace(/"/g, "");
-        }
-        return '';
-    };
-    const token = getAuthToken();
+
     const LoaderOpen = () => {
         setLoOpen(true);
     };
@@ -211,7 +205,8 @@ const Screen2 = ({ location, year, month }) => {
                 <button type="button"
                         className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? 'cursor-not-allowed' : ''}`}
                         onClick={handleSubmit}
-                        disabled={!location || !year}>
+                        // disabled={!location || !year}
+                        >
                         Submit
                     </button>
                 </div>
@@ -232,4 +227,4 @@ const Screen2 = ({ location, year, month }) => {
     );
 };
 
-export default Screen2;
+export default Describewhether;

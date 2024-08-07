@@ -14,7 +14,7 @@ const widgets = {
   GovernanceRowWidget: GovernanceRowWidget,
 };
 
-const view_path = "";
+const view_path = "gri-governance-structure-2-9-c-composition";
 const client_id = 1;
 const user_id = 1;
 
@@ -151,6 +151,7 @@ const CompositionOfHighestGovernanceBody = ({
   const toastShown = useRef(false);
   const LoaderOpen = () => setLoOpen(true);
   const LoaderClose = () => setLoOpen(false);
+
   const updateFormData = async () => {
     LoaderOpen();
     const data = {
@@ -158,9 +159,9 @@ const CompositionOfHighestGovernanceBody = ({
       user_id,
       path: view_path,
       form_data: formData,
-      selectedOrg,
+      organisation: selectedOrg,
+      corporate: selectedCorp,
       year,
-      month,
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -200,7 +201,7 @@ const CompositionOfHighestGovernanceBody = ({
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&selectedOrg=${selectedOrg}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&corporate=${selectedCorp}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -227,7 +228,7 @@ const CompositionOfHighestGovernanceBody = ({
 
   const handleSubmit = ({ formData }) => {
     console.log("Form data:", formData);
-    // updateFormData();
+    updateFormData();
   };
 
   const handleChange = (e) => {
@@ -278,8 +279,8 @@ const CompositionOfHighestGovernanceBody = ({
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             onSubmit={handleSubmit}

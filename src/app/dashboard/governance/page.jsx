@@ -7,6 +7,9 @@ import ManagementImpact from './Board-Involvement-Sustainability/Management-Impa
 import DelegationResponsibility from "./Board-Involvement-Sustainability/Delegation-Responsibility/page"
 import SustainabilityReporting from "./Board-Involvement-Sustainability/Sustainability-Reporting/page"
 import ConflictInterest from "./Governances/Conflict-Interest/page"
+import NominationAndSelection from "./Board-info/Nomination-and-selection/page";
+import ChairOfBoard from "./Board-info/Chair-of-board/page";
+
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -569,6 +572,16 @@ const Governance = () => {
               {activeStep === 1 && (
                 <>
                   <div><BoardInfo/> </div>
+                </>
+              )}
+              {activeStep === 2 && (
+                <>
+                  <div><NominationAndSelection/> </div>
+                </>
+              )}
+              {activeStep === 3 && (
+                <>
+                  <div><ChairOfBoard/> </div>
                 </>
               )}
               {activeStep === 4 && (
