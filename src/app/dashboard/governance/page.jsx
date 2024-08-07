@@ -9,6 +9,7 @@ import SustainabilityReporting from "./Board-Involvement-Sustainability/Sustaina
 import ConflictInterest from "./Governances/Conflict-Interest/page"
 import NominationAndSelection from "./Board-info/Nomination-and-selection/page";
 import ChairOfBoard from "./Board-info/Chair-of-board/page";
+import Criticalconcerns from "./Governances/Critical-Concerns/page"
 
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -602,6 +603,11 @@ const Governance = () => {
                  {activeStep === 7 && (
                 <>
                   <div><ConflictInterest/> </div>
+                </>
+              )}
+                    {activeStep === 8 && (
+                <>
+                  <div><Criticalconcerns/> </div>
                 </>
               )}
 

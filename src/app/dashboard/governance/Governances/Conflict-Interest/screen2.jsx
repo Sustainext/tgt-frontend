@@ -37,7 +37,7 @@ const uiSchema = {
     'ui:options': {
         titles: [
             { key: "Criteria", title: "Conflict of interest relating to:", type:"number", display:"none" },
-            { key: "Disclosed", title: "Whether taken into consideration?", type:"number",display:"block"  },
+            { key: "Disclosed", title: "Disclosed?", type:"number",display:"block",tooltip:"Conflict of interest: situation where an individual is confronted with choosing between the requirements of their function in the organization and their other personal or professional interests or responsibilities"  },
 
 
         ],
@@ -182,14 +182,15 @@ const Screen2 = ({ location, year, month }) => {
                 <div className='mb-4 flex'>
                     <div className='w-[80%] relative'>
                         <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold mb-2'>
-                        Describe whether and how the following are taken into consideration for nomination and selection of highest governance body members:
+                        Report whether conflicts of interest are disclosed to stakeholders, including, at a minimum,
+                        conflicts of interest relating to:-
 
                         </h2>
                     </div>
                     <div className='w-[20%]'>
                         <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
                             <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                                GRI 2-10-b
+                                GRI 2-15-b
                             </p>
                         </div>
 
