@@ -84,10 +84,11 @@ const Describewhether = ({ selectedOrg,selectedCorp, year, month }) => {
             user_id: user_id,
             path: view_path,
             form_data: formData,
-            location,
+            organisation: selectedOrg,
+            corporate: selectedCorp,
             year,
-            month
-        }
+            month,
+          };
 
         const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
         try {

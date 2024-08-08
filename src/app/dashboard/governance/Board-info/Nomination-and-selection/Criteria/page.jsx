@@ -80,7 +80,8 @@ const Criteria = ({ selectedOrg, selectedCorp, year, month }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      selectedOrg,
+      organisation: selectedOrg,
+      corporate: selectedCorp,
       year,
       month,
     };
