@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import Screenone from "./screen1";
 import Screentwo from "./screen2";
 import Screenthree from "./screen3";
-// import Screenfour from "./screen4";
-// import Screenfive from "./screen5";
+import Screenfour from "./screen4";
+import Screenfive from "./screen5";
 // import Screensix from "./screen6";
 // import Screenseven from "./screen7";
 import { MdOutlineNavigateNext,MdOutlineNavigateBefore  } from "react-icons/md";
@@ -41,13 +41,13 @@ const Identifyinginformation = ({ }) => {
         {currentStep === 3 && (
           <Screenthree nextStep={nextStep} prevStep={prevStep} />
         )}
-         {/*  {currentStep === 4 && (
+         {currentStep === 4 && (
           <Screenfour nextStep={nextStep} prevStep={prevStep} />
         )}
-        {currentStep === 5 && (
+    {currentStep === 5 && (
           <Screenfive nextStep={nextStep} prevStep={prevStep} />
         )}
-        {currentStep === 6 && (
+            {/*  {currentStep === 6 && (
           <Screensix nextStep={nextStep} prevStep={prevStep} />
         )}
         {currentStep === 7 && (
