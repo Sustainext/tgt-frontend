@@ -9,12 +9,13 @@ import "react-tooltip/dist/react-tooltip.css";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Oval } from "react-loader-spinner";
+import axiosInstance from "@/app/utils/axiosMiddleware";
 
 const widgets = {
   inputWidget: InputWidget2,
 };
 
-const view_path = "";
+const view_path = "gri-governance-nomination-2-10-b-criteria";
 const client_id = 1;
 const user_id = 1;
 
@@ -59,28 +60,17 @@ const Criteria = ({ selectedOrg, selectedCorp, year, month }) => {
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
+
   const LoaderOpen = () => {
     setLoOpen(true);
   };
+
   const LoaderClose = () => {
     setLoOpen(false);
   };
 
   const handleChange = (e) => {
     setFormData(e.formData);
-  };
-
-  let axiosConfig = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
   };
 
   const updateFormData = async () => {
@@ -90,14 +80,14 @@ const Criteria = ({ selectedOrg, selectedCorp, year, month }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      selectedOrg,
+      organisation: selectedOrg,
+      corporate: selectedCorp,
       year,
-      month,
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
-      const response = await axios.post(url, data, axiosConfig);
+      const response = await axiosInstance.post(url, data);
       if (response.status === 200) {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -142,9 +132,9 @@ const Criteria = ({ selectedOrg, selectedCorp, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&selectedOrg=${selectedOrg}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&corporate=${selectedCorp}&year=${year}`;
     try {
-      const response = await axios.get(url, axiosConfig);
+      const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
@@ -170,7 +160,7 @@ const Criteria = ({ selectedOrg, selectedCorp, year, month }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form data:", formData);
-    // updateFormData();
+    updateFormData();
   };
 
   return (
@@ -219,8 +209,8 @@ const Criteria = ({ selectedOrg, selectedCorp, year, month }) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

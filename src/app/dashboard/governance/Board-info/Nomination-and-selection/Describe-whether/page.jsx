@@ -5,17 +5,17 @@ import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 import GovernancetableWidget from '../../../../../shared/widgets/Governance/governancetableWidget'
-import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
 import { GlobalState } from '@/Context/page';
 import axiosInstance from '@/app/utils/axiosMiddleware'
+
 const widgets = {
     TableWidget: GovernancetableWidget,
 };
 
-const view_path = 'gri-social-community_engagement-413-1a-number_of_operations'
+const view_path = 'gri-governance-nomination-2-10-b-consideration_and_selection'
 const client_id = 1
 const user_id = 1
 
@@ -51,7 +51,7 @@ const uiSchema = {
     },
 };
 
-const Describewhether = ({ location, year, month }) => {
+const Describewhether = ({ selectedOrg,selectedCorp, year, month }) => {
     const { open } = GlobalState();
     const initialFormData = [
         { Whethertakenintoconsideration: "", How: "" },
@@ -84,10 +84,10 @@ const Describewhether = ({ location, year, month }) => {
             user_id: user_id,
             path: view_path,
             form_data: formData,
-            location,
+            organisation: selectedOrg,
+            corporate: selectedCorp,
             year,
-            month
-        }
+          };
 
         const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
         try {
@@ -152,26 +152,23 @@ const Describewhether = ({ location, year, month }) => {
     };
 
 
-    // fetch backend and replace initialized forms
     useEffect(() => {
-        if (location && year && month) {
-            loadFormData();
-            toastShown.current = false; // Reset the flag when valid data is present
+        if (selectedOrg && year) {
+          loadFormData();
+          toastShown.current = false;
         } else {
-            // Only show the toast if it has not been shown already
-            if (!toastShown.current) {
-
-                toastShown.current = true; // Set the flag to true after showing the toast
-            }
+          if (!toastShown.current) {
+            toastShown.current = true;
+          }
         }
-    }, [location, year, month]); // Dependencies // React only triggers this effect if these dependencies change
+      }, [selectedOrg, year]);
 
 
 
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Form data:', formData);
-        // updateFormData()
+        updateFormData()
     };
     return (
         <>
@@ -194,8 +191,8 @@ const Describewhether = ({ location, year, month }) => {
                     </div>
                 </div>
                 <Form
-                    schema={schema}
-                    uiSchema={uiSchema}
+                    schema={r_schema}
+                    uiSchema={r_ui_schema}
                     formData={formData}
                     onChange={handleChange}
                     validator={validator}

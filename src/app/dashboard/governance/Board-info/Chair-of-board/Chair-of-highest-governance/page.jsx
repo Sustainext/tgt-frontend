@@ -18,7 +18,7 @@ const widgets = {
   TableWidget: CustomTableWidget,
 };
 
-const view_path = "gri-social-product_labeling-417-1a-required";
+const view_path = "gri-governance-chair_of_board-2-11-b-chair";
 const client_id = 1;
 const user_id = 1;
 
@@ -217,7 +217,7 @@ const ChairOfHighestGovernance = ({ selectedOrg, year, selectedCorp }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -244,7 +244,7 @@ const ChairOfHighestGovernance = ({ selectedOrg, year, selectedCorp }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // updateFormData();
+    updateFormData();
     console.log("test form data", formData);
   };
 
@@ -259,10 +259,10 @@ const ChairOfHighestGovernance = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="w-[80%]">
           <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
-            Governance Structure
+          Chair of the highest governance body
             <MdInfoOutline
               data-tooltip-id={`tooltip-$e1`}
-              data-tooltip-content="This section documents data corresponding to the organisation's governance structure, including the committees of the highest governance body."
+              data-tooltip-content="This section documents data corresponding to the chair of the highest governance body."
               className="mt-1.5 ml-2 text-[14px]"
             />
             <ReactTooltip
@@ -284,8 +284,8 @@ const ChairOfHighestGovernance = ({ selectedOrg, year, selectedCorp }) => {
         <div className="mx-2 flex">
           <div className="w-[92%] relative">
             <Form
-              schema={schema}
-              uiSchema={uiSchema}
+              schema={r_schema}
+              uiSchema={r_ui_schema}
               formData={formData}
               onChange={handleChange}
               validator={validator}
