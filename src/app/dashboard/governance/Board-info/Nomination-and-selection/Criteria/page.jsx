@@ -83,7 +83,6 @@ const Criteria = ({ selectedOrg, selectedCorp, year, month }) => {
       organisation: selectedOrg,
       corporate: selectedCorp,
       year,
-      month,
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
