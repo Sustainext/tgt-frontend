@@ -4587,4 +4587,40 @@ export const Socialdata = [
       </>,
     ],
   },
+  {
+    category: ["76"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+   GRI 2-12: Nomination and selection of the highest governance body
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+            Guidance to 2-12-b-i
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Requirement 2-12-b-i covers the role of the highest governance body in stakeholder engagement. The organization is also required to report information about stakeholder engagement under other disclosures, such as under the disclosures in section 5 of this Standard.
+The organization can describe the frequency of engagement between the highest governance body and stakeholders as well as the means of engagement. If stakeholder engagement is delegated, the organization can report to whom it is delegated and how the feedback received is provided to the highest governance body.
+            </p>
+
+
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12710&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+
 ];
