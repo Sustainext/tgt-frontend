@@ -1,4 +1,4 @@
-"use client";
+
 import React, { useState,useEffect } from 'react';
 import { MdInfoOutline } from 'react-icons/md';
 import { Tooltip as ReactTooltip } from 'react-tooltip';

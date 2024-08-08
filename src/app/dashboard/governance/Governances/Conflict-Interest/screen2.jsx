@@ -37,7 +37,7 @@ const uiSchema = {
     'ui:options': {
         titles: [
             { key: "Criteria", title: "Conflict of interest relating to:", type:"number", display:"none" },
-            { key: "Disclosed", title: "Disclosed?", type:"number",display:"block",tooltip:"Conflict of interest: situation where an individual is confronted with choosing between the requirements of their function in the organization and their other personal or professional interests or responsibilities"  },
+            { key: "Disclosed", title: "Disclosed?", type:"number",display:"block",tooltip:"Indicate whether the given conflict of interest are disclosed to stakeholders."  },
 
 
         ],
