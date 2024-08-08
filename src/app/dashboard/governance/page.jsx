@@ -1007,65 +1007,6 @@ const Governance = () => {
                       </div>
                     </li>
                   </AccordionItem>
-                  <AccordionItem title="Managing Concerns">
-                  <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(18)}
-                    >
-                      {isStepCompleted(18) ? (
-                        <>
-                          <div className="before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${
-                              activeStep === 13
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(18) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Advice & Concerns
-                            </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
-                          </>
-                        ) : (
-                          <p
-                            className={`${
-                              activeStep === 18
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[12px]  text-gray-600"
-                            } `}
-                          >
-                            Advice & Concerns
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                  </AccordionItem>
                   <AccordionItem title="Sustainability Strategy">
                   <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
