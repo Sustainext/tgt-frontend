@@ -67,7 +67,7 @@ const ManagementImpact = () => {
               </button>
               <button
                 className="text-[#fff] bg-[#00558A] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("4")}
+                onClick={() => toggleDrawer("29")}
               >
                 SDG 16
               </button>
