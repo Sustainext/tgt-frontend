@@ -3,18 +3,21 @@ import React, { useState, useEffect } from "react";
 import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import Socialheader from "../../socialheader";
-import NewEmployeeHire from "./New-Employee-Hire/page";
-import Employeeturnover from "./Employee-turnover/page";
-// import {Socialdata} from "../../data/socialgriinfo"
-import { Socialdata } from "../../data/socialgriinfo";
-const EmployeeHiresTurnover = () => {
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import GovernanceHeader2 from "../../GovernanceHeader2";
+import { Socialdata } from "@/app/dashboard/Social/data/socialgriinfo"
+import Screen1 from "./screen1"
+import Screen2 from "./screen2"
+const DelegationResponsibility = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState(2024);
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedOrg, setSelectedOrg] = useState("");
+  const [selectedCorp, setSelectedCorp] = useState("");
 
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
@@ -38,6 +41,7 @@ const EmployeeHiresTurnover = () => {
 
   return (
     <>
+       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
@@ -46,7 +50,7 @@ const EmployeeHiresTurnover = () => {
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] font-bold pt-1">
-                    Structure
+                  Delegation of Responsibility
                   </p>
                 </div>
               </div>
@@ -58,54 +62,32 @@ const EmployeeHiresTurnover = () => {
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
                 onClick={() => toggleDrawer("1")}
               >
-                GRI 401 - 1
+                GRI 2 - 13
               </button>
-              <button
-                className="text-[#fff] bg-orange-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("2")}
-              >
-                SDG 5
-              </button>
-              <button
-                className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("3")}
-              >
-                SDG 8
-              </button>
-              <button
-                className="text-[#fff] bg-pink-500 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("4")}
-              >
-                SDG 10
-              </button>
+
             </div>
           </div>
         </div>
 
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-            New employee hires and employee turnover
-            {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
-                            data-tooltip-content="This section documents data corresponding to total water
-                            withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[14px]" />
-                        <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
-                            width: "290px", backgroundColor: "#000",
-                            color: "white",
-                            fontSize: "12px",
-                            boxShadow: 3,
-                            borderRadius: "8px",
-                            textAlign: 'left',
-                        }}>
+          Delegation of responsibility for managing impacts
+            <MdInfoOutline data-tooltip-id={`tooltip-$e10`}
+              data-tooltip-content="This section documents the data corresponding to  the delegation of responsibility for managing impacts. " className="mt-1.5 ml-2 text-[14px]" />
+            <ReactTooltip id={`tooltip-$e10`} place="top" effect="solid" style={{
+              width: "290px", backgroundColor: "#000",
+              color: "white",
+              fontSize: "12px",
+              boxShadow: 3,
+              borderRadius: "8px",
+              textAlign: 'left',
+            }}>
 
-                        </ReactTooltip> */}
+            </ReactTooltip>
           </h6>
         </div>
         <div
-          className={`${
-            isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"
-          }
-fixed right-[51px]  w-[340px] h-full bg-white  rounded-md
-transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
+          className={`${isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"} fixed right-[51px]  w-[340px] h-full bg-white  rounded-md transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         >
           {data &&
             data.map((program) => (
@@ -127,32 +109,32 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
             ))}
         </div>
       </div>
-      <Socialheader
+      <GovernanceHeader2
         activeMonth={activeMonth}
         setActiveMonth={setActiveMonth}
-        location={location}
-        setLocation={setLocation}
+        selectedOrg={selectedOrg}
+        setSelectedOrg={setSelectedOrg}
+        selectedCorp={selectedCorp}
+        setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
       />
-      <p className="mt-6 mx-4 text-[12px] mb-3">
-        {" "}
-        Please ensure that data added in this section corresponds to the
-        location selected above
-      </p>
-      <NewEmployeeHire
+      <Screen1
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
         location={location}
         year={year}
         month={activeMonth}
-        activeMonth={activeMonth}
       />
-      <Employeeturnover
+      <Screen2
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
         location={location}
         year={year}
         month={activeMonth}
-        activeMonth={activeMonth}
       />
+
     </>
   );
 };
-export default EmployeeHiresTurnover;
+export default DelegationResponsibility;

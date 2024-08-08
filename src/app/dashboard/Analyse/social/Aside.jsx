@@ -138,7 +138,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
           >
             <span className="mr-8 text-left">Customer Health and Safety</span>
           </button>
-          <button
+          {/* <button
             className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
               activeTab === "Tab13"
                 ? "text-[#007EEF] "
@@ -147,7 +147,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
             onClick={() => handleTabClick("Tab13")}
           >
             <span className="mr-8 text-left">Marketing and Labeling</span>
-          </button>
+          </button> */}
           <button
             className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
               activeTab === "Tab14"
