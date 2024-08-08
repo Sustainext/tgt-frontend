@@ -202,7 +202,7 @@ const ActionsTaken = ({ selectedOrg, year, selectedCorp }) => {
           <div className="w-[20%]">
             <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
               <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-18-a
+                GRI 2-18-c
               </p>
             </div>
           </div>
