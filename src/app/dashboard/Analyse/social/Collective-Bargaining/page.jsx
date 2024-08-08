@@ -277,11 +277,11 @@ const AnalyseCollectiveBargaining = ({ isBoxOpen }) => {
               >
                 <div className="flex justify-between items-center mb-2">
                   <p>
-                    Average hours of training provided to employees
+                  Operations where workers' freedom of association or collective bargaining is at risk
                   </p>
                   <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                     <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                      GRI 404-1a
+                      GRI 407-1a
                     </div>
                   </div>
                 </div>
@@ -297,11 +297,11 @@ const AnalyseCollectiveBargaining = ({ isBoxOpen }) => {
               >
                 <div className="flex justify-between items-center mb-2">
                   <p>
-                    Percentage of employees receiving regular performance and career development reviews
+                  Suppliers in which the right to freedom of association or collective bargaining may be at risk
                   </p>
                   <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                     <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                      GRI 404-3a
+                      GRI 407-1a
                     </div>
                   </div>
                 </div>
