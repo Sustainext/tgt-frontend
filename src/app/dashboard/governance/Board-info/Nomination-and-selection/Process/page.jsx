@@ -6,7 +6,6 @@ import InputWidget5 from "../../../../../shared/widgets/Input/InputWidget5";
 import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from '@/app/utils/axiosMiddleware'
@@ -80,7 +79,8 @@ const Process = ({ selectedOrg, selectedCorp, year, month }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      selectedOrg,
+      organisation: selectedOrg,
+      corporate: selectedCorp,
       year,
       month,
     };

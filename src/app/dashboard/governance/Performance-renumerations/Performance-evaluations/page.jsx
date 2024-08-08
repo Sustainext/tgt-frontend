@@ -60,19 +60,7 @@ const PerformanceEvaluations = () => {
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
                 onClick={() => toggleDrawer("1")}
               >
-                GRI 2 - 9
-              </button>
-              <button
-                className="text-[#fff] bg-orange-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("2")}
-              >
-                SDG 5
-              </button>
-              <button
-                className="text-[#fff] bg-pink-500 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("4")}
-              >
-                SDG 16
+                GRI 2 - 18
               </button>
             </div>
           </div>

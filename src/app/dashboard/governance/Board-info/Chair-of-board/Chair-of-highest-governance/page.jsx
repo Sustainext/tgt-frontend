@@ -259,10 +259,10 @@ const ChairOfHighestGovernance = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="w-[80%]">
           <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
-            Governance Structure
+          Chair of the highest governance body
             <MdInfoOutline
               data-tooltip-id={`tooltip-$e1`}
-              data-tooltip-content="This section documents data corresponding to the organisation's governance structure, including the committees of the highest governance body."
+              data-tooltip-content="This section documents data corresponding to the chair of the highest governance body."
               className="mt-1.5 ml-2 text-[14px]"
             />
             <ReactTooltip
