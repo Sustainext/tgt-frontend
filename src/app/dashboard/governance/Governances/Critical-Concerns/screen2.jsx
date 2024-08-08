@@ -14,10 +14,10 @@ import axiosInstance from '@/app/utils/axiosMiddleware'
 import RadioWidget2 from "../../../../shared/widgets/Input/radioWidget2";
 const widgets = {
     inputWidget: inputWidget2,
-    RadioWidget2:RadioWidget2,
+    RadioWidget2: RadioWidget2,
 };
 
-const view_path = "gri-governance-management_of_impact-2-12-c-effectiveness";
+const view_path = "gri-governance-critical_concerns-2-16-b-report";
 const client_id = 1;
 const user_id = 1;
 
@@ -44,7 +44,7 @@ const schema = {
 
 const uiSchema = {
     items: {
-        "ui:order": ["Q1","Q2"],
+        "ui:order": ["Q1", "Q2"],
         Q1: {
             "ui:title": "Report the total number of critical concerns that were communicated to the highest governance body",
             "ui:tooltip":
@@ -186,7 +186,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
 
     return (
         <>
-             <div className="mx-2 p-3 mb-6 pb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+            <div className="mx-2 p-3 mb-6 pb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
                 <div className='mb-4 flex'>
                     <div className='w-[80%]'>
                         {/* <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold mb-2'>
@@ -218,8 +218,8 @@ interest are prevented and mitigated." className="mt-1.5 ml-2 text-[14px]" />
                 </div>
                 <div className='mx-2 mb-3'>
                     <Form
-                        schema={schema}
-                        uiSchema={uiSchema}
+                        schema={r_schema}
+                        uiSchema={r_ui_schema}
                         formData={formData}
                         onChange={handleChange}
                         validator={validator}
@@ -233,7 +233,7 @@ interest are prevented and mitigated." className="mt-1.5 ml-2 text-[14px]" />
                         className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year ? "cursor-not-allowed" : ""
                             }`}
                         onClick={handleSubmit}
-                        // disabled={!selectedOrg || !year}
+                    // disabled={!selectedOrg || !year}
                     >
                         Submit
                     </button>

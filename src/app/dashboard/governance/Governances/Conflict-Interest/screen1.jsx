@@ -16,7 +16,7 @@ const widgets = {
     inputWidget: inputWidget2,
 };
 
-const view_path = "gri-governance-management_of_impact-2-12-c-effectiveness";
+const view_path = "gri-governance-conflict_of_interest-2-15-a-highest";
 const client_id = 1;
 const user_id = 1;
 
@@ -170,11 +170,11 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
     return (
         <>
-             <div className="mx-2 p-3 mb-6 pb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+            <div className="mx-2 p-3 mb-6 pb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
                 <div className='mb-4 flex'>
                     <div className='w-[80%]'>
                         <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold mb-2'>
-                        Highest governance body processes to prevent conflict of interest
+                            Highest governance body processes to prevent conflict of interest
                             <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                                 data-tooltip-content="This section documents the data corresponding to the processes for the highest governance body to ensure that conflicts of
 interest are prevented and mitigated." className="mt-1.5 ml-2 text-[14px]" />
@@ -202,8 +202,8 @@ interest are prevented and mitigated." className="mt-1.5 ml-2 text-[14px]" />
                 </div>
                 <div className='mx-2 mb-3'>
                     <Form
-                        schema={schema}
-                        uiSchema={uiSchema}
+                        schema={r_schema}
+                        uiSchema={r_ui_schema}
                         formData={formData}
                         onChange={handleChange}
                         validator={validator}
