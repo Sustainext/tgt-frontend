@@ -298,7 +298,7 @@ if(reportradio === "Yes" || reportradio === "Yesone"){
     newErrors.checkboxes = "Please select at least one option";
   }
 }
-   
+
 
     if (selectedOptions.includes("other")) {
       // If it's an array and "other" is one of the options
@@ -533,7 +533,7 @@ if(reportradio === "Yes" || reportradio === "Yesone"){
             <div className="w-[90%] mb-5">
               <div className="float-right">
                 <button
-                  className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                  className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                   disabled
                 >
                   &lt; Previous
@@ -761,7 +761,7 @@ if(reportradio === "Yes" || reportradio === "Yesone"){
                 <div className="w-[90%] mb-5">
                   <div className="float-right">
                     <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                       onClick={prevStep}
                     >
                       &lt; Previous
@@ -963,7 +963,7 @@ if(reportradio === "Yes" || reportradio === "Yesone"){
                 <div className="w-[90%] mb-5">
                   <div className="float-right">
                     <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                       onClick={prevStep}
                     >
                       &lt; Previous

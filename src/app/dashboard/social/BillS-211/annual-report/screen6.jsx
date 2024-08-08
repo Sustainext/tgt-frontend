@@ -379,7 +379,7 @@ const Screensix = ({ nextStep, prevStep }) => {
             <div className="w-[90%] mb-5">
               <div className="float-right">
                 <button
-                  className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                  className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                   disabled
                 >
                   &lt; Previous
@@ -409,7 +409,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                   {data !== null ? (
                     <MdOutlineModeEditOutline
                     className="text-[15.5px] ml-2 mt-1 cursor-pointer"
- 
+
                       onClick={handleeditClick}
                     />
                   ) : (
@@ -567,7 +567,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                 <div className="w-[90%] mb-5">
                   <div className="float-right">
                     <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                       onClick={prevStep}
                     >
                       &lt; Previous
@@ -726,7 +726,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                 <div className="w-[90%] mb-5">
                   <div className="float-right">
                     <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                       onClick={prevStep}
                     >
                       &lt; Previous

@@ -111,12 +111,12 @@ const Screentwo = ({ nextStep, prevStep }) => {
   };
   const handleReportnradio = (event) => {
     setReportnradio(event.target.value);
-    
+
   };
 
   const handleReportingdescription = (event) => {
     setReportingdescription(event.target.value);
-    
+
   };
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -874,7 +874,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
             <div className="w-[90%] mb-5">
               <div className="float-right">
                 <button
-                  className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                  className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                   disabled
                 >
                   &lt; Previous
@@ -1127,7 +1127,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                 <div className="w-[90%] mb-5">
                   <div className="float-right">
                     <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                       onClick={prevStep}
                     >
                       &lt; Previous
@@ -1380,7 +1380,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                 <div className="w-[90%] mb-5">
                   <div className="float-right">
                     <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                       onClick={prevStep}
                     >
                       &lt; Previous

@@ -446,13 +446,13 @@ const Screenthree = ({ nextStep, prevStep }) => {
                   {error.reportingdescription && (
                     <p className="text-red-500">{error.reportingdescription}</p>
                   )}
-                </div> */} 
+                </div> */}
               </div>
             </form>
             <div className="w-[90%] mb-5">
               <div className="float-right">
                 <button
-                  className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                  className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                   disabled
                 >
                   &lt; Previous
@@ -482,7 +482,7 @@ const Screenthree = ({ nextStep, prevStep }) => {
                   {data !== null ? (
                      <MdOutlineModeEditOutline
                      className="text-[15.5px] ml-2 mt-1 cursor-pointer"
-  
+
                        onClick={handleeditClick}
                      />
                   ) : (
@@ -624,7 +624,7 @@ const Screenthree = ({ nextStep, prevStep }) => {
                 <div className="w-[90%] mb-5 mt-5">
                   <div className="float-right">
                     <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                       onClick={prevStep}
                     >
                       &lt; Previous
@@ -768,7 +768,7 @@ const Screenthree = ({ nextStep, prevStep }) => {
                 <div className="w-[90%] mb-5">
                   <div className="float-right">
                     <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                       onClick={prevStep}
                     >
                       &lt; Previous

@@ -220,7 +220,7 @@ const Screenseven = ({ nextStep, prevStep }) => {
       }
     }
 
-  
+
     if (Object.keys(newErrors).length === 0) {
       setError({});
       submitForm();
@@ -235,7 +235,7 @@ const Screenseven = ({ nextStep, prevStep }) => {
         newErrors.reportradioone = "This field is required. Please fill it out.";
       }
     }
-   
+
     return newErrors;
   };
   const handleSubmit = async (event) => {
@@ -485,7 +485,7 @@ const Screenseven = ({ nextStep, prevStep }) => {
               <div className="w-[90%] mb-5">
               <div className="float-right">
                 <button
-                  className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                  className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                   disabled
                 >
                   &lt; Previous
@@ -516,7 +516,7 @@ const Screenseven = ({ nextStep, prevStep }) => {
                   {data !== null ? (
                     <MdOutlineModeEditOutline
                     className="text-[15.5px] ml-2 mt-1 cursor-pointer"
- 
+
                       onClick={handleeditClick}
                     />
                   ) : (
@@ -729,12 +729,12 @@ const Screenseven = ({ nextStep, prevStep }) => {
                   </div> */}
                 </div>
 
-                
+
               </form>
               <div className="w-[90%] mb-5">
               <div className="float-right">
                 <button
-                  className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                  className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                   onClick={prevStep}
                 >
                   &lt; Previous
@@ -946,12 +946,12 @@ const Screenseven = ({ nextStep, prevStep }) => {
                   </div> */}
                 </div>
 
-               
+
               </form>
               <div className="w-[90%] mb-5">
                   <div className="float-right">
                     <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                       onClick={prevStep}
                     >
                       &lt; Previous

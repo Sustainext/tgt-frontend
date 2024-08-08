@@ -415,7 +415,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
               <div className="w-[80%] mb-5">
                 <div className="float-right">
                   <button
-                    className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                    className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                     disabled
                   >
                     &lt; Previous
@@ -563,7 +563,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                 <div className="w-[80%] mb-5">
                   <div className="float-right">
                     <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                       onClick={prevStep}
                     >
                       &lt; Previous
@@ -693,7 +693,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                 <div className="w-[80%] mb-5">
                   <div className="float-right">
                     <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                       onClick={prevStep}
                     >
                       &lt; Previous

@@ -345,17 +345,17 @@ const Screenend = ({ prevStep }) => {
   // };
   const handleDownload = async () => {
     setLoading(true);
-  
+
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/canadabills211/generate-csv/${localStorage.getItem("user_id")}`);
-  
+
       if (!response.ok) {
         // Parse the error message from the JSON response
         const errorResponse = await response.json(); // Assuming the server responds with a JSON object on error
         // Throw a new error with the message from the server's response
         throw new Error(errorResponse.error || 'Unknown error occurred'); // Fallback to a generic error message if none provided
       }
-  
+
       const blob = await response.blob();
       const downloadUrl = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
@@ -376,16 +376,16 @@ const Screenend = ({ prevStep }) => {
         progress: undefined,
         theme: "colored",
       });
-    
+
     } finally {
       setLoading(false);
     }
   };
-  
-  
-  
-  
-  
+
+
+
+
+
   return (
     <>
       <ToastContainer style={{ fontSize: "13px" }} />
@@ -562,7 +562,7 @@ const Screenend = ({ prevStep }) => {
             </form>
             <div className="float-right">
               <button
-                className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                 onClick={prevStep}
               >
                 &lt; Previous
@@ -739,7 +739,7 @@ const Screenend = ({ prevStep }) => {
                 <div className="w-[90%] mb-5">
                   <div className="float-right">
                     <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                       onClick={prevStep}
                     >
                       &lt; Previous
@@ -914,7 +914,7 @@ const Screenend = ({ prevStep }) => {
                 <div className="w-[90%] mb-5">
                   <div className="float-right">
                     <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                       onClick={prevStep}
                     >
                       &lt; Previous
