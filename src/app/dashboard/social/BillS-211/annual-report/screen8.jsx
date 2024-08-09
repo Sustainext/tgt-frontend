@@ -741,7 +741,7 @@ const Screenend = ({ prevStep }) => {
                     </div>
                   </div>
                 </form>
-                <div className="w-[98%] mb-5">
+                <div className="w-[97s%] mb-5">
                   <div className="float-right">
                     <button
                       className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
