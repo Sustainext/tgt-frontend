@@ -130,7 +130,7 @@ const Process = ({ selectedOrg, selectedCorp, year }) => {
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([{}]);
+    setFormData([{ Q1: {Q1: "",fileName:"",fileURL:"" } }]);
     const view_path = 'gri-governance-nomination-2-10-a-nomination';
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&corporate=${selectedCorp}&year=${year}`;
     try {
@@ -140,7 +140,7 @@ const Process = ({ selectedOrg, selectedCorp, year }) => {
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData([{}]);
+      setFormData([{ Q1: {Q1: "",fileName:"",fileURL:"" } }]);
     } finally {
       LoaderClose();
     }

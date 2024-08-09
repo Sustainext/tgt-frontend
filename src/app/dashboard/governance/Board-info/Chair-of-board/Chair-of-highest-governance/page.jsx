@@ -216,7 +216,16 @@ const ChairOfHighestGovernance = ({ selectedOrg, year, selectedCorp }) => {
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([{}]);
+    setFormData([{
+    Q2: "",
+    Q3: [
+      {
+        TheirFunctionWithinTheOrganization: "",
+        ReasonsForThisArrangement: "",
+        HowConFlictsArePrevented: "",
+      }
+    ]
+  }]);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
@@ -225,7 +234,16 @@ const ChairOfHighestGovernance = ({ selectedOrg, year, selectedCorp }) => {
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData([{}]);
+      setFormData([{
+    Q2: "",
+    Q3: [
+      {
+        TheirFunctionWithinTheOrganization: "",
+        ReasonsForThisArrangement: "",
+        HowConFlictsArePrevented: "",
+      }
+    ]
+  }]);
     } finally {
       LoaderClose();
     }
