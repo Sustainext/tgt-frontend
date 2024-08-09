@@ -64,7 +64,7 @@ const uiSchema = {
   },
 };
 
-const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year, month }) => {
+const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year }) => {
   const [formData, setFormData] = useState([]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -93,7 +93,6 @@ const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year, mon
       organisation: selectedOrg,
       corporate: selectedCorp,
       year,
-      month,
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;

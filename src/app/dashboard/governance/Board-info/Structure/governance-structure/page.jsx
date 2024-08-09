@@ -58,7 +58,7 @@ const uiSchema = {
   },
 };
 
-const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
+const GovernanceStructure = ({ selectedOrg, selectedCorp, year }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
