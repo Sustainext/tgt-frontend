@@ -6,7 +6,7 @@ import "react-tooltip/dist/react-tooltip.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import GovernanceHeader2 from "../../GovernanceHeader2";
-import { Socialdata } from "@/app/dashboard/Social/data/socialgriinfo"
+import { Socialdata } from "../../../social/data/socialgriinfo"
 import Screen1 from "./screen1"
 const SustainabilityKnowledge = () => {
   const [activeMonth, setActiveMonth] = useState(1);
