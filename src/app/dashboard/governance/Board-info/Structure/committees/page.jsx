@@ -143,7 +143,7 @@ const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year }) =
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([{}]);
+    setFormData([]);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&corporate=${selectedCorp}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
@@ -152,7 +152,7 @@ const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year }) =
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData([{}]);
+      setFormData([]);
     } finally {
       LoaderClose();
     }

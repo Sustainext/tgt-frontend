@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdInfoOutline, MdOutlineFileUpload, MdFilePresent } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -6,8 +6,6 @@ import { BlobServiceClient } from "@azure/storage-blob";
 
 const InputWidget5 = (props) => {
   const { onChange, value = "", formContext, idSchema } = props;
-  const [fileUrl, setFileUrl] = useState(value.fileURL || '');
-  const [fileName, setFileName] = useState(value.fileName || '');
 
   const handleChange = (event) => {
     const newValue = event.target.value;
@@ -19,8 +17,6 @@ const InputWidget5 = (props) => {
     if (file) {
       console.log("Uploading file:", file.name);
       const uploadedFileUrl = await uploadFileToAzure(file);
-      setFileUrl(uploadedFileUrl);
-      setFileName(file.name);
       onChange({ ...value, fileURL: uploadedFileUrl, fileName: file.name });
     }
   };
@@ -101,7 +97,7 @@ const InputWidget5 = (props) => {
               onChange={handleFileChange}
               style={{ display: "none" }}
             />
-            {fileName ? (
+            {value.fileName ? (
               <label className="flex cursor-pointer">
                 <div
                   className="flex items-center text-center mt-2 px-6"
@@ -109,7 +105,7 @@ const InputWidget5 = (props) => {
                   <div className="truncate text-sky-600 text-sm flex text-center">
                     <MdFilePresent
                       className="w-6 h-6 mr-1 text-green-500"
-                    /> {fileName}
+                    /> {value.fileName}
                   </div>
                 </div>
               </label>
