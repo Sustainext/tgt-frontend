@@ -4,7 +4,7 @@ import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import inputWidget2 from "@/app/shared/widgets/Input/inputWidget2";
 import "react-tooltip/dist/react-tooltip.css";
-import RadioWidget2 from "@/app/shared/widgets/Input/RadioWidget2";
+import RadioWidget2 from "../../../../../shared/widgets/Input/radioWidget2.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
@@ -18,7 +18,7 @@ const widgets = {
     RadioWidget2: RadioWidget2,
 };
 
-const view_path = "gri-social-product_labeling-417-1a-required";
+const view_path = "gri-governance-performance_evaluations-2-18-b-evaluation";
 const client_id = 1;
 const user_id = 1;
 
@@ -55,7 +55,7 @@ const schema = {
 
 const uiSchema = {
     items: {
-        "ui:order": ["Q1", "Q2", "Q3", "Q4", "Q5"],
+        "ui:order": ["Q2", "Q3"],
         Q2: {
             "ui:title":
                 "Whether it has appointed any senior executives with responsibility for the management of impacts",
@@ -71,7 +71,7 @@ const uiSchema = {
         Q3: {
             "ui:title": "Report the frequency of the evaluations",
             "ui:description": " ",
-            "ui:descriptionClassNames": "mb-2", 
+            "ui:descriptionClassNames": "mb-2",
             "ui:tooltip":
                 "Provide an explanation of how the highest governance body engages with stakeholders to support these processes? ",
             "ui:tooltipdisplay": "none",
@@ -173,7 +173,7 @@ const EvaluationAndFrequency = ({ selectedOrg, year, selectedCorp }) => {
     const loadFormData = async () => {
         LoaderOpen();
         setFormData([{}]);
-        const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+        const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&corporate=${selectedCorp}&year=${year}`;
         try {
             const response = await axiosInstance.get(url);
             console.log("API called successfully:", response.data);
@@ -199,7 +199,7 @@ const EvaluationAndFrequency = ({ selectedOrg, year, selectedCorp }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // updateFormData();
+        updateFormData();
         console.log("test form data", formData);
     };
 
@@ -250,8 +250,8 @@ const EvaluationAndFrequency = ({ selectedOrg, year, selectedCorp }) => {
                 <div className="mx-2 flex">
                     <div className="w-[92%] relative">
                         <Form
-                            schema={schema}
-                            uiSchema={uiSchema}
+                            schema={r_schema}
+                            uiSchema={r_ui_schema}
                             formData={formData}
                             onChange={handleChange}
                             validator={validator}

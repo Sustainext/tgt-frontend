@@ -16,7 +16,7 @@ const widgets = {
   inputWidget: inputWidget2,
 };
 
-const view_path = "gri-governance-management_of_impact-2-12-c-effectiveness";
+const view_path = "gri-governance-performance_evaluations-2-18-c-actions";
 const client_id = 1;
 const user_id = 1;
 
@@ -209,8 +209,8 @@ const ActionsTaken = ({ selectedOrg, year, selectedCorp }) => {
         </div>
         <div className="mx-2 mb-3">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

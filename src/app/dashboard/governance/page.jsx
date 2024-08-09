@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
-import BoardInfo from "./Board-info/structure/page";
+import BoardInfo from "./Board-info/Structure/page";
 import ManagementImpact from './Board-Involvement-Sustainability/Management-Impact/page'
 import DelegationResponsibility from "./Board-Involvement-Sustainability/Delegation-Responsibility/page"
 import SustainabilityReporting from "./Board-Involvement-Sustainability/Sustainability-Reporting/page"
@@ -663,7 +663,7 @@ const Governance = () => {
                         )}
                       </div>
                     </li>
-                    <li
+                    {/* <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(11)}
                     >
@@ -825,7 +825,7 @@ const Governance = () => {
                           </p>
                         )}
                       </div>
-                    </li>
+                    </li> */}
                   </AccordionItem>
                   <AccordionItem title="Sustainability Strategy">
                   <li
@@ -885,7 +885,7 @@ const Governance = () => {
                       </div>
                     </li>
                   </AccordionItem>
-                  <AccordionItem title="Policy">
+                  {/* <AccordionItem title="Policy">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(9)}
@@ -1006,8 +1006,8 @@ const Governance = () => {
                         )}
                       </div>
                     </li>
-                  </AccordionItem>
-                  <AccordionItem title="Remediation">
+                  </AccordionItem> */}
+                  {/* <AccordionItem title="Remediation">
                   <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(14)}
@@ -1065,7 +1065,7 @@ const Governance = () => {
                         )}
                       </div>
                     </li>
-                  </AccordionItem>
+                  </AccordionItem> */}
                   <AccordionItem title="Managing Concerns">
                   <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"

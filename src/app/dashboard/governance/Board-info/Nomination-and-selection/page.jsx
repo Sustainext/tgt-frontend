@@ -3,12 +3,13 @@ import React, { useState, useEffect } from "react";
 import { MdOutlineClear } from "react-icons/md";
 import "react-tooltip/dist/react-tooltip.css";
 import GovernanceHeader2 from "../../GovernanceHeader2";
-import { Socialdata } from "@/app/dashboard/Social/data/socialgriinfo";
+import { Socialdata } from "../../../social/data/socialgriinfo";
 import Process from "./Process/page";
 import Criteria from "./Criteria/page";
-import Describewhether from "./Describe-whether/page"
+import Describewhether from "./Describe-whether/page";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 const NominationAndSelection = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [year, setYear] = useState(2024);

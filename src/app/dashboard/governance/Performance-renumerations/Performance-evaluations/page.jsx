@@ -3,10 +3,11 @@ import React, { useState, useEffect } from "react";
 import { MdOutlineClear } from "react-icons/md";
 import "react-tooltip/dist/react-tooltip.css";
 import GovernanceHeader2 from "../../GovernanceHeader2";
-import { Socialdata } from "@/app/dashboard/Social/data/socialgriinfo";
+import { Socialdata } from "../../../social/data/socialgriinfo";
 import Process from "./Process-for-evaluating/page";
 import EvaluationAndFrequency from "./Evaluation-and-frequency/page";
 import ActionsTaken from "./Actions-taken/page";
+import { ToastContainer } from "react-toastify";
 
 const PerformanceEvaluations = () => {
   const [activeMonth, setActiveMonth] = useState(1);
@@ -40,6 +41,7 @@ const PerformanceEvaluations = () => {
 
   return (
     <>
+    <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">

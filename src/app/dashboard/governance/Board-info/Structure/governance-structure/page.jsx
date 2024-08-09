@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import InputWidget2 from "../../../../../shared/widgets/Input/InputWidget2";
+import InputWidget2 from "../../../../../shared/widgets/Input/inputWidget2.js";
 import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -98,7 +98,6 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
       organisation:selectedOrg,
       corporate:selectedCorp,
       year,
-      month,
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -164,7 +163,7 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
   };
 
   useEffect(() => {
-    if (selectedOrg && year && month) {
+    if (selectedOrg && year) {
       loadFormData();
       toastShown.current = false;
     } else {
@@ -172,7 +171,7 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, month]);
+  }, [selectedOrg, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

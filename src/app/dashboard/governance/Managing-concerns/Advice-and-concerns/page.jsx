@@ -16,11 +16,13 @@ const widgets = {
   inputWidget: inputWidget2,
 };
 
-const view_path = "gri-governance-management_of_impact-2-12-c-effectiveness";
+const view_path = "gri-governance-advice_and_concerns-2-26-a";
 const client_id = 1;
 const user_id = 1;
 
 const schema = {
+  type: "array",
+  items: {
     type: "object",
     properties: {
       Q1: {
@@ -32,9 +34,11 @@ const schema = {
         title: "Raise concerns about the organization's business conduct",
       },
     },
-  };
+  },
+};
 
 const uiSchema = {
+  items: {
     "ui:order": ["Q1", "Q2"],
     Q1: {
       "ui:title": "Seek advice on implementing the organization’s policies and practices for responsible business conduct.",
@@ -54,15 +58,16 @@ const uiSchema = {
         label: false,
       },
     },
-    "ui:options": {
-      orderable: false,
-      addable: false,
-      removable: false,
-    },
-  };
+  },
+  "ui:options": {
+    orderable: false,
+    addable: false,
+    removable: false,
+  },
+};
 
 const AdviceAndConcerns = ({ selectedOrg, year, selectedCorp }) => {
-  const [formData, setFormData] = useState({Q1: '', Q2: ''});
+  const [formData, setFormData] = useState([{ Q1: '', Q2: '' }]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
@@ -78,8 +83,9 @@ const AdviceAndConcerns = ({ selectedOrg, year, selectedCorp }) => {
   };
 
   const handleChange = (e) => {
-    setFormData(e.formData);
-  };
+    setFormData([e.formData]);
+};
+
 
   const updateFormData = async () => {
     const data = {
@@ -91,7 +97,7 @@ const AdviceAndConcerns = ({ selectedOrg, year, selectedCorp }) => {
       organisation: selectedOrg,
       year,
     };
-    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
+    const url = `/datametric/update-fieldgroup`;
     try {
       const response = await axiosInstance.post(url, data);
       if (response.status === 200) {
@@ -137,8 +143,8 @@ const AdviceAndConcerns = ({ selectedOrg, year, selectedCorp }) => {
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
+    setFormData([{ Q1: '', Q2: '' }]);
+    const url = `/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -146,11 +152,12 @@ const AdviceAndConcerns = ({ selectedOrg, year, selectedCorp }) => {
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData([{}]);
+      setFormData([{ Q1: '', Q2: '' }]);
     } finally {
       LoaderClose();
     }
   };
+
   useEffect(() => {
     if (selectedOrg && year) {
       loadFormData();
@@ -210,16 +217,16 @@ const AdviceAndConcerns = ({ selectedOrg, year, selectedCorp }) => {
               </p>
             </div>
           </div>
-        </div>
+        </div>.
         <div className="mx-2 mb-3">
-          <Form
-            schema={schema}
-            uiSchema={uiSchema}
-            formData={formData}
-            onChange={handleChange}
-            validator={validator}
-            widgets={widgets}
-          />
+            <Form
+              schema={Object.keys(r_schema).length === 0 ? {} : r_schema.items}
+              uiSchema={Object.keys(r_ui_schema).length === 0 ? {} : r_ui_schema.items}
+              formData={formData[0]}
+              onChange={handleChange}
+              validator={validator}
+              widgets={widgets}
+            />
         </div>
 
         <div className="mb-6">

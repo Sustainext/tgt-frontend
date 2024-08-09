@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from "react";
 import Screenone from "./screen1";
 import Screentwo from "./screen2";
