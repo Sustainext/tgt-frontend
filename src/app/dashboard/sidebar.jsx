@@ -31,7 +31,7 @@ const Sidenav = () => {
       title: "Materiality Dashboard",
       icon: <MdOutlinePieChartOutline />,
       spacing: true,
-      link: "#",
+      link: "/dashboard/Materiality",
     },
     {
       title: "Collect",
@@ -51,7 +51,7 @@ const Sidenav = () => {
         {
           title: "Governance",
           icon: <MdOutlineDiversity1 />,
-          link: "/dashboard/environment",
+          link: "/dashboard/governance",
         },
         {
           title: "General",

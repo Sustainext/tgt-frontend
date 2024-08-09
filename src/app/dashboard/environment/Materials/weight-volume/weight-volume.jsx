@@ -7,6 +7,8 @@ import { Energydata } from '../../data/griinfo';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import Weightvolumebody from './weight-volume-body';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Weightvolume = () => {
     const [activeMonth, setActiveMonth] = useState(1);
     const [location, setLocation] = useState("");
@@ -40,6 +42,7 @@ const Weightvolume = () => {
 
     return (
         <>
+              <ToastContainer style={{ fontSize: "12px" }} />
             <div className="flex flex-col justify-start overflow-x-hidden ">
                 <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
                     <div className='w-full'>
