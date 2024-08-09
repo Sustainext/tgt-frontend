@@ -127,11 +127,11 @@ const InputWidget5 = (props) => {
             )}
           </div>
         </div>
-        {fileUrl && (
+        {/* {fileUrl && (
           <p className="mt-2 text-sm text-gray-500">
             File uploaded: <a href={fileUrl} target="_blank" rel="noopener noreferrer">{fileUrl}</a>
           </p>
-        )}
+        )} */}
       </div>
     </>
   );
