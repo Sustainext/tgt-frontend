@@ -663,7 +663,7 @@ const Governance = () => {
                         )}
                       </div>
                     </li>
-                    <li
+                    {/* <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(11)}
                     >
@@ -825,7 +825,7 @@ const Governance = () => {
                           </p>
                         )}
                       </div>
-                    </li>
+                    </li> */}
                   </AccordionItem>
                   <AccordionItem title="Sustainability Strategy">
                   <li
@@ -885,7 +885,7 @@ const Governance = () => {
                       </div>
                     </li>
                   </AccordionItem>
-                  <AccordionItem title="Policy">
+                  {/* <AccordionItem title="Policy">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(9)}
@@ -1006,8 +1006,8 @@ const Governance = () => {
                         )}
                       </div>
                     </li>
-                  </AccordionItem>
-                  <AccordionItem title="Remediation">
+                  </AccordionItem> */}
+                  {/* <AccordionItem title="Remediation">
                   <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(14)}
@@ -1065,7 +1065,7 @@ const Governance = () => {
                         )}
                       </div>
                     </li>
-                  </AccordionItem>
+                  </AccordionItem> */}
                   <AccordionItem title="Managing Concerns">
                   <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"

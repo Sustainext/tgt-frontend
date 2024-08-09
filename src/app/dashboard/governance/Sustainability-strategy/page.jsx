@@ -6,6 +6,7 @@ import GovernanceHeader2 from "../GovernanceHeader2";
 import { Socialdata } from "@/app/dashboard/Social/data/socialgriinfo";
 import SustainabilityStrategy from "./sustainability-strategy/page";
 import { Tooltip as ReactTooltip } from "react-tooltip";
+import { ToastContainer } from "react-toastify";
 
 
 const SustainabilityStrategyPage = () => {
@@ -40,6 +41,7 @@ const SustainabilityStrategyPage = () => {
 
   return (
     <>
+    <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
