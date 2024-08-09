@@ -223,7 +223,7 @@ const CompositionOfHighestGovernanceBody = ({
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year]);
+  }, [selectedOrg, selectedCorp, year]);
 
   const handleSubmit = ({ formData }) => {
     console.log("Form data:", formData);

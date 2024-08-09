@@ -155,7 +155,7 @@ const Process = ({ selectedOrg, selectedCorp, year }) => {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year]);
+  }, [selectedOrg, selectedCorp, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
