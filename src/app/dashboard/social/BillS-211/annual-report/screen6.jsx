@@ -444,7 +444,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                           value="Yes"
                           checked={reportradio === "Yes"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -466,7 +466,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                           value="Yesone"
                           checked={reportradio === "Yesone"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -488,7 +488,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                           value="No"
                           checked={reportradio === "No"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -508,7 +508,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                           value="Noone"
                           checked={reportradio === "Noone"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -553,7 +553,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                       // onChange={handleInputChange}
                       rows={5}
                       onChange={handleReportingdescription}
-                      disabled={true} // Specify the number of rows to determine the initial height
+                      // Specify the number of rows to determine the initial height
                     />
                     {/* <div className="my-1">
                     {error.reportingdescription && (

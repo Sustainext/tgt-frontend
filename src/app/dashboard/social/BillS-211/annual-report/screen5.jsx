@@ -596,7 +596,7 @@ if(reportradio === "Yes" || reportradio === "Yesone"){
                           value="Yes"
                           checked={reportradio === "Yes"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -618,7 +618,7 @@ if(reportradio === "Yes" || reportradio === "Yesone"){
                           value="Yesone"
                           checked={reportradio === "Yesone"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -640,7 +640,7 @@ if(reportradio === "Yes" || reportradio === "Yesone"){
                           value="No"
                           checked={reportradio === "No"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -660,7 +660,7 @@ if(reportradio === "Yes" || reportradio === "Yesone"){
                           value="Noone"
                           checked={reportradio === "Noone"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -696,7 +696,7 @@ if(reportradio === "Yes" || reportradio === "Yesone"){
                               value={option.value}
                               checked={selectedOptions.includes(option.value)}
                               onChange={handleCheckboxChange}
-                              disabled={true}
+
                               className="mr-3"
                             />
                             {option.label}
@@ -713,7 +713,7 @@ if(reportradio === "Yes" || reportradio === "Yesone"){
                             } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
                             value={reportingentity}
                             onChange={handleReportingentity}
-                            disabled={true}
+
                           ></input>
                         </div>
                       )}
@@ -747,7 +747,7 @@ if(reportradio === "Yes" || reportradio === "Yesone"){
                       // onChange={handleInputChange}
                       rows={5}
                       onChange={handleReportingdescription}
-                      disabled={true} // Specify the number of rows to determine the initial height
+                      // Specify the number of rows to determine the initial height
                     />
                     {/* <div className="my-1">
                     {error.reportingdescription && (

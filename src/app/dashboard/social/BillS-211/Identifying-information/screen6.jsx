@@ -509,7 +509,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                             checked={selectedOptions.includes(option.value)}
                             onChange={handleCheckboxChange}
                             className="mr-3 pt-1"
-                            disabled={true}
+
                           />
                           {option.label}
                         </label>
@@ -527,7 +527,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                           open ? "w-[80%]" : "w-[80%]"
                         } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
                         value={reportingentity}
-                        disabled={true}
+
                       ></input>
                     </div>
                   )}

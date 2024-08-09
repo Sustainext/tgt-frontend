@@ -560,14 +560,19 @@ const Screenend = ({ prevStep }) => {
                 </div> */}
               </div>
             </form>
-            <div className="float-right">
+            <div className="w-[91%]">
+            <div className=" float-right">
               <button
-                className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
+                className="px-3 py-1.5 rounded font-semibold w-[120px] text-gray-600 text-[14px]"
                 onClick={prevStep}
               >
                 &lt; Previous
               </button>
+
             </div>
+            </div>
+
+
           </div>
         </>
       ) : (
@@ -617,7 +622,7 @@ const Screenend = ({ prevStep }) => {
                           value="Yes"
                           checked={reportradio === "Yes"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -638,7 +643,7 @@ const Screenend = ({ prevStep }) => {
                           value="No"
                           checked={reportradio === "No"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -672,7 +677,7 @@ const Screenend = ({ prevStep }) => {
                                 value={option.value}
                                 checked={selectedOptions.includes(option.value)}
                                 onChange={handleCheckboxChange}
-                                disabled={true}
+
                                 className="mr-3"
                               />
                               {option.label}
@@ -689,7 +694,7 @@ const Screenend = ({ prevStep }) => {
                               } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
                               value={reportingentity}
                               onChange={handleReportingentity}
-                              disabled={true}
+
                             ></input>
                           </div>
                         )}
@@ -725,7 +730,7 @@ const Screenend = ({ prevStep }) => {
                       // onChange={handleInputChange}
                       rows={5}
                       onChange={handleReportingdescription}
-                      disabled={true} // Specify the number of rows to determine the initial height
+                      // Specify the number of rows to determine the initial height
                     />
                     <div className="my-1">
                       {error.reportingdescription && (
@@ -736,13 +741,19 @@ const Screenend = ({ prevStep }) => {
                     </div>
                   </div>
                 </form>
-                <div className="w-[90%] mb-5">
+                <div className="w-[98%] mb-5">
                   <div className="float-right">
                     <button
                       className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                       onClick={prevStep}
                     >
                       &lt; Previous
+                    </button>
+                    <button
+                      className="px-3 py-1.5 font-semibold rounded ml-2 w-[120px] text-[12px] bg-blue-500 text-white"
+
+                    >
+                       Submit
                     </button>
                     {/* {loading ? (
                       <button

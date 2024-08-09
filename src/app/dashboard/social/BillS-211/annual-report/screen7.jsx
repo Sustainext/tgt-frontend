@@ -549,7 +549,7 @@ const Screenseven = ({ nextStep, prevStep }) => {
                         value="Yes"
                         checked={reportradio === "Yes"}
                         onChange={handleReportnradio}
-                        disabled={true}
+
                       />
                        {" "}
                       <label
@@ -571,7 +571,7 @@ const Screenseven = ({ nextStep, prevStep }) => {
                         value="No"
                         checked={reportradio === "No"}
                         onChange={handleReportnradio}
-                        disabled={true}
+
                       />
                        {" "}
                       <label
@@ -609,7 +609,7 @@ const Screenseven = ({ nextStep, prevStep }) => {
                           value="Yes"
                           checked={reportradioone === "Yes"}
                           onChange={handleReportnradioone}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -630,7 +630,7 @@ const Screenseven = ({ nextStep, prevStep }) => {
                           value="Yesone"
                           checked={reportradioone === "Yesone"}
                           onChange={handleReportnradioone}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -652,7 +652,7 @@ const Screenseven = ({ nextStep, prevStep }) => {
                           value="Yestwo"
                           checked={reportradioone === "Yestwo"}
                           onChange={handleReportnradioone}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -673,7 +673,7 @@ const Screenseven = ({ nextStep, prevStep }) => {
                           value="No"
                           checked={reportradioone === "No"}
                           onChange={handleReportnradioone}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -714,7 +714,7 @@ const Screenseven = ({ nextStep, prevStep }) => {
                       open ? "w-[90%]" : "w-[90%]"
                     }  border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
                     value={reportingdescription}
-                    disabled={true}
+
                     // value={formData.countriesOfOperation}
                     // onChange={handleInputChange}
                     rows={5}

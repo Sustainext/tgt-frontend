@@ -28,7 +28,7 @@ const Identifyinginformation = ({ }) => {
       {/* Pagination */}
 
       {/* Step Content */}
-      <div className="h-[550px] overflow-y-auto scrollable-content">
+      <div className="h-[650px] overflow-y-auto scrollable-content">
         {currentStep === 1 && (
           <Screenone
             nextStep={nextStep}

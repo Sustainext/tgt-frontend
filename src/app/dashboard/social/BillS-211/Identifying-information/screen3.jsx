@@ -560,7 +560,7 @@ const Screenthree = ({ nextStep, prevStep }) => {
                         open ? "w-[78%]" : "w-[78%]"
                       } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
                       defaultValue={reportingbusinessnumber}
-                      disabled={true}
+
                     ></input>
                   </div>
                 </div>
@@ -581,7 +581,7 @@ const Screenthree = ({ nextStep, prevStep }) => {
                         value="Yes"
                         checked={reportradiojoint === "Yes"}
                         onChange={handleReportnradio}
-                        disabled={true}
+
                       />
                        {" "}
                       <label
@@ -601,7 +601,7 @@ const Screenthree = ({ nextStep, prevStep }) => {
                         value="No"
                         checked={reportradiojoint === "No"}
                         onChange={handleReportnradio}
-                        disabled={true}
+
                       />
                        {" "}
                       <label
@@ -637,7 +637,7 @@ const Screenthree = ({ nextStep, prevStep }) => {
                             type="text"
                             placeholder="Enter entity name"
                             defaultValue={entity.legalName}
-                            disabled={true}
+
                             onChange={(e) =>
                               handleInputChange(
                                 index,
@@ -660,7 +660,7 @@ const Screenthree = ({ nextStep, prevStep }) => {
                             type="number"
                             placeholder="Enter Business numbers"
                             defaultValue={entity.businessNumber}
-                            disabled={true}
+
                             onChange={(e) =>
                               handleInputChange(
                                 index,
@@ -678,26 +678,26 @@ const Screenthree = ({ nextStep, prevStep }) => {
                             </p>
                           )} */}
                         </div>
-                        {/* <div className="ml-2 mt-1">
-                          {" "}
-                          <MdDeleteOutline
-                            // onClick={() => handleRemoveEntity(index)}
-                            className="text-red-500 text-sm "
-                            disabled={true}
-                          />
-                        </div> */}
+                        {index !== 0 && (
+                          <div className="ml-2 mt-1">
+                            <MdDeleteOutline
+                              onClick={() => handleRemoveEntity(index)}
+                              className="text-red-500 text-[30px] mt-1 cursor-pointer"
+                            />
+                          </div>
+                        )}
                       </div>
                     ))}
-                    {/* <div className="mt-2">
+                    <div className="mt-2">
                       <button
                         type="button"
                         className="text-[12px] text-sky-500 ml-1"
-                        // onClick={handleAddEntity}
-                        disabled={true}
+                        onClick={handleAddEntity}
+
                       >
                         + Add new entity
                       </button>
-                    </div> */}
+                    </div>
                   </div>
                 )}
                 <div className="w-[80%] mb-5 mt-5">

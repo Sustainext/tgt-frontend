@@ -481,7 +481,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                         checked={reportradio === "Yes"}
                         onChange={handleReportnradio}
                         className="radio-label"
-                        disabled={true}
+
                       />
                        {" "}
                       <label
@@ -501,7 +501,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                         value="No"
                         checked={reportradio === "No"}
                         onChange={handleReportnradio}
-                        disabled={true}
+
                       />
                        {" "}
                       <label
@@ -528,7 +528,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                         <input
                           type="date"
                           defaultValue={reportingdate}
-                          disabled={true}
+
                           className="w-[80%] border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer "
                         />
                       </div>
@@ -549,7 +549,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                           placeholder="Enter a description..."
                           className="w-[80%] border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer "
                           defaultValue={reportingdescription}
-                          disabled={true}
+
                           // value={formData.countriesOfOperation}
                           // onChange={handleInputChange}
                           rows={5}

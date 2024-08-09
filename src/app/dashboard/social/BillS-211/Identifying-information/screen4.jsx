@@ -539,7 +539,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
                         value="Yes"
                         checked={reportradio === "Yes"}
                         onChange={handleReportnradio}
-                        disabled={true}
+
                       />
                        {" "}
                       <label
@@ -559,7 +559,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
                         value="No"
                         checked={reportradio === "No"}
                         onChange={handleReportnradio}
-                        disabled={true}
+
                       />
                        {" "}
                       <label
@@ -595,7 +595,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
                                 checked={selectedOptions.includes(option.value)}
                                 onChange={handleCheckboxChange}
                                 className="mr-3 custom-checkbox"
-                                disabled={true}
+
                               />
                               {option.label}
                             </label>
@@ -619,7 +619,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
                             } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
                             value={reportingentity}
                             onChange={handleReportingentity}
-                            disabled={true}
+
                           ></input>
                         </div>
                       )}

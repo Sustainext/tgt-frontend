@@ -399,7 +399,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                 name={option.key}
                 checked={checkboxStates[option.key]}
                 onChange={handleCheckboxChange(option.key)}
-                disabled={true}
+
                 className="mr-3 pt-1 scale-90 rounded-xl"
               />
               {option.label}
@@ -442,7 +442,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                 name={option.key}
                 checked={checkboxStates[option.key]}
                 onChange={handleCheckboxChange(option.key)}
-                disabled={true}
+
                 className="mr-3 pt-1 scale-90 rounded-xl"
               />
               {option.label}
@@ -626,7 +626,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                       checked={isCheckednew}
                       onChange={handleCheckboxChangenew("isCheckednew")}
                       className="mr-3 pt-1"
-                      disabled={true}
+
                     />
                     Listed on a stock exchange in Canada
                   </label>
@@ -640,7 +640,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                         checked={isChecked}
                         onChange={handleCheckboxChange("isChecked")}
                         className="mr-3 pt-1"
-                        disabled={true}
+
                       />
                       Canadian business presence (select all that apply)
                     </label>
@@ -654,7 +654,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                         checked={isCheckedone}
                         onChange={handleCheckboxChange("isCheckedone")}
                         className="mr-3 pt-1"
-                        disabled={true}
+
                       />
                       Meets size-related thresholds (select all that apply):
                     </label>

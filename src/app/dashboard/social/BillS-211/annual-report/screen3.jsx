@@ -515,7 +515,7 @@ const Screenthree = ({ nextStep, prevStep }) => {
                           value="Yes"
                           checked={reportradio === "Yes"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -535,7 +535,7 @@ const Screenthree = ({ nextStep, prevStep }) => {
                           value="No"
                           checked={reportradio === "No"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -572,7 +572,7 @@ const Screenthree = ({ nextStep, prevStep }) => {
                                 value={option.value}
                                 checked={selectedOptions.includes(option.value)}
                                 onChange={handleCheckboxChange}
-                                disabled={true}
+
                                 className="mr-3"
                               />
                               {option.label}
@@ -610,7 +610,7 @@ const Screenthree = ({ nextStep, prevStep }) => {
                       // onChange={handleInputChange}
                       rows={5}
                       onChange={handleReportingdescription}
-                      disabled={true} // Specify the number of rows to determine the initial height
+                      // Specify the number of rows to determine the initial height
                     />
                     {/* <div className="my-1">
                       {error.reportingdescription && (
