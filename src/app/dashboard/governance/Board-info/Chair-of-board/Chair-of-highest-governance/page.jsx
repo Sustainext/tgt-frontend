@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import RadioWidget2 from "@/app/shared/widgets/Input/RadioWidget2"; // Ensure this path is correct
+import RadioWidget2 from "../../../../../shared/widgets/Input/radioWidget2"; // Ensure this path is correct
 import "react-tooltip/dist/react-tooltip.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

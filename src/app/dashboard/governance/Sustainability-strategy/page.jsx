@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { MdInfoOutline, MdOutlineClear } from "react-icons/md";
 import "react-tooltip/dist/react-tooltip.css";
 import GovernanceHeader2 from "../GovernanceHeader2";
-import { Socialdata } from "@/app/dashboard/Social/data/socialgriinfo";
+import { Socialdata } from "../../social/data/socialgriinfo";
 import SustainabilityStrategy from "./sustainability-strategy/page";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { ToastContainer } from "react-toastify";
