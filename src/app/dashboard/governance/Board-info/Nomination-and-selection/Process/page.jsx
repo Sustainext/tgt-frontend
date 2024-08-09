@@ -53,7 +53,7 @@ const uiSchema = {
   },
 };
 
-const Process = ({ selectedOrg, selectedCorp, year, month }) => {
+const Process = ({ selectedOrg, selectedCorp, year }) => {
   const [formData, setFormData] = useState([{ Q1: {Q1: "",fileName:"",fileURL:"" } }]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -147,7 +147,7 @@ const Process = ({ selectedOrg, selectedCorp, year, month }) => {
   };
 
   useEffect(() => {
-    if (selectedOrg && year && month) {
+    if (selectedOrg && year) {
       loadFormData();
       toastShown.current = false;
     } else {
@@ -155,7 +155,7 @@ const Process = ({ selectedOrg, selectedCorp, year, month }) => {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, month]);
+  }, [selectedOrg, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
