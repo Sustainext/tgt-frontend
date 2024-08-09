@@ -41,6 +41,8 @@ import StatementnoncomplianceLabeling from "./Marketing-Labeling/Statement-non-c
 import NoncomplianceincidentsMarketing from "./Marketing-Labeling/Non-compliance-incidents-Marketing/page"
 import StatementnoncomplianceMarketing from "./Marketing-Labeling/Statement-non-compliance-Marketing/page"
 import Identifyinginformation from "./BillS-211/Identifying-information/page"
+import Annualreport from './BillS-211/annual-report/page'
+
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -102,7 +104,7 @@ const Social = () => {
             <section className="flex  justify-center ">
               <div className="w-80">
                 <ul>
-                <AccordionItem title="Bill S-211">
+                  <AccordionItem title="Bill S-211">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(39)}
@@ -147,7 +149,7 @@ const Social = () => {
                         {isStepCompleted(39) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                            Identifying Information
+                              Identifying Information
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -158,76 +160,16 @@ const Social = () => {
                               : " text-[12px]  text-gray-600"
                               } `}
                           >
-                        Identifying Information
+                            Identifying Information
                           </p>
                         )}
                       </div>
                     </li>
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(2)}
+                      onClick={() => activeSteps(40)}
                     >
-                      {isStepCompleted(2) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${activeStep === 2
-                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                            } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 2
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(2) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Benefits
-                            </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 2
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Benefits
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(3)}
-                    >
-                      {isStepCompleted(3) ? (
+                      {isStepCompleted(40) ? (
                         <>
                           <div className=" before:bg-sky-800  font-bold">
                             <svg
@@ -247,7 +189,7 @@ const Social = () => {
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${activeStep === 3
+                            className={`${activeStep === 40
                               ? "bi bi-circle-fill fill-sky-800  font-bold "
                               : " bi bi-circle-fill fill-gray-400"
                               } `}
@@ -259,21 +201,21 @@ const Social = () => {
                       )}
 
                       <div className="flex items-center">
-                        {isStepCompleted(3) ? (
+                        {isStepCompleted(40) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Parental Leave
+                              Annual Report
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
                         ) : (
                           <p
-                            className={`${activeStep === 3
+                            className={`${activeStep === 40
                               ? "text-[12px] text-sky-800  font-bold"
                               : " text-[12px]  text-gray-600"
                               } `}
                           >
-                            Parental Leave
+                            Annual Report
                           </p>
                         )}
                       </div>
@@ -2343,7 +2285,7 @@ const Social = () => {
                         {isStepCompleted(35) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                            Statement of non compliance - Labeling
+                              Statement of non compliance - Labeling
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -2354,7 +2296,7 @@ const Social = () => {
                               : " text-[12px]  text-gray-600"
                               } `}
                           >
-                              Statement of non compliance - Labeling
+                            Statement of non compliance - Labeling
                           </p>
                         )}
                       </div>
@@ -2403,7 +2345,7 @@ const Social = () => {
                         {isStepCompleted(36) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                            Non compliance incidents  - Marketing
+                              Non compliance incidents  - Marketing
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -2414,7 +2356,7 @@ const Social = () => {
                               : " text-[12px]  text-gray-600"
                               } `}
                           >
-                              Non compliance incidents  - Marketing
+                            Non compliance incidents  - Marketing
                           </p>
                         )}
                       </div>
@@ -2539,294 +2481,303 @@ const Social = () => {
           </div>
           <div className="w-full ms-3">
             <div>
-            {activeStep === 1 && (
-              <>
-                <div>
-                  <EmployeeHiresTurnover />
-                </div>
-              </>
-            )}
-            {activeStep === 2 && (
-              <>
-                <div>
-                  <Benefits />
-                </div>
-              </>
-            )}
+              {activeStep === 1 && (
+                <>
+                  <div>
+                    <EmployeeHiresTurnover />
+                  </div>
+                </>
+              )}
+              {activeStep === 2 && (
+                <>
+                  <div>
+                    <Benefits />
+                  </div>
+                </>
+              )}
 
-            {activeStep === 3 && (
-              <>
-                <div>
-                  <Parentalleave />
-                </div>
-              </>
-            )}
-            {activeStep === 4 && (
-              <>
-                <div>
-                  <Noticeperiod />
-                </div>
-              </>
-            )}
-            {activeStep === 5 && (
-              <>
-                <div>
-                  <Ohsmanagment />
-                </div>
-              </>
-            )}
-            {activeStep === 6 && (
-              <>
-                <div>
-                  <Riskassessment />
-                </div>
-              </>
-            )}
-            {activeStep === 7 && (
-              <>
-                <div>
-                  <Ohsservices />
-                </div>
-              </>
-            )}
-            {activeStep === 8 && (
-              <>
-                <div>
-                  <Workinvolvement />
-                </div>
-              </>
-            )}
-            {activeStep === 9 && (
-              <>
-                <div>
-                  <Ohstraining />
-                </div>
-              </>
-            )}
-            {activeStep === 10 && (
-              <>
-                <div>
-                  <Promotionhealth />
-                </div>
-              </>
-            )}
-            {activeStep === 11 && (
-              <>
-                <div>
-                  <Preventionohsimpact />
-                </div>
-              </>
-            )}
-            {activeStep === 12 && (
-              <>
-                <div>
-                  <Ohsmanagementsystemcoverage />
-                </div>
-              </>
-            )}
-            {activeStep === 13 && (
-              <>
-                <div>
-                  <Injuries />
-                </div>
-              </>
-            )}
-            {activeStep === 14 && (
-              <>
-                <div>
-                  <Illhealth />
-                </div>
-              </>
-            )}  {activeStep === 15 && (
-              <>
-                <div>
-                  <Traininghours />
-                </div>
-              </>
-            )}
-            {activeStep === 16 && (
-              <>
-                <div>
-                  < Skillupgrade />
-                </div>
-              </>
-            )}
-            {activeStep === 17 && (
-              <>
-                <div>
-                  <Performancedevelopment />
-                </div>
-              </>
-            )}
+              {activeStep === 3 && (
+                <>
+                  <div>
+                    <Parentalleave />
+                  </div>
+                </>
+              )}
+              {activeStep === 4 && (
+                <>
+                  <div>
+                    <Noticeperiod />
+                  </div>
+                </>
+              )}
+              {activeStep === 5 && (
+                <>
+                  <div>
+                    <Ohsmanagment />
+                  </div>
+                </>
+              )}
+              {activeStep === 6 && (
+                <>
+                  <div>
+                    <Riskassessment />
+                  </div>
+                </>
+              )}
+              {activeStep === 7 && (
+                <>
+                  <div>
+                    <Ohsservices />
+                  </div>
+                </>
+              )}
+              {activeStep === 8 && (
+                <>
+                  <div>
+                    <Workinvolvement />
+                  </div>
+                </>
+              )}
+              {activeStep === 9 && (
+                <>
+                  <div>
+                    <Ohstraining />
+                  </div>
+                </>
+              )}
+              {activeStep === 10 && (
+                <>
+                  <div>
+                    <Promotionhealth />
+                  </div>
+                </>
+              )}
+              {activeStep === 11 && (
+                <>
+                  <div>
+                    <Preventionohsimpact />
+                  </div>
+                </>
+              )}
+              {activeStep === 12 && (
+                <>
+                  <div>
+                    <Ohsmanagementsystemcoverage />
+                  </div>
+                </>
+              )}
+              {activeStep === 13 && (
+                <>
+                  <div>
+                    <Injuries />
+                  </div>
+                </>
+              )}
+              {activeStep === 14 && (
+                <>
+                  <div>
+                    <Illhealth />
+                  </div>
+                </>
+              )}  {activeStep === 15 && (
+                <>
+                  <div>
+                    <Traininghours />
+                  </div>
+                </>
+              )}
+              {activeStep === 16 && (
+                <>
+                  <div>
+                    < Skillupgrade />
+                  </div>
+                </>
+              )}
+              {activeStep === 17 && (
+                <>
+                  <div>
+                    <Performancedevelopment />
+                  </div>
+                </>
+              )}
 
-            {activeStep === 18 && (
-              <>
-                <div>
-                  <DiversityBoard />
-                </div>
-              </>
-            )}   {activeStep === 19 && (
-              <>
-                <div>
-                  <Salaryratio />
-                </div>
-              </>
-            )}
-            {activeStep === 20 && (
-              <>
-                <div>
-                  <IncidentsofDiscrimination />
-                </div>
-              </>
-            )}
-            {activeStep === 21 && (
-              <>
-                <div>
-                  <CollectiveBargaining />
-                </div>
-              </>
-            )}
-            {activeStep === 22 && (
-              <>
-                <div>
-                  <Childlabour />
-                </div>
-              </>
-            )}
-            {activeStep === 23 && (
-              <>
-                <div>
-                  <Forcedorcompulsorylabour />
-                </div>
-              </>
-            )}
-            {activeStep === 24 && (
-              <>
-                <div>
-                  <Securitypersonnel />
-                </div>
-              </>
-            )}
-            {activeStep === 25 && (
-              <>
-                <div>
-                  <IndigenousPeople />
-                </div>
-              </>
-            )}
-            {activeStep === 26 && (
-              <>
-                <div>
-                  <CommunityEngagement />
-                </div>
-              </>
-            )}
-            {activeStep === 27 && (
-              <>
-                <div>
-                  <ImpactonCommunity />
-                </div>
-              </>
-            )}
-            {activeStep === 28 && (
-              <>
-                <div>
-                  <Suppliersscreened />
-                </div>
-              </>
-            )}
-            {activeStep === 29 && (
-              <>
-                <div>
-                  <Impactsactionstaken />
-                </div>
-              </>
-            )}
-            {activeStep === 30 && (
-              <>
-                <div>
-                  <PoliticalInvolvement />
-                </div>
-              </>
-            )}
-            {activeStep === 31 && (
-              <>
-                <div>
-                  <ProductServiceSafety />
-                </div>
-              </>
-            )}
-            {activeStep === 32 && (
-              <>
-                <div>
-                  <Compliance />
-                </div>
-              </>
-            )}
-            {activeStep === 33 && (
-              <>
-                <div>
-                  <ProductServicelabelling />
-                </div>
-              </>
-            )}
-            {activeStep === 34 && (
-              <>
-                <div>
-                  <NoncomplianceincidentsLabelling />
-                </div>
-              </>
-            )}
-            {activeStep === 35 && (
-              <>
-                <div>
-                  <StatementnoncomplianceLabeling />
-                </div>
-              </>
-            )}
-            {activeStep === 36 && (
-              <>
-                <div>
-                  <NoncomplianceincidentsMarketing />
-                </div>
-              </>
-            )}
-            {activeStep === 37 && (
-              <>
-                <div>
-                  <StatementnoncomplianceMarketing />
-                </div>
-              </>
-            )}
-            {activeStep === 38 && (
-              <>
-                <div>
-                  <CustomerPrivacy />
-                </div>
-              </>
-            )}
+              {activeStep === 18 && (
+                <>
+                  <div>
+                    <DiversityBoard />
+                  </div>
+                </>
+              )}   {activeStep === 19 && (
+                <>
+                  <div>
+                    <Salaryratio />
+                  </div>
+                </>
+              )}
+              {activeStep === 20 && (
+                <>
+                  <div>
+                    <IncidentsofDiscrimination />
+                  </div>
+                </>
+              )}
+              {activeStep === 21 && (
+                <>
+                  <div>
+                    <CollectiveBargaining />
+                  </div>
+                </>
+              )}
+              {activeStep === 22 && (
+                <>
+                  <div>
+                    <Childlabour />
+                  </div>
+                </>
+              )}
+              {activeStep === 23 && (
+                <>
+                  <div>
+                    <Forcedorcompulsorylabour />
+                  </div>
+                </>
+              )}
+              {activeStep === 24 && (
+                <>
+                  <div>
+                    <Securitypersonnel />
+                  </div>
+                </>
+              )}
+              {activeStep === 25 && (
+                <>
+                  <div>
+                    <IndigenousPeople />
+                  </div>
+                </>
+              )}
+              {activeStep === 26 && (
+                <>
+                  <div>
+                    <CommunityEngagement />
+                  </div>
+                </>
+              )}
+              {activeStep === 27 && (
+                <>
+                  <div>
+                    <ImpactonCommunity />
+                  </div>
+                </>
+              )}
+              {activeStep === 28 && (
+                <>
+                  <div>
+                    <Suppliersscreened />
+                  </div>
+                </>
+              )}
+              {activeStep === 29 && (
+                <>
+                  <div>
+                    <Impactsactionstaken />
+                  </div>
+                </>
+              )}
+              {activeStep === 30 && (
+                <>
+                  <div>
+                    <PoliticalInvolvement />
+                  </div>
+                </>
+              )}
+              {activeStep === 31 && (
+                <>
+                  <div>
+                    <ProductServiceSafety />
+                  </div>
+                </>
+              )}
+              {activeStep === 32 && (
+                <>
+                  <div>
+                    <Compliance />
+                  </div>
+                </>
+              )}
+              {activeStep === 33 && (
+                <>
+                  <div>
+                    <ProductServicelabelling />
+                  </div>
+                </>
+              )}
+              {activeStep === 34 && (
+                <>
+                  <div>
+                    <NoncomplianceincidentsLabelling />
+                  </div>
+                </>
+              )}
+              {activeStep === 35 && (
+                <>
+                  <div>
+                    <StatementnoncomplianceLabeling />
+                  </div>
+                </>
+              )}
+              {activeStep === 36 && (
+                <>
+                  <div>
+                    <NoncomplianceincidentsMarketing />
+                  </div>
+                </>
+              )}
+              {activeStep === 37 && (
+                <>
+                  <div>
+                    <StatementnoncomplianceMarketing />
+                  </div>
+                </>
+              )}
+              {activeStep === 38 && (
+                <>
+                  <div>
+                    <CustomerPrivacy />
+                  </div>
+                </>
+              )}
               {activeStep === 39 && (
-              <>
-                <div>
-                  <Identifyinginformation />
-                </div>
-              </>
-            )}
+                <>
+                  <div>
+                    <Identifyinginformation />
+                  </div>
+                </>
+              )}
 
-             </div>
+              {activeStep === 40 && (
+                <>
+                  <div>
+                    <Annualreport />
+                  </div>
+                </>
+              )}
+
+            </div>
             <div>
               <div className="w-full mb-5">
                 <div className="absolute right-5">
                   <div className="flex  me-2  mb-5">
-                    <button
-                      className={`${activeStep === 1 ? "text-gray-500" : "text-blue-500"
-                        } px-3 py-1.5 rounded font-bold `}
-                      onClick={handlePrevious}
-                      disabled={activeStep === 1}
-                    >
-                      &lt; Previous
-                    </button>
-
+                    {(activeStep !== 39 && activeStep !== 40) && (
+                      <button
+                        className={`${activeStep === 1 ? "text-gray-500" : "text-blue-500"
+                          } px-3 py-1.5 rounded font-bold `}
+                        onClick={handlePrevious}
+                        disabled={activeStep === 1}
+                      >
+                        &lt; Previous
+                      </button>
+                    )}
                     {activeStep < 38 && (
                       <button
                         className={`${activeStep === 38

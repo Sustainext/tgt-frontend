@@ -7,7 +7,8 @@ import { Socialdata } from "@/app/dashboard/Social/data/socialgriinfo";
 import GovernanceStructure from "./governance-structure/page";
 import CommitteeOfHighestGovernanceBody from "./committees/page";
 import CompositionOfHighestGovernanceBody from "./composition/page";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const BoardInfo = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [year, setYear] = useState(2024);
@@ -40,6 +41,7 @@ const BoardInfo = () => {
 
   return (
     <>
+        <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">

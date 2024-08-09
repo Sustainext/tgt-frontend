@@ -407,7 +407,6 @@ const WaterstressQ1 = ({location, year, month}) => {
       };
     return (
         <>
-             <ToastContainer style={{ fontSize: "12px" }} />
             <div className="w-full max-w-xs mb-2">
                 <label className="text-sm leading-5 text-gray-700 flex">
                 Do you withdraw/discharge water from water stress areas?

@@ -6,7 +6,8 @@ import GovernanceHeader2 from "../../GovernanceHeader2";
 import { Socialdata } from "@/app/dashboard/Social/data/socialgriinfo";
 import ChairOfHighestGovernance from "./Chair-of-highest-governance/page";
 import { Tooltip as ReactTooltip } from "react-tooltip";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ChairOfBoard = () => {
   const [activeMonth, setActiveMonth] = useState(1);
@@ -40,6 +41,7 @@ const ChairOfBoard = () => {
 
   return (
     <>
+      <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">

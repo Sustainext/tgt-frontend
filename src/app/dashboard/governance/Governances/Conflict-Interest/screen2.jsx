@@ -15,7 +15,7 @@ const widgets = {
     TableWidget: GovernancetableWidget,
 };
 
-const view_path = 'gri-social-community_engagement-413-1a-number_of_operations'
+const view_path = 'gri-governance-conflict_of_interest-2-15-b-report'
 const client_id = 1
 const user_id = 1
 
@@ -25,7 +25,7 @@ const schema = {
         type: 'object',
         properties: {
             Criteria: { type: "string", title: "Conflict of interest relating to:" },
-            Disclosed: { type: "string",enum: ['Yes', 'No', 'NA'], title: "Disclosed?" },
+            Disclosed: { type: "string", enum: ['Yes', 'No', 'NA'], title: "Disclosed?" },
 
 
         },
@@ -36,30 +36,30 @@ const uiSchema = {
     "ui:widget": "TableWidget",
     'ui:options': {
         titles: [
-            { key: "Criteria", title: "Conflict of interest relating to:", type:"number", display:"none" },
-            { key: "Disclosed", title: "Disclosed?", type:"number",display:"block",tooltip:"Indicate whether the given conflict of interest are disclosed to stakeholders."  },
+            { key: "Criteria", title: "Conflict of interest relating to:", type: "number", display: "none" },
+            { key: "Disclosed", title: "Disclosed?", type: "number", display: "block", tooltip: "Indicate whether the given conflict of interest are disclosed to stakeholders." },
 
 
         ],
         rowLabels: [
-            { title: "Cross-board membership", tooltip: "Mention the number of operations that include the use of social impact assessments, including gender impact assessments, based on participatory processes.",display:"none" },
-            { title: "Cross-shareholding with suppliers and other stakeholders", tooltip: "Mention the number of operations that include the use of environmental impact assessments and ongoing monitoring.",display:"none" },
-            { title: "Existence of controlling shareholders", tooltip: "Mention the number of operations that include the use of public disclosure of results of environmental and social impact assessments",display:"none" },
-            { title: "Related parties, theri relationships, transactions, and outstanding balances", tooltip: "Mention the number of operations that include the use of local community development programs based on local communities’ needs.",display:"none" },
-            { title: "Others", tooltip: "Mention the number of operations that include the use of local community development programs based on local communities’ needs.",display:"none" },
+            { title: "Cross-board membership", tooltip: "Mention the number of operations that include the use of social impact assessments, including gender impact assessments, based on participatory processes.", display: "none" },
+            { title: "Cross-shareholding with suppliers and other stakeholders", tooltip: "Mention the number of operations that include the use of environmental impact assessments and ongoing monitoring.", display: "none" },
+            { title: "Existence of controlling shareholders", tooltip: "Mention the number of operations that include the use of public disclosure of results of environmental and social impact assessments", display: "none" },
+            { title: "Related parties, theri relationships, transactions, and outstanding balances", tooltip: "Mention the number of operations that include the use of local community development programs based on local communities’ needs.", display: "none" },
+            { title: "Others", tooltip: "Mention the number of operations that include the use of local community development programs based on local communities’ needs.", display: "none" },
 
         ]
     },
 };
 
-const Screen2 = ({ location, year, month }) => {
+const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
     const { open } = GlobalState();
     const initialFormData = [
-        { Disclosed: ""},
-        { Disclosed: ""},
-        { Disclosed: ""},
-        { Disclosed: ""},
-        { Disclosed: ""},
+        { Disclosed: "" },
+        { Disclosed: "" },
+        { Disclosed: "" },
+        { Disclosed: "" },
+        { Disclosed: "" },
     ];
     const [formData, setFormData] = useState(initialFormData);
     const [r_schema, setRemoteSchema] = useState({})
@@ -86,9 +86,9 @@ const Screen2 = ({ location, year, month }) => {
             user_id: user_id,
             path: view_path,
             form_data: formData,
-            location,
+            corporate: selectedCorp,
+            organisation: selectedOrg,
             year,
-            month
         }
 
         const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
@@ -154,26 +154,23 @@ const Screen2 = ({ location, year, month }) => {
     };
 
 
-    // fetch backend and replace initialized forms
     useEffect(() => {
-        if (location && year && month) {
+        if (selectedOrg && year) {
             loadFormData();
-            toastShown.current = false; // Reset the flag when valid data is present
+            toastShown.current = false;
         } else {
-            // Only show the toast if it has not been shown already
             if (!toastShown.current) {
-
-                toastShown.current = true; // Set the flag to true after showing the toast
+                toastShown.current = true;
             }
         }
-    }, [location, year, month]); // Dependencies // React only triggers this effect if these dependencies change
+    }, [selectedOrg, year, selectedCorp]);
 
 
 
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Form data:', formData);
-        // updateFormData()
+        updateFormData()
     };
     return (
         <>
@@ -182,8 +179,8 @@ const Screen2 = ({ location, year, month }) => {
                 <div className='mb-4 flex'>
                     <div className='w-[80%] relative'>
                         <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold mb-2'>
-                        Report whether conflicts of interest are disclosed to stakeholders, including, at a minimum,
-                        conflicts of interest relating to:-
+                            Report whether conflicts of interest are disclosed to stakeholders, including, at a minimum,
+                            conflicts of interest relating to:-
 
                         </h2>
                     </div>
@@ -197,8 +194,8 @@ const Screen2 = ({ location, year, month }) => {
                     </div>
                 </div>
                 <Form
-                    schema={schema}
-                    uiSchema={uiSchema}
+                    schema={r_schema}
+                    uiSchema={r_ui_schema}
                     formData={formData}
                     onChange={handleChange}
                     validator={validator}
@@ -206,9 +203,11 @@ const Screen2 = ({ location, year, month }) => {
                 />
                 <div className='mb-8'>
                 <button type="button"
-                        className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? 'cursor-not-allowed' : ''}`}
+                        className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year ? "cursor-not-allowed" : ""
+                            }`}
                         onClick={handleSubmit}
-                        disabled={!location || !year}>
+                        disabled={!selectedOrg || !year}
+                    >
                         Submit
                     </button>
                 </div>
