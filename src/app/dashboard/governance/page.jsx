@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
-import BoardInfo from "./Board-info/structure/page";
+import BoardInfo from "./Board-info/Structure/page";
 import ManagementImpact from './Board-Involvement-Sustainability/Management-Impact/page'
 import DelegationResponsibility from "./Board-Involvement-Sustainability/Delegation-Responsibility/page"
 import SustainabilityReporting from "./Board-Involvement-Sustainability/Sustainability-Reporting/page"

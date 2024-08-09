@@ -4,7 +4,7 @@ import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import inputWidget2 from "@/app/shared/widgets/Input/inputWidget2";
 import "react-tooltip/dist/react-tooltip.css";
-import RadioWidget2 from "@/app/shared/widgets/Input/RadioWidget2";
+import RadioWidget2 from "../../../../../shared/widgets/Input/radioWidget2.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
@@ -71,7 +71,7 @@ const uiSchema = {
         Q3: {
             "ui:title": "Report the frequency of the evaluations",
             "ui:description": " ",
-            "ui:descriptionClassNames": "mb-2", 
+            "ui:descriptionClassNames": "mb-2",
             "ui:tooltip":
                 "Provide an explanation of how the highest governance body engages with stakeholders to support these processes? ",
             "ui:tooltipdisplay": "none",
