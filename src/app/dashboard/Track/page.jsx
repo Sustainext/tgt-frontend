@@ -2,6 +2,8 @@
 import React, { useState, useLayoutEffect } from 'react';
 import Aside from './Aside';
 import EnvironmentTrack from './Environment/page';
+import SocialTrack from './Social/page'
+import GovernanceTrack from './Governance/page'
 import { GlobalState } from '@/Context/page';
 
 const Index = () => {
@@ -52,14 +54,12 @@ const Index = () => {
           {activeModule === 'Environment' && (
             <EnvironmentTrack contentSize={contentSize} />
           )}
-          {activeModule === 'Social' && (
-            <iframe
-              frameBorder='0'
-              width={contentSize.width}
-              height={contentSize.height}
-              src={`${process.env.NEXT_APP_POWERBI_URL}`}
-            ></iframe>
-          )}
+          {activeModule === 'Social' && 
+          <SocialTrack contentSize={contentSize} />
+          }
+          {activeModule === 'Governance' && 
+          <GovernanceTrack contentSize={contentSize} />
+          }
         </div>
       </div>
     </div>

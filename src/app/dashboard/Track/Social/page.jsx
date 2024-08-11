@@ -2,26 +2,22 @@
 import React, { useState } from 'react';
 import { GiPublicSpeaker } from "react-icons/gi";
 
-const EnvironmentTrack = ({ contentSize }) => {
-  const [activeTab, setActiveTab] = useState('zohoEmissions');
+const SocialTrack = ({ contentSize }) => {
+  const [activeTab, setActiveTab] = useState('zohoSocial');
 
   const { width, height } = contentSize;
 
   const tabs = [
-    { id: 'zohoEmissions', label: 'Emissions (Zoho)' },
-    { id: 'powerbiEmissions', label: 'Emissions (PowerBI)' },
-    { id: 'zohoEnergy', label: 'Energy (Zoho)' },
-    { id: 'powerbiEnergy', label: 'Energy (PowerBI)' },
-    { id: 'zohoWaste', label: 'Waste (Zoho)' },
-    { id: 'powerbiWaste', label: 'Waste (PowerBI)' },
+    { id: 'zohoSocial', label: 'Social (Zoho)' },
+    { id: 'powerbiSocial', label: 'Social (PowerBI)' },
   ];
   
   const getIframeUrl = (tabId) => {
     switch (tabId) {
-      case 'zohoEmissions':
-        return process.env.NEXT_APP_TRACK_URL;
-      case 'powerbiEmissions':
-        return process.env.NEXT_APP_POWERBI_URL;
+      case 'zohoSocial':
+        return null;
+      case 'powerbiSocial':
+        return null;
       default:
         return null;
     }
@@ -99,4 +95,4 @@ const EnvironmentTrack = ({ contentSize }) => {
   );
 };
 
-export default EnvironmentTrack;
+export default SocialTrack;

@@ -2,30 +2,26 @@
 import React, { useState } from 'react';
 import { GiPublicSpeaker } from "react-icons/gi";
 
-const EnvironmentTrack = ({ contentSize }) => {
-  const [activeTab, setActiveTab] = useState('zohoEmissions');
+const GovernanceTrack = ({ contentSize }) => {
+    const [activeTab, setActiveTab] = useState('zohoGovernance');
 
-  const { width, height } = contentSize;
-
-  const tabs = [
-    { id: 'zohoEmissions', label: 'Emissions (Zoho)' },
-    { id: 'powerbiEmissions', label: 'Emissions (PowerBI)' },
-    { id: 'zohoEnergy', label: 'Energy (Zoho)' },
-    { id: 'powerbiEnergy', label: 'Energy (PowerBI)' },
-    { id: 'zohoWaste', label: 'Waste (Zoho)' },
-    { id: 'powerbiWaste', label: 'Waste (PowerBI)' },
-  ];
+    const { width, height } = contentSize;
   
-  const getIframeUrl = (tabId) => {
-    switch (tabId) {
-      case 'zohoEmissions':
-        return process.env.NEXT_APP_TRACK_URL;
-      case 'powerbiEmissions':
-        return process.env.NEXT_APP_POWERBI_URL;
-      default:
-        return null;
-    }
-  };
+    const tabs = [
+      { id: 'zohoGovernance', label: 'Governance (Zoho)' },
+      { id: 'powerbiGovernance', label: 'Governance (PowerBI)' },
+    ];
+    
+    const getIframeUrl = (tabId) => {
+      switch (tabId) {
+        case 'zohoGovernance':
+          return null;
+        case 'powerbiGovernance':
+          return null;
+        default:
+          return null;
+      }
+    };
 
   return (
     <div className='flex flex-col justify-start items-center' style={{ width, height }}>
@@ -99,4 +95,4 @@ const EnvironmentTrack = ({ contentSize }) => {
   );
 };
 
-export default EnvironmentTrack;
+export default GovernanceTrack;
