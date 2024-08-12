@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
-import BoardInfo from "./Board-info/structure/page";
+import BoardInfo from "./Board-info/Structure/page";
 import ManagementImpact from './Board-Involvement-Sustainability/Management-Impact/page'
 import DelegationResponsibility from "./Board-Involvement-Sustainability/Delegation-Responsibility/page"
 import SustainabilityReporting from "./Board-Involvement-Sustainability/Sustainability-Reporting/page"
@@ -11,6 +11,10 @@ import NominationAndSelection from "./Board-info/Nomination-and-selection/page";
 import ChairOfBoard from "./Board-info/Chair-of-board/page";
 import Criticalconcerns from "./Governances/Critical-Concerns/page"
 import SustainabilityKnowledge from "./Performance-renumerations/Sustainability-Knowledge/page"
+import SustainabilityStrategyPage from "./Sustainability-strategy/page";
+import ManagingConcerns from "./Managing-concerns/page";
+import PerformanceEvaluations from "./Performance-renumerations/Performance-evaluations/page";
+
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -659,7 +663,7 @@ const Governance = () => {
                         )}
                       </div>
                     </li>
-                    <li
+                    {/* <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(11)}
                     >
@@ -821,6 +825,304 @@ const Governance = () => {
                           </p>
                         )}
                       </div>
+                    </li> */}
+                  </AccordionItem>
+                  <AccordionItem title="Sustainability Strategy">
+                  <li
+                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+                      onClick={() => activeSteps(14)}
+                    >
+                      {isStepCompleted(14) ? (
+                        <>
+                          <div className="before:bg-sky-800  font-bold">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              className="bi bi-circle-fill fill-sky-800  font-bold "
+                              viewBox="0 0 16 16"
+                            >
+                              <circle cx="8" cy="8" r="8" />
+                            </svg>
+                          </div>
+                        </>
+                      ) : (
+                        <div>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            className={`${activeStep === 13
+                                ? "bi bi-circle-fill fill-sky-800  font-bold "
+                                : " bi bi-circle-fill fill-gray-400"
+                              } `}
+                            viewBox="0 0 16 16"
+                          >
+                            <circle cx="8" cy="8" r="8" />
+                          </svg>
+                        </div>
+                      )}
+
+                      <div className="flex items-center">
+                        {isStepCompleted(14) ? (
+                          <>
+                            <p className="text-[12px] text-sky-800  font-bold">
+                              Sustainability Strategy
+                            </p>
+                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                          </>
+                        ) : (
+                          <p
+                            className={`${
+                              activeStep === 14
+                                ? "text-[12px] text-sky-800  font-bold"
+                                : " text-[12px]  text-gray-600"
+                            } `}
+                          >
+                            Sustainability Strategy
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                  </AccordionItem>
+                  {/* <AccordionItem title="Policy">
+                    <li
+                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+                      onClick={() => activeSteps(9)}
+                    >
+                      {isStepCompleted(9) ? (
+                        <>
+                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              className="bi bi-circle-fill fill-sky-800  font-bold "
+                              viewBox="0 0 16 16"
+                            >
+                              <circle cx="8" cy="8" r="8" />
+                            </svg>
+                          </div>
+                        </>
+                      ) : (
+                        <div
+                          className={`${
+                            activeStep === 9
+                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                          } `}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            className={`${
+                              activeStep === 9
+                                ? "bi bi-circle-fill fill-sky-800  font-bold "
+                                : " bi bi-circle-fill fill-gray-400"
+                            } `}
+                            viewBox="0 0 16 16"
+                          >
+                            <circle cx="8" cy="8" r="8" />
+                          </svg>
+                        </div>
+                      )}
+
+                      <div className="flex items-center">
+                        {isStepCompleted(9) ? (
+                          <>
+                            <p className="text-[12px] text-sky-800  font-bold">
+                              Conflict of Interest
+                            </p>
+                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                          </>
+                        ) : (
+                          <p
+                            className={`${
+                              activeStep === 7
+                                ? "text-[12px] text-sky-800  font-bold"
+                                : " text-[12px]  text-gray-600"
+                            } `}
+                          >
+                            Sustainability Knowledge
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                    <li
+                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+                      onClick={() => activeSteps(10)}
+                    >
+                      {isStepCompleted(8) ? (
+                        <>
+                          <div className="before:bg-sky-800  font-bold">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              className="bi bi-circle-fill fill-sky-800  font-bold "
+                              viewBox="0 0 16 16"
+                            >
+                              <circle cx="8" cy="8" r="8" />
+                            </svg>
+                          </div>
+                        </>
+                      ) : (
+                        <div>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            className={`${
+                              activeStep === 10
+                                ? "bi bi-circle-fill fill-sky-800  font-bold "
+                                : " bi bi-circle-fill fill-gray-400"
+                            } `}
+                            viewBox="0 0 16 16"
+                          >
+                            <circle cx="8" cy="8" r="8" />
+                          </svg>
+                        </div>
+                      )}
+
+                      <div className="flex items-center">
+                        {isStepCompleted(10) ? (
+                          <>
+                            <p className="text-[12px] text-sky-800  font-bold">
+                              Critical Concerns
+                            </p>
+                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                          </>
+                        ) : (
+                          <p
+                            className={`${
+                              activeStep === 13
+                                ? "text-[12px] text-sky-800  font-bold"
+                                : " text-[12px]  text-gray-600"
+                              } `}
+                          >
+                            Sustainability Strategy
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                  </AccordionItem> */}
+                  {/* <AccordionItem title="Remediation">
+                  <li
+                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+                      onClick={() => activeSteps(14)}
+                    >
+                      {isStepCompleted(14) ? (
+                        <>
+                          <div className="before:bg-sky-800  font-bold">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              className="bi bi-circle-fill fill-sky-800  font-bold "
+                              viewBox="0 0 16 16"
+                            >
+                              <circle cx="8" cy="8" r="8" />
+                            </svg>
+                          </div>
+                        </>
+                      ) : (
+                        <div>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            className={`${
+                              activeStep === 13
+                                ? "bi bi-circle-fill fill-sky-800  font-bold "
+                                : " bi bi-circle-fill fill-gray-400"
+                            } `}
+                            viewBox="0 0 16 16"
+                          >
+                            <circle cx="8" cy="8" r="8" />
+                          </svg>
+                        </div>
+                      )}
+
+                      <div className="flex items-center">
+                        {isStepCompleted(14) ? (
+                          <>
+                            <p className="text-[12px] text-sky-800  font-bold">
+                              Sustainability Strategy
+                            </p>
+                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                          </>
+                        ) : (
+                          <p
+                            className={`${
+                              activeStep === 14
+                                ? "text-[12px] text-sky-800  font-bold"
+                                : " text-[12px]  text-gray-600"
+                            } `}
+                          >
+                            Sustainability Strategy
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                  </AccordionItem> */}
+                  <AccordionItem title="Managing Concerns">
+                  <li
+                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+                      onClick={() => activeSteps(18)}
+                    >
+                      {isStepCompleted(18) ? (
+                        <>
+                          <div className="before:bg-sky-800  font-bold">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              className="bi bi-circle-fill fill-sky-800  font-bold "
+                              viewBox="0 0 16 16"
+                            >
+                              <circle cx="8" cy="8" r="8" />
+                            </svg>
+                          </div>
+                        </>
+                      ) : (
+                        <div>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            className={`${
+                              activeStep === 13
+                                ? "bi bi-circle-fill fill-sky-800  font-bold "
+                                : " bi bi-circle-fill fill-gray-400"
+                            } `}
+                            viewBox="0 0 16 16"
+                          >
+                            <circle cx="8" cy="8" r="8" />
+                          </svg>
+                        </div>
+                      )}
+
+                      <div className="flex items-center">
+                        {isStepCompleted(18) ? (
+                          <>
+                            <p className="text-[12px] text-sky-800  font-bold">
+                              Advice & Concerns
+                            </p>
+                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                          </>
+                        ) : (
+                          <p
+                            className={`${
+                              activeStep === 18
+                                ? "text-[12px] text-sky-800  font-bold"
+                                : " text-[12px]  text-gray-600"
+                            } `}
+                          >
+                            Advice & Concerns
+                          </p>
+                        )}
+                      </div>
                     </li>
                   </AccordionItem>
                 </ul>
@@ -874,8 +1176,21 @@ const Governance = () => {
                   <div><SustainabilityKnowledge /> </div>
                 </>
               )}
-
-
+              {activeStep === 10 && (
+                <>
+                  <div><PerformanceEvaluations/> </div>
+                </>
+              )}
+              {activeStep === 14 && (
+                <>
+                  <div><SustainabilityStrategyPage/> </div>
+                </>
+              )}
+              {activeStep === 18 && (
+                <>
+                  <div><ManagingConcerns/> </div>
+                </>
+              )}
             </div>
             {/* <div>
               <div className="w-full mb-5">

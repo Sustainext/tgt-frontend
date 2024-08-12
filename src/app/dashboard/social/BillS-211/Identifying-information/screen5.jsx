@@ -399,7 +399,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                 name={option.key}
                 checked={checkboxStates[option.key]}
                 onChange={handleCheckboxChange(option.key)}
-                disabled={true}
+
                 className="mr-3 pt-1 scale-90 rounded-xl"
               />
               {option.label}
@@ -442,7 +442,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                 name={option.key}
                 checked={checkboxStates[option.key]}
                 onChange={handleCheckboxChange(option.key)}
-                disabled={true}
+
                 className="mr-3 pt-1 scale-90 rounded-xl"
               />
               {option.label}
@@ -463,7 +463,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
         >
           <div className="text-left mb-5 ml-6 mt-4">
             <p className="text-sm">Social</p>
-            <p className="gradient-text text-[22px]">
+           <p className="gradient-text text-[22px] h-[24px]">
               Bill S-211 - Fighting Bill Forced Labour and Child Labour in
               Supply Chains Act
             </p>
@@ -563,7 +563,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
           <div className="w-[80%] mb-5">
             <div className="float-right">
               <button
-                className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                 disabled
               >
                 &lt; Previous
@@ -626,7 +626,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                       checked={isCheckednew}
                       onChange={handleCheckboxChangenew("isCheckednew")}
                       className="mr-3 pt-1"
-                      disabled={true}
+
                     />
                     Listed on a stock exchange in Canada
                   </label>
@@ -640,7 +640,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                         checked={isChecked}
                         onChange={handleCheckboxChange("isChecked")}
                         className="mr-3 pt-1"
-                        disabled={true}
+
                       />
                       Canadian business presence (select all that apply)
                     </label>
@@ -654,7 +654,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                         checked={isCheckedone}
                         onChange={handleCheckboxChange("isCheckedone")}
                         className="mr-3 pt-1"
-                        disabled={true}
+
                       />
                       Meets size-related thresholds (select all that apply):
                     </label>
@@ -666,7 +666,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
               <div className="w-[80%] mb-5 mt-5">
                 <div className="float-right">
                   <button
-                    className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                    className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                     onClick={prevStep}
                   >
                     &lt; Previous
@@ -753,7 +753,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
               <div className="w-[80%] mb-5">
                 <div className="float-right">
                   <button
-                    className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                    className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                     onClick={prevStep}
                   >
                     &lt; Previous

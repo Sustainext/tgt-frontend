@@ -345,17 +345,17 @@ const Screenend = ({ prevStep }) => {
   // };
   const handleDownload = async () => {
     setLoading(true);
-  
+
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/canadabills211/generate-csv/${localStorage.getItem("user_id")}`);
-  
+
       if (!response.ok) {
         // Parse the error message from the JSON response
         const errorResponse = await response.json(); // Assuming the server responds with a JSON object on error
         // Throw a new error with the message from the server's response
         throw new Error(errorResponse.error || 'Unknown error occurred'); // Fallback to a generic error message if none provided
       }
-  
+
       const blob = await response.blob();
       const downloadUrl = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
@@ -376,16 +376,16 @@ const Screenend = ({ prevStep }) => {
         progress: undefined,
         theme: "colored",
       });
-    
+
     } finally {
       setLoading(false);
     }
   };
-  
-  
-  
-  
-  
+
+
+
+
+
   return (
     <>
       <ToastContainer style={{ fontSize: "13px" }} />
@@ -397,7 +397,7 @@ const Screenend = ({ prevStep }) => {
         >
           <div className="text-left mb-5 ml-6 mt-4">
             <p className="text-sm">Social</p>
-            <p className="gradient-text text-[22px]">
+           <p className="gradient-text text-[22px] h-[24px]">
               Bill S-211 - Fighting Bill Forced Labour and Child Labour in
               Supply Chains Act
             </p>
@@ -560,14 +560,19 @@ const Screenend = ({ prevStep }) => {
                 </div> */}
               </div>
             </form>
-            <div className="float-right">
+            <div className="w-[91%]">
+            <div className=" float-right">
               <button
-                className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                className="px-3 py-1.5 rounded font-semibold w-[120px] text-gray-600 text-[14px]"
                 onClick={prevStep}
               >
                 &lt; Previous
               </button>
+
             </div>
+            </div>
+
+
           </div>
         </>
       ) : (
@@ -617,7 +622,7 @@ const Screenend = ({ prevStep }) => {
                           value="Yes"
                           checked={reportradio === "Yes"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -638,7 +643,7 @@ const Screenend = ({ prevStep }) => {
                           value="No"
                           checked={reportradio === "No"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -672,7 +677,7 @@ const Screenend = ({ prevStep }) => {
                                 value={option.value}
                                 checked={selectedOptions.includes(option.value)}
                                 onChange={handleCheckboxChange}
-                                disabled={true}
+
                                 className="mr-3"
                               />
                               {option.label}
@@ -689,7 +694,7 @@ const Screenend = ({ prevStep }) => {
                               } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
                               value={reportingentity}
                               onChange={handleReportingentity}
-                              disabled={true}
+
                             ></input>
                           </div>
                         )}
@@ -725,7 +730,7 @@ const Screenend = ({ prevStep }) => {
                       // onChange={handleInputChange}
                       rows={5}
                       onChange={handleReportingdescription}
-                      disabled={true} // Specify the number of rows to determine the initial height
+                      // Specify the number of rows to determine the initial height
                     />
                     <div className="my-1">
                       {error.reportingdescription && (
@@ -736,13 +741,19 @@ const Screenend = ({ prevStep }) => {
                     </div>
                   </div>
                 </form>
-                <div className="w-[90%] mb-5">
+                <div className="w-[97s%] mb-5">
                   <div className="float-right">
                     <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                       onClick={prevStep}
                     >
                       &lt; Previous
+                    </button>
+                    <button
+                      className="px-3 py-1.5 font-semibold rounded ml-2 w-[120px] text-[12px] bg-blue-500 text-white"
+
+                    >
+                       Submit
                     </button>
                     {/* {loading ? (
                       <button
@@ -914,7 +925,7 @@ const Screenend = ({ prevStep }) => {
                 <div className="w-[90%] mb-5">
                   <div className="float-right">
                     <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                       onClick={prevStep}
                     >
                       &lt; Previous

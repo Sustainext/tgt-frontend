@@ -248,7 +248,6 @@ const Sharedresource = ({location, year, month}) => {
 
   return (
     <>
-    <ToastContainer style={{ fontSize: "12px" }} />
       <div >
         <div>
         <Form

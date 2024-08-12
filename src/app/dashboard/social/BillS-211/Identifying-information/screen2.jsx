@@ -276,7 +276,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
         >
           <div className="text-left mb-5 ml-6 mt-4">
             <p className="text-sm">Social</p>
-            <p className="gradient-text text-[22px]">
+           <p className="gradient-text text-[22px] h-[24px]">
               Bill S-211 - Fighting Bill Forced Labour and Child Labour in
               Supply Chains Act
             </p>
@@ -415,7 +415,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
               <div className="w-[80%] mb-5">
                 <div className="float-right">
                   <button
-                    className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                    className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                     disabled
                   >
                     &lt; Previous
@@ -481,7 +481,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                         checked={reportradio === "Yes"}
                         onChange={handleReportnradio}
                         className="radio-label"
-                        disabled={true}
+
                       />
                        {" "}
                       <label
@@ -501,7 +501,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                         value="No"
                         checked={reportradio === "No"}
                         onChange={handleReportnradio}
-                        disabled={true}
+
                       />
                        {" "}
                       <label
@@ -528,7 +528,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                         <input
                           type="date"
                           defaultValue={reportingdate}
-                          disabled={true}
+
                           className="w-[80%] border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer "
                         />
                       </div>
@@ -549,7 +549,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                           placeholder="Enter a description..."
                           className="w-[80%] border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer "
                           defaultValue={reportingdescription}
-                          disabled={true}
+
                           // value={formData.countriesOfOperation}
                           // onChange={handleInputChange}
                           rows={5}
@@ -563,7 +563,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                 <div className="w-[80%] mb-5">
                   <div className="float-right">
                     <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                       onClick={prevStep}
                     >
                       &lt; Previous
@@ -693,7 +693,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                 <div className="w-[80%] mb-5">
                   <div className="float-right">
                     <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                       onClick={prevStep}
                     >
                       &lt; Previous

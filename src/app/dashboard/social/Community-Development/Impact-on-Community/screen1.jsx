@@ -183,6 +183,7 @@ const Screen1 = ({ location, year, month }) => {
             localcommunities: "",
             locationofoperations: "",
             potentialnegative: "",
+            impactsoftheOperation:"",
 
 
         };

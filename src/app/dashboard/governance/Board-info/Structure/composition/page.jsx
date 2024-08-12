@@ -142,7 +142,6 @@ const CompositionOfHighestGovernanceBody = ({
   selectedOrg,
   selectedCorp,
   year,
-  month,
 }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -216,7 +215,7 @@ const CompositionOfHighestGovernanceBody = ({
   };
 
   useEffect(() => {
-    if (selectedOrg && year && month) {
+    if (selectedOrg && year) {
       loadFormData();
       toastShown.current = false;
     } else {
@@ -224,7 +223,7 @@ const CompositionOfHighestGovernanceBody = ({
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, month]);
+  }, [selectedOrg, selectedCorp, year]);
 
   const handleSubmit = ({ formData }) => {
     console.log("Form data:", formData);

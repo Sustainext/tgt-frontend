@@ -448,7 +448,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
         >
           <div className="text-left mb-5 ml-6 mt-4">
             <p className="text-sm">Social</p>
-            <p className="gradient-text text-[22px]">
+           <p className="gradient-text text-[22px] h-[24px]">
               Bill S-211 - Fighting Bill Forced Labour and Child Labour in
               Supply Chains Act
             </p>
@@ -688,7 +688,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
             <div className="w-[90%] mb-5">
               <div className="float-right">
                 <button
-                  className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                  className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                   disabled
                 >
                   &lt; Previous
@@ -718,7 +718,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
                   {data !== null ? (
                     <MdOutlineModeEditOutline
                     className="text-[15.5px] ml-2 mt-1 cursor-pointer"
- 
+
                       onClick={handleeditClick}
                     />
                   ) : (
@@ -751,7 +751,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
                           value="Yes"
                           checked={reportradio === "Yes"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -773,7 +773,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
                           value="Yesone"
                           checked={reportradio === "Yesone"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -794,7 +794,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
                           value="No"
                           checked={reportradio === "No"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -832,7 +832,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
                               checked={selectedOptions.includes(option.value)}
                               onChange={handleCheckboxChange}
                               className="mr-3"
-                              disabled={true}
+
                             />
                             {option.label}
                           </label>
@@ -849,7 +849,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
                             } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
                             value={reportingentity}
                             onChange={handleReportingentity}
-                            disabled={true}
+
                           ></input>
                           {error.reportingentity && (
                             <div className="text-red-500 ml-1">
@@ -887,7 +887,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
                                 optionsone.value
                               )}
                               onChange={handleCheckboxChangeone}
-                              disabled={true}
+
                               className="mr-3"
                             />
                             {optionsone.label}
@@ -906,7 +906,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
                             } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
                             value={reportingentityone}
                             onChange={handleReportingentityone}
-                            disabled={true}
+
                           ></input>
                         </div>
                       )}
@@ -941,7 +941,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
                       // onChange={handleInputChange}
                       rows={5}
                       onChange={handleReportingdescription}
-                      disabled={true} // Specify the number of rows to determine the initial height
+                      // Specify the number of rows to determine the initial height
                     />
                     {/* <div className="my-1">
                       {error.reportingdescription && (
@@ -955,7 +955,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
                 <div className="w-[90%] mb-5">
                   <div className="float-right">
                     <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                       onClick={prevStep}
                     >
                       &lt; Previous
@@ -1195,7 +1195,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
                 <div className="w-[90%] mb-5">
                   <div className="float-right">
                     <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                       onClick={prevStep}
                     >
                       &lt; Previous

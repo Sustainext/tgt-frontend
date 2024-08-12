@@ -111,12 +111,12 @@ const Screentwo = ({ nextStep, prevStep }) => {
   };
   const handleReportnradio = (event) => {
     setReportnradio(event.target.value);
-    
+
   };
 
   const handleReportingdescription = (event) => {
     setReportingdescription(event.target.value);
-    
+
   };
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -286,7 +286,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                 name={option.key}
                 checked={checkboxStates[option.key]}
                 onChange={handleCheckboxChange(option.key)}
-                disabled={true}
+
                 className="mr-3 pt-1 scale-90 rounded-xl"
               />
               {option.label}
@@ -322,7 +322,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                 name={option.key}
                 checked={checkboxStates[option.key]}
                 onChange={handleCheckboxChange(option.key)}
-                disabled={true}
+
                 className="mr-3 pt-1 scale-90 rounded-xl"
               />
               {option.label}
@@ -357,7 +357,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                 name={option.key}
                 checked={checkboxStates[option.key]}
                 onChange={handleCheckboxChange(option.key)}
-                disabled={true}
+
                 className="mr-3 pt-1 scale-90 rounded-xl"
               />
               {option.label}
@@ -611,7 +611,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
         >
           <div className="text-left mb-5 ml-6 mt-4">
             <p className="text-sm">Social</p>
-            <p className="gradient-text text-[22px]">
+           <p className="gradient-text text-[22px] h-[24px]">
               Bill S-211 - Fighting Bill Forced Labour and Child Labour in
               Supply Chains Act
             </p>
@@ -874,7 +874,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
             <div className="w-[90%] mb-5">
               <div className="float-right">
                 <button
-                  className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                  className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                   disabled
                 >
                   &lt; Previous
@@ -936,7 +936,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                           value="Corporation"
                           checked={reportradio === "Corporation"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -956,7 +956,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                           value="Trust"
                           checked={reportradio === "Trust"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -976,7 +976,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                           value="Partnership"
                           checked={reportradio === "Partnership"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -998,7 +998,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                             reportradio === "Other unincorporated organization"
                           }
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -1031,7 +1031,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                               type="checkbox"
                               checked={isChecked}
                               onChange={handleCheckboxChange("isChecked")}
-                              disabled={true}
+
                               className="mr-3 pt-1"
                             />
                             Producing goods (including manufacturing,
@@ -1045,7 +1045,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                               type="checkbox"
                               checked={isCheckedone}
                               onChange={handleCheckboxChange("isCheckedone")}
-                              disabled={true}
+
                               className="mr-3 pt-1"
                             />
                             Selling goods
@@ -1058,7 +1058,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                               type="checkbox"
                               checked={isCheckedoneone}
                               onChange={handleCheckboxChange("isCheckedoneone")}
-                              disabled={true}
+
                               className="mr-3 pt-1"
                             />
                             Distributing goods
@@ -1071,7 +1071,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                               type="checkbox"
                               checked={isCheckeotherone}
                               onChange={handleCheckotherone("isCheckeotherone")}
-                              disabled={true}
+
                               className="mr-3 pt-1"
                             />
                             Importing into Canada goods produced outside Canada
@@ -1085,7 +1085,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                               onChange={handleCheckothertwo(
                                 "isCheckedothertwo"
                               )}
-                              disabled={true}
+
                               className="mr-3 pt-1"
                             />
                             Controlling an entity engaged in producing, selling
@@ -1117,7 +1117,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                             // value={formData.countriesOfOperation}
                             // onChange={handleInputChange}
                             rows={5}
-                            disabled={true} // Specify the number of rows to determine the initial height
+                            // Specify the number of rows to determine the initial height
                           />
                         </div>
                       </div>
@@ -1127,7 +1127,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                 <div className="w-[90%] mb-5">
                   <div className="float-right">
                     <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                       onClick={prevStep}
                     >
                       &lt; Previous
@@ -1380,7 +1380,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                 <div className="w-[90%] mb-5">
                   <div className="float-right">
                     <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                       onClick={prevStep}
                     >
                       &lt; Previous

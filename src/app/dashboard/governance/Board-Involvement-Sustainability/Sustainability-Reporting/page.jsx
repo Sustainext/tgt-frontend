@@ -6,7 +6,7 @@ import "react-tooltip/dist/react-tooltip.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import GovernanceHeader2 from "../../GovernanceHeader2";
-import { Socialdata } from "@/app/dashboard/Social/data/socialgriinfo"
+import { Socialdata } from "../../../social/data/socialgriinfo" 
 import Screen1 from "./screen1"
 const SustainabilityReporting = () => {
   const [activeMonth, setActiveMonth] = useState(1);
@@ -59,7 +59,7 @@ const SustainabilityReporting = () => {
             <div className="flex float-end border-l">
               <button
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("1")}
+                onClick={() => toggleDrawer("77")}
               >
                 GRI 2 - 14
               </button>

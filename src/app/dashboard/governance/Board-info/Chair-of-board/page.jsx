@@ -1,11 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { MdOutlineClear } from "react-icons/md";
+import { MdInfoOutline, MdOutlineClear } from "react-icons/md";
 import "react-tooltip/dist/react-tooltip.css";
 import GovernanceHeader2 from "../../GovernanceHeader2";
-import { Socialdata } from "@/app/dashboard/Social/data/socialgriinfo";
+import { Socialdata } from "../../../social/data/socialgriinfo";
 import ChairOfHighestGovernance from "./Chair-of-highest-governance/page";
-
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ChairOfBoard = () => {
   const [activeMonth, setActiveMonth] = useState(1);
@@ -39,6 +41,7 @@ const ChairOfBoard = () => {
 
   return (
     <>
+      <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
@@ -56,18 +59,6 @@ const ChairOfBoard = () => {
           <div className="w-full float-end">
             <div className="flex float-end border-l">
               <button
-                className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("1")}
-              >
-                GRI 2 - 9
-              </button>
-              <button
-                className="text-[#fff] bg-orange-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("2")}
-              >
-                SDG 5
-              </button>
-              <button
                 className="text-[#fff] bg-pink-500 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
                 onClick={() => toggleDrawer("4")}
               >
@@ -79,8 +70,27 @@ const ChairOfBoard = () => {
 
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-            Governance Structure and Composition
+          Chair of the highest governance body
           </h6>
+          <MdInfoOutline
+              data-tooltip-id={`tooltip-$e1`}
+              data-tooltip-content="This section documents data corresponding to the chair of the highest governance body."
+              className="mt-1.5 ml-2 text-[14px]"
+            />
+            <ReactTooltip
+              id={`tooltip-$e1`}
+              place="top"
+              effect="solid"
+              style={{
+                width: "290px",
+                backgroundColor: "#000",
+                color: "white",
+                fontSize: "12px",
+                boxShadow: 3,
+                borderRadius: "8px",
+                textAlign: "left",
+              }}
+            ></ReactTooltip>
         </div>
         <div
           className={`${

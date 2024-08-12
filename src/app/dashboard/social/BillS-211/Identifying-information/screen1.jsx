@@ -263,7 +263,7 @@ const Screenone = ({ nextStep }) => {
         >
           <div className="text-left mb-5 ml-6 mt-4">
             <p className="text-sm">Social</p>
-            <p className="gradient-text text-[22px]">
+           <p className="gradient-text text-[22px] h-[24px]">
               Bill S-211 - Fighting Bill Forced Labour and Child Labour in
               Supply Chains Act
             </p>
@@ -450,15 +450,15 @@ const Screenone = ({ nextStep }) => {
                         open ? "w-[78%]" : "w-[78%]"
                       } rounded-md border-0 py-4 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                       value={reportname}
-                      disabled
+
                     >
-                      <option value="default" disabled>
+                      <option value="default" >
                         Select Entity
                       </option>
-                      <option value="Entity" disabled>
+                      <option value="Entity" >
                         Entity
                       </option>
-                      <option value="GovernmentInsititution" disabled>
+                      <option value="GovernmentInsititution">
                         Government Insititution
                       </option>
                       {/* Add more options here as needed */}
@@ -481,7 +481,7 @@ const Screenone = ({ nextStep }) => {
                         open ? "w-[78%]" : "w-[78%]"
                       } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
                       defaultValue={reportingentity}
-                      disabled={true}
+
                     ></input>
                   </div>
                 </div>
@@ -498,7 +498,7 @@ const Screenone = ({ nextStep }) => {
                         <input
                           type="date"
                           defaultValue={reportingdateform}
-                          disabled={true}
+
                           className="w-[100%] border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer"
                         />
                       </div>
@@ -508,7 +508,7 @@ const Screenone = ({ nextStep }) => {
                         <input
                           type="date"
                           defaultValue={reportingdateto}
-                          disabled={true}
+
                           className="w-[100%] border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer"
                         />
                       </div>

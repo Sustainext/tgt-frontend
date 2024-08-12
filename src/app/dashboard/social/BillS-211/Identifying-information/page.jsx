@@ -5,8 +5,8 @@ import Screentwo from "./screen2";
 import Screenthree from "./screen3";
 import Screenfour from "./screen4";
 import Screenfive from "./screen5";
-// import Screensix from "./screen6";
-// import Screenseven from "./screen7";
+import Screensix from "./screen6";
+import Screenseven from "./screen7";
 import { MdOutlineNavigateNext,MdOutlineNavigateBefore  } from "react-icons/md";
 const Identifyinginformation = ({ }) => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -28,7 +28,7 @@ const Identifyinginformation = ({ }) => {
       {/* Pagination */}
 
       {/* Step Content */}
-      <div className="h-[550px] overflow-y-auto scrollable-content">
+      <div className="h-[650px] overflow-y-auto scrollable-content">
         {currentStep === 1 && (
           <Screenone
             nextStep={nextStep}
@@ -44,15 +44,15 @@ const Identifyinginformation = ({ }) => {
          {currentStep === 4 && (
           <Screenfour nextStep={nextStep} prevStep={prevStep} />
         )}
-    {currentStep === 5 && (
+         {currentStep === 5 && (
           <Screenfive nextStep={nextStep} prevStep={prevStep} />
         )}
-            {/*  {currentStep === 6 && (
+          {currentStep === 6 && (
           <Screensix nextStep={nextStep} prevStep={prevStep} />
         )}
-        {currentStep === 7 && (
+           {currentStep === 7 && (
           <Screenseven prevStep={prevStep}  />
-        )} */}
+        )}
       </div>
       <div className="w-full">
         <div className="flex justify-center space-x-4 mt-[15px] w-full">

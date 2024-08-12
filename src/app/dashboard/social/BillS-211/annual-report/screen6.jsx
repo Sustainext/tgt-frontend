@@ -217,7 +217,7 @@ const Screensix = ({ nextStep, prevStep }) => {
         >
           <div className="text-left mb-5 ml-6 mt-4">
             <p className="text-sm">Social</p>
-            <p className="gradient-text text-[22px]">
+           <p className="gradient-text text-[22px] h-[24px]">
               Bill S-211 - Fighting Bill Forced Labour and Child Labour in
               Supply Chains Act
             </p>
@@ -379,7 +379,7 @@ const Screensix = ({ nextStep, prevStep }) => {
             <div className="w-[90%] mb-5">
               <div className="float-right">
                 <button
-                  className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                  className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                   disabled
                 >
                   &lt; Previous
@@ -409,7 +409,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                   {data !== null ? (
                     <MdOutlineModeEditOutline
                     className="text-[15.5px] ml-2 mt-1 cursor-pointer"
- 
+
                       onClick={handleeditClick}
                     />
                   ) : (
@@ -444,7 +444,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                           value="Yes"
                           checked={reportradio === "Yes"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -466,7 +466,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                           value="Yesone"
                           checked={reportradio === "Yesone"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -488,7 +488,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                           value="No"
                           checked={reportradio === "No"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -508,7 +508,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                           value="Noone"
                           checked={reportradio === "Noone"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -553,7 +553,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                       // onChange={handleInputChange}
                       rows={5}
                       onChange={handleReportingdescription}
-                      disabled={true} // Specify the number of rows to determine the initial height
+                      // Specify the number of rows to determine the initial height
                     />
                     {/* <div className="my-1">
                     {error.reportingdescription && (
@@ -567,7 +567,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                 <div className="w-[90%] mb-5">
                   <div className="float-right">
                     <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                       onClick={prevStep}
                     >
                       &lt; Previous
@@ -726,7 +726,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                 <div className="w-[90%] mb-5">
                   <div className="float-right">
                     <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                       onClick={prevStep}
                     >
                       &lt; Previous

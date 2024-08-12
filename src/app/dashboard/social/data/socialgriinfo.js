@@ -4225,10 +4225,10 @@ export const Socialdata = [
               the reporting organization shall:2.1.1 exclude incidents of
               non-compliance in which the organization was determined not to be
               at fault;2.1.2 exclude incidents of non-compliance related to
-              labeling. Incidents related to labeling are reported in
-              Disclosure 417-2 of GRI 417: Marketing and Labeling;2.1.3 if
-              applicable, identify any incidents of non-compliance that relate
-              to events in periods prior to the reporting period.
+              labeling. Incidents related to labeling are reported in Disclosure
+              417-2 of GRI 417: Marketing and Labeling;2.1.3 if applicable,
+              identify any incidents of non-compliance that relate to events in
+              periods prior to the reporting period.
             </p>
             <p className="text-[11px] text-black mb-2">Guidance:-</p>
             <p className="text-[11px] text-[#727272] mb-4">
@@ -4281,28 +4281,35 @@ export const Socialdata = [
       <>
         <div className="p-2 pt-5">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Promote peaceful and inclusive societies for sustainable development, provide access to justice for all and build effective, accountable and inclusive institutions at all levels
+            Promote peaceful and inclusive societies for sustainable
+            development, provide access to justice for all and build effective,
+            accountable and inclusive institutions at all levels
           </p>
           <div className="h-[300px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 16.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Promote the rule of law at the national and international levels and ensure equal access to justice for all.
+              Promote the rule of law at the national and international levels
+              and ensure equal access to justice for all.
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">16.3.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of victims of violence in the previous 12 months who reported their victimization to competent authorities or other officially recognized conflict resolution mechanisms.
+              Proportion of victims of violence in the previous 12 months who
+              reported their victimization to competent authorities or other
+              officially recognized conflict resolution mechanisms.
             </p>
 
             <p className="text-[11px] text-[#222222] mb-2">16.3.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Unsentenced detainees as a proportion of overall prison population.
+              Unsentenced detainees as a proportion of overall prison
+              population.
             </p>
             <p className="text-[11px] text-[#222222] mb-2">16.3.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of the population who have experienced a dispute in the past two years and who accessed a formal or informal dispute resolution mechanism, by type of mechanism.
+              Proportion of the population who have experienced a dispute in the
+              past two years and who accessed a formal or informal dispute
+              resolution mechanism, by type of mechanism.
             </p>
-
           </div>
           <div>
             <a
@@ -4328,19 +4335,30 @@ export const Socialdata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          GRI 418-1: Substantiated complaints concerning breaches of customer privacy and losses of customer data
+            GRI 418-1: Substantiated complaints concerning breaches of customer
+            privacy and losses of customer data
           </p>
           <div className="h-[320px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
               Compilation Requirements
             </p>
             <p className="text-[11px] text-[#727272] mb-4">
-            2.1 When compiling the information specified in Disclosure 418-1, the reporting organization  shall indicate if a substantial number of these breaches relate to events in preceding years.
+              2.1 When compiling the information specified in Disclosure 418-1,
+              the reporting organization shall indicate if a substantial number
+              of these breaches relate to events in preceding years.
             </p>
 
             <p className="text-[11px] text-black mb-2">Background</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Protection of customer privacy is a generally  recognized goal in national regulations and organizational  policies. As set out in the Organisation for Economic  Co-operation and Development (OECD) OECD  Guidelines for Multinational Enterprises, organizations  are expected to ‘respect consumer privacy and take  reasonable measures to ensure the security of personal  data that they collect, store, process or disseminate’. To protect customer privacy, an organization is  expected to limit its collection of personal data, to  collect data by lawful means, and to be transparent.
+              Protection of customer privacy is a generally recognized goal in
+              national regulations and organizational policies. As set out in
+              the Organisation for Economic Co-operation and Development (OECD)
+              OECD Guidelines for Multinational Enterprises, organizations are
+              expected to ‘respect consumer privacy and take reasonable measures
+              to ensure the security of personal data that they collect, store,
+              process or disseminate’. To protect customer privacy, an
+              organization is expected to limit its collection of personal data,
+              to collect data by lawful means, and to be transparent.
             </p>
           </div>
           <div>
@@ -4373,39 +4391,54 @@ export const Socialdata = [
       <>
         <div className="p-2 pt-5">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Promote peaceful and inclusive societies for sustainable development, provide access to justice for all and build effective, accountable and inclusive institutions at all levels
+            Promote peaceful and inclusive societies for sustainable
+            development, provide access to justice for all and build effective,
+            accountable and inclusive institutions at all levels
           </p>
           <div className="h-[300px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 16.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Promote the rule of law at the national and international levels and ensure equal access to justice for all.
+              Promote the rule of law at the national and international levels
+              and ensure equal access to justice for all.
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">16.3.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of victims of violence in the previous 12 months who reported their victimization to competent authorities or other officially recognized conflict resolution mechanisms.
+              Proportion of victims of violence in the previous 12 months who
+              reported their victimization to competent authorities or other
+              officially recognized conflict resolution mechanisms.
             </p>
 
             <p className="text-[11px] text-[#222222] mb-2">16.3.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Unsentenced detainees as a proportion of overall prison population.
+              Unsentenced detainees as a proportion of overall prison
+              population.
             </p>
             <p className="text-[11px] text-[#222222] mb-2">16.3.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of the population who have experienced a dispute in the past two years and who accessed a formal or informal dispute resolution mechanism, by type of mechanism.
+              Proportion of the population who have experienced a dispute in the
+              past two years and who accessed a formal or informal dispute
+              resolution mechanism, by type of mechanism.
             </p>
             <p className="text-[13px] text-[#222222] mb-2">Target 16.10</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Ensure public access to information and protect fundamental freedoms, in accordance with national legislation and international agreements.
+              Ensure public access to information and protect fundamental
+              freedoms, in accordance with national legislation and
+              international agreements.
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">16.10.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Number of verified cases of killing, kidnapping, enforced disappearance, arbitrary detention and torture of journalists, associated media personnel, trade unionists and human rights advocates in the previous 12 months.
+              Number of verified cases of killing, kidnapping, enforced
+              disappearance, arbitrary detention and torture of journalists,
+              associated media personnel, trade unionists and human rights
+              advocates in the previous 12 months.
             </p>
             <p className="text-[11px] text-[#222222] mb-2">16.10.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Number of countries that adopt and implement constitutional, statutory and/or policy guarantees for public access to information.
+              Number of countries that adopt and implement constitutional,
+              statutory and/or policy guarantees for public access to
+              information.
             </p>
           </div>
           <div>
@@ -4425,21 +4458,25 @@ export const Socialdata = [
     category: ["72"],
     header: [
       <h5 className="text-sky-600 text-[17px] font-bold">
-    GRI 417: Marketing and Labeling 2016
+        GRI 417: Marketing and Labeling 2016
       </h5>,
     ],
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          GRI 417-1: Requirements for product and service information and labeling
+            GRI 417-1: Requirements for product and service information and
+            labeling
           </p>
           <div className="h-[320px] overflow-y-auto custom-scrollbar">
-            <p className="text-[11px] text-black mb-2">
-            Background:
-            </p>
+            <p className="text-[11px] text-black mb-2">Background:</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Customers and end users need accessible and  adequate information about the positive and negative environmental and social impacts of products and  services. This can include information on the safe use  of a product or service, the disposal of the product,  or the sourcing of its components. Access to this  information helps customers to make informed   purchasing choices.
+              Customers and end users need accessible and adequate information
+              about the positive and negative environmental and social impacts
+              of products and services. This can include information on the safe
+              use of a product or service, the disposal of the product, or the
+              sourcing of its components. Access to this information helps
+              customers to make informed purchasing choices.
             </p>
           </div>
           <div>
@@ -4472,26 +4509,27 @@ export const Socialdata = [
       <>
         <div className="p-2 pt-5">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Ensure sustainable consumption and production patterns
+            Ensure sustainable consumption and production patterns
           </p>
           <div className="h-[280px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 12.8</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            By 2030, ensure that people everywhere have the relevant information and awareness for sustainable development and lifestyles in harmony with nature.
+              By 2030, ensure that people everywhere have the relevant
+              information and awareness for sustainable development and
+              lifestyles in harmony with nature.
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">12.8.1</p>
+            <p className="text-[11px] text-[#727272] mb-1">Extent to which</p>
             <p className="text-[11px] text-[#727272] mb-1">
-            Extent to which
+              (i) global citizenship education and
             </p>
             <p className="text-[11px] text-[#727272] mb-1">
-            (i) global citizenship education and
+              (ii) education for sustainable development are mainstreamed in
             </p>
             <p className="text-[11px] text-[#727272] mb-1">
-            (ii) education for sustainable development are mainstreamed in
-            </p>
-            <p className="text-[11px] text-[#727272] mb-1">
-            (a) national education policies; (b) curricula; (c) teacher education; and (d) student assessment.
+              (a) national education policies; (b) curricula; (c) teacher
+              education; and (d) student assessment.
             </p>
           </div>
           <div>
@@ -4511,27 +4549,34 @@ export const Socialdata = [
     category: ["74"],
     header: [
       <h5 className="text-sky-600 text-[17px] font-bold">
-    GRI 417: Marketing and Labeling 2016
+        GRI 417: Marketing and Labeling 2016
       </h5>,
     ],
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          GRI 417-2: Incidents of non-compliance concerning product and service information and labeling
+            GRI 417-2: Incidents of non-compliance concerning product and
+            service information and labeling
           </p>
           <div className="h-[320px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
-            Compilation Requirements
+              Compilation Requirements
             </p>
             <p className="text-[11px] text-[#727272] mb-4">
-            2.1 When compiling the information specified in Disclosure 417-2, the reporting organization shall:2.1.1 exclude incidents of non-compliance in which the organization was determined not to be at fault;2.1.2 if applicable, identify any incidents of non-compliance that relate to events in periods prior to the reporting period.
+              2.1 When compiling the information specified in Disclosure 417-2,
+              the reporting organization shall:2.1.1 exclude incidents of
+              non-compliance in which the organization was determined not to be
+              at fault;2.1.2 if applicable, identify any incidents of
+              non-compliance that relate to events in periods prior to the
+              reporting period.
             </p>
-            <p className="text-[11px] text-black mb-2">
-            Guidance
-            </p>
+            <p className="text-[11px] text-black mb-2">Guidance</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            The incidents of non-compliance that occur within the reporting period can relate to incidents formally resolved during the reporting period, whether they occurred in periods prior to the reporting period or not.
+              The incidents of non-compliance that occur within the reporting
+              period can relate to incidents formally resolved during the
+              reporting period, whether they occurred in periods prior to the
+              reporting period or not.
             </p>
           </div>
           <div>
@@ -4551,33 +4596,233 @@ export const Socialdata = [
     category: ["75"],
     header: [
       <h5 className="text-sky-600 text-[17px] font-bold">
-    GRI 417: Marketing and Labeling 2016
+        GRI 417: Marketing and Labeling 2016
       </h5>,
     ],
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          GRI 417-3: Incidents of non-compliance concerning marketing communications
+            GRI 417-3: Incidents of non-compliance concerning marketing
+            communications
           </p>
           <div className="h-[320px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
-            Compilation Requirements
+              Compilation Requirements
             </p>
             <p className="text-[11px] text-[#727272] mb-4">
-            2.2 When compiling the information specified in Disclosure 417-3, the reporting organization shall:2.2.1 exclude incidents of non-compliance in which the organization was determined not  to be at fault.2.2.2 if applicable, identify any incidents of non-compliance that relate to events in periods  prior to the reporting period.
+              2.2 When compiling the information specified in Disclosure 417-3,
+              the reporting organization shall:2.2.1 exclude incidents of
+              non-compliance in which the organization was determined not  to be
+              at fault.2.2.2 if applicable, identify any incidents of
+              non-compliance that relate to events in periods  prior to the
+              reporting period.
             </p>
-            <p className="text-[11px] text-black mb-2">
-            Guidance
-            </p>
+            <p className="text-[11px] text-black mb-2">Guidance</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            The incidents of non-compliance that occur within  the reporting period can relate to incidents formally resolved during the reporting period, whether they  occurred in periods prior to the reporting period  or not.
+              The incidents of non-compliance that occur within the reporting
+              period can relate to incidents formally resolved during the
+              reporting period, whether they occurred in periods prior to the
+              reporting period or not.
             </p>
           </div>
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12710&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["76"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-12: Nomination and selection of the highest governance body
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">Guidance to 2-12-b-i</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Requirement 2-12-b-i covers the role of the highest governance
+              body in stakeholder engagement. The organization is also required
+              to report information about stakeholder engagement under other
+              disclosures, such as under the disclosures in section 5 of this
+              Standard. The organization can describe the frequency of
+              engagement between the highest governance body and stakeholders as
+              well as the means of engagement. If stakeholder engagement is
+              delegated, the organization can report to whom it is delegated and
+              how the feedback received is provided to the highest governance
+              body.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["77"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-14: Nomination and selection of the highest governance body
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization can report whether the highest governance body
+              has established a sustainability reporting committee to support
+              the highest governance body’s review and approval process. The
+              organization can also report whether the highest governance body
+              reviews the adequacy of the organization’s internal controls to
+              strengthen the integrity and credibility of the organization’s
+              sustainability reporting (see section 5.2 in GRI 1: Foundation
+              2021 for more information). The involvement of the highest
+              governance body and senior executives in developing the
+              organization’s policy and practice for seeking external assurance
+              is reported under Disclosure 2-5 in this Standard.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["78"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-15: Conflicts of interest
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+              Guidance to 2-15-b-iii
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization should use the definition of controlling
+              shareholder applied in the organization’s consolidated financial
+              statements or equivalent documents.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["79"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-16.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-blue-900 text-[17px] font-bold ml-2">SDG 16</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Promote peaceful and inclusive societies for sustainable
+            development, provide access to justice for all and build effective,
+            accountable and inclusive institutions at all levels
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 16.6</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Develop effective, accountable and transparent institutions at all
+              levels
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.6.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Primary government expenditures as a proportion of original
+              approved budget, by sector (or by budget codes or similar)
+            </p>
+
+            <p className="text-[11px] text-[#222222] mb-2">16.6.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of population satisfied with their last experience of
+              public services
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal16"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["80"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+       GRI 2-16: Communication of critical concerns
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+            Guidance
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Critical concerns include concerns about the organization’s potential and actual negative impacts on stakeholders raised through grievance mechanisms and other processes. They also include concerns identified through other mechanisms about the organization’s business conduct in its operations and its business relationships. See guidance to Disclosure 2-25 and Disclosure 2-26 in this Standard for more information.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
               target="_blank"
             >
               Learn more <MdChevronRight className="text-lg mt-0.5" />

@@ -64,7 +64,7 @@ const uiSchema = {
   },
 };
 
-const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year, month }) => {
+const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year }) => {
   const [formData, setFormData] = useState([]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -93,7 +93,6 @@ const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year, mon
       organisation: selectedOrg,
       corporate: selectedCorp,
       year,
-      month,
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -144,8 +143,8 @@ const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year, mon
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&year=${year}`;
+    setFormData([]);
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&corporate=${selectedCorp}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -153,7 +152,7 @@ const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year, mon
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData([{}]);
+      setFormData([]);
     } finally {
       LoaderClose();
     }
@@ -254,7 +253,6 @@ const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year, mon
           />
         </div>
       )}
-      <ToastContainer />
     </>
   );
 };

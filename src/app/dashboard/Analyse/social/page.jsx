@@ -43,7 +43,7 @@ const social = () => {
         {activeTab === "Tab9" && <AnalyseCollectiveBargaining /> }
         {activeTab === "Tab10" && <AnalyseCommunityDevelopment /> }
         {activeTab === "Tab12" && <AnalyseCustomerHealthSafety /> }
-        {/* {activeTab === "Tab13" && <AnalyseMarketingLabeling /> } */}
+        {activeTab === "Tab13" && <AnalyseMarketingLabeling /> }
         {activeTab === "Tab14" && <AnalyseCustomerprivacy /> }
       </div>
     </div>

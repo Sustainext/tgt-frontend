@@ -298,7 +298,7 @@ if(reportradio === "Yes" || reportradio === "Yesone"){
     newErrors.checkboxes = "Please select at least one option";
   }
 }
-   
+
 
     if (selectedOptions.includes("other")) {
       // If it's an array and "other" is one of the options
@@ -332,7 +332,7 @@ if(reportradio === "Yes" || reportradio === "Yesone"){
         >
           <div className="text-left mb-5 ml-6 mt-4">
             <p className="text-sm">Social</p>
-            <p className="gradient-text text-[22px]">
+           <p className="gradient-text text-[22px] h-[24px]">
               Bill S-211 - Fighting Bill Forced Labour and Child Labour in
               Supply Chains Act
             </p>
@@ -533,7 +533,7 @@ if(reportradio === "Yes" || reportradio === "Yesone"){
             <div className="w-[90%] mb-5">
               <div className="float-right">
                 <button
-                  className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                  className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                   disabled
                 >
                   &lt; Previous
@@ -596,7 +596,7 @@ if(reportradio === "Yes" || reportradio === "Yesone"){
                           value="Yes"
                           checked={reportradio === "Yes"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -618,7 +618,7 @@ if(reportradio === "Yes" || reportradio === "Yesone"){
                           value="Yesone"
                           checked={reportradio === "Yesone"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -640,7 +640,7 @@ if(reportradio === "Yes" || reportradio === "Yesone"){
                           value="No"
                           checked={reportradio === "No"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -660,7 +660,7 @@ if(reportradio === "Yes" || reportradio === "Yesone"){
                           value="Noone"
                           checked={reportradio === "Noone"}
                           onChange={handleReportnradio}
-                          disabled={true}
+
                         />
                          {" "}
                         <label
@@ -696,7 +696,7 @@ if(reportradio === "Yes" || reportradio === "Yesone"){
                               value={option.value}
                               checked={selectedOptions.includes(option.value)}
                               onChange={handleCheckboxChange}
-                              disabled={true}
+
                               className="mr-3"
                             />
                             {option.label}
@@ -713,7 +713,7 @@ if(reportradio === "Yes" || reportradio === "Yesone"){
                             } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
                             value={reportingentity}
                             onChange={handleReportingentity}
-                            disabled={true}
+
                           ></input>
                         </div>
                       )}
@@ -747,7 +747,7 @@ if(reportradio === "Yes" || reportradio === "Yesone"){
                       // onChange={handleInputChange}
                       rows={5}
                       onChange={handleReportingdescription}
-                      disabled={true} // Specify the number of rows to determine the initial height
+                      // Specify the number of rows to determine the initial height
                     />
                     {/* <div className="my-1">
                     {error.reportingdescription && (
@@ -761,7 +761,7 @@ if(reportradio === "Yes" || reportradio === "Yesone"){
                 <div className="w-[90%] mb-5">
                   <div className="float-right">
                     <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                       onClick={prevStep}
                     >
                       &lt; Previous
@@ -963,7 +963,7 @@ if(reportradio === "Yes" || reportradio === "Yesone"){
                 <div className="w-[90%] mb-5">
                   <div className="float-right">
                     <button
-                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-400 text-[12px]"
+                      className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
                       onClick={prevStep}
                     >
                       &lt; Previous

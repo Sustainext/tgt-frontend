@@ -406,7 +406,7 @@ const Screenone = ({ nextStep, prevStep }) => {
         >
           <div className="text-left mb-5 ml-6 mt-4">
             <p className="text-sm">Social</p>
-            <p className="gradient-text text-[22px]">
+           <p className="gradient-text text-[22px] h-[24px]">
               Bill S-211 - Fighting Bill Forced Labour and Child Labour in
               Supply Chains Act
             </p>
@@ -583,7 +583,7 @@ const Screenone = ({ nextStep, prevStep }) => {
                             checked={selectedOptions.includes(option.value)}
                             onChange={handleCheckboxChange}
                             className="mr-3 pt-1"
-                            disabled={true}
+
                           />
                           {option.label}
                         </label>
@@ -600,7 +600,7 @@ const Screenone = ({ nextStep, prevStep }) => {
                         open ? "w-[90%]" : "w-[90%]"
                       } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  `}
                       value={reportingentity}
-                      disabled={true}
+
                     ></input>
                   </div>
                 )}
@@ -620,7 +620,7 @@ const Screenone = ({ nextStep, prevStep }) => {
                       open ? "w-[90%]" : "w-[90%]"
                     }  border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
                     value={reportingdescription}
-                    disabled={true}
+
                     // value={formData.countriesOfOperation}
                     // onChange={handleInputChange}
                     rows={5}
