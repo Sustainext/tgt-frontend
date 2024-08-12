@@ -5,9 +5,14 @@ import Image from "next/image";
 
 const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
   const [activeTab, setActiveTab] = useState(1);
+  const [assessmentApproach,setAssessmentApproach] = useState("")
 
   const handleTabClick = (tabNumber) => {
     setActiveTab(tabNumber);
+  };
+
+  const handleChangeRadio = (event) => {
+    setAssessmentApproach(event.target.value);
   };
 
   return (
@@ -54,13 +59,16 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
               <form className="space-y-2 px-6 pt-4">
                 <div className="flex items-center">
                   <input
-                    id="option1"
+                    id="accordance"
                     name="radio"
                     type="radio"
+                    value="accordance"
+                    checked={assessmentApproach === "accordance"}
+                    onChange={handleChangeRadio}
                     className="text-gray-600 form-radio h-4 w-4"
                   />
                   <label
-                    for="option1"
+                    htmlFor="accordance"
                     className="ml-2 text-gray-600 text-[15px] cursor-pointer"
                   >
                     GRI: In Accordance With
@@ -68,13 +76,16 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
                 </div>
                 <div className="flex items-center">
                   <input
-                    id="option2"
+                    id="reference"
                     name="radio"
                     type="radio"
+                    value="reference"
+                    checked={assessmentApproach === "reference"}
+                    onChange={handleChangeRadio}
                     className="text-gray-600 form-radio h-4 w-4"
                   />
                   <label
-                    for="option2"
+                    htmlFor="reference"
                     className="ml-2 text-gray-600 text-[15px] cursor-pointer"
                   >
                     GRI: with Reference To
@@ -153,7 +164,7 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
                             // value={deadline}
                             // min={getTodayDate()}
                             required
-                            className="block w-full px-1 rounded-md border-0 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            className="block w-full px-1 rounded-md border-0 py-2.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           />
                         </div>
                       </div>
@@ -229,7 +240,7 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
                                 // value={deadline}
                                 // min={getTodayDate()}
                                 required
-                                className="block w-[50%] px-1 rounded-md border-0 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                className="block w-[50%] px-1 rounded-md border-0 py-2.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                               />
                             </div>
                           </div>

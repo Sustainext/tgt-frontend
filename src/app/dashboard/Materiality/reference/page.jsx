@@ -1,27 +1,436 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import ReferencePopup from "../modals/referencePopup";
+import CompletePopup from '../modals/completePopup'
+import { GRIData } from "../data/GRIinfo";
+import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
 
-const Reference=()=>{
+const Reference = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCompleteModalOpen, setIsCompleteModalOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [data, setData] = useState();
 
-    return (
-        <>
-        <div className="flex flex-col justify-start overflow-x-hidden ">
-          <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-            <div className="w-full">
-              <div className="text-left mb-4 ml-3 pt-5">
-                <div className="flex">
-                  <div>
-                    <p className="gradient-text text-[22px] font-bold pt-4 pb-4 ml-3">
-                   Select Materiality Topic
-                    </p>
+  const toggleDrawerclose = () => {
+    setIsOpen(!isOpen);
+  };
+  const toggleDrawer = (selected) => {
+    setIsOpen(!isOpen);
+  };
+  useEffect(() => {
+    console.log(GRIData);
+    var newData = [];
+    GRIData.map((program) => {
+      newData.push(program);
+    });
+    setData(newData);
+  }, []);
+  useEffect(() => {
+    setIsModalOpen(true);
+  }, []);
+  return (
+    <>
+      <div
+        className={`${
+          isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"
+        }
+      fixed right-[51px]  w-[340px] h-full bg-white  rounded-md
+      transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
+      >
+        {data &&
+          data.map((program) => (
+            <>
+              <div className="flex justify-between p-2 pt-5 pb-4 border-b-2 ">
+                <div className="ml-2">{program.header}</div>
+
+                <div className="ml-2 float-right">
+                  <h5
+                    className="text-[#727272] text-[17px] font-bold cursor-pointer"
+                    onClick={toggleDrawerclose}
+                  >
+                    <MdOutlineClear />
+                  </h5>
+                </div>
+              </div>
+              <div> {program.data}</div>
+            </>
+          ))}
+      </div>
+      <div className="flex flex-col justify-start overflow-x-hidden ">
+        <div className="flex justify-between items-center border-b border-gray-200 w-full">
+          <div className="w-full">
+            <div className="text-left mb-4 ml-3 pt-5">
+              <div className="flex justify-between items-center">
+                <div className="w-[70%]">
+                  <p className="gradient-text text-[22px] font-bold pt-4 pb-4 ml-3">
+                    Select Materiality Topic
+                  </p>
+                </div>
+                <div className="w-full float-end px-5 ">
+                  <div className="flex float-end border-l">
+                    <button
+                      className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                      onClick={() => toggleDrawer("1")}
+                    >
+                      GRI 3-2
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        
-        </>
-    )
-}
-export default Reference
+      </div>
+
+      <div>
+        <div className="flex">
+          <div>
+            <p className="text-[#344054] text-[22px] font-bold pt-4 pb-2 ml-6">
+              ESG Topics
+            </p>
+            <p className="text-[#2E0B34] text-[14px] font-[400] pb-4 ml-6">
+              Select the topics that were chosen as the material topic by the
+              organization.
+            </p>
+          </div>
+          <div className="shadow-lg p-3 bg-white w-[30%] ml-20 rounded-lg mt-10">
+            <div className="flex  mb-4">
+              <div className="w-[60%]">
+                <p className="text-[14px] text-black font-[400] px-2 pt-2">
+                  Reporting Level
+                </p>
+                <p className="text-[13px] text-gray-500 font-[400] px-2 pt-2">
+                  Organization
+                </p>
+              </div>
+              <div>
+                <p className="text-[14px] text-black font-[400] px-2 pt-2">
+                  Reporting Year
+                </p>
+                <p className="text-[13px] text-gray-500 font-[400] px-2 pt-2">
+                  2022
+                </p>
+              </div>
+            </div>
+            <div className="flex  mb-2">
+              <div className="w-[60%]">
+                <p className="text-[14px] text-black font-[400] px-2 pt-2">
+                  Organization Name
+                </p>
+                <p className="text-[13px] text-gray-500 font-[400] px-2 pt-2">
+                  Organization
+                </p>
+              </div>
+              <div>
+                <p className="text-[14px] text-black font-[400] px-2 pt-2">
+                  Corporate Entity Name
+                </p>
+                <p className="text-[13px] text-gray-500 font-[400] px-2 pt-2">
+                  2022
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-3 mb-3">
+        <p className="text-[#344054] text-[17px] font-bold pt-4 pb-2 ml-6">
+          Selecting ESG Topics
+        </p>
+      </div>
+      <div className="mx-5">
+        <div className="flex justify-between items-start">
+          <div className="shadow-lg rounded-lg  w-[30%]">
+            <div className="gradient-background p-2 rounded-t-lg">
+              <p className="text-[##2E0B34] text-[17px] mx-2 pt-2">
+                Environmental
+              </p>
+            </div>
+            <form className="space-y-2 p-4">
+              <div className="flex items-center">
+                <input
+                  id="checkbox1"
+                  type="checkbox"
+                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <label
+                  htmlFor="checkbox1"
+                  className="ml-2 text-black-500 text-sm cursor-pointer"
+                >
+                  Option 1
+                </label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  id="checkbox2"
+                  type="checkbox"
+                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <label
+                  htmlFor="checkbox2"
+                  className="ml-2 text-black-500 text-sm cursor-pointer"
+                >
+                  Option 2
+                </label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  id="checkbox3"
+                  type="checkbox"
+                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <label
+                  htmlFor="checkbox3"
+                  className="ml-2 text-black-500 text-sm cursor-pointer"
+                >
+                  Option 3
+                </label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  id="checkbox4"
+                  type="checkbox"
+                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <label
+                  htmlFor="checkbox4"
+                  className="ml-2 text-black-500 text-sm cursor-pointer"
+                >
+                  Option 4
+                </label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  id="checkbox5"
+                  type="checkbox"
+                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <label
+                  htmlFor="checkbox5"
+                  className="ml-2 text-black-500 text-sm cursor-pointer"
+                >
+                  Option 5
+                </label>
+              </div>
+            </form>
+          </div>
+          <div className="shadow-lg rounded-lg  w-[30%]">
+            <div className="gradient-background p-2 rounded-t-lg">
+              <p className="text-[##2E0B34] text-[17px] mx-2 pt-2">Social</p>
+            </div>
+            <form className="space-y-2 p-4">
+              <div className="flex items-center">
+                <input
+                  id="checkbox1"
+                  type="checkbox"
+                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <label
+                  htmlFor="checkbox1"
+                  className="ml-2 text-black-500 text-sm cursor-pointer"
+                >
+                  Option 1
+                </label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  id="checkbox2"
+                  type="checkbox"
+                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <label
+                  htmlFor="checkbox2"
+                  className="ml-2 text-black-500 text-sm cursor-pointer"
+                >
+                  Option 2
+                </label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  id="checkbox3"
+                  type="checkbox"
+                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <label
+                  htmlFor="checkbox3"
+                  className="ml-2 text-black-500 text-sm cursor-pointer"
+                >
+                  Option 3
+                </label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  id="checkbox4"
+                  type="checkbox"
+                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <label
+                  htmlFor="checkbox4"
+                  className="ml-2 text-black-500 text-sm cursor-pointer"
+                >
+                  Option 4
+                </label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  id="checkbox5"
+                  type="checkbox"
+                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <label
+                  htmlFor="checkbox5"
+                  className="ml-2 text-black-500 text-sm cursor-pointer"
+                >
+                  Option 5
+                </label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  id="checkbox5"
+                  type="checkbox"
+                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <label
+                  htmlFor="checkbox5"
+                  className="ml-2 text-black-500 text-sm cursor-pointer"
+                >
+                  Option 5
+                </label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  id="checkbox5"
+                  type="checkbox"
+                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <label
+                  htmlFor="checkbox5"
+                  className="ml-2 text-black-500 text-sm cursor-pointer"
+                >
+                  Option 5
+                </label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  id="checkbox5"
+                  type="checkbox"
+                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <label
+                  htmlFor="checkbox5"
+                  className="ml-2 text-black-500 text-sm cursor-pointer"
+                >
+                  Option 5
+                </label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  id="checkbox5"
+                  type="checkbox"
+                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <label
+                  htmlFor="checkbox5"
+                  className="ml-2 text-black-500 text-sm cursor-pointer"
+                >
+                  Option 5
+                </label>
+              </div>
+            </form>
+          </div>
+          <div className="shadow-lg rounded-lg  w-[30%]">
+            <div className="gradient-background p-2 rounded-t-lg">
+              <p className="text-[##2E0B34] text-[17px] mx-2 pt-2">
+                Governance
+              </p>
+            </div>
+            <form className="space-y-2 p-4">
+              <div className="flex items-center">
+                <input
+                  id="checkbox1"
+                  type="checkbox"
+                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <label
+                  htmlFor="checkbox1"
+                  className="ml-2 text-black-500 text-sm cursor-pointer"
+                >
+                  Option 1
+                </label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  id="checkbox2"
+                  type="checkbox"
+                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <label
+                  htmlFor="checkbox2"
+                  className="ml-2 text-black-500 text-sm cursor-pointer"
+                >
+                  Option 2
+                </label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  id="checkbox3"
+                  type="checkbox"
+                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <label
+                  htmlFor="checkbox3"
+                  className="ml-2 text-black-500 text-sm cursor-pointer"
+                >
+                  Option 3
+                </label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  id="checkbox4"
+                  type="checkbox"
+                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <label
+                  htmlFor="checkbox4"
+                  className="ml-2 text-black-500 text-sm cursor-pointer"
+                >
+                  Option 4
+                </label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  id="checkbox5"
+                  type="checkbox"
+                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <label
+                  htmlFor="checkbox5"
+                  className="ml-2 text-black-500 text-sm cursor-pointer"
+                >
+                  Option 5
+                </label>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div className="flex justify-end items-center mb-3 mx-2">
+        <button className="h-full mr-2  py-2 px-6 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer"
+        onClick={()=>{setIsCompleteModalOpen(true)}}
+        >
+         Save and Proceed {'>'}
+        </button>
+      </div>
+      <ReferencePopup
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
+      <CompletePopup
+      isCompleteModalOpen={isCompleteModalOpen}
+      setIsCompleteModalOpen={setIsCompleteModalOpen}
+      />
+    </>
+  );
+};
+export default Reference;
