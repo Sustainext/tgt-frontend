@@ -2,20 +2,18 @@
 import React, { useState, useEffect } from "react";
 import { MdInfoOutline, MdOutlineClear } from "react-icons/md";
 import "react-tooltip/dist/react-tooltip.css";
-import GovernanceHeader3 from '../../GovernanceHeader3'
+import GovernanceHeader3 from "../../GovernanceHeader3";
 import { Socialdata } from "../../../social/data/socialgriinfo";
 import { ToastContainer } from "react-toastify";
 import { Tooltip as ReactTooltip } from "react-tooltip";
-import AnnualAndMedian from "./Annual-and-median/page";
-import PercentageIncrease from "./Percentage-increase/page";
-import ContextualInformation from './Contextual-information/page'
+import Process from "./Process/page";
 
-const CompensationRatio = () => {
+const DetermineRemuneration = () => {
   const [year, setYear] = useState(2024);
   const [data, setData] = useState([]);
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedLocation,setSelectedLocation] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState("");
 
   const toggleDrawerclose = () => {
     setIsOpen(false);
@@ -40,7 +38,7 @@ const CompensationRatio = () => {
 
   return (
     <>
-    <ToastContainer style={{ fontSize: "12px" }} />
+      <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
@@ -49,7 +47,7 @@ const CompensationRatio = () => {
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] font-bold pt-1">
-                    Compensation Ratio
+                    Determine Remuneration
                   </p>
                 </div>
               </div>
@@ -61,7 +59,7 @@ const CompensationRatio = () => {
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
                 onClick={() => toggleDrawer("1")}
               >
-                GRI 2 - 21
+                GRI 2 - 20
               </button>
             </div>
           </div>
@@ -69,27 +67,27 @@ const CompensationRatio = () => {
 
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Process to determine remuneration
+            Process to determine remuneration
           </h6>
           <MdInfoOutline
-                data-tooltip-id={`tooltip-$e1`}
-                data-tooltip-content="This section documents the data corresponding to the process to determine remuneration."
-                className="mt-1.5 ml-2 text-[14px]"
-              />
-              <ReactTooltip
-                id={`tooltip-$e1`}
-                place="top"
-                effect="solid"
-                style={{
-                  width: "290px",
-                  backgroundColor: "#000",
-                  color: "white",
-                  fontSize: "12px",
-                  boxShadow: 3,
-                  borderRadius: "8px",
-                  textAlign: "left",
-                }}
-              ></ReactTooltip>
+            data-tooltip-id={`tooltip-$e1`}
+            data-tooltip-content="This section documents the data corresponding to the process to determine remuneration."
+            className="mt-1.5 ml-2 text-[14px]"
+          />
+          <ReactTooltip
+            id={`tooltip-$e1`}
+            place="top"
+            effect="solid"
+            style={{
+              width: "290px",
+              backgroundColor: "#000",
+              color: "white",
+              fontSize: "12px",
+              boxShadow: 3,
+              borderRadius: "8px",
+              textAlign: "left",
+            }}
+          ></ReactTooltip>
         </div>
         <div
           className={`${
@@ -121,15 +119,7 @@ const CompensationRatio = () => {
         year={year}
         setYear={setYear}
       />
-      <AnnualAndMedian
-        selectedLocation={selectedLocation}
-        year={year}
-      />
-      <PercentageIncrease
-        selectedLocation={selectedLocation}
-        year={year}
-      />
-      <ContextualInformation
+      <Process
         selectedLocation={selectedLocation}
         year={year}
       />
@@ -137,4 +127,4 @@ const CompensationRatio = () => {
   );
 };
 
-export default CompensationRatio;
+export default DetermineRemuneration;

@@ -15,6 +15,7 @@ import SustainabilityStrategyPage from "./Sustainability-strategy/page";
 import ManagingConcerns from "./Managing-concerns/page";
 import PerformanceEvaluations from "./Performance-renumerations/Performance-evaluations/page";
 import CompensationRatio from './Performance-renumerations/compensation-ratio/page'
+import DetermineRemuneration from "./Performance-renumerations/Determine-remuneration/page";
 
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -757,7 +758,7 @@ const Governance = () => {
                         {isStepCompleted(12) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Critical Concerns
+                              Determine Remuneration
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -1180,6 +1181,11 @@ const Governance = () => {
               {activeStep === 10 && (
                 <>
                   <div><PerformanceEvaluations/> </div>
+                </>
+              )}
+              {activeStep === 12 && (
+                <>
+                  <div><DetermineRemuneration/> </div>
                 </>
               )}
               {activeStep === 13 && (
