@@ -14,6 +14,7 @@ import SustainabilityKnowledge from "./Performance-renumerations/Sustainability-
 import SustainabilityStrategyPage from "./Sustainability-strategy/page";
 import ManagingConcerns from "./Managing-concerns/page";
 import PerformanceEvaluations from "./Performance-renumerations/Performance-evaluations/page";
+import CompensationRatio from './Performance-renumerations/compensation-ratio/page'
 
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -663,7 +664,7 @@ const Governance = () => {
                         )}
                       </div>
                     </li>
-                    {/* <li
+                    <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(11)}
                     >
@@ -810,7 +811,7 @@ const Governance = () => {
                         {isStepCompleted(13) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Critical Concerns
+                              Compensation Ratio
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -825,7 +826,7 @@ const Governance = () => {
                           </p>
                         )}
                       </div>
-                    </li> */}
+                    </li>
                   </AccordionItem>
                   <AccordionItem title="Sustainability Strategy">
                   <li
@@ -989,7 +990,7 @@ const Governance = () => {
                         {isStepCompleted(10) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Critical Concerns
+                              Compensation Ratio
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -1179,6 +1180,11 @@ const Governance = () => {
               {activeStep === 10 && (
                 <>
                   <div><PerformanceEvaluations/> </div>
+                </>
+              )}
+              {activeStep === 13 && (
+                <>
+                  <div><CompensationRatio/> </div>
                 </>
               )}
               {activeStep === 14 && (
