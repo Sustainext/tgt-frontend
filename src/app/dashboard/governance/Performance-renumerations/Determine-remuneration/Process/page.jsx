@@ -64,6 +64,7 @@ const uiSchema = {
         "ui:widget": "TableWidget",
         "ui:label": false, 
         "ui:options": {
+          hideLabel: true,
           titles: [
             { key: "Criteria", title: "", type: "number", display: "none" },
             {
