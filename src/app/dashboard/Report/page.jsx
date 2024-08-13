@@ -46,7 +46,7 @@ const Report = () => {
   const handleChangeallcrop = async (event) => {
 
     const selectedId = event.target.value;
-
+    setSelectedOrg(selectedId);
     try {
       const response = await axiosInstance.get(`/sustainapp/all_corporate_list/`, {
         params: { organization_id: selectedId },
