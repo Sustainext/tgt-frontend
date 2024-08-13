@@ -26,13 +26,13 @@ const RadioWidget2 = ({
 
     <div className='mb-6 pb-4'>
           <div className='flex mb-2 items-center relative'>
-        <p className='text-[15px] text-gray-700 w-full mb-2'>
+        <p className='text-[15px] text-gray-700 w-full mb-2 flex'>
           {uiSchema['ui:title']}
           <MdInfoOutline
             data-tooltip-id={`tooltip-${uiSchema['ui:title'].replace(/\s+/g, '-')}`}
             data-tooltip-content={uiSchema['ui:tooltip']}
-            className='ml-2 text-[14px] align-middle'
-            style={{ display: uiSchema['ui:tooltip'] ? 'inline' : 'none' }}
+            className='ml-2 text-[14px] align-middle mt-1'
+            style={{ display: uiSchema['ui:tooltipdisplay']}}
           />
           <ReactTooltip
             id={`tooltip-${uiSchema['ui:title'].replace(/\s+/g, '-')}`}

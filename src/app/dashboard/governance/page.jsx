@@ -18,7 +18,7 @@ import Remuneration from "./Performance-renumerations/Remuneration/page";
 import Remediation from "./Remediation/page"
 import CompensationRatio from './Performance-renumerations/compensation-ratio/page'
 import DetermineRemuneration from "./Performance-renumerations/Determine-remuneration/page";
-
+import PolicyCommitments from "./Policy/Policy-Commitments/page"
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -933,12 +933,12 @@ const Governance = () => {
                     </li>
                   </AccordionItem>
 
-                  {/* <AccordionItem title="Policy">
+                  <AccordionItem title="Policy">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(9)}
+                      onClick={() => activeSteps(15)}
                     >
-                      {isStepCompleted(9) ? (
+                      {isStepCompleted(15) ? (
                         <>
                           <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
                             <svg
@@ -955,7 +955,7 @@ const Governance = () => {
                       ) : (
                         <div
                           className={`${
-                            activeStep === 9
+                            activeStep === 15
                               ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
                               : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
                           } `}
@@ -965,7 +965,7 @@ const Governance = () => {
                             width="12"
                             height="12"
                             className={`${
-                              activeStep === 9
+                              activeStep === 15
                                 ? "bi bi-circle-fill fill-sky-800  font-bold "
                                 : " bi bi-circle-fill fill-gray-400"
                             } `}
@@ -977,22 +977,22 @@ const Governance = () => {
                       )}
 
                       <div className="flex items-center">
-                        {isStepCompleted(9) ? (
+                        {isStepCompleted(15) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Conflict of Interest
+                            Policy Commitments
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
                         ) : (
                           <p
                             className={`${
-                              activeStep === 7
+                              activeStep === 15
                                 ? "text-[12px] text-sky-800  font-bold"
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                            Sustainability Knowledge
+                         Policy Commitments
                           </p>
                         )}
                       </div>
@@ -1054,7 +1054,7 @@ const Governance = () => {
                         )}
                       </div>
                     </li>
-                  </AccordionItem> */}
+                  </AccordionItem>
                   <AccordionItem title="Remediation">
                   <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
@@ -1270,6 +1270,13 @@ const Governance = () => {
                 <>
                   <div>
                     <SustainabilityStrategyPage />{" "}
+                  </div>
+                </>
+              )}
+                 {activeStep === 15 && (
+                <>
+                  <div>
+                    <PolicyCommitments />{" "}
                   </div>
                 </>
               )}
