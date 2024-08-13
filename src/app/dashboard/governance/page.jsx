@@ -16,6 +16,9 @@ import ManagingConcerns from "./Managing-concerns/page";
 import PerformanceEvaluations from "./Performance-renumerations/Performance-evaluations/page";
 import Remuneration from "./Performance-renumerations/Remuneration/page";
 import Remediation from "./Remediation/page"
+import CompensationRatio from './Performance-renumerations/compensation-ratio/page'
+import DetermineRemuneration from "./Performance-renumerations/Determine-remuneration/page";
+
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -799,7 +802,7 @@ const Governance = () => {
                         {isStepCompleted(12) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Critical Concerns
+                              Determine Remuneration
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -853,7 +856,7 @@ const Governance = () => {
                         {isStepCompleted(13) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Critical Concerns
+                              Compensation Ratio
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -929,6 +932,7 @@ const Governance = () => {
                       </div>
                     </li>
                   </AccordionItem>
+
                   {/* <AccordionItem title="Policy">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
@@ -1033,7 +1037,7 @@ const Governance = () => {
                         {isStepCompleted(10) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Critical Concerns
+                              Compensation Ratio
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -1250,6 +1254,16 @@ const Governance = () => {
                   <div>
                     <Remuneration />{" "}
                   </div>
+                </>
+              )}
+              {activeStep === 12 && (
+                <>
+                  <div><DetermineRemuneration/> </div>
+                </>
+              )}
+              {activeStep === 13 && (
+                <>
+                  <div><CompensationRatio/> </div>
                 </>
               )}
               {activeStep === 14 && (
