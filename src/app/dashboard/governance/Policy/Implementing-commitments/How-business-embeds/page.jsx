@@ -6,16 +6,17 @@ import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import inputWidget2 from '../../../../../shared/widgets/Input/inputWidget2'
-import GovernancetableWidget2 from "../../../../../shared/widgets/Governance/governancetableWidget2";
+import GovernancetableWidget3 from "../../../../../shared/widgets/Governance/governancetableWidget3";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
+import CustomTableField from "../../../../../shared/components/customTableField";
 
 const widgets = {
   inputWidget: inputWidget2,  
-  TableWidget: GovernancetableWidget2,
+  TableWidget: GovernancetableWidget3,
 };
 
 const view_path = "";
@@ -23,43 +24,28 @@ const client_id = 1;
 const user_id = 1;
 
 const schema = {
-  type: "array",
-  items: {
-    type: "object",
-    properties: {
-      processDescription: {
-        type: "string",
-        title: "Process Description"
-      },
-      tableData: {
-        type: "array",
-        items: {
-          type: "object",
-          properties: {
-            Criteria: { type: "string", title: "Criteria" },
-            Whethertakenintoconsideration: {
-              type: "string",
-              enum: ["Gender", "Race", "Others"],
-              title: "",
-            },
-            How: { type: "string", title: "Total no. of operations" },
+    type: "array",
+    items: {
+      type: "object",
+      properties: {
+        tableData: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              Criteria: { type: "string", title: "Criteria" },
+              How: { type: "string", title: "Description" }
+            }
           },
         },
       },
     },
-  },
-};
+  };
 
-const uiSchema = {
-    "ui:order": ["processDescription", "tableData"],
+  const uiSchema = {
+    "ui:order": ["tableData"],
+    // "ui:field": CustomTableField,
     items: {
-      processDescription: {
-        "ui:widget": "inputWidget",
-        "ui:title": "",
-        "ui:tooltip": "Describe the process for designing remuneration policies and determining remuneration",
-        "ui:tooltipdisplay": "none",
-        "ui:label": false
-      },
       tableData: {
         "ui:widget": "TableWidget",
         "ui:title": null,
@@ -68,29 +54,28 @@ const uiSchema = {
           hideLabel: true,
           titles: [
             { key: "Criteria", title: "", type: "number", display: "none" },
-            {
-              key: "Whethertakenintoconsideration",
-              title: "",
-              type: "number",
-              display: "block",
-            },
-            { key: "How", title: "", type: "number", display: "block" },
+            { key: "How", title: "Description", type: "string", display: "block" },
           ],
           rowLabels: [
             {
-              title: "Whether independent highest governance body members or an independent remuneration committee oversees the process for determining remuneration",
-              tooltip: "",
-              display: "none",
+              title: "How the organisation allocates responsibility to implement the commitments across different levels within the organization",
+              tooltip: "Examples of different levels within an organization include the highest governance body, seniorexecutives, and operational levels.",
+              display: "inline-block",
             },
             {
-              title: "Weather and how the views of stakeholders (including shareholders) regarding remuneration are sought and taken into consideration",
-              tooltip: "",
-              display: "none",
+              title: "How the organisation integrates the commitments into organizational strategies, operational policies, and operational procedures;",
+              tooltip: "The organization can describe:• how it aligns the policy commitments with broader risk management systems,economic, environmental, social, and human rights impact assessments, policies and procedures that set financial and other performance incentives formanagement or workers etc.• how it applies the policy commitments when making decisions, such as about its sourcingand operating locations.",
+              display: "inline-block",
             },
             {
-              title: "Whether remuneration consultants are involved in determining remuneration and, if so, whether they are independent of the organization, its highest governance body and senior executives;",
-              tooltip: "",
-              display: "none",
+              title: "How the organisation implements its commitments with and through its business relationships.",
+              tooltip: "Briefly explain how the organisation implements its commitments with and through its business relationships.",
+              display: "inline-block",
+            },
+            {
+              title: "Training that the organization provides on implementing the commitments",
+              tooltip: "The organization can report:•the content of the training;• to whom the training is provided, and whether it is mandatory;• the form (e.g., in-person, online) and frequency of the training;• examples of how the organization has determined that the training is effective.",
+              display: "inline-block",
             },
           ],
         },
@@ -98,12 +83,12 @@ const uiSchema = {
     },
   };
 
-const Process = ({ selectedLocation, year }) => {
+const HowBusinessEmbeds = ({ selectedLocation, year }) => {
   const { open } = GlobalState();
   const initialFormData = [
     {
-      processDescription: "",
       tableData: [
+        { Whethertakenintoconsideration: "", How: "" },
         { Whethertakenintoconsideration: "", How: "" },
         { Whethertakenintoconsideration: "", How: "" },
         { Whethertakenintoconsideration: "", How: "" },
@@ -228,12 +213,11 @@ const Process = ({ selectedLocation, year }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative flex">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
-              Describe the process for designing its remuneration policies and
-              for determining remuneration
+            Describe how organisation embeds each of its policy commitments for responsible business conduct throughout its activities and business relationships, including:
             </h2>
             <MdInfoOutline
               data-tooltip-id={`tooltip-$e1`}
-              data-tooltip-content="What is the process for designing its remuneration policies and for determining remuneration?"
+              data-tooltip-content="Provide a description of organisation's specific policy commitment to respect human rights.				"
               className="mt-1.5 ml-2 text-[14px]"
             />
             <ReactTooltip
@@ -254,7 +238,7 @@ const Process = ({ selectedLocation, year }) => {
           <div className="w-[20%]">
             <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
               <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-20-a
+                GRI 2-24-a
               </p>
             </div>
           </div>
@@ -296,4 +280,4 @@ const Process = ({ selectedLocation, year }) => {
   );
 };
 
-export default Process;
+export default HowBusinessEmbeds;

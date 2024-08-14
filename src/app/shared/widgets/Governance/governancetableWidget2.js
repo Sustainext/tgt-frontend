@@ -28,14 +28,14 @@ const GovernancetableWidget2 = ({ id, options, value, required, onChange, schema
 
     return (
         <div style={{ maxHeight: "400px" }} className='mb-2'>
-            <table id={id} className="rounded-md border border-gray-300 w-full">
+            <table id={id} className="border border-gray-300 rounded-lg w-full">
                 <tbody>
                     {options.rowLabels.map((label, rowIndex) => (
                         <tr key={rowIndex} className='border border-gray-300'>
                             <td className=" p-3 text-left w-2/5">
                                 <span>{label.title}</span>
                                 <MdInfoOutline
-                                    data-tooltip-id={`tooltip-${label.title.replace(/\s+/g, '-')}`}
+                                    data-tooltip-id={`tooltip-${label.title?.replace(/\s+/g, '-')}`}
                                     data-tooltip-content={label.tooltip}
                                     className="ml-2 cursor-pointer"
                                     style={{ display: label.display }}
