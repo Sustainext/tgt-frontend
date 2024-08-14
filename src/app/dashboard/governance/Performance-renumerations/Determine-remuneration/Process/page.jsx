@@ -62,6 +62,7 @@ const uiSchema = {
       },
       tableData: {
         "ui:widget": "TableWidget",
+        "ui:title": "",
         "ui:label": false, 
         "ui:options": {
           hideLabel: true,
