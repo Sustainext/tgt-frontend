@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import InputWidget2 from "../../../../../shared/widgets/Input/InputWidget2";
+import InputWidget2 from "../../../../../shared/widgets/Input/inputWidget2.js";
 import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -58,7 +58,7 @@ const uiSchema = {
   },
 };
 
-const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
+const GovernanceStructure = ({ selectedOrg, selectedCorp, year }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -148,7 +148,7 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
     const path_slug = "gri-governance-structure-2-9-a-governance_structure";
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${path_slug}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&year=${year}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${path_slug}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&corporate=${selectedCorp}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -171,7 +171,7 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year, month }) => {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year]);
+  }, [selectedOrg, selectedCorp, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

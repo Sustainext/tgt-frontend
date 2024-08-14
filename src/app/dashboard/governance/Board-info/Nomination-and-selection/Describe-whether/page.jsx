@@ -52,7 +52,7 @@ const uiSchema = {
     },
 };
 
-const Describewhether = ({ selectedOrg,selectedCorp, year, month }) => {
+const Describewhether = ({ selectedOrg,selectedCorp, year }) => {
     const { open } = GlobalState();
     const initialFormData = [
         { Whethertakenintoconsideration: "", How: "" },
@@ -162,7 +162,7 @@ const Describewhether = ({ selectedOrg,selectedCorp, year, month }) => {
             toastShown.current = true;
           }
         }
-      }, [selectedOrg, year]);
+      }, [selectedOrg, selectedCorp, year]);
 
 
 
@@ -201,9 +201,9 @@ const Describewhether = ({ selectedOrg,selectedCorp, year, month }) => {
                 />
                 <div className='mb-8'>
                 <button type="button"
-                        className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? 'cursor-not-allowed' : ''}`}
+                        className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year ? 'cursor-not-allowed' : ''}`}
                         onClick={handleSubmit}
-                        // disabled={!location || !year}
+                        disabled={!selectedOrg || !year}
                         >
                         Submit
                     </button>

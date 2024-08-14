@@ -145,7 +145,7 @@ function Executivesummary({
                               {scope.scope_name}
                             </td>
                             <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                              {scope.total_co2e} {scope.co2e_unit}
+                            {scope.total_co2e.toFixed(2)} {scope.co2e_unit}
                             </td>
                             <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                               {scope.contribution_scope}%

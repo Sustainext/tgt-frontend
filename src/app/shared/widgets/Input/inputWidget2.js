@@ -20,7 +20,7 @@ const inputWidget2 = (props) => {
                   /\s+/g,
                   "-"
                 )}`}
-                data-tooltip-content={uiSchema["ui:tooltip"]}
+                data-tooltip-html={uiSchema["ui:tooltip"]}
                 className="mt-1 ml-2 w-[30px] text-[14px]"
                 style={{ display: uiSchema["ui:tooltipdisplay"] }}
               />

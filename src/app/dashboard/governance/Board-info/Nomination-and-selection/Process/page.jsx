@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import InputWidget5 from "../../../../../shared/widgets/Input/InputWidget5";
+import InputWidget5 from "../../../../../shared/widgets/Input/inputWidget5";
 import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -53,7 +53,7 @@ const uiSchema = {
   },
 };
 
-const Process = ({ selectedOrg, selectedCorp, year, month }) => {
+const Process = ({ selectedOrg, selectedCorp, year }) => {
   const [formData, setFormData] = useState([{ Q1: {Q1: "",fileName:"",fileURL:"" } }]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -130,7 +130,7 @@ const Process = ({ selectedOrg, selectedCorp, year, month }) => {
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([{}]);
+    setFormData([{ Q1: {Q1: "",fileName:"",fileURL:"" } }]);
     const view_path = 'gri-governance-nomination-2-10-a-nomination';
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&corporate=${selectedCorp}&year=${year}`;
     try {
@@ -140,14 +140,14 @@ const Process = ({ selectedOrg, selectedCorp, year, month }) => {
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData([{}]);
+      setFormData([{ Q1: {Q1: "",fileName:"",fileURL:"" } }]);
     } finally {
       LoaderClose();
     }
   };
 
   useEffect(() => {
-    if (selectedOrg && year && month) {
+    if (selectedOrg && year) {
       loadFormData();
       toastShown.current = false;
     } else {
@@ -155,7 +155,7 @@ const Process = ({ selectedOrg, selectedCorp, year, month }) => {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, month]);
+  }, [selectedOrg, selectedCorp, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
