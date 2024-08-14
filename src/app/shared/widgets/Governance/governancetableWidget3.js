@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { debounce } from 'lodash';
-import { MdInfoOutline } from "react-icons/md";
+import { MdInfoOutline, MdOutlineDeleteOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
-const GovernancetableWidget = ({ id, options, value, required, onChange, schema,formContext }) => {
+const GovernancetableWidget3 = ({ id, options, value, required, onChange, schema, formContext }) => {
     const [localValue, setLocalValue] = useState(value);
 
     useEffect(() => {
@@ -28,57 +28,45 @@ const GovernancetableWidget = ({ id, options, value, required, onChange, schema,
     }, [localValue, debouncedUpdate]);
 
     return (
-        <div style={{ maxHeight: "400px" }} className='mb-2'>
+        <div style={{ maxHeight: "400px" }} className="mb-2">
             <table id={id} className="rounded-md border border-gray-300 w-full">
-            {formContext.view !== "0" && (
-                <thead className={formContext.view === "0" ? "" : "gradient-background"}>
+                <thead className="gradient-background">
                     <tr>
-                        {options.titles.map((item, idx) => (
-                            <th key={idx} className="text-[12px] border border-gray-300 px-2 py-2 w-auto text-center">
-                                <div className='flex'>
-                                    <p className='w-[80%]'>
-                                        {item.title}
+                    {options.titles.map((item, idx) => (
+                            <th
+                                key={idx}
+                                style={{ minWidth: "120px", textAlign: "left" }}
+                                className="text-[12px] border border-gray-300 px-2 py-2"
+                            >
+                                <div className="flex items-center">
+                                    <p>{item.title}</p>
+                                    <p>
+                                        <MdInfoOutline
+                                            data-tooltip-id={`tooltip-${item.title.replace(
+                                                /\s+/g,
+                                                "-"
+                                            )}`}
+                                            data-tooltip-content={item.tooltip}
+                                            style={{ display: `${item.display}` }}
+                                            className="ml-2 cursor-pointer"
+                                        />
+                                        <ReactTooltip
+                                            id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
+                                            place="top"
+                                            effect="solid"
+                                            className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
+                                        />
                                     </p>
-                                    <MdInfoOutline
-                                        data-tooltip-id={`tooltip-${item.title.replace(/\s+/g, '-')}`}
-                                        data-tooltip-content={item.tooltip}
-                                        className="ml-2 cursor-pointer w-[20%]"
-                                        style={{ display: item.display }}
-                                    />
-                                    <ReactTooltip
-                                        id={`tooltip-${item.title.replace(/\s+/g, '-')}`}
-                                        place="top"
-                                        effect="solid"
-                                        className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
-                                    />
                                 </div>
                             </th>
                         ))}
+                        <th></th>
                     </tr>
                 </thead>
-                  )}
                 <tbody>
-                    {options.rowLabels.map((label, rowIndex) => (
-                        <tr key={rowIndex}>
-                            <td className="border border-gray-300 p-3 text-left">
-                                <div className="flex">
-                                <span>{label.title}</span>
-                                <MdInfoOutline
-                                    data-tooltip-id={`tooltip-${label.title.replace(/\s+/g, '-')}`}
-                                    data-tooltip-content={label.tooltip}
-                                    className="ml-2 cursor-pointer mt-1"
-                                    style={{ display: label.display }}
-                                />
-                                <ReactTooltip
-                                    id={`tooltip-${label.title.replace(/\s+/g, '-')}`}
-                                    place="top"
-                                    effect="solid"
-                                    className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
-                                />
-                                </div>
-
-                            </td>
-                            {Object.keys(localValue[rowIndex] || {}).map((key, cellIndex) => {
+                    {localValue.map((row, rowIndex) => (
+                        <tr key={rowIndex} className="border border-gray-300">
+                            {Object.keys(schema.items.properties).map((key, cellIndex) => {
                                 const propertySchema = schema.items.properties[key];
                                 const isEnum = propertySchema && propertySchema.hasOwnProperty('enum');
 
@@ -98,17 +86,23 @@ const GovernancetableWidget = ({ id, options, value, required, onChange, schema,
                                             </select>
                                         ) : (
                                             <input
-                                                type="text"
+                                                type={propertySchema.type}
                                                 required={required}
                                                 value={localValue[rowIndex][key] || ""}
                                                 onChange={(e) => handleFieldChange(rowIndex, key, e.target.value)}
                                                 className="text-sm pl-2 py-2 w-full"
                                                 placeholder="Enter"
+                                                disabled={key === 'Specifylevel' && localValue[rowIndex]['Seniorlevel'] !== 'Yes'}
                                             />
                                         )}
                                     </td>
                                 );
                             })}
+                            <td className="border border-gray-300 p-3">
+                                <button onClick={() => formContext.onRemove(rowIndex)}>
+                                    <MdOutlineDeleteOutline className="text-[23px] text-red-600" />
+                                </button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
@@ -117,4 +111,4 @@ const GovernancetableWidget = ({ id, options, value, required, onChange, schema,
     );
 };
 
-export default GovernancetableWidget;
+export default GovernancetableWidget3;

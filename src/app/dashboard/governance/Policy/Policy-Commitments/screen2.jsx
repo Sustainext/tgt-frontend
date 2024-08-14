@@ -185,7 +185,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form data:", formData);
-    updateFormData();
+    // updateFormData();
   };
   return (
     <>
@@ -251,7 +251,7 @@ to respect human rights."
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            // disabled={!selectedOrg || !year}
           >
             Submit
           </button>

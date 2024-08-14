@@ -1,23 +1,21 @@
-"use client";
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import GovernancetableWidget3 from "../../../../shared/widgets/Governance/governancetableWidget3.js";
-import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
+import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import GovernancetableWidget4 from "../../../../shared/widgets/Governance/governancetableWidget4.js";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
+import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-
-// Simple Custom Table Widget
 const widgets = {
-  TableWidget: GovernancetableWidget3,
+  TableWidget: GovernancetableWidget4,
 };
 
-const view_path = "gri-social-impacts_and_actions-414-2b-number_of_suppliers";
+const view_path = "gri-governance-conflict_of_interest-2-15-b-report";
 const client_id = 1;
 const user_id = 1;
 
@@ -26,18 +24,12 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      PolicyCommitment: { type: "string", title: "Policy Commitment" },
-      Levelorganization: {
+      column1: { type: "string", title: "Policy Commitment" },
+      column2: {
         type: "string",
         title:
           "Level at which the policy commitments was approved within the organization",
       },
-      Seniorlevel: {
-        type: "string",
-        title: "Whether this is the most senior level",
-        enum: ["Yes", "No"],
-      },
-      Specifylevel: { type: "string", title: "If yes, specify senior level" },
     },
   },
 };
@@ -47,39 +39,111 @@ const uiSchema = {
   "ui:options": {
     titles: [
       {
-        key: "PolicyCommitment",
-        title: "Policy Commitment",
-        tooltip: "Specify the policy commitment. ",
+        key: "column1",
+        title: "column1",
+        type: "text",
+        display: "none",
       },
       {
-        key: "Levelorganization",
+        key: "column2",
+        title: "column2",
+        type: "text",
+        display: "none",
+        tooltip:
+          "Indicate whether the given conflict of interest are disclosed to stakeholders.",
+      },
+    ],
+    rowLabels: [
+      {
+        key: "text1",
+        title: "Overall",
+        tooltip:
+          "If the organisation's policy commitment covers all internationally recognized human rights, a brief statement of this fact is sufficient to comply with the requirement. The organization can also state if the policy commitment references certain rights that require particular attention.",
+        display: "none",
+        type: "text",
+        file: "yes",
+      },
+      {
+        key: "text2",
         title:
-          "Level at which the policy commitments was approved within the organization",
+          "Authoritative governmental instruments that the commitments reference",
         tooltip:
-          "Specify the level at which the policy commitments was approved within the organization",
+          "See the Bibliographies of the GRI Standards for a list of authoritative intergovernmental instruments for responsible business conduct.",
+        display: "block",
+        type: "text",
+        file: "yes",
       },
       {
-        key: "Seniorlevel",
-        title: "Whether this is the most senior level",
+        key: "text3",
+        title: "Whether the commitments stipulate conducting due diligence",
         tooltip:
-          "Indicate whether the level at which each of the policy commitments was approved within the organization is the most senior level.",
+          "Due diligence: Process to identify, prevent, mitigate, and account for how the organization addresses its actual and potential negative impacts.",
+        display: "block",
+        type: "select",
+        file: "yes",
+        selectoption: ["Yes", "No"],
       },
       {
-        key: "Specifylevel",
-        title: "If yes, specify senior level",
+        key: "text4",
+        title:
+          "Whether the commitments stipulate applying the precautionary principle",
         tooltip:
-          "For example, the most senior level in an organization could be the highest governance body (e.g., the board) or the most senior executive (e.g., chief executive officer)",
+          "The precautionary principle means taking early action to prevent and mitigate potential negative impacts in situations where conclusive scientific understanding or evidence is lacking, but there is sufficient reason to expect serious or irreversible damage. (The precautionary principle is set out in Principle 15 of the UN Rio Declaration on Environment and Development.)",
+        display: "block",
+        type: "select",
+        file: "yes",
+        selectoption: ["Yes", "No"],
+      },
+      {
+        key: "text5",
+        title: "Whether the commitments stipulate respecting human rights",
+        tooltip:
+          "If the organisation's policy commitment covers all internationally recognized human rights, a brief statement of this fact is sufficient to comply with the requirement. The organization can also state if the policy commitment references certain rights that require particular attention.",
+        display: "none",
+        type: "select",
+        file: "yes",
+        selectoption: ["Yes", "No"],
       },
     ],
   },
 };
-const Screen4 = ({ selectedOrg, selectedCorp, location, year, month }) => {
+
+const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const initialFormData = [
     {
-      PolicyCommitment: "",
-      Levelorganization: "",
-      Seniorlevel: "",
-      Specifylevel: "",
+      column1: "",
+      column2: "",
+      column1_details: "",
+      fileUrl: "",
+      fileName: "",
+    },
+    {
+      column1: "",
+      column2: "",
+      column1_details: "",
+      fileUrl: "",
+      fileName: "",
+    },
+    {
+      column1: "",
+      column2: "",
+      column1_details: "",
+      fileUrl: "",
+      fileName: "",
+    },
+    {
+      column1: "",
+      column2: "",
+      column1_details: "",
+      fileUrl: "",
+      fileName: "",
+    },
+    {
+      column1: "",
+      column2: "",
+      column1_details: "",
+      fileUrl: "",
+      fileName: "",
     },
   ];
   const [formData, setFormData] = useState(initialFormData);
@@ -167,7 +231,40 @@ const Screen4 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
-      setFormData(response.data.form_data[0].data);
+      // setFormData(response.data.form_data[0].data);
+      const newFormData = [
+        {
+          column1: "test",
+          column2: "",
+          fileUrl: "https://sustainextudm.blob.core.windows.net/nextbucket/GRI 409_ Forced or Compulsory Labor 2016.pdf",
+          fileName: "GRI 409_ Forced or Compulsory Labor 2016.pdf",
+        },
+        {
+          column1: "test1",
+          column2: "",
+          fileUrl: "https://sustainextudm.blob.core.windows.net/nextbucket/GRI 301_ Materials 2016.pdf",
+          fileName: "GRI 301_ Materials 2016.pdf",
+        },
+        {
+          column1: "Yes",
+          column2: "",
+          column1_details: "test2",
+        },
+        {
+          column1: "Yes",
+          column2: "",
+          column1_details: "test3",
+          fileUrl: "https://sustainextudm.blob.core.windows.net/nextbucket/tes new r.pdf",
+          fileName: "tes new r.pdf",
+        },
+        {
+          column1: "Yes",
+          column2: "",
+          column1_details: "test4",
+        },
+      ];
+      setFormData(newFormData);
+      console.log(formData, "afterapi");
     } catch (error) {
       setFormData(initialFormData);
     } finally {
@@ -178,6 +275,7 @@ const Screen4 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   useEffect(() => {
     if (selectedOrg && year) {
       loadFormData();
+
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
@@ -190,21 +288,6 @@ const Screen4 = ({ selectedOrg, selectedCorp, location, year, month }) => {
     e.preventDefault(); // Prevent the default form submission
     console.log("Form data:", formData);
     // updateFormData();
-  };
-
-  const handleAddCommittee = () => {
-    const newCommittee = {
-      PolicyCommitment: "",
-      Levelorganization: "",
-      Seniorlevel: "",
-      Specifylevel: "",
-    };
-    setFormData([...formData, newCommittee]);
-  };
-
-  const handleRemoveCommittee = (index) => {
-    const newFormData = formData.filter((_, i) => i !== index);
-    setFormData(newFormData);
   };
 
   return (
@@ -224,8 +307,8 @@ const Screen4 = ({ selectedOrg, selectedCorp, location, year, month }) => {
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
                 data-tooltip-content="This section documents the data corresponding to the number of
-suppliers identified as having significant actual and potential
-negative social impacts."
+  suppliers identified as having significant actual and potential
+  negative social impacts."
                 className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip
@@ -262,20 +345,9 @@ negative social impacts."
             validator={validator}
             widgets={widgets}
             formContext={{
-              onRemove: handleRemoveCommittee,
+              view: "0",
             }}
           />
-        </div>
-        <div className="flex right-1 mx-2">
-          {selectedOrg && year && (
-            <button
-              type="button"
-              className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
-              onClick={handleAddCommittee}
-            >
-              To enter another commitment <MdAdd className="text-lg" />
-            </button>
-          )}
         </div>
 
         <div className="mb-6">
@@ -307,4 +379,4 @@ negative social impacts."
   );
 };
 
-export default Screen4;
+export default Screen1;
