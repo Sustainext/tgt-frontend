@@ -14,7 +14,7 @@ const widgets = {
   inputWidget: InputWidget5,
 };
 
-const view_path = "gri-governance-nomination-2-10-a-nomination";
+const view_path = "gri-governance-process-2-25-b-approach";
 const client_id = 1;
 const user_id = 1;
 
@@ -136,7 +136,6 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{ Q1: {Q1: "",fileName:"",fileURL:"" } }]);
-    const view_path = 'gri-governance-nomination-2-10-a-nomination';
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&corporate=${selectedCorp}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
@@ -215,8 +214,8 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

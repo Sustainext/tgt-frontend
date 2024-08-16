@@ -15,7 +15,7 @@ const widgets = {
   TableWidget: GovernancetableWidget4,
 };
 
-const view_path = "gri-governance-conflict_of_interest-2-15-b-report";
+const view_path = "gri-governance-policy_commitments-2-23-a-business_conduct";
 const client_id = 1;
 const user_id = 1;
 
@@ -231,39 +231,8 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
-      // setFormData(response.data.form_data[0].data);
-      const newFormData = [
-        {
-          column1: "test",
-          column2: "",
-          fileUrl: "https://sustainextudm.blob.core.windows.net/nextbucket/GRI 409_ Forced or Compulsory Labor 2016.pdf",
-          fileName: "GRI 409_ Forced or Compulsory Labor 2016.pdf",
-        },
-        {
-          column1: "test1",
-          column2: "",
-          fileUrl: "https://sustainextudm.blob.core.windows.net/nextbucket/GRI 301_ Materials 2016.pdf",
-          fileName: "GRI 301_ Materials 2016.pdf",
-        },
-        {
-          column1: "Yes",
-          column2: "",
-          column1_details: "test2",
-        },
-        {
-          column1: "Yes",
-          column2: "",
-          column1_details: "test3",
-          fileUrl: "https://sustainextudm.blob.core.windows.net/nextbucket/tes new r.pdf",
-          fileName: "tes new r.pdf",
-        },
-        {
-          column1: "Yes",
-          column2: "",
-          column1_details: "test4",
-        },
-      ];
-      setFormData(newFormData);
+      setFormData(response.data.form_data[0].data);
+
       console.log(formData, "afterapi");
     } catch (error) {
       setFormData(initialFormData);
@@ -287,7 +256,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
     console.log("Form data:", formData);
-    // updateFormData();
+    updateFormData();
   };
 
   return (
@@ -302,17 +271,14 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
         <div className="mb-4 flex">
           <div className="w-[80%]">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
-              Number of suppliers identified having significant actual and
-              potential negative social impacts.
+            Describe the organization's policy commitments for "responsible business conduct", including:
               <MdInfoOutline
-                data-tooltip-id={`tooltip-$e1`}
-                data-tooltip-content="This section documents the data corresponding to the number of
-  suppliers identified as having significant actual and potential
-  negative social impacts."
+                data-tooltip-id={`tooltip-$e80`}
+                data-tooltip-content="Provide a description of organisation's policy commitments for responsible business conduct."
                 className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip
-                id={`tooltip-$e1`}
+                id={`tooltip-$e80`}
                 place="top"
                 effect="solid"
                 style={{
@@ -331,15 +297,15 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
           <div className="w-[20%]">
             <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
               <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-23-c
+                GRI 2-23-a
               </p>
             </div>
           </div>
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -357,7 +323,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

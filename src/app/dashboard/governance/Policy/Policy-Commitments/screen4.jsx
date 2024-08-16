@@ -17,7 +17,7 @@ const widgets = {
   TableWidget: GovernancetableWidget3,
 };
 
-const view_path = "gri-social-impacts_and_actions-414-2b-number_of_suppliers";
+const view_path = "gri-governance-policy_commitments-2-23-c-leave";
 const client_id = 1;
 const user_id = 1;
 
@@ -189,7 +189,7 @@ const Screen4 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
     console.log("Form data:", formData);
-    // updateFormData();
+    updateFormData();
   };
 
   const handleAddCommittee = () => {
@@ -217,19 +217,19 @@ const Screen4 = ({ selectedOrg, selectedCorp, location, year, month }) => {
         }}
       >
         <div className="mb-4 flex">
-          <div className="w-[80%]">
+          <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
               Number of suppliers identified having significant actual and
               potential negative social impacts.
               <MdInfoOutline
-                data-tooltip-id={`tooltip-$e1`}
+                data-tooltip-id={`tooltip-$e86`}
                 data-tooltip-content="This section documents the data corresponding to the number of
 suppliers identified as having significant actual and potential
 negative social impacts."
                 className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip
-                id={`tooltip-$e1`}
+                id={`tooltip-$e86`}
                 place="top"
                 effect="solid"
                 style={{
@@ -255,8 +255,8 @@ negative social impacts."
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -285,7 +285,7 @@ negative social impacts."
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

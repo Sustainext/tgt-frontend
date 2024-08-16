@@ -17,7 +17,7 @@ const widgets = {
     RadioWidget2: RadioWidget2,
 };
 
-const view_path = "gri-governance-critical_concerns-2-16-b-report";
+const view_path = "gri-governance-remuneration-2-19-b-policies";
 const client_id = 1;
 const user_id = 1;
 
@@ -174,7 +174,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
         <>
             <div className="mx-2 p-3 mb-6 pb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
                 <div className='mb-4 flex'>
-                    <div className='w-[80%]'>
+                   <div className="w-[80%] relative">
                         {/* <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold mb-2'>
                         Highest governance body processes to prevent conflict of interest
                             <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
@@ -219,7 +219,7 @@ interest are prevented and mitigated." className="mt-1.5 ml-2 text-[14px]" />
                         className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year ? "cursor-not-allowed" : ""
                             }`}
                         onClick={handleSubmit}
-                    // disabled={!selectedOrg || !year}
+                    disabled={!selectedOrg || !year}
                     >
                         Submit
                     </button>

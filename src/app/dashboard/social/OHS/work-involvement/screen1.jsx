@@ -205,7 +205,7 @@ const Screen1 = ({location, year, month}) => {
         <>
             <div className="mx-2  p-3 mb-6 pb-6 rounded-md" style={{boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px"}}>
                 <div className='mb-4 flex'>
-                    <div className='w-[80%]'>
+                   <div className="w-[80%] relative">
                     <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold'>
                     Occupational health and safety management system
                         <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
