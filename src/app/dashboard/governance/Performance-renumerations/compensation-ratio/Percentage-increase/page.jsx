@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import inputWidget2 from "@/app/shared/widgets/Input/inputWidget2";
+import inputWidget2 from "@/app/shared/widgets/Input/numberInputWidget";
 import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -26,17 +26,17 @@ const schema = {
     type: "object",
     properties: {
       Q1: {
-        type: "string",
-        title:
-          "What is the percentage increase in annual total compensation for the organization's highest-paid",
+        type: "number",
+        title: "What is the percentage increase in annual total compensation for the organization's highest-paid",
       },
       Q2: {
-        type: "string",
+        type: "number",
         title: "What is the median percentage increase in annual total compensation for all of the organization's employees excluding the highest-paid individual?",
       },
     },
   },
 };
+
 
 const uiSchema = {
   items: {
@@ -50,6 +50,7 @@ const uiSchema = {
       "ui:widget": "inputWidget",
       "ui:options": {
         label: false,
+        inputType: 'number'
       },
     },
     Q2: {
@@ -60,6 +61,7 @@ const uiSchema = {
       "ui:widget": "inputWidget",
       "ui:options": {
         label: false,
+        inputType: 'number' 
       },
     },
   },
@@ -222,10 +224,10 @@ const PercentageIncrease = ({ selectedLocation, year }) => {
         </div>
         <div className="mx-2 mb-3">
           <Form
-              schema={Object.keys(r_schema).length === 0 ? {} : r_schema.items}
-              uiSchema={Object.keys(r_ui_schema).length === 0 ? {} : r_ui_schema.items}
-            // schema={schema.items}
-            // uiSchema={uiSchema.items}
+              // schema={Object.keys(r_schema).length === 0 ? {} : r_schema.items}
+              // uiSchema={Object.keys(r_ui_schema).length === 0 ? {} : r_ui_schema.items}
+            schema={schema.items}
+            uiSchema={uiSchema.items}
             formData={formData[0]}
             onChange={handleChange}
             validator={validator}
