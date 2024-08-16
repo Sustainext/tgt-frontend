@@ -5,7 +5,7 @@ import { GiPublicSpeaker } from "react-icons/gi";
 const GovernanceTrack = ({ contentSize }) => {
     const [activeTab, setActiveTab] = useState('zohoGovernance');
 
-    const { width, height } = contentSize;
+    const { width, height } = contentSize || { width: 800, height: 600 };
   
     const tabs = [
       { id: 'zohoGovernance', label: 'Governance (Zoho)' },
