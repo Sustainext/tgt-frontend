@@ -42,9 +42,9 @@ const uiSchema = {
     'ui:options': {
         titles:
             [
-                { title: "The organization's purpose", tooltip: "Describe the role of the highest governance body and of senior executives in developing, approving, and updating the following:" },
+                { title: "The organization's purpose", tooltip: "What is the role of the highest governance body and of senior executives in developing, approving, and updating the organisation's purpose?" },
                 { title: "Value or mission statements", tooltip: "What is the role of the highest governance body and of senior executives in developing, approving,and updating the value or mission statements?" },
-                { title: "Strategies", tooltip: "Describe the role of the highest governance body and of senior executives in developing, approving, and updating the following" },
+                { title: "Strategies", tooltip: "What is the role of the highest governance body and of senior executives in developing, approving, and updating strategies?" },
                 { title: "Policies", tooltip: "What is the role of the highest governance body and of senior executives in developing, approving, and updating policies?" },
                 { title: "Goals related to sustainable development", tooltip: "What is the role of the highest governance body and of senior executives in developing, approving, and updating goals related to sustainable development?" },
 
@@ -182,7 +182,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
         <>
             <div className="mx-2 p-3 mb-6 pb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
                 <div className='mb-4 flex'>
-                    <div className='w-[80%]'>
+                   <div className="w-[80%] relative">
                         <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold mb-2'>
                             Role of the highest governance body and of senior executives
                             <MdInfoOutline data-tooltip-id={`tooltip-$e1`}

@@ -249,6 +249,27 @@ const Report = () => {
           router.push("/dashboard/Report/Ghgtemplates");
           //   navigate(`/report/GHGtemplate`, { state: { data: response.data } });
         }
+        else if(response.status == "204"){
+          toast.error("No data available for the given corporate IDs", {
+         position: "top-right",
+         autoClose: 3000,
+         hideProgressBar: false,
+         closeOnClick: true,
+         pauseOnHover: true,
+         draggable: true,
+         progress: undefined,
+         theme: "light",
+       });
+       LoaderClose();
+       handleCloseModal();
+       setReportname();
+       setReporttype();
+       setStartdate();
+       setEnddate();
+       setSelectedOrg();
+       setSelectedCorp();
+       setFirstSelection();
+     }
       })
       .catch((error) => {
         const errorMessage =

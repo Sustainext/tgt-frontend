@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { debounce } from 'lodash';
 import { MdInfoOutline } from "react-icons/md";
-import { Tooltip as ReactTooltip } from 'react-tooltip';
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 const GovernancetableWidget = ({ id, options, value, required, onChange, schema,formContext }) => {
     const [localValue, setLocalValue] = useState(value);

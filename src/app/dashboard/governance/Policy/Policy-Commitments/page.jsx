@@ -6,12 +6,13 @@ import "react-tooltip/dist/react-tooltip.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import GovernanceHeader2 from "../../GovernanceHeader2";
-import { Socialdata } from "../../../social/data/socialgriinfo"
-// import Screen1 from "./screen1"
-import Screen2 from "./screen2"
-import Screen3 from "./screen3"
-import Screen5 from "./screen5"
-import Screen6 from "./screen6"
+import { Socialdata } from "../../../social/data/socialgriinfo";
+import Screen1 from "./screen1"
+import Screen2 from "./screen2";
+import Screen3 from "./screen3";
+import Screen4 from "./screen4";
+import Screen5 from "./screen5";
+import Screen6 from "./screen6";
 const PolicyCommitments = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
@@ -53,7 +54,7 @@ const PolicyCommitments = () => {
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] font-bold pt-1">
-                  Policy Commitments
+                    Policy Commitments
                   </p>
                 </div>
               </div>
@@ -63,13 +64,13 @@ const PolicyCommitments = () => {
             <div className="flex float-end border-l">
               <button
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("1")}
+                onClick={() => toggleDrawer("82")}
               >
                 GRI 2 - 23
               </button>
               <button
                 className="text-[#fff] bg-[#00558A] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("4")}
+                onClick={() => toggleDrawer("69")}
               >
                 SDG 16
               </button>
@@ -79,23 +80,32 @@ const PolicyCommitments = () => {
 
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Communication of critical concerns
-            <MdInfoOutline data-tooltip-id={`tooltip-$e10`}
-              data-tooltip-content="This section documents the data corresponding to the Communication of critical concerns." className="mt-1.5 ml-2 text-[14px]" />
-            <ReactTooltip id={`tooltip-$e10`} place="top" effect="solid" style={{
-              width: "290px", backgroundColor: "#000",
-              color: "white",
-              fontSize: "12px",
-              boxShadow: 3,
-              borderRadius: "8px",
-              textAlign: 'left',
-            }}>
-
-            </ReactTooltip>
+            Communication of critical concerns
+            <MdInfoOutline
+              data-tooltip-id={`tooltip-$e10`}
+              data-tooltip-content="This section documents the data corresponding to the Communication of critical concerns."
+              className="mt-1.5 ml-2 text-[14px]"
+            />
+            <ReactTooltip
+              id={`tooltip-$e10`}
+              place="top"
+              effect="solid"
+              style={{
+                width: "290px",
+                backgroundColor: "#000",
+                color: "white",
+                fontSize: "12px",
+                boxShadow: 3,
+                borderRadius: "8px",
+                textAlign: "left",
+              }}
+            ></ReactTooltip>
           </h6>
         </div>
         <div
-          className={`${isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"} fixed right-[51px]  w-[340px] h-full bg-white  rounded-md transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
+          className={`${
+            isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"
+          } fixed right-[51px]  w-[340px] h-full bg-white  rounded-md transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         >
           {data &&
             data.map((program) => (
@@ -127,36 +137,43 @@ const PolicyCommitments = () => {
         year={year}
         setYear={setYear}
       />
-      {/* <Screen1
+      <Screen1
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         location={location}
         year={year}
         month={activeMonth}
-      /> */}
+      />
 
-           <Screen2
+      <Screen2
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         location={location}
         year={year}
         month={activeMonth}
       />
-           <Screen3
+      <Screen3
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         location={location}
         year={year}
         month={activeMonth}
       />
-             <Screen5
+      <Screen4
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         location={location}
         year={year}
         month={activeMonth}
       />
-             <Screen6
+      <Screen5
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        location={location}
+        year={year}
+        month={activeMonth}
+      />
+      <Screen6
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         location={location}

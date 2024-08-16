@@ -15,7 +15,7 @@ const widgets = {
   TableWidget: GovernancetableWidget,
 };
 
-const view_path = "gri-governance-conflict_of_interest-2-15-b-report";
+const view_path = "gri-governance-policy_commitments-2-23-b-human_rights";
 const client_id = 1;
 const user_id = 1;
 
@@ -54,20 +54,19 @@ const uiSchema = {
     ],
     rowLabels: [
       {
-        title: "The internationally recognized human rights that the commitment covers",
+        title:
+          "The internationally recognized human rights that the commitment covers",
         tooltip:
           "If the organisation's policy commitment covers all internationally recognized human rights, a brief statement of this fact is sufficient to comply with the requirement.The organization can also state if the policy commitment references certain rights that require particular attention. ",
         display: "block",
       },
       {
-        title: "The categories of stakeholders, including at-risk or vulnerable groups, that the organization gives particular attention to in the commitment",
+        title:
+          "The categories of stakeholders, including at-risk or vulnerable groups, that the organization gives particular attention to in the commitment",
         tooltip:
           "Categories of stakeholders that the organization gives particular attention to can include consumers, customers, employees and other workers, and local communities.For example, a bank may give particular attention in its policy commitment to avoid discriminating against specific categories of customers, or a mining organization may give particular attention to avoid infringing on the rights of indigenous peoples",
         display: "block",
       },
-
-
-
     ],
   },
 };
@@ -202,7 +201,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
               Describe the specific policy commitment to "respect human rights",
               including:
               <MdInfoOutline
-                data-tooltip-id={`tooltip-$e1`}
+                data-tooltip-id={`tooltip-$e81`}
                 data-tooltip-content="Provide a description of
 organisation's specific
 policy commitment
@@ -210,7 +209,7 @@ to respect human rights."
                 className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip
-                id={`tooltip-$e1`}
+                id={`tooltip-$e81`}
                 place="top"
                 effect="solid"
                 style={{
@@ -234,15 +233,15 @@ to respect human rights."
           </div>
         </div>
         <Form
-          schema={schema}
-          uiSchema={uiSchema}
+          schema={r_schema}
+          uiSchema={r_ui_schema}
           formData={formData}
           onChange={handleChange}
           validator={validator}
           widgets={widgets}
           formContext={{
-            view:"0",
-        }}
+            view: "0",
+          }}
         />
         <div className="mb-8">
           <button

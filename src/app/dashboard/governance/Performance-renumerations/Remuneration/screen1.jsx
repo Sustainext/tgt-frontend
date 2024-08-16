@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import InputWidget5 from "../../../../shared/widgets/Input/inputWidget5";
+import Textboxwithfileupload from "../../../../shared/widgets/Input/Textboxwithfileupload";
 import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -11,10 +11,10 @@ import { Oval } from "react-loader-spinner";
 import axiosInstance from '@/app/utils/axiosMiddleware'
 
 const widgets = {
-  inputWidget: InputWidget5,
+  inputWidget: Textboxwithfileupload,
 };
 
-const view_path = "gri-governance-nomination-2-10-a-nomination";
+const view_path = "gri-governance-remuneration-2-19-a-remuneration";
 const client_id = 1;
 const user_id = 1;
 
@@ -110,7 +110,7 @@ const uiSchema = {
 };
 
 const screen1 = ({ selectedOrg, selectedCorp, year }) => {
-  const [formData, setFormData] = useState([{ Q1: {Q1: "",fileName:"",fileURL:"" } }]);
+  const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
@@ -186,8 +186,7 @@ const screen1 = ({ selectedOrg, selectedCorp, year }) => {
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([{ Q1: {Q1: "",fileName:"",fileURL:"" } }]);
-    const view_path = 'gri-governance-nomination-2-10-a-nomination';
+    setFormData([{}]);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&corporate=${selectedCorp}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
@@ -196,7 +195,7 @@ const screen1 = ({ selectedOrg, selectedCorp, year }) => {
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData([{ Q1: {Q1: "",fileName:"",fileURL:"" } }]);
+      setFormData([{}]);
     } finally {
       LoaderClose();
     }
@@ -266,8 +265,8 @@ const screen1 = ({ selectedOrg, selectedCorp, year }) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

@@ -20,7 +20,7 @@ const widgets = {
   inputWidget5: inputWidget5,
 };
 
-const view_path = "gri-governance-sustainability_reporting-2-14-role";
+const view_path = "gri-governance-policy_commitments-2-23-c-links";
 const client_id = 1;
 const user_id = 1;
 const schema = {
@@ -213,7 +213,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // updateFormData();
+    updateFormData();
     console.log("test form data", formData);
   };
 
@@ -231,12 +231,12 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
               Links to policy commitments
               <MdInfoOutline
-                data-tooltip-id={`tooltip-$e1`}
+                data-tooltip-id={`tooltip-$e82`}
                 data-tooltip-content="This section documents data corresponding to the links to policy commitments. "
                 className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip
-                id={`tooltip-$e1`}
+                id={`tooltip-$e82`}
                 place="top"
                 effect="solid"
                 style={{
@@ -264,8 +264,8 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
