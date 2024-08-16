@@ -38,7 +38,7 @@ const uiSchema = {
     Q1: {
       "ui:title": "Describe the processes for evaluating the performance of the highest governance body in overseeing the management of the organization’s impacts on the economy, environment, and people",
       "ui:tooltip": "",
-      "ui:tooltipdisplay": "block",
+      "ui:tooltipdisplay": "none",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
       "ui:options": {
@@ -172,16 +172,16 @@ const Process = ({ selectedOrg, selectedCorp, year }) => {
         }}
       >
         <div className="mb-4 flex">
-          <div className="w-[80%]">
+          <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
             Processes for evaluating the performance of the highest governance body
               <MdInfoOutline
-                data-tooltip-id={`tooltip-$e1`}
+                data-tooltip-id={`tooltip-$e5`}
                 data-tooltip-content="This section documents the data corresponding to the processes for evaluating <br/>the performance of the highest governance bodyin overseeing the management of the organization’s impacts on the economy,environment, and people."
                 className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip
-                id={`tooltip-$e1`}
+                id={`tooltip-$e5`}
                 place="top"
                 effect="solid"
                 style={{

@@ -60,7 +60,7 @@ const ChairOfBoard = () => {
             <div className="flex float-end border-l">
               <button
                 className="text-[#fff] bg-pink-500 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("4")}
+                onClick={() => toggleDrawer("15")}
               >
                 SDG 16
               </button>

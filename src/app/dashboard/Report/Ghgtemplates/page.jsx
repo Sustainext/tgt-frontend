@@ -42,10 +42,11 @@ const { open } = GlobalState();
   const [loading, setLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState();
   const isMounted = useRef(true);
-
+  const reportreportorgname = typeof window !== 'undefined' ? localStorage.getItem("reportorgname") : '';
   const reportname = typeof window !== 'undefined' ? localStorage.getItem("reportname") : '';
   const reportstartdateStr = typeof window !== 'undefined' ? localStorage.getItem("reportstartdate"): '';
-  const reportenddateStr = typeof window !== 'undefined' ? localStorage.getItem("reportenddate") : ''
+  const reportenddateStr = typeof window !== 'undefined' ? localStorage.getItem("reportenddate") : '';
+
   const reportId = typeof window !== 'undefined' ? localStorage.getItem("reportid") : '';
   const reportstartdate = reportstartdateStr ? new Date(reportstartdateStr) : null;
   const reportenddate = reportenddateStr ? new Date(reportenddateStr) : null;

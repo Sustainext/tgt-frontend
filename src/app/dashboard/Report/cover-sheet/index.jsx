@@ -15,7 +15,7 @@ function CoverSheet({
   const [errorimg, setErrorimg] = useState("");
   const [error, setError] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
-
+  const reportreportorgname = typeof window !== 'undefined' ? localStorage.getItem("reportorgname") : '';
   const reportname = typeof window !== 'undefined' ? localStorage.getItem("reportname") : '';
 
   useEffect(() => {
@@ -65,7 +65,7 @@ function CoverSheet({
               <p className="text-gray-500">Organisation name</p>
             </h1>
             <h1 className="ml-2">-</h1>
-            <h1 className="text-lg text-gray-500 ml-2">{reportname}</h1>
+            <h1 className="text-lg text-gray-500 ml-2">{reportreportorgname}</h1>
           </div>
           <div className="flex mt-5">
             <h1 className="text-lg">
