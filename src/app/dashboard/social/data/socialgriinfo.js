@@ -4805,20 +4805,546 @@ export const Socialdata = [
     category: ["80"],
     header: [
       <h5 className="text-sky-600 text-[17px] font-bold">
-       GRI 2-16: Communication of critical concerns
+        GRI 2-16: Communication of critical concerns
       </h5>,
     ],
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <div className="h-[320px] overflow-y-auto custom-scrollbar">
-            <p className="text-[11px] text-black mb-2">
-            Guidance
-            </p>
+            <p className="text-[11px] text-black mb-2">Guidance</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Critical concerns include concerns about the organization’s potential and actual negative impacts on stakeholders raised through grievance mechanisms and other processes. They also include concerns identified through other mechanisms about the organization’s business conduct in its operations and its business relationships. See guidance to Disclosure 2-25 and Disclosure 2-26 in this Standard for more information.
+              Critical concerns include concerns about the organization’s
+              potential and actual negative impacts on stakeholders raised
+              through grievance mechanisms and other processes. They also
+              include concerns identified through other mechanisms about the
+              organization’s business conduct in its operations and its business
+              relationships. See guidance to Disclosure 2-25 and Disclosure 2-26
+              in this Standard for more information.
             </p>
           </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["81"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-19: Remuneration policies
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">Guidance to 2-19-a-i</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Fixed pay and variable pay can include performance-based pay,
+              equity-based pay, bonuses, and deferred and vested shares. If the
+              organization uses performance-based pay, it should describe how
+              remuneration for senior executives is designed to reward long-term
+              performance.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              Guidance to 2-19-a-iii
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Termination payments are all payments and benefits given to a
+              departing member of the highest governance body or senior
+              executive whose appointment is terminated. Termination payments
+              extend beyond monetary payments, from transferring property to
+              automatic or accelerated vesting of incentives.If the organization
+              provides termination payments, it should explain whether:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                notice periods for highest governance body members and senior
+                executives are different from those for other employees
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                termination payments for highest governance body members and
+                senior executives are different from those for other employees
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                departing highest governance body members and senior executives
+                receive payments other than those related to the notice period
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                any mitigation clauses are included in the termination
+                arrangements.
+              </li>
+            </ul>
+            <p className="text-[11px] text-black mb-2">Guidance to 2-19-a-iv</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Clawbacks are repayments of previously received compensation that
+              a highest governance body member or senior executive is required
+              to make to their employer if certain conditions of employment or
+              goals are not met.
+            </p>
+            <p className="text-[11px] text-black mb-2">Guidance to 2-19-a-v</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization should report the differences between the
+              retirement benefit schemes and the contribution rates for the
+              highest governance body members, senior executives, and all other
+              employees.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["82"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-23: Policy commitments
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">Guidance</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure covers the organization’s policy commitments for
+              responsible business conduct, including the commitment to respect
+              human rights. These commitments can be set out in a stand-alone
+              policy document or be included within one or more other policy
+              documents, such as codes of conduct. The Organisation for Economic
+              Co-operation and Development (OECD) Guidelines for Multinational
+              Enterprises [12], the OECD Due Diligence Guidance for Responsible
+              Business Conduct [11], and the United Nations (UN) Guiding
+              Principles on Business and Human Rights [14] set out expectations
+              for organizations in relation to these policy commitments
+            </p>
+            <p className="text-[11px] text-black mb-2">Guidance to 2-23-a</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization should report the expectations, values,
+              principles, and norms of behavior set out in the policy
+              commitments.
+            </p>{" "}
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization can also report how the policy commitments were
+              developed, including the internal and external expertise that
+              informed the policy commitments.
+            </p>
+            <p className="text-[11px] text-black mb-2">Guidance to 2-23-a-i</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              See the Bibliography for a list of authoritative intergovernmental
+              instruments for responsible business conduct.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization can also make a reference to other standards or
+              initiatives that it participates in.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              Guidance to 2-23-a-iii
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The precautionary principle is set out in Principle 15 of the UN
+              Rio Declaration on Environment and Development [18]. It states:
+              ‘Where there are threats of serious or irreversible damage, lack
+              of full scientific certainty shall not be used as a reason for
+              postponing cost-effective measures to prevent environmental
+              degradation.’
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The precautionary principle means taking early action to prevent
+              and mitigate potential negative impacts in situations where
+              conclusive scientific understanding or evidence is lacking, but
+              there is sufficient reason to expect serious or irreversible
+              damage.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              While the precautionary principle is most often associated with
+              the protection of the environment, it can be applied to other
+              areas, such as health and safety. The organization can describe
+              the areas where it applies the precautionary principle.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The application of the precautionary principle can be reported
+              under 3-3-d-i in GRI 3: Material Topics 2021, as part of the
+              organization’s actions to prevent or mitigate potential negative
+              impacts for each material topic.
+            </p>
+            <p className="text-[11px] text-black mb-2">Guidance to 2-23-a-i</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              See the Bibliography for a list of authoritative intergovernmental
+              instruments for responsible business conduct.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization can also make a reference to other standards or
+              initiatives that it participates in.
+            </p>
+            <p className="text-[11px] text-black mb-2">Guidance to 2-23-b-I</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Human rights are rights inherent to all human beings and are all
+              interrelated, interdependent, and indivisible.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The internationally recognized human rights include, at a minimum,
+              the rights set out in the UN International Bill of Human Rights
+              [15] and the principles concerning fundamental rights set out in
+              the International Labour Organization (ILO) Declaration on
+              Fundamental Principles and Rights at Work [5]. The UN
+              International Bill of Human Rights consists of the Universal
+              Declaration of Human Rights, the International Covenant on
+              Economic, Social and Cultural Rights, and the International
+              Covenant on Civil and Political Rights and its two Optional
+              Protocols.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Other UN instruments elaborate further on the rights of indigenous
+              peoples; women; national or ethnic, religious and linguistic
+              minorities; children; persons with disabilities; and migrant
+              workers and their families. There are also standards of
+              international humanitarian law that apply in situations of armed
+              conflict, such as the International Committee of the Red Cross
+              (ICRC) Geneva Conventions of 1949 [1
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              At the regional level, binding treaties as well as non-binding
+              instruments provide region-specific frameworks for human rights.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              If the policy commitment covers all internationally recognized
+              human rights, a brief statement of this fact is sufficient to
+              comply with the requirement. The organization can also state if
+              the policy commitment references certain rights that require
+              particular attention. For example, an organization can state that
+              its policy commitment covers all internationally recognized human
+              rights, and also references the rights to privacy and freedom of
+              expression in particular because the organization has identified
+              that its activities have an impact on these rights.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              If the policy commitment covers only some internationally
+              recognized human rights, the organization is required to state the
+              rights that are covered. It can explain why the policy commitment
+              is limited to these rights.
+            </p>
+            <p className="text-[11px] text-black mb-2">Guidance to 2-23-b-ii</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Categories of stakeholders that the organization gives particular
+              attention to can include consumers, customers, employees and other
+              workers, and local communities. They can also include individuals
+              belonging to groups or populations that are considered to be at
+              risk or vulnerable groups, such as children; human rights
+              defenders; indigenous peoples; migrant workers and their families;
+              national or ethnic, religious and linguistic minorities; persons
+              who might be discriminated against based on their sexual
+              orientation, gender identity, gender expression, or sex
+              characteristics; persons with disabilities; or women.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              For example, a bank may give particular attention in its policy
+              commitment to avoid discriminating against specific categories of
+              customers, or a mining organization may give particular attention
+              to avoid infringing on the rights of indigenous peoples.
+            </p>
+            <p className="text-[11px] text-black mb-2">Guidance to 2-23-d</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The most senior level may differ between organizations. For
+              example, the most senior level in an organization could be the
+              highest governance body (e.g., the board) or the most senior
+              executive (e.g., chief executive officer).
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization can also report the dates of approval and
+              adoption of the policy commitments, and how frequently the
+              commitments are reviewed.
+            </p>
+            <p className="text-[11px] text-black mb-2">Guidance to 2-23-e</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              If the policy commitments apply to all of the organization’s
+              activities and business relationships equally, a brief statement
+              of this fact is sufficient to comply with the requirement. If the
+              policy commitments apply to only some of the organization’s
+              activities (e.g., they apply only to entities located in certain
+              countries or to certain subsidiaries), the organization should
+              report which activities the commitments apply to. It can also
+              explain why the commitments are limited to these activities. If
+              the policy commitments apply to only some of the organization’s
+              business relationships, the organization should specify the types
+              of business relationships the commitments apply to (e.g.,
+              distributors, franchisees, joint ventures, suppliers). It can also
+              explain why the commitments are limited to these business
+              relationships. The organization should also explain whether the
+              business relationships are obligated to abide by the policy
+              commitments or are encouraged (but not obligated) to do so.
+            </p>
+            <p className="text-[11px] text-black mb-2">Guidance to 2-23-f</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization can report:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                whether the policy commitments need to be read, agreed to, and
+                regularly signed by all workers, business partners, and other
+                relevant parties, such as governance body members;
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                the means through which it communicates the policy commitments
+                (e.g., newsletters, formal or informal meetings, dedicated
+                websites, contractual agreements)
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                how it identifies and removes potential barriers to the
+                communication or dissemination of the policy commitments (e.g.,
+                by making them accessible and available in relevant languages)
+              </li>
+            </ul>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["83"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-9: Governance structure and composition
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="text-[11px] text-[#727272] mb-4">
+          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">Guidance to 2-9-c</div>
+          The organization can describe the composition of the highest governance body and its committees by additional indicators of diversity, such as age, ancestry and ethnic origin, citizenship, creed, disability, or any other indicators of diversity that are relevant for reporting.
+          </div>
+          <div className="text-[11px] text-[#727272] mb-4">
+          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">Guidance to 2-9-c-ii</div>
+          ‘Independence’ refers to conditions that enable the members of the highest governance body to exercise independent judgment free from any external influence or conflicts of interest. See reference [20] in the Bibliography for more information on independence criteria for governance bodies.
+          </div>
+          <div className="text-[11px] text-[#727272] mb-4">
+          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">Guidance to 2-9-c-iv</div>
+          A position or commitment held by a highest governance body member is significant when the time and attention it demands compromises the member’s ability to perform its duties in the organization. Significant positions can include cross-board memberships.
+          </div>
+          <div className="text-[11px] text-[#727272] mb-4">
+          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">Guidance to 2-9-c-vii</div>
+          Competencies relevant to the impacts of the organization include competencies relevant to impacts commonly associated with the organization’s sectors, products, and geographic locations
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["84"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-10: Nomination and selection of the highest governance body
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="text-[11px] text-[#727272] mb-4">
+          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">Guidance to 2-10-b-iii</div>
+          ‘Independence’ refers to conditions that enable the members of the highest governance body to exercise independent judgment free from any external influence or conflicts of interest. See reference [20] in the Bibliography for more information on independence criteria for governance bodies.
+          </div>
+          <div className="text-[11px] text-[#727272] mb-4">
+          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">Guidance to 2-10-b-iv</div>
+          Competencies relevant to the impacts of the organization include competencies relevant to impacts commonly associated with the organization’s sectors, products, and geographic locations.
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    //to be changed
+    category: ["85"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-20: Nomination and selection of the highest governance body
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="text-[11px] text-[#727272] mb-4">
+          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">Guidance to 2-10-b-iii</div>
+          ‘Independence’ refers to conditions that enable the members of the highest governance body to exercise independent judgment free from any external influence or conflicts of interest. See reference [20] in the Bibliography for more information on independence criteria for governance bodies.
+          </div>
+          <div className="text-[11px] text-[#727272] mb-4">
+          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">Guidance to 2-10-b-iv</div>
+          Competencies relevant to the impacts of the organization include competencies relevant to impacts commonly associated with the organization’s sectors, products, and geographic locations.
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["86"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-20: Process to determine remuneration
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+        <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">Guidance</div>
+        Remuneration policies are established to ensure that the remuneration arrangements help recruit, motivate, and retain the highest governance body members, senior executives, and other employees. Remuneration policies further support the organization’s strategy and contribution to sustainable development and align with stakeholders' interests.
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["87"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-21: Annual total compensation ratio
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+        <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">Guidance to 2-21-a and 2-21-b</div>
+        <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">This disclosure covers all employees as reported under Disclosure 2-7 in this Standard.<br/><br/>Annual total compensation includes salary, bonus, stock awards, option awards, non-equity incentive plan compensation, change in pension value, and nonqualified deferred compensation earnings provided over the course of a year. When calculating the ratio, the organization should, depending on the organization’s remuneration policies and availability of data, consider all of the following:<br/>• Base salary, which is the sum of guaranteed, short-term, and non-variable cash compensation.<br/>• Total cash compensation, which is the sum of the base salary and cash allowances, bonuses, commissions, cash profit-sharing, and other forms of variable cash payments.<br/>• Direct compensation, which is the sum of total cash compensation and total fair value of all annual long-term incentives (e.g., stock option awards, restricted stock shares or units, performance stock shares or units, phantom stock shares, stock appreciation rights, and long-term cash awards).<br/><br/>The annual total compensation ratio can be calculated using the following formula:<br/>(Annual total compensation for the organization's highest paid-individual / Median annual total compensation for all of the organization's employees excluding the highest-paid individual)<br/><br/>The change in the annual total compensation ratio can be calculated using the following formula:<br/>(Percentage increase in annual total compensation for the organization's highest-paid individual / Median percentage increase in annual total compensation for all of the organization's employees excluding the highest-paid individual)<br/></div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["88"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-22: Statement on sustainable development strategy
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+        <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">Guidance</div>
+        <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">The organization should describe:<br/>• its short, medium, and long-term vision and strategy to manage its impacts on the economy, environment, and people, including impacts on their human rights, across the organization’s activities and business relationships;<br/>• how its purpose, business strategy, and business model aim to prevent negative impacts and achieve positive impacts on the economy, environment, and people;<br/>• its short and medium-term strategic priorities for contributing to sustainable development, including how the priorities are aligned with authoritative intergovernmental instruments;<br/>• the broader trends (e.g., macroeconomic, social, political) affecting the organization and its strategy for contributing to sustainable development;<br/>• the key events, achievements, and failures associated with the organization’s contribution to sustainable development during the reporting period;<br/>• a view of performance against goals and targets related to the organization’s material topics during the reporting period;<br/>• the organization’s main challenges, goals, and targets regarding its contribution to sustainable development for the next year and the coming three to five years.</div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["89"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-24: Statement on sustainable development strategy
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+        <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">Guidance</div>
+        <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">This disclosure gives insight into how the organization embeds its policy commitments for responsible business conduct, including the commitment to respect human rights, throughout its activities and business relationships. This ensures that people at all levels act responsibly and with awareness of and respect for human rights.</div>
+        <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">Guidance to 2-24-a-i</div>
+        <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">Examples of different levels within an organization include the highest governance body, senior executives, and operational levels.<br/><br/>The organization can report:<br/>• the most senior level with oversight of, or accountability for, the implementation of the policy commitments;<br/><br/>• the functions in the organization with day-to-day responsibility for implementing each of the policy commitments (e.g., human resources with the responsibility for implementing the commitment to respect the rights of workers), including:<br/>- their reporting lines to senior decision-making levels;<br/>- the reason for allocating the responsibility to them;<br/><br/>• whether responsible business conduct is formally discussed at meetings of the highest governance body or senior executives and, if so, which topics are discussed;<br/><br/>• whether there are other formal or systematic means for discussions about responsible business conduct between different levels or functions in the organization (e.g., a crossfunctional working group).</div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["90"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-26: Statement on sustainable development strategy
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+        <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">Guidance</div>
+        <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">This disclosure covers the organization’s mechanisms for individuals to seek advice and raise concerns about responsible business conduct in the organization's operations and business relationships. Examples of these mechanisms include confidential interviews during site visits, escalation processes (to raise issues through management levels), hotlines, mechanisms to report non-compliance with laws and regulations, and whistleblowing mechanisms.<br/><br/>These mechanisms enable individuals to raise concerns about wrongdoing or breaches of the law in the organization’s operations or business relationships, regardless of whether the individuals themselves are harmed or not. They are distinct from grievance mechanisms, which enable stakeholders to raise concerns about, and seek remedy / remediation for, the organization’s potential and actual negative impacts on them. Grievance mechanisms are reported under Disclosure 2-25 in this Standard.<br/><br/>If the organization’s grievance mechanisms and its mechanisms for seeking advice and raising concerns about responsible business conduct operate in a similar way, the organization can provide a single description of how these mechanisms operate and explain which mechanisms the description covers.<br/><br/>The organization can report:<br/>• who the intended users of the mechanisms are;<br/>• how the mechanisms operate and which level or function in the organization is assigned responsibility for them;<br/>• whether the mechanisms are operated independently of the organization (e.g., by a third party);<br/>• the process through which concerns are investigated;<br/>• whether requests for advice and concerns raised are treated confidentially;<br/>• whether the mechanisms can be used anonymously.<br/><br/>Additionally, the organization can report information about the effectiveness of the mechanisms, including:<br/>• whether and how the intended users are informed about the mechanisms and trained on how to use them;<br/>• the accessibility of the mechanisms, such as the number of hours per day or days per week they are available, and their availability in different languages;<br/>• how the organization seeks to ensure it respects users’ human rights and protects them against reprisals (i.e., non-retaliation for raising concerns);<br/>• how satisfied users are with the mechanisms and with the resulting outcomes;<br/>• the number and types of requests for advice received during the reporting period, and the percentage of requests that were answered;<br/>• the number and types of concerns raised during the reporting period, and the percentage of concerns that were addressed and resolved or found to be unsubstantiated.</div>
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
