@@ -37,7 +37,7 @@ const uiSchema = {
     Q1: {
       "ui:title": "Describe the nomination and selection process for the highest governance body and its committees",
       "ui:tooltip": "This section documents data corresponding to the nomination & selection process of the highest governance body and committees.",
-      "ui:tooltipdisplay": "block",
+      "ui:tooltipdisplay": "none",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
       "ui:options": {
@@ -178,7 +178,7 @@ const Process = ({ selectedOrg, selectedCorp, year }) => {
             Nomination and selection processes for the highest governance body
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
-                data-tooltip-content="This section documents data corresponding to the organisation's governance structure, including the committees of the highest governance body."
+                data-tooltip-content="This section documents data corresponding to the  nomination & selection process of the highest governance body and committees."
                 className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip

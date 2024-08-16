@@ -207,7 +207,7 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
             Social
           </div>
           <div className="h-[35px]">
-            <div className="h-[26px] flex justify-start items-end gap-3">
+            <div className="h-[30px] flex justify-start items-end gap-3">
               <div className="gradient-text text-opacity-20 text-[22px] font-medium font-['Manrope'] leading-[1.425rem]">
                 {activeTab === "Tab1"
                   ? "Employment 2016"

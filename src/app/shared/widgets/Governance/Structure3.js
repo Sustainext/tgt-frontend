@@ -1,5 +1,5 @@
 'use client'
-import React,{useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { MdInfoOutline } from 'react-icons/md';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 
@@ -13,6 +13,7 @@ const GovernanceRowWidget = ({ value, onChange, options }) => {
   if (!hydrated) {
     return null; 
   }
+
   const handleChange = (index, field, newValue) => {
     const updatedValue = [...value];
     updatedValue[index] = { ...updatedValue[index], [field]: newValue };
@@ -147,7 +148,7 @@ const SelectField2 = ({ label, value, onChange, options, handleChange, otherValu
   
   return (
     <div className="w-[175px] sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6 px-2 mb-4">
-      <label className="block text-black/60 text-sm font-bold mb-2 flex items-center h-14">
+      <label className="text-black/60 text-sm font-bold mb-2 flex items-center justify-center h-14">
         {label}
         <InfoTooltip id={label} content={tooltipContent} />
       </label>
@@ -168,31 +169,35 @@ const SelectField2 = ({ label, value, onChange, options, handleChange, otherValu
       </select>
       {value === 'Others (Please specify)' && (
         <input
-        className="appearance-none border-b rounded w-[175px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        type="text"
-        value={otherValue}
+          className="appearance-none border-b rounded w-[175px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          type="text"
+          value={otherValue}
           onChange={(e) => handleChange('otherExecutivePower', e.target.value)}
           options={options}
-      />
+        />
       )}
     </div>
   );
 };
 
-const InfoTooltip = ({ id, content }) => (
-  <>
-    <MdInfoOutline
-      data-tooltip-id={`tooltip-${id}`}
-      data-tooltip-content={content}
-      className="ml-1 text-gray-500"
-    />
-    <ReactTooltip
-      id={`tooltip-${id}`}
-      place="top"
-      effect="solid"
-      className="max-w-xs bg-black text-white text-xs rounded shadow-lg"
-    />
-  </>
-);
+const InfoTooltip = ({ id, content }) => {
+  if (!content) return null;  // Don't render anything if there's no content
+
+  return (
+    <>
+      <MdInfoOutline
+        data-tooltip-id={`tooltip-${id}`}
+        data-tooltip-content={content}
+        className="ml-1 text-gray-500"
+      />
+      <ReactTooltip
+        id={`tooltip-${id}`}
+        place="top"
+        effect="solid"
+        className="max-w-xs bg-black text-white text-xs rounded shadow-lg"
+      />
+    </>
+  );
+};
 
 export default GovernanceRowWidget;

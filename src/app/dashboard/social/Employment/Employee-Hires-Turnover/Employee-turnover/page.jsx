@@ -9,8 +9,7 @@ import Tab2 from "./tab2";
 import Tab3 from "./tab3";
 import Tab4 from "./tab4";
 import Tab5 from "./tab5";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 function convertShortNameToFullName(shortName) {
     const shortMonthNames = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     const fullMonthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -32,9 +31,9 @@ const Employeeturnover = ({ location, year, month,activeMonth }) => {
     const fullName = convertShortNameToFullName(activeMonth);
     return (
         <>
-           <ToastContainer style={{ fontSize: "12px" }} />
+
             <div className='mb-4 flex mx-2'>
-                <div className='w-[80%]'>
+               <div className="w-[80%] relative">
                     <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold'>
                     Employee turnover
                         <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
