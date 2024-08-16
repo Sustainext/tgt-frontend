@@ -58,7 +58,7 @@ const AnalyseAnnualtotalcompensationratio = ({ isBoxOpen }) => {
     setCustomerhealth([]);
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_customer_health_safety_analysis`,
+        `/sustainapp/get_governance_analysis`,
         {
           params: params,
         }
@@ -66,22 +66,19 @@ const AnalyseAnnualtotalcompensationratio = ({ isBoxOpen }) => {
 
       const data = response.data;
 
-      const { customer_health_percent } = data;
+      const { compensation_ratio_annual_total_and_increase } = data;
 
       const formatcustomerhealth = (data) => {
         return data.map((data, index) => {
-          const percentage = parseFloat(data.percentage).toFixed(2);
-          const formattedPercentage = percentage.endsWith(".00")
-            ? percentage.slice(0, -3)
-            : percentage;
+
           return {
-            "Ratio of annual total compensation": data.org_or_corp,
+            "Ratio of annual total compensation": data.ratio_of_annual_total_compensation.toFixed(2),
             "Ratio of percentage increase in annual total compensation":
-              formattedPercentage,
+              data.ratio_of_percentage_increase_in_annual_total_compensation.toFixed(2),
           };
         });
       };
-      setCustomerhealth(formatcustomerhealth(customer_health_percent));
+      setCustomerhealth(formatcustomerhealth(compensation_ratio_annual_total_and_increase));
       LoaderClose();
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
