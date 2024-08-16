@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import inputWidget2 from "@/app/shared/widgets/Input/inputWidget2";
+import inputWidget2 from "@/app/shared/widgets/Input/numberInputWidget";
 import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -26,40 +26,39 @@ const schema = {
     type: "object",
     properties: {
       Q1: {
-        type: "string",
-        title:
-          "What is the annual total compensation for the organization's highest paid-individual?",
+        type: "number",  // Changed from string to number
+        title: "What is the annual total compensation for the organization's highest paid-individual?",
       },
       Q2: {
-        type: "string",
+        type: "number",  // Changed from string to number
         title: "What is the median annual total compensation for all of the organization's employees excluding the highest-paid individual?",
       },
     },
   },
 };
 
+
 const uiSchema = {
   items: {
     "ui:order": ["Q1", "Q2"],
     Q1: {
-      "ui:title":
-        "What is the annual total compensation for the organization's highest paid-individual?",
-      "ui:tooltip":
-        "Annual total compensation includes salary, bonus, stock awards, option awards, non-equity incentive plan compensation, change in pension value, and nonqualified deferred compensation earnings provided over the course of a year.",
+      "ui:title": "What is the annual total compensation for the organization's highest paid-individual?",
+      "ui:tooltip": "Annual total compensation includes salary, bonus, stock awards, option awards, non-equity incentive plan compensation, change in pension value, and nonqualified deferred compensation earnings provided over the course of a year.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:options": {
         label: false,
+        inputType: 'number' // Ensure your widget respects this or adjust accordingly
       },
     },
     Q2: {
       "ui:title": "What is the median annual total compensation for all of the organization's employees excluding the highest-paid individual?",
-      "ui:tooltip":
-        "Provide a detail information about median annual total compensation for all of the organization's employees excluding the highest-paid individual.",
+      "ui:tooltip": "Provide a detail information about median annual total compensation for all of the organization's employees excluding the highest-paid individual.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:options": {
         label: false,
+        inputType: 'number' // Ensure your widget respects this or adjust accordingly
       },
     },
   },
@@ -69,6 +68,7 @@ const uiSchema = {
     removable: false,
   },
 };
+
 
 const AnnualAndMedian = ({ selectedLocation, year }) => {
   const [formData, setFormData] = useState([{ Q1: "", Q2: "" }]);

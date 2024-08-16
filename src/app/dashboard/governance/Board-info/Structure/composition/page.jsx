@@ -246,7 +246,7 @@ const CompositionOfHighestGovernanceBody = ({
         <div className="mb-4 flex">
           <div className="w-[80%]">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
-              Governance Structure
+            Describe the composition of the highest governance body and its committees by the following:
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
                 data-tooltip-content="This section documents data corresponding to the organisation's governance structure, including the committees of the highest governance body."

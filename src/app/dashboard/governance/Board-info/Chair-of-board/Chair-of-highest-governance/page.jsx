@@ -11,11 +11,11 @@ import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
-import CustomTableWidget from "@/app/shared/widgets/Table/tableWidget";
+import CustomTableWidgetGov from "../../../../../shared/widgets/Governance/CustomTableWidgetGov";
 
 const widgets = {
   RadioWidget2: RadioWidget2,
-  TableWidget: CustomTableWidget,
+  TableWidget: CustomTableWidgetGov,
 };
 
 const view_path = "gri-governance-chair_of_board-2-11-b-chair";
@@ -89,6 +89,8 @@ const schema = {
       },
       Q3: {
         "ui:widget": "TableWidget",
+        "ui:title": "If yes, please explain the following",
+        "ui:tag": "GRI 2-11-b",
         "ui:options": {
           titles: [
             {
@@ -101,12 +103,12 @@ const schema = {
             },
             {
               title: "How conflicts of interest are prevented and mitigated",
-              tooltip: "Conflict of interest:situation where an individual is confronted with choosing between the requirements of their function in the organization and their other personal or professional interests or responsibilities",
+              tooltip: "Conflict of interest: situation where an individual is confronted with choosing between the requirements of their function in the organization and their other personal or professional interests or responsibilities",
             },
           ],
         },
-        "ui:description": " ", // Add this line
-        "ui:descriptionClassNames": "mb-4", // Add this line
+        "ui:description": "If yes, please explain the following",
+        "ui:descriptionClassNames": "mb-4",
       },
       "ui:options": {
         orderable: false,
@@ -116,6 +118,7 @@ const schema = {
       },
     },
   };
+  
 
 const ChairOfHighestGovernance = ({ selectedOrg, year, selectedCorp }) => {
   const [formData, setFormData] = useState([{
@@ -314,7 +317,7 @@ const ChairOfHighestGovernance = ({ selectedOrg, year, selectedCorp }) => {
             <div className={`flex float-end`}>
               <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 ">
                 <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                  GRI 2-11-b
+                  GRI 2-11-a
                 </p>
               </div>
             </div>

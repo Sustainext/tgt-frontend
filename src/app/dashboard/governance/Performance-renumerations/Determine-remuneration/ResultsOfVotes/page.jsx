@@ -16,7 +16,7 @@ const widgets = {
   inputWidget: inputWidget2,
 };
 
-const view_path = "gri-governance-sustainability_strategy-2-22-a_provide";
+const view_path = "gri-governance-determine-remuneration-2-22-b-results";
 const client_id = 1;
 const user_id = 1;
 
@@ -57,7 +57,7 @@ const uiSchema = {
   },
 };
 
-const ResultsOfVotes = ({ selectedOrg, year, selectedCorp }) => {
+const ResultsOfVotes = ({ selectedLocation, year }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -83,8 +83,7 @@ const ResultsOfVotes = ({ selectedOrg, year, selectedCorp }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      corporate: selectedCorp,
-      organisation: selectedOrg,
+      location: selectedLocation,
       year,
     };
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -134,7 +133,7 @@ const ResultsOfVotes = ({ selectedOrg, year, selectedCorp }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${selectedLocation}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -148,7 +147,7 @@ const ResultsOfVotes = ({ selectedOrg, year, selectedCorp }) => {
     }
   };
   useEffect(() => {
-    if (selectedOrg && year) {
+    if (selectedLocation && year) {
       loadFormData();
       toastShown.current = false;
     } else {
@@ -156,7 +155,7 @@ const ResultsOfVotes = ({ selectedOrg, year, selectedCorp }) => {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedLocation, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -209,8 +208,8 @@ const ResultsOfVotes = ({ selectedOrg, year, selectedCorp }) => {
         </div>
         <div className="mx-2 mb-3">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -222,10 +221,10 @@ const ResultsOfVotes = ({ selectedOrg, year, selectedCorp }) => {
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              !selectedLocation || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={!selectedLocation || !year}
           >
             Submit
           </button>

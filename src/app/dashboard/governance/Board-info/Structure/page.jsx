@@ -1,12 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { MdOutlineClear } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
 import "react-tooltip/dist/react-tooltip.css";
 import GovernanceHeader2 from "../../GovernanceHeader2";
 import { Socialdata } from "../../../social/data/socialgriinfo";
 import GovernanceStructure from "./governance-structure/page";
 import CommitteeOfHighestGovernanceBody from "./committees/page";
 import CompositionOfHighestGovernanceBody from "./composition/page";
+import { Tooltip as ReactTooltip} from "react-tooltip";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const BoardInfo = () => {
@@ -84,6 +85,25 @@ const BoardInfo = () => {
           <h6 className="text-[17px] mb-4 font-semibold flex">
             Governance Structure and Composition
           </h6>
+          <MdInfoOutline
+                data-tooltip-id={`tooltip-$e1`}
+                data-tooltip-content="This section documents data corresponding to the organisation's Governance Structure and Composition."
+                className="mt-1.5 ml-2 text-[14px]"
+              />
+              <ReactTooltip
+                id={`tooltip-$e1`}
+                place="top"
+                effect="solid"
+                style={{
+                  width: "290px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  textAlign: "left",
+                }}
+              ></ReactTooltip>
         </div>
         <div
           className={`${

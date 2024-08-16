@@ -29,7 +29,7 @@ const schema = {
         properties: {
             Q2: {
                 type: "string",
-                title: "Whether it has appointed any senior executives with responsibility for the management of impacts",
+                title: " Report whether the evaluations are independent or not",
                 enum: ["Yes", "No"],
             },
         },
@@ -58,9 +58,9 @@ const uiSchema = {
         "ui:order": ["Q2", "Q3"],
         Q2: {
             "ui:title":
-                "Whether it has appointed any senior executives with responsibility for the management of impacts",
+                " Report whether the evaluations are independent or not",
             "ui:tooltip":
-                "Indicate whether highest governance body has appointed any senior executives with responsibility for the management of impacts. If yes then provide an explanation. ",
+                "Indicate whether the evaluations are independent or not.",
             "ui:tooltipdisplay": "block",
             "ui:widget": "RadioWidget2",
             "ui:horizontal": true,
@@ -73,8 +73,8 @@ const uiSchema = {
             "ui:description": " ",
             "ui:descriptionClassNames": "mb-2",
             "ui:tooltip":
-                "Provide an explanation of how the highest governance body engages with stakeholders to support these processes? ",
-            "ui:tooltipdisplay": "none",
+                "What is the frequency of the evaluations?",
+            "ui:tooltipdisplay": "block",
             "ui:widget": "inputWidget",
             "ui:options": {
                 label: false,

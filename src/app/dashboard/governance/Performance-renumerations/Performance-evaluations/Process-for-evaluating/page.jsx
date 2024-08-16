@@ -38,7 +38,7 @@ const uiSchema = {
     Q1: {
       "ui:title": "Describe the processes for evaluating the performance of the highest governance body in overseeing the management of the organization’s impacts on the economy, environment, and people",
       "ui:tooltip": "",
-      "ui:tooltipdisplay": "block",
+      "ui:tooltipdisplay": "none",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
       "ui:options": {
