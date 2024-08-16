@@ -39,7 +39,7 @@ const Scope1 = forwardRef(({ location, year, month, successCallback, countryCode
 
   useImperativeHandle(ref, () => ({
     updateFormData() {
-      return updateFormData(formData); 
+      return updateFormData(formData);
     }
   }));
 
@@ -56,7 +56,9 @@ const Scope1 = forwardRef(({ location, year, month, successCallback, countryCode
   };
 
   const handleChange = (e) => {
+    console.log("handleChange triggered");
     setFormData(e.formData);
+    console.log("Updated form data in handleChange:", e.formData);
   };
 
   const handleCombinedWidgetChange = (index, field, value, activityId, unitType) => {
@@ -100,17 +102,41 @@ const Scope1 = forwardRef(({ location, year, month, successCallback, countryCode
     });
   };
 
+
   const handleAddNew = () => {
     setFormData((prevFormData) => [...prevFormData, { Emission: {} }]);
+
+    console.log(formData,"test data");
+  };
+  const handleRemove = async (index) => {
+    console.log(index, "updatedData data index");
+
+    let updatedData;
+
+    // Update the state and get the updated data
+    setFormData((prevFormData) => {
+      const newFormData = prevFormData.filter((_, i) => i !== index);
+      console.log(newFormData, "updatedData after removing index");
+      updatedData = newFormData; // Capture the updated data
+      return newFormData;
+    });
+
+    try {
+      // Wait for the state update to complete and then call updateFormData
+      await updateFormData(updatedData);
+      successCallback();
+    } catch (error) {
+      console.error("Failed to update form data:", error);
+    }
   };
 
-  const updateFormData = async (form_data) => {
+  const updateFormData = async (formData) => {
     LoaderOpen();
     const data = {
       client_id: client_id,
       user_id: user_id,
       path: view_path,
-      form_data: form_data,
+      form_data: formData,
       location,
       year,
       month,
@@ -119,7 +145,6 @@ const Scope1 = forwardRef(({ location, year, month, successCallback, countryCode
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
       const response = await post(url, { ...data });
-
     } catch (error) {
       setModalData({
         message: "Oops, something went wrong"
@@ -143,7 +168,9 @@ const Scope1 = forwardRef(({ location, year, month, successCallback, countryCode
         const form_parent = response.data.form_data;
         const f_data = form_parent[0].data;
         setFormData(f_data);
+
         LoaderClose();
+
       })
       .catch((error) => {
         console.log(error)
@@ -172,19 +199,7 @@ const Scope1 = forwardRef(({ location, year, month, successCallback, countryCode
   //   // successCallback();
   // };
 
-  const handleRemove = async (index) => {
-    const updatedData = [...formData];
-    updatedData.splice(index, 1);
-    
-    try {
-      await setFormData(updatedData);
-      await updateFormData(updatedData);
-      successCallback();
-    } catch (error) {
-      console.error("Failed to update form data:", error);
-    }
-  };
-  
+
 
   const updateCache = (subcategory, activities) => {
     setActivityCache((prevCache) => ({

@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { debounce } from 'lodash';
 import { MdInfoOutline } from "react-icons/md";
-import { Tooltip as ReactTooltip } from 'react-tooltip';
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
-const GovernancetableWidget = ({ id, options, value, required, onChange, schema }) => {
+const GovernancetableWidget = ({ id, options, value, required, onChange, schema,formContext }) => {
     const [localValue, setLocalValue] = useState(value);
 
     useEffect(() => {
@@ -29,7 +30,8 @@ const GovernancetableWidget = ({ id, options, value, required, onChange, schema 
     return (
         <div style={{ maxHeight: "400px" }} className='mb-2'>
             <table id={id} className="rounded-md border border-gray-300 w-full">
-                <thead className="gradient-background">
+            {formContext.view !== "0" && (
+                <thead className={formContext.view === "0" ? "" : "gradient-background"}>
                     <tr>
                         {options.titles.map((item, idx) => (
                             <th key={idx} className="text-[12px] border border-gray-300 px-2 py-2 w-auto text-center">
@@ -54,15 +56,17 @@ const GovernancetableWidget = ({ id, options, value, required, onChange, schema 
                         ))}
                     </tr>
                 </thead>
+                  )}
                 <tbody>
                     {options.rowLabels.map((label, rowIndex) => (
                         <tr key={rowIndex}>
                             <td className="border border-gray-300 p-3 text-left">
+                                <div className="flex">
                                 <span>{label.title}</span>
                                 <MdInfoOutline
                                     data-tooltip-id={`tooltip-${label.title.replace(/\s+/g, '-')}`}
                                     data-tooltip-content={label.tooltip}
-                                    className="ml-2 cursor-pointer"
+                                    className="ml-2 cursor-pointer mt-1"
                                     style={{ display: label.display }}
                                 />
                                 <ReactTooltip
@@ -71,6 +75,8 @@ const GovernancetableWidget = ({ id, options, value, required, onChange, schema 
                                     effect="solid"
                                     className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
                                 />
+                                </div>
+
                             </td>
                             {Object.keys(localValue[rowIndex] || {}).map((key, cellIndex) => {
                                 const propertySchema = schema.items.properties[key];
@@ -92,7 +98,7 @@ const GovernancetableWidget = ({ id, options, value, required, onChange, schema 
                                             </select>
                                         ) : (
                                             <input
-                                                type={propertySchema.type}
+                                                type="text"
                                                 required={required}
                                                 value={localValue[rowIndex][key] || ""}
                                                 onChange={(e) => handleFieldChange(rowIndex, key, e.target.value)}

@@ -3053,6 +3053,83 @@ export const Energydata = [
       </>,
     ],
   },
+  {
+    category: ["40"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-21: Annual total compensation ratio
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+
+          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">Guidance to 2-21-a and 2-21-b</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            This disclosure covers all employees as reported under Disclosure 2-7 in this Standard.
+
+Annual total compensation includes salary, bonus, stock awards, option awards, non-equity incentive plan compensation, change in pension value, and nonqualified deferred compensation earnings provided over the course of a year. When calculating the ratio, the organization should, depending on the organization’s remuneration policies and availability of data, consider all of the following:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+              Base salary, which is the sum of guaranteed, short-term, and non-variable cash compensation.
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+              Total cash compensation, which is the sum of the base salary and cash allowances, bonuses, commissions, cash profit-sharing, and other forms of variable cash payments.
+              </li>
+              <li className="text-[11px] text-[#727272]">
+              Direct compensation, which is the sum of total cash compensation and total fair value of all annual long-term incentives (e.g., stock option awards, restricted stock shares or units, performance stock shares or units, phantom stock shares, stock appreciation rights, and long-term cash awards).
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-4">
+            The annual total compensation ratio can be calculated using the following formula:
+            (Annual total compensation for the organization's highest paid-individual / Median annual total compensation for all of the organization's employees excluding the highest-paid individual)
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            The change in the annual total compensation ratio can be calculated using the following formula:
+            (Percentage increase in annual total compensation for the organization's highest-paid individual / Median percentage increase in annual total compensation for all of the organization's employees excluding the highest-paid individual)
+            </p>
+            <p className="text-[11px] text-black mb-2">Guidance to 2-21-c</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Quantitative data, such as the annual total compensation ratio, may not be sufficient on its own to understand pay disparity and its drivers. For example, pay ratios can be influenced by the size of the organization (e.g., revenue, number of employees), its sector, its employment strategy (e.g., reliance on outsourced workers or part-time employees, a high degree of automation), or currency volatility.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            The difference in pay disparity reported over the years may be the result of a change in the organization’s compensation policy or the level of compensation for its highest-paid individual or employees, a change in calculation methodology (e.g., selection of the median annual total compensation, inclusions or exclusions) or an improvement in data collection processes. For this reason, the organization is required to report contextual information to help information users interpret the data and understand how it has been compiled.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            The organization should provide the following contextual information:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+              Whether any employees reported under Disclosure 2-7 in this Standard have been excluded.
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+              Whether full-time equivalent (FTE) pay rates are used for each part-time employee.
+              </li>
+              <li className="text-[11px] text-[#727272]">
+              A list of the types of compensation included.
+              </li>
+              <li className="text-[11px] text-[#727272]">
+              The title of the highest-paid individual.
+              </li>
+            </ul>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12576&page=7"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
   //  sdg contet start//
   {
     category: ["sd1"],

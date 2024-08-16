@@ -152,6 +152,8 @@ const AnalyseCustomerprivacy = ({ isBoxOpen }) => {
       start: null,
       end: null,
       corporate: newCorp,
+      organisation: selectedOrg,
+
     }));
   };
 

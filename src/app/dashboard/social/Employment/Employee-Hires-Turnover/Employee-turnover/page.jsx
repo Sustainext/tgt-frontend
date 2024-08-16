@@ -33,7 +33,7 @@ const Employeeturnover = ({ location, year, month,activeMonth }) => {
         <>
 
             <div className='mb-4 flex mx-2'>
-                <div className='w-[80%]'>
+               <div className="w-[80%] relative">
                     <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold'>
                     Employee turnover
                         <MdInfoOutline data-tooltip-id={`tooltip-$e1`}

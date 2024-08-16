@@ -51,7 +51,7 @@ const Scope2 = forwardRef(({ location, year, month, successCallback, countryCode
 
   useImperativeHandle(ref, () => ({
     updateFormData() {
-      return updateFormData(formData); 
+      return updateFormData(formData);
     }
   }));
 
@@ -115,7 +115,27 @@ const Scope2 = forwardRef(({ location, year, month, successCallback, countryCode
   const handleAddNew = () => {
     setFormData((prevFormData) => [...prevFormData, { Emission: {} }]);
   };
+  const handleRemove = async (index) => {
+    console.log(index, "updatedData data index");
 
+    let updatedData;
+
+    // Update the state and get the updated data
+    setFormData((prevFormData) => {
+      const newFormData = prevFormData.filter((_, i) => i !== index);
+      console.log(newFormData, "updatedData after removing index");
+      updatedData = newFormData; // Capture the updated data
+      return newFormData;
+    });
+
+    try {
+      // Wait for the state update to complete and then call updateFormData
+      await updateFormData(updatedData);
+      successCallback();
+    } catch (error) {
+      console.error("Failed to update form data:", error);
+    }
+  };
   const updateFormData = async (form_data) => {
     LoaderOpen();
     const data = {
@@ -184,19 +204,8 @@ const Scope2 = forwardRef(({ location, year, month, successCallback, countryCode
   //   // successCallback();
   // };
 
-  const handleRemove = async (index) => {
-    const updatedData = [...formData];
-    updatedData.splice(index, 1);
-    
-    try {
-      await setFormData(updatedData);
-      await updateFormData(updatedData);
-      successCallback();
-    } catch (error) {
-      console.error("Failed to update form data:", error);
-    }
-  };
-  
+
+
 
   const updateCache = (subcategory, activities) => {
     setActivityCache((prevCache) => ({
