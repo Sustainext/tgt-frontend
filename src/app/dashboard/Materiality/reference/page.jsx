@@ -4,27 +4,30 @@ import ReferencePopup from "../modals/referencePopup";
 import CompletePopup from '../modals/completePopup'
 import { GRIData } from "../data/GRIinfo";
 import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
+import Environment from "./ESGcheckboxes/environment"
+import Social from "./ESGcheckboxes/social"
+import Governance from "./ESGcheckboxes/governance"
 
 const Reference = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCompleteModalOpen, setIsCompleteModalOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState();
+  const [category, setCategory] = useState("");
 
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
   const toggleDrawer = (selected) => {
     setIsOpen(!isOpen);
+    setCategory(selected);
   };
   useEffect(() => {
-    console.log(GRIData);
-    var newData = [];
-    GRIData.map((program) => {
-      newData.push(program);
-    });
+    const newData = GRIData.filter((program) =>
+      program.category.includes(category)
+    );
     setData(newData);
-  }, []);
+  }, [category]);
   useEffect(() => {
     setIsModalOpen(true);
   }, []);
@@ -147,197 +150,14 @@ const Reference = () => {
                 Environmental
               </p>
             </div>
-            <form className="space-y-2 p-4">
-              <div className="flex items-center">
-                <input
-                  id="checkbox1"
-                  type="checkbox"
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-                <label
-                  htmlFor="checkbox1"
-                  className="ml-2 text-black-500 text-sm cursor-pointer"
-                >
-                  Option 1
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  id="checkbox2"
-                  type="checkbox"
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-                <label
-                  htmlFor="checkbox2"
-                  className="ml-2 text-black-500 text-sm cursor-pointer"
-                >
-                  Option 2
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  id="checkbox3"
-                  type="checkbox"
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-                <label
-                  htmlFor="checkbox3"
-                  className="ml-2 text-black-500 text-sm cursor-pointer"
-                >
-                  Option 3
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  id="checkbox4"
-                  type="checkbox"
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-                <label
-                  htmlFor="checkbox4"
-                  className="ml-2 text-black-500 text-sm cursor-pointer"
-                >
-                  Option 4
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  id="checkbox5"
-                  type="checkbox"
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-                <label
-                  htmlFor="checkbox5"
-                  className="ml-2 text-black-500 text-sm cursor-pointer"
-                >
-                  Option 5
-                </label>
-              </div>
-            </form>
+            <Environment/>
+           
           </div>
           <div className="shadow-lg rounded-lg  w-[30%]">
             <div className="gradient-background p-2 rounded-t-lg">
               <p className="text-[##2E0B34] text-[17px] mx-2 pt-2">Social</p>
             </div>
-            <form className="space-y-2 p-4">
-              <div className="flex items-center">
-                <input
-                  id="checkbox1"
-                  type="checkbox"
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-                <label
-                  htmlFor="checkbox1"
-                  className="ml-2 text-black-500 text-sm cursor-pointer"
-                >
-                  Option 1
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  id="checkbox2"
-                  type="checkbox"
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-                <label
-                  htmlFor="checkbox2"
-                  className="ml-2 text-black-500 text-sm cursor-pointer"
-                >
-                  Option 2
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  id="checkbox3"
-                  type="checkbox"
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-                <label
-                  htmlFor="checkbox3"
-                  className="ml-2 text-black-500 text-sm cursor-pointer"
-                >
-                  Option 3
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  id="checkbox4"
-                  type="checkbox"
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-                <label
-                  htmlFor="checkbox4"
-                  className="ml-2 text-black-500 text-sm cursor-pointer"
-                >
-                  Option 4
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  id="checkbox5"
-                  type="checkbox"
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-                <label
-                  htmlFor="checkbox5"
-                  className="ml-2 text-black-500 text-sm cursor-pointer"
-                >
-                  Option 5
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  id="checkbox5"
-                  type="checkbox"
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-                <label
-                  htmlFor="checkbox5"
-                  className="ml-2 text-black-500 text-sm cursor-pointer"
-                >
-                  Option 5
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  id="checkbox5"
-                  type="checkbox"
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-                <label
-                  htmlFor="checkbox5"
-                  className="ml-2 text-black-500 text-sm cursor-pointer"
-                >
-                  Option 5
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  id="checkbox5"
-                  type="checkbox"
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-                <label
-                  htmlFor="checkbox5"
-                  className="ml-2 text-black-500 text-sm cursor-pointer"
-                >
-                  Option 5
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  id="checkbox5"
-                  type="checkbox"
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-                <label
-                  htmlFor="checkbox5"
-                  className="ml-2 text-black-500 text-sm cursor-pointer"
-                >
-                  Option 5
-                </label>
-              </div>
-            </form>
+            <Social/>
           </div>
           <div className="shadow-lg rounded-lg  w-[30%]">
             <div className="gradient-background p-2 rounded-t-lg">
@@ -345,73 +165,7 @@ const Reference = () => {
                 Governance
               </p>
             </div>
-            <form className="space-y-2 p-4">
-              <div className="flex items-center">
-                <input
-                  id="checkbox1"
-                  type="checkbox"
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-                <label
-                  htmlFor="checkbox1"
-                  className="ml-2 text-black-500 text-sm cursor-pointer"
-                >
-                  Option 1
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  id="checkbox2"
-                  type="checkbox"
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-                <label
-                  htmlFor="checkbox2"
-                  className="ml-2 text-black-500 text-sm cursor-pointer"
-                >
-                  Option 2
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  id="checkbox3"
-                  type="checkbox"
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-                <label
-                  htmlFor="checkbox3"
-                  className="ml-2 text-black-500 text-sm cursor-pointer"
-                >
-                  Option 3
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  id="checkbox4"
-                  type="checkbox"
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-                <label
-                  htmlFor="checkbox4"
-                  className="ml-2 text-black-500 text-sm cursor-pointer"
-                >
-                  Option 4
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  id="checkbox5"
-                  type="checkbox"
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-                <label
-                  htmlFor="checkbox5"
-                  className="ml-2 text-black-500 text-sm cursor-pointer"
-                >
-                  Option 5
-                </label>
-              </div>
-            </form>
+            <Governance/>
           </div>
         </div>
       </div>

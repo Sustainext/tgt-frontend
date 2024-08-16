@@ -90,7 +90,7 @@ const AccordancePopup = ({ isModalOpen, setIsModalOpen }) => {
                   className="w-2/6 h-full mr-2 py-2 px-3 text-[#727272]  cursor-pointer"
                   onClick={handlePrev}
                 >
-                  Previous
+                  {"<"} Previous
                 </button>
   
               {currentSlide < slides.length - 1 ? (

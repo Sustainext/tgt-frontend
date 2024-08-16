@@ -55,7 +55,7 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
                 <p className="text-[13px] text-[#495057] font-[600] px-3 pt-5">
                   Select Materiality Assessment Approach
                 </p>
-              </div>
+              </div>  
               <form className="space-y-2 px-6 pt-4">
                 <div className="flex items-center">
                   <input
