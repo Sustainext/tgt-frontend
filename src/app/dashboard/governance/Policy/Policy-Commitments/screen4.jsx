@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import GovernancetableWidget3 from "../../../../shared/widgets/Governance/governancetableWidget3.js";
+import GovernancetableWidget5 from "../../../../shared/widgets/Governance/governancetableWidget5.js";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -14,7 +14,7 @@ import axiosInstance from "@/app/utils/axiosMiddleware";
 
 // Simple Custom Table Widget
 const widgets = {
-  TableWidget: GovernancetableWidget3,
+  TableWidget: GovernancetableWidget5,
 };
 
 const view_path = "gri-governance-policy_commitments-2-23-c-leave";
