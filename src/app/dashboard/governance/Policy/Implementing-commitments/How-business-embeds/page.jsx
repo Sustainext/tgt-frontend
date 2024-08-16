@@ -88,10 +88,10 @@ const HowBusinessEmbeds = ({ selectedLocation, year }) => {
   const initialFormData = [
     {
       tableData: [
-        { Whethertakenintoconsideration: "", How: "" },
-        { Whethertakenintoconsideration: "", How: "" },
-        { Whethertakenintoconsideration: "", How: "" },
-        { Whethertakenintoconsideration: "", How: "" },
+        { How: "" },
+        { How: "" },
+        { How: "" },
+        { How: "" },
       ],
     },
   ];
