@@ -1002,7 +1002,7 @@ const Governance = () => {
                             width="12"
                             height="12"
                             className={`${
-                              activeStep === 10
+                              activeStep === 16
                                 ? "bi bi-circle-fill fill-sky-800  font-bold "
                                 : " bi bi-circle-fill fill-gray-400"
                             } `}
@@ -1024,7 +1024,7 @@ const Governance = () => {
                         ) : (
                           <p
                             className={`${
-                              activeStep === 13
+                              activeStep === 16
                                 ? "text-[12px] text-sky-800  font-bold"
                                 : " text-[12px]  text-gray-600"
                               } `}
