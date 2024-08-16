@@ -224,10 +224,10 @@ const PercentageIncrease = ({ selectedLocation, year }) => {
         </div>
         <div className="mx-2 mb-3">
           <Form
-              // schema={Object.keys(r_schema).length === 0 ? {} : r_schema.items}
-              // uiSchema={Object.keys(r_ui_schema).length === 0 ? {} : r_ui_schema.items}
-            schema={schema.items}
-            uiSchema={uiSchema.items}
+              schema={Object.keys(r_schema).length === 0 ? {} : r_schema.items}
+              uiSchema={Object.keys(r_ui_schema).length === 0 ? {} : r_ui_schema.items}
+            // schema={schema.items}
+            // uiSchema={uiSchema.items}
             formData={formData[0]}
             onChange={handleChange}
             validator={validator}
