@@ -5,7 +5,7 @@ import { GiPublicSpeaker } from "react-icons/gi";
 const EnvironmentTrack = ({ contentSize }) => {
   const [activeTab, setActiveTab] = useState('zohoEmissions');
 
-  const { width, height } = contentSize;
+  const { width, height } = contentSize || { width: 800, height: 600 };
 
   const tabs = [
     { id: 'zohoEmissions', label: 'Emissions (Zoho)' },

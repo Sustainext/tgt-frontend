@@ -1,0 +1,284 @@
+"use client";
+import React, { useState, useEffect, useRef } from "react";
+import Form from "@rjsf/core";
+import validator from "@rjsf/validator-ajv8";
+import { MdInfoOutline } from "react-icons/md";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+import inputWidget2 from '../../../../../shared/widgets/Input/inputWidget2'
+import GovernancetableWidget3 from "../../../../../shared/widgets/Governance/governancetableWidget3";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Oval } from "react-loader-spinner";
+import { GlobalState } from "@/Context/page";
+import axiosInstance from "@/app/utils/axiosMiddleware";
+import CustomTableField from "../../../../../shared/components/customTableField";
+
+const widgets = {
+  inputWidget: inputWidget2,  
+  TableWidget: GovernancetableWidget3,
+};
+
+const view_path = "gri-governance-implementing-commitments-2-24-a-describe";
+const client_id = 1;
+const user_id = 1;
+
+const schema = {
+    type: "array",
+    items: {
+      type: "object",
+      properties: {
+        tableData: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              Criteria: { type: "string", title: "Criteria" },
+              How: { type: "string", title: "Description" }
+            }
+          },
+        },
+      },
+    },
+  };
+
+  const uiSchema = {
+    "ui:order": ["tableData"],
+    // "ui:field": CustomTableField,
+    items: {
+      tableData: {
+        "ui:widget": "TableWidget",
+        "ui:title": null,
+        "ui:label": false, 
+        "ui:options": {
+          hideLabel: true,
+          titles: [
+            { key: "Criteria", title: "", type: "number", display: "none" },
+            { key: "How", title: "Description", type: "string", display: "block" },
+          ],
+          rowLabels: [
+            {
+              title: "How the organisation allocates responsibility to implement the commitments across different levels within the organization",
+              tooltip: "Examples of different levels within an organization include the highest governance body, seniorexecutives, and operational levels.",
+              display: "inline-block",
+            },
+            {
+              title: "How the organisation integrates the commitments into organizational strategies, operational policies, and operational procedures;",
+              tooltip: "The organization can describe:• how it aligns the policy commitments with broader risk management systems,economic, environmental, social, and human rights impact assessments, policies and procedures that set financial and other performance incentives formanagement or workers etc.• how it applies the policy commitments when making decisions, such as about its sourcingand operating locations.",
+              display: "inline-block",
+            },
+            {
+              title: "How the organisation implements its commitments with and through its business relationships.",
+              tooltip: "Briefly explain how the organisation implements its commitments with and through its business relationships.",
+              display: "inline-block",
+            },
+            {
+              title: "Training that the organization provides on implementing the commitments",
+              tooltip: "The organization can report:•the content of the training;• to whom the training is provided, and whether it is mandatory;• the form (e.g., in-person, online) and frequency of the training;• examples of how the organization has determined that the training is effective.",
+              display: "inline-block",
+            },
+          ],
+        },
+      },
+    },
+  };
+
+const HowBusinessEmbeds = ({ selectedOrg, selectedCorp, year }) => {
+  const { open } = GlobalState();
+  const initialFormData = [
+    {
+      tableData: [
+        { How: "" },
+        { How: "" },
+        { How: "" },
+        { How: "" },
+      ],
+    },
+  ];
+  const [formData, setFormData] = useState(initialFormData);
+  const [r_schema, setRemoteSchema] = useState({});
+  const [r_ui_schema, setRemoteUiSchema] = useState({});
+  const [loopen, setLoOpen] = useState(false);
+  const toastShown = useRef(false);
+
+  const LoaderOpen = () => {
+    setLoOpen(true);
+  };
+  const LoaderClose = () => {
+    setLoOpen(false);
+  };
+
+  const handleChange = (e) => {
+    setFormData(e.formData);
+  };
+
+  const updateFormData = async () => {
+    LoaderOpen();
+    const data = {
+      client_id: client_id,
+      user_id: user_id,
+      path: view_path,
+      form_data: formData,
+      organisation: selectedOrg,
+      corporate: selectedCorp,
+      year,
+    };
+
+    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
+    try {
+      const response = await axiosInstance.post(url, data);
+      if (response.status === 200) {
+        toast.success("Data added successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        LoaderClose();
+        loadFormData();
+      } else {
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        LoaderClose();
+      }
+    } catch (error) {
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      LoaderClose();
+    }
+  };
+
+  const loadFormData = async () => {
+    LoaderOpen();
+    setFormData(initialFormData);
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&corporate=${selectedCorp}&year=${year}`;
+    try {
+      const response = await axiosInstance.get(url);
+      console.log("API called successfully:", response.data);
+      setRemoteSchema(response.data.form[0].schema);
+      setRemoteUiSchema(response.data.form[0].ui_schema);
+      setFormData(response.data.form_data[0].data);
+    } catch (error) {
+      setFormData(initialFormData);
+    } finally {
+      LoaderClose();
+    }
+  };
+
+  useEffect(() => {
+    if (selectedOrg && year) {
+      loadFormData();
+      toastShown.current = false;
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
+    }
+  }, [selectedOrg,selectedCorp, year]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form data:", formData);
+    updateFormData();
+  };
+
+  return (
+    <>
+      <div
+        className="mx-2 p-3 mb-6 pb-4 rounded-md"
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
+        <div className="mb-4 flex">
+          <div className="w-[80%] relative flex">
+            <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
+            Describe how organisation embeds each of its policy commitments for responsible business conduct throughout its activities and business relationships, including:
+            </h2>
+            <MdInfoOutline
+              data-tooltip-id={`tooltip-$e1`}
+              data-tooltip-content="Provide a description of organisation's specific policy commitment to respect human rights.				"
+              className="mt-1.5 ml-2 text-[14px]"
+            />
+            <ReactTooltip
+              id={`tooltip-$e1`}
+              place="top"
+              effect="solid"
+              style={{
+                width: "290px",
+                backgroundColor: "#000",
+                color: "white",
+                fontSize: "12px",
+                boxShadow: 3,
+                borderRadius: "8px",
+                textAlign: "left",
+              }}
+            />
+          </div>
+          <div className="w-[20%]">
+            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
+              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
+                GRI 2-24-a
+              </p>
+            </div>
+          </div>
+        </div>
+        <Form
+          schema={r_schema}
+          uiSchema={r_ui_schema}
+          formData={formData}
+          onChange={handleChange}
+          validator={validator}
+          widgets={widgets}
+        />
+        <div className="mb-8">
+          <button
+            type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              !selectedOrg || !year ? "cursor-not-allowed" : ""
+            }`}
+            onClick={handleSubmit}
+            disabled={!selectedOrg || !year}
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+      {loopen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
+    </>
+  );
+};
+
+export default HowBusinessEmbeds;

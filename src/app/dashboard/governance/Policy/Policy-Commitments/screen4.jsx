@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import GovernancetableWidget3 from "../../../../shared/widgets/Governance/governancetableWidget3.js";
+import GovernancetableWidget5 from "../../../../shared/widgets/Governance/governancetableWidget5.js";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -14,7 +14,7 @@ import axiosInstance from "@/app/utils/axiosMiddleware";
 
 // Simple Custom Table Widget
 const widgets = {
-  TableWidget: GovernancetableWidget3,
+  TableWidget: GovernancetableWidget5,
 };
 
 const view_path = "gri-governance-policy_commitments-2-23-c-leave";
@@ -219,9 +219,8 @@ const Screen4 = ({ selectedOrg, selectedCorp, location, year, month }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
-              Number of suppliers identified having significant actual and
-              potential negative social impacts.
-              <MdInfoOutline
+            Level of approval: Policy commitments
+              {/* <MdInfoOutline
                 data-tooltip-id={`tooltip-$e86`}
                 data-tooltip-content="This section documents the data corresponding to the number of
 suppliers identified as having significant actual and potential
@@ -241,14 +240,14 @@ negative social impacts."
                   borderRadius: "8px",
                   textAlign: "left",
                 }}
-              ></ReactTooltip>
+              ></ReactTooltip> */}
             </h2>
           </div>
 
           <div className="w-[20%]">
             <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
               <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-23-c
+                GRI 2-23-d
               </p>
             </div>
           </div>

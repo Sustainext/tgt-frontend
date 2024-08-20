@@ -40,7 +40,7 @@ const DynamicTable2 = ({ data, columns }) => {
                     } text-sm`}
                   >
                        {row[column] !== undefined && row[column] !== null
-                      ? colIndex === 0 ? row[column] : `${row[column]}%`
+                      ? colIndex === 0 ? row[column] : `${row[column]}`
                       : 'N/A'}
                   </td>
                 ))}

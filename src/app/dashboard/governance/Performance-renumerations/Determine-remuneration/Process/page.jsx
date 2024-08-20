@@ -18,7 +18,7 @@ const widgets = {
   TableWidget: GovernancetableWidget2,
 };
 
-const view_path = "";
+const view_path = "gri-governance-determine-remuneration-2-20-a-process";
 const client_id = 1;
 const user_id = 1;
 
@@ -62,8 +62,10 @@ const uiSchema = {
       },
       tableData: {
         "ui:widget": "TableWidget",
+        "ui:title": null,
         "ui:label": false, 
         "ui:options": {
+          hideLabel: true,
           titles: [
             { key: "Criteria", title: "", type: "number", display: "none" },
             {
@@ -258,8 +260,8 @@ const Process = ({ selectedLocation, year }) => {
           </div>
         </div>
         <Form
-          schema={schema}
-          uiSchema={uiSchema}
+          schema={r_schema}
+          uiSchema={r_ui_schema}
           formData={formData}
           onChange={handleChange}
           validator={validator}

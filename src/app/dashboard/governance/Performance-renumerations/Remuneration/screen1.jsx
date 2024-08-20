@@ -51,6 +51,10 @@ const uiSchema = {
   items: {
     "ui:order": ["Q1","Q2","Q3","Q4","Q5"],
     Q1: {
+      "ui:hading": "Link/Reference",
+      "ui:hadingtooltip": "This section documents data corresponding to the external assurance of the sustainability report. ",
+      "ui:hadingtooltipdisplay": "block",
+      "ui:hadingdisplay": "block",
       "ui:title": "Fixed pay & variable pay",
       "ui:tooltip": "Report on fixed pay and variable pay. This can include performance-based pay, equity-based pay, bonuses, and deferred and vested shares.",
       "ui:tooltipdisplay": "block",
@@ -61,6 +65,10 @@ const uiSchema = {
       },
     },
     Q2: {
+      "ui:hading": "Link/Reference",
+      "ui:hadingtooltip": "This section documents data corresponding to the external assurance of the sustainability report. ",
+      "ui:hadingtooltipdisplay": "block",
+      "ui:hadingdisplay": "block",
         "ui:title": "Sign-on bonuses or recruitment incentive payments",
         "ui:tooltip": "Report on sign-on bonuses or recruitment incentive payments.",
         "ui:tooltipdisplay": "block",
@@ -71,6 +79,10 @@ const uiSchema = {
         },
       },
       Q3: {
+        "ui:hading": "Link/Reference",
+        "ui:hadingtooltip": "This section documents data corresponding to the external assurance of the sustainability report. ",
+        "ui:hadingtooltipdisplay": "block",
+        "ui:hadingdisplay": "block",
         "ui:title": "Termination payments",
         "ui:tooltip": "Report on termination payments.Termination payments are all payments and benefits given to a departing member of the highest governance body or senior executive whose appointment is terminated.",
         "ui:tooltipdisplay": "block",
@@ -81,6 +93,10 @@ const uiSchema = {
         },
       },
       Q4: {
+        "ui:hading": "Link/Reference",
+        "ui:hadingtooltip": "This section documents data corresponding to the external assurance of the sustainability report. ",
+        "ui:hadingtooltipdisplay": "block",
+        "ui:hadingdisplay": "block",
         "ui:title": "Clawbacks",
         "ui:tooltip": "Clawbacks are repayments of previously received compensation that a highest governance body member or senior executive is required to make to their employer if certain conditions of employment or goals are not met",
         "ui:tooltipdisplay": "block",
@@ -91,6 +107,10 @@ const uiSchema = {
         },
       },
       Q5: {
+        "ui:hading": "Link/Reference",
+        "ui:hadingtooltip": "This section documents data corresponding to the external assurance of the sustainability report. ",
+        "ui:hadingtooltipdisplay": "block",
+        "ui:hadingdisplay": "block",
         "ui:title": "Retirement benefits",
         "ui:tooltip": "Report on retirement benefits. This can also include the differences between the retirement benefit schemes and the contribution rates for the highest governance body members, senior executives, and all other employee. ",
         "ui:tooltipdisplay": "block",

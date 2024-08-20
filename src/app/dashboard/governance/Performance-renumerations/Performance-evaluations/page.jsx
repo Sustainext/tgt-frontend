@@ -1,12 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { MdOutlineClear } from "react-icons/md";
+import { MdInfoOutline, MdOutlineClear } from "react-icons/md";
 import "react-tooltip/dist/react-tooltip.css";
 import GovernanceHeader2 from "../../GovernanceHeader2";
 import { Socialdata } from "../../../social/data/socialgriinfo";
 import Process from "./Process-for-evaluating/page";
 import EvaluationAndFrequency from "./Evaluation-and-frequency/page";
 import ActionsTaken from "./Actions-taken/page";
+import { Tooltip as ReactTooltip } from "react-tooltip";  
 import { ToastContainer } from "react-toastify";
 
 const PerformanceEvaluations = () => {
@@ -60,7 +61,7 @@ const PerformanceEvaluations = () => {
             <div className="flex float-end border-l">
               <button
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("1")}
+                // onClick={() => toggleDrawer("1")}
               >
                 GRI 2 - 18
               </button>
@@ -72,6 +73,25 @@ const PerformanceEvaluations = () => {
           <h6 className="text-[17px] mb-4 font-semibold flex">
           Evaluation of the performance of the highest governance body
           </h6>
+          <MdInfoOutline
+              data-tooltip-id={`tooltip-$e1`}
+              data-tooltip-content="This section documents the data corresponding to the evaluation of the performance of the highest governance body."
+              className="mt-1.5 ml-2 text-[14px]"
+            />
+            <ReactTooltip
+              id={`tooltip-$e1`}
+              place="top"
+              effect="solid"
+              style={{
+                width: "290px",
+                backgroundColor: "#000",
+                color: "white",
+                fontSize: "12px",
+                boxShadow: 3,
+                borderRadius: "8px",
+                textAlign: "left",
+              }}
+            ></ReactTooltip>
         </div>
         <div
           className={`${

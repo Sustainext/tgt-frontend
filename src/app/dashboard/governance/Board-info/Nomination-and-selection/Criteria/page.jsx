@@ -38,7 +38,7 @@ const uiSchema = {
     Q1: {
       "ui:title": "Describe the 'criteria' used for nominating and selecting the highest governance body members",
       "ui:tooltip": "",
-      "ui:tooltipdisplay": "block",
+      "ui:tooltipdisplay": "none",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
       "ui:options": {

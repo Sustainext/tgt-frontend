@@ -5,7 +5,7 @@ import { GiPublicSpeaker } from "react-icons/gi";
 const SocialTrack = ({ contentSize }) => {
   const [activeTab, setActiveTab] = useState('zohoSocial');
 
-  const { width, height } = contentSize;
+  const { width, height } = contentSize || { width: 800, height: 600 };
 
   const tabs = [
     { id: 'zohoSocial', label: 'Social (Zoho)' },

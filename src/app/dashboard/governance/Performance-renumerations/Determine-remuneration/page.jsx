@@ -7,6 +7,7 @@ import { Socialdata } from "../../../social/data/socialgriinfo";
 import { ToastContainer } from "react-toastify";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import Process from "./Process/page";
+import ResultsOfVotes from './ResultsOfVotes/page'
 
 const DetermineRemuneration = () => {
   const [year, setYear] = useState(2024);
@@ -57,7 +58,7 @@ const DetermineRemuneration = () => {
             <div className="flex float-end border-l">
               <button
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("1")}
+                onClick={() => toggleDrawer("86")}
               >
                 GRI 2 - 20
               </button>
@@ -120,6 +121,10 @@ const DetermineRemuneration = () => {
         setYear={setYear}
       />
       <Process
+        selectedLocation={selectedLocation}
+        year={year}
+      />
+      <ResultsOfVotes
         selectedLocation={selectedLocation}
         year={year}
       />

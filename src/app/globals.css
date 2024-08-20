@@ -222,3 +222,6 @@ input[type='number']::-webkit-outer-spin-button {
 .jodit-status-bar-link{
   display: none !important;
 }
+.form-group > label {
+  display: none !important;
+}
