@@ -2,22 +2,20 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import GovernancetableWidget5 from "../../../../shared/widgets/Governance/governancetableWidget5.js";
+import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
+import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-
-// Simple Custom Table Widget
 const widgets = {
-  TableWidget: GovernancetableWidget5,
+  inputWidget: inputWidget2,
 };
 
-const view_path = "gri-governance-policy_commitments-2-23-c-leave";
+const view_path = "gri-governance-remuneration-2-19-b-policies";
 const client_id = 1;
 const user_id = 1;
 
@@ -26,71 +24,50 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      PolicyCommitment: { type: "string", title: "Policy Commitment" },
-      Levelorganization: {
+      Q1: {
         type: "string",
-        title:
-          "Level at which the policy commitments was approved within the organization",
+        title: "List all entities included in the sustainability report",
       },
-      Seniorlevel: {
-        type: "string",
-        title: "Whether this is the most senior level",
-        enum: ["Yes", "No"],
-      },
-      Specifylevel: { type: "string", title: "If yes, specify senior level" },
     },
   },
 };
 
 const uiSchema = {
-  "ui:widget": "TableWidget",
-  "ui:options": {
-    titles: [
-      {
-        key: "PolicyCommitment",
-        title: "Policy Commitment",
-        tooltip: "Specify the policy commitment. ",
+  items: {
+    "ui:order": ["Q1"],
+    Q1: {
+      "ui:title": "",
+      "ui:tooltip":
+        "Provide a list of all entities included in the sustainability report. ",
+      "ui:tooltipdisplay": "none",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
-      {
-        key: "Levelorganization",
-        title:
-          "Level at which the policy commitments was approved within the organization",
-        tooltip:
-          "Specify the level at which the policy commitments was approved within the organization",
-      },
-      {
-        key: "Seniorlevel",
-        title: "Whether this is the most senior level",
-        tooltip:
-          "Indicate whether the level at which each of the policy commitments was approved within the organization is the most senior level.",
-      },
-      {
-        key: "Specifylevel",
-        title: "If yes, specify senior level",
-        tooltip:
-          "For example, the most senior level in an organization could be the highest governance body (e.g., the board) or the most senior executive (e.g., chief executive officer)",
-      },
-    ],
+    },
+
+    "ui:options": {
+      orderable: false, // Prevent reordering of items
+      addable: false, // Prevent adding items from UI
+      removable: false, // Prevent removing items from UI
+      layout: "horizontal", // Set layout to horizontal
+    },
   },
 };
-const Screen4 = ({ selectedOrg, selectedCorp, location, year, month }) => {
-  const initialFormData = [
-    {
-      PolicyCommitment: "",
-      Levelorganization: "",
-      Seniorlevel: "",
-      Specifylevel: "",
-    },
-  ];
-  const [formData, setFormData] = useState(initialFormData);
+
+const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
+  const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
+  const { open } = GlobalState();
 
   const LoaderOpen = () => {
     setLoOpen(true);
   };
+
   const LoaderClose = () => {
     setLoOpen(false);
   };
@@ -151,16 +128,11 @@ const Screen4 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       });
       LoaderClose();
     }
-    // console.log('Response:', response.data);
-    // } catch (error) {
-    // console.error('Error:', error);
-    // }
   };
 
   const loadFormData = async () => {
-    console.log("loadFormData screen 2");
     LoaderOpen();
-    setFormData(initialFormData);
+    setFormData([{}]);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
@@ -169,12 +141,11 @@ const Screen4 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData(initialFormData);
+      setFormData([{}]);
     } finally {
       LoaderClose();
     }
   };
-
   useEffect(() => {
     if (selectedOrg && year) {
       loadFormData();
@@ -187,30 +158,19 @@ const Screen4 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission
-    console.log("Form data:", formData);
-    updateFormData();
+    e.preventDefault();
+    // updateFormData();
+    console.log("test form data", formData);
   };
-
-  const handleAddCommittee = () => {
-    const newCommittee = {
-      PolicyCommitment: "",
-      Levelorganization: "",
-      Seniorlevel: "",
-      Specifylevel: "",
-    };
-    setFormData([...formData, newCommittee]);
+  const handleAddNew = () => {
+    const newData = [...formData, {}];
+    setFormData(newData);
+    console.log("Form data newData:", newData);
   };
-
-  const handleRemoveCommittee = (index) => {
-    const newFormData = formData.filter((_, i) => i !== index);
-    setFormData(newFormData);
-  };
-
   return (
     <>
       <div
-        className="mx-2 p-3 mb-6 rounded-md"
+        className="mx-2 p-3 mb-6 pb-6 rounded-md"
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
@@ -219,16 +179,27 @@ const Screen4 = ({ selectedOrg, selectedCorp, location, year, month }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
-            Level of approval: Policy commitments
-              {/* <MdInfoOutline
-                data-tooltip-id={`tooltip-$e86`}
-                data-tooltip-content="This section documents the data corresponding to the number of
-suppliers identified as having significant actual and potential
-negative social impacts."
+              List of entities
+            </h2>
+          </div>
+
+          <div className="w-[20%]">
+            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
+              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
+                GRI 2-2-a
+              </p>
+            </div>
+          </div>
+        </div>
+        <p className="flex mx-2 text-sm text-gray-700">
+        List all entities included in the sustainability report
+              <MdInfoOutline
+                data-tooltip-id={`tooltip-$e1`}
+                data-tooltip-content="Provide a list of all entities included in the sustainability report. "
                 className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip
-                id={`tooltip-$e86`}
+                id={`tooltip-$e1`}
                 place="top"
                 effect="solid"
                 style={{
@@ -240,43 +211,27 @@ negative social impacts."
                   borderRadius: "8px",
                   textAlign: "left",
                 }}
-              ></ReactTooltip> */}
-            </h2>
-          </div>
-
-          <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-23-d
+              ></ReactTooltip>
               </p>
-            </div>
-          </div>
-        </div>
-        <div className="mx-2">
+        <div className="mx-2 mb-3">
           <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+            schema={schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
-            formContext={{
-              onRemove: handleRemoveCommittee,
-            }}
           />
         </div>
-        <div className="flex right-1 mx-2">
-          {selectedOrg && year && (
-            <button
-              type="button"
-              className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
-              onClick={handleAddCommittee}
-            >
-              To enter another commitment <MdAdd className="text-lg" />
-            </button>
-          )}
+        <div className="flex justify-between right-1 mt-5">
+          <button
+            type="button"
+            className="text-[#007EEF] text-[12px] flex cursor-pointer my-auto"
+            onClick={handleAddNew}
+          >
+            Add text box <MdAdd className="text-lg" />
+          </button>
         </div>
-
         <div className="mb-6">
           <button
             type="button"
@@ -284,7 +239,7 @@ negative social impacts."
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            // disabled={!selectedOrg || !year}
           >
             Submit
           </button>
@@ -306,4 +261,4 @@ negative social impacts."
   );
 };
 
-export default Screen4;
+export default Screen1;

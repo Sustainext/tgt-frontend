@@ -5,15 +5,12 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import GovernanceHeader2 from "../../GovernanceHeader2";
 import { Socialdata } from "../../../social/data/socialgriinfo";
+import GeneralHeader2 from "../../GeneralHeader2"
 import Screen1 from "./screen1"
-import Screen2 from "./screen2";
-import Screen3 from "./screen3";
-import Screen4 from "./screen4";
-import Screen5 from "./screen5";
-import Screen6 from "./screen6";
-const PolicyCommitments = () => {
+import Screen2 from "./screen2"
+import Screen3 from "./screen3"
+const Entities = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState(2024);
@@ -50,11 +47,11 @@ const PolicyCommitments = () => {
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
             <div className="text-left mb-4 ml-3 pt-5">
-              <p className="text-sm">Governance</p>
+              <p className="text-sm">General</p>
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] font-bold pt-1">
-                    Policy Commitments
+                  Organization Details
                   </p>
                 </div>
               </div>
@@ -66,24 +63,19 @@ const PolicyCommitments = () => {
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
                 onClick={() => toggleDrawer("82")}
               >
-                GRI 2 - 23
+              GRI 2 - 2
               </button>
-              <button
-                className="text-[#fff] bg-[#00558A] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("69")}
-              >
-                SDG 16
-              </button>
+
             </div>
           </div>
         </div>
 
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-            Communication of critical concerns
+          Entities included in the organization's sustainability reporting
             <MdInfoOutline
               data-tooltip-id={`tooltip-$e10`}
-              data-tooltip-content="This section documents the data corresponding to the policy commitments."
+              data-tooltip-content="This section documents data corresponding to the energy consumption within the organisation"
               className="mt-1.5 ml-2 text-[14px]"
             />
             <ReactTooltip
@@ -127,7 +119,7 @@ const PolicyCommitments = () => {
             ))}
         </div>
       </div>
-      <GovernanceHeader2
+      <GeneralHeader2
         activeMonth={activeMonth}
         setActiveMonth={setActiveMonth}
         selectedOrg={selectedOrg}
@@ -144,43 +136,24 @@ const PolicyCommitments = () => {
         year={year}
         month={activeMonth}
       />
+    <Screen2
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        location={location}
+        year={year}
+        month={activeMonth}
+      />
+    <Screen3
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        location={location}
+        year={year}
+        month={activeMonth}
+      />
 
-      <Screen2
-        selectedOrg={selectedOrg}
-        selectedCorp={selectedCorp}
-        location={location}
-        year={year}
-        month={activeMonth}
-      />
-      <Screen3
-        selectedOrg={selectedOrg}
-        selectedCorp={selectedCorp}
-        location={location}
-        year={year}
-        month={activeMonth}
-      />
-      <Screen4
-        selectedOrg={selectedOrg}
-        selectedCorp={selectedCorp}
-        location={location}
-        year={year}
-        month={activeMonth}
-      />
-      <Screen5
-        selectedOrg={selectedOrg}
-        selectedCorp={selectedCorp}
-        location={location}
-        year={year}
-        month={activeMonth}
-      />
-      <Screen6
-        selectedOrg={selectedOrg}
-        selectedCorp={selectedCorp}
-        location={location}
-        year={year}
-        month={activeMonth}
-      />
+
+
     </>
   );
 };
-export default PolicyCommitments;
+export default Entities;

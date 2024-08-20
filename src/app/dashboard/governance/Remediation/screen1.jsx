@@ -43,7 +43,7 @@ const uiSchema = {
             "ui:title": "Describe organisation's commitments to provide for or cooperate in the remediation of negative impacts that the organization identifies it has caused or contributed to.",
             "ui:tooltip":
                 "what are the organisation's commitments to provide for or cooperate in the remediation of negative impacts that the organization identifies it has caused or contributed to?",
-            "ui:tooltipdisplay": "none",
+            "ui:tooltipdisplay": "block",
             "ui:widget": "inputWidget",
             "ui:horizontal": true,
             "ui:options": {

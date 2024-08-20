@@ -2,19 +2,20 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import InputWidget5 from "../../../shared/widgets/Input/inputWidget5";
+import Textboxwithfileupload from "../../../../shared/widgets/Input/Textboxwithfileupload";
 import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { toast } from "react-toastify";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from '@/app/utils/axiosMiddleware'
-
+import Textboxmultirowfile from "../../../../shared/widgets/Input/Textboxmultirowfile";
 const widgets = {
-  inputWidget: InputWidget5,
+  inputWidget: Textboxwithfileupload,
+  Textboxmultirowfile:Textboxmultirowfile,
 };
 
-const view_path = "gri-governance-process-2-25-b-approach";
+const view_path = "gri-governance-remuneration-2-19-a-remuneration";
 const client_id = 1;
 const user_id = 1;
 
@@ -23,22 +24,31 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      Q1: {
-        type: "string",
-        title: "Describe organisation's approach to identify and address grievances, including the grievance mechanisms that the organization has established or participates in",
+      Q1: { type: "string", title: "Legal name" },
+      Q2: { type: "string", title: "Nature of ownership & legal form" },
+      Q3: { type: "string", title: "Termination payments" },
+      Q4: { type: "string", title: "Location of headquarters" },
+      Q5: {
+        type: "array",
+        title: "Countries of operation",
+        items: {
+          type: "object",
+          properties: {
+            text: { type: "string", title: "Country" },
+          },
+        },
       },
-
-
     },
   },
 };
 
+
 const uiSchema = {
   items: {
-    "ui:order": ["Q1"],
+    "ui:order": ["Q1","Q2","Q3","Q4","Q5"],
     Q1: {
-      "ui:title": "Describe organisation's approach to identify and address grievances, including the grievance mechanisms that the organization has established or participates in",
-      "ui:tooltip": "Grievance mechanisms refer to any routinized, state-based or non-state-based, judicial or non judicial processes through which stakeholders can raise grievances and seek remedy.",
+      "ui:title": "Legal name",
+      "ui:tooltip": "If your company has a different trading name from its legal name. Name both. E.g. Legal Name: Yum! Brands, Inc.Trading Name: Kentucky Fried Chicken (KFC)",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -46,9 +56,46 @@ const uiSchema = {
         label: false,
       },
     },
-
-
-
+    Q2: {
+        "ui:title": "Nature of ownership & legal form",
+        "ui:tooltip": "Please specify the nature of ownership & legal form. E.g. Sole proprietorship,Partnership (general or limited), Corporation,  Limited Liability Company (LLC) etc. ",
+        "ui:tooltipdisplay": "block",
+        "ui:widget": "inputWidget",
+        "ui:horizontal": true,
+        "ui:options": {
+          label: false,
+        },
+      },
+      Q3: {
+        "ui:title": "Termination payments",
+        "ui:tooltip": "Report on termination payments.Termination payments are all payments and benefits given to a departing member of the highest governance body or senior executive whose appointment is terminated.",
+        "ui:tooltipdisplay": "block",
+        "ui:widget": "inputWidget",
+        "ui:horizontal": true,
+        "ui:options": {
+          label: false,
+        },
+      },
+      Q4: {
+        "ui:title": "Location of headquarters",
+        "ui:tooltip": "Please specify the location of organization's headquarters. Headquarters are an organization’s global administrative center, the place from which it is controlled or directed.",
+        "ui:tooltipdisplay": "block",
+        "ui:widget": "inputWidget",
+        "ui:horizontal": true,
+        "ui:options": {
+          label: false,
+        },
+      },
+      Q5: {
+        "ui:title": "Countries of operation",
+        "ui:tooltip": "Indicate the countries in which the organisation operates. Include: The organization can also specify the regions or specific locations within countries (e.g., states, cities) where it has operations.",
+        "ui:tooltipdisplay": "block",
+        "ui:widget": "Textboxmultirowfile",
+        "ui:horizontal": true,
+        "ui:options": {
+          label: false,
+        },
+      },
     "ui:options": {
       orderable: false,
       addable: false,
@@ -58,8 +105,8 @@ const uiSchema = {
   },
 };
 
-const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
-  const [formData, setFormData] = useState([{ Q1: {Q1: "",fileName:"",fileURL:"" } }]);
+const screen1 = ({ selectedOrg, selectedCorp, year }) => {
+  const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
@@ -135,7 +182,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([{ Q1: {Q1: "",fileName:"",fileURL:"" } }]);
+    setFormData([{}]);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&corporate=${selectedCorp}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
@@ -144,7 +191,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData([{ Q1: {Q1: "",fileName:"",fileURL:"" } }]);
+      setFormData([{}]);
     } finally {
       LoaderClose();
     }
@@ -164,7 +211,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form data:", formData);
-    updateFormData();
+    // updateFormData();
   };
 
   return (
@@ -177,13 +224,16 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
         }}
       >
         <div className="mb-4 flex">
-          <div className="w-[80%]">
-            {/* <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
-            Describe the remuneration policies for members of the highest governance body and
-            senior executives, including:
+          <div className="w-[80%] relative">
+            <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
+            Organizational Details
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
-                data-tooltip-content="Specify the remuneration policies for members of the highest governance body and senior executives."
+                data-tooltip-content="This section documents data regarding the specific workers, activities, and
+workplaces encompassed by the occupational health and safety
+management system. It highlights which groups of employees,
+types of activities, and workplaces fall within the scope of the system,
+and explains any exclusions that may exist."
                 className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip
@@ -200,22 +250,37 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
                   textAlign: "left",
                 }}
               ></ReactTooltip>
-            </h2> */}
+            </h2>
             {/* <p className="text-[12px] text-gray-500">Describe the governance structure, including the committees of the highest governance body</p> */}
           </div>
 
-          <div className="w-[20%]">
+          <div className="w-[25%] flex gap-2">
             <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
               <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-25-b
+                GRI 2-1a
+              </p>
+            </div>
+            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end ">
+              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
+                GRI 2-1b
+              </p>
+            </div>
+            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
+              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
+                GRI 2-1c
+              </p>
+            </div>
+            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
+              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
+                GRI 2-1d
               </p>
             </div>
           </div>
         </div>
         <div className="mx-2">
           <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+            schema={schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -229,7 +294,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            // disabled={!selectedOrg || !year}
           >
             Submit
           </button>
@@ -251,4 +316,4 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
   );
 };
 
-export default Screen2;
+export default screen1;

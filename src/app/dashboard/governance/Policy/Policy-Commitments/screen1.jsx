@@ -81,7 +81,7 @@ const uiSchema = {
         display: "block",
         type: "select",
         file: "yes",
-        selectoption: ["Yes", "No"],
+        selectoption: ["Yes", "No","NA"],
       },
       {
         key: "text4",
@@ -92,7 +92,7 @@ const uiSchema = {
         display: "block",
         type: "select",
         file: "yes",
-        selectoption: ["Yes", "No"],
+        selectoption: ["Yes", "No","NA"],
       },
       {
         key: "text5",
@@ -102,7 +102,7 @@ const uiSchema = {
         display: "none",
         type: "select",
         file: "yes",
-        selectoption: ["Yes", "No"],
+        selectoption: ["Yes", "No","NA"],
       },
     ],
   },

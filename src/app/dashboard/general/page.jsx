@@ -2,24 +2,8 @@
 import React, { useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
-import BoardInfo from "./Board-info/Structure/page";
-import ManagementImpact from "./Board-Involvement-Sustainability/Management-Impact/page";
-import DelegationResponsibility from "./Board-Involvement-Sustainability/Delegation-Responsibility/page";
-import SustainabilityReporting from "./Board-Involvement-Sustainability/Sustainability-Reporting/page";
-import ConflictInterest from "./Governances/Conflict-Interest/page";
-import NominationAndSelection from "./Board-info/Nomination-and-selection/page";
-import ChairOfBoard from "./Board-info/Chair-of-board/page";
-import Criticalconcerns from "./Governances/Critical-Concerns/page";
-import SustainabilityKnowledge from "./Performance-renumerations/Sustainability-Knowledge/page";
-import SustainabilityStrategyPage from "./Sustainability-strategy/page";
-import ManagingConcerns from "./Managing-concerns/page";
-import PerformanceEvaluations from "./Performance-renumerations/Performance-evaluations/page";
-import Remuneration from "./Performance-renumerations/Remuneration/page";
-import Remediation from "./Remediation/page";
-import CompensationRatio from "./Performance-renumerations/compensation-ratio/page";
-import DetermineRemuneration from "./Performance-renumerations/Determine-remuneration/page";
-import PolicyCommitments from "./Policy/Policy-Commitments/page";
-import ImplementingCommitments from "./Policy/Implementing-commitments/page";
+import OrgDetails from "./GRI-Reporting/Org-Details/page";
+import Entities from "./GRI-Reporting/Entities/page";
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -46,7 +30,7 @@ const AccordionItem = ({ title, children }) => {
     </div>
   );
 };
-const Governance = () => {
+const General = () => {
   const [activeStep, setActiveStep] = useState(1);
   const [completedSteps, setCompletedSteps] = useState([]);
 
@@ -81,7 +65,7 @@ const Governance = () => {
             <section className="flex  justify-center ">
               <div className="w-80">
                 <ul>
-                  <AccordionItem title="Board Info">
+                  <AccordionItem title="GRI Reporting info">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(1)}
@@ -128,7 +112,7 @@ const Governance = () => {
                         {isStepCompleted(1) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Structure
+                              Org Details
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -140,7 +124,7 @@ const Governance = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                            Structure
+                            Org Details
                           </p>
                         )}
                       </div>
@@ -191,7 +175,7 @@ const Governance = () => {
                         {isStepCompleted(2) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Nomination and Selection
+                              Entities
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -203,7 +187,7 @@ const Governance = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                            Nomination and Selection
+                            Entities
                           </p>
                         )}
                       </div>
@@ -214,7 +198,7 @@ const Governance = () => {
                     >
                       {isStepCompleted(3) ? (
                         <>
-                          <div className=" before:bg-sky-800  font-bold">
+                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="12"
@@ -227,7 +211,13 @@ const Governance = () => {
                           </div>
                         </>
                       ) : (
-                        <div>
+                        <div
+                          className={`${
+                            activeStep === 3
+                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                          } `}
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
@@ -248,7 +238,7 @@ const Governance = () => {
                         {isStepCompleted(3) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Chair of Board
+                              Report Details
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -260,13 +250,11 @@ const Governance = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                            Chair of Board
+                            Report Details
                           </p>
                         )}
                       </div>
                     </li>
-                  </AccordionItem>
-                  <AccordionItem title="Board Involvement in Sustainability">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(4)}
@@ -313,7 +301,7 @@ const Governance = () => {
                         {isStepCompleted(4) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Management of Impact
+                              Restatement
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -325,7 +313,7 @@ const Governance = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                            Management of Impact
+                            Restatement
                           </p>
                         )}
                       </div>
@@ -336,7 +324,7 @@ const Governance = () => {
                     >
                       {isStepCompleted(5) ? (
                         <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
+                          <div className=" before:bg-sky-800  font-bold">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="12"
@@ -349,13 +337,7 @@ const Governance = () => {
                           </div>
                         </>
                       ) : (
-                        <div
-                          className={`${
-                            activeStep === 5
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
-                        >
+                        <div>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
@@ -376,7 +358,7 @@ const Governance = () => {
                         {isStepCompleted(5) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Delegation of Responsibility
+                              Assurance
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -388,18 +370,20 @@ const Governance = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                            Delegation of Responsibility
+                            Assurance
                           </p>
                         )}
                       </div>
                     </li>
+                  </AccordionItem>
+                  <AccordionItem title="Organization Details">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(6)}
                     >
                       {isStepCompleted(6) ? (
                         <>
-                          <div className="before:bg-sky-800  font-bold">
+                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="12"
@@ -412,7 +396,13 @@ const Governance = () => {
                           </div>
                         </>
                       ) : (
-                        <div>
+                        <div
+                          className={`${
+                            activeStep === 6
+                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                          } `}
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
@@ -433,7 +423,7 @@ const Governance = () => {
                         {isStepCompleted(6) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Sustainability Reporting
+                              Business Details
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -445,13 +435,11 @@ const Governance = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                            Sustainability Reporting
+                            Business Details
                           </p>
                         )}
                       </div>
                     </li>
-                  </AccordionItem>
-                  <AccordionItem title="Governance">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(7)}
@@ -498,7 +486,7 @@ const Governance = () => {
                         {isStepCompleted(7) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Conflict of Interest
+                              Workforce-Employees
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -510,7 +498,7 @@ const Governance = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                            Conflict of Interest
+                            Workforce-Employees
                           </p>
                         )}
                       </div>
@@ -555,7 +543,7 @@ const Governance = () => {
                         {isStepCompleted(8) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Critical Concerns
+                              Workforce-Other Workers
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -567,20 +555,20 @@ const Governance = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                            Critical Concerns
+                            Workforce-Other Workers
                           </p>
                         )}
                       </div>
                     </li>
                   </AccordionItem>
-                  <AccordionItem title="Performance and Renumerations">
+                  <AccordionItem title="Compliance">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(9)}
                     >
                       {isStepCompleted(9) ? (
                         <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
+                          <div className="before:bg-sky-800  font-bold">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="12"
@@ -593,13 +581,7 @@ const Governance = () => {
                           </div>
                         </>
                       ) : (
-                        <div
-                          className={`${
-                            activeStep === 9
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
-                        >
+                        <div>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
@@ -620,30 +602,33 @@ const Governance = () => {
                         {isStepCompleted(9) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                            Sustainability Knowledge
+                              Laws and Regulation
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
                         ) : (
                           <p
                             className={`${
-                              activeStep === 7
+                              activeStep === 9
                                 ? "text-[12px] text-sky-800  font-bold"
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                            Sustainability Knowledge
+                            Laws and Regulation
                           </p>
                         )}
                       </div>
                     </li>
+                  </AccordionItem>
+
+                  <AccordionItem title="Membership & Association">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(10)}
                     >
                       {isStepCompleted(10) ? (
                         <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
+                          <div className="before:bg-sky-800  font-bold">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="12"
@@ -656,13 +641,7 @@ const Governance = () => {
                           </div>
                         </>
                       ) : (
-                        <div
-                          className={`${
-                            activeStep === 10
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
-                        >
+                        <div>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
@@ -683,7 +662,7 @@ const Governance = () => {
                         {isStepCompleted(10) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                            Performance Evaluations
+                              Membership & Association
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -695,18 +674,21 @@ const Governance = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                         Performance Evaluations
+                            Membership & Association
                           </p>
                         )}
                       </div>
                     </li>
+                  </AccordionItem>
+
+                  <AccordionItem title="Stakeholder Engagement">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(11)}
                     >
                       {isStepCompleted(11) ? (
                         <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
+                          <div className="before:bg-sky-800  font-bold">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="12"
@@ -719,13 +701,7 @@ const Governance = () => {
                           </div>
                         </>
                       ) : (
-                        <div
-                          className={`${
-                            activeStep === 11
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
-                        >
+                        <div>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
@@ -746,7 +722,7 @@ const Governance = () => {
                         {isStepCompleted(11) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                            Remuneration
+                              Stakeholder Engagement
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -758,18 +734,20 @@ const Governance = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                         Remuneration
+                            Stakeholder Engagement
                           </p>
                         )}
                       </div>
                     </li>
+                  </AccordionItem>
+                  <AccordionItem title="Collective Bargaining Agreements">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(12)}
                     >
                       {isStepCompleted(12) ? (
                         <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
+                          <div className="before:bg-sky-800  font-bold">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="12"
@@ -782,13 +760,7 @@ const Governance = () => {
                           </div>
                         </>
                       ) : (
-                        <div
-                          className={`${
-                            activeStep === 12
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
-                        >
+                        <div>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
@@ -809,7 +781,7 @@ const Governance = () => {
                         {isStepCompleted(12) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                            Determine Remuneration
+                              Collective Bargaining Agreements
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -821,366 +793,7 @@ const Governance = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                          Determine Remuneration
-                          </p>
-                        )}
-                      </div>
-                    </li>
-
-
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(13)}
-                    >
-                      {isStepCompleted(13) ? (
-                        <>
-                          <div className="before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${
-                              activeStep === 13
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(13) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Compensation Ratio
-                            </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
-                          </>
-                        ) : (
-                          <p
-                            className={`${
-                              activeStep === 13
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[12px]  text-gray-600"
-                            } `}
-                          >
-                            Compensation Ratio
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                  </AccordionItem>
-                  <AccordionItem title="Sustainability Strategy">
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(14)}
-                    >
-                      {isStepCompleted(14) ? (
-                        <>
-                          <div className="before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${
-                              activeStep === 13
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(14) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Sustainability Strategy
-                            </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
-                          </>
-                        ) : (
-                          <p
-                            className={`${
-                              activeStep === 14
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[12px]  text-gray-600"
-                            } `}
-                          >
-                            Sustainability Strategy
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                  </AccordionItem>
-
-                  <AccordionItem title="Policy">
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(15)}
-                    >
-                      {isStepCompleted(15) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${
-                            activeStep === 15
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${
-                              activeStep === 15
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(15) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Policy Commitments
-                            </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
-                          </>
-                        ) : (
-                          <p
-                            className={`${
-                              activeStep === 15
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[12px]  text-gray-600"
-                            } `}
-                          >
-                            Policy Commitments
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(16)}
-                    >
-                      {isStepCompleted(16) ? (
-                        <>
-                          <div className="before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${
-                              activeStep === 16
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(16) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Implementing Commitments
-                            </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
-                          </>
-                        ) : (
-                          <p
-                            className={`${
-                              activeStep === 16
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[12px]  text-gray-600"
-                            } `}
-                          >
-                            Implementing Commitments
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                  </AccordionItem>
-                  <AccordionItem title="Remediation">
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(17)}
-                    >
-                      {isStepCompleted(17) ? (
-                        <>
-                          <div className="before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${
-                              activeStep === 17
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(17) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Process
-                            </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
-                          </>
-                        ) : (
-                          <p
-                            className={`${
-                              activeStep === 17
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[12px]  text-gray-600"
-                            } `}
-                          >
-                            Process
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                  </AccordionItem>
-                  <AccordionItem title="Managing Concerns">
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(18)}
-                    >
-                      {isStepCompleted(18) ? (
-                        <>
-                          <div className="before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${
-                              activeStep === 13
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(18) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Advice & Concerns
-                            </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
-                          </>
-                        ) : (
-                          <p
-                            className={`${
-                              activeStep === 18
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[12px]  text-gray-600"
-                            } `}
-                          >
-                            Advice & Concerns
+                            Collective Bargaining Agreements
                           </p>
                         )}
                       </div>
@@ -1195,131 +808,19 @@ const Governance = () => {
               {activeStep === 1 && (
                 <>
                   <div>
-                    <BoardInfo />{" "}
+                    <OrgDetails />
                   </div>
                 </>
               )}
               {activeStep === 2 && (
                 <>
                   <div>
-                    <NominationAndSelection />{" "}
-                  </div>
-                </>
-              )}
-              {activeStep === 3 && (
-                <>
-                  <div>
-                    <ChairOfBoard />{" "}
-                  </div>
-                </>
-              )}
-              {activeStep === 4 && (
-                <>
-                  <div>
-                    <ManagementImpact />{" "}
-                  </div>
-                </>
-              )}
-              {activeStep === 5 && (
-                <>
-                  <div>
-                    <DelegationResponsibility />{" "}
-                  </div>
-                </>
-              )}
-              {activeStep === 6 && (
-                <>
-                  <div>
-                    <SustainabilityReporting />{" "}
-                  </div>
-                </>
-              )}
-              {activeStep === 7 && (
-                <>
-                  <div>
-                    <ConflictInterest />{" "}
-                  </div>
-                </>
-              )}
-              {activeStep === 8 && (
-                <>
-                  <div>
-                    <Criticalconcerns />{" "}
-                  </div>
-                </>
-              )}
-              {activeStep === 9 && (
-                <>
-                  <div>
-                    <SustainabilityKnowledge />{" "}
-                  </div>
-                </>
-              )}
-              {activeStep === 10 && (
-                <>
-                  <div>
-                    <PerformanceEvaluations />{" "}
-                  </div>
-                </>
-              )}
-              {activeStep === 11 && (
-                <>
-                  <div>
-                    <Remuneration />{" "}
-                  </div>
-                </>
-              )}
-              {activeStep === 12 && (
-                <>
-                  <div>
-                    <DetermineRemuneration />{" "}
-                  </div>
-                </>
-              )}
-              {activeStep === 13 && (
-                <>
-                  <div>
-                    <CompensationRatio />{" "}
-                  </div>
-                </>
-              )}
-              {activeStep === 14 && (
-                <>
-                  <div>
-                    <SustainabilityStrategyPage />{" "}
-                  </div>
-                </>
-              )}
-              {activeStep === 15 && (
-                <>
-                  <div>
-                    <PolicyCommitments />{" "}
-                  </div>
-                </>
-              )}
-              {activeStep === 16 && (
-                <>
-                  <div>
-                    <ImplementingCommitments />{" "}
-                  </div>
-                </>
-              )}
-              {activeStep === 17 && (
-                <>
-                  <div>
-                    <Remediation />{" "}
-                  </div>
-                </>
-              )}
-              {activeStep === 18 && (
-                <>
-                  <div>
-                    <ManagingConcerns />{" "}
+                    <Entities />
                   </div>
                 </>
               )}
             </div>
-            <div>
+            {/* <div>
               <div className="w-full mb-5">
                 <div className="absolute right-5">
                   <div className="flex  me-2  mb-5">
@@ -1333,15 +834,15 @@ const Governance = () => {
                       &lt; Previous
                     </button>
 
-                    {activeStep < 18 && (
+                    {activeStep < 38 && (
                       <button
                         className={`${
-                          activeStep === 18
+                          activeStep === 38
                             ? "bg-gray-300"
                             : "bg-blue-500 text-white"
                         } px-3 py-1.5 rounded ml-2 font-bold w-[100px]`}
                         onClick={handleNext}
-                        disabled={activeStep === 18}
+                        disabled={activeStep === 38}
                       >
                         Next &gt;
                       </button>
@@ -1349,7 +850,7 @@ const Governance = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -1357,4 +858,4 @@ const Governance = () => {
   );
 };
 
-export default Governance;
+export default General;
