@@ -1,6 +1,6 @@
 const nextConfig = {
     env: {
-        BACKEND_API_URL: 'https://udm-be.sustainext.ai',
+        BACKEND_API_URL: 'https://udm-be-dev.sustainext.ai',
         // BACKEND_API_URL: 'http://127.0.0.1:8000',
         NEXT_APP_TRACK_URL: 'https://analytics.zoho.in/open-view/283231000002209106',
         NEXT_APP_POWERBI_URL: 'https://app.powerbi.com/view?r=eyJrIjoiMmM0Yjk1ZGMtNGJjZS00N2E4LWJlM2UtZmRhMTQ1YjhkYjJiIiwidCI6ImIwZjhlODRjLWU0YTgtNDc5OS04MWIwLWRmMTUwMDY0MDM3ZCJ9',
@@ -9,7 +9,7 @@ const nextConfig = {
 
     },
     images: {
-        domains: ['udm-be.sustainext.ai'],
+        domains: ['udm-be-dev.sustainext.ai'],
     },
     eslint: {
         ignoreDuringBuilds: true,
