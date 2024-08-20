@@ -1,8 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import materialImage from "../../../../../public/materiality.jpeg"
+import materialImage from "../../../../../public/materiality.jpg"
 import Image from "next/image";
 import NewMaterialityAssement from "../modals/newMaterialityAssesment";
+import { MdAdd } from "react-icons/md";
 
 const NoAssesment =({isModalOpen,setIsModalOpen})=>{
 
@@ -10,17 +11,17 @@ const NoAssesment =({isModalOpen,setIsModalOpen})=>{
         <>
          <div className="flex justify-center items-center p-5">
                 <div>
-                  <div  className="flex justify-center items-center">
+                  <div  className="flex justify-center items-center my-2 mt-5">
                   <Image
                 src={materialImage}
                 alt="img"
-                width={221}
-                height={221}
+                width={250}
+                height={250}
                
               />
                   </div>
                
-                  <div className="mb-4">
+                  <div className="mb-4 mt-2">
                   <p className="text-[24px] font-bold mb-3 text-center">
                       No Assesments
                     </p>

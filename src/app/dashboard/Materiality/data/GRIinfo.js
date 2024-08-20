@@ -52,7 +52,8 @@ export const GRIData = [
               //   href="https://sdgs.un.org/goals/goal7"
               //   target="_blank"
             >
-              Learn more <MdChevronRight />
+              Learn more <MdChevronRight className="mt-1"
+               />
             </a>
           </div>
         </div>
@@ -173,7 +174,7 @@ export const GRIData = [
               //   href="https://sdgs.un.org/goals/goal7"
               //   target="_blank"
             >
-              Learn more <MdChevronRight />
+              Learn more <MdChevronRight className="mt-1"/>
             </a>
           </div>
         </div>
@@ -385,7 +386,7 @@ export const GRIData = [
               //   href="https://sdgs.un.org/goals/goal7"
               //   target="_blank"
             >
-              Learn more <MdChevronRight />
+              Learn more <MdChevronRight className="mt-1" />
             </a>
           </div>
         </div>

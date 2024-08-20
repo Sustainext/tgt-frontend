@@ -85,12 +85,6 @@ const MaterialAssessmentProcess = () => {
       </div>
 
       <InputField />
-
-      <div className="flex justify-end w-full gap-4 mt-4 ">
-        <button className="w-[15%] h-full mr-2 py-2 px-2 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer">
-          Save and Proceed {">"}
-        </button>
-      </div>
       <div></div>
     </>
   );

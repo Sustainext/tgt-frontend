@@ -9,19 +9,17 @@ const CheckboxWidget = ({
 }) => {
   const [selectedValues, setSelectedValues] = useState(value); // Initialize state with the provided array
 
-  useEffect(() => {
-    setSelectedValues(value);
-  }, [value]);
+  // useEffect(() => {
+  //   setSelectedValues(value);
+  // }, [value]);
 
   const handleChange = (event) => {
     const newValue = event.target.value;
     let updatedValues;
 
     if (event.target.checked) {
-      // Add the new value to the array
       updatedValues = [...selectedValues, newValue];
     } else {
-      // Remove the value from the array
       updatedValues = selectedValues.filter(val => val !== newValue);
     }
 

@@ -5,11 +5,15 @@ import { MdOutlineClear, MdInfoOutline,MdOutlineDone } from "react-icons/md";
 import Step1 from "./steps/step1";
 import Step2 from "./steps/step2";
 import Step3 from "./steps/step3";
+import { useRouter } from 'next/navigation'
+import TopicSelectedPopup from "../../modals/topicSelectedPopup";
 
 const SelectMaterialityTopic = () => {
+  const router = useRouter()
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState();
   const [currentStep, setCurrentStep] = useState(0);
+  const [isModalOpen,setIsModalOpen]=useState(false)
   const [category, setCategory] = useState("");
  
   const steps = [1, 2, 3];
@@ -208,7 +212,7 @@ const SelectMaterialityTopic = () => {
           ):(
             <div>
             {currentStep==1?(
-              <Step2/>
+              <Step2 setCurrentStep={setCurrentStep}/>
             ):(
               <Step3/>
             )}
@@ -221,18 +225,33 @@ const SelectMaterialityTopic = () => {
         <div className="flex justify-end w-full gap-4 mt-4 ">
         <button
                   className="w-[15%] h-full mr-2 py-2 px-3 text-[#727272]  cursor-pointer"
-                  onClick={handlePrevious}
+                  onClick={()=>{
+                    if(currentStep==0){
+                      router.push("/dashboard")
+                    }
+                    else{
+                      handlePrevious()
+                    }
+                  }}
                 >
-                  {"<"} Back to Dashboard
+                  {"<"} {currentStep==0?"Back to Dashboard":"Previous"}
           </button>
           <button
                   className="w-[15%] h-full mr-3 py-2 px-2 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer"
-                  onClick={handleNext}
+                  onClick={()=>{
+                    if(currentStep==2){
+                      setIsModalOpen(true)
+                    }
+                    else{
+                      handleNext()
+                    }
+                  }}
                 >
-                  Next {">"}
+                  {currentStep==2?"Save and Proceed":"Next"} {">"}
                 </button>
         </div>
       </div>
+      <TopicSelectedPopup isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
     </>
   );
 };

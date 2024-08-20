@@ -21,7 +21,7 @@ const CompletePopup = ({ isCompleteModalOpen, setIsCompleteModalOpen }) => {
               <div>
               <p className="text-[14px] text-[#667085] font-[400] pt-4">
               Assessment details are updated in the Materiality Dashboard.
-             It can now be viewed or edited from it.
+              The material topics can now be viewed and edited from the dashboard.
                 </p>
               </div>
               <div className="flex justify-center items-center mt-5 mb-3">

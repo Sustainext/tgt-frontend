@@ -30,11 +30,6 @@ const schema = {
     items: {
         type: "object",
         properties: {
-            Q1: {
-                type: "string",
-                title: "Describe actual and potential, negative and positive impacts on the economy, environment and people including impacts on their human rights.",
-
-            },
             Q2: {
                 type: "string",
                 title: "Report whether the organization is involved with the negative impacts through its activities or as a result of its business relationships, and describe the activities or business relationships",
@@ -53,33 +48,7 @@ const schema = {
 
 const uiSchema = {
     items: {
-        "ui:order": ["Q1", "Q2","Q3"],
-        Q1: {
-            "ui:title": "Describe actual and potential, negative and positive impacts on the economy, environment and people including impacts on their human rights.",
-            "ui:tooltip":
-                "<p>Impact: </p><p>Effect the organization has or could have on the economy including on their human rights, which in turn can indicate its contribution (negative or positive) to sustainable development.</p><p>Human rights: </p><p>Rights inherent to all human beings, which include, at a minimum, the rights set out in the United Nations (UN) International Bill of Human Rights and the principles concerning fundamental rights set out in the International Labour Organization (ILO) Declaration on Fundamental Principles and Rights at Work.</p>",
-            "ui:tooltipdisplay": "block",
-            "ui:widget": "MaterialityTableWidget",
-            "ui:tag":"GRI-3-3-a",
-            "ui:horizontal": true,
-            "ui:options": {
-                label: false,
-                titles: [
-                    {
-                      title: "Materia Topic",
-                      tooltip: "Please specify the total number of incidents of discrimination on grounds  of race, color, sex, religion, political opinion, national extraction and social origin.",
-                    },
-                    {
-                      title: "Impact Type",
-                      tooltip: "Please specify the total number of incidents of discrimination on grounds  of race, color, sex, religion, political opinion, national extraction and social origin. ",
-                    },
-                    {
-                      title: "Impact overview (if any)",
-                      tooltip: "Please specify the total number of incidents of discrimination on grounds  of race, color, sex, religion, political opinion, national extraction and social origin.",
-                    },
-                  ],
-            },
-        },
+        "ui:order": ["Q2","Q3"],
         Q2: {
             "ui:title": "Report whether the organization is involved with the negative impacts through its activities or as a result of its business relationships, and describe the activities or business relationships",
             "ui:tooltip":

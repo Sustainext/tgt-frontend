@@ -14,13 +14,13 @@ const CheckboxWidget2 = ({
   const [showTextbox,setShowTextbox]=useState(false)
 
   useEffect(() => {
-    setSelectedValues(value);
     if(selectedValues.includes('Others please specify')){
       setShowTextbox(true)
     }
     else{
       setShowTextbox(false)
-    }
+    }     
+    
   }, [value]);
 
   const handleChange = (event) => {
@@ -36,7 +36,8 @@ const CheckboxWidget2 = ({
     }
 
     setSelectedValues(updatedValues);  // Update the state with the new array of values
-    onChange(updatedValues);           // Call onChange prop with the new array of values
+    onChange(updatedValues);
+        
   };
 
   return (
@@ -45,29 +46,38 @@ const CheckboxWidget2 = ({
         <div className='relative w-[55%]'>
         <p className="text-[15px] text-gray-700 flex">
               {uiSchema["ui:title"]}
-              <MdInfoOutline
-                data-tooltip-id={uiSchema["ui:title"]?`tooltip-${uiSchema["ui:title"].replace(
-                  /\s+/g,
-                  "-"
-                )}`:""}
-                data-tooltip-html={`${uiSchema["ui:tooltip"]}`}
-                className="mt-1 ml-2 w-[30px] text-[14px]"
-                style={{ display: uiSchema["ui:tooltipdisplay"] }}
-              />
-              {/* Tooltip */}
-              <ReactTooltip
-                id={uiSchema["ui:title"]?`tooltip-${uiSchema["ui:title"].replace(/\s+/g, "-")}`:""}
-                place="top"
-                effect="solid"
-                style={{
-                  width: "300px",
-                  backgroundColor: "#000",
-                  color: "white",
-                  fontSize: "12px",
-                  boxShadow: 3,
-                  borderRadius: "8px",
-                }}
-              ></ReactTooltip>
+              {uiSchema["ui:title"]?(
+                    <div>
+                      <MdInfoOutline
+                    data-tooltip-id={uiSchema["ui:title"]?`tooltip-${uiSchema["ui:title"].replace(
+                      /\s+/g,
+                      "-"
+                    )}`:""}
+                    data-tooltip-html={`${uiSchema["ui:tooltip"]}`}
+                    className="mt-1 ml-2 w-[30px] text-[14px]"
+                    style={{ display: uiSchema["ui:tooltipdisplay"] }}
+                  />
+                  {/* Tooltip */}
+                  <ReactTooltip
+                    id={uiSchema["ui:title"]?`tooltip-${uiSchema["ui:title"].replace(/\s+/g, "-")}`:""}
+                    place="top"
+                    effect="solid"
+                    style={{
+                      width: "300px",
+                      backgroundColor: "#000",
+                      color: "white",
+                      fontSize: "12px",
+                      boxShadow: 3,
+                      borderRadius: "8px",
+                    }}
+                  ></ReactTooltip>
+                    </div>
+              ):(
+                  <div>
+
+                  </div>
+              )}
+              
             </p>
         </div>
         

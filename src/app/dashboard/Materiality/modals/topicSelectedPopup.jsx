@@ -2,9 +2,10 @@
 import React, { useState } from "react";
 import GRISVG from "../../../../../public/gri.svg";
 import Image from "next/image";
+import { useRouter } from 'next/navigation'
 
 const TopicSelectedPopup = ({ isModalOpen, setIsModalOpen }) => {
-  
+  const router= useRouter()
   return (
     <>
       {isModalOpen && (
@@ -49,10 +50,12 @@ const TopicSelectedPopup = ({ isModalOpen, setIsModalOpen }) => {
               <div className="flex justify-between items-center mt-5 mb-3">
               <button
                   className="w-auto h-full mr-2 py-2 px-3 text-[#727272]  cursor-pointer"
+                  onClick={()=>{router.push("/dashboard")}}
                 >
                   {"<"} Back to Dashboard
                 </button>
-                  <button className="w-auto h-full mr-2  py-2 px-3 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer" >
+                  <button className="w-auto h-full mr-2  py-2 px-3 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer" 
+                  >
                   Continue Materiality Assessment Process
                   </button>
                 </div>

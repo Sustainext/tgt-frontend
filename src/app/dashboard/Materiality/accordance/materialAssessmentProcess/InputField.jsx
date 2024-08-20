@@ -120,59 +120,59 @@ const InputField = ({ selectedOrg, year, selectedCorp }) => {
         setFormData(e.formData);
     };
 
-    const updateFormData = async () => {
-        const data = {
-            client_id: client_id,
-            user_id: user_id,
-            path: view_path,
-            form_data: formData,
-            corporate: selectedCorp,
-            organisation: selectedOrg,
-            year,
-        };
-        const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
-        try {
-            const response = await axiosInstance.post(url, data);
-            if (response.status === 200) {
-                toast.success("Data added successfully", {
-                    position: "top-right",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
-                LoaderClose();
-                loadFormData();
-            } else {
-                toast.error("Oops, something went wrong", {
-                    position: "top-right",
-                    autoClose: 1000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
-                LoaderClose();
-            }
-        } catch (error) {
-            toast.error("Oops, something went wrong", {
-                position: "top-right",
-                autoClose: 1000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
-            LoaderClose();
-        }
-    };
+    // const updateFormData = async () => {
+    //     const data = {
+    //         client_id: client_id,
+    //         user_id: user_id,
+    //         path: view_path,
+    //         form_data: formData,
+    //         corporate: selectedCorp,
+    //         organisation: selectedOrg,
+    //         year,
+    //     };
+    //     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
+    //     try {
+    //         const response = await axiosInstance.post(url, data);
+    //         if (response.status === 200) {
+    //             toast.success("Data added successfully", {
+    //                 position: "top-right",
+    //                 autoClose: 3000,
+    //                 hideProgressBar: false,
+    //                 closeOnClick: true,
+    //                 pauseOnHover: true,
+    //                 draggable: true,
+    //                 progress: undefined,
+    //                 theme: "light",
+    //             });
+    //             LoaderClose();
+    //             loadFormData();
+    //         } else {
+    //             toast.error("Oops, something went wrong", {
+    //                 position: "top-right",
+    //                 autoClose: 1000,
+    //                 hideProgressBar: false,
+    //                 closeOnClick: true,
+    //                 pauseOnHover: true,
+    //                 draggable: true,
+    //                 progress: undefined,
+    //                 theme: "colored",
+    //             });
+    //             LoaderClose();
+    //         }
+    //     } catch (error) {
+    //         toast.error("Oops, something went wrong", {
+    //             position: "top-right",
+    //             autoClose: 1000,
+    //             hideProgressBar: false,
+    //             closeOnClick: true,
+    //             pauseOnHover: true,
+    //             draggable: true,
+    //             progress: undefined,
+    //             theme: "colored",
+    //         });
+    //         LoaderClose();
+    //     }
+    // };
 
    
     const handleSubmit = (e) => {
@@ -196,18 +196,14 @@ const InputField = ({ selectedOrg, year, selectedCorp }) => {
                     />
                 </div>
             </div>
-            {/* {loopen && (
-                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-                    <Oval
-                        height={50}
-                        width={50}
-                        color="#00BFFF"
-                        secondaryColor="#f3f3f3"
-                        strokeWidth={2}
-                        strokeWidthSecondary={2}
-                    />
-                </div>
-            )} */}
+            <div className="flex justify-end w-full gap-4 mt-4 ">
+        <button className="w-[15%] h-full mr-2 py-2 px-2 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer"
+        onClick={handleSubmit}
+        >
+          Save and Proceed {">"}
+        </button>
+      </div>
+           
         </>
     );
 };
