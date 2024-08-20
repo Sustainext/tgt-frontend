@@ -8,9 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { Socialdata } from "../../../social/data/socialgriinfo";
 import GeneralHeader2 from "../../GeneralHeader2"
 import Screen1 from "./screen1"
-import Screen2 from "./screen2"
-import Screen3 from "./screen3"
-const Entities = () => {
+
+const Restatement = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState(2024);
@@ -51,7 +50,7 @@ const Entities = () => {
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] font-bold pt-1">
-                  Entities
+                  Restatement
                   </p>
                 </div>
               </div>
@@ -63,7 +62,7 @@ const Entities = () => {
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
                 onClick={() => toggleDrawer("82")}
               >
-              GRI 2 - 2
+              GRI 2 - 4
               </button>
 
             </div>
@@ -72,10 +71,10 @@ const Entities = () => {
 
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Entities included in the organization's sustainability reporting
+          Restatements of Information
             <MdInfoOutline
               data-tooltip-id={`tooltip-$e10`}
-              data-tooltip-content="This section documents data corresponding to the energy consumption within the organisation"
+              data-tooltip-content="This section documents the data corresponding to the restatements of information."
               className="mt-1.5 ml-2 text-[14px]"
             />
             <ReactTooltip
@@ -136,24 +135,12 @@ const Entities = () => {
         year={year}
         month={activeMonth}
       />
-    <Screen2
-        selectedOrg={selectedOrg}
-        selectedCorp={selectedCorp}
-        location={location}
-        year={year}
-        month={activeMonth}
-      />
-    <Screen3
-        selectedOrg={selectedOrg}
-        selectedCorp={selectedCorp}
-        location={location}
-        year={year}
-        month={activeMonth}
-      />
+
+
 
 
 
     </>
   );
 };
-export default Entities;
+export default Restatement;

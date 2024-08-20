@@ -2,7 +2,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
+import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
 import TextareaWidget3 from "../../../../shared/widgets/Textarea/TextareaWidget3";
+import Textboxwithfileupload from "../../../../shared/widgets/Input/Textboxwithfileupload"
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -11,11 +13,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
-import axiosInstance from "@/app/utils/axiosMiddleware";
+import axiosInstance from '@/app/utils/axiosMiddleware'
 
 const widgets = {
-  TextareaWidget3: TextareaWidget3,
+  inputWidget: inputWidget2,
   RadioWidget2: RadioWidget2,
+  TextareaWidget3:TextareaWidget3,
+  Textboxwithfileupload:Textboxwithfileupload,
 };
 
 const view_path = "gri-social-product_labeling-417-1a-required";
@@ -29,8 +33,28 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Does the organization consist of multiple entities?",
+        title: "Has the organization's sustainability report been externally assured?",
         enum: ["Yes", "No"],
+      },
+      Q3: {
+        type: "string",
+        title: "Please describe what has been assured and on what basis",
+      },
+      Q4: {
+        type: "string",
+        title: "What is the Assurance Standard used?",
+      },
+      Q5: {
+        type: "string",
+        title: "What is the level of Assurance obtained?",
+      },
+      Q6: {
+        type: "string",
+        title: "Please describe any limitations of the assurance process",
+      },
+      Q7: {
+        type: "string",
+        title: "Please describe the relationship between the organization and the assurance provider",
       },
     },
     dependencies: {
@@ -43,9 +67,9 @@ const schema = {
               },
               Q2: {
                 type: "string",
-                title:
-                  "If yes, then explain the approach used for consolidating information.",
+                title: "If yes, please provide a link or reference to the external assurance reports or assurance statements",
               },
+
             },
           },
         ],
@@ -56,12 +80,12 @@ const schema = {
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1", "Q2"],
+    "ui:order": ["Q1", "Q2","Q3","Q4","Q5","Q6","Q7"],
     Q1: {
-      "ui:title": "Does the organization consist of multiple entities?",
+      "ui:title": "Has the organization's sustainability report been externally assured?",
       "ui:tooltip":
-        "Please select 'Yes' if  the organization have audited, consolidated financial statements or financial information filed on public record or select 'No' if not. ",
-      "ui:tooltipdisplay": "none",
+        "Indicate whether the organization's sustainability report has been externally assured. .",
+      "ui:tooltipdisplay": "block",
       "ui:widget": "RadioWidget2",
       "ui:horizontal": true,
       "ui:options": {
@@ -69,21 +93,96 @@ const uiSchema = {
       },
     },
     Q2: {
-      "ui:hading": "Approach used to consolidate information",
-      "ui:hadingtooltip": "Approach used to consolidate information",
-      "ui:hadingtooltipdisplay": "none",
+        "ui:hading": "Link/Reference",
+        "ui:hadingtooltip": "This section documents data corresponding to the external assurance of the sustainability report. ",
+        "ui:hadingtooltipdisplay": "block",
+        "ui:hadingdisplay": "block",
       "ui:title":
-        "If yes, then explain the approach used for consolidating information.",
+        "If yes, please provide a link or reference to the external assurance reports or assurance statements",
       "ui:tooltip":
-        "Include :i. whether the approach involves adjustments to information for minority interestsii. how the approach takes into account mergers, acquisitions and disposal of entities or parts of entities iii. whether and how the approach differs across the disclosures within GRI Standards and across material topics",
+        "Indicate whether the organization's sustainability report has been externally assured. ",
       "ui:tooltipdisplay": "block",
-      "ui:widget": "TextareaWidget3",
+      "ui:widget": "Textboxwithfileupload",
       "ui:horizontal": true,
       "ui:options": {
         label: false,
       },
     },
-
+    Q3: {
+        "ui:hading": "What has been assured and on what basis",
+        "ui:hadingtooltip": "This section documents data corresponding to what has been assured and on what basis.  ",
+        "ui:hadingtooltipdisplay": "block",
+        "ui:title":
+          "Please describe what has been assured and on what basis",
+        "ui:tooltip":
+          " Please specify what has been assured and on what basis it has been assured.",
+        "ui:tooltipdisplay": "block",
+        "ui:widget": "TextareaWidget3",
+        "ui:horizontal": true,
+        "ui:options": {
+          label: false,
+        },
+      },
+      Q4: {
+        "ui:hading": "Assurance standard",
+        "ui:hadingtooltip": "This section documents data corresponding to the assurance standard used.",
+        "ui:hadingtooltipdisplay": "block",
+        "ui:title":
+          "What is the Assurance Standard used?",
+        "ui:tooltip":
+          "Please specify the standard used for assurance. ",
+        "ui:tooltipdisplay": "block",
+        "ui:widget": "TextareaWidget3",
+        "ui:horizontal": true,
+        "ui:options": {
+          label: false,
+        },
+      },
+      Q5: {
+        "ui:hading": "Level of assurance",
+        "ui:hadingtooltip": "This section documents data corresponding to the level of assurance. ",
+        "ui:hadingtooltipdisplay": "block",
+        "ui:title":
+          "What is the level of Assurance obtained?",
+        "ui:tooltip":
+          "Please specify the level of assurance obtained. ",
+        "ui:tooltipdisplay": "block",
+        "ui:widget": "TextareaWidget3",
+        "ui:horizontal": true,
+        "ui:options": {
+          label: false,
+        },
+      },
+      Q6: {
+        "ui:hading": "Limitation of the assurance process",
+        "ui:hadingtooltip": "This section documents data corresponding to the limitation of the assurance process. ",
+        "ui:hadingtooltipdisplay": "block",
+        "ui:title":
+          "What is the level of Assurance obtained?",
+        "ui:tooltip":
+          "Please provide a description of any limitations of the assurance process.  ",
+        "ui:tooltipdisplay": "block",
+        "ui:widget": "TextareaWidget3",
+        "ui:horizontal": true,
+        "ui:options": {
+          label: false,
+        },
+      },
+      Q7: {
+        "ui:hading": "Relationship between organization and the assurance provider ",
+        "ui:hadingtooltip": "This section documents data corresponding to the relationship between the organization and the assurance provider",
+        "ui:hadingtooltipdisplay": "block",
+        "ui:title":
+          "Please describe the relationship between the organization and the assurance provider",
+        "ui:tooltip":
+          "What is the relationship between the organization and the assurance provider?",
+        "ui:tooltipdisplay": "block",
+        "ui:widget": "TextareaWidget3",
+        "ui:horizontal": true,
+        "ui:options": {
+          label: false,
+        },
+      },
     "ui:options": {
       orderable: false, // Prevent reordering of items
       addable: false, // Prevent adding items from UI
@@ -113,6 +212,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
     let newFormData = { ...e.formData[0] };
     if (newFormData.Q1 === "No") {
       newFormData.Q2 = "";
+
     }
     setFormData([newFormData]);
   };
@@ -202,7 +302,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
+    // updateFormData();
     console.log("test form data", formData);
   };
 
@@ -218,17 +318,10 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
-            Multiple entities
-              {/* <MdInfoOutline data-tooltip-id={`tooltip-employees`}
-                data-tooltip-content="This section documents the data corresponding to the r product and
-service information and labeling.
-Include:
-i.The sourcing of components of the product or service;
-ii. Content, particularly with regard to substances that might produce an
-environmental or social impact;
-iii. Safe use of the product or service;
-iv. Disposal of the product and environmental or social impacts.
- " className="mt-1.5 ml-2 text-[14px]" />
+            External assurance of sustainability report
+              <MdInfoOutline data-tooltip-id={`tooltip-employees`}
+                data-tooltip-content="This section documents data corresponding to the
+external assurance of the sustainability report. " className="mt-1.5 ml-2 text-[14px]" />
               <ReactTooltip id={`tooltip-employees`} place="top" effect="solid" style={{
                 width: "290px", backgroundColor: "#000",
                 color: "white",
@@ -237,7 +330,7 @@ iv. Disposal of the product and environmental or social impacts.
                 borderRadius: "8px",
                 textAlign: 'left',
               }}>
-              </ReactTooltip> */}
+              </ReactTooltip>
             </h2>
           </div>
 
@@ -245,7 +338,7 @@ iv. Disposal of the product and environmental or social impacts.
             <div className={`flex float-end`}>
               <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 ">
                 <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                  GRI 2-2-b
+                  GRI 2-5-b
                 </p>
               </div>
             </div>
@@ -262,14 +355,11 @@ iv. Disposal of the product and environmental or social impacts.
           />
         </div>
         <div className="mb-6">
-          <button
-            type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
-            }`}
+          <button type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year  ? 'cursor-not-allowed' : ''}`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
-          >
+            // disabled={!selectedOrg || !year }
+            >
             Submit
           </button>
         </div>

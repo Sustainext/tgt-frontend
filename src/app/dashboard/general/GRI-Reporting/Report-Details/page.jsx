@@ -6,11 +6,12 @@ import "react-tooltip/dist/react-tooltip.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Socialdata } from "../../../social/data/socialgriinfo";
-import GeneralHeader2 from "../../GeneralHeader2"
-import Screen1 from "./screen1"
-import Screen2 from "./screen2"
-import Screen3 from "./screen3"
-const Entities = () => {
+import GeneralHeader2 from "../../GeneralHeader2";
+import Screen1 from "./screen1";
+import Screen2 from "./screen2";
+import Screen3 from "./screen3";
+import Screen4 from "./screen4";
+const ReportDetails = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState(2024);
@@ -51,7 +52,7 @@ const Entities = () => {
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] font-bold pt-1">
-                  Entities
+                    Report Details
                   </p>
                 </div>
               </div>
@@ -63,19 +64,18 @@ const Entities = () => {
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
                 onClick={() => toggleDrawer("82")}
               >
-              GRI 2 - 2
+                GRI 2 - 3
               </button>
-
             </div>
           </div>
         </div>
 
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Entities included in the organization's sustainability reporting
+            Reporting period, Frequency and Contact Point
             <MdInfoOutline
               data-tooltip-id={`tooltip-$e10`}
-              data-tooltip-content="This section documents data corresponding to the energy consumption within the organisation"
+              data-tooltip-content="This section documents the data corresponding to the reporting period, reporting frequency and Contact Point."
               className="mt-1.5 ml-2 text-[14px]"
             />
             <ReactTooltip
@@ -136,24 +136,30 @@ const Entities = () => {
         year={year}
         month={activeMonth}
       />
-    <Screen2
+
+      <Screen2
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         location={location}
         year={year}
         month={activeMonth}
       />
-    <Screen3
+
+      <Screen3
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         location={location}
         year={year}
         month={activeMonth}
       />
-
-
-
+            <Screen4
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        location={location}
+        year={year}
+        month={activeMonth}
+      />
     </>
   );
 };
-export default Entities;
+export default ReportDetails;

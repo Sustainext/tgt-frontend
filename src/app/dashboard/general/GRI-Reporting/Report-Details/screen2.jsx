@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import TextareaWidget3 from "../../../../shared/widgets/Textarea/TextareaWidget3";
+import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -11,10 +11,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
-import axiosInstance from "@/app/utils/axiosMiddleware";
+import axiosInstance from '@/app/utils/axiosMiddleware'
 
 const widgets = {
-  TextareaWidget3: TextareaWidget3,
+  inputWidget: inputWidget2,
   RadioWidget2: RadioWidget2,
 };
 
@@ -29,7 +29,7 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Does the organization consist of multiple entities?",
+        title: "Does the reporting period for the organization's financial reporting align with the period for its sustainability reporting?",
         enum: ["Yes", "No"],
       },
     },
@@ -39,13 +39,13 @@ const schema = {
           {
             properties: {
               Q1: {
-                enum: ["Yes"],
+                enum: ["No"],
               },
               Q2: {
                 type: "string",
-                title:
-                  "If yes, then explain the approach used for consolidating information.",
+                title: "If not, then please explain why",
               },
+
             },
           },
         ],
@@ -58,10 +58,10 @@ const uiSchema = {
   items: {
     "ui:order": ["Q1", "Q2"],
     Q1: {
-      "ui:title": "Does the organization consist of multiple entities?",
+      "ui:title": "Does the reporting period for the organization's financial reporting align with the period for its sustainability reporting?",
       "ui:tooltip":
-        "Please select 'Yes' if  the organization have audited, consolidated financial statements or financial information filed on public record or select 'No' if not. ",
-      "ui:tooltipdisplay": "none",
+        "Indicate whether  the reporting period for the organization's financial reporting align with the period for its sustainability reporting. ",
+      "ui:tooltipdisplay": "block",
       "ui:widget": "RadioWidget2",
       "ui:horizontal": true,
       "ui:options": {
@@ -69,15 +69,12 @@ const uiSchema = {
       },
     },
     Q2: {
-      "ui:hading": "Approach used to consolidate information",
-      "ui:hadingtooltip": "Approach used to consolidate information",
-      "ui:hadingtooltipdisplay": "none",
       "ui:title":
-        "If yes, then explain the approach used for consolidating information.",
+        "If not, then please explain why",
       "ui:tooltip":
-        "Include :i. whether the approach involves adjustments to information for minority interestsii. how the approach takes into account mergers, acquisitions and disposal of entities or parts of entities iii. whether and how the approach differs across the disclosures within GRI Standards and across material topics",
+        "Provide an explanation if the reporting period for the organization's financial reporting does not align with the period for its sustainability reporting. ",
       "ui:tooltipdisplay": "block",
-      "ui:widget": "TextareaWidget3",
+      "ui:widget": "inputWidget",
       "ui:horizontal": true,
       "ui:options": {
         label: false,
@@ -93,7 +90,7 @@ const uiSchema = {
   },
 };
 
-const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -111,8 +108,9 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
 
   const handleChange = (e) => {
     let newFormData = { ...e.formData[0] };
-    if (newFormData.Q1 === "No") {
+    if (newFormData.Q1 === "Yes") {
       newFormData.Q2 = "";
+
     }
     setFormData([newFormData]);
   };
@@ -218,7 +216,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
-            Multiple entities
+            Reporting period and frequency
               {/* <MdInfoOutline data-tooltip-id={`tooltip-employees`}
                 data-tooltip-content="This section documents the data corresponding to the r product and
 service information and labeling.
@@ -262,14 +260,10 @@ iv. Disposal of the product and environmental or social impacts.
           />
         </div>
         <div className="mb-6">
-          <button
-            type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
-            }`}
+          <button type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year  ? 'cursor-not-allowed' : ''}`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
-          >
+            disabled={!selectedOrg || !year }>
             Submit
           </button>
         </div>
@@ -290,4 +284,4 @@ iv. Disposal of the product and environmental or social impacts.
   );
 };
 
-export default Screen3;
+export default Screen2;

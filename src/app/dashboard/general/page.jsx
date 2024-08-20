@@ -4,6 +4,9 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import OrgDetails from "./GRI-Reporting/Org-Details/page";
 import Entities from "./GRI-Reporting/Entities/page";
+import ReportDetails from "./GRI-Reporting/Report-Details/page";
+import Restatement from "./GRI-Reporting/Restatement/page";
+import Assurance from "./GRI-Reporting/Assurance/page"
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -816,6 +819,27 @@ const General = () => {
                 <>
                   <div>
                     <Entities />
+                  </div>
+                </>
+              )}
+              {activeStep === 3 && (
+                <>
+                  <div>
+                    <ReportDetails />
+                  </div>
+                </>
+              )}{" "}
+              {activeStep === 4 && (
+                <>
+                  <div>
+                    <Restatement />
+                  </div>
+                </>
+              )}
+               {activeStep === 5 && (
+                <>
+                  <div>
+                    <Assurance />
                   </div>
                 </>
               )}

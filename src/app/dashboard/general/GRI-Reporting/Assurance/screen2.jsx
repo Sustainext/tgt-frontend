@@ -2,23 +2,20 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import TextareaWidget3 from "../../../../shared/widgets/Textarea/TextareaWidget3";
+import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import RadioWidget2 from "../../../../shared/widgets/Input/radioWidget2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-
 const widgets = {
-  TextareaWidget3: TextareaWidget3,
-  RadioWidget2: RadioWidget2,
+  inputWidget: inputWidget2,
 };
 
-const view_path = "gri-social-product_labeling-417-1a-required";
+const view_path = "gri-governance-remuneration-2-19-b-policies";
 const client_id = 1;
 const user_id = 1;
 
@@ -29,26 +26,8 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Does the organization consist of multiple entities?",
-        enum: ["Yes", "No"],
-      },
-    },
-    dependencies: {
-      Q1: {
-        oneOf: [
-          {
-            properties: {
-              Q1: {
-                enum: ["Yes"],
-              },
-              Q2: {
-                type: "string",
-                title:
-                  "If yes, then explain the approach used for consolidating information.",
-              },
-            },
-          },
-        ],
+        title:
+          "Describe the policy and practice for seeking external assurance.",
       },
     },
   },
@@ -56,28 +35,14 @@ const schema = {
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1", "Q2"],
+    "ui:order": ["Q1"],
     Q1: {
-      "ui:title": "Does the organization consist of multiple entities?",
-      "ui:tooltip":
-        "Please select 'Yes' if  the organization have audited, consolidated financial statements or financial information filed on public record or select 'No' if not. ",
-      "ui:tooltipdisplay": "none",
-      "ui:widget": "RadioWidget2",
-      "ui:horizontal": true,
-      "ui:options": {
-        label: false,
-      },
-    },
-    Q2: {
-      "ui:hading": "Approach used to consolidate information",
-      "ui:hadingtooltip": "Approach used to consolidate information",
-      "ui:hadingtooltipdisplay": "none",
       "ui:title":
-        "If yes, then explain the approach used for consolidating information.",
+        "Please describe whether and how the highest governance body and senior executives involved in the process.",
       "ui:tooltip":
-        "Include :i. whether the approach involves adjustments to information for minority interestsii. how the approach takes into account mergers, acquisitions and disposal of entities or parts of entities iii. whether and how the approach differs across the disclosures within GRI Standards and across material topics",
+        "Provide a description of whether and how the highest governance body and senior executives involved in the external assurance process.",
       "ui:tooltipdisplay": "block",
-      "ui:widget": "TextareaWidget3",
+      "ui:widget": "inputWidget",
       "ui:horizontal": true,
       "ui:options": {
         label: false,
@@ -93,7 +58,7 @@ const uiSchema = {
   },
 };
 
-const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -110,11 +75,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
   };
 
   const handleChange = (e) => {
-    let newFormData = { ...e.formData[0] };
-    if (newFormData.Q1 === "No") {
-      newFormData.Q2 = "";
-    }
-    setFormData([newFormData]);
+    setFormData(e.formData);
   };
 
   const updateFormData = async () => {
@@ -123,9 +84,9 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      location,
+      corporate: selectedCorp,
+      organisation: selectedOrg,
       year,
-      month,
     };
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
@@ -174,7 +135,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -187,29 +148,27 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
       LoaderClose();
     }
   };
-
   useEffect(() => {
     if (selectedOrg && year) {
       loadFormData();
-      toastShown.current = false; // Reset the flag when valid data is present
+      toastShown.current = false;
     } else {
-      // Only show the toast if it has not been shown already
       if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
+        toastShown.current = true;
       }
     }
   }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
+    // updateFormData();
     console.log("test form data", formData);
   };
 
   return (
     <>
       <div
-        className="mx-2  p-3 mb-6 pb-6 rounded-md"
+        className="mx-2 p-3 mb-6 pb-6 rounded-md"
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
@@ -217,41 +176,42 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
-            Multiple entities
-              {/* <MdInfoOutline data-tooltip-id={`tooltip-employees`}
-                data-tooltip-content="This section documents the data corresponding to the r product and
-service information and labeling.
-Include:
-i.The sourcing of components of the product or service;
-ii. Content, particularly with regard to substances that might produce an
-environmental or social impact;
-iii. Safe use of the product or service;
-iv. Disposal of the product and environmental or social impacts.
- " className="mt-1.5 ml-2 text-[14px]" />
-              <ReactTooltip id={`tooltip-employees`} place="top" effect="solid" style={{
-                width: "290px", backgroundColor: "#000",
-                color: "white",
-                fontSize: "12px",
-                boxShadow: 3,
-                borderRadius: "8px",
-                textAlign: 'left',
-              }}>
-              </ReactTooltip> */}
+            <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
+            Highest governance body and senior executive
+              <MdInfoOutline
+                data-tooltip-id={`tooltip-144`}
+                data-tooltip-content="This section documents data corresponding to the highest
+governance body and senior executive involved in the process.
+Whether and how they are involved."
+                className="mt-1.5 ml-2 text-[14px]"
+              />
+              <ReactTooltip
+                id={`tooltip-144`}
+                place="top"
+                effect="solid"
+                style={{
+                  width: "290px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  textAlign: "left",
+                }}
+              ></ReactTooltip>
             </h2>
           </div>
 
-          <div className={`${open ? "w-[20%]" : "w-[20%]"}`}>
-            <div className={`flex float-end`}>
-              <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 ">
-                <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                  GRI 2-2-b
-                </p>
-              </div>
+          <div className="w-[20%]">
+            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
+              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
+                GRI 2-5-a
+              </p>
             </div>
           </div>
         </div>
-        <div className="mx-2">
+
+        <div className="mx-2 mb-3">
           <Form
             schema={schema}
             uiSchema={uiSchema}
@@ -261,6 +221,7 @@ iv. Disposal of the product and environmental or social impacts.
             widgets={widgets}
           />
         </div>
+
         <div className="mb-6">
           <button
             type="button"
@@ -268,7 +229,7 @@ iv. Disposal of the product and environmental or social impacts.
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            // disabled={!selectedOrg || !year}
           >
             Submit
           </button>
@@ -290,4 +251,4 @@ iv. Disposal of the product and environmental or social impacts.
   );
 };
 
-export default Screen3;
+export default Screen2;

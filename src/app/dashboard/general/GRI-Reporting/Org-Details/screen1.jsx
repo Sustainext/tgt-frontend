@@ -47,6 +47,10 @@ const uiSchema = {
   items: {
     "ui:order": ["Q1","Q2","Q3","Q4","Q5"],
     Q1: {
+      "ui:hading": "",
+      "ui:hadingtooltip": "",
+      "ui:hadingtooltipdisplay": "none",
+      "ui:hadingdisplay": "none",
       "ui:title": "Legal name",
       "ui:tooltip": "If your company has a different trading name from its legal name. Name both. E.g. Legal Name: Yum! Brands, Inc.Trading Name: Kentucky Fried Chicken (KFC)",
       "ui:tooltipdisplay": "block",
@@ -57,6 +61,10 @@ const uiSchema = {
       },
     },
     Q2: {
+      "ui:hading": "",
+      "ui:hadingtooltip": "",
+      "ui:hadingtooltipdisplay": "none",
+      "ui:hadingdisplay": "none",
         "ui:title": "Nature of ownership & legal form",
         "ui:tooltip": "Please specify the nature of ownership & legal form. E.g. Sole proprietorship,Partnership (general or limited), Corporation,  Limited Liability Company (LLC) etc. ",
         "ui:tooltipdisplay": "block",
@@ -67,6 +75,10 @@ const uiSchema = {
         },
       },
       Q3: {
+        "ui:hading": "",
+        "ui:hadingtooltip": "",
+        "ui:hadingtooltipdisplay": "none",
+        "ui:hadingdisplay": "none",
         "ui:title": "Termination payments",
         "ui:tooltip": "Report on termination payments.Termination payments are all payments and benefits given to a departing member of the highest governance body or senior executive whose appointment is terminated.",
         "ui:tooltipdisplay": "block",
@@ -77,6 +89,10 @@ const uiSchema = {
         },
       },
       Q4: {
+        "ui:hading": "",
+        "ui:hadingtooltip": "",
+        "ui:hadingtooltipdisplay": "none",
+        "ui:hadingdisplay": "none",
         "ui:title": "Location of headquarters",
         "ui:tooltip": "Please specify the location of organization's headquarters. Headquarters are an organization’s global administrative center, the place from which it is controlled or directed.",
         "ui:tooltipdisplay": "block",
