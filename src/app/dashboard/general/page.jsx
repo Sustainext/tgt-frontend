@@ -8,6 +8,7 @@ import ReportDetails from "./GRI-Reporting/Report-Details/page";
 import Restatement from "./GRI-Reporting/Restatement/page";
 import Assurance from "./GRI-Reporting/Assurance/page";
 import WorkforceEmployees from "./Organization-Details/Workforce-Employees/page"
+import WorkforceOtherWorkers from "./Organization-Details/Workforce-Other-Workers/page"
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -848,6 +849,13 @@ const General = () => {
                 <>
                   <div>
                     <WorkforceEmployees />
+                  </div>
+                </>
+              )}
+                  {activeStep === 8 && (
+                <>
+                  <div>
+                    <WorkforceOtherWorkers />
                   </div>
                 </>
               )}
