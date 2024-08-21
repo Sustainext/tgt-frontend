@@ -8,8 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { Socialdata } from "../../../social/data/socialgriinfo";
 import GeneralHeader2 from "../../GeneralHeader2";
 import Screen1 from "./screen1";
-// import Screen2 from "./screen2";
-
+import Screen2 from "./screen2";
+import Screen3 from "./screen3";
 const WorkforceOtherWorkers = () => {
   const [activeMonth, setActiveMonth] = useState("");
   const [location, setLocation] = useState("");
@@ -144,13 +144,20 @@ employee by gender, type and region."
         year={year}
         month={activeMonth}
       />
-      {/* <Screen2
+      <Screen2
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         location={location}
         year={year}
         month={activeMonth}
-      /> */}
+      />
+            <Screen3
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        location={location}
+        year={year}
+        month={activeMonth}
+      />
     </>
   );
 };

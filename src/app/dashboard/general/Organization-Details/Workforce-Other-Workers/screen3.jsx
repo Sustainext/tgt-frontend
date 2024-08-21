@@ -2,21 +2,20 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
+import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
+import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import GeneralWorkersEmployees from "../../../../shared/widgets/Table/generalWorkersEmployees.js";
-// Simple Custom Table Widget
 const widgets = {
-  TableWidget: GeneralWorkersEmployees,
+  inputWidget: inputWidget2,
 };
 
-const view_path = "gri-governance-policy_commitments-2-23-c-leave";
+const view_path = "gri-governance-remuneration-2-19-b-policies";
 const client_id = 1;
 const user_id = 1;
 
@@ -25,140 +24,52 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      TypeofWorker: {
+      Q1: {
         type: "string",
-        title: "Type of Worker",
-        enum: [
-          "Agency worker",
-          "Apprentice",
-          "Contractor",
-          "Home worker",
-          "Intern",
-          "Self-employed person",
-          "Sub-contractor",
-          "Volunteer",
-          "Others (please specify)",
-        ],
-      },
-      TotalnumberofWorkers: {
-        type: "string",
-        title: "Total number of Workers",
-        texttype: "number",
-      },
-      Contractualrelationship: {
-        type: "string",
-        title: "Contractual relationship",
-        enum: [
-          "Full-time employee",
-          "Independent contractor",
-          "Paid intern",
-          "Part-time employee",
-          "Subcontractor",
-          "Temporary agency worker",
-          "Unpaid intern",
-          "Others (please specify)",
-        ],
-      },
-      Workperformed: {
-        type: "string",
-        title: "Work performed",
-        enum: [
-          "Administration",
-          "Coding",
-          "Consulting",
-          "Data Analysis",
-          "Design",
-          "Development",
-          "Delivery",
-          "Finance",
-          "Installation",
-          "Maintenance",
-          "Marketing",
-          "Operations",
-          "Research",
-          "Sales",
-          "Training",
-          "Writing",
-          "Others (please specify)",
-        ],
-      },
-      Engagementapproach: {
-        type: "string",
-        title: "Engagement approach",
-        enum: ["Directly", "Indirectly (through third-party)"],
-      },
-      Thirdparty: {
-        type: "string",
-        title: "Third party (if applicable)",
-        enum: ["Contractor", "mployment agency", "Others (please specify)"],
+        title:
+          "Describe any significant changes in worker numbers during or between reporting periods.",
       },
     },
   },
 };
 
 const uiSchema = {
-  "ui:widget": "TableWidget",
-  "ui:options": {
-    titles: [
-      {
-        key: "TypeofWorker",
-        title: "Type of Worker",
-        tooltip:
-          "Please select the types of workers employed or engaged by your organization during the reporting period.",
+  items: {
+    "ui:order": ["Q1"],
+    Q1: {
+      "ui:title":
+        "Describe any significant changes in worker numbers during or between reporting periods.",
+      "ui:tooltip":
+        "Specify the nature and reason for these fluctuations (e.g., project completion, restructuring).",
+      "ui:tooltipdisplay": "block",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
-      {
-        key: "TotalnumberofWorkers",
-        title: "Total number of Workers",
-        tooltip:
-          "For the type of worker selected, enter the total number of individuals engaged during the reporting period.",
-      },
-      {
-        key: "Contractualrelationship",
-        title: "Contractual relationship",
-        tooltip:
-          "Please specify the primary contractual relationship for the worker. ",
-      },
-      {
-        key: "Workperformed",
-        title: "Work performed",
-        tooltip:
-          "Choose the primary category of work performed by the reported workers.",
-      },
-      {
-        key: "Engagementapproach",
-        title: "Engagement approach",
-        tooltip:
-          "Indicate whether the workers are directly employed by your organization or engaged through a third party.",
-      },
-      {
-        key: "Thirdparty",
-        title: "Third party (if applicable",
-        tooltip:
-          "If workers are engaged indirectly, specify the type of third party involved (e.g., agency, subcontractor).",
-      },
-    ],
+    },
+
+    "ui:options": {
+      orderable: false, // Prevent reordering of items
+      addable: false, // Prevent adding items from UI
+      removable: false, // Prevent removing items from UI
+      layout: "horizontal", // Set layout to horizontal
+    },
   },
 };
-const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
-  const initialFormData = [
-    {
-      TypeofWorker: "",
-      TotalnumberofWorkers: "",
-      Contractualrelationship: "",
-      Workperformed: "",
-      Engagementapproach: "",
-      Thirdparty: "",
-    },
-  ];
-  const [formData, setFormData] = useState(initialFormData);
+
+const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
+  const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
+  const { open } = GlobalState();
 
   const LoaderOpen = () => {
     setLoOpen(true);
   };
+
   const LoaderClose = () => {
     setLoOpen(false);
   };
@@ -219,45 +130,24 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       });
       LoaderClose();
     }
-    // console.log('Response:', response.data);
-    // } catch (error) {
-    // console.error('Error:', error);
-    // }
   };
 
   const loadFormData = async () => {
-    console.log("loadFormData screen 2");
     LoaderOpen();
-    setFormData(initialFormData);
+    setFormData([{}]);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
-      // setFormData(response.data.form_data[0].data);
-      const Newdata =[
-        {
-            "TypeofWorker": "Others (please specify)",
-            "TotalnumberofWorkers": "568",
-            "Contractualrelationship": "Others (please specify)",
-            "Workperformed": "Others (please specify)",
-            "Engagementapproach": "Directly",
-            "Thirdparty": "Others (please specify)",
-            "TypeofWorker_others": "test1",
-            "Contractualrelationship_others": "test45",
-            "Thirdparty_others": "test54",
-            "Workperformed_others": "test85"
-        }
-    ]
-    setFormData(Newdata);
+      setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData(initialFormData);
+      setFormData([{}]);
     } finally {
       LoaderClose();
     }
   };
-
   useEffect(() => {
     if (selectedOrg && year) {
       loadFormData();
@@ -270,15 +160,15 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission
-    console.log("Form data:", formData);
+    e.preventDefault();
     // updateFormData();
+    console.log("test form data", formData);
   };
 
   return (
     <>
       <div
-        className="mx-2 p-3 mb-6 rounded-md"
+        className="mx-2 p-3 mb-6 pb-6 rounded-md"
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
@@ -287,17 +177,16 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
-              Workers who are not Employees
+            Worker Fluctuations
               <MdInfoOutline
-                data-tooltip-id={`tooltip-$e86`}
-                data-tooltip-content="This section documents data corresponding to the number of
-workers who are not employees but whose work is controlled by your organization.
-It also describes the most common types of these workers,
-their contractual relationships with your organization, and the types of work they perform."
+                data-tooltip-id={`tooltip-144`}
+                data-tooltip-content="This section documents data corresponding to significant
+fluctuations in the number of employees during or between
+reporting periods."
                 className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip
-                id={`tooltip-$e86`}
+                id={`tooltip-144`}
                 place="top"
                 effect="solid"
                 style={{
@@ -316,12 +205,13 @@ their contractual relationships with your organization, and the types of work th
           <div className="w-[20%]">
             <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
               <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-8-a
+                GRI 2-8c
               </p>
             </div>
           </div>
         </div>
-        <div className="mx-2">
+
+        <div className="mx-2 mb-3">
           <Form
             schema={schema}
             uiSchema={uiSchema}
@@ -361,4 +251,4 @@ their contractual relationships with your organization, and the types of work th
   );
 };
 
-export default Screen1;
+export default Screen3;

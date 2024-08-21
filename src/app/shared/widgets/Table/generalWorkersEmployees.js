@@ -1,14 +1,28 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { debounce } from 'lodash';
-import { MdInfoOutline, MdOutlineDeleteOutline } from "react-icons/md";
+import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
 const GeneralWorkersEmployees = ({ id, options, value, required, onChange, schema, formContext }) => {
     const [localValue, setLocalValue] = useState(value);
+    const [othersInputs, setOthersInputs] = useState([]);
 
     useEffect(() => {
+        const initializeOthersInputs = () => {
+            const newOthersInputs = value.map(row => {
+                let rowOthers = {};
+                Object.keys(row).forEach(key => {
+                    if (row[key] === "Others (please specify)" || row[key + "_others"]) {
+                        rowOthers[key] = true;
+                    }
+                });
+                return rowOthers;
+            });
+            setOthersInputs(newOthersInputs);
+        };
         setLocalValue(value);
+        initializeOthersInputs();
     }, [value]);
 
     const handleFieldChange = (index, key, newValue) => {
@@ -17,6 +31,21 @@ const GeneralWorkersEmployees = ({ id, options, value, required, onChange, schem
             updatedValues[index] = {};
         }
         updatedValues[index][key] = newValue;
+
+        if (newValue === "Others (please specify)") {
+            const updatedOthersInputs = [...othersInputs];
+            if (!updatedOthersInputs[index]) {
+                updatedOthersInputs[index] = {};
+            }
+            updatedOthersInputs[index][key] = true;
+            setOthersInputs(updatedOthersInputs);
+        } else {
+            const updatedOthersInputs = [...othersInputs];
+            if (updatedOthersInputs[index]) {
+                updatedOthersInputs[index][key] = false;
+            }
+            setOthersInputs(updatedOthersInputs);
+        }
 
         setLocalValue(updatedValues);
     };
@@ -32,7 +61,7 @@ const GeneralWorkersEmployees = ({ id, options, value, required, onChange, schem
             <table id={id} className="rounded-md border border-gray-300 w-full">
                 <thead className="gradient-background">
                     <tr>
-                    {options.titles.map((item, idx) => (
+                        {options.titles.map((item, idx) => (
                             <th
                                 key={idx}
                                 style={{ minWidth: "120px", textAlign: "left" }}
@@ -42,10 +71,7 @@ const GeneralWorkersEmployees = ({ id, options, value, required, onChange, schem
                                     <p>{item.title}</p>
                                     <p>
                                         <MdInfoOutline
-                                            data-tooltip-id={`tooltip-${item.title.replace(
-                                                /\s+/g,
-                                                "-"
-                                            )}`}
+                                            data-tooltip-id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
                                             data-tooltip-content={item.tooltip}
                                             style={{ display: `${item.display}` }}
                                             className="ml-2 cursor-pointer"
@@ -60,7 +86,6 @@ const GeneralWorkersEmployees = ({ id, options, value, required, onChange, schem
                                 </div>
                             </th>
                         ))}
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -73,36 +98,42 @@ const GeneralWorkersEmployees = ({ id, options, value, required, onChange, schem
                                 return (
                                     <td key={cellIndex} className="border border-gray-300 p-3 text-center">
                                         {isEnum ? (
-                                            <select
-                                                value={localValue[rowIndex][key]}
-                                                onChange={(e) => handleFieldChange(rowIndex, key, e.target.value)}
-                                                className="text-sm pl-2 py-2 w-full border-b"
-                                                required={required}
-                                            >
-                                                <option value="">Select</option>
-                                                {propertySchema.enum.map((option) => (
-                                                    <option key={option} value={option}>{option}</option>
-                                                ))}
-                                            </select>
+                                            <>
+                                                <select
+                                                    value={localValue[rowIndex][key]}
+                                                    onChange={(e) => handleFieldChange(rowIndex, key, e.target.value)}
+                                                    className="text-sm pl-2 py-2 w-full border-b"
+                                                    required={required}
+                                                >
+                                                    <option value="">Select</option>
+                                                    {propertySchema.enum.map((option) => (
+                                                        <option key={option} value={option}>{option}</option>
+                                                    ))}
+                                                </select>
+                                                {othersInputs[rowIndex] && othersInputs[rowIndex][key] && (
+                                                    <input
+                                                        type="text"
+                                                        required={required}
+                                                        value={localValue[rowIndex][`${key}_others`] || ""}
+                                                        onChange={(e) => handleFieldChange(rowIndex, `${key}_others`, e.target.value)}
+                                                        className="text-sm pl-2 py-2 w-full mt-2"
+                                                        placeholder="Please specify"
+                                                    />
+                                                )}
+                                            </>
                                         ) : (
                                             <input
-                                                type={propertySchema.type}
+                                                type={propertySchema.texttype}
                                                 required={required}
                                                 value={localValue[rowIndex][key] || ""}
                                                 onChange={(e) => handleFieldChange(rowIndex, key, e.target.value)}
                                                 className="text-sm pl-2 py-2 w-full"
                                                 placeholder="Enter"
-                                                disabled={key === 'Specifylevel' && localValue[rowIndex]['Seniorlevel'] !== 'Yes'}
                                             />
                                         )}
                                     </td>
                                 );
                             })}
-                            <td className="border border-gray-300 p-3">
-                                <button onClick={() => formContext.onRemove(rowIndex)}>
-                                    <MdOutlineDeleteOutline className="text-[23px] text-red-600" />
-                                </button>
-                            </td>
                         </tr>
                     ))}
                 </tbody>
