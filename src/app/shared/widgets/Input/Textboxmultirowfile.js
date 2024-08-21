@@ -131,7 +131,7 @@ const Textboxmultirowfile = (props) => {
           ) : (
             <label
               htmlFor={`fileInput-${uiSchema["ui:title"]}`}
-              className="flex cursor-pointer ml-1"
+              className="flex cursor-pointer"
             >
               <div className="flex items-center mt-2">
                 <MdOutlineFileUpload className="w-6 h-6 mr-1 text-[#007EEF]" />
