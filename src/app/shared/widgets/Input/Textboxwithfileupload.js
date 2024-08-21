@@ -84,7 +84,7 @@ const Textboxwithfileupload = (props) => {
             </p>
         </div>
 
-        <div className="flex mb-2">
+        <div className="flex mb-2 relative">
 
           <p className="text-sm text-gray-700 flex">
             {uiSchema["ui:title"]}
@@ -117,7 +117,7 @@ const Textboxwithfileupload = (props) => {
           rows={4}
         />
         <div className=''>
-          <div className="flex right-1 mx-2">
+          <div className="flex right-1">
             <input
               type="file"
               id={`fileInput-${uiSchema["ui:title"]}`} // Ensure unique id for each file input
