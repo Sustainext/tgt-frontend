@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
@@ -8,10 +9,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import FileUploadWithAddRowAndCol from "../../../shared/widgets/General/FileUploadWithAddRowAndColWidget";
+import FileUploadWithAddRowAndCol from "../../../shared/widgets/General/FileUploadWithAddRowAndCol.js";
 
 const widgets = {
-  FileUploadWithAddRowAndCol: FileUploadWithAddRowAndCol,
+  FileUploadWithAddRowAndCols: FileUploadWithAddRowAndCol,
 };
 
 const view_path = "gri-governance-structure-2-9-b-committees";
@@ -19,50 +20,48 @@ const client_id = 1;
 const user_id = 1;
 
 const schema = {
-    type: "array",
-    items: {
-      type: "object",
-      properties: {
-        Q1: {
+  type: "array",
+  items: {
+    type: "object",
+    properties: {
+      Test: {
+        type: "array",
+        title:
+          "List the committees of the highest governance body that are responsible for decision-making on and overseeing the management of the organization's impacts on the economy, environment, and people",
+        items: {
           type: "array",
-          title:
-            "List the committees of the highest governance body that are responsible for decision-making on and overseeing the management of the organization's impacts on the economy, environment, and people",
           items: {
-            type: "array",
-            items: {
-              type: "string",
-            },
+            type: "string",
           },
         },
       },
     },
-  };
-  
-
-  const uiSchema = {
-    items: {
-      Q1: {
-        "ui:title":
-          "List the committees of the highest governance body that are responsible for decision-making on and overseeing the management of the organization's impacts on the economy, environment, and people",
-        "ui:widget": "FileUploadWithAddRowAndCol",
-        "ui:tooltip":
-          "Provide a list of committees of the highest governance body, including those responsible for overseeing the management of the organization's impacts on the economy, environment, and people (e.g., Sustainability Committee, Corporate Social Responsibility Committee, etc.).",
-        "ui:options": {
-          label: false,
-        },
-        "ui:tooltipdisplay": "block",
+  },
+};
+const uiSchema = {
+  items: {
+    "ui:order": ["Test"],
+    Test: {
+      "ui:title":
+        "List the committees of the highest governance body that are responsible for decision-making on and overseeing the management of the organization's impacts on the economy, environment, and people",
+      "ui:widget": "FileUploadWithAddRowAndCols",
+      "ui:tooltip":
+        "Provide a list of committees of the highest governance body, including those responsible for overseeing the management of the organization's impacts on the economy, environment, and people (e.g., Sustainability Committee, Corporate Social Responsibility Committee, etc.).",
+      "ui:tooltipdisplay": "block",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
+
     "ui:options": {
-      orderable: false,
-      addable: true,
-      removable: false,
-      layout: "horizontal",
+      orderable: false, // Prevent reordering of items
+      addable: false, // Prevent adding items from UI
+      removable: false, // Prevent removing items from UI
+      layout: "horizontal", // Set layout to horizontal
     },
-  };
-  
-  
-  
+  },
+};
 
 const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
   const [formData, setFormData] = useState([]);
@@ -146,7 +145,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&corporate=${selectedCorp}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
-      console.log("API called successfully:", response.data);
+
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
@@ -157,16 +156,16 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
     }
   };
 
-//   useEffect(() => {
-//     if (selectedOrg && year) {
-//       loadFormData();
-//       toastShown.current = false;
-//     } else {
-//       if (!toastShown.current) {
-//         toastShown.current = true;
-//       }
-//     }
-//   }, [selectedOrg, year, selectedCorp]);
+  useEffect(() => {
+    if (selectedOrg && year) {
+      loadFormData();
+      toastShown.current = false;
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
+    }
+  }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
