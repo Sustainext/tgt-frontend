@@ -10,7 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import GeneralWorkersEmployees from "../../../../shared/widgets/Table/generalWorkersEmployees.js";
+import GeneralWorkersEmployees from "../../../shared/widgets/Table/generalWorkersEmployees.js";
 // Simple Custom Table Widget
 const widgets = {
   TableWidget: GeneralWorkersEmployees,
@@ -25,72 +25,21 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      TypeofWorker: {
+
+      Organisationengages: {
         type: "string",
-        title: "Type of Worker",
-        enum: [
-          "Agency worker",
-          "Apprentice",
-          "Contractor",
-          "Home worker",
-          "Intern",
-          "Self-employed person",
-          "Sub-contractor",
-          "Volunteer",
-          "Others (please specify)",
-        ],
+        title: "What are the categories of stakeholders organisation engages with",
+        texttype: "text",
       },
-      TotalnumberofWorkers: {
+     Stakeholdersidentified: {
         type: "string",
-        title: "Total number of Workers",
-        texttype: "number",
+        title: "How the stakeholders are identified.",
+        texttype: "text",
       },
-      Contractualrelationship: {
+      Stakeholderengagement: {
         type: "string",
-        title: "Contractual relationship",
-        enum: [
-          "Full-time employee",
-          "Independent contractor",
-          "Paid intern",
-          "Part-time employee",
-          "Subcontractor",
-          "Temporary agency worker",
-          "Unpaid intern",
-          "Others (please specify)",
-        ],
-      },
-      Workperformed: {
-        type: "string",
-        title: "Work performed",
-        enum: [
-          "Administration",
-          "Coding",
-          "Consulting",
-          "Data Analysis",
-          "Design",
-          "Development",
-          "Delivery",
-          "Finance",
-          "Installation",
-          "Maintenance",
-          "Marketing",
-          "Operations",
-          "Research",
-          "Sales",
-          "Training",
-          "Writing",
-          "Others (please specify)",
-        ],
-      },
-      Engagementapproach: {
-        type: "string",
-        title: "Engagement approach",
-        enum: ["Directly", "Indirectly (through third-party)"],
-      },
-      Thirdparty: {
-        type: "string",
-        title: "Third party (if applicable)",
-        enum: ["Contractor", "mployment agency", "Others (please specify)"],
+        title: "Describe the purpose of stakeholder engagement",
+        texttype: "text",
       },
     },
   },
@@ -101,53 +50,34 @@ const uiSchema = {
   "ui:options": {
     titles: [
       {
-        key: "TypeofWorker",
-        title: "Type of Worker",
+        key: "Organisationengages",
+        title: "What are the categories of stakeholders organisation engages with",
         tooltip:
-          "Please select the types of workers employed or engaged by your organization during the reporting period.",
+          "Here the organization can explain how the organisation determines which categories of stakeholders to engage with and which categories not to engage with.",
       },
       {
-        key: "TotalnumberofWorkers",
-        title: "Total number of Workers",
+        key: "Stakeholdersidentified",
+        title: "How the stakeholders are identified.",
         tooltip:
-          "For the type of worker selected, enter the total number of individuals engaged during the reporting period.",
+          "Explain the process of stakeholder indentification.",
       },
       {
-        key: "Contractualrelationship",
-        title: "Contractual relationship",
+        key: "Stakeholderengagement",
+        title: "Describe the purpose of stakeholder engagement",
         tooltip:
-          "Please specify the primary contractual relationship for the worker. ",
+          "The purpose of stakeholder engagement can be, for example, to identify actual and potential impacts or to determine prevention and mitigation responses to potential negative impacts.",
       },
-      {
-        key: "Workperformed",
-        title: "Work performed",
-        tooltip:
-          "Choose the primary category of work performed by the reported workers.",
-      },
-      {
-        key: "Engagementapproach",
-        title: "Engagement approach",
-        tooltip:
-          "Indicate whether the workers are directly employed by your organization or engaged through a third party.",
-      },
-      {
-        key: "Thirdparty",
-        title: "Third party (if applicable",
-        tooltip:
-          "If workers are engaged indirectly, specify the type of third party involved (e.g., agency, subcontractor).",
-      },
+
+
     ],
   },
 };
 const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const initialFormData = [
     {
-      TypeofWorker: "",
-      TotalnumberofWorkers: "",
-      Contractualrelationship: "",
-      Workperformed: "",
-      Engagementapproach: "",
-      Thirdparty: "",
+      Organisationengages: "",
+      Stakeholdersidentified: "",
+      Stakeholderengagement: "",
     },
   ];
   const [formData, setFormData] = useState(initialFormData);
@@ -235,22 +165,22 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
-      // setFormData(response.data.form_data[0].data);
-      const Newdata =[
-        {
-            "TypeofWorker": "Others (please specify)",
-            "TotalnumberofWorkers": "568",
-            "Contractualrelationship": "Others (please specify)",
-            "Workperformed": "Others (please specify)",
-            "Engagementapproach": "Directly",
-            "Thirdparty": "Others (please specify)",
-            "TypeofWorker_others": "test1",
-            "Contractualrelationship_others": "test45",
-            "Thirdparty_others": "test54",
-            "Workperformed_others": "test85"
-        }
-    ]
-    setFormData(Newdata);
+      setFormData(response.data.form_data[0].data);
+    //   const Newdata =[
+    //     {
+    //         "TypeofWorker": "Others (please specify)",
+    //         "TotalnumberofWorkers": "568",
+    //         "Contractualrelationship": "Others (please specify)",
+    //         "Workperformed": "Others (please specify)",
+    //         "Engagementapproach": "Directly",
+    //         "Thirdparty": "Others (please specify)",
+    //         "TypeofWorker_others": "test1",
+    //         "Contractualrelationship_others": "test45",
+    //         "Thirdparty_others": "test54",
+    //         "Workperformed_others": "test85"
+    //     }
+    // ]
+    // setFormData(Newdata);
     } catch (error) {
       setFormData(initialFormData);
     } finally {
@@ -287,13 +217,11 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
-              Workers who are not Employees
+            Describe the organisation's approach to engaging with stakeholders, including:
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e86`}
-                data-tooltip-content="This section documents data corresponding to the number of
-workers who are not employees but whose work is controlled by your organization.
-It also describes the most common types of these workers,
-their contractual relationships with your organization, and the types of work they perform."
+                data-tooltip-content="Stakeholders are individuals or groups that have interests that are affected or could be affected
+by the organization’s activities."
                 className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip
@@ -316,7 +244,7 @@ their contractual relationships with your organization, and the types of work th
           <div className="w-[20%]">
             <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
               <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-8-a
+                GRI 2-29a
               </p>
             </div>
           </div>
