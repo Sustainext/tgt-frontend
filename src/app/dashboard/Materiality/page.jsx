@@ -2,12 +2,45 @@
 import React, { useState } from "react";
 import NoAssesment from "./components/noAssesment";
 import NewMaterialityAssement from "./modals/newMaterialityAssesment";
+import DataTable from "./components/dataTable";
 
 const Materiality = ({ open }) => {
 
-  const [data,setData]=useState(false)
+  const [data,setData]=useState(true)
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const DummyData=[
+    {
+      organization:"Warner Brothers",
+      corporate:"Acme Corp",
+      type:"GRI: In Accordance to",
+      timePeriod:"Jan 2023 to Jan 2024",
+      enviromentTopics:["Not Selected"],
+      socialTopics:["Not Selected"],
+      governanceTopics:["No Material Topic"],
+      status:"InProgress"
+    },
+    {
+      organization:"Warner Brothers",
+      corporate:"Acme Corp",
+      type:"GRI: with Reference to",
+      timePeriod:"Jan 2023 to Jan 2024",
+      enviromentTopics:["GHG Emissions","Water & effluent","Waste Management","Energy"],
+      socialTopics:["Occupational Health &  Safety","Labor Management","Employment","Pay equality"],
+      governanceTopics:["Governance","Policy","Economic Performance","Corruption"],
+      status:"Completed"
+    },
+    {
+      organization:"Warner Brothers",
+      corporate:"DC universe",
+      type:"GRI: In Accordance to",
+      timePeriod:"Jan 2023 to Jan 2024",
+      enviromentTopics:["GHG Emissions","Water & effluent","Waste Management","Energy"],
+      socialTopics:["Occupational Health &  Safety","Labor Management","Employment","Pay equality"],
+      governanceTopics:["Governance","Policy","Economic Performance","Corruption"],
+      status:"Outdated"
+    }
+  ]
   
     return (
         <>
@@ -29,7 +62,7 @@ const Materiality = ({ open }) => {
 
        
         <div className="flex justify-center items-center mt-5">
-            <div className="border border-gray-200 mb-5 w-11/12">
+            <div className="border border-gray-200 mb-5 w-11/12 rounded-md">
               <div className="flex justify-between items-center w-full border-b border-gray-200 pb-5">
                     <div>
                       <p className="text-[18px] font-bold pt-5 px-5">
@@ -52,7 +85,7 @@ const Materiality = ({ open }) => {
               {/* main section */}
               {data?(
                 <div>
-
+                  <DataTable data={DummyData}/>
                 </div>
               ):(
              <NoAssesment isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
