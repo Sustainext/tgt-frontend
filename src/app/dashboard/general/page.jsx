@@ -13,6 +13,7 @@ import LawAndRegulations from './Compliance/Laws-Regulation/page'
 import BusinessDetails from "./Organization-Details/Business-Details/page"
 import CollectiveBargainingAgreements from "./Collective-Barganing-Agreements/page"
 import MembershipAndAssociation from "./Membership-Association/page"
+import StakeholderEngagement from "./Stakeholder-Engagement/page"
 
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -882,6 +883,13 @@ const General = () => {
                 <>
                   <div>
                     <MembershipAndAssociation />
+                  </div>
+                </>
+              )}
+                {activeStep === 11 && (
+                <>
+                  <div>
+                    <StakeholderEngagement />
                   </div>
                 </>
               )}
