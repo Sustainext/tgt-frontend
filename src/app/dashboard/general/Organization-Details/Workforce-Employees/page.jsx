@@ -63,7 +63,7 @@ const WorkforceEmployees = () => {
             <div className="flex float-end border-l">
               <button
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("82")}
+                onClick={() => toggleDrawer("98")}
               >
                 GRI 2 - 7
               </button>
