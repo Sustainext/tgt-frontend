@@ -15,7 +15,7 @@ const widgets = {
   Textboxmultirowfile:Textboxmultirowfile,
 };
 
-const view_path = "gri-governance-remuneration-2-19-a-remuneration";
+const view_path = "gri-general-org_details_2-1a-1b-1c-1d";
 const client_id = 1;
 const user_id = 1;
 
@@ -227,7 +227,7 @@ const screen1 = ({ selectedOrg, selectedCorp, year }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form data:", formData);
-    // updateFormData();
+    updateFormData();
   };
 
   return (
@@ -295,8 +295,8 @@ and explains any exclusions that may exist."
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -310,7 +310,7 @@ and explains any exclusions that may exist."
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

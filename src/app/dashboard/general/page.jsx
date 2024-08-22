@@ -10,6 +10,7 @@ import Assurance from "./GRI-Reporting/Assurance/page";
 import WorkforceEmployees from "./Organization-Details/Workforce-Employees/page"
 import WorkforceOtherWorkers from "./Organization-Details/Workforce-Other-Workers/page"
 import LawAndRegulations from './Compliance/Laws-Regulation/page'
+import BusinessDetails from "./Organization-Details/Business-Details/page"
 import CollectiveBargainingAgreements from "./Collective-Barganing-Agreements/page"
 import MembershipAndAssociation from "./Membership-Association/page"
 
@@ -846,6 +847,13 @@ const General = () => {
                 <>
                   <div>
                     <Assurance />
+                  </div>
+                </>
+              )}
+               {activeStep === 6 && (
+                <>
+                  <div>
+                    <BusinessDetails />
                   </div>
                 </>
               )}

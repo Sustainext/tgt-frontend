@@ -126,7 +126,7 @@ const Textboxwithfileupload = (props) => {
             />
             {value.fileName ? (
               <label className="flex cursor-pointer">
-                <div className="flex items-center text-center mt-2 px-6">
+                <div className="flex items-center text-center mt-2">
                   <div className="truncate text-sky-600 text-sm flex text-center">
                     <MdFilePresent className="w-6 h-6 mr-1 text-green-500" /> {value.fileName}
                   </div>

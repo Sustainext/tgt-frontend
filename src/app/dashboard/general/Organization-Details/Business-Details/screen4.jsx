@@ -6,19 +6,16 @@ import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import RadioWidget2 from "../../../../shared/widgets/Input/radioWidget2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
-import axiosInstance from '@/app/utils/axiosMiddleware'
-
+import axiosInstance from "@/app/utils/axiosMiddleware";
 const widgets = {
   inputWidget: inputWidget2,
-  RadioWidget2: RadioWidget2,
 };
 
-const view_path = "gri-general-entities-audited-2-2-b";
+const view_path = "gri-governance-remuneration-2-19-b-policies";
 const client_id = 1;
 const user_id = 1;
 
@@ -29,26 +26,8 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Does the organization have audited, consolidated financial statements or financial information filed on public record?",
-        enum: ["Yes", "No"],
-      },
-    },
-    dependencies: {
-      Q1: {
-        oneOf: [
-          {
-            properties: {
-              Q1: {
-                enum: ["Yes"],
-              },
-              Q2: {
-                type: "string",
-                title: "If yes, then please specify the differences between the list of entities included in the financial reporting and the list included in the sustainability reporting.",
-              },
-
-            },
-          },
-        ],
+        title:
+          "Please describe any significant changes in the information mentioned above compared to the previous reporting period",
       },
     },
   },
@@ -56,23 +35,12 @@ const schema = {
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1", "Q2"],
+    "ui:order": ["Q1"],
     Q1: {
-      "ui:title": "Does the organization have audited, consolidated financial statements or financial information filed on public record?",
-      "ui:tooltip":
-        "Please select 'Yes' if  the organization have audited, consolidated financial statements or financial information filed on public record or select 'No' if not. ",
-      "ui:tooltipdisplay": "block",
-      "ui:widget": "RadioWidget2",
-      "ui:horizontal": true,
-      "ui:options": {
-        label: false,
-      },
-    },
-    Q2: {
       "ui:title":
-        "If yes, then please specify the differences between the list of entities included in the financial reporting and the list included in the sustainability reporting.",
+        "Please describe any significant changes in the information mentioned above compared to the previous reporting period",
       "ui:tooltip":
-        "Describe the differences between the list of entities included in the financial reporting and the list included in the sustainability reporting. ",
+        "Provide a description of  significant changes in the organization’s  sectors, value chain, and other business relationships compared to the previous reporting period.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -90,7 +58,7 @@ const uiSchema = {
   },
 };
 
-const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -107,12 +75,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
   };
 
   const handleChange = (e) => {
-    let newFormData = { ...e.formData[0] };
-    if (newFormData.Q1 === "No") {
-      newFormData.Q2 = "";
-
-    }
-    setFormData([newFormData]);
+    setFormData(e.formData);
   };
 
   const updateFormData = async () => {
@@ -198,14 +161,14 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
+    // updateFormData();
     console.log("test form data", formData);
   };
 
   return (
     <>
       <div
-        className="mx-2  p-3 mb-6 pb-6 rounded-md"
+        className="mx-2 p-3 mb-6 pb-6 rounded-md"
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
@@ -213,55 +176,60 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
-            Audited, consolidated financial statements
-              {/* <MdInfoOutline data-tooltip-id={`tooltip-employees`}
-                data-tooltip-content="This section documents the data corresponding to the r product and
-service information and labeling.
-Include:
-i.The sourcing of components of the product or service;
-ii. Content, particularly with regard to substances that might produce an
-environmental or social impact;
-iii. Safe use of the product or service;
-iv. Disposal of the product and environmental or social impacts.
- " className="mt-1.5 ml-2 text-[14px]" />
-              <ReactTooltip id={`tooltip-employees`} place="top" effect="solid" style={{
-                width: "290px", backgroundColor: "#000",
-                color: "white",
-                fontSize: "12px",
-                boxShadow: 3,
-                borderRadius: "8px",
-                textAlign: 'left',
-              }}>
-              </ReactTooltip> */}
+            <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
+            Changes in the information
+              <MdInfoOutline
+                data-tooltip-id={`tooltip-144`}
+                data-tooltip-content="This section documents data corresponding to any significant
+changes in the information compared to the previous reporting period."
+                className="mt-1.5 ml-2 text-[14px]"
+              />
+              <ReactTooltip
+                id={`tooltip-144`}
+                place="top"
+                effect="solid"
+                style={{
+                  width: "290px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  textAlign: "left",
+                }}
+              ></ReactTooltip>
             </h2>
           </div>
 
-          <div className={`${open ? "w-[20%]" : "w-[20%]"}`}>
-            <div className={`flex float-end`}>
-              <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 ">
-                <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                  GRI 2-2-b
-                </p>
-              </div>
+          <div className="w-[20%]">
+            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
+              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
+                GRI 2-6d
+              </p>
             </div>
           </div>
         </div>
-        <div className="mx-2">
+
+        <div className="mx-2 mb-3">
           <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+            schema={schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
           />
         </div>
+
         <div className="mb-6">
-          <button type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year  ? 'cursor-not-allowed' : ''}`}
+          <button
+            type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              !selectedOrg || !year ? "cursor-not-allowed" : ""
+            }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year }>
+            // disabled={!selectedOrg || !year}
+          >
             Submit
           </button>
         </div>
@@ -282,4 +250,4 @@ iv. Disposal of the product and environmental or social impacts.
   );
 };
 
-export default Screen2;
+export default Screen4;
