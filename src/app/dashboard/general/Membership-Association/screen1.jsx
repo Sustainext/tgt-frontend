@@ -1,9 +1,6 @@
-"use client";
-
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import GovernanceWidget from "../../../shared/widgets/Governance/Structure2";
 import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -11,57 +8,61 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "@/app/utils/axiosMiddleware";
+import FileUploadWithAddRowAndCol from "../../../shared/widgets/General/FileUploadWithAddRowAndColWidget";
+
 const widgets = {
-    GovernanceWidget: GovernanceWidget,
+  FileUploadWithAddRowAndCol: FileUploadWithAddRowAndCol,
 };
 
 const view_path = "gri-governance-structure-2-9-b-committees";
 const client_id = 1;
 const user_id = 1;
 
-const schema = 
-    {
-        "type": "array",
-        "items": {
-            "type": "object",
-            "properties": { 
-                "Q1": {
-                    "type": "array",
-                    "title": "List the committees of the highest governance body that are responsible for decision-making on and overseeing the management of the organization's impacts on the economy, environment and people",
-                    "items": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-const uiSchema = {
-    "items": {
-        "Q1": {
-            "ui:title": "List the committees of the highest governance body that are responsible for decision-making on and overseeing the management of the organization's impacts on the economy, environment and people",
-            "ui:widget": "GovernanceWidget",
-            "ui:options": {
-                "label": false
+const schema = {
+    type: "array",
+    items: {
+      type: "object",
+      properties: {
+        Q1: {
+          type: "array",
+          title:
+            "List the committees of the highest governance body that are responsible for decision-making on and overseeing the management of the organization's impacts on the economy, environment, and people",
+          items: {
+            type: "array",
+            items: {
+              type: "string",
             },
-            "ui:tooltip": " Provide a list of committees of the highest governance body, including those responsible for overseeing the management of the organization's impacts on the economy, environment, and people (e.g., Sustainability Committee, Corporate Social Responsibility Committee etc.).",
-            "ui:horizontal": true,
-            "ui:tooltipdisplay": "block"
+          },
         },
-        "ui:order": [
-            "Q1"
-        ],
+      },
+    },
+  };
+  
+
+  const uiSchema = {
+    items: {
+      Q1: {
+        "ui:title":
+          "List the committees of the highest governance body that are responsible for decision-making on and overseeing the management of the organization's impacts on the economy, environment, and people",
+        "ui:widget": "FileUploadWithAddRowAndCol",
+        "ui:tooltip":
+          "Provide a list of committees of the highest governance body, including those responsible for overseeing the management of the organization's impacts on the economy, environment, and people (e.g., Sustainability Committee, Corporate Social Responsibility Committee, etc.).",
         "ui:options": {
-            "layout": "horizontal",
-            "addable": true,
-            "orderable": false,
-            "removable": false
-        }
-    }
-}
+          label: false,
+        },
+        "ui:tooltipdisplay": "block",
+      },
+    },
+    "ui:options": {
+      orderable: false,
+      addable: true,
+      removable: false,
+      layout: "horizontal",
+    },
+  };
+  
+  
+  
 
 const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
   const [formData, setFormData] = useState([]);
@@ -69,9 +70,11 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
+
   const LoaderOpen = () => {
     setLoOpen(true);
   };
+
   const LoaderClose = () => {
     setLoOpen(false);
   };
@@ -79,8 +82,6 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
   const handleChange = (e) => {
     setFormData(e.formData);
   };
-
-
 
   const updateFormData = async () => {
     LoaderOpen();
@@ -97,7 +98,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
       const response = await axiosInstance.post(url, data);
-      console.log('structure formdata', formData);
+      console.log("structure formdata", formData);
 
       if (response.status === 200) {
         toast.success("Data added successfully", {
@@ -110,7 +111,6 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
           progress: undefined,
           theme: "light",
         });
-        LoaderClose();
         loadFormData();
       } else {
         toast.error("Oops, something went wrong", {
@@ -123,7 +123,6 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
           progress: undefined,
           theme: "colored",
         });
-        LoaderClose();
       }
     } catch (error) {
       toast.error("Oops, something went wrong", {
@@ -136,6 +135,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
         progress: undefined,
         theme: "colored",
       });
+    } finally {
       LoaderClose();
     }
   };
@@ -160,17 +160,16 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
 //   useEffect(() => {
 //     if (selectedOrg && year) {
 //       loadFormData();
-//       toastShown.current = false; // Reset the flag when valid data is present
+//       toastShown.current = false;
 //     } else {
 //       if (!toastShown.current) {
 //         toastShown.current = true;
 //       }
 //     }
-//   }, [selectedOrg, year,selectedCorp]);
+//   }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form data:", formData);
     // updateFormData();
   };
 
@@ -184,9 +183,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
         }}
       >
         <div className="mb-4 flex">
-          <div className="w-[80%]">
-           
-          </div>
+          <div className="w-[80%]"></div>
 
           <div className="w-[20%]">
             <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
@@ -231,6 +228,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
           />
         </div>
       )}
+      <ToastContainer />
     </>
   );
 };

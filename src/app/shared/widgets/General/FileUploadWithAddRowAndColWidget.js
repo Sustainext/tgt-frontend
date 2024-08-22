@@ -1,55 +1,59 @@
 import React, { useState, useEffect } from "react";
-import { MdKeyboardArrowDown, MdInfoOutline, MdAdd, MdDelete } from "react-icons/md";
+import { MdKeyboardArrowDown, MdInfoOutline, MdAdd, MdDelete, MdOutlineFileUpload, MdFilePresent } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { BlobServiceClient } from "@azure/storage-blob";
 
 const FileUploadWithAddRowAndCol = ({ onChange, value = [], uiSchema = {} }) => {
-  const [data, setData] = useState(value.length > 0 ? value : [[""]]);
+  const [data, setData] = useState(value.length > 0 ? value.slice(0, -1) : [[""]]);
+  const [fileInfo, setFileInfo] = useState(value.length > 0 ? value[value.length - 1] : {});
 
   useEffect(() => {
     if (data.length === 0) {
       const defaultFirstRow = new Array(data[0]?.length || 1).fill("");
       setData([defaultFirstRow]);
-      onChange([defaultFirstRow]);
+      onChange([defaultFirstRow, fileInfo]);
     }
-  }, [data, onChange]);
+  }, [data, onChange, fileInfo]);
 
   const handleCellChange = (rowIndex, colIndex, event) => {
     const newData = [...data];
     newData[rowIndex][colIndex] = event.target.value;
     setData(newData);
-    onChange(newData);
+    onChange([...newData, fileInfo]);
   };
 
   const addRow = () => {
     const newData = [...data, new Array(data[0]?.length || 1).fill("")];
     setData(newData);
-    onChange(newData);
+    onChange([...newData, fileInfo]);
   };
 
   const addColumn = () => {
-    const newData = data.map(row => [...row, ""]);
+    const newData = data.map((row) => [...row, ""]);
     setData(newData);
-    onChange(newData);
+    onChange([...newData, fileInfo]);
   };
 
   const deleteRow = (rowIndex) => {
     const newData = data.filter((_, index) => index !== rowIndex);
     setData(newData);
-    onChange(newData);
+    onChange([...newData, fileInfo]);
   };
 
   const deleteColumn = (colIndex) => {
-    const newData = data.map(row => row.filter((_, index) => index !== colIndex));
+    const newData = data.map((row) => row.filter((_, index) => index !== colIndex));
     setData(newData);
-    onChange(newData);
+    onChange([...newData, fileInfo]);
   };
+
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
     if (file) {
       const uploadedFileUrl = await uploadFileToAzure(file);
-      onChange({ ...value, fileURL: uploadedFileUrl, fileName: file.name });
+      const newFileInfo = { fileURL: uploadedFileUrl, fileName: file.name };
+      setFileInfo(newFileInfo);
+      onChange([...data, newFileInfo]);
     }
   };
 
@@ -150,19 +154,19 @@ const FileUploadWithAddRowAndCol = ({ onChange, value = [], uiSchema = {} }) => 
             <MdAdd /> Add Column
           </button>
         </div>
-        <div className=''>
-          <div className="flex right-1">
+        <div className="mt-4">
+          <div className="flex">
             <input
               type="file"
               id={`fileInput-${uiSchema["ui:title"]}`} // Ensure unique id for each file input
               onChange={handleFileChange}
               style={{ display: "none" }}
             />
-            {value.fileName ? (
+            {fileInfo.fileName ? (
               <label className="flex cursor-pointer">
                 <div className="flex items-center text-center mt-2 px-6">
                   <div className="truncate text-sky-600 text-sm flex text-center">
-                    <MdFilePresent className="w-6 h-6 mr-1 text-green-500" /> {value.fileName}
+                    <MdFilePresent className="w-6 h-6 mr-1 text-green-500" /> {fileInfo.fileName}
                   </div>
                 </div>
               </label>

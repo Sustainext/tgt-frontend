@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import inputWidget2 from "../../../shared/widgets/Input/inputWidget2";
+import inputWidget3 from "../../../shared/widgets/Input/inputWidget3";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -13,7 +13,7 @@ import { GlobalState } from "@/Context/page";
 import axiosInstance from '@/app/utils/axiosMiddleware'
 
 const widgets = {
-  inputWidget: inputWidget2,
+  inputWidget: inputWidget3,
 };
 
 const view_path = "gri-social-product_labeling-417-1a-required";
@@ -28,7 +28,6 @@ const schema = {
       Q1: {
         type: "string",
         title: "What is the total number of employees covered by collective bargaining agreements?",
-        enum: ["Yes", "No"],
       },
       Q2: {
         type: "string",

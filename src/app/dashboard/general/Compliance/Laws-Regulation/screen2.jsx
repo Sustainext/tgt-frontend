@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
+import inputWidget3 from "../../../../shared/widgets/Input/inputWidget3";
 import TextareaWidget3 from "../../../../shared/widgets/Textarea/TextareaWidget3";
 import Textboxwithfileupload from "../../../../shared/widgets/Input/Textboxwithfileupload"
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
@@ -16,7 +16,7 @@ import { GlobalState } from "@/Context/page";
 import axiosInstance from '@/app/utils/axiosMiddleware'
 
 const widgets = {
-  inputWidget: inputWidget2,
+  inputWidget: inputWidget3,
   RadioWidget2: RadioWidget2,
   TextareaWidget3:TextareaWidget3,
   Textboxwithfileupload:Textboxwithfileupload,
