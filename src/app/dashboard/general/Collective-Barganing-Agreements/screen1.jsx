@@ -2,13 +2,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
-import TextareaWidget3 from "../../../../shared/widgets/Textarea/TextareaWidget3";
-import Textboxwithfileupload from "../../../../shared/widgets/Input/Textboxwithfileupload"
+import inputWidget2 from "../../../shared/widgets/Input/inputWidget2";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import RadioWidget2 from "../../../../shared/widgets/Input/radioWidget2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
@@ -17,9 +14,6 @@ import axiosInstance from '@/app/utils/axiosMiddleware'
 
 const widgets = {
   inputWidget: inputWidget2,
-  RadioWidget2: RadioWidget2,
-  TextareaWidget3:TextareaWidget3,
-  Textboxwithfileupload:Textboxwithfileupload,
 };
 
 const view_path = "gri-social-product_labeling-417-1a-required";
@@ -33,7 +27,12 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Describe the significant instances of non-compliance",
+        title: "What is the total number of employees covered by collective bargaining agreements?",
+        enum: ["Yes", "No"],
+      },
+      Q2: {
+        type: "string",
+        title: "What is the total number of employees in the organisation (as reported under disclosure 2-7) ?",
       },
     },
   },
@@ -41,11 +40,11 @@ const schema = {
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1"],
+    "ui:order": ["Q1", "Q2"],
     Q1: {
-      "ui:title": "Describe the significant instances of non-compliance",
+      "ui:title": "What is the total number of employees covered by collective bargaining agreements?",
       "ui:tooltip":
-        "The description of significant instances of non-compliance can include the geographic location where the instance occurred, and the matter to which the instance relates, such as a tax fraud or a spill. The organization is required to report sufficient information for information users to understand the type and the context of significant instances of non-compliance.",
+        "Specify the Number of employees covered by collective bargaining agreements. The employees covered by collective bargaining agreements are those employees to whom the organization is obligated to apply the agreement.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -53,17 +52,28 @@ const uiSchema = {
         label: false,
       },
     },
-   
+    Q2: {
+      "ui:title":
+        "If yes, please provide a link or reference to the external assurance reports or assurance statements",
+      "ui:tooltip":
+        "Total number of employees should be same as reported under the disclosure 2-7.",
+      "ui:tooltipdisplay": "block",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
+    },
     "ui:options": {
       orderable: false, // Prevent reordering of items
       addable: false, // Prevent adding items from UI
       removable: false, // Prevent removing items from UI
       layout: "horizontal", // Set layout to horizontal
     },
-  },    
+  },
 };
 
-const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -188,13 +198,28 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
+            <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
+            Percentage of total employees covered by collective bargaining agreements
+              <MdInfoOutline data-tooltip-id={`tooltip-employees`}
+                data-tooltip-content="This section documents the data corresponding to the percentage 
+of employees covered by collective bargaining agreements." className="mt-1.5 ml-2 text-[14px]" />
+              <ReactTooltip id={`tooltip-employees`} place="top" effect="solid" style={{
+                width: "290px", backgroundColor: "#000",
+                color: "white",
+                fontSize: "12px",
+                boxShadow: 3,
+                borderRadius: "8px",
+                textAlign: 'left',
+              }}>
+              </ReactTooltip>
+            </h2>
           </div>
 
           <div className={`${open ? "w-[20%]" : "w-[20%]"}`}>
             <div className={`flex float-end`}>
               <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 ">
                 <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                  GRI 2-27-c
+                  GRI 2-30-a
                 </p>
               </div>
             </div>
@@ -236,4 +261,4 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
   );
 };
 
-export default Screen3;
+export default Screen1;

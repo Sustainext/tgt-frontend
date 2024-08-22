@@ -2,13 +2,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
-import TextareaWidget3 from "../../../../shared/widgets/Textarea/TextareaWidget3";
-import Textboxwithfileupload from "../../../../shared/widgets/Input/Textboxwithfileupload"
+import inputWidget2 from "../../../shared/widgets/Input/inputWidget2";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import RadioWidget2 from "../../../../shared/widgets/Input/radioWidget2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
@@ -17,9 +14,6 @@ import axiosInstance from '@/app/utils/axiosMiddleware'
 
 const widgets = {
   inputWidget: inputWidget2,
-  RadioWidget2: RadioWidget2,
-  TextareaWidget3:TextareaWidget3,
-  Textboxwithfileupload:Textboxwithfileupload,
 };
 
 const view_path = "gri-social-product_labeling-417-1a-required";
@@ -33,7 +27,7 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Describe the significant instances of non-compliance",
+        title: "For employees not covered by collective bargaining agreements, describe whether the Organization determines their working conditions and terms of employment based on collective bargaining agreements that cover its other employees or based on collective bargaining agreements from other organizations.",
       },
     },
   },
@@ -43,10 +37,10 @@ const uiSchema = {
   items: {
     "ui:order": ["Q1"],
     Q1: {
-      "ui:title": "Describe the significant instances of non-compliance",
+      "ui:title": "For employees not covered by collective bargaining agreements, describe whether the Organization determines their working conditions and terms of employment based on collective bargaining agreements that cover its other employees or based on collective bargaining agreements from other organizations.",
       "ui:tooltip":
         "The description of significant instances of non-compliance can include the geographic location where the instance occurred, and the matter to which the instance relates, such as a tax fraud or a spill. The organization is required to report sufficient information for information users to understand the type and the context of significant instances of non-compliance.",
-      "ui:tooltipdisplay": "block",
+      "ui:tooltipdisplay": "none",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
       "ui:options": {
@@ -63,7 +57,7 @@ const uiSchema = {
   },    
 };
 
-const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -194,7 +188,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
             <div className={`flex float-end`}>
               <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 ">
                 <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                  GRI 2-27-c
+                  GRI 2-30-b
                 </p>
               </div>
             </div>
@@ -236,4 +230,4 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
   );
 };
 
-export default Screen3;
+export default Screen2;

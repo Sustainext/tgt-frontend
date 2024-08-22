@@ -1,106 +1,104 @@
 "use client";
+
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
-import TextareaWidget3 from "../../../../shared/widgets/Textarea/TextareaWidget3";
-import Textboxwithfileupload from "../../../../shared/widgets/Input/Textboxwithfileupload"
-import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
+import GovernanceWidget from "../../../shared/widgets/Governance/Structure2";
+import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import RadioWidget2 from "../../../../shared/widgets/Input/radioWidget2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
-import { GlobalState } from "@/Context/page";
-import axiosInstance from '@/app/utils/axiosMiddleware'
-
+import axiosInstance from "@/app/utils/axiosMiddleware";
 const widgets = {
-  inputWidget: inputWidget2,
-  RadioWidget2: RadioWidget2,
-  TextareaWidget3:TextareaWidget3,
-  Textboxwithfileupload:Textboxwithfileupload,
+    GovernanceWidget: GovernanceWidget,
 };
 
-const view_path = "gri-social-product_labeling-417-1a-required";
+const view_path = "gri-governance-structure-2-9-b-committees";
 const client_id = 1;
 const user_id = 1;
 
-const schema = {
-  type: "array",
-  items: {
-    type: "object",
-    properties: {
-      Q1: {
-        type: "string",
-        title: "Describe the significant instances of non-compliance",
-      },
-    },
-  },
-};
+const schema = 
+    {
+        "type": "array",
+        "items": {
+            "type": "object",
+            "properties": { 
+                "Q1": {
+                    "type": "array",
+                    "title": "List the committees of the highest governance body that are responsible for decision-making on and overseeing the management of the organization's impacts on the economy, environment and people",
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 const uiSchema = {
-  items: {
-    "ui:order": ["Q1"],
-    Q1: {
-      "ui:title": "Describe the significant instances of non-compliance",
-      "ui:tooltip":
-        "The description of significant instances of non-compliance can include the geographic location where the instance occurred, and the matter to which the instance relates, such as a tax fraud or a spill. The organization is required to report sufficient information for information users to understand the type and the context of significant instances of non-compliance.",
-      "ui:tooltipdisplay": "block",
-      "ui:widget": "inputWidget",
-      "ui:horizontal": true,
-      "ui:options": {
-        label: false,
-      },
-    },
-   
-    "ui:options": {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: "horizontal", // Set layout to horizontal
-    },
-  },    
-};
+    "items": {
+        "Q1": {
+            "ui:title": "List the committees of the highest governance body that are responsible for decision-making on and overseeing the management of the organization's impacts on the economy, environment and people",
+            "ui:widget": "GovernanceWidget",
+            "ui:options": {
+                "label": false
+            },
+            "ui:tooltip": " Provide a list of committees of the highest governance body, including those responsible for overseeing the management of the organization's impacts on the economy, environment, and people (e.g., Sustainability Committee, Corporate Social Responsibility Committee etc.).",
+            "ui:horizontal": true,
+            "ui:tooltipdisplay": "block"
+        },
+        "ui:order": [
+            "Q1"
+        ],
+        "ui:options": {
+            "layout": "horizontal",
+            "addable": true,
+            "orderable": false,
+            "removable": false
+        }
+    }
+}
 
-const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
-  const [formData, setFormData] = useState([{}]);
+const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
+  const [formData, setFormData] = useState([]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-  const { open } = GlobalState();
-
   const LoaderOpen = () => {
     setLoOpen(true);
   };
-
   const LoaderClose = () => {
     setLoOpen(false);
   };
 
   const handleChange = (e) => {
-    let newFormData = { ...e.formData[0] };
-    if (newFormData.Q1 === "No") {
-      newFormData.Q2 = "";
-
-    }
-    setFormData([newFormData]);
+    setFormData(e.formData);
   };
 
+
+
   const updateFormData = async () => {
+    LoaderOpen();
     const data = {
       client_id: client_id,
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      location,
+      organisation: selectedOrg,
+      corporate: selectedCorp,
       year,
-      month,
     };
+
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
       const response = await axiosInstance.post(url, data);
+      console.log('structure formdata', formData);
+
       if (response.status === 200) {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -144,8 +142,8 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    setFormData([]);
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&corporate=${selectedCorp}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -153,50 +151,48 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData([{}]);
+      setFormData([]);
     } finally {
       LoaderClose();
     }
   };
 
-  useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      toastShown.current = false; // Reset the flag when valid data is present
-    } else {
-      // Only show the toast if it has not been shown already
-      if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
-      }
-    }
-  }, [selectedOrg, year, selectedCorp]);
+//   useEffect(() => {
+//     if (selectedOrg && year) {
+//       loadFormData();
+//       toastShown.current = false; // Reset the flag when valid data is present
+//     } else {
+//       if (!toastShown.current) {
+//         toastShown.current = true;
+//       }
+//     }
+//   }, [selectedOrg, year,selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("Form data:", formData);
     // updateFormData();
-    console.log("test form data", formData);
   };
 
   return (
     <>
       <div
-        className="mx-2  p-3 mb-6 pb-6 rounded-md"
+        className="mx-2 p-3 mb-6 pb-6 rounded-md"
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
         }}
       >
         <div className="mb-4 flex">
-          <div className="w-[80%] relative">
+          <div className="w-[80%]">
+           
           </div>
 
-          <div className={`${open ? "w-[20%]" : "w-[20%]"}`}>
-            <div className={`flex float-end`}>
-              <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 ">
-                <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                  GRI 2-27-c
-                </p>
-              </div>
+          <div className="w-[20%]">
+            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
+              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
+                GRI 2-28-a
+              </p>
             </div>
           </div>
         </div>
@@ -211,11 +207,14 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
           />
         </div>
         <div className="mb-6">
-          <button type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year  ? 'cursor-not-allowed' : ''}`}
+          <button
+            type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              !selectedOrg || !year ? "cursor-not-allowed" : ""
+            }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year }
-            >
+            disabled={!selectedOrg || !year}
+          >
             Submit
           </button>
         </div>
@@ -236,4 +235,4 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
   );
 };
 
-export default Screen3;
+export default Screen1;
