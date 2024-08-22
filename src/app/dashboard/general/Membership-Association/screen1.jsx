@@ -24,7 +24,7 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      Test: {
+      MembershipAssociations: {
         type: "array",
         title:
           "List the committees of the highest governance body that are responsible for decision-making on and overseeing the management of the organization's impacts on the economy, environment, and people",
@@ -40,8 +40,8 @@ const schema = {
 };
 const uiSchema = {
   items: {
-    "ui:order": ["Test"],
-    Test: {
+    "ui:order": ["MembershipAssociations"],
+    MembershipAssociations: {
       "ui:title":
         "List the committees of the highest governance body that are responsible for decision-making on and overseeing the management of the organization's impacts on the economy, environment, and people",
       "ui:widget": "FileUploadWithAddRowAndCols",
@@ -64,7 +64,7 @@ const uiSchema = {
 };
 
 const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
-  const [formData, setFormData] = useState([]);
+  const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
@@ -141,7 +141,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([]);
+    setFormData([{}]);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&corporate=${selectedCorp}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
@@ -170,6 +170,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // updateFormData();
+    console.log("Form data:", formData);
   };
 
   return (
@@ -209,7 +210,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            // disabled={!selectedOrg || !year}
           >
             Submit
           </button>

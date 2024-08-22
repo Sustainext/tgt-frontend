@@ -5,8 +5,15 @@ import "react-tooltip/dist/react-tooltip.css";
 import { BlobServiceClient } from "@azure/storage-blob";
 
 const FileUploadWithAddRowAndCol = ({ onChange, value = [], uiSchema = {} }) => {
-  const [data, setData] = useState(value.length > 0 ? value.slice(0, -1) : [[""]]);
-  const [fileInfo, setFileInfo] = useState(value.length > 0 ? value[value.length - 1] : {});
+  const [data, setData] = useState([[""]]);
+  const [fileInfo, setFileInfo] = useState({});
+
+  useEffect(() => {
+    if (value.length > 0) {
+      setData(value.slice(0, -1));
+      setFileInfo(value[value.length - 1]);
+    }
+  }, [value]);
 
   useEffect(() => {
     if (data.length === 0) {
@@ -27,31 +34,26 @@ const FileUploadWithAddRowAndCol = ({ onChange, value = [], uiSchema = {} }) => 
 
   const addRow = () => {
     const newRow = new Array(data[0]?.length || 1).fill("");
-    const newData = [...data, newRow];
-    setData(newData);
+    setData([...data, newRow]);
   };
 
   const addColumn = () => {
-    const newData = data.map((row) => [...row, ""]);
-    setData(newData);
+    setData(data.map((row) => [...row, ""]));
   };
 
   const deleteRow = (rowIndex) => {
-    const newData = data.filter((_, index) => index !== rowIndex);
-    setData(newData);
+    setData(data.filter((_, index) => index !== rowIndex));
   };
 
   const deleteColumn = (colIndex) => {
-    const newData = data.map((row) => row.filter((_, index) => index !== colIndex));
-    setData(newData);
+    setData(data.map((row) => row.filter((_, index) => index !== colIndex)));
   };
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
     if (file) {
       const uploadedFileUrl = await uploadFileToAzure(file);
-      const newFileInfo = { fileURL: uploadedFileUrl, fileName: file.name };
-      setFileInfo(newFileInfo);
+      setFileInfo({ fileURL: uploadedFileUrl, fileName: file.name });
     }
   };
 
@@ -164,7 +166,7 @@ const FileUploadWithAddRowAndCol = ({ onChange, value = [], uiSchema = {} }) => 
             />
             {fileInfo.fileName ? (
               <label className="flex cursor-pointer">
-                <div className="flex items-center text-center mt-2 px-6">
+                <div className="flex items-center text-center mt-2">
                   <div className="truncate text-sky-600 text-sm flex text-center">
                     <MdFilePresent className="w-6 h-6 mr-1 text-green-500" /> {fileInfo.fileName}
                   </div>
