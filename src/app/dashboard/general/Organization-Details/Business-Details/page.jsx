@@ -11,8 +11,8 @@ import Screen1 from "./screen1";
 import Screen2 from "./screen2";
 import Screen3 from "./screen3";
 import Screen4 from "./screen4";
-const ReportDetails = () => {
-  const [activeMonth, setActiveMonth] = useState(1);
+const BusinessDetails = () => {
+  const [activeMonth, setActiveMonth] = useState("");
   const [location, setLocation] = useState("");
   const [year, setYear] = useState(2024);
   const [data, setData] = useState();
@@ -52,7 +52,7 @@ const ReportDetails = () => {
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] font-bold pt-1">
-                    Report Details
+                  Business Details
                   </p>
                 </div>
               </div>
@@ -62,20 +62,22 @@ const ReportDetails = () => {
             <div className="flex float-end border-l">
               <button
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("94")}
+                onClick={() => toggleDrawer("82")}
               >
-                GRI 2 - 3
+                GRI 2 - 6
               </button>
+
+
             </div>
           </div>
         </div>
 
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-            Reporting period, Frequency and Contact Point
+          Activities, value chain and other business relationships
             <MdInfoOutline
               data-tooltip-id={`tooltip-$e10`}
-              data-tooltip-content="This section documents the data corresponding to the reporting period, reporting frequency and Contact Point."
+              data-tooltip-content="This section documents the data corresponding to activities, value chain and other business relationships."
               className="mt-1.5 ml-2 text-[14px]"
             />
             <ReactTooltip
@@ -136,7 +138,6 @@ const ReportDetails = () => {
         year={year}
         month={activeMonth}
       />
-
       <Screen2
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
@@ -144,22 +145,22 @@ const ReportDetails = () => {
         year={year}
         month={activeMonth}
       />
+    <Screen3
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        location={location}
+        year={year}
+        month={activeMonth}
+      />
+    <Screen4
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        location={location}
+        year={year}
+        month={activeMonth}
+      />
 
-      <Screen3
-        selectedOrg={selectedOrg}
-        selectedCorp={selectedCorp}
-        location={location}
-        year={year}
-        month={activeMonth}
-      />
-            <Screen4
-        selectedOrg={selectedOrg}
-        selectedCorp={selectedCorp}
-        location={location}
-        year={year}
-        month={activeMonth}
-      />
     </>
   );
 };
-export default ReportDetails;
+export default BusinessDetails;

@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
-import selectWidget4 from "../../../../shared/widgets/Select/selectWidget4"
+import selectWidget4 from "../../../../shared/widgets/Select/selectWidget4";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -14,10 +14,10 @@ import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 const widgets = {
   inputWidget: inputWidget2,
-  selectWidget4:selectWidget4,
+  selectWidget4: selectWidget4,
 };
 
-const view_path = "gri-governance-remuneration-2-19-b-policies";
+const view_path = "gri-general-report_details-reporting_period-2-3-a";
 const client_id = 1;
 const user_id = 1;
 
@@ -28,12 +28,14 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Please specify the reporting period for the organization's sustainability reporting",
+        title:
+          "Please specify the reporting period for the organization's sustainability reporting",
       },
       Q2: {
         type: "string",
-        title: "Please specify the reporting frequency for the organization's sustainability reporting",
-        enum :["Annual","Half-yearly","Quarterly"]
+        title:
+          "Please specify the reporting frequency for the organization's sustainability reporting",
+        enum: ["Annual", "Half-yearly", "Quarterly"],
       },
     },
   },
@@ -41,11 +43,11 @@ const schema = {
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1","Q2"],
+    "ui:order": ["Q1", "Q2"],
     Q1: {
-      "ui:title": "Please specify the reporting period for the organization's sustainability reporting",
-      "ui:tooltip":
-        "Specify the period of sustainability reporting.",
+      "ui:title":
+        "Please specify the reporting period for the organization's sustainability reporting",
+      "ui:tooltip": "Specify the period of sustainability reporting.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -54,16 +56,16 @@ const uiSchema = {
       },
     },
     Q2: {
-        "ui:title": "Please specify the reporting frequency for the organization's sustainability reporting",
-        "ui:tooltip":
-          "Specify the frequency of sustainability reporting..",
-        "ui:tooltipdisplay": "block",
-        "ui:widget": "selectWidget4",
-        "ui:horizontal": true,
-        "ui:options": {
-          label: false,
-        },
+      "ui:title":
+        "Please specify the reporting frequency for the organization's sustainability reporting",
+      "ui:tooltip": "Specify the frequency of sustainability reporting..",
+      "ui:tooltipdisplay": "block",
+      "ui:widget": "selectWidget4",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
+    },
     "ui:options": {
       orderable: false, // Prevent reordering of items
       addable: false, // Prevent adding items from UI
@@ -176,7 +178,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // updateFormData();
+    updateFormData();
     console.log("test form data", formData);
   };
 
@@ -192,7 +194,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
-            Reporting period and frequency
+              Reporting period and frequency
             </h2>
           </div>
 
@@ -207,8 +209,8 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
         <div className="mx-2 mb-3">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -223,7 +225,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

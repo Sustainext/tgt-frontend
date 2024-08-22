@@ -5140,20 +5140,41 @@ export const Socialdata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <div className="text-[11px] text-[#727272] mb-4">
-          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">Guidance to 2-9-c</div>
-          The organization can describe the composition of the highest governance body and its committees by additional indicators of diversity, such as age, ancestry and ethnic origin, citizenship, creed, disability, or any other indicators of diversity that are relevant for reporting.
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+              Guidance to 2-9-c
+            </div>
+            The organization can describe the composition of the highest
+            governance body and its committees by additional indicators of
+            diversity, such as age, ancestry and ethnic origin, citizenship,
+            creed, disability, or any other indicators of diversity that are
+            relevant for reporting.
           </div>
           <div className="text-[11px] text-[#727272] mb-4">
-          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">Guidance to 2-9-c-ii</div>
-          ‘Independence’ refers to conditions that enable the members of the highest governance body to exercise independent judgment free from any external influence or conflicts of interest. See reference [20] in the Bibliography for more information on independence criteria for governance bodies.
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+              Guidance to 2-9-c-ii
+            </div>
+            ‘Independence’ refers to conditions that enable the members of the
+            highest governance body to exercise independent judgment free from
+            any external influence or conflicts of interest. See reference [20]
+            in the Bibliography for more information on independence criteria
+            for governance bodies.
           </div>
           <div className="text-[11px] text-[#727272] mb-4">
-          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">Guidance to 2-9-c-iv</div>
-          A position or commitment held by a highest governance body member is significant when the time and attention it demands compromises the member’s ability to perform its duties in the organization. Significant positions can include cross-board memberships.
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+              Guidance to 2-9-c-iv
+            </div>
+            A position or commitment held by a highest governance body member is
+            significant when the time and attention it demands compromises the
+            member’s ability to perform its duties in the organization.
+            Significant positions can include cross-board memberships.
           </div>
           <div className="text-[11px] text-[#727272] mb-4">
-          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">Guidance to 2-9-c-vii</div>
-          Competencies relevant to the impacts of the organization include competencies relevant to impacts commonly associated with the organization’s sectors, products, and geographic locations
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+              Guidance to 2-9-c-vii
+            </div>
+            Competencies relevant to the impacts of the organization include
+            competencies relevant to impacts commonly associated with the
+            organization’s sectors, products, and geographic locations
           </div>
           <div>
             <a
@@ -5179,12 +5200,22 @@ export const Socialdata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <div className="text-[11px] text-[#727272] mb-4">
-          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">Guidance to 2-10-b-iii</div>
-          ‘Independence’ refers to conditions that enable the members of the highest governance body to exercise independent judgment free from any external influence or conflicts of interest. See reference [20] in the Bibliography for more information on independence criteria for governance bodies.
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+              Guidance to 2-10-b-iii
+            </div>
+            ‘Independence’ refers to conditions that enable the members of the
+            highest governance body to exercise independent judgment free from
+            any external influence or conflicts of interest. See reference [20]
+            in the Bibliography for more information on independence criteria
+            for governance bodies.
           </div>
           <div className="text-[11px] text-[#727272] mb-4">
-          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">Guidance to 2-10-b-iv</div>
-          Competencies relevant to the impacts of the organization include competencies relevant to impacts commonly associated with the organization’s sectors, products, and geographic locations.
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+              Guidance to 2-10-b-iv
+            </div>
+            Competencies relevant to the impacts of the organization include
+            competencies relevant to impacts commonly associated with the
+            organization’s sectors, products, and geographic locations.
           </div>
           <div>
             <a
@@ -5211,12 +5242,22 @@ export const Socialdata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <div className="text-[11px] text-[#727272] mb-4">
-          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">Guidance to 2-10-b-iii</div>
-          ‘Independence’ refers to conditions that enable the members of the highest governance body to exercise independent judgment free from any external influence or conflicts of interest. See reference [20] in the Bibliography for more information on independence criteria for governance bodies.
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+              Guidance to 2-10-b-iii
+            </div>
+            ‘Independence’ refers to conditions that enable the members of the
+            highest governance body to exercise independent judgment free from
+            any external influence or conflicts of interest. See reference [20]
+            in the Bibliography for more information on independence criteria
+            for governance bodies.
           </div>
           <div className="text-[11px] text-[#727272] mb-4">
-          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">Guidance to 2-10-b-iv</div>
-          Competencies relevant to the impacts of the organization include competencies relevant to impacts commonly associated with the organization’s sectors, products, and geographic locations.
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+              Guidance to 2-10-b-iv
+            </div>
+            Competencies relevant to the impacts of the organization include
+            competencies relevant to impacts commonly associated with the
+            organization’s sectors, products, and geographic locations.
           </div>
           <div>
             <a
@@ -5241,8 +5282,14 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-        <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">Guidance</div>
-        Remuneration policies are established to ensure that the remuneration arrangements help recruit, motivate, and retain the highest governance body members, senior executives, and other employees. Remuneration policies further support the organization’s strategy and contribution to sustainable development and align with stakeholders' interests.
+          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">
+            Guidance
+          </div>
+          Remuneration policies are established to ensure that the remuneration
+          arrangements help recruit, motivate, and retain the highest governance
+          body members, senior executives, and other employees. Remuneration
+          policies further support the organization’s strategy and contribution
+          to sustainable development and align with stakeholders' interests.
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
@@ -5266,8 +5313,49 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-        <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">Guidance to 2-21-a and 2-21-b</div>
-        <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">This disclosure covers all employees as reported under Disclosure 2-7 in this Standard.<br/><br/>Annual total compensation includes salary, bonus, stock awards, option awards, non-equity incentive plan compensation, change in pension value, and nonqualified deferred compensation earnings provided over the course of a year. When calculating the ratio, the organization should, depending on the organization’s remuneration policies and availability of data, consider all of the following:<br/>• Base salary, which is the sum of guaranteed, short-term, and non-variable cash compensation.<br/>• Total cash compensation, which is the sum of the base salary and cash allowances, bonuses, commissions, cash profit-sharing, and other forms of variable cash payments.<br/>• Direct compensation, which is the sum of total cash compensation and total fair value of all annual long-term incentives (e.g., stock option awards, restricted stock shares or units, performance stock shares or units, phantom stock shares, stock appreciation rights, and long-term cash awards).<br/><br/>The annual total compensation ratio can be calculated using the following formula:<br/>(Annual total compensation for the organization's highest paid-individual / Median annual total compensation for all of the organization's employees excluding the highest-paid individual)<br/><br/>The change in the annual total compensation ratio can be calculated using the following formula:<br/>(Percentage increase in annual total compensation for the organization's highest-paid individual / Median percentage increase in annual total compensation for all of the organization's employees excluding the highest-paid individual)<br/></div>
+          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">
+            Guidance to 2-21-a and 2-21-b
+          </div>
+          <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+            This disclosure covers all employees as reported under Disclosure
+            2-7 in this Standard.
+            <br />
+            <br />
+            Annual total compensation includes salary, bonus, stock awards,
+            option awards, non-equity incentive plan compensation, change in
+            pension value, and nonqualified deferred compensation earnings
+            provided over the course of a year. When calculating the ratio, the
+            organization should, depending on the organization’s remuneration
+            policies and availability of data, consider all of the following:
+            <br />• Base salary, which is the sum of guaranteed, short-term, and
+            non-variable cash compensation.
+            <br />• Total cash compensation, which is the sum of the base salary
+            and cash allowances, bonuses, commissions, cash profit-sharing, and
+            other forms of variable cash payments.
+            <br />• Direct compensation, which is the sum of total cash
+            compensation and total fair value of all annual long-term incentives
+            (e.g., stock option awards, restricted stock shares or units,
+            performance stock shares or units, phantom stock shares, stock
+            appreciation rights, and long-term cash awards).
+            <br />
+            <br />
+            The annual total compensation ratio can be calculated using the
+            following formula:
+            <br />
+            (Annual total compensation for the organization's highest
+            paid-individual / Median annual total compensation for all of the
+            organization's employees excluding the highest-paid individual)
+            <br />
+            <br />
+            The change in the annual total compensation ratio can be calculated
+            using the following formula:
+            <br />
+            (Percentage increase in annual total compensation for the
+            organization's highest-paid individual / Median percentage increase
+            in annual total compensation for all of the organization's employees
+            excluding the highest-paid individual)
+            <br />
+          </div>
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
@@ -5291,8 +5379,34 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-        <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">Guidance</div>
-        <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">The organization should describe:<br/>• its short, medium, and long-term vision and strategy to manage its impacts on the economy, environment, and people, including impacts on their human rights, across the organization’s activities and business relationships;<br/>• how its purpose, business strategy, and business model aim to prevent negative impacts and achieve positive impacts on the economy, environment, and people;<br/>• its short and medium-term strategic priorities for contributing to sustainable development, including how the priorities are aligned with authoritative intergovernmental instruments;<br/>• the broader trends (e.g., macroeconomic, social, political) affecting the organization and its strategy for contributing to sustainable development;<br/>• the key events, achievements, and failures associated with the organization’s contribution to sustainable development during the reporting period;<br/>• a view of performance against goals and targets related to the organization’s material topics during the reporting period;<br/>• the organization’s main challenges, goals, and targets regarding its contribution to sustainable development for the next year and the coming three to five years.</div>
+          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">
+            Guidance
+          </div>
+          <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+            The organization should describe:
+            <br />• its short, medium, and long-term vision and strategy to
+            manage its impacts on the economy, environment, and people,
+            including impacts on their human rights, across the organization’s
+            activities and business relationships;
+            <br />• how its purpose, business strategy, and business model aim
+            to prevent negative impacts and achieve positive impacts on the
+            economy, environment, and people;
+            <br />• its short and medium-term strategic priorities for
+            contributing to sustainable development, including how the
+            priorities are aligned with authoritative intergovernmental
+            instruments;
+            <br />• the broader trends (e.g., macroeconomic, social, political)
+            affecting the organization and its strategy for contributing to
+            sustainable development;
+            <br />• the key events, achievements, and failures associated with
+            the organization’s contribution to sustainable development during
+            the reporting period;
+            <br />• a view of performance against goals and targets related to
+            the organization’s material topics during the reporting period;
+            <br />• the organization’s main challenges, goals, and targets
+            regarding its contribution to sustainable development for the next
+            year and the coming three to five years.
+          </div>
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
@@ -5316,10 +5430,44 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-        <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">Guidance</div>
-        <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">This disclosure gives insight into how the organization embeds its policy commitments for responsible business conduct, including the commitment to respect human rights, throughout its activities and business relationships. This ensures that people at all levels act responsibly and with awareness of and respect for human rights.</div>
-        <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">Guidance to 2-24-a-i</div>
-        <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">Examples of different levels within an organization include the highest governance body, senior executives, and operational levels.<br/><br/>The organization can report:<br/>• the most senior level with oversight of, or accountability for, the implementation of the policy commitments;<br/><br/>• the functions in the organization with day-to-day responsibility for implementing each of the policy commitments (e.g., human resources with the responsibility for implementing the commitment to respect the rights of workers), including:<br/>- their reporting lines to senior decision-making levels;<br/>- the reason for allocating the responsibility to them;<br/><br/>• whether responsible business conduct is formally discussed at meetings of the highest governance body or senior executives and, if so, which topics are discussed;<br/><br/>• whether there are other formal or systematic means for discussions about responsible business conduct between different levels or functions in the organization (e.g., a crossfunctional working group).</div>
+          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">
+            Guidance
+          </div>
+          <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+            This disclosure gives insight into how the organization embeds its
+            policy commitments for responsible business conduct, including the
+            commitment to respect human rights, throughout its activities and
+            business relationships. This ensures that people at all levels act
+            responsibly and with awareness of and respect for human rights.
+          </div>
+          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">
+            Guidance to 2-24-a-i
+          </div>
+          <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+            Examples of different levels within an organization include the
+            highest governance body, senior executives, and operational levels.
+            <br />
+            <br />
+            The organization can report:
+            <br />• the most senior level with oversight of, or accountability
+            for, the implementation of the policy commitments;
+            <br />
+            <br />• the functions in the organization with day-to-day
+            responsibility for implementing each of the policy commitments
+            (e.g., human resources with the responsibility for implementing the
+            commitment to respect the rights of workers), including:
+            <br />- their reporting lines to senior decision-making levels;
+            <br />- the reason for allocating the responsibility to them;
+            <br />
+            <br />• whether responsible business conduct is formally discussed
+            at meetings of the highest governance body or senior executives and,
+            if so, which topics are discussed;
+            <br />
+            <br />• whether there are other formal or systematic means for
+            discussions about responsible business conduct between different
+            levels or functions in the organization (e.g., a crossfunctional
+            working group).
+          </div>
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
@@ -5343,8 +5491,537 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-        <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">Guidance</div>
-        <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">This disclosure covers the organization’s mechanisms for individuals to seek advice and raise concerns about responsible business conduct in the organization's operations and business relationships. Examples of these mechanisms include confidential interviews during site visits, escalation processes (to raise issues through management levels), hotlines, mechanisms to report non-compliance with laws and regulations, and whistleblowing mechanisms.<br/><br/>These mechanisms enable individuals to raise concerns about wrongdoing or breaches of the law in the organization’s operations or business relationships, regardless of whether the individuals themselves are harmed or not. They are distinct from grievance mechanisms, which enable stakeholders to raise concerns about, and seek remedy / remediation for, the organization’s potential and actual negative impacts on them. Grievance mechanisms are reported under Disclosure 2-25 in this Standard.<br/><br/>If the organization’s grievance mechanisms and its mechanisms for seeking advice and raising concerns about responsible business conduct operate in a similar way, the organization can provide a single description of how these mechanisms operate and explain which mechanisms the description covers.<br/><br/>The organization can report:<br/>• who the intended users of the mechanisms are;<br/>• how the mechanisms operate and which level or function in the organization is assigned responsibility for them;<br/>• whether the mechanisms are operated independently of the organization (e.g., by a third party);<br/>• the process through which concerns are investigated;<br/>• whether requests for advice and concerns raised are treated confidentially;<br/>• whether the mechanisms can be used anonymously.<br/><br/>Additionally, the organization can report information about the effectiveness of the mechanisms, including:<br/>• whether and how the intended users are informed about the mechanisms and trained on how to use them;<br/>• the accessibility of the mechanisms, such as the number of hours per day or days per week they are available, and their availability in different languages;<br/>• how the organization seeks to ensure it respects users’ human rights and protects them against reprisals (i.e., non-retaliation for raising concerns);<br/>• how satisfied users are with the mechanisms and with the resulting outcomes;<br/>• the number and types of requests for advice received during the reporting period, and the percentage of requests that were answered;<br/>• the number and types of concerns raised during the reporting period, and the percentage of concerns that were addressed and resolved or found to be unsubstantiated.</div>
+          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">
+            Guidance
+          </div>
+
+          <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+            This disclosure covers the organization’s mechanisms for individuals
+            to seek advice and raise concerns about responsible business conduct
+            in the organization's operations and business relationships.
+            Examples of these mechanisms include confidential interviews during
+            site visits, escalation processes (to raise issues through
+            management levels), hotlines, mechanisms to report non-compliance
+            with laws and regulations, and whistleblowing mechanisms.
+            <br />
+            <br />
+            These mechanisms enable individuals to raise concerns about
+            wrongdoing or breaches of the law in the organization’s operations
+            or business relationships, regardless of whether the individuals
+            themselves are harmed or not. They are distinct from grievance
+            mechanisms, which enable stakeholders to raise concerns about, and
+            seek remedy / remediation for, the organization’s potential and
+            actual negative impacts on them. Grievance mechanisms are reported
+            under Disclosure 2-25 in this Standard.
+            <br />
+            <br />
+            If the organization’s grievance mechanisms and its mechanisms for
+            seeking advice and raising concerns about responsible business
+            conduct operate in a similar way, the organization can provide a
+            single description of how these mechanisms operate and explain which
+            mechanisms the description covers.
+            <br />
+            <br />
+            The organization can report:
+            <br />• who the intended users of the mechanisms are;
+            <br />• how the mechanisms operate and which level or function in
+            the organization is assigned responsibility for them;
+            <br />• whether the mechanisms are operated independently of the
+            organization (e.g., by a third party);
+            <br />• the process through which concerns are investigated;
+            <br />• whether requests for advice and concerns raised are treated
+            confidentially;
+            <br />• whether the mechanisms can be used anonymously.
+            <br />
+            <br />
+            Additionally, the organization can report information about the
+            effectiveness of the mechanisms, including:
+            <br />• whether and how the intended users are informed about the
+            mechanisms and trained on how to use them;
+            <br />• the accessibility of the mechanisms, such as the number of
+            hours per day or days per week they are available, and their
+            availability in different languages;
+            <br />• how the organization seeks to ensure it respects users’
+            human rights and protects them against reprisals (i.e.,
+            non-retaliation for raising concerns);
+            <br />• how satisfied users are with the mechanisms and with the
+            resulting outcomes;
+            <br />• the number and types of requests for advice received during
+            the reporting period, and the percentage of requests that were
+            answered;
+            <br />• the number and types of concerns raised during the reporting
+            period, and the percentage of concerns that were addressed and
+            resolved or found to be unsubstantiated.
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["91"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-25: Processes to remediate negative impacts
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">Guidance</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure covers grievance mechanisms that the organization
+              has established or participates in. Grievance mechanisms enable
+              stakeholders to raise concerns about, and seek remedy for, the
+              organization’s potential and actual negative impacts on them. This
+              includes impacts on their human rights. This disclosure also
+              covers other processes by which the organization provides for or
+              cooperates in the remediation of negative impacts that it
+              identifies it has caused or contributed to.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The United Nations (UN) Guiding Principles on Business and Human
+              Rights [14] and the Organisation for Economic Co-operation and
+              Development (OECD) Guidelines for Multinational Enterprises [12]
+              set out expectations for organizations to provide for or cooperate
+              in the remediation, through legitimate processes, of negative
+              impacts that they identify they have caused or contributed to. The
+              organization is not responsible for the remediation of negative
+              impacts directly linked to its operations, products, or services
+              by its business relationships, where the organization has not
+              contributed to the impacts. It can, however, play a role in the
+              remediation. See Box 3 in GRI 3: Material Topics 2021 for more
+              information on causing, contributing, or being directly linked to
+              negative impacts.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              These instruments also set out expectations for organizations to
+              establish or participate in effective operational-level grievance
+              mechanisms.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Grievance mechanisms are distinct from whistleblowing mechanisms.
+              Whistleblowing mechanisms enable individuals to raise concerns
+              about wrongdoing or breaches of the law in the organization’s
+              operations or business relationships, regardless of whether the
+              individuals themselves are harmed or not. Whistleblowing
+              mechanisms are reported under Disclosure 2- 26 in this Standard.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure covers the operation of grievance mechanisms and
+              other remediation processes. The actions taken to provide for or
+              cooperate in the remediation of actual negative impacts for
+              material topics are reported under 3-3-d-ii in GRI 3.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The disclosure is only relevant to environmental remediation
+              processes (e.g., processes to remove contaminants from soil) when
+              these are connected to impacts on stakeholders or grievances
+              raised by stakeholders. However, the remedy provided to
+              stakeholders through the mechanisms and processes covered by this
+              disclosure may involve environmental remediation. The use of
+              environmental remediation processes can be reported under 3-3-d-ii
+              in GRI 3.
+            </p>
+            <p className="text-[11px] text-black mb-2">Guidance to 2-25-b</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Grievance mechanisms refer to any routinized, state-based or
+              non-state-based, judicial or nonjudicial processes through which
+              stakeholders can raise grievances and seek remedy. Examples of
+              state-based judicial and non-judicial grievance mechanisms include
+              courts (for both criminal and civil actions), labor tribunals,
+              national human rights institutions, National Contact Points under
+              the OECD Guidelines for Multinational Enterprises, ombudsperson
+              offices, consumer protection agencies, regulatory oversight
+              bodies, and government-run complaints offices. Non-state-based
+              grievance mechanisms include those administered by the
+              organization, either alone or together with stakeholders, such as
+              operational-level grievance mechanisms and collective bargaining,
+              including the mechanisms established by collective bargaining.
+              They also include mechanisms administered by industry
+              associations, international organizations, civil society
+              organizations, or multi-stakeholder groups. Operational-level
+              grievance mechanisms are administered by the organization either
+              alone or in collaboration with other parties and are directly
+              accessible by the organization’s stakeholders. They allow for
+              grievances to be identified and addressed early and directly,
+              thereby preventing both harm and grievances from escalating. They
+              also provide important feedback on the effectiveness of the
+              organization’s due diligence from those who are directly affected.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization can describe:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                the intended purpose and users of the mechanisms (i.e., whether
+                they are intended for a particular stakeholder category, topic,
+                or region) and whether they enable users to raise human
+                rights-related concerns. For example, the organization can
+                explain that it has established a mechanism for community
+                members to raise complaints about resettlement, as well as a
+                separate hotline for workers to raise concerns about issues
+                affecting their rights, such as health and safety conditions;
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                how the mechanisms operate and who administers them (the
+                organization or another party);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                whether operational-level grievance mechanisms are administered
+                at the organizational level or whether they are administered at
+                a lower level (at the site or project level) and, in such a
+                case, how information from these mechanisms is centralized;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                how the mechanisms have been designed and on which principles
+                and guidelines they are based, including whether they are
+                designed to meet the effectiveness criteria set out in UN
+                Guiding Principle 31 [14];
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                the process through which grievances are investigated;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                whether grievances are communicated to the highest governance
+                body;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                whether grievances are treated confidentially;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                whether the mechanisms can be used by stakeholders anonymously
+                through representation by a third party;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                whether the organization requires or provides incentives for the
+                creation or improvement of operational-level grievance
+                mechanisms in workplaces of suppliers;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                whether the organization provides a back-up process for
+                workplaces of suppliers that do not have operational-level
+                grievance mechanisms or where the existing grievance mechanisms
+                in those workplaces result in unresolved issues
+              </li>
+            </ul>
+            <p className="text-[11px] text-black mb-2">Guidance to 2-25-c</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Requirement 2-25-c covers remediation processes other than
+              grievance mechanisms. Such processes lead to the remediation of an
+              impact without mechanisms for filing a formal complaint.Examples
+              include instances where the organization takes action to remediate
+              an actual impact evidenced in an impact assessment or a report
+              published by a civil society organization.
+            </p>
+            <p className="text-[11px] text-black mb-2">Guidance to 2-25-d</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization can describe, for example, how it engages with
+              stakeholders who are the intended users of the grievance
+              mechanisms, to understand how they want to access the mechanisms
+              to raise concerns, and their expectations about how the mechanisms
+              will operate.
+            </p>
+            <p className="text-[11px] text-black mb-2">Guidance to 2-25-e</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              According to UN Guiding Principle 31 [14], effective grievance
+              mechanisms are legitimate, accessible, predictable, equitable,
+              transparent, rights-compatible, and a source of continuous
+              learning. In addition to these criteria, effective
+              operational-level grievance mechanisms are also based on
+              engagement and dialogue. It can be more difficult for the
+              organization to assess the effectiveness of grievance mechanisms
+              that it participates in compared to those it has established
+              itself.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization can report:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                whether and how the intended users are informed about the
+                grievance mechanisms and remediation processes;
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                whether and how the intended users are trained to use the
+                grievance mechanisms and remediation processes;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                the accessibility of the grievance mechanisms and remediation
+                processes, such as the number of hours per day or days per week
+                they are accessible, and their availability in different
+                languages;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                how the organization seeks to ensure it respects users’ human
+                rights and protects them against reprisals (i.e.,
+                non-retaliation for raising complaints or concerns);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                how satisfied users are with the grievance mechanisms and
+                remediation processes, and with the resulting outcomes, as well
+                as how the organization assesses user satisfaction;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                the number and types of grievances filed during the reporting
+                period, and the percentage of grievances that were addressed and
+                resolved, including the percentage that were resolved through
+                remediation;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                the number of grievances filed during the reporting period that
+                are repeated or recurring;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                changes made to the grievance mechanisms and remediation
+                processes in response to lessons learned about their
+                effectiveness.
+              </li>
+              <p className="text-[11px] text-[#727272] mb-4">
+                Quantitative data, such as the number of grievances, is unlikely
+                to be sufficient on its own. For example, a low number of
+                grievances could indicate that few incidents have occurred, but
+                it could also signal that their intended users do not trust the
+                mechanisms. For this reason, contextual information should be
+                provided to help information users interpret the data.
+              </p>
+            </ul>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["92"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-1: Organizational details
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 2-1-a
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              If the organization uses a commonly known trading name or business
+              name that is differentfrom its legal name, it should report this
+              in addition to its legal name.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 2-1-b
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The nature of ownership and the legal form of the organization
+              refers to whether it is publicly or privately owned, and whether
+              it is an incorporated entity, a partnership, a sole
+              proprietorship, or another type of entity such as a nonprofit, an
+              association, or a charity.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 2-1-c
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Headquarters are an organization’s global administrative center,
+              the place from which it is controlled or directed.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 2-1-d
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              If the organization has reported its countries of operation
+              elsewhere, such as in its audited consolidated financial
+              statements or financial information filed on public record, the
+              organization can provide a link or reference to this information.
+              The organization can also report the regions or specific locations
+              within countries (e.g., states, cities) where it has operations,
+              if this provides contextual information for understanding the
+              organization’s impacts.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["93"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-2: Entities included in the organization’s sustainability
+        reporting
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 2-2-a
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The entities reported under 2-2-a form the basis for reporting the
+              disclosures in this Standard and for determining the
+              organization’s material topics. Requirement 2-2-a includes those
+              entities that the organization controls or has an interest in and
+              are included in its sustainability reporting, such as
+              subsidiaries, joint ventures, and affiliates, including minority
+              interests. The organization should report information for the same
+              group of entities as covered in its financial reporting. When
+              determining its material topics, the organization should consider
+              the impacts of additional entities with which it has business
+              relationships that are not included in the list reported
+              under2-2-a. See section 1 in GRI 3: Material Topics 2021 for more
+              information.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 2-2-a & 2-2-b
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              If all the entities in the organization’s financial reporting are
+              also included in its sustainability reporting, a brief statement
+              of this fact, including a link or reference to the list of
+              entities included in its audited consolidated financial statements
+              or financial information filed on public record, insufficient to
+              comply with 2-2-a and 2-2-b.The organization should separately
+              specify any additional entities included in the sustainability
+              reporting that are not included in its financial reporting.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 2-2-c
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              A minority interest is an ownership interest in an entity that is
+              not controlled by the parent entity.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["94"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-3: Reporting period, frequency and contact point
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 2-3-a
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization can specify the frequency of sustainability
+              reporting as ‘annual’.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 2-3-a & 2-3-b
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The reporting period refers to the time period covered by the
+              reported information and should include the start and end dates
+              (e.g., 1 January 2022 to 31 December 2022, 1 July 2022 through 30
+              June 2023). The organization should report the information for the
+              same reporting period as covered in its financial reporting. The
+              organization should also publish the information at the same time
+              as its financial reporting, where this is possible.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["95"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-4: Restatements of information
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[520px] overflow-y-auto custom-scrollbar">
+
+            <p className="text-[11px] text-[#727272] mb-4">
+            The organization should provide a restatement of information when it has learned that the previously reported information needs to be revised. Restatements of information from previous reporting periods can correct an error, or account for changes in measurement methodology or to the nature of the business. Restatements of information ensure consistency and enable comparability of information between reporting periods.
+            The organization should report the criteria used to determine when a change or error in previously reported information is considered significant enough to provide a restatement. A change or error could be significant when it influences information users’ decision-making (e.g., it influences the analysis of the changes in the organization’s impacts over time).
+            For example, if an organization adopts a new, more accurate method for measuring greenhouse gas (GHG) emissions, it may subsequently experience a reduction in its previously reported GHG emissions that meets the organization’s restatement criteria. The organization then restates its previously reported GHG emissions. In such a case, the organization is required to explain that it has restated its previously reported GHG emissions due to the new measurement methodology and that this has resulted in lower GHG emissions than previously reported. The organization should also report the quantitative change observed (e.g., GHG emissions are 10% lower than the emissions previously reported).
+            If the organization has not made any restatement in the reporting period, a brief statement of this fact is sufficient to comply with the requirement.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+            Guidance to 2-4-a-i
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+              Examples of reasons for restatements of information include:
+              </li>
+
+              <li className="text-[11px] text-[#727272]">Change of base period or length of the reporting period;</li>
+              <li className="text-[11px] text-[#727272]">Change in the nature of the business;</li>
+              <li className="text-[11px] text-[#727272]">Change in the measurement methodologies or in the definitions used;</li>
+              <li className="text-[11px] text-[#727272]">Disposals, mergers, or acquisitions;</li>
+              <li className="text-[11px] text-[#727272]">Error made in previous reporting periods.</li>
+            </ul>
+            <p className="text-[11px] text-black mb-2">
+            Guidance to 2-4-a-ii
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            The effect of the restatement refers to the consequences of the change or correction made to previously reported information. If the restatement relates to quantitative information, the organization should specify the quantitative change in the restated information (e.g., GHG emissions are 10% lower compared to the level of emissions previously reported).
+            If the organization has not made any restatement in the reporting period, a brief statement of this fact is sufficient to comply with the requirement.
+            </p>
+          </div>
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
