@@ -15,6 +15,7 @@ const FileUploadWithAddRowAndCol = (props) => {
     if (!Array.isArray(value.MembershipAssociations) || value.MembershipAssociations.length === 0 || (value.MembershipAssociations.length === 1 && value.MembershipAssociations[0].length === 0)) {
       onChange({ ...value, MembershipAssociations: [[""]] });
     }
+    setLocalMembershipAssociations(value.MembershipAssociations);
   }, [value, onChange]);
 
   const debouncedOnChange = useCallback(
@@ -190,13 +191,13 @@ const FileUploadWithAddRowAndCol = (props) => {
         </div>
 
         {/* Display file URL if available */}
-        {fileInfo.fileUrl && (
+        {/* {fileInfo.fileUrl && (
           <div className="mt-2 text-sm text-gray-700">
             <a href={fileInfo.fileUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
               {fileInfo.fileUrl}
             </a>
           </div>
-        )}
+        )} */}
       </div>
 
     </>
