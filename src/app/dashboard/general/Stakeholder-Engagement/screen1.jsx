@@ -16,7 +16,7 @@ const widgets = {
   TableWidget: GeneralWorkersEmployees,
 };
 
-const view_path = "gri-governance-policy_commitments-2-23-c-leave";
+const view_path = "gri-general-stakeholder_engagement-2-29a-describe";
 const client_id = 1;
 const user_id = 1;
 
@@ -156,7 +156,6 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   };
 
   const loadFormData = async () => {
-    console.log("loadFormData screen 2");
     LoaderOpen();
     setFormData(initialFormData);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
@@ -166,21 +165,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
-    //   const Newdata =[
-    //     {
-    //         "TypeofWorker": "Others (please specify)",
-    //         "TotalnumberofWorkers": "568",
-    //         "Contractualrelationship": "Others (please specify)",
-    //         "Workperformed": "Others (please specify)",
-    //         "Engagementapproach": "Directly",
-    //         "Thirdparty": "Others (please specify)",
-    //         "TypeofWorker_others": "test1",
-    //         "Contractualrelationship_others": "test45",
-    //         "Thirdparty_others": "test54",
-    //         "Workperformed_others": "test85"
-    //     }
-    // ]
-    // setFormData(Newdata);
+
     } catch (error) {
       setFormData(initialFormData);
     } finally {
@@ -202,7 +187,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
     console.log("Form data:", formData);
-    // updateFormData();
+    updateFormData();
   };
 
   return (
@@ -251,8 +236,8 @@ by the organization’s activities."
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -267,7 +252,7 @@ by the organization’s activities."
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

@@ -16,7 +16,7 @@ const widgets = {
   inputWidget: inputWidget2,
 };
 
-const view_path = "gri-social-product_labeling-417-1a-required";
+const view_path = "gri-general-collective_bargaining-2-30-b-employees";
 const client_id = 1;
 const user_id = 1;
 
@@ -47,14 +47,14 @@ const uiSchema = {
         label: false,
       },
     },
-   
+
     "ui:options": {
       orderable: false, // Prevent reordering of items
       addable: false, // Prevent adding items from UI
       removable: false, // Prevent removing items from UI
       layout: "horizontal", // Set layout to horizontal
     },
-  },    
+  },
 };
 
 const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
@@ -83,15 +83,17 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
   };
 
   const updateFormData = async () => {
+    LoaderOpen();
     const data = {
       client_id: client_id,
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      location,
+      organisation: selectedOrg,
+      corporate: selectedCorp,
       year,
-      month,
     };
+
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
       const response = await axiosInstance.post(url, data);
@@ -139,7 +141,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&corporate=${selectedCorp}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -156,18 +158,17 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
   useEffect(() => {
     if (selectedOrg && year) {
       loadFormData();
-      toastShown.current = false; // Reset the flag when valid data is present
+      toastShown.current = false;
     } else {
-      // Only show the toast if it has not been shown already
       if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
+        toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, selectedCorp, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // updateFormData();
+    updateFormData();
     console.log("test form data", formData);
   };
 
@@ -196,8 +197,8 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -208,7 +209,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
           <button type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year  ? 'cursor-not-allowed' : ''}`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year }
+            disabled={!selectedOrg || !year }
             >
             Submit
           </button>

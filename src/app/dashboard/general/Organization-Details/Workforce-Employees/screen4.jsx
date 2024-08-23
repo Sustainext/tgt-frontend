@@ -15,7 +15,7 @@ const widgets = {
   inputWidget: inputWidget2,
 };
 
-const view_path = "gri-governance-remuneration-2-19-b-policies";
+const view_path = "gri-general-workforce_employees-fluctuations-2-7e";
 const client_id = 1;
 const user_id = 1;
 
@@ -161,7 +161,7 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // updateFormData();
+    updateFormData();
     console.log("test form data", formData);
   };
 
@@ -212,8 +212,8 @@ in employee numbers experienced during or between reporting periods."
 
         <div className="mx-2 mb-3">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -228,7 +228,7 @@ in employee numbers experienced during or between reporting periods."
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

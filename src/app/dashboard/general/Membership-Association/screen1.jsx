@@ -15,7 +15,7 @@ const widgets = {
   FileUploadWithAddRowAndCols: FileUploadWithAddRowAndCol,
 };
 
-const view_path = "gri-governance-structure-2-9-b-committees";
+const view_path = "gri-general-membership_association-2-28-a-report";
 const client_id = 1;
 const user_id = 1;
 
@@ -25,43 +25,36 @@ const schema = {
     type: "object",
     properties: {
       MembershipAssociations: {
-        type: "array",
-        title:
-          "Report industry associations, other membership associations, and national or international advocacy organizations in which it participates in a significant role.",
-        items: {
-          type: "array",
-          items: {
-            type: "string",
-          },
-        },
-      },
-    },
-  },
+        type: "string",
+        title: "Report industry associations, other membership associations, and national or international advocacy organizations in which it participates in a significant role."
+      }
+    }
+  }
 };
+
+
 const uiSchema = {
   items: {
     "ui:order": ["MembershipAssociations"],
     MembershipAssociations: {
-      "ui:title":
-        "Report industry associations, other membership associations, and national or international advocacy organizations in which it participates in a significant role.",
-      "ui:widget": "FileUploadWithAddRowAndCols",
-      "ui:tooltip":
-        "Describe an organization's involvement in  industry associations,other membership associations, and national or international advocacy organizations where it plays a significant role.",
-      "ui:tooltipdisplay": "block",
+      "ui:title": "Report industry associations, other membership associations, and national or international advocacy organizations in which it participates in a significant role",
+      "ui:tooltip": "Describe an organization's involvement in  industry associations,other membership associations, and national or international advocacy organizations where it plays a significant role.",
+      "ui:tooltipdisplay": "block",  // Ensure tooltip is displayed
+      "ui:widget": "FileUploadWithAddRowAndCols",  // Use your custom widget
       "ui:horizontal": true,
       "ui:options": {
-        label: false,
-      },
+        label: false
+      }
     },
-
     "ui:options": {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: "horizontal", // Set layout to horizontal
-    },
-  },
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: "horizontal"
+    }
+  }
 };
+
 
 const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
   const [formData, setFormData] = useState([{}]);
@@ -150,22 +143,22 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData([]);
+      setFormData([{}]);
     } finally {
       LoaderClose();
     }
   };
 
-  useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      toastShown.current = false;
-    } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
-      }
-    }
-  }, [selectedOrg, year, selectedCorp]);
+  // useEffect(() => {
+  //   if (selectedOrg && year) {
+  //     loadFormData();
+  //     toastShown.current = false;
+  //   } else {
+  //     if (!toastShown.current) {
+  //       toastShown.current = true;
+  //     }
+  //   }
+  // }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -228,7 +221,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
           />
         </div>
       )}
-      <ToastContainer />
+
     </>
   );
 };

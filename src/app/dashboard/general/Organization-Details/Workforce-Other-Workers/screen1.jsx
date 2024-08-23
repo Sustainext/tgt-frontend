@@ -16,7 +16,7 @@ const widgets = {
   TableWidget: GeneralWorkersEmployees,
 };
 
-const view_path = "gri-governance-policy_commitments-2-23-c-leave";
+const view_path = "gri-general-workforce_other_workers-workers-2-8-a";
 const client_id = 1;
 const user_id = 1;
 
@@ -235,22 +235,8 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
-      // setFormData(response.data.form_data[0].data);
-      const Newdata =[
-        {
-            "TypeofWorker": "Others (please specify)",
-            "TotalnumberofWorkers": "568",
-            "Contractualrelationship": "Others (please specify)",
-            "Workperformed": "Others (please specify)",
-            "Engagementapproach": "Directly",
-            "Thirdparty": "Others (please specify)",
-            "TypeofWorker_others": "test1",
-            "Contractualrelationship_others": "test45",
-            "Thirdparty_others": "test54",
-            "Workperformed_others": "test85"
-        }
-    ]
-    setFormData(Newdata);
+      setFormData(response.data.form_data[0].data);
+
     } catch (error) {
       setFormData(initialFormData);
     } finally {
@@ -272,7 +258,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
     console.log("Form data:", formData);
-    // updateFormData();
+    updateFormData();
   };
 
   return (
@@ -323,8 +309,8 @@ their contractual relationships with your organization, and the types of work th
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -339,7 +325,7 @@ their contractual relationships with your organization, and the types of work th
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

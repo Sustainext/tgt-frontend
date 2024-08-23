@@ -15,7 +15,7 @@ const widgets = {
     TableWidget: CustomTableWidget5,
 };
 
-const view_path = 'gri-social-employee_hires-401-1a-new_emp_hire-permanent_emp'
+const view_path = 'gri-general-workforce_employees-2-7-a-b-part_time_employee'
 const client_id = 1
 const user_id = 1
 
@@ -132,7 +132,7 @@ const Tab5 = ({ fullName, selectedOrg, year, selectedCorp }) => {
 
       const loadFormData = async () => {
         LoaderOpen();
-        setFormData([{}]);
+        setFormData(initialFormData);
         const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
         try {
           const response = await axiosInstance.get(url);
@@ -141,7 +141,7 @@ const Tab5 = ({ fullName, selectedOrg, year, selectedCorp }) => {
           setRemoteUiSchema(response.data.form[0].ui_schema);
           setFormData(response.data.form_data[0].data);
         } catch (error) {
-          setFormData([{}]);
+          setFormData(initialFormData);
         } finally {
           LoaderClose();
         }
@@ -162,15 +162,15 @@ const Tab5 = ({ fullName, selectedOrg, year, selectedCorp }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Form data:', formData);
-        // updateFormData()
+        updateFormData()
     };
 
     return (
         <>
             <div className="mx-2 p-3 mb-6 rounded-md">
                 <Form
-                    schema={schema}
-                    uiSchema={uiSchema}
+                    schema={r_schema}
+                    uiSchema={r_ui_schema}
                     formData={formData}
                     onChange={handleChange}
                     validator={validator}
@@ -185,7 +185,7 @@ const Tab5 = ({ fullName, selectedOrg, year, selectedCorp }) => {
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

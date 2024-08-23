@@ -15,7 +15,7 @@ const widgets = {
   inputWidget: inputWidget2,
 };
 
-const view_path = "gri-governance-remuneration-2-19-b-policies";
+const view_path = "gri-general-assurance-policy-2-5-a";
 const client_id = 1;
 const user_id = 1;
 
@@ -212,8 +212,8 @@ policy and practice for seeking external assurance."
 
         <div className="mx-2 mb-3">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
