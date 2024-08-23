@@ -44,6 +44,7 @@ const selectWidget4 = (props) => {
         <select
         className="block w-full rounded-md border-0 py-4 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset  sm:text-sm sm:leading-6"
           onChange={handleChange}
+          value={value}
         >
           <option value="" disabled={!!props.value}>{`Select`}</option>
           {props.options.enumOptions.map((option) => (

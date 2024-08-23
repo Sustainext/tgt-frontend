@@ -15,7 +15,7 @@ const widgets = {
   inputWidget: inputWidget2,
 };
 
-const view_path = "gri-governance-remuneration-2-19-b-policies";
+const view_path = "gri-general-entities-list_of_entities-2-2-a";
 const client_id = 1;
 const user_id = 1;
 
@@ -159,7 +159,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // updateFormData();
+    updateFormData();
     console.log("test form data", formData);
   };
   const handleAddNew = () => {
@@ -191,46 +191,50 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
             </div>
           </div>
         </div>
-        <p className="flex mx-2 text-sm text-gray-700">
-        List all entities included in the sustainability report
-              <MdInfoOutline
-                data-tooltip-id={`tooltip-$e1`}
-                data-tooltip-content="Provide a list of all entities included in the sustainability report. "
-                className="mt-1.5 ml-2 text-[14px]"
-              />
-              <ReactTooltip
-                id={`tooltip-$e1`}
-                place="top"
-                effect="solid"
-                style={{
-                  width: "290px",
-                  backgroundColor: "#000",
-                  color: "white",
-                  fontSize: "12px",
-                  boxShadow: 3,
-                  borderRadius: "8px",
-                  textAlign: "left",
-                }}
-              ></ReactTooltip>
-              </p>
-        <div className="mx-2 mb-3">
+        {selectedOrg && year && (
+          <p className="flex mx-2 text-sm text-gray-700">
+            List all entities included in the sustainability report
+            <MdInfoOutline
+              data-tooltip-id={`tooltip-$e1`}
+              data-tooltip-content="Provide a list of all entities included in the sustainability report. "
+              className="mt-1.5 ml-2 text-[14px]"
+            />
+            <ReactTooltip
+              id={`tooltip-$e1`}
+              place="top"
+              effect="solid"
+              style={{
+                width: "290px",
+                backgroundColor: "#000",
+                color: "white",
+                fontSize: "12px",
+                boxShadow: 3,
+                borderRadius: "8px",
+                textAlign: "left",
+              }}
+            ></ReactTooltip>
+          </p>
+        )}
+        <div className="mx-2 mb-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
           />
         </div>
-        <div className="flex justify-between right-1 mt-5">
-          <button
-            type="button"
-            className="text-[#007EEF] text-[12px] flex cursor-pointer my-auto"
-            onClick={handleAddNew}
-          >
-            Add text box <MdAdd className="text-lg" />
-          </button>
+        <div className="flex justify-between right-1  mx-2">
+          {selectedOrg && year && (
+            <button
+              type="button"
+              className="text-[#007EEF] text-[12px] flex cursor-pointer my-auto"
+              onClick={handleAddNew}
+            >
+              Add text box <MdAdd className="text-lg" />
+            </button>
+          )}
         </div>
         <div className="mb-6">
           <button
@@ -239,7 +243,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

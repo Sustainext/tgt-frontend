@@ -18,7 +18,7 @@ const widgets = {
   RadioWidget2: RadioWidget2,
 };
 
-const view_path = "gri-social-product_labeling-417-1a-required";
+const view_path = "gri-general-entities-multiple-2-2-c";
 const client_id = 1;
 const user_id = 1;
 
@@ -75,7 +75,7 @@ const uiSchema = {
       "ui:title":
         "If yes, then explain the approach used for consolidating information.",
       "ui:tooltip":
-        "Include :i. whether the approach involves adjustments to information for minority interestsii. how the approach takes into account mergers, acquisitions and disposal of entities or parts of entities iii. whether and how the approach differs across the disclosures within GRI Standards and across material topics",
+        "Include :<ul><li>i. whether the approach involves adjustments to information for minority interests</li><li>ii. how the approach takes into account mergers, acquisitions and disposal of entities or parts of entities </li><li>        iii. whether and how the approach differs across the disclosures within GRI Standards and across material topics</li></ul>",
       "ui:tooltipdisplay": "block",
       "ui:widget": "TextareaWidget3",
       "ui:horizontal": true,
@@ -85,10 +85,10 @@ const uiSchema = {
     },
 
     "ui:options": {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: "horizontal", // Set layout to horizontal
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: "horizontal",
     },
   },
 };
@@ -123,9 +123,9 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      location,
+      corporate: selectedCorp,
+      organisation: selectedOrg,
       year,
-      month,
     };
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
@@ -174,7 +174,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -187,15 +187,13 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
       LoaderClose();
     }
   };
-
   useEffect(() => {
     if (selectedOrg && year) {
       loadFormData();
-      toastShown.current = false; // Reset the flag when valid data is present
+      toastShown.current = false;
     } else {
-      // Only show the toast if it has not been shown already
       if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
+        toastShown.current = true;
       }
     }
   }, [selectedOrg, year, selectedCorp]);
@@ -245,7 +243,7 @@ iv. Disposal of the product and environmental or social impacts.
             <div className={`flex float-end`}>
               <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 ">
                 <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                  GRI 2-2-b
+                  GRI 2-2-c
                 </p>
               </div>
             </div>
@@ -253,8 +251,8 @@ iv. Disposal of the product and environmental or social impacts.
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

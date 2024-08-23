@@ -15,8 +15,13 @@ const Textboxmultirowfile = (props) => {
   const [file, setFile] = useState(value.file || { fileURL: "", fileName: "" });
 
   useEffect(() => {
+    setRows(value.rows || [{ text: "" }]);
+    setFile(value.file || { fileURL: "", fileName: "" });
+  }, [value]);
+
+  useEffect(() => {
     onChange({ rows, file });
-  }, [rows, file]);
+  }, [rows, file, onChange]);
 
   const handleChange = (index, event) => {
     const newRows = [...rows];
@@ -121,7 +126,7 @@ const Textboxmultirowfile = (props) => {
           />
           {file.fileName ? (
             <label className="flex cursor-pointer">
-              <div className="flex items-center text-center mt-2 px-6">
+              <div className="flex items-center text-center mt-2">
                 <div className="truncate text-sky-600 text-sm flex text-center">
                   <MdFilePresent className="w-6 h-6 mr-1 text-green-500" />{" "}
                   {file.fileName}
@@ -131,7 +136,7 @@ const Textboxmultirowfile = (props) => {
           ) : (
             <label
               htmlFor={`fileInput-${uiSchema["ui:title"]}`}
-              className="flex cursor-pointer ml-1"
+              className="flex cursor-pointer"
             >
               <div className="flex items-center mt-2">
                 <MdOutlineFileUpload className="w-6 h-6 mr-1 text-[#007EEF]" />

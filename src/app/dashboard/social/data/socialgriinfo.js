@@ -5140,20 +5140,41 @@ export const Socialdata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <div className="text-[11px] text-[#727272] mb-4">
-          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">Guidance to 2-9-c</div>
-          The organization can describe the composition of the highest governance body and its committees by additional indicators of diversity, such as age, ancestry and ethnic origin, citizenship, creed, disability, or any other indicators of diversity that are relevant for reporting.
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+              Guidance to 2-9-c
+            </div>
+            The organization can describe the composition of the highest
+            governance body and its committees by additional indicators of
+            diversity, such as age, ancestry and ethnic origin, citizenship,
+            creed, disability, or any other indicators of diversity that are
+            relevant for reporting.
           </div>
           <div className="text-[11px] text-[#727272] mb-4">
-          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">Guidance to 2-9-c-ii</div>
-          ‘Independence’ refers to conditions that enable the members of the highest governance body to exercise independent judgment free from any external influence or conflicts of interest. See reference [20] in the Bibliography for more information on independence criteria for governance bodies.
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+              Guidance to 2-9-c-ii
+            </div>
+            ‘Independence’ refers to conditions that enable the members of the
+            highest governance body to exercise independent judgment free from
+            any external influence or conflicts of interest. See reference [20]
+            in the Bibliography for more information on independence criteria
+            for governance bodies.
           </div>
           <div className="text-[11px] text-[#727272] mb-4">
-          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">Guidance to 2-9-c-iv</div>
-          A position or commitment held by a highest governance body member is significant when the time and attention it demands compromises the member’s ability to perform its duties in the organization. Significant positions can include cross-board memberships.
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+              Guidance to 2-9-c-iv
+            </div>
+            A position or commitment held by a highest governance body member is
+            significant when the time and attention it demands compromises the
+            member’s ability to perform its duties in the organization.
+            Significant positions can include cross-board memberships.
           </div>
           <div className="text-[11px] text-[#727272] mb-4">
-          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">Guidance to 2-9-c-vii</div>
-          Competencies relevant to the impacts of the organization include competencies relevant to impacts commonly associated with the organization’s sectors, products, and geographic locations
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+              Guidance to 2-9-c-vii
+            </div>
+            Competencies relevant to the impacts of the organization include
+            competencies relevant to impacts commonly associated with the
+            organization’s sectors, products, and geographic locations
           </div>
           <div>
             <a
@@ -5179,12 +5200,22 @@ export const Socialdata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <div className="text-[11px] text-[#727272] mb-4">
-          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">Guidance to 2-10-b-iii</div>
-          ‘Independence’ refers to conditions that enable the members of the highest governance body to exercise independent judgment free from any external influence or conflicts of interest. See reference [20] in the Bibliography for more information on independence criteria for governance bodies.
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+              Guidance to 2-10-b-iii
+            </div>
+            ‘Independence’ refers to conditions that enable the members of the
+            highest governance body to exercise independent judgment free from
+            any external influence or conflicts of interest. See reference [20]
+            in the Bibliography for more information on independence criteria
+            for governance bodies.
           </div>
           <div className="text-[11px] text-[#727272] mb-4">
-          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">Guidance to 2-10-b-iv</div>
-          Competencies relevant to the impacts of the organization include competencies relevant to impacts commonly associated with the organization’s sectors, products, and geographic locations.
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+              Guidance to 2-10-b-iv
+            </div>
+            Competencies relevant to the impacts of the organization include
+            competencies relevant to impacts commonly associated with the
+            organization’s sectors, products, and geographic locations.
           </div>
           <div>
             <a
@@ -5211,12 +5242,22 @@ export const Socialdata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <div className="text-[11px] text-[#727272] mb-4">
-          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">Guidance to 2-10-b-iii</div>
-          ‘Independence’ refers to conditions that enable the members of the highest governance body to exercise independent judgment free from any external influence or conflicts of interest. See reference [20] in the Bibliography for more information on independence criteria for governance bodies.
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+              Guidance to 2-10-b-iii
+            </div>
+            ‘Independence’ refers to conditions that enable the members of the
+            highest governance body to exercise independent judgment free from
+            any external influence or conflicts of interest. See reference [20]
+            in the Bibliography for more information on independence criteria
+            for governance bodies.
           </div>
           <div className="text-[11px] text-[#727272] mb-4">
-          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">Guidance to 2-10-b-iv</div>
-          Competencies relevant to the impacts of the organization include competencies relevant to impacts commonly associated with the organization’s sectors, products, and geographic locations.
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
+              Guidance to 2-10-b-iv
+            </div>
+            Competencies relevant to the impacts of the organization include
+            competencies relevant to impacts commonly associated with the
+            organization’s sectors, products, and geographic locations.
           </div>
           <div>
             <a
@@ -5241,8 +5282,14 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-        <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">Guidance</div>
-        Remuneration policies are established to ensure that the remuneration arrangements help recruit, motivate, and retain the highest governance body members, senior executives, and other employees. Remuneration policies further support the organization’s strategy and contribution to sustainable development and align with stakeholders' interests.
+          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">
+            Guidance
+          </div>
+          Remuneration policies are established to ensure that the remuneration
+          arrangements help recruit, motivate, and retain the highest governance
+          body members, senior executives, and other employees. Remuneration
+          policies further support the organization’s strategy and contribution
+          to sustainable development and align with stakeholders' interests.
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
@@ -5266,8 +5313,49 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-        <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">Guidance to 2-21-a and 2-21-b</div>
-        <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">This disclosure covers all employees as reported under Disclosure 2-7 in this Standard.<br/><br/>Annual total compensation includes salary, bonus, stock awards, option awards, non-equity incentive plan compensation, change in pension value, and nonqualified deferred compensation earnings provided over the course of a year. When calculating the ratio, the organization should, depending on the organization’s remuneration policies and availability of data, consider all of the following:<br/>• Base salary, which is the sum of guaranteed, short-term, and non-variable cash compensation.<br/>• Total cash compensation, which is the sum of the base salary and cash allowances, bonuses, commissions, cash profit-sharing, and other forms of variable cash payments.<br/>• Direct compensation, which is the sum of total cash compensation and total fair value of all annual long-term incentives (e.g., stock option awards, restricted stock shares or units, performance stock shares or units, phantom stock shares, stock appreciation rights, and long-term cash awards).<br/><br/>The annual total compensation ratio can be calculated using the following formula:<br/>(Annual total compensation for the organization's highest paid-individual / Median annual total compensation for all of the organization's employees excluding the highest-paid individual)<br/><br/>The change in the annual total compensation ratio can be calculated using the following formula:<br/>(Percentage increase in annual total compensation for the organization's highest-paid individual / Median percentage increase in annual total compensation for all of the organization's employees excluding the highest-paid individual)<br/></div>
+          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">
+            Guidance to 2-21-a and 2-21-b
+          </div>
+          <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+            This disclosure covers all employees as reported under Disclosure
+            2-7 in this Standard.
+            <br />
+            <br />
+            Annual total compensation includes salary, bonus, stock awards,
+            option awards, non-equity incentive plan compensation, change in
+            pension value, and nonqualified deferred compensation earnings
+            provided over the course of a year. When calculating the ratio, the
+            organization should, depending on the organization’s remuneration
+            policies and availability of data, consider all of the following:
+            <br />• Base salary, which is the sum of guaranteed, short-term, and
+            non-variable cash compensation.
+            <br />• Total cash compensation, which is the sum of the base salary
+            and cash allowances, bonuses, commissions, cash profit-sharing, and
+            other forms of variable cash payments.
+            <br />• Direct compensation, which is the sum of total cash
+            compensation and total fair value of all annual long-term incentives
+            (e.g., stock option awards, restricted stock shares or units,
+            performance stock shares or units, phantom stock shares, stock
+            appreciation rights, and long-term cash awards).
+            <br />
+            <br />
+            The annual total compensation ratio can be calculated using the
+            following formula:
+            <br />
+            (Annual total compensation for the organization's highest
+            paid-individual / Median annual total compensation for all of the
+            organization's employees excluding the highest-paid individual)
+            <br />
+            <br />
+            The change in the annual total compensation ratio can be calculated
+            using the following formula:
+            <br />
+            (Percentage increase in annual total compensation for the
+            organization's highest-paid individual / Median percentage increase
+            in annual total compensation for all of the organization's employees
+            excluding the highest-paid individual)
+            <br />
+          </div>
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
@@ -5291,8 +5379,34 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-        <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">Guidance</div>
-        <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">The organization should describe:<br/>• its short, medium, and long-term vision and strategy to manage its impacts on the economy, environment, and people, including impacts on their human rights, across the organization’s activities and business relationships;<br/>• how its purpose, business strategy, and business model aim to prevent negative impacts and achieve positive impacts on the economy, environment, and people;<br/>• its short and medium-term strategic priorities for contributing to sustainable development, including how the priorities are aligned with authoritative intergovernmental instruments;<br/>• the broader trends (e.g., macroeconomic, social, political) affecting the organization and its strategy for contributing to sustainable development;<br/>• the key events, achievements, and failures associated with the organization’s contribution to sustainable development during the reporting period;<br/>• a view of performance against goals and targets related to the organization’s material topics during the reporting period;<br/>• the organization’s main challenges, goals, and targets regarding its contribution to sustainable development for the next year and the coming three to five years.</div>
+          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">
+            Guidance
+          </div>
+          <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+            The organization should describe:
+            <br />• its short, medium, and long-term vision and strategy to
+            manage its impacts on the economy, environment, and people,
+            including impacts on their human rights, across the organization’s
+            activities and business relationships;
+            <br />• how its purpose, business strategy, and business model aim
+            to prevent negative impacts and achieve positive impacts on the
+            economy, environment, and people;
+            <br />• its short and medium-term strategic priorities for
+            contributing to sustainable development, including how the
+            priorities are aligned with authoritative intergovernmental
+            instruments;
+            <br />• the broader trends (e.g., macroeconomic, social, political)
+            affecting the organization and its strategy for contributing to
+            sustainable development;
+            <br />• the key events, achievements, and failures associated with
+            the organization’s contribution to sustainable development during
+            the reporting period;
+            <br />• a view of performance against goals and targets related to
+            the organization’s material topics during the reporting period;
+            <br />• the organization’s main challenges, goals, and targets
+            regarding its contribution to sustainable development for the next
+            year and the coming three to five years.
+          </div>
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
@@ -5316,10 +5430,44 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-        <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">Guidance</div>
-        <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">This disclosure gives insight into how the organization embeds its policy commitments for responsible business conduct, including the commitment to respect human rights, throughout its activities and business relationships. This ensures that people at all levels act responsibly and with awareness of and respect for human rights.</div>
-        <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">Guidance to 2-24-a-i</div>
-        <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">Examples of different levels within an organization include the highest governance body, senior executives, and operational levels.<br/><br/>The organization can report:<br/>• the most senior level with oversight of, or accountability for, the implementation of the policy commitments;<br/><br/>• the functions in the organization with day-to-day responsibility for implementing each of the policy commitments (e.g., human resources with the responsibility for implementing the commitment to respect the rights of workers), including:<br/>- their reporting lines to senior decision-making levels;<br/>- the reason for allocating the responsibility to them;<br/><br/>• whether responsible business conduct is formally discussed at meetings of the highest governance body or senior executives and, if so, which topics are discussed;<br/><br/>• whether there are other formal or systematic means for discussions about responsible business conduct between different levels or functions in the organization (e.g., a crossfunctional working group).</div>
+          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">
+            Guidance
+          </div>
+          <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+            This disclosure gives insight into how the organization embeds its
+            policy commitments for responsible business conduct, including the
+            commitment to respect human rights, throughout its activities and
+            business relationships. This ensures that people at all levels act
+            responsibly and with awareness of and respect for human rights.
+          </div>
+          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">
+            Guidance to 2-24-a-i
+          </div>
+          <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+            Examples of different levels within an organization include the
+            highest governance body, senior executives, and operational levels.
+            <br />
+            <br />
+            The organization can report:
+            <br />• the most senior level with oversight of, or accountability
+            for, the implementation of the policy commitments;
+            <br />
+            <br />• the functions in the organization with day-to-day
+            responsibility for implementing each of the policy commitments
+            (e.g., human resources with the responsibility for implementing the
+            commitment to respect the rights of workers), including:
+            <br />- their reporting lines to senior decision-making levels;
+            <br />- the reason for allocating the responsibility to them;
+            <br />
+            <br />• whether responsible business conduct is formally discussed
+            at meetings of the highest governance body or senior executives and,
+            if so, which topics are discussed;
+            <br />
+            <br />• whether there are other formal or systematic means for
+            discussions about responsible business conduct between different
+            levels or functions in the organization (e.g., a crossfunctional
+            working group).
+          </div>
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
@@ -5343,8 +5491,1462 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-        <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">Guidance</div>
-        <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">This disclosure covers the organization’s mechanisms for individuals to seek advice and raise concerns about responsible business conduct in the organization's operations and business relationships. Examples of these mechanisms include confidential interviews during site visits, escalation processes (to raise issues through management levels), hotlines, mechanisms to report non-compliance with laws and regulations, and whistleblowing mechanisms.<br/><br/>These mechanisms enable individuals to raise concerns about wrongdoing or breaches of the law in the organization’s operations or business relationships, regardless of whether the individuals themselves are harmed or not. They are distinct from grievance mechanisms, which enable stakeholders to raise concerns about, and seek remedy / remediation for, the organization’s potential and actual negative impacts on them. Grievance mechanisms are reported under Disclosure 2-25 in this Standard.<br/><br/>If the organization’s grievance mechanisms and its mechanisms for seeking advice and raising concerns about responsible business conduct operate in a similar way, the organization can provide a single description of how these mechanisms operate and explain which mechanisms the description covers.<br/><br/>The organization can report:<br/>• who the intended users of the mechanisms are;<br/>• how the mechanisms operate and which level or function in the organization is assigned responsibility for them;<br/>• whether the mechanisms are operated independently of the organization (e.g., by a third party);<br/>• the process through which concerns are investigated;<br/>• whether requests for advice and concerns raised are treated confidentially;<br/>• whether the mechanisms can be used anonymously.<br/><br/>Additionally, the organization can report information about the effectiveness of the mechanisms, including:<br/>• whether and how the intended users are informed about the mechanisms and trained on how to use them;<br/>• the accessibility of the mechanisms, such as the number of hours per day or days per week they are available, and their availability in different languages;<br/>• how the organization seeks to ensure it respects users’ human rights and protects them against reprisals (i.e., non-retaliation for raising concerns);<br/>• how satisfied users are with the mechanisms and with the resulting outcomes;<br/>• the number and types of requests for advice received during the reporting period, and the percentage of requests that were answered;<br/>• the number and types of concerns raised during the reporting period, and the percentage of concerns that were addressed and resolved or found to be unsubstantiated.</div>
+          <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">
+            Guidance
+          </div>
+
+          <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+            This disclosure covers the organization’s mechanisms for individuals
+            to seek advice and raise concerns about responsible business conduct
+            in the organization's operations and business relationships.
+            Examples of these mechanisms include confidential interviews during
+            site visits, escalation processes (to raise issues through
+            management levels), hotlines, mechanisms to report non-compliance
+            with laws and regulations, and whistleblowing mechanisms.
+            <br />
+            <br />
+            These mechanisms enable individuals to raise concerns about
+            wrongdoing or breaches of the law in the organization’s operations
+            or business relationships, regardless of whether the individuals
+            themselves are harmed or not. They are distinct from grievance
+            mechanisms, which enable stakeholders to raise concerns about, and
+            seek remedy / remediation for, the organization’s potential and
+            actual negative impacts on them. Grievance mechanisms are reported
+            under Disclosure 2-25 in this Standard.
+            <br />
+            <br />
+            If the organization’s grievance mechanisms and its mechanisms for
+            seeking advice and raising concerns about responsible business
+            conduct operate in a similar way, the organization can provide a
+            single description of how these mechanisms operate and explain which
+            mechanisms the description covers.
+            <br />
+            <br />
+            The organization can report:
+            <br />• who the intended users of the mechanisms are;
+            <br />• how the mechanisms operate and which level or function in
+            the organization is assigned responsibility for them;
+            <br />• whether the mechanisms are operated independently of the
+            organization (e.g., by a third party);
+            <br />• the process through which concerns are investigated;
+            <br />• whether requests for advice and concerns raised are treated
+            confidentially;
+            <br />• whether the mechanisms can be used anonymously.
+            <br />
+            <br />
+            Additionally, the organization can report information about the
+            effectiveness of the mechanisms, including:
+            <br />• whether and how the intended users are informed about the
+            mechanisms and trained on how to use them;
+            <br />• the accessibility of the mechanisms, such as the number of
+            hours per day or days per week they are available, and their
+            availability in different languages;
+            <br />• how the organization seeks to ensure it respects users’
+            human rights and protects them against reprisals (i.e.,
+            non-retaliation for raising concerns);
+            <br />• how satisfied users are with the mechanisms and with the
+            resulting outcomes;
+            <br />• the number and types of requests for advice received during
+            the reporting period, and the percentage of requests that were
+            answered;
+            <br />• the number and types of concerns raised during the reporting
+            period, and the percentage of concerns that were addressed and
+            resolved or found to be unsubstantiated.
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["91"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-25: Processes to remediate negative impacts
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">Guidance</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure covers grievance mechanisms that the organization
+              has established or participates in. Grievance mechanisms enable
+              stakeholders to raise concerns about, and seek remedy for, the
+              organization’s potential and actual negative impacts on them. This
+              includes impacts on their human rights. This disclosure also
+              covers other processes by which the organization provides for or
+              cooperates in the remediation of negative impacts that it
+              identifies it has caused or contributed to.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The United Nations (UN) Guiding Principles on Business and Human
+              Rights [14] and the Organisation for Economic Co-operation and
+              Development (OECD) Guidelines for Multinational Enterprises [12]
+              set out expectations for organizations to provide for or cooperate
+              in the remediation, through legitimate processes, of negative
+              impacts that they identify they have caused or contributed to. The
+              organization is not responsible for the remediation of negative
+              impacts directly linked to its operations, products, or services
+              by its business relationships, where the organization has not
+              contributed to the impacts. It can, however, play a role in the
+              remediation. See Box 3 in GRI 3: Material Topics 2021 for more
+              information on causing, contributing, or being directly linked to
+              negative impacts.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              These instruments also set out expectations for organizations to
+              establish or participate in effective operational-level grievance
+              mechanisms.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Grievance mechanisms are distinct from whistleblowing mechanisms.
+              Whistleblowing mechanisms enable individuals to raise concerns
+              about wrongdoing or breaches of the law in the organization’s
+              operations or business relationships, regardless of whether the
+              individuals themselves are harmed or not. Whistleblowing
+              mechanisms are reported under Disclosure 2- 26 in this Standard.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure covers the operation of grievance mechanisms and
+              other remediation processes. The actions taken to provide for or
+              cooperate in the remediation of actual negative impacts for
+              material topics are reported under 3-3-d-ii in GRI 3.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The disclosure is only relevant to environmental remediation
+              processes (e.g., processes to remove contaminants from soil) when
+              these are connected to impacts on stakeholders or grievances
+              raised by stakeholders. However, the remedy provided to
+              stakeholders through the mechanisms and processes covered by this
+              disclosure may involve environmental remediation. The use of
+              environmental remediation processes can be reported under 3-3-d-ii
+              in GRI 3.
+            </p>
+            <p className="text-[11px] text-black mb-2">Guidance to 2-25-b</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Grievance mechanisms refer to any routinized, state-based or
+              non-state-based, judicial or nonjudicial processes through which
+              stakeholders can raise grievances and seek remedy. Examples of
+              state-based judicial and non-judicial grievance mechanisms include
+              courts (for both criminal and civil actions), labor tribunals,
+              national human rights institutions, National Contact Points under
+              the OECD Guidelines for Multinational Enterprises, ombudsperson
+              offices, consumer protection agencies, regulatory oversight
+              bodies, and government-run complaints offices. Non-state-based
+              grievance mechanisms include those administered by the
+              organization, either alone or together with stakeholders, such as
+              operational-level grievance mechanisms and collective bargaining,
+              including the mechanisms established by collective bargaining.
+              They also include mechanisms administered by industry
+              associations, international organizations, civil society
+              organizations, or multi-stakeholder groups. Operational-level
+              grievance mechanisms are administered by the organization either
+              alone or in collaboration with other parties and are directly
+              accessible by the organization’s stakeholders. They allow for
+              grievances to be identified and addressed early and directly,
+              thereby preventing both harm and grievances from escalating. They
+              also provide important feedback on the effectiveness of the
+              organization’s due diligence from those who are directly affected.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization can describe:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                the intended purpose and users of the mechanisms (i.e., whether
+                they are intended for a particular stakeholder category, topic,
+                or region) and whether they enable users to raise human
+                rights-related concerns. For example, the organization can
+                explain that it has established a mechanism for community
+                members to raise complaints about resettlement, as well as a
+                separate hotline for workers to raise concerns about issues
+                affecting their rights, such as health and safety conditions;
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                how the mechanisms operate and who administers them (the
+                organization or another party);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                whether operational-level grievance mechanisms are administered
+                at the organizational level or whether they are administered at
+                a lower level (at the site or project level) and, in such a
+                case, how information from these mechanisms is centralized;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                how the mechanisms have been designed and on which principles
+                and guidelines they are based, including whether they are
+                designed to meet the effectiveness criteria set out in UN
+                Guiding Principle 31 [14];
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                the process through which grievances are investigated;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                whether grievances are communicated to the highest governance
+                body;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                whether grievances are treated confidentially;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                whether the mechanisms can be used by stakeholders anonymously
+                through representation by a third party;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                whether the organization requires or provides incentives for the
+                creation or improvement of operational-level grievance
+                mechanisms in workplaces of suppliers;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                whether the organization provides a back-up process for
+                workplaces of suppliers that do not have operational-level
+                grievance mechanisms or where the existing grievance mechanisms
+                in those workplaces result in unresolved issues
+              </li>
+            </ul>
+            <p className="text-[11px] text-black mb-2">Guidance to 2-25-c</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Requirement 2-25-c covers remediation processes other than
+              grievance mechanisms. Such processes lead to the remediation of an
+              impact without mechanisms for filing a formal complaint.Examples
+              include instances where the organization takes action to remediate
+              an actual impact evidenced in an impact assessment or a report
+              published by a civil society organization.
+            </p>
+            <p className="text-[11px] text-black mb-2">Guidance to 2-25-d</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization can describe, for example, how it engages with
+              stakeholders who are the intended users of the grievance
+              mechanisms, to understand how they want to access the mechanisms
+              to raise concerns, and their expectations about how the mechanisms
+              will operate.
+            </p>
+            <p className="text-[11px] text-black mb-2">Guidance to 2-25-e</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              According to UN Guiding Principle 31 [14], effective grievance
+              mechanisms are legitimate, accessible, predictable, equitable,
+              transparent, rights-compatible, and a source of continuous
+              learning. In addition to these criteria, effective
+              operational-level grievance mechanisms are also based on
+              engagement and dialogue. It can be more difficult for the
+              organization to assess the effectiveness of grievance mechanisms
+              that it participates in compared to those it has established
+              itself.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization can report:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                whether and how the intended users are informed about the
+                grievance mechanisms and remediation processes;
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                whether and how the intended users are trained to use the
+                grievance mechanisms and remediation processes;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                the accessibility of the grievance mechanisms and remediation
+                processes, such as the number of hours per day or days per week
+                they are accessible, and their availability in different
+                languages;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                how the organization seeks to ensure it respects users’ human
+                rights and protects them against reprisals (i.e.,
+                non-retaliation for raising complaints or concerns);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                how satisfied users are with the grievance mechanisms and
+                remediation processes, and with the resulting outcomes, as well
+                as how the organization assesses user satisfaction;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                the number and types of grievances filed during the reporting
+                period, and the percentage of grievances that were addressed and
+                resolved, including the percentage that were resolved through
+                remediation;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                the number of grievances filed during the reporting period that
+                are repeated or recurring;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                changes made to the grievance mechanisms and remediation
+                processes in response to lessons learned about their
+                effectiveness.
+              </li>
+              <p className="text-[11px] text-[#727272] mb-4">
+                Quantitative data, such as the number of grievances, is unlikely
+                to be sufficient on its own. For example, a low number of
+                grievances could indicate that few incidents have occurred, but
+                it could also signal that their intended users do not trust the
+                mechanisms. For this reason, contextual information should be
+                provided to help information users interpret the data.
+              </p>
+            </ul>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["92"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-1: Organizational details
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 2-1-a
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              If the organization uses a commonly known trading name or business
+              name that is differentfrom its legal name, it should report this
+              in addition to its legal name.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 2-1-b
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The nature of ownership and the legal form of the organization
+              refers to whether it is publicly or privately owned, and whether
+              it is an incorporated entity, a partnership, a sole
+              proprietorship, or another type of entity such as a nonprofit, an
+              association, or a charity.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 2-1-c
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Headquarters are an organization’s global administrative center,
+              the place from which it is controlled or directed.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 2-1-d
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              If the organization has reported its countries of operation
+              elsewhere, such as in its audited consolidated financial
+              statements or financial information filed on public record, the
+              organization can provide a link or reference to this information.
+              The organization can also report the regions or specific locations
+              within countries (e.g., states, cities) where it has operations,
+              if this provides contextual information for understanding the
+              organization’s impacts.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["93"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-2: Entities included in the organization’s sustainability
+        reporting
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 2-2-a
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The entities reported under 2-2-a form the basis for reporting the
+              disclosures in this Standard and for determining the
+              organization’s material topics. Requirement 2-2-a includes those
+              entities that the organization controls or has an interest in and
+              are included in its sustainability reporting, such as
+              subsidiaries, joint ventures, and affiliates, including minority
+              interests. The organization should report information for the same
+              group of entities as covered in its financial reporting. When
+              determining its material topics, the organization should consider
+              the impacts of additional entities with which it has business
+              relationships that are not included in the list reported
+              under2-2-a. See section 1 in GRI 3: Material Topics 2021 for more
+              information.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 2-2-a & 2-2-b
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              If all the entities in the organization’s financial reporting are
+              also included in its sustainability reporting, a brief statement
+              of this fact, including a link or reference to the list of
+              entities included in its audited consolidated financial statements
+              or financial information filed on public record, insufficient to
+              comply with 2-2-a and 2-2-b.The organization should separately
+              specify any additional entities included in the sustainability
+              reporting that are not included in its financial reporting.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 2-2-c
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              A minority interest is an ownership interest in an entity that is
+              not controlled by the parent entity.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["94"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-3: Reporting period, frequency and contact point
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 2-3-a
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization can specify the frequency of sustainability
+              reporting as ‘annual’.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 2-3-a & 2-3-b
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The reporting period refers to the time period covered by the
+              reported information and should include the start and end dates
+              (e.g., 1 January 2022 to 31 December 2022, 1 July 2022 through 30
+              June 2023). The organization should report the information for the
+              same reporting period as covered in its financial reporting. The
+              organization should also publish the information at the same time
+              as its financial reporting, where this is possible.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["95"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-4: Restatements of information
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[520px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization should provide a restatement of information when
+              it has learned that the previously reported information needs to
+              be revised. Restatements of information from previous reporting
+              periods can correct an error, or account for changes in
+              measurement methodology or to the nature of the business.
+              Restatements of information ensure consistency and enable
+              comparability of information between reporting periods. The
+              organization should report the criteria used to determine when a
+              change or error in previously reported information is considered
+              significant enough to provide a restatement. A change or error
+              could be significant when it influences information users’
+              decision-making (e.g., it influences the analysis of the changes
+              in the organization’s impacts over time). For example, if an
+              organization adopts a new, more accurate method for measuring
+              greenhouse gas (GHG) emissions, it may subsequently experience a
+              reduction in its previously reported GHG emissions that meets the
+              organization’s restatement criteria. The organization then
+              restates its previously reported GHG emissions. In such a case,
+              the organization is required to explain that it has restated its
+              previously reported GHG emissions due to the new measurement
+              methodology and that this has resulted in lower GHG emissions than
+              previously reported. The organization should also report the
+              quantitative change observed (e.g., GHG emissions are 10% lower
+              than the emissions previously reported). If the organization has
+              not made any restatement in the reporting period, a brief
+              statement of this fact is sufficient to comply with the
+              requirement.
+            </p>
+            <p className="text-[11px] text-black mb-2">Guidance to 2-4-a-i</p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                Examples of reasons for restatements of information include:
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                Change of base period or length of the reporting period;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Change in the nature of the business;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Change in the measurement methodologies or in the definitions
+                used;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Disposals, mergers, or acquisitions;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Error made in previous reporting periods.
+              </li>
+            </ul>
+            <p className="text-[11px] text-black mb-2">Guidance to 2-4-a-ii</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The effect of the restatement refers to the consequences of the
+              change or correction made to previously reported information. If
+              the restatement relates to quantitative information, the
+              organization should specify the quantitative change in the
+              restated information (e.g., GHG emissions are 10% lower compared
+              to the level of emissions previously reported). If the
+              organization has not made any restatement in the reporting period,
+              a brief statement of this fact is sufficient to comply with the
+              requirement.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["96"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-5: External assurance
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[420px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-black mb-2">Guidance to 2-5-b-ii</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              If this information is covered in the external assurance reports
+              or statements that the organization has provided a link or a
+              reference to under 2-5-b-i, then a brief statement of this fact is
+              sufficient to comply with the requirement.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization can also describe, in accessible language:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                The scope of information and processes covered;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                The responsibilities of the organization relative to the
+                assurance provider;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                The opinion or conclusions formally signed off by the assurance
+                provider;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                A summary of the work performed;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Information on the experience and qualifications of the
+                assurance provider, e.g., profile and level of subject matter
+                expertise of the individuals involved
+              </li>
+            </ul>
+            <p className="text-[11px] text-black mb-2">Guidance to 2-5-b-iii</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              An assurance provider conducting external assurance needs to
+              demonstrate independence from the organization to reach and
+              publish objective and impartial conclusions about the
+              organization’s sustainability reporting.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["97"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-6: Activities, value chain and other business relationships
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-black mb-2">Guidance to 2-6-a</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Sectors can be identified according to categories, such as the
+              public or private sector; or industry-specific categories, such as
+              the education sector or the financial sector.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Depending on the organization’s activities, sectors can be
+              identified using the GRI Sector Standards or classification
+              systems such as the Global Industry Classification Standard
+              (GICS®), the Industry Classification Benchmark (ICB), the
+              International Standard Industrial Classification of All Economic
+              Activities (ISIC), and the Sustainable Industry Classification
+              System (SICS®).
+            </p>
+            <p className="text-[13px] text-black mb-2">Guidance to 2-6-b</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization’s value chain includes the range of activities
+              carried out by the organization, and by entities upstream and
+              downstream from the organization, to bring the organization’s
+              products or services from their conception to their end use.
+              Entities upstream from the organization provide products or
+              services used in the development of the organization’s own
+              products or services. Entities downstream from the organization
+              are those that receive products or services from the organization.
+              Entities in the value chain include entities beyond the first
+              tier, both upstream and downstream. The information reported under
+              2-6-b provides a context for understanding the organization’s
+              impacts across its value chain, including through the use of its
+              products and services. Describing the markets served provides
+              further information on the groups of customers targeted by the
+              organization’s products and services. The organization is not
+              required to provide a detailed description of each activity in its
+              value chain. Instead, it can provide a high-level overview of its
+              value chain.
+            </p>{" "}
+            <p className="text-[13px] text-black mb-2">Guidance to 2-6-b-i</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              When describing its activities, the organization should report its
+              total number of operations and explain how it defines ‘operation’.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              When describing its products and services, the organization should
+              report:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                The quantity of products or services provided during the
+                reporting period (e.g., number of products or services provided,
+                net sales of products or services provided);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Whether it sells products or services that are banned in certain
+                markets or are the subject of stakeholder concerns or public
+                debate, including the reason for the ban or concerns and how the
+                organization has responded to these concerns.
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-2">
+              When describing the markets served, the organization can report:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                The geographic locations where products and services are
+                offered;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                The demographic or other characteristics of the markets;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Information on the size and relative importance of the markets
+                (e.g., net sales, net revenues).
+              </li>
+            </ul>
+            <p className="text-[11px] text-black mb-2">Guidance to 2-6-b-ii</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization can describe:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                The types of suppliers (e.g., brokers, contractors,
+                wholesalers);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                The estimated number of suppliers throughout its supply chain
+                and in each tier (e.g., first tier, second tier);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                The types of activities related to the organization’s products
+                and services carried out by its suppliers (e.g., manufacturing,
+                providing consulting services);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                The nature of its business relationships with its suppliers
+                (e.g., long-term or short-term,
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                contractual or non-contractual, project-based or event-based);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                The sector-specific characteristics of its supply chain (e.g.,
+                labor-intensive);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                The estimated monetary value of payments made to its suppliers;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                The geographic location of its suppliers.
+              </li>
+            </ul>
+            <p className="text-[13px] text-black mb-2">Guidance to 2-6-b-iii</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization can describe:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                The types of downstream entities (e.g., customers,
+                beneficiaries);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                The estimated number of downstream entities; the types of
+                activities related to the organization’s products and services
+                carried out by the downstream entities (e.g., manufacturing,
+                wholesale, retail);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                The nature of its business relationships with the downstream
+                entities (e.g., long-term or short-term, contractual or
+                non-contractual, project-based or event-based);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                The geographic location of the downstream entities.
+              </li>
+            </ul>
+            <p className="text-[13px] text-black mb-2">Guidance to 2-6-c</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Other relevant business relationships include relationships that
+              the organization has with entities that are not described as part
+              of its value chain under 2-6-b. These may include business
+              partners (e.g., joint ventures) and other entities directly linked
+              to the organization’s operations, products, or services (for
+              examples, see the note in the definition of ‘business
+              relationships’). The organization can report the types of
+              entities, their activities, and their geographic location.
+            </p>
+            <p className="text-[13px] text-black mb-2">Guidance to 2-6-d</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Requirement 2-6-d entails describing significant changes in the
+              organization’s sectors, value chain, and other business
+              relationships compared to the previous reporting period. This
+              information can help explain changes to the organization’s
+              impacts. Examples of significant changes that can be reported
+              under this disclosure are changes in activities such as the
+              opening, closing, or expansion of facilities; changes in the
+              structure of the organization’s supply chain or in its
+              relationships with suppliers, including selection and termination;
+              or changes in the location of its suppliers.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["98"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-7: Employees
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-black mb-2">Guidance to 2-7-a</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              An employee is an individual who is in an employment relationship
+              with the organization according to national law or practice.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Providing a breakdown of employees by gender gives insight into
+              gender representation across the organization. Providing a
+              breakdown of employees by region gives insight into regional
+              variations. A region can refer to a country or other geographic
+              locations, such as a city or a world region.
+            </p>
+            <p className="text-[13px] text-black mb-2">Guidance to 2-7-b</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The definitions of permanent, temporary, non-guaranteed hours,
+              full-time, and part-time employees differ between countries. If
+              the organization has employees in more than one country, it should
+              use the definitions as per the national laws of the countries
+              where the employees are based to calculate country-level data. The
+              country-level data should then be added up to calculate total
+              numbers, disregarding differences in national legal definitions.
+            </p>{" "}
+            <p className="text-[11px] text-[#727272] mb-4">
+              Non-guaranteed hours employees are employed by the organization
+              without a guarantee of a minimum or fixed number of working hours.
+              The employee may need to make themselves available for work as
+              required, but the organization is not contractually obligated to
+              offer the employee a minimum or fixed number of working hours per
+              day, week, or month. Casual employees, employees with zero-hour
+              contracts, and on-call employees are examples that fall under this
+              category. If the organization is unable to report exact figures,
+              it can report estimates of the number of employees to the nearest
+              ten or, where the number of employees is greater than 1,000, to
+              the nearest 100, and explain this under 2-7-c.
+            </p>
+            <p className="text-[13px] text-black mb-4">Guidance to 2-7-c</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization can report the total number of employees and the
+              number of permanent, temporary, non-guaranteed hours, full-time,
+              and part-time employees in head count or full-time equivalent
+              (FTE). Reporting these numbers in head count gives insight into
+              the number of individual employees, whether full-time or part-time
+              employed. Reporting these numbers in FTE gives insight into the
+              hours worked. The organization can use another methodology for
+              reporting these numbers. Reporting the number of employees at the
+              end of the reporting period provides information for that point in
+              time, without capturing fluctuations during the reporting period.
+              Reporting these numbers in averages across the reporting period
+              takes into account fluctuations during the reporting period.
+            </p>
+            <p className="text-[13px] text-black mb-2">Guidance to 2-7-d</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Quantitative data, such as the number of temporary or part-time
+              employees, is unlikely to be sufficient on its own. For example, a
+              high proportion of temporary or part-time employees could indicate
+              lack of employment security for employees, but it could equally
+              signal workplace flexibility when offered as a voluntary choice.
+              For this reason, the organization is required to report contextual
+              information to help information users interpret the data. The
+              organization can explain the reasons for temporary employment. An
+              example of such a reason is the recruitment of employees to
+              undertake work on a temporary or seasonal project or event.
+              Another example is the standard practice to offer a temporary
+              contract (e.g., six months) to new employees before an offer of
+              permanent employment is made. The organization can also explain
+              the reasons for non-guaranteed hours employment.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization can explain how it defines full-time employment.
+              If the organization has employees in more than one country, it can
+              report the definitions of full-time employment it uses for the
+              regions that cover these countries. The organization can also
+              explain the reasons for part-time employment. Examples of such
+              reasons are to accommodate employees’ requests to work reduced
+              hours, or because the organization is unable to provide full-time
+              employment to all employees. If there are differences in
+              permanent, temporary, non-guaranteed hours, full-time, and
+              part-time employment between genders or between regions, the
+              organization can explain the reasons for these differences.
+            </p>
+            <p className="text-[13px] text-black mb-2">Guidance to 2-7-e</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Requirement 2-7-e enables the organization to explain how the
+              numbers of employees vary during the reporting period compared to
+              the previous reporting periods (i.e., whether the numbers have
+              increased or decreased). It can also include the reasons for the
+              fluctuations. For example, an increase in the number of employees
+              during the reporting period could be due to a seasonal event.
+              Conversely, a decrease in the number of employees compared to the
+              previous reporting period could be due to the completion of a
+              temporary project.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              It is up to the organization to determine which fluctuations in
+              the number of employees it considers significant to report under
+              2-7-e. The organization should report its threshold for
+              determining significant fluctuations. If there are no significant
+              fluctuations in the number of employees during the reporting
+              period or between reporting periods, a brief statement of this
+              fact is sufficient to comply with the requirement.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["99"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-08.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-red-900 text-[17px] font-bold ml-2">SDG 8</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 8: Promote sustained, inclusive and
+            sustainable economic growth, full and productive employment and
+            decent work for all
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 8.4</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Improve progressively, through 2030, global resource efficiency in
+              consumption and production and endeavour to decouple economic
+              growth from environmental degradation, in accordance with the
+              10-Year Framework of Programmes on Sustainable Consumption and
+              Production, with developed countries taking the lead
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.4.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Material footprint, material footprint per capita, and material
+              footprint per GDP
+            </p>
+
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.4.2</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Domestic material consumption, domestic material consumption per
+              capita, and domestic material consumption per GDP
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal8"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["100"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-8: Workers who are not employees
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-black mb-2">
+              Guidance to 2-8-a-i and 2-8-a-ii
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              When reporting its contractual relationship with the most common
+              types of workers, the organization should report whether it
+              engages them directly or indirectly through a third party, and in
+              the latter case, who this third party is (e.g., employment agency,
+              contractor). It is sufficient that the organization provides a
+              general description. The organization is not required to report
+              the type of worker, contractual relationship, and work performed
+              for every worker who is not an employee.
+            </p>
+            <p className="text-[13px] text-black mb-2">Guidance to 2-8-b</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization can report the number of workers who are not
+              employees in head count or fulltime equivalent (FTE). The head
+              count gives insight into the number of individual workers, whether
+              on a full-time or part-time basis. The FTE gives insight into the
+              hours worked. The organization can use another methodology for
+              reporting this number. Reporting the number of workers who are not
+              employees at the end of the reporting period provides information
+              for that point in time without capturing fluctuations during the
+              reporting period. Reporting this number as an average across the
+              reporting period takes into account fluctuations during the
+              reporting period
+            </p>{" "}
+            <p className="text-[13px] text-black mb-4">Guidance to 2-8-c</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Requirement 2-8-c enables the organization to explain how the
+              number of workers who are not employees varies during the
+              reporting period or compared to previous reporting periods (i.e.,
+              whether the numbers have increased or decreased). It can also
+              include the reasons for the fluctuations. For example, an increase
+              in the number of workers who are not employees during the
+              reporting period could be due to a seasonal event. Conversely, a
+              decrease in the number of workers who are not employees compared
+              to the previous reporting period could be due to the completion of
+              a temporary project. It is up to the organization to determine
+              which fluctuations in the number of workers it considers
+              significant to report under 2-8-c. The organization should report
+              its threshold for determining significant fluctuations. If there
+              are no significant fluctuations in the number of workers who are
+              not employees during the reporting period or between reporting
+              periods, a brief statement of this fact is sufficient to comply
+              with the requirement.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["101"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-27: Compliance with laws and regulations
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-black mb-2">Guidance</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              This disclosure addresses non-compliance, or failure to comply
+              with, laws and regulations that apply to the organization.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Non-compliance with laws and regulations can give insight into the
+              ability of management to ensure that the organization conforms to
+              certain performance parameters. Laws and regulations can be issued
+              by various bodies, including local, regional, and national
+              governments; regulatory authorities; and public agencies.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Laws and regulations include:
+            </p>
+            <ul className="list-disc ml-6 mb-2">
+              <li className="text-[11px] text-[#727272]">
+                International declarations, conventions, and treaties;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                National, subnational, regional, and local regulations;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Binding voluntary agreements made with regulatory authorities
+                and developed as a substitute for implementing a new regulation;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Voluntary agreements (or covenants), if the organization
+                directly joins the agreement, or if public agencies make the
+                agreement applicable to organizations in their territory through
+                legislation or regulation.
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-2">
+              This disclosure includes significant instances of non-compliance
+              that resulted in administrative or judicial sanctions and fines
+              that are being appealed during the reporting period.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Non-monetary sanctions can include restrictions imposed by
+              governments, regulatory authorities, or public agencies on the
+              organization’s activities or operations, such as withdrawal of
+              trading licenses or licenses to operate in highly regulated
+              industries. They can also include directives to cease or remediate
+              an unlawful activity.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization can use information about fines that have been
+              reported in its audited consolidated financial statements or in
+              the financial information filed on public record, including fines
+              that are being appealed and which may appear as balance sheet
+              reserves in the financial statements.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              If there were no significant instances of non-compliance with laws
+              and regulations or no fines were paid during the reporting period,
+              a brief statement of this fact is sufficient to comply with the
+              disclosure.
+            </p>
+            <p className="text-[13px] text-black mb-2">Guidance to 2-27-c</p>
+            <p className="text-[11px] text-[#727272] mb-2 ">
+              The description of significant instances of non-compliance can
+              include the geographic location where the instance occurred, and
+              the matter to which the instance relates, such as a tax fraud or a
+              spill. The organization is required to report sufficient
+              information for information users to understand the type and the
+              context of significant instances of non-compliance.
+            </p>{" "}
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization can also explain whether the significant
+              instances are repeated or recurring.
+            </p>{" "}
+            <p className="text-[13px] text-black mb-4">Guidance to 2-27-d</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              When determining the significant instances of non-compliance, the
+              organization can assess:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                The severity of the impact resulting from the instance;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                External benchmarks used in its sector to determine significant
+                instances of noncompliance.
+              </li>
+            </ul>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["102"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-28: Membership associations
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[220px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-black mb-2">Guidance</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization may have a significant role in an association or
+              advocacy organization when it holds a position in the governance
+              body, participates in projects or committees, or provides
+              substantive funding beyond routine membership dues. The role may
+              also be significant when the organization views its membership as
+              strategic to influencing the mission or objective of the
+              association that is critical to the organization’s own activities.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["103"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-29: Approach to stakeholder engagement
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-black mb-2">Guidance</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Stakeholders are individuals or groups that have interests that
+              are affected or could be affected by the organization’s activities
+              [11]. For more information on stakeholders, see section 2.4 in GRI
+              1: Foundation 2021.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure covers stakeholder engagement undertaken by the
+              organization as part of its ongoing activities, rather than
+              specifically for the purpose of sustainability reporting.
+            </p>
+            <p className="text-[13px] text-black mb-2">Guidance to 2-29-a-i</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Common categories of stakeholders for organizations are business
+              partners, civil society organizations, consumers, customers,
+              employees and other workers, governments, local communities,
+              non-governmental organizations, shareholders and other investors,
+              suppliers, trade unions, and vulnerable groups
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization can explain how it determines which categories of
+              stakeholders to engage with and which categories not to engage
+              with.
+            </p>
+            <p className="text-[13px] text-black mb-2">Guidance to 2-29-a-ii</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The purpose of stakeholder engagement can be, for example, to
+              identify actual and potential impacts or to determine prevention
+              and mitigation responses to potential negative impacts. In some
+              cases, stakeholder engagement is a right in and of itself, such as
+              the right of workers to form or join trade unions or their right
+              to bargain collectively.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization can also report:
+            </p>
+            <ul className="list-disc ml-6 mb-2">
+              <li className="text-[11px] text-[#727272]">
+                The type of stakeholder engagement (e.g., participation,
+                consultation, information) and its frequency (e.g., ongoing,
+                quarterly, annually);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                When it engages directly with stakeholders and when it engages
+                with credible stakeholder representatives or proxy
+                organizations, or other credible independent expert resources,
+                and why;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Whether stakeholder engagement activities take place at the
+                organizational level or at a lower level, such as at the site or
+                project level, and in the latter case, how information from
+                stakeholder engagement activities is centralized;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                The resources (e.g., financial or human resources) allocated to
+                stakeholder engagement.
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Further information on stakeholder engagement undertaken for
+              specific activities is reported under other disclosures. For
+              example, the organization must report on stakeholder engagement
+              undertaken to determine and manage material topics under 3-1-b and
+              3-3-f in GRI 3: Material Topics 2021.
+            </p>
+            <p className="text-[13px] text-black mb-2">
+              Guidance to 2-29-a-iii
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Meaningful stakeholder engagement is characterized by two-way
+              communication and depends on the good faith of participants on
+              both sides. It is also responsive and ongoing and includes in many
+              cases engaging with relevant stakeholders before decisions are
+              made.
+            </p>{" "}
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization can report:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                {" "}
+                how it takes into account potential barriers to stakeholder
+                engagement (e.g., language and cultural differences, gender and
+                power imbalances, divisions within a community or group)
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                how it engages with at-risk or vulnerable groups (e.g., whether
+                it takes specific approaches and gives special attention to
+                potential barriers);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                how it provides stakeholders with information that is
+                understandable and accessible through appropriate communication
+                channels;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                {" "}
+                how stakeholder feedback is recorded and integrated into
+                decision-making, and how stakeholders are informed about the way
+                in which their feedback has influenced decisions;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                how it seeks to respect the human rights of all stakeholders
+                engaged, for example, their rights to privacy, freedom of
+                expression, and peaceful assembly and protest;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                how it works with business partners to engage with stakeholders
+                in a meaningful way, including the expectations it places on
+                business partners to respect the human rights of stakeholders
+                during engagement.
+              </li>
+            </ul>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["104"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-30: Collective bargaining agreements
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-black mb-2">Guidance</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              This disclosure provides insights into how the organization
+              engages in collective bargaining with its employees. Collective
+              bargaining is a fundamental right at work covered in the
+              International Labour Organization (ILO) Right to Organise and
+              Collective Bargaining Convention [8].
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Collective bargaining refers to negotiations that take place
+              between one or more employers or employers' organizations and one
+              or more workers' organizations (e.g., trade unions). The objective
+              of these negotiations is to reach a collective agreement on
+              working conditions and terms of employment (e.g., wages, working
+              time) and to regulate relations between employers and workers. [3]
+              These negotiations are an important means through which employers’
+              organizations and workers’ organizations can improve working
+              conditions and labor relations.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Collective agreements can be made at the level of the
+              organization, at the level of a particular site, at the industry
+              level, and at the national level in countries where this is the
+              practice. Collective agreements can cover specific groups of
+              workers, for example, those performing a specific activity or
+              working at a specific location.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              If the organization has a statement or policy commitment on
+              freedom of association and collective bargaining, this is reported
+              under 2-23-b-i in this Standard or 3-3-c in GRI 3: Material Topics
+              2021.
+            </p>
+            <p className="text-[13px] text-black mb-2">Guidance to 2-30-a</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization is required to report the percentage of its
+              employees whose working conditions and terms of employment are
+              regulated by one or more collective bargaining agreements. The
+              percentage of employees covered by collective bargaining
+              agreements is calculated using the following formula: (Number of
+              employees covered by collective bargaining agreements / Total
+              number of employees reported under 2-7-a) * 100 The employees
+              covered by collective bargaining agreements are those employees to
+              whom the organization is obligated to apply the agreement. This
+              means that if none of the employees are covered by a collective
+              bargaining agreement, the percentage reported is zero. An employee
+              covered by more than one collective bargaining agreement only
+              needs to be counted once. This requirement does not ask for the
+              percentage of employees represented by a works council or
+              belonging to trade unions, which can be different. The percentage
+              of employees covered by collective bargaining agreements can be
+              higher than the percentage of unionized employees when the
+              collective bargaining agreements apply to both union and non-union
+              members. Alternatively, the percentage of employees covered by
+              collective bargaining agreements can be lower than the percentage
+              of unionized employees. This may be the case when there are no
+              collective bargaining agreements available or when the collective
+              bargaining agreements do not cover all unionized employees. The
+              organization can also provide a breakdown of the percentage of
+              employees covered by collective bargaining agreements by region,
+              or provide comparisons with industry benchmarks.
+            </p>
+
+            <p className="text-[13px] text-black mb-2">Guidance to 2-30-b</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              There may be instances where collective bargaining agreements
+              cover some or none of the organization’s employees. However, the
+              working conditions and terms of employment of these employees may
+              be influenced or determined by the organization based on other
+              collective bargaining agreements, such as agreements that cover
+              other employees or agreements from other organizations. If this is
+              the case, the organization is required to report it under 2-30-b.
+              If this is not the case, and the working conditions and terms of
+              employment of these employees are not influenced or determined
+              based on other collective bargaining agreements, a brief statement
+              of this fact is sufficient to comply with this requirement.
+            </p>
+          </div>
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
