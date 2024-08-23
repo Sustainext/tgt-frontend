@@ -40,7 +40,7 @@ const uiSchema = {
       "ui:title":
         "Briefly describe any factors or events relevant to understanding the reported employee data",
       "ui:tooltip":
-        "Specify the nature and reason for these fluctuations (e.g., project completion, restructuring).",
+        "Please provide additional details about the factors influencing the reported employee breakdown (e.g., reasons for temporary/part-time employment, regional differences).",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -204,7 +204,7 @@ and events relevant to understanding the reported employee data."
           <div className="w-[20%]">
             <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
               <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-7-e
+                GRI 2-7-d
               </p>
             </div>
           </div>

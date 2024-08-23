@@ -27,7 +27,7 @@ const schema = {
       MembershipAssociations: {
         type: "array",
         title:
-          "List the committees of the highest governance body that are responsible for decision-making on and overseeing the management of the organization's impacts on the economy, environment, and people",
+          "Report industry associations, other membership associations, and national or international advocacy organizations in which it participates in a significant role.",
         items: {
           type: "array",
           items: {
@@ -43,10 +43,10 @@ const uiSchema = {
     "ui:order": ["MembershipAssociations"],
     MembershipAssociations: {
       "ui:title":
-        "List the committees of the highest governance body that are responsible for decision-making on and overseeing the management of the organization's impacts on the economy, environment, and people",
+        "Report industry associations, other membership associations, and national or international advocacy organizations in which it participates in a significant role.",
       "ui:widget": "FileUploadWithAddRowAndCols",
       "ui:tooltip":
-        "Provide a list of committees of the highest governance body, including those responsible for overseeing the management of the organization's impacts on the economy, environment, and people (e.g., Sustainability Committee, Corporate Social Responsibility Committee, etc.).",
+        "Describe an organization's involvement in  industry associations,other membership associations, and national or international advocacy organizations where it plays a significant role.",
       "ui:tooltipdisplay": "block",
       "ui:horizontal": true,
       "ui:options": {
