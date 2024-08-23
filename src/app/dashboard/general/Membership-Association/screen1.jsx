@@ -131,18 +131,15 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
       LoaderClose();
     }
   };
-
   const loadFormData = async () => {
     LoaderOpen();
-    // Initialize formData with default values
     setFormData([{ MembershipAssociations: [[]], fileName: '', fileUrl: '' }]);
-
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&corporate=${selectedCorp}&year=${year}`;
-
     try {
       const response = await axiosInstance.get(url);
-
-      // Check if form_data is present and not empty
+      console.log("API called successfully:", response.data);
+      setRemoteSchema(response.data.form[0].schema);
+      setRemoteUiSchema(response.data.form[0].ui_schema);
       const responseData = response.data.form_data[0].data;
       if (responseData && responseData.length > 0) {
         setFormData(responseData);
@@ -151,13 +148,8 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
         setFormData([{ MembershipAssociations: [[]], fileName: '', fileUrl: '' }]);
       }
 
-      // Set schemas
-      setRemoteSchema(response.data.form[0].schema);
-      setRemoteUiSchema(response.data.form[0].ui_schema);
     } catch (error) {
-      console.error("Error loading form data:", error);
-      // Set to default values on error
-      setFormData([{ MembershipAssociations: [[]], fileName: '', fileUrl: '' }]);
+      setFormData([{}]);
     } finally {
       LoaderClose();
     }

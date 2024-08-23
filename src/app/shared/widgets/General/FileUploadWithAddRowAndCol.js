@@ -23,11 +23,16 @@ const FileUploadWithAddRowAndCol = (props) => {
     } else {
       setLocalMembershipAssociations(value.MembershipAssociations);
     }
-  }, [value, onChange]);
 
+    // Update file info if it changes in props
+    setFileInfo({ fileName: value.fileName || "", fileUrl: value.fileUrl || "" });
+
+    console.log('Initialized localMembershipAssociations:', value.MembershipAssociations);
+  }, [value, onChange]);
 
   const debouncedOnChange = useCallback(
     debounce((updatedMembershipAssociations) => {
+      console.log('Debounced onChange:', updatedMembershipAssociations);
       onChange({ ...value, MembershipAssociations: updatedMembershipAssociations });
     }, 300),
     [value, onChange]
@@ -100,108 +105,110 @@ const FileUploadWithAddRowAndCol = (props) => {
     }
   };
 
-return (
-  <>
-    <div className="mb-6">
-      <div className="flex mb-2">
-        <div className="relative w-full">
-          <p className="text-sm text-gray-700 flex">
-            {uiSchema["ui:title"]}
-            <MdInfoOutline
-              data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(/\s+/g, "-")}`}
-              data-tooltip-html={uiSchema["ui:tooltip"]}
-              className="mt-1 ml-2 w-[30px] text-[14px]"
-              style={{ display: uiSchema["ui:tooltipdisplay"] }}
-            />
-            <ReactTooltip
-              id={`tooltip-${uiSchema["ui:title"].replace(/\s+/g, "-")}`}
-              place="top"
-              effect="solid"
-              style={{
-                width: "300px",
-                backgroundColor: "#000",
-                color: "white",
-                fontSize: "12px",
-                boxShadow: 3,
-                borderRadius: "8px",
-              }}
-            />
-          </p>
-        </div>
-      </div>
-
-      {localMembershipAssociations.map((row, rowIndex) => (
-        <div key={rowIndex} className="mb-2">
-          <div className="flex">
-            {row.map((col, colIndex) => (
-              <textarea
-                key={colIndex}
-                placeholder="Enter data"
-                className={`border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mr-2`}
-                value={col}
-                onChange={(event) => handleTextChange(rowIndex, colIndex, event)}
-                rows={4}
+  return (
+    <>
+      <div className="mb-6">
+        <div className="flex mb-2">
+          <div className="relative w-full">
+            <p className="text-sm text-gray-700 flex">
+              {uiSchema["ui:title"]}
+              <MdInfoOutline
+                data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(/\s+/g, "-")}`}
+                data-tooltip-html={uiSchema["ui:tooltip"]}
+                className="mt-1 ml-2 w-[30px] text-[14px]"
+                style={{ display: uiSchema["ui:tooltipdisplay"] }}
               />
-            ))}
-            <button
-              type="button"
-              className="text-red-500 hover:text-red-700"
-              onClick={() => deleteRow(rowIndex)}
-            >
-              <MdOutlineDeleteOutline size={24} />
-            </button>
+              <ReactTooltip
+                id={`tooltip-${uiSchema["ui:title"].replace(/\s+/g, "-")}`}
+                place="top"
+                effect="solid"
+                style={{
+                  width: "300px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                }}
+              />
+            </p>
           </div>
         </div>
-      ))}
-      <div className="flex justify-between mt-2">
-        <button
-          type="button"
-          className="text-blue-500 hover:text-blue-700 text-sm flex items-center"
-          onClick={addRow}
-        >
-          <MdAdd className="mr-1" size={18} /> Add Row
-        </button>
-        <button
-          type="button"
-          className="text-blue-500 hover:text-blue-700 text-sm flex items-center"
-          onClick={addColumn}
-        >
-          <MdAdd className="mr-1" size={18} /> Add Column
-        </button>
-      </div>
 
-      <div className="mt-4">
-        <div className="flex">
-          <input
-            type="file"
-            id={`fileInput-${uiSchema["ui:title"]}`}
-            onChange={handleFileChange}
-            style={{ display: "none" }}
-          />
-          {fileInfo.fileName ? (
-            <label htmlFor={`fileInput-${uiSchema["ui:title"]}`} className="flex cursor-pointer">
-              <div className="flex items-center text-center mt-2">
-                <div className="truncate text-sky-600 text-sm flex text-center">
-                  <MdFilePresent className="w-6 h-6 mr-1 text-green-500" /> {fileInfo.fileName}
-                </div>
+        {localMembershipAssociations.length > 0 && localMembershipAssociations[0].length > 0 && (
+          localMembershipAssociations.map((row, rowIndex) => (
+            <div key={rowIndex} className="mb-2">
+              <div className="flex">
+                {row.map((col, colIndex) => (
+                  <textarea
+                    key={colIndex}
+                    placeholder="Enter data"
+                    className="border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mr-2"
+                    value={col}
+                    onChange={(event) => handleTextChange(rowIndex, colIndex, event)}
+                    rows={4}
+                  />
+                ))}
+                <button
+                  type="button"
+                  className="text-red-500 hover:text-red-700"
+                  onClick={() => deleteRow(rowIndex)}
+                >
+                  <MdOutlineDeleteOutline size={24} />
+                </button>
               </div>
-            </label>
-          ) : (
-            <label htmlFor={`fileInput-${uiSchema["ui:title"]}`} className="flex cursor-pointer ml-1">
-              <div className="flex items-center mt-2">
-                <MdOutlineFileUpload className="w-6 h-6 mr-1 text-[#007EEF]" />
-                <div className="truncate text-[#007EEF] text-sm ml-1">
-                  Upload documentation
+            </div>
+          ))
+        )}
+
+        <div className="flex justify-between mt-2">
+          <button
+            type="button"
+            className="text-blue-500 hover:text-blue-700 text-sm flex items-center"
+            onClick={addRow}
+          >
+            <MdAdd className="mr-1" size={18} /> Add Row
+          </button>
+          <button
+            type="button"
+            className="text-blue-500 hover:text-blue-700 text-sm flex items-center"
+            onClick={addColumn}
+          >
+            <MdAdd className="mr-1" size={18} /> Add Column
+          </button>
+        </div>
+
+        <div className="mt-4">
+          <div className="flex">
+            <input
+              type="file"
+              id={`fileInput-${uiSchema["ui:title"]}`}
+              onChange={handleFileChange}
+              style={{ display: "none" }}
+            />
+            {fileInfo.fileName ? (
+              <label htmlFor={`fileInput-${uiSchema["ui:title"]}`} className="flex cursor-pointer">
+                <div className="flex items-center text-center mt-2">
+                  <div className="truncate text-sky-600 text-sm flex text-center">
+                    <MdFilePresent className="w-6 h-6 mr-1 text-green-500" /> {fileInfo.fileName}
+                  </div>
                 </div>
-              </div>
-            </label>
-          )}
+              </label>
+            ) : (
+              <label htmlFor={`fileInput-${uiSchema["ui:title"]}`} className="flex cursor-pointer ml-1">
+                <div className="flex items-center mt-2">
+                  <MdOutlineFileUpload className="w-6 h-6 mr-1 text-[#007EEF]" />
+                  <div className="truncate text-[#007EEF] text-sm ml-1">
+                    Upload documentation
+                  </div>
+                </div>
+              </label>
+            )}
+          </div>
         </div>
       </div>
-    </div>
-  </>
-);
-
+    </>
+  );
 };
 
 export default FileUploadWithAddRowAndCol;
