@@ -256,7 +256,8 @@ and explains any exclusions that may exist."
             {/* <p className="text-[12px] text-gray-500">Describe the governance structure, including the committees of the highest governance body</p> */}
           </div>
 
-          <div className="w-[25%] flex gap-2">
+          <div className="w-[25%]">
+            <div className="flex float-end">
             <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
               <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
                 GRI 2-1a
@@ -277,6 +278,8 @@ and explains any exclusions that may exist."
                 GRI 2-1d
               </p>
             </div>
+            </div>
+
           </div>
         </div>
         <div className="mx-2">
