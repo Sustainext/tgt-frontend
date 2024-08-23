@@ -5,55 +5,55 @@ import "react-tooltip/dist/react-tooltip.css";
 import { BlobServiceClient } from "@azure/storage-blob";
 
 const FileUploadWithAddRowAndCol = ({ onChange, value = [], uiSchema = {} }) => {
-  const [data, setData] = useState(value.length > 0 ? value.slice(0, -1) : [[""]]);
-  const [fileInfo, setFileInfo] = useState(value.length > 0 ? value[value.length - 1] : {});
+  const [data, setData] = useState([[""]]);
+  const [fileInfo, setFileInfo] = useState({});
+
+  useEffect(() => {
+    if (value.length > 0) {
+      setData(value.slice(0, -1));
+      setFileInfo(value[value.length - 1]);
+    }
+  }, [value]);
 
   useEffect(() => {
     if (data.length === 0) {
-      const defaultFirstRow = new Array(data[0]?.length || 1).fill("");
-      setData([defaultFirstRow]);
-      onChange([defaultFirstRow, fileInfo]);
+      setData([[""]]);
+    } else {
+      onChange([...data, fileInfo]);
     }
-  }, [data, onChange, fileInfo]);
+  }, [data, fileInfo, onChange]);
 
   const handleCellChange = (rowIndex, colIndex, event) => {
-    const newData = [...data];
-    newData[rowIndex][colIndex] = event.target.value;
+    const newData = data.map((row, rIndex) =>
+      row.map((cell, cIndex) =>
+        rIndex === rowIndex && cIndex === colIndex ? event.target.value : cell
+      )
+    );
     setData(newData);
-    onChange([...newData, fileInfo]);
   };
 
   const addRow = () => {
-    const newData = [...data, new Array(data[0]?.length || 1).fill("")];
-    setData(newData);
-    onChange([...newData, fileInfo]);
+    const newRow = new Array(data[0]?.length || 1).fill("");
+    setData([...data, newRow]);
   };
 
   const addColumn = () => {
-    const newData = data.map((row) => [...row, ""]);
-    setData(newData);
-    onChange([...newData, fileInfo]);
+    setData(data.map((row) => [...row, ""]));
   };
 
   const deleteRow = (rowIndex) => {
-    const newData = data.filter((_, index) => index !== rowIndex);
-    setData(newData);
-    onChange([...newData, fileInfo]);
+    setData(data.filter((_, index) => index !== rowIndex));
   };
 
   const deleteColumn = (colIndex) => {
-    const newData = data.map((row) => row.filter((_, index) => index !== colIndex));
-    setData(newData);
-    onChange([...newData, fileInfo]);
+    setData(data.map((row) => row.filter((_, index) => index !== colIndex)));
   };
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
     if (file) {
       const uploadedFileUrl = await uploadFileToAzure(file);
-      const newFileInfo = { fileURL: uploadedFileUrl, fileName: file.name };
-      setFileInfo(newFileInfo);
-      onChange([...data, newFileInfo]);
+      setFileInfo({ fileURL: uploadedFileUrl, fileName: file.name });
     }
   };
 
@@ -122,19 +122,21 @@ const FileUploadWithAddRowAndCol = ({ onChange, value = [], uiSchema = {} }) => 
                 <textarea
                   key={colIndex}
                   placeholder="Enter data"
-                  className="border appearance-none text-xs py-4 border-gray-400 text-neutral-600 pl-2 rounded-md  leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
+                  className="border appearance-none text-xs py-4 border-gray-400 text-neutral-600 pl-2 rounded-md leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
                   value={cell}
                   onChange={(e) => handleCellChange(rowIndex, colIndex, e)}
                   rows={1}
                 />
               ))}
-              <button
-                type="button"
-                className="text-red-500 hover:text-red-700"
-                onClick={() => deleteRow(rowIndex)}
-              >
-                <MdDelete />
-              </button>
+              {data.length > 1 && (
+                <button
+                  type="button"
+                  className="text-red-500 hover:text-red-700"
+                  onClick={() => deleteRow(rowIndex)}
+                >
+                  <MdDelete />
+                </button>
+              )}
             </div>
           ))}
         </div>
@@ -158,13 +160,13 @@ const FileUploadWithAddRowAndCol = ({ onChange, value = [], uiSchema = {} }) => 
           <div className="flex">
             <input
               type="file"
-              id={`fileInput-${uiSchema["ui:title"]}`} // Ensure unique id for each file input
+              id={`fileInput-${uiSchema["ui:title"]}`}
               onChange={handleFileChange}
               style={{ display: "none" }}
             />
             {fileInfo.fileName ? (
               <label className="flex cursor-pointer">
-                <div className="flex items-center text-center mt-2 px-6">
+                <div className="flex items-center text-center mt-2">
                   <div className="truncate text-sky-600 text-sm flex text-center">
                     <MdFilePresent className="w-6 h-6 mr-1 text-green-500" /> {fileInfo.fileName}
                   </div>
