@@ -18,7 +18,7 @@ const widgets = {
   RadioWidget2: RadioWidget2,
 };
 
-const view_path = "gri-social-product_labeling-417-1a-required";
+const view_path = "gri-general-restatements-2-4-a";
 const client_id = 1;
 const user_id = 1;
 
@@ -116,15 +116,17 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   };
 
   const updateFormData = async () => {
+    LoaderOpen();
     const data = {
       client_id: client_id,
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      location,
+      organisation: selectedOrg,
+      corporate: selectedCorp,
       year,
-      month,
     };
+
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
       const response = await axiosInstance.post(url, data);
@@ -172,7 +174,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&corporate=${selectedCorp}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -189,14 +191,13 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   useEffect(() => {
     if (selectedOrg && year) {
       loadFormData();
-      toastShown.current = false; // Reset the flag when valid data is present
+      toastShown.current = false;
     } else {
-      // Only show the toast if it has not been shown already
       if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
+        toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, selectedCorp, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -247,8 +248,8 @@ and explains any exclusions that may exist." className="mt-1.5 ml-2 text-[14px]"
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

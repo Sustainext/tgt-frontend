@@ -1,59 +1,64 @@
-import React, { useState, useEffect } from "react";
-import { MdKeyboardArrowDown, MdInfoOutline, MdAdd, MdDelete, MdOutlineFileUpload, MdFilePresent } from "react-icons/md";
+import React, { useState, useEffect, useCallback } from 'react';
+import { MdInfoOutline, MdOutlineFileUpload, MdFilePresent, MdAdd, MdOutlineDeleteOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { BlobServiceClient } from "@azure/storage-blob";
+import { debounce } from 'lodash';
 
-const FileUploadWithAddRowAndCol = ({ onChange, value = [], uiSchema = {} }) => {
-  const [data, setData] = useState([[""]]);
-  const [fileInfo, setFileInfo] = useState({});
+const FileUploadWithAddRowAndCol = (props) => {
+  const { onChange, value = { MembershipAssociations: [[]], fileName: '', fileUrl: '' }, uiSchema = {} } = props;
+  const [fileInfo, setFileInfo] = useState({ fileName: value.fileName || "", fileUrl: value.fileUrl || "" });
+  const [localMembershipAssociations, setLocalMembershipAssociations] = useState(value.MembershipAssociations);
 
+  // Ensure there is always at least one row with one column in MembershipAssociations
   useEffect(() => {
-    if (value.length > 0) {
-      setData(value.slice(0, -1));
-      setFileInfo(value[value.length - 1]);
+    if (!Array.isArray(value.MembershipAssociations) || value.MembershipAssociations.length === 0 || (value.MembershipAssociations.length === 1 && value.MembershipAssociations[0].length === 0)) {
+      onChange({ ...value, MembershipAssociations: [[""]] });
     }
-  }, [value]);
+  }, [value, onChange]);
 
-  useEffect(() => {
-    if (data.length === 0) {
-      setData([[""]]);
-    } else {
-      onChange([...data, fileInfo]);
-    }
-  }, [data, fileInfo, onChange]);
+  const debouncedOnChange = useCallback(
+    debounce((updatedMembershipAssociations) => {
+      onChange({ ...value, MembershipAssociations: updatedMembershipAssociations });
+    }, 300),
+    [value, onChange]
+  );
 
-  const handleCellChange = (rowIndex, colIndex, event) => {
-    const newData = data.map((row, rIndex) =>
-      row.map((cell, cIndex) =>
-        rIndex === rowIndex && cIndex === colIndex ? event.target.value : cell
-      )
-    );
-    setData(newData);
+  const handleTextChange = (rowIndex, colIndex, event) => {
+    const updatedMembershipAssociations = [...localMembershipAssociations];
+    updatedMembershipAssociations[rowIndex][colIndex] = event.target.value;
+    setLocalMembershipAssociations(updatedMembershipAssociations);
+    debouncedOnChange(updatedMembershipAssociations);
   };
 
   const addRow = () => {
-    const newRow = new Array(data[0]?.length || 1).fill("");
-    setData([...data, newRow]);
+    const newMembershipAssociations = [...localMembershipAssociations, localMembershipAssociations[0].map(() => "")];
+    setLocalMembershipAssociations(newMembershipAssociations);
+    onChange({ ...value, MembershipAssociations: newMembershipAssociations });
   };
 
   const addColumn = () => {
-    setData(data.map((row) => [...row, ""]));
+    const newMembershipAssociations = localMembershipAssociations.map(row => [...row, ""]);
+    setLocalMembershipAssociations(newMembershipAssociations);
+    onChange({ ...value, MembershipAssociations: newMembershipAssociations });
   };
 
   const deleteRow = (rowIndex) => {
-    setData(data.filter((_, index) => index !== rowIndex));
-  };
-
-  const deleteColumn = (colIndex) => {
-    setData(data.map((row) => row.filter((_, index) => index !== colIndex)));
+    const newMembershipAssociations = [...localMembershipAssociations];
+    newMembershipAssociations.splice(rowIndex, 1);
+    setLocalMembershipAssociations(newMembershipAssociations);
+    onChange({ ...value, MembershipAssociations: newMembershipAssociations });
   };
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
     if (file) {
-      const uploadedFileUrl = await uploadFileToAzure(file);
-      setFileInfo({ fileURL: uploadedFileUrl, fileName: file.name });
+      const fileUrl = await uploadFileToAzure(file);
+      if (fileUrl) {
+        const newFileInfo = { fileName: file.name, fileUrl };
+        setFileInfo(newFileInfo);
+        onChange({ ...value, ...newFileInfo });
+      }
     }
   };
 
@@ -90,12 +95,12 @@ const FileUploadWithAddRowAndCol = ({ onChange, value = [], uiSchema = {} }) => 
     <>
       <div className="mb-6">
         <div className="flex mb-2">
-          <div className="relative">
+          <div className="relative w-full">
             <p className="text-sm text-gray-700 flex">
               {uiSchema["ui:title"]}
               <MdInfoOutline
                 data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(/\s+/g, "-")}`}
-                data-tooltip-content={uiSchema["ui:tooltip"]}
+                data-tooltip-html={uiSchema["ui:tooltip"]}
                 className="mt-1 ml-2 w-[30px] text-[14px]"
                 style={{ display: uiSchema["ui:tooltipdisplay"] }}
               />
@@ -115,47 +120,46 @@ const FileUploadWithAddRowAndCol = ({ onChange, value = [], uiSchema = {} }) => 
             </p>
           </div>
         </div>
-        <div className="flex flex-col gap-2">
-          {data.map((row, rowIndex) => (
-            <div key={rowIndex} className="flex items-center gap-2">
-              {row.map((cell, colIndex) => (
+        {localMembershipAssociations.map((row, rowIndex) => (
+          <div key={rowIndex} className="mb-2">
+            <div className="flex">
+              {row.map((col, colIndex) => (
                 <textarea
                   key={colIndex}
                   placeholder="Enter data"
-                  className="border appearance-none text-xs py-4 border-gray-400 text-neutral-600 pl-2 rounded-md leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
-                  value={cell}
-                  onChange={(e) => handleCellChange(rowIndex, colIndex, e)}
-                  rows={1}
+                  className={`border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mr-2`}
+                  value={col}
+                  onChange={(event) => handleTextChange(rowIndex, colIndex, event)}
+                  rows={4}
                 />
               ))}
-              {data.length > 1 && (
-                <button
-                  type="button"
-                  className="text-red-500 hover:text-red-700"
-                  onClick={() => deleteRow(rowIndex)}
-                >
-                  <MdDelete />
-                </button>
-              )}
+              <button
+                type="button"
+                className="text-red-500 hover:text-red-700"
+                onClick={() => deleteRow(rowIndex)}
+              >
+                <MdOutlineDeleteOutline size={24} />
+              </button>
             </div>
-          ))}
-        </div>
-        <div className="flex gap-2 mt-2">
+          </div>
+        ))}
+        <div className="flex justify-between mt-2">
           <button
             type="button"
-            className="text-blue-500 hover:text-blue-700 flex items-center gap-1"
+            className="text-blue-500 hover:text-blue-700 text-sm flex items-center"
             onClick={addRow}
           >
-            <MdAdd /> Add Row
+            <MdAdd className="mr-1" size={18} /> Add Row
           </button>
           <button
             type="button"
-            className="text-blue-500 hover:text-blue-700 flex items-center gap-1"
+            className="text-blue-500 hover:text-blue-700 text-sm flex items-center"
             onClick={addColumn}
           >
-            <MdAdd /> Add Column
+            <MdAdd className="mr-1" size={18} /> Add Column
           </button>
         </div>
+
         <div className="mt-4">
           <div className="flex">
             <input
@@ -176,15 +180,25 @@ const FileUploadWithAddRowAndCol = ({ onChange, value = [], uiSchema = {} }) => 
               <label htmlFor={`fileInput-${uiSchema["ui:title"]}`} className="flex cursor-pointer ml-1">
                 <div className="flex items-center mt-2">
                   <MdOutlineFileUpload className="w-6 h-6 mr-1 text-[#007EEF]" />
-                  <div className="w-[150px] truncate text-[#007EEF] text-sm ml-1">
-                    Upload Documentation
+                  <div className="truncate text-[#007EEF] text-sm ml-1">
+                    Upload documentation
                   </div>
                 </div>
               </label>
             )}
           </div>
         </div>
+
+        {/* Display file URL if available */}
+        {fileInfo.fileUrl && (
+          <div className="mt-2 text-sm text-gray-700">
+            <a href={fileInfo.fileUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
+              {fileInfo.fileUrl}
+            </a>
+          </div>
+        )}
       </div>
+
     </>
   );
 };
