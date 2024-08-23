@@ -40,7 +40,7 @@ const uiSchema = {
       "ui:title":
         "Briefly describe any factors or events relevant to understanding the reported employee data",
       "ui:tooltip":
-        "Specify the nature and reason for these fluctuations (e.g., project completion, restructuring).",
+        "Please provide additional details about the factors influencing the reported employee breakdown (e.g., reasons for temporary/part-time employment, regional differences).",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,

@@ -26,9 +26,8 @@ const schema = {
     properties: {
       Q1: { type: "string", title: "Legal name" },
       Q2: { type: "string", title: "Nature of ownership & legal form" },
-      Q3: { type: "string", title: "Termination payments" },
-      Q4: { type: "string", title: "Location of headquarters" },
-      Q5: {
+      Q3: { type: "string", title: "Location of headquarters" },
+      Q4: {
         type: "array",
         title: "Countries of operation",
         items: {
@@ -45,7 +44,7 @@ const schema = {
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1","Q2","Q3","Q4","Q5"],
+    "ui:order": ["Q1","Q2","Q3","Q4"],
     Q1: {
       "ui:hading": "",
       "ui:hadingtooltip": "",
@@ -74,21 +73,8 @@ const uiSchema = {
           label: false,
         },
       },
+
       Q3: {
-        "ui:hading": "",
-        "ui:hadingtooltip": "",
-        "ui:hadingtooltipdisplay": "none",
-        "ui:hadingdisplay": "none",
-        "ui:title": "Termination payments",
-        "ui:tooltip": "Report on termination payments.Termination payments are all payments and benefits given to a departing member of the highest governance body or senior executive whose appointment is terminated.",
-        "ui:tooltipdisplay": "block",
-        "ui:widget": "inputWidget",
-        "ui:horizontal": true,
-        "ui:options": {
-          label: false,
-        },
-      },
-      Q4: {
         "ui:hading": "",
         "ui:hadingtooltip": "",
         "ui:hadingtooltipdisplay": "none",
@@ -102,7 +88,7 @@ const uiSchema = {
           label: false,
         },
       },
-      Q5: {
+      Q4: {
         "ui:title": "Countries of operation",
         "ui:tooltip": "Indicate the countries in which the organisation operates. Include: The organization can also specify the regions or specific locations within countries (e.g., states, cities) where it has operations.",
         "ui:tooltipdisplay": "block",
