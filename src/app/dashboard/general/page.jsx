@@ -388,7 +388,7 @@ const General = () => {
                     </li>
                   </AccordionItem>
                   <AccordionItem title="Organization Details">
-                    {/* <li
+                    <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(6)}
                     >
@@ -450,7 +450,7 @@ const General = () => {
                           </p>
                         )}
                       </div>
-                    </li> */}
+                    </li>
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(7)}
@@ -851,13 +851,13 @@ const General = () => {
                   </div>
                 </>
               )}
-               {/* {activeStep === 6 && (
+                {activeStep === 6 && (
                 <>
                   <div>
                     <BusinessDetails />
                   </div>
                 </>
-              )} */}
+              )}
                  {activeStep === 7 && (
                 <>
                   <div>
