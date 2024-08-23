@@ -851,13 +851,13 @@ const General = () => {
                   </div>
                 </>
               )}
-               {activeStep === 6 && (
+               {/* {activeStep === 6 && (
                 <>
                   <div>
                     <BusinessDetails />
                   </div>
                 </>
-              )}
+              )} */}
                  {activeStep === 7 && (
                 <>
                   <div>
