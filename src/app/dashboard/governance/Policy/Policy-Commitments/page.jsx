@@ -80,7 +80,7 @@ const PolicyCommitments = () => {
 
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-            Communication of critical concerns
+          Policy Commitments
             <MdInfoOutline
               data-tooltip-id={`tooltip-$e10`}
               data-tooltip-content="This section documents the data corresponding to the policy commitments."

@@ -27,7 +27,7 @@ const schema = {
     properties: {
       Q1: {
         type: "number",
-        title: "What is the percentage increase in annual total compensation for the organization's highest-paid",
+        title: "What is the percentage increase in annual total compensation for the organization's highest-paid individual?",
       },
       Q2: {
         type: "number",
@@ -43,9 +43,9 @@ const uiSchema = {
     "ui:order": ["Q1", "Q2"],
     Q1: {
       "ui:title":
-        "What is the percentage increase in annual total compensation for the organization's highest-paid",
+        "What is the percentage increase in annual total compensation for the organization's highest-paid individual?",
       "ui:tooltip":
-        "Specify the percentage increase in annual total compensation for the organization's highest-paid individual.",
+        "Specify the percentage increase in annual total compensation for the organization's highest-paid individual?",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:options": {
@@ -182,7 +182,7 @@ const PercentageIncrease = ({ selectedLocation, year }) => {
   return (
     <>
       <div
-        className="mx-2 p-3 mb-6 pb-6 rounded-md"
+        className="mx-2 p-3 mb-6 pb-10 rounded-md"
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",

@@ -39,7 +39,7 @@ const schema = {
             Criteria: { type: "string", title: "Criteria" },
             Whethertakenintoconsideration: {
               type: "string",
-              enum: ["Gender", "Race", "Others"],
+              enum: ["Yes", "No", "N/A"],
               title: "",
             },
             How: { type: "string", title: "Total no. of operations" },
