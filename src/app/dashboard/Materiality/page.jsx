@@ -6,7 +6,7 @@ import DataTable from "./components/dataTable";
 
 const Materiality = ({ open }) => {
 
-  const [data,setData]=useState(true)
+  const [data,setData]=useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const DummyData=[
