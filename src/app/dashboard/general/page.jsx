@@ -6,7 +6,15 @@ import OrgDetails from "./GRI-Reporting/Org-Details/page";
 import Entities from "./GRI-Reporting/Entities/page";
 import ReportDetails from "./GRI-Reporting/Report-Details/page";
 import Restatement from "./GRI-Reporting/Restatement/page";
-import Assurance from "./GRI-Reporting/Assurance/page"
+import Assurance from "./GRI-Reporting/Assurance/page";
+import WorkforceEmployees from "./Organization-Details/Workforce-Employees/page"
+import WorkforceOtherWorkers from "./Organization-Details/Workforce-Other-Workers/page"
+import LawAndRegulations from './Compliance/Laws-Regulation/page'
+import BusinessDetails from "./Organization-Details/Business-Details/page"
+import CollectiveBargainingAgreements from "./Collective-Barganing-Agreements/page"
+import MembershipAndAssociation from "./Membership-Association/page"
+import StakeholderEngagement from "./Stakeholder-Engagement/page"
+
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -840,6 +848,55 @@ const General = () => {
                 <>
                   <div>
                     <Assurance />
+                  </div>
+                </>
+              )}
+               {/* {activeStep === 6 && (
+                <>
+                  <div>
+                    <BusinessDetails />
+                  </div>
+                </>
+              )} */}
+                 {activeStep === 7 && (
+                <>
+                  <div>
+                    <WorkforceEmployees />
+                  </div>
+                </>
+              )}
+                  {activeStep === 8 && (
+                <>
+                  <div>
+                    <WorkforceOtherWorkers />
+                  </div>
+                </>
+              )}
+               {activeStep === 9 && (
+                <>
+                  <div>
+                    <LawAndRegulations />
+                  </div>
+                </>
+              )}
+              {activeStep === 10 && (
+                <>
+                  <div>
+                    <MembershipAndAssociation />
+                  </div>
+                </>
+              )}
+                {activeStep === 11 && (
+                <>
+                  <div>
+                    <StakeholderEngagement />
+                  </div>
+                </>
+              )}
+               {activeStep === 12 && (
+                <>
+                  <div>
+                    <CollectiveBargainingAgreements />
                   </div>
                 </>
               )}

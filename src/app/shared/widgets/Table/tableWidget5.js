@@ -57,9 +57,11 @@ const CustomTableWidget5 = ({
         <thead className="gradient-background">
           <tr>
             <th className="border-r"></th>
+
             <th colSpan="3" className="font-normal text-[14px] py-2">
             {formContext.newMonth}
             </th>
+
             <th className="border-l"></th>
           </tr>
           <tr>

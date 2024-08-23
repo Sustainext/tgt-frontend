@@ -38,7 +38,7 @@ const GovernancetableWidget5 = ({ id, options, value, required, onChange, schema
                                 style={{ minWidth: "120px", textAlign: "left" }}
                                 className="text-[12px] border border-gray-300 px-2 py-2"
                             >
-                                <div className="flex items-center">
+                                <div className="flex items-center relative">
                                     <p>{item.title}</p>
                                     <p>
                                         <MdInfoOutline

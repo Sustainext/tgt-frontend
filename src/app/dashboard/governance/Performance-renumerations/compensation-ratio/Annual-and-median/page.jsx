@@ -180,7 +180,7 @@ const AnnualAndMedian = ({ selectedLocation, year }) => {
   return (
     <>
       <div
-        className="mx-2 p-3 mb-6 pb-6 rounded-md"
+        className="mx-2 p-3 mb-6 pb-10 rounded-md"
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",

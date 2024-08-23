@@ -61,7 +61,7 @@ const Entities = () => {
             <div className="flex float-end border-l">
               <button
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("82")}
+                onClick={() => toggleDrawer("93")}
               >
               GRI 2 - 2
               </button>
@@ -75,7 +75,8 @@ const Entities = () => {
           Entities included in the organization's sustainability reporting
             <MdInfoOutline
               data-tooltip-id={`tooltip-$e10`}
-              data-tooltip-content="This section documents data corresponding to the energy consumption within the organisation"
+              data-tooltip-content="This section documents the data corresponding to the  entities included in the organization’s
+sustainability report."
               className="mt-1.5 ml-2 text-[14px]"
             />
             <ReactTooltip
