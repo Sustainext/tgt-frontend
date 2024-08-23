@@ -38,7 +38,7 @@ const LawAndRegulations = () => {
       });
     });
     // //console.log(newData);
-    setData(newData);
+    setData(newData); 
   }, [category]);
 
   return (
