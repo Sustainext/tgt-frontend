@@ -146,7 +146,7 @@ const FileUploadWithAddRowAndCol = (props) => {
                     className="border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mr-2"
                     value={col}
                     onChange={(event) => handleTextChange(rowIndex, colIndex, event)}
-                    rows={4}
+                    rows={2}
                   />
                 ))}
                 <button
@@ -161,7 +161,7 @@ const FileUploadWithAddRowAndCol = (props) => {
           ))
         )}
 
-        <div className="flex justify-between mt-2">
+        <div className="flex gap-2 mt-2">
           <button
             type="button"
             className="text-blue-500 hover:text-blue-700 text-sm flex items-center"
