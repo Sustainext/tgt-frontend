@@ -239,7 +239,7 @@ and explains any exclusions that may exist." className="mt-1.5 ml-2 text-[14px]"
             <div className={`flex float-end`}>
               <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 ">
                 <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                  GRI 2-2-a
+                  GRI 2-4-a
                 </p>
               </div>
             </div>

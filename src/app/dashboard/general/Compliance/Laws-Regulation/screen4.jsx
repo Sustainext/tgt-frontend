@@ -194,7 +194,7 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
             <div className={`flex float-end`}>
               <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 ">
                 <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                  GRI 2-27-c
+                  GRI 2-27-d
                 </p>
               </div>
             </div>
