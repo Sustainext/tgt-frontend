@@ -75,7 +75,7 @@ const uiSchema = {
       "ui:title":
         "If yes, then explain the approach used for consolidating information.",
       "ui:tooltip":
-        "Include :i. whether the approach involves adjustments to information for minority interestsii. how the approach takes into account mergers, acquisitions and disposal of entities or parts of entities iii. whether and how the approach differs across the disclosures within GRI Standards and across material topics",
+        "Include :<ul><li>i. whether the approach involves adjustments to information for minority interests</li><li>ii. how the approach takes into account mergers, acquisitions and disposal of entities or parts of entities </li><li>        iii. whether and how the approach differs across the disclosures within GRI Standards and across material topics</li></ul>",
       "ui:tooltipdisplay": "block",
       "ui:widget": "TextareaWidget3",
       "ui:horizontal": true,
