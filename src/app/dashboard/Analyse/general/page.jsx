@@ -6,7 +6,7 @@ import Employees from "./Employees/page";
 import StrategyPolicyPractices
  from "./Strategy-policy-practices/page";
 const General = () => {
-  const [activeTab, setActiveTab] = useState("Emissions");
+  const [activeTab, setActiveTab] = useState("Tab1");
   const [isBoxOpen, setIsBoxOpen] = useState(false);
 
   const handleTabClick = (tab) => {
@@ -22,8 +22,8 @@ const General = () => {
         <div className="sticky top-14 bg-white z-[100]">
           <Header activeTab={activeTab} setIsBoxOpen={setIsBoxOpen} />
         </div>
-        {activeTab === "Employees" && <Employees />}
-        {activeTab === "Strategy, policies and practices" && <StrategyPolicyPractices isBoxOpen={isBoxOpen} />}
+        {activeTab === "Tab1" && <Employees />}
+        {activeTab === "Tab2" && <StrategyPolicyPractices />}
 
       </div>
     </div>
