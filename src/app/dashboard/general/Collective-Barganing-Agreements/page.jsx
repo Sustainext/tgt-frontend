@@ -82,7 +82,9 @@ const  CollectiveBargainingAgreements  = () => {
           Collective bargaining agreements
             <MdInfoOutline
               data-tooltip-id={`tooltip-$e10`}
-              data-tooltip-content="This section documents the data corresponding to the approach to Stakeholder Engagement."
+              data-tooltip-content="This section documents the data corresponding to the collective bargaining agreements.
+Collective bargaining refers to negotiations that take place between one or more employers or
+employers' organizations and one or more workers' organizations (e.g., trade unions)."
               className="mt-1.5 ml-2 text-[14px]"
             />
             <ReactTooltip
@@ -136,7 +138,7 @@ const  CollectiveBargainingAgreements  = () => {
         year={year}
         setYear={setYear}
       />
-      
+
        <Screen1
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
@@ -151,7 +153,7 @@ const  CollectiveBargainingAgreements  = () => {
         year={year}
         month={activeMonth}
       />
-    
+
     </>
   );
 };

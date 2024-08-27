@@ -39,7 +39,7 @@ const uiSchema = {
     Q1: {
       "ui:title": "Date of report/report information",
       "ui:tooltip":
-        "Indicate whether  the reporting period for the organization's financial reporting align with the period for its sustainability reporting.",
+        "Specify the publication date of the report or reported information",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
