@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import GRISVG from "../../../../../public/gri.svg";
 import Image from "next/image";
 import DateRangePicker from "@/app/utils/DatePickerComponent";
@@ -11,11 +11,58 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
   const [activeTab, setActiveTab] = useState(1);
   const [assessmentApproach,setAssessmentApproach] = useState("")
   const [isDateRangeValid, setIsDateRangeValid] = useState(true);
+  const [organisations, setOrganisations] = useState([]);
+  const[selectedOrg,setSelectedOrg]=useState([])
+  const [corporates, setCorporates] = useState([]);
+  const [errors, setErrors] = useState({
+    organization: "Please select an organization",
+    corporate: "Please select a location",
+  });
 
   const [dateRange, setDateRange] = useState({
     start: null,
     end: null
   });
+
+  useEffect(() => {
+    const fetchOrg = async () => {
+      try {
+        const response = await axiosInstance.get(`/orggetonly`);
+        setOrganisations(response.data);
+      } catch (e) {
+        console.error("Failed fetching organization:", e);
+      }
+    };
+
+    fetchOrg();
+  }, []);
+
+  // useEffect(() => {
+  //   const fetchCorporates = async () => {
+  //     if (selectedOrg) {
+  //       try {
+  //         const response = await axiosInstance.get(`/corporate/`, {
+  //           params: { organization_id: selectedOrg },
+  //         });
+  //         setCorporates(response.data);
+  //       } catch (e) {
+  //         console.error("Failed fetching corporates:", e);
+  //       }
+  //     }
+  //   };
+
+  //   fetchCorporates();
+  // }, [selectedOrg]);
+
+  const handleOrgChange = (e) => {
+    const newOrg = e.target.value;
+    setSelectedOrg(newOrg);
+    // setSelectedCorp("");
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      organization: newOrg ? "" : "Please select an organization",
+    }));
+  };
 
   const handleDateChange = (newRange) => {
     setDateRange(newRange);
@@ -148,21 +195,49 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
            <div className="mt-4 w-full">
              {activeTab === 1 ? (
                <div className="flex justify-between items-center">
+                {/* <div className="mr-2">
+                  <label
+                    htmlFor="cname"
+                    className="text-neutral-800 text-[13px] font-normal"
+                  >
+                    Select Organization*
+                  </label>
+                  <div className="mt-2">
+                    <select
+                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      value={selectedOrg}
+                      onChange={handleOrgChange}
+                    >
+                      <option value="01">Select Organization</option>
+                      {organisations &&
+                        organisations.map((org) => (
+                          <option key={org.id} value={org.id}>
+                            {org.name}
+                          </option>
+                        ))}
+                    </select>
+                    {errors.organization && (
+                      <p className="text-red-500 text-sm top=16  left-0 pl-2">
+                        {errors.organization}
+                      </p>
+                    )}
+                  </div>
+                </div> */}
                  <div className="mr-2 w-full">
-                   <label
-                     htmlFor="cname"
-                     className="text-neutral-800 text-[13px] font-normal"
-                   >
-                     Select Organization
-                   </label>
-                   <div className="mt-2">
-                     <select
-                       className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                     <label
+                       htmlFor="cname"
+                       className="text-neutral-800 text-[13px] font-normal"
                      >
-                       <option value=""> Select Organization </option>
-                     </select>
+                       Select Organization
+                     </label>
+                     <div className="mt-2">
+                       <select
+                         className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                       >
+                         <option value=""> Select Organization </option>
+                       </select>
+                     </div>
                    </div>
-                 </div>
                  <div className="mr-2 w-full">
                    <label
                      htmlFor="cname"

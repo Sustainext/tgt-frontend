@@ -222,7 +222,7 @@ const SelectMaterialityTopic = () => {
         </div>
 
         {/* buttons */}
-        <div className="flex justify-end w-full gap-4 mt-4 ">
+        <div className="flex justify-end w-full gap-4 mt-4">
         <button
                   className="w-[15%] h-full mr-2 py-2 px-3 text-[#727272]  cursor-pointer"
                   onClick={()=>{

@@ -86,7 +86,7 @@ const Reference = () => {
       </div>
 
       <div>
-        <div className="flex">
+        <div className="flex justify-between">
           <div>
             <p className="text-[#344054] text-[22px] font-bold pt-4 pb-2 ml-6">
               ESG Topics
@@ -96,7 +96,7 @@ const Reference = () => {
               organization.
             </p>
           </div>
-          <div className="shadow-lg p-3 bg-white w-[30%] ml-20 rounded-lg mt-10">
+          <div className="shadow-lg p-3 bg-white w-[30%] ml-20 rounded-lg mt-10 mx-5">
             <div className="flex  mb-4">
               <div className="w-[60%]">
                 <p className="text-[14px] text-black font-[400] px-2 pt-2">
@@ -144,7 +144,7 @@ const Reference = () => {
       </div>
       <div className="mx-5">
         <div className="flex justify-between items-start">
-          <div className="shadow-lg rounded-lg  w-[30%]">
+          <div className="shadow-lg rounded-lg  w-[32%]">
             <div className="gradient-background p-2 rounded-t-lg">
               <p className="text-[##2E0B34] text-[17px] mx-2 pt-2">
                 Environmental
@@ -153,13 +153,13 @@ const Reference = () => {
             <Environment/>
            
           </div>
-          <div className="shadow-lg rounded-lg  w-[30%]">
+          <div className="shadow-lg rounded-lg  w-[32%]">
             <div className="gradient-background p-2 rounded-t-lg">
               <p className="text-[##2E0B34] text-[17px] mx-2 pt-2">Social</p>
             </div>
             <Social/>
           </div>
-          <div className="shadow-lg rounded-lg  w-[30%]">
+          <div className="shadow-lg rounded-lg  w-[32%]">
             <div className="gradient-background p-2 rounded-t-lg">
               <p className="text-[##2E0B34] text-[17px] mx-2 pt-2">
                 Governance
@@ -169,7 +169,7 @@ const Reference = () => {
           </div>
         </div>
       </div>
-      <div className="flex justify-end items-center mb-3 mx-2">
+      <div className="flex justify-end items-center mb-3 mx-3">
         <button className="h-full mr-2  py-2 px-6 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer"
         onClick={()=>{setIsCompleteModalOpen(true)}}
         >

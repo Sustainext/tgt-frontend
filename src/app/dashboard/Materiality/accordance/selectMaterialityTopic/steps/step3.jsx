@@ -198,7 +198,7 @@ const Step3 = ({ selectedOrg, year, selectedCorp }) => {
 
     return (
         <>
-            <div className="mt-7">
+            <div className="mt-10">
                 <div className='mx-2 mb-3'>
                     <Form
                         schema={schema}

@@ -28,9 +28,13 @@ const NoAssesment =({isModalOpen,setIsModalOpen})=>{
                     <p className="text-[16px] text-[#2E0B34] mb-4 text-center">
                     No materiality assessments made. 
                     </p>
-                    <button className="w-full h-full  py-2 px-3 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer" onClick={()=>{setIsModalOpen(true)}}>
-                    Add New Materiality Assessment +
+                    <button className="w-full h-full  py-2 px-3 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer flex" onClick={()=>{setIsModalOpen(true)}}>
+                    Add New Materiality Assessment <span className="text-[#fff] text-[21px] font-bold ml-1 text-center mt-0.5">
+                        <MdAdd/>
+                      </span>
+                    
                     </button>
+                    
                   </div>
                 </div>
                   
