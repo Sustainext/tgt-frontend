@@ -6,7 +6,7 @@ import Employees from "./Employees/page";
 import StrategyPolicyPractices
  from "./Strategy-policy-practices/page";
 const General = () => {
-  const [activeTab, setActiveTab] = useState("Employees");
+  const [activeTab, setActiveTab] = useState("Tab1");
   const [isBoxOpen, setIsBoxOpen] = useState(false);
 
   const handleTabClick = (tab) => {

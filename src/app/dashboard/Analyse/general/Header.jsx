@@ -29,14 +29,14 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
 
   const gri = [
     {
-      category: "Employees",
+      category: "Tab1",
       tag: "GRI 2",
       data: [
         { tagid: "7", infoid: "41" },
       ],
     },
     {
-      category: "Strategy, policies and practices",
+      category: "Tab2",
       tag: "GRI 2",
       data: [
         { tagid: "30", infoid: "42" },
@@ -45,14 +45,14 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
   ];
   const sdg = [
     {
-      category: "Employees",
+      category: "Tab1",
       data: [
         { id: 'sd12', label: 'SDG 8', bgColor: 'bg-red-900' },
         { id: 'sd13', label: 'SDG 10', bgColor: 'bg-[#DD1367]' },
       ]
     },
     {
-      category: "Strategy, policies and practices",
+      category: "Tab2",
       data: [
         { id: 'sd15', label:'SDG 8', bgColor: 'bg-red-900' },
       ]
@@ -75,13 +75,11 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
                   ? "Strategy, policies and practices"
                   : ""}
               </div>
-              {activeTab === "Tab1" && (
-                <div className="w-[95px] pl-1 pr-0.5 bg-slate-200 rounded justify-center items-center flex">
+              <div className="w-[95px] pl-1 pr-0.5 bg-slate-200 rounded justify-center items-center flex">
                   <div className="text-zinc-600 text-xs font-normal font-['Manrope'] leading-[21px]">
                     Material Topic
                   </div>
                 </div>
-              )}
             </div>
           </div>
         </div>
