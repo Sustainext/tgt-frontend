@@ -100,7 +100,7 @@ const uiSchema = {
       "ui:title":
         "If yes, please provide a link or reference to the external assurance reports or assurance statements",
       "ui:tooltip":
-        "Indicate whether the organization's sustainability report has been externally assured. ",
+        "Provide a link or reference  to the external assurance reports or assurance statements",
       "ui:tooltipdisplay": "block",
       "ui:widget": "Textboxwithfileupload",
       "ui:horizontal": true,

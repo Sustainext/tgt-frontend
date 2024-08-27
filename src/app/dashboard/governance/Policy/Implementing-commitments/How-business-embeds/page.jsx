@@ -15,7 +15,7 @@ import axiosInstance from "@/app/utils/axiosMiddleware";
 import CustomTableField from "../../../../../shared/components/customTableField";
 
 const widgets = {
-  inputWidget: inputWidget2,  
+  inputWidget: inputWidget2,
   TableWidget: GovernancetableWidget3,
 };
 
@@ -49,7 +49,7 @@ const schema = {
       tableData: {
         "ui:widget": "TableWidget",
         "ui:title": null,
-        "ui:label": false, 
+        "ui:label": false,
         "ui:options": {
           hideLabel: true,
           titles: [
@@ -216,13 +216,13 @@ const HowBusinessEmbeds = ({ selectedOrg, selectedCorp, year }) => {
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
             Describe how organisation embeds each of its policy commitments for responsible business conduct throughout its activities and business relationships, including:
             </h2>
-            <MdInfoOutline
-              data-tooltip-id={`tooltip-$e1`}
+            {/* <MdInfoOutline
+              data-tooltip-id={`tooltip-$e85`}
               data-tooltip-content="Provide a description of organisation's specific policy commitment to respect human rights.				"
               className="mt-1.5 ml-2 text-[14px]"
             />
             <ReactTooltip
-              id={`tooltip-$e1`}
+              id={`tooltip-$e85`}
               place="top"
               effect="solid"
               style={{
@@ -234,7 +234,7 @@ const HowBusinessEmbeds = ({ selectedOrg, selectedCorp, year }) => {
                 borderRadius: "8px",
                 textAlign: "left",
               }}
-            />
+            /> */}
           </div>
           <div className="w-[20%]">
             <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">

@@ -65,9 +65,9 @@ const GeneralWorkersEmployees = ({ id, options, value, required, onChange, schem
                             <th
                                 key={idx}
                                 style={{ minWidth: "120px", textAlign: "left" }}
-                                className="text-[12px] border border-gray-300 px-2 py-2"
+                                className="text-[12px] border border-gray-300 px-2 py-2 relative"
                             >
-                                <div className="flex items-center">
+                                <div className="flex items-center ">
                                     <p>{item.title}</p>
                                     <p>
                                         <MdInfoOutline

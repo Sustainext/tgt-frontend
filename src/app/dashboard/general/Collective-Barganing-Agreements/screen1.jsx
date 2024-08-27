@@ -53,7 +53,7 @@ const uiSchema = {
     },
     Q2: {
       "ui:title":
-        "If yes, please provide a link or reference to the external assurance reports or assurance statements",
+        "What is the total number of employees in the organisation (as reported under disclosure 2-7) ?",
       "ui:tooltip":
         "Total number of employees should be same as reported under the disclosure 2-7.",
       "ui:tooltipdisplay": "block",

@@ -12,13 +12,27 @@ const FileUploadWithAddRowAndCol = (props) => {
 
   // Ensure there is always at least one row with one column in MembershipAssociations
   useEffect(() => {
-    if (!Array.isArray(value.MembershipAssociations) || value.MembershipAssociations.length === 0 || (value.MembershipAssociations.length === 1 && value.MembershipAssociations[0].length === 0)) {
-      onChange({ ...value, MembershipAssociations: [[""]] });
+    if (
+      !Array.isArray(value.MembershipAssociations) ||
+      value.MembershipAssociations.length === 0 ||
+      (value.MembershipAssociations.length === 1 && value.MembershipAssociations[0].length === 0)
+    ) {
+      const initialData = [[""]];
+      setLocalMembershipAssociations(initialData);
+      onChange({ ...value, MembershipAssociations: initialData });
+    } else {
+      setLocalMembershipAssociations(value.MembershipAssociations);
     }
+
+    // Update file info if it changes in props
+    setFileInfo({ fileName: value.fileName || "", fileUrl: value.fileUrl || "" });
+
+    console.log('Initialized localMembershipAssociations:', value.MembershipAssociations);
   }, [value, onChange]);
 
   const debouncedOnChange = useCallback(
     debounce((updatedMembershipAssociations) => {
+      console.log('Debounced onChange:', updatedMembershipAssociations);
       onChange({ ...value, MembershipAssociations: updatedMembershipAssociations });
     }, 300),
     [value, onChange]
@@ -120,30 +134,34 @@ const FileUploadWithAddRowAndCol = (props) => {
             </p>
           </div>
         </div>
-        {localMembershipAssociations.map((row, rowIndex) => (
-          <div key={rowIndex} className="mb-2">
-            <div className="flex">
-              {row.map((col, colIndex) => (
-                <textarea
-                  key={colIndex}
-                  placeholder="Enter data"
-                  className={`border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mr-2`}
-                  value={col}
-                  onChange={(event) => handleTextChange(rowIndex, colIndex, event)}
-                  rows={4}
-                />
-              ))}
-              <button
-                type="button"
-                className="text-red-500 hover:text-red-700"
-                onClick={() => deleteRow(rowIndex)}
-              >
-                <MdOutlineDeleteOutline size={24} />
-              </button>
+
+        {localMembershipAssociations.length > 0 && localMembershipAssociations[0].length > 0 && (
+          localMembershipAssociations.map((row, rowIndex) => (
+            <div key={rowIndex} className="mb-2">
+              <div className="flex">
+                {row.map((col, colIndex) => (
+                  <textarea
+                    key={colIndex}
+                    placeholder="Enter data"
+                    className="border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mr-2"
+                    value={col}
+                    onChange={(event) => handleTextChange(rowIndex, colIndex, event)}
+                    rows={2}
+                  />
+                ))}
+                <button
+                  type="button"
+                  className="text-red-500 hover:text-red-700"
+                  onClick={() => deleteRow(rowIndex)}
+                >
+                  <MdOutlineDeleteOutline size={24} />
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
-        <div className="flex justify-between mt-2">
+          ))
+        )}
+
+        <div className="flex gap-2 mt-2">
           <button
             type="button"
             className="text-blue-500 hover:text-blue-700 text-sm flex items-center"
@@ -169,7 +187,7 @@ const FileUploadWithAddRowAndCol = (props) => {
               style={{ display: "none" }}
             />
             {fileInfo.fileName ? (
-              <label className="flex cursor-pointer">
+              <label htmlFor={`fileInput-${uiSchema["ui:title"]}`} className="flex cursor-pointer">
                 <div className="flex items-center text-center mt-2">
                   <div className="truncate text-sky-600 text-sm flex text-center">
                     <MdFilePresent className="w-6 h-6 mr-1 text-green-500" /> {fileInfo.fileName}
@@ -188,17 +206,7 @@ const FileUploadWithAddRowAndCol = (props) => {
             )}
           </div>
         </div>
-
-        {/* Display file URL if available */}
-        {fileInfo.fileUrl && (
-          <div className="mt-2 text-sm text-gray-700">
-            <a href={fileInfo.fileUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
-              {fileInfo.fileUrl}
-            </a>
-          </div>
-        )}
       </div>
-
     </>
   );
 };

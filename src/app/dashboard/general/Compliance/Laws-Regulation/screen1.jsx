@@ -74,7 +74,7 @@ const uiSchema = {
     Q1: {
       "ui:title": "Did the organization have any significant instances of non-compliance with laws and regulations during the reporting period?",
       "ui:tooltip":
-        "Indicate whether the organization's sustainability report has been externally assured. .",
+        "Indicate whether the organization have any significant instances of non-compliance with laws and regulations during the reporting period.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "RadioWidget2",
       "ui:horizontal": true,
@@ -87,7 +87,7 @@ const uiSchema = {
         "If yes, please provide a link or reference to the external assurance reports or assurance statements",
       "ui:tooltip":
         "Is the data based on the end of the reporting period, an average across the entire period, or another methodology?",
-      "ui:tooltipdisplay": "block",
+      "ui:tooltipdisplay": "none",
       "ui:widget": "Textbox",
       "ui:horizontal": true,
       "ui:options": {
@@ -205,7 +205,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       LoaderClose();
     }
   };
- 
+
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
@@ -253,7 +253,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
             Instance of non-compliance
               <MdInfoOutline data-tooltip-id={`tooltip-employees`}
-                data-tooltip-content="This section documents the data corresponding to the  significant 
+                data-tooltip-content="This section documents the data corresponding to the  significant
 instances of non-compliance with laws and
 regulations during the reporting period," className="mt-1.5 ml-2 text-[14px]" />
               <ReactTooltip id={`tooltip-employees`} place="top" effect="solid" style={{

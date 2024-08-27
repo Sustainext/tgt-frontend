@@ -220,15 +220,13 @@ const Screen4 = ({ selectedOrg, selectedCorp, location, year, month }) => {
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
             Level of approval: Policy commitments
-              {/* <MdInfoOutline
-                data-tooltip-id={`tooltip-$e86`}
-                data-tooltip-content="This section documents the data corresponding to the number of
-suppliers identified as having significant actual and potential
-negative social impacts."
+              <MdInfoOutline
+                data-tooltip-id={`tooltip-$e868`}
+                data-tooltip-content="This section documents data corresponding to the level at which each of the policy commitments was approved within the organization."
                 className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip
-                id={`tooltip-$e86`}
+                id={`tooltip-$e868`}
                 place="top"
                 effect="solid"
                 style={{
@@ -240,7 +238,7 @@ negative social impacts."
                   borderRadius: "8px",
                   textAlign: "left",
                 }}
-              ></ReactTooltip> */}
+              ></ReactTooltip>
             </h2>
           </div>
 

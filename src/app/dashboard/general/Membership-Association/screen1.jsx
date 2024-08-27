@@ -57,7 +57,7 @@ const uiSchema = {
 
 
 const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
-  const [formData, setFormData] = useState([{}]);
+  const [formData, setFormData] = useState([{ MembershipAssociations: [[]], fileName: '', fileUrl: '' }]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
@@ -131,17 +131,23 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
       LoaderClose();
     }
   };
-
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([{}]);
+    setFormData([{ MembershipAssociations: [[]], fileName: '', fileUrl: '' }]);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&corporate=${selectedCorp}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
-
+      console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
-      setFormData(response.data.form_data[0].data);
+      const responseData = response.data.form_data[0].data;
+      if (responseData && responseData.length > 0) {
+        setFormData(responseData);
+      } else {
+        // Set formData to default values if response is empty
+        setFormData([{ MembershipAssociations: [[]], fileName: '', fileUrl: '' }]);
+      }
+
     } catch (error) {
       setFormData([{}]);
     } finally {
@@ -149,20 +155,20 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
     }
   };
 
-  // useEffect(() => {
-  //   if (selectedOrg && year) {
-  //     loadFormData();
-  //     toastShown.current = false;
-  //   } else {
-  //     if (!toastShown.current) {
-  //       toastShown.current = true;
-  //     }
-  //   }
-  // }, [selectedOrg, year, selectedCorp]);
+  useEffect(() => {
+    if (selectedOrg && year) {
+      loadFormData();
+      toastShown.current = false;
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
+    }
+  }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // updateFormData();
+    updateFormData();
     console.log("Form data:", formData);
   };
 
@@ -188,8 +194,8 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -203,7 +209,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

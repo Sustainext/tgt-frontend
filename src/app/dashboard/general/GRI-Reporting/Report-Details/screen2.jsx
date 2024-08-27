@@ -213,7 +213,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
-            Reporting period and frequency
+            Reporting period for financial reporting
               {/* <MdInfoOutline data-tooltip-id={`tooltip-employees`}
                 data-tooltip-content="This section documents the data corresponding to the r product and
 service information and labeling.

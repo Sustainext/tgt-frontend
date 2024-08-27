@@ -231,11 +231,9 @@ const screen1 = ({ selectedOrg, selectedCorp, year }) => {
             Organizational Details
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
-                data-tooltip-content="This section documents data regarding the specific workers, activities, and
-workplaces encompassed by the occupational health and safety
-management system. It highlights which groups of employees,
-types of activities, and workplaces fall within the scope of the system,
-and explains any exclusions that may exist."
+                data-tooltip-content="This section documents data corresponding
+to the organisational details like legal name,
+location of its headquarters, countries of operation etc. "
                 className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip
@@ -256,7 +254,8 @@ and explains any exclusions that may exist."
             {/* <p className="text-[12px] text-gray-500">Describe the governance structure, including the committees of the highest governance body</p> */}
           </div>
 
-          <div className="w-[25%] flex gap-2">
+          <div className="w-[25%]">
+            <div className="flex float-end">
             <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
               <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
                 GRI 2-1a
@@ -277,6 +276,8 @@ and explains any exclusions that may exist."
                 GRI 2-1d
               </p>
             </div>
+            </div>
+
           </div>
         </div>
         <div className="mx-2">

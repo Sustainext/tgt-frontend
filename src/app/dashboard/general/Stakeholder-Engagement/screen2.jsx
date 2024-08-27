@@ -249,8 +249,15 @@ const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
             How the organization seeks to ensure meaningful engagement with stakeholders
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e86`}
-                data-tooltip-content="Stakeholders are individuals or groups that have interests that are affected or could be affected
-by the organization’s activities."
+                data-tooltip-html="The organisation can include:
+                <ul>
+  <li>1.How it takes into account potential barriers to stakeholder engagement.</li>
+  <li>2.How it engages with at-risk or vulnerable groups.</li>
+  <li>3.How it provides stakeholders with information that is understandable and accessible through appropriate communication channels.</li>
+  <li>4.How stakeholder feedback is recorded and integrated into decision-making, and how stakeholders are informed about the way in which their feedback has influenced decisions.</li>
+  <li>5.How it seeks to respect the human rights of all stakeholders engaged, for example, their rights to privacy, freedom of expression.</li>
+  <li>6.How it works with business partners to engage with stakeholders in a meaningful way.</li>
+</ul>"
                 className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip
