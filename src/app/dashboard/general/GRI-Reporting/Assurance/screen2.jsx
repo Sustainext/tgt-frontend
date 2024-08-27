@@ -27,7 +27,7 @@ const schema = {
       Q1: {
         type: "string",
         title:
-          "Describe the policy and practice for seeking external assurance.",
+          "Please describe whether and how the highest governance body and senior executives involved in the process.",
       },
     },
   },
