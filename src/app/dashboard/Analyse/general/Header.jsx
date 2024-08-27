@@ -29,89 +29,35 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
 
   const gri = [
     {
-      category: "Energy",
-      tag: "GRI 302",
+      category: "Employees",
+      tag: "GRI 2",
       data: [
-        { tagid: "1", infoid: "1" },
-        { tagid: "2", infoid: "2" },
-        { tagid: "3", infoid: "3" },
-        { tagid: "4", infoid: "4" },
-        { tagid: "5", infoid: "5" },
-      ]
+        { tagid: "7", infoid: "41" },
+      ],
     },
     {
-      category: "Waste",
-      tag: "GRI 306",
+      category: "Strategy, policies and practices",
+      tag: "GRI 2",
       data: [
-        { tagid: "1", infoid: "6" },
-        { tagid: "2", infoid: "7" },
-        { tagid: "3", infoid: "8" },
-        { tagid: "4", infoid: "9" },
-        { tagid: "5", infoid: "10" },
-      ]
+        { tagid: "30", infoid: "42" },
+      ],
     },
-    {
-      category: "Materials",
-      tag: "GRI 301",
-      data: [
-        { tagid: "1", infoid: "11" },
-        { tagid: "2", infoid: "12" },
-        { tagid: "3", infoid: "13" },
-
-      ]
-    },
-    {
-      category: "Water and effluents",
-      tag: "GRI 303",
-      data: [
-        { tagid: "1", infoid: "14" },
-        { tagid: "2", infoid: "15" },
-        { tagid: "3", infoid: "16" },
-        { tagid: "4", infoid: "17" },
-        { tagid: "5", infoid: "18" },
-
-      ]
-    }
   ];
   const sdg = [
     {
-      category: "Energy",
+      category: "Employees",
       data: [
-        { id: 'sd1', label: 'SDG 7', bgColor: 'bg-amber-400' },
-        { id: 'sd2', label: 'SDG 8', bgColor: 'bg-red-900' },
-        { id: 'sd3', label: 'SDG 12', bgColor: 'bg-yellow-600' },
-        { id: 'sd4', label: 'SDG 13', bgColor: 'bg-lime-900' },
+        { id: 'sd12', label: 'SDG 8', bgColor: 'bg-red-900' },
+        { id: 'sd13', label: 'SDG 10', bgColor: 'bg-[#DD1367]' },
       ]
     },
     {
-      category: "Waste",
+      category: "Strategy, policies and practices",
       data: [
-        { id: 'sd5', label: 'SDG 3', bgColor: 'bg-[#4C9F38]' },
-        { id: 'sd6', label: 'SDG 6', bgColor: 'bg-cyan-500' },
-        { id: 'sd2', label: 'SDG 8', bgColor: 'bg-red-900' },
-        { id: 'sd7', label: 'SDG 11', bgColor: 'bg-amber-400' },
-        { id: 'sd3', label: 'SDG 12', bgColor: 'bg-yellow-600' },
-        { id: 'sd8', label:'SDG 15', bgColor: 'bg-[#56C02B]' },
+        { id: 'sd15', label:'SDG 8', bgColor: 'bg-red-900' },
       ]
     },
-    {
-      category: "Materials",
-      data: [
 
-        { id: 'sd2', label: 'SDG 8', bgColor: 'bg-red-900' },
-        { id: 'sd9', label: 'SDG 12', bgColor: 'bg-yellow-600' },
-
-      ]
-    },
-    {
-      category: "Water and effluents",
-      data: [
-
-        { id: 'sd6', label: 'SDG 6', bgColor: 'bg-cyan-500' },
-
-
-      ]
-    }
   ];
   return (
     <>
