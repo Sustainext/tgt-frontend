@@ -47,8 +47,8 @@ const ImplementingCommitments = () => {
             <div className="text-left mb-4 ml-3 pt-5">
               <p className="text-sm">Governance</p>
               <div className="flex">
-                <div>
-                  <p className="gradient-text text-[22px] font-bold pt-1">
+                         <div className="h-[29px]">
+                  <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
                   Implementing Commitments
                   </p>
                 </div>

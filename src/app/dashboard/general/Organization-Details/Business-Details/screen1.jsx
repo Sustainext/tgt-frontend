@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
+import SectorstableWidget from "../../../../shared/widgets/Table/SectorstableWidget"
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -12,7 +13,7 @@ import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 const widgets = {
-  inputWidget: inputWidget2,
+  SectorstableWidget: SectorstableWidget,
 };
 
 const view_path = "gri-general-entities-list_of_entities-2-2-a";
@@ -24,9 +25,9 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      Q1: {
+      Sectors: {
         type: "string",
-        title: "List all entities included in the sustainability report",
+        title: "Report the sector/sectors in which the organization is active",
       },
     },
   },
@@ -34,13 +35,13 @@ const schema = {
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1"],
-    Q1: {
-      "ui:title": "",
+    "ui:order": ["Sectors"],
+    Sectors: {
+      "ui:title": "Report the sector/sectors in which the organization is active",
       "ui:tooltip":
-        "Provide a list of all entities included in the sustainability report. ",
-      "ui:tooltipdisplay": "none",
-      "ui:widget": "inputWidget",
+        "Please specify the sector/sectors in which the organization is active.e.g. Sectors can be identified according to categories, such as the public or private sector; orindustry-specific categories, such as the education sector or the financial sector.",
+      "ui:tooltipdisplay": "block",
+      "ui:widget": "SectorstableWidget",
       "ui:horizontal": true,
       "ui:options": {
         label: false,
@@ -57,7 +58,9 @@ const uiSchema = {
 };
 
 const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
-  const [formData, setFormData] = useState([{}]);
+  const initialData = [{ Sector: "Sector 1", Sub_industry: "Industry 1" },{ Sector: "Sector 2", Sub_industry: "Industry 2" },{ Sector: "Sector 4", Sub_industry: "" }];
+  const [tabledata, settabledata] = useState(initialData);
+  const [formData, setFormData] = useState(initialData);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
@@ -76,6 +79,20 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
     setFormData(e.formData);
   };
 
+
+  const updatedUiSchema = {
+    ...uiSchema,
+    items: {
+      ...uiSchema.items,
+      Sectors: {
+        ...uiSchema.items.Sectors,
+        "ui:options": {
+          ...uiSchema.items.Sectors["ui:options"],
+          tabledata, // Pass tabledata here
+        },
+      },
+    },
+  };
   const updateFormData = async () => {
     const data = {
       client_id: client_id,
@@ -130,43 +147,46 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
     }
   };
 
-  const loadFormData = async () => {
-    LoaderOpen();
-    setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
-    try {
-      const response = await axiosInstance.get(url);
-      console.log("API called successfully:", response.data);
-      setRemoteSchema(response.data.form[0].schema);
-      setRemoteUiSchema(response.data.form[0].ui_schema);
-      setFormData(response.data.form_data[0].data);
-    } catch (error) {
-      setFormData([{}]);
-    } finally {
-      LoaderClose();
-    }
-  };
-  useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      toastShown.current = false;
-    } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
-      }
-    }
-  }, [selectedOrg, year, selectedCorp]);
+  // const loadFormData = async () => {
+  //   LoaderOpen();
+  //   setFormData([{}]);
+  //   const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
+  //   try {
+  //     const response = await axiosInstance.get(url);
+  //     console.log("API called successfully:", response.data);
+  //     setRemoteSchema(response.data.form[0].schema);
+  //     setRemoteUiSchema(response.data.form[0].ui_schema);
+  //     setFormData(response.data.form_data[0].data);
+  //   } catch (error) {
+  //     setFormData([{}]);
+  //   } finally {
+  //     LoaderClose();
+  //   }
+  // };
+  // useEffect(() => {
+  //   if (selectedOrg && year) {
+  //     loadFormData();
+  //     toastShown.current = false;
+  //   } else {
+  //     if (!toastShown.current) {
+  //       toastShown.current = true;
+  //     }
+  //   }
+  // }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
+    // updateFormData();
     console.log("test form data", formData);
   };
-  const handleAddNew = () => {
-    const newData = [...formData, {}];
-    setFormData(newData);
-    console.log("Form data newData:", newData);
-  };
+
+  useEffect(() => {
+    console.log('Initial formData:', formData); // Check initial formData
+  }, []);
+
+  useEffect(() => {
+    console.log('Updated formData:', formData); // Log whenever formData updates
+  }, [formData]);
   return (
     <>
       <div
@@ -239,23 +259,16 @@ industry-specific categories, such as the education sector or the financial sect
         <div className="mx-2 mb-2">
           <Form
             schema={schema}
-            uiSchema={uiSchema}
+            uiSchema={updatedUiSchema.items.Sectors}
             formData={formData}
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+
           />
         </div>
         <div className="flex justify-between right-1  mx-2">
-          {selectedOrg && year && (
-            <button
-              type="button"
-              className="text-[#007EEF] text-[12px] flex cursor-pointer my-auto"
-              onClick={handleAddNew}
-            >
-              Add another sector <MdAdd className="text-lg" />
-            </button>
-          )}
+
         </div>
         <div className="mb-6">
           <button
@@ -264,7 +277,7 @@ industry-specific categories, such as the education sector or the financial sect
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            // disabled={!selectedOrg || !year}
           >
             Submit
           </button>

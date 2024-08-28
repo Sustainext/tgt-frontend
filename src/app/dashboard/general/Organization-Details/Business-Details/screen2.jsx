@@ -120,7 +120,7 @@ const uiSchema = {
       },
     },
 
-    Q5: {
+    Q6: {
       "ui:title": "Entities downstream from the organization & their activities",
       "ui:tooltip": "Please describe the entities downstream from the organization & their activities. The description can include: <ul><li>1) the types of downstream entities (e.g., customers, beneficiaries);</li><li>2) the estimated number of downstream entities;</li><li>3) the types of activities related to the organization’s products and services carried out by the downstream entities (e.g., manufacturing, wholesale, retail);</li><li>4) the nature of its business relationships with the downstream entities (e.g., long-term or short-term, contractual or non-contractual, project-based or event-based);</li><li>5) the geographic location of the downstream entities.</li></ul>",
       "ui:tooltipdisplay": "block",

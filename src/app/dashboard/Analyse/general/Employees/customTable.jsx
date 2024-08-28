@@ -28,6 +28,7 @@ function DynamicTable({ columns, data }) {
             <th className="p-2 text-gray-600 font-bold border-l border-t block md:table-cell text-sm">&lt;30 year old</th>
             <th className="p-2 text-gray-600 font-bold border-l border-t block md:table-cell text-sm">30-50 years old</th>
             <th className="p-2 text-gray-600 font-bold border-l border-t border-r block md:table-cell text-sm">&gt;50 year old</th>
+            <th className="p-2 text-gray-600 font-bold block md:table-cell"></th>
           </tr>
         </thead>
         <tbody className="block md:table-row-group">
@@ -38,12 +39,13 @@ function DynamicTable({ columns, data }) {
                 className={`bg-white border-l border-b block md:table-row ${index % 2 === 0 ? 'bg-gray-100' : ''}`}
               >
                 <td className="p-2 text-left block md:table-cell text-sm font-bold border-x ">{row.type}</td>
-                <td className="p-2 text-center block md:table-cell text-sm text-gray-600">{row.male} %</td>
-                <td className="p-2 text-center block md:table-cell text-sm text-gray-600">{row.female} %</td>
-                <td className="p-2 text-center block md:table-cell text-sm text-gray-600 border-r ">{row.nonBinary} %</td>
-                <td className="p-2 text-center block md:table-cell text-sm text-gray-600 border-r">{row.ageBelow30} %</td>
-                <td className="p-2 text-center block md:table-cell text-sm text-gray-600 border-r">{row.age30To50} %</td>
-                <td className="p-2 text-center block md:table-cell text-sm text-gray-600 border-r">{row.ageAbove50} %</td>
+                <td className="p-2 text-center block md:table-cell text-sm text-gray-600">{row.male} </td>
+                <td className="p-2 text-center block md:table-cell text-sm text-gray-600">{row.female} </td>
+                <td className="p-2 text-center block md:table-cell text-sm text-gray-600 border-r ">{row.nonBinary} </td>
+                <td className="p-2 text-center block md:table-cell text-sm text-gray-600 border-r">{row.ageBelow30} </td>
+                <td className="p-2 text-center block md:table-cell text-sm text-gray-600 border-r">{row.age30To50} </td>
+                <td className="p-2 text-center block md:table-cell text-sm text-gray-600 border-r">{row.ageAbove50} </td>
+                <td className="p-2 text-center border block md:table-cell text-sm text-gray-600">{row.total} </td>
               </tr>
             ))
           ) : (

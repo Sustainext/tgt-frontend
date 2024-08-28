@@ -7,7 +7,7 @@ import { Socialdata } from "../../../social/data/socialgriinfo";
 import Process from "./Process-for-evaluating/page";
 import EvaluationAndFrequency from "./Evaluation-and-frequency/page";
 import ActionsTaken from "./Actions-taken/page";
-import { Tooltip as ReactTooltip } from "react-tooltip";  
+import { Tooltip as ReactTooltip } from "react-tooltip";
 import { ToastContainer } from "react-toastify";
 
 const PerformanceEvaluations = () => {
@@ -49,8 +49,8 @@ const PerformanceEvaluations = () => {
             <div className="text-left mb-4 ml-3 pt-5">
               <p className="text-sm">Governance</p>
               <div className="flex">
-                <div>
-                  <p className="gradient-text text-[22px] font-bold pt-1">
+                         <div className="h-[29px]">
+                  <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
                     Performance Evaluations
                   </p>
                 </div>

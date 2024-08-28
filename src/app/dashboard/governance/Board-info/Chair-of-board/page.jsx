@@ -49,7 +49,7 @@ const ChairOfBoard = () => {
               <p className="text-sm">Governance</p>
               <div className="flex">
                 <div>
-                  <p className="gradient-text text-[22px] font-bold pt-1">
+                  <p className="gradient-text text-[22px]  font-bold pt-1">
                     Chair of Boards
                   </p>
                 </div>

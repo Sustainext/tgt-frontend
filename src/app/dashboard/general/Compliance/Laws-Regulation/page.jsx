@@ -38,7 +38,7 @@ const LawAndRegulations = () => {
       });
     });
     // //console.log(newData);
-    setData(newData); 
+    setData(newData);
   }, [category]);
 
   return (
@@ -50,8 +50,8 @@ const LawAndRegulations = () => {
             <div className="text-left mb-4 ml-3 pt-5">
               <p className="text-sm">General</p>
               <div className="flex">
-                <div>
-                  <p className="gradient-text text-[22px] font-bold pt-1">
+                         <div className="h-[29px]">
+                  <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
                   Laws and Regulation
                   </p>
                 </div>
@@ -129,7 +129,7 @@ const LawAndRegulations = () => {
         year={year}
         setYear={setYear}
       />
-      
+
       <Screen1
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
