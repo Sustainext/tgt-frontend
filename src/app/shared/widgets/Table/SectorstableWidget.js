@@ -99,7 +99,7 @@ const SectorstableWidget = ({ value = [], onChange, uiSchema = {} }) => {
                     className="border-b border-gray-200 text-center"
                   >
                     <td className="py-2 px-4">{row.Sector}</td>
-                    <td className="py-2 px-4">{row.Sub_industry || "N/A"}</td>{" "}
+                    <td className="py-2 px-4">{row.Sub_industry || "-"}</td>{" "}
                     {/* Show empty string if Sub_industry is null */}
                   </tr>
                 ))

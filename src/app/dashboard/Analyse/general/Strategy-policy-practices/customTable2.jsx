@@ -5,10 +5,10 @@ const DynamicTable2 = ({ data, columns }) => {
   const isEmptyData = data.every(row => Object.keys(row).length === 0);
 
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full border-collapse block md:table w-full rounded-lg overflow-hidden">
-        <thead className="block md:table-header-group border">
-          <tr className="border border-gray-300 md:table-row gradient-background">
+    <div className="overflow-hidden rounded-lg border border-slate-200">
+      <table className="min-w-full  w-full">
+        <thead className="block md:table-header-group">
+          <tr className="md:table-row gradient-background">
             {columns.map((column, index) => (
               <th
                 key={column}
@@ -21,7 +21,7 @@ const DynamicTable2 = ({ data, columns }) => {
         </thead>
         <tbody className="block md:table-row-group">
           {data.length === 0 || isEmptyData ? (
-            <tr className="border border-gray-300 md:table-row">
+            <tr className="md:table-row">
               <td
                 colSpan={columns.length}
                 className="text-center p-2 block md:table-cell text-sm"
