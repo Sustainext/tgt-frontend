@@ -26,38 +26,41 @@ const schema = {
     properties: {
       MembershipAssociations: {
         type: "string",
-        title: "Report industry associations, other membership associations, and national or international advocacy organizations in which it participates in a significant role."
-      }
-    }
-  }
+        title:
+          "Report industry associations, other membership associations, and national or international advocacy organizations in which it participates in a significant role.",
+      },
+    },
+  },
 };
-
 
 const uiSchema = {
   items: {
     "ui:order": ["MembershipAssociations"],
     MembershipAssociations: {
-      "ui:title": "Report industry associations, other membership associations, and national or international advocacy organizations in which it participates in a significant role",
-      "ui:tooltip": "Describe an organization's involvement in  industry associations,other membership associations, and national or international advocacy organizations where it plays a significant role.",
-      "ui:tooltipdisplay": "block",  // Ensure tooltip is displayed
-      "ui:widget": "FileUploadWithAddRowAndCols",  // Use your custom widget
+      "ui:title":
+        "Report industry associations, other membership associations, and national or international advocacy organizations in which it participates in a significant role",
+      "ui:tooltip":
+        "Describe an organization's involvement in  industry associations,other membership associations, and national or international advocacy organizations where it plays a significant role.",
+      "ui:tooltipdisplay": "block", // Ensure tooltip is displayed
+      "ui:widget": "FileUploadWithAddRowAndCols", // Use your custom widget
       "ui:horizontal": true,
       "ui:options": {
-        label: false
-      }
+        label: false,
+      },
     },
     "ui:options": {
       orderable: false,
       addable: false,
       removable: false,
-      layout: "horizontal"
-    }
-  }
+      layout: "horizontal",
+    },
+  },
 };
 
-
 const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
-  const [formData, setFormData] = useState([{ MembershipAssociations: [[]], fileName: '', fileUrl: '' }]);
+  const [formData, setFormData] = useState([
+    { MembershipAssociations: [[]], fileName: "", fileUrl: "" },
+  ]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
@@ -133,7 +136,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
   };
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([{ MembershipAssociations: [[]], fileName: '', fileUrl: '' }]);
+    setFormData([{ MembershipAssociations: [[]], fileName: "", fileUrl: "" }]);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&corporate=${selectedCorp}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
@@ -145,9 +148,10 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
         setFormData(responseData);
       } else {
         // Set formData to default values if response is empty
-        setFormData([{ MembershipAssociations: [[]], fileName: '', fileUrl: '' }]);
+        setFormData([
+          { MembershipAssociations: [[]], fileName: "", fileUrl: "" },
+        ]);
       }
-
     } catch (error) {
       setFormData([{}]);
     } finally {
@@ -185,10 +189,12 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
           <div className="w-[80%]"></div>
 
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-28-a
-              </p>
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 2-28-a
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -227,7 +233,6 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
           />
         </div>
       )}
-
     </>
   );
 };

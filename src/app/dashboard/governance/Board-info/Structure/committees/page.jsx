@@ -63,7 +63,11 @@ const uiSchema = {
   },
 };
 
-const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year }) => {
+const CommitteeOfHighestGovernanceBody = ({
+  selectedOrg,
+  selectedCorp,
+  year,
+}) => {
   const [formData, setFormData] = useState([]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -80,8 +84,6 @@ const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year }) =
     setFormData(e.formData);
   };
 
-
-
   const updateFormData = async () => {
     LoaderOpen();
     const data = {
@@ -97,7 +99,7 @@ const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year }) =
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
       const response = await axiosInstance.post(url, data);
-      console.log('structure formdata', formData);
+      console.log("structure formdata", formData);
 
       if (response.status === 200) {
         toast.success("Data added successfully", {
@@ -166,7 +168,7 @@ const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year }) =
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year,selectedCorp]);
+  }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -210,10 +212,12 @@ const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year }) =
           </div>
 
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-9-b
-              </p>
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 2-9-b
+                </div>
+              </div>
             </div>
           </div>
         </div>

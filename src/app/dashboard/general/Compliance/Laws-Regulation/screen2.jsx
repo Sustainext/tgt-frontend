@@ -4,7 +4,7 @@ import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import inputWidget3 from "../../../../shared/widgets/Input/inputWidget3";
 import TextareaWidget3 from "../../../../shared/widgets/Textarea/TextareaWidget3";
-import Textboxwithfileupload from "../../../../shared/widgets/Input/Textboxwithfileupload"
+import Textboxwithfileupload from "../../../../shared/widgets/Input/Textboxwithfileupload";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -13,13 +13,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
-import axiosInstance from '@/app/utils/axiosMiddleware'
+import axiosInstance from "@/app/utils/axiosMiddleware";
 
 const widgets = {
   inputWidget: inputWidget3,
   RadioWidget2: RadioWidget2,
-  TextareaWidget3:TextareaWidget3,
-  Textboxwithfileupload:Textboxwithfileupload,
+  TextareaWidget3: TextareaWidget3,
+  Textboxwithfileupload: Textboxwithfileupload,
 };
 
 const view_path = "gri-general-laws_and_regulation-monetary-2-27-b";
@@ -33,12 +33,14 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Provide the total number of fines for instances of non-compliance with laws and regulations that occurred in the current reporting period",
+        title:
+          "Provide the total number of fines for instances of non-compliance with laws and regulations that occurred in the current reporting period",
       },
       Q2: {
         type: "string",
-        title: "Provide the total number of fines for instances of non-compliance with laws and regulations that occurred in previous reporting periods",
-      }
+        title:
+          "Provide the total number of fines for instances of non-compliance with laws and regulations that occurred in previous reporting periods",
+      },
     },
   },
 };
@@ -47,7 +49,8 @@ const uiSchema = {
   items: {
     "ui:order": ["Q1", "Q2"],
     Q1: {
-      "ui:title": "Provide the total number of fines for instances of non-compliance with laws and regulations that occurred in the current reporting period",
+      "ui:title":
+        "Provide the total number of fines for instances of non-compliance with laws and regulations that occurred in the current reporting period",
       "ui:tooltip":
         "Indicate whether the organization's sustainability report has been externally assured. .",
       "ui:tooltipdisplay": "none",
@@ -98,7 +101,6 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
     let newFormData = { ...e.formData[0] };
     if (newFormData.Q1 === "No") {
       newFormData.Q2 = "";
-
     }
     setFormData([newFormData]);
   };
@@ -156,7 +158,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
       LoaderClose();
     }
   };
- 
+
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
@@ -202,38 +204,47 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
-            GRI 2-27-b Monetary value of fines for instances of non-compliance
-              <MdInfoOutline data-tooltip-id={`tooltip-employees`}
-                data-tooltip-content="This section documents the data corresponding 
-to the monetary value of fines for 
-instances of non-compliance with laws and 
-regulations that were paid during the reporting period." className="mt-1.5 ml-2 text-[14px]" />
-              <ReactTooltip id={`tooltip-employees`} place="top" effect="solid" style={{
-                width: "290px", backgroundColor: "#000",
-                color: "white",
-                fontSize: "12px",
-                boxShadow: 3,
-                borderRadius: "8px",
-                textAlign: 'left',
-              }}>
-              </ReactTooltip>
+              GRI 2-27-b Monetary value of fines for instances of non-compliance
+              <MdInfoOutline
+                data-tooltip-id={`tooltip-employees`}
+                data-tooltip-content="This section documents the data corresponding
+to the monetary value of fines for
+instances of non-compliance with laws and
+regulations that were paid during the reporting period."
+                className="mt-1.5 ml-2 text-[14px]"
+              />
+              <ReactTooltip
+                id={`tooltip-employees`}
+                place="top"
+                effect="solid"
+                style={{
+                  width: "290px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  textAlign: "left",
+                }}
+              ></ReactTooltip>
             </h2>
           </div>
-
-          <div className={`${open ? "w-[20%]" : "w-[20%]"}`}>
-            <div className={`flex float-end`}>
-              <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 ">
-                <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
+          <div className="w-[20%]">
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                   GRI 2-27-b
-                </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div className="mb-6 w-[80%]">
-        <h2 className="flex mx-2 text-[15px] text-gray-500">
-        Provide the total number and the monetary value of fines for instances of non-compliance with laws and regulations that were paid during the reporting period, and a breakdown of this total by:
-            </h2>
+          <h2 className="flex mx-2 text-[15px] text-gray-500">
+            Provide the total number and the monetary value of fines for
+            instances of non-compliance with laws and regulations that were paid
+            during the reporting period, and a breakdown of this total by:
+          </h2>
         </div>
         <div className="mx-2">
           <Form
@@ -246,11 +257,14 @@ regulations that were paid during the reporting period." className="mt-1.5 ml-2 
           />
         </div>
         <div className="mb-6">
-          <button type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year  ? 'cursor-not-allowed' : ''}`}
+          <button
+            type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              !selectedOrg || !year ? "cursor-not-allowed" : ""
+            }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year }
-            >
+            disabled={!selectedOrg || !year}
+          >
             Submit
           </button>
         </div>

@@ -5,7 +5,7 @@ import validator from "@rjsf/validator-ajv8";
 import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import inputWidget2 from '../../../../../shared/widgets/Input/inputWidget2'
+import inputWidget2 from "../../../../../shared/widgets/Input/inputWidget2";
 import GovernancetableWidget2 from "../../../../../shared/widgets/Governance/governancetableWidget2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,7 +14,7 @@ import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 
 const widgets = {
-  inputWidget: inputWidget2,  
+  inputWidget: inputWidget2,
   TableWidget: GovernancetableWidget2,
 };
 
@@ -29,7 +29,7 @@ const schema = {
     properties: {
       processDescription: {
         type: "string",
-        title: "Process Description"
+        title: "Process Description",
       },
       tableData: {
         type: "array",
@@ -51,52 +51,56 @@ const schema = {
 };
 
 const uiSchema = {
-    "ui:order": ["processDescription", "tableData"],
-    items: {
-      processDescription: {
-        "ui:widget": "inputWidget",
-        "ui:title": "",
-        "ui:tooltip": "Describe the process for designing remuneration policies and determining remuneration",
-        "ui:tooltipdisplay": "none",
-        "ui:label": false
-      },
-      tableData: {
-        "ui:widget": "TableWidget",
-        "ui:title": null,
-        "ui:label": false, 
-        "ui:options": {
-          hideLabel: true,
-          titles: [
-            { key: "Criteria", title: "", type: "number", display: "none" },
-            {
-              key: "Whethertakenintoconsideration",
-              title: "",
-              type: "number",
-              display: "block",
-            },
-            { key: "How", title: "", type: "number", display: "block" },
-          ],
-          rowLabels: [
-            {
-              title: "Whether independent highest governance body members or an independent remuneration committee oversees the process for determining remuneration",
-              tooltip: "",
-              display: "none",
-            },
-            {
-              title: "Weather and how the views of stakeholders (including shareholders) regarding remuneration are sought and taken into consideration",
-              tooltip: "",
-              display: "none",
-            },
-            {
-              title: "Whether remuneration consultants are involved in determining remuneration and, if so, whether they are independent of the organization, its highest governance body and senior executives;",
-              tooltip: "",
-              display: "none",
-            },
-          ],
-        },
+  "ui:order": ["processDescription", "tableData"],
+  items: {
+    processDescription: {
+      "ui:widget": "inputWidget",
+      "ui:title": "",
+      "ui:tooltip":
+        "Describe the process for designing remuneration policies and determining remuneration",
+      "ui:tooltipdisplay": "none",
+      "ui:label": false,
+    },
+    tableData: {
+      "ui:widget": "TableWidget",
+      "ui:title": null,
+      "ui:label": false,
+      "ui:options": {
+        hideLabel: true,
+        titles: [
+          { key: "Criteria", title: "", type: "number", display: "none" },
+          {
+            key: "Whethertakenintoconsideration",
+            title: "",
+            type: "number",
+            display: "block",
+          },
+          { key: "How", title: "", type: "number", display: "block" },
+        ],
+        rowLabels: [
+          {
+            title:
+              "Whether independent highest governance body members or an independent remuneration committee oversees the process for determining remuneration",
+            tooltip: "",
+            display: "none",
+          },
+          {
+            title:
+              "Weather and how the views of stakeholders (including shareholders) regarding remuneration are sought and taken into consideration",
+            tooltip: "",
+            display: "none",
+          },
+          {
+            title:
+              "Whether remuneration consultants are involved in determining remuneration and, if so, whether they are independent of the organization, its highest governance body and senior executives;",
+            tooltip: "",
+            display: "none",
+          },
+        ],
       },
     },
-  };
+  },
+};
 
 const Process = ({ selectedLocation, year }) => {
   const { open } = GlobalState();
@@ -252,10 +256,12 @@ const Process = ({ selectedLocation, year }) => {
             />
           </div>
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-20-a
-              </p>
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 2-20-a
+                </div>
+              </div>
             </div>
           </div>
         </div>

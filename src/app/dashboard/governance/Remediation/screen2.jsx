@@ -8,7 +8,7 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { toast } from "react-toastify";
 import { Oval } from "react-loader-spinner";
-import axiosInstance from '@/app/utils/axiosMiddleware'
+import axiosInstance from "@/app/utils/axiosMiddleware";
 
 const widgets = {
   inputWidget: InputWidget5,
@@ -25,10 +25,9 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Describe organisation's approach to identify and address grievances, including the grievance mechanisms that the organization has established or participates in",
+        title:
+          "Describe organisation's approach to identify and address grievances, including the grievance mechanisms that the organization has established or participates in",
       },
-
-
     },
   },
 };
@@ -37,8 +36,10 @@ const uiSchema = {
   items: {
     "ui:order": ["Q1"],
     Q1: {
-      "ui:title": "Describe organisation's approach to identify and address grievances, including the grievance mechanisms that the organization has established or participates in",
-      "ui:tooltip": "Grievance mechanisms refer to any routinized, state-based or non-state-based, judicial or non judicial processes through which stakeholders can raise grievances and seek remedy.",
+      "ui:title":
+        "Describe organisation's approach to identify and address grievances, including the grievance mechanisms that the organization has established or participates in",
+      "ui:tooltip":
+        "Grievance mechanisms refer to any routinized, state-based or non-state-based, judicial or non judicial processes through which stakeholders can raise grievances and seek remedy.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -46,8 +47,6 @@ const uiSchema = {
         label: false,
       },
     },
-
-
 
     "ui:options": {
       orderable: false,
@@ -59,7 +58,9 @@ const uiSchema = {
 };
 
 const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
-  const [formData, setFormData] = useState([{ Q1: {Q1: "",fileName:"",fileURL:"" } }]);
+  const [formData, setFormData] = useState([
+    { Q1: { Q1: "", fileName: "", fileURL: "" } },
+  ]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
@@ -135,7 +136,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([{ Q1: {Q1: "",fileName:"",fileURL:"" } }]);
+    setFormData([{ Q1: { Q1: "", fileName: "", fileURL: "" } }]);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&corporate=${selectedCorp}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
@@ -144,7 +145,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData([{ Q1: {Q1: "",fileName:"",fileURL:"" } }]);
+      setFormData([{ Q1: { Q1: "", fileName: "", fileURL: "" } }]);
     } finally {
       LoaderClose();
     }
@@ -205,10 +206,12 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
           </div>
 
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-25-b
-              </p>
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 2-25-b
+                </div>
+              </div>
             </div>
           </div>
         </div>

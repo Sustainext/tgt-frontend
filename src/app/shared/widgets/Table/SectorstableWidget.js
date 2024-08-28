@@ -13,7 +13,7 @@ const SectorstableWidget = ({ value = [], onChange, uiSchema = {} }) => {
   }, [tabledata]);
 
   const handleSectorChange = (id, newValue) => {
-    const updatedInputs = sectorInputs.map(input =>
+    const updatedInputs = sectorInputs.map((input) =>
       input.id === id ? { ...input, sector: newValue } : input
     );
     setSectorInputs(updatedInputs);
@@ -21,10 +21,10 @@ const SectorstableWidget = ({ value = [], onChange, uiSchema = {} }) => {
     // Update the value array with the correct structure
     const updatedValue = [
       ...tabledata, // Keep existing table data
-      ...updatedInputs.map(input => ({
+      ...updatedInputs.map((input) => ({
         Sector: input.sector,
-        Sub_industry: "" // Always pass an empty string for Sub_industry
-      }))
+        Sub_industry: "", // Always pass an empty string for Sub_industry
+      })),
     ];
     onChange(updatedValue);
   };
@@ -34,16 +34,16 @@ const SectorstableWidget = ({ value = [], onChange, uiSchema = {} }) => {
   };
 
   const removeInputBox = (id) => {
-    const updatedInputs = sectorInputs.filter(input => input.id !== id);
+    const updatedInputs = sectorInputs.filter((input) => input.id !== id);
     setSectorInputs(updatedInputs);
 
     // Update the value array after removing an input box
     const updatedValue = [
       ...tabledata, // Keep existing table data
-      ...updatedInputs.map(input => ({
+      ...updatedInputs.map((input) => ({
         Sector: input.sector,
-        Sub_industry: ""
-      }))
+        Sub_industry: "",
+      })),
     ];
     onChange(updatedValue);
   };
@@ -55,7 +55,10 @@ const SectorstableWidget = ({ value = [], onChange, uiSchema = {} }) => {
           <p className="text-sm text-gray-700 flex">
             {uiSchema["ui:title"]}
             <MdInfoOutline
-              data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(/\s+/g, "-")}`}
+              data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(
+                /\s+/g,
+                "-"
+              )}`}
               data-tooltip-html={uiSchema["ui:tooltip"]}
               className="mt-1 ml-2 w-[30px] text-[14px]"
               style={{ display: uiSchema["ui:tooltipdisplay"] }}
@@ -88,12 +91,18 @@ const SectorstableWidget = ({ value = [], onChange, uiSchema = {} }) => {
           </thead>
           <tbody>
             {tabledata && tabledata.length > 0 ? (
-              tabledata.map((row, index) => (
-                <tr key={index} className="border-b border-gray-200 text-center">
-                  <td className="py-2 px-4">{row.Sector}</td>
-                  <td className="py-2 px-4">{row.Sub_industry}</td>
-                </tr>
-              ))
+              tabledata
+                .filter((row) => row.Sector && row.Sector !== "Default") // Filter out rows with null or "Default" Sector
+                .map((row, index) => (
+                  <tr
+                    key={index}
+                    className="border-b border-gray-200 text-center"
+                  >
+                    <td className="py-2 px-4">{row.Sector}</td>
+                    <td className="py-2 px-4">{row.Sub_industry || "N/A"}</td>{" "}
+                    {/* Show empty string if Sub_industry is null */}
+                  </tr>
+                ))
             ) : (
               <tr>
                 <td colSpan={2} className="py-2 px-4 text-center">
@@ -101,30 +110,31 @@ const SectorstableWidget = ({ value = [], onChange, uiSchema = {} }) => {
                 </td>
               </tr>
             )}
-            {sectorInputs.map(input => (
-              <tr key={input.id} className="border-b border-gray-200 text-center">
+            {sectorInputs.map((input) => (
+              <tr
+                key={input.id}
+                className="border-b border-gray-200 text-center"
+              >
                 <td colSpan={2} className="py-2 px-4">
-                    <div className="flex">
+                  <div className="flex">
                     <input
-                    type="text"
-                    value={input.sector}
-                    onChange={(e) => handleSectorChange(input.id, e.target.value)}
-                    placeholder="Enter Sector"
-                    className="w-full border-b border-gray-300 p-2 focus:outline-none"
-                  />
-                         <button
-                    type="button"
-                    className="text-red-500 ml-2"
-                    onClick={() => removeInputBox(input.id)}
-                  >
-                    <MdOutlineDeleteOutline size={20} />
-                  </button>
-                   </div>
-
-
+                      type="text"
+                      value={input.sector}
+                      onChange={(e) =>
+                        handleSectorChange(input.id, e.target.value)
+                      }
+                      placeholder="Enter Sector/Industry"
+                      className="w-full border-b border-gray-300 p-2 focus:outline-none"
+                    />
+                    <button
+                      type="button"
+                      className="text-red-500 ml-2"
+                      onClick={() => removeInputBox(input.id)}
+                    >
+                      <MdOutlineDeleteOutline size={20} />
+                    </button>
+                  </div>
                 </td>
-
-
               </tr>
             ))}
           </tbody>

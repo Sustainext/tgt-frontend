@@ -25,11 +25,10 @@ const schema = {
   items: {
     type: "object",
     properties: {
-        Stakeholder : {
+      Stakeholder: {
         type: "string",
         title: "Stakeholder",
         texttype: "text",
-
       },
       RepresentativeGroup: {
         type: "string",
@@ -45,14 +44,13 @@ const schema = {
         type: "string",
         title: "Frequency",
         enum: [
-            "Weekly",
-            "Fourthnightly",
-            "Monthly",
-            "Quarterly",
-            "Half-yearly",
-            "Annual",
-            "Need-based",
-
+          "Weekly",
+          "Fourthnightly",
+          "Monthly",
+          "Quarterly",
+          "Half-yearly",
+          "Annual",
+          "Need-based",
         ],
       },
       Keyconcernraised: {
@@ -64,7 +62,6 @@ const schema = {
         type: "string",
         title: "Response to concerns",
         texttype: "text",
-
       },
     },
   },
@@ -77,38 +74,32 @@ const uiSchema = {
       {
         key: "Stakeholder",
         title: "Stakeholder",
-        tooltip:
-          "Provide the category of the stakeholder.",
+        tooltip: "Provide the category of the stakeholder.",
       },
       {
         key: "RepresentativeGroup",
         title: "Representative Group",
-        tooltip:
-          "Mention the representative group of the stakeholder.",
+        tooltip: "Mention the representative group of the stakeholder.",
       },
       {
         key: "EngagementMethod",
         title: "Engagement Method",
-        tooltip:
-          "What is the method of engagement?",
+        tooltip: "What is the method of engagement?",
       },
       {
         key: "Frequency",
         title: "Frequency",
-        tooltip:
-          "Indicate the frequency of engagement with stakeholder",
+        tooltip: "Indicate the frequency of engagement with stakeholder",
       },
       {
         key: "Keyconcernraised",
         title: "Key concern raised",
-        tooltip:
-          "Mention a key concern raised.",
+        tooltip: "Mention a key concern raised.",
       },
       {
         key: "Responsetoconcerns",
         title: "Response to concerns",
-        tooltip:
-          "Mention a response to the concerns raised.",
+        tooltip: "Mention a response to the concerns raised.",
       },
     ],
   },
@@ -116,12 +107,12 @@ const uiSchema = {
 const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const initialFormData = [
     {
-        Stakeholder: "",
-        RepresentativeGroup: "",
-        EngagementMethod: "",
-        Frequency: "",
-        Keyconcernraised: "",
-        Responsetoconcerns: "",
+      Stakeholder: "",
+      RepresentativeGroup: "",
+      EngagementMethod: "",
+      Frequency: "",
+      Keyconcernraised: "",
+      Responsetoconcerns: "",
     },
   ];
   const [formData, setFormData] = useState(initialFormData);
@@ -246,7 +237,8 @@ const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
-            How the organization seeks to ensure meaningful engagement with stakeholders
+              How the organization seeks to ensure meaningful engagement with
+              stakeholders
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e86`}
                 data-tooltip-html="The organisation can include:
@@ -278,10 +270,12 @@ const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
           </div>
 
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-29a
-              </p>
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 2-29a
+                </div>
+              </div>
             </div>
           </div>
         </div>

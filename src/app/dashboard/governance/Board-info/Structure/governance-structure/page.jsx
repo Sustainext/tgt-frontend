@@ -10,7 +10,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 // import "react-toastify/dist/react-toastify.css";
 import { Oval } from "react-loader-spinner";
-import axiosInstance from "@/app/utils/axiosMiddleware"
+import axiosInstance from "@/app/utils/axiosMiddleware";
 
 const widgets = {
   inputWidget: InputWidget2,
@@ -95,8 +95,8 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      organisation:selectedOrg,
-      corporate:selectedCorp,
+      organisation: selectedOrg,
+      corporate: selectedCorp,
       year,
     };
 
@@ -215,10 +215,12 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year }) => {
           </div>
 
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-9-a
-              </p>
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 2-9-a
+                </div>
+              </div>
             </div>
           </div>
         </div>

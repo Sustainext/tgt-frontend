@@ -26,8 +26,7 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title:
-          "Please mention the timeframe used for data compilation.",
+        title: "Please mention the timeframe used for data compilation.",
       },
     },
   },
@@ -37,8 +36,7 @@ const uiSchema = {
   items: {
     "ui:order": ["Q1"],
     Q1: {
-      "ui:title":
-        "Please mention the timeframe used for data compilation.",
+      "ui:title": "Please mention the timeframe used for data compilation.",
       "ui:tooltip":
         "Is the data based on the end of the reporting period, an average across the entire period, or another methodology?",
       "ui:tooltipdisplay": "block",
@@ -177,7 +175,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
-            Data Compilation Timeframe
+              Data Compilation Timeframe
               <MdInfoOutline
                 data-tooltip-id={`tooltip-125`}
                 data-tooltip-content="This section documents data corresponding to the specific
@@ -202,10 +200,12 @@ timeframe utilized for compiling the reported employee data."
           </div>
 
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-7-c
-              </p>
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 2-7-c
+                </div>
+              </div>
             </div>
           </div>
         </div>

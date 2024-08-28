@@ -26,8 +26,7 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title:
-          "Methods and assumptions used to calculate data.",
+        title: "Methods and assumptions used to calculate data.",
       },
     },
   },
@@ -37,8 +36,7 @@ const uiSchema = {
   items: {
     "ui:order": ["Q1"],
     Q1: {
-      "ui:title":
-        "Methods and assumptions used to calculate data.",
+      "ui:title": "Methods and assumptions used to calculate data.",
       "ui:tooltip":
         "Briefly describe the methodology used (e.g., headcount, FTE, or another methodology?).",
       "ui:tooltipdisplay": "block",
@@ -177,7 +175,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
-            Methodologies and Assumptions used
+              Methodologies and Assumptions used
               <MdInfoOutline
                 data-tooltip-id={`tooltip-125`}
                 data-tooltip-content="This section documents data corresponding to the methodologies
@@ -202,10 +200,12 @@ and assumptions used to calculate the reported employee data."
           </div>
 
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-8b
-              </p>
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 2-8b
+                </div>
+              </div>
             </div>
           </div>
         </div>

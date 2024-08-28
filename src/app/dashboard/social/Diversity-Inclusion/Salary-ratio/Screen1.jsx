@@ -64,28 +64,28 @@ const uiSchema = {
         tooltip: "Please specify the category.",
         colSpan: 1,
         type: "text",
-        title2 :"Category",
+        title2: "Category",
       },
       {
         title: "Male",
         tooltip: "Please specify the number of male individuals.",
         colSpan: 1,
         type: "number",
-        title2 :"Male",
+        title2: "Male",
       },
       {
         title: "Female",
         tooltip: "Please specify the number of female individuals.",
         colSpan: 1,
         type: "number",
-        title2 :"Female",
+        title2: "Female",
       },
       {
         title: "Non-Binary",
         tooltip: "Please specify the number of non-binary individuals.",
         colSpan: 1,
         type: "number",
-        title2 :"NonBinary",
+        title2: "NonBinary",
       },
       {
         title: "",
@@ -93,7 +93,7 @@ const uiSchema = {
           "Please specify the number of vulnerable community individuals.",
         colSpan: 1,
         type: "text",
-        title2 :"locationandoperation",
+        title2: "locationandoperation",
       },
     ],
   },
@@ -267,10 +267,12 @@ age group and diversity group. "
           </div>
 
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 405-2a
-              </p>
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 405-2a
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -289,10 +291,13 @@ age group and diversity group. "
         </div>
 
         <div className="mb-6">
-        <button type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year  ? "cursor-not-allowed" : ""}`}
+          <button
+            type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              !location || !year ? "cursor-not-allowed" : ""
+            }`}
             onClick={handleSubmit}
-            disabled={!location || !year }
+            disabled={!location || !year}
           >
             Submit
           </button>

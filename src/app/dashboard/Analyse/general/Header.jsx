@@ -61,14 +61,14 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
   ];
   return (
     <>
-      <div className="flex justify-between items-center border-b border-gray-200 pb-4 z-[100] relative">
-        <div className="h-[46px] flex-col justify-start items-start gap-0.5 inline-flex ms-4 mt-8">
-          <div className="text-black text-opacity-50 text-[11px] font-semibold font-['Manrope'] capitalize leading-[14px]">
+      <div className="flex justify-between items-center border-b border-gray-200 pb-2  z-[100] relative">
+        <div className=" flex-col justify-start items-start gap-0.5 inline-flex ms-4 mt-8">
+          <div className="text-black text-opacity-50 text-[11px] mb-2 font-semibold font-['Manrope'] capitalize leading-[14px]">
           General
           </div>
-          <div className="h-[35px]">
-            <div className="h-[30px] flex justify-start items-end gap-3">
-              <div className="gradient-text text-opacity-20 text-[22px] h-[52px] font-medium font-['Manrope'] leading-[1.425rem]">
+          <div className="mb-2">
+            <div className=" flex justify-start items-end gap-3">
+              <div className="gradient-text text-opacity-20 text-[22px] h-[25px] font-medium font-['Manrope'] leading-[1.425rem]">
                 {activeTab === "Tab1"
                   ? "Employees"
                   : activeTab === "Tab2"
@@ -83,7 +83,7 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col border-l gap-2 absolute right-12 top-8">
+        <div className="flex flex-col border-l gap-2 absolute right-12 top-7">
           <div className="flex">
             {gri
               .filter((g) => g.category === activeTab)

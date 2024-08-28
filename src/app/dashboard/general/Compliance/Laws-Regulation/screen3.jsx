@@ -53,14 +53,14 @@ const uiSchema = {
         label: false,
       },
     },
-   
+
     "ui:options": {
       orderable: false, // Prevent reordering of items
       addable: false, // Prevent adding items from UI
       removable: false, // Prevent removing items from UI
       layout: "horizontal", // Set layout to horizontal
     },
-  },    
+  },
 };
 
 const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
@@ -141,7 +141,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
       LoaderClose();
     }
   };
- 
+
   const loadFormData = async () => {
     LoaderOpen();
    setFormData([{}]);
@@ -187,13 +187,12 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
           </div>
-
-          <div className={`${open ? "w-[20%]" : "w-[20%]"}`}>
-            <div className={`flex float-end`}>
-              <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 ">
-                <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
+          <div className="w-[20%]">
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                   GRI 2-27-c
-                </p>
+                </div>
               </div>
             </div>
           </div>
@@ -212,7 +211,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
           <button type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year  ? 'cursor-not-allowed' : ''}`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year }
+            disabled={!selectedOrg || !year }
             >
             Submit
           </button>

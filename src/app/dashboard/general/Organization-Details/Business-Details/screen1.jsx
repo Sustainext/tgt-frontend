@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
-import SectorstableWidget from "../../../../shared/widgets/Table/SectorstableWidget"
+import SectorstableWidget from "../../../../shared/widgets/Table/SectorstableWidget";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -16,7 +16,7 @@ const widgets = {
   SectorstableWidget: SectorstableWidget,
 };
 
-const view_path = "gri-general-entities-list_of_entities-2-2-a";
+const view_path = "gri-general-business_details-organisation-2-6a";
 const client_id = 1;
 const user_id = 1;
 
@@ -37,7 +37,8 @@ const uiSchema = {
   items: {
     "ui:order": ["Sectors"],
     Sectors: {
-      "ui:title": "Report the sector/sectors in which the organization is active",
+      "ui:title":
+        "Report the sector/sectors in which the organization is active",
       "ui:tooltip":
         "Please specify the sector/sectors in which the organization is active.e.g. Sectors can be identified according to categories, such as the public or private sector; orindustry-specific categories, such as the education sector or the financial sector.",
       "ui:tooltipdisplay": "block",
@@ -58,8 +59,8 @@ const uiSchema = {
 };
 
 const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
-  const initialData = [{ Sector: "Sector 1", Sub_industry: "Industry 1" },{ Sector: "Sector 2", Sub_industry: "Industry 2" },{ Sector: "Sector 4", Sub_industry: "" }];
-  const [tabledata, settabledata] = useState(initialData);
+  const initialData = [{ Sector: "", Sub_industry: "" }];
+  const [tabledata, setTabledata] = useState(initialData);
   const [formData, setFormData] = useState(initialData);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -78,7 +79,6 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   const handleChange = (e) => {
     setFormData(e.formData);
   };
-
 
   const updatedUiSchema = {
     ...uiSchema,
@@ -147,46 +147,41 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
     }
   };
 
-  // const loadFormData = async () => {
-  //   LoaderOpen();
-  //   setFormData([{}]);
-  //   const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
-  //   try {
-  //     const response = await axiosInstance.get(url);
-  //     console.log("API called successfully:", response.data);
-  //     setRemoteSchema(response.data.form[0].schema);
-  //     setRemoteUiSchema(response.data.form[0].ui_schema);
-  //     setFormData(response.data.form_data[0].data);
-  //   } catch (error) {
-  //     setFormData([{}]);
-  //   } finally {
-  //     LoaderClose();
-  //   }
-  // };
-  // useEffect(() => {
-  //   if (selectedOrg && year) {
-  //     loadFormData();
-  //     toastShown.current = false;
-  //   } else {
-  //     if (!toastShown.current) {
-  //       toastShown.current = true;
-  //     }
-  //   }
-  // }, [selectedOrg, year, selectedCorp]);
+  const loadFormData = async () => {
+    LoaderOpen();
+    setFormData(initialData);
+    setTabledata(initialData);
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
+    try {
+      const response = await axiosInstance.get(url);
+      console.log("API called successfully:", response.data);
+      setRemoteSchema(response.data.form[0].schema);
+      setRemoteUiSchema(response.data.form[0].ui_schema);
+      setFormData(response.data.form_data[0].data);
+      setTabledata(response.data.form_data[0].data);
+    } catch (error) {
+      setTabledata(initialData);
+    } finally {
+      LoaderClose();
+    }
+  };
+  useEffect(() => {
+    if (selectedOrg && year) {
+      loadFormData();
+      toastShown.current = false;
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
+    }
+  }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // updateFormData();
+    updateFormData();
     console.log("test form data", formData);
   };
 
-  useEffect(() => {
-    console.log('Initial formData:', formData); // Check initial formData
-  }, []);
-
-  useEffect(() => {
-    console.log('Updated formData:', formData); // Log whenever formData updates
-  }, [formData]);
   return (
     <>
       <div
@@ -199,77 +194,51 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
-            Organisation's sector/sectors
-            <MdInfoOutline
-              data-tooltip-id={`tooltip-$e25`}
-              data-tooltip-content="This section documents data corresponding to the sector/sectors in which the organization is active.  "
-              className="mt-1.5 ml-2 text-[14px]"
-            />
-            <ReactTooltip
-              id={`tooltip-$e25`}
-              place="top"
-              effect="solid"
-              style={{
-                width: "290px",
-                backgroundColor: "#000",
-                color: "white",
-                fontSize: "12px",
-                boxShadow: 3,
-                borderRadius: "8px",
-                textAlign: "left",
-              }}
-            ></ReactTooltip>
+              Organisation's sector/sectors
+              <MdInfoOutline
+                data-tooltip-id={`tooltip-$e25`}
+                data-tooltip-content="This section documents data corresponding to the sector/sectors in which the organization is active.  "
+                className="mt-1.5 ml-2 text-[14px]"
+              />
+              <ReactTooltip
+                id={`tooltip-$e25`}
+                place="top"
+                effect="solid"
+                style={{
+                  width: "290px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  textAlign: "left",
+                }}
+              ></ReactTooltip>
             </h2>
           </div>
 
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-6a
-              </p>
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 2-6a
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        {selectedOrg && year && (
-          <p className="flex mx-2 text-sm text-gray-700">
-           Report the sector/sectors in which the organization is active
-            <MdInfoOutline
-              data-tooltip-id={`tooltip-$e29`}
-              data-tooltip-content="Please specify the sector/sectors in which the organization is active.
-e.g. Sectors can be identified according to categories, such as the public or private sector; or
-industry-specific categories, such as the education sector or the financial sector. "
-              className="mt-1.5 ml-2 text-[14px]"
-            />
-            <ReactTooltip
-              id={`tooltip-$e29`}
-              place="top"
-              effect="solid"
-              style={{
-                width: "290px",
-                backgroundColor: "#000",
-                color: "white",
-                fontSize: "12px",
-                boxShadow: 3,
-                borderRadius: "8px",
-                textAlign: "left",
-              }}
-            ></ReactTooltip>
-          </p>
-        )}
+
         <div className="mx-2 mb-2">
           <Form
-            schema={schema}
+            schema={r_schema}
             uiSchema={updatedUiSchema.items.Sectors}
             formData={formData}
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
-
           />
         </div>
-        <div className="flex justify-between right-1  mx-2">
-
-        </div>
+        <div className="flex justify-between right-1  mx-2"></div>
         <div className="mb-6">
           <button
             type="button"
@@ -277,7 +246,7 @@ industry-specific categories, such as the education sector or the financial sect
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

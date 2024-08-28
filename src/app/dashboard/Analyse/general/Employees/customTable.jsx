@@ -1,34 +1,37 @@
 import React from 'react';
 
 function DynamicTable({ columns, data }) {
-  // Calculate total columns including special age group columns
-  const totalColumns = columns.reduce((acc, column) => acc + (column.colSpan || 1), 0) + 3; // +3 for the age group headers
-
   return (
-    <div className="container mx-auto">
-      <table className="min-w-full border-collapse block md:table w-full rounded-lg overflow-hidden">
-        <thead className="block md:table-header-group border">
+    <div className="overflow-hidden rounded-lg border border-slate-200">
+      <table className="min-w-full  w-full">
+        <thead className="block md:table-header-group  ">
           <tr className="gradient-background block md:table-row">
             {columns.map((column, index) => (
-              <th
-                key={index}
-                colSpan={column.colSpan ? column.colSpan : 1}
-                className="p-2 text-gray-600 font-bold border-x border-b block md:table-cell text-sm"
-              >
-                {column.header}
-              </th>
+              column.colSpan && column.colSpan > 1 ? (
+                <th
+                  key={index}
+                  colSpan={column.colSpan}
+                  rowSpan={1}
+                  className="p-2 text-gray-600 font-bold border-r border-b block md:table-cell text-sm"
+                >
+                  {column.header}
+                </th>
+              ) : (
+                <th
+                  key={index}
+                  colSpan={column.colSpan || 1}
+                  rowSpan={column.rowspan || 2}
+                  className={`p-2 text-gray-600 font-bold ${column.border} border-b block md:table-cell text-sm`}
+                >
+                  {column.header}
+                </th>
+              )
             ))}
           </tr>
           <tr className="gradient-background block md:table-row">
-            {/* Simplified headers for age groups */}
-            <th className="p-2 text-gray-600 font-bold border-x block md:table-cell"></th>
-            <th className="p-2 text-gray-600 font-bold block md:table-cell"></th>
-            <th className="p-2 text-gray-600 font-bold block md:table-cell"></th>
-            <th className="p-2 text-gray-600 font-bold block md:table-cell"></th>
-            <th className="p-2 text-gray-600 font-bold border-l border-t block md:table-cell text-sm">&lt;30 year old</th>
-            <th className="p-2 text-gray-600 font-bold border-l border-t block md:table-cell text-sm">30-50 years old</th>
-            <th className="p-2 text-gray-600 font-bold border-l border-t border-r block md:table-cell text-sm">&gt;50 year old</th>
-            <th className="p-2 text-gray-600 font-bold block md:table-cell"></th>
+            <th className="p-2 text-gray-600 font-bold  border-t block md:table-cell text-sm">&lt;30 years old</th>
+            <th className="p-2 text-gray-600 font-bold border-t block md:table-cell text-sm">30-50 years old</th>
+            <th className="p-2 text-gray-600 font-bold  border-t border-r block md:table-cell text-sm">&gt;50 years old</th>
           </tr>
         </thead>
         <tbody className="block md:table-row-group">
@@ -38,19 +41,19 @@ function DynamicTable({ columns, data }) {
                 key={index}
                 className={`bg-white border-l border-b block md:table-row ${index % 2 === 0 ? 'bg-gray-100' : ''}`}
               >
-                <td className="p-2 text-left block md:table-cell text-sm font-bold border-x ">{row.type}</td>
-                <td className="p-2 text-center block md:table-cell text-sm text-gray-600">{row.male} </td>
-                <td className="p-2 text-center block md:table-cell text-sm text-gray-600">{row.female} </td>
-                <td className="p-2 text-center block md:table-cell text-sm text-gray-600 border-r ">{row.nonBinary} </td>
-                <td className="p-2 text-center block md:table-cell text-sm text-gray-600 border-r">{row.ageBelow30} </td>
-                <td className="p-2 text-center block md:table-cell text-sm text-gray-600 border-r">{row.age30To50} </td>
-                <td className="p-2 text-center block md:table-cell text-sm text-gray-600 border-r">{row.ageAbove50} </td>
-                <td className="p-2 text-center border block md:table-cell text-sm text-gray-600">{row.total} </td>
+                <td className="p-2 text-left block md:table-cell text-sm font-bold border-x">{row.type}</td>
+                <td className="p-2 text-center block md:table-cell text-sm text-gray-600">{row.male}</td>
+                <td className="p-2 text-center block md:table-cell text-sm text-gray-600">{row.female}</td>
+                <td className="p-2 text-center block md:table-cell text-sm text-gray-600 border-r">{row.nonBinary}</td>
+                <td className="p-2 text-center block md:table-cell text-sm text-gray-600 ">{row.ageBelow30}</td>
+                <td className="p-2 text-center block md:table-cell text-sm text-gray-600 ">{row.age30To50}</td>
+                <td className="p-2 text-center block md:table-cell text-sm text-gray-600 border-r">{row.ageAbove50}</td>
+                <td className="p-2 text-center  block md:table-cell text-sm text-gray-600">{row.total}</td>
               </tr>
             ))
           ) : (
             <tr className="bg-white border">
-              <td colSpan={totalColumns} className="p-2 text-center text-sm font-bold text-gray-600 block md:table-cell">
+              <td colSpan={columns.length + 2} className="p-2 text-center text-sm font-bold text-gray-600 block md:table-cell">
                 No data available
               </td>
             </tr>

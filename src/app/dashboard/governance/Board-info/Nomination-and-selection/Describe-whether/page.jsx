@@ -46,10 +46,17 @@ const uiSchema = {
         key: "Whethertakenintoconsideration",
         title: "Whether taken into consideration?",
         type: "number",
-        tooltip: 'Indicate which criteria is taken into consideration while nominating and selecting the highest governance body members.',
+        tooltip:
+          "Indicate which criteria is taken into consideration while nominating and selecting the highest governance body members.",
         display: "block",
       },
-      { key: "How", title: "How?", type: "number",tooltip: 'Provide an explaination on criteria considered', display: "block" },
+      {
+        key: "How",
+        title: "How?",
+        type: "number",
+        tooltip: "Provide an explaination on criteria considered",
+        display: "block",
+      },
     ],
     rowLabels: [
       {
@@ -212,10 +219,12 @@ const Describewhether = ({ selectedOrg, selectedCorp, year }) => {
             </h2>
           </div>
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-10-b
-              </p>
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 2-10-b
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -25,13 +25,13 @@ const schema = {
   items: {
     type: "object",
     properties: {
-
       Organisationengages: {
         type: "string",
-        title: "What are the categories of stakeholders organisation engages with",
+        title:
+          "What are the categories of stakeholders organisation engages with",
         texttype: "text",
       },
-     Stakeholdersidentified: {
+      Stakeholdersidentified: {
         type: "string",
         title: "How the stakeholders are identified.",
         texttype: "text",
@@ -51,15 +51,15 @@ const uiSchema = {
     titles: [
       {
         key: "Organisationengages",
-        title: "What are the categories of stakeholders organisation engages with",
+        title:
+          "What are the categories of stakeholders organisation engages with",
         tooltip:
           "Here the organization can explain how the organisation determines which categories of stakeholders to engage with and which categories not to engage with.",
       },
       {
         key: "Stakeholdersidentified",
         title: "How the stakeholders are identified.",
-        tooltip:
-          "Explain the process of stakeholder indentification.",
+        tooltip: "Explain the process of stakeholder indentification.",
       },
       {
         key: "Stakeholderengagement",
@@ -67,8 +67,6 @@ const uiSchema = {
         tooltip:
           "The purpose of stakeholder engagement can be, for example, to identify actual and potential impacts or to determine prevention and mitigation responses to potential negative impacts.",
       },
-
-
     ],
   },
 };
@@ -165,7 +163,6 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
-
     } catch (error) {
       setFormData(initialFormData);
     } finally {
@@ -202,7 +199,8 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
-            Describe the organisation's approach to engaging with stakeholders, including:
+              Describe the organisation's approach to engaging with
+              stakeholders, including:
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e86`}
                 data-tooltip-content="Stakeholders are individuals or groups that have interests that are affected or could be affected
@@ -227,10 +225,12 @@ by the organization’s activities."
           </div>
 
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-29a
-              </p>
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 2-29a
+                </div>
+              </div>
             </div>
           </div>
         </div>
