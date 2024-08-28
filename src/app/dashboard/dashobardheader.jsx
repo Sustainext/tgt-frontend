@@ -5,8 +5,7 @@ import { useRouter } from "next/navigation";
 import { loadFromLocalStorage } from "../utils/storage";
 import Link from "next/link";
 import Profile from "./Profile";
-import { useFluentC } from "../../Context/fluentc";
-import FluentCScript from "../shared/FluentcScript";
+
 
 const DashboardHeader = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -75,35 +74,6 @@ const DashboardHeader = () => {
     setDropdownVisible(false);
   };
 
-  //FluentcWidget Configuration
-
-  const { isFluentCOpen, setIsFluentCOpen } = useFluentC();
-
-  const widgetContainerRef = useRef(null);
-  const hasLoadedWidget = useRef(false);
-
-  const loadWidget = useCallback(() => {
-    if (
-      !hasLoadedWidget.current &&
-      window.fluentcWidget &&
-      widgetContainerRef.current
-    ) {
-      const widget = new window.fluentcWidget({
-        widgetID: "33d7c1ce-b762-41c9-8b89-1606844f8707",
-      });
-      widget.setupWidget(widgetContainerRef.current);
-      hasLoadedWidget.current = true;
-    }
-  }, []);
-
-  useEffect(() => {
-    loadWidget();
-  }, [loadWidget]);
-
-  useEffect(() => {
-    setIsFluentCOpen(hasLoadedWidget.current);
-  }, [loadWidget, setIsFluentCOpen]);
-
   return (
     <>
       <div className="flex justify-between bg-white sticky top-0 right-0 border-b border-sky-600 border-opacity-50 pt-1 w-full mx-2 -z--1000">
@@ -119,23 +89,7 @@ const DashboardHeader = () => {
             </span>
           </a>
         </div>
-        {/* <FluentCScript /> */}
         <div className="flex justify-center items-center">
-          {isFluentCOpen && (
-            <label
-              className="relative inline-flex items-center cursor-pointer"
-              for="fluentc-widget"
-            >
-              Select Language :
-            </label>
-          )}
-          <div>
-            <div
-              ref={widgetContainerRef}
-              id="fluentc-widget"
-              className="border mr-4"
-            />
-          </div>
           <div className="me-8 flex items-center">
             <div className="text-[#007EEF]">
               <span className="text-[#007EEF]"> Hi,</span>

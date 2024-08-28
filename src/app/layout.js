@@ -26,7 +26,6 @@ export default function RootLayout({ children }) {
           <FluentCProvider>
             <AuthProvider>
               {children}
-              {/* <FluentCScript /> */}
             </AuthProvider>
           </FluentCProvider>
         </GlobalStateProvider>
