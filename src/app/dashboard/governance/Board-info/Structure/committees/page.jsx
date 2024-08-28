@@ -7,7 +7,7 @@ import GovernanceWidget from "../../../../../shared/widgets/Governance/Structure
 import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "@/app/utils/axiosMiddleware";
@@ -65,7 +65,14 @@ const uiSchema = {
 };
 
 const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year }) => {
-  const [formData, setFormData] = useState([]);
+  const [formData, setFormData] = useState([{
+                    "Q1": [
+                        [
+                            "",
+                            ""
+                        ],
+                    ]
+                }]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
@@ -143,16 +150,40 @@ const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year }) =
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([]);
+    setFormData([{
+                    "Q1": [
+                        [
+                            "",
+                            ""
+                        ],
+                    ]
+                }]);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&corporate=${selectedCorp}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
-      setFormData(response.data.form_data[0].data);
+      if (response.data.form_data[0].data.length === 0) {
+        setFormData([{
+                    "Q1": [
+                        [
+                            "",
+                            ""
+                        ],
+                    ]
+                }]);
+    }    
+      else setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData([]);
+      setFormData([{
+                    "Q1": [
+                        [
+                            "",
+                            ""
+                        ],
+                    ]
+                }]);
     } finally {
       LoaderClose();
     }
@@ -161,7 +192,7 @@ const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year }) =
   useEffect(() => {
     if (selectedOrg && year) {
       loadFormData();
-      toastShown.current = false; // Reset the flag when valid data is present
+      toastShown.current = false; 
     } else {
       if (!toastShown.current) {
         toastShown.current = true;

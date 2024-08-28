@@ -20,6 +20,7 @@ import { LiaHomeSolid } from "react-icons/lia";
 import Link from "next/link";
 import DashboardHeader from "./dashobardheader";
 import { GlobalState } from "../../Context/page";
+import { CiSettings } from "react-icons/ci";
 
 const Sidenav = () => {
   const { open, setOpen } = GlobalState();
@@ -105,6 +106,11 @@ const Sidenav = () => {
       title: "Organizational Structure",
       icon: <MdOutlineAccountTree />,
       link: "/dashboard/OrgStructure",
+    },
+    {
+      title: "Settings",
+      icon: <CiSettings />,
+      link: "/dashboard/Settings",
     },
     { title: "About", icon: <MdInfoOutline />, link: "#" },
   ];
