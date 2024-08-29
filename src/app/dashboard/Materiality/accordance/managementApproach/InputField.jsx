@@ -18,7 +18,7 @@ const widgets = {
   MaterialityInputWidget: MaterialityInputWidget,
   MaterialityRadioWidget: MaterialityRadioWidget,
   MaterialityTableWidget:MaterialityTableWidget
- 
+
 };
 
 const view_path = "gri-governance-critical_concerns-2-16-a-critical_concerns";
@@ -40,7 +40,7 @@ const schema = {
                 title: "Describe how engagement with stakeholders has informed the actions taken (3-3-d) and how stakeholder feedback is used to assess the effectiveness of the actions taken (3-3-e).",
 
             },
-            
+
         },
 
     },
@@ -75,11 +75,11 @@ const uiSchema = {
             },
         },
 
-        "ui:options": {
-            orderable: false, // Prevent reordering of items
-            addable: false, // Prevent adding items from UI
-            removable: false, // Prevent removing items from UI
-            layout: "horizontal", // Set layout to horizontal
+          "ui:options": {
+            orderable: false,
+            addable: false,
+            removable: false,
+            layout: "horizontal",
         },
     },
 };
@@ -158,7 +158,7 @@ const InputField = ({ selectedOrg, year, selectedCorp }) => {
         }
     };
 
-   
+
     const handleSubmit = (e) => {
         e.preventDefault();
         // updateFormData();
