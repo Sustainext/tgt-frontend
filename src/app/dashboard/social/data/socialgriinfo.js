@@ -6960,4 +6960,47 @@ export const Socialdata = [
       </>,
     ],
   },
+  {
+    category: ["106"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 203: Indirect Economic Impacts 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[480px] overflow-y-auto custom-scrollbar">
+            <p className="text-[15px] text-[#0057A5] mb-4">
+              Disclosure 203-1 Infrastructure investments and services supported
+            </p>
+            <p className="text-[13px] text-black mb-2">Background:</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              This disclosure concerns the impact that an organization’s
+              infrastructure investments and services supported have on its
+              stakeholders and the economy.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The impacts of infrastructure investment can extend beyond the
+              scope of an organization’s own\ operations and over a longer
+              timescale. Such investments can include transport links,
+              utilities, community social facilities, health and welfare
+              centers, and sports centers. Along with investment in its own
+              operations, this is one measure of the organization’s capital
+              contribution to the economy
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
 ];
