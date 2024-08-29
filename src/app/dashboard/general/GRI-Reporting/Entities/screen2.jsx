@@ -11,7 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
-import axiosInstance from '@/app/utils/axiosMiddleware'
+import axiosInstance from "@/app/utils/axiosMiddleware";
 
 const widgets = {
   inputWidget: inputWidget2,
@@ -29,7 +29,8 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Does the organization have audited, consolidated financial statements or financial information filed on public record?",
+        title:
+          "Does the organization have audited, consolidated financial statements or financial information filed on public record?",
         enum: ["Yes", "No"],
       },
     },
@@ -43,9 +44,9 @@ const schema = {
               },
               Q2: {
                 type: "string",
-                title: "If yes, then please specify the differences between the list of entities included in the financial reporting and the list included in the sustainability reporting.",
+                title:
+                  "If yes, then please specify the differences between the list of entities included in the financial reporting and the list included in the sustainability reporting.",
               },
-
             },
           },
         ],
@@ -58,7 +59,8 @@ const uiSchema = {
   items: {
     "ui:order": ["Q1", "Q2"],
     Q1: {
-      "ui:title": "Does the organization have audited, consolidated financial statements or financial information filed on public record?",
+      "ui:title":
+        "Does the organization have audited, consolidated financial statements or financial information filed on public record?",
       "ui:tooltip":
         "Please select 'Yes' if  the organization have audited, consolidated financial statements or financial information filed on public record or select 'No' if not. ",
       "ui:tooltipdisplay": "block",
@@ -110,7 +112,6 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
     let newFormData = { ...e.formData[0] };
     if (newFormData.Q1 === "No") {
       newFormData.Q2 = "";
-
     }
     setFormData([newFormData]);
   };
@@ -214,7 +215,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
-            Audited, consolidated financial statements
+              Audited, consolidated financial statements
               {/* <MdInfoOutline data-tooltip-id={`tooltip-employees`}
                 data-tooltip-content="This section documents the data corresponding to the r product and
 service information and labeling.
@@ -236,17 +237,17 @@ iv. Disposal of the product and environmental or social impacts.
               </ReactTooltip> */}
             </h2>
           </div>
-
-          <div className={`${open ? "w-[20%]" : "w-[20%]"}`}>
-            <div className={`flex float-end`}>
-              <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 ">
-                <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
+          <div className="w-[20%]">
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                   GRI 2-2-b
-                </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
         <div className="mx-2">
           <Form
             schema={r_schema}
@@ -258,10 +259,14 @@ iv. Disposal of the product and environmental or social impacts.
           />
         </div>
         <div className="mb-6">
-          <button type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year  ? 'cursor-not-allowed' : ''}`}
+          <button
+            type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              !selectedOrg || !year ? "cursor-not-allowed" : ""
+            }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year }>
+            disabled={!selectedOrg || !year}
+          >
             Submit
           </button>
         </div>

@@ -95,21 +95,21 @@ by gender and geographic area, categorized by employment type."
             </h2>
           </div>
           <div className="w-[15%]">
-            <div className="flex float-end">
-              <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-                <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
+            <div className="flex float-end gap-2">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                   GRI 2-7-a
-                </p>
+                </div>
               </div>
-              <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-                <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                   GRI 2-7-b
-                </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="shadow-md rounded-md">
+        <div className="shadow-md rounded-md mx-2">
           {/* Tabs */}
           <ul className="flex justify-evenly cursor-pointer">
             {tabs.map((tab, index) => (

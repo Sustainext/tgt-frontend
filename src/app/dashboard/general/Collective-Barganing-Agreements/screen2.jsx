@@ -185,16 +185,17 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
           <div className="w-[80%] relative">
           </div>
 
-          <div className={`${open ? "w-[20%]" : "w-[20%]"}`}>
-            <div className={`flex float-end`}>
-              <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 ">
-                <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
+          <div className="w-[20%]">
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                   GRI 2-30-b
-                </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
         <div className="mx-2">
           <Form
             schema={r_schema}

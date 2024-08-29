@@ -8,7 +8,7 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { toast } from "react-toastify";
 import { Oval } from "react-loader-spinner";
-import axiosInstance from '@/app/utils/axiosMiddleware'
+import axiosInstance from "@/app/utils/axiosMiddleware";
 
 const widgets = {
   inputWidget: InputWidget5,
@@ -25,7 +25,8 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Describe the nomination and selection process for the highest governance body and its committees",
+        title:
+          "Describe the nomination and selection process for the highest governance body and its committees",
       },
     },
   },
@@ -35,8 +36,10 @@ const uiSchema = {
   items: {
     "ui:order": ["Q1"],
     Q1: {
-      "ui:title": "Describe the nomination and selection process for the highest governance body and its committees",
-      "ui:tooltip": "This section documents data corresponding to the nomination & selection process of the highest governance body and committees.",
+      "ui:title":
+        "Describe the nomination and selection process for the highest governance body and its committees",
+      "ui:tooltip":
+        "This section documents data corresponding to the nomination & selection process of the highest governance body and committees.",
       "ui:tooltipdisplay": "none",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -54,7 +57,9 @@ const uiSchema = {
 };
 
 const Process = ({ selectedOrg, selectedCorp, year }) => {
-  const [formData, setFormData] = useState([{ Q1: {Q1: "",fileName:"",fileURL:"" } }]);
+  const [formData, setFormData] = useState([
+    { Q1: { Q1: "", fileName: "", fileURL: "" } },
+  ]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
@@ -130,8 +135,8 @@ const Process = ({ selectedOrg, selectedCorp, year }) => {
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([{ Q1: {Q1: "",fileName:"",fileURL:"" } }]);
-    const view_path = 'gri-governance-nomination-2-10-a-nomination';
+    setFormData([{ Q1: { Q1: "", fileName: "", fileURL: "" } }]);
+    const view_path = "gri-governance-nomination-2-10-a-nomination";
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&corporate=${selectedCorp}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
@@ -140,7 +145,7 @@ const Process = ({ selectedOrg, selectedCorp, year }) => {
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData([{ Q1: {Q1: "",fileName:"",fileURL:"" } }]);
+      setFormData([{ Q1: { Q1: "", fileName: "", fileURL: "" } }]);
     } finally {
       LoaderClose();
     }
@@ -175,7 +180,7 @@ const Process = ({ selectedOrg, selectedCorp, year }) => {
         <div className="mb-4 flex">
           <div className="w-[80%]">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
-            Nomination and selection processes for the highest governance body
+              Nomination and selection processes for the highest governance body
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
                 data-tooltip-content="This section documents data corresponding to the  nomination & selection process of the highest governance body and committees."
@@ -200,10 +205,12 @@ const Process = ({ selectedOrg, selectedCorp, year }) => {
           </div>
 
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-10-a
-              </p>
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 2-10-a
+                </div>
+              </div>
             </div>
           </div>
         </div>

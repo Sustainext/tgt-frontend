@@ -177,7 +177,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
-            Worker Fluctuations
+              Worker Fluctuations
               <MdInfoOutline
                 data-tooltip-id={`tooltip-144`}
                 data-tooltip-content="This section documents data corresponding to significant
@@ -203,10 +203,12 @@ reporting periods."
           </div>
 
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-8c
-              </p>
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 2-8c
+                </div>
+              </div>
             </div>
           </div>
         </div>

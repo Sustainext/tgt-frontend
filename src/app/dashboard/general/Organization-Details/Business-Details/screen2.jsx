@@ -15,7 +15,7 @@ const widgets = {
   inputWidget: inputWidget2,
 };
 
-const view_path = "gri-governance-remuneration-2-19-b-policies";
+const view_path = "gri-general-business_details-value-2-6b";
 const client_id = 1;
 const user_id = 1;
 
@@ -26,33 +26,27 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title:
-          "Activities",
+        title: "Activities",
       },
       Q2: {
         type: "string",
-        title:
-          "Products",
+        title: "Products",
       },
       Q3: {
         type: "string",
-        title:
-          "Services",
+        title: "Services",
       },
       Q4: {
         type: "string",
-        title:
-          "Markets Served",
+        title: "Markets Served",
       },
       Q5: {
         type: "string",
-        title:
-          "Supply chain",
+        title: "Supply chain",
       },
       Q6: {
         type: "string",
-        title:
-          "Entities downstream from the organization & their activities",
+        title: "Entities downstream from the organization & their activities",
       },
     },
   },
@@ -60,12 +54,11 @@ const schema = {
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1","Q2","Q3","Q4","Q5","Q6"],
+    "ui:order": ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6"],
     Q1: {
-      "ui:title":
-        "Activities",
+      "ui:title": "Activities",
       "ui:tooltip":
-        "Please specify the activities carried out by the organization. While describing activities , please mention the total number of operations and explain how the organization defines ‘operation’. ",
+        "Please specify the activities carried out by the organization. While describing activities , please mention the total number of operations and explain how the organization defines ‘operation’.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -74,10 +67,9 @@ const uiSchema = {
       },
     },
     Q2: {
-      "ui:title":
-        "Products",
+      "ui:title": "Products",
       "ui:tooltip":
-        "Please describe the quantity of products provided during the reporting period (e.g., the number of productsprovided, net sales of products provided). whether the organization sells products that are banned in certain markets or are the subject of stakeholder concerns or public debate, including the reason for the ban or concerns and how the organization has responded to these concerns.",
+        "Please describe the quantity of products provided during the reporting period (e.g., the number of products provided, net sales of products provided). whether the organization sells products that are banned in certain markets or are the subject of stakeholder concerns or public debate, including the reason for the ban or concerns and how the organization has responded to these concerns.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -86,10 +78,9 @@ const uiSchema = {
       },
     },
     Q3: {
-      "ui:title":
-        "Services",
+      "ui:title": "Services",
       "ui:tooltip":
-        "Please describe the services that organization offers. While describing the services, please mention the quantity of  services provided during the reporting period (e.g., number of services provided, net sales of services provided). Whether the organization sells  services that are banned in certain markets or are the subject of stakeholder concerns or public debate, including the reason for the ban or concerns and how the organization has responded to these concerns.",
+        "Please describe the services that organization offers. While describing the services, please mention the quantity of  services provided during the reporting period (e.g., number of services provided, net sales of services provided). Whether the organization sells services that are banned in certain markets or are the subject of stakeholder concerns or public debate, including the reason for the ban or concerns and how the organization has responded to these concerns.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -98,10 +89,9 @@ const uiSchema = {
       },
     },
     Q4: {
-      "ui:title":
-        "Markets Served",
+      "ui:title": "Markets Served",
       "ui:tooltip":
-        "Please describe the market served by the organization. This description could include the geographic locations where products and services are offered;the demographic or other characteristics of the markets;information on the size and relative importance of the markets (e.g., net sales, net revenues).",
+        "Please describe the market served by the organization. This description could include the geographic locations where products and services are offered; the demographic or other characteristics of the markets; information on the size and relative importance of the markets (e.g., net sales, net revenues).",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -111,23 +101,26 @@ const uiSchema = {
     },
     Q5: {
       "ui:title": "Supply chain",
-      "ui:tooltip": "Please describe the following:<ul> <li>• The types of suppliers (e.g., brokers, contractors, wholesalers);</li><li>• The estimated number of suppliers throughout its supply chain and in each tier (e.g., first tier, second tier);</li><li>• The types of activities related to the organization’s products and services carried out by its suppliers (e.g., manufacturing, providing consulting services);</li><li>• The nature of its business relationships with its suppliers (e.g., long-term or short-term, contractual or non-contractual, project-based or event-based);</li><li>• The sector-specific characteristics of its supply chain (e.g., labor-intensive);</li><li>• The estimated monetary value of payments made to its suppliers;</li><li>• The geographic location of its suppliers.</li></ul>",
+      "ui:tooltip":
+        "Please describe the following:<ul> <li>• The types of suppliers (e.g., brokers, contractors, wholesalers); the estimated number of suppliers throughout its supply chain and in each tier (e.g., first tier, second tier)</li><li>• The types of activities related to the organization’s products and services carried out by its suppliers (e.g., manufacturing, providing consulting services)</li><li>• The nature of its business relationships with its suppliers (e.g., long-term or short-term, contractual or non-contractual, project-based or event-based)</li><li>• The estimated monetary value of payments made to its suppliers</li><li>• The geographic location of its suppliers.</li></ul>",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
       "ui:options": {
-        "label": false
+        label: false,
       },
     },
 
-    Q5: {
-      "ui:title": "Entities downstream from the organization & their activities",
-      "ui:tooltip": "Please describe the entities downstream from the organization & their activities. The description can include: <ul><li>1) the types of downstream entities (e.g., customers, beneficiaries);</li><li>2) the estimated number of downstream entities;</li><li>3) the types of activities related to the organization’s products and services carried out by the downstream entities (e.g., manufacturing, wholesale, retail);</li><li>4) the nature of its business relationships with the downstream entities (e.g., long-term or short-term, contractual or non-contractual, project-based or event-based);</li><li>5) the geographic location of the downstream entities.</li></ul>",
+    Q6: {
+      "ui:title":
+        "Entities downstream from the organization & their activities",
+      "ui:tooltip":
+        "Please describe the entities downstream from the organization & their activities. The description can include:<ul> <li>1) the types of downstream entities (e.g., customers, beneficiaries)</li><li> 2)the estimated number of downstream entities</li><li> 3) the types of activities related to the organization’s products and services carried out by the downstream entities (e.g., manufacturing, wholesale, retail)</li><li> 4) the nature of its business relationships with the downstream entities (e.g., long-term or short-term, contractual or non-contractual, project-based or event-based)</li><li> 5) the geographic location of the downstream entities.</li></ul>",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
       "ui:options": {
-        "label": false
+        label: false,
       },
     },
 
@@ -243,7 +236,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // updateFormData();
+    updateFormData();
     console.log("test form data", formData);
   };
 
@@ -259,7 +252,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
-            Value Chain
+              Value Chain
               <MdInfoOutline
                 data-tooltip-id={`tooltip-144`}
                 data-tooltip-html="This section documents data corresponding
@@ -287,8 +280,8 @@ organization & their activities  "
               ></ReactTooltip>
             </h2>
             <p className="flex mx-2 text-[15px] text-gray-500 font-semibold mb-2">
-            Please describe the organization's value chain -
-            <MdInfoOutline
+              Please describe the organization's value chain -
+              <MdInfoOutline
                 data-tooltip-id={`tooltip-145`}
                 data-tooltip-html="Provide a description of organization's value chain including organization's activity, product, services,
 markets served, supply chain and entities downstream from the organization & their activities"
@@ -312,18 +305,20 @@ markets served, supply chain and entities downstream from the organization & the
           </div>
 
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-6b
-              </p>
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 2-6b
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         <div className="mx-2 mb-3">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -338,7 +333,7 @@ markets served, supply chain and entities downstream from the organization & the
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

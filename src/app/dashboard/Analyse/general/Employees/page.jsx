@@ -58,10 +58,10 @@ const Employees = () => {
     if (!validateForm()) return;
 
     LoaderOpen();
-    setCustomerhealth([]);
+    setChilddata1([]);
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_customer_health_safety_analysis`,
+        `/sustainapp/get_general_employee_analysis`,
         {
           params: params
         }
@@ -69,24 +69,22 @@ const Employees = () => {
 
       const data = response.data;
 
-      const { customer_health_percent } = data;
+      const { total_number_of_employees } = data;
 
-      const formatcustomerhealth = (data) => {
-        return data.map((item, index) => ({
-          type: item.type_of_employee,
-          male: item.percentage_of_male_employee,
-          female: item.percentage_of_female_employee,
-          nonBinary: item.percentage_of_non_binary_employee,
-          ageBelow30: item.yearsold30,
-          age30To50: item.yearsold30to50,
-          ageAbove50: item.yearsold50,
+      const formatEmployee = (data) => {
+        return data.map((item) => ({
+          type: item.type_of_employee.replace('_', ' '),  // Formatting the type to be more readable
+          male: item.male.total,
+          female: item.female.total,
+          nonBinary: item.others.total,
+          ageBelow30: item.male.yearsold30 + item.female.yearsold30 + item.others.yearsold30,
+          age30To50: item.male.yearsold30to50 + item.female.yearsold30to50 + item.others.yearsold30to50,
+          ageAbove50: item.male.yearsold50 + item.female.yearsold50 + item.others.yearsold50,
+          total:item.male.total+item.female.total+item.others.total,
         }));
       };
-      setChilddata1(
-        formatcustomerhealth(
-          customer_health_percent
-        )
-      );
+
+      setChilddata1(formatEmployee(total_number_of_employees));
       LoaderClose();
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
@@ -141,7 +139,7 @@ const Employees = () => {
     setSelectedOrg(newOrg);
     setSelectedCorp("");
     setSelectedYear("");
-    setCustomerhealth([]);
+    setChilddata1([]);
 
     setDatasetparams({
       organisation: newOrg,

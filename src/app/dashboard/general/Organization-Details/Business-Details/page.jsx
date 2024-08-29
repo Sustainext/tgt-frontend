@@ -50,8 +50,8 @@ const BusinessDetails = () => {
             <div className="text-left mb-4 ml-3 pt-5">
               <p className="text-sm">General</p>
               <div className="flex">
-                <div>
-                  <p className="gradient-text text-[22px] font-bold pt-1">
+                         <div className="h-[29px]">
+                  <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
                   Business Details
                   </p>
                 </div>
@@ -72,7 +72,7 @@ const BusinessDetails = () => {
           </div>
         </div>
 
-        <div className="ml-3 flex">
+      <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
           Activities, value chain and other business relationships
             <MdInfoOutline

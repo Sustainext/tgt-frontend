@@ -26,9 +26,9 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Please indicate the contact point for questions about the report",
+        title:
+          "Please indicate the contact point for questions about the report",
       },
-
     },
   },
 };
@@ -37,7 +37,8 @@ const uiSchema = {
   items: {
     "ui:order": ["Q1"],
     Q1: {
-      "ui:title": "Please indicate the contact point for questions about the report",
+      "ui:title":
+        "Please indicate the contact point for questions about the report",
       "ui:tooltip":
         "Specify the contact point for questions about the report or reported information. E.g. provide name and email address etc. ",
       "ui:tooltipdisplay": "block",
@@ -176,15 +177,17 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
-            Point of contact
+              Point of contact
             </h2>
           </div>
 
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-3-d
-              </p>
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 2-3-d
+                </div>
+              </div>
             </div>
           </div>
         </div>

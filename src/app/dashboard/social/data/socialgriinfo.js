@@ -4846,7 +4846,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+          <div className="h-[580px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">Guidance to 2-19-a-i</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Fixed pay and variable pay can include performance-based pay,
@@ -4923,7 +4923,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+          <div className="h-[580px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">Guidance</p>
             <p className="text-[11px] text-[#727272] mb-4">
               This disclosure covers the organization’s policy commitments for
@@ -5576,7 +5576,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+          <div className="h-[580px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">Guidance</p>
             <p className="text-[11px] text-[#727272] mb-4">
               This disclosure covers grievance mechanisms that the organization
@@ -5992,7 +5992,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[520px] overflow-y-auto custom-scrollbar">
+          <div className="h-[580px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-[#727272] mb-4">
               The organization should provide a restatement of information when
               it has learned that the previously reported information needs to
@@ -6144,7 +6144,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+          <div className="h-[580px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-black mb-2">Guidance to 2-6-a</p>
             <p className="text-[11px] text-[#727272] mb-2">
               Sectors can be identified according to categories, such as the
@@ -6327,7 +6327,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+          <div className="h-[580px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-black mb-2">Guidance to 2-7-a</p>
             <p className="text-[11px] text-[#727272] mb-2">
               An employee is an individual who is in an employment relationship
@@ -6510,7 +6510,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+          <div className="h-[580px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-black mb-2">
               Guidance to 2-8-a-i and 2-8-a-ii
             </p>
@@ -6582,7 +6582,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+          <div className="h-[580px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-black mb-2">Guidance</p>
             <p className="text-[11px] text-[#727272] mb-2">
               This disclosure addresses non-compliance, or failure to comply
@@ -6728,7 +6728,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+          <div className="h-[580px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-black mb-2">Guidance</p>
             <p className="text-[11px] text-[#727272] mb-2">
               Stakeholders are individuals or groups that have interests that
@@ -6868,7 +6868,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+          <div className="h-[580px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-black mb-2">Guidance</p>
             <p className="text-[11px] text-[#727272] mb-2">
               This disclosure provides insights into how the organization

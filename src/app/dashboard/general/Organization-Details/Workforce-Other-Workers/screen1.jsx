@@ -236,7 +236,6 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
-
     } catch (error) {
       setFormData(initialFormData);
     } finally {
@@ -300,10 +299,12 @@ their contractual relationships with your organization, and the types of work th
           </div>
 
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-8-a
-              </p>
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 2-8-a
+                </div>
+              </div>
             </div>
           </div>
         </div>

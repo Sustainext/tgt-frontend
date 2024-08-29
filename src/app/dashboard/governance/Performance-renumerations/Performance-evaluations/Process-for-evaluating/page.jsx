@@ -26,7 +26,8 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Describe the processes for evaluating the performance of the highest governance body in overseeing the management of the organization’s impacts on the economy, environment, and people",
+        title:
+          "Describe the processes for evaluating the performance of the highest governance body in overseeing the management of the organization’s impacts on the economy, environment, and people",
       },
     },
   },
@@ -36,7 +37,8 @@ const uiSchema = {
   items: {
     "ui:order": ["Q1"],
     Q1: {
-      "ui:title": "Describe the processes for evaluating the performance of the highest governance body in overseeing the management of the organization’s impacts on the economy, environment, and people",
+      "ui:title":
+        "Describe the processes for evaluating the performance of the highest governance body in overseeing the management of the organization’s impacts on the economy, environment, and people",
       "ui:tooltip": "",
       "ui:tooltipdisplay": "none",
       "ui:widget": "inputWidget",
@@ -55,7 +57,9 @@ const uiSchema = {
 };
 
 const Process = ({ selectedOrg, selectedCorp, year }) => {
-  const [formData, setFormData] = useState([{ Q1: {Q1: "",fileName:"",fileURL:"" } }]);
+  const [formData, setFormData] = useState([
+    { Q1: { Q1: "", fileName: "", fileURL: "" } },
+  ]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
@@ -174,7 +178,8 @@ const Process = ({ selectedOrg, selectedCorp, year }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
-            Processes for evaluating the performance of the highest governance body
+              Processes for evaluating the performance of the highest governance
+              body
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e5`}
                 data-tooltip-content="This section documents the data corresponding to the processes for evaluating <br/>the performance of the highest governance bodyin overseeing the management of the organization’s impacts on the economy,environment, and people."
@@ -199,10 +204,12 @@ const Process = ({ selectedOrg, selectedCorp, year }) => {
           </div>
 
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-18-a
-              </p>
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 2-18-a
+                </div>
+              </div>
             </div>
           </div>
         </div>
