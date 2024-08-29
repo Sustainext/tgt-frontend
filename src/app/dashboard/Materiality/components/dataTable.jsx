@@ -103,39 +103,39 @@ const DataTable = ({ data }) => {
                   </div>
                 </td>
                 <td className="p-3 align-top">
-                  <div className="flex gap-2 cursor-pointer">
-                    {item.status == "Outdated" ? (
-                      <div className="w-[20%]"></div>
-                    ) : (
-                      <div className="w-[20%]">
-                        <MdOutlineEdit
-                          className="text-[18px] text-gray-500"
-                          onClick={() => {
-                            if (item.type == "GRI: In Accordance with") {
-                              router.push("Materiality/accordance");
-                            } else if (item.type == "GRI: with Reference to") {
-                              router.push("Materiality/reference");
-                            }
-                          }}
-                        />
-                      </div>
-                    )}
+        <div className="flex gap-2 cursor-pointer">
+          {item.status == "Outdated" ? (
+            <div className="w-[20%]"></div>
+          ) : (
+            <div className="w-[20%]">
+              <MdOutlineEdit
+                className="text-[18px] text-gray-500"
+                onClick={() => {
+                  if (item.type == "GRI: In Accordance to") {
+                    router.push("Materiality/accordance");
+                  } else if (item.type == "GRI: with Reference to") {
+                    router.push("Materiality/reference");
+                  }
+                }}
+              />
+            </div>
+          )}
 
-                    <div className="w-[20%]">
-                      <MdOutlineDeleteOutline
-                        className="text-[18px] text-gray-500"
-                        onClick={() => {
-                          setDeleteData({
-                            organization: item.organization,
-                            corporate: item.corporate,
-                            type: item.type,
-                            period: item.timePeriod,
-                          });
-                          setDeleteModalOpen(true);
-                        }}
-                      />
-                    </div>
-                  </div>
+          <div className="w-[20%]">
+            <MdOutlineDeleteOutline
+              className="text-[18px] text-gray-500"
+              onClick={() => {
+                setDeleteData({
+                  organization: item.organization,
+                  corporate: item.corporate,
+                  type: item.type,
+                  period: item.timePeriod,
+                });
+                setDeleteModalOpen(true);
+              }}
+            />
+          </div>
+        </div>
                 </td>
               </tr>
             ))}

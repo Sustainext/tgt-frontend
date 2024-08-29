@@ -247,12 +247,12 @@ input[type='number']::-webkit-outer-spin-button {
 
 .green-radio:checked::before{
   content: '';
-  display: block;
-  height: 8px; /* Smaller green circle */
-  width: 8px;
-  border-radius: 100%;
-  background-color: #22C55E; /* Green circle */
   position: absolute;
-  top: 2.5px; /* Positioning the small green circle */
-  left: 2px;
+  left: 55%;
+  top: 45%;
+  width: 5px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: translate(-50%, -50%) rotate(45deg);
 }

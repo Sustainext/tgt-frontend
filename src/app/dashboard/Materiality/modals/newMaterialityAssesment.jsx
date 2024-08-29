@@ -164,14 +164,14 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
          </div>
          <div>
          <form className="space-y-2 px-6 pt-4">
-           <div className="flex items-center green-radio" onClick={()=>{handleChangeRadio("accordance")}}>
+           <div className="flex items-center" onClick={()=>{handleChangeRadio("accordance")}}>
              <input
                id="accordance"
                name="radio"
                type="radio"
                value="accordance"
                checked={assessmentApproach === "accordance"}
-              className="form-radio green-radio h-3.5 w-3.5 appearance-none rounded-[15px] border border-gray-500 checked:border-green-500 checked:bg-white relative cursor-pointer"
+              className="form-radio green-radio h-4 w-4 appearance-none rounded-full border border-gray-500 checked:border-green-500 checked:bg-[#42cc71] relative cursor-pointer"
                
              />
              <label
@@ -181,14 +181,14 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
                GRI: In Accordance With
              </label>
            </div>
-           <div className="flex items-center green-radio" onClick={()=>{handleChangeRadio("reference")}}>
+           <div className="flex items-center" onClick={()=>{handleChangeRadio("reference")}}>
              <input
                id="reference"
                name="radio"
                type="radio"
                value="reference"
                checked={assessmentApproach === "reference"}
-              className="form-radio green-radio h-3.5 w-3.5 appearance-none rounded-[15px] border border-gray-500 checked:border-green-500 checked:bg-white relative cursor-pointer"
+              className="form-radio green-radio h-4 w-4 appearance-none rounded-full border border-gray-500 checked:border-green-500 checked:bg-[#42cc71] relative cursor-pointer"
                
              />
              <label
