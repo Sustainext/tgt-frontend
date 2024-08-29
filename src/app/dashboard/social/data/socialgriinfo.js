@@ -7105,4 +7105,46 @@ export const Socialdata = [
       </>,
     ],
   },
+  {
+    category: ["109"],
+    header: [<h5 className="text-sky-600 text-[17px] font-bold">
+      GRI 203: Indirect Economic Impacts 2016</h5>],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Disclosure 203-2 Significant indirect economic impacts
+          </p>
+          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-4">Guidance:</p>
+            <p className="text-[11px] text-[#727272]">
+            This disclosure concerns the spectrum of indirect economic impacts that an organization can have on its stakeholders and the economy.
+
+            </p>
+            <p className="text-[11px] text-[#727272]">
+            Examples of significant indirect economic impacts, both positive and negative, can include:
+
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                Under 30 years old;
+              </li>
+
+              <li className="text-[11px] text-[#727272]">30-50 years old;</li>
+              <li className="text-[11px] text-[#727272]">Over 50 years old.</li>
+            </ul>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
 ];
