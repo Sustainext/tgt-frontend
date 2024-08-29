@@ -50,7 +50,7 @@ const TopicSelectedPopup = ({ isModalOpen, setIsModalOpen }) => {
               <div className="flex justify-between items-center mt-5 mb-3">
               <button
                   className="w-auto h-full mr-2 py-2 px-3 text-[#727272]  cursor-pointer"
-                  onClick={()=>{router.push("/dashboard")}}
+                  onClick={()=>{router.push("/dashboard/Materiality")}}
                 >
                   {"<"} Back to Dashboard
                 </button>

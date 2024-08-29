@@ -90,7 +90,7 @@ const CheckboxWidget2 = ({
         )}
         
       </div>
-      <div className={`p-2 mx-1 mt-2 ${uiSchema['ui:section']}`}>
+      <div className={`p-2 mx-1 mt-2  ${uiSchema['ui:section']}`}>
         {options.enumOptions.map((option, index) => (
           <label key={index} className='flex items-center gap-2 text-sm mb-4 cursor-pointer'>
             <input
@@ -100,8 +100,10 @@ const CheckboxWidget2 = ({
               checked={selectedValues.includes(option.value)} // Check if the value is in the array
               autoFocus={autofocus && index === 0}
               onChange={handleChange}
-              className='form-checkbox h-3 w-3' // Changed from 'form-radio' to 'form-checkbox'
+              className="form-checkbox green-checkbox h-3 w-3 appearance-none checked:bg-green-500 checked:border-green-500 border border-gray-500 rounded-sm relative"
+ // Changed from 'form-radio' to 'form-checkbox'
             />
+           
             {option.label}
           </label>
         ))}

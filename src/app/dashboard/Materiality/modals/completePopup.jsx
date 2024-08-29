@@ -25,9 +25,9 @@ const CompletePopup = ({ isCompleteModalOpen, setIsCompleteModalOpen }) => {
                 </p>
               </div>
               <div className="flex justify-center items-center mt-5 mb-3">
-                  <button className="w-2/6 h-full mr-2  py-2 px-3 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer"
+                  <button className="w-auto h-full mr-2  py-2 px-3 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer"
                  onClick={()=>{
-                    router.push('/dashboard')
+                    router.push('/dashboard/Materiality')
                  }}
                   >
                     Back to Dashboard

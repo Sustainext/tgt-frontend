@@ -100,7 +100,7 @@ const Environment = () => {
                     theme: "light",
                 });
                 LoaderClose();
-                loadFormData();
+                // loadFormData();
             } else {
                 toast.error("Oops, something went wrong", {
                     position: "top-right",

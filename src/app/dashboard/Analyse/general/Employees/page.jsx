@@ -201,7 +201,7 @@ const Employees = () => {
                       }`}
                     onClick={() => handleReportTypeChange("Corporate")}
                   >
-                    <div className="text-slate-700 text-[13px] font-medium font-['Manrope'] leading-tight">
+                    <div className="text-slate-800 text-[13px] font-medium font-['Manrope'] leading-tight">
                       Corporate
                     </div>
                   </div>

@@ -191,7 +191,7 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
           readOnly
           value={startDate && endDate ? `${format(startDate, 'dd/MMM/yyyy')} ~ ${format(endDate, 'dd/MMM/yyyy')}` : ""}
           onClick={() => setShowDatePicker(!showDatePicker)}
-          className="py-1 border border-gray-300 rounded-md w-full text-sm pl-2"
+          className="py-1.5 border border-gray-300 rounded-md w-full text-sm pl-2"
         />
         <AiOutlineCalendar className="absolute right-2 cursor-pointer" onClick={() => setShowDatePicker(!showDatePicker)} />
       </div>

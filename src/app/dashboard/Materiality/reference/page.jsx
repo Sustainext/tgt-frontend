@@ -144,7 +144,7 @@ const Reference = () => {
       </div>
       <div className="mx-5">
         <div className="flex justify-between items-start">
-          <div className="shadow-lg rounded-lg  w-[32%]">
+          <div className="shadow-lg rounded-lg  w-[32.5%]">
             <div className="gradient-background p-2 rounded-t-lg">
               <p className="text-[##2E0B34] text-[17px] mx-2 pt-2">
                 Environmental
@@ -153,13 +153,13 @@ const Reference = () => {
             <Environment/>
            
           </div>
-          <div className="shadow-lg rounded-lg  w-[32%]">
+          <div className="shadow-lg rounded-lg  w-[32.5%]">
             <div className="gradient-background p-2 rounded-t-lg">
               <p className="text-[##2E0B34] text-[17px] mx-2 pt-2">Social</p>
             </div>
             <Social/>
           </div>
-          <div className="shadow-lg rounded-lg  w-[32%]">
+          <div className="shadow-lg rounded-lg  w-[32.5%]">
             <div className="gradient-background p-2 rounded-t-lg">
               <p className="text-[##2E0B34] text-[17px] mx-2 pt-2">
                 Governance

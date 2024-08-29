@@ -11,20 +11,20 @@ const Aside = ({ activeTab, handleTabClick }) => {
             <span className="text-[16px] font-[600] p-2">Materiality Module</span>
           </button>
           <div>
-          <p className="text-[13px] text-[#727272] my-3 mx-5">
+          <p className="text-[13px] text-[#727272] my-2 px-5">
            GRI
           </p>
-          <p className={`text-[13px] text-[#727272]  my-3 ${activeTab=="selectMaterialityTopic"?"bg-[#007eef0d] p-3 px-5":"bg-transparent mx-5"}`}
+          <p className={`text-[13px] text-[#727272]  my-2 ${activeTab=="selectMaterialityTopic"?"bg-[#007eef0d] p-2 px-5":"bg-transparent p-2 px-5"}`}
           onClick={()=>{handleTabClick('selectMaterialityTopic')}}
           >
           Select Materiality Topics
           </p>
-          <p className={`text-[13px] text-[#727272]  my-3 ${activeTab=="materialAssessmentProcess"?"bg-[#007eef0d] p-3 px-5":"bg-transparent mx-5"}`}
+          <p className={`text-[13px] text-[#727272]  my-2 ${activeTab=="materialAssessmentProcess"?"bg-[#007eef0d] p-2 px-5":"bg-transparent  p-2 px-5"}`}
           onClick={()=>{handleTabClick('materialAssessmentProcess')}}
           >
           Materiality Assessment Process
           </p>
-          <p className={`text-[13px] text-[#727272]  my-3 ${activeTab=="managementApproach"?"bg-[#007eef0d] p-3 px-5":"bg-transparent mx-5"}`}
+          <p className={`text-[13px] text-[#727272]  my-2 ${activeTab=="managementApproach"?"bg-[#007eef0d] p-2 px-5":"bg-transparent p-2 px-5"}`}
           onClick={()=>{handleTabClick('managementApproach')}}
           >
           Management Approach

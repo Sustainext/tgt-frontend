@@ -224,10 +224,10 @@ const SelectMaterialityTopic = () => {
         {/* buttons */}
         <div className="flex justify-end w-full gap-4 mt-4">
         <button
-                  className="w-[15%] h-full mr-2 py-2 px-3 text-[#727272]  cursor-pointer"
+                  className="w-auto h-full mr-2 py-2 px-3 text-[#727272]  cursor-pointer"
                   onClick={()=>{
                     if(currentStep==0){
-                      router.push("/dashboard")
+                      router.push("/dashboard/Materiality")
                     }
                     else{
                       handlePrevious()
@@ -237,7 +237,7 @@ const SelectMaterialityTopic = () => {
                   {"<"} {currentStep==0?"Back to Dashboard":"Previous"}
           </button>
           <button
-                  className="w-[15%] h-full mr-3 py-2 px-2 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer"
+                  className="w-[16%] h-full mr-4 py-2 px-2 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer"
                   onClick={()=>{
                     if(currentStep==2){
                       setIsModalOpen(true)

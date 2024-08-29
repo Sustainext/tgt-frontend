@@ -35,7 +35,7 @@ const Step1 = () => {
       {/* checkbox */}
       <div className="mx-5">
         <div className="flex justify-between items-start">
-          <div className="shadow-lg rounded-lg  w-[32%]">
+          <div className="shadow-lg rounded-lg  w-[32.5%]">
             <div className="gradient-background p-2 rounded-t-lg flex justify-between">
               <p className="text-[##2E0B34] text-[17px] mx-2 pt-2">
                 Environmental
@@ -44,26 +44,26 @@ const Step1 = () => {
                   id="env"
                   type="checkbox"
                   name="env"
-                  className="h-4 w-4 mt-3 mx-2 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  className="h-3.5 w-3.5 mt-3 mx-2 green-checkbox appearance-none checked:bg-green-500 checked:border-green-500 border border-gray-500 rounded-[3px] relative bg-white"
                   onChange={handleChecked}
                 />
             </div>
             <Enviroment envChecked={envChecked}/>
           </div>
-          <div className="shadow-lg rounded-lg  w-[32%]">
+          <div className="shadow-lg rounded-lg  w-[32.5%]">
             <div className="gradient-background p-2 rounded-t-lg flex justify-between">
               <p className="text-[##2E0B34] text-[17px] mx-2 pt-2">Social</p>
               <input
                   id="soc"
                   type="checkbox"
                   name="soc"
-                  className="h-4 w-4 mt-3 mx-2 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  className="h-3.5 w-3.5 mt-3 mx-2 green-checkbox appearance-none checked:bg-green-500 checked:border-green-500 border border-gray-500 rounded-[3px] relative bg-white"
                   onChange={handleChecked}
                 />
             </div>
            <Social socChecked={socChecked}/>
           </div>
-          <div className="shadow-lg rounded-lg  w-[32%]">
+          <div className="shadow-lg rounded-lg  w-[32.5%]">
             <div className="gradient-background p-2 rounded-t-lg flex justify-between">
               <p className="text-[##2E0B34] text-[17px] mx-2 pt-2">
                 Governance
@@ -72,7 +72,7 @@ const Step1 = () => {
                   id="gov"
                   type="checkbox"
                   name="gov"
-                  className="h-4 w-4 mt-3 mx-2 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  className="h-3.5 w-3.5 mt-3 mx-2 green-checkbox appearance-none checked:bg-green-500 checked:border-green-500 border border-gray-500 rounded-[3px] relative bg-white"
                   onChange={handleChecked}
                 />
             </div>

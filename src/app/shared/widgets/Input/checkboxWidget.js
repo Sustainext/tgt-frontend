@@ -27,6 +27,12 @@ const CheckboxWidget = ({
     onChange(updatedValues);           // Call onChange prop with the new array of values
   };
 
+  useEffect(() => {
+    if (!options.envChecked && !options.socChecked && !options.govChecked) {
+      setSelectedValues([]); // Uncheck all checkboxes
+    }
+  }, [options.envChecked, options.socChecked, options.govChecked, setSelectedValues]);
+  
   return (
     <div className='mb-1'>
       <div className={`p-2 mx-1 mt-2 ${options.envChecked || options.socChecked || options.govChecked ? "" : "opacity-25"}`}>
@@ -39,7 +45,7 @@ const CheckboxWidget = ({
               checked={selectedValues.includes(option.value)} // Check if the value is in the array
               autoFocus={autofocus && index === 0}
               onChange={handleChange}
-              className='form-checkbox h-3 w-3' // Changed from 'form-radio' to 'form-checkbox'
+              className='form-checkbox h-3 w-3  green-checkbox appearance-none checked:bg-green-500 checked:border-green-500 border border-gray-500 rounded-sm relative' // Changed from 'form-radio' to 'form-checkbox'
               disabled={!(options.envChecked || options.socChecked || options.govChecked)}
             />
             {option.label}

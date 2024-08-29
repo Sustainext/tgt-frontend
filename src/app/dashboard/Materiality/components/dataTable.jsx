@@ -2,13 +2,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { MdOutlineEdit, MdOutlineDeleteOutline } from "react-icons/md";
 import DeletePopup from "../modals/deletePopup";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
 const DataTable = ({ data }) => {
-  const router = useRouter()
+  const router = useRouter();
   const [loopen, setLoOpen] = useState(false);
-  const [deleteModalOpen,setDeleteModalOpen]=useState(false)
-  const [deleteData,setDeleteData]=useState({})
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [deleteData, setDeleteData] = useState({});
   const toastShown = useRef(false);
   const Col = [
     "Organization",
@@ -29,7 +29,6 @@ const DataTable = ({ data }) => {
     setLoOpen(false);
   };
 
-
   return (
     <>
       <div className="mb-2 h-auto">
@@ -49,102 +48,105 @@ const DataTable = ({ data }) => {
             </tr>
           </thead>
           <tbody>
-  {data.map((item, rowIndex) => (
-    <tr
-      key={rowIndex}
-      className={`${
-        rowIndex >= data.length - 1 ? "" : "border-b"
-      } text-[13px] align-top space-x-1`}
-    >
-      <td className="p-3 text-left align-top">{item.organization}</td>
-      <td className="p-3 text-left align-top">{item.corporate}</td>
-      <td className="p-3 text-left align-top">{item.type}</td>
-      <td className="p-3 text-left align-top">{item.timePeriod}</td>
-      <td className="p-3 text-left align-top">
-        {item.enviromentTopics.length > 0
-          ? item.enviromentTopics.map((topic, index) => (
-              <div className="mb-2.5" key={index}>
-                {topic}
-              </div>
-            ))
-          : "Not Selected"}
-      </td>
-      <td className="p-3 text-left align-top">
-        {item.socialTopics.length > 0
-          ? item.socialTopics.map((topic, index) => (
-              <div className="mb-2.5" key={index}>
-                {topic}
-              </div>
-            ))
-          : "Not Selected"}
-      </td>
-      <td className="p-3 text-left align-top">
-        {item.governanceTopics.length > 0
-          ? item.governanceTopics.map((topic, index) => (
-              <div className="mb-2.5" key={index}>
-                {topic}
-              </div>
-            ))
-          : "Not Selected"}
-      </td>
-      <td className="p-3 text-left align-top">
-  <div className="flex items-start">
-    <span
-      className={`inline-block w-3 h-3 mr-2 rounded-full ${
-        item.status === "InProgress"
-          ? "bg-yellow-500"
-          : item.status === "Completed"
-          ? "bg-green-800"
-          : "bg-gray-500"
-      }`}
-    ></span>
-    <span className="leading-none self-start">{item.status}</span>
-  </div>
-</td>
+            {data.map((item, rowIndex) => (
+              <tr
+                key={rowIndex}
+                className={`${
+                  rowIndex >= data.length - 1 ? "" : "border-b"
+                } text-[13px] align-top`}
+              >
+                <td className="p-3 text-left align-top">{item.organization}</td>
+                <td className="p-3 text-left align-top">{item.corporate}</td>
+                <td className="p-3 text-left align-top">{item.type}</td>
+                <td className="p-3 text-left align-top">{item.timePeriod}</td>
+                <td className="p-3 text-left align-top">
+                  {item.enviromentTopics.length > 0
+                    ? item.enviromentTopics.map((topic, index) => (
+                        <div className="mb-2.5" key={index}>
+                          {topic}
+                        </div>
+                      ))
+                    : "Not Selected"}
+                </td>
+                <td className="p-3 text-left align-top">
+                  {item.socialTopics.length > 0
+                    ? item.socialTopics.map((topic, index) => (
+                        <div className="mb-2.5" key={index}>
+                          {topic}
+                        </div>
+                      ))
+                    : "Not Selected"}
+                </td>
+                <td className="p-3 text-left align-top">
+                  {item.governanceTopics.length > 0
+                    ? item.governanceTopics.map((topic, index) => (
+                        <div className="mb-2.5" key={index}>
+                          {topic}
+                        </div>
+                      ))
+                    : "Not Selected"}
+                </td>
+                <td className="p-3 text-left align-top">
+                  <div className="flex items-start">
+                    <span
+                      className={`inline-block w-3 h-3 mr-2 rounded-full ${
+                        item.status === "InProgress"
+                          ? "bg-yellow-500"
+                          : item.status === "Completed"
+                          ? "bg-green-800"
+                          : "bg-gray-500"
+                      }`}
+                    ></span>
+                    <span className="leading-none self-start">
+                      {item.status}
+                    </span>
+                  </div>
+                </td>
+                <td className="p-3 align-top">
+                  <div className="flex gap-2 cursor-pointer">
+                    {item.status == "Outdated" ? (
+                      <div className="w-[20%]"></div>
+                    ) : (
+                      <div className="w-[20%]">
+                        <MdOutlineEdit
+                          className="text-[18px] text-gray-500"
+                          onClick={() => {
+                            if (item.type == "GRI: In Accordance with") {
+                              router.push("Materiality/accordance");
+                            } else if (item.type == "GRI: with Reference to") {
+                              router.push("Materiality/reference");
+                            }
+                          }}
+                        />
+                      </div>
+                    )}
 
-
-      <td className="p-3 align-top">
-        <div className="flex gap-2 cursor-pointer">
-          {item.status == "Outdated" ? (
-            <div className="w-[20%]"></div>
-          ) : (
-            <div className="w-[20%]">
-              <MdOutlineEdit
-                className="text-[18px] text-gray-500"
-                onClick={() => {
-                  if (item.type == "GRI: In Accordance to") {
-                    router.push("Materiality/accordance");
-                  } else if (item.type == "GRI: with Reference to") {
-                    router.push("Materiality/reference");
-                  }
-                }}
-              />
-            </div>
-          )}
-
-          <div className="w-[20%]">
-            <MdOutlineDeleteOutline
-              className="text-[18px] text-gray-500"
-              onClick={() => {
-                setDeleteData({
-                  organization: item.organization,
-                  corporate: item.corporate,
-                  type: item.type,
-                  period: item.timePeriod,
-                });
-                setDeleteModalOpen(true);
-              }}
-            />
-          </div>
-        </div>
-      </td>
-    </tr>
-  ))}
-</tbody>
-
+                    <div className="w-[20%]">
+                      <MdOutlineDeleteOutline
+                        className="text-[18px] text-gray-500"
+                        onClick={() => {
+                          setDeleteData({
+                            organization: item.organization,
+                            corporate: item.corporate,
+                            type: item.type,
+                            period: item.timePeriod,
+                          });
+                          setDeleteModalOpen(true);
+                        }}
+                      />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
-      <DeletePopup isModalOpen={deleteModalOpen} setIsModalOpen={setDeleteModalOpen} deleteData={deleteData} />
+      <DeletePopup
+        isModalOpen={deleteModalOpen}
+        setIsModalOpen={setDeleteModalOpen}
+        deleteData={deleteData}
+      />
     </>
   );
 };
