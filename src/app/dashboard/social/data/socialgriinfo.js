@@ -6961,6 +6961,460 @@ export const Socialdata = [
     ],
   },
   {
+    category: ["106"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 203: Indirect Economic Impacts 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[480px] overflow-y-auto custom-scrollbar">
+            <p className="text-[15px] text-[#0057A5] mb-4">
+              Disclosure 203-1 Infrastructure investments and services supported
+            </p>
+            <p className="text-[13px] text-black mb-2">Background:</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              This disclosure concerns the impact that an organization’s
+              infrastructure investments and services supported have on its
+              stakeholders and the economy.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The impacts of infrastructure investment can extend beyond the
+              scope of an organization’s own\ operations and over a longer
+              timescale. Such investments can include transport links,
+              utilities, community social facilities, health and welfare
+              centers, and sports centers. Along with investment in its own
+              operations, this is one measure of the organization’s capital
+              contribution to the economy
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["107"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-09.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-[#F36E24] text-[17px] font-bold ml-2">SDG 9</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 9: Build resilient infrastructure,
+            promote inclusive and sustainable industrialization and foster
+            innovation
+          </p>
+          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 9.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Develop quality, reliable, sustainable and resilient
+              infrastructure, including regional and transborder infrastructure,
+              to support economic development and human well-being, with a focus
+              on affordable and equitable access for all
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">9.1.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of the rural population who live within 2 km of an
+              all-season road
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">9.1.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Passenger and freight volumes, by mode of transport
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 9.4</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, upgrade infrastructure and retrofit industries to make
+              them sustainable, with increased resource-use efficiency and
+              greater adoption of clean and environmentally sound technologies
+              and industrial processes, with all countries taking action in
+              accordance with their respective capabilities.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">9.4.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              CO2 emission per unit of value added
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal9"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["108"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-11.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-[#F36E24] text-[17px] font-bold ml-2">SDG 11</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 11:Make cities and human settlements
+            inclusive, safe, resilient and sustainable
+          </p>
+          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 11.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, provide access to safe, affordable, accessible and
+              sustainable transport systems for all, improving road safety,
+              notably by expanding public transport, with special attention to
+              the needs of those in vulnerable situations, women, children,
+              persons with disabilities and older persons
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">11.2.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of population that has convenient access to public
+              transport, by sex, age and persons with disabilities
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal9"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["109"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 203: Indirect Economic Impacts 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 203-2 Significant indirect economic impacts
+          </p>
+          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-4">Guidance:</p>
+            <p className="text-[11px] text-[#727272]">
+              This disclosure concerns the spectrum of indirect economic impacts
+              that an organization can have on its stakeholders and the economy.
+            </p>
+            <p className="text-[11px] text-[#727272]">
+              Examples of significant indirect economic impacts, both positive
+              and negative, can include:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                • changes in the productivity of organizations, sectors, or the
+                whole economy (such as through greater adoption of information
+                technology);
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                • economic development in areas of high poverty (such as changes
+                in the total number of dependents supported through the income
+                of a single job);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                • economic impacts of improving or deteriorating social or
+                environmental conditions (such as changing job market in an area
+                converted from small farms to large plantations, or the economic
+                impacts of pollution);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                • economic impacts of improving or deteriorating social or
+                environmental conditions (such as changing job market in an area
+                converted from small farms to large plantations, or the economic
+                impacts of pollution);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                • availability of products and services for those on low incomes
+                (such as preferential pricing of pharmaceuticals, which
+                contributes to a healthier population that can participate more
+                fully in the economy; or pricing structures that exceed the
+                economic capacity of those on low incomes);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                • enhanced skills and knowledge in a professional community or
+                in a geographic location (such as when shifts in an
+                organization’s needs attract additional skilled workers to an
+                area, who, in turn, drive a local need for new learning
+                institutions);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                • number of jobs supported in the supply or distribution chain
+                (such as the employment impacts on suppliers as a result of an
+                organization’s growth or contraction);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                • stimulating, enabling, or limiting foreign direct investment
+                (such as when an organization changes the infrastructure or
+                services it provides in a developing country, which then leads
+                to
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                • stimulating, enabling, or limiting foreign direct investment
+                (such as when an organization changes the infrastructure or
+                services it provides in a developing country, which then leads
+                to changes in foreign direct investment in the region);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                • economic impacts from a change in operation or activity
+                location (such as the impact of outsourcing jobs to an overseas
+                location);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                • economic impacts from the use of products and services (such
+                as economic growth resulting from the use of a particular
+                product or service).
+              </li>
+            </ul>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["110"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-01.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-[#EA1D2D] text-[17px] font-bold ml-2">SDG 1</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Sustainable Development Goal 1: End poverty in all its forms everywhere
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <p className="text-[13px] text-[#222222] mb-2">Target 1.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2030, eradicate extreme poverty for all people everywhere, currently measured as people living on less than $1.25 a day
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">1.2.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of population living below the national poverty line, by sex and age
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">1.2.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of men, women and children of all ages living in poverty in all its dimensions according to national definitions
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 1.4</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, ensure that all men and women, in particular the poor and
+              the vulnerable, have equal rights to economic resources, as well
+              as access to basic services, ownership and control over land and
+              other forms of property, inheritance, natural resources,
+              appropriate new technology and financial services, including
+              microfinance.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">1.4.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of population living in households with access to basic
+              services.
+            </p>
+
+            <p className="text-[11px] text-[#222222] mb-2">1.4.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of total adult population with secure tenure rights to
+              land, (a) with legally recognized documentation, and (b) who
+              perceive their rights to land as secure, by sex and by type of
+              tenure.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["111"],
+    header: [
+      <>
+        <div className="flex w-[100px]">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-03.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-green-500 text-[17px] font-bold ml-2">SDG 3</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Sustainable Development Goal 1: End poverty in all its forms everywhere
+          </p>
+          <div className="h-[280px] overflow-y-auto custom-scrollbar">
+
+            <p className="text-[13px] text-[#222222] mb-2">Target 3.7</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2030, ensure universal access to sexual and reproductive health-care services, including for family planning, information and education, and the integration of reproductive health into national strategies and programmes
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">3.7.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of women of reproductive age (aged 15-49 years) who have their need for family planning satisfied with modern methods
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">3.7.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Adolescent birth rate (aged 10-14 years; aged 15-19 years) per 1,000 women in that age group
+            </p>
+
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal3"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["112"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-08.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-red-900 text-[17px] font-bold ml-2">SDG 8</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Sustainable Development Goal 8: Promote sustained, inclusive and sustainable economic growth, full and productive employment and decent work for all
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 8.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Achieve higher levels of economic productivity through
+              diversification, technological upgrading and innovation, including
+              through a focus on high-value added and labour-intensive sectors.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.2.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Annual growth rate of real GDP per employed person.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 8.3</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Promote development-oriented policies that support productive activities, decent job creation, entrepreneurship, creativity and innovation, and encourage the formalization and growth of micro-, small- and medium-sized enterprises, including through access to financial services
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.3.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of informal employment in total employment, by sector and sex
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 8.5</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, achieve full and productive employment and decent work
+              for all women and men, including for young people and persons with
+              disabilities, and equal pay for work of equal value.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.5.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Average hourly earnings of female and male employees, by
+              occupation, age and persons with disabilities.
+            </p>
+
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.5.2</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Unemployment rate, by sex, age and persons with disabilities.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal8"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
     category: ["105"],
     header: [
       <>

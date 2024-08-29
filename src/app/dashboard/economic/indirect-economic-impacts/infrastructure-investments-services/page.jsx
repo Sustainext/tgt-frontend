@@ -61,25 +61,25 @@ const Infrastructureinvestmentsservices = () => {
             <div className="flex float-end border-l">
               <button
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("104")}
+                onClick={() => toggleDrawer("106")}
               >
                 GRI 203-1
               </button>
               <button
                 className="text-[#fff] bg-[#EF402B] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("22")}
+                onClick={() => toggleDrawer("7")}
               >
                 SDG 5
               </button>
               <button
                 className="text-[#fff] bg-[#F36E24] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("22")}
+                onClick={() => toggleDrawer("107")}
               >
                 SDG 9
               </button>
               <button
                 className="text-[#fff] bg-[#EF412A] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("22")}
+                onClick={() => toggleDrawer("108")}
               >
                 SDG 11
               </button>

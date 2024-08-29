@@ -61,25 +61,25 @@ const Significantindirecteconomic = () => {
             <div className="flex float-end border-l">
               <button
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("104")}
+                onClick={() => toggleDrawer("109")}
               >
                 GRI 203-2
               </button>
               <button
                 className="text-[#fff] bg-[#EA1D2D] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("22")}
+                onClick={() => toggleDrawer("110")}
               >
                 SDG 1
               </button>
               <button
                 className="text-[#fff] bg-[#2D9A47] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("22")}
+                onClick={() => toggleDrawer("111")}
               >
                 SDG 3
               </button>
               <button
                 className="text-[#fff] bg-[#A21942] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("22")}
+                onClick={() => toggleDrawer("112")}
               >
                 SDG 8
               </button>
