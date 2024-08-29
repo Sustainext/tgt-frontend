@@ -189,7 +189,7 @@ const Screen2 = ({ location, year}) => {
           The definition used for 'senior management'
               <MdInfoOutline data-tooltip-id={`es25`}
                 data-tooltip-html="<p>Mention the definition used for 'senior management'.</p>" className="mt-1.5 ml-2 text-[14px]" />
-              <ReactTooltip id={`es25`} place="bottom" effect="solid" style={{
+              <ReactTooltip id={`es25`} place="top" effect="solid" style={{
                 width: "290px", backgroundColor: "#000",
                 color: "white",
                 fontSize: "12px",

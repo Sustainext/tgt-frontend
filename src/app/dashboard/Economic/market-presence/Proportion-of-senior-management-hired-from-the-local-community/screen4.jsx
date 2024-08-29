@@ -189,7 +189,7 @@ const Screen4 = ({ location, year}) => {
           The definition used for "significant locations of operation"
               <MdInfoOutline data-tooltip-id={`es25`}
                 data-tooltip-html="<p>Mention the definition used for ‘significant locations of operation’.Significant locations of operation refer to the geographical areas where the organization has a substantial impact through its operations. </p>" className="mt-1.5 ml-2 text-[14px]" />
-              <ReactTooltip id={`es25`} place="bottom" effect="solid" style={{
+              <ReactTooltip id={`es25`} place="top" effect="solid" style={{
                 width: "290px", backgroundColor: "#000",
                 color: "white",
                 fontSize: "12px",
