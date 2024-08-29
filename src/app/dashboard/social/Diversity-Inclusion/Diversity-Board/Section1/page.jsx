@@ -76,7 +76,7 @@ const Section1 = () => {
           </div>
         </div>
 
-        <div className="ml-3 flex">
+      <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
             Percentage of employees receiving regular performance and career
             development reviews (1/2)

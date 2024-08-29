@@ -75,7 +75,7 @@ const ManagementImpact = () => {
           </div>
         </div>
 
-        <div className="ml-3 flex">
+      <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
             Role of the highest governance body in overseeing the management of impacts
             <MdInfoOutline data-tooltip-id={`tooltip-$e10`}

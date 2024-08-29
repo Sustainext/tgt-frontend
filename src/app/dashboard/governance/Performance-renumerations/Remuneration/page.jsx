@@ -69,7 +69,7 @@ const Remuneration = () => {
           </div>
         </div>
 
-        <div className="ml-3 flex">
+      <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
           Remuneration policies highest governance body
             <MdInfoOutline data-tooltip-id={`tooltip-$e10`}

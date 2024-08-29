@@ -90,7 +90,7 @@ const Traininghours = () => {
           </div>
         </div>
 
-        <div className="ml-3 flex">
+      <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
             Average hours of training per year per employee
             {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}

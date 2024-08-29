@@ -12,7 +12,7 @@ const DynamicTable2 = ({ data, columns }) => {
             {columns.map((column, index) => (
               <th
                 key={column}
-                className={`px-2 py-3 font-semibold text-gray-600 block md:table-cell text-sm text-center`}
+                className={`px-2 py-3 font-semibold text-gray-600 block md:table-cell text-sm text-center capitalize`}
               >
                 {column}
               </th>
@@ -31,7 +31,7 @@ const DynamicTable2 = ({ data, columns }) => {
             </tr>
           ) : (
             data.map((row, rowIndex) => (
-              <tr key={rowIndex} className="border border-gray-300 md:table-row">
+              <tr key={rowIndex} className="md:table-row">
                 {columns.map((column, colIndex) => (
                   <td
                     key={colIndex}

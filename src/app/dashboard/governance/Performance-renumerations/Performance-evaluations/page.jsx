@@ -69,7 +69,7 @@ const PerformanceEvaluations = () => {
           </div>
         </div>
 
-        <div className="ml-3 flex">
+      <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
           Evaluation of the performance of the highest governance body
           </h6>

@@ -8,7 +8,7 @@ import { yearInfo } from "@/app/shared/data/yearInfo";
 import { Oval } from 'react-loader-spinner';
 const StrategyPolicyPractices = () => {
 
-  const [customerhealth, setCustomerhealth] = useState([]);
+  const [strategypolicy, setStrategypolicy] = useState([]);
   const [organisations, setOrganisations] = useState([]);
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
@@ -54,10 +54,10 @@ const StrategyPolicyPractices = () => {
     if (!validateForm()) return;
 
     LoaderOpen();
-    setCustomerhealth([]);
+    setStrategypolicy([]);
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_customer_health_safety_analysis`,
+        `/sustainapp/get_general_collective_bargaining_analysis`,
         {
           params: params
         }
@@ -65,21 +65,22 @@ const StrategyPolicyPractices = () => {
 
       const data = response.data;
 
-      const { customer_health_percent } = data;
+      const { collective_bargaining } = data;
 
-      const formatcustomerhealth = (data) => {
+      const formatcollectivebargaining = (data) => {
         return data.map((data, index) => {
           const percentage = parseFloat(data.percentage).toFixed(2);
           const formattedPercentage = percentage.endsWith('.00') ? percentage.slice(0, -3) : percentage;
           return {
+            "Organisation/Corporation":data.org_or_corp,
             "Percentage of total employees covered by collective bargaining agreements": formattedPercentage,
           };
         });
 
       };
-      setCustomerhealth(
-        formatcustomerhealth(
-          customer_health_percent
+      setStrategypolicy(
+        formatcollectivebargaining(
+          collective_bargaining
         )
       );
       LoaderClose();
@@ -136,7 +137,7 @@ const StrategyPolicyPractices = () => {
     setSelectedOrg(newOrg);
     setSelectedCorp("");
     setSelectedYear("");
-    setCustomerhealth([]);
+    setStrategypolicy([]);
 
     setDatasetparams({
       organisation: newOrg,
@@ -314,7 +315,7 @@ const StrategyPolicyPractices = () => {
                 <div className="mb-4">
                   <DynamicTable2
                     columns={columns1}
-                    data={customerhealth}
+                    data={strategypolicy}
                   />
                 </div>
               </div>
