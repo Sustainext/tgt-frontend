@@ -27,7 +27,7 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Describe the extent of development of significant infrastructure investments and services supported",
+        title: "Explain the significance of the indirect economic impacts in the context of external benchmarks and stakeholder priorities.",
       },
     },
   },
@@ -37,9 +37,9 @@ const uiSchema = {
   items: {
     "ui:order": ["Q1"],
     Q1: {
-      "ui:title": "Describe the extent of development of significant infrastructure investments and services supported",
+      "ui:title": "Explain the significance of the indirect economic impacts in the context of external benchmarks and stakeholder priorities.",
       "ui:tooltip":
-        "<p>The answer should include the size, cost, and duration of each significant infrastructure investment or service supported.</p><p><strong>Infrastructure:</strong></p><ul><li>Facilities built primarily to provide a public service or good rather than a commercial purpose.</li><li>From which the organization does not seek to gain direct economic benefit.</li></ul><p><strong>Services supported:</strong></p><ul><li>Services that provide a public benefit either through direct payment of operating costs.</li><li>Or through staffing the facility or service with an organization’s own employees.</li></ul>",
+        "What is the significance of the indirect economic impacts in the context of external benchmarks and stakeholder priorities, such as national and international standards, protocols, and policy agendas?",
       "ui:tooltipdisplay": "none",
       "ui:titledisplay": "none",
       "ui:widgetType": "textarea",
@@ -60,7 +60,7 @@ const uiSchema = {
   },
 };
 
-const Screen1 = ({ location, year}) => {
+const Screen2 = ({ selectedOrg, year, selectedCorp}) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -81,16 +81,15 @@ const Screen1 = ({ location, year}) => {
   };
 
   const updateFormData = async () => {
-    LoaderOpen();
     const data = {
       client_id: client_id,
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      location,
+      corporate: selectedCorp,
+      organisation: selectedOrg,
       year,
     };
-
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
       const response = await axiosInstance.post(url, data);
@@ -138,7 +137,7 @@ const Screen1 = ({ location, year}) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -151,9 +150,8 @@ const Screen1 = ({ location, year}) => {
       LoaderClose();
     }
   };
-
   useEffect(() => {
-    if (location && year) {
+    if (selectedOrg && year) {
       loadFormData();
       toastShown.current = false;
     } else {
@@ -161,7 +159,7 @@ const Screen1 = ({ location, year}) => {
         toastShown.current = true;
       }
     }
-  }, [location,year]);
+  }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -181,17 +179,16 @@ const Screen1 = ({ location, year}) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
           <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
-          Describe the extent of development of significant infrastructure investments and services supported
-              <MdInfoOutline data-tooltip-id={`es25`}
-                data-tooltip-html="<p>The answer should include the size, cost, and duration of each significant infrastructure investment or service supported.</p><p><strong>Infrastructure:</strong></p><ul><li>Facilities built primarily to provide a public service or good rather than a commercial purpose.</li><li>From which the organization does not seek to gain direct economic benefit.</li></ul><p><strong>Services supported:</strong></p><ul><li>Services that provide a public benefit either through direct payment of operating costs.</li><li>Or through staffing the facility or service with an organization’s own employees.</li></ul>" className="mt-1.5 ml-2 text-[14px]" />
-              <ReactTooltip id={`es25`} place="bottom" effect="solid" style={{
+          Explain the significance of the indirect economic impacts in the context of external benchmarks and stakeholder priorities.
+              <MdInfoOutline data-tooltip-id={`es26`}
+                data-tooltip-html="What is the significance of the indirect economic impacts in the context of external benchmarks and stakeholder priorities, such as national and international standards, protocols, and policy agendas?" className="mt-1.5 ml-2 text-[18px]" />
+              <ReactTooltip id={`es26`} place="top" effect="solid" style={{
                 width: "290px", backgroundColor: "#000",
                 color: "white",
                 fontSize: "12px",
                 boxShadow: 3,
                 borderRadius: "8px",
                 textAlign: 'left',
-                zIndex:"100",
               }}>
               </ReactTooltip>
             </h2>
@@ -200,7 +197,7 @@ const Screen1 = ({ location, year}) => {
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 203-1a
+                  GRI 203-2b
                 </div>
               </div>
             </div>
@@ -217,11 +214,14 @@ const Screen1 = ({ location, year}) => {
           />
         </div>
         <div className="mb-6">
-          <button type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year  ? 'cursor-not-allowed' : ''}`}
+        <button
+            type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              !selectedOrg || !year ? "cursor-not-allowed" : ""
+            }`}
             onClick={handleSubmit}
-            disabled={!location || !year }
-            >
+            disabled={!selectedOrg || !year}
+          >
             Submit
           </button>
         </div>
@@ -242,4 +242,4 @@ const Screen1 = ({ location, year}) => {
   );
 };
 
-export default Screen1;
+export default Screen2;

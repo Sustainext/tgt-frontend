@@ -3,18 +3,7 @@ import React, { useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import Infrastructureinvestmentsservices from "./indirect-economic-impacts/infrastructure-investments-services/page"
-// import OrgDetails from "./GRI-Reporting/Org-Details/page";
-// import Entities from "./GRI-Reporting/Entities/page";
-// import ReportDetails from "./GRI-Reporting/Report-Details/page";
-// import Restatement from "./GRI-Reporting/Restatement/page";
-// import Assurance from "./GRI-Reporting/Assurance/page";
-// import WorkforceEmployees from "./Organization-Details/Workforce-Employees/page"
-// import WorkforceOtherWorkers from "./Organization-Details/Workforce-Other-Workers/page"
-// import LawAndRegulations from './Compliance/Laws-Regulation/page'
-// import BusinessDetails from "./Organization-Details/Business-Details/page"
-// import CollectiveBargainingAgreements from "./Collective-Barganing-Agreements/page"
-// import MembershipAndAssociation from "./Membership-Association/page"
-// import StakeholderEngagement from "./Stakeholder-Engagement/page"
+import Significantindirecteconomic from "./indirect-economic-impacts/significant-indirect-economic/page"
 
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -1254,13 +1243,13 @@ const Economic = () => {
                   </div>
                 </>
               )}
-                  {/* {activeStep === 8 && (
+                  {activeStep === 8 && (
                 <>
                   <div>
-                    <WorkforceOtherWorkers />
+                    <Significantindirecteconomic />
                   </div>
                 </>
-              )} */}
+              )}
                {/* {activeStep === 9 && (
                 <>
                   <div>

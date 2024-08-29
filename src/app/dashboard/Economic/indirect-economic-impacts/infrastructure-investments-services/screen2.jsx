@@ -77,12 +77,7 @@ const Screen2 = ({ location, year}) => {
   };
 
   const handleChange = (e) => {
-    let newFormData = { ...e.formData[0] };
-    if (newFormData.Q1 === "No") {
-      newFormData.Q2 = "";
-
-    }
-    setFormData([newFormData]);
+    setFormData(e.formData);
   };
 
   const updateFormData = async () => {
