@@ -123,7 +123,7 @@ const Economic = () => {
                         {isStepCompleted(1) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                            Direct economic value generated & distributed
+                              Direct economic value generated & distributed
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -135,7 +135,7 @@ const Economic = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                          Direct economic value generated & distributed
+                            Direct economic value generated & distributed
                           </p>
                         )}
                       </div>
@@ -186,7 +186,8 @@ const Economic = () => {
                         {isStepCompleted(2) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Financial implications and other risks and opportunities due to climate change
+                              Financial implications and other risks and
+                              opportunities due to climate change
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -198,7 +199,8 @@ const Economic = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                            Financial implications and other risks and opportunities due to climate change
+                            Financial implications and other risks and
+                            opportunities due to climate change
                           </p>
                         )}
                       </div>
@@ -249,7 +251,8 @@ const Economic = () => {
                         {isStepCompleted(3) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Defined benefit plan obligations and other retirement plans
+                              Defined benefit plan obligations and other
+                              retirement plans
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -261,7 +264,8 @@ const Economic = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                            Defined benefit plan obligations and other retirement plans
+                            Defined benefit plan obligations and other
+                            retirement plans
                           </p>
                         )}
                       </div>
@@ -272,7 +276,7 @@ const Economic = () => {
                     >
                       {isStepCompleted(4) ? (
                         <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
+                          <div className="before:bg-sky-800  font-bold">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="12"
@@ -285,13 +289,7 @@ const Economic = () => {
                           </div>
                         </>
                       ) : (
-                        <div
-                          className={`${
-                            activeStep === 4
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
-                        >
+                        <div>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
@@ -319,7 +317,7 @@ const Economic = () => {
                         ) : (
                           <p
                             className={`${
-                              activeStep === 4
+                              activeStep === 8
                                 ? "text-[12px] text-sky-800  font-bold"
                                 : " text-[12px]  text-gray-600"
                             } `}
@@ -329,7 +327,6 @@ const Economic = () => {
                         )}
                       </div>
                     </li>
-                  
                   </AccordionItem>
                   <AccordionItem title="Market Presence">
                     <li
@@ -378,7 +375,8 @@ const Economic = () => {
                         {isStepCompleted(5) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Ratios of Standard Entry level wage by gender compared to local minimum wage					
+                              Ratios of Standard Entry level wage by gender
+                              compared to local minimum wage
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -390,7 +388,8 @@ const Economic = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                            Ratios of Standard Entry level wage by gender compared to local minimum wage					
+                            Ratios of Standard Entry level wage by gender
+                            compared to local minimum wage
                           </p>
                         )}
                       </div>
@@ -401,7 +400,7 @@ const Economic = () => {
                     >
                       {isStepCompleted(6) ? (
                         <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
+                          <div className="before:bg-sky-800  font-bold">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="12"
@@ -414,13 +413,7 @@ const Economic = () => {
                           </div>
                         </>
                       ) : (
-                        <div
-                          className={`${
-                            activeStep === 6
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
-                        >
+                        <div>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
@@ -441,7 +434,8 @@ const Economic = () => {
                         {isStepCompleted(6) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                             Proportion of senior management hired from the local community
+                              Proportion of senior management hired from the
+                              local community
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -453,12 +447,12 @@ const Economic = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                           Proportion of senior management hired from the local community
+                            Proportion of senior management hired from the local
+                            community
                           </p>
                         )}
                       </div>
                     </li>
-                    
                   </AccordionItem>
                   <AccordionItem title="Indirect Economic Impacts">
                     <li
@@ -467,7 +461,7 @@ const Economic = () => {
                     >
                       {isStepCompleted(7) ? (
                         <>
-                          <div className="before:bg-sky-800  font-bold">
+                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="12"
@@ -480,7 +474,13 @@ const Economic = () => {
                           </div>
                         </>
                       ) : (
-                        <div>
+                        <div
+                          className={`${
+                            activeStep === 7
+                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                          } `}
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
@@ -638,13 +638,13 @@ const Economic = () => {
                   </AccordionItem>
 
                   <AccordionItem title="Anti Corruption">
-                  <li
+                    <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(10)}
                     >
                       {isStepCompleted(10) ? (
                         <>
-                          <div className="before:bg-sky-800  font-bold">
+                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="12"
@@ -657,7 +657,13 @@ const Economic = () => {
                           </div>
                         </>
                       ) : (
-                        <div>
+                        <div
+                          className={`${
+                            activeStep === 10
+                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                          } `}
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
@@ -678,7 +684,8 @@ const Economic = () => {
                         {isStepCompleted(10) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                             Operations assessed for risks related to corruption
+                              Operations assessed for risks related to
+                              corruption
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -690,7 +697,7 @@ const Economic = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                           Operations assessed for risks related to corruption
+                            Operations assessed for risks related to corruption
                           </p>
                         )}
                       </div>
@@ -701,7 +708,7 @@ const Economic = () => {
                     >
                       {isStepCompleted(11) ? (
                         <>
-                          <div className="before:bg-sky-800  font-bold">
+                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="12"
@@ -714,7 +721,13 @@ const Economic = () => {
                           </div>
                         </>
                       ) : (
-                        <div>
+                        <div
+                          className={`${
+                            activeStep === 11
+                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                          } `}
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
@@ -735,7 +748,8 @@ const Economic = () => {
                         {isStepCompleted(11) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                             Communication and training about anti-corruption policies and procedures
+                              Communication and training about anti-corruption
+                              policies and procedures
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -747,7 +761,8 @@ const Economic = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                           Communication and training about anti-corruption policies and procedures
+                            Communication and training about anti-corruption
+                            policies and procedures
                           </p>
                         )}
                       </div>
@@ -792,7 +807,8 @@ const Economic = () => {
                         {isStepCompleted(12) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                             Confirmed incidents of corruption and actions taken
+                              Confirmed incidents of corruption and actions
+                              taken
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -804,7 +820,7 @@ const Economic = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                           Confirmed incidents of corruption and actions taken
+                            Confirmed incidents of corruption and actions taken
                           </p>
                         )}
                       </div>
@@ -817,7 +833,7 @@ const Economic = () => {
                     >
                       {isStepCompleted(13) ? (
                         <>
-                          <div className="before:bg-sky-800  font-bold">
+                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="12"
@@ -830,7 +846,13 @@ const Economic = () => {
                           </div>
                         </>
                       ) : (
-                        <div>
+                        <div
+                          className={`${
+                            activeStep === 13
+                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                          } `}
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
@@ -933,7 +955,7 @@ const Economic = () => {
                     >
                       {isStepCompleted(15) ? (
                         <>
-                          <div className="before:bg-sky-800  font-bold">
+                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="12"
@@ -946,7 +968,13 @@ const Economic = () => {
                           </div>
                         </>
                       ) : (
-                        <div>
+                        <div
+                          className={`${
+                            activeStep === 15
+                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                          } `}
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
@@ -990,7 +1018,7 @@ const Economic = () => {
                     >
                       {isStepCompleted(16) ? (
                         <>
-                          <div className="before:bg-sky-800  font-bold">
+                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="12"
@@ -1003,7 +1031,13 @@ const Economic = () => {
                           </div>
                         </>
                       ) : (
-                        <div>
+                        <div
+                          className={`${
+                            activeStep === 16
+                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                          } `}
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
@@ -1047,7 +1081,7 @@ const Economic = () => {
                     >
                       {isStepCompleted(17) ? (
                         <>
-                          <div className="before:bg-sky-800  font-bold">
+                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="12"
@@ -1060,7 +1094,13 @@ const Economic = () => {
                           </div>
                         </>
                       ) : (
-                        <div>
+                        <div
+                          className={`${
+                            activeStep === 17
+                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                          } `}
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
@@ -1081,7 +1121,8 @@ const Economic = () => {
                         {isStepCompleted(17) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Stakeholder engagement and management of concerns related to tax
+                              Stakeholder engagement and management of concerns
+                              related to tax
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -1093,7 +1134,8 @@ const Economic = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                            Stakeholder engagement and management of concerns related to tax
+                            Stakeholder engagement and management of concerns
+                            related to tax
                           </p>
                         )}
                       </div>
