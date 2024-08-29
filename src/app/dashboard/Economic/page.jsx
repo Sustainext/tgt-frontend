@@ -16,6 +16,7 @@ import ProcurementPractices from "./procurement-practices/page"
 // import CollectiveBargainingAgreements from "./Collective-Barganing-Agreements/page"
 // import MembershipAndAssociation from "./Membership-Association/page"
 // import StakeholderEngagement from "./Stakeholder-Engagement/page"
+import Significantindirecteconomic from "./indirect-economic-impacts/significant-indirect-economic/page"
 
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -1255,14 +1256,14 @@ const Economic = () => {
                   </div>
                 </>
               )}
-                  {/* {activeStep === 8 && (
+                  {activeStep === 8 && (
                 <>
                   <div>
-                    <WorkforceOtherWorkers />
+                    <Significantindirecteconomic />
                   </div>
                 </>
               )} */}
-               {activeStep === 9 && (
+               {/* {activeStep === 9 && (
                 <>
                   <div>
                     <ProcurementPractices />
