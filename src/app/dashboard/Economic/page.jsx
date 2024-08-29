@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import Infrastructureinvestmentsservices from "./indirect-economic-impacts/infrastructure-investments-services/page"
+import ProcurementPractices from "./procurement-practices/page"
 // import OrgDetails from "./GRI-Reporting/Org-Details/page";
 // import Entities from "./GRI-Reporting/Entities/page";
 // import ReportDetails from "./GRI-Reporting/Report-Details/page";
@@ -1261,13 +1262,13 @@ const Economic = () => {
                   </div>
                 </>
               )} */}
-               {/* {activeStep === 9 && (
+               {activeStep === 9 && (
                 <>
                   <div>
-                    <LawAndRegulations />
+                    <ProcurementPractices />
                   </div>
                 </>
-              )} */}
+              )}
               {/* {activeStep === 10 && (
                 <>
                   <div>

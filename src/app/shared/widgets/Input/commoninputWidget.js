@@ -9,6 +9,12 @@ const CommoninputWidget = (props) => {
       onChange(event.target.value);
     };
 
+    const handleInputChange = (e) => {
+      const val = e.target.value;
+      const validValue = val.match(/^\d*\.?\d{0,2}$/) ? val : value;
+      onChange(validValue);
+    };
+
     return (
       <>
         <div className="mb-6">
@@ -40,22 +46,42 @@ const CommoninputWidget = (props) => {
             </div>
           </div>
           {uiSchema["ui:widgetType"] === "textarea" ? (
-            <textarea
-              placeholder="Enter data"
-              className="backdrop:before:w-[48rem] border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
-              value={value}
-              onChange={handleChange}
-              rows={4}
-            />
-          ) : (
-            <input
-              type= {uiSchema["ui:inputfildtype"]}
-              placeholder="Enter data"
-              className="backdrop:before:w-[48rem] py-4 border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
-              value={value}
-              onChange={handleChange}
-            />
-          )}
+             <textarea
+             placeholder="Enter data"
+             className="backdrop:before:w-[48rem] border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
+             value={value}
+             onChange={handleChange}
+             rows={4}
+           />
+          ):
+          (
+            <>
+             {uiSchema["ui:widgetType"] === "positiveNumber"?
+              (
+                <input
+                type= {uiSchema["ui:inputfildtype"]}
+                placeholder="Enter data"
+                className="backdrop:before:w-[48rem] py-4 border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
+                value={value}
+                onChange={handleInputChange} 
+                min="0"
+                step="0.01"
+              />
+              ) : (
+                <input
+                  type= {uiSchema["ui:inputfildtype"]}
+                  placeholder="Enter data"
+                  className="backdrop:before:w-[48rem] py-4 border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
+                  value={value}
+                  onChange={handleChange}
+                />
+              )
+            }
+            </>
+           
+          )
+          
+        }
         </div>
       </>
     );
