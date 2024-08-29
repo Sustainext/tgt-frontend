@@ -91,11 +91,11 @@ const uiSchema = {
             },
         },
 
-        "ui:options": {
-            orderable: false, // Prevent reordering of items
-            addable: false, // Prevent adding items from UI
-            removable: false, // Prevent removing items from UI
-            layout: "horizontal", // Set layout to horizontal
+          "ui:options": {
+            orderable: false,
+            addable: false,
+            removable: false,
+            layout: "horizontal",
         },
     },
 };
@@ -174,7 +174,7 @@ const InputField = ({ selectedOrg, year, selectedCorp }) => {
     //     }
     // };
 
-   
+
     const handleSubmit = (e) => {
         e.preventDefault();
         // updateFormData();
@@ -203,7 +203,7 @@ const InputField = ({ selectedOrg, year, selectedCorp }) => {
           Save and Proceed {">"}
         </button>
       </div>
-           
+
         </>
     );
 };

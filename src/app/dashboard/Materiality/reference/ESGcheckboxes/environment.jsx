@@ -46,11 +46,11 @@ const uiSchema = {
                 label: false,
             },
         },
-        "ui:options": {
-            orderable: false, // Prevent reordering of items
-            addable: false, // Prevent adding items from UI
-            removable: false, // Prevent removing items from UI
-            layout: "horizontal", // Set layout to horizontal
+          "ui:options": {
+            orderable: false,
+            addable: false,
+            removable: false,
+            layout: "horizontal",
         },
     },
 };
@@ -129,14 +129,14 @@ const Environment = () => {
         }
     };
 
-   
-    
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
         // updateFormData();
         console.log("test form data", formData);
     };
-   
+
     return (
         <>
             <div className='mx-2 mb-3'>
