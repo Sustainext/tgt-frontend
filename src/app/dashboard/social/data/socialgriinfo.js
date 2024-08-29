@@ -7003,4 +7003,106 @@ export const Socialdata = [
       </>,
     ],
   },
+  {
+    category: ["107"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-09.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-[#F36E24] text-[17px] font-bold ml-2">SDG 9</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Sustainable Development Goal 9: Build resilient infrastructure, promote inclusive and sustainable industrialization and foster innovation
+          </p>
+          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 9.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Develop quality, reliable, sustainable and resilient infrastructure, including regional and transborder infrastructure, to support economic development and human well-being, with a focus on affordable and equitable access for all
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">9.1.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of the rural population who live within 2 km of an all-season road
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">9.1.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Passenger and freight volumes, by mode of transport
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 9.4</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2030, upgrade infrastructure and retrofit industries to make them sustainable, with increased resource-use efficiency and greater adoption of clean and environmentally sound technologies and industrial processes, with all countries taking action in accordance with their respective capabilities.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">9.4.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            CO2 emission per unit of value added
+            </p>
+
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal9"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["108"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-11.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-[#F36E24] text-[17px] font-bold ml-2">SDG 11</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Sustainable Development Goal 11:Make cities and human settlements inclusive, safe, resilient and sustainable
+          </p>
+          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 11.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By 2030, provide access to safe, affordable, accessible and sustainable transport systems for all, improving road safety, notably by expanding public transport, with special attention to the needs of those in vulnerable situations, women, children, persons with disabilities and older persons
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">11.2.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of population that has convenient access to public transport, by sex, age and persons with disabilities
+            </p>
+
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal9"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
 ];
