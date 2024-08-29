@@ -1262,8 +1262,8 @@ const Economic = () => {
                     <Significantindirecteconomic />
                   </div>
                 </>
-              )} */}
-               {/* {activeStep === 9 && (
+              )} 
+               {activeStep === 9 && (
                 <>
                   <div>
                     <ProcurementPractices />
