@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
+import Infrastructureinvestmentsservices from "./indirect-economic-impacts/infrastructure-investments-services/page"
 // import OrgDetails from "./GRI-Reporting/Org-Details/page";
 // import Entities from "./GRI-Reporting/Entities/page";
 // import ReportDetails from "./GRI-Reporting/Report-Details/page";
@@ -1202,95 +1203,95 @@ const Economic = () => {
               </div>
             </section>
           </div>
-          {/* <div className="w-full ms-3">
+        <div className="w-full ms-3">
             <div>
-              {activeStep === 1 && (
+              {/* {activeStep === 1 && (
                 <>
                   <div>
                     <OrgDetails />
                   </div>
                 </>
-              )}
-              {activeStep === 2 && (
+              )} */}
+              {/* {activeStep === 2 && (
                 <>
                   <div>
                     <Entities />
                   </div>
                 </>
-              )}
-              {activeStep === 3 && (
+              )} */}
+              {/* {activeStep === 3 && (
                 <>
                   <div>
                     <ReportDetails />
                   </div>
                 </>
-              )}{" "}
-              {activeStep === 4 && (
+              )} */}
+              {/* {activeStep === 4 && (
                 <>
                   <div>
                     <Restatement />
                   </div>
                 </>
-              )}
-               {activeStep === 5 && (
+              )} */}
+               {/* {activeStep === 5 && (
                 <>
                   <div>
                     <Assurance />
                   </div>
                 </>
-              )}
-                {activeStep === 6 && (
+              )} */}
+                {/* {activeStep === 6 && (
                 <>
                   <div>
                     <BusinessDetails />
                   </div>
                 </>
-              )}
+              )} */}
                  {activeStep === 7 && (
                 <>
                   <div>
-                    <WorkforceEmployees />
+                    <Infrastructureinvestmentsservices />
                   </div>
                 </>
               )}
-                  {activeStep === 8 && (
+                  {/* {activeStep === 8 && (
                 <>
                   <div>
                     <WorkforceOtherWorkers />
                   </div>
                 </>
-              )}
-               {activeStep === 9 && (
+              )} */}
+               {/* {activeStep === 9 && (
                 <>
                   <div>
                     <LawAndRegulations />
                   </div>
                 </>
-              )}
-              {activeStep === 10 && (
+              )} */}
+              {/* {activeStep === 10 && (
                 <>
                   <div>
                     <MembershipAndAssociation />
                   </div>
                 </>
-              )}
-                {activeStep === 11 && (
+              )} */}
+                {/* {activeStep === 11 && (
                 <>
                   <div>
                     <StakeholderEngagement />
                   </div>
                 </>
-              )}
-               {activeStep === 12 && (
+              )} */}
+               {/* {activeStep === 12 && (
                 <>
                   <div>
                     <CollectiveBargainingAgreements />
                   </div>
                 </>
-              )}
+              )} */}
             </div>
-           
-          </div> */}
+
+          </div>
         </div>
       </div>
     </>
