@@ -6960,4 +6960,125 @@ export const Socialdata = [
       </>,
     ],
   },
+  {
+    category: ["105"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-08.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-red-900 text-[17px] font-bold ml-2">SDG 8</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Sustainable Development Goal 8: Promote sustained, inclusive and sustainable economic growth, full and productive employment and decent work for all
+          </p>
+          <div className="h-[250px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 8.3</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Promote development-oriented policies that support productive activities, decent job creation, entrepreneurship, creativity and innovation, and encourage the formalization and growth of micro-, small- and medium-sized enterprises, including through access to financial services
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.3.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Proportion of informal employment in total employment, by sector and sex
+            </p>
+
+           
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal8"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["113"],
+    header: [<h5 className="text-sky-600 text-[17px] font-bold">GRI 204: Procurement Practices 2016</h5>],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Disclosure 204-1 Proportion of spending on local
+          suppliers
+          </p>
+          <div className="h-[250px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-4">Guidance:</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Local purchases can be made either from a budget managed at the location of operation or at an organization’s headquarters.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-4">
+            Background:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            By supporting local suppliers, an organization can indirectly attract additional investment to the local economy. Local sourcing can be a strategy to help ensure supply, support a stable local economy, and maintain community relations.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["114"],
+    header: [<h5 className="text-sky-600 text-[17px] font-bold">GRI 202: Market Presence 2016</h5>],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Disclosure 202-2 Proportion of senior management hired from the local community
+          </p>
+          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-4">Compilation Requirements:</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            2.2 When compiling the information specified in Disclosure 202-2, the reporting organization shall calculate this percentage using data on full-time employees.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-4">
+            Guidance:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Senior management hired from the local community includes those individuals either born or who have the legal right to reside indefinitely (such as naturalized citizens or permanent visa holders) in the same geographic market as the operation. The geographical definition of ‘local’ can include the community surrounding operations, a region within a country, or a country.
+            </p>
+
+            <p className="text-[13px] text-[#222222] mb-4">
+            Background:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Including members from the local community in an organization’s senior management demonstrates the organization’s positive market presence. Including local community members in the management team can enhance human capital. It can also increase the economic benefit to the local community, and improve an organization’s ability to understand local needs.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
 ];

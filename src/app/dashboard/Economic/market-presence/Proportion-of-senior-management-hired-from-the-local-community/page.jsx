@@ -5,12 +5,14 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Socialdata } from "../../social/data/socialgriinfo";
-import EconomicHeader3 from "../EconomicHeader3";
+import { Socialdata } from "../../../social/data/socialgriinfo";
+import EconomicHeader3 from "../../EconomicHeader3";
 import Screen1 from "./screen1";
 import Screen2 from "./screen2";
 import Screen3 from "./screen3";
-const ProcurementPractices = () => {
+import Screen4 from "./screen4";
+
+const PortionForSeniorManagement = () => {
   const [activeMonth, setActiveMonth] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
   const [year, setYear] = useState(2024);
@@ -47,11 +49,11 @@ const ProcurementPractices = () => {
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
             <div className="text-left mb-4 ml-3 pt-5">
-              <p className="text-sm">Economic performance</p>
+              <p className="text-sm">Economic</p>
               <div className="flex">
                 <div className="h-[29px]">
                   <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
-                  Procurement Practices
+                  Market Presence 
                   </p>
                 </div>
               </div>
@@ -61,27 +63,27 @@ const ProcurementPractices = () => {
             <div className="flex float-end border-l">
               <button
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("113")}
+                onClick={() => toggleDrawer("114")}
               >
-                GRI 204-1
+                GRI 202-1
               </button>
               <button
                 className="text-[#fff] bg-[#A21942] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("105")}
+                onClick={() => toggleDrawer("3")}
               >
                 SDG 8
               </button>
-              
+             
             </div>
           </div>
         </div>
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Proportion of spending on local suppliers
+          Proportion of senior management hired from the local community	
             <MdInfoOutline
               data-tooltip-id={`tooltip-$es10`}
-              data-tooltip-content="This section documents the data corresponding to the proportion of spending on local suppliers."
+              data-tooltip-content="This section documents the data corresponding to the proportion of senior management hired from the local community."
               className="mt-1.5 ml-2 text-[14px]"
             />
             <ReactTooltip
@@ -134,7 +136,8 @@ const ProcurementPractices = () => {
       <Screen1 location={selectedLocation} year={year} />
       <Screen2 location={selectedLocation} year={year} />
       <Screen3 location={selectedLocation} year={year} />
+      <Screen4 location={selectedLocation} year={year} />
     </>
   );
 };
-export default ProcurementPractices;
+export default PortionForSeniorManagement;

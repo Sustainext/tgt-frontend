@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import CommoninputWidget from "../../../shared/widgets/Input/commoninputWidget";
+import CommoninputWidget from "../../../../shared/widgets/Input/commoninputWidget";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -27,7 +27,7 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Percentage of the procurement budget used for significant locations of operation that is spent on suppliers local to that operation (such as percentage of products and services purchased locally).",
+        title: "Percentage of senior management at significant locations of operation that are hired from the local community.",
       },
     },
   },
@@ -37,12 +37,12 @@ const uiSchema = {
   items: {
     "ui:order": ["Q1"],
     Q1: {
-      "ui:title": "Percentage of the procurement budget used for significant locations of operation that is spent on suppliers local to that operation (such as percentage of products and services purchased locally).",
+      "ui:title": "Percentage of senior management at significant locations of operation that are hired from the local community.",
       "ui:tooltip":
-        "<p>The organization should calculate the percentages based on invoices or commitments made during the reporting period, e.g, using accruals accounting.</p>",
+       "<p>What is the percentage of senior management at significant locations of operation that are hired from the local community?</p><p>Note: The reporting organization shall calculate this percentage using data on full-time employees.</p>",
       "ui:tooltipdisplay": "none",
       "ui:titledisplay": "none",
-      "ui:widgetType": "positiveNumber",
+      "ui:widgetType": "input",
       "ui:inputfildtype": "number",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -60,7 +60,7 @@ const uiSchema = {
   },
 };
 
-const Screen1 = ({ location, year}) => {
+const Scren1 = ({ location, year}) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -77,12 +77,7 @@ const Screen1 = ({ location, year}) => {
   };
 
   const handleChange = (e) => {
-    let newFormData = { ...e.formData[0] };
-    if (newFormData.Q1 === "No") {
-      newFormData.Q2 = "";
-
-    }
-    setFormData([newFormData]);
+    setFormData(e.formData);
   };
 
   const updateFormData = async () => {
@@ -186,18 +181,20 @@ const Screen1 = ({ location, year}) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
           <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
-          Percentage of the procurement budget used for significant locations of operation that is spent on suppliers local to that operation (such as percentage of products and services purchased locally).
-          <MdInfoOutline data-tooltip-id={`es28`}
-                data-tooltip-html="<p>The organization should calculate the percentages based on invoices or commitments made during the reporting period, e.g, using accruals accounting.</p>"
-                 className="mt-1.5 ml-2 text-[23px]" />
-              <ReactTooltip id={`es28`} place="top" effect="solid" style={{
+          Percentage of senior management at significant locations of operation that are hired from the local community.
+              <MdInfoOutline data-tooltip-id={`es25`}
+                data-tooltip-html="<p>What is the percentage of senior management at significant 
+locations of operation that are hired
+from the local community?</p>
+<p>Note: The reporting organization shall calculate this 
+percentage using data on full-time employees.</p>" className="mt-1.5 ml-2 text-[14px]" />
+              <ReactTooltip id={`es25`} place="bottom" effect="solid" style={{
                 width: "290px", backgroundColor: "#000",
                 color: "white",
                 fontSize: "12px",
                 boxShadow: 3,
                 borderRadius: "8px",
                 textAlign: 'left',
-                zIndex:"100",
               }}>
               </ReactTooltip>
             </h2>
@@ -206,7 +203,7 @@ const Screen1 = ({ location, year}) => {
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 204-1a
+                  GRI 202-2a
                 </div>
               </div>
             </div>
@@ -248,4 +245,4 @@ const Screen1 = ({ location, year}) => {
   );
 };
 
-export default Screen1;
+export default Scren1;

@@ -17,6 +17,7 @@ import ProcurementPractices from "./procurement-practices/page"
 // import MembershipAndAssociation from "./Membership-Association/page"
 // import StakeholderEngagement from "./Stakeholder-Engagement/page"
 import Significantindirecteconomic from "./indirect-economic-impacts/significant-indirect-economic/page"
+import PortionOfSeniorManagement from "./market-presence/Proportion-of-senior-management-hired-from-the-local-community/page"
 
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -1242,13 +1243,13 @@ const Economic = () => {
                   </div>
                 </>
               )} */}
-                {/* {activeStep === 6 && (
+                {activeStep === 6 && (
                 <>
                   <div>
-                    <BusinessDetails />
+                    <PortionOfSeniorManagement />
                   </div>
                 </>
-              )} */}
+              )}
                  {activeStep === 7 && (
                 <>
                   <div>
