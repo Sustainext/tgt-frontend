@@ -237,7 +237,7 @@ const CompositionOfHighestGovernanceBody = ({
   return (
     <>
       <div
-        className="mx-2 p-3 mb-6 pb-6 rounded-md"
+        className="mx-2 p-3 mb-6 pb-8 rounded-md"
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
@@ -288,20 +288,23 @@ const CompositionOfHighestGovernanceBody = ({
             onSubmit={handleSubmit}
             validator={validator}
             widgets={widgets}
-          >
-            <div className="mb-6">
+          />
+
+
+          </div>
+          <div className="mb-6">
               <button
-                type="submit"
+                type="button"
                 className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
                   !selectedOrg || !year ? "cursor-not-allowed" : ""
                 }`}
                 disabled={!selectedOrg || !year}
+                onClick={handleSubmit}
               >
                 Submit
               </button>
             </div>
-          </Form>
-        </div>
+
       </div>
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

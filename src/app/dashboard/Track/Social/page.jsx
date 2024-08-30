@@ -3,21 +3,27 @@ import React, { useState } from 'react';
 import { GiPublicSpeaker } from "react-icons/gi";
 
 const SocialTrack = ({ contentSize }) => {
-  const [activeTab, setActiveTab] = useState('zohoSocial');
+  const [activeTab, setActiveTab] = useState('powerbiSocialEmployment');
 
-  const { width, height } = contentSize || { width: 800, height: 600 };
+  const { width, height } = contentSize || { width: 800, height: 600 }; // Fallback values
 
   const tabs = [
-    { id: 'zohoSocial', label: 'Social (Zoho)' },
-    { id: 'powerbiSocial', label: 'Social (PowerBI)' },
+    { id: 'powerbiSocialEmployment', label: 'Employment (PowerBI)' },
+    { id: 'powerbiSocialOHS', label: 'OHS (PowerBI)' },
+    { id: 'powerbiSocialDiversityInclusion', label: 'Diversity & Inclusion (PowerBI)' },
+    { id: 'powerbiSocialCommunityDevelopment', label: 'Community Development (PowerBI)' },
   ];
   
   const getIframeUrl = (tabId) => {
     switch (tabId) {
-      case 'zohoSocial':
-        return null;
-      case 'powerbiSocial':
-        return null;
+      case 'powerbiSocialEmployment':
+        return process.env.NEXT_APP_POWERBI_URL_SOCIAL_EMPLOYMENT;
+      case 'powerbiSocialOHS':
+        return process.env.NEXT_APP_POWERBI_URL_SOCIAL_OHS;
+        case 'powerbiSocialDiversityInclusion':
+        return process.env.NEXT_APP_POWERBI_URL_SOCIAL_DIVERSITYINCLUSION;
+      case 'powerbiSocialCommunityDevelopment':
+        return process.env.NEXT_APP_POWERBI_URL_SOCIAL_COMMUNITYDEVELOPMENT;
       default:
         return null;
     }
@@ -63,34 +69,6 @@ const SocialTrack = ({ contentSize }) => {
           </div>
         )}
       </div>
-      <style jsx>{`
-        .coming-soon-container {
-          width: 100%;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          background-image: url('/download.png');
-          background-size: cover;
-          background-position: center;
-          background-repeat: no-repeat;
-          position: relative;
-        }
-        .coming-soon-container::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          right: 0;
-          bottom: 0;
-          left: 0;
-          background-color: rgba(255, 255, 255, 0.8);  /* This creates the 30% opacity effect */
-        }
-        .coming-soon-container > div {
-          position: relative;
-          z-index: 1;
-        }
-      `}</style>
     </div>
   );
 };

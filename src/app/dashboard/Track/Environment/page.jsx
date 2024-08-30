@@ -5,23 +5,27 @@ import { GiPublicSpeaker } from "react-icons/gi";
 const EnvironmentTrack = ({ contentSize }) => {
   const [activeTab, setActiveTab] = useState('zohoEmissions');
 
-  const { width, height } = contentSize || { width: 800, height: 600 };
+  const { width, height } = contentSize || { width: 800, height: 600 }; // Fallback values
 
   const tabs = [
     { id: 'zohoEmissions', label: 'Emissions (Zoho)' },
     { id: 'powerbiEmissions', label: 'Emissions (PowerBI)' },
-    { id: 'zohoEnergy', label: 'Energy (Zoho)' },
+    // { id: 'zohoEnergy', label: 'Energy (Zoho)' },
     { id: 'powerbiEnergy', label: 'Energy (PowerBI)' },
-    { id: 'zohoWaste', label: 'Waste (Zoho)' },
+    // { id: 'zohoWaste', label: 'Waste (Zoho)' },
     { id: 'powerbiWaste', label: 'Waste (PowerBI)' },
   ];
   
   const getIframeUrl = (tabId) => {
     switch (tabId) {
       case 'zohoEmissions':
-        return process.env.NEXT_APP_TRACK_URL;
+        return process.env.NEXT_APP_ZOHO_URL_EMISSIONS;
       case 'powerbiEmissions':
-        return process.env.NEXT_APP_POWERBI_URL;
+        return process.env.NEXT_APP_POWERBI_URL_ENV_EMISSIONS;
+      case 'powerbiEnergy':
+        return process.env.NEXT_APP_POWERBI_URL_ENV_ENERGY;
+      case 'powerbiWaste':
+        return process.env.NEXT_APP_POWERBI_URL_ENV_WASTE;
       default:
         return null;
     }
@@ -67,34 +71,6 @@ const EnvironmentTrack = ({ contentSize }) => {
           </div>
         )}
       </div>
-      <style jsx>{`
-        .coming-soon-container {
-          width: 100%;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          background-image: url('/download.png');
-          background-size: cover;
-          background-position: center;
-          background-repeat: no-repeat;
-          position: relative;
-        }
-        .coming-soon-container::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          right: 0;
-          bottom: 0;
-          left: 0;
-          background-color: rgba(255, 255, 255, 0.8);  /* This creates the 30% opacity effect */
-        }
-        .coming-soon-container > div {
-          position: relative;
-          z-index: 1;
-        }
-      `}</style>
     </div>
   );
 };

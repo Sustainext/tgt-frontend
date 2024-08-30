@@ -1,19 +1,26 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { MdKeyboardArrowDown, MdInfoOutline, MdAdd, MdDelete } from "react-icons/md";
+import {
+  MdInfoOutline,
+  MdAdd,
+  MdDelete,
+} from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
 const GovernanceWidget = ({ onChange, value = [], uiSchema = {} }) => {
-  const [data, setData] = useState(value.length > 0 ? value : [[""]]);
+  const [data, setData] = useState(value);
 
+  // useEffect(() => {
+  //   if (data.length === 0 || (data.length === 1 && data[0].length === 0)) {
+  //     const defaultFirstRow = [""];
+  //     setData([defaultFirstRow]);
+  //     onChange([defaultFirstRow]);
+  //   }
+  // }, [data.length, onChange]);
   useEffect(() => {
-    if (data.length === 0) {
-      const defaultFirstRow = new Array(data[0]?.length || 1).fill("");
-      setData([defaultFirstRow]);
-      onChange([defaultFirstRow]);
-    }
-  }, [data, onChange]);
+    setData(value);
+  }, [value]);
 
   const handleCellChange = (rowIndex, colIndex, event) => {
     const newData = [...data];
@@ -23,13 +30,14 @@ const GovernanceWidget = ({ onChange, value = [], uiSchema = {} }) => {
   };
 
   const addRow = () => {
-    const newData = [...data, new Array(data[0]?.length || 1).fill("")];
+    const newRow = new Array(data[0]?.length || 1).fill("");
+    const newData = [...data, newRow];
     setData(newData);
     onChange(newData);
   };
 
   const addColumn = () => {
-    const newData = data.map(row => [...row, ""]);
+    const newData = data.map((row) => [...row, ""]);
     setData(newData);
     onChange(newData);
   };
@@ -41,7 +49,10 @@ const GovernanceWidget = ({ onChange, value = [], uiSchema = {} }) => {
   };
 
   const deleteColumn = (colIndex) => {
-    const newData = data.map(row => row.filter((_, index) => index !== colIndex));
+    if (data[0].length === 1) return;
+    const newData = data.map((row) =>
+      row.filter((_, index) => index !== colIndex)
+    );
     setData(newData);
     onChange(newData);
   };
@@ -54,7 +65,10 @@ const GovernanceWidget = ({ onChange, value = [], uiSchema = {} }) => {
             <p className="text-sm text-gray-700 flex">
               {uiSchema["ui:title"]}
               <MdInfoOutline
-                data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(/\s+/g, "-")}`}
+                data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(
+                  /\s+/g,
+                  "-"
+                )}`}
                 data-tooltip-content={uiSchema["ui:tooltip"]}
                 className="mt-1 ml-2 w-[30px] text-[14px]"
                 style={{ display: uiSchema["ui:tooltipdisplay"] }}
