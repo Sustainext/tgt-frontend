@@ -189,7 +189,7 @@ const Screen2 = ({ location, year}) => {
           The organization's geographical definition of 'local'
               <MdInfoOutline data-tooltip-id={`es25`}
                 data-tooltip-html="<p>Provide the organisation's geographical definition of 'local'.</p>" className="mt-1.5 ml-2 text-[14px]" />
-              <ReactTooltip id={`es25`} place="bottom" effect="solid" style={{
+              <ReactTooltip id={`es25`} place="top" effect="solid" style={{
                 width: "290px", backgroundColor: "#000",
                 color: "white",
                 fontSize: "12px",

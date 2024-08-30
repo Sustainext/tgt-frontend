@@ -183,12 +183,12 @@ const Scren1 = ({ location, year}) => {
           <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
           Percentage of senior management at significant locations of operation that are hired from the local community.
               <MdInfoOutline data-tooltip-id={`es25`}
-                data-tooltip-html="<p>What is the percentage of senior management at significant 
+                data-tooltip-html="<p>What is the percentage of senior management at significant
 locations of operation that are hired
 from the local community?</p>
-<p>Note: The reporting organization shall calculate this 
+<p>Note: The reporting organization shall calculate this
 percentage using data on full-time employees.</p>" className="mt-1.5 ml-2 text-[14px]" />
-              <ReactTooltip id={`es25`} place="bottom" effect="solid" style={{
+              <ReactTooltip id={`es25`} place="top" effect="solid" style={{
                 width: "290px", backgroundColor: "#000",
                 color: "white",
                 fontSize: "12px",
