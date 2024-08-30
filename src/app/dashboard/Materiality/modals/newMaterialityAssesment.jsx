@@ -6,7 +6,9 @@ import DateRangePicker from "@/app/utils/DatePickerComponent";
 import { useRouter } from 'next/navigation'
 import { yearInfo } from "@/app/shared/data/yearInfo";
 import axiosInstance from "../../../utils/axiosMiddleware";
- 
+import { Oval } from "react-loader-spinner";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
   const router = useRouter()
@@ -14,12 +16,12 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
   const [assessmentApproach,setAssessmentApproach] = useState("")
   const [isDateRangeValid, setIsDateRangeValid] = useState(true);
   const [organisations, setOrganisations] = useState([]);
-  const[selectedOrg,setSelectedOrg]=useState([])
-  // const [corporates, setCorporates] = useState([]);
-  const [corporate, setCorporates] = useState([]);
-  const [reportType, setReportType] = useState("Organization");
+  const[selectedOrg,setSelectedOrg]=useState("")
+  const [corporates, setCorporates] = useState([]);
   const [selectedCorp, setSelectedCorp] = useState("");
-  const [selectedYear, setSelectedYear] = useState("");
+  const [loopen, setLoOpen] = useState(false);
+  const [framework,setFramework]=useState("")
+
   const [errors, setErrors] = useState({
     organization: "Please select an organization",
     corporate: "Please select a location",
@@ -30,9 +32,7 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
     end: null
   });
 
-  const handleReportTypeChange = (type) => {
-    setReportType(type);
-  };
+  
 
   useEffect(() => {
     const fetchOrg = async () => {
@@ -47,58 +47,34 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
     fetchOrg();
   }, []);
 
-  // useEffect(() => {
-  //   const fetchCorporates = async () => {
-  //     if (selectedOrg) {
-  //       try {
-  //         const response = await axiosInstance.get(`/corporate/`, {
-  //           params: { organization_id: selectedOrg },
-  //         });
-  //         setCorporates(response.data);
-  //       } catch (e) {
-  //         console.error("Failed fetching corporates:", e);
-  //       }
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchCorporates = async () => {
+      if (selectedOrg) {
+        try {
+          const response = await axiosInstance.get(`/corporate/`, {
+            params: { organization_id: selectedOrg },
+          });
+          setCorporates(response.data);
+        } catch (e) {
+          console.error("Failed fetching corporates:", e);
+        }
+      }
+    };
 
-  //   fetchCorporates();
-  // }, [selectedOrg]);
+    fetchCorporates();
+  }, [selectedOrg]);
 
   const handleOrgChange = (e) => {
     const newOrg = e.target.value;
     setSelectedOrg(newOrg);
-    // setSelectedCorp("");
+    setSelectedCorp("");
     setErrors((prevErrors) => ({
       ...prevErrors,
       organization: newOrg ? "" : "Please select an organization",
     }));
   };
 
-  const handleOrganizationChange = (e) => {
-    const newOrg = e.target.value;
-    setSelectedOrg(newOrg);
-    setSelectedCorp("");
-    setSelectedYear("");
-    // setCustomerhealth([]);
-
-    // setDatasetparams({
-    //   organisation: newOrg,
-    //   corporate: "",
-    //   start: "",
-    //   end: "",
-    // });
-  };
-
-  const handleYearChange = (e) => {
-    const newYear = e.target.value;
-    setSelectedYear(newYear);
-
-    // setDatasetparams((prevParams) => ({
-    //   ...prevParams,
-    //   start: `${newYear}-01-01`,
-    //   end: `${newYear}-12-31`,
-    // }));
-  };
+ 
   const handleDateChange = (newRange) => {
     setDateRange(newRange);
 
@@ -113,6 +89,16 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
     setActiveTab(tabNumber);
   };
 
+  const handleCorpChange = (e) => {
+    const newCorp = e.target.value;
+    setSelectedCorp(newCorp);
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      corporate: newCorp ? "" : "Please select a corporate",
+    }));
+  };
+
+
   const handleChangeRadio = (event) => {
     if(event=="reference"){
       setAssessmentApproach("reference");
@@ -122,6 +108,99 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
     }
     
   };
+
+  const LoaderOpen = () => {
+    setLoOpen(true);
+  };
+
+  const LoaderClose = () => {
+    setLoOpen(false);
+  };
+
+  // useEffect(async()=>{
+  //   const url = `${process.env.BACKEND_API_URL}/materiality_dashboard/get_selected_framework/`;
+  //   try {
+  //     const response = await axiosInstance.get(url);
+  //     if(response.status==200){
+  //       setFramework(response.data[0].id)
+  //     }
+      
+  //   }
+  //   catch (error) {
+  //     toast.error("Oops, something went wrong", {
+  //       position: "top-right",
+  //       autoClose: 1000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "colored",
+  //     });
+  //   }
+  // },[])
+
+  const handleSubmit= async()=>{
+    LoaderOpen()
+    const data = {
+      "organization": selectedOrg,
+      "corporate": selectedCorp,
+      "start_date": dateRange.start,
+      "end_date": dateRange.end,
+      "framework": 8,
+      "approach": assessmentApproach=="accordance"?"GRI: In accordance with":"GRI: With Reference to",
+      "status": "in_progress"
+    };
+    const url = `${process.env.BACKEND_API_URL}/materiality_dashboard/materiality-assessments/`;
+    try {
+      const response = await axiosInstance.post(url, data);
+      console.log(response,"seee")
+      if (response.status === 201) {
+        toast.success("Data added successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        LoaderClose();
+        if(assessmentApproach=="accordance"){
+          router.push('Materiality/accordance')
+        }
+        else if(assessmentApproach=="reference"){
+          router.push('Materiality/reference')
+        }
+      } else {
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        LoaderClose();
+      }
+    } catch (error) {
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      LoaderClose();
+    }
+  
+  }
 
   return (
     <>
@@ -164,14 +243,15 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
          </div>
          <div>
          <form className="space-y-2 px-6 pt-4">
-           <div className="flex items-center" onClick={()=>{handleChangeRadio("accordance")}}>
+           <div className="flex items-center green-radio" onClick={()=>{handleChangeRadio("accordance")}}>
              <input
                id="accordance"
                name="radio"
                type="radio"
                value="accordance"
                checked={assessmentApproach === "accordance"}
-              className="form-radio green-radio h-[13px] w-[13px] appearance-none rounded-full border border-gray-500 checked:border-[#42cc71] checked:bg-[#42cc71] relative cursor-pointer"
+              className="form-radio h-4 w-4" //green-radio h-[13px] w-[13px] appearance-none rounded-full border border-gray-500 checked:border-[#42cc71] checked:bg-[#42cc71] relative cursor-pointer
+              
                
              />
              <label
@@ -181,14 +261,14 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
                GRI: In Accordance With
              </label>
            </div>
-           <div className="flex items-center" onClick={()=>{handleChangeRadio("reference")}}>
+           <div className="flex items-center green-radio" onClick={()=>{handleChangeRadio("reference")}}>
              <input
                id="reference"
                name="radio"
                type="radio"
                value="reference"
                checked={assessmentApproach === "reference"}
-              className="form-radio green-radio h-[13px] w-[13px] appearance-none rounded-full border border-gray-500 checked:border-[#42cc71] checked:bg-[#42cc71] relative cursor-pointer"
+              className="form-radio h-4 w-4"
                
              />
              <label
@@ -242,7 +322,7 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
                     className={`w-[111px] px-4 py-2.5 border-r rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${activeTab == "1" ? "bg-sky-100" : "bg-white"
                       }`}
                     // onClick={() => handleReportTypeChange("Organization")}
-                    onClick={() => handleTabClick(1)}
+                    onClick={() => {handleTabClick(1); setSelectedOrg("")}}
                   >
                     <div className="text-slate-800 text-[13px] font-medium font-['Manrope'] leading-tight">
                       Organization
@@ -252,7 +332,7 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
                     className={`w-[111px] px-4 py-2.5 border-r rounded-r-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${activeTab == "2" ? "bg-sky-100" : "bg-white"
                       }`}
                     // onClick={() => handleReportTypeChange("Corporate")}
-                    onClick={() => handleTabClick(2)}
+                    onClick={() => {handleTabClick(2); setSelectedOrg("")}}
                   >
                     <div className="text-slate-800 text-[13px] font-medium font-['Manrope'] leading-tight">
                       Corporate
@@ -277,8 +357,17 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
                        <select
                         //  className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                          className="py-1.5 border border-gray-300 rounded-md w-full text-sm pl-2"
+                      //    value={selectedOrg}
+                      // onChange={handleOrgChange}
                        >
-                         <option value=""> Select Organization </option>
+                         <option>Select Organization</option>
+                      {/* {organisations &&
+                        organisations.map((org) => (
+                          <option key={org.id} value={org.id}>
+                            {org.name}
+                          </option>
+                        ))} */}
+                      
                        </select>
                      </div>
                    </div>
@@ -314,11 +403,20 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
                        Select Organization
                      </label>
                      <div className="mt-2">
-                       <select
+                     <select
                         //  className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                          className="py-1.5 border border-gray-300 rounded-md w-full text-sm pl-2"
+                      //    value={selectedOrg}
+                      // onChange={handleOrgChange}
                        >
-                         <option value=""> Select Organization </option>
+                         <option >Select Organization</option>
+                      {/* {organisations &&
+                        organisations.map((org) => (
+                          <option key={org.id} value={org.id}>
+                            {org.name}
+                          </option>
+                        ))} */}
+                      
                        </select>
                      </div>
                    </div>
@@ -330,12 +428,20 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
                        Select Corporate
                      </label>
                      <div className="mt-2">
-                       <select
-                        //  className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                     <select
+                        // className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         className="py-1.5 border border-gray-300 rounded-md w-full text-sm pl-2"
-                       >
-                         <option value=""> Select Corporate </option>
-                       </select>
+                        // value={selectedCorp}
+                        // onChange={handleCorpChange}
+                      >
+                        <option  value="">Select Corporate </option>
+                        {/* {corporates &&
+                          corporates.map((corp) => (
+                            <option key={corp.id} value={corp.id}>
+                              {corp.name}
+                            </option>
+                          ))} */}
+                      </select>
                      </div>
                    </div>
                  </div>
@@ -478,7 +584,19 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
 
      
       )}
-
+      {loopen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
+  <ToastContainer/>
     </>
   );
 };

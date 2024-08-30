@@ -90,7 +90,7 @@ const CheckboxWidget2 = ({
         )}
         
       </div>
-      <div className={`p-2 mx-1 mt-2  ${uiSchema['ui:section']}`}>
+      <div className={`p-2 mx-1 mt-2 green-checkbox ${uiSchema['ui:section']}`}>
         {options.enumOptions.map((option, index) => (
           <label key={index} className='flex items-center gap-2 text-sm mb-4 cursor-pointer'>
             <input

@@ -35,7 +35,7 @@ const CheckboxWidget = ({
   
   return (
     <div className='mb-1'>
-      <div className={`p-2 mx-1 mt-2 ${options.envChecked || options.socChecked || options.govChecked ? "" : "opacity-25"}`}>
+      <div className={`p-2 mx-1 mt-2 green-checkbox ${options.envChecked || options.socChecked || options.govChecked ? "" : "opacity-25"}`}>
         {options.enumOptions.map((option, index) => (
           <label key={index} className='flex items-center gap-2 text-sm mb-4 cursor-pointer'>
             <input
@@ -45,7 +45,7 @@ const CheckboxWidget = ({
               checked={selectedValues.includes(option.value)} // Check if the value is in the array
               autoFocus={autofocus && index === 0}
               onChange={handleChange}
-              className='form-checkbox h-3 w-3 ' // Changed from 'form-radio' to 'form-checkbox' green-checkbox appearance-none checked:bg-[#42cc71] checked:border-[#42cc71] border border-gray-500 rounded-sm relative
+              className='form-checkbox h-3 w-3' // Changed from 'form-radio' to 'form-checkbox' green-checkbox appearance-none checked:bg-[#42cc71] checked:border-[#42cc71] border border-gray-500 rounded-sm relative
               disabled={!(options.envChecked || options.socChecked || options.govChecked)}
             />
             {option.label}
