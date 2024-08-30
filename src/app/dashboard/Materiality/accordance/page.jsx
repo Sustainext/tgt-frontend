@@ -28,7 +28,7 @@ const Accordance = () => {
 
         {/* main content */}
         <div className="w-full">
-          {activeTab === "selectMaterialityTopic" && <SelectMaterialityTopic />}
+          {activeTab === "selectMaterialityTopic" && <SelectMaterialityTopic  handleTabClick={handleTabClick} />}
           {activeTab === "materialAssessmentProcess" && (
             <MaterialAssessmentProcess />
           )}

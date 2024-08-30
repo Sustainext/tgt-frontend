@@ -8,7 +8,7 @@ import Step3 from "./steps/step3";
 import { useRouter } from 'next/navigation'
 import TopicSelectedPopup from "../../modals/topicSelectedPopup";
 
-const SelectMaterialityTopic = () => {
+const SelectMaterialityTopic = ({ handleTabClick}) => {
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState();
@@ -251,7 +251,7 @@ const SelectMaterialityTopic = () => {
                 </button>
         </div>
       </div>
-      <TopicSelectedPopup isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
+      <TopicSelectedPopup isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}  handleTabClick={handleTabClick}/>
     </>
   );
 };

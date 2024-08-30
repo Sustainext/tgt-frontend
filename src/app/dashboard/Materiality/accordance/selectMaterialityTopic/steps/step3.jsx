@@ -115,7 +115,7 @@ const schema = {
     },
   };
 
-const Step3 = ({ selectedOrg, year, selectedCorp }) => {
+const Step3 = ({ selectedOrg, year, selectedCorp}) => {
     const [formData, setFormData] = useState([{}]);
     const [r_schema, setRemoteSchema] = useState({});
     const [r_ui_schema, setRemoteUiSchema] = useState({});
