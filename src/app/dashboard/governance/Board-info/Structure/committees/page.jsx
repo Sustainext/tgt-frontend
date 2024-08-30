@@ -45,7 +45,7 @@ const uiSchema = {
       "ui:title":
         "List the committees of the highest governance body that are responsible for decision-making on and overseeing the management of the organization's impacts on the economy, environment and people",
       "ui:tooltip":
-        " Provide a list of committees of the highest governance body, including those responsible for overseeing the management of the organization's impacts on the economy, environment, and people (e.g., Sustainability Committee, Corporate Social Responsibility Committee etc.).",
+        "Provide a list of committees of the highest governance body, including those responsible for overseeing the management of the organization's impacts on the economy, environment, and people (e.g., Sustainability Committee, Corporate Social Responsibility Committee etc.).",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -68,7 +68,11 @@ const CommitteeOfHighestGovernanceBody = ({
   selectedCorp,
   year,
 }) => {
-  const [formData, setFormData] = useState([]);
+  const [formData, setFormData] = useState([
+    {
+      Q1: [["", ""]],
+    },
+  ]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
@@ -144,16 +148,30 @@ const CommitteeOfHighestGovernanceBody = ({
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([]);
+    setFormData([
+      {
+        Q1: [["", ""]],
+      },
+    ]);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&corporate=${selectedCorp}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
-      setFormData(response.data.form_data[0].data);
+      if (response.data.form_data[0].data.length === 0) {
+        setFormData([
+          {
+            Q1: [["", ""]],
+          },
+        ]);
+      } else setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData([]);
+      setFormData([
+        {
+          Q1: [["", ""]],
+        },
+      ]);
     } finally {
       LoaderClose();
     }
@@ -162,7 +180,7 @@ const CommitteeOfHighestGovernanceBody = ({
   useEffect(() => {
     if (selectedOrg && year) {
       loadFormData();
-      toastShown.current = false; // Reset the flag when valid data is present
+      toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
@@ -212,12 +230,10 @@ const CommitteeOfHighestGovernanceBody = ({
           </div>
 
           <div className="w-[20%]">
-            <div className="float-end">
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 2-9-b
-                </div>
-              </div>
+            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
+              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
+                GRI 2-9-b
+              </p>
             </div>
           </div>
         </div>
