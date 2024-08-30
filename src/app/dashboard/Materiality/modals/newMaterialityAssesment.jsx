@@ -275,7 +275,8 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
                      </label>
                      <div className="mt-2">
                        <select
-                         className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        //  className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                         className="py-1.5 border border-gray-300 rounded-md w-full text-sm pl-2"
                        >
                          <option value=""> Select Organization </option>
                        </select>
@@ -314,7 +315,8 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
                      </label>
                      <div className="mt-2">
                        <select
-                         className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        //  className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                         className="py-1.5 border border-gray-300 rounded-md w-full text-sm pl-2"
                        >
                          <option value=""> Select Organization </option>
                        </select>
@@ -329,7 +331,8 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
                      </label>
                      <div className="mt-2">
                        <select
-                         className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        //  className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="py-1.5 border border-gray-300 rounded-md w-full text-sm pl-2"
                        >
                          <option value=""> Select Corporate </option>
                        </select>
