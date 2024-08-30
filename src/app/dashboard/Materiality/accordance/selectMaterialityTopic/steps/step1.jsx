@@ -44,7 +44,7 @@ const Step1 = () => {
                   id="env"
                   type="checkbox"
                   name="env"
-                  className="h-3.5 w-3.5 mt-3 mx-2 green-checkbox appearance-none checked:bg-green-500 checked:border-green-500 border border-gray-500 rounded-[3px] relative bg-white"
+                  className="h-3.5 w-3.5 mt-3 mx-2"
                   onChange={handleChecked}
                 />
             </div>
@@ -57,7 +57,7 @@ const Step1 = () => {
                   id="soc"
                   type="checkbox"
                   name="soc"
-                  className="h-3.5 w-3.5 mt-3 mx-2 green-checkbox appearance-none checked:bg-green-500 checked:border-green-500 border border-gray-500 rounded-[3px] relative bg-white"
+                  className="h-3.5 w-3.5 mt-3 mx-2" //green-checkbox appearance-none checked:bg-green-500 checked:border-green-500 border border-gray-500 rounded-[3px] relative bg-white
                   onChange={handleChecked}
                 />
             </div>
@@ -72,7 +72,7 @@ const Step1 = () => {
                   id="gov"
                   type="checkbox"
                   name="gov"
-                  className="h-3.5 w-3.5 mt-3 mx-2 green-checkbox appearance-none checked:bg-green-500 checked:border-green-500 border border-gray-500 rounded-[3px] relative bg-white"
+                  className="h-3.5 w-3.5 mt-3 mx-2"
                   onChange={handleChecked}
                 />
             </div>
