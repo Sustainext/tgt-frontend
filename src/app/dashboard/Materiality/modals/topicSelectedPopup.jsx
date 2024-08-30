@@ -4,7 +4,7 @@ import GRISVG from "../../../../../public/gri.svg";
 import Image from "next/image";
 import { useRouter } from 'next/navigation'
 
-const TopicSelectedPopup = ({ isModalOpen, setIsModalOpen }) => {
+const TopicSelectedPopup = ({ isModalOpen, setIsModalOpen , handleTabClick}) => {
   const router= useRouter()
   return (
     <>
@@ -55,7 +55,7 @@ const TopicSelectedPopup = ({ isModalOpen, setIsModalOpen }) => {
                   {"<"} Back to Dashboard
                 </button>
                   <button className="w-auto h-full mr-2  py-2 px-3 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer" 
-                  // onClick={()=>{handleTabClick("materialAssessmentProcess")}}
+                  onClick={()=>{handleTabClick("materialAssessmentProcess")}}
                   >
                   Continue Materiality Assessment Process
                   </button>
