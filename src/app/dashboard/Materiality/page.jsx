@@ -86,9 +86,7 @@ const Materiality = ({ open }) => {
               </div>
               {/* main section */}
               {data?(
-                <div>
-                  <DataTable data={DummyData}/>
-                </div>
+                <DataTable data={DummyData}/>
               ):(
              <NoAssesment isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
               )}

@@ -100,7 +100,7 @@ const CheckboxWidget2 = ({
               checked={selectedValues.includes(option.value)} // Check if the value is in the array
               autoFocus={autofocus && index === 0}
               onChange={handleChange}
-              className="form-checkbox green-checkbox h-3 w-3 appearance-none checked:bg-[#42cc71] checked:border-green-500 border border-gray-500 rounded-sm relative"
+              className="form-checkbox green-checkbox h-3 w-3 appearance-none checked:bg-[#42cc71] checked:border-[#42cc71] border border-gray-500 rounded-sm relative"
  // Changed from 'form-radio' to 'form-checkbox'
             />
            

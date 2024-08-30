@@ -171,7 +171,7 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
                type="radio"
                value="accordance"
                checked={assessmentApproach === "accordance"}
-              className="form-radio green-radio h-4 w-4 appearance-none rounded-full border border-gray-500 checked:border-green-500 checked:bg-[#42cc71] relative cursor-pointer"
+              className="form-radio green-radio h-[13px] w-[13px] appearance-none rounded-full border border-gray-500 checked:border-[#42cc71] checked:bg-[#42cc71] relative cursor-pointer"
                
              />
              <label
@@ -188,7 +188,7 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
                type="radio"
                value="reference"
                checked={assessmentApproach === "reference"}
-              className="form-radio green-radio h-4 w-4 appearance-none rounded-full border border-gray-500 checked:border-green-500 checked:bg-[#42cc71] relative cursor-pointer"
+              className="form-radio green-radio h-[13px] w-[13px] appearance-none rounded-full border border-gray-500 checked:border-[#42cc71] checked:bg-[#42cc71] relative cursor-pointer"
                
              />
              <label
@@ -199,6 +199,8 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
              </label>
            </div>
          </form>
+        
+
          </div>
         
          <div>
@@ -465,8 +467,15 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen }) => {
          </div>
        </div>
      </div>
+
+
+
+
+
+
      
       )}
+
     </>
   );
 };

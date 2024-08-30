@@ -111,7 +111,7 @@ const DataTable = ({ data }) => {
               <MdOutlineEdit
                 className="text-[18px] text-gray-500"
                 onClick={() => {
-                  if (item.type == "GRI: In Accordance to") {
+                  if (item.type == "GRI: In Accordance with") {
                     router.push("Materiality/accordance");
                   } else if (item.type == "GRI: with Reference to") {
                     router.push("Materiality/reference");

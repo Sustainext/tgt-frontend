@@ -248,10 +248,10 @@ input[type='number']::-webkit-outer-spin-button {
 .green-radio:checked::before{
   content: '';
   position: absolute;
-  left: 50%; /* Center horizontally */
+  left: 52%; /* Center horizontally */
   top: 45%; /* Center vertically */
-  width: 0.3em; /* Adjust size relative to font size */
-  height: 0.5em; /* Adjust size relative to font size */
+  width: 0.25em; /* Adjust size relative to font size */
+  height: 0.45em; /* Adjust size relative to font size */
   border: solid white;
   border-width: 0 0.15em 0.15em 0; /* Adjust border width relative to size */
   transform: translate(-50%, -50%) rotate(45deg); /* Center and rotate the tick */

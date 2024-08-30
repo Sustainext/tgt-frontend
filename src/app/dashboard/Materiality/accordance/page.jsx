@@ -42,6 +42,7 @@ const Accordance = () => {
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
       />
+
     </>
   );
 };
