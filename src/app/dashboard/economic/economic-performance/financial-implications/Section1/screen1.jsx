@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import CommoninputWidget from "../../../shared/widgets/Input/commoninputWidget";
+import CommoninputWidget from "../../../../../shared/widgets/Input/commoninputWidget";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -10,13 +10,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
-import axiosInstance from '@/app/utils/axiosMiddleware'
+import axiosInstance from "@/app/utils/axiosMiddleware";
 
 const widgets = {
   inputWidget: CommoninputWidget,
 };
 
-const view_path = "gri-economic-proportion_of_spending_on_local_suppliers-definition-204-1c";
+const view_path = "gri-economic-significant_indirect-explain-203-2b";
 const client_id = 1;
 const user_id = 1;
 
@@ -27,7 +27,9 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: 'The definition used for "significant locations of operation"',
+        title:
+          "Is there a system to calculate the financial implications or costs, or to make revenue projections?",
+          enum:["Yes","No"],
       },
     },
   },
@@ -37,12 +39,13 @@ const uiSchema = {
   items: {
     "ui:order": ["Q1"],
     Q1: {
-      "ui:title": 'The definition used for "significant locations of operation"',
+      "ui:title":
+        "Is there a system to calculate the financial implications or costs, or to make revenue projections?",
       "ui:tooltip":
-        '<p>Mention the definition used for "significant locations of operation".Significant locations of operation refer to the geographical areas where the organization has a substantial impact through its operations.</p>',
+        "What is the significance of the indirect economic impacts in the context of external benchmarks and stakeholder priorities, such as national and international standards, protocols, and policy agendas?",
       "ui:tooltipdisplay": "none",
       "ui:titledisplay": "none",
-      "ui:widgetType": "textarea",
+      "ui:widgetType": "radio",
       "ui:inputfildtype": "text",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -60,7 +63,7 @@ const uiSchema = {
   },
 };
 
-const Screen3 = ({ location, year}) => {
+const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -77,25 +80,19 @@ const Screen3 = ({ location, year}) => {
   };
 
   const handleChange = (e) => {
-    let newFormData = { ...e.formData[0] };
-    if (newFormData.Q1 === "No") {
-      newFormData.Q2 = "";
-
-    }
-    setFormData([newFormData]);
+    setFormData(e.formData);
   };
 
   const updateFormData = async () => {
-    LoaderOpen();
     const data = {
       client_id: client_id,
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      location,
+      corporate: selectedCorp,
+      organisation: selectedOrg,
       year,
     };
-
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
       const response = await axiosInstance.post(url, data);
@@ -143,7 +140,7 @@ const Screen3 = ({ location, year}) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -156,9 +153,8 @@ const Screen3 = ({ location, year}) => {
       LoaderClose();
     }
   };
-
   useEffect(() => {
-    if (location && year) {
+    if (selectedOrg && year) {
       loadFormData();
       toastShown.current = false;
     } else {
@@ -166,7 +162,7 @@ const Screen3 = ({ location, year}) => {
         toastShown.current = true;
       }
     }
-  }, [location,year]);
+  }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -185,28 +181,35 @@ const Screen3 = ({ location, year}) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-          <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
-          The definition used for "significant locations of operation"
-              <MdInfoOutline data-tooltip-id={`es25`}
-                data-tooltip-html= '<p>Mention the definition used for "significant locations of operation".Significant locations of operation refer to the geographical areas where the organization has a substantial impact through its operations.</p>'
-                className="mt-1.5 ml-2 text-[14px]" />
-              <ReactTooltip id={`es25`} place="top" effect="solid" style={{
-                width: "290px", backgroundColor: "#000",
-                color: "white",
-                fontSize: "12px",
-                boxShadow: 3,
-                borderRadius: "8px",
-                textAlign: 'left',
-                zIndex:"100",
-              }}>
-              </ReactTooltip>
+            <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
+            Is there a system to calculate the financial implications or costs, or to make revenue projections?
+              <MdInfoOutline
+                data-tooltip-id={`es26`}
+                data-tooltip-html="Indicate whether the organisation has a system to calculate
+the financial implications or costs, or to make revenue projections."
+                className="mt-1.5 ml-2 text-[16px]"
+              />
+              <ReactTooltip
+                id={`es26`}
+                place="top"
+                effect="solid"
+                style={{
+                  width: "290px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  textAlign: "left",
+                }}
+              ></ReactTooltip>
             </h2>
           </div>
           <div className="w-[20%]">
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 204-1b
+                  GRI 201-2a
                 </div>
               </div>
             </div>
@@ -214,8 +217,8 @@ const Screen3 = ({ location, year}) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+            schema={schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -223,11 +226,14 @@ const Screen3 = ({ location, year}) => {
           />
         </div>
         <div className="mb-6">
-          <button type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year  ? 'cursor-not-allowed' : ''}`}
+          <button
+            type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              !selectedOrg || !year ? "cursor-not-allowed" : ""
+            }`}
             onClick={handleSubmit}
-            disabled={!location || !year }
-            >
+            disabled={!selectedOrg || !year}
+          >
             Submit
           </button>
         </div>
@@ -248,4 +254,4 @@ const Screen3 = ({ location, year}) => {
   );
 };
 
-export default Screen3;
+export default Screen1;

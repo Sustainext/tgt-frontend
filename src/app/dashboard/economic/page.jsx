@@ -4,21 +4,12 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import Infrastructureinvestmentsservices from "./indirect-economic-impacts/infrastructure-investments-services/page"
 import ProcurementPractices from "./procurement-practices/page"
-// import OrgDetails from "./GRI-Reporting/Org-Details/page";
-// import Entities from "./GRI-Reporting/Entities/page";
-// import ReportDetails from "./GRI-Reporting/Report-Details/page";
-// import Restatement from "./GRI-Reporting/Restatement/page";
-// import Assurance from "./GRI-Reporting/Assurance/page";
-// import WorkforceEmployees from "./Organization-Details/Workforce-Employees/page"
-// import WorkforceOtherWorkers from "./Organization-Details/Workforce-Other-Workers/page"
-// import LawAndRegulations from './Compliance/Laws-Regulation/page'
-// import BusinessDetails from "./Organization-Details/Business-Details/page"
-// import CollectiveBargainingAgreements from "./Collective-Barganing-Agreements/page"
-// import MembershipAndAssociation from "./Membership-Association/page"
-// import StakeholderEngagement from "./Stakeholder-Engagement/page"
 import Significantindirecteconomic from "./indirect-economic-impacts/significant-indirect-economic/page"
 import PortionOfSeniorManagement from "./market-presence/Proportion-of-senior-management-hired-from-the-local-community/page"
-
+import Directeconomic from "./economic-performance/direct-economic/page"
+import Financialimplications from "./economic-performance/financial-implications/page"
+import Definedbenefit from "./economic-performance/defined-benefit/page"
+import Financialassistance from "./economic-performance/financial-assistance/page"
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -321,7 +312,7 @@ const Economic = () => {
                         ) : (
                           <p
                             className={`${
-                              activeStep === 8
+                              activeStep === 4
                                 ? "text-[12px] text-sky-800  font-bold"
                                 : " text-[12px]  text-gray-600"
                             } `}
@@ -1208,34 +1199,34 @@ const Economic = () => {
           </div>
         <div className="w-full ms-3">
             <div>
-              {/* {activeStep === 1 && (
+              {activeStep === 1 && (
                 <>
                   <div>
-                    <OrgDetails />
+                    <Directeconomic />
                   </div>
                 </>
-              )} */}
-              {/* {activeStep === 2 && (
+              )}
+              {activeStep === 2 && (
                 <>
                   <div>
-                    <Entities />
+                    <Financialimplications />
                   </div>
                 </>
-              )} */}
-              {/* {activeStep === 3 && (
+              )}
+              {activeStep === 3 && (
                 <>
                   <div>
-                    <ReportDetails />
+                    <Definedbenefit />
                   </div>
                 </>
-              )} */}
-              {/* {activeStep === 4 && (
+              )}
+              {activeStep === 4 && (
                 <>
                   <div>
-                    <Restatement />
+                    <Financialassistance />
                   </div>
                 </>
-              )} */}
+              )}
                {/* {activeStep === 5 && (
                 <>
                   <div>
@@ -1263,7 +1254,7 @@ const Economic = () => {
                     <Significantindirecteconomic />
                   </div>
                 </>
-              )} 
+              )}
                {activeStep === 9 && (
                 <>
                   <div>

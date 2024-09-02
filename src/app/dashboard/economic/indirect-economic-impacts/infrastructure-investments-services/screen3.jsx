@@ -16,7 +16,7 @@ const widgets = {
   inputWidget: CommoninputWidget,
 };
 
-const view_path = "gri-general-collective_bargaining-2-30-b-employees";
+const view_path = "gri-economic-infrastructure-whether-203-1c";
 const client_id = 1;
 const user_id = 1;
 
@@ -207,8 +207,8 @@ const Screen3 = ({ location, year}) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

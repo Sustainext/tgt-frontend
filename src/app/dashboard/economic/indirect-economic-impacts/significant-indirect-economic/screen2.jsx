@@ -10,13 +10,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
-import axiosInstance from '@/app/utils/axiosMiddleware'
+import axiosInstance from "@/app/utils/axiosMiddleware";
 
 const widgets = {
   inputWidget: CommoninputWidget,
 };
 
-const view_path = "gri-general-collective_bargaining-2-30-b-employees";
+const view_path = "gri-economic-significant_indirect-explain-203-2b";
 const client_id = 1;
 const user_id = 1;
 
@@ -27,7 +27,8 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Explain the significance of the indirect economic impacts in the context of external benchmarks and stakeholder priorities.",
+        title:
+          "Explain the significance of the indirect economic impacts in the context of external benchmarks and stakeholder priorities.",
       },
     },
   },
@@ -37,7 +38,8 @@ const uiSchema = {
   items: {
     "ui:order": ["Q1"],
     Q1: {
-      "ui:title": "Explain the significance of the indirect economic impacts in the context of external benchmarks and stakeholder priorities.",
+      "ui:title":
+        "Explain the significance of the indirect economic impacts in the context of external benchmarks and stakeholder priorities.",
       "ui:tooltip":
         "What is the significance of the indirect economic impacts in the context of external benchmarks and stakeholder priorities, such as national and international standards, protocols, and policy agendas?",
       "ui:tooltipdisplay": "none",
@@ -60,7 +62,7 @@ const uiSchema = {
   },
 };
 
-const Screen2 = ({ selectedOrg, year, selectedCorp}) => {
+const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -178,19 +180,28 @@ const Screen2 = ({ selectedOrg, year, selectedCorp}) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-          <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
-          Explain the significance of the indirect economic impacts in the context of external benchmarks and stakeholder priorities.
-              <MdInfoOutline data-tooltip-id={`es26`}
-                data-tooltip-html="What is the significance of the indirect economic impacts in the context of external benchmarks and stakeholder priorities, such as national and international standards, protocols, and policy agendas?" className="mt-1.5 ml-2 text-[18px]" />
-              <ReactTooltip id={`es26`} place="top" effect="solid" style={{
-                width: "290px", backgroundColor: "#000",
-                color: "white",
-                fontSize: "12px",
-                boxShadow: 3,
-                borderRadius: "8px",
-                textAlign: 'left',
-              }}>
-              </ReactTooltip>
+            <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
+              Explain the significance of the indirect economic impacts in the
+              context of external benchmarks and stakeholder priorities.
+              <MdInfoOutline
+                data-tooltip-id={`es26`}
+                data-tooltip-html="What is the significance of the indirect economic impacts in the context of external benchmarks and stakeholder priorities, such as national and international standards, protocols, and policy agendas?"
+                className="mt-1.5 ml-2 text-[18px]"
+              />
+              <ReactTooltip
+                id={`es26`}
+                place="top"
+                effect="solid"
+                style={{
+                  width: "290px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  textAlign: "left",
+                }}
+              ></ReactTooltip>
             </h2>
           </div>
           <div className="w-[20%]">
@@ -205,8 +216,8 @@ const Screen2 = ({ selectedOrg, year, selectedCorp}) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -214,7 +225,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp}) => {
           />
         </div>
         <div className="mb-6">
-        <button
+          <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
               !selectedOrg || !year ? "cursor-not-allowed" : ""

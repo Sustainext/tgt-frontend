@@ -16,7 +16,7 @@ const widgets = {
   inputWidget: CommoninputWidget,
 };
 
-const view_path = "gri-general-collective_bargaining-2-30-b-employees";
+const view_path = "gri-economic-proportion_of_senior_management-local_community-202-2a";
 const client_id = 1;
 const user_id = 1;
 
@@ -211,8 +211,8 @@ percentage using data on full-time employees.</p>" className="mt-1.5 ml-2 text-[
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
