@@ -75,7 +75,7 @@ const PoliticalInvolvement = () => {
           </div>
         </div>
 
-        <div className="ml-3 flex">
+      <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
           Political contributions
 

@@ -8,7 +8,7 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { toast } from "react-toastify";
 import { Oval } from "react-loader-spinner";
-import axiosInstance from '@/app/utils/axiosMiddleware'
+import axiosInstance from "@/app/utils/axiosMiddleware";
 
 const widgets = {
   inputWidget: Textboxwithfileupload,
@@ -49,10 +49,15 @@ const schema = {
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1","Q2","Q3","Q4","Q5"],
+    "ui:order": ["Q1", "Q2", "Q3", "Q4", "Q5"],
     Q1: {
+      "ui:hading": "",
+      "ui:hadingtooltip": "",
+      "ui:hadingtooltipdisplay": "none",
+      "ui:hadingdisplay": "none",
       "ui:title": "Fixed pay & variable pay",
-      "ui:tooltip": "Report on fixed pay and variable pay. This can include performance-based pay, equity-based pay, bonuses, and deferred and vested shares.",
+      "ui:tooltip":
+        "Report on fixed pay and variable pay. This can include performance-based pay, equity-based pay, bonuses, and deferred and vested shares.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -61,45 +66,65 @@ const uiSchema = {
       },
     },
     Q2: {
-        "ui:title": "Sign-on bonuses or recruitment incentive payments",
-        "ui:tooltip": "Report on sign-on bonuses or recruitment incentive payments.",
-        "ui:tooltipdisplay": "block",
-        "ui:widget": "inputWidget",
-        "ui:horizontal": true,
-        "ui:options": {
-          label: false,
-        },
+      "ui:hading": "",
+      "ui:hadingtooltip": "",
+      "ui:hadingtooltipdisplay": "none",
+      "ui:hadingdisplay": "none",
+      "ui:title": "Sign-on bonuses or recruitment incentive payments",
+      "ui:tooltip":
+        "Report on sign-on bonuses or recruitment incentive payments.",
+      "ui:tooltipdisplay": "block",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
-      Q3: {
-        "ui:title": "Termination payments",
-        "ui:tooltip": "Report on termination payments.Termination payments are all payments and benefits given to a departing member of the highest governance body or senior executive whose appointment is terminated.",
-        "ui:tooltipdisplay": "block",
-        "ui:widget": "inputWidget",
-        "ui:horizontal": true,
-        "ui:options": {
-          label: false,
-        },
+    },
+    Q3: {
+      "ui:hading": "",
+      "ui:hadingtooltip": "",
+      "ui:hadingtooltipdisplay": "none",
+      "ui:hadingdisplay": "none",
+      "ui:title": "Termination payments",
+      "ui:tooltip":
+        "Report on termination payments.Termination payments are all payments and benefits given to a departing member of the highest governance body or senior executive whose appointment is terminated.",
+      "ui:tooltipdisplay": "block",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
-      Q4: {
-        "ui:title": "Clawbacks",
-        "ui:tooltip": "Clawbacks are repayments of previously received compensation that a highest governance body member or senior executive is required to make to their employer if certain conditions of employment or goals are not met",
-        "ui:tooltipdisplay": "block",
-        "ui:widget": "inputWidget",
-        "ui:horizontal": true,
-        "ui:options": {
-          label: false,
-        },
+    },
+    Q4: {
+      "ui:hading": "",
+      "ui:hadingtooltip": "",
+      "ui:hadingtooltipdisplay": "none",
+      "ui:hadingdisplay": "none",
+      "ui:title": "Clawbacks",
+      "ui:tooltip":
+        "Clawbacks are repayments of previously received compensation that a highest governance body member or senior executive is required to make to their employer if certain conditions of employment or goals are not met",
+      "ui:tooltipdisplay": "block",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
-      Q5: {
-        "ui:title": "Retirement benefits",
-        "ui:tooltip": "Report on retirement benefits. This can also include the differences between the retirement benefit schemes and the contribution rates for the highest governance body members, senior executives, and all other employee. ",
-        "ui:tooltipdisplay": "block",
-        "ui:widget": "inputWidget",
-        "ui:horizontal": true,
-        "ui:options": {
-          label: false,
-        },
+    },
+    Q5: {
+      "ui:hading": "",
+      "ui:hadingtooltip": "",
+      "ui:hadingtooltipdisplay": "none",
+      "ui:hadingdisplay": "none",
+      "ui:title": "Retirement benefits",
+      "ui:tooltip":
+        "Report on retirement benefits. This can also include the differences between the retirement benefit schemes and the contribution rates for the highest governance body members, senior executives, and all other employee. ",
+      "ui:tooltipdisplay": "block",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
+    },
     "ui:options": {
       orderable: false,
       addable: false,
@@ -230,8 +255,8 @@ const screen1 = ({ selectedOrg, selectedCorp, year }) => {
         <div className="mb-4 flex">
           <div className="w-[80%]">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
-            Describe the remuneration policies for members of the highest governance body and
-            senior executives, including:
+              Describe the remuneration policies for members of the highest
+              governance body and senior executives, including:
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
                 data-tooltip-content="Specify the remuneration policies for members of the highest governance body and senior executives."
@@ -256,10 +281,12 @@ const screen1 = ({ selectedOrg, selectedCorp, year }) => {
           </div>
 
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-19-a
-              </p>
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 2-19-a
+                </div>
+              </div>
             </div>
           </div>
         </div>

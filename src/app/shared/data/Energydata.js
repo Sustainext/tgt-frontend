@@ -3063,57 +3063,94 @@ export const Energydata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-
           <div className="h-[620px] overflow-y-auto custom-scrollbar">
-            <p className="text-[11px] text-black mb-2">Guidance to 2-21-a and 2-21-b</p>
+            <p className="text-[11px] text-black mb-2">
+              Guidance to 2-21-a and 2-21-b
+            </p>
             <p className="text-[11px] text-[#727272] mb-4">
-            This disclosure covers all employees as reported under Disclosure 2-7 in this Standard.
-
-Annual total compensation includes salary, bonus, stock awards, option awards, non-equity incentive plan compensation, change in pension value, and nonqualified deferred compensation earnings provided over the course of a year. When calculating the ratio, the organization should, depending on the organization’s remuneration policies and availability of data, consider all of the following:
+              This disclosure covers all employees as reported under Disclosure
+              2-7 in this Standard. Annual total compensation includes salary,
+              bonus, stock awards, option awards, non-equity incentive plan
+              compensation, change in pension value, and nonqualified deferred
+              compensation earnings provided over the course of a year. When
+              calculating the ratio, the organization should, depending on the
+              organization’s remuneration policies and availability of data,
+              consider all of the following:
             </p>
             <ul className="list-disc ml-6 mb-4">
               <li className="text-[11px] text-[#727272]">
-              Base salary, which is the sum of guaranteed, short-term, and non-variable cash compensation.
+                Base salary, which is the sum of guaranteed, short-term, and
+                non-variable cash compensation.
               </li>
 
               <li className="text-[11px] text-[#727272]">
-              Total cash compensation, which is the sum of the base salary and cash allowances, bonuses, commissions, cash profit-sharing, and other forms of variable cash payments.
+                Total cash compensation, which is the sum of the base salary and
+                cash allowances, bonuses, commissions, cash profit-sharing, and
+                other forms of variable cash payments.
               </li>
               <li className="text-[11px] text-[#727272]">
-              Direct compensation, which is the sum of total cash compensation and total fair value of all annual long-term incentives (e.g., stock option awards, restricted stock shares or units, performance stock shares or units, phantom stock shares, stock appreciation rights, and long-term cash awards).
+                Direct compensation, which is the sum of total cash compensation
+                and total fair value of all annual long-term incentives (e.g.,
+                stock option awards, restricted stock shares or units,
+                performance stock shares or units, phantom stock shares, stock
+                appreciation rights, and long-term cash awards).
               </li>
             </ul>
             <p className="text-[11px] text-[#727272] mb-4">
-            The annual total compensation ratio can be calculated using the following formula:
-            (Annual total compensation for the organization's highest paid-individual / Median annual total compensation for all of the organization's employees excluding the highest-paid individual)
+              The annual total compensation ratio can be calculated using the
+              following formula: (Annual total compensation for the
+              organization's highest paid-individual / Median annual total
+              compensation for all of the organization's employees excluding the
+              highest-paid individual)
             </p>
             <p className="text-[11px] text-[#727272] mb-4">
-            The change in the annual total compensation ratio can be calculated using the following formula:
-            (Percentage increase in annual total compensation for the organization's highest-paid individual / Median percentage increase in annual total compensation for all of the organization's employees excluding the highest-paid individual)
+              The change in the annual total compensation ratio can be
+              calculated using the following formula: (Percentage increase in
+              annual total compensation for the organization's highest-paid
+              individual / Median percentage increase in annual total
+              compensation for all of the organization's employees excluding the
+              highest-paid individual)
             </p>
             <p className="text-[11px] text-black mb-2">Guidance to 2-21-c</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Quantitative data, such as the annual total compensation ratio, may not be sufficient on its own to understand pay disparity and its drivers. For example, pay ratios can be influenced by the size of the organization (e.g., revenue, number of employees), its sector, its employment strategy (e.g., reliance on outsourced workers or part-time employees, a high degree of automation), or currency volatility.
+              Quantitative data, such as the annual total compensation ratio,
+              may not be sufficient on its own to understand pay disparity and
+              its drivers. For example, pay ratios can be influenced by the size
+              of the organization (e.g., revenue, number of employees), its
+              sector, its employment strategy (e.g., reliance on outsourced
+              workers or part-time employees, a high degree of automation), or
+              currency volatility.
             </p>
             <p className="text-[11px] text-[#727272] mb-4">
-            The difference in pay disparity reported over the years may be the result of a change in the organization’s compensation policy or the level of compensation for its highest-paid individual or employees, a change in calculation methodology (e.g., selection of the median annual total compensation, inclusions or exclusions) or an improvement in data collection processes. For this reason, the organization is required to report contextual information to help information users interpret the data and understand how it has been compiled.
+              The difference in pay disparity reported over the years may be the
+              result of a change in the organization’s compensation policy or
+              the level of compensation for its highest-paid individual or
+              employees, a change in calculation methodology (e.g., selection of
+              the median annual total compensation, inclusions or exclusions) or
+              an improvement in data collection processes. For this reason, the
+              organization is required to report contextual information to help
+              information users interpret the data and understand how it has
+              been compiled.
             </p>
             <p className="text-[11px] text-[#727272] mb-4">
-            The organization should provide the following contextual information:
+              The organization should provide the following contextual
+              information:
             </p>
             <ul className="list-disc ml-6 mb-4">
               <li className="text-[11px] text-[#727272]">
-              Whether any employees reported under Disclosure 2-7 in this Standard have been excluded.
+                Whether any employees reported under Disclosure 2-7 in this
+                Standard have been excluded.
               </li>
 
               <li className="text-[11px] text-[#727272]">
-              Whether full-time equivalent (FTE) pay rates are used for each part-time employee.
+                Whether full-time equivalent (FTE) pay rates are used for each
+                part-time employee.
               </li>
               <li className="text-[11px] text-[#727272]">
-              A list of the types of compensation included.
+                A list of the types of compensation included.
               </li>
               <li className="text-[11px] text-[#727272]">
-              The title of the highest-paid individual.
+                The title of the highest-paid individual.
               </li>
             </ul>
           </div>
@@ -3121,6 +3158,245 @@ Annual total compensation includes salary, bonus, stock awards, option awards, n
             <a
               className="text-[14px] text-[#2196F3]  flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12576&page=7"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["41"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-7: Employees
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-black mb-2">Guidance to 2-7-a</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              An employee is an individual who is in an employment relationship
+              with the organization according to national law or practice.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Providing a breakdown of employees by gender gives insight into
+              gender representation across the organization. Providing a
+              breakdown of employees by region gives insight into regional
+              variations. A region can refer to a country or other geographic
+              locations, such as a city or a world region.
+            </p>
+
+            <p className="text-[13px] text-black mb-2">Guidance to 2-7-b</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The definitions of permanent, temporary, non-guaranteed hours,
+              full-time, and part-time employees differ between countries. If
+              the organization has employees in more than one country, it should
+              use the definitions as per the national laws of the countries
+              where the employees are based to calculate country-level data. The
+              country-level data should then be added up to calculate total
+              numbers, disregarding differences in national legal definitions.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Non-guaranteed hours employees are employed by the organization
+              without a guarantee of a minimum or fixed number of working hours.
+              The employee may need to make themselves available for work as
+              required, but the organization is not contractually obligated to
+              offer the employee a minimum or fixed number of working hours per
+              day, week, or month. Casual employees, employees with zero-hour
+              contracts, and on-call employees are examples that fall under this
+              category. If the organization is unable to report exact figures,
+              it can report estimates of the number of employees to the nearest
+              ten or, where the number of employees is greater than 1,000, to
+              the nearest 100, and explain this under 2-7-c.
+            </p>
+
+            <p className="text-[13px] text-black mb-2">Guidance to 2-7-c</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization can report the total number of employees and the
+              number of permanent, temporary, non-guaranteed hours, full-time,
+              and part-time employees in head count or full-time equivalent
+              (FTE). Reporting these numbers in head count gives insight into
+              the number of individual employees, whether full-time or part-time
+              employed. Reporting these numbers in FTE gives insight into the
+              hours worked. The organization can use another methodology for
+              reporting these numbers. Reporting the number of employees at the
+              end of the reporting period provides information for that point in
+              time, without capturing fluctuations during the reporting period.
+              Reporting these numbers in averages across the reporting period
+              takes into account fluctuations during the reporting period.
+            </p>
+
+            <p className="text-[13px] text-black mb-2">Guidance to 2-7-d</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Quantitative data, such as the number of temporary or part-time
+              employees, is unlikely to be sufficient on its own. For example, a
+              high proportion of temporary or part-time employees could indicate
+              lack of employment security for employees, but it could equally
+              signal workplace flexibility when offered as a voluntary choice.
+              For this reason, the organization is required to report contextual
+              information to help information users interpret the data. The
+              organization can explain the reasons for temporary employment. An
+              example of such a reason is the recruitment of employees to
+              undertake work on a temporary or seasonal project or event.
+              Another example is the standard practice to offer a temporary
+              contract (e.g., six months) to new employees before an offer of
+              permanent employment is made. The organization can also explain
+              the reasons for non-guaranteed hours employment.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization can explain how it defines full-time employment.
+              If the organization has employees in more than one country, it can
+              report the definitions of full-time employment it uses for the
+              regions that cover these countries. The organization can also
+              explain the reasons for part-time employment. Examples of such
+              reasons are to accommodate employees’ requests to work reduced
+              hours, or because the organization is unable to provide full-time
+              employment to all employees. If there are differences in
+              permanent, temporary, non-guaranteed hours, full-time, and
+              part-time employment between genders or between regions, the
+              organization can explain the reasons for these differences.
+            </p>
+
+            <p className="text-[13px] text-black mb-2">Guidance to 2-7-e</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Requirement 2-7-e enables the organization to explain how the
+              numbers of employees vary during the reporting period compared to
+              the previous reporting periods (i.e., whether the numbers have
+              increased or decreased). It can also include the reasons for the
+              fluctuations. For example, an increase in the number of employees
+              during the reporting period could be due to a seasonal event.
+              Conversely, a decrease in the number of employees compared to the
+              previous reporting period could be due to the completion of a
+              temporary project.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              It is up to the organization to determine which fluctuations in
+              the number of employees it considers significant to report under
+              2-7-e. The organization should report its threshold for
+              determining significant fluctuations. If there are no significant
+              fluctuations in the number of employees during the reporting
+              period or between reporting periods, a brief statement of this
+              fact is sufficient to comply with the requirement.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["42"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-30: Collective bargaining agreements
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-black mb-2">Guidance</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              This disclosure provides insights into how the organization
+              engages in collective bargaining with its employees. Collective
+              bargaining is a fundamental right at work covered in the
+              International Labour Organization (ILO) Right to Organise and
+              Collective Bargaining Convention [8].
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Collective bargaining refers to negotiations that take place
+              between one or more employers or employers' organizations and one
+              or more workers' organizations (e.g., trade unions). The objective
+              of these negotiations is to reach a collective agreement on
+              working conditions and terms of employment (e.g., wages, working
+              time) and to regulate relations between employers and workers. [3]
+              These negotiations are an important means through which employers’
+              organizations and workers’ organizations can improve working
+              conditions and labor relations.
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              Collective agreements can be made at the level of the
+              organization, at the level of a particular site, at the industry
+              level, and at the national level in countries where this is the
+              practice. Collective agreements can cover specific groups of
+              workers, for example, those performing a specific activity or
+              working at a specific location.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              If the organization has a statement or policy commitment on
+              freedom of association and collective bargaining, this is reported
+              under 2-23-b-i in this Standard or 3-3-c in GRI 3: Material Topics
+              2021.
+            </p>
+
+            <p className="text-[13px] text-black mb-2">Guidance to 2-30-a</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization is required to report the percentage of its
+              employees whose working conditions and terms of employment are
+              regulated by one or more collective bargaining agreements.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The percentage of employees covered by collective bargaining
+              agreements is calculated using the following formula: (Number of
+              employees covered by collective bargaining agreements / Total
+              number of employees reported under 2-7-a) * 100 The employees
+              covered by collective bargaining agreements are those employees to
+              whom the organization is obligated to apply the agreement. This
+              means that if none of the employees are covered by a collective
+              bargaining agreement, the percentage reported is zero. An employee
+              covered by more than one collective bargaining agreement only
+              needs to be counted once. This requirement does not ask for the
+              percentage of employees represented by a works council or
+              belonging to trade unions, which can be different. The percentage
+              of employees covered by collective bargaining agreements can be
+              higher than the percentage of unionized employees when the
+              collective bargaining agreements apply to both union and non-union
+              members. Alternatively, the percentage of employees covered by
+              collective bargaining agreements can be lower than the percentage
+              of unionized employees. This may be the case when there are no
+              collective bargaining agreements available or when the collective
+              bargaining agreements do not cover all unionized employees.
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization can also provide a breakdown of the percentage of
+              employees covered by collective bargaining agreements by region,
+              or provide comparisons with industry benchmarks.
+            </p>
+
+            <p className="text-[13px] text-black mb-2">Guidance to 2-30-b</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              There may be instances where collective bargaining agreements
+              cover some or none of the organization’s employees. However, the
+              working conditions and terms of employment of these employees may
+              be influenced or determined by the organization based on other
+              collective bargaining agreements, such as agreements that cover
+              other employees or agreements from other organizations. If this is
+              the case, the organization is required to report it under 2-30-b.
+              If this is not the case, and the working conditions and terms of
+              employment of these employees are not influenced or determined
+              based on other collective bargaining agreements, a brief statement
+              of this fact is sufficient to comply with this requirement.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
               target="_blank"
             >
               Learn more <MdChevronRight className="text-lg mt-0.5" />

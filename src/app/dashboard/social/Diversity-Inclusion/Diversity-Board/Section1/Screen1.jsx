@@ -10,7 +10,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
-import axiosInstance from "@/app/utils/axiosMiddleware"
+import axiosInstance from "@/app/utils/axiosMiddleware";
 
 // Simple Custom Table Widget
 const widgets = {
@@ -22,52 +22,156 @@ const client_id = 1;
 const user_id = 1;
 
 const schema = {
-  type: 'array',
+  type: "array",
   items: {
-    type: 'object',
+    type: "object",
     properties: {
       category: { type: "string", title: "Category" },
       male: { type: "integer", title: "Male" },
       female: { type: "integer", title: "Female" },
       nonBinary: { type: "integer", title: "Non-Binary" },
-      totalGender: { type: "integer", title: "Total number of individuals within the organisation's governance bodies" },
+      totalGender: {
+        type: "integer",
+        title:
+          "Total number of individuals within the organisation's governance bodies",
+      },
       lessThan30: { type: "integer", title: "< 30 years" },
       between30and50: { type: "integer", title: "30-50 years" },
       moreThan50: { type: "integer", title: "> 50 years" },
-      totalAge: { type: "integer", title: "Total number of individuals within the organisation's governance bodies" },
+      totalAge: {
+        type: "integer",
+        title:
+          "Total number of individuals within the organisation's governance bodies",
+      },
       minorityGroup: { type: "integer", title: "Minority group" },
-      vulnerableCommunities: { type: "integer", title: "Vulnerable Communities" },
+      vulnerableCommunities: {
+        type: "integer",
+        title: "Vulnerable Communities",
+      },
     },
-    required: ["category", "male", "female", "nonBinary", "totalGender", "lessThan30", "between30and50", "moreThan50", "totalAge", "minorityGroup", "vulnerableCommunities"]
-  }
+    required: [
+      "category",
+      "male",
+      "female",
+      "nonBinary",
+      "totalGender",
+      "lessThan30",
+      "between30and50",
+      "moreThan50",
+      "totalAge",
+      "minorityGroup",
+      "vulnerableCommunities",
+    ],
+  },
 };
-
-
 
 const uiSchema = {
   "ui:widget": "TableWidget",
-  'ui:options': {
+  "ui:options": {
     titles: [
-      { title: "Number of employees per employee category", tooltip: "Please specify the category.", colSpan: 1 },
-      { title: "Gender", tooltip: "Please specify the gender of individuals.", colSpan: 4 },
-      { title: "Age Group", tooltip: "Please specify the age group of individuals.", colSpan: 4 },
-      { title: "Diversity groups", tooltip: "Please specify the diversity groups of individuals.", colSpan: 2 },
+      {
+        title: "Number of employees per employee category",
+        tooltip: "Please specify the category.",
+        colSpan: 1,
+      },
+      {
+        title: "Gender",
+        tooltip: "Please specify the gender of individuals.",
+        colSpan: 4,
+      },
+      {
+        title: "Age Group",
+        tooltip: "Please specify the age group of individuals.",
+        colSpan: 4,
+      },
+      {
+        title: "Diversity groups",
+        tooltip: "Please specify the diversity groups of individuals.",
+        colSpan: 2,
+      },
     ],
     subTitles: [
-      { title: "", title2: "category",tooltip: "Please specify the category.", colSpan: 1, type: "text" },
-      { title: "Male", title2: "Male",tooltip: "Please specify the number of male individuals.", colSpan: 1, type: "number" },
-      { title: "Female", title2: "Female",tooltip: "Please specify the number of female individuals.", colSpan: 1, type: "number" },
-      { title: "Non-Binary",title2: "NonBinary", tooltip: "Please specify the number of non-binary individuals.", colSpan: 1, type: "number" },
-      { title: "Total number of employee",title2: "totalGender", tooltip: "Please specify the total number of individuals.", colSpan: 1, type: "number" },
-      { title: "< 30 years", title2: "LessThan30", tooltip: "Please specify the number of individuals under 30 years old.", colSpan: 1, type: "number" },
-      { title: "30-50 years", title2: "Between30and50", tooltip: "Please specify the number of individuals between 30 and 50 years old.", colSpan: 1, type: "number" },
-      { title: "> 50 years", title2: "MoreThan50", tooltip: "Please specify the number of individuals over 50 years old.", colSpan: 1, type: "number" },
-      { title: "Total number of employee", title2: "totalAge", tooltip: "Please specify the total number of individuals.", colSpan: 1, type: "number" },
-      { title: "Minority group", title2: "Minoritygroup",tooltip: "Please specify the number of minority group individuals.", colSpan: 1, type: "number" },
-      { title: "Vulnerable Communities", title2: "vulnerableCommunities", tooltip: "Please specify the number of vulnerable community individuals.", colSpan: 1, type: "number" },
-
-    ]
-  }
+      {
+        title: "",
+        title2: "category",
+        tooltip: "Please specify the category.",
+        colSpan: 1,
+        type: "text",
+      },
+      {
+        title: "Male",
+        title2: "Male",
+        tooltip: "Please specify the number of male individuals.",
+        colSpan: 1,
+        type: "number",
+      },
+      {
+        title: "Female",
+        title2: "Female",
+        tooltip: "Please specify the number of female individuals.",
+        colSpan: 1,
+        type: "number",
+      },
+      {
+        title: "Non-Binary",
+        title2: "NonBinary",
+        tooltip: "Please specify the number of non-binary individuals.",
+        colSpan: 1,
+        type: "number",
+      },
+      {
+        title: "Total number of employee",
+        title2: "totalGender",
+        tooltip: "Please specify the total number of individuals.",
+        colSpan: 1,
+        type: "number",
+      },
+      {
+        title: "< 30 years",
+        title2: "LessThan30",
+        tooltip: "Please specify the number of individuals under 30 years old.",
+        colSpan: 1,
+        type: "number",
+      },
+      {
+        title: "30-50 years",
+        title2: "Between30and50",
+        tooltip:
+          "Please specify the number of individuals between 30 and 50 years old.",
+        colSpan: 1,
+        type: "number",
+      },
+      {
+        title: "> 50 years",
+        title2: "MoreThan50",
+        tooltip: "Please specify the number of individuals over 50 years old.",
+        colSpan: 1,
+        type: "number",
+      },
+      {
+        title: "Total number of employee",
+        title2: "totalAge",
+        tooltip: "Please specify the total number of individuals.",
+        colSpan: 1,
+        type: "number",
+      },
+      {
+        title: "Minority group",
+        title2: "Minoritygroup",
+        tooltip: "Please specify the number of minority group individuals.",
+        colSpan: 1,
+        type: "number",
+      },
+      {
+        title: "Vulnerable Communities",
+        title2: "vulnerableCommunities",
+        tooltip:
+          "Please specify the number of vulnerable community individuals.",
+        colSpan: 1,
+        type: "number",
+      },
+    ],
+  },
 };
 
 const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
@@ -187,7 +291,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year,selectedCorp]);
+  }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -238,10 +342,12 @@ age group and diversity group. "
           </div>
 
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 405-1a
-              </p>
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 405-1a
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -260,10 +366,13 @@ age group and diversity group. "
         </div>
 
         <div className="mb-6">
-        <button type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year  ? "cursor-not-allowed" : ""}`}
+          <button
+            type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              !selectedOrg || !year ? "cursor-not-allowed" : ""
+            }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year }
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

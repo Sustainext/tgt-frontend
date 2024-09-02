@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
@@ -46,7 +45,7 @@ const uiSchema = {
       "ui:title":
         "List the committees of the highest governance body that are responsible for decision-making on and overseeing the management of the organization's impacts on the economy, environment and people",
       "ui:tooltip":
-        " Provide a list of committees of the highest governance body, including those responsible for overseeing the management of the organization's impacts on the economy, environment, and people (e.g., Sustainability Committee, Corporate Social Responsibility Committee etc.).",
+        "Provide a list of committees of the highest governance body, including those responsible for overseeing the management of the organization's impacts on the economy, environment, and people (e.g., Sustainability Committee, Corporate Social Responsibility Committee etc.).",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -64,15 +63,16 @@ const uiSchema = {
   },
 };
 
-const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year }) => {
-  const [formData, setFormData] = useState([{
-                    "Q1": [
-                        [
-                            "",
-                            ""
-                        ],
-                    ]
-                }]);
+const CommitteeOfHighestGovernanceBody = ({
+  selectedOrg,
+  selectedCorp,
+  year,
+}) => {
+  const [formData, setFormData] = useState([
+    {
+      Q1: [["", ""]],
+    },
+  ]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
@@ -87,8 +87,6 @@ const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year }) =
   const handleChange = (e) => {
     setFormData(e.formData);
   };
-
-
 
   const updateFormData = async () => {
     LoaderOpen();
@@ -105,7 +103,7 @@ const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year }) =
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
       const response = await axiosInstance.post(url, data);
-      console.log('structure formdata', formData);
+      console.log("structure formdata", formData);
 
       if (response.status === 200) {
         toast.success("Data added successfully", {
@@ -150,14 +148,11 @@ const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year }) =
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([{
-                    "Q1": [
-                        [
-                            "",
-                            ""
-                        ],
-                    ]
-                }]);
+    setFormData([
+      {
+        Q1: [["", ""]],
+      },
+    ]);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&corporate=${selectedCorp}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
@@ -165,25 +160,18 @@ const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year }) =
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
       if (response.data.form_data[0].data.length === 0) {
-        setFormData([{
-                    "Q1": [
-                        [
-                            "",
-                            ""
-                        ],
-                    ]
-                }]);
-    }    
-      else setFormData(response.data.form_data[0].data);
+        setFormData([
+          {
+            Q1: [["", ""]],
+          },
+        ]);
+      } else setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData([{
-                    "Q1": [
-                        [
-                            "",
-                            ""
-                        ],
-                    ]
-                }]);
+      setFormData([
+        {
+          Q1: [["", ""]],
+        },
+      ]);
     } finally {
       LoaderClose();
     }
@@ -192,13 +180,13 @@ const CommitteeOfHighestGovernanceBody = ({ selectedOrg, selectedCorp, year }) =
   useEffect(() => {
     if (selectedOrg && year) {
       loadFormData();
-      toastShown.current = false; 
+      toastShown.current = false;
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year,selectedCorp]);
+  }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

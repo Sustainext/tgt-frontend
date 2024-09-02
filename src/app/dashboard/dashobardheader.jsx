@@ -90,8 +90,8 @@ const DashboardHeader = () => {
           </a>
         </div>
         <div className="flex justify-center items-center">
-          <div className="me-8 flex items-center">
-            <div className="text-[#007EEF]">
+          <div className="flex mr-3">
+            <div className="text-[#007EEF] items-center">
               <span className="text-[#007EEF]"> Hi,</span>
               <span className="me-4 text-[#007EEF]">{username}</span>
             </div>
@@ -101,14 +101,14 @@ const DashboardHeader = () => {
                   style={{
                     background:
                       "linear-gradient(rgb(0, 126, 239), rgb(42, 228, 255))",
-                    width: "25px",
-                    height: "25px",
+                    width: "30px",
+                    height: "30px",
                     borderRadius: "50%",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
                     color: "white",
-                    fontSize: "12px",
+                    fontSize: "14px",
                     fontWeight: "bold",
                   }}
                 >

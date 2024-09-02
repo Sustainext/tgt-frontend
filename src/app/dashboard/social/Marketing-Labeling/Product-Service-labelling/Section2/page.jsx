@@ -64,7 +64,7 @@ const Section2 = () => {
           </div>
         </div>
 
-        <div className="ml-3 flex">
+      <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
           Requirements for product and service information and labeling (2/2)
           </h6>

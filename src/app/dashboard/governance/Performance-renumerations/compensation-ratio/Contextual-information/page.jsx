@@ -27,7 +27,8 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Report contextual information necessary to understand the data and how the data has been compiled.",
+        title:
+          "Report contextual information necessary to understand the data and how the data has been compiled.",
       },
     },
   },
@@ -37,7 +38,8 @@ const uiSchema = {
   items: {
     "ui:order": ["Q1"],
     Q1: {
-      "ui:title": "Report contextual information necessary to understand the data and how the data has been compiled.",
+      "ui:title":
+        "Report contextual information necessary to understand the data and how the data has been compiled.",
       "ui:tooltip":
         "Provide contextual information necessary to understand the data and how the data has been compiled. Include: Any standard, methodology and assumption used to compile data.",
       "ui:tooltipdisplay": "block",
@@ -175,7 +177,7 @@ const ContextualInformation = ({ selectedLocation, year }) => {
         <div className="mb-4 flex">
           <div className="w-[80%]">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
-            Contextual information to understand data compilation
+              Contextual information to understand data compilation
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
                 data-tooltip-content="This section documents the data corresponding to the contextual information necessary to understand the data and how the data has been compiled.."
@@ -199,10 +201,12 @@ const ContextualInformation = ({ selectedLocation, year }) => {
           </div>
 
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-21-c
-              </p>
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 2-21-c
+                </div>
+              </div>
             </div>
           </div>
         </div>

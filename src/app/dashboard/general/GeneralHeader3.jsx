@@ -1,39 +1,18 @@
-// location year and month//
 'use client';
 import { useEffect, useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
-import { yearInfo, months } from "@/app/shared/data/yearInfo";
+import { yearInfo } from "@/app/shared/data/yearInfo";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 
-const monthMapping = {
-  "Jan": 1,
-  "Feb": 2,
-  "Mar": 3,
-  "Apr": 4,
-  "May": 5,
-  "Jun": 6,
-  "Jul": 7,
-  "Aug": 8,
-  "Sep": 9,
-  "Oct": 10,
-  "Nov": 11,
-  "Dec": 12
-};
-
-const getMonthString = (monthNumber) => {
-  return Object.keys(monthMapping).find(key => monthMapping[key] === monthNumber);
-};
-
-const Socialheader = ({ activeMonth, setActiveMonth, location, setLocation, year, setYear }) => {
+const GeneralHeader3 = ({ selectedLocation, setSelectedLocation, year, setYear }) => {
   const [formState, setFormState] = useState({
-    location: location,
+    location: selectedLocation,
     year: year,
-    month: activeMonth,
   });
 
   const [locations, setLocations] = useState([]);
   const [errors, setErrors] = useState({
-    location: location ? "" : "Please select a location",
+    location: selectedLocation ? "" : "Please select a location",
     year: year ? "" : "Please select a year"
   });
 
@@ -58,10 +37,8 @@ const Socialheader = ({ activeMonth, setActiveMonth, location, setLocation, year
       [name]: value,
     }));
 
-    if (name === "month") {
-      setActiveMonth(monthMapping[value]);
-    } else if (name === "location") {
-      setLocation(Number(value));
+    if (name === "location") {
+      setSelectedLocation(Number(value));
       setErrors((prevErrors) => ({
         ...prevErrors,
         location: value ? "" : "Please select a location",
@@ -77,11 +54,10 @@ const Socialheader = ({ activeMonth, setActiveMonth, location, setLocation, year
 
   useEffect(() => {
     setFormState({
-      location: location,
+      location: selectedLocation,
       year: year,
-      month: activeMonth,
     });
-  }, [location, year, activeMonth]);
+  }, [selectedLocation, year]);
 
   return (
     <>
@@ -138,34 +114,9 @@ const Socialheader = ({ activeMonth, setActiveMonth, location, setLocation, year
             {errors.year && <p className="text-red-500 text-sm absolute top-10 left-0 pl-2">{errors.year}</p>}
           </div>
         </div>
-        <div className="flex justify-between mb-4">
-          <div className="flex bg-[#f7f7f7] py-1 rounded-lg">
-            {months.map((month, index) => (
-              <button
-                key={index}
-                className={`text-[12px] border-r mx-1 ${
-                  formState.month === monthMapping[month] ? "bg-white shadow-md rounded-lg" : ""
-                }`}
-                onClick={() => handleChange({ target: { name: "month", value: month } })}
-              >
-                <p
-                  className={`text-center ${
-                    formState.month === monthMapping[month]
-                      ? "custom-gradient-text"
-                      : "text-[#A1A1A1]"
-                  } hover:bg-[#f7f7f7] py-1 w-[55px] ${
-                    index === 0 ? "rounded-l" : ""
-                  } ${index === months.length - 1 ? "rounded-r" : ""}`}
-                >
-                  {month}
-                </p>
-              </button>
-            ))}
-          </div>
-        </div>
       </div>
     </>
   );
 };
 
-export default Socialheader;
+export default GeneralHeader3;

@@ -27,7 +27,8 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Seek advice on implementing the organization's policies and practices for responsible business conduct.",
+        title:
+          "Seek advice on implementing the organization's policies and practices for responsible business conduct.",
       },
       Q2: {
         type: "string",
@@ -41,8 +42,10 @@ const uiSchema = {
   items: {
     "ui:order": ["Q1", "Q2"],
     Q1: {
-      "ui:title": "Seek advice on implementing the organization’s policies and practices for responsible business conduct.",
-      "ui:tooltip": "What is the mechanism for individuals to seek advice on implementing the organization’s policies and practices responsible business conduct?",
+      "ui:title":
+        "Seek advice on implementing the organization’s policies and practices for responsible business conduct.",
+      "ui:tooltip":
+        "What is the mechanism for individuals to seek advice on implementing the organization’s policies and practices responsible business conduct?",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:options": {
@@ -51,7 +54,8 @@ const uiSchema = {
     },
     Q2: {
       "ui:title": "Raise concerns about the organization's business conduct",
-      "ui:tooltip": "What is the mechanism for individuals to raise concerns about the organization’s business conduct?",
+      "ui:tooltip":
+        "What is the mechanism for individuals to raise concerns about the organization’s business conduct?",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:options": {
@@ -67,7 +71,7 @@ const uiSchema = {
 };
 
 const AdviceAndConcerns = ({ selectedOrg, year, selectedCorp }) => {
-  const [formData, setFormData] = useState([{ Q1: '', Q2: '' }]);
+  const [formData, setFormData] = useState([{ Q1: "", Q2: "" }]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
@@ -84,8 +88,7 @@ const AdviceAndConcerns = ({ selectedOrg, year, selectedCorp }) => {
 
   const handleChange = (e) => {
     setFormData([e.formData]);
-};
-
+  };
 
   const updateFormData = async () => {
     const data = {
@@ -143,7 +146,7 @@ const AdviceAndConcerns = ({ selectedOrg, year, selectedCorp }) => {
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([{ Q1: '', Q2: '' }]);
+    setFormData([{ Q1: "", Q2: "" }]);
     const url = `/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
@@ -152,7 +155,7 @@ const AdviceAndConcerns = ({ selectedOrg, year, selectedCorp }) => {
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData([{ Q1: '', Q2: '' }]);
+      setFormData([{ Q1: "", Q2: "" }]);
     } finally {
       LoaderClose();
     }
@@ -187,7 +190,7 @@ const AdviceAndConcerns = ({ selectedOrg, year, selectedCorp }) => {
         <div className="mb-4 flex">
           <div className="w-[80%]">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
-            Describe the mechanisms for individuals to:
+              Describe the mechanisms for individuals to:
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
                 data-tooltip-content="Example: Examples of these mechanisms include confidential interviews during site visits, escalation processes (to raise issues through management levels), hotlines, mechanisms to report non-compliance with laws and regulations, and whistleblowing mechanisms."
@@ -211,24 +214,28 @@ const AdviceAndConcerns = ({ selectedOrg, year, selectedCorp }) => {
           </div>
 
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-26-a
-              </p>
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 2-26-a
+                </div>
+              </div>
             </div>
           </div>
-        </div>.
-        <div className="mx-2 mb-3">
-            <Form
-              schema={Object.keys(r_schema).length === 0 ? {} : r_schema.items}
-              uiSchema={Object.keys(r_ui_schema).length === 0 ? {} : r_ui_schema.items}
-              formData={formData[0]}
-              onChange={handleChange}
-              validator={validator}
-              widgets={widgets}
-            />
         </div>
-
+        .
+        <div className="mx-2 mb-3">
+          <Form
+            schema={Object.keys(r_schema).length === 0 ? {} : r_schema.items}
+            uiSchema={
+              Object.keys(r_ui_schema).length === 0 ? {} : r_ui_schema.items
+            }
+            formData={formData[0]}
+            onChange={handleChange}
+            validator={validator}
+            widgets={widgets}
+          />
+        </div>
         <div className="mb-6">
           <button
             type="button"

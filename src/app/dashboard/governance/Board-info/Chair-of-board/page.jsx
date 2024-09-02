@@ -49,7 +49,7 @@ const ChairOfBoard = () => {
               <p className="text-sm">Governance</p>
               <div className="flex">
                 <div>
-                  <p className="gradient-text text-[22px] font-bold pt-1">
+                  <p className="gradient-text text-[22px]  font-bold pt-1">
                     Chair of Boards
                   </p>
                 </div>
@@ -68,7 +68,7 @@ const ChairOfBoard = () => {
           </div>
         </div>
 
-        <div className="ml-3 flex">
+      <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
           Chair of the highest governance body
           </h6>

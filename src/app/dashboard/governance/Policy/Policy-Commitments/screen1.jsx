@@ -81,7 +81,7 @@ const uiSchema = {
         display: "block",
         type: "select",
         file: "yes",
-        selectoption: ["Yes", "No"],
+        selectoption: ["Yes", "No", "NA"],
       },
       {
         key: "text4",
@@ -92,7 +92,7 @@ const uiSchema = {
         display: "block",
         type: "select",
         file: "yes",
-        selectoption: ["Yes", "No"],
+        selectoption: ["Yes", "No", "NA"],
       },
       {
         key: "text5",
@@ -102,7 +102,7 @@ const uiSchema = {
         display: "none",
         type: "select",
         file: "yes",
-        selectoption: ["Yes", "No"],
+        selectoption: ["Yes", "No", "NA"],
       },
     ],
   },
@@ -271,7 +271,8 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
         <div className="mb-4 flex">
           <div className="w-[80%]">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
-            Describe the organization's policy commitments for "responsible business conduct", including:
+              Describe the organization's policy commitments for "responsible
+              business conduct", including:
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e80`}
                 data-tooltip-content="Provide a description of organisation's policy commitments for responsible business conduct."
@@ -295,10 +296,12 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
           </div>
 
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-23-a
-              </p>
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 2-23-a
+                </div>
+              </div>
             </div>
           </div>
         </div>

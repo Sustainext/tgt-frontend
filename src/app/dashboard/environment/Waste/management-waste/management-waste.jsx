@@ -100,7 +100,7 @@ const Managementwaste = () => {
           </div>
         </div>
 
-        <div className="ml-3 flex">
+      <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
             Topic management disclosure
             {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}

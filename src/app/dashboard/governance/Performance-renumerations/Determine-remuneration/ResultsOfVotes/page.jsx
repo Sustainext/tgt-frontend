@@ -27,7 +27,8 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Report the results of votes of stakeholders (including shareholders) on remuneration policies and proposals. (if applicable)",
+        title:
+          "Report the results of votes of stakeholders (including shareholders) on remuneration policies and proposals. (if applicable)",
       },
     },
   },
@@ -37,7 +38,8 @@ const uiSchema = {
   items: {
     "ui:order": ["Q1"],
     Q1: {
-      "ui:title": "Report the results of votes of stakeholders (including shareholders) on remuneration policies and proposals. (if applicable)",
+      "ui:title":
+        "Report the results of votes of stakeholders (including shareholders) on remuneration policies and proposals. (if applicable)",
       "ui:tooltip":
         "What are the results of votes of stakeholders (including shareholders) on remuneration policies and proposals?",
       "ui:tooltipdisplay": "block",
@@ -173,16 +175,16 @@ const ResultsOfVotes = ({ selectedLocation, year }) => {
         }}
       >
         <div className="mb-4 flex">
-          <div className="w-[80%]">
+          <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
-            Results of votes of stakeholders
+              Results of votes of stakeholders
               <MdInfoOutline
-                data-tooltip-id={`tooltip-$e1`}
+                data-tooltip-id={`tooltip-$e25`}
                 data-tooltip-content="This section documents the data corresponding to the results of votes of stakeholders."
                 className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip
-                id={`tooltip-$e1`}
+                id={`tooltip-$e25`}
                 place="top"
                 effect="solid"
                 style={{
@@ -199,10 +201,12 @@ const ResultsOfVotes = ({ selectedLocation, year }) => {
           </div>
 
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-22-b
-              </p>
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 2-20-b
+                </div>
+              </div>
             </div>
           </div>
         </div>

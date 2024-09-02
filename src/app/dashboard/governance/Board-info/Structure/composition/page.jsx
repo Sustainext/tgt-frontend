@@ -237,7 +237,7 @@ const CompositionOfHighestGovernanceBody = ({
   return (
     <>
       <div
-        className="mx-2 p-3 mb-6 pb-6 rounded-md"
+        className="mx-2 p-3 mb-6 pb-8 rounded-md"
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
@@ -246,7 +246,8 @@ const CompositionOfHighestGovernanceBody = ({
         <div className="mb-4 flex">
           <div className="w-[80%]">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
-            Describe the composition of the highest governance body and its committees by the following:
+              Describe the composition of the highest governance body and its
+              committees by the following:
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
                 data-tooltip-content="This section documents data corresponding to the organisation's governance structure, including the committees of the highest governance body."
@@ -269,10 +270,12 @@ const CompositionOfHighestGovernanceBody = ({
             </h2>
           </div>
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-9-c
-              </p>
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 2-9-c
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -285,20 +288,23 @@ const CompositionOfHighestGovernanceBody = ({
             onSubmit={handleSubmit}
             validator={validator}
             widgets={widgets}
-          >
-            <div className="mb-6">
+          />
+
+
+          </div>
+          <div className="mb-6">
               <button
-                type="submit"
+                type="button"
                 className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
                   !selectedOrg || !year ? "cursor-not-allowed" : ""
                 }`}
                 disabled={!selectedOrg || !year}
+                onClick={handleSubmit}
               >
                 Submit
               </button>
             </div>
-          </Form>
-        </div>
+
       </div>
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

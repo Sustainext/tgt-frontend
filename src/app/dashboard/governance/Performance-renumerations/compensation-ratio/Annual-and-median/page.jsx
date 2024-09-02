@@ -180,7 +180,7 @@ const AnnualAndMedian = ({ selectedLocation, year }) => {
   return (
     <>
       <div
-        className="mx-2 p-3 mb-6 pb-6 rounded-md"
+        className="mx-2 p-3 mb-6 pb-10 rounded-md"
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
@@ -213,10 +213,12 @@ const AnnualAndMedian = ({ selectedLocation, year }) => {
           </div>
 
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
+          <div className="float-end">
+            <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                 GRI 2-21-a
-              </p>
+              </div>
+            </div>
             </div>
           </div>
         </div>

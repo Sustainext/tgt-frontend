@@ -66,7 +66,7 @@ const Section2 = () => {
           </div>
         </div>
 
-        <div className="ml-3 flex">
+      <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
           Incidents of non-compliance concerning the health and safety impacts of products and services  (2/2)
           </h6>

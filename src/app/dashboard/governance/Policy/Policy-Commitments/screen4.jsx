@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import GovernancetableWidget3 from "../../../../shared/widgets/Governance/governancetableWidget3.js";
+import GovernancetableWidget5 from "../../../../shared/widgets/Governance/governancetableWidget5.js";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -14,7 +14,7 @@ import axiosInstance from "@/app/utils/axiosMiddleware";
 
 // Simple Custom Table Widget
 const widgets = {
-  TableWidget: GovernancetableWidget3,
+  TableWidget: GovernancetableWidget5,
 };
 
 const view_path = "gri-governance-policy_commitments-2-23-c-leave";
@@ -219,17 +219,14 @@ const Screen4 = ({ selectedOrg, selectedCorp, location, year, month }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
-              Number of suppliers identified having significant actual and
-              potential negative social impacts.
+              Level of approval: Policy commitments
               <MdInfoOutline
-                data-tooltip-id={`tooltip-$e86`}
-                data-tooltip-content="This section documents the data corresponding to the number of
-suppliers identified as having significant actual and potential
-negative social impacts."
+                data-tooltip-id={`tooltip-$e868`}
+                data-tooltip-content="This section documents data corresponding to the level at which each of the policy commitments was approved within the organization."
                 className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip
-                id={`tooltip-$e86`}
+                id={`tooltip-$e868`}
                 place="top"
                 effect="solid"
                 style={{
@@ -246,10 +243,12 @@ negative social impacts."
           </div>
 
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-23-c
-              </p>
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 2-23-d
+                </div>
+              </div>
             </div>
           </div>
         </div>

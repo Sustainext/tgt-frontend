@@ -27,41 +27,43 @@ const schema = {
     properties: {
       Q1: {
         type: "number",
-        title: "What is the percentage increase in annual total compensation for the organization's highest-paid",
+        title:
+          "What is the percentage increase in annual total compensation for the organization's highest-paid individual?",
       },
       Q2: {
         type: "number",
-        title: "What is the median percentage increase in annual total compensation for all of the organization's employees excluding the highest-paid individual?",
+        title:
+          "What is the median percentage increase in annual total compensation for all of the organization's employees excluding the highest-paid individual?",
       },
     },
   },
 };
-
 
 const uiSchema = {
   items: {
     "ui:order": ["Q1", "Q2"],
     Q1: {
       "ui:title":
-        "What is the percentage increase in annual total compensation for the organization's highest-paid",
+        "What is the percentage increase in annual total compensation for the organization's highest-paid individual?",
       "ui:tooltip":
-        "Specify the percentage increase in annual total compensation for the organization's highest-paid individual.",
+        "Specify the percentage increase in annual total compensation for the organization's highest-paid individual?",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:options": {
         label: false,
-        inputType: 'number'
+        inputType: "number",
       },
     },
     Q2: {
-      "ui:title": "What is the median percentage increase in annual total compensation for all of the organization's employees excluding the highest-paid individual?",
+      "ui:title":
+        "What is the median percentage increase in annual total compensation for all of the organization's employees excluding the highest-paid individual?",
       "ui:tooltip":
         "Specify the median percentage increase in annual total compensation for all of the organization's employees excluding the highest-paid individua individual.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:options": {
         label: false,
-        inputType: 'number' 
+        inputType: "number",
       },
     },
   },
@@ -182,7 +184,7 @@ const PercentageIncrease = ({ selectedLocation, year }) => {
   return (
     <>
       <div
-        className="mx-2 p-3 mb-6 pb-6 rounded-md"
+        className="mx-2 p-3 mb-6 pb-10 rounded-md"
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
@@ -191,7 +193,7 @@ const PercentageIncrease = ({ selectedLocation, year }) => {
         <div className="mb-4 flex">
           <div className="w-[80%]">
             <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
-            Percentage increase in annual total compensation
+              Percentage increase in annual total compensation
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
                 data-tooltip-content="This section documents the data corresponding to the percentage increase in annual total compensation for the organization’s highest-paid individual to the median percentage increase in annual total compensation for all employees (excluding the highest-paid individual)."
@@ -215,19 +217,23 @@ const PercentageIncrease = ({ selectedLocation, year }) => {
           </div>
 
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                GRI 2-21-b
-              </p>
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 2-21-b
+                </div>
+              </div>
             </div>
           </div>
         </div>
         <div className="mx-2 mb-3">
           <Form
-              // schema={Object.keys(r_schema).length === 0 ? {} : r_schema.items}
-              // uiSchema={Object.keys(r_ui_schema).length === 0 ? {} : r_ui_schema.items}
-            schema={schema.items}
-            uiSchema={uiSchema.items}
+            schema={Object.keys(r_schema).length === 0 ? {} : r_schema.items}
+            uiSchema={
+              Object.keys(r_ui_schema).length === 0 ? {} : r_ui_schema.items
+            }
+            // schema={schema.items}
+            // uiSchema={uiSchema.items}
             formData={formData[0]}
             onChange={handleChange}
             validator={validator}

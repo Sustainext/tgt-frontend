@@ -48,8 +48,8 @@ const Remuneration = () => {
             <div className="text-left mb-4 ml-3 pt-5">
               <p className="text-sm">Governance</p>
               <div className="flex">
-                <div>
-                  <p className="gradient-text text-[22px] font-bold pt-1">
+                         <div className="h-[29px]">
+                  <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
                   Remuneration
                   </p>
                 </div>
@@ -69,11 +69,11 @@ const Remuneration = () => {
           </div>
         </div>
 
-        <div className="ml-3 flex">
+      <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
           Remuneration policies highest governance body
             <MdInfoOutline data-tooltip-id={`tooltip-$e10`}
-              data-tooltip-content="This section documents the data corresponding to the conflicts of interest." className="mt-1.5 ml-2 text-[14px]" />
+              data-tooltip-content="This section documents the data corresponding to the remuneration policies." className="mt-1.5 ml-2 text-[14px]" />
             <ReactTooltip id={`tooltip-$e10`} place="top" effect="solid" style={{
               width: "290px", backgroundColor: "#000",
               color: "white",

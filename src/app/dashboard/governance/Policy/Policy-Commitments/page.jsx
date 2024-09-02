@@ -52,8 +52,8 @@ const PolicyCommitments = () => {
             <div className="text-left mb-4 ml-3 pt-5">
               <p className="text-sm">Governance</p>
               <div className="flex">
-                <div>
-                  <p className="gradient-text text-[22px] font-bold pt-1">
+                         <div className="h-[29px]">
+                  <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
                     Policy Commitments
                   </p>
                 </div>
@@ -78,12 +78,12 @@ const PolicyCommitments = () => {
           </div>
         </div>
 
-        <div className="ml-3 flex">
+      <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-            Communication of critical concerns
+          Policy Commitments
             <MdInfoOutline
               data-tooltip-id={`tooltip-$e10`}
-              data-tooltip-content="This section documents the data corresponding to the Communication of critical concerns."
+              data-tooltip-content="This section documents the data corresponding to the policy commitments."
               className="mt-1.5 ml-2 text-[14px]"
             />
             <ReactTooltip

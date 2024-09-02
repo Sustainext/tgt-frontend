@@ -64,7 +64,7 @@ const StatementnoncomplianceMarketing = () => {
           </div>
         </div>
 
-        <div className="ml-3 flex">
+      <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
           Incidents of non-compliance concerning marketing communications (2/2)
           </h6>
