@@ -185,7 +185,7 @@ const Screen2 = ({ location, year}) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-          <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
+          <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
           The definition used for 'senior management'
               <MdInfoOutline data-tooltip-id={`es25`}
                 data-tooltip-html="<p>Mention the definition used for 'senior management'.</p>" className="mt-1.5 ml-2 text-[14px]" />

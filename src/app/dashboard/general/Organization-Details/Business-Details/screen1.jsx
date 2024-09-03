@@ -40,7 +40,7 @@ const uiSchema = {
       "ui:title":
         "Report the sector/sectors in which the organization is active",
       "ui:tooltip":
-        "Please specify the sector/sectors in which the organization is active.e.g. Sectors can be identified according to categories, such as the public or private sector; orindustry-specific categories, such as the education sector or the financial sector.",
+        "Please specify the sector/sectors in which the organization is active. e.g. Depending on the organization’s activities, sectors can be identified using the GRI Sector Standards or classification systems such as the Global Industry Classification Standard (GICS®), the Industry Classification Benchmark (ICB), the International Standard Industrial Classification of All Economic Activities (ISIC), and the Sustainable Industry Classification System (SICS®). ",
       "ui:tooltipdisplay": "block",
       "ui:widget": "SectorstableWidget",
       "ui:horizontal": true,
@@ -50,10 +50,10 @@ const uiSchema = {
     },
 
     "ui:options": {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: "horizontal", // Set layout to horizontal
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: "horizontal",
     },
   },
 };
@@ -193,7 +193,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
+            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold mb-2">
               Organisation's sector/sectors
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e25`}

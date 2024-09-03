@@ -36,7 +36,7 @@ const AddmultiInput = (props) => {
 
   return (
     <div className="mb-3 relative">
-      <p className="text-sm text-gray-700 flex mb-2" style={{ display: uiSchema["ui:titledisplay"] }}>
+      <p className="text-[15px] text-gray-500 font-semibold flex mb-2" style={{ display: uiSchema["ui:titledisplay"] }}>
         {label}
         <MdInfoOutline
           data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(/\s+/g, "-")}`}

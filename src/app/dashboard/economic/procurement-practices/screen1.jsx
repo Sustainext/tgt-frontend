@@ -185,7 +185,7 @@ const Screen1 = ({ location, year}) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-          <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
+          <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
           Percentage of the procurement budget used for significant locations of operation that is spent on suppliers local to that operation (such as percentage of products and services purchased locally).
           <MdInfoOutline data-tooltip-id={`es28`}
                 data-tooltip-html="<p>The organization should calculate the percentages based on invoices or commitments made during the reporting period, e.g, using accruals accounting.</p>"

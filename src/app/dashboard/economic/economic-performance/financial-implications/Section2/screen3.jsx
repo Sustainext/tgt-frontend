@@ -10,10 +10,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import Economictable from "../../../../../shared/widgets/Economic/economictable";
+import Economictablemultipal from "../../../../../shared/widgets/Economic/economictablemultipal";
 // Simple Custom Table Widget
 const widgets = {
-  TableWidget: Economictable,
+  TableWidget: Economictablemultipal,
 };
 
 const view_path = "gri-general-workforce_other_workers-workers-2-8-a";
@@ -25,196 +25,18 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      TypeofRisk: {
+      expenditure : {
         type: "string",
-        title: "Type of Risk",
-        enum: [
-          "Regulatory changes",
-          "Market shifts",
-          "Technology changes",
-          "Reputational risks",
-          "Legal risks",
-          "Energy transition",
-          "Investor Pressure",
-          "Consumer Preference Changes",
-          "Supply chain disruptions",
-          "Corporate governance changes",
-        ],
+        title: "expenditure",
+
       },
-      PotentialImpact: {
-        type: "string",
-        title: "Potential Impact",
-        enum: [
-          "Increased or decreased capital costs",
-          "Increased or decreased operational costs",
-          "Increased or decreased demand for products and services",
-          "Increased or decreased capital availability and investment opportunities",
-          "Increased or decreased investment opportunities",
-          "Others (please specify)",
-        ],
-      },
-      Likelihoodofimpact: {
-        type: "string",
-        title: "Likelihood of impact",
-        enum: ["Low", "Moderate", "High", "Not Sure"],
-      },
-      MagnitudeofImpact: {
-        type: "string",
-        title: "Magnitude of Impact",
-        enum: ["Low", "Moderate", "High", "Not Sure"],
-      },
-      FinancialEffect: {
-        type: "string",
-        title: "Financial Effect",
-        enum: ["Very High", "High", "Moderate", "Low", "Very Low"],
-      },
-      FinancialImplications: {
-        type: "string",
-        title: "Financial Implications",
-        enum: [
-          "Increased maintenance costs",
-          "Potential fines and revenue loss",
-          "Higher premiums",
-          "Reduced energy costs",
-          "Decreased sales revenue",
-          "Others (please specify)",
-        ],
-      },
-      ManagementMethods: {
-        type: "string",
-        title: "Management Methods",
-        enum: [
-          "Business continuity planning",
-          "Diversification of supply chain",
-          "Infrastructure improvements",
-          "Insurance coverage",
-          "Emergency response planning",
-          "Others (please specify)",
-        ],
-      },
-      TimeFrame: {
-        type: "string",
-        title: "Time Frame",
-        enum: [
-          "Immediate-term (0-1 year)",
-          "Short-term (1-3 years)",
-          "Medium-term (3-5 years)",
-          "Long-term (5+ years)",
-        ],
-      },
-      DirectImpacts: {
-        type: "string",
-        title: "Direct or Indirect Impacts",
-        enum: ["Indirect", "Direct", "Not Sure"],
-      },
-      ImplementedMitigationStrategies: {
-        type: "string",
-        title: "Implemented Mitigation Strategies",
-        enum: ["Yes", "No"],
-      },
-      MitigationStrategies: {
-        type: "string",
-        title: "Mitigation Strategies",
-        enum: [
-          "Installation of early warning systems",
-          "Community engagement and education",
-          "Investment in resilient infrastructure",
-          "Enhanced weather monitoring",
-          "Improved drainage systems",
-          "Structural reinforcements",
-          "Emergency preparedness programs",
-          "Backup power systems",
-          "Others (please specify)",
-        ],
-      },
+
     },
   },
 };
 
 const uiSchema = {
     "ui:widget": "TableWidget",
-    "ui:options": {
-      titles: [
-        {
-          key: "TypeofRisk",
-          title: "Type of Risk",
-          tooltip:
-            "Please choose the specific type of risk within the selected category",
-          tooltipdisplay: "block",
-        },
-        {
-          key: "PotentialImpact",
-          title: "Potential Impact",
-          tooltip:
-            "Please identify all potential impacts associated with the selected risk.",
-          tooltipdisplay: "block",
-        },
-        {
-          key: "Likelihoodofimpact",
-          title: "Likelihood of impact",
-          tooltip:
-            "Please specify the probability of the impact of the risk on the organization.",
-          tooltipdisplay: "block",
-        },
-        {
-          key: "MagnitudeofImpact",
-          title: "Magnitude of Impact",
-          tooltip:
-            "Indicate the estimated magnitude of the impact of the chosen risk.",
-          tooltipdisplay: "block",
-        },
-        {
-          key: "FinancialEffect",
-          title: "Financial Effect",
-          tooltip:
-            "Indicate the estimated magnitude of the financial impact of the chosen risk",
-          tooltipdisplay: "block",
-        },
-        {
-          key: "FinancialImplications ",
-          title: "Financial Implications",
-          tooltip:
-            "Please describe the specific financial consequences that may result from the chosen risk.",
-          tooltipdisplay: "block",
-        },
-        {
-          key: "ManagementMethods ",
-          title: "Management Methods",
-          tooltip:
-            "Select the strategies and actions the organization will implement to manage and mitigate the chosen risk.",
-          tooltipdisplay: "block",
-        },
-        {
-          key: "TimeFrame",
-          title: "Time Frame",
-          tooltip:
-            "Please indicate the expected period for the selected risk to materialize.",
-          tooltipdisplay: "block",
-        },
-        {
-          key: "DirectImpacts",
-          title: "Direct or Indirect Impacts",
-          tooltip:
-            "Please specify whether the impacts of the selected risk on the organization are direct,indirect, or uncertain.",
-          tooltipdisplay: "block",
-        },
-        {
-          key: "ImplementedMitigationStrategies",
-          title: "Implemented Mitigation Strategies",
-          textdriction: "start",
-          tooltip:
-            "Indicate whether any mitigation strategies have already been implemented for the chosen risk (Yes/No).",
-          tooltipdisplay: "block",
-        },
-        {
-          key: "MitigationStrategies",
-          title: "Mitigation Strategies",
-          tooltip:
-            "If yes, Please select the actions taken by the organization to mitigate or reduce the selected risk.",
-          tooltipdisplay: "block",
-        },
-      ],
-    },
   };
 const Screen3 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const [formData, setFormData] = useState([{}]);
@@ -338,7 +160,7 @@ const Screen3 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
+            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold mb-2">
             Report the opportunitites posed by climate change that have the potential to generate substantive changes in operations, revenue, or expenditure of the organisation including:
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e88`}

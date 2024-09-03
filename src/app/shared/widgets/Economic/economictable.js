@@ -75,7 +75,7 @@ const Economictable = ({ id, options, value, required, onChange, schema, formCon
     return (
         <>
         <div style={{
-            maxHeight: "400px",
+
             display: "block",
             overflowX: "auto",
             maxWidth: "100%",

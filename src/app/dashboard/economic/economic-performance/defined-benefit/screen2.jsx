@@ -204,7 +204,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
+            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold mb-2">
             If a separate fund exists to pay the plan’s pension liabilities,
               <MdInfoOutline
                 data-tooltip-id={`tooltip-125`}

@@ -311,7 +311,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
             Provide details of the total monetary value of financial assistance received by the organization from any government during the reporting period, including
               <MdInfoOutline
                 data-tooltip-id={`es25`}

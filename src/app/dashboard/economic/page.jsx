@@ -2,14 +2,20 @@
 import React, { useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
-import Infrastructureinvestmentsservices from "./indirect-economic-impacts/infrastructure-investments-services/page"
-import ProcurementPractices from "./procurement-practices/page"
-import Significantindirecteconomic from "./indirect-economic-impacts/significant-indirect-economic/page"
-import PortionOfSeniorManagement from "./market-presence/Proportion-of-senior-management-hired-from-the-local-community/page"
-import Directeconomic from "./economic-performance/direct-economic/page"
-import Financialimplications from "./economic-performance/financial-implications/page"
-import Definedbenefit from "./economic-performance/defined-benefit/page"
-import Financialassistance from "./economic-performance/financial-assistance/page"
+import Infrastructureinvestmentsservices from "./indirect-economic-impacts/infrastructure-investments-services/page";
+import ProcurementPractices from "./procurement-practices/page";
+import Significantindirecteconomic from "./indirect-economic-impacts/significant-indirect-economic/page";
+import PortionOfSeniorManagement from "./market-presence/Proportion-of-senior-management-hired-from-the-local-community/page";
+import Directeconomic from "./economic-performance/direct-economic/page";
+import Financialimplications from "./economic-performance/financial-implications/page";
+import Definedbenefit from "./economic-performance/defined-benefit/page";
+import Financialassistance from "./economic-performance/financial-assistance/page";
+import Publiclegal from "./legal-actions/public-legal/page";
+import Anticompetitivebehavior from "./legal-actions/Anti-competitive-behavior/page";
+import Approachtotax from "./tax/approach-to-tax/page";
+import Taxgovernance from "./tax/tax-governance/page";
+import Stakeholderengagement from "./tax/stakeholder-engagement/page";
+import Countrybycountryreporting from "./tax/country-by-country-reporting/page";
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -1197,7 +1203,7 @@ const Economic = () => {
               </div>
             </section>
           </div>
-        <div className="w-full ms-3">
+          <div className="w-full ms-3">
             <div>
               {activeStep === 1 && (
                 <>
@@ -1227,35 +1233,35 @@ const Economic = () => {
                   </div>
                 </>
               )}
-               {/* {activeStep === 5 && (
+              {/* {activeStep === 5 && (
                 <>
                   <div>
                     <Assurance />
                   </div>
                 </>
               )} */}
-                {activeStep === 6 && (
+              {activeStep === 6 && (
                 <>
                   <div>
                     <PortionOfSeniorManagement />
                   </div>
                 </>
               )}
-                 {activeStep === 7 && (
+              {activeStep === 7 && (
                 <>
                   <div>
                     <Infrastructureinvestmentsservices />
                   </div>
                 </>
               )}
-                  {activeStep === 8 && (
+              {activeStep === 8 && (
                 <>
                   <div>
                     <Significantindirecteconomic />
                   </div>
                 </>
               )}
-               {activeStep === 9 && (
+              {activeStep === 9 && (
                 <>
                   <div>
                     <ProcurementPractices />
@@ -1269,22 +1275,56 @@ const Economic = () => {
                   </div>
                 </>
               )} */}
-                {/* {activeStep === 11 && (
+              {/* {activeStep === 11 && (
                 <>
                   <div>
                     <StakeholderEngagement />
                   </div>
                 </>
               )} */}
-               {/* {activeStep === 12 && (
+              {activeStep === 13 && (
                 <>
                   <div>
-                    <CollectiveBargainingAgreements />
+                    <Publiclegal />
                   </div>
                 </>
-              )} */}
+              )}
+              {activeStep === 14 && (
+                <>
+                  <div>
+                    <Anticompetitivebehavior />
+                  </div>
+                </>
+              )}
+              {activeStep === 15 && (
+                <>
+                  <div>
+                    <Approachtotax />
+                  </div>
+                </>
+              )}
+              {activeStep === 16 && (
+                <>
+                  <div>
+                    <Taxgovernance />
+                  </div>
+                </>
+              )}
+              {activeStep === 17 && (
+                <>
+                  <div>
+                    <Stakeholderengagement />
+                  </div>
+                </>
+              )}
+              {activeStep === 18 && (
+                <>
+                  <div>
+                    <Countrybycountryreporting />
+                  </div>
+                </>
+              )}
             </div>
-
           </div>
         </div>
       </div>

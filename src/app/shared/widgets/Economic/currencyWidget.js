@@ -1,13 +1,54 @@
 import React, { useState } from 'react';
-import { MdInfoOutline } from "react-icons/md";
+import { MdInfoOutline, MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import Select from 'react-select';
 import { Currency } from "../../data/currency";
 
 const currencyOptions = Currency.map(({ currency, country }) => ({
   value: currency,
   label: `${currency}`
 }));
+
+const customStyles = {
+  control: (provided) => ({
+    ...provided,
+    minHeight: '45px',
+    borderRadius: '0 0.375rem 0.375rem 0',
+    borderColor: 'transparent', // Remove border
+    boxShadow: 'none',
+    '&:hover': {
+      borderColor: 'transparent', // Remove border on hover
+    },
+    width: '100%',
+  }),
+  input: (provided) => ({
+    ...provided,
+
+    fontSize: '0.875rem',
+  }),
+  placeholder: (provided) => ({
+    ...provided,
+    fontSize: '0.75rem',
+    color: '#6B7280',  // Tailwind Gray-500
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    fontSize: '0.875rem',
+  }),
+  dropdownIndicator: (provided) => ({
+    ...provided,
+    padding: 0,
+    margin: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  }),
+  indicatorSeparator: () => ({
+    display: 'none', // Remove the separator
+  }),
+};
 
 const CurrencyWidget = (props) => {
   const { onChange, value = "", uiSchema = {}, options, autofocus } = props;
@@ -21,8 +62,8 @@ const CurrencyWidget = (props) => {
     onChange(`${validValue} ${selectedCurrency}`);
   };
 
-  const handleCurrencyChange = (e) => {
-    const currency = e.target.value;
+  const handleCurrencyChange = (selectedOption) => {
+    const currency = selectedOption ? selectedOption.value : "";
     setSelectedCurrency(currency);
     onChange(`${inputValue} ${currency}`);
   };
@@ -57,28 +98,28 @@ const CurrencyWidget = (props) => {
           </div>
         </div>
 
-        <div className="flex items-center">
+        <div className="flex items-center border border-gray-300 rounded-md w-[50%]">
           <input
             type={uiSchema["ui:inputfildtype"]}
             placeholder="Enter amount"
-            className="py-4 border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-l-md leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-[20%]"
+            className="py-4 text-md text-neutral-600 pl-2 leading-tight  border-r border-gray-300 focus:outline-none focus:bg-white cursor-pointer w-[50%]"
             value={inputValue}
             onChange={handleInputChange}
             min="0"
             step="0.01"
           />
-          <select
-            className="py-4 border appearance-none text-xs bg-gray-50 border-gray-400 text-black pl-2 pr-2 rounded-r-md leading-tight focus:outline-none focus:bg-white  cursor-pointer"
+          <Select
+            styles={customStyles}
+            className="w-[50%] border-none"
+            placeholder="Select Currency"
+            value={currencyOptions.find(option => option.value === selectedCurrency) || null}
             onChange={handleCurrencyChange}
-            value={selectedCurrency}
-          >
-            <option value="" disabled={!!selectedCurrency}>Select Currency</option>
-            {currencyOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
+            options={currencyOptions}
+            isSearchable
+            components={{ DropdownIndicator: () => <MdOutlineKeyboardArrowDown className="text-gray-600 " size={20}/> }}
+            isClearable
+            noOptionsMessage={() => "No currencies found"}
+          />
         </div>
       </div>
     </>

@@ -15,7 +15,12 @@ const CommoninputWidget = (props) => {
     const validValue = val.match(/^\d*\.?\d{0,2}$/) ? val : value;
     onChange(validValue);
   };
-
+  const handleKeyDown = (event) => {
+    // Prevent 'e', '+', '-', and '.' from being entered
+    if (["e", "E", "+", "-"].includes(event.key)) {
+      event.preventDefault();
+    }
+  };
   return (
     <>
       <div className="mb-6">
@@ -23,7 +28,7 @@ const CommoninputWidget = (props) => {
           <div className="relative flex">
             <div>
               <h2
-                className="flex mx-2 text-[17px] text-gray-500 font-semibold"
+                className="flex text-[15px] text-gray-500 font-semibold"
                 style={{ display: uiSchema["ui:titledisplay"] }}
               >
                 {uiSchema["ui:title"]}
@@ -37,7 +42,7 @@ const CommoninputWidget = (props) => {
                   "-"
                 )}`}
                 data-tooltip-html={uiSchema["ui:tooltip"]}
-                className="mt-1.5 ml-2 w-[18px] text-[14px] text-gray-500"
+                className="mt-1.5 ml-2 w-[20px] text-[15px] text-gray-500"
                 style={{ display: uiSchema["ui:tooltipdisplay"] }}
               />
               <ReactTooltip
@@ -59,7 +64,7 @@ const CommoninputWidget = (props) => {
         {uiSchema["ui:widgetType"] === "textarea" ? (
           <textarea
             placeholder="Enter data"
-            className="backdrop:before:w-[48rem] border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
+            className="backdrop:before:w-[48rem] border appearance-none text-[15px] border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
             value={value}
             onChange={handleChange}
             rows={4}
@@ -68,9 +73,10 @@ const CommoninputWidget = (props) => {
           <input
             type={uiSchema["ui:inputfildtype"]}
             placeholder="Enter data"
-            className="backdrop:before:w-[48rem] py-4 border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
+            className="backdrop:before:w-[48rem] py-4 border appearance-none text-[15px] border-gray-400 text-neutral-600 pl-2 rounded-md leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
             value={value}
             onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
             min="0"
             step="0.01"
           />
@@ -100,7 +106,7 @@ const CommoninputWidget = (props) => {
           <input
             type={uiSchema["ui:inputfildtype"]}
             placeholder="Enter data"
-            className="backdrop:before:w-[48rem] py-4 border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
+            className="backdrop:before:w-[48rem] py-4 border appearance-none text-[15px] border-gray-400 text-neutral-600 pl-2 rounded-md leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
             value={value}
             onChange={handleChange}
           />

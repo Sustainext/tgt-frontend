@@ -180,7 +180,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
             If currently no system is in place to calculate the financial implications or costs, or to make revenue projections, Provide plans and timelines to develop the necessary systems.
               {/* <MdInfoOutline
                 data-tooltip-id={`es26`}

@@ -231,7 +231,7 @@ const Process = ({ selectedLocation, year }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative flex">
-            <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
+            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold mb-2">
               Describe the process for designing its remuneration policies and
               for determining remuneration
             </h2>

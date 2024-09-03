@@ -176,7 +176,7 @@ const ContextualInformation = ({ selectedLocation, year }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%]">
-            <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
+            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold mb-2">
               Contextual information to understand data compilation
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
