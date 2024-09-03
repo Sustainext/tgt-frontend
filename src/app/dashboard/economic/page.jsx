@@ -16,6 +16,8 @@ import Approachtotax from "./tax/approach-to-tax/page";
 import Taxgovernance from "./tax/tax-governance/page";
 import Stakeholderengagement from "./tax/stakeholder-engagement/page";
 import Countrybycountryreporting from "./tax/country-by-country-reporting/page";
+import Operationsassessed from "./anti-corruption/operations-assessed/page";
+import Confirmedincidents from "./anti-corruption/confirmed-incidents/page"
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -1268,13 +1270,13 @@ const Economic = () => {
                   </div>
                 </>
               )}
-              {/* {activeStep === 10 && (
+              {activeStep === 10 && (
                 <>
                   <div>
-                    <MembershipAndAssociation />
+                    <Operationsassessed />
                   </div>
                 </>
-              )} */}
+              )}
               {/* {activeStep === 11 && (
                 <>
                   <div>
@@ -1282,6 +1284,13 @@ const Economic = () => {
                   </div>
                 </>
               )} */}
+                 {activeStep === 12 && (
+                <>
+                  <div>
+                    <Confirmedincidents />
+                  </div>
+                </>
+              )}
               {activeStep === 13 && (
                 <>
                   <div>
