@@ -61,25 +61,25 @@ const Taxgovernance = () => {
             <div className="flex float-end border-l">
               <button
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("113")}
+                onClick={() => toggleDrawer("129")}
               >
                 GRI 207-2
               </button>
               <button
                 className="text-[#fff] bg-[#FC0014] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("69")}
+                onClick={() => toggleDrawer("126")}
               >
                 SDG 1
               </button>
               <button
                 className="text-[#fff] bg-[#E01A83] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("69")}
+                onClick={() => toggleDrawer("127")}
               >
                 SDG 10
               </button>
               <button
                 className="text-[#fff] bg-[#00558A] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("69")}
+                onClick={() => toggleDrawer("128")}
               >
                 SDG 17
               </button>

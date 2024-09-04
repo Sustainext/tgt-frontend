@@ -8705,60 +8705,85 @@ export const Socialdata = [
               Guidance for Disclosure 207-2-a-iii:
             </p>
             <p className="text-[11px] text-[#727272] mb-2">
-            Tax risks are risks associated with the organization’s tax practices that might lead to a negative effect on the goals of the organization, or to financial or reputational damage. These include compliance risks or risks such as those related to uncertain tax positions, changes in legislation, or a perception of aggressive tax practices.
-
-When reporting on the approach to tax risks, the organization can describe its risk appetite and tolerance and provide examples of tax practices it has avoided because they are misaligned with its approach to tax and tax strategy. Risk appetite and tolerance indicate the degree of risk the organization is willing to accept in determining its tax positions.
-
-When reporting how tax risks are identified, managed, and monitored, the organization can:
+              Tax risks are risks associated with the organization’s tax
+              practices that might lead to a negative effect on the goals of the
+              organization, or to financial or reputational damage. These
+              include compliance risks or risks such as those related to
+              uncertain tax positions, changes in legislation, or a perception
+              of aggressive tax practices. When reporting on the approach to tax
+              risks, the organization can describe its risk appetite and
+              tolerance and provide examples of tax practices it has avoided
+              because they are misaligned with its approach to tax and tax
+              strategy. Risk appetite and tolerance indicate the degree of risk
+              the organization is willing to accept in determining its tax
+              positions. When reporting how tax risks are identified, managed,
+              and monitored, the organization can:
             </p>
             <ul className="list-disc ml-6 mb-4">
               <li className="text-[11px] text-[#727272]">
-              • describe the role of the highest governance body in the tax risk management process;
+                • describe the role of the highest governance body in the tax
+                risk management process;
               </li>
 
               <li className="text-[11px] text-[#727272]">
-              • describe how the tax risk management process is communicated and embedded across the organization;
+                • describe how the tax risk management process is communicated
+                and embedded across the organization;
               </li>
               <li className="text-[11px] text-[#727272]">
-              • refer to any internal control frameworks or generally accepted risk management principles that are applied to tax.
+                • refer to any internal control frameworks or generally accepted
+                risk management principles that are applied to tax.
               </li>
             </ul>
             <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
-              Guidance for Disclosure 207-1-a-iv:
+              Guidance for Disclosure 207-2-a-iv:
             </p>
             <p className="text-[11px] text-[#727272] mb-2">
-              When describing how its approach to tax is linked to its business
-              strategy, the organization can explain how its tax planning is
-              aligned with its commercial activities. The description can
-              include any relevant statements from its tax strategy or
-              equivalent documents. When describing how its approach to tax is
-              linked to its sustainable development strategy, the organization
-              can explain the following:
+              When reporting how compliance with the tax governance and control
+              framework is evaluated, the organization can describe the process
+              through which the tax governance and control framework is
+              monitored, tested, and maintained. An example of this is giving an
+              internal auditor accountability for undertaking annual reviews of
+              the tax department’s compliance with the tax governance and
+              control framework. The organization can also specify the degree to
+              which the highest governance body has oversight of the design,
+              implementation, and effectiveness of the tax governance and
+              control framework.
             </p>
-            <ul className="list-disc ml-6 mb-4">
-              <li className="text-[11px] text-[#727272]">
-                • Whether it considered the economic and social impacts of its
-                approach to tax when developing its tax strategy.
-              </li>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-2-b:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              One example of a mechanism for individuals to raise concerns about
+              the organization’s business conduct, or about activities that
+              compromise the organization’s integrity in relation to tax, is
+              whistleblowing. Disclosure 207-2-b is related to Disclosure 2-26
+              in GRI 2: General Disclosures 2021. If the information reported by
+              the organization in Disclosure 2-26 covers mechanisms used to
+              raise concerns about the organization’s business conduct in
+              relation to tax, the organization can provide a reference to this
+              information.
+            </p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-2-c:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Disclosure 207-2-c is related to Disclosure 2-5 in GRI 2: General
+              Disclosures 2021. If the assurance process for disclosures on tax
+              has been completed as part of another assurance process, the
+              organization can provide a reference to this information reported
+              in Disclosure 2-5 or elsewhere.
+            </p>
 
-              <li className="text-[11px] text-[#727272]">
-                • Any organizational commitments to sustainable development in
-                the jurisdictions in which it operates and whether its approach
-                to tax is aligned with these commitments.
-              </li>
-            </ul>
             <p className="text-[13px] text-[#222222] mb-4">Background:</p>
             <p className="text-[11px] text-[#727272] mb-4">
-              An organization’s approach to tax defines how the organization
-              balances tax compliance with business activities and ethical,
-              societal, and sustainable development-related expectations. It can
-              include the organization’s tax principles, its attitude to tax
-              planning, the degree of risk the organization is willing to
-              accept, and the organization’s approach to engaging with tax
-              authorities. An organization’s approach to tax is often described
-              in a tax strategy, but it could also be described in equivalent
-              documents, such as policies, standards, principles, or codes of
-              conduct.
+              Having robust governance, control, and risk management systems in
+              place for tax can be an indication that the reported approach to
+              tax and tax strategy are well embedded in an organization and that
+              the organization is effectively monitoring its compliance
+              obligations. Reporting this information reassures stakeholders
+              that the organization’s practices reflect the statements it has
+              made about its approach to tax in its tax strategy or equivalent
+              documents.
             </p>
           </div>
           <div>
