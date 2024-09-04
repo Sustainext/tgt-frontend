@@ -17,7 +17,8 @@ import Taxgovernance from "./tax/tax-governance/page";
 import Stakeholderengagement from "./tax/stakeholder-engagement/page";
 import Countrybycountryreporting from "./tax/country-by-country-reporting/page";
 import Operationsassessed from "./anti-corruption/operations-assessed/page";
-import Confirmedincidents from "./anti-corruption/confirmed-incidents/page"
+import Confirmedincidents from "./anti-corruption/confirmed-incidents/page";
+import Ratiosstandard from "./market-presence/ratios-standard/page"
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -336,7 +337,7 @@ const Economic = () => {
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(5)}
                     >
-                      {isStepCompleted(6) ? (
+                      {isStepCompleted(5) ? (
                         <>
                           <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
                             <svg
@@ -1238,7 +1239,7 @@ const Economic = () => {
               {/* {activeStep === 5 && (
                 <>
                   <div>
-                    <Assurance />
+                    <Ratiosstandard />
                   </div>
                 </>
               )} */}

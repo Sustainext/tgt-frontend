@@ -5,7 +5,7 @@ import Section1 from "./Section1/page";
 import Section2 from "./Section2/page";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const Financialimplications = () => {
+const Ratiosstandard = () => {
     // State to track the current section
     const [currentSection, setCurrentSection] = useState(1);
 
@@ -14,9 +14,10 @@ const Financialimplications = () => {
             <ToastContainer style={{ fontSize: "12px" }} />
             {currentSection === 1 && <Section1 />}
             {currentSection === 2 && <Section2 />}
-{/* 
+
+            {/* Navigation buttons */}
             <div className="flex space-x-2 justify-end mr-4">
-               
+                {/* Show the Previous button, disable and style differently if on the first section */}
                 <button
                     onClick={() => currentSection > 1 && setCurrentSection(currentSection - 1)}
                     className={` text-gray-800 font-semibold py-1 w-[100px] rounded inline-flex items-center ${currentSection === 1 ? 'opacity-50 cursor-not-allowed' : ''
@@ -26,6 +27,7 @@ const Financialimplications = () => {
                     <MdChevronLeft className='text-[20px]' /> Previous
                 </button>
 
+                {/* Show the Next button only if it's not the last section */}
                 {currentSection < 2 && (
                     <button
                         onClick={() => setCurrentSection(currentSection + 1)}
@@ -34,9 +36,9 @@ const Financialimplications = () => {
                         Next  <MdChevronRight className='text-[20px] ml-4' />
                     </button>
                 )}
-            </div> */}
+            </div>
         </>
     );
 };
 
-export default Financialimplications;
+export default Ratiosstandard;
