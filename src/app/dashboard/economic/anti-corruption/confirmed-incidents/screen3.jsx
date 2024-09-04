@@ -19,7 +19,7 @@ const widgets = {
   RichtextWidget: RichtextWidget,
 };
 
-const view_path = "gri-economic-significant_indirect-explain-203-2b";
+const view_path = "gri-economic_confirmed_incidents_of_corruption_and_actions_taken-205-3c-s3";
 const client_id = 1;
 const user_id = 1;
 
@@ -171,7 +171,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp,month }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // updateFormData();
+    updateFormData();
     console.log("test form data", formData);
   };
 
@@ -222,8 +222,8 @@ const Screen3 = ({ selectedOrg, year, selectedCorp,month }) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -237,7 +237,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp,month }) => {
               !selectedOrg || !year || !month ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year || !month}
+            disabled={!selectedOrg || !year || !month}
           >
             Submit
           </button>

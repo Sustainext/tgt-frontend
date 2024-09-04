@@ -8799,4 +8799,331 @@ export const Socialdata = [
       </>,
     ],
   },
+  {
+    category: ["130"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">GRI 207: Tax 2019</h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 207-3 Stakeholder engagement and management of concerns
+            related to tax
+          </p>
+          <div className="h-[520px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Guidance:</p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-3-a-i :
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The approach to engagement with tax authorities can include
+              participating in cooperative compliance agreements, seeking active
+              real-time audit, seeking clearance for all significant
+              transactions, engaging on tax risks, and seeking advance pricing
+              agreements.
+            </p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-3-a-ii:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              When reporting the approach to public policy advocacy on tax, the
+              reporting organization can describe:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                • its lobbying activities related to tax;
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                • its stance on significant issues related to tax that it
+                addresses in its public policy advocacy, and any differences
+                between its advocacy positions and its stated policies, goals,
+                or other public positions;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                • whether it is a member of, or contributes to, any
+                representative associations or committees that participate in
+                public policy advocacy on tax, including:
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                - the nature of this contribution;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                - any differences between the organization’s stated policies,
+                goals, or other public positions on significant issues related
+                to tax, and the positions of the representative associations or
+                committees.
+              </li>
+            </ul>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              Disclosure 207-3-a-ii is related to the requirements in GRI 415:
+              Public Policy 2016. If the organization has determined public
+              policy to be a material topic and has reported information in GRI
+              415 that covers the organization’s public policy advocacy on tax,
+              the organization can provide a reference to this information.
+            </p>
+
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-3-a-iii:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              When reporting the processes for collecting and considering the
+              views and concerns of stakeholders, the organization can describe
+              how the processes enable stakeholders to participate in this
+              engagement. The organization can also provide examples of how
+              stakeholder feedback has influenced the approach to tax, the tax
+              strategy, or the tax practices of the organization.
+            </p>
+
+            <p className="text-[13px] text-[#222222] mb-4">Background:</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Organizations’ tax practices are of interest to various
+              stakeholders. The approach an organization takes to engaging with
+              stakeholders has the potential to influence its reputation and
+              position of trust. This includes how the organization engages with
+              tax authorities in the development of tax systems, legislation,
+              and administration. Stakeholder engagement can enable the
+              organization to understand evolving expectations related to tax.
+              It can give the organization insight into potential future
+              regulatory changes and enable the organization to better manage
+              its risks and impacts.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/standards/standards-development/topic-standard-for-tax/"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["131"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">GRI 207: Tax 2019</h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 207-4 Country-by-country reporting
+          </p>
+          <div className="h-[520px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">
+              Compilation requirements:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              2.1 When compiling the information specified in Disclosure 207-4,
+              the reporting organization shall report information for the time
+              period covered by the most recent audited consolidated financial
+              statements or financial information filed on public record. If
+              information is not available for this time period, the
+              organization may report information for the time period covered by
+              the audited consolidated financial statements, or the financial
+              information filed on public record, immediately preceding the most
+              recent ones.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              2.2 When compiling the information specified in Disclosure
+              207-4-b, the reporting organization shall:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              2.2.1 reconcile the data reported for Disclosures 207-4-b-iv, vi,
+              vii, and viii with the data stated in its audited consolidated
+              financial statements, or the financial information filed on public
+              record, for the time period reported in Disclosure 207-4-c. Where
+              the data reported does not reconcile with the audited consolidated
+              financial statements, or the financial information filed on public
+              record, the organization shall provide an explanation for this
+              difference;
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              2.2.2 for Disclosure 207-4-b-ix, include corporate income tax
+              accrued in the time period reported in Disclosure 207-4-c and
+              exclude deferred corporate income
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              2.2.3 in cases where an entity is deemed not to be resident in any
+              tax jurisdiction, provide the information for this stateless
+              entity separately.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Guidance:</p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-4-a:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              In the context of this Standard, tax jurisdictions are identified
+              according to where the entities included in the organization’s
+              audited consolidated financial statements, or in the financial
+              information filed on public record, are resident for tax purposes.
+              These entities include permanent establishments and dormant
+              entities.
+            </p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-4-b:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Unless otherwise stated, country-by-country information is to be
+              reported at the level of tax jurisdictions and not at the level of
+              individual entities. Number of employees, revenues, profit/loss
+              before tax, and tangible assets other than cash and cash
+              equivalents are indicators of the organization’s scale of activity
+              within a tax jurisdiction. When considered in conjunction with the
+              other required and recommended information, they can inform
+              assessments about the level of taxes being paid in a jurisdiction.
+              In addition to this information, the organization can report any
+              other information relevant for understanding the scale of its
+              activity within a jurisdiction. If the reporting organization
+              cannot report all required information for all the tax
+              jurisdictions reported in Disclosure 207-4-a, it may use reasons
+              for omission as set out in GRI 1: Foundation 2021. The
+              organization is required to specify the requirement it cannot
+              comply with, and to provide a reason for omission and required
+              explanation, as set out in GRI 1. See Requirement 6 in GRI 1 for
+              more information on reasons for omission. If complete reporting
+              for a tax jurisdiction is not possible because the organization
+              holds a minority shareholding or is the non-operating joint
+              venture partner in an entity, the organization may provide
+              ‘information unavailable / incomplete’ as the reason for omission
+              and specify the majority shareholder or operating partner. The
+              organization can also report any contextual information necessary
+              to understand how data has been compiled, such as any standards,
+              methodologies, and assumptions used.
+            </p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-4-b-i:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Disclosure 207-4-b-i requires the organization to report a list of
+              entities by tax jurisdiction. If the organization’s publicly
+              available audited consolidated financial statements, or the
+              financial information filed on public record, include a list of
+              all its entities by tax jurisdiction, the organization can provide
+              a reference to this information. When reporting the names of the
+              resident entities for a tax jurisdiction, the organization can
+              specify if any of the entities are dormant
+            </p>
+
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-4-b-ii:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              When reporting its primary activities in a tax jurisdiction, the
+              organization can provide a general description such that a report
+              reader can clearly identify the organization’s main activities in
+              the jurisdiction, for example, sales, marketing, manufacturing, or
+              distribution. The organization is not required to list the
+              activities of each entity in the jurisdiction.
+            </p>
+
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-4-b-iii:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Employee numbers can be reported using an appropriate calculation,
+              such as head count at the end of the time period reported in
+              Disclosure 207-4-c or a full-time equivalent (FTE) calculation. To
+              enable comparability, it is important that the organization
+              applies the approach consistently across all tax jurisdictions and
+              between time periods. If the organization is unable to report
+              exact figures, it can report the number of employees to the
+              nearest ten or, where the number of employees is greater than
+              1000, to the nearest 100. The number of employees is one indicator
+              of the organization’s scale of activity in a tax jurisdiction. In
+              addition to the number of employees, the organization may report
+              the number of workers (excluding employees) performing the
+              organization’s activities, if this helps explain the
+              organization’s scale of activity in the jurisdiction. It is
+              important that the organization reports the number of employees
+              and/or the number of workers consistently across all jurisdictions
+              and between time periods.
+            </p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosures 207-4-b-iv and 207-4-b-v::
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              These disclosures require the organization to report revenues from
+              third-party sales for each tax jurisdiction and from intra-group
+              transactions between that jurisdiction and other tax
+              jurisdictions. Intra-group transactions within the same tax
+              jurisdiction are not required, but the organization can report
+              this information separately. Intra-group transactions between
+              jurisdictions can influence the tax bases of the organization in
+              the jurisdictions involved in these transactions. Intra-group
+              transactions within the same tax jurisdiction do not affect the
+              tax base of the organization within that jurisdiction. For this
+              reason, revenues from third-party sales and intra-group
+              transactions with other jurisdictions are a more appropriate
+              indicator of an organization’s scale of activity in a tax
+              jurisdiction than aggregated revenues. Aggregated revenues could
+              result in local revenues being double-counted, which might create
+              a misleading impression about the organization's scale of activity
+              in a jurisdiction. The organization can also report other sources
+              of revenue, for example, dividends, interest, and royalties, where
+              this is standard practice in the sector of the organization.
+            </p>
+
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-4-b-vi:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              When reporting profit/loss before tax for a tax jurisdiction, the
+              organization can calculate the consolidated profit/loss before tax
+              for all its resident entities in the jurisdiction.
+            </p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-4-b-vi:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              When reporting profit/loss before tax for a tax jurisdiction, the
+              organization can calculate the consolidated profit/loss before tax
+              for all its resident entities in the jurisdiction.
+            </p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-4-b-vii:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              When reporting tangible assets for a tax jurisdiction, the
+              organization can calculate the consolidated total of the net book
+              values of tangible assets for all its resident entities in the
+              jurisdiction
+            </p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-4-b-viii:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              When reporting corporate income tax paid on a cash basis for a tax
+              jurisdiction, the organization can calculate the total actual
+              corporate income tax paid during the time period reported in
+              Disclosure 207-4-c by all its resident entities in the
+              jurisdiction. This includes cash taxes paid by entities to the
+              jurisdiction of residence and to all other jurisdictions (e.g.,
+              withholding taxes incurred in other tax jurisdictions). If the tax
+              paid includes a significant amount of withholding tax, the
+              organization can explain this. If taxes are incurred in other tax
+              jurisdictions, the organization can report the amount of tax paid
+              to the other tax jurisdictions separately and identify the
+              jurisdictions where the tax was paid.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/standards/standards-development/topic-standard-for-tax/"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
 ];

@@ -19,7 +19,7 @@ const widgets = {
   Textboxwithfileupload:Textboxwithfileupload,
 };
 
-const view_path = "gri-economic-significant_indirect-explain-203-2b";
+const view_path = "gri-economic-tax_governance_control_and_risk_management-207-2c-has";
 const client_id = 1;
 const user_id = 1;
 
@@ -220,7 +220,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // updateFormData();
+    updateFormData();
     console.log("test form data", formData);
   };
 
@@ -270,8 +270,8 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -285,7 +285,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

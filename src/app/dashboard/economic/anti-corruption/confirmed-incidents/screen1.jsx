@@ -19,7 +19,7 @@ const widgets = {
   RichtextWidget: RichtextWidget,
 };
 
-const view_path = "gri-economic-significant_indirect-explain-203-2b";
+const view_path = "gri-economic_confirmed_incidents_of_corruption_and_actions_taken-205-3a-s1";
 const client_id = 1;
 const user_id = 1;
 
@@ -187,7 +187,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp,month }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // updateFormData();
+    updateFormData();
     console.log("test form data", formData);
   };
 
@@ -207,8 +207,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp,month }) => {
               <MdInfoOutline
                 data-tooltip-id={`es30`}
                 data-tooltip-html=
-                " <p>Specify the total number of confirmed incidents of corruption.</p>
-               <p> Corruption: Abuse of entrusted power for private gain’, which can be instigated by individuals or organizations. For example: Corruption includes practices such as bribery, facilitation payments, fraud, extortion, collusion, and money laundering. It also includes an offer or receipt of any gift, loan, fee, reward, or other advantage to or from any person as an inducement to do something that is dishonest, illegal, or a breach of trust in the conduct of the enterprise’s business. This can include cash or in-kind benefits, such as free goods, gifts, and holidays, or special personal services provided for the purpose of an improper advantage, or that can result in moral pressure to receive such an advantage.</p> "
+                "<p>Specify the total number of confirmed incidents of corruption.</p><p> Corruption: Abuse of entrusted power for private gain’, which can be instigated by individuals or organizations. For example: Corruption includes practices such as bribery, facilitation payments, fraud, extortion, collusion, and money laundering. It also includes an offer or receipt of any gift, loan, fee, reward, or other advantage to or from any person as an inducement to do something that is dishonest, illegal, or a breach of trust in the conduct of the enterprise’s business. This can include cash or in-kind benefits, such as free goods, gifts, and holidays, or special personal services provided for the purpose of an improper advantage, or that can result in moral pressure to receive such an advantage.</p> "
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
@@ -239,8 +238,8 @@ const Screen1 = ({ selectedOrg, year, selectedCorp,month }) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -254,7 +253,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp,month }) => {
               !selectedOrg || !year || !month ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year || !month}
+            disabled={!selectedOrg || !year || !month}
           >
             Submit
           </button>

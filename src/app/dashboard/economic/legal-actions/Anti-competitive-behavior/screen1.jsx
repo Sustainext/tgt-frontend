@@ -20,7 +20,7 @@ const widgets = {
   WithhaddinginputWidget: WithhaddinginputWidget,
 };
 
-const view_path = "gri-economic-significant_indirect-explain-203-2b";
+const view_path = "gri-economic-anti_competitive_behavior-206-1a-behavior";
 const client_id = 1;
 const user_id = 1;
 
@@ -242,7 +242,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // updateFormData();
+    updateFormData();
     console.log("test form data", formData);
   };
 
@@ -307,8 +307,8 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

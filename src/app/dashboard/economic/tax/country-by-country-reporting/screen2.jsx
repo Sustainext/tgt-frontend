@@ -17,7 +17,7 @@ const widgets = {
   CurrencyselectWidget: CurrencyselectWidget,
 };
 
-const view_path = "gri-social-customer_privacy-418-1a-total_number";
+const view_path = "gri-economic-country_by_country_reporting-207-4b-for";
 const client_id = 1;
 const user_id = 1;
 
@@ -183,6 +183,8 @@ const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   };
   const [formData, setFormData] = useState(initialFormData);
   const [loopen, setLoOpen] = useState(false);
+  const [r_schema, setRemoteSchema] = useState({});
+  const [r_ui_schema, setRemoteUiSchema] = useState({});
   const toastShown = useRef(false);
 
   const LoaderOpen = () => {
@@ -239,6 +241,8 @@ const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}&month=${month}`;
     try {
       const response = await axiosInstance.get(url);
+      setRemoteSchema(response.data.form[0].schema);
+      setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
       setFormData(initialFormData);
@@ -260,7 +264,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // updateFormData();
+    updateFormData();
     console.log("test form data", formData);
   };
 
@@ -339,8 +343,8 @@ const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -350,6 +354,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
             }}
           />
         </div>
+        {selectedOrg && year && (
         <div className="flex right-1 mx-2">
           <button
             type="button"
@@ -359,7 +364,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
             Add Row <MdAdd className="text-lg" />
           </button>
         </div>
-
+      )}
         <div className="mb-6">
           <button
             type="button"
@@ -367,7 +372,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>
