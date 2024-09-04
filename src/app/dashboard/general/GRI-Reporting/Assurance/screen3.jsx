@@ -94,7 +94,7 @@ const uiSchema = {
     },
     Q2: {
         "ui:hading": "Link/Reference",
-        "ui:hadingtooltip": "This section documents data corresponding to the reference of the external assurance report or assurance statement.Include: Link/reference to the external assurance report or assurance statement.",
+        "ui:hadingtooltip": "This section documents data corresponding to the reference of the external assurance report or assurance statement. Include: Link/reference to the external assurance report or assurance statement.",
         "ui:hadingtooltipdisplay": "block",
         "ui:hadingdisplay": "block",
       "ui:title":

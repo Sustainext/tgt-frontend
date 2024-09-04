@@ -40,7 +40,7 @@ const uiSchema = {
       "ui:title":
         "Report the sector/sectors in which the organization is active",
       "ui:tooltip":
-        "Please specify the sector/sectors in which the organization is active. e.g. Depending on the organization’s activities, sectors can be identified using the GRI Sector Standards or classification systems such as the Global Industry Classification Standard (GICS®), the Industry Classification Benchmark (ICB), the International Standard Industrial Classification of All Economic Activities (ISIC), and the Sustainable Industry Classification System (SICS®). ",
+        "Please specify the sector/sectors in which the organization is active. e.g. Depending on the organization’s activities, sectors can be identified using the GRI Sector Standards or classification systems such as the Global Industry Classification Standard (GICS®), the Industry Classification Benchmark (ICB), the International Standard Industrial Classification of All Economic Activities (ISIC), and the Sustainable Industry Classification System (SICS®).",
       "ui:tooltipdisplay": "block",
       "ui:widget": "SectorstableWidget",
       "ui:horizontal": true,
