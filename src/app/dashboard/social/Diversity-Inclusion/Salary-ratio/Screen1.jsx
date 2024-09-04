@@ -240,7 +240,7 @@ const Screen1 = ({ location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%]">
-            <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
+            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold mb-2">
               Number of individuals within the organization’s governance bodies
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}

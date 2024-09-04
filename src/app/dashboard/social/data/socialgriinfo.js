@@ -4072,7 +4072,7 @@ export const Socialdata = [
             accountable and inclusive institutions at all levels
           </p>
           <div className="h-[300px] overflow-y-auto custom-scrollbar">
-            <p className="text-[13px] text-[#222222] mb-2">Target 16.5.1</p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 16.5</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Substantially reduce corruption and bribery in all their forms
             </p>
@@ -6993,7 +6993,7 @@ export const Socialdata = [
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              href="https://www.globalreporting.org/pdf.ashx?id=12390"
               target="_blank"
             >
               Learn more <MdChevronRight className="text-lg mt-0.5" />
@@ -7212,7 +7212,7 @@ export const Socialdata = [
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
+              href="https://www.globalreporting.org/pdf.ashx?id=12390"
               target="_blank"
             >
               Learn more <MdChevronRight className="text-lg mt-0.5" />
@@ -7239,21 +7239,25 @@ export const Socialdata = [
       <>
         <div className="p-2 pt-5">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Sustainable Development Goal 1: End poverty in all its forms everywhere
+            Sustainable Development Goal 1: End poverty in all its forms
+            everywhere
           </p>
           <div className="h-[300px] overflow-y-auto custom-scrollbar">
-          <p className="text-[13px] text-[#222222] mb-2">Target 1.2</p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 1.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            By 2030, eradicate extreme poverty for all people everywhere, currently measured as people living on less than $1.25 a day
+              By 2030, eradicate extreme poverty for all people everywhere,
+              currently measured as people living on less than $1.25 a day
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">1.2.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of population living below the national poverty line, by sex and age
+              Proportion of population living below the national poverty line,
+              by sex and age
             </p>
             <p className="text-[11px] text-[#222222] mb-2">1.2.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of men, women and children of all ages living in poverty in all its dimensions according to national definitions
+              Proportion of men, women and children of all ages living in
+              poverty in all its dimensions according to national definitions
             </p>
             <p className="text-[13px] text-[#222222] mb-2">Target 1.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
@@ -7309,25 +7313,29 @@ export const Socialdata = [
       <>
         <div className="p-2 pt-5">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Sustainable Development Goal 1: End poverty in all its forms everywhere
+            Sustainable Development Goal 1: End poverty in all its forms
+            everywhere
           </p>
           <div className="h-[280px] overflow-y-auto custom-scrollbar">
-
             <p className="text-[13px] text-[#222222] mb-2">Target 3.7</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            By 2030, ensure universal access to sexual and reproductive health-care services, including for family planning, information and education, and the integration of reproductive health into national strategies and programmes
+              By 2030, ensure universal access to sexual and reproductive
+              health-care services, including for family planning, information
+              and education, and the integration of reproductive health into
+              national strategies and programmes
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">3.7.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of women of reproductive age (aged 15-49 years) who have their need for family planning satisfied with modern methods
+              Proportion of women of reproductive age (aged 15-49 years) who
+              have their need for family planning satisfied with modern methods
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">3.7.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Adolescent birth rate (aged 10-14 years; aged 15-19 years) per 1,000 women in that age group
+              Adolescent birth rate (aged 10-14 years; aged 15-19 years) per
+              1,000 women in that age group
             </p>
-
           </div>
           <div>
             <a
@@ -7359,7 +7367,9 @@ export const Socialdata = [
       <>
         <div className="p-2 pt-5">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Sustainable Development Goal 8: Promote sustained, inclusive and sustainable economic growth, full and productive employment and decent work for all
+            Sustainable Development Goal 8: Promote sustained, inclusive and
+            sustainable economic growth, full and productive employment and
+            decent work for all
           </p>
           <div className="h-[300px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.2</p>
@@ -7375,12 +7385,17 @@ export const Socialdata = [
             </p>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Promote development-oriented policies that support productive activities, decent job creation, entrepreneurship, creativity and innovation, and encourage the formalization and growth of micro-, small- and medium-sized enterprises, including through access to financial services
+              Promote development-oriented policies that support productive
+              activities, decent job creation, entrepreneurship, creativity and
+              innovation, and encourage the formalization and growth of micro-,
+              small- and medium-sized enterprises, including through access to
+              financial services
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">8.3.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of informal employment in total employment, by sector and sex
+              Proportion of informal employment in total employment, by sector
+              and sex
             </p>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.5</p>
             <p className="text-[11px] text-[#727272] mb-4">
@@ -7431,20 +7446,25 @@ export const Socialdata = [
       <>
         <div className="p-2 pt-5">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Sustainable Development Goal 8: Promote sustained, inclusive and sustainable economic growth, full and productive employment and decent work for all
+            Sustainable Development Goal 8: Promote sustained, inclusive and
+            sustainable economic growth, full and productive employment and
+            decent work for all
           </p>
           <div className="h-[250px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Promote development-oriented policies that support productive activities, decent job creation, entrepreneurship, creativity and innovation, and encourage the formalization and growth of micro-, small- and medium-sized enterprises, including through access to financial services
+              Promote development-oriented policies that support productive
+              activities, decent job creation, entrepreneurship, creativity and
+              innovation, and encourage the formalization and growth of micro-,
+              small- and medium-sized enterprises, including through access to
+              financial services
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">8.3.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Proportion of informal employment in total employment, by sector and sex
+              Proportion of informal employment in total employment, by sector
+              and sex
             </p>
-
-           
           </div>
           <div>
             <a
@@ -7461,30 +7481,35 @@ export const Socialdata = [
   },
   {
     category: ["113"],
-    header: [<h5 className="text-sky-600 text-[17px] font-bold">GRI 204: Procurement Practices 2016</h5>],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 204: Procurement Practices 2016
+      </h5>,
+    ],
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Disclosure 204-1 Proportion of spending on local
-          suppliers
+            Disclosure 204-1 Proportion of spending on local suppliers
           </p>
           <div className="h-[250px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-4">Guidance:</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Local purchases can be made either from a budget managed at the location of operation or at an organization’s headquarters.
+              Local purchases can be made either from a budget managed at the
+              location of operation or at an organization’s headquarters.
             </p>
-            <p className="text-[13px] text-[#222222] mb-4">
-            Background:
-            </p>
+            <p className="text-[13px] text-[#222222] mb-4">Background:</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            By supporting local suppliers, an organization can indirectly attract additional investment to the local economy. Local sourcing can be a strategy to help ensure supply, support a stable local economy, and maintain community relations.
+              By supporting local suppliers, an organization can indirectly
+              attract additional investment to the local economy. Local sourcing
+              can be a strategy to help ensure supply, support a stable local
+              economy, and maintain community relations.
             </p>
           </div>
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
+              href="https://www.globalreporting.org/pdf.ashx?id=12401"
               target="_blank"
             >
               Learn more <MdChevronRight className="text-lg mt-0.5" />
@@ -7496,36 +7521,1602 @@ export const Socialdata = [
   },
   {
     category: ["114"],
-    header: [<h5 className="text-sky-600 text-[17px] font-bold">GRI 202: Market Presence 2016</h5>],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 202: Market Presence 2016
+      </h5>,
+    ],
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Disclosure 202-2 Proportion of senior management hired from the local community
+            Disclosure 202-2 Proportion of senior management hired from the
+            local community
           </p>
           <div className="h-[400px] overflow-y-auto custom-scrollbar">
-            <p className="text-[13px] text-[#222222] mb-4">Compilation Requirements:</p>
-            <p className="text-[11px] text-[#727272] mb-4">
-            2.2 When compiling the information specified in Disclosure 202-2, the reporting organization shall calculate this percentage using data on full-time employees.
-            </p>
             <p className="text-[13px] text-[#222222] mb-4">
-            Guidance:
+              Compilation Requirements:
             </p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Senior management hired from the local community includes those individuals either born or who have the legal right to reside indefinitely (such as naturalized citizens or permanent visa holders) in the same geographic market as the operation. The geographical definition of ‘local’ can include the community surrounding operations, a region within a country, or a country.
+              2.2 When compiling the information specified in Disclosure 202-2,
+              the reporting organization shall calculate this percentage using
+              data on full-time employees.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-4">Guidance:</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Senior management hired from the local community includes those
+              individuals either born or who have the legal right to reside
+              indefinitely (such as naturalized citizens or permanent visa
+              holders) in the same geographic market as the operation. The
+              geographical definition of ‘local’ can include the community
+              surrounding operations, a region within a country, or a country.
             </p>
 
-            <p className="text-[13px] text-[#222222] mb-4">
-            Background:
-            </p>
+            <p className="text-[13px] text-[#222222] mb-4">Background:</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Including members from the local community in an organization’s senior management demonstrates the organization’s positive market presence. Including local community members in the management team can enhance human capital. It can also increase the economic benefit to the local community, and improve an organization’s ability to understand local needs.
+              Including members from the local community in an organization’s
+              senior management demonstrates the organization’s positive market
+              presence. Including local community members in the management team
+              can enhance human capital. It can also increase the economic
+              benefit to the local community, and improve an organization’s
+              ability to understand local needs.
             </p>
           </div>
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
+              href="https://www.globalreporting.org/pdf.ashx?id=12379"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["115"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 201:Economic Performance 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 201-1 Direct economic value generated and distributed
+          </p>
+          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-4">
+              Compilation requirements:
+            </p>
+            <p className="text-[11px] text-[#727272]">
+              2.1 When compiling the information specified in Disclosure 201-1,
+              the reporting organization shall, if applicable, compile the EVG&D
+              from data in the organization’s audited financial or profit and
+              loss (P&L) statement, or its internally audited management
+              accounts.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">
+              Guidance for Disclosure 201-1:
+            </p>
+            <p className="text-[13px] text-[#727272] mb-2">Revenues </p>
+            <p className="text-[11px] text-[#727272]">
+              An organization can calculate revenues as net sales plus revenues
+              from financial investments and sales of assets. Net sales can be
+              calculated as gross sales from products and services minus
+              returns, discounts, and allowances.
+            </p>
+            <p className="text-[11px] text-[#727272]">
+              Revenues from financial investments can include cash received as:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                • interest on financial loans
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                • dividends from shareholdings
+              </li>
+              <li className="text-[11px] text-[#727272]">• royalties</li>
+              <li className="text-[11px] text-[#727272]">
+                • direct income generated from assets, such as property rental.
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272]">
+              Revenues from sale of assets can include:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                • physical assets, such as property, infrastructure, and
+                equipment
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                • intangibles, such as intellectual property rights, designs,
+                and brand names
+              </li>
+            </ul>
+            <p className="text-[13px] text-[#222222] mb-4">Operating costs</p>
+            <p className="text-[11px] text-[#727272]">
+              An organization can calculate operating costs as cash payments
+              made outside the organization for materials, product components,
+              facilities, and services purchased. Services purchased can include
+              payments to self-employed persons, temporary placement agencies
+              and other organizations providing services. Costs related to
+              workers who are not employees working in an operational role are
+              included as part of services purchased, rather than under employee
+              wages and benefits.
+            </p>
+            <p className="text-[11px] text-[#727272]">
+              Operating costs can include:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">• property rental</li>
+
+              <li className="text-[11px] text-[#727272]">• license fees</li>
+              <li className="text-[11px] text-[#727272]">
+                • facilitation payments (since these have a clear commercial
+                objective)
+              </li>
+              <li className="text-[11px] text-[#727272]">• royalties</li>
+              <li className="text-[11px] text-[#727272]">
+                • payments for contract workers
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                • training costs, if outside trainers are used
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                • personal protective clothing
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272]">
+              The use of facilitation payments is also addressed in GRI 205:
+              Anti-corruption 2016. Employee wages and benefits An organization
+              can calculate employee wages and benefits as total payroll
+              (including employee salaries and amounts paid to government
+              institutions on behalf of employees) plus total benefits
+              (excluding training, costs of protective equipment or other cost
+              items directly related to the employee’s job function). Amounts
+              paid to government institutions on behalf of employees can include
+              employee taxes, levies, and unemployment funds.
+            </p>
+            <p className="text-[11px] text-[#727272]">
+              Total benefits can include:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                • regular contributions, such as to pensions, insurance, company
+                vehicles, and private health
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                • other employee support, such as housing, interest-free loans,
+                public transport assistance, educational grants, and redundancy
+                payment
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272]">
+              Payments to providers of capital An organization can calculate
+              payments to providers of capital as dividends to all shareholders,
+              plus interest payments made to providers of loans.
+            </p>
+            <p className="text-[11px] text-[#727272]">
+              Interest payments made to providers of loans can include:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                • interest on all forms of debt and borrowings (not only
+                long-term debt)
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                • arrears of dividends due to preferred shareholders.
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272]">
+              Payments to government An organization can calculate payments to
+              governments as all of the organization’s taxes plus related
+              penalties paid at the international, national, and local levels.
+              Organization taxes can include corporate, income, and property.
+              Payments to government exclude deferred taxes, because they may
+              not be paid. If operating in more than one country, the
+              organization can report taxes paid by country, including the
+              definition of segmentation used.
+            </p>
+            <p className="text-[11px] text-[#727272]">
+              Community investments Total community investments refers to actual
+              expenditures in the reporting period, not commitments. An
+              organization can calculate community investments as voluntary
+              donations plus investment of funds in the broader community where
+              the target beneficiaries are external to the organization.
+              Voluntary donations and investment of funds in the broader
+              community where the target beneficiaries are external to the
+              organization can include:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                • funds to support community infrastructure, such as
+                recreational facilities;
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                • direct costs of social programs, including arts and
+                educational events.
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272]">
+              If reporting infrastructure investments, an organization can
+              include costs of goods and labor, in addition to capital costs, as
+              well as operating costs for support of ongoing facilities or
+              programs. An example of support for ongoing facilities or programs
+              can include the organization funding the daily operations of a
+              public facility.
+            </p>
+            <p className="text-[11px] text-[#727272]">
+              Community investments exclude legal and commercial activities or
+              where the purpose of the investment is exclusively commercial
+              (donations to political parties can be included, but are also
+              addressed separately in more detail in GRI 415: Public Policy
+              2016).
+            </p>
+            <p className="text-[11px] text-[#727272]">
+              Community investments also exclude any infrastructure investment
+              that is driven primarily by core business needs, or to facilitate
+              the business operations of an organization. Infrastructure
+              investments driven primarily by core business needs can include,
+              for example, building a road to a mine or a factory. The
+              calculation of investment can include infrastructure built outside
+              the main business activities of the organization, such as a school
+              or hospital for workers and their families.
+            </p>
+            <p className="text-[11px] text-[#727272]">
+              See references [5], [6], [7] and [9] in the Bibliography.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Revenues </p>
+            <p className="text-[11px] text-[#727272]">
+              Information on the creation and distribution of economic value
+              provides a basic indication of how an organization has created
+              wealth for stakeholders. Several components of the economic value
+              generated and distributed (EVG&D) also provide an economic profile
+              of an organization, which can be useful for normalizing other
+              performance figures. If presented in country-level detail, EVG&D
+              can provide a useful picture of the direct monetary value added to
+              local economies.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12368&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["116"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-08.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-red-900 text-[17px] font-bold ml-2">SDG 8</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 8: Promote sustained, inclusive and
+            sustainable economic growth, full and productive employment and
+            decent work for all
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 8.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Sustain per capita economic growth in accordance with national
+              circumstances and, in particular, at least 7 per cent gross
+              domestic product growth per annum in the least developed countries
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.1.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Annual growth rate of real GDP per capita
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 8.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Achieve higher levels of economic productivity through
+              diversification, technological upgrading and innovation, including
+              through a focus on high-value added and labour-intensive sectors.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.2.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Annual growth rate of real GDP per employed person.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal8"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["117"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-09.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-[#F36E24] text-[17px] font-bold ml-2">SDG 9</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 9: Build resilient infrastructure,
+            promote inclusive and sustainable industrialization and foster
+            innovation
+          </p>
+          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 9.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Develop quality, reliable, sustainable and resilient
+              infrastructure, including regional and transborder infrastructure,
+              to support economic development and human well-being, with a focus
+              on affordable and equitable access for all
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">9.1.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of the rural population who live within 2 km of an
+              all-season road
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">9.1.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Passenger and freight volumes, by mode of transport
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 9.4</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, upgrade infrastructure and retrofit industries to make
+              them sustainable, with increased resource-use efficiency and
+              greater adoption of clean and environmentally sound technologies
+              and industrial processes, with all countries taking action in
+              accordance with their respective capabilities.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">9.4.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              CO2 emission per unit of value added
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 9.5</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Enhance scientific research, upgrade the technological
+              capabilities of industrial sectors in all countries, in particular
+              developing countries, including, by 2030, encouraging innovation
+              and substantially increasing the number of research and
+              development workers per 1 million people and public and private
+              research and development spending
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">9.5.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Research and development expenditure as a proportion of GDP
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">9.5.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Researchers (in full-time equivalent) per million inhabitants
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal9"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["118"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 201:Economic Performance 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 201-2 Financial implications and other risks and
+            opportunities due to climate change
+          </p>
+          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-4">
+              Compilation Requirements:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              2.2 When compiling the information specified in Disclosure 201-2,
+              if the reporting organization does not have a system in place to
+              calculate the financial implications or costs, or to make revenue
+              projections, it shall report its plans and timeline to develop the
+              necessary systems.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-4">Guidance:</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Risk and opportunities due to climate change can be classified as:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">• physical</li>
+
+              <li className="text-[11px] text-[#727272]">• regulatory</li>
+              <li className="text-[11px] text-[#727272]">• other</li>
+            </ul>
+
+            <p className="text-[11px] text-[#727272] mb-4">
+              Physical risks and opportunities can include
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                • the impact of more frequent and intense storms
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                • changes in sea level, ambient temperature, and water
+                availability
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                • impacts on workers – such as health effects, including
+                heat-related illness or disease, and the need to relocate
+                operations
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Other risks and opportunities can include the availability of new
+              technologies, products, or services to address challenges related
+              to climate change, as well as changes in customer behavior.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Methods used to manage the risk or opportunity can include:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                • carbon capture and storage;
+              </li>
+
+              <li className="text-[11px] text-[#727272]">• fuel switching;</li>
+              <li className="text-[11px] text-[#727272]">
+                • use of renewable and lower carbon footprint energy;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                • improving energy efficiency;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                • flaring, venting, and fugitive emission reduction;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                • renewable energy certificates
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                • use of carbon offsets.
+              </li>
+            </ul>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12368&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["119"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-13.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-red-900 text-[17px] font-bold ml-2">SDG 13</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 13: Take urgent action to combat
+            climate change and its impacts
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 13.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Strengthen resilience and adaptive capacity to climate-related
+              hazards and natural disasters in all countries
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">13.1.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of the rural population who live within 2 km of an
+              all-season road
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 13.1.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Number of countries that adopt and implement national disaster
+              risk reduction strategies in line with the Sendai Framework for
+              Disaster Risk Reduction 2015–2030
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 13.1.3</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of local governments that adopt and implement local
+              disaster risk reduction strategies in line with national disaster
+              risk reduction strategies
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal8"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["120"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 201:Economic Performance 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 201-3 Defined benefit plan obligations and other
+            retirement plans
+          </p>
+          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-4">Guidance:</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The structure of retirement plans offered to employees can be
+              based on:
+            </p>
+
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                • defined benefit plans
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                • defined contribution plans
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                • other types of retirement benefits.
+              </li>
+            </ul>
+
+            <p className="text-[11px] text-[#727272] mb-4">
+              Different jurisdictions, such as countries, have varying
+              interpretations and guidance regardingcalculations used to
+              determine plan coverage.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Note that benefit pension plans are part of the International
+              Accounting Standards Board (IASB) IAS 19 Employee Benefits,
+              however IAS 19 covers additional topics. See reference [7] in the
+              Bibliography.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-4">Background:</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              When an organization provides a retirement plan for its employees,
+              these benefits can become a commitment that members of the schemes
+              plan on for their long-term economic well-being.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Defined benefit plans have potential implications for employers in
+              terms of the obligations that need to be met. Other types of
+              plans, such as defined contribution plans, do not guarantee access
+              to a retirement plan or the quality of the benefits. Thus, the
+              type of plan chosen has implications for both employees and
+              employers. Conversely, a properly funded pension plan can help to
+              attract and maintain employees and support long-term financial and
+              strategic planning on the part of the employer.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12368&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["121"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 201:Economic Performance 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 201-4 Financial assistance received from government
+          </p>
+          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-4">
+              Compilation Requirement:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              2.5 When compiling the information specified in Disclosure 201-4,
+              the reporting organization shall identify the monetary value of
+              financial assistance received from government through consistent
+              application of generally accepted accounting principles.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-4">Background:</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure provides a measure of governments’ contributions
+              to an organization. The significant financial assistance received
+              from a government, in comparison with taxes paid, can be useful
+              for developing a balanced picture of the transactions between the
+              organization and government. See reference [8] in the
+              Bibliography.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12368&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["122"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 205: Anti-corruption 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 205-1 Operations assessed for risks related to corruption
+          </p>
+          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-4">Guidance :</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure can include a risk assessment focused on
+              corruption or the inclusion of corruption as a risk factor in
+              overall risk assessments. The term ‘operation’ refers to a single
+              location used by the organization for the production, storage
+              and/or distribution of its goods and services, or for
+              administrative purposes. Within a single operation, there can be
+              multiple production lines, warehouses, or other activities. For
+              example, a single factory can be used for multiple products or a
+              single retail outlet can contain several different retail
+              operations that are owned or managed by the organization.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-4">Background:</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure measures the extent of the risk assessment’s
+              implementation across an organization. Risk assessments can help
+              to assess the potential for incidents of corruption within and
+              related to the organization, and help the organization to design
+              policies and procedures to combat corruption.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12412"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["123"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 205: Anti-corruption 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 205-3 Confirmed incidents of corruption and actions taken
+          </p>
+          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-4">Guidance :</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              For stakeholders, there is an interest in both the occurrence of
+              incidents and an organization’s response to the incidents. Public
+              legal cases regarding corruption can include current public
+              investigations, prosecutions, or closed cases.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-4">
+              Guidance for Disclosure 205-3-c:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              In the context of this GRI Standard, the term ‘business partners’
+              includes, among others, suppliers, agents, lobbyists and other
+              intermediaries, joint venture and consortia partners, governments,
+              customers, and clients.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12412"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["124"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 206: Anti Competitive Behaviour
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 206-1 Legal actions for anti-competitive behavior,
+            anti-trust, and monopoly practices
+          </p>
+          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-4">Background:</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure pertains to legal actions initiated under national
+              or international laws designed primarily for the purpose of
+              regulating anti-competitive behavior, anti-trust, or monopoly
+              practices. Anti-competitive behavior, anti-trust, and monopoly
+              practices can affect consumer choice, pricing, and other factors
+              that are essential to efficient markets. Legislation introduced in
+              many countries seeks to control or prevent monopolies, with the
+              underlying assumption that competition between enterprises also
+              promotes economic efficiency and sustainable growth. Legal action
+              indicates a situation in which the market actions or status of an
+              organization have reached a sufficient scale to merit concern by a
+              third party. Legal decisions arising from these situations can
+              carry the risk of significant disruption of market activities for
+              the organization as well as punitive measures.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12412"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["125"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">GRI 207: Tax 2019</h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 207-1 Approach to tax
+          </p>
+          <div className="h-[520px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Guidance:</p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-1-a :
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The reporting organization can illustrate its approach to tax by
+              providing examples drawn from its tax practices. For example, the
+              organization can provide an overview of its use of tax havens, the
+              types of tax incentive it uses, or its approach to transfer
+              pricing. These examples help demonstrate the organization’s risk
+              appetite and the tax practices deemed acceptable and unacceptable
+              by the organization and its highest governance body.
+            </p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-1-a-i:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              If the organization has a tax strategy but the strategy is not
+              publicly available, the organization can provide an abstract or
+              summary of the strategy. If the organization has a tax strategy
+              that applies to a smaller number of entities or tax jurisdictions
+              than reported in Disclosure 207-4, the organization may report
+              this strategy and list the entities or tax jurisdictions to which
+              the strategy applies. In addition to the overall strategy, if the
+              organization has tax strategies that apply to individual entities
+              or tax jurisdictions, the organization can explain any relevant
+              differences between these strategies.
+            </p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-1-a-iii:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              When describing its approach to regulatory compliance, the
+              organization can describe any statements in its tax strategy or
+              equivalent documents regarding its intention with respect to the
+              tax laws in the jurisdictions in which it operates. For example,
+              the organization can describe whether it seeks to comply with the
+              letter and the spirit of the law. That is, whether the
+              organization takes reasonable steps to determine and follow the
+              intention of the legislature.
+            </p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-1-a-iv:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              When describing how its approach to tax is linked to its business
+              strategy, the organization can explain how its tax planning is
+              aligned with its commercial activities. The description can
+              include any relevant statements from its tax strategy or
+              equivalent documents. When describing how its approach to tax is
+              linked to its sustainable development strategy, the organization
+              can explain the following:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                • Whether it considered the economic and social impacts of its
+                approach to tax when developing its tax strategy.
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                • Any organizational commitments to sustainable development in
+                the jurisdictions in which it operates and whether its approach
+                to tax is aligned with these commitments.
+              </li>
+            </ul>
+            <p className="text-[13px] text-[#222222] mb-4">Background:</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              An organization’s approach to tax defines how the organization
+              balances tax compliance with business activities and ethical,
+              societal, and sustainable development-related expectations. It can
+              include the organization’s tax principles, its attitude to tax
+              planning, the degree of risk the organization is willing to
+              accept, and the organization’s approach to engaging with tax
+              authorities. An organization’s approach to tax is often described
+              in a tax strategy, but it could also be described in equivalent
+              documents, such as policies, standards, principles, or codes of
+              conduct.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/standards/standards-development/topic-standard-for-tax/"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["126"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-01.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-[#EA1D2D] text-[17px] font-bold ml-2">SDG 1</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 1: End poverty in all its forms
+            everywhere
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 1.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, eradicate extreme poverty for all people everywhere,
+              currently measured as people living on less than $1.25 a day
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">1.1.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of the population living below the international
+              poverty line by sex, age, employment status and geographical
+              location (urban/rural)
+            </p>
+
+            <p className="text-[13px] text-[#222222] mb-2">Target 1.3</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Implement nationally appropriate social protection systems and
+              measures for all, including floors, and by 2030 achieve
+              substantial coverage of the poor and the vulnerable
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">1.3.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of population covered by social protection
+              floors/systems, by sex, distinguishing children, unemployed
+              persons, older persons, persons with disabilities, pregnant women,
+              newborns, work-injury victims and the poor and the vulnerable
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["127"],
+    header: [
+      <>
+        <div className="flex w-[100px]">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-10.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-pink-500 text-[17px] font-bold ml-2">SDG 10</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 10: Reduce inequality within and among
+            countries
+          </p>
+          <div className="h-[280px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 10.4</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Adopt policies, especially fiscal, wage and social protection
+              policies, and progressively achieve greater equality
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">10.4.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Labor share of GDP
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">10.4.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Redistributive impact of fiscal policy
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal10"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["128"],
+    header: [
+      <>
+        <div className="flex w-[100px]">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-17.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-[#1A3668] text-[17px] font-bold ml-2">SDG 17</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 17: End poverty in all its forms
+            everywhere
+          </p>
+          <div className="h-[280px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 17.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Strengthen domestic resource mobilization, including through
+              international support to developing countries, to improve domestic
+              capacity for tax and other revenue collection
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">17.1.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Total government revenue as a proportion of GDP, by source
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">17.1.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of domestic budget funded by domestic taxes
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 17.3</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Mobilize additional financial resources for developing countries
+              from multiple sources
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">17.3.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Additional financial resources mobilized for developing countries
+              from multiple sources
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">17.3.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Volume of remittances (in United States dollars) as a proportion
+              of total GDP
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal17"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["129"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">GRI 207: Tax 2019</h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 207-2 Tax governance, control, and risk management
+          </p>
+          <div className="h-[520px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Guidance:</p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-2-a :
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              When describing the tax governance and control framework, the
+              reporting organization can provide examples of effective
+              implementation of its tax governance, control, and risk management
+              systems.
+            </p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-2-a-i:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              If the highest governance body in an organization is accountable
+              for compliance with the tax strategy, the organization can specify
+              the degree to which the highest governance body has oversight of
+              compliance. The organization can also specify any accountability
+              for compliance delegated to executive-level positions within the
+              organization.
+            </p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-2-a-ii:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              When reporting how the approach to tax is embedded within the
+              organization, the organization can describe processes, projects,
+              programs, and initiatives that support adherence to the approach
+              to tax and tax strategy. Examples of such initiatives can include:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                • training and guidance provided to relevant employees on the
+                link between tax strategy, business strategy, and sustainable
+                development;
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                • remuneration or incentive schemes for the person(s)
+                responsible for implementing the tax strategy;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                • succession-planning for positions within the organization that
+                are responsible for tax; participation in tax transparency
+                initiatives or representative associations that seek to develop
+                best practice around disclosures on tax or educate stakeholders
+                on tax-related issues.
+              </li>
+            </ul>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-2-a-iii:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Tax risks are risks associated with the organization’s tax
+              practices that might lead to a negative effect on the goals of the
+              organization, or to financial or reputational damage. These
+              include compliance risks or risks such as those related to
+              uncertain tax positions, changes in legislation, or a perception
+              of aggressive tax practices. When reporting on the approach to tax
+              risks, the organization can describe its risk appetite and
+              tolerance and provide examples of tax practices it has avoided
+              because they are misaligned with its approach to tax and tax
+              strategy. Risk appetite and tolerance indicate the degree of risk
+              the organization is willing to accept in determining its tax
+              positions. When reporting how tax risks are identified, managed,
+              and monitored, the organization can:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                • describe the role of the highest governance body in the tax
+                risk management process;
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                • describe how the tax risk management process is communicated
+                and embedded across the organization;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                • refer to any internal control frameworks or generally accepted
+                risk management principles that are applied to tax.
+              </li>
+            </ul>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-2-a-iv:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              When reporting how compliance with the tax governance and control
+              framework is evaluated, the organization can describe the process
+              through which the tax governance and control framework is
+              monitored, tested, and maintained. An example of this is giving an
+              internal auditor accountability for undertaking annual reviews of
+              the tax department’s compliance with the tax governance and
+              control framework. The organization can also specify the degree to
+              which the highest governance body has oversight of the design,
+              implementation, and effectiveness of the tax governance and
+              control framework.
+            </p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-2-b:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              One example of a mechanism for individuals to raise concerns about
+              the organization’s business conduct, or about activities that
+              compromise the organization’s integrity in relation to tax, is
+              whistleblowing. Disclosure 207-2-b is related to Disclosure 2-26
+              in GRI 2: General Disclosures 2021. If the information reported by
+              the organization in Disclosure 2-26 covers mechanisms used to
+              raise concerns about the organization’s business conduct in
+              relation to tax, the organization can provide a reference to this
+              information.
+            </p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-2-c:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Disclosure 207-2-c is related to Disclosure 2-5 in GRI 2: General
+              Disclosures 2021. If the assurance process for disclosures on tax
+              has been completed as part of another assurance process, the
+              organization can provide a reference to this information reported
+              in Disclosure 2-5 or elsewhere.
+            </p>
+
+            <p className="text-[13px] text-[#222222] mb-4">Background:</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Having robust governance, control, and risk management systems in
+              place for tax can be an indication that the reported approach to
+              tax and tax strategy are well embedded in an organization and that
+              the organization is effectively monitoring its compliance
+              obligations. Reporting this information reassures stakeholders
+              that the organization’s practices reflect the statements it has
+              made about its approach to tax in its tax strategy or equivalent
+              documents.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/standards/standards-development/topic-standard-for-tax/"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["130"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">GRI 207: Tax 2019</h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 207-3 Stakeholder engagement and management of concerns
+            related to tax
+          </p>
+          <div className="h-[520px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Guidance:</p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-3-a-i :
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The approach to engagement with tax authorities can include
+              participating in cooperative compliance agreements, seeking active
+              real-time audit, seeking clearance for all significant
+              transactions, engaging on tax risks, and seeking advance pricing
+              agreements.
+            </p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-3-a-ii:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              When reporting the approach to public policy advocacy on tax, the
+              reporting organization can describe:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                • its lobbying activities related to tax;
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                • its stance on significant issues related to tax that it
+                addresses in its public policy advocacy, and any differences
+                between its advocacy positions and its stated policies, goals,
+                or other public positions;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                • whether it is a member of, or contributes to, any
+                representative associations or committees that participate in
+                public policy advocacy on tax, including:
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                - the nature of this contribution;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                - any differences between the organization’s stated policies,
+                goals, or other public positions on significant issues related
+                to tax, and the positions of the representative associations or
+                committees.
+              </li>
+            </ul>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              Disclosure 207-3-a-ii is related to the requirements in GRI 415:
+              Public Policy 2016. If the organization has determined public
+              policy to be a material topic and has reported information in GRI
+              415 that covers the organization’s public policy advocacy on tax,
+              the organization can provide a reference to this information.
+            </p>
+
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-3-a-iii:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              When reporting the processes for collecting and considering the
+              views and concerns of stakeholders, the organization can describe
+              how the processes enable stakeholders to participate in this
+              engagement. The organization can also provide examples of how
+              stakeholder feedback has influenced the approach to tax, the tax
+              strategy, or the tax practices of the organization.
+            </p>
+
+            <p className="text-[13px] text-[#222222] mb-4">Background:</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Organizations’ tax practices are of interest to various
+              stakeholders. The approach an organization takes to engaging with
+              stakeholders has the potential to influence its reputation and
+              position of trust. This includes how the organization engages with
+              tax authorities in the development of tax systems, legislation,
+              and administration. Stakeholder engagement can enable the
+              organization to understand evolving expectations related to tax.
+              It can give the organization insight into potential future
+              regulatory changes and enable the organization to better manage
+              its risks and impacts.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/standards/standards-development/topic-standard-for-tax/"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["131"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">GRI 207: Tax 2019</h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 207-4 Country-by-country reporting
+          </p>
+          <div className="h-[520px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">
+              Compilation requirements:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              2.1 When compiling the information specified in Disclosure 207-4,
+              the reporting organization shall report information for the time
+              period covered by the most recent audited consolidated financial
+              statements or financial information filed on public record. If
+              information is not available for this time period, the
+              organization may report information for the time period covered by
+              the audited consolidated financial statements, or the financial
+              information filed on public record, immediately preceding the most
+              recent ones.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              2.2 When compiling the information specified in Disclosure
+              207-4-b, the reporting organization shall:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              2.2.1 reconcile the data reported for Disclosures 207-4-b-iv, vi,
+              vii, and viii with the data stated in its audited consolidated
+              financial statements, or the financial information filed on public
+              record, for the time period reported in Disclosure 207-4-c. Where
+              the data reported does not reconcile with the audited consolidated
+              financial statements, or the financial information filed on public
+              record, the organization shall provide an explanation for this
+              difference;
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              2.2.2 for Disclosure 207-4-b-ix, include corporate income tax
+              accrued in the time period reported in Disclosure 207-4-c and
+              exclude deferred corporate income
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              2.2.3 in cases where an entity is deemed not to be resident in any
+              tax jurisdiction, provide the information for this stateless
+              entity separately.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Guidance:</p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-4-a:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              In the context of this Standard, tax jurisdictions are identified
+              according to where the entities included in the organization’s
+              audited consolidated financial statements, or in the financial
+              information filed on public record, are resident for tax purposes.
+              These entities include permanent establishments and dormant
+              entities.
+            </p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-4-b:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Unless otherwise stated, country-by-country information is to be
+              reported at the level of tax jurisdictions and not at the level of
+              individual entities. Number of employees, revenues, profit/loss
+              before tax, and tangible assets other than cash and cash
+              equivalents are indicators of the organization’s scale of activity
+              within a tax jurisdiction. When considered in conjunction with the
+              other required and recommended information, they can inform
+              assessments about the level of taxes being paid in a jurisdiction.
+              In addition to this information, the organization can report any
+              other information relevant for understanding the scale of its
+              activity within a jurisdiction. If the reporting organization
+              cannot report all required information for all the tax
+              jurisdictions reported in Disclosure 207-4-a, it may use reasons
+              for omission as set out in GRI 1: Foundation 2021. The
+              organization is required to specify the requirement it cannot
+              comply with, and to provide a reason for omission and required
+              explanation, as set out in GRI 1. See Requirement 6 in GRI 1 for
+              more information on reasons for omission. If complete reporting
+              for a tax jurisdiction is not possible because the organization
+              holds a minority shareholding or is the non-operating joint
+              venture partner in an entity, the organization may provide
+              ‘information unavailable / incomplete’ as the reason for omission
+              and specify the majority shareholder or operating partner. The
+              organization can also report any contextual information necessary
+              to understand how data has been compiled, such as any standards,
+              methodologies, and assumptions used.
+            </p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-4-b-i:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Disclosure 207-4-b-i requires the organization to report a list of
+              entities by tax jurisdiction. If the organization’s publicly
+              available audited consolidated financial statements, or the
+              financial information filed on public record, include a list of
+              all its entities by tax jurisdiction, the organization can provide
+              a reference to this information. When reporting the names of the
+              resident entities for a tax jurisdiction, the organization can
+              specify if any of the entities are dormant
+            </p>
+
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-4-b-ii:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              When reporting its primary activities in a tax jurisdiction, the
+              organization can provide a general description such that a report
+              reader can clearly identify the organization’s main activities in
+              the jurisdiction, for example, sales, marketing, manufacturing, or
+              distribution. The organization is not required to list the
+              activities of each entity in the jurisdiction.
+            </p>
+
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-4-b-iii:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Employee numbers can be reported using an appropriate calculation,
+              such as head count at the end of the time period reported in
+              Disclosure 207-4-c or a full-time equivalent (FTE) calculation. To
+              enable comparability, it is important that the organization
+              applies the approach consistently across all tax jurisdictions and
+              between time periods. If the organization is unable to report
+              exact figures, it can report the number of employees to the
+              nearest ten or, where the number of employees is greater than
+              1000, to the nearest 100. The number of employees is one indicator
+              of the organization’s scale of activity in a tax jurisdiction. In
+              addition to the number of employees, the organization may report
+              the number of workers (excluding employees) performing the
+              organization’s activities, if this helps explain the
+              organization’s scale of activity in the jurisdiction. It is
+              important that the organization reports the number of employees
+              and/or the number of workers consistently across all jurisdictions
+              and between time periods.
+            </p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosures 207-4-b-iv and 207-4-b-v::
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              These disclosures require the organization to report revenues from
+              third-party sales for each tax jurisdiction and from intra-group
+              transactions between that jurisdiction and other tax
+              jurisdictions. Intra-group transactions within the same tax
+              jurisdiction are not required, but the organization can report
+              this information separately. Intra-group transactions between
+              jurisdictions can influence the tax bases of the organization in
+              the jurisdictions involved in these transactions. Intra-group
+              transactions within the same tax jurisdiction do not affect the
+              tax base of the organization within that jurisdiction. For this
+              reason, revenues from third-party sales and intra-group
+              transactions with other jurisdictions are a more appropriate
+              indicator of an organization’s scale of activity in a tax
+              jurisdiction than aggregated revenues. Aggregated revenues could
+              result in local revenues being double-counted, which might create
+              a misleading impression about the organization's scale of activity
+              in a jurisdiction. The organization can also report other sources
+              of revenue, for example, dividends, interest, and royalties, where
+              this is standard practice in the sector of the organization.
+            </p>
+
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-4-b-vi:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              When reporting profit/loss before tax for a tax jurisdiction, the
+              organization can calculate the consolidated profit/loss before tax
+              for all its resident entities in the jurisdiction.
+            </p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-4-b-vi:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              When reporting profit/loss before tax for a tax jurisdiction, the
+              organization can calculate the consolidated profit/loss before tax
+              for all its resident entities in the jurisdiction.
+            </p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-4-b-vii:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              When reporting tangible assets for a tax jurisdiction, the
+              organization can calculate the consolidated total of the net book
+              values of tangible assets for all its resident entities in the
+              jurisdiction
+            </p>
+            <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
+              Guidance for Disclosure 207-4-b-viii:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              When reporting corporate income tax paid on a cash basis for a tax
+              jurisdiction, the organization can calculate the total actual
+              corporate income tax paid during the time period reported in
+              Disclosure 207-4-c by all its resident entities in the
+              jurisdiction. This includes cash taxes paid by entities to the
+              jurisdiction of residence and to all other jurisdictions (e.g.,
+              withholding taxes incurred in other tax jurisdictions). If the tax
+              paid includes a significant amount of withholding tax, the
+              organization can explain this. If taxes are incurred in other tax
+              jurisdictions, the organization can report the amount of tax paid
+              to the other tax jurisdictions separately and identify the
+              jurisdictions where the tax was paid.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/standards/standards-development/topic-standard-for-tax/"
               target="_blank"
             >
               Learn more <MdChevronRight className="text-lg mt-0.5" />

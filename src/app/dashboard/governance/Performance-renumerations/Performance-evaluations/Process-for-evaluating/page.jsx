@@ -177,7 +177,7 @@ const Process = ({ selectedOrg, selectedCorp, year }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
               Processes for evaluating the performance of the highest governance
               body
               <MdInfoOutline

@@ -84,7 +84,7 @@ const uiSchema = {
     Q1: {
       "ui:title": "Has the organization's sustainability report been externally assured?",
       "ui:tooltip":
-        "Indicate whether the organization's sustainability report has been externally assured. .",
+        "Indicate whether the organization's sustainability report has been externally assured.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "RadioWidget2",
       "ui:horizontal": true,
@@ -94,7 +94,7 @@ const uiSchema = {
     },
     Q2: {
         "ui:hading": "Link/Reference",
-        "ui:hadingtooltip": "This section documents data corresponding to the external assurance of the sustainability report. ",
+        "ui:hadingtooltip": "This section documents data corresponding to the reference of the external assurance report or assurance statement. Include: Link/reference to the external assurance report or assurance statement.",
         "ui:hadingtooltipdisplay": "block",
         "ui:hadingdisplay": "block",
       "ui:title":
@@ -315,7 +315,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
             External assurance of sustainability report
               <MdInfoOutline data-tooltip-id={`tooltip-employees`}
                 data-tooltip-content="This section documents data corresponding to the

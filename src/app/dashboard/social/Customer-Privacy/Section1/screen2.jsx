@@ -185,7 +185,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
             Identified leaks, thefts, or losses of customer data
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e15`}
