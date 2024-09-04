@@ -5,9 +5,9 @@ import "react-tooltip/dist/react-tooltip.css";
 import Select from 'react-select';
 import { Currency } from "../../data/currency";
 
-const currencyOptions = Currency.map(({ currency, country }) => ({
+const currencyOptions = Currency.map(({ currency, country,currency_name }) => ({
   value: currency,
-  label: `${currency}`
+  label: `${currency} - ${currency_name}`
 }));
 
 const customStyles = {
@@ -25,16 +25,16 @@ const customStyles = {
   input: (provided) => ({
     ...provided,
 
-    fontSize: '0.875rem',
+    fontSize: '15px',
   }),
   placeholder: (provided) => ({
     ...provided,
-    fontSize: '0.75rem',
+    fontSize: '15px',
     color: '#6B7280',  // Tailwind Gray-500
   }),
   singleValue: (provided) => ({
     ...provided,
-    fontSize: '0.875rem',
+    fontSize: '15px',
   }),
   dropdownIndicator: (provided) => ({
     ...provided,
@@ -102,7 +102,7 @@ const CurrencyWidget = (props) => {
           <input
             type={uiSchema["ui:inputfildtype"]}
             placeholder="Enter amount"
-            className="py-4 text-md text-neutral-600 pl-2 leading-tight  border-r border-gray-300 focus:outline-none focus:bg-white cursor-pointer w-[50%]"
+            className="py-4 text-[15px] text-neutral-600 pl-2 leading-tight  border-r border-gray-300 focus:outline-none focus:bg-white cursor-pointer w-[50%]"
             value={inputValue}
             onChange={handleInputChange}
             min="0"

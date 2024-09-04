@@ -19,7 +19,7 @@ const widgets = {
   AddmultiInput:AddmultiInput,
 };
 
-const view_path = "gri-economic-significant_indirect-provide-203-2a";
+const view_path = "gri-economic-direct_economic_value-report-201-1a-1b";
 const client_id = 1;
 const user_id = 1;
 
@@ -87,7 +87,7 @@ const uiSchema = {
       "ui:tooltip": "Specify the frequency of sustainability reporting..",
       "ui:tooltipdisplay": "none",
       "ui:widget": "selectWidget",
-      "ui:widgtclass":"block w-[20vw]  py-2  text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300 mb-4",
+      "ui:widgtclass":"block w-[20vw] text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300 mb-4",
       "ui:horizontal": true,
       "ui:options": {
         label: false,
@@ -332,8 +332,8 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // updateFormData();
-    console.log("test form data", formData);
+    updateFormData();
+    // console.log("test form data", formData);
   };
 
   return (
@@ -359,7 +359,7 @@ report EVG&D separately at country, regional, or market levels, and the criteria
 <p>
 Note: Compile the EVG&D from data in the organization’s audited financial or profit and loss
 (P&L) statement, or its internally audited management accounts.</p> "
-                className="mt-1.5 ml-2 text-[32px]"
+                className=" ml-2 text-[25px]"
               />
               <ReactTooltip
                 id={`es25`}
@@ -395,8 +395,8 @@ Note: Compile the EVG&D from data in the organization’s audited financial or p
         </div>
         <div className="mx-2 mb-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -410,7 +410,7 @@ Note: Compile the EVG&D from data in the organization’s audited financial or p
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

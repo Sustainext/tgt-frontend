@@ -1,262 +1,327 @@
 export const Currency = [
     {
         "currency": "USD",
-        "country": "United States"
+        "country": "United States",
+        "currency_name": "United States Dollar"
     },
     {
         "currency": "CAD",
-        "country": "Canada"
+        "country": "Canada",
+        "currency_name": "Canadian Dollar"
     },
     {
         "currency": "EUR",
-        "country": "Eurozone countries"
+        "country": "Eurozone countries",
+        "currency_name": "Euro"
     },
     {
         "currency": "AED",
-        "country": "United Arab Emirates"
+        "country": "United Arab Emirates",
+        "currency_name": "United Arab Emirates Dirham"
     },
     {
         "currency": "AFN",
-        "country": "Afghanistan"
+        "country": "Afghanistan",
+        "currency_name": "Afghan Afghani"
     },
     {
         "currency": "ALL",
-        "country": "Albania"
+        "country": "Albania",
+        "currency_name": "Albanian Lek"
     },
     {
         "currency": "AMD",
-        "country": "Armenia"
+        "country": "Armenia",
+        "currency_name": "Armenian Dram"
     },
     {
         "currency": "ARS",
-        "country": "Argentina"
+        "country": "Argentina",
+        "currency_name": "Argentine Peso"
     },
     {
         "currency": "AUD",
-        "country": "Australia"
+        "country": "Australia",
+        "currency_name": "Australian Dollar"
     },
     {
         "currency": "AZN",
-        "country": "Azerbaijan"
+        "country": "Azerbaijan",
+        "currency_name": "Azerbaijani Manat"
     },
     {
         "currency": "BAM",
-        "country": "Bosnia and Herzegovina"
+        "country": "Bosnia and Herzegovina",
+        "currency_name": "Bosnia-Herzegovina Convertible Mark"
     },
     {
         "currency": "BDT",
-        "country": "Bangladesh"
+        "country": "Bangladesh",
+        "currency_name": "Bangladeshi Taka"
     },
     {
         "currency": "BGN",
-        "country": "Bulgaria"
+        "country": "Bulgaria",
+        "currency_name": "Bulgarian Lev"
     },
     {
         "currency": "BHD",
-        "country": "Bahrain"
+        "country": "Bahrain",
+        "currency_name": "Bahraini Dinar"
     },
     {
         "currency": "BIF",
-        "country": "Burundi"
+        "country": "Burundi",
+        "currency_name": "Burundian Franc"
     },
     {
         "currency": "BND",
-        "country": "Brunei"
+        "country": "Brunei",
+        "currency_name": "Brunei Dollar"
     },
     {
         "currency": "BOB",
-        "country": "Bolivia"
+        "country": "Bolivia",
+        "currency_name": "Bolivian Boliviano"
     },
     {
         "currency": "BRL",
-        "country": "Brazil"
+        "country": "Brazil",
+        "currency_name": "Brazilian Real"
     },
     {
         "currency": "BWP",
-        "country": "Botswana"
+        "country": "Botswana",
+        "currency_name": "Botswana Pula"
     },
     {
         "currency": "BYN",
-        "country": "Belarus"
+        "country": "Belarus",
+        "currency_name": "Belarusian Ruble"
     },
     {
         "currency": "BZD",
-        "country": "Belize"
+        "country": "Belize",
+        "currency_name": "Belize Dollar"
     },
     {
         "currency": "CDF",
-        "country": "Democratic Republic of the Congo"
+        "country": "Democratic Republic of the Congo",
+        "currency_name": "Congolese Franc"
     },
     {
         "currency": "CHF",
-        "country": "Switzerland"
+        "country": "Switzerland",
+        "currency_name": "Swiss Franc"
     },
     {
         "currency": "CLP",
-        "country": "Chile"
+        "country": "Chile",
+        "currency_name": "Chilean Peso"
     },
     {
         "currency": "CNY",
-        "country": "China"
+        "country": "China",
+        "currency_name": "Chinese Yuan"
     },
     {
         "currency": "COP",
-        "country": "Colombia"
+        "country": "Colombia",
+        "currency_name": "Colombian Peso"
     },
     {
         "currency": "CRC",
-        "country": "Costa Rica"
+        "country": "Costa Rica",
+        "currency_name": "Costa Rican Colón"
     },
     {
         "currency": "CVE",
-        "country": "Cape Verde"
+        "country": "Cape Verde",
+        "currency_name": "Cape Verdean Escudo"
     },
     {
         "currency": "CZK",
-        "country": "Czech Republic"
+        "country": "Czech Republic",
+        "currency_name": "Czech Koruna"
     },
     {
         "currency": "DJF",
-        "country": "Djibouti"
+        "country": "Djibouti",
+        "currency_name": "Djiboutian Franc"
     },
     {
         "currency": "DKK",
-        "country": "Denmark"
+        "country": "Denmark",
+        "currency_name": "Danish Krone"
     },
     {
         "currency": "DOP",
-        "country": "Dominican Republic"
+        "country": "Dominican Republic",
+        "currency_name": "Dominican Peso"
     },
     {
         "currency": "DZD",
-        "country": "Algeria"
+        "country": "Algeria",
+        "currency_name": "Algerian Dinar"
     },
     {
         "currency": "EEK",
-        "country": "Estonia"
+        "country": "Estonia",
+        "currency_name": "Estonian Kroon"
     },
     {
         "currency": "EGP",
-        "country": "Egypt"
+        "country": "Egypt",
+        "currency_name": "Egyptian Pound"
     },
     {
         "currency": "ERN",
-        "country": "Eritrea"
+        "country": "Eritrea",
+        "currency_name": "Eritrean Nakfa"
     },
     {
         "currency": "ETB",
-        "country": "Ethiopia"
+        "country": "Ethiopia",
+        "currency_name": "Ethiopian Birr"
     },
     {
         "currency": "GBP",
-        "country": "United Kingdom"
+        "country": "United Kingdom",
+        "currency_name": "British Pound Sterling"
     },
     {
         "currency": "GEL",
-        "country": "Georgia"
+        "country": "Georgia",
+        "currency_name": "Georgian Lari"
     },
     {
         "currency": "GHS",
-        "country": "Ghana"
+        "country": "Ghana",
+        "currency_name": "Ghanaian Cedi"
     },
     {
         "currency": "GNF",
-        "country": "Guinea"
+        "country": "Guinea",
+        "currency_name": "Guinean Franc"
     },
     {
         "currency": "GTQ",
-        "country": "Guatemala"
+        "country": "Guatemala",
+        "currency_name": "Guatemalan Quetzal"
     },
     {
         "currency": "HKD",
-        "country": "Hong Kong"
+        "country": "Hong Kong",
+        "currency_name": "Hong Kong Dollar"
     },
     {
         "currency": "HNL",
-        "country": "Honduras"
+        "country": "Honduras",
+        "currency_name": "Honduran Lempira"
     },
     {
         "currency": "HRK",
-        "country": "Croatia"
+        "country": "Croatia",
+        "currency_name": "Croatian Kuna"
     },
     {
         "currency": "HUF",
-        "country": "Hungary"
+        "country": "Hungary",
+        "currency_name": "Hungarian Forint"
     },
     {
         "currency": "IDR",
-        "country": "Indonesia"
+        "country": "Indonesia",
+        "currency_name": "Indonesian Rupiah"
     },
     {
         "currency": "ILS",
-        "country": "Israel"
+        "country": "Israel",
+        "currency_name": "Israeli New Shekel"
     },
     {
         "currency": "INR",
-        "country": "India"
+        "country": "India",
+        "currency_name": "Indian Rupee"
     },
     {
         "currency": "IQD",
-        "country": "Iraq"
+        "country": "Iraq",
+        "currency_name": "Iraqi Dinar"
     },
     {
         "currency": "IRR",
-        "country": "Iran"
+        "country": "Iran",
+        "currency_name": "Iranian Rial"
     },
     {
         "currency": "ISK",
-        "country": "Iceland"
+        "country": "Iceland",
+        "currency_name": "Icelandic Króna"
     },
     {
         "currency": "JMD",
-        "country": "Jamaica"
+        "country": "Jamaica",
+        "currency_name": "Jamaican Dollar"
     },
     {
         "currency": "JOD",
-        "country": "Jordan"
+        "country": "Jordan",
+        "currency_name": "Jordanian Dinar"
     },
     {
         "currency": "JPY",
-        "country": "Japan"
+        "country": "Japan",
+        "currency_name": "Japanese Yen"
     },
     {
         "currency": "KES",
-        "country": "Kenya"
+        "country": "Kenya",
+        "currency_name": "Kenyan Shilling"
     },
     {
         "currency": "KHR",
-        "country": "Cambodia"
+        "country": "Cambodia",
+        "currency_name": "Cambodian Riel"
     },
     {
         "currency": "KMF",
-        "country": "Comoros"
+        "country": "Comoros",
+        "currency_name": "Comorian Franc"
     },
     {
         "currency": "KRW",
-        "country": "South Korea"
+        "country": "South Korea",
+        "currency_name": "South Korean Won"
     },
     {
         "currency": "KWD",
-        "country": "Kuwait"
+        "country": "Kuwait",
+        "currency_name": "Kuwaiti Dinar"
     },
     {
         "currency": "KZT",
-        "country": "Kazakhstan"
+        "country": "Kazakhstan",
+        "currency_name": "Kazakhstani Tenge"
     },
     {
         "currency": "LBP",
-        "country": "Lebanon"
+        "country": "Lebanon",
+        "currency_name": "Lebanese Pound"
     },
     {
         "currency": "LKR",
-        "country": "Sri Lanka"
+        "country": "Sri Lanka",
+        "currency_name": "Sri Lankan Rupee"
     },
     {
         "currency": "LTL",
-        "country": "Lithuania"
+        "country": "Lithuania",
+        "currency_name": "Lithuanian Litas"
     },
     {
         "currency": "LVL",
-        "country": "Latvia"
+        "country": "Latvia",
+        "currency_name": "Latvian Lats"
     }
-]
+];

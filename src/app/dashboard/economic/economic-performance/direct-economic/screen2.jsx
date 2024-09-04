@@ -16,7 +16,7 @@ const widgets = {
   inputWidget: CommoninputWidget,
 };
 
-const view_path = "gri-economic-significant_indirect-explain-203-2b";
+const view_path = "gri-economic-direct_economic_value-data-201-1a";
 const client_id = 1;
 const user_id = 1;
 
@@ -186,7 +186,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
                 data-tooltip-id={`es26`}
                 data-tooltip-html="Provide a justification for data presented on a cash basis decision in addition
 to reporting on the above basic components."
-                className="mt-1.5 ml-2 text-[18px]"
+                className="mt-1 ml-2 text-[16px]"
               />
               <ReactTooltip
                 id={`es26`}
@@ -216,8 +216,8 @@ to reporting on the above basic components."
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

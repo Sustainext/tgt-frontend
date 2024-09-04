@@ -16,7 +16,7 @@ const widgets = {
   inputWidget: CommoninputWidget,
 };
 
-const view_path = "gri-economic-infrastructure-whether-203-1c";
+const view_path = "gri-economic-defined_benefit_plan-mention-201-3e";
 const client_id = 1;
 const user_id = 1;
 
@@ -216,8 +216,8 @@ schemes, or those with financial impact."
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

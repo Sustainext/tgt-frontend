@@ -15,7 +15,7 @@ const widgets = {
   inputWidget: inputWidget2,
 };
 
-const view_path = "gri-general-workforce_other_workers-methodologies-2-8b";
+const view_path = "gri-economic-defined_benefit_plan-separate-201-3b";
 const client_id = 1;
 const user_id = 1;
 
@@ -243,8 +243,8 @@ general resources. "
 
         <div className="mx-2 mb-3">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

@@ -50,7 +50,7 @@ const Operationsassessed = () => {
               <div className="flex">
                 <div className="h-[29px]">
                   <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
-                  Anti Corruption
+                    Anti Corruption
                   </p>
                 </div>
               </div>
@@ -60,15 +60,14 @@ const Operationsassessed = () => {
             <div className="flex float-end border-l">
               <button
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("113")}
+                onClick={() => toggleDrawer("122")}
               >
                 GRI 205-1
               </button>
 
-
               <button
                 className="text-[#fff] bg-[#00558A] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("69")}
+                onClick={() => toggleDrawer("65")}
               >
                 SDG 16
               </button>
@@ -78,7 +77,7 @@ const Operationsassessed = () => {
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Operations assessed for risks related to corruption
+            Operations assessed for risks related to corruption
             <MdInfoOutline
               data-tooltip-id={`tooltip-$es35`}
               data-tooltip-content="This section documents the data corresponding to the operations assessed for risks related to corruption."
@@ -139,7 +138,7 @@ const Operationsassessed = () => {
         selectedCorp={selectedCorp}
         year={year}
       />
-    <Screen2
+      <Screen2
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}

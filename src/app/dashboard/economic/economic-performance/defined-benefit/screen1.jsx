@@ -16,7 +16,7 @@ const widgets = {
     CurrencyWidget: CurrencyWidget,
 };
 
-const view_path = "gri-economic-infrastructure-describe-203-1a";
+const view_path = "gri-economic-defined_benefit_plan-general-201-3a";
 const client_id = 1;
 const user_id = 1;
 
@@ -162,7 +162,7 @@ const Screen1 = ({ selectedOrg,selectedCorp, year}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // updateFormData();
+    updateFormData();
     console.log("test form data", formData);
   };
 
@@ -205,8 +205,8 @@ const Screen1 = ({ selectedOrg,selectedCorp, year}) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -220,7 +220,7 @@ const Screen1 = ({ selectedOrg,selectedCorp, year}) => {
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

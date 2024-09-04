@@ -16,7 +16,7 @@ const widgets = {
   inputWidget: CommoninputWidget,
 };
 
-const view_path = "gri-economic-significant_indirect-explain-203-2b";
+const view_path = "gri-economic-financial_implications-201-2a-calculate";
 const client_id = 1;
 const user_id = 1;
 
@@ -217,8 +217,8 @@ the financial implications or costs, or to make revenue projections."
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

@@ -19,7 +19,7 @@ const widgets = {
   AddmultiInput:AddmultiInput,
 };
 
-const view_path = "gri-economic-significant_indirect-provide-203-2a";
+const view_path = "gri-economic-financial_assistance-204-1a-2b-provide";
 const client_id = 1;
 const user_id = 1;
 
@@ -296,7 +296,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // updateFormData();
+    updateFormData();
     console.log("test form data", formData);
   };
 
@@ -319,7 +319,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
                This section documents the data corresponding to the
 type and scope of programs implemented and assistance
 provided to upgrade employee skills.  "
-                className="mt-1.5 ml-2 text-[24px]"
+                className="mt-1.5 ml-2 text-[18px]"
               />
               <ReactTooltip
                 id={`es25`}
@@ -355,8 +355,8 @@ provided to upgrade employee skills.  "
         </div>
         <div className="mx-2 mb-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -370,7 +370,7 @@ provided to upgrade employee skills.  "
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>
