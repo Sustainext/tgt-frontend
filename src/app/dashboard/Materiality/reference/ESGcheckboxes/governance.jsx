@@ -11,57 +11,27 @@ import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from '@/app/utils/axiosMiddleware'
 import CheckboxWidget2 from "../../../../shared/widgets/Input/checkboxWidget2";
+import CheckboxWidget from "@/app/shared/widgets/Input/checkboxWidget";
 
 const widgets = {
-    CheckboxWidget2: CheckboxWidget2,
+    CheckboxWidget: CheckboxWidget,
 };
 
 const view_path = "gri-governance-critical_concerns-2-16-a-critical_concerns";
 const client_id = 1;
 const user_id = 1;
 
-const schema = {
-    type: "array",
-    items: {
-        type: "object",
-        properties: {
-            Governance: {
-                type: "string",
-                title: "Governance",
-                enum: ["Governance", "Policy","Economic impacts","Economic performance","Corruption","Tax Transparency"],
 
-            },
-        },
 
-    },
-};
+const Governance = ({govChecked,formData,setFormData}) => {
 
-const uiSchema = {
-    items: {
-        "ui:order": ["Governance"],
-        Governance: {
-            "ui:widget": "CheckboxWidget2",
-            "ui:horizontal": true,
-            "ui:options": {
-                label: false,
-            },
-        },
-          "ui:options": {
-            orderable: false,
-            addable: false,
-            removable: false,
-            layout: "horizontal",
-        },
-    },
-};
-
-const Governance = () => {
-    const [formData, setFormData] = useState([{}]);
+    // const [formData, setFormData] = useState([{}]);
     const [r_schema, setRemoteSchema] = useState({});
     const [r_ui_schema, setRemoteUiSchema] = useState({});
     const [loopen, setLoOpen] = useState(false);
     const toastShown = useRef(false);
     const { open } = GlobalState();
+    const [govTopics,setGovTopics]=useState([])
 
     const LoaderOpen = () => {
         setLoOpen(true);
@@ -71,66 +41,92 @@ const Governance = () => {
         setLoOpen(false);
     };
 
+    const fetchGovTopics = async()=>{
+        LoaderOpen()
+        const url = `${process.env.BACKEND_API_URL}/materiality_dashboard/list-esg-topics/?framework_id=1&esg_category=governance`;
+        try {
+          const response = await axiosInstance.get(url);
+            if(response.status==200){
+                const options = response.data.map((val) => ({
+                    label: val.id.toString(),
+                    value: val.name,
+                }));
+                setGovTopics(options);
+                LoaderClose()
+            }
+          }
+         
+        catch (error) {
+            LoaderClose()
+          toast.error("Oops, something went wrong", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+      }
+  
+      useEffect(()=>{
+        fetchGovTopics()
+      },[])
+
+    const schema = {
+        type: "array",
+        items: {
+            type: "object",
+            properties: {
+                Governance: {
+                    type: "string",
+                    title: "Governance",
+                    enum: govTopics
+    
+                },
+            },
+    
+        },
+    };
+    
+    const uiSchema = {
+        items: {
+            "ui:order": ["Governance"],
+            Governance: {
+                "ui:widget": "CheckboxWidget",
+                "ui:horizontal": true,
+                "ui:options": {
+                    label: false,
+                    govChecked:govChecked,
+                    enumOptions:govTopics
+                },
+            },
+            "ui:options": {
+                orderable: false, // Prevent reordering of items
+                addable: false, // Prevent adding items from UI
+                removable: false, // Prevent removing items from UI
+                layout: "horizontal", // Set layout to horizontal
+            },
+        },
+    };
+    
+    // formData=[
+    //     {
+    //     "Governance": formData[0].Governance
+    //     }
+    // ]
+
+
     const handleChange = (e) => {
         setFormData(e.formData);
     };
 
-    const updateFormData = async () => {
-        const data = {
-            client_id: client_id,
-            user_id: user_id,
-            path: view_path,
-            form_data: formData,
-            corporate: selectedCorp,
-            organisation: selectedOrg,
-            year,
-        };
-        const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
-        try {
-            const response = await axiosInstance.post(url, data);
-            if (response.status === 200) {
-                toast.success("Data added successfully", {
-                    position: "top-right",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
-                LoaderClose();
-                loadFormData();
-            } else {
-                toast.error("Oops, something went wrong", {
-                    position: "top-right",
-                    autoClose: 1000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
-                LoaderClose();
-            }
-        } catch (error) {
-            toast.error("Oops, something went wrong", {
-                position: "top-right",
-                autoClose: 1000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
-            LoaderClose();
-        }
-    };
+    
 
-
-
+   
+    
     const handleSubmit = (e) => {
         e.preventDefault();
         // updateFormData();

@@ -4,7 +4,7 @@ import { MdOutlineEdit, MdOutlineDeleteOutline } from "react-icons/md";
 import DeletePopup from "../modals/deletePopup";
 import { useRouter } from "next/navigation";
 
-const DataTable = ({ data }) => {
+const DataTable = ({ data,setRefresh,refresh }) => {
   const router = useRouter();
   const [loopen, setLoOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -28,6 +28,8 @@ const DataTable = ({ data }) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
+
+ 
 
   return (
     <>
@@ -90,7 +92,7 @@ const DataTable = ({ data }) => {
                   <div className="flex items-start">
                     <span
                       className={`inline-block w-3 h-3 mr-2 rounded-full ${
-                        item.status === "InProgress"
+                        item.status === "In_progress"
                           ? "bg-yellow-500"
                           : item.status === "Completed"
                           ? "bg-green-800"
@@ -111,9 +113,11 @@ const DataTable = ({ data }) => {
               <MdOutlineEdit
                 className="text-[18px] text-gray-500"
                 onClick={() => {
-                  if (item.type == "GRI: In Accordance with") {
+                  if (item.type == "GRI: In accordance with") {
+                    localStorage.setItem("id",item.id)
                     router.push("Materiality/accordance");
-                  } else if (item.type == "GRI: with Reference to") {
+                  } else if (item.type == "GRI: With reference to") {
+                    localStorage.setItem("id",item.id)
                     router.push("Materiality/reference");
                   }
                 }}
@@ -126,6 +130,7 @@ const DataTable = ({ data }) => {
               className="text-[18px] text-gray-500"
               onClick={() => {
                 setDeleteData({
+                  id:item.id,
                   organization: item.organization,
                   corporate: item.corporate,
                   type: item.type,
@@ -143,6 +148,8 @@ const DataTable = ({ data }) => {
         </table>
       </div>
       <DeletePopup
+      setRefresh={setRefresh}
+      refresh={refresh}
         isModalOpen={deleteModalOpen}
         setIsModalOpen={setDeleteModalOpen}
         deleteData={deleteData}

@@ -8,12 +8,11 @@ import Step3 from "./steps/step3";
 import { useRouter } from 'next/navigation'
 import TopicSelectedPopup from "../../modals/topicSelectedPopup";
 
-const SelectMaterialityTopic = ({ handleTabClick}) => {
+const SelectMaterialityTopic = ({ handleTabClick,cardData}) => {
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState();
   const [currentStep, setCurrentStep] = useState(0);
-  const [isModalOpen,setIsModalOpen]=useState(false)
   const [category, setCategory] = useState("");
  
   const steps = [1, 2, 3];
@@ -60,6 +59,12 @@ const SelectMaterialityTopic = ({ handleTabClick}) => {
     },
 
   ]
+
+  const convertDate=(dateStr)=>{
+    const date = new Date(dateStr);
+  
+  return date.toLocaleString('en-US', { month: 'short', year: 'numeric' });
+  }
 
   return (
     <>
@@ -161,7 +166,7 @@ const SelectMaterialityTopic = ({ handleTabClick}) => {
                     Reporting Level
                   </p>
                   <p className="text-[13px] text-gray-500 font-[400] px-2 pt-2">
-                    Organization
+                   {cardData.corporate_name?"Corporate":"Organization"}
                   </p>
                 </div>
                 <div>
@@ -169,7 +174,7 @@ const SelectMaterialityTopic = ({ handleTabClick}) => {
                     Materiality Assessment approach
                   </p>
                   <p className="text-[13px] text-gray-500 font-[400] px-2 pt-2">
-                    ...
+                   {cardData.approach}
                   </p>
                 </div>
               </div>
@@ -179,7 +184,7 @@ const SelectMaterialityTopic = ({ handleTabClick}) => {
                     Reporting Year
                   </p>
                   <p className="text-[13px] text-gray-500 font-[400] px-2 pt-2">
-                    2022
+                  {`${convertDate(cardData.start_date)} - ${convertDate(cardData.end_date)}`}
                   </p>
                 </div>
               </div>
@@ -189,17 +194,22 @@ const SelectMaterialityTopic = ({ handleTabClick}) => {
                     Organization Name
                   </p>
                   <p className="text-[13px] text-gray-500 font-[400] px-2 pt-2">
-                    Organization
+                    {cardData.organisation_name}
                   </p>
                 </div>
-                <div>
-                  <p className="text-[14px] text-black font-[400] px-2 pt-2">
-                    Corporate Entity Name
-                  </p>
-                  <p className="text-[13px] text-gray-500 font-[400] px-2 pt-2">
-                    ...
-                  </p>
-                </div>
+                {cardData.corporate_name?(
+                    <div>
+                    <p className="text-[14px] text-black font-[400] px-2 pt-2">
+                      Corporate Entity Name
+                    </p>
+                    <p className="text-[13px] text-gray-500 font-[400] px-2 pt-2">
+                      {cardData.corporate_name}
+                    </p>
+                  </div>
+                ):(
+                  <div></div>
+                )}
+                
               </div>
             </div>
           </div>
@@ -208,50 +218,22 @@ const SelectMaterialityTopic = ({ handleTabClick}) => {
         {/* steps */}
         <div>
           {currentStep==0?(
-            <Step1/>
+            <Step1 handleNext={handleNext}/>
           ):(
             <div>
             {currentStep==1?(
-              <Step2 setCurrentStep={setCurrentStep}/>
+              <Step2 setCurrentStep={setCurrentStep} handleNext={handleNext} handlePrevious={handlePrevious}/>
             ):(
-              <Step3/>
+              <Step3 handlePrevious={handlePrevious} handleTabClick={handleTabClick}/>
             )}
             </div>
           )}
 
         </div>
 
-        {/* buttons */}
-        <div className="flex justify-end w-full gap-4 mt-4">
-        <button
-                  className="w-auto h-full mr-2 py-2 px-3 text-[#727272]  cursor-pointer"
-                  onClick={()=>{
-                    if(currentStep==0){
-                      router.push("/dashboard/Materiality")
-                    }
-                    else{
-                      handlePrevious()
-                    }
-                  }}
-                >
-                  {"<"} {currentStep==0?"Back to Dashboard":"Previous"}
-          </button>
-          <button
-                  className="w-[16%] h-full mr-4 py-2 px-2 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer"
-                  onClick={()=>{
-                    if(currentStep==2){
-                      setIsModalOpen(true)
-                    }
-                    else{
-                      handleNext()
-                    }
-                  }}
-                >
-                  {currentStep==2?"Save and Proceed":"Next"} {">"}
-                </button>
-        </div>
+        
       </div>
-      <TopicSelectedPopup isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}  handleTabClick={handleTabClick}/>
+      
     </>
   );
 };

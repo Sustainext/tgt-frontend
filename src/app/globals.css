@@ -248,7 +248,12 @@ input[type='number']::-webkit-outer-spin-button {
   transform: translate(-50%, -50%) rotate(45deg);
 } */
 
-.green-radio:checked::before{
+.green-checkbox input[type="checkbox"] {
+  accent-color: #42CC71;
+}
+
+
+/* .green-radio:checked::before{
   content: '';
   position: absolute;
   left: 52%;
@@ -256,8 +261,12 @@ input[type='number']::-webkit-outer-spin-button {
   width: 0.25em;
   height: 0.45em;
   border: solid white;
-  border-width: 0 0.15em 0.15em 0;
-  transform: translate(-50%, -50%) rotate(45deg);
+  border-width: 0 0.15em 0.15em 0; 
+  transform: translate(-50%, -50%) rotate(45deg); 
+} */
+
+.green-radio input[type=radio] {
+  accent-color: green;
 }
 .coming-soon-container {
   width: 100%;
