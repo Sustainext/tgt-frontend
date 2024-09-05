@@ -20,7 +20,7 @@ const client_id = 1;
 const user_id = 1;
 
 const Table = ({ selectedOrg, year, selectedCorp }) => {
-  const assessment_id = localStorage.getItem("id");
+  const assessment_id = typeof window !== 'undefined' ?localStorage.getItem("id"):'';
   const [materialTopics, setMaterialTopics] = useState([]);
   const [dataPresent,setDatapresent]=useState(false)
   const [formData, setFormData] = useState([

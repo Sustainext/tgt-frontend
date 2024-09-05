@@ -20,14 +20,14 @@ const Accordance = () => {
   };
 
   useEffect(() => {
-    const isFirstVisit = localStorage.getItem('hasVisitedacc');
+    const isFirstVisit = typeof window !== 'undefined' ?localStorage.getItem('hasVisitedacc'): '';
     if (isFirstVisit=='true') {
       setIsModalOpen(true);
       localStorage.setItem('hasVisitedacc','false');
     }
   }, []);
 
-  const id=localStorage.getItem("id")
+  const id= typeof window !== 'undefined' ?localStorage.getItem("id"):''
   const fetchDetails = async()=>{
     const url = `${process.env.BACKEND_API_URL}/materiality_dashboard/materiality-assessments/${id}/`;
     try {

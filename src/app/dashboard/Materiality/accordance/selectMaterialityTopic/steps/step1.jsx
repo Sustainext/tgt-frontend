@@ -28,7 +28,7 @@ const Step1 = ({handleNext}) => {
    }
   }
 
-  const id=localStorage.getItem("id")
+  const id=typeof window !== 'undefined' ?localStorage.getItem("id"):''
 
   const fetchSelectedTopic=async()=>{
 
