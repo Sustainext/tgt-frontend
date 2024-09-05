@@ -11,57 +11,27 @@ import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from '@/app/utils/axiosMiddleware'
 import CheckboxWidget2 from "../../../../shared/widgets/Input/checkboxWidget2";
+import CheckboxWidget from "@/app/shared/widgets/Input/checkboxWidget";
 
 const widgets = {
-    CheckboxWidget2: CheckboxWidget2,
+    CheckboxWidget: CheckboxWidget,
 };
 
 const view_path = "gri-governance-critical_concerns-2-16-a-critical_concerns";
 const client_id = 1;
 const user_id = 1;
 
-const schema = {
-    type: "array",
-    items: {
-        type: "object",
-        properties: {
-            Social: {
-                type: "string",
-                title: "Social",
-                enum: ["Occupational Health & Safety", "Community Relations","Labor Management","Child Labor","Employment","Human Capital Development","Privacy & Data Security","Product Safety & Quality","Marketing and Labeling","Pay equality","Access to Health Care","Supply Chain Labor Standards","Diversity & equal oppportunity","Non-discrimination"],
 
-            },
-        },
 
-    },
-};
+const Social = ({socChecked,formData,setFormData}) => {
 
-const uiSchema = {
-    items: {
-        "ui:order": ["Social"],
-        Social: {
-            "ui:widget": "CheckboxWidget2",
-            "ui:horizontal": true,
-            "ui:options": {
-                label: false,
-            },
-        },
-          "ui:options": {
-            orderable: false,
-            addable: false,
-            removable: false,
-            layout: "horizontal",
-        },
-    },
-};
-
-const Social = () => {
-    const [formData, setFormData] = useState([{}]);
+    // const [formData, setFormData] = useState([{}]);
     const [r_schema, setRemoteSchema] = useState({});
     const [r_ui_schema, setRemoteUiSchema] = useState({});
     const [loopen, setLoOpen] = useState(false);
     const toastShown = useRef(false);
     const { open } = GlobalState();
+    const [socTopics,setSocTopics]=useState([])
 
     const LoaderOpen = () => {
         setLoOpen(true);
@@ -71,66 +41,90 @@ const Social = () => {
         setLoOpen(false);
     };
 
+    const fetchGovTopics = async()=>{
+        LoaderOpen()
+        const url = `${process.env.BACKEND_API_URL}/materiality_dashboard/list-esg-topics/?framework_id=1&esg_category=social`;
+        try {
+          const response = await axiosInstance.get(url);
+            if(response.status==200){
+                const options = response.data.map((val) => ({
+                    label: val.id.toString(),
+                    value: val.name,
+                }));
+                setSocTopics(options);
+                LoaderClose()
+            }
+          }
+         
+        catch (error) {
+            LoaderClose()
+          toast.error("Oops, something went wrong", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+      }
+  
+      useEffect(()=>{
+        fetchGovTopics()
+      },[])
+    const schema = {
+        type: "array",
+        items: {
+            type: "object",
+            properties: {
+                Social: {
+                    type: "string",
+                    title: "Social",
+                    enum: socTopics
+    
+                },
+            },
+    
+        },
+    };
+    
+    const uiSchema = {
+        items: {
+            "ui:order": ["Social"],
+            Social: {
+                "ui:widget": "CheckboxWidget",
+                "ui:horizontal": true,
+                "ui:options": {
+                    label: false,
+                    socChecked:socChecked,
+                    enumOptions:socTopics
+                },
+            },
+            "ui:options": {
+                orderable: false, // Prevent reordering of items
+                addable: false, // Prevent adding items from UI
+                removable: false, // Prevent removing items from UI
+                layout: "horizontal", // Set layout to horizontal
+            },
+        },
+    };
+    
+    // formData=[
+    //     {
+    //     "Social": formData[0].Social
+    //     }
+    // ]
+
     const handleChange = (e) => {
         setFormData(e.formData);
     };
 
-    const updateFormData = async () => {
-        const data = {
-            client_id: client_id,
-            user_id: user_id,
-            path: view_path,
-            form_data: formData,
-            corporate: selectedCorp,
-            organisation: selectedOrg,
-            year,
-        };
-        const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
-        try {
-            const response = await axiosInstance.post(url, data);
-            if (response.status === 200) {
-                toast.success("Data added successfully", {
-                    position: "top-right",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
-                LoaderClose();
-                loadFormData();
-            } else {
-                toast.error("Oops, something went wrong", {
-                    position: "top-right",
-                    autoClose: 1000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
-                LoaderClose();
-            }
-        } catch (error) {
-            toast.error("Oops, something went wrong", {
-                position: "top-right",
-                autoClose: 1000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
-            LoaderClose();
-        }
-    };
+    
 
-
-
+   
+    
     const handleSubmit = (e) => {
         e.preventDefault();
         // updateFormData();

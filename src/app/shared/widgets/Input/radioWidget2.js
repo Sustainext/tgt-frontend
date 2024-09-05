@@ -26,7 +26,7 @@ const RadioWidget2 = ({
 
     <div className='mb-6 pb-4'>
           <div className='flex mb-2 items-center relative'>
-        <p className='text-[15px] text-gray-700 w-full mb-2 flex'>
+        <p className='text-[15px] text-gray-500 font-semibold flex'>
           {uiSchema['ui:title']}
           <MdInfoOutline
             data-tooltip-id={`tooltip-${uiSchema['ui:title'].replace(/\s+/g, '-')}`}

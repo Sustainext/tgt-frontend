@@ -215,7 +215,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
             Multiple entities
               {/* <MdInfoOutline data-tooltip-id={`tooltip-employees`}
                 data-tooltip-content="This section documents the data corresponding to the r product and

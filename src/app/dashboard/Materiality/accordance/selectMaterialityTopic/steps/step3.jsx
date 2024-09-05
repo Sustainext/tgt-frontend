@@ -12,6 +12,7 @@ import { GlobalState } from "@/Context/page";
 import axiosInstance from '@/app/utils/axiosMiddleware'
 import MaterialityRadioWidget from "../../../../../shared/widgets/Input/materialityRadioWidget"
 import MaterialityInputWidget from "../../../../../shared/widgets/Input/materialityInputWidget";
+import TopicSelectedPopup from "../../../modals/topicSelectedPopup"
 
 const widgets = {
   MaterialityInputWidget: MaterialityInputWidget,
@@ -82,30 +83,6 @@ const schema = {
           label: false,
         },
       },
-      Q3: {
-          "ui:title":
-            "Provide the total number of instances for which fines were incurred",
-          "ui:tooltip":
-            " Please specify what has been assured and on what basis it has been assured.",
-          "ui:tooltipdisplay": "none",
-          "ui:widget": "inputWidget",
-          "ui:horizontal": true,
-          "ui:options": {
-            label: false,
-          },
-        },
-        Q4: {
-          "ui:title":
-            "Provide the total number of instances for which non-monetary sanctions were incurred",
-          "ui:tooltip":
-            "Please specify the standard used for assurance. ",
-          "ui:tooltipdisplay": "none",
-          "ui:widget": "inputWidget",
-          "ui:horizontal": true,
-          "ui:options": {
-            label: false,
-          },
-        },
       "ui:options": {
         orderable: false, // Prevent reordering of items
         addable: false, // Prevent adding items from UI
@@ -115,11 +92,14 @@ const schema = {
     },
   };
 
-const Step3 = ({ selectedOrg, year, selectedCorp}) => {
+const Step3 = ({handleTabClick,handlePrevious}) => {
+
+  const [isModalOpen,setIsModalOpen]=useState(false)
     const [formData, setFormData] = useState([{}]);
     const [r_schema, setRemoteSchema] = useState({});
     const [r_ui_schema, setRemoteUiSchema] = useState({});
     const [loopen, setLoOpen] = useState(false);
+    const [dataPresent,setDatapresent]=useState(false)
     const toastShown = useRef(false);
     const { open } = GlobalState();
 
@@ -132,68 +112,96 @@ const Step3 = ({ selectedOrg, year, selectedCorp}) => {
     };
 
     const handleChange = (e) => {
-        setFormData(e.formData);
+      let newFormData = { ...e.formData[0] };
+      if (newFormData.Q1 === "No") {
+        newFormData.Q2 = "";
+      }
+      setFormData([newFormData]);
     };
+  
 
-    const updateFormData = async () => {
-        const data = {
-            client_id: client_id,
-            user_id: user_id,
-            path: view_path,
-            form_data: formData,
-            corporate: selectedCorp,
-            organisation: selectedOrg,
-            year,
-        };
-        const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
-        try {
-            const response = await axiosInstance.post(url, data);
-            if (response.status === 200) {
-                toast.success("Data added successfully", {
-                    position: "top-right",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
-                LoaderClose();
-                loadFormData();
-            } else {
-                toast.error("Oops, something went wrong", {
-                    position: "top-right",
-                    autoClose: 1000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
-                LoaderClose();
-            }
-        } catch (error) {
-            toast.error("Oops, something went wrong", {
-                position: "top-right",
-                autoClose: 1000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
-            LoaderClose();
+    const assessment_id=localStorage.getItem("id")
+
+    const fetchDetails = async()=>{
+      const url = `${process.env.BACKEND_API_URL}/materiality_dashboard/materiality-change-confirmation/${assessment_id}/`;
+      try {
+        const response = await axiosInstance.get(url);
+        if(response.status==200){
+          setFormData(
+            [
+              {Q1:response.data.change_made==true?"Yes":"No",
+                Q2:response.data.reason_for_change
+
+              }
+            ]
+          )
+          setDatapresent(true)
         }
-    };
+        
+        }
+       
+      catch (error) {
+        // toast.error("Oops, something went wrong", {
+        //   position: "top-right",
+        //   autoClose: 1000,
+        //   hideProgressBar: false,
+        //   closeOnClick: true,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        //   theme: "colored",
+        // });
+      }
+    }
+
+    useEffect(()=>{
+      fetchDetails()
+    },[])
+
+    
 
    
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
-        // updateFormData();
-        console.log("test form data", formData);
+       const data={
+            "assessment":assessment_id,
+            "change_made":formData[0].Q1=="Yes"?true:false,
+            "reason_for_change":formData[0].Q2
+        }
+        const url = dataPresent?`${process.env.BACKEND_API_URL}/materiality_dashboard/materiality-change-confirmation/${assessment_id}/`:`${process.env.BACKEND_API_URL}/materiality_dashboard/materiality-change-confirmation/create/`;
+      try {
+        const response = dataPresent?await axiosInstance.put(url,data):await axiosInstance.post(url,data);
+        if(response.status>=200&&response.status<300){
+          setIsModalOpen(true)
+        }
+        else{
+          toast.error("Oops, something went wrong", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+        
+        }
+       
+      catch (error) {
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+       
     };
 
     return (
@@ -210,8 +218,25 @@ const Step3 = ({ selectedOrg, year, selectedCorp}) => {
 
                     />
                 </div>
+                {/* buttons */}
+        <div className="flex justify-end w-full gap-4 mt-4">
+        <button
+                  className="w-auto h-full mr-2 py-2 px-3 text-[#727272]  cursor-pointer"
+                  onClick={()=>{
+                    handlePrevious()
+                  }}
+                >
+                  {"<"} Previous
+          </button>
+          <button
+                  className="w-[16%] h-full mr-4 py-2 px-2 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer"
+                  onClick={handleSubmit}
+                >
+                 Save and Proceed {">"}
+                </button>
+        </div>
             </div>
-            {/* {loopen && (
+            {loopen && (
                 <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
                     <Oval
                         height={50}
@@ -222,7 +247,10 @@ const Step3 = ({ selectedOrg, year, selectedCorp}) => {
                         strokeWidthSecondary={2}
                     />
                 </div>
-            )} */}
+            )}
+
+<TopicSelectedPopup isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}  handleTabClick={handleTabClick}/>
+<ToastContainer/>
         </>
     );
 };

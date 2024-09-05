@@ -250,7 +250,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
             Instance of non-compliance
               <MdInfoOutline data-tooltip-id={`tooltip-employees`}
                 data-tooltip-content="This section documents the data corresponding to the  significant

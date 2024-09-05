@@ -72,7 +72,7 @@ const Restatement = () => {
       <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
           Restatements of Information
-            <MdInfoOutline
+            {/* <MdInfoOutline
               data-tooltip-id={`tooltip-$e10`}
               data-tooltip-content="This section documents the data corresponding to the restatements of information."
               className="mt-1.5 ml-2 text-[14px]"
@@ -90,7 +90,7 @@ const Restatement = () => {
                 borderRadius: "8px",
                 textAlign: "left",
               }}
-            ></ReactTooltip>
+            ></ReactTooltip> */}
           </h6>
         </div>
         <div

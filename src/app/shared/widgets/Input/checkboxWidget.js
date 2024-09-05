@@ -9,9 +9,13 @@ const CheckboxWidget = ({
 }) => {
   const [selectedValues, setSelectedValues] = useState(value); // Initialize state with the provided array
 
-  // useEffect(() => {
-  //   setSelectedValues(value);
-  // }, [value]);
+  // Sync selectedValues state with the incoming prop value when it changes
+  useEffect(() => {
+    // Only update if the value has actually changed to prevent unnecessary updates
+    if (JSON.stringify(selectedValues) !== JSON.stringify(value)) {
+      setSelectedValues(value);
+    }
+  }, [value]);
 
   const handleChange = (event) => {
     const newValue = event.target.value;
@@ -27,28 +31,37 @@ const CheckboxWidget = ({
     onChange(updatedValues);           // Call onChange prop with the new array of values
   };
 
+  // // Uncheck all checkboxes if none of the specific options are checked
+  // useEffect(() => {
+  //   if (!options.envChecked && !options.socChecked && !options.govChecked) {
+  //     setSelectedValues([]); // Uncheck all checkboxes
+  //   }
+  // }, [options.envChecked, options.socChecked, options.govChecked]);
   useEffect(() => {
     if (!options.envChecked && !options.socChecked && !options.govChecked) {
-      setSelectedValues([]); // Uncheck all checkboxes
+      // Only update if the selectedValues are not already empty
+      if (selectedValues.length > 0) {
+        setSelectedValues([]); // Uncheck all checkboxes
+      }
     }
-  }, [options.envChecked, options.socChecked, options.govChecked, setSelectedValues]);
-  
+  }, [options.envChecked, options.socChecked, options.govChecked]);
+
   return (
     <div className='mb-1'>
-      <div className={`p-2 mx-1 mt-2 ${options.envChecked || options.socChecked || options.govChecked ? "" : "opacity-25"}`}>
+      <div className={`p-2 mx-1 mt-2 green-checkbox ${options.envChecked || options.socChecked || options.govChecked ? "" : "opacity-25"}`}>
         {options.enumOptions.map((option, index) => (
           <label key={index} className='flex items-center gap-2 text-sm mb-4 cursor-pointer'>
             <input
               type='checkbox'
               name={options.name}
-              value={option.value}
-              checked={selectedValues.includes(option.value)} // Check if the value is in the array
+              value={option.value.label}
+              checked={selectedValues.includes(option.value.label)} // Check if the value is in the array
               autoFocus={autofocus && index === 0}
               onChange={handleChange}
-              className='form-checkbox h-3 w-3 ' // Changed from 'form-radio' to 'form-checkbox' green-checkbox appearance-none checked:bg-[#42cc71] checked:border-[#42cc71] border border-gray-500 rounded-sm relative
+              className='form-checkbox h-3 w-3' // Changed from 'form-radio' to 'form-checkbox'
               disabled={!(options.envChecked || options.socChecked || options.govChecked)}
             />
-            {option.label}
+            {option.value.value}
           </label>
         ))}
       </div>

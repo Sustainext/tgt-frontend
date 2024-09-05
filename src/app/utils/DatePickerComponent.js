@@ -10,9 +10,11 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
   const [showMonthDropdown, setShowMonthDropdown] = useState(false);
   const [showYearDropdown, setShowYearDropdown] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [position, setPosition] = useState('bottom'); // Add a state for position
   const dateInputRef = useRef(null);
   const [range, setRange] = useState({ start: startDate ? new Date(startDate) : null, end: endDate ? new Date(endDate) : null });
 
+  // Handle click outside the date picker
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dateInputRef.current && !dateInputRef.current.contains(event.target)) {
@@ -27,12 +29,14 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
     };
   }, []);
 
+  // Strip time from date
   const stripTime = (date) => {
     const strippedDate = new Date(date);
     strippedDate.setHours(0, 0, 0, 0);
     return strippedDate;
   };
 
+  // Handle date click
   const handleDateClick = (day) => {
     const strippedDate = stripTime(day);
 
@@ -51,12 +55,14 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
     }
   };
 
+  // Handle month change
   const handleMonthChange = (setMonth, newMonth) => {
     setMonth(newMonth);
     setShowMonthDropdown(false);
     setActiveDropdown(null);
   };
 
+  // Handle year change
   const handleYearChange = (month, setMonth, newYear) => {
     const newDate = new Date(month);
     newDate.setFullYear(newYear);
@@ -65,18 +71,21 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
     setActiveDropdown(null);
   };
 
+  // Toggle month dropdown
   const toggleMonthDropdown = (dropdownType) => {
     setShowMonthDropdown(!showMonthDropdown);
     setShowYearDropdown(false);
     setActiveDropdown(dropdownType);
   };
 
+  // Toggle year dropdown
   const toggleYearDropdown = (dropdownType) => {
     setShowYearDropdown(!showYearDropdown);
     setShowMonthDropdown(false);
     setActiveDropdown(dropdownType);
   };
 
+  // Render header for the date picker
   const renderHeader = (month, setMonth, dropdownType) => (
     <div className="flex justify-between items-center mb-2">
       <div className="flex items-center space-x-2">
@@ -128,6 +137,7 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
     </div>
   );
 
+  // Render days of the week
   const renderDays = () => {
     const days = [];
     let startDate = startOfWeek(startMonth);
@@ -141,6 +151,7 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
     return <div className="grid grid-cols-7 mb-2 gap-2">{days}</div>;
   };
 
+  // Render cells for the days in the calendar
   const renderCells = (month) => {
     const monthStart = startOfMonth(month);
     const monthEnd = endOfMonth(monthStart);
@@ -183,6 +194,32 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
     return <div className="space-y-2">{rows}</div>;
   };
 
+  // Dynamic positioning of the date picker based on available space
+  const calculatePosition = () => {
+    const rect = dateInputRef.current.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    const windowWidth = window.innerWidth;
+
+    // Check available space at the bottom
+    if (rect.bottom + 300 > windowHeight && rect.top > 300) {
+      setPosition('top'); // Open above if not enough space at the bottom
+    } else if (rect.left + 500 > windowWidth && rect.right > 500) {
+      setPosition('left'); // Open to the left if not enough space on the right
+    } else if (rect.right + 500 > windowWidth) {
+      setPosition('right'); // Open to the right
+    } else {
+      setPosition('bottom'); // Default is to open below the input
+    }
+  };
+
+  // Toggle the date picker and calculate position
+  const toggleDatePicker = () => {
+    setShowDatePicker(!showDatePicker);
+    if (!showDatePicker) {
+      calculatePosition();
+    }
+  };
+
   return (
     <div className="relative" ref={dateInputRef}>
       <div className="relative flex items-center">
@@ -190,13 +227,17 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
           type="text"
           readOnly
           value={startDate && endDate ? `${format(startDate, 'dd/MMM/yyyy')} ~ ${format(endDate, 'dd/MMM/yyyy')}` : ""}
-          onClick={() => setShowDatePicker(!showDatePicker)}
+          onClick={toggleDatePicker}
           className="py-1.5 border border-gray-300 rounded-md w-full text-sm pl-2"
         />
-        <AiOutlineCalendar className="absolute right-2 cursor-pointer" onClick={() => setShowDatePicker(!showDatePicker)} />
+        <AiOutlineCalendar className="absolute right-2 cursor-pointer" onClick={toggleDatePicker} />
       </div>
       {showDatePicker && (
-        <div className="absolute z-10 mt-2 p-4 bg-white border border-gray-300 rounded-md -ml-60 w-[53vw]">
+        <div
+          className={`absolute z-10 mt-2 p-4 bg-white border border-gray-300 rounded-md w-[53vw] ${
+            position === 'top' ? 'bottom-full mb-2' : position === 'left' ? 'right-full mr-2' : position === 'right' ? 'left-full ml-2' : 'top-full mt-2'
+          }`}
+        >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="relative">
               {renderHeader(startMonth, setStartMonth, "start")}

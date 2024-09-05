@@ -13,7 +13,7 @@ const inputWidget2 = (props) => {
       <div className="mb-6">
         <div className="flex mb-2">
           <div className=" relative">
-            <p className="text-sm text-gray-700 flex">
+            <p className="flex text-[15px] text-gray-500 font-semibold">
               {uiSchema["ui:title"]}
               <MdInfoOutline
                 data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(
@@ -43,7 +43,7 @@ const inputWidget2 = (props) => {
         </div>
         <textarea
           placeholder="Enter data"
-          className={`backdrop:before:w-[48rem] border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
+          className={`backdrop:before:w-[48rem] border appearance-none text-[15px] border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
           value={value}
           onChange={handleChange}
           rows={4}

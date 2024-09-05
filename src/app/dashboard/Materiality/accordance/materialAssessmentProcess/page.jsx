@@ -6,7 +6,7 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import InputField from "./InputField";
 import "react-tooltip/dist/react-tooltip.css";
 
-const MaterialAssessmentProcess = () => {
+const MaterialAssessmentProcess = ({handleTabClick}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
@@ -84,7 +84,7 @@ const MaterialAssessmentProcess = () => {
         </div>
       </div>
 
-      <InputField />
+      <InputField handleTabClick={handleTabClick} />
       <div></div>
     </>
   );

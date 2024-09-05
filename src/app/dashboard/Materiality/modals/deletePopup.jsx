@@ -1,10 +1,59 @@
 "use client";
 import React, { useState } from "react";
-import GRISVG from "../../../../../public/gri.svg";
-import Image from "next/image";
 import { MdOutlineEdit, MdOutlineDeleteOutline } from "react-icons/md";
+import axiosInstance from "../../../utils/axiosMiddleware";
+import {  toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 
-const DeletePopup = ({ isModalOpen, setIsModalOpen,deleteData }) => {
+const DeletePopup = ({ setRefresh,refresh,isModalOpen, setIsModalOpen,deleteData }) => {
+
+  const handleDelete= async(id)=>{
+    const url = `${process.env.BACKEND_API_URL}/materiality_dashboard/materiality-assessments/${id}/`;
+    try {
+      const response = await axiosInstance.delete(url);
+      if(response.status===204){
+        toast.success("Deleted successfully", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+
+        setRefresh((prevRefresh) => !prevRefresh);
+        setIsModalOpen(false);
+        
+      }
+      else{
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+      
+    }
+    catch (error) {
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  }
    
   return (
     <>
@@ -89,6 +138,7 @@ const DeletePopup = ({ isModalOpen, setIsModalOpen,deleteData }) => {
                 </button>
                 <button
                   className="w-full h-full mr-2 py-2 px-3 bg-[#EF5350] text-white rounded-[8px] shadow cursor-pointer"
+                  onClick={()=>{handleDelete(deleteData.id)}}
                 >
                   Yes, Delete
                 </button>
