@@ -108,7 +108,7 @@ const InputField = ({ selectedOrg, year, selectedCorp }) => {
         setFormData(e.formData);
     };
 
-    const assessment_id=localStorage.getItem("id")
+    const assessment_id=typeof window !== 'undefined' ?localStorage.getItem("id"):''
 
     const fetchDetails = async()=>{
       const url = `${process.env.BACKEND_API_URL}/materiality_dashboard/management-approach-question/${assessment_id}/`;

@@ -46,7 +46,7 @@ const InputField = ({ handleTabClick }) => {
         setLoOpen(false);
     };
 
-    const assessment_id=localStorage.getItem("id")
+    const assessment_id=typeof window !== 'undefined' ?localStorage.getItem("id"):''
 
     const fetchData = async()=>{
         const url = `${process.env.BACKEND_API_URL}/materiality_dashboard/materiality-assessment-process/${assessment_id}/`;
