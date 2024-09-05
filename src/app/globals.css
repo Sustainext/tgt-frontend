@@ -246,15 +246,9 @@ input[type='number']::-webkit-outer-spin-button {
 } */
 
 .green-checkbox input[type="checkbox"] {
-  accent-color: green;
+  accent-color: #42CC71;
 }
 
-.green-checkbox input[type="checkbox"]:hover {
-  cursor: default !important;
-    background-color: inherit !important;
-    border-color: inherit !important;
-    box-shadow: none !important;
-}
 
 /* .green-radio:checked::before{
   content: '';

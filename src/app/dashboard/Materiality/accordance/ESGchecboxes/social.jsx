@@ -21,7 +21,57 @@ const client_id = 1;
 const user_id = 1;
 
 
-const Social = ({socChecked}) => {
+const Social = ({socChecked,formData,setFormData}) => {
+
+    // const [formData, setFormData] = useState([{}]);
+    const [r_schema, setRemoteSchema] = useState({});
+    const [r_ui_schema, setRemoteUiSchema] = useState({});
+    const [loopen, setLoOpen] = useState(false);
+    const toastShown = useRef(false);
+    const { open } = GlobalState();
+    const [socTopics,setSocTopics]=useState([])
+
+    const LoaderOpen = () => {
+        setLoOpen(true);
+    };
+
+    const LoaderClose = () => {
+        setLoOpen(false);
+    };
+
+    const fetchGovTopics = async()=>{
+        LoaderOpen()
+        const url = `${process.env.BACKEND_API_URL}/materiality_dashboard/list-esg-topics/?framework_id=2&esg_category=social`;
+        try {
+          const response = await axiosInstance.get(url);
+            if(response.status==200){
+                const options = response.data.map((val) => ({
+                    label: val.id.toString(),
+                    value: val.name,
+                }));
+                setSocTopics(options);
+                LoaderClose()
+            }
+          }
+         
+        catch (error) {
+            LoaderClose()
+          toast.error("Oops, something went wrong", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+      }
+  
+      useEffect(()=>{
+        fetchGovTopics()
+      },[])
     const schema = {
         type: "array",
         items: {
@@ -30,7 +80,7 @@ const Social = ({socChecked}) => {
                 Social: {
                     type: "string",
                     title: "Social",
-                    enum: ["Occupational Health & Safety", "Community Relations","Labor Management","Child Labor","Employment","Human Capital Development","Privacy & Data Security","Product Safety & Quality","Marketing and Labeling","Pay equality","Access to Health Care","Supply Chain Labor Standards","Diversity & equal oppportunity","Non-discrimination"],
+                    enum: socTopics
     
                 },
             },
@@ -46,7 +96,8 @@ const Social = ({socChecked}) => {
                 "ui:horizontal": true,
                 "ui:options": {
                     label: false,
-                    socChecked:socChecked
+                    socChecked:socChecked,
+                    enumOptions:socTopics
                 },
             },
             "ui:options": {
@@ -58,20 +109,7 @@ const Social = ({socChecked}) => {
         },
     };
     
-    const [formData, setFormData] = useState([{}]);
-    const [r_schema, setRemoteSchema] = useState({});
-    const [r_ui_schema, setRemoteUiSchema] = useState({});
-    const [loopen, setLoOpen] = useState(false);
-    const toastShown = useRef(false);
-    const { open } = GlobalState();
-
-    const LoaderOpen = () => {
-        setLoOpen(true);
-    };
-
-    const LoaderClose = () => {
-        setLoOpen(false);
-    };
+   
 
     const handleChange = (e) => {
         setFormData(e.formData);

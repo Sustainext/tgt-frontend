@@ -8,20 +8,24 @@ const CheckboxWidget2 = ({
   value = [], // Default value should be an empty array if not provided
   autofocus,
   onChange,
-  uiSchema
+  uiSchema,
 }) => {
   const [selectedValues, setSelectedValues] = useState(value); // Initialize state with the provided array
-  const [showTextbox,setShowTextbox]=useState(false)
+  const [showTextbox, setShowTextbox] = useState(false);
 
+  // useEffect to monitor changes in value and set textbox visibility
   useEffect(() => {
-    if(selectedValues.includes('Others please specify')){
-      setShowTextbox(true)
+    if (JSON.stringify(value) !== JSON.stringify(selectedValues)) {
+      setSelectedValues(value);
     }
-    else{
-      setShowTextbox(false)
-    }     
     
-  }, [value]);
+    if (value.includes('13')) {  // Adjust this condition based on your specific "Others please specify" value
+      setShowTextbox(true);
+    } else {
+      setShowTextbox(false);
+      options.setTextboxValue(''); // Clear the textbox value when not needed
+    }
+  }, [value, options]); // Remove
 
   const handleChange = (event) => {
     const newValue = event.target.value;
@@ -32,93 +36,83 @@ const CheckboxWidget2 = ({
       updatedValues = [...selectedValues, newValue];
     } else {
       // Remove the value from the array
-      updatedValues = selectedValues.filter(val => val !== newValue);
+      updatedValues = selectedValues.filter((val) => val !== newValue);
     }
 
-    setSelectedValues(updatedValues);  // Update the state with the new array of values
+    setSelectedValues(updatedValues);
     onChange(updatedValues);
-        
+  };
+
+  const handleTextboxChange = (event) => {
+    const value = event.target.value;
+    options.setTextboxValue(value);
   };
 
   return (
-    <div className='mb-1'>
-       <div className='flex mb-2'>
-        <div className='relative w-[55%]'>
-        <p className="text-[15px] text-gray-700 flex">
-              {uiSchema["ui:title"]}
-              {uiSchema["ui:title"]?(
-                    <div>
-                      <MdInfoOutline
-                    data-tooltip-id={uiSchema["ui:title"]?`tooltip-${uiSchema["ui:title"].replace(
-                      /\s+/g,
-                      "-"
-                    )}`:""}
-                    data-tooltip-html={`${uiSchema["ui:tooltip"]}`}
-                    className="mt-1 ml-2 w-[30px] text-[14px]"
-                    style={{ display: uiSchema["ui:tooltipdisplay"] }}
-                  />
-                  {/* Tooltip */}
-                  <ReactTooltip
-                    id={uiSchema["ui:title"]?`tooltip-${uiSchema["ui:title"].replace(/\s+/g, "-")}`:""}
-                    place="top"
-                    effect="solid"
-                    style={{
-                      width: "300px",
-                      backgroundColor: "#000",
-                      color: "white",
-                      fontSize: "12px",
-                      boxShadow: 3,
-                      borderRadius: "8px",
-                    }}
-                  ></ReactTooltip>
-                    </div>
-              ):(
-                  <div>
-
-                  </div>
-              )}
-              
-            </p>
+    <div className="mb-1">
+      <div className="flex mb-2">
+        <div className="relative w-[55%] flex">
+          <p className="text-[15px] text-gray-700 flex w-full">
+            {uiSchema['ui:title']}
+           
+          </p>
+          {uiSchema['ui:title'] && (
+              <div>
+                <MdInfoOutline
+                  data-tooltip-id={`tooltip-${uiSchema['ui:title'].replace(/\s+/g, '-')}`}
+                  data-tooltip-html={`${uiSchema['ui:tooltip']}`}
+                  className="mt-1 ml-2 w-[30px] text-[14px]"
+                  style={{ display: uiSchema['ui:tooltipdisplay'] }}
+                />
+                {/* Tooltip */}
+                <ReactTooltip
+                  id={`tooltip-${uiSchema['ui:title'].replace(/\s+/g, '-')}`}
+                  place="top"
+                  effect="solid"
+                  style={{
+                    width: '300px',
+                    backgroundColor: '#000',
+                    color: 'white',
+                    fontSize: '12px',
+                    boxShadow: 3,
+                    borderRadius: '8px',
+                  }}
+                />
+              </div>
+            )}
         </div>
-        
-        {uiSchema['ui:tag']?(
-            <button className="text-[#007EEF] bg-slate-200 rounded-md text-[11px] w-[72px] h-[22px] ml-6 text-center mt-1">
+
+        {uiSchema['ui:tag'] && (
+          <button className="text-[#007EEF] bg-slate-200 rounded-md text-[11px] w-[72px] h-[22px] ml-6 text-center mt-1">
             {uiSchema['ui:tag']}
           </button>
-        ):(
-          <div></div>
         )}
-        
       </div>
       <div className={`p-2 mx-1 mt-2 green-checkbox ${uiSchema['ui:section']}`}>
         {options.enumOptions.map((option, index) => (
-          <label key={index} className='flex items-center gap-2 text-sm mb-4 cursor-pointer'>
+          <label key={index} className="flex items-center gap-2 text-sm mb-4 cursor-pointer">
             <input
-              type='checkbox'
+              type="checkbox"
               name={options.name}
-              value={option.value}
-              checked={selectedValues.includes(option.value)} // Check if the value is in the array
+              value={option.value.label}
+              checked={selectedValues.includes(option.value.label)} // Check if the value is in the array
               autoFocus={autofocus && index === 0}
               onChange={handleChange}
               className="form-checkbox h-3 w-3"
- // Changed from 'form-radio' to 'form-checkbox' green-checkbox h-3 w-3 appearance-none checked:bg-[#42cc71] checked:border-[#42cc71] border border-gray-500 rounded-sm relative
             />
-           
-            {option.label}
+            {option.value.value}
           </label>
         ))}
       </div>
-      {showTextbox?(
-         <textarea
-         placeholder="Enter a description..."
-         className={`backdrop:before:w-[48rem] border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer mx-3 mt-2 sm:w-[48rem] md:w-[60%] lg:w-[63%] xl:w-[67%] 2xl:w-[67%] `}
-         id="details"
-         // value={formData[0].details}
-         // onChange={e => setFormData([{...formData[0], details: e.target.value }])}
-         rows={7}
-       />
-      ):(
-        <div></div>
+      {showTextbox && (
+        <textarea
+          placeholder="Enter a description..."
+          className={`border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer mx-3 mt-2 sm:w-[48rem] md:w-[60%] lg:w-[63%] xl:w-[67%] 2xl:w-[67%] `}
+          id="details"
+          rows={7}
+          value={options.textboxValue}
+          onChange={handleTextboxChange} // Update the state when the textarea changes
+        />
       )}
     </div>
   );

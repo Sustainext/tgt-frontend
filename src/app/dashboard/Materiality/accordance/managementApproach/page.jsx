@@ -6,15 +6,14 @@ import InputField from "./InputField"
 import Table from "./table"
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import CompletePopup from '../../modals/completePopup'
+
 
 
 const ManagementApproach = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState();
   const [category,setCategory]=useState("")
-  const [isCompleteModalOpen, setIsCompleteModalOpen] = useState(false);
-
+  
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -92,16 +91,8 @@ const ManagementApproach = () => {
       <Table/>
     <InputField/>
     
-    <div className="flex justify-end w-full gap-4 mt-4 ">
-          <button
-           onClick={()=>{setIsCompleteModalOpen(true)}}
-                  className="w-[15%] h-full mr-2 py-2 px-2 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer"
-                >
-                  Save and Proceed {">"}
-                </button>
-        </div>
-      <CompletePopup  isCompleteModalOpen={isCompleteModalOpen}
-      setIsCompleteModalOpen={setIsCompleteModalOpen}/>
+    
+      
     </>
   );
 };

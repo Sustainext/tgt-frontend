@@ -22,7 +22,57 @@ const user_id = 1;
 
 
 
-const Environment = ({envChecked}) => {
+const Environment = ({envChecked,formData,setFormData}) => {
+
+    // const [formData, setFormData] = useState([{}]);
+    const [r_schema, setRemoteSchema] = useState({});
+    const [r_ui_schema, setRemoteUiSchema] = useState({});
+    const [loopen, setLoOpen] = useState(false);
+    const toastShown = useRef(false);
+    const { open } = GlobalState();
+    const [envTopics,setEnvTopics]=useState([])
+
+    const LoaderOpen = () => {
+        setLoOpen(true);
+    };
+
+    const LoaderClose = () => {
+        setLoOpen(false);
+    };
+    const fetchEnvTopics = async()=>{
+        LoaderOpen()
+        const url = `${process.env.BACKEND_API_URL}/materiality_dashboard/list-esg-topics/?framework_id=2&esg_category=environment`;
+        try {
+          const response = await axiosInstance.get(url);
+            if(response.status==200){
+                const options = response.data.map((val) => ({
+                    label: val.id.toString(),
+                    value: val.name,
+                }));
+                setEnvTopics(options);
+                LoaderClose()
+            }
+          }
+         
+        catch (error) {
+            LoaderClose()
+          toast.error("Oops, something went wrong", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+      }
+  
+      useEffect(()=>{
+        fetchEnvTopics()
+      },[])
+
     const schema = {
         type: "array",
         items: {
@@ -31,7 +81,7 @@ const Environment = ({envChecked}) => {
                 Environmental: {
                     type: "string",
                     title: "Environmental",
-                    enum: ["GHG Emissions", "Biodiversity & Land Use","Air Emissions","Water & effluent","Raw Material Sourcing","Waste Management","Energy","Packaging Material","Supply chain sustainability","Fossil Fuel","Agriculture","Aquaculture"],
+                    enum: envTopics
     
                 },
             },
@@ -47,7 +97,8 @@ const Environment = ({envChecked}) => {
                 "ui:horizontal": true,
                 "ui:options": {
                     label: false,
-                    envChecked:envChecked
+                    envChecked:envChecked,
+                    enumOptions:envTopics
                 },
             },
             "ui:options": {
@@ -59,20 +110,7 @@ const Environment = ({envChecked}) => {
         },
     };
 
-    const [formData, setFormData] = useState([{}]);
-    const [r_schema, setRemoteSchema] = useState({});
-    const [r_ui_schema, setRemoteUiSchema] = useState({});
-    const [loopen, setLoOpen] = useState(false);
-    const toastShown = useRef(false);
-    const { open } = GlobalState();
-
-    const LoaderOpen = () => {
-        setLoOpen(true);
-    };
-
-    const LoaderClose = () => {
-        setLoOpen(false);
-    };
+   
 
     const handleChange = (e) => {
         setFormData(e.formData);
