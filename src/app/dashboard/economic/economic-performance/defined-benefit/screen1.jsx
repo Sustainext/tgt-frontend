@@ -39,7 +39,7 @@ const uiSchema = {
     Q1: {
       "ui:title": "If the plan’s liabilities are met by the organization’s general resources, provide the estimated value of those liabilities. (for the reporting period)",
       "ui:tooltip":
-        "<p>The answer should include the size, cost, and duration of each significant infrastructure investment or service supported.</p><p><strong>Infrastructure:</strong></p><ul><li>Facilities built primarily to provide a public service or good rather than a commercial purpose.</li><li>From which the organization does not seek to gain direct economic benefit.</li></ul><p><strong>Services supported:</strong></p><ul><li>Services that provide a public benefit either through direct payment of operating costs.</li><li>Or through staffing the facility or service with an organization’s own employees.</li></ul>",
+        "Mention the estimated value of the liabilities, if the plan liabilities are met by the organisation's general resources.",
       "ui:tooltipdisplay": "none",
       "ui:titledisplay": "none",
       "ui:inputfildtype": "number",

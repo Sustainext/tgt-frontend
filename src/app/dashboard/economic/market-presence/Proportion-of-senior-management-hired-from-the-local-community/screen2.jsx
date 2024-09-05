@@ -16,7 +16,7 @@ const widgets = {
   inputWidget: CommoninputWidget,
 };
 
-const view_path = "ggri-economic-proportion_of_senior_management-senior_management-202-2b";
+const view_path = "gri-economic-proportion_of_senior_management-senior_management-202-2b";
 const client_id = 1;
 const user_id = 1;
 

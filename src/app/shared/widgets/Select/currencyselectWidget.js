@@ -32,7 +32,7 @@ const customStyles = {
   }),
   valueContainer: (provided) => ({
     ...provided,
-    padding: '0 8px', // Adjust padding for the value container
+    padding: '0', // Adjust padding for the value container
   }),
   input: (provided) => ({
     ...provided,
@@ -55,6 +55,40 @@ const CurrencyselectWidget = (props) => {
     return (
         <>
         <div className="mb-6">
+          <div className='relative flex'>
+            <div>
+            <p className="flex text-[15px] text-gray-500 font-semibold mb-3"  style={{ display: uiSchema["ui:haddingdisplay"] }}>
+          {uiSchema["ui:hadding"]}
+     
+        </p>
+            </div>
+            <div>
+            <MdInfoOutline
+          data-tooltip-id={`tooltip-${uiSchema["ui:hadding"].replace(
+            /\s+/g,
+            "-"
+          )}`}
+          data-tooltip-content={uiSchema["ui:haddingtooltips"]}
+          className="mt-1 ml-2 w-[30px] text-gray-500 text-[16px]"
+          style={{ display: uiSchema["ui:haddingtooltipdisplay"] }}
+        />
+        {/* Tooltip */}
+        <ReactTooltip
+          id={`tooltip-${uiSchema["ui:hadding"].replace(/\s+/g, "-")}`}
+          place="top"
+          effect="solid"
+          style={{
+            width: "300px",
+            backgroundColor: "#000",
+            color: "white",
+            fontSize: "12px",
+            boxShadow: 3,
+            borderRadius: "8px",
+          }}
+        ></ReactTooltip>
+            </div>
+      
+          </div>
         <div className="relative mb-2">
         <p className="text-sm text-gray-700 flex">
           {uiSchema["ui:title"]}

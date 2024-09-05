@@ -11,9 +11,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-
+import CurrencyselectWidget from "../../../../../shared/widgets/Select/currencyselectWidget";
+import LoctiondropdwonTable from "../../../../../shared/widgets/Economic/loctiondropdwonTable";
 const widgets = {
   inputWidget: CommoninputWidget,
+  CurrencyselectWidget:CurrencyselectWidget,
+  LoctiondropdwonTable:LoctiondropdwonTable,
 };
 
 const view_path = "gri-economic-financial_implications-201-2a-calculate";
@@ -28,8 +31,44 @@ const schema = {
       Q1: {
         type: "string",
         title:
-          "Is there a system to calculate the financial implications or costs, or to make revenue projections?",
+          "Does your organisation subject to minimum wage rules?",
           enum:["Yes","No"],
+      },
+      Q2: {
+        type: "string",
+        title:
+          "Are a significant proportion of employees compensated based on wages subject to minimum wage rules?",
+          enum:["Yes","No"],
+      },
+    },
+    dependencies: {
+      Q2: {
+        oneOf: [
+          {
+            properties: {
+              Q2: {
+                enum: ["Yes"],
+              },
+              Q3: {
+                type: "string",
+                title: "If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
+              },
+              Q4: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    Location: { type: "string" },
+                    Male : { type: "string" },
+                    Female: { type: "string" },
+                    Nonbinary: { type: "string" },
+         
+                  },
+                },
+              },
+            },
+          },
+        ],
       },
     },
   },
@@ -37,12 +76,12 @@ const schema = {
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1"],
+    "ui:order": ["Q1","Q2","Q3","Q4"],
     Q1: {
       "ui:title":
-        "Is there a system to calculate the financial implications or costs, or to make revenue projections?",
+        "Does your organisation subject to minimum wage rules?",
       "ui:tooltip":
-        "What is the significance of the indirect economic impacts in the context of external benchmarks and stakeholder priorities, such as national and international standards, protocols, and policy agendas?",
+        "Indicate whether your organisation is subject to minimum wage rules.",
       "ui:tooltipdisplay": "none",
       "ui:titledisplay": "none",
       "ui:widgetType": "radio",
@@ -53,7 +92,77 @@ const uiSchema = {
         label: false,
       },
     },
-
+    Q2: {
+      "ui:title":
+        "Are a significant proportion of employees compensated based on wages subject to minimum wage rules?",
+      "ui:tooltip":
+        "Indicate whether a significant proportion of employees are compensated based on wages subject to minimum wage rules.",
+      "ui:tooltipdisplay": "block",
+      "ui:titledisplay": "block",
+      "ui:widgetType": "radio",
+      "ui:inputfildtype": "text",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
+    },
+    Q3: {
+      "ui:hadding":"If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
+      "ui:haddingtooltips":"If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
+      "ui:haddingdisplay":"block",
+      "ui:haddingtooltipdisplay":"block",
+      "ui:title":
+      "Select Currency",
+    "ui:tooltip": "Specify the frequency of sustainability reporting..",
+    "ui:tooltipdisplay": "none",
+    "ui:widget": "CurrencyselectWidget",
+    "ui:widgtclass":"block w-[20vw] text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300 mb-4",
+    "ui:horizontal": true,
+    "ui:options": {
+      label: false,
+    },
+  },
+  Q4: {
+    "ui:widget": "LoctiondropdwonTable",
+    "ui:options": {
+      titles: [
+        {
+          title: "Location",
+          tooltip:
+            "How many substantiated complaints received concerning breaches of customer privacy?",
+          type: "number",
+          tooltipdisplay: "none",
+          widgettype: "select",
+        },
+        {
+          title: "Male",
+          tooltip: "Mention a list of entities by tax jurisdiction.",
+          type: "number",
+          tooltipdisplay: "none",
+          widgettype: "input",
+        },
+        {
+          title: "Female",
+          tooltip:
+            "Specify the main activities of the organisation. e.g. sales, marketing, manufacturing, or distribution.",
+          type: "number",
+          tooltipdisplay: "none",
+          widgettype: "input",
+        },
+        {
+          title:
+            "Non-binary",
+          tooltip:
+            "Employee numbers can be reported using an appropriate calculation, such as head count at the end of the time period reported in Disclosure 207-4-c or a full-time equivalent (FTE) calculation",
+          type: "number",
+          tooltipdisplay: "none",
+          widgettype: "input",
+        },
+       
+      ],
+    },
+  },
     "ui:options": {
       orderable: false,
       addable: false,
@@ -64,7 +173,21 @@ const uiSchema = {
 };
 
 const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
-  const [formData, setFormData] = useState([{}]);
+  const data=[ {
+    Q1: "",  
+    Q2: "",  
+    Q3: "",  
+    Q4: [
+      {
+        Location: "",  
+        Male: "",     
+        Female: "",   
+        Nonbinary: ""  
+      }
+    ] 
+  }]
+  const [formData, setFormData] = useState(data);
+  
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
@@ -153,16 +276,16 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       LoaderClose();
     }
   };
-  useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      toastShown.current = false;
-    } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
-      }
-    }
-  }, [selectedOrg, year, selectedCorp]);
+  // useEffect(() => {
+  //   if (selectedOrg && year) {
+  //     loadFormData();
+  //     toastShown.current = false;
+  //   } else {
+  //     if (!toastShown.current) {
+  //       toastShown.current = true;
+  //     }
+  //   }
+  // }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -179,15 +302,14 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
         }}
       >
-        <div className="mb-4 flex">
+        <div className="mb-2 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
-            Is there a system to calculate the financial implications or costs, or to make revenue projections?
+            Does your organisation subject to minimum wage rules?
               <MdInfoOutline
                 data-tooltip-id={`es26`}
-                data-tooltip-html="Indicate whether the organisation has a system to calculate
-the financial implications or costs, or to make revenue projections."
-                className="mt-1.5 ml-2 text-[16px]"
+                data-tooltip-html="Indicate whether your organisation is subject to minimum wage rules."
+                className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip
                 id={`es26`}
@@ -217,8 +339,8 @@ the financial implications or costs, or to make revenue projections."
         </div>
         <div className="mx-2">
           <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+            schema={schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

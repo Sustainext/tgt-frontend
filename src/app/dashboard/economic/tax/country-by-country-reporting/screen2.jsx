@@ -20,38 +20,46 @@ const widgets = {
 const view_path = "gri-economic-country_by_country_reporting-207-4b-for";
 const client_id = 1;
 const user_id = 1;
-
 const schema = {
-  type: "object",
-  properties: {
-    Q1: {
-      type: "string",
-      title: "Select Currency",
-    },
-    Q2: {
-      type: "array",
-      items: {
-        type: "object",
-        properties: {
-          Taxjurisdictioncol1: { type: "string" },
-          Taxjurisdictioncol2: { type: "string" },
-          Taxjurisdictioncol3: { type: "string" },
-          Taxjurisdictioncol4: { type: "string" },
-          Taxjurisdictioncol5: { type: "string" },
-          Taxjurisdictioncol6: { type: "string" },
-          Taxjurisdictioncol7: { type: "string" },
-          Taxjurisdictioncol8: { type: "string" },
-          Taxjurisdictioncol9: { type: "string" },
-          Taxjurisdictioncol10: { type: "string" },
-          Taxjurisdictioncol11: { type: "string" },
+  type: "array",
+  items: {
+    type: "object",
+    properties: {
+      Q1: {
+        type: "string",
+        title: "Select Currency",
+      },
+      Q2: {
+        type: "array",
+        items: {
+          type: "object",
+          properties: {
+            Taxjurisdictioncol1: { type: "string" },
+            Taxjurisdictioncol2: { type: "string" },
+            Taxjurisdictioncol3: { type: "string" },
+            Taxjurisdictioncol4: { type: "string" },
+            Taxjurisdictioncol5: { type: "string" },
+            Taxjurisdictioncol6: { type: "string" },
+            Taxjurisdictioncol7: { type: "string" },
+            Taxjurisdictioncol8: { type: "string" },
+            Taxjurisdictioncol9: { type: "string" },
+            Taxjurisdictioncol10: { type: "string" },
+            Taxjurisdictioncol11: { type: "string" },
+          },
         },
       },
     },
+
   },
 };
 
+
 const uiSchema = {
   Q1: {
+    "ui:hadding":"If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
+    "ui:haddingtooltips":"If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
+    "ui:haddingdisplay":"none",
+    "ui:haddingtooltipdisplay":"none",
     "ui:title": "Select Currency",
     "ui:tooltip": "Specify the frequency of sustainability reporting..",
     "ui:tooltipdisplay": "none",
@@ -162,8 +170,8 @@ const uiSchema = {
   },
 };
 
-const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
-  const initialFormData = {
+const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
+  const initialFormData = [{
     Q1: "",
     Q2: [
       {
@@ -180,7 +188,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
         Taxjurisdictioncol11: "",
       },
     ],
-  };
+  }];
   const [formData, setFormData] = useState(initialFormData);
   const [loopen, setLoOpen] = useState(false);
   const [r_schema, setRemoteSchema] = useState({});
@@ -207,7 +215,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       corporate: selectedCorp,
       organisation: selectedOrg,
       year,
-      month,
+ 
     };
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
@@ -235,32 +243,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
     }
   };
 
-  const loadFormData = async () => {
-    LoaderOpen();
-    setFormData(initialFormData);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}&month=${month}`;
-    try {
-      const response = await axiosInstance.get(url);
-      setRemoteSchema(response.data.form[0].schema);
-      setRemoteUiSchema(response.data.form[0].ui_schema);
-      setFormData(response.data.form_data[0].data);
-    } catch (error) {
-      setFormData(initialFormData);
-    } finally {
-      LoaderClose();
-    }
-  };
-
-  useEffect(() => {
-    if (selectedOrg && year && month) {
-      loadFormData();
-      toastShown.current = false;
-    } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
-      }
-    }
-  }, [selectedOrg, year, selectedCorp, month]);
+ 
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -343,8 +326,8 @@ const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+             schema={schema}
+             uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

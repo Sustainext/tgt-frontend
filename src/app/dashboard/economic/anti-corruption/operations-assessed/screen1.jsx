@@ -19,7 +19,7 @@ const widgets = {
   RichtextWidget: RichtextWidget,
 };
 
-const view_path = "ggri-economic-operations_assessed_for_risks_related_to_corruption-205-1a-total";
+const view_path = "gri-economic-operations_assessed_for_risks_related_to_corruption-205-1a-total";
 const client_id = 1;
 const user_id = 1;
 

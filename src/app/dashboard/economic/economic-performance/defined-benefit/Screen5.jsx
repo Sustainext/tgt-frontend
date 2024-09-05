@@ -67,7 +67,6 @@ const Screen5 = ({ selectedOrg, year, selectedCorp }) => {
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
   const { open } = GlobalState();
-
   const LoaderOpen = () => {
     setLoOpen(true);
   };
