@@ -56,7 +56,7 @@ const uiSchema = {
     ],
   },
 };
-const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
+const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
   const initialFormData = [
     {
       CompletedLegalAction: "",
@@ -90,7 +90,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       corporate: selectedCorp,
       organisation: selectedOrg,
       year,
-      month,
+
     };
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
@@ -144,7 +144,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
     console.log("loadFormData screen 2");
     LoaderOpen();
     setFormData(initialFormData);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -159,7 +159,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   };
 
   useEffect(() => {
-    if (selectedOrg && year && month) {
+    if (selectedOrg && year) {
       loadFormData();
       toastShown.current = false;
     } else {
@@ -167,7 +167,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp, month]);
+  }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -247,17 +247,7 @@ including any decisions or judgements in detail."
             }}
           />
         </div>
-        <div className="flex right-1 mx-2">
-          {selectedOrg && year && (
-            <button
-              type="button"
-              className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
-              onClick={handleAddCommittee}
-            >
-              Add Row <MdAdd className="text-lg" />
-            </button>
-          )}
-        </div>
+    
         {selectedOrg && year && (
           <button
             type="button"

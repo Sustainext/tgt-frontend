@@ -14,7 +14,7 @@ const Financialimplications = () => {
             <ToastContainer style={{ fontSize: "12px" }} />
             {currentSection === 1 && <Section1 />}
             {currentSection === 2 && <Section2 />}
-{/* 
+
             <div className="flex space-x-2 justify-end mr-4">
                
                 <button
@@ -34,7 +34,7 @@ const Financialimplications = () => {
                         Next  <MdChevronRight className='text-[20px] ml-4' />
                     </button>
                 )}
-            </div> */}
+            </div>
         </>
     );
 };

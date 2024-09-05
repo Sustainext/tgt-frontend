@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import CommoninputWidget from "../../../../shared/widgets/Input/commoninputWidget";
-import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -12,14 +11,13 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import RichtextWidget from "../../../../shared/widgets/Economic/RichtextWidget";
+
 const widgets = {
   inputWidget: CommoninputWidget,
-  inputWidget2:inputWidget2,
-  RichtextWidget:RichtextWidget,
+
 };
 
-const view_path = "ggri-economic-country_by_country_reporting-207-4c-disclosure";
+const view_path = "gri-economic-country_by_country_reporting-207-4c-disclosure";
 const client_id = 1;
 const user_id = 1;
 
@@ -85,9 +83,17 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
     setLoOpen(false);
   };
 
-  const handleChange = (e) => {
-    setFormData(e.formData);
-  };
+
+    const handleChange = (e) => {
+      let newFormData = { ...e.formData[0] };
+      if (newFormData.Q2 === "No") {
+        newFormData.Q3 = "";
+        newFormData.Q4 = "";
+      }
+  
+      setFormData([newFormData]);
+    };
+
 
   const updateFormData = async () => {
     const data = {
@@ -222,8 +228,8 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+         schema={r_schema}
+         uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

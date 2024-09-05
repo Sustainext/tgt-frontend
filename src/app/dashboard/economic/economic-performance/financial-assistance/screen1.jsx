@@ -75,6 +75,10 @@ const uiSchema = {
   items: {
     "ui:order": ["Q1","Q2","Q3","Q4","Q5","Q6","Q7","Q8","Q9"],
     Q1: {
+      "ui:hadding":"If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
+      "ui:haddingtooltips":"If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
+      "ui:haddingdisplay":"none",
+      "ui:haddingtooltipdisplay":"none",
         "ui:title":
         "Select Currency",
       "ui:tooltip": "Specify the frequency of sustainability reporting..",
