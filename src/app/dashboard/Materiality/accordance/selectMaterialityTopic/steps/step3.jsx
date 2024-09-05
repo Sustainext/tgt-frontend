@@ -120,7 +120,7 @@ const Step3 = ({handleTabClick,handlePrevious}) => {
     };
   
 
-    const assessment_id=localStorage.getItem("id")
+    const assessment_id= typeof window !== 'undefined' ?localStorage.getItem("id"):''
 
     const fetchDetails = async()=>{
       const url = `${process.env.BACKEND_API_URL}/materiality_dashboard/materiality-change-confirmation/${assessment_id}/`;

@@ -10,7 +10,7 @@ const Step2 = ({ data, setCurrentStep, handleNext, handlePrevious }) => {
   const [disclosureTopics, setDisclosureTopics] = useState([]);
   const [selectedDisclosures, setSelectedDisclosures] = useState({});
   const [dataPresent,setDatapresent]=useState(false)
-  const id = localStorage.getItem("id");
+  const id = typeof window !== 'undefined' ?localStorage.getItem("id"):'';
   const [loopen, setLoOpen] = useState(false);
 
 

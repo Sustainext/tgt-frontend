@@ -166,7 +166,7 @@ const SelectMaterialityTopic = ({ handleTabClick,cardData}) => {
                     Reporting Level
                   </p>
                   <p className="text-[13px] text-gray-500 font-[400] px-2 pt-2">
-                   {cardData.corporate_name?"Corporate":"Organization"}
+                   {cardData?.corporate_name?"Corporate":"Organization"}
                   </p>
                 </div>
                 <div>
@@ -174,7 +174,7 @@ const SelectMaterialityTopic = ({ handleTabClick,cardData}) => {
                     Materiality Assessment approach
                   </p>
                   <p className="text-[13px] text-gray-500 font-[400] px-2 pt-2">
-                   {cardData.approach}
+                   {cardData?.approach}
                   </p>
                 </div>
               </div>
@@ -184,7 +184,7 @@ const SelectMaterialityTopic = ({ handleTabClick,cardData}) => {
                     Reporting Year
                   </p>
                   <p className="text-[13px] text-gray-500 font-[400] px-2 pt-2">
-                  {`${convertDate(cardData.start_date)} - ${convertDate(cardData.end_date)}`}
+                  {`${convertDate(cardData?.start_date)} - ${convertDate(cardData?.end_date)}`}
                   </p>
                 </div>
               </div>
@@ -194,16 +194,16 @@ const SelectMaterialityTopic = ({ handleTabClick,cardData}) => {
                     Organization Name
                   </p>
                   <p className="text-[13px] text-gray-500 font-[400] px-2 pt-2">
-                    {cardData.organisation_name}
+                    {cardData?.organisation_name}
                   </p>
                 </div>
-                {cardData.corporate_name?(
+                {cardData?.corporate_name?(
                     <div>
                     <p className="text-[14px] text-black font-[400] px-2 pt-2">
                       Corporate Entity Name
                     </p>
                     <p className="text-[13px] text-gray-500 font-[400] px-2 pt-2">
-                      {cardData.corporate_name}
+                      {cardData?.corporate_name}
                     </p>
                   </div>
                 ):(

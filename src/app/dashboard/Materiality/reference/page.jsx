@@ -54,14 +54,14 @@ const Reference = () => {
   }, [category]);
 
   useEffect(() => {
-    const isFirstVisit = localStorage.getItem('hasVisitedref');
+    const isFirstVisit = typeof window !== 'undefined' ?localStorage.getItem('hasVisitedref'):'';
     if (isFirstVisit=="true") {
       setIsModalOpen(true);
       localStorage.setItem('hasVisitedref','false');
     }
   }, []);
 
-  const id=localStorage.getItem("id")
+  const id= typeof window !== 'undefined' ?localStorage.getItem("id"):''
   const fetchSelectedTopic=async()=>{
 
     const url = `${process.env.BACKEND_API_URL}/materiality_dashboard/get-material-topics/${id}/`;
