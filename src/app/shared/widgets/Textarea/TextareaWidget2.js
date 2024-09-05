@@ -95,7 +95,7 @@ const TextareaWidget2 = (props) => {
 
         <textarea
           placeholder="Enter a description..."
-          className={`backdrop:before:w-[48rem] border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-[90%]`}
+          className={`backdrop:before:w-[48rem] border appearance-none text-[15px] border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-[90%]`}
           value={value}
           onChange={handleChange}
           rows={7}

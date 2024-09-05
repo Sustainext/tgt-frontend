@@ -217,7 +217,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%]">
-            <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
               Negative social impacts in the supply chain and actions taken
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}

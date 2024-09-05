@@ -75,7 +75,7 @@ const Textboxmultirowfile = (props) => {
     <>
       <div className="mb-6">
         <div className="flex mb-2 relative">
-          <p className="text-sm text-gray-700 flex">
+          <p className="text-[15px] text-gray-500 font-semibold flex">
             {uiSchema["ui:title"]}
             <MdInfoOutline
               data-tooltip-id={uiSchema["ui:tooltip"]}

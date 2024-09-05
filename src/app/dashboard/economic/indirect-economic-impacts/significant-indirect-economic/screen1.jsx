@@ -16,7 +16,7 @@ const widgets = {
   inputWidget: CommoninputWidget,
 };
 
-const view_path = "gri-general-collective_bargaining-2-30-b-employees";
+const view_path = "gri-economic-significant_indirect-provide-203-2a";
 const client_id = 1;
 const user_id = 1;
 
@@ -180,7 +180,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
               Provide examples of significant identified indirect economic
               impacts of the organization, including positive and negative
               impacts.
@@ -218,8 +218,8 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

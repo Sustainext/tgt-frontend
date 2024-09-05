@@ -15,7 +15,7 @@ const nextConfig = {
 
   },
   images: {
-      domains: ['udm-be.sustainext.ai'],
+      domains: ['udm-be-dev.sustainext.ai'],
   },
   eslint: {
       ignoreDuringBuilds: true,

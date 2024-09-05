@@ -3,7 +3,9 @@
 @tailwind utilities;
 body{
   height: 100vh;
-  zoom: 0.8
+  zoom: 0.8;
+  overflow-x: hidden;
+
 }
 button,
 input,
@@ -121,6 +123,7 @@ h1,h2,h3,h4,h5,h6,p,div {
   }
   ::-webkit-scrollbar {
     width: 10px;
+    height: 10px;
   }
 
   /* Track */
@@ -253,10 +256,10 @@ input[type='number']::-webkit-outer-spin-button {
 /* .green-radio:checked::before{
   content: '';
   position: absolute;
-  left: 52%; 
-  top: 45%; 
-  width: 0.25em; 
-  height: 0.45em; 
+  left: 52%;
+  top: 45%;
+  width: 0.25em;
+  height: 0.45em;
   border: solid white;
   border-width: 0 0.15em 0.15em 0; 
   transform: translate(-50%, -50%) rotate(45deg); 
@@ -291,3 +294,4 @@ input[type='number']::-webkit-outer-spin-button {
   position: relative;
   z-index: 1;
 }
+
