@@ -28,7 +28,17 @@ const schema = {
       Q1: {
         type: "string",
         title:
-          " If currently no system is in place to calculate the financial implications or costs, or to make revenue projections, Provide plans and timelines to develop the necessary systems.",
+          "Does your organisation subject to minimum wage rules?",
+      },
+      Q2: {
+        type: "string",
+        title:
+          "Are a significant proportion of other workers (excluding employees) performing the organization’s activities compensated based on wages subject to minimum wage rules?",
+      },
+      Q3: {
+        type: "string",
+        title:
+          "Describe the actions taken to determine whether these workers are paid above the minimum wage.",
       },
     },
   },
@@ -36,7 +46,7 @@ const schema = {
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1"],
+    "ui:order": ["Q1","Q2","Q3"],
     Q1: {
       "ui:title":
         " If currently no system is in place to calculate the financial implications or costs, or to make revenue projections, Provide plans and timelines to develop the necessary systems.",
@@ -52,7 +62,36 @@ const uiSchema = {
         label: false,
       },
     },
-
+    Q2: {
+      "ui:title":
+        " If currently no system is in place to calculate the financial implications or costs, or to make revenue projections, Provide plans and timelines to develop the necessary systems.",
+      "ui:tooltip":
+        " If currently no system is in place to calculate the financial implications or costs, or to make revenue projections, Provide plans and timelines to develop the necessary systems.",
+      "ui:tooltipdisplay": "none",
+      "ui:titledisplay": "none",
+      "ui:widgetType": "textarea",
+      "ui:inputfildtype": "text",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
+    },
+    Q3: {
+      "ui:title":
+        " If currently no system is in place to calculate the financial implications or costs, or to make revenue projections, Provide plans and timelines to develop the necessary systems.",
+      "ui:tooltip":
+        " If currently no system is in place to calculate the financial implications or costs, or to make revenue projections, Provide plans and timelines to develop the necessary systems.",
+      "ui:tooltipdisplay": "none",
+      "ui:titledisplay": "none",
+      "ui:widgetType": "textarea",
+      "ui:inputfildtype": "text",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
+    },
     "ui:options": {
       orderable: false,
       addable: false,
@@ -181,14 +220,14 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
-            If currently no system is in place to calculate the financial implications or costs, or to make revenue projections, Provide plans and timelines to develop the necessary systems.
-              {/* <MdInfoOutline
-                data-tooltip-id={`es26`}
-                data-tooltip-html="What is the significance of the indirect economic impacts in the context of external benchmarks and stakeholder priorities, such as national and international standards, protocols, and policy agendas?"
+            Does your organisation subject to minimum wage rules?				
+              <MdInfoOutline
+                data-tooltip-id={`es29`}
+                data-tooltip-html="Indicate whether your organisation is subject to minimum wage rules."
                 className="mt-1.5 ml-2 text-[18px]"
               />
               <ReactTooltip
-                id={`es26`}
+                id={`es29`}
                 place="top"
                 effect="solid"
                 style={{
@@ -200,14 +239,14 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
                   borderRadius: "8px",
                   textAlign: "left",
                 }}
-              ></ReactTooltip> */}
+              ></ReactTooltip>
             </h2>
           </div>
           <div className="w-[20%]">
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 202-2
+                  GRI 202-1b
                 </div>
               </div>
             </div>
@@ -215,8 +254,8 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+            schema={schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -230,7 +269,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            // disabled={!selectedOrg || !year}
           >
             Submit
           </button>
