@@ -1,4 +1,3 @@
-"use client";
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
@@ -9,172 +8,239 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
-import axiosInstance from '@/app/utils/axiosMiddleware'
+import axiosInstance from '@/app/utils/axiosMiddleware';
 import MaterialityTableWidget from "../../../../shared/widgets/Table/materialityTableWidget";
 
 const widgets = {
-  MaterialityTableWidget:MaterialityTableWidget
- 
+  MaterialityTableWidget: MaterialityTableWidget
 };
 
 const view_path = "gri-governance-critical_concerns-2-16-a-critical_concerns";
 const client_id = 1;
 const user_id = 1;
 
-const schema = {
+const Table = ({ selectedOrg, year, selectedCorp }) => {
+  const assessment_id = typeof window !== 'undefined' ?localStorage.getItem("id"):'';
+  const [materialTopics, setMaterialTopics] = useState([]);
+  const [dataPresent,setDatapresent]=useState(false)
+  const [formData, setFormData] = useState([
+    {
+      MaterialTopic: "",
+      ImpactType: "",
+      ImpactOverview: "",
+    },
+  ]);
+  const [loopen, setLoOpen] = useState(false);
+
+  const LoaderOpen = () => {
+    setLoOpen(true);
+};
+
+const LoaderClose = () => {
+    setLoOpen(false);
+};
+  
+  // Fetch material topics from API
+  const fetchMaterialTopics = async () => {
+    LoaderOpen()
+    const url = `${process.env.BACKEND_API_URL}/materiality_dashboard/selected-material-topics/${assessment_id}/`;
+    try {
+      const response = await axiosInstance.get(url);
+      if (response.status === 200) {
+        LoaderClose()
+        setMaterialTopics(response.data);
+      }
+    } catch (error) {
+      LoaderClose()
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
+
+  const fetchData=async()=>{
+    LoaderOpen()
+    const url = `${process.env.BACKEND_API_URL}/materiality_dashboard/materiality-impact/${assessment_id}/`;
+    try {
+      const response = await axiosInstance.get(url);
+      if (response.status === 200) {
+        LoaderClose()
+        const arr=[]
+        response.data.map((val)=>{
+          const obj={
+            MaterialTopic: val.material_topic,
+            ImpactType: val.impact_type,
+            ImpactOverview: val.impact_overview,
+          }
+          arr.push(obj)
+        })
+        setFormData(arr)
+        setDatapresent(true)
+       
+      }
+    } catch (error) {
+      LoaderClose()
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  }
+
+  useEffect(() => {
+    fetchMaterialTopics();
+    fetchData()
+  }, []);
+
+  const schema = {
     type: "array",
     items: {
       type: "object",
       properties: {
-        MaterialTopic: { type: "string", title: "Material Topic", enum: ["Yes", "No"], },
+        MaterialTopic: {
+          type: "number",
+          title: "Material Topic",
+          enum: materialTopics.map(topic => topic.topic.id), // Store topic IDs in enum
+        },
         ImpactType: {
           type: "string",
-          title:
-            "Impact Type",
-            enum: ["Yes", "No"],
+          title: "Impact Type",
+          enum: ["Positive Impact", "Negative Impact"],
         },
         ImpactOverview: {
           type: "string",
           title: "Impact Overview (if any)",
-        }
+        },
       },
     },
   };
-  
+
   const uiSchema = {
     "ui:widget": "MaterialityTableWidget",
     "ui:options": {
-        titles: [
-            {
-            key:"MaterialTopic",
-              title: "Materia Topic",
-              tooltip: "Please specify the total number of incidents of discrimination on grounds  of race, color, sex, religion, political opinion, national extraction and social origin.",
-            },
-            {
-                key:"ImpactType",
-              title: "Impact Type",
-              tooltip: "Please specify the total number of incidents of discrimination on grounds  of race, color, sex, religion, political opinion, national extraction and social origin. ",
-            },
-            {
-                key:"ImpactOverview",
-              title: "Impact overview (if any)",
-              tooltip: "Please specify the total number of incidents of discrimination on grounds  of race, color, sex, religion, political opinion, national extraction and social origin.",
-            },
-          ],
+      titles: [
+        {
+          key: "MaterialTopic",
+          title: "Material Topic",
+          tooltip: "Specify if this is a material topic.",
+        },
+        {
+          key: "ImpactType",
+          title: "Impact Type",
+          tooltip: "Specify the impact type.",
+        },
+        {
+          key: "ImpactOverview",
+          title: "Impact Overview (if any)",
+          tooltip: "Provide an overview of the impact, if any.",
+        },
+      ],
+      materialTopics: materialTopics, // Pass the fetched material topics to the widget
     },
   };
 
-const Table = ({ selectedOrg, year, selectedCorp }) => {
-    const [formData, setFormData] = useState([{}]);
-    const [r_schema, setRemoteSchema] = useState({});
-    const [r_ui_schema, setRemoteUiSchema] = useState({});
-    const [loopen, setLoOpen] = useState(false);
-    const toastShown = useRef(false);
-    const { open } = GlobalState();
+  const handleChange = (e) => {
+    setFormData(e.formData);
+  };
 
-    const LoaderOpen = () => {
-        setLoOpen(true);
+  const handleRemoveCommittee = (index) => {
+    const newFormData = formData.filter((_, i) => i !== index);
+    setFormData(newFormData);
+  };
+
+  const handleAddCommittee = () => {
+    const newCommittee = {
+      MaterialTopic: "Select Material Topic",
+      ImpactType: "Select Impact Type",
+      ImpactOverview: "",
     };
+    setFormData([...formData, newCommittee]);
+  };
 
-    const LoaderClose = () => {
-        setLoOpen(false);
-    };
+  const transformFormData = (data) => {
+    return data.map((item) => ({
+      assessment: assessment_id, // Static value for assessment
+      material_topic: parseInt(item.MaterialTopic, 10), // Convert MaterialTopic to material_topic as an integer
+      impact_type: item.ImpactType, // Map ImpactType to impact_type
+      impact_overview: item.ImpactOverview // Map ImpactOverview to impact_overview
+    }));
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const transformedData = transformFormData(formData);
+    
+  const url = dataPresent?`${process.env.BACKEND_API_URL}/materiality_dashboard/materiality-impact/${assessment_id}/edit/`:`${process.env.BACKEND_API_URL}/materiality_dashboard/materiality-impact/create/`
+try {
+  const response = dataPresent?await axiosInstance.put(url,transformedData):await axiosInstance.post(url,transformedData);
+  
+  if(response.status>=200&&response.status<300){
+    toast.success("Data submitted", {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  }
+  else{
+    toast.error("Oops, something went wrong", {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  }
+  
+  }
+ 
+catch (error) {
+  toast.error("Oops, something went wrong", {
+    position: "top-right",
+    autoClose: 1000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+  });
+}
+    
+  };
 
-    const handleChange = (e) => {
-        setFormData(e.formData);
-    };
-
-    const handleRemoveCommittee = (index) => {
-        const newFormData = formData.filter((_, i) => i !== index);
-        setFormData(newFormData);
-      };
-
-      const handleAddCommittee = () => {
-        const newCommittee = {
-            MaterialTopic: "",
-            ImpactType: "",
-            ImpactOverview: "",
-        };
-        setFormData([...formData, newCommittee]);
-      };
-    const updateFormData = async () => {
-        const data = {
-            client_id: client_id,
-            user_id: user_id,
-            path: view_path,
-            form_data: formData,
-            corporate: selectedCorp,
-            organisation: selectedOrg,
-            year,
-        };
-        const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
-        try {
-            const response = await axiosInstance.post(url, data);
-            if (response.status === 200) {
-                toast.success("Data added successfully", {
-                    position: "top-right",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
-                LoaderClose();
-                // loadFormData();
-            } else {
-                toast.error("Oops, something went wrong", {
-                    position: "top-right",
-                    autoClose: 1000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
-                LoaderClose();
-            }
-        } catch (error) {
-            toast.error("Oops, something went wrong", {
-                position: "top-right",
-                autoClose: 1000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
-            LoaderClose();
-        }
-    };
-
-   
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // updateFormData();
-        console.log("test form data", formData);
-    };
-
-    return (
-        <>
-            <div
-        className="p-3 mb-6 pb-6 rounded-md shadow-lg mx-2 mt-10"
-      >
+  return (
+    <>
+      <div className="p-3 mb-6 pb-6 rounded-md shadow-lg mx-2 mt-10">
         <div className="mb-4 flex">
           <div className="w-full relative">
             <h2 className="flex mx-2 text-[15px] mb-2">
-            Describe actual and potential, negative and positive impacts on the economy, environment and people including impacts on their human rights.
+              Describe actual and potential, negative and positive impacts.
               <MdInfoOutline
-                data-tooltip-id={`tooltip-$e86`}
-                data-tooltip-html={
-                    
-                    `
-                    <p>Impact: </p><p>Effect the organization has or could have on the economy including on their human rights, which in turn can indicate its contribution (negative or positive) to sustainable development.</p><p>Human rights: </p><p>Rights inherent to all human beings, which include, at a minimum, the rights set out in the United Nations (UN) International Bill of Human Rights and the principles concerning fundamental rights set out in the International Labour Organization (ILO) Declaration on Fundamental Principles and Rights at Work.</p>
-                    `
-                }
+                data-tooltip-id="tooltip-$e86"
+                data-tooltip-html={`
+                  <p>Impact: Effect the organization has on the economy, environment, and people.</p>
+                  <p>Human rights: Rights inherent to all human beings.</p>
+                `}
                 className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip
@@ -189,12 +255,12 @@ const Table = ({ selectedOrg, year, selectedCorp }) => {
                   boxShadow: 3,
                   borderRadius: "8px",
                 }}
-              ></ReactTooltip>
+              />
             </h2>
           </div>
 
           <button className="text-[#007EEF] bg-slate-200 rounded-md text-[11px] w-[72px] h-[22px] ml-6 text-center mt-1">
-           GRI-3-3-a
+            GRI-3-3-a
           </button>
         </div>
         <div className="mx-2 mb-4">
@@ -210,18 +276,30 @@ const Table = ({ selectedOrg, year, selectedCorp }) => {
             }}
           />
         </div>
-        <div className="flex right-1 mx-2  border-gray-200">
-        <button
+        <div className="flex justify-between">
+          <div className="flex right-1 mx-2 border-gray-200">
+            <button
               type="button"
-              className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-2 mx-2"
+              className={` text-[13px] flex  mt-5 mb-2 mx-2 ${materialTopics.length!=0?"text-[#007EEF] cursor-pointer":"text-gray-300"}`}
               onClick={handleAddCommittee}
+              disabled={materialTopics.length==0}
             >
-             Add row <MdAdd className="text-lg" />
+              Add row <MdAdd className="text-lg" />
             </button>
+          </div>
+          <div>
+            <button
+              type="button"
+              className={`mt-5 text-center py-1 text-sm w-[100px] ${materialTopics.length!=0?"bg-blue-500 text-white hover:bg-blue-600":"bg-gray-200"} rounded  focus:outline-none focus:shadow-outline`}
+              onClick={handleSubmit}
+              disabled={materialTopics.length==0}
+            >
+              Submit
+            </button>
+          </div>
         </div>
-
-       
       </div>
+
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <Oval
@@ -234,8 +312,8 @@ const Table = ({ selectedOrg, year, selectedCorp }) => {
           />
         </div>
       )}
-        </>
-    );
+    </>
+  );
 };
 
 export default Table;

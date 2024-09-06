@@ -16,7 +16,7 @@ const widgets = {
   inputWidget: CommoninputWidget,
 };
 
-const view_path = "gri-general-collective_bargaining-2-30-b-employees";
+const view_path = "gri-economic-proportion_of_senior_management-operation-202-2d";
 const client_id = 1;
 const user_id = 1;
 
@@ -185,7 +185,7 @@ const Screen4 = ({ location, year}) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-          <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
+          <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
           The definition used for "significant locations of operation"
               <MdInfoOutline data-tooltip-id={`es25`}
                 data-tooltip-html="<p>Mention the definition used for ‘significant locations of operation’.Significant locations of operation refer to the geographical areas where the organization has a substantial impact through its operations. </p>" className="mt-1.5 ml-2 text-[14px]" />
@@ -213,8 +213,8 @@ const Screen4 = ({ location, year}) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

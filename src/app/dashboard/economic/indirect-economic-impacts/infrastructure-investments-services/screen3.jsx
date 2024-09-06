@@ -16,7 +16,7 @@ const widgets = {
   inputWidget: CommoninputWidget,
 };
 
-const view_path = "gri-general-collective_bargaining-2-30-b-employees";
+const view_path = "gri-economic-infrastructure-whether-203-1c";
 const client_id = 1;
 const user_id = 1;
 
@@ -180,7 +180,7 @@ const Screen3 = ({ location, year}) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-          <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold">
+          <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
           Whether these investments and services are commercial, in-kind, or pro bono engagements.
               {/* <MdInfoOutline data-tooltip-id={`es25`}
                 data-tooltip-html="<p>The answer should include the size, cost, and duration of each significant infrastructure investment or service supported.</p><p><strong>Infrastructure:</strong></p><ul><li>Facilities built primarily to provide a public service or good rather than a commercial purpose.</li><li>From which the organization does not seek to gain direct economic benefit.</li></ul><p><strong>Services supported:</strong></p><ul><li>Services that provide a public benefit either through direct payment of operating costs.</li><li>Or through staffing the facility or service with an organization’s own employees.</li></ul>" className="mt-1.5 ml-2 text-[14px]" />
@@ -207,8 +207,8 @@ const Screen3 = ({ location, year}) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

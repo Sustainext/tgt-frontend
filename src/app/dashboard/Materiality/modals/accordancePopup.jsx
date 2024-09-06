@@ -41,7 +41,7 @@ const AccordancePopup = ({ isModalOpen, setIsModalOpen }) => {
           <div className="modal-content-custom">
             <div className="flex justify-between items-center drop-shadow-lg pt-6 w-full">
               <div className="flex">
-                <Image src={GRISVG} className="w-7 h-7 mr-2" />
+                <Image src={GRISVG} className="w-7 h-7 mr-2" alt="gri-logo" />
                 <h2 className="self-stretch text-black text-[18px] font-bold">
                   <span>GRI-Material Topic</span>
                 </h2>

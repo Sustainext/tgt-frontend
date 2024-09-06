@@ -5,6 +5,7 @@ import "react-tooltip/dist/react-tooltip.css";
 
 const MaterialityInputWidget = (props) => {
   const { onChange, value = "", uiSchema = {} } = props;
+ 
   const handleChange = (event) => {
     onChange(event.target.value);
   };
@@ -12,10 +13,12 @@ const MaterialityInputWidget = (props) => {
     <>
       <div className="mb-6">
         <div className="flex mb-2">
-          <div className=" relative w-[55%]">
-            <p className="text-[15px] text-gray-700 flex">
+          <div className=" relative w-[55%] flex">
+            <p className="text-[15px] text-gray-700 flex w-full">
               {uiSchema["ui:title"]}
-              <MdInfoOutline
+              
+            </p>
+            <MdInfoOutline
                 data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(
                   /\s+/g,
                   "-"
@@ -38,7 +41,6 @@ const MaterialityInputWidget = (props) => {
                   borderRadius: "8px",
                 }}
               ></ReactTooltip>
-            </p>
           </div>
           <button className="text-[#007EEF] bg-slate-200 rounded-md text-[11px] w-[72px] h-[22px] ml-6 text-center mt-1">
             {uiSchema['ui:tag']}
@@ -54,9 +56,9 @@ const MaterialityInputWidget = (props) => {
          <textarea
           placeholder="Enter a description..."
           className={`backdrop:before:w-[48rem] border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer mx-3 mt-2 sm:w-[48rem] md:w-[60%] lg:w-[63%] xl:w-[62%] 2xl:w-[67%] `}
-          id="details"
-          // value={formData[0].details}
-          // onChange={e => setFormData([{...formData[0], details: e.target.value }])}
+         
+          value={value}
+          onChange={handleChange}
           rows={7}
         />
       </div>

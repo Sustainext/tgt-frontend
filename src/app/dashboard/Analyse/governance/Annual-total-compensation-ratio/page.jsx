@@ -203,7 +203,7 @@ const AnalyseAnnualtotalcompensationratio = ({ isBoxOpen }) => {
                 id="ReductionOfEnergy"
                 className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
               >
-                <h2 className="flex mx-2 text-[17px] text-gray-500 font-semibold mb-2">
+                <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold mb-2">
                   Ratio of annual total compensation & ratio of percentage
                   increase in annual total compensation
                   <MdInfoOutline

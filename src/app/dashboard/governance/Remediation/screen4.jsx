@@ -176,7 +176,7 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%]">
-            {/* <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold mb-2'>
+            {/* <h2 className='flex mx-2 text-[15px] text-gray-500 font-semibold mb-2'>
                         Highest governance body processes to prevent conflict of interest
                             <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                                 data-tooltip-content="This section documents the data corresponding to the processes for the highest governance body to ensure that conflicts of

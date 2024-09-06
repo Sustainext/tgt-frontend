@@ -13,6 +13,7 @@ import axiosInstance from '@/app/utils/axiosMiddleware'
 import MaterialityRadioWidget from "../../../../shared/widgets/Input/materialityRadioWidget"
 import MaterialityInputWidget from "../../../../shared/widgets/Input/materialityInputWidget";
 import MaterialityTableWidget from "../../../../shared/widgets/Table/materialityTableWidget";
+import CompletePopup from '../../modals/completePopup'
 
 const widgets = {
   MaterialityInputWidget: MaterialityInputWidget,
@@ -21,7 +22,7 @@ const widgets = {
 
 };
 
-const view_path = "gri-governance-critical_concerns-2-16-a-critical_concerns";
+const view_path = "";
 const client_id = 1;
 const user_id = 1;
 
@@ -91,6 +92,9 @@ const InputField = ({ selectedOrg, year, selectedCorp }) => {
     const [loopen, setLoOpen] = useState(false);
     const toastShown = useRef(false);
     const { open } = GlobalState();
+    const [dataPresent,setDatapresent]=useState(false)
+    const [dataSubmit,setDataSubmit] = useState(false)
+    const [isCompleteModalOpen, setIsCompleteModalOpen] = useState(false);
 
     const LoaderOpen = () => {
         setLoOpen(true);
@@ -104,47 +108,88 @@ const InputField = ({ selectedOrg, year, selectedCorp }) => {
         setFormData(e.formData);
     };
 
-    const updateFormData = async () => {
-        const data = {
-            client_id: client_id,
-            user_id: user_id,
-            path: view_path,
-            form_data: formData,
-            corporate: selectedCorp,
-            organisation: selectedOrg,
-            year,
-        };
-        const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
+    const assessment_id=typeof window !== 'undefined' ?localStorage.getItem("id"):''
+
+    const fetchDetails = async()=>{
+      const url = `${process.env.BACKEND_API_URL}/materiality_dashboard/management-approach-question/${assessment_id}/`;
+      try {
+        const response = await axiosInstance.get(url);
+        if(response.status==200){
+          setFormData(
+            [
+              {Q2:response.data.negative_impact_involvement_description,
+                Q3:response.data.stakeholder_engagement_effectiveness_description
+
+              }
+            ]
+          ) 
+          setDatapresent(true)
+        }
+        
+        }
+       
+      catch (error) {
+        // toast.error("Oops, something went wrong", {
+        //   position: "top-right",
+        //   autoClose: 1000,
+        //   hideProgressBar: false,
+        //   closeOnClick: true,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        //   theme: "colored",
+        // });
+      }
+    }
+
+    const fetchData=async()=>{
+        LoaderOpen()
+        const url = `${process.env.BACKEND_API_URL}/materiality_dashboard/materiality-impact/${assessment_id}/`;
         try {
-            const response = await axiosInstance.post(url, data);
-            if (response.status === 200) {
-                toast.success("Data added successfully", {
-                    position: "top-right",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
-                LoaderClose();
-                // loadFormData();
-            } else {
-                toast.error("Oops, something went wrong", {
-                    position: "top-right",
-                    autoClose: 1000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
-                LoaderClose();
+          const response = await axiosInstance.get(url);
+          if (response.status === 200) {
+            LoaderClose()
+            if(response.data.length>0){
+                setDataSubmit(true)
             }
+           
+          }
         } catch (error) {
-            toast.error("Oops, something went wrong", {
+          LoaderClose()
+          toast.error("Oops, something went wrong", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+      }
+
+    useEffect(()=>{
+      fetchDetails()
+      fetchData()
+    },[])
+
+    
+    const handleSubmit = async(e) => {
+        if(!formData[0].Q2){
+            return
+        }
+        e.preventDefault();
+       const data={
+            "assessment":assessment_id,
+            "negative_impact_involvement_description":formData[0].Q2,
+            "stakeholder_engagement_effectiveness_description":formData[0].Q3
+        }
+        const url = dataPresent?`${process.env.BACKEND_API_URL}/materiality_dashboard/management-approach-question/${assessment_id}/edit/`:`${process.env.BACKEND_API_URL}/materiality_dashboard/management-approach-question/create/`;
+      try {
+        const response = dataPresent?await axiosInstance.put(url,data):await axiosInstance.post(url,data);
+        if(response.status>=200&&response.status<300){
+            toast.success("Data Submitted", {
                 position: "top-right",
                 autoClose: 1000,
                 hideProgressBar: false,
@@ -153,16 +198,61 @@ const InputField = ({ selectedOrg, year, selectedCorp }) => {
                 draggable: true,
                 progress: undefined,
                 theme: "colored",
-            });
-            LoaderClose();
+              });
+              if(dataSubmit){
+                const markComplete={
+                    "status":"completed",
+                }
+                const CompleteUrl = `${process.env.BACKEND_API_URL}/materiality_dashboard/materiality-assessments/${assessment_id}/`
+                try{
+                  const response = await axiosInstance.patch(CompleteUrl,markComplete);
+            
+                  if(response.status==200){
+                    setIsCompleteModalOpen(true)
+                  }
+                }
+                catch(error){
+                  toast.error("Oops, something went wrong", {
+                    position: "top-right",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                  });
+                }
+              }
         }
-    };
-
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // updateFormData();
-        console.log("test form data", formData);
+        else{
+          toast.error("Oops, something went wrong", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+        
+        }
+       
+      catch (error) {
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+       
     };
 
     return (
@@ -180,7 +270,15 @@ const InputField = ({ selectedOrg, year, selectedCorp }) => {
                     />
                 </div>
             </div>
-            {/* {loopen && (
+            <div className="flex justify-end w-full gap-4 mt-4 ">
+          <button
+           onClick={handleSubmit}
+                  className="w-[15%] h-full mr-2 py-2 px-2 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer"
+                >
+                  Save and Proceed {">"}
+                </button>
+        </div>
+            {loopen && (
                 <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
                     <Oval
                         height={50}
@@ -191,7 +289,10 @@ const InputField = ({ selectedOrg, year, selectedCorp }) => {
                         strokeWidthSecondary={2}
                     />
                 </div>
-            )} */}
+            )}
+            <CompletePopup  isCompleteModalOpen={isCompleteModalOpen}
+      setIsCompleteModalOpen={setIsCompleteModalOpen}/>
+            <ToastContainer/>
         </>
     );
 };

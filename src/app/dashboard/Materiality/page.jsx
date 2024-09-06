@@ -1,48 +1,85 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import NoAssesment from "./components/noAssesment";
 import NewMaterialityAssement from "./modals/newMaterialityAssesment";
 import DataTable from "./components/dataTable";
 import {MdAdd} from "react-icons/md"
+import axiosInstance from "../../utils/axiosMiddleware";
+import { Oval } from "react-loader-spinner";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Materiality = ({ open }) => {
 
-  const [data,setData]=useState(true)
+  const [data,setData]=useState([])
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [refresh,setRefresh]=useState(false)
+  const [loopen, setLoOpen] = useState(false);
 
-  const DummyData=[
-    {
-      organization:"Warner Brothers",
-      corporate:"Acme Corp",
-      type:"GRI: In Accordance with",
-      timePeriod:"Jan 2023 to Jan 2024",
-      enviromentTopics:["Not Selected"],
-      socialTopics:["Not Selected"],
-      governanceTopics:["No Material Topic"],
-      status:"InProgress"
-    },
-    {
-      organization:"Warner Brothers",
-      corporate:"Acme Corp",
-      type:"GRI: with Reference to",
-      timePeriod:"Jan 2023 to Jan 2024",
-      enviromentTopics:["GHG Emissions","Water & effluent","Waste Management","Energy"],
-      socialTopics:["Occupational Health &  Safety","Labor Management","Employment","Pay equality"],
-      governanceTopics:["Governance","Policy","Economic Performance","Corruption"],
-      status:"Completed"
-    },
-    {
-      organization:"Warner Brothers",
-      corporate:"DC universe",
-      type:"GRI: In Accordance to",
-      timePeriod:"Jan 2023 to Jan 2024",
-      enviromentTopics:["GHG Emissions","Water & effluent","Waste Management","Energy"],
-      socialTopics:["Occupational Health &  Safety","Labor Management","Employment","Pay equality"],
-      governanceTopics:["Governance","Policy","Economic Performance","Corruption"],
-      status:"Outdated"
+  const LoaderOpen = () => {
+    setLoOpen(true);
+};
+
+const LoaderClose = () => {
+    setLoOpen(false);
+};
+
+  const fetchDetails = async()=>{
+    LoaderOpen()
+    const url = `${process.env.BACKEND_API_URL}/materiality_dashboard/get-materiality-assessments-dashboard/`;
+    try {
+      const response = await axiosInstance.get(url);
+      if(response.status==200){
+        const convertedData = response.data
+        .map(item => ({
+          id:item.id,
+          organization: item.organization_name,
+          corporate: item.corporate_name,
+          type: item.framework_name,
+          timePeriod: `${new Date(item.start_date).toLocaleString('default', { month: 'short', year: 'numeric' })} to ${new Date(item.end_date).toLocaleString('default', { month: 'short', year: 'numeric' })}`,
+          enviromentTopics: item.environment_topics,
+          socialTopics: item.social_topics,
+          governanceTopics: item.governance_topics,
+          status: item.status.replace('_', '').charAt(0).toUpperCase() + item.status.slice(1)
+      }));
+        setData(convertedData)
+        LoaderClose()
+      }
+      else{
+        LoaderClose()
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+      
     }
-  ]
+    catch (error) {
+      LoaderClose()
+      toast.error("Oops, something went wrong", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  }
+  useEffect(()=>{
+    fetchDetails()
+  },[refresh])
+
   
+  console.log(data)
     return (
         <>
         <div className="flex flex-col justify-start overflow-x-hidden ">
@@ -85,15 +122,30 @@ const Materiality = ({ open }) => {
                     </div>
               </div>
               {/* main section */}
-              {data?(
-                <DataTable data={DummyData}/>
+              {data.length>0?(
+                <DataTable data={data} setRefresh={setRefresh} refresh={refresh}/>
               ):(
              <NoAssesment isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
               )}
               
             </div>
         </div>
-        <NewMaterialityAssement isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
+        <NewMaterialityAssement isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} existingData={data}/>
+
+        {loopen && (
+                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                    <Oval
+                        height={50}
+                        width={50}
+                        color="#00BFFF"
+                        secondaryColor="#f3f3f3"
+                        strokeWidth={2}
+                        strokeWidthSecondary={2}
+                    />
+                </div>
+            )}
+
+            <ToastContainer/>
       </>
     );
   };
