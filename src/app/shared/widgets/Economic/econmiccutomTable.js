@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import { MdInfoOutline, MdOutlineDeleteOutline } from "react-icons/md";
+import { MdInfoOutline, MdOutlineDeleteOutline, MdAdd } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
@@ -12,19 +12,18 @@ const EconmiccutomTable = ({
   onChange,
   formContext,
 }) => {
-    const updateField = (index, key, newValue) => {
-        const newData = value.map((item, i) => {
-          if (i === index) {
-            return { ...item, [key]: newValue };
-          }
-          return item;
-        });
-        onChange(newData);
-      };
+  // Function to update a specific field in a row
+  const updateField = (index, key, newValue) => {
+    const newData = value.map((item, i) => {
+      if (i === index) {
+        return { ...item, [key]: newValue };
+      }
+      return item;
+    });
+    onChange(newData); // Notify parent of changes
+  };
 
-      useEffect(() => {
-        // console.log("CustomTableWidget value:", value);
-      }, [value]);
+
 
   return (
     <div
@@ -103,7 +102,7 @@ const EconmiccutomTable = ({
                   )}
                 </td>
               ))}
-              <td className="border border-gray-300 p-3">
+             <td className="border border-gray-300 p-3">
                 <button onClick={() => formContext.onRemove(rowIndex)}>
                   <MdOutlineDeleteOutline className="text-[23px] text-red-600" />
                 </button>
@@ -112,8 +111,10 @@ const EconmiccutomTable = ({
           ))}
         </tbody>
       </table>
+ 
     </div>
   );
 };
+
 
 export default EconmiccutomTable;

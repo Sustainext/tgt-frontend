@@ -15,7 +15,7 @@ import Anticompetitivebehavior from "./legal-actions/Anti-competitive-behavior/p
 import Approachtotax from "./tax/approach-to-tax/page";
 import Taxgovernance from "./tax/tax-governance/page";
 import Stakeholderengagement from "./tax/stakeholder-engagement/page";
-// import Countrybycountryreporting from "./tax/country-by-country-reporting/page";
+import Countrybycountryreporting from "./tax/country-by-country-reporting/page";
 import Operationsassessed from "./anti-corruption/operations-assessed/page";
 import Confirmedincidents from "./anti-corruption/confirmed-incidents/page";
 // import Ratiosstandard from "./market-presence/ratios-standard/page"
@@ -1144,7 +1144,7 @@ const Economic = () => {
                         )}
                       </div>
                     </li>
-                    {/* <li
+                    <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(18)}
                     >
@@ -1200,7 +1200,7 @@ const Economic = () => {
                           </p>
                         )}
                       </div>
-                    </li> */}
+                    </li>
                   </AccordionItem>
                 </ul>
               </div>
@@ -1327,13 +1327,13 @@ const Economic = () => {
                   </div>
                 </>
               )}
-              {/* {activeStep === 18 && (
+              {activeStep === 18 && (
                 <>
                   <div>
                     <Countrybycountryreporting />
                   </div>
                 </>
-              )} */}
+              )}
             </div>
           </div>
         </div>

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MdInfoOutline, MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import Select from 'react-select';
 import { Currency } from "../../data/currency";
 
-const currencyOptions = Currency.map(({ currency, country,currency_name }) => ({
+const currencyOptions = Currency.map(({ currency, country, currency_name }) => ({
   value: currency,
   label: `${currency} - ${currency_name}`
 }));
@@ -15,22 +15,21 @@ const customStyles = {
     ...provided,
     minHeight: '45px',
     borderRadius: '0 0.375rem 0.375rem 0',
-    borderColor: 'transparent', // Remove border
+    borderColor: 'transparent', 
     boxShadow: 'none',
     '&:hover': {
-      borderColor: 'transparent', // Remove border on hover
+      borderColor: 'transparent',
     },
     width: '100%',
   }),
   input: (provided) => ({
     ...provided,
-
     fontSize: '15px',
   }),
   placeholder: (provided) => ({
     ...provided,
     fontSize: '15px',
-    color: '#6B7280',  // Tailwind Gray-500
+    color: '#6B7280',  
   }),
   singleValue: (provided) => ({
     ...provided,
@@ -46,14 +45,20 @@ const customStyles = {
     width: '100%',
   }),
   indicatorSeparator: () => ({
-    display: 'none', // Remove the separator
+    display: 'none', 
   }),
 };
 
 const CurrencyWidget = (props) => {
   const { onChange, value = "", uiSchema = {}, options, autofocus } = props;
-  const [inputValue, setInputValue] = useState(value.split(" ")[0] || "");
-  const [selectedCurrency, setSelectedCurrency] = useState(value.split(" ")[1] || "");
+  const [inputValue, setInputValue] = useState("");
+  const [selectedCurrency, setSelectedCurrency] = useState("");
+
+  useEffect(() => {
+    const [amount, currency] = value.split(" ");
+    setInputValue(amount || "");
+    setSelectedCurrency(currency || "");
+  }, [value]);
 
   const handleInputChange = (e) => {
     const val = e.target.value;
@@ -93,16 +98,16 @@ const CurrencyWidget = (props) => {
                   boxShadow: 3,
                   borderRadius: "8px",
                 }}
-              ></ReactTooltip>
+              />
             </p>
           </div>
         </div>
 
         <div className="flex items-center border border-gray-300 rounded-md w-[50%]">
           <input
-            type={uiSchema["ui:inputfildtype"]}
+            type={uiSchema["ui:inputfildtype"] || "text"}
             placeholder="Enter amount"
-            className="py-4 text-[15px] text-neutral-600 pl-2 leading-tight  border-r border-gray-300 focus:outline-none focus:bg-white cursor-pointer w-[50%]"
+            className="py-4 text-[15px] text-neutral-600 pl-2 leading-tight border-r border-gray-300 focus:outline-none focus:bg-white cursor-pointer w-[50%]"
             value={inputValue}
             onChange={handleInputChange}
             min="0"
