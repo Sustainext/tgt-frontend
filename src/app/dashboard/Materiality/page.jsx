@@ -80,20 +80,7 @@ const LoaderClose = () => {
 
   
   console.log(data)
-    return data.length==0?(
-      <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-                    <Oval
-                        height={50}
-                        width={50}
-                        color="#00BFFF"
-                        secondaryColor="#f3f3f3"
-                        strokeWidth={2}
-                        strokeWidthSecondary={2}
-                    />
-                    <p className="ml-2">Loading...</p>
-                </div>
-    ):
-     (
+    return (
         <>
         <div className="flex flex-col justify-start overflow-x-hidden ">
           <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
