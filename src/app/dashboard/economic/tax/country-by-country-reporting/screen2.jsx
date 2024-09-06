@@ -400,7 +400,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
             }}
           />
         </div>
-        {/* {selectedOrg && year && ( */}
+        {selectedOrg && year && (
         <div className="flex right-1 mx-2">
           <button
             type="button"
@@ -410,7 +410,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
             Add Row <MdAdd className="text-lg" />
           </button>
         </div>
-      {/* )} */}
+      )} 
         <div className="mb-6">
           <button
             type="button"
