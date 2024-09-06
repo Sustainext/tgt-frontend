@@ -2,7 +2,6 @@ import "./globals.css";
 import { GlobalStateProvider } from "../Context/page";
 import { AuthProvider } from "../Context/auth";
 import { FluentCProvider } from "../Context/fluentc";
-// import FluentCScript from "./shared/FluentcScript";
 
 export const metadata = {
   title: "Sustainext",
@@ -10,6 +9,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+
   return (
     <html lang="en">
       <head>
