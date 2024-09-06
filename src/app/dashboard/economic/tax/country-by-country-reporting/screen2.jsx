@@ -53,142 +53,156 @@ const schema = {
   },
 };
 
-
 const uiSchema = {
-  Q1: {
-    "ui:hadding":"If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
-    "ui:haddingtooltips":"If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
-    "ui:haddingdisplay":"none",
-    "ui:haddingtooltipdisplay":"none",
-    "ui:title": "Select Currency",
-    "ui:tooltip": "Specify the frequency of sustainability reporting..",
-    "ui:tooltipdisplay": "none",
-    "ui:widget": "CurrencyselectWidget",
-    "ui:widgtclass":
-      "block w-[20vw]  py-2  text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300 mb-4",
-    "ui:horizontal": true,
-    "ui:options": {
-      label: false,
+  items: {
+    "ui:order": ["Q1","Q2"],
+    Q1: {
+      "ui:hadding":"If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
+      "ui:haddingtooltips":"If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
+      "ui:haddingdisplay":"none",
+      "ui:haddingtooltipdisplay":"none",
+      "ui:title": "Select Currency",
+      "ui:tooltip": "Specify the frequency of sustainability reporting..",
+      "ui:tooltipdisplay": "none",
+      "ui:widget": "CurrencyselectWidget",
+      "ui:widgtclass":
+        "block w-[20vw]  py-2  text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300 mb-4",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
     },
-  },
-  Q2: {
-    "ui:widget": "TableWidget",
+    Q2: {
+      "ui:widget": "TableWidget",
+      "ui:options": {
+        titles: [
+          {
+            title: "Tax Jurisdiction",
+            tooltip:
+              "How many substantiated complaints received concerning breaches of customer privacy?",
+            type: "text",
+            tooltipdisplay: "none",
+            widgettype: "input",
+          },
+          {
+            title: "Names of resident entities",
+            tooltip: "Mention a list of entities by tax jurisdiction.",
+            type: "text",
+            tooltipdisplay: "block",
+            widgettype: "input",
+          },
+          {
+            title: "Primary activities of the organization",
+            tooltip:
+              "Specify the main activities of the organisation. e.g. sales, marketing, manufacturing, or distribution.",
+            type: "text",
+            tooltipdisplay: "block",
+            widgettype: "textarea",
+          },
+          {
+            title:
+              "Number of employees and the basis of calculation of this number",
+            tooltip:
+              "Employee numbers can be reported using an appropriate calculation, such as head count at the end of the time period reported in Disclosure 207-4-c or a full-time equivalent (FTE) calculation",
+            type: "text",
+            tooltipdisplay: "block",
+            widgettype: "input",
+          },
+          {
+            title: "Revenues from third party sales",
+            tooltip:
+              "Mention revenues generated from third party sales for each tax jurisdiction.",
+            type: "number",
+            tooltipdisplay: "block",
+            widgettype: "input",
+          },
+          {
+            title:
+              "Revenues from intra-group transactions with other tax jurisdictions",
+            tooltip:
+              "Mention revenues from intra-group transactions with other tax jurisdictions",
+            type: "number",
+            tooltipdisplay: "block",
+            widgettype: "input",
+          },
+          {
+            title: "Profit/Loss before tax",
+            tooltip:
+              "Mention profit/Loss before tax for a tax jurisdiction.",
+            type: "text",
+            tooltipdisplay: "block",
+            widgettype: "input",
+          },
+          {
+            title:
+              "Tangible assets other than cash and cash equivalents",
+            tooltip:
+              "Specify tangible assets other than cash and cash equivalents for a tax jurisdiction.",
+            type: "number",
+            tooltipdisplay: "block",
+            widgettype: "input",
+          },
+          {
+            title: "Corporate income tax paid on a cash basis",
+            tooltip:
+              "When organisation's income tax paid on a cash basis for a tax jurisdiction, the organization can calculate the total actual corporate income tax paid during the time period reported in Disclosure 207-4-c by all its resident entities in the jurisdiction.",
+            type: "number",
+            tooltipdisplay: "block",
+            widgettype: "input",
+          },
+          {
+            title: "Corporate income tax accrued on profit/loss",
+            tooltip: "Mention corporate income tax accrued on profit/loss.",
+            type: "text",
+            tooltipdisplay: "block",
+            widgettype: "input",
+          },
+          {
+            title:
+              "Reasons for the difference between corporate income tax accrued on profit/loss and the tax due if the statutory tax rate is applied to profit/loss before tax.",
+            tooltip:
+              "When reporting the reasons for the difference between corporate income tax accrued on profit/loss and the tax due if the statutory tax rate is applied to profit/loss before tax, the organization can describe items that explain the difference, such as tax reliefs, allowances, incentives, or any special tax provisions where an entity benefits from preferential tax treatment.",
+            type: "text",
+            tooltipdisplay: "block",
+            widgettype: "textarea",
+          },
+        ],
+      },
+    },
+
+
     "ui:options": {
-      titles: [
-        {
-          title: "Tax Jurisdiction",
-          tooltip:
-            "How many substantiated complaints received concerning breaches of customer privacy?",
-          type: "text",
-          tooltipdisplay: "none",
-          widgettype: "input",
-        },
-        {
-          title: "Names of resident entities",
-          tooltip: "Mention a list of entities by tax jurisdiction.",
-          type: "text",
-          tooltipdisplay: "block",
-          widgettype: "input",
-        },
-        {
-          title: "Primary activities of the organization",
-          tooltip:
-            "Specify the main activities of the organisation. e.g. sales, marketing, manufacturing, or distribution.",
-          type: "text",
-          tooltipdisplay: "block",
-          widgettype: "textarea",
-        },
-        {
-          title:
-            "Number of employees and the basis of calculation of this number",
-          tooltip:
-            "Employee numbers can be reported using an appropriate calculation, such as head count at the end of the time period reported in Disclosure 207-4-c or a full-time equivalent (FTE) calculation",
-          type: "text",
-          tooltipdisplay: "block",
-          widgettype: "input",
-        },
-        {
-          title: "Revenues from third party sales",
-          tooltip:
-            "Mention revenues generated from third party sales for each tax jurisdiction.",
-          type: "number",
-          tooltipdisplay: "block",
-          widgettype: "input",
-        },
-        {
-          title:
-            "Revenues from intra-group transactions with other tax jurisdictions",
-          tooltip:
-            "Mention revenues from intra-group transactions with other tax jurisdictions",
-          type: "number",
-          tooltipdisplay: "block",
-          widgettype: "input",
-        },
-        {
-          title: "Profit/Loss before tax",
-          tooltip:
-            "Mention profit/Loss before tax for a tax jurisdiction.",
-          type: "text",
-          tooltipdisplay: "block",
-          widgettype: "input",
-        },
-        {
-          title:
-            "Tangible assets other than cash and cash equivalents",
-          tooltip:
-            "Specify tangible assets other than cash and cash equivalents for a tax jurisdiction.",
-          type: "number",
-          tooltipdisplay: "block",
-          widgettype: "input",
-        },
-        {
-          title: "Corporate income tax paid on a cash basis",
-          tooltip:
-            "When organisation's income tax paid on a cash basis for a tax jurisdiction, the organization can calculate the total actual corporate income tax paid during the time period reported in Disclosure 207-4-c by all its resident entities in the jurisdiction.",
-          type: "number",
-          tooltipdisplay: "block",
-          widgettype: "input",
-        },
-        {
-          title: "Corporate income tax accrued on profit/loss",
-          tooltip: "Mention corporate income tax accrued on profit/loss.",
-          type: "text",
-          tooltipdisplay: "block",
-          widgettype: "input",
-        },
-        {
-          title:
-            "Reasons for the difference between corporate income tax accrued on profit/loss and the tax due if the statutory tax rate is applied to profit/loss before tax.",
-          tooltip:
-            "When reporting the reasons for the difference between corporate income tax accrued on profit/loss and the tax due if the statutory tax rate is applied to profit/loss before tax, the organization can describe items that explain the difference, such as tax reliefs, allowances, incentives, or any special tax provisions where an entity benefits from preferential tax treatment.",
-          type: "text",
-          tooltipdisplay: "block",
-          widgettype: "textarea",
-        },
-      ],
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: "horizontal",
     },
   },
 };
 
+
 const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
-  const initialFormData = [{
-    Q1: "",
-    Q2: [
-      {
-        Taxjurisdictioncol1: "",
-        Taxjurisdictioncol2: "",
-        Taxjurisdictioncol3: "",
-        Taxjurisdictioncol4: "",
-        Taxjurisdictioncol5: "",
-        Taxjurisdictioncol6: "",
-        Taxjurisdictioncol7: "",
-        Taxjurisdictioncol8: "",
-        Taxjurisdictioncol9: "",
-        Taxjurisdictioncol10: "",
-        Taxjurisdictioncol11: "",
-      },
-    ],
-  }];
+  const initialFormData = [
+    {
+      Q1: "",  // For the currency selection widget
+      Q2: [
+        {
+          Taxjurisdictioncol1: "",
+          Taxjurisdictioncol2: "",
+          Taxjurisdictioncol3: "",
+          Taxjurisdictioncol4: "",
+          Taxjurisdictioncol5: "",
+          Taxjurisdictioncol6: "",
+          Taxjurisdictioncol7: "",
+          Taxjurisdictioncol8: "",
+          Taxjurisdictioncol9: "",
+          Taxjurisdictioncol10: "",
+          Taxjurisdictioncol11: "",
+        }
+      ]
+    }
+  ];
+  
   const [formData, setFormData] = useState(initialFormData);
   const [loopen, setLoOpen] = useState(false);
   const [r_schema, setRemoteSchema] = useState({});
@@ -243,42 +257,91 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
     }
   };
 
- 
+  const loadFormData = async () => {
+    LoaderOpen();
+    setFormData(initialFormData);
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
+    try {
+      const response = await axiosInstance.get(url);
+      console.log("API called successfully:", response.data);
+      setRemoteSchema(response.data.form[0].schema);
+      setRemoteUiSchema(response.data.form[0].ui_schema);
+      setFormData(response.data.form_data[0].data);
+    } catch (error) {
+      setFormData(initialFormData);
+    } finally {
+      LoaderClose();
+    }
+  };
+  useEffect(() => {
+    if (selectedOrg && year) {
+      loadFormData();
+      toastShown.current = false;
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
+    }
+  }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     updateFormData();
     console.log("test form data", formData);
   };
-
   const handleAddCommittee = () => {
-    setFormData((prevData) => ({
-      ...prevData,
-      Q2: [
-        ...prevData.Q2,
+    setFormData((prevData) => {
+      // Ensure Q2 is always an array within the first item of the formData array
+      const updatedQ2 = Array.isArray(prevData[0]?.Q2) ? prevData[0].Q2 : [];
+  
+      // Add a new committee row
+      const newCommittee = {
+        Taxjurisdictioncol1: "",
+        Taxjurisdictioncol2: "",
+        Taxjurisdictioncol3: "",
+        Taxjurisdictioncol4: "",
+        Taxjurisdictioncol5: "",
+        Taxjurisdictioncol6: "",
+        Taxjurisdictioncol7: "",
+        Taxjurisdictioncol8: "",
+        Taxjurisdictioncol9: "",
+        Taxjurisdictioncol10: "",
+        Taxjurisdictioncol11: "",
+      };
+  
+      // Update the formData with the new Q2 array
+      const updatedFormData = [
         {
-          Taxjurisdictioncol1: "",
-          Taxjurisdictioncol2: "",
-          Taxjurisdictioncol3: "",
-          Taxjurisdictioncol4: "",
-          Taxjurisdictioncol5: "",
-          Taxjurisdictioncol6: "",
-          Taxjurisdictioncol7: "",
-          Taxjurisdictioncol8: "",
-          Taxjurisdictioncol9: "",
-          Taxjurisdictioncol10: "",
-          Taxjurisdictioncol11: "",
+          ...prevData[0],
+          Q2: [...updatedQ2, newCommittee], // Add the new row to the Q2 array
         },
-      ],
-    }));
+      ];
+  
+      return updatedFormData;
+    });
   };
-
+  
   const handleRemoveCommittee = (index) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      Q2: prevData.Q2.filter((_, i) => i !== index),
-    }));
+    setFormData((prevData) => {
+      // Ensure Q2 is an array within the first item of the formData array
+      const updatedQ2 = Array.isArray(prevData[0]?.Q2) ? prevData[0].Q2 : [];
+  
+      // Filter out the item at the given index
+      const filteredQ2 = updatedQ2.filter((_, i) => i !== index);
+  
+      // Update the formData with the filtered Q2 array
+      const updatedFormData = [
+        {
+          ...prevData[0],
+          Q2: filteredQ2, // Remove the row from the Q2 array
+        },
+      ];
+  
+      return updatedFormData;
+    });
   };
+  
+
 
   return (
     <>
@@ -326,8 +389,8 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
         </div>
         <div className="mx-2">
           <Form
-             schema={schema}
-             uiSchema={uiSchema}
+             schema={r_schema}
+             uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -347,7 +410,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
             Add Row <MdAdd className="text-lg" />
           </button>
         </div>
-      )}
+      )} 
         <div className="mb-6">
           <button
             type="button"

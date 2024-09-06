@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { MdInfoOutline, MdOutlineDeleteOutline, MdAdd } from 'react-icons/md';
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -6,36 +6,31 @@ import "react-tooltip/dist/react-tooltip.css";
 const AddMultiSingleInput = (props) => {
   const { onChange, label, value = [], uiSchema = {} } = props;
 
-  // Initialize state for values, defaulting to [""] if value is empty
-  const [values, setValues] = useState(value.length > 0 ? value : [""]);
-
-  // Update state when value prop changes
   useEffect(() => {
-    if (value.length > 0 && JSON.stringify(value) !== JSON.stringify(values)) {
-      setValues(value);
-    } else if (value.length === 0 && values.length === 0) {
-      setValues([""]); // Ensure at least one input is shown when both are empty
-    }
-  }, [value]); // Run only when `value` prop changes
+    console.log("test", value);
+  }, [value]);
 
-  const handleChange = (index, event) => {
-    const updatedValues = [...values];
-    updatedValues[index] = event.target.value;
-    setValues(updatedValues);
-    onChange(updatedValues);  // Pass the updated values back to the parent component
+  // Handle adding a new row
+  const handleAddRow = () => {
+    const updatedValue = [...value, '']; // Add a new empty row
+    onChange(updatedValue);
   };
 
-  const addRow = () => {
-    setValues([...values, ""]);
+  // Handle removing a row
+  const handleRemoveRow = (index) => {
+    const updatedValue = value.filter((_, i) => i !== index);
+    onChange(updatedValue);
   };
 
-  const removeRow = (index) => {
-    if (values.length > 1) {
-      const updatedValues = values.filter((_, i) => i !== index);
-      setValues(updatedValues);
-      onChange(updatedValues);  // Update the parent component
-    }
+  // Handle changing input value
+  const handleInputChange = (index, event) => {
+    const updatedValue = [...value];
+    updatedValue[index] = event.target.value;
+    onChange(updatedValue);
   };
+
+  // If the value array is empty, make sure we have at least one input field
+  const valuesToRender = value.length === 0 ? [''] : value;
 
   return (
     <>
@@ -76,7 +71,7 @@ const AddMultiSingleInput = (props) => {
       </div>
 
       <div>
-        {values.map((val, index) => (
+        {valuesToRender.map((val, index) => (
           <div key={index} className="mb-2">
             <div className="flex">
               <div className="w-[98%]">
@@ -85,15 +80,15 @@ const AddMultiSingleInput = (props) => {
                   placeholder={uiSchema["ui:widgetplaceholder2"]}
                   type={uiSchema["ui:inputtype2"]}
                   value={val}
-                  onChange={(event) => handleChange(index, event)}
+                  onChange={(event) => handleInputChange(index, event)}
                 />
               </div>
               <div className="flex items-center">
                 <button
                   type="button"
-                  className="ml-2 text-red-500 mt-2"
-                  onClick={() => removeRow(index)}
-                  style={{ display: values.length > 1 ? "inline" : "none" }}
+                  className="ml-2 text-red-500"
+                  onClick={() => handleRemoveRow(index)}
+                  disabled={valuesToRender.length === 1} // Disable if there's only one input field
                 >
                   <MdOutlineDeleteOutline size={25} />
                 </button>
@@ -105,7 +100,7 @@ const AddMultiSingleInput = (props) => {
           <button
             type="button"
             className="text-blue-500 font-semibold text-[15px] flex items-center cursor-pointer"
-            onClick={addRow}
+            onClick={handleAddRow}
           >
             Add row <MdAdd className="text-lg ml-1" />
           </button>

@@ -85,7 +85,7 @@ const uiSchema = {
       "ui:hadding":"If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
       "ui:haddingtooltips":"If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
       "ui:haddingdisplay":"none",
-      "ui:haddingtooltipdisplay":"none",
+      "ui:haddingtooltipdisplay":"block",
         "ui:title":
         "Select Currency",
       "ui:tooltip": "Specify the frequency of sustainability reporting..",
