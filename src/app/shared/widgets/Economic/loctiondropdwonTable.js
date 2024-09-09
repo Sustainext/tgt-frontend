@@ -29,7 +29,7 @@ const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove }) =
               type={options.titles[cellIndex].type || "number"} // Default to text input if no type is defined
               value={item[key] || ""} // Ensure the value is either the item value or an empty string
               onChange={(e) => {
-                console.log("Updating row:", rowIndex, "Cell:", key, "New Value:", e.target.value);
+               
                 updateField(rowIndex, key, e.target.value);
               }}
               style={{ width: "100%" }} // Set full width for the input
@@ -153,9 +153,9 @@ const LoctiondropdwonTable = ({
         <button
           type="button"
           onClick={addRow}
-          className="text-blue-500 flex items-center"
+          className="text-blue-500 flex items-center text-[15px]"
         >
-          Add Row <MdAdd />
+      Add Location <div className="ml-2 mt-1"><MdAdd /></div>
         </button>
       </div>
     </div>

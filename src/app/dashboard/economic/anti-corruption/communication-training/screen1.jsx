@@ -210,7 +210,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
+    // updateFormData();
     console.log("Form data:", formData);
   };
   console.log("Location data: locationdata", locationdata);

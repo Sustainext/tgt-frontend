@@ -79,11 +79,11 @@ const GRI2021combinWidhet = ({ locationdata, onChange, value = [] }) => {
     setCurrencyValue(selectedOption ? selectedOption.value : "");
   };
 
-  const handleWageChange = (locationId, gender, wageValue) => {
+  const handleWageChange = (locationValue, gender, wageValue) => {
     setWages((prevWages) => ({
       ...prevWages,
-      [locationId]: {
-        ...prevWages[locationId],
+      [locationValue]: {
+        ...prevWages[locationValue],
         [gender]: wageValue,
       },
     }));
@@ -260,19 +260,19 @@ const GRI2021combinWidhet = ({ locationdata, onChange, value = [] }) => {
                         {gender}
                       </td>
                       <td className="p-2 border border-gray-300">
-                        <input
-                          type="number"
-                          className="w-full p-2 border-b border-gray-300 rounded"
-                          placeholder="Enter Value"
-                          value={wages[location.id]?.[gender] || ""}
-                          onChange={(e) =>
-                            handleWageChange(
-                              location.id,
-                              gender,
-                              e.target.value
-                            )
-                          }
-                        />
+                      <input
+                type="number"
+                className="w-full p-2 border-b border-gray-300 rounded"
+                placeholder="Enter Value"
+                value={wages[location.value]?.[gender] || ""}
+                onChange={(e) =>
+                  handleWageChange(
+                    location.value,
+                    gender,
+                    e.target.value
+                  )
+                }
+              />
                       </td>
                     </tr>
                   ))

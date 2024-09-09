@@ -197,7 +197,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
     console.log("Form data:", formData);
-    // updateFormData();
+    updateFormData();
   };
 
   return (
@@ -276,7 +276,7 @@ substantive changes in operations, revenue, or expenditure of the organisation. 
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>
