@@ -18,7 +18,8 @@ import Stakeholderengagement from "./tax/stakeholder-engagement/page";
 import Countrybycountryreporting from "./tax/country-by-country-reporting/page";
 import Operationsassessed from "./anti-corruption/operations-assessed/page";
 import Confirmedincidents from "./anti-corruption/confirmed-incidents/page";
-import Ratiosstandard from "./market-presence/ratios-standard/page"
+import Ratiosstandard from "./market-presence/ratios-standard/page";
+import Communicationtraining from "./anti-corruption/communication-training/page"
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -1278,13 +1279,13 @@ const Economic = () => {
                   </div>
                 </>
               )}
-              {/* {activeStep === 11 && (
+              {activeStep === 11 && (
                 <>
                   <div>
-                    <StakeholderEngagement />
+                    <Communicationtraining />
                   </div>
                 </>
-              )} */}
+              )}
                  {activeStep === 12 && (
                 <>
                   <div>
