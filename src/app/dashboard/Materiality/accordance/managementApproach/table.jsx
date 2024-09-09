@@ -72,7 +72,8 @@ const LoaderClose = () => {
       const response = await axiosInstance.get(url);
       if (response.status === 200) {
         LoaderClose()
-        const arr=[]
+        if(response.data.length>0){
+          const arr=[]
         response.data.map((val)=>{
           const obj={
             MaterialTopic: val.material_topic,
@@ -83,6 +84,7 @@ const LoaderClose = () => {
         })
         setFormData(arr)
         setDatapresent(true)
+        }
        
       }
     } catch (error) {
@@ -133,19 +135,22 @@ const LoaderClose = () => {
     "ui:options": {
       titles: [
         {
-          key: "MaterialTopic",
+          // key: "MaterialTopic",
           title: "Material Topic",
           tooltip: "Specify if this is a material topic.",
+          type:"number"
         },
         {
-          key: "ImpactType",
+          // key: "ImpactType",
           title: "Impact Type",
           tooltip: "Specify the impact type.",
+          type:"string"
         },
         {
-          key: "ImpactOverview",
+          // key: "ImpactOverview",
           title: "Impact Overview (if any)",
           tooltip: "Provide an overview of the impact, if any.",
+          type:"string"
         },
       ],
       materialTopics: materialTopics, // Pass the fetched material topics to the widget
@@ -160,7 +165,10 @@ const LoaderClose = () => {
     const newFormData = formData.filter((_, i) => i !== index);
     setFormData(newFormData);
   };
-
+  
+  
+ 
+  
   const handleAddCommittee = () => {
     const newCommittee = {
       MaterialTopic: "Select Material Topic",

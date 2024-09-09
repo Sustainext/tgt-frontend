@@ -19,7 +19,10 @@ const MaterialityTableWidget = ({ id, options, value, required, onChange, schema
         updatedValues[index][key] = newValue;
 
         setLocalValue(updatedValues);
+        
     };
+
+   
 
     const debouncedUpdate = useCallback(debounce(onChange, 200), [onChange]);
 

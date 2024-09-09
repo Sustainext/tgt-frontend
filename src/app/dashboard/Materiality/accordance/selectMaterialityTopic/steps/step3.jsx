@@ -127,15 +127,18 @@ const Step3 = ({handleTabClick,handlePrevious}) => {
       try {
         const response = await axiosInstance.get(url);
         if(response.status==200){
-          setFormData(
-            [
-              {Q1:response.data.change_made==true?"Yes":"No",
-                Q2:response.data.reason_for_change
-
-              }
-            ]
-          )
-          setDatapresent(true)
+          if(response.data){
+            setFormData(
+              [
+                {Q1:response.data.change_made==true?"Yes":"No",
+                  Q2:response.data.reason_for_change
+  
+                }
+              ]
+            )
+            setDatapresent(true)
+          }
+          
         }
         
         }

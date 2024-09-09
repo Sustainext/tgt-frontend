@@ -22,6 +22,7 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
   const [framework, setFramework] = useState("");
   const [overlapError, setOverlapError] = useState("");
   const [dateExist,setDateexist]=useState(false)
+  const [organizationName,setOrganizationName]=useState("")
 
   const [errors, setErrors] = useState({
     organization: "",
@@ -113,24 +114,53 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
           (newStart.year === end.year && newStart.month > end.month) // Same year, but new start is after existing end
         );
        
-        if(isOverlapping && assessment.type == newAssessment.type){
+        const isSameTypeAndOrganization = 
+        assessment.type === newAssessment.type &&
+        assessment.organization === newAssessment.organization;
+
+        if(isOverlapping && isSameTypeAndOrganization){
             return true
         }
   };
+  return false
 }
   
   
 
 
+  // const handleOrgChange = (e) => {
+  //   console.log(e.target.value,"see")
+  //   const newOrg = e.target.value;
+  //   setSelectedOrg(newOrg);
+  //   setOrganizationName(e.target.name)
+  //   setSelectedCorp("");
+  //   setErrors((prevErrors) => ({
+  //     ...prevErrors,
+  //     organization: newOrg ? "" : "Please select an organization",
+  //   }));
+  // };
+
   const handleOrgChange = (e) => {
-    const newOrg = e.target.value;
-    setSelectedOrg(newOrg);
+    const newOrgId = e.target.value;
+  
+    // Find the selected organization in the `organisations` array by its ID
+    const selectedOrganization = organisations.find(org => org.id === parseInt(newOrgId));
+  
+    // If the organization is found, set the organization name
+    const newOrgName = selectedOrganization ? selectedOrganization.name : "";
+  
+    // Update the selected organization ID and name in the state
+    setSelectedOrg(newOrgId);
+    setOrganizationName(newOrgName);
+  
+    // Reset selected corporate (if applicable) and manage errors
     setSelectedCorp("");
     setErrors((prevErrors) => ({
       ...prevErrors,
-      organization: newOrg ? "" : "Please select an organization",
+      organization: newOrgId ? "" : "Please select an organization",
     }));
   };
+  
 
   const handleDateChange = (newRange) => {
     setDateRange(newRange);
@@ -138,8 +168,11 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
     const newAssessment = {
       type: assessmentApproach=="accordance"?"GRI: In accordance with":"GRI: With reference to", // Type chosen by the user
       startDate: new Date(newRange.start), 
-      endDate: new Date(newRange.end)  
+      endDate: new Date(newRange.end),
+      organization:organizationName
+
     };
+    console.log(newAssessment,"see")
     const overlap = checkAssessment(existingData, newAssessment);
     
     if (overlap) {
@@ -332,6 +365,7 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
               <button
                 className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 focus:outline-none"
                 onClick={() => {
+                  setOverlapError("");
                   setErrors(
                     {
                       organization: "",
@@ -477,13 +511,14 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
                           className="py-1.5 border border-gray-300 rounded-md w-full text-sm pl-2"
                           value={selectedOrg}
                           onChange={handleOrgChange}
+                          name={organizationName}
                         >
                           <option disabled={true} value="">
                             Select Organization
                           </option>
                           {organisations &&
                             organisations.map((org) => (
-                              <option key={org.id} value={org.id}>
+                              <option key={org.id} value={org.id} name={org.name}>
                                 {org.name}
                               </option>
                             ))}
@@ -536,13 +571,14 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
                             className="py-1.5 border border-gray-300 rounded-md w-full text-sm pl-2"
                             value={selectedOrg}
                             onChange={handleOrgChange}
+                            name={organizationName}
                           >
                             <option disabled={true} value="">
                               Select Organization
                             </option>
                             {organisations &&
                               organisations.map((org) => (
-                                <option key={org.id} value={org.id}>
+                                <option key={org.id} value={org.id} name={org.name}>
                                   {org.name}
                                 </option>
                               ))}
