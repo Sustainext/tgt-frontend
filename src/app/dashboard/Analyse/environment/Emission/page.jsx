@@ -375,20 +375,20 @@ const AnalyseEmission = () => {
         <div className="mx-4">
           <h2 className="font-bold text-[15px]">Top Emissions by Scope</h2>
         </div>
-        <ScopeTable data={scopeData} />
+        <ScopeTable data={scopeData} organisation={selectedOrg} corporate={selectedCorp} location={selectedLocation} />
       </div>
       <div className="mt-4">
         <div className="mx-4">
           <h2 className="font-bold text-[15px]">Top Emissions by Source</h2>
         </div>
-        <SourceTable data={sourceData} />
+        <SourceTable data={sourceData} organisation={selectedOrg} corporate={selectedCorp} location={selectedLocation} />
       </div>
 
       <div className="mt-8">
         <div className="mx-4">
           <h2 className="font-bold text-[15px]">Top Emissions by Location</h2>
         </div>
-        <LocationTable data={locationData} />
+        <LocationTable data={locationData} organisation={selectedOrg} corporate={selectedCorp} location={selectedLocation} />
       </div>
       {loopen && (
           <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 z-[100]">

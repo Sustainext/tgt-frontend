@@ -10,11 +10,12 @@ const EnvironmentTrack = ({ contentSize }) => {
   const tabs = [
     { id: 'zohoEmissions', label: 'Emissions (Zoho)' },
     { id: 'powerbiEmissions', label: 'Emissions (PowerBI)' },
-    // { id: 'zohoEnergy', label: 'Energy (Zoho)' },
+    { id: 'superSetEmissions', label: 'Emissions (Superset)' },
     { id: 'powerbiEnergy', label: 'Energy (PowerBI)' },
-    // { id: 'zohoWaste', label: 'Waste (Zoho)' },
     { id: 'powerbiWaste', label: 'Waste (PowerBI)' },
+    { id: 'superSetWaste', label: 'Waste (Superset)' },
   ];
+  
   
   const getIframeUrl = (tabId) => {
     switch (tabId) {
@@ -22,10 +23,14 @@ const EnvironmentTrack = ({ contentSize }) => {
         return process.env.NEXT_APP_ZOHO_URL_EMISSIONS;
       case 'powerbiEmissions':
         return process.env.NEXT_APP_POWERBI_URL_ENV_EMISSIONS;
+      case 'superSetEmissions':
+        return process.env.NEXT_APP_SUPERSET_URL_ENV_EMISSIONS;
       case 'powerbiEnergy':
         return process.env.NEXT_APP_POWERBI_URL_ENV_ENERGY;
       case 'powerbiWaste':
         return process.env.NEXT_APP_POWERBI_URL_ENV_WASTE;
+      case 'superSetWaste':
+        return process.env.NEXT_APP_SUPERSET_URL_ENV_WASTE;
       default:
         return null;
     }
