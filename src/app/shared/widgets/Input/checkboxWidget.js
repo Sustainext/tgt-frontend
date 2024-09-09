@@ -7,9 +7,9 @@ const CheckboxWidget = ({
   onChange,
   uiSchema
 }) => {
-  const [selectedValues, setSelectedValues] = useState(value); // Initialize state with the provided array
+  const [selectedValues, setSelectedValues] = useState(value); 
 
-  // Sync selectedValues state with the incoming prop value when it changes
+  
   useEffect(() => {
     // Only update if the value has actually changed to prevent unnecessary updates
     if (JSON.stringify(selectedValues) !== JSON.stringify(value)) {
@@ -27,16 +27,11 @@ const CheckboxWidget = ({
       updatedValues = selectedValues.filter(val => val !== newValue);
     }
 
-    setSelectedValues(updatedValues);  // Update the state with the new array of values
-    onChange(updatedValues);           // Call onChange prop with the new array of values
+    setSelectedValues(updatedValues);  
+    onChange(updatedValues);          
   };
 
-  // // Uncheck all checkboxes if none of the specific options are checked
-  // useEffect(() => {
-  //   if (!options.envChecked && !options.socChecked && !options.govChecked) {
-  //     setSelectedValues([]); // Uncheck all checkboxes
-  //   }
-  // }, [options.envChecked, options.socChecked, options.govChecked]);
+  
   useEffect(() => {
     if (!options.envChecked && !options.socChecked && !options.govChecked) {
       // Only update if the selectedValues are not already empty
@@ -45,6 +40,9 @@ const CheckboxWidget = ({
       }
     }
   }, [options.envChecked, options.socChecked, options.govChecked]);
+
+
+ 
 
   return (
     <div className='mb-1'>

@@ -113,14 +113,14 @@ const LoaderClose = () => {
       type: "object",
       properties: {
         MaterialTopic: {
-          type: "number",
+          // type: "number",
           title: "Material Topic",
-          enum: materialTopics.map(topic => topic.topic.id), // Store topic IDs in enum
+          // enum: materialTopics.map(topic => topic.topic.id), // Store topic IDs in enum
         },
         ImpactType: {
           type: "string",
           title: "Impact Type",
-          enum: ["Positive Impact", "Negative Impact"],
+          // enum: ["Positive Impact", "Negative Impact"],
         },
         ImpactOverview: {
           type: "string",
@@ -135,19 +135,19 @@ const LoaderClose = () => {
     "ui:options": {
       titles: [
         {
-          // key: "MaterialTopic",
+          key: "MaterialTopic",
           title: "Material Topic",
           tooltip: "Specify if this is a material topic.",
-          type:"number"
+          // type:"number"
         },
         {
-          // key: "ImpactType",
+          key: "ImpactType",
           title: "Impact Type",
           tooltip: "Specify the impact type.",
           type:"string"
         },
         {
-          // key: "ImpactOverview",
+          key: "ImpactOverview",
           title: "Impact Overview (if any)",
           tooltip: "Provide an overview of the impact, if any.",
           type:"string"
@@ -161,8 +161,21 @@ const LoaderClose = () => {
     setFormData(e.formData);
   };
 
+  // const handleRemoveCommittee = (index) => {
+  //   const newFormData = formData.filter((_, i) => i !== index);
+  //   setFormData(newFormData);
+  // };
+
   const handleRemoveCommittee = (index) => {
     const newFormData = formData.filter((_, i) => i !== index);
+    // Ensure that we always have at least one row with default values
+    if (newFormData.length === 0) {
+      newFormData.push({
+        MaterialTopic: "", 
+        ImpactType: "", 
+        ImpactOverview: "",
+      });
+    }
     setFormData(newFormData);
   };
   
@@ -171,8 +184,8 @@ const LoaderClose = () => {
   
   const handleAddCommittee = () => {
     const newCommittee = {
-      MaterialTopic: "Select Material Topic",
-      ImpactType: "Select Impact Type",
+      MaterialTopic: "",
+      ImpactType: "",
       ImpactOverview: "",
     };
     setFormData([...formData, newCommittee]);
@@ -236,6 +249,8 @@ catch (error) {
     
   };
 
+  
+
   return (
     <>
       <div className="p-3 mb-6 pb-6 rounded-md shadow-lg mx-2 mt-10">
@@ -298,9 +313,17 @@ catch (error) {
           <div>
             <button
               type="button"
-              className={`mt-5 text-center py-1 text-sm w-[100px] ${materialTopics.length!=0?"bg-blue-500 text-white hover:bg-blue-600":"bg-gray-200"} rounded  focus:outline-none focus:shadow-outline`}
+              className={`mt-5 text-center py-1 text-sm w-[100px] ${materialTopics.length === 0 ||
+                (materialTopics.length > 0 &&
+                 (!formData[0].MaterialTopic || !formData[0].ImpactType))
+?"bg-gray-200":"bg-blue-500 text-white hover:bg-blue-600"} rounded  focus:outline-none focus:shadow-outline`}
               onClick={handleSubmit}
-              disabled={materialTopics.length==0}
+              disabled={
+                materialTopics.length === 0 ||
+                (materialTopics.length > 0 &&
+                 (!formData[0].MaterialTopic || !formData[0].ImpactType))
+              }
+              
             >
               Submit
             </button>

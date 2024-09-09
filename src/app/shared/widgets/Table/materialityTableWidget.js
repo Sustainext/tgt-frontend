@@ -79,14 +79,14 @@ const MaterialityTableWidget = ({ id, options, value, required, onChange, schema
                                                 required={required}
                                                 disabled={options.materialTopics.length==0}
                                             >
-                                                <option  value="">Select Material Topic</option>
+                                                <option disabled={true} value="">Select Material Topic</option>
                                                 {options.materialTopics.map((topic) => (
                                                     <option key={topic.topic.id} value={topic.topic.id}>
                                                         {topic.topic.name}
                                                     </option>
                                                 ))}
                                             </select>
-                                        ) : isEnum ? (
+                                        ) : key ==="ImpactType" ? (
                                             <select
                                                 value={localValue[rowIndex][key]}
                                                 onChange={(e) => handleFieldChange(rowIndex, key, e.target.value)}
@@ -94,10 +94,11 @@ const MaterialityTableWidget = ({ id, options, value, required, onChange, schema
                                                 required={required}
                                                 disabled={options.materialTopics.length==0}
                                             >
-                                                <option value="">Select Impact Type</option>
-                                                {propertySchema.enum.map((option) => (
-                                                    <option key={option} value={option}>{option}</option>
-                                                ))}
+                                                <option disabled={true} value="">Select Impact Type</option>
+                                                {/* {propertySchema.enum.map((option) => ( */}
+                                                    <option key={"Positive Impact"} value={"Positive Impact"}>{"Positive Impact"}</option>
+                                                    <option key={"Negative Impact"} value={"Negative Impact"}>{"Negative Impact"}</option>
+                                                {/* ))} */}
                                             </select>
                                         ) : (
                                             <input

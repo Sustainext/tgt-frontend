@@ -162,52 +162,137 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
   };
   
 
-  const handleDateChange = (newRange) => {
-    setDateRange(newRange);
-    setIsDateRangeValid(newRange.start !== null && newRange.end !== null);
-    const newAssessment = {
-      type: assessmentApproach=="accordance"?"GRI: In accordance with":"GRI: With reference to", // Type chosen by the user
-      startDate: new Date(newRange.start), 
-      endDate: new Date(newRange.end),
-      organization:organizationName
-
-    };
-    console.log(newAssessment,"see")
-    const overlap = checkAssessment(existingData, newAssessment);
-    
-    if (overlap) {
-      setDateexist(true)
-            setOverlapError("An assessment already exists for this date range and type.");
-          } else {
-            setDateexist(false)
-            setOverlapError("");
-          }
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      dateRange: newRange.start && newRange.end ? "" : "Please select a valid date range",
-    }));
-  };
-
   // const handleDateChange = (newRange) => {
   //   setDateRange(newRange);
   //   setIsDateRangeValid(newRange.start !== null && newRange.end !== null);
+  //   const newAssessment = {
+  //     type: assessmentApproach=="accordance"?"GRI: In accordance with":"GRI: With reference to", // Type chosen by the user
+  //     startDate: new Date(newRange.start), 
+  //     endDate: new Date(newRange.end),
+  //     organization:organizationName
 
-  //   // Check for overlap
-  //   if (assessmentApproach) {
-  //     const overlap = checkForOverlap(newRange, assessmentApproach);
-  //     console.log(overlap,"look")
-  //     if (overlap) {
-  //       setOverlapError("An assessment already exists for this date range and type.");
-  //     } else {
-  //       setOverlapError("");
-  //     }
-  //   }
-
+  //   };
+  //   const overlap = checkAssessment(existingData, newAssessment);
+    
+  //   if (overlap) {
+  //     setDateexist(true)
+  //           setOverlapError("An assessment already exists for this date range and type.");
+  //         } else {
+  //           setDateexist(false)
+  //           setOverlapError("");
+  //         }
   //   setErrors((prevErrors) => ({
   //     ...prevErrors,
   //     dateRange: newRange.start && newRange.end ? "" : "Please select a valid date range",
   //   }));
   // };
+
+  //new one
+//   const handleDateChange = (newRange) => {
+//     const currentDate = new Date();
+    
+//     // Calculate two years forward from today
+//     const twoYearsForward = new Date(currentDate);
+//     twoYearsForward.setFullYear(currentDate.getFullYear() + 2);
+    
+//     // Calculate two years backward from today (if required)
+//     const twoYearsBackward = new Date(currentDate);
+//     twoYearsBackward.setFullYear(currentDate.getFullYear() - 2);
+
+//     const startDate = new Date(newRange.start);
+//     const endDate = new Date(newRange.end);
+    
+//     // Check if the date range is within two years from the current date
+//     const isWithinTwoYears = (startDate >= twoYearsBackward && endDate <= twoYearsForward);
+
+//     // Set date range validity based on start, end, and the two-year restriction
+//     const isDateRangeValid = newRange.start !== null && newRange.end !== null && isWithinTwoYears;
+    
+//     setDateRange(newRange);
+//     setIsDateRangeValid(isDateRangeValid);
+    
+//     const newAssessment = {
+//       type: assessmentApproach === "accordance" ? "GRI: In accordance with" : "GRI: With reference to", // Type chosen by the user
+//       startDate: startDate,
+//       endDate: endDate,
+//       organization: organizationName
+//     };
+    
+//     const overlap = checkAssessment(existingData, newAssessment);
+    
+//     if (overlap) {
+//       setDateexist(true);
+//       setOverlapError("An assessment already exists for this date range and type.");
+//     } else {
+//       setDateexist(false);
+//       setOverlapError("");
+//     }
+    
+//     // Set errors, including date range validity message if outside the allowed two-year window
+//     setErrors((prevErrors) => ({
+//       ...prevErrors,
+//       dateRange: newRange.start && newRange.end
+//         ? isWithinTwoYears
+//           ? ""
+//           : "Please select a date range within two years from today."
+//         : "Please select a valid date range",
+//     }));
+// };
+
+const handleDateChange = (newRange) => {
+  const currentDate = new Date();
+  
+  // Calculate two years forward from today
+  const twoYearsForward = new Date(currentDate);
+  twoYearsForward.setFullYear(currentDate.getFullYear() + 2);
+  
+  // Calculate two years backward from today
+  const twoYearsBackward = new Date(currentDate);
+  twoYearsBackward.setFullYear(currentDate.getFullYear() - 2);
+
+  const startDate = new Date(newRange.start);
+  const endDate = new Date(newRange.end);
+  
+  // Check if the date range is within the backward and forward two-year limit
+  const isStartDateValid = startDate >= twoYearsBackward && startDate <= twoYearsForward;
+  const isEndDateValid = endDate >= twoYearsBackward && endDate <= twoYearsForward;
+
+  // Set date range validity based on the validity of start and end date
+  const isDateRangeValid = newRange.start !== null && newRange.end !== null && isStartDateValid && isEndDateValid && startDate<endDate;
+
+  // Update the state
+  setDateRange(newRange);
+  setIsDateRangeValid(isDateRangeValid);
+  
+  const newAssessment = {
+    type: assessmentApproach === "accordance" ? "GRI: In accordance with" : "GRI: With reference to", // Type chosen by the user
+    startDate: startDate,
+    endDate: endDate,
+    organization: organizationName
+  };
+  
+  const overlap = checkAssessment(existingData, newAssessment);
+  
+  if (overlap) {
+    setDateexist(true);
+    setOverlapError("An assessment already exists for this date range and type.");
+  } else {
+    setDateexist(false);
+    setOverlapError("");
+  }
+  
+  // Set errors based on date range validity
+  setErrors((prevErrors) => ({
+    ...prevErrors,
+    dateRange: newRange.start && newRange.end
+      ? isDateRangeValid
+        ? ""
+        : "Please choose a date range within two years from today, ensuring the start date is before the end date"
+      : "Please select a valid date range",
+  }));
+};
+
+
 
 
   const handleTabClick = (tabNumber) => {
@@ -254,32 +339,70 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
     setLoOpen(false);
   };
 
+  // const validateForm = () => {
+  //   const newErrors = {};
+
+  //   if (!selectedOrg) {
+  //     newErrors.organization = "Please select an organization";
+  //   }
+
+  //   if (activeTab === 2 && !selectedCorp) {
+  //     newErrors.corporate = "Please select a corporate";
+  //   }
+
+  //   if (!dateRange.start || !dateRange.end) {
+  //     newErrors.dateRange = "Please select a valid date range";
+  //   }
+
+  //   if (!assessmentApproach) {
+  //     newErrors.assessmentApproach = "Please select an assessment approach";
+  //   }
+  //   if(dateExist){
+  //     newErrors.dateExist = "An assessment already exists for this date range and type.";
+  //   }
+
+  //   setErrors(newErrors);
+
+  //   return Object.keys(newErrors).length === 0;
+  // };
+
   const validateForm = () => {
     const newErrors = {};
 
+    // Validate organization selection
     if (!selectedOrg) {
       newErrors.organization = "Please select an organization";
     }
 
+    // If active tab requires corporate selection, validate it
     if (activeTab === 2 && !selectedCorp) {
       newErrors.corporate = "Please select a corporate";
     }
 
+    // Validate the date range, including whether a valid date range was chosen
     if (!dateRange.start || !dateRange.end) {
       newErrors.dateRange = "Please select a valid date range";
+    } else if (!isDateRangeValid) {
+      newErrors.dateRange = "Please select a date range within two years before or after today.";
     }
 
+    // Validate assessment approach selection
     if (!assessmentApproach) {
       newErrors.assessmentApproach = "Please select an assessment approach";
     }
-    if(dateExist){
+
+    // Check if there is an overlap in the date range and add the appropriate error message
+    if (dateExist) {
       newErrors.dateExist = "An assessment already exists for this date range and type.";
     }
 
+    // Set errors to state
     setErrors(newErrors);
 
+    // Return whether the form is valid
     return Object.keys(newErrors).length === 0;
-  };
+};
+
 
   const handleSubmit = async () => {
     if (!validateForm()) {  
