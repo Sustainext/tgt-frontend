@@ -54,19 +54,19 @@ const uiSchema = {
         titles: [
           {
             title: "Region Name",
-            tooltip: "Enter the region name.",
+            tooltip: "Specify name of the region from which governance body members have received training on anti-corruption,",
             widgettype: "select",
-            tooltipdisplay: "none",
+            tooltipdisplay: "block",
           },
           {
             title: "Total number of governance body members that the organization's anti-corruption policies and procedures have been communicated to",
-            tooltip: "SMention the total number of employees that the organization's anti-corruption policies and procedures have been communicated to.",
+            tooltip: "Mention the total number of governance body members that have received training on anti-corruption.",
             widgettype: "input",
             tooltipdisplay: "block",
           },
           {
             title: "Total number of governance body members in that region.",
-            tooltip: "Mention the total number of governance body members in that region.",
+            tooltip: "Mention the total number of governance body members.",
             widgettype: "input",
             tooltipdisplay: "block",
           },
@@ -82,7 +82,7 @@ const uiSchema = {
 };
 
 
-const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
   const [formData, setFormData] = useState([
     {
  
@@ -226,11 +226,11 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
         <div className="mb-2 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
-            Total number of governance body members that the organization’s anti-corruption policies and procedures have been communicated to, broken down by region.
+            Total number of governance body members that have received training on anti-corruption, broken down by region.
               <MdInfoOutline
                 data-tooltip-id={`es26`}
-                data-tooltip-html="Specify the total number of governance body members that the organization’s anti-corruption policies and procedures have been communicated to, broken down by region."
-                className="mt-1.5 ml-2 text-[20px]"
+                data-tooltip-html="Specify the total number of governance body members that have received training on anti-corruption, broken down by region."
+                className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip
                 id={`es26`}
@@ -252,7 +252,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 205-2a
+                  GRI 205-2d
                 </div>
               </div>
             </div>
@@ -262,8 +262,8 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
         {Array.isArray(locationdata) && locationdata.length > 0 ? (
           <div className="mx-2">
             <Form
-              schema={r_schema}
-              uiSchema={r_ui_schema}
+              schema={schema}
+              uiSchema={uiSchema}
               formData={formData}
               onChange={handleChange}
               validator={validator}
@@ -311,4 +311,4 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   );
 };
 
-export default Screen1;
+export default Screen4;

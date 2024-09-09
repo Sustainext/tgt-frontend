@@ -1,93 +1,141 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { debounce } from "lodash";
 import { MdInfoOutline, MdOutlineDeleteOutline, MdAdd } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
-// Row component to handle each row
-const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove }) => {
-  return (
-    <tr key={rowIndex}>
-      {Object.keys(item).map((key, cellIndex) => (
-        <td key={cellIndex} className="border border-gray-300 px-2">
-          {/* Handle Location dropdown */}
-          {options.titles[cellIndex].widgettype === "select" && key === "Location" ? (
-            <select
-              value={item[key]}
-              onChange={(e) => updateField(rowIndex, key, e.target.value)}
-              className="text-sm pl-2 py-2 w-full"
-            >
-              <option value="">Select location</option>
-              {locationdata?.length > 0 &&
-                locationdata.map((loc) => (
-                  <option key={loc.location_name} value={loc.location_name}>
-                    {loc.location_name}
-                  </option>
-                ))}
-            </select>
-          ) : (
-            <input
-              type={options.titles[cellIndex].type || "text"} // Default to text input if no type is defined
-              value={item[key] || ""} // Ensure the value is either the item value or an empty string
-              onChange={(e) => {
-                console.log("Updating row:", rowIndex, "Cell:", key, "New Value:", e.target.value);
-                updateField(rowIndex, key, e.target.value);
-              }}
-              style={{ width: "100%" }} // Set full width for the input
-              placeholder="Enter data" // Placeholder text
-              className="text-sm pl-2 py-2" // Styling
-            />
-          )}
-        </td>
-      ))}
-      <td className="border border-gray-300 p-3">
-        <button onClick={() => onRemove(rowIndex)}>
-          <MdOutlineDeleteOutline className="text-[23px] text-red-600" />
-        </button>
-      </td>
-    </tr>
-  );
+const generateShortKey = (title) => {
+  return title.toLowerCase().replace(/\s+/g, "-").slice(0, 10); // Adjust length as needed
 };
 
-const LoctiondropdwonTablegri205 = ({
+const LocationDropdownTableGrid = ({
   id,
   options,
   value = [],
   required,
   onChange,
-  locationdata, 
+  locationdata,
 }) => {
-  // Ensure the first row is always displayed if value is empty
+  const [localValue, setLocalValue] = useState({});
+  const [shortKeyMap, setShortKeyMap] = useState({});
+
+  // Initialize localValue and shortKeyMap
   useEffect(() => {
-    if (value.length === 0) {
-      const newRow = {};
+    const initializeValue = () => {
+      const newData = {};
+      const newShortKeyMap = {};
       options.titles.forEach((title) => {
-        newRow[title.title] = "";
+        const shortKey = generateShortKey(title.title);
+        newShortKeyMap[title.tittlekey] = shortKey;
       });
-      onChange([newRow]);
+
+      locationdata.forEach((quarterData) => {
+        Object.values(quarterData).forEach((locations) => {
+          locations.forEach((location) => {
+            const name = location["Region Name"];
+            if (!newData[name]) {
+              newData[name] = [];
+            }
+            // Add a default row if no rows exist for this location
+            if (newData[name].length === 0) {
+              const newRow = {};
+              options.titles.forEach((title) => {
+                newRow[title.tittlekey] = "";
+              });
+              newData[name].push(newRow);
+            }
+          });
+        });
+      });
+      setLocalValue(newData);
+      setShortKeyMap(newShortKeyMap);
+      onChange(newData);
+    };
+
+    if (Object.keys(value).length === 0) {
+      initializeValue();
+    } else {
+      setLocalValue(value);
+      const newShortKeyMap = {};
+      options.titles.forEach((title) => {
+        newShortKeyMap[title.tittlekey] = generateShortKey(title.title);
+      });
+      setShortKeyMap(newShortKeyMap);
     }
-  }, [value, options.titles, onChange]);
+  }, [value, locationdata, options.titles, onChange]);
+
+  // Create a debounced onChange function
+  const debouncedOnChange = useCallback(
+    debounce((newData) => {
+      onChange(newData);
+    }, 500),
+    [onChange]
+  );
 
   // Function to update a field in a row
-  const updateField = (index, key, newValue) => {
-    const newData = [...value]; // Make a shallow copy of the value array
-    newData[index] = { ...newData[index], [key]: newValue }; // Update the specific key in the row
-    onChange(newData); // Pass the updated array to onChange
+  const updateField = (locationName, index, key, newValue) => {
+    const newData = { ...localValue };
+    if (!newData[locationName]) {
+      newData[locationName] = [];
+    }
+    const updatedRow = { ...newData[locationName][index], [key]: newValue };
+    newData[locationName] = newData[locationName].map((row, idx) =>
+      idx === index ? updatedRow : row
+    );
+    setLocalValue(newData);
+    debouncedOnChange(newData); // Use the debounced function
   };
 
   // Function to add a new row
-  const addRow = () => {
+  const addRow = (locationName) => {
+    const newData = { ...localValue };
+    if (!newData[locationName]) {
+      newData[locationName] = [];
+    }
     const newRow = {};
     options.titles.forEach((title) => {
-      newRow[title.title] = "";
+      newRow[title.tittlekey] = "";
     });
-    onChange([...value, newRow]);
+    newData[locationName].push(newRow);
+    setLocalValue(newData);
+    debouncedOnChange(newData); // Use the debounced function
   };
 
   // Function to remove a row by index
-  const onRemove = (indexToRemove) => {
-    const newData = value.filter((_, index) => index !== indexToRemove);
-    onChange(newData);
+  const onRemove = (locationName, indexToRemove) => {
+    const newData = { ...localValue };
+    if (newData[locationName]) {
+      newData[locationName] = newData[locationName].filter(
+        (_, index) => index !== indexToRemove
+      );
+      // Ensure at least one row is present
+      if (newData[locationName].length === 0) {
+        const newRow = {};
+        options.titles.forEach((title) => {
+          newRow[title.tittlekey] = "";
+        });
+        newData[locationName].push(newRow);
+      }
+      setLocalValue(newData);
+      debouncedOnChange(newData); // Use the debounced function
+    }
   };
+
+  // Create a map of locations for faster lookup
+  const locationMap = locationdata.reduce((map, quarterData) => {
+    Object.values(quarterData).forEach((locations) => {
+      locations.forEach((location) => {
+        const name = location["Region Name"];
+        if (!map[name]) {
+          map[name] = [];
+        }
+        map[name].push(location);
+      });
+    });
+    return map;
+  }, {});
+
+  console.log("Location Data Map:", locationMap); // Log location data
 
   return (
     <div
@@ -103,6 +151,28 @@ const LoctiondropdwonTablegri205 = ({
       <table id={id} className="table-fixed border-collapse w-full">
         <thead className="gradient-background">
           <tr className="h-[102px]">
+            <th
+              style={{ width: "17vw", textAlign: "left" }}
+              className="text-[12px] border border-gray-300 px-2 py-2 text-center"
+            >
+              <div className="flex items-center relative justify-center">
+                <p>Location Name</p>
+
+                <p>
+                  <MdInfoOutline
+                    data-tooltip-id="223"
+                    data-tooltip-content="hi"
+                    className="ml-2 cursor-pointer"
+                  />
+                  <ReactTooltip
+                    id="223"
+                    place="top"
+                    effect="solid"
+                    className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
+                  />
+                </p>
+              </div>
+            </th>
             {options.titles.map((item, idx) => (
               <th
                 key={idx}
@@ -114,15 +184,14 @@ const LoctiondropdwonTablegri205 = ({
                   {item.tooltipdisplay === "block" && (
                     <p>
                       <MdInfoOutline
-                        data-tooltip-id={`tooltip-${item.title.replace(
-                          /\s+/g,
-                          "-"
-                        )}`}
+                        data-tooltip-id={`tooltip-${
+                          shortKeyMap[item.tittlekey]
+                        }`}
                         data-tooltip-content={item.tooltip}
                         className="ml-2 cursor-pointer"
                       />
                       <ReactTooltip
-                        id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
+                        id={`tooltip-${shortKeyMap[item.tittlekey]}`}
                         place="top"
                         effect="solid"
                         className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
@@ -132,34 +201,90 @@ const LoctiondropdwonTablegri205 = ({
                 </div>
               </th>
             ))}
-            <th className="w-[5vw] border border-gray-300 "></th>
+            <th className="w-[5vw] border border-gray-300"></th>
           </tr>
         </thead>
         <tbody>
-          {value.map((item, rowIndex) => (
-            <Row
-              key={rowIndex}
-              rowIndex={rowIndex}
-              item={item}
-              options={options}
-              locationdata={locationdata}
-              updateField={updateField}
-              onRemove={onRemove}
-            />
+          {Object.entries(locationMap).map(([locationName]) => (
+            <React.Fragment key={locationName}>
+              {(localValue[locationName] || []).map((row, rowIndex) => (
+                <tr key={rowIndex}>
+                  {rowIndex === 0 && (
+                    <td
+                      rowSpan={(localValue[locationName] || []).length}
+                      className="p-2 border border-gray-300 text-center"
+                    >
+                      {locationName}
+                    </td>
+                  )}
+                  {options.titles.map((title, colIndex) => (
+                    <td key={colIndex} className="p-2 border border-gray-300">
+                      {title.widgettype === "number" ? (
+                        <input
+                          type="number"
+                          className="w-full p-2 border-b border-gray-300 rounded"
+                          placeholder="enter data"
+                          value={row[title.tittlekey] || ""}
+                          onChange={(e) =>
+                            updateField(
+                              locationName,
+                              rowIndex,
+                              title.tittlekey,
+                              e.target.value
+                            )
+                          }
+                        />
+                      ) : title.widgettype === "text" ? (
+                        <input
+                          type="text"
+                          className="w-full p-2 border-b border-gray-300 rounded"
+                          placeholder="enter data"
+                          value={row[title.tittlekey] || ""}
+                          onChange={(e) =>
+                            updateField(
+                              locationName,
+                              rowIndex,
+                              title.tittlekey,
+                              e.target.value
+                            )
+                          }
+                        />
+                      ) : (
+                        <div className="w-full p-2 border-b border-gray-300 rounded"></div>
+                      )}
+                    </td>
+                  ))}
+                  <td className="p-2 border border-gray-300 text-center">
+                    <button
+                      type="button"
+                      onClick={() => onRemove(locationName, rowIndex)}
+                      className="text-red-500"
+                    >
+                      <MdOutlineDeleteOutline />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+              <tr>
+                <td
+                  colSpan={options.titles.length + 1}
+                  className="p-2 border border-gray-300 text-center"
+                >
+                  <button
+                    type="button"
+                    onClick={() => addRow(locationName)}
+                    className="text-blue-500 flex items-center"
+                  >
+                    Add Row <MdAdd />
+                  </button>
+                </td>
+              </tr>
+            </React.Fragment>
           ))}
         </tbody>
       </table>
-      <div className="mt-2">
-        <button
-          type="button"
-          onClick={addRow}
-          className="text-blue-500 flex items-center"
-        >
-          Add Row <MdAdd />
-        </button>
-      </div>
     </div>
   );
 };
 
-export default LoctiondropdwonTablegri205;
+export default LocationDropdownTableGrid;

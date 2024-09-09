@@ -10,7 +10,7 @@ const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove }) =
       {Object.keys(item).map((key, cellIndex) => (
         <td key={cellIndex} className="border border-gray-300 px-2">
           {/* Handle Location dropdown */}
-          {options.titles[cellIndex].widgettype === "select"  ? (
+          {options.titles[cellIndex].widgettype === "select" ? (
             <select
               value={item[key]}
               onChange={(e) => updateField(rowIndex, key, e.target.value)}
@@ -26,10 +26,9 @@ const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove }) =
             </select>
           ) : (
             <input
-              type={options.titles[cellIndex].type || "number"} // Default to text input if no type is defined
+              type= "number" // Default to number input if no type is defined
               value={item[key] || ""} // Ensure the value is either the item value or an empty string
               onChange={(e) => {
-               
                 updateField(rowIndex, key, e.target.value);
               }}
               style={{ width: "100%" }} // Set full width for the input
@@ -48,14 +47,7 @@ const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove }) =
   );
 };
 
-const LoctiondropdwonTable = ({
-  id,
-  options,
-  value = [],
-  required,
-  onChange,
-  locationdata, 
-}) => {
+const LocationDropdownTable = ({ id, options, value = [], required, onChange, locationdata }) => {
   // Ensure the first row is always displayed if value is empty
   useEffect(() => {
     if (value.length === 0) {
@@ -69,9 +61,13 @@ const LoctiondropdwonTable = ({
 
   // Function to update a field in a row
   const updateField = (index, key, newValue) => {
-    const newData = [...value]; // Make a shallow copy of the value array
-    newData[index] = { ...newData[index], [key]: newValue }; // Update the specific key in the row
-    onChange(newData); // Pass the updated array to onChange
+    const newData = value.map((item, i) => {
+      if (i === index) {
+        return { ...item, [key]: newValue };
+      }
+      return item;
+    });
+    onChange(newData); // Notify parent of changes
   };
 
   // Function to add a new row
@@ -137,6 +133,7 @@ const LoctiondropdwonTable = ({
         </thead>
         <tbody>
           {value.map((item, rowIndex) => (
+            
             <Row
               key={rowIndex}
               rowIndex={rowIndex}
@@ -155,11 +152,11 @@ const LoctiondropdwonTable = ({
           onClick={addRow}
           className="text-blue-500 flex items-center text-[15px]"
         >
-      Add Location <div className="ml-2 mt-1"><MdAdd /></div>
+          Add Location <div className="ml-2 mt-1"><MdAdd /></div>
         </button>
       </div>
     </div>
   );
 };
 
-export default LoctiondropdwonTable;
+export default LocationDropdownTable;
