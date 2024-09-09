@@ -11,14 +11,14 @@ import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 
-import LoctiondropdwonTable from "../../../../shared/widgets/Economic/loctiondropdwonTable";
-
+import LocationDropdownTableGrid from "../../../../shared/widgets/Economic/loctiondropdwonTablegri205";
+import CommoninputWidget from "../../../../shared/widgets/Input/commoninputWidget";
 const widgets = {
-
-  LoctiondropdwonTable: LoctiondropdwonTable,
+  LocationDropdownTableGrid: LocationDropdownTableGrid,
+  inputWidget: CommoninputWidget,
 };
-
-const view_path =
+const view_path = "";
+const view_path2 =
   "gri-economic-anti_corruption-comm_and_training-205-2a-governance_body_members";
 const client_id = 1;
 const user_id = 1;
@@ -33,46 +33,68 @@ const schema = {
         items: {
           type: "object", // Each item in Q1 is an object
           properties: {
-            RegionName: { type: "string" },
-            Totalnumberanticorruption: { type: "string" },
-            Totalnumberbodymembers: { type: "string" },
+            Typeofbusinesspartner: { type: "string" },
+            Totalnumberemployees: { type: "string" },
+            Totalemployeeinthisregion: { type: "string" },
           },
         },
+      },
+      Q2: {
+        type: "string",
+        title:
+          "Describe if the organization’s anti-corruption policies and procedures have been communicated to any other persons or organizations.",
       },
     },
   },
 };
 
-
-
 const uiSchema = {
   "ui:order": ["Q1"],
   items: {
     Q1: {
-      "ui:widget": "LoctiondropdwonTable",
+      "ui:widget": "LocationDropdownTableGrid",
       "ui:options": {
         titles: [
           {
-            title: "Region Name",
-            tooltip: "Enter the region name.",
-            widgettype: "select",
+            title: "Type of business partner ",
+            tooltip: "Specify the total number communicated.",
+            widgettype: "text",
             tooltipdisplay: "none",
+            tittlekey: "Typeofbusinesspartner",
           },
           {
-            title: "Total number of governance body members that the organization's anti-corruption policies and procedures have been communicated to",
-            tooltip: "SMention the total number of employees that the organization's anti-corruption policies and procedures have been communicated to.",
-            widgettype: "input",
+            title:
+              "Total number of business partners that the organization's anti-corruption policies and procedures have been communicated to",
+            tooltip: "Mention the total number of business partners that the organization’s anti-corruption policies and procedures have been communicated to.",
+            widgettype: "number",
             tooltipdisplay: "block",
+            tittlekey: "Totalnumberemployees",
           },
           {
-            title: "Total number of governance body members in that region.",
-            tooltip: "Mention the total number of governance body members in that region.",
-            widgettype: "input",
+            title: "Total number of business partners in this region",
+            tooltip: "Mention the total number of business partners in this region.",
+            widgettype: "number",
             tooltipdisplay: "block",
+            tittlekey: "Totalemployeeinthisregion",
           },
         ],
       },
     },
+    Q2: {
+        "ui:title":
+          "Describe if the organization’s anti-corruption policies and procedures have been communicated to any other persons or organizations.",
+        "ui:tooltip":
+          "What are the actions taken to determine whether these workers are paid abovethe minimum wage?",
+        "ui:tooltipdisplay": "none",
+        "ui:titledisplay": "block",
+        "ui:widgetType": "textarea",
+        "ui:inputfildtype": "text",
+        "ui:widget": "inputWidget",
+        "ui:horizontal": true,
+        "ui:options": {
+          label: false,
+        },
+      },
     "ui:options": {
       orderable: false,
       addable: true,
@@ -81,20 +103,8 @@ const uiSchema = {
   },
 };
 
-
-const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
-  const [formData, setFormData] = useState([
-    {
- 
-      Q1: [
-        {
-          RegionName: "",
-          Totalnumberanticorruption: "",
-          Totalnumberbodymembers: "",
-        },
-      ],
-    },
-  ]);
+const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
+  const [formData, setFormData] = useState([{}]);
   const [locationdata, setLocationdata] = useState(); // Initialize as empty array
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -167,14 +177,15 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       LoaderClose();
     }
   };
-  const facthloctiondata = async () => {
-    const url = `${process.env.BACKEND_API_URL}/sustainapp/get_location_as_per_org_or_corp/?corporate=${selectedCorp}&organization=${selectedOrg}`;
+  const loadFormData2 = async () => {
+    LoaderOpen();
+
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path2}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
-      console.log("Location data:", response.data);
-      setLocationdata(response.data);
+      console.log(response.data.form_data[0].data);
+      setLocationdata(response.data.form_data[0].data);
     } catch (error) {
-      setLocationdata();
     } finally {
       LoaderClose();
     }
@@ -201,7 +212,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   useEffect(() => {
     if (selectedOrg && year) {
       loadFormData();
-      facthloctiondata();
+      loadFormData2();
       toastShown.current = false;
     } else if (!toastShown.current) {
       toastShown.current = true;
@@ -210,7 +221,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
+    // updateFormData();
     console.log("Form data:", formData);
   };
   console.log("Location data: locationdata", locationdata);
@@ -226,14 +237,14 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
         <div className="mb-2 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
-            Total number of governance body members that the organization’s anti-corruption policies and procedures have been communicated to, broken down by region.
+            Total number of business partners that the organization’s anti-corruption policies and procedures have been communicated to, broken down by type of business partner and region.
               <MdInfoOutline
-                data-tooltip-id={`es26`}
-                data-tooltip-html="Specify the total number of governance body members that the organization’s anti-corruption policies and procedures have been communicated to, broken down by region."
+                data-tooltip-id={`es278`}
+                data-tooltip-html="Specify the total number of business partners that the organization’s anti-corruption policies and procedures have been communicated to, broken down by type of business partner and region."
                 className="mt-1.5 ml-2 text-[20px]"
               />
               <ReactTooltip
-                id={`es26`}
+                id={`es278`}
                 place="top"
                 effect="solid"
                 style={{
@@ -252,7 +263,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 205-2a
+                  GRI 205-2c
                 </div>
               </div>
             </div>
@@ -262,15 +273,15 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
         {Array.isArray(locationdata) && locationdata.length > 0 ? (
           <div className="mx-2">
             <Form
-              schema={r_schema}
-              uiSchema={r_ui_schema}
+              schema={schema}
+              uiSchema={uiSchema}
               formData={formData}
               onChange={handleChange}
               validator={validator}
               widgets={{
                 ...widgets,
-                LoctiondropdwonTable: (props) => (
-                  <LoctiondropdwonTable
+                LocationDropdownTableGrid: (props) => (
+                  <LocationDropdownTableGrid
                     {...props}
                     locationdata={locationdata}
                   />
@@ -289,7 +300,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            // disabled={!selectedOrg || !year}
           >
             Submit
           </button>
@@ -311,4 +322,4 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   );
 };
 
-export default Screen1;
+export default Screen3;
