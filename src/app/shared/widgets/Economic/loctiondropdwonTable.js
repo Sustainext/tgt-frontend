@@ -3,33 +3,84 @@ import { MdInfoOutline, MdOutlineDeleteOutline, MdAdd } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
+// Row component to handle each row
+const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove }) => {
+  return (
+    <tr key={rowIndex}>
+      {Object.keys(item).map((key, cellIndex) => (
+        <td key={cellIndex} className="border border-gray-300 px-2">
+          {/* Handle Location dropdown */}
+          {options.titles[cellIndex].widgettype === "select" && key === "Location" ? (
+            <select
+              value={item[key]}
+              onChange={(e) => updateField(rowIndex, key, e.target.value)}
+              className="text-sm pl-2 py-2 w-full"
+            >
+              <option value="">Select location</option>
+              {locationdata?.length > 0 &&
+                locationdata.map((loc) => (
+                  <option key={loc.location_name} value={loc.location_name}>
+                    {loc.location_name}
+                  </option>
+                ))}
+            </select>
+          ) : (
+            <input
+              type={options.titles[cellIndex].type || "text"} // Default to text input if no type is defined
+              value={item[key] || ""} // Ensure the value is either the item value or an empty string
+              onChange={(e) => {
+                console.log("Updating row:", rowIndex, "Cell:", key, "New Value:", e.target.value);
+                updateField(rowIndex, key, e.target.value);
+              }}
+              style={{ width: "100%" }} // Set full width for the input
+              placeholder="Enter data" // Placeholder text
+              className="text-sm pl-2 py-2" // Styling
+            />
+          )}
+        </td>
+      ))}
+      <td className="border border-gray-300 p-3">
+        <button onClick={() => onRemove(rowIndex)}>
+          <MdOutlineDeleteOutline className="text-[23px] text-red-600" />
+        </button>
+      </td>
+    </tr>
+  );
+};
+
 const LoctiondropdwonTable = ({
   id,
   options,
   value = [],
   required,
   onChange,
-  formContext,
+  locationdata, 
 }) => {
-  // Function to update the specific field in the row
+  // Ensure the first row is always displayed if value is empty
+  useEffect(() => {
+    if (value.length === 0) {
+      const newRow = {};
+      options.titles.forEach((title) => {
+        newRow[title.title] = "";
+      });
+      onChange([newRow]);
+    }
+  }, [value, options.titles, onChange]);
+
+  // Function to update a field in a row
   const updateField = (index, key, newValue) => {
-    const newData = value.map((item, i) => {
-      if (i === index) {
-        return { ...item, [key]: newValue };
-      }
-      return item;
-    });
-    onChange(newData);
+    const newData = [...value]; // Make a shallow copy of the value array
+    newData[index] = { ...newData[index], [key]: newValue }; // Update the specific key in the row
+    onChange(newData); // Pass the updated array to onChange
   };
 
   // Function to add a new row
   const addRow = () => {
-    const newRow = {}; // Customize default values if needed
+    const newRow = {};
     options.titles.forEach((title) => {
-      newRow[title.title] = ""; // Assuming empty string for each field initially
+      newRow[title.title] = "";
     });
-
-    onChange([...value, newRow]); // Append the new row to the value array
+    onChange([...value, newRow]);
   };
 
   // Function to remove a row by index
@@ -37,10 +88,6 @@ const LoctiondropdwonTable = ({
     const newData = value.filter((_, index) => index !== indexToRemove);
     onChange(newData);
   };
-
-  useEffect(() => {
-    // You can log the value for debugging if necessary
-  }, [value]);
 
   return (
     <div
@@ -90,43 +137,15 @@ const LoctiondropdwonTable = ({
         </thead>
         <tbody>
           {value.map((item, rowIndex) => (
-            <tr key={rowIndex}>
-              {Object.keys(item).map((key, cellIndex) => (
-                <td key={cellIndex} className="border border-gray-300 px-2">
-                  {options.titles[cellIndex].widgettype === "select" ? (
-                    <select
-                      value={item[key]}
-                      onChange={(e) =>
-                        updateField(rowIndex, key, e.target.value)
-                      }
-                      className="text-sm pl-2 py-2 w-full"
-                    >
-                      <option value="">Select option</option>
-                      <option value="Option1">Option 1</option>
-                      <option value="Option2">Option 2</option>
-                      <option value="Option3">Option 3</option>
-                    </select>
-                  ) : (
-                    <input
-                      type={options.titles[cellIndex].type || "text"}
-                      required={required}
-                      value={item[key]}
-                      onChange={(e) =>
-                        updateField(rowIndex, key, e.target.value)
-                      }
-                      style={{ width: "100%" }}
-                      placeholder="Enter data"
-                      className="text-sm pl-2 py-2"
-                    />
-                  )}
-                </td>
-              ))}
-              <td className="border border-gray-300 p-3">
-                <button onClick={() => onRemove(rowIndex)}>
-                  <MdOutlineDeleteOutline className="text-[23px] text-red-600" />
-                </button>
-              </td>
-            </tr>
+            <Row
+              key={rowIndex}
+              rowIndex={rowIndex}
+              item={item}
+              options={options}
+              locationdata={locationdata}
+              updateField={updateField}
+              onRemove={onRemove}
+            />
           ))}
         </tbody>
       </table>
@@ -136,7 +155,7 @@ const LoctiondropdwonTable = ({
           onClick={addRow}
           className="text-blue-500 flex items-center"
         >
-         Add Row  <MdAdd /> 
+          Add Row <MdAdd />
         </button>
       </div>
     </div>

@@ -85,7 +85,7 @@ const Section1 = () => {
           </div>
         </div>
 
-        <div className="ml-3 flex">
+        <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
           Ratios of Standard Entry level wage by gender compared to local minimum wage
             <MdInfoOutline

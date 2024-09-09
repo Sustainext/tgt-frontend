@@ -13,13 +13,15 @@ import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import CurrencyselectWidget from "../../../../../shared/widgets/Select/currencyselectWidget";
 import LoctiondropdwonTable from "../../../../../shared/widgets/Economic/loctiondropdwonTable";
+
 const widgets = {
   inputWidget: CommoninputWidget,
-  CurrencyselectWidget:CurrencyselectWidget,
-  LoctiondropdwonTable:LoctiondropdwonTable,
+  CurrencyselectWidget: CurrencyselectWidget,
+  LoctiondropdwonTable: LoctiondropdwonTable,
 };
 
-const view_path = "gri-economic-financial_implications-201-2a-calculate";
+const view_path =
+  "gri-economic-ratios_of_standard_entry_level_wage_by_gender_compared_to_local_minimum_wage-202-1a-s1";
 const client_id = 1;
 const user_id = 1;
 
@@ -30,15 +32,14 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title:
-          "Does your organisation subject to minimum wage rules?",
-          enum:["Yes","No"],
+        title: "Does your organisation subject to minimum wage rules?",
+        enum: ["Yes", "No"],
       },
       Q2: {
         type: "string",
         title:
           "Are a significant proportion of employees compensated based on wages subject to minimum wage rules?",
-          enum:["Yes","No"],
+        enum: ["Yes", "No"],
       },
     },
     dependencies: {
@@ -51,7 +52,8 @@ const schema = {
               },
               Q3: {
                 type: "string",
-                title: "If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
+                title:
+                  "If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
               },
               Q4: {
                 type: "array",
@@ -59,10 +61,9 @@ const schema = {
                   type: "object",
                   properties: {
                     Location: { type: "string" },
-                    Male : { type: "string" },
+                    Male: { type: "string" },
                     Female: { type: "string" },
                     Nonbinary: { type: "string" },
-         
                   },
                 },
               },
@@ -76,10 +77,9 @@ const schema = {
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1","Q2","Q3","Q4"],
+    "ui:order": ["Q1", "Q2", "Q3", "Q4"],
     Q1: {
-      "ui:title":
-        "Does your organisation subject to minimum wage rules?",
+      "ui:title": "Does your organisation subject to minimum wage rules?",
       "ui:tooltip":
         "Indicate whether your organisation is subject to minimum wage rules.",
       "ui:tooltipdisplay": "none",
@@ -108,61 +108,61 @@ const uiSchema = {
       },
     },
     Q3: {
-      "ui:hadding":"If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
-      "ui:haddingtooltips":"If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
-      "ui:haddingdisplay":"block",
-      "ui:haddingtooltipdisplay":"block",
-      "ui:title":
-      "Select Currency",
-    "ui:tooltip": "Specify the frequency of sustainability reporting..",
-    "ui:tooltipdisplay": "none",
-    "ui:widget": "CurrencyselectWidget",
-    "ui:widgtclass":"block w-[20vw] text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300 mb-4",
-    "ui:horizontal": true,
-    "ui:options": {
-      label: false,
+      "ui:hadding":
+        "If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
+      "ui:haddingtooltips":
+        "If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
+      "ui:haddingdisplay": "block",
+      "ui:haddingtooltipdisplay": "block",
+      "ui:title": "Select Currency",
+      "ui:tooltip": "Specify the frequency of sustainability reporting..",
+      "ui:tooltipdisplay": "none",
+      "ui:widget": "CurrencyselectWidget",
+      "ui:widgtclass":
+        "block w-[20vw] text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300 mb-4",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
     },
-  },
-  Q4: {
-    "ui:widget": "LoctiondropdwonTable",
-    "ui:options": {
-      titles: [
-        {
-          title: "Location",
-          tooltip:
-            "How many substantiated complaints received concerning breaches of customer privacy?",
-          type: "number",
-          tooltipdisplay: "none",
-          widgettype: "select",
-        },
-        {
-          title: "Male",
-          tooltip: "Mention a list of entities by tax jurisdiction.",
-          type: "number",
-          tooltipdisplay: "none",
-          widgettype: "input",
-        },
-        {
-          title: "Female",
-          tooltip:
-            "Specify the main activities of the organisation. e.g. sales, marketing, manufacturing, or distribution.",
-          type: "number",
-          tooltipdisplay: "none",
-          widgettype: "input",
-        },
-        {
-          title:
-            "Non-binary",
-          tooltip:
-            "Employee numbers can be reported using an appropriate calculation, such as head count at the end of the time period reported in Disclosure 207-4-c or a full-time equivalent (FTE) calculation",
-          type: "number",
-          tooltipdisplay: "none",
-          widgettype: "input",
-        },
-       
-      ],
+    Q4: {
+      "ui:widget": "LoctiondropdwonTable",
+      "ui:options": {
+        titles: [
+          {
+            title: "Location",
+            tooltip:
+              "How many substantiated complaints received concerning breaches of customer privacy?",
+            type: "number",
+            tooltipdisplay: "none",
+            widgettype: "select",
+          },
+          {
+            title: "Male",
+            tooltip: "Mention a list of entities by tax jurisdiction.",
+            type: "number",
+            tooltipdisplay: "none",
+            widgettype: "input",
+          },
+          {
+            title: "Female",
+            tooltip:
+              "Specify the main activities of the organisation. e.g. sales, marketing, manufacturing, or distribution.",
+            type: "number",
+            tooltipdisplay: "none",
+            widgettype: "input",
+          },
+          {
+            title: "Non-binary",
+            tooltip:
+              "Employee numbers can be reported using an appropriate calculation, such as head count at the end of the time period reported in Disclosure 207-4-c or a full-time equivalent (FTE) calculation",
+            type: "number",
+            tooltipdisplay: "none",
+            widgettype: "input",
+          },
+        ],
+      },
     },
-  },
     "ui:options": {
       orderable: false,
       addable: false,
@@ -173,21 +173,22 @@ const uiSchema = {
 };
 
 const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
-  const data=[ {
-    Q1: "",  
-    Q2: "",  
-    Q3: "",  
-    Q4: [
-      {
-        Location: "",  
-        Male: "",     
-        Female: "",   
-        Nonbinary: ""  
-      }
-    ] 
-  }]
-  const [formData, setFormData] = useState(data);
-  
+  const [formData, setFormData] = useState([
+    {
+      Q1: "",
+      Q2: "",
+      Q3: "",
+      Q4: [
+        {
+          Location: "",
+          Male: "",
+          Female: "",
+          Nonbinary: "",
+        },
+      ],
+    },
+  ]);
+  const [locationdata, setLocationdata] = useState(); // Initialize as empty array
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
@@ -208,8 +209,8 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
   const updateFormData = async () => {
     const data = {
-      client_id: client_id,
-      user_id: user_id,
+      client_id,
+      user_id,
       path: view_path,
       form_data: formData,
       corporate: selectedCorp,
@@ -259,14 +260,27 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       LoaderClose();
     }
   };
-
+  const facthloctiondata = async () => {
+    const url = `${process.env.BACKEND_API_URL}/sustainapp/get_location_as_per_org_or_corp/?corporate=${selectedCorp}&organization=${selectedOrg}`;
+    try {
+      const response = await axiosInstance.get(url);
+      console.log("Location data:", response.data);
+      setLocationdata(response.data);
+    } catch (error) {
+      setLocationdata();
+    } finally {
+      LoaderClose();
+    }
+  };
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([{}]);
+    setFormData([]);
+
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
+
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
@@ -276,27 +290,27 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       LoaderClose();
     }
   };
-  // useEffect(() => {
-  //   if (selectedOrg && year) {
-  //     loadFormData();
-  //     toastShown.current = false;
-  //   } else {
-  //     if (!toastShown.current) {
-  //       toastShown.current = true;
-  //     }
-  //   }
-  // }, [selectedOrg, year, selectedCorp]);
+
+  useEffect(() => {
+    if (selectedOrg && year) {
+      loadFormData();
+      facthloctiondata();
+      toastShown.current = false;
+    } else if (!toastShown.current) {
+      toastShown.current = true;
+    }
+  }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     updateFormData();
-    console.log("test form data", formData);
+    console.log("Form data:", formData);
   };
-
+  console.log("Location data: locationdata", locationdata);
   return (
     <>
       <div
-        className="mx-2  p-3 mb-6 pb-6 rounded-md"
+        className="mx-2 p-3 mb-6 pb-6 rounded-md"
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
@@ -305,7 +319,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
         <div className="mb-2 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
-            Does your organisation subject to minimum wage rules?
+              Does your organisation subject to minimum wage rules?
               <MdInfoOutline
                 data-tooltip-id={`es26`}
                 data-tooltip-html="Indicate whether your organisation is subject to minimum wage rules."
@@ -324,7 +338,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
                   borderRadius: "8px",
                   textAlign: "left",
                 }}
-              ></ReactTooltip>
+              />
             </h2>
           </div>
           <div className="w-[20%]">
@@ -337,16 +351,30 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
             </div>
           </div>
         </div>
-        <div className="mx-2">
-          <Form
-            schema={schema}
-            uiSchema={uiSchema}
-            formData={formData}
-            onChange={handleChange}
-            validator={validator}
-            widgets={widgets}
-          />
-        </div>
+
+        {Array.isArray(locationdata) && locationdata.length > 0 ? (
+          <div className="mx-2">
+            <Form
+              schema={r_schema}
+              uiSchema={r_ui_schema}
+              formData={formData}
+              onChange={handleChange}
+              validator={validator}
+              widgets={{
+                ...widgets,
+                LoctiondropdwonTable: (props) => (
+                  <LoctiondropdwonTable
+                    {...props}
+                    locationdata={locationdata}
+                  />
+                ),
+              }}
+            />
+          </div>
+        ) : (
+          <div className="mx-2"></div>
+        )}
+
         <div className="mb-6">
           <button
             type="button"

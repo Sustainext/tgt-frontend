@@ -2,21 +2,21 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
+import CommoninputWidget from "../../../../../shared/widgets/Input/commoninputWidget";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
+import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import Economictable from "../../../../../shared/widgets/Economic/economictable";
-// Simple Custom Table Widget
+
 const widgets = {
-  TableWidget: Economictable,
+  inputWidget: CommoninputWidget,
 };
 
-const view_path = "gri-general-workforce_other_workers-workers-2-8-a";
+const view_path = "gri-economic-financial_implications-201-2-no_system";
 const client_id = 1;
 const user_id = 1;
 
@@ -25,207 +25,57 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      TypeofRisk: {
+
+ 
+      Q1: {
         type: "string",
-        title: "Type of Risk",
-        enum: [
-          "Regulatory changes",
-          "Market shifts",
-          "Technology changes",
-          "Reputational risks",
-          "Legal risks",
-          "Energy transition",
-          "Investor Pressure",
-          "Consumer Preference Changes",
-          "Supply chain disruptions",
-          "Corporate governance changes",
-        ],
-      },
-      PotentialImpact: {
-        type: "string",
-        title: "Potential Impact",
-        enum: [
-          "Increased or decreased capital costs",
-          "Increased or decreased operational costs",
-          "Increased or decreased demand for products and services",
-          "Increased or decreased capital availability and investment opportunities",
-          "Increased or decreased investment opportunities",
-          "Others (please specify)",
-        ],
-      },
-      Likelihoodofimpact: {
-        type: "string",
-        title: "Likelihood of impact",
-        enum: ["Low", "Moderate", "High", "Not Sure"],
-      },
-      MagnitudeofImpact: {
-        type: "string",
-        title: "Magnitude of Impact",
-        enum: ["Low", "Moderate", "High", "Not Sure"],
-      },
-      FinancialEffect: {
-        type: "string",
-        title: "Financial Effect",
-        enum: ["Very High", "High", "Moderate", "Low", "Very Low"],
-      },
-      FinancialImplications: {
-        type: "string",
-        title: "Financial Implications",
-        enum: [
-          "Increased maintenance costs",
-          "Potential fines and revenue loss",
-          "Higher premiums",
-          "Reduced energy costs",
-          "Decreased sales revenue",
-          "Others (please specify)",
-        ],
-      },
-      ManagementMethods: {
-        type: "string",
-        title: "Management Methods",
-        enum: [
-          "Business continuity planning",
-          "Diversification of supply chain",
-          "Infrastructure improvements",
-          "Insurance coverage",
-          "Emergency response planning",
-          "Others (please specify)",
-        ],
-      },
-      TimeFrame: {
-        type: "string",
-        title: "Time Frame",
-        enum: [
-          "Immediate-term (0-1 year)",
-          "Short-term (1-3 years)",
-          "Medium-term (3-5 years)",
-          "Long-term (5+ years)",
-        ],
-      },
-      DirectImpacts: {
-        type: "string",
-        title: "Direct or Indirect Impacts",
-        enum: ["Indirect", "Direct", "Not Sure"],
-      },
-      ImplementedMitigationStrategies: {
-        type: "string",
-        title: "Implemented Mitigation Strategies",
-        enum: ["Yes", "No"],
-      },
-      MitigationStrategies: {
-        type: "string",
-        title: "Mitigation Strategies",
-        enum: [
-          "Installation of early warning systems",
-          "Community engagement and education",
-          "Investment in resilient infrastructure",
-          "Enhanced weather monitoring",
-          "Improved drainage systems",
-          "Structural reinforcements",
-          "Emergency preparedness programs",
-          "Backup power systems",
-          "Others (please specify)",
-        ],
+        title:
+          "The definition used for significant locations of operation",
       },
     },
   },
 };
 
 const uiSchema = {
-    "ui:widget": "TableWidget",
-    "ui:options": {
-      titles: [
-        {
-          key: "TypeofRisk",
-          title: "Type of Risk",
-          tooltip:
-            "Please choose the specific type of risk within the selected category",
-          tooltipdisplay: "block",
-        },
-        {
-          key: "PotentialImpact",
-          title: "Potential Impact",
-          tooltip:
-            "Please identify all potential impacts associated with the selected risk.",
-          tooltipdisplay: "block",
-        },
-        {
-          key: "Likelihoodofimpact",
-          title: "Likelihood of impact",
-          tooltip:
-            "Please specify the probability of the impact of the risk on the organization.",
-          tooltipdisplay: "block",
-        },
-        {
-          key: "MagnitudeofImpact",
-          title: "Magnitude of Impact",
-          tooltip:
-            "Indicate the estimated magnitude of the impact of the chosen risk.",
-          tooltipdisplay: "block",
-        },
-        {
-          key: "FinancialEffect",
-          title: "Financial Effect",
-          tooltip:
-            "Indicate the estimated magnitude of the financial impact of the chosen risk",
-          tooltipdisplay: "block",
-        },
-        {
-          key: "FinancialImplications ",
-          title: "Financial Implications",
-          tooltip:
-            "Please describe the specific financial consequences that may result from the chosen risk.",
-          tooltipdisplay: "block",
-        },
-        {
-          key: "ManagementMethods ",
-          title: "Management Methods",
-          tooltip:
-            "Select the strategies and actions the organization will implement to manage and mitigate the chosen risk.",
-          tooltipdisplay: "block",
-        },
-        {
-          key: "TimeFrame",
-          title: "Time Frame",
-          tooltip:
-            "Please indicate the expected period for the selected risk to materialize.",
-          tooltipdisplay: "block",
-        },
-        {
-          key: "DirectImpacts",
-          title: "Direct or Indirect Impacts",
-          tooltip:
-            "Please specify whether the impacts of the selected risk on the organization are direct,indirect, or uncertain.",
-          tooltipdisplay: "block",
-        },
-        {
-          key: "ImplementedMitigationStrategies",
-          title: "Implemented Mitigation Strategies",
-          textdriction: "start",
-          tooltip:
-            "Indicate whether any mitigation strategies have already been implemented for the chosen risk (Yes/No).",
-          tooltipdisplay: "block",
-        },
-        {
-          key: "MitigationStrategies",
-          title: "Mitigation Strategies",
-          tooltip:
-            "If yes, Please select the actions taken by the organization to mitigate or reduce the selected risk.",
-          tooltipdisplay: "block",
-        },
-      ],
+  items: {
+    "ui:order": ["Q1"],
+   
+    Q1: {
+      "ui:title":
+        "The definition used for significant locations of operation.",
+      "ui:tooltip":
+        "Explain the definition used for ‘significant locations of operation’. Significant locations of operation refer to the geographical areas where the organization has a substantial impact through its operations.",
+      "ui:tooltipdisplay": "none",
+      "ui:titledisplay": "none",
+      "ui:widgetType": "textarea",
+      "ui:inputfildtype": "text",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
     },
-  };
-const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
+    "ui:options": {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: "horizontal",
+    },
+  },
+};
+
+const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
+  const { open } = GlobalState();
 
   const LoaderOpen = () => {
     setLoOpen(true);
   };
+
   const LoaderClose = () => {
     setLoOpen(false);
   };
@@ -286,70 +136,61 @@ const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       });
       LoaderClose();
     }
-    // console.log('Response:', response.data);
-    // } catch (error) {
-    // console.error('Error:', error);
-    // }
   };
 
-  const loadFormData = async () => {
-    console.log("loadFormData screen 2");
-    LoaderOpen();
-    setFormData(initialFormData);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
-    try {
-      const response = await axiosInstance.get(url);
-      console.log("API called successfully:", response.data);
-      setRemoteSchema(response.data.form[0].schema);
-      setRemoteUiSchema(response.data.form[0].ui_schema);
-      setFormData(response.data.form_data[0].data);
-    } catch (error) {
-      setFormData(initialFormData);
-    } finally {
-      LoaderClose();
-    }
-  };
-
-  useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      toastShown.current = false;
-    } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
-      }
-    }
-  }, [selectedOrg, year, selectedCorp]);
+  // const loadFormData = async () => {
+  //   LoaderOpen();
+  //   setFormData([{}]);
+  //   const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
+  //   try {
+  //     const response = await axiosInstance.get(url);
+  //     console.log("API called successfully:", response.data);
+  //     setRemoteSchema(response.data.form[0].schema);
+  //     setRemoteUiSchema(response.data.form[0].ui_schema);
+  //     setFormData(response.data.form_data[0].data);
+  //   } catch (error) {
+  //     setFormData([{}]);
+  //   } finally {
+  //     LoaderClose();
+  //   }
+  // };
+  // useEffect(() => {
+  //   if (selectedOrg && year) {
+  //     loadFormData();
+  //     toastShown.current = false;
+  //   } else {
+  //     if (!toastShown.current) {
+  //       toastShown.current = true;
+  //     }
+  //   }
+  // }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission
-    console.log("Form data:", formData);
-    // updateFormData();
+    e.preventDefault();
+    updateFormData();
+    console.log("test form data", formData);
   };
 
   return (
     <>
       <div
-        className="mx-2 p-3 mb-6 pb-6 rounded-md "
+        className="mx-2  p-3 mb-6 pb-6 rounded-md"
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
         }}
       >
-        <div className="mb-4 flex">
+        <div className="flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold mb-2">
-            Transition Risk:
-              {/* <MdInfoOutline
-                data-tooltip-id={`tooltip-$e87`}
-                data-tooltip-content="This section documents data corresponding to the number of
-workers who are not employees but whose work is controlled by your organization.
-It also describes the most common types of these workers,
-their contractual relationships with your organization, and the types of work they perform."
+            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            The definition used for significant locations of operation.		
+              <MdInfoOutline
+                data-tooltip-id={`es67`}
+                data-tooltip-html="Explain the definition used for ‘significant locations of operation’. Significant locations of operation refer to the geographical areas where the organization has a substantial impact through its operations."
                 className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip
-                id={`tooltip-$e87`}
+                id={`es67`}
                 place="top"
                 effect="solid"
                 style={{
@@ -361,21 +202,20 @@ their contractual relationships with your organization, and the types of work th
                   borderRadius: "8px",
                   textAlign: "left",
                 }}
-              ></ReactTooltip> */}
+              ></ReactTooltip>
             </h2>
           </div>
-
           <div className="w-[20%]">
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 201-2a
+                  GRI 202-1d
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="mx-2 ">
+        <div className="mx-2">
           <Form
             schema={schema}
             uiSchema={uiSchema}
@@ -383,14 +223,8 @@ their contractual relationships with your organization, and the types of work th
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
-            formContext={{
-              colhadding: "Risk Category",
-              colname: "Transition Risk",
-              view: 1,
-            }}
           />
         </div>
-
         <div className="mb-6">
           <button
             type="button"
