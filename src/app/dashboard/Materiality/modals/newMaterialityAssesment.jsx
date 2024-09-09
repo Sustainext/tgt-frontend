@@ -23,6 +23,7 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
   const [overlapError, setOverlapError] = useState("");
   const [dateExist,setDateexist]=useState(false)
   const [organizationName,setOrganizationName]=useState("")
+  const [corporateName,setCorporateName]=useState("")
 
   const [errors, setErrors] = useState({
     organization: "",
@@ -116,11 +117,17 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
        
         const isSameTypeAndOrganization = 
         assessment.type === newAssessment.type &&
-        assessment.organization === newAssessment.organization;
+        assessment.organization === newAssessment.organization
 
-        if(isOverlapping && isSameTypeAndOrganization){
-            return true
-        }
+        // if(isOverlapping && isSameTypeAndOrganization){
+        //     return true
+        // }
+        const isSameCorporate = assessment.corporate === newAssessment.corporate;
+        
+
+        if(isOverlapping && isSameTypeAndOrganization && isSameCorporate){
+          return true
+      }
   };
   return false
 }
@@ -158,6 +165,20 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
     setErrors((prevErrors) => ({
       ...prevErrors,
       organization: newOrgId ? "" : "Please select an organization",
+    }));
+  };
+
+  const handleCorpChange = (e) => {
+    const newCorp = e.target.value;
+    const selectedCorporate = corporates.find(corp => corp.id === parseInt(newCorp));
+  
+    // If the organization is found, set the organization name
+    const newCorpName = selectedCorporate ? selectedCorporate.name : "";
+    setSelectedCorp(newCorp);
+    setCorporateName(newCorpName)
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      corporate: newCorp ? "" : "Please select a corporate",
     }));
   };
   
@@ -239,6 +260,7 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
 //     }));
 // };
 
+
 const handleDateChange = (newRange) => {
   const currentDate = new Date();
   
@@ -268,7 +290,8 @@ const handleDateChange = (newRange) => {
     type: assessmentApproach === "accordance" ? "GRI: In accordance with" : "GRI: With reference to", // Type chosen by the user
     startDate: startDate,
     endDate: endDate,
-    organization: organizationName
+    organization: organizationName,
+    corporate:corporateName
   };
   
   const overlap = checkAssessment(existingData, newAssessment);
@@ -301,14 +324,7 @@ const handleDateChange = (newRange) => {
     setSelectedCorp("");
   };
 
-  const handleCorpChange = (e) => {
-    const newCorp = e.target.value;
-    setSelectedCorp(newCorp);
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      corporate: newCorp ? "" : "Please select a corporate",
-    }));
-  };
+  
 
   const handleChangeRadio = (event) => {
     let approach = "";
@@ -731,7 +747,7 @@ const handleDateChange = (newRange) => {
                             </option>
                             {corporates &&
                               corporates.map((corp) => (
-                                <option key={corp.id} value={corp.id}>
+                                <option key={corp.id} value={corp.id} name={corp.name}>
                                   {corp.name}
                                 </option>
                               ))}

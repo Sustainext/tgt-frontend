@@ -34,7 +34,7 @@ const Materiality = ({ open }) => {
         const convertedData = response.data.map((item) => ({
           id: item.id,
           organization: item.organization_name,
-          corporate: item.corporate_name,
+          corporate: item.corporate_name?item.corporate_name:'',
           type: item.framework_name,
           timePeriod: `${new Date(item.start_date).toLocaleString("default", {
             month: "short",
@@ -85,6 +85,8 @@ const Materiality = ({ open }) => {
   useEffect(() => {
     fetchDetails();
   }, [refresh]);
+
+
 
   return (
     <>
