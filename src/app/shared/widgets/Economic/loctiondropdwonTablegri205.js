@@ -10,7 +10,7 @@ const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove }) =
       {Object.keys(item).map((key, cellIndex) => (
         <td key={cellIndex} className="border border-gray-300 px-2">
           {/* Handle Location dropdown */}
-          {options.titles[cellIndex].widgettype === "select"  ? (
+          {options.titles[cellIndex].widgettype === "select" && key === "Location" ? (
             <select
               value={item[key]}
               onChange={(e) => updateField(rowIndex, key, e.target.value)}
@@ -26,10 +26,10 @@ const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove }) =
             </select>
           ) : (
             <input
-              type={options.titles[cellIndex].type || "number"} // Default to text input if no type is defined
+              type={options.titles[cellIndex].type || "text"} // Default to text input if no type is defined
               value={item[key] || ""} // Ensure the value is either the item value or an empty string
               onChange={(e) => {
-               
+                console.log("Updating row:", rowIndex, "Cell:", key, "New Value:", e.target.value);
                 updateField(rowIndex, key, e.target.value);
               }}
               style={{ width: "100%" }} // Set full width for the input
@@ -48,7 +48,7 @@ const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove }) =
   );
 };
 
-const LoctiondropdwonTable = ({
+const LoctiondropdwonTablegri205 = ({
   id,
   options,
   value = [],
@@ -153,13 +153,13 @@ const LoctiondropdwonTable = ({
         <button
           type="button"
           onClick={addRow}
-          className="text-blue-500 flex items-center text-[15px]"
+          className="text-blue-500 flex items-center"
         >
-      Add Location <div className="ml-2 mt-1"><MdAdd /></div>
+          Add Row <MdAdd />
         </button>
       </div>
     </div>
   );
 };
 
-export default LoctiondropdwonTable;
+export default LoctiondropdwonTablegri205;

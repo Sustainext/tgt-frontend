@@ -18,7 +18,8 @@ import Stakeholderengagement from "./tax/stakeholder-engagement/page";
 import Countrybycountryreporting from "./tax/country-by-country-reporting/page";
 import Operationsassessed from "./anti-corruption/operations-assessed/page";
 import Confirmedincidents from "./anti-corruption/confirmed-incidents/page";
-// import Ratiosstandard from "./market-presence/ratios-standard/page"
+import Ratiosstandard from "./market-presence/ratios-standard/page";
+import Communicationtraining from "./anti-corruption/communication-training/page"
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -333,7 +334,7 @@ const Economic = () => {
                     </li>
                   </AccordionItem>
                   <AccordionItem title="Market Presence">
-                    {/* <li
+                    <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(5)}
                     >
@@ -397,7 +398,7 @@ const Economic = () => {
                           </p>
                         )}
                       </div>
-                    </li> */}
+                    </li>
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(6)}
@@ -1236,13 +1237,13 @@ const Economic = () => {
                   </div>
                 </>
               )}
-              {/* {activeStep === 5 && (
+              {activeStep === 5 && (
                 <>
                   <div>
                     <Ratiosstandard />
                   </div>
                 </>
-              )} */}
+              )}
               {activeStep === 6 && (
                 <>
                   <div>
@@ -1278,13 +1279,13 @@ const Economic = () => {
                   </div>
                 </>
               )}
-              {/* {activeStep === 11 && (
+              {activeStep === 11 && (
                 <>
                   <div>
-                    <StakeholderEngagement />
+                    <Communicationtraining />
                   </div>
                 </>
-              )} */}
+              )}
                  {activeStep === 12 && (
                 <>
                   <div>
