@@ -2,8 +2,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import CommoninputWidget from "../../../../shared/widgets/Input/commoninputWidget";
-import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -12,14 +10,16 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import RichtextWidget from "../../../../shared/widgets/Economic/RichtextWidget";
+
+import LoctiondropdwonTable from "../../../../shared/widgets/Economic/loctiondropdwonTable";
+
 const widgets = {
-  inputWidget: CommoninputWidget,
-  inputWidget2:inputWidget2,
-  RichtextWidget:RichtextWidget,
+
+  LoctiondropdwonTable: LoctiondropdwonTable,
 };
 
-const view_path = "gri-economic-tax_governance_control_and_risk_management-207-2a-provide";
+const view_path =
+  "gri-economic-anti_corruption-comm_and_training-205-2d-training";
 const client_id = 1;
 const user_id = 1;
 
@@ -29,104 +29,73 @@ const schema = {
     type: "object",
     properties: {
       Q1: {
-        type: "string",
-        title: "Mention the governance body or executive-level position within the organization accountable for compliance with the tax strategy.",
+        type: "array", // Specify that Q1 is an array
+        items: {
+          type: "object", // Each item in Q1 is an object
+          properties: {
+            RegionName: { type: "string" },
+            Totalnumberanticorruption: { type: "string" },
+            Totalnumberbodymembers: { type: "string" },
+          },
+        },
       },
-      Q2: {
-        type: "string",
-        title: "Please provide an explaination of how the approach to tax is embedded within the organization.",
-
-      },
-      Q3: {
-        type: "string",
-        title: "Describe the approach to tax risks, including how risks are identified, managed, and monitored.",
-
-      },
-      Q4: {
-        type: "string",
-        title: "Please explain how the framework for compliance with the tax governance and control is evaluated.",
-
-      },
-
-
     },
-
   },
 };
+
+
 
 const uiSchema = {
+  "ui:order": ["Q1"],
   items: {
-    "ui:order": ["Q1","Q2","Q3","Q4"],
     Q1: {
-      "ui:title":
-        "Mention the governance body or executive-level position within the organization accountable for compliance with the tax strategy.",
-      "ui:tooltip":
-        "When describing the tax governance and control framework, the reporting organization can provide examples of effective implementation of its tax governance, control, and risk management systems.",
-      "ui:tooltipdisplay": "block",
-      "ui:titledisplay": "block",
-      "ui:widgetType": "textarea",
-      "ui:inputfildtype": "text",
-      "ui:widget": "inputWidget",
-      "ui:horizontal": true,
+      "ui:widget": "LoctiondropdwonTable",
       "ui:options": {
-        label: false,
+        titles: [
+          {
+            title: "Region Name",
+            tooltip: "Specify name of the region from which governance body members have received training on anti-corruption,",
+            widgettype: "select",
+            tooltipdisplay: "block",
+          },
+          {
+            title: "Total number of governance body members that the organization's anti-corruption policies and procedures have been communicated to",
+            tooltip: "Mention the total number of governance body members that have received training on anti-corruption.",
+            widgettype: "input",
+            tooltipdisplay: "block",
+          },
+          {
+            title: "Total number of governance body members in that region.",
+            tooltip: "Mention the total number of governance body members.",
+            widgettype: "input",
+            tooltipdisplay: "block",
+          },
+        ],
       },
     },
-    Q2: {
-      "ui:title":
-      "Please provide an explaination of how the approach to tax is embedded within the organization.",
-    "ui:tooltip":
-      "The organization can describe processes, projects, programs, and initiatives that support adherence to the approach to tax and tax strategy. For examples, please refer to the guidance by clicking the GRI 207-2 tag on the top right of the screen.",
-    "ui:tooltipdisplay": "block",
-    "ui:titledisplay": "block",
-    "ui:widgetType": "textarea",
-    "ui:inputfildtype": "text",
-    "ui:widget": "inputWidget",
-    "ui:horizontal": true,
-    "ui:options": {
-      label: false,
-    },
-    },
-    Q3: {
-      "ui:title":
-      "Describe the approach to tax risks, including how risks are identified, managed, and monitored.",
-    "ui:tooltip":
-      "Tax risks are risks associated with the organization’s tax practices that might lead to a negative effect on the goals of the organization, or to financial or reputational damage. These include compliance risks or risks such as those related to uncertain tax positions, changes in legislation, or a perception of aggressive tax practices.",
-    "ui:tooltipdisplay": "block",
-    "ui:titledisplay": "block",
-    "ui:widget": "RichtextWidget",
-    "ui:horizontal": true,
-    "ui:options": {
-      label: false,
-    },
-    },
-    Q4: {
-      "ui:title":
-      "Please explain how the framework for compliance with the tax governance and control is evaluated.",
-    "ui:tooltip":
-      "The organization can describe the process through which the tax governance and control framework is monitored, tested, and maintained. An example of this is giving an internal auditor accountability for undertaking annual reviews of the tax department’s compliance with the tax governance and control framework.",
-    "ui:tooltipdisplay": "block",
-    "ui:titledisplay": "block",
-    "ui:widgetType": "textarea",
-    "ui:inputfildtype": "text",
-    "ui:widget": "inputWidget",
-    "ui:horizontal": true,
-    "ui:options": {
-      label: false,
-    },
-    },
-
     "ui:options": {
       orderable: false,
-      addable: false,
-      removable: false,
-      layout: "horizontal",
+      addable: true,
+      removable: true,
     },
   },
 };
 
-const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
-  const [formData, setFormData] = useState([{}]);
+
+const Screen4 = ({ selectedOrg, year, selectedCorp,setDatarefreshtwo }) => {
+  const [formData, setFormData] = useState([
+    {
+ 
+      Q1: [
+        {
+          RegionName: "",
+          Totalnumberanticorruption: "",
+          Totalnumberbodymembers: "",
+        },
+      ],
+    },
+  ]);
+  const [locationdata, setLocationdata] = useState(); // Initialize as empty array
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
@@ -147,8 +116,8 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
   const updateFormData = async () => {
     const data = {
-      client_id: client_id,
-      user_id: user_id,
+      client_id,
+      user_id,
       path: view_path,
       form_data: formData,
       corporate: selectedCorp,
@@ -171,6 +140,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
         });
         LoaderClose();
         loadFormData();
+        setDatarefreshtwo(1);
       } else {
         toast.error("Oops, something went wrong", {
           position: "top-right",
@@ -198,14 +168,27 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       LoaderClose();
     }
   };
-
+  const facthloctiondata = async () => {
+    const url = `${process.env.BACKEND_API_URL}/sustainapp/get_location_as_per_org_or_corp/?corporate=${selectedCorp}&organization=${selectedOrg}`;
+    try {
+      const response = await axiosInstance.get(url);
+      console.log("Location data:", response.data);
+      setLocationdata(response.data);
+    } catch (error) {
+      setLocationdata();
+    } finally {
+      LoaderClose();
+    }
+  };
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([{}]);
+    setFormData([]);
+
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
+
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
@@ -215,47 +198,47 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       LoaderClose();
     }
   };
+
   useEffect(() => {
     if (selectedOrg && year) {
       loadFormData();
+      facthloctiondata();
       toastShown.current = false;
-    } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
-      }
+    } else if (!toastShown.current) {
+      toastShown.current = true;
     }
   }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     updateFormData();
-    console.log("test form data", formData);
+    console.log("Form data:", formData);
   };
-
+  console.log("Location data: locationdata", locationdata);
   return (
     <>
       <div
-        className="mx-2  p-3 mb-6 pb-6 rounded-md"
+        className="mx-2 p-3 mb-6 pb-6 rounded-md"
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
         }}
       >
-        <div className="mb-4 flex">
+        <div className="mb-2 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
-            Provide a description of the tax governance and control framework:
-              {/* <MdInfoOutline
-                data-tooltip-id={`es30`}
-                data-tooltip-html="Indicate whether your organisation has a tax strategy. "
+            Total number of governance body members that have received training on anti-corruption, broken down by region.
+              <MdInfoOutline
+                data-tooltip-id={`es26`}
+                data-tooltip-html="Specify the total number of governance body members that have received training on anti-corruption, broken down by region."
                 className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip
-                id={`es30`}
+                id={`es26`}
                 place="top"
                 effect="solid"
                 style={{
-                  width: "390px",
+                  width: "290px",
                   backgroundColor: "#000",
                   color: "white",
                   fontSize: "12px",
@@ -263,29 +246,43 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
                   borderRadius: "8px",
                   textAlign: "left",
                 }}
-              ></ReactTooltip> */}
+              />
             </h2>
           </div>
           <div className="w-[20%]">
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 207-2a
+                  GRI 205-2d
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="mx-2">
-          <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
-            formData={formData}
-            onChange={handleChange}
-            validator={validator}
-            widgets={widgets}
-          />
-        </div>
+
+        {Array.isArray(locationdata) && locationdata.length > 0 ? (
+          <div className="mx-2">
+            <Form
+              schema={r_schema}
+              uiSchema={r_ui_schema}
+              formData={formData}
+              onChange={handleChange}
+              validator={validator}
+              widgets={{
+                ...widgets,
+                LoctiondropdwonTable: (props) => (
+                  <LoctiondropdwonTable
+                    {...props}
+                    locationdata={locationdata}
+                  />
+                ),
+              }}
+            />
+          </div>
+        ) : (
+          <div className="mx-2"></div>
+        )}
+
         <div className="mb-6">
           <button
             type="button"
@@ -315,4 +312,4 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   );
 };
 
-export default Screen1;
+export default Screen4;

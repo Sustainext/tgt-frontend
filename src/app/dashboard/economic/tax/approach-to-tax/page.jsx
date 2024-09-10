@@ -91,7 +91,7 @@ const Approachtotax = () => {
           Approach to tax
             <MdInfoOutline
               data-tooltip-id={`tooltip-$es25`}
-              data-tooltip-content="This section documents the data corresponding to the public legal cases  regarding corruption and actions taken."
+              data-tooltip-content="This section documents the data corresponding to the approach to tax."
               className="mt-1.5 ml-2 text-[14px]"
             />
             <ReactTooltip

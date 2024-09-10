@@ -3,7 +3,7 @@ import { debounce } from "lodash";
 import { MdInfoOutline, MdAdd, MdOutlineDeleteOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-
+import Select from "react-select";
 const Economictablemultipal = ({ id, value, onChange }) => {
   const titles = [
     {
@@ -141,8 +141,10 @@ const Economictablemultipal = ({ id, value, onChange }) => {
       const newOthersInputs = value.map((row) => {
         let rowOthers = {};
         Object.keys(row).forEach((key) => {
-          if (row[key] === "Others (please specify)" || row[key + "_others"]) {
-            rowOthers[key] = true;
+          if (Array.isArray(row[key])) {
+            rowOthers[key] = row[key].includes("Others (please specify)");
+          } else {
+            rowOthers[key] = row[key] === "Others (please specify)";
           }
         });
         return rowOthers;
@@ -158,26 +160,29 @@ const Economictablemultipal = ({ id, value, onChange }) => {
     if (!updatedValues[index]) {
       updatedValues[index] = {};
     }
+    if (key === "TypeofRisk") {
+      updatedValues[index]["FinancialImplications"] = [];
+      updatedValues[index]["ManagementMethods"] = [];
+      updatedValues[index]["MitigationStrategies"] = [];  // Clear selected ManagementMethods
+    }
     updatedValues[index][key] = newValue;
 
-    if (newValue === "Others (please specify)") {
-      const updatedOthersInputs = [...othersInputs];
-      if (!updatedOthersInputs[index]) {
-        updatedOthersInputs[index] = {};
-      }
-      updatedOthersInputs[index][key] = true;
-      setOthersInputs(updatedOthersInputs);
-    } else {
-      const updatedOthersInputs = [...othersInputs];
-      if (updatedOthersInputs[index]) {
-        updatedOthersInputs[index][key] = false;
-      }
-      setOthersInputs(updatedOthersInputs);
+    const updatedOthersInputs = [...othersInputs];
+    if (!updatedOthersInputs[index]) {
+      updatedOthersInputs[index] = {};
     }
 
+    if (Array.isArray(newValue)) {
+      updatedOthersInputs[index][key] = newValue.includes("Others (please specify)");
+    } else {
+      updatedOthersInputs[index][key] = newValue === "Others (please specify)";
+    }
+
+    setOthersInputs(updatedOthersInputs);
     setLocalValue(updatedValues);
   };
 
+ 
   const debouncedUpdate = useCallback(debounce(onChange, 200), [onChange]);
 
   useEffect(() => {
@@ -527,7 +532,63 @@ const Economictablemultipal = ({ id, value, onChange }) => {
     }
   };
 
-
+  const isMultiSelect = (key) => {
+    return ["ManagementMethods", "FinancialImplications", "PotentialImpact"].includes(key);
+  };
+  const CustomOption = ({ children, ...props }) => {
+    const { isSelected, isFocused, innerProps } = props;
+    return (
+      <div
+        {...innerProps}
+        style={{
+          backgroundColor: isSelected ? "#e0e0e0" : isFocused ? "#f0f0f0" : "white",
+          padding: "8px",
+          display: "flex",
+          alignItems: "center",
+          textAlign:"left"
+        }}
+      >
+        <input type="checkbox" checked={isSelected} readOnly style={{ marginRight: "8px" }} />
+        {children}
+      </div>
+    );
+  };
+  const customStyles = {
+    control: (provided) => ({
+      ...provided,
+      border: 'none',
+      boxShadow: 'none',
+      padding: 0, // Ensure no padding that might cause a gap
+      margin: 0, // Remove any margin
+      minHeight: 'auto',
+    }),
+    placeholder: (provided) => ({
+      ...provided,
+     textAlign:"left"
+    }),
+    input: (provided) => ({
+      ...provided,
+      margin: 0, // Ensure no margin for the input
+      padding: 0, // Ensure no padding for the input
+    }),
+    menu: (provided) => ({
+      ...provided,
+      position: 'relative',
+      bottom: '100%',
+      top:0,
+      zIndex: 1000,
+    }),
+    menuList: (provided) => ({
+      ...provided,
+      maxHeight: '200px', // Adjust this value as needed
+    }),
+  };
+  const getColumnWidth = (key) => {
+    if (["ManagementMethods", "FinancialImplications", "PotentialImpact"].includes(key)) {
+      return "25vw";
+    }
+    return "17vw";
+  };
   return (
     <>
       <div
@@ -547,7 +608,7 @@ const Economictablemultipal = ({ id, value, onChange }) => {
               {titles.map((item, idx) => (
                 <th
                   key={idx}
-                  style={{ width: "17vw", textAlign: "left" }}
+                  style={{ width: getColumnWidth(item.key), textAlign: "left" }}
                   className="text-[13px] border border-gray-300 px-2 py-3 relative"
                 >
                   <div
@@ -588,10 +649,11 @@ const Economictablemultipal = ({ id, value, onChange }) => {
             </tr>
           </thead>
           <tbody>
-            {localValue.map((row, rowIndex) => (
+          {localValue.map((row, rowIndex) => (
               <tr key={rowIndex} className="border border-gray-300">
                 {titles.map((item, cellIndex) => {
                   const isEnum = Array.isArray(item.options);
+                  const isMulti = isMultiSelect(item.key);
 
                   return (
                     <td
@@ -599,29 +661,68 @@ const Economictablemultipal = ({ id, value, onChange }) => {
                       className="border border-gray-300 text-center"
                     >
                       {isEnum ? (
-                        <select
-                          value={localValue[rowIndex][item.key] || ""}
-                          onChange={(e) =>
-                            handleFieldChange(
-                              rowIndex,
-                              item.key,
-                              e.target.value
-                            )
-                          }
-                          className="text-sm pl-2 py-2 w-full border-b"
-                        >
-                          <option value="">Select</option>
-                          {(item.key === "FinancialImplications" ||
-                          item.key === "ManagementMethods" ||
-                          item.key === "MitigationStrategies"
-                            ? getConditionalOptions(rowIndex, item.key)
-                            : item.options
-                          ).map((option) => (
-                            <option key={option} value={option}>
-                              {option}
-                            </option>
-                          ))}
-                        </select>
+                        isMulti ? (
+                          <>
+                            <Select
+                              isMulti
+                              value={
+                                localValue[rowIndex][item.key]
+                                  ? localValue[rowIndex][item.key].map((val) => ({
+                                      value: val,
+                                      label: val,
+                                    }))
+                                  : []
+                              }
+                              onChange={(selectedOptions) =>
+                                handleFieldChange(
+                                  rowIndex,
+                                  item.key,
+                                  selectedOptions.map((option) => option.value)
+                                )
+                              }
+                              options={
+                                (item.key === "FinancialImplications" ||
+                                item.key === "ManagementMethods"
+                                  ? getConditionalOptions(rowIndex, item.key)
+                                  : item.options
+                                ).map((option) => ({
+                                  value: option,
+                                  label: option,
+                                }))
+                              }
+                              className="text-sm w-full"
+                              placeholder="Select options"
+                              components={{ Option: CustomOption }}
+                              closeMenuOnSelect={false}
+                              hideSelectedOptions={false}
+                              styles={customStyles}
+                            />
+                          </>
+                        ) : (
+                          <>
+                            <select
+                              value={localValue[rowIndex][item.key] || ""}
+                              onChange={(e) =>
+                                handleFieldChange(
+                                  rowIndex,
+                                  item.key,
+                                  e.target.value
+                                )
+                              }
+                              className="text-sm pl-2 py-2 w-full border-b"
+                            >
+                              <option value="">Select</option>
+                              {(item.key === "MitigationStrategies"
+                                ? getConditionalOptions(rowIndex, item.key)
+                                : item.options
+                              ).map((option) => (
+                                <option key={option} value={option}>
+                                  {option}
+                                </option>
+                              ))}
+                            </select>
+                          </>
+                        )
                       ) : (
                         <input
                           type="text"

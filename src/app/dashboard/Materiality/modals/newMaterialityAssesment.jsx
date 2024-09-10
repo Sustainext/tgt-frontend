@@ -22,6 +22,8 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
   const [framework, setFramework] = useState("");
   const [overlapError, setOverlapError] = useState("");
   const [dateExist,setDateexist]=useState(false)
+  const [organizationName,setOrganizationName]=useState("")
+  const [corporateName,setCorporateName]=useState("")
 
   const [errors, setErrors] = useState({
     organization: "",
@@ -113,68 +115,207 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
           (newStart.year === end.year && newStart.month > end.month) // Same year, but new start is after existing end
         );
        
-        if(isOverlapping && assessment.type == newAssessment.type){
-            return true
-        }
+        const isSameTypeAndOrganization = 
+        assessment.type === newAssessment.type &&
+        assessment.organization === newAssessment.organization
+
+        // if(isOverlapping && isSameTypeAndOrganization){
+        //     return true
+        // }
+        const isSameCorporate = assessment.corporate === newAssessment.corporate;
+        
+
+        if(isOverlapping && isSameTypeAndOrganization && isSameCorporate){
+          return true
+      }
   };
+  return false
 }
   
   
 
 
+  // const handleOrgChange = (e) => {
+  //   console.log(e.target.value,"see")
+  //   const newOrg = e.target.value;
+  //   setSelectedOrg(newOrg);
+  //   setOrganizationName(e.target.name)
+  //   setSelectedCorp("");
+  //   setErrors((prevErrors) => ({
+  //     ...prevErrors,
+  //     organization: newOrg ? "" : "Please select an organization",
+  //   }));
+  // };
+
   const handleOrgChange = (e) => {
-    const newOrg = e.target.value;
-    setSelectedOrg(newOrg);
+    const newOrgId = e.target.value;
+  
+    // Find the selected organization in the `organisations` array by its ID
+    const selectedOrganization = organisations.find(org => org.id === parseInt(newOrgId));
+  
+    // If the organization is found, set the organization name
+    const newOrgName = selectedOrganization ? selectedOrganization.name : "";
+  
+    // Update the selected organization ID and name in the state
+    setSelectedOrg(newOrgId);
+    setOrganizationName(newOrgName);
+  
+    // Reset selected corporate (if applicable) and manage errors
     setSelectedCorp("");
     setErrors((prevErrors) => ({
       ...prevErrors,
-      organization: newOrg ? "" : "Please select an organization",
+      organization: newOrgId ? "" : "Please select an organization",
     }));
   };
 
-  const handleDateChange = (newRange) => {
-    setDateRange(newRange);
-    setIsDateRangeValid(newRange.start !== null && newRange.end !== null);
-    const newAssessment = {
-      type: assessmentApproach=="accordance"?"GRI: In accordance with":"GRI: With reference to", // Type chosen by the user
-      startDate: new Date(newRange.start), 
-      endDate: new Date(newRange.end)  
-    };
-    const overlap = checkAssessment(existingData, newAssessment);
-    
-    if (overlap) {
-      setDateexist(true)
-            setOverlapError("An assessment already exists for this date range and type.");
-          } else {
-            setDateexist(false)
-            setOverlapError("");
-          }
+  const handleCorpChange = (e) => {
+    const newCorp = e.target.value;
+    const selectedCorporate = corporates.find(corp => corp.id === parseInt(newCorp));
+  
+    // If the organization is found, set the organization name
+    const newCorpName = selectedCorporate ? selectedCorporate.name : "";
+    setSelectedCorp(newCorp);
+    setCorporateName(newCorpName)
     setErrors((prevErrors) => ({
       ...prevErrors,
-      dateRange: newRange.start && newRange.end ? "" : "Please select a valid date range",
+      corporate: newCorp ? "" : "Please select a corporate",
     }));
   };
+  
 
   // const handleDateChange = (newRange) => {
   //   setDateRange(newRange);
   //   setIsDateRangeValid(newRange.start !== null && newRange.end !== null);
+  //   const newAssessment = {
+  //     type: assessmentApproach=="accordance"?"GRI: In accordance with":"GRI: With reference to", // Type chosen by the user
+  //     startDate: new Date(newRange.start), 
+  //     endDate: new Date(newRange.end),
+  //     organization:organizationName
 
-  //   // Check for overlap
-  //   if (assessmentApproach) {
-  //     const overlap = checkForOverlap(newRange, assessmentApproach);
-  //     console.log(overlap,"look")
-  //     if (overlap) {
-  //       setOverlapError("An assessment already exists for this date range and type.");
-  //     } else {
-  //       setOverlapError("");
-  //     }
-  //   }
-
+  //   };
+  //   const overlap = checkAssessment(existingData, newAssessment);
+    
+  //   if (overlap) {
+  //     setDateexist(true)
+  //           setOverlapError("An assessment already exists for this date range and type.");
+  //         } else {
+  //           setDateexist(false)
+  //           setOverlapError("");
+  //         }
   //   setErrors((prevErrors) => ({
   //     ...prevErrors,
   //     dateRange: newRange.start && newRange.end ? "" : "Please select a valid date range",
   //   }));
   // };
+
+  //new one
+//   const handleDateChange = (newRange) => {
+//     const currentDate = new Date();
+    
+//     // Calculate two years forward from today
+//     const twoYearsForward = new Date(currentDate);
+//     twoYearsForward.setFullYear(currentDate.getFullYear() + 2);
+    
+//     // Calculate two years backward from today (if required)
+//     const twoYearsBackward = new Date(currentDate);
+//     twoYearsBackward.setFullYear(currentDate.getFullYear() - 2);
+
+//     const startDate = new Date(newRange.start);
+//     const endDate = new Date(newRange.end);
+    
+//     // Check if the date range is within two years from the current date
+//     const isWithinTwoYears = (startDate >= twoYearsBackward && endDate <= twoYearsForward);
+
+//     // Set date range validity based on start, end, and the two-year restriction
+//     const isDateRangeValid = newRange.start !== null && newRange.end !== null && isWithinTwoYears;
+    
+//     setDateRange(newRange);
+//     setIsDateRangeValid(isDateRangeValid);
+    
+//     const newAssessment = {
+//       type: assessmentApproach === "accordance" ? "GRI: In accordance with" : "GRI: With reference to", // Type chosen by the user
+//       startDate: startDate,
+//       endDate: endDate,
+//       organization: organizationName
+//     };
+    
+//     const overlap = checkAssessment(existingData, newAssessment);
+    
+//     if (overlap) {
+//       setDateexist(true);
+//       setOverlapError("An assessment already exists for this date range and type.");
+//     } else {
+//       setDateexist(false);
+//       setOverlapError("");
+//     }
+    
+//     // Set errors, including date range validity message if outside the allowed two-year window
+//     setErrors((prevErrors) => ({
+//       ...prevErrors,
+//       dateRange: newRange.start && newRange.end
+//         ? isWithinTwoYears
+//           ? ""
+//           : "Please select a date range within two years from today."
+//         : "Please select a valid date range",
+//     }));
+// };
+
+
+const handleDateChange = (newRange) => {
+  const currentDate = new Date();
+  
+  // Calculate two years forward from today
+  const twoYearsForward = new Date(currentDate);
+  twoYearsForward.setFullYear(currentDate.getFullYear() + 2);
+  
+  // Calculate two years backward from today
+  const twoYearsBackward = new Date(currentDate);
+  twoYearsBackward.setFullYear(currentDate.getFullYear() - 2);
+
+  const startDate = new Date(newRange.start);
+  const endDate = new Date(newRange.end);
+  
+  // Check if the date range is within the backward and forward two-year limit
+  const isStartDateValid = startDate >= twoYearsBackward && startDate <= twoYearsForward;
+  const isEndDateValid = endDate >= twoYearsBackward && endDate <= twoYearsForward;
+
+  // Set date range validity based on the validity of start and end date
+  const isDateRangeValid = newRange.start !== null && newRange.end !== null && isStartDateValid && isEndDateValid && startDate<endDate;
+
+  // Update the state
+  setDateRange(newRange);
+  setIsDateRangeValid(isDateRangeValid);
+  
+  const newAssessment = {
+    type: assessmentApproach === "accordance" ? "GRI: In accordance with" : "GRI: With reference to", // Type chosen by the user
+    startDate: startDate,
+    endDate: endDate,
+    organization: organizationName,
+    corporate:corporateName
+  };
+  
+  const overlap = checkAssessment(existingData, newAssessment);
+  
+  if (overlap) {
+    setDateexist(true);
+    setOverlapError("An assessment already exists for this date range and type.");
+  } else {
+    setDateexist(false);
+    setOverlapError("");
+  }
+  
+  // Set errors based on date range validity
+  setErrors((prevErrors) => ({
+    ...prevErrors,
+    dateRange: newRange.start && newRange.end
+      ? isDateRangeValid
+        ? ""
+        : "Please choose a date range within two years from today, ensuring the start date is before the end date"
+      : "Please select a valid date range",
+  }));
+};
+
+
 
 
   const handleTabClick = (tabNumber) => {
@@ -183,14 +324,7 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
     setSelectedCorp("");
   };
 
-  const handleCorpChange = (e) => {
-    const newCorp = e.target.value;
-    setSelectedCorp(newCorp);
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      corporate: newCorp ? "" : "Please select a corporate",
-    }));
-  };
+  
 
   const handleChangeRadio = (event) => {
     let approach = "";
@@ -221,32 +355,70 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
     setLoOpen(false);
   };
 
+  // const validateForm = () => {
+  //   const newErrors = {};
+
+  //   if (!selectedOrg) {
+  //     newErrors.organization = "Please select an organization";
+  //   }
+
+  //   if (activeTab === 2 && !selectedCorp) {
+  //     newErrors.corporate = "Please select a corporate";
+  //   }
+
+  //   if (!dateRange.start || !dateRange.end) {
+  //     newErrors.dateRange = "Please select a valid date range";
+  //   }
+
+  //   if (!assessmentApproach) {
+  //     newErrors.assessmentApproach = "Please select an assessment approach";
+  //   }
+  //   if(dateExist){
+  //     newErrors.dateExist = "An assessment already exists for this date range and type.";
+  //   }
+
+  //   setErrors(newErrors);
+
+  //   return Object.keys(newErrors).length === 0;
+  // };
+
   const validateForm = () => {
     const newErrors = {};
 
+    // Validate organization selection
     if (!selectedOrg) {
       newErrors.organization = "Please select an organization";
     }
 
+    // If active tab requires corporate selection, validate it
     if (activeTab === 2 && !selectedCorp) {
       newErrors.corporate = "Please select a corporate";
     }
 
+    // Validate the date range, including whether a valid date range was chosen
     if (!dateRange.start || !dateRange.end) {
       newErrors.dateRange = "Please select a valid date range";
+    } else if (!isDateRangeValid) {
+      newErrors.dateRange = "Please select a date range within two years before or after today.";
     }
 
+    // Validate assessment approach selection
     if (!assessmentApproach) {
       newErrors.assessmentApproach = "Please select an assessment approach";
     }
-    if(dateExist){
+
+    // Check if there is an overlap in the date range and add the appropriate error message
+    if (dateExist) {
       newErrors.dateExist = "An assessment already exists for this date range and type.";
     }
 
+    // Set errors to state
     setErrors(newErrors);
 
+    // Return whether the form is valid
     return Object.keys(newErrors).length === 0;
-  };
+};
+
 
   const handleSubmit = async () => {
     if (!validateForm()) {  
@@ -270,7 +442,7 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
     try {
       const response = await axiosInstance.post(url, data);
       if (response.status === 201) {
-        toast.success("Data added successfully", {
+        toast.success("Assessment Created successfully", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -332,6 +504,7 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
               <button
                 className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 focus:outline-none"
                 onClick={() => {
+                  setOverlapError("");
                   setErrors(
                     {
                       organization: "",
@@ -380,6 +553,12 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
                   className="flex items-center green-radio"
                   onClick={() => {
                     handleChangeRadio("accordance");
+                    setDateRange(
+                      {
+                        start: null,
+                        end: null
+                      }
+                    )
                   }}
                 >
                   <input
@@ -402,6 +581,12 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
                   className="flex items-center green-radio"
                   onClick={() => {
                     handleChangeRadio("reference");
+                    setDateRange(
+                      {
+                        start: null,
+                        end: null
+                      }
+                    )
                   }}
                 >
                   <input
@@ -439,8 +624,26 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
                     activeTab === 1 ? "bg-sky-100" : "bg-white"
                   }`}
                   onClick={() => {
-                    handleTabClick(1);
+                    setOverlapError("");
+                    setErrors(
+                      {
+                        organization: "",
+                        corporate: "",
+                        dateRange: "",
+                        assessmentApproach: "",
+                        dateExist:""
+                      }
+                    )
+                    setDateRange(
+                      {
+                        start: null,
+                        end: null
+                      }
+                    )
+                    setAssessmentApproach("")
                     setSelectedOrg("");
+                    setSelectedCorp("");
+                    handleTabClick(1);
                   }}
                 >
                   <div className="text-slate-800 text-[13px] font-medium font-['Manrope'] leading-tight">
@@ -452,8 +655,27 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
                     activeTab === 2 ? "bg-sky-100" : "bg-white"
                   }`}
                   onClick={() => {
-                    handleTabClick(2);
+                    setOverlapError("");
+                    setErrors(
+                      {
+                        organization: "",
+                        corporate: "",
+                        dateRange: "",
+                        assessmentApproach: "",
+                        dateExist:""
+                      }
+                    )
+                    setDateRange(
+                      {
+                        start: null,
+                        end: null
+                      }
+                    )
+                    setAssessmentApproach("")
                     setSelectedOrg("");
+                    setSelectedCorp("");
+                    handleTabClick(2);
+
                   }}
                 >
                   <div className="text-slate-800 text-[13px] font-medium font-['Manrope'] leading-tight">
@@ -477,13 +699,14 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
                           className="py-1.5 border border-gray-300 rounded-md w-full text-sm pl-2"
                           value={selectedOrg}
                           onChange={handleOrgChange}
+                          name={organizationName}
                         >
                           <option disabled={true} value="">
                             Select Organization
                           </option>
                           {organisations &&
                             organisations.map((org) => (
-                              <option key={org.id} value={org.id}>
+                              <option key={org.id} value={org.id} name={org.name}>
                                 {org.name}
                               </option>
                             ))}
@@ -536,13 +759,14 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
                             className="py-1.5 border border-gray-300 rounded-md w-full text-sm pl-2"
                             value={selectedOrg}
                             onChange={handleOrgChange}
+                            name={organizationName}
                           >
                             <option disabled={true} value="">
                               Select Organization
                             </option>
                             {organisations &&
                               organisations.map((org) => (
-                                <option key={org.id} value={org.id}>
+                                <option key={org.id} value={org.id} name={org.name}>
                                   {org.name}
                                 </option>
                               ))}
@@ -572,7 +796,7 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
                             </option>
                             {corporates &&
                               corporates.map((corp) => (
-                                <option key={corp.id} value={corp.id}>
+                                <option key={corp.id} value={corp.id} name={corp.name}>
                                   {corp.name}
                                 </option>
                               ))}

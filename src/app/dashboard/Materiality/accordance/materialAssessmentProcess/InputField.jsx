@@ -53,17 +53,20 @@ const InputField = ({ handleTabClick }) => {
         try {
           const response = await axiosInstance.get(url);
           if(response.status==200){
-            setFormData(
-              [
-                {Q1:response.data.process_description,
-                  Q2:response.data.impact_assessment_process,
-                  Q3:response.data.selected_stakeholders.map(String)
-  
-                }
-              ]
-            )
-            setTextboxValue(response.data.stakeholder_others)
-            setDatapresent(true)
+            if(response.data){
+              setFormData(
+                [
+                  {Q1:response.data.process_description,
+                    Q2:response.data.impact_assessment_process,
+                    Q3:response.data.selected_stakeholders.map(String)
+    
+                  }
+                ]
+              )
+              setTextboxValue(response.data.stakeholder_others)
+              setDatapresent(true)
+            }
+           
           }
           
           }
@@ -242,7 +245,7 @@ const InputField = ({ handleTabClick }) => {
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-                theme: "colored",
+                theme: "light",
               });
               setTimeout(()=>{
                 handleTabClick('managementApproach')

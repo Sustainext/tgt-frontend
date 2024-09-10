@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import CommoninputWidget from "../../../../shared/widgets/Input/commoninputWidget";
-import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -12,14 +11,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import RichtextWidget from "../../../../shared/widgets/Economic/RichtextWidget";
+
 const widgets = {
   inputWidget: CommoninputWidget,
-  inputWidget2:inputWidget2,
-  RichtextWidget:RichtextWidget,
 };
 
-const view_path = "gri-economic-tax_governance_control_and_risk_management-207-2a-provide";
+const view_path = "gri-economic-financial_implications-201-2-no_system";
 const client_id = 1;
 const user_id = 1;
 
@@ -30,40 +27,23 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Mention the governance body or executive-level position within the organization accountable for compliance with the tax strategy.",
+        title:
+          " If currently no system is in place to calculate the financial implications or costs, or to make revenue projections, Provide plans and timelines to develop the necessary systems.",
       },
-      Q2: {
-        type: "string",
-        title: "Please provide an explaination of how the approach to tax is embedded within the organization.",
-
-      },
-      Q3: {
-        type: "string",
-        title: "Describe the approach to tax risks, including how risks are identified, managed, and monitored.",
-
-      },
-      Q4: {
-        type: "string",
-        title: "Please explain how the framework for compliance with the tax governance and control is evaluated.",
-
-      },
-
-
     },
-
   },
 };
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1","Q2","Q3","Q4"],
+    "ui:order": ["Q1"],
     Q1: {
       "ui:title":
-        "Mention the governance body or executive-level position within the organization accountable for compliance with the tax strategy.",
+        " If currently no system is in place to calculate the financial implications or costs, or to make revenue projections, Provide plans and timelines to develop the necessary systems.",
       "ui:tooltip":
-        "When describing the tax governance and control framework, the reporting organization can provide examples of effective implementation of its tax governance, control, and risk management systems.",
-      "ui:tooltipdisplay": "block",
-      "ui:titledisplay": "block",
+        " If currently no system is in place to calculate the financial implications or costs, or to make revenue projections, Provide plans and timelines to develop the necessary systems.",
+      "ui:tooltipdisplay": "none",
+      "ui:titledisplay": "none",
       "ui:widgetType": "textarea",
       "ui:inputfildtype": "text",
       "ui:widget": "inputWidget",
@@ -71,49 +51,6 @@ const uiSchema = {
       "ui:options": {
         label: false,
       },
-    },
-    Q2: {
-      "ui:title":
-      "Please provide an explaination of how the approach to tax is embedded within the organization.",
-    "ui:tooltip":
-      "The organization can describe processes, projects, programs, and initiatives that support adherence to the approach to tax and tax strategy. For examples, please refer to the guidance by clicking the GRI 207-2 tag on the top right of the screen.",
-    "ui:tooltipdisplay": "block",
-    "ui:titledisplay": "block",
-    "ui:widgetType": "textarea",
-    "ui:inputfildtype": "text",
-    "ui:widget": "inputWidget",
-    "ui:horizontal": true,
-    "ui:options": {
-      label: false,
-    },
-    },
-    Q3: {
-      "ui:title":
-      "Describe the approach to tax risks, including how risks are identified, managed, and monitored.",
-    "ui:tooltip":
-      "Tax risks are risks associated with the organization’s tax practices that might lead to a negative effect on the goals of the organization, or to financial or reputational damage. These include compliance risks or risks such as those related to uncertain tax positions, changes in legislation, or a perception of aggressive tax practices.",
-    "ui:tooltipdisplay": "block",
-    "ui:titledisplay": "block",
-    "ui:widget": "RichtextWidget",
-    "ui:horizontal": true,
-    "ui:options": {
-      label: false,
-    },
-    },
-    Q4: {
-      "ui:title":
-      "Please explain how the framework for compliance with the tax governance and control is evaluated.",
-    "ui:tooltip":
-      "The organization can describe the process through which the tax governance and control framework is monitored, tested, and maintained. An example of this is giving an internal auditor accountability for undertaking annual reviews of the tax department’s compliance with the tax governance and control framework.",
-    "ui:tooltipdisplay": "block",
-    "ui:titledisplay": "block",
-    "ui:widgetType": "textarea",
-    "ui:inputfildtype": "text",
-    "ui:widget": "inputWidget",
-    "ui:horizontal": true,
-    "ui:options": {
-      label: false,
-    },
     },
 
     "ui:options": {
@@ -125,7 +62,7 @@ const uiSchema = {
   },
 };
 
-const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -244,18 +181,18 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
-            Provide a description of the tax governance and control framework:
+            If currently no system is in place to calculate the financial implications or costs, or to make revenue projections, Provide plans and timelines to develop the necessary systems.
               {/* <MdInfoOutline
-                data-tooltip-id={`es30`}
-                data-tooltip-html="Indicate whether your organisation has a tax strategy. "
-                className="mt-1.5 ml-2 text-[14px]"
+                data-tooltip-id={`es26`}
+                data-tooltip-html="What is the significance of the indirect economic impacts in the context of external benchmarks and stakeholder priorities, such as national and international standards, protocols, and policy agendas?"
+                className="mt-1.5 ml-2 text-[18px]"
               />
               <ReactTooltip
-                id={`es30`}
+                id={`es26`}
                 place="top"
                 effect="solid"
                 style={{
-                  width: "390px",
+                  width: "290px",
                   backgroundColor: "#000",
                   color: "white",
                   fontSize: "12px",
@@ -270,7 +207,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 207-2a
+                  GRI 202-2
                 </div>
               </div>
             </div>
@@ -315,4 +252,4 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   );
 };
 
-export default Screen1;
+export default Screen2;

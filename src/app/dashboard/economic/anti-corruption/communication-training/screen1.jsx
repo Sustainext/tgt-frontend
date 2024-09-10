@@ -5,18 +5,21 @@ import validator from "@rjsf/validator-ajv8";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
+import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import Economictablemultipal from "../../../../../shared/widgets/Economic/economictablemultipal";
-// Simple Custom Table Widget
+
+import LoctiondropdwonTable from "../../../../shared/widgets/Economic/loctiondropdwonTable";
+
 const widgets = {
-  TableWidget: Economictablemultipal,
+
+  LoctiondropdwonTable: LoctiondropdwonTable,
 };
 
-const view_path = "gri-general-workforce_other_workers-workers-2-8-a";
+const view_path =
+  "gri-economic-anti_corruption-comm_and_training-205-2a-governance_body_members";
 const client_id = 1;
 const user_id = 1;
 
@@ -25,29 +28,84 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      expenditure : {
-        type: "string",
-        title: "expenditure",
-
+      Q1: {
+        type: "array", // Specify that Q1 is an array
+        items: {
+          type: "object", // Each item in Q1 is an object
+          properties: {
+            RegionName: { type: "string" },
+            Totalnumberanticorruption: { type: "string" },
+            Totalnumberbodymembers: { type: "string" },
+          },
+        },
       },
-
     },
   },
 };
 
+
+
 const uiSchema = {
-    "ui:widget": "TableWidget",
-  };
-const Screen3 = ({ selectedOrg, selectedCorp, location, year, month }) => {
-  const [formData, setFormData] = useState([{}]);
+  "ui:order": ["Q1"],
+  items: {
+    Q1: {
+      "ui:widget": "LoctiondropdwonTable",
+      "ui:options": {
+        titles: [
+          {
+            title: "Region Name",
+            tooltip: "Enter the region name.",
+            widgettype: "select",
+            tooltipdisplay: "none",
+          },
+          {
+            title: "Total number of governance body members that the organization's anti-corruption policies and procedures have been communicated to",
+            tooltip: "SMention the total number of employees that the organization's anti-corruption policies and procedures have been communicated to.",
+            widgettype: "input",
+            tooltipdisplay: "block",
+          },
+          {
+            title: "Total number of governance body members in that region.",
+            tooltip: "Mention the total number of governance body members in that region.",
+            widgettype: "input",
+            tooltipdisplay: "block",
+          },
+        ],
+      },
+    },
+    "ui:options": {
+      orderable: false,
+      addable: true,
+      removable: true,
+    },
+  },
+};
+
+
+const Screen1 = ({ selectedOrg, year, selectedCorp,setDatarefresh }) => {
+  const [formData, setFormData] = useState([
+    {
+ 
+      Q1: [
+        {
+          RegionName: "",
+          Totalnumberanticorruption: "",
+          Totalnumberbodymembers: "",
+        },
+      ],
+    },
+  ]);
+  const [locationdata, setLocationdata] = useState(); // Initialize as empty array
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
+  const { open } = GlobalState();
 
   const LoaderOpen = () => {
     setLoOpen(true);
   };
+
   const LoaderClose = () => {
     setLoOpen(false);
   };
@@ -58,8 +116,8 @@ const Screen3 = ({ selectedOrg, selectedCorp, location, year, month }) => {
 
   const updateFormData = async () => {
     const data = {
-      client_id: client_id,
-      user_id: user_id,
+      client_id,
+      user_id,
       path: view_path,
       form_data: formData,
       corporate: selectedCorp,
@@ -82,6 +140,7 @@ const Screen3 = ({ selectedOrg, selectedCorp, location, year, month }) => {
         });
         LoaderClose();
         loadFormData();
+        setDatarefresh(1);
       } else {
         toast.error("Oops, something went wrong", {
           position: "top-right",
@@ -108,25 +167,33 @@ const Screen3 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       });
       LoaderClose();
     }
-    // console.log('Response:', response.data);
-    // } catch (error) {
-    // console.error('Error:', error);
-    // }
   };
-
+  const facthloctiondata = async () => {
+    const url = `${process.env.BACKEND_API_URL}/sustainapp/get_location_as_per_org_or_corp/?corporate=${selectedCorp}&organization=${selectedOrg}`;
+    try {
+      const response = await axiosInstance.get(url);
+      console.log("Location data:", response.data);
+      setLocationdata(response.data);
+    } catch (error) {
+      setLocationdata();
+    } finally {
+      LoaderClose();
+    }
+  };
   const loadFormData = async () => {
-    console.log("loadFormData screen 2");
     LoaderOpen();
-    setFormData(initialFormData);
+    setFormData([]);
+
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
+
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData(initialFormData);
+      setFormData([{}]);
     } finally {
       LoaderClose();
     }
@@ -135,41 +202,39 @@ const Screen3 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   useEffect(() => {
     if (selectedOrg && year) {
       loadFormData();
+      facthloctiondata();
       toastShown.current = false;
-    } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
-      }
+    } else if (!toastShown.current) {
+      toastShown.current = true;
     }
   }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission
+    e.preventDefault();
+    updateFormData();
     console.log("Form data:", formData);
-    // updateFormData();
   };
-
+  console.log("Location data: locationdata", locationdata);
   return (
     <>
       <div
-        className="mx-2 p-3 mb-6 pb-6 rounded-md "
+        className="mx-2 p-3 mb-6 pb-6 rounded-md"
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
         }}
       >
-        <div className="mb-4 flex">
+        <div className="mb-2 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold mb-2">
-            Report the opportunitites posed by climate change that have the potential to generate substantive changes in operations, revenue, or expenditure of the organisation including:
+            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            Total number of governance body members that the organization’s anti-corruption policies and procedures have been communicated to, broken down by region.
               <MdInfoOutline
-                data-tooltip-id={`tooltip-$e88`}
-                data-tooltip-content="Mention risks posed by climate change that have the potential to generate
-substantive changes in operations, revenue, or expenditure of the organisation. "
-                className="mt-1.5 ml-2 text-[24px]"
+                data-tooltip-id={`es26`}
+                data-tooltip-html="Specify the total number of governance body members that the organization’s anti-corruption policies and procedures have been communicated to, broken down by region."
+                className="mt-1.5 ml-2 text-[20px]"
               />
               <ReactTooltip
-                id={`tooltip-$e88`}
+                id={`es26`}
                 place="top"
                 effect="solid"
                 style={{
@@ -181,31 +246,42 @@ substantive changes in operations, revenue, or expenditure of the organisation. 
                   borderRadius: "8px",
                   textAlign: "left",
                 }}
-              ></ReactTooltip>
+              />
             </h2>
           </div>
-
           <div className="w-[20%]">
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 201-2a
+                  GRI 205-2a
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="mx-2 ">
-          <Form
-            schema={schema}
-            uiSchema={uiSchema}
-            formData={formData}
-            onChange={handleChange}
-            validator={validator}
-            widgets={widgets}
 
-          />
-        </div>
+        {Array.isArray(locationdata) && locationdata.length > 0 ? (
+          <div className="mx-2">
+            <Form
+              schema={r_schema}
+              uiSchema={r_ui_schema}
+              formData={formData}
+              onChange={handleChange}
+              validator={validator}
+              widgets={{
+                ...widgets,
+                LoctiondropdwonTable: (props) => (
+                  <LoctiondropdwonTable
+                    {...props}
+                    locationdata={locationdata}
+                  />
+                ),
+              }}
+            />
+          </div>
+        ) : (
+          <div className="mx-2"></div>
+        )}
 
         <div className="mb-6">
           <button
@@ -214,7 +290,7 @@ substantive changes in operations, revenue, or expenditure of the organisation. 
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>
@@ -236,4 +312,4 @@ substantive changes in operations, revenue, or expenditure of the organisation. 
   );
 };
 
-export default Screen3;
+export default Screen1;

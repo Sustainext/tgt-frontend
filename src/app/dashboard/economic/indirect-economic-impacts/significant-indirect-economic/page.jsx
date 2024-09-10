@@ -92,7 +92,7 @@ const Significantindirecteconomic = () => {
           Significant indirect economic impacts
             <MdInfoOutline
               data-tooltip-id={`tooltip-$es10`}
-              data-tooltip-content="This section documents the data corresponding to the infrastructure investments and services supported."
+              data-tooltip-content="This section documents the data corresponding to the significant indirect economic impacts."
               className="mt-1.5 ml-2 text-[14px]"
             />
             <ReactTooltip

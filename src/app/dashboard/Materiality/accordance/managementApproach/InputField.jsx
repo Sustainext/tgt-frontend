@@ -85,7 +85,7 @@ const uiSchema = {
     },
 };
 
-const InputField = ({ selectedOrg, year, selectedCorp }) => {
+const InputField = ({ selectedOrg, year, selectedCorp,setTableDataSubmit,tableDataSubmit }) => {
     const [formData, setFormData] = useState([{}]);
     const [r_schema, setRemoteSchema] = useState({});
     const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -115,15 +115,18 @@ const InputField = ({ selectedOrg, year, selectedCorp }) => {
       try {
         const response = await axiosInstance.get(url);
         if(response.status==200){
-          setFormData(
-            [
-              {Q2:response.data.negative_impact_involvement_description,
-                Q3:response.data.stakeholder_engagement_effectiveness_description
-
-              }
-            ]
-          ) 
-          setDatapresent(true)
+          if(response.data){
+            setFormData(
+              [
+                {Q2:response.data.negative_impact_involvement_description,
+                  Q3:response.data.stakeholder_engagement_effectiveness_description
+  
+                }
+              ]
+            ) 
+            setDatapresent(true)
+          }
+          
         }
         
         }
@@ -172,7 +175,7 @@ const InputField = ({ selectedOrg, year, selectedCorp }) => {
     useEffect(()=>{
       fetchDetails()
       fetchData()
-    },[])
+    },[tableDataSubmit])
 
     
     const handleSubmit = async(e) => {
@@ -197,7 +200,7 @@ const InputField = ({ selectedOrg, year, selectedCorp }) => {
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-                theme: "colored",
+                theme: "light",
               });
               if(dataSubmit){
                 const markComplete={

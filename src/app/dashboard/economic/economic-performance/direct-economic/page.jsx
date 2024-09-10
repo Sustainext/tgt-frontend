@@ -85,7 +85,7 @@ const Directeconomic = () => {
           Direct economic value generated & distributed
             <MdInfoOutline
               data-tooltip-id={`tooltip-$es10`}
-              data-tooltip-content="This section documents the data corresponding to the proportion of spending on local suppliers."
+              data-tooltip-content="This section documents the data corresponding to the direct economic value generated and distributed."
               className="mt-1.5 ml-2 text-[14px]"
             />
             <ReactTooltip
