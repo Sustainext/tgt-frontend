@@ -553,6 +553,12 @@ const handleDateChange = (newRange) => {
                   className="flex items-center green-radio"
                   onClick={() => {
                     handleChangeRadio("accordance");
+                    setDateRange(
+                      {
+                        start: null,
+                        end: null
+                      }
+                    )
                   }}
                 >
                   <input
@@ -575,6 +581,12 @@ const handleDateChange = (newRange) => {
                   className="flex items-center green-radio"
                   onClick={() => {
                     handleChangeRadio("reference");
+                    setDateRange(
+                      {
+                        start: null,
+                        end: null
+                      }
+                    )
                   }}
                 >
                   <input
