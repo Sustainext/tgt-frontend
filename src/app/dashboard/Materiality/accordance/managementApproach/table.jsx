@@ -19,7 +19,7 @@ const view_path = "gri-governance-critical_concerns-2-16-a-critical_concerns";
 const client_id = 1;
 const user_id = 1;
 
-const Table = ({ selectedOrg, year, selectedCorp }) => {
+const Table = ({ selectedOrg, year, selectedCorp,setTableDataSubmit,tableDataSubmit }) => {
   const assessment_id = typeof window !== 'undefined' ?localStorage.getItem("id"):'';
   const [materialTopics, setMaterialTopics] = useState([]);
   const [dataPresent,setDatapresent]=useState(false)
@@ -216,8 +216,9 @@ try {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "colored",
+      theme: "light",
     });
+    setTableDataSubmit(true)
   }
   else{
     toast.error("Oops, something went wrong", {

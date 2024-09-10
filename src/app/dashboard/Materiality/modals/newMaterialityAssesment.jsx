@@ -442,7 +442,7 @@ const handleDateChange = (newRange) => {
     try {
       const response = await axiosInstance.post(url, data);
       if (response.status === 201) {
-        toast.success("Data added successfully", {
+        toast.success("Assessment Created successfully", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -612,8 +612,26 @@ const handleDateChange = (newRange) => {
                     activeTab === 1 ? "bg-sky-100" : "bg-white"
                   }`}
                   onClick={() => {
-                    handleTabClick(1);
+                    setOverlapError("");
+                    setErrors(
+                      {
+                        organization: "",
+                        corporate: "",
+                        dateRange: "",
+                        assessmentApproach: "",
+                        dateExist:""
+                      }
+                    )
+                    setDateRange(
+                      {
+                        start: null,
+                        end: null
+                      }
+                    )
+                    setAssessmentApproach("")
                     setSelectedOrg("");
+                    setSelectedCorp("");
+                    handleTabClick(1);
                   }}
                 >
                   <div className="text-slate-800 text-[13px] font-medium font-['Manrope'] leading-tight">
@@ -625,8 +643,27 @@ const handleDateChange = (newRange) => {
                     activeTab === 2 ? "bg-sky-100" : "bg-white"
                   }`}
                   onClick={() => {
-                    handleTabClick(2);
+                    setOverlapError("");
+                    setErrors(
+                      {
+                        organization: "",
+                        corporate: "",
+                        dateRange: "",
+                        assessmentApproach: "",
+                        dateExist:""
+                      }
+                    )
+                    setDateRange(
+                      {
+                        start: null,
+                        end: null
+                      }
+                    )
+                    setAssessmentApproach("")
                     setSelectedOrg("");
+                    setSelectedCorp("");
+                    handleTabClick(2);
+
                   }}
                 >
                   <div className="text-slate-800 text-[13px] font-medium font-['Manrope'] leading-tight">

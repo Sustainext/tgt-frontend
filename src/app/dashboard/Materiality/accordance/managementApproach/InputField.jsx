@@ -85,7 +85,7 @@ const uiSchema = {
     },
 };
 
-const InputField = ({ selectedOrg, year, selectedCorp }) => {
+const InputField = ({ selectedOrg, year, selectedCorp,setTableDataSubmit,tableDataSubmit }) => {
     const [formData, setFormData] = useState([{}]);
     const [r_schema, setRemoteSchema] = useState({});
     const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -175,7 +175,7 @@ const InputField = ({ selectedOrg, year, selectedCorp }) => {
     useEffect(()=>{
       fetchDetails()
       fetchData()
-    },[])
+    },[tableDataSubmit])
 
     
     const handleSubmit = async(e) => {
@@ -200,7 +200,7 @@ const InputField = ({ selectedOrg, year, selectedCorp }) => {
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-                theme: "colored",
+                theme: "light",
               });
               if(dataSubmit){
                 const markComplete={

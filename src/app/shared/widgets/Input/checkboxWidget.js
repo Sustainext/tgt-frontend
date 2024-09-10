@@ -39,10 +39,36 @@ const CheckboxWidget = ({
         setSelectedValues([]); // Uncheck all checkboxes
       }
     }
-  }, [options.envChecked, options.socChecked, options.govChecked]);
+  }, [options.envChecked, options.socChecked, options.govChecked,options.enumOptions]);
 
 
- 
+useEffect(() => {
+  if (typeof options.envChecked === 'boolean' && !options.envChecked) {
+    const newSelectedValues = selectedValues.filter(val => !options.enumOptions.some(option => option.value.label === val));
+
+    if (JSON.stringify(newSelectedValues) !== JSON.stringify(selectedValues)) {
+      setSelectedValues(newSelectedValues);
+      onChange(newSelectedValues);
+    }
+  }
+
+  if (typeof options.socChecked === 'boolean' && !options.socChecked) {
+    const newSelectedValues = selectedValues.filter(val => !options.enumOptions.some(option => option.value.label === val));
+    if (JSON.stringify(newSelectedValues) !== JSON.stringify(selectedValues)) {
+      setSelectedValues(newSelectedValues);
+      onChange(newSelectedValues);
+    }
+  }
+
+  if (typeof options.govChecked === 'boolean' && !options.govChecked) {
+    const newSelectedValues = selectedValues.filter(val => !options.enumOptions.some(option => option.value.label === val));
+    if (JSON.stringify(newSelectedValues) !== JSON.stringify(selectedValues)) {
+      setSelectedValues(newSelectedValues);
+      onChange(newSelectedValues);
+    }
+  }
+}, [options.envChecked, options.socChecked, options.govChecked, selectedValues, onChange, options.enumOptions]);
+
 
   return (
     <div className='mb-1'>

@@ -245,7 +245,7 @@ const InputField = ({ handleTabClick }) => {
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-                theme: "colored",
+                theme: "light",
               });
               setTimeout(()=>{
                 handleTabClick('managementApproach')
