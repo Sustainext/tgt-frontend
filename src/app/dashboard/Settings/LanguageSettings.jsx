@@ -20,7 +20,7 @@ const LanguageSettings = () => {
       });
       widget.setupWidget('fluentc-widget');
 
-      // widget.setupWidget('fluentc-widget', {defaultLanguage: 'ja'});
+      widget.setupWidget('fluentc-widget', {defaultLanguage: 'ja'});
       hasLoadedWidget.current = true;
     }
   }, []);

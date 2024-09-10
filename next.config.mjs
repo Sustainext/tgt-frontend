@@ -4,7 +4,7 @@ const nextConfig = {
       // BACKEND_API_URL: 'http://127.0.0.1:8000',
       NEXT_APP_ZOHO_URL_EMISSIONS: 'https://analytics.zoho.in/open-view/283231000002209106',
       NEXT_APP_POWERBI_URL_ENV_EMISSIONS: 'https://app.powerbi.com/view?r=eyJrIjoiODY4ZTc0ODAtNDlmZC00YTQ2LTgyNTMtNmI3YjFlZGM1OTdiIiwidCI6ImIwZjhlODRjLWU0YTgtNDc5OS04MWIwLWRmMTUwMDY0MDM3ZCJ9',
-      NEXT_APP_SUPERSET_URL_ENV_EMISSIONS: 'https://superset-dev.sustainext.ai/superset/dashboard/p/78Vx0pKxNqZ/',
+      NEXT_APP_SUPERSET_URL_ENV_EMISSIONS: 'https://superset-dev.sustainext.ai/superset/dashboard/p/78Vx0pKxNqZ&standalone=true',
       NEXT_APP_POWERBI_URL_ENV_ENERGY: 'https://app.powerbi.com/view?r=eyJrIjoiZmIzMTc5NWQtOTgyZS00NmQyLWE3ZjYtNmQxZTUxOGI2NWFmIiwidCI6ImIwZjhlODRjLWU0YTgtNDc5OS04MWIwLWRmMTUwMDY0MDM3ZCJ9',
       NEXT_APP_POWERBI_URL_ENV_WASTE: 'https://app.powerbi.com/view?r=eyJrIjoiZGMwZTgzNzMtNjM0My00NWQ4LWEzMTEtMjVjZTM3MGUyZmU3IiwidCI6ImIwZjhlODRjLWU0YTgtNDc5OS04MWIwLWRmMTUwMDY0MDM3ZCJ9',
       NEXT_APP_SUPERSET_URL_ENV_WASTE: 'https://superset-dev.sustainext.ai/superset/dashboard/p/vgmxy0BzP4Q/',
@@ -14,6 +14,10 @@ const nextConfig = {
       NEXT_APP_POWERBI_URL_SOCIAL_COMMUNITYDEVELOPMENT: 'https://app.powerbi.com/view?r=eyJrIjoiMzE0ZjgzNjgtYzhmMS00MmVhLWEzNmQtZTRmYzViZTg5MjI1IiwidCI6ImIwZjhlODRjLWU0YTgtNDc5OS04MWIwLWRmMTUwMDY0MDM3ZCJ9',
       NEXT_PUBLIC_APP_CLIMATIQ_KEY: 'HE3SK2V2F04MTSG9210JSQXB2QCX',
       NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION: '8',
+
+      NEXT_PUBLIC_SUPERSET_DOMAIN: 'https://superset-dev.sustainext.ai',
+      NEXT_PUBLIC_SUPERSET_DASHBOARD_ID_ENV_EMISSIONS:'239841c1-c7ee-4bfe-938c-0da7724b0d06',
+      NEXT_PUBLIC_SUPERSET_DASHBOARD_ID_ENV_WASTE: 'c8d3cfcf-c1ec-4caf-8744-b9794f6340b4'
 
   },
   images: {

@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import { GiPublicSpeaker } from "react-icons/gi";
+import { embedDashboard } from "@superset-ui/embedded-sdk";
 
 const EnvironmentTrack = ({ contentSize }) => {
   const [activeTab, setActiveTab] = useState('zohoEmissions');
