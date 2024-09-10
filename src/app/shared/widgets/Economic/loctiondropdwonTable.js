@@ -1,19 +1,34 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { MdInfoOutline, MdOutlineDeleteOutline, MdAdd } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
 // Row component to handle each row
-const Row = ({ item, rowIndex, options, locationdata, updateField }) => {
+const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove }) => {
+  const [localValues, setLocalValues] = useState(item); // Local state to store input values
+
+  useEffect(() => {
+    setLocalValues(item); // Sync the local state with the passed item prop
+  }, [item]);
+
+  const handleChange = (key, value) => {
+    setLocalValues((prevValues) => ({ ...prevValues, [key]: value })); // Update local input values immediately
+  };
+
+  const handleBlur = (key) => {
+    updateField(rowIndex, key, localValues[key]); // Only update parent state onBlur (focus-out)
+  };
+
   return (
     <tr key={rowIndex}>
-      {Object.keys(item).map((key, cellIndex) => (
+      {Object.keys(localValues).map((key, cellIndex) => (
         <td key={cellIndex} className="border border-gray-300 px-2">
           {/* Handle Location dropdown */}
           {options.titles[cellIndex].widgettype === "select" ? (
             <select
-              value={item[key]}
-              onChange={(e) => updateField(rowIndex, key, e.target.value)} // Direct update
+              value={localValues[key]}
+              onChange={(e) => handleChange(key, e.target.value)}
+              onBlur={() => handleBlur(key)} // Trigger update when input loses focus
               className="text-sm pl-2 py-2 w-full"
             >
               <option value="">Select location</option>
@@ -27,25 +42,27 @@ const Row = ({ item, rowIndex, options, locationdata, updateField }) => {
           ) : (
             <input
               type="number" // Default to number input if no type is defined
-              value={item[key]} // Ensure the value is either the item value or an empty string
-              onChange={(e) => updateField(rowIndex, key, e.target.value)} // Direct update
+              value={localValues[key] || ""} // Ensure the value is either the item value or an empty string
+              onChange={(e) => handleChange(key, e.target.value)}
+              onBlur={() => handleBlur(key)} // Trigger update when input loses focus
               style={{ width: "100%" }} // Set full width for the input
               placeholder="Enter data" // Placeholder text
-              className="text-sm pl-2 py-2" // Add focus style
+              className="text-sm pl-2 py-2" // Styling
             />
           )}
         </td>
       ))}
-      <td className="border border-gray-300 p-3 flex justify-center">
-        <button onClick={() => onRemove(rowIndex)}>
-          <MdOutlineDeleteOutline className="text-[20px] text-red-600" />
-        </button>
-      </td>
+      {locationdata.length > 1 && (
+        <td className="border border-gray-300 p-3 flex justify-center">
+          <button onClick={() => onRemove(rowIndex)}>
+            <MdOutlineDeleteOutline className="text-[20px] text-red-600" />
+          </button>
+        </td>
+      )}
     </tr>
   );
 };
 
-// LocationDropdownTable component
 const LocationDropdownTable = ({ id, options, value = [], required, onChange, locationdata }) => {
   // Ensure the first row is always displayed if value is empty
   useEffect(() => {
@@ -58,7 +75,7 @@ const LocationDropdownTable = ({ id, options, value = [], required, onChange, lo
     }
   }, [value, options.titles, onChange]);
 
-
+  // Function to update a field in a row
   const updateField = (index, key, newValue) => {
     const newData = value.map((item, i) => {
       if (i === index) {
@@ -127,7 +144,9 @@ const LocationDropdownTable = ({ id, options, value = [], required, onChange, lo
                 </div>
               </th>
             ))}
-            <th className="w-[5vw] border border-gray-300 "></th>
+            {locationdata.length > 1 && (
+              <th className="w-[5vw] border border-gray-300 "></th>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -144,15 +163,17 @@ const LocationDropdownTable = ({ id, options, value = [], required, onChange, lo
           ))}
         </tbody>
       </table>
-      <div className="mt-2">
-        <button
-          type="button"
-          onClick={addRow}
-          className="text-blue-500 flex items-center text-[15px]"
-        >
-          Add Location <div className="ml-2 mt-1"><MdAdd /></div>
-        </button>
-      </div>
+      {locationdata.length > 1 && (
+        <div className="mt-2">
+          <button
+            type="button"
+            onClick={addRow}
+            className="text-blue-500 flex items-center text-[15px]"
+          >
+            Add Location <div className="ml-2 mt-1"><MdAdd /></div>
+          </button>
+        </div>
+      )}
     </div>
   );
 };

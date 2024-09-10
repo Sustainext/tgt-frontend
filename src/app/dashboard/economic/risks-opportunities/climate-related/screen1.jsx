@@ -16,7 +16,7 @@ const widgets = {
   TableWidget: Economictablemultipal,
 };
 
-const view_path = "gri-general-workforce_other_workers-workers-2-8-a";
+const view_path = "gri-economic-climate_realted_opportunities-202-2a-report";
 const client_id = 1;
 const user_id = 1;
 
@@ -38,7 +38,7 @@ const schema = {
 const uiSchema = {
     "ui:widget": "TableWidget",
   };
-const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
+const Screen1 = ({ selectedOrg, selectedCorp, selectedLocation, year, month }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -65,6 +65,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       corporate: selectedCorp,
       organisation: selectedOrg,
       year,
+      selectedLocation,
     };
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
@@ -117,8 +118,8 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const loadFormData = async () => {
     console.log("loadFormData screen 2");
     LoaderOpen();
-    setFormData(initialFormData);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
+    setFormData([{}]);
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}&location=${selectedLocation}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -126,7 +127,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData(initialFormData);
+      setFormData([{}]);
     } finally {
       LoaderClose();
     }
@@ -141,12 +142,12 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
         toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp,selectedLocation]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
     console.log("Form data:", formData);
-    // updateFormData();
+    updateFormData();
   };
 
   return (
@@ -197,8 +198,8 @@ substantive changes in operations, revenue, or expenditure of the organisation. 
         </div>
         <div className="mx-2 ">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -214,7 +215,7 @@ substantive changes in operations, revenue, or expenditure of the organisation. 
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

@@ -16,7 +16,7 @@ const widgets = {
   TableWidget: Economictable,
 };
 
-const view_path = "gri-general-workforce_other_workers-workers-2-8-a";
+const view_path = "gri-economic-climate_related_risks-202-2a-physical_risk";
 const client_id = 1;
 const user_id = 1;
 
@@ -306,7 +306,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, selectedLocation, year }) => {
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
     console.log("Form data:", formData);
-    // updateFormData();
+    updateFormData();
   };
 
   return (
@@ -392,8 +392,8 @@ const Screen1 = ({ selectedOrg, selectedCorp, selectedLocation, year }) => {
         </div>
         <div className="mx-2 ">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -413,7 +413,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, selectedLocation, year }) => {
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>
