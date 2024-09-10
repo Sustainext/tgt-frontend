@@ -1,7 +1,7 @@
 import React from "react";
 import ReusableTable from "../../../../shared/components/Table";
 
-const SourceTable = ({ data, organisation, corporate,location }) => {
+const SourceTable = ({ data,fullData, organisation, corporate,location, fromDate, toDate }) => {
   const columns = [
     {
       Header: "S.No",
@@ -25,7 +25,7 @@ const SourceTable = ({ data, organisation, corporate,location }) => {
     },
   ];
 
-  return <ReusableTable type='Source' columns={columns} data={data} organisation={organisation} corporate={corporate} location={location} />;
+  return <ReusableTable type='Source' columns={columns} data={data} fullData={fullData} organisation={organisation} corporate={corporate} location={location} fromDate={fromDate} toDate={toDate} />;
 };
 
 export default SourceTable;

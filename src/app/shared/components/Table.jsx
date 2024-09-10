@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { MdArrowOutward } from "react-icons/md";
 import FullTable from "../../shared/components/FullTable";
 
-const Table = ({ type, columns, data, organisation, corporate, location }) => {
+const Table = ({ type, columns, data,fullData, organisation, corporate, location, fromDate, toDate }) => {
   const [openFullTable, setOpenFullTable] = useState(false);
 
   const closeFullTable = () => {
@@ -18,7 +18,7 @@ const Table = ({ type, columns, data, organisation, corporate, location }) => {
               <th
                 key={column.accessor} 
                 className={`px-2 py-3 font-semibold text-gray-600 block md:table-cell text-sm w-1/5 ${
-                  index === 0 && index === 1 ? "text-left" : "text-center"
+                  index === 0 ? "text-left ml-4" : "text-center"
                 }`}
               >
                 {column.Header}
@@ -76,7 +76,7 @@ const Table = ({ type, columns, data, organisation, corporate, location }) => {
       {openFullTable && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-[999]">
           <div className="bg-white p-6 rounded-lg shadow-lg">
-            <FullTable onClose={closeFullTable} columns={columns} data={data} organisation={organisation} corporate={corporate} location={location} />
+            <FullTable onClose={closeFullTable} columns={columns} data={fullData} organisation={organisation} corporate={corporate} location={location} fromDate={fromDate} toDate={toDate} />
           </div>
         </div>
       )}

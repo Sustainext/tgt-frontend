@@ -102,7 +102,7 @@ import { FaSort, FaSortUp, FaSortDown } from 'react-icons/fa';
 import { MdOutlineFileUpload } from "react-icons/md";
 import * as XLSX from 'xlsx';
 
-const FullTable = ({ columns, data, onClose, organisation, corporate, location }) => {
+const FullTable = ({ columns, data, onClose, organisation, corporate, location, fromDate, toDate }) => {
   const [sortColumn, setSortColumn] = useState(null);
   const [sortDirection, setSortDirection] = useState('asc');
 
@@ -159,8 +159,8 @@ const FullTable = ({ columns, data, onClose, organisation, corporate, location }
       <div className="flex justify-between items-center mb-4">
         <div>
           <h2 className="text-xl font-semibold">Top Emissions by Source</h2>
-          <p className="text-sm text-gray-500">{organisation} {corporate ? ":" + corporate : ""} {location ? ":" + location : ""}</p>
-          <p className="text-sm text-gray-500">Date: 31/02/1994</p>
+          <p className="text-sm text-gray-500">{organisation} {corporate ? ": " + corporate : ""} {location ? ": " + location : ""}</p>
+          <p className="text-sm text-gray-500">Date: {fromDate} {toDate? "to " + toDate : ""}</p>
         </div>
         <button
         //   onClick={exportToExcel}

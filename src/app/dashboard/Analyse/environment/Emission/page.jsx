@@ -6,6 +6,7 @@ import LocationTable from "./LocationTable";
 import DateRangePicker from "@/app/utils/DatePickerComponent";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import { Oval } from 'react-loader-spinner';
+import { set } from "date-fns";
 
 const AnalyseEmission = () => {
   const [analyseData, setAnalyseData] = useState([]);
@@ -16,7 +17,9 @@ const AnalyseEmission = () => {
   const [selectedsetLocation, setSelectedSetLocation] = useState("");
   const [scopeData, setScopeData] = useState([]);
   const [sourceData, setSourceData] = useState([]);
+  const [sourceDataAll, setSourceDataAll] = useState([]);
   const [locationData, setLocationData] = useState([]);
+  const [locationDataAll, setLocationDataAll] = useState([]);
   const [selectedYear, setSelectedYear] = useState("2023");
   const [corporates, setCorporates] = useState([]);
   const [reportType, setReportType] = useState("Organization");
@@ -34,6 +37,12 @@ const AnalyseEmission = () => {
     start: null,
     end: null
   });
+  const [organisationName, setOrganisationName] = useState("");
+  const [corporateName, setCorporateName] = useState("");
+  const [locationName, setLocationName] = useState("");
+  const [fromDate,setFromDate] = useState("");
+  const [toDate,setToDate] = useState("");
+
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -74,31 +83,56 @@ const AnalyseEmission = () => {
       const data = response.data.data;
       console.log(data, "testing");
 
-      const { top_emission_by_source, top_emission_by_scope, top_emission_by_location } = data;
-      const formattedLocation = top_emission_by_location.map((loc, index) => ({
+      const { top_5_emisson_by_source, all_emission_by_scope, top_5_emisson_by_location, all_emission_by_location, all_emission_by_source, selected_org, selected_corporate, selected_location, selected_start_date, selected_end_date
+      } = data;
+      const formattedLocation = top_5_emisson_by_location.map((loc, index) => ({
         sno: String(index + 1),
         location: loc.location,
         ageContribution: `${loc.contribution}%`,
         totalemissions: String((loc.total/1000).toFixed(3)),
         units: "tCO₂e"
       }));
-      const formattedScope = top_emission_by_scope.map((s, index) => ({
+      const formattedScope = all_emission_by_scope.map((s, index) => ({
         sno: String(index + 1),
         scope: s.scope,
         ageContribution: `${s.contribution}%`,
         totalemissions: String((s.total/1000).toFixed(3)),
         units: "tCO₂e"
       }));
-      const formattedSource = top_emission_by_source.map((src, index) => ({
+      const formattedSource = top_5_emisson_by_source.map((src, index) => ({
         sno: String(index + 1),
         source: src.source,
         ageContribution: `${src.contribution}%`,
         totalemissions: String((src.total/1000).toFixed(3)),
         units: "tCO₂e"
       }));
+      const formattedLocationAll = all_emission_by_location
+      .map((loc, index) => ({
+        sno: String(index + 1),
+        location: loc.location,
+        ageContribution: `${loc.contribution}%`,
+        totalemissions: String((loc.total/1000).toFixed(3)),
+        units: "tCO₂e"
+      }));
+      const formattedSourceAll = all_emission_by_source
+      .map((loc, index) => ({
+        sno: String(index + 1),
+        source: loc.source,
+        ageContribution: `${loc.contribution}%`,
+        totalemissions: String((loc.total/1000).toFixed(3)),
+        units: "tCO₂e"
+      }));
+      
       setScopeData(formattedScope);
       setSourceData(formattedSource);
+      setSourceDataAll(formattedSourceAll);
       setLocationData(formattedLocation);
+      setLocationDataAll(formattedLocationAll);
+      setOrganisationName(selected_org);
+      setCorporateName(selected_corporate);
+      setLocationName(selected_location);
+      setFromDate(selected_start_date);
+      setToDate(selected_end_date);
 
       const resultArray = Object.keys(data).map((key) => ({
         key: key,
@@ -375,23 +409,23 @@ const AnalyseEmission = () => {
         <div className="mx-4">
           <h2 className="font-bold text-[15px]">Top Emissions by Scope</h2>
         </div>
-        <ScopeTable data={scopeData} organisation={selectedOrg} corporate={selectedCorp} location={selectedLocation} />
+        <ScopeTable data={scopeData} organisation={organisationName} corporate={corporateName} location={locationName} fromDate={fromDate} toDate={toDate} />
       </div>
       <div className="mt-4">
         <div className="mx-4">
           <h2 className="font-bold text-[15px]">Top Emissions by Source</h2>
         </div>
-        <SourceTable data={sourceData} organisation={selectedOrg} corporate={selectedCorp} location={selectedLocation} />
+        <SourceTable data={sourceData} fullData={sourceDataAll} organisation={organisationName} corporate={corporateName} location={locationName} fromDate={fromDate} toDate={toDate} />
       </div>
 
       <div className="mt-8">
         <div className="mx-4">
           <h2 className="font-bold text-[15px]">Top Emissions by Location</h2>
         </div>
-        <LocationTable data={locationData} organisation={selectedOrg} corporate={selectedCorp} location={selectedLocation} />
+        <LocationTable data={locationData} fullData={locationDataAll} organisation={organisationName} corporate={corporateName} location={locationName} fromDate={fromDate} toDate={toDate} />
       </div>
       {loopen && (
-          <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 z-[100]">
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[100]">
             <Oval
               height={50}
               width={50}
