@@ -17,7 +17,7 @@ const widgets = {
   LocationDropdownTableGrid: LocationDropdownTableGrid,
   inputWidget: CommoninputWidget,
 };
-const view_path = "";
+const view_path = "gri-economic-anti_corruption-comm_and_training-205-2c-business";
 const view_path2 =
   "gri-economic-anti_corruption-comm_and_training-205-2a-governance_body_members";
 const client_id = 1;
@@ -103,7 +103,7 @@ const uiSchema = {
   },
 };
 
-const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen3 = ({ selectedOrg, year, selectedCorp,datarefresh }) => {
   const [formData, setFormData] = useState([{}]);
   const [locationdata, setLocationdata] = useState(); // Initialize as empty array
   const [r_schema, setRemoteSchema] = useState({});
@@ -179,20 +179,21 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
   };
   const loadFormData2 = async () => {
     LoaderOpen();
-
+    setLocationdata();
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path2}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log(response.data.form_data[0].data);
       setLocationdata(response.data.form_data[0].data);
     } catch (error) {
+      setLocationdata();
     } finally {
       LoaderClose();
     }
   };
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([]);
+    setFormData([{}]);
 
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
@@ -217,11 +218,11 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
     } else if (!toastShown.current) {
       toastShown.current = true;
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp,datarefresh]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // updateFormData();
+    updateFormData();
     console.log("Form data:", formData);
   };
   console.log("Location data: locationdata", locationdata);
@@ -273,8 +274,8 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
         {Array.isArray(locationdata) && locationdata.length > 0 ? (
           <div className="mx-2">
             <Form
-              schema={schema}
-              uiSchema={uiSchema}
+              schema={r_schema}
+              uiSchema={r_ui_schema}
               formData={formData}
               onChange={handleChange}
               validator={validator}
@@ -300,7 +301,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

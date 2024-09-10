@@ -1,24 +1,23 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
+import { Socialdata } from "../../../social/data/socialgriinfo.js";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Socialdata } from "../../../social/data/socialgriinfo";
 import EconomicHeader2 from "../../EconomicHeader2";
 import Screen1 from "./screen1";
-
-const Approachtotax = () => {
-  const [activeMonth, setActiveMonth] = useState("");
-  const [selectedLocation, setSelectedLocation] = useState("");
+import Screen2 from "./screen2";
+const Financialimplications = () => {
+  const [activeMonth, setActiveMonth] = useState(1);
+  const [location, setLocation] = useState("");
   const [year, setYear] = useState(2024);
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
-
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -46,11 +45,11 @@ const Approachtotax = () => {
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
             <div className="text-left mb-4 ml-3 pt-5">
-              <p className="text-sm">Economic</p>
+              <p className="text-sm">Economic </p>
               <div className="flex">
-                <div className="h-[29px]">
-                  <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
-                  Tax
+                <div>
+                  <p className="gradient-text text-[22px] font-bold pt-1">
+                  Risks & Opportunities
                   </p>
                 </div>
               </div>
@@ -60,46 +59,34 @@ const Approachtotax = () => {
             <div className="flex float-end border-l">
               <button
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("125")}
+                onClick={() => toggleDrawer("118")}
               >
-                GRI 207-1
+                GRI 201 - 2
               </button>
               <button
-                className="text-[#fff] bg-[#FC0014] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("126")}
+                className="text-[#fff] bg-[#48773C] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                onClick={() => toggleDrawer("119")}
               >
-                SDG 1
-              </button>
-              <button
-                className="text-[#fff] bg-[#E01A83] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("127")}
-              >
-                SDG 10
-              </button>
-              <button
-                className="text-[#fff] bg-[#00558A] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("128")}
-              >
-                SDG 17
+                SDG 13
               </button>
             </div>
           </div>
         </div>
 
-        <div className="ml-3 flex relative">
+        <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Approach to tax
+          Financial implications and other risks and opportunities due to climate change
             <MdInfoOutline
-              data-tooltip-id={`tooltip-$es25`}
-              data-tooltip-content="This section documents the data corresponding to the approach to tax."
+              data-tooltip-id={`tooltip-$e10`}
+              data-tooltip-content="This section documents the data corresponding to the financial implications and other risks and opportunities due to climate change."
               className="mt-1.5 ml-2 text-[14px]"
             />
             <ReactTooltip
-              id={`tooltip-$es25`}
-              place="bottom"
+              id={`tooltip-$e10`}
+              place="top"
               effect="solid"
               style={{
-                width: "500px",
+                width: "290px",
                 backgroundColor: "#000",
                 color: "white",
                 fontSize: "12px",
@@ -113,7 +100,9 @@ const Approachtotax = () => {
         <div
           className={`${
             isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"
-          } fixed right-[51px]  w-[340px] h-full bg-white  rounded-md transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
+          }
+fixed right-[51px]  w-[340px] h-full bg-white  rounded-md
+transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         >
           {data &&
             data.map((program) => (
@@ -143,14 +132,17 @@ const Approachtotax = () => {
         year={year}
         setYear={setYear}
       />
-
       <Screen1
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
       />
-
+      <Screen2
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        year={year}
+      />
     </>
   );
 };
-export default Approachtotax;
+export default Financialimplications;

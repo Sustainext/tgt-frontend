@@ -17,7 +17,7 @@ const widgets = {
   CurrencyWidget: CurrencyWidget,
 };
 
-const view_path = "gri-general-workforce_other_workers-workers-2-8-a";
+const view_path = "gri-economic-ratios_of_standard_entry-202-1c-location";
 const client_id = 1;
 const user_id = 1;
 
@@ -249,8 +249,8 @@ substantive changes in operations, revenue, or expenditure of the organisation. 
         {Array.isArray(locationdata) && locationdata.length > 0 ? (
           <div className="mx-2">
             <Form
-              schema={schema}
-              uiSchema={uiSchema}
+              schema={r_schema}
+              uiSchema={r_ui_schema}
               formData={formData}
               onChange={handleChange}
               validator={validator}

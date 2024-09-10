@@ -19,7 +19,7 @@ const widgets = {
 };
 
 const view_path =
-  "gri-economic-anti_corruption-comm_and_training-205-2a-governance_body_members";
+  "gri-economic-anti_corruption-comm_and_training-205-2d-training";
 const client_id = 1;
 const user_id = 1;
 
@@ -82,7 +82,7 @@ const uiSchema = {
 };
 
 
-const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen4 = ({ selectedOrg, year, selectedCorp,setDatarefreshtwo }) => {
   const [formData, setFormData] = useState([
     {
  
@@ -140,6 +140,7 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
         });
         LoaderClose();
         loadFormData();
+        setDatarefreshtwo(1);
       } else {
         toast.error("Oops, something went wrong", {
           position: "top-right",
@@ -262,8 +263,8 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
         {Array.isArray(locationdata) && locationdata.length > 0 ? (
           <div className="mx-2">
             <Form
-              schema={schema}
-              uiSchema={uiSchema}
+              schema={r_schema}
+              uiSchema={r_ui_schema}
               formData={formData}
               onChange={handleChange}
               validator={validator}

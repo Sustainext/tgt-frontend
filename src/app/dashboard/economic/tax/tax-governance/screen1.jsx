@@ -61,8 +61,8 @@ const uiSchema = {
       "ui:title":
         "Mention the governance body or executive-level position within the organization accountable for compliance with the tax strategy.",
       "ui:tooltip":
-        "Indicate whether your organisation has a tax strategy. ",
-      "ui:tooltipdisplay": "none",
+        "When describing the tax governance and control framework, the reporting organization can provide examples of effective implementation of its tax governance, control, and risk management systems.",
+      "ui:tooltipdisplay": "block",
       "ui:titledisplay": "block",
       "ui:widgetType": "textarea",
       "ui:inputfildtype": "text",

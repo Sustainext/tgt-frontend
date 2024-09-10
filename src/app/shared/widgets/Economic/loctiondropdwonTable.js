@@ -4,7 +4,7 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
 // Row component to handle each row
-const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove }) => {
+const Row = ({ item, rowIndex, options, locationdata, updateField }) => {
   return (
     <tr key={rowIndex}>
       {Object.keys(item).map((key, cellIndex) => (
@@ -13,7 +13,7 @@ const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove }) =
           {options.titles[cellIndex].widgettype === "select" ? (
             <select
               value={item[key]}
-              onChange={(e) => updateField(rowIndex, key, e.target.value)}
+              onChange={(e) => updateField(rowIndex, key, e.target.value)} // Direct update
               className="text-sm pl-2 py-2 w-full"
             >
               <option value="">Select location</option>
@@ -26,27 +26,26 @@ const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove }) =
             </select>
           ) : (
             <input
-              type= "number" // Default to number input if no type is defined
-              value={item[key] || ""} // Ensure the value is either the item value or an empty string
-              onChange={(e) => {
-                updateField(rowIndex, key, e.target.value);
-              }}
+              type="number" // Default to number input if no type is defined
+              value={item[key]} // Ensure the value is either the item value or an empty string
+              onChange={(e) => updateField(rowIndex, key, e.target.value)} // Direct update
               style={{ width: "100%" }} // Set full width for the input
               placeholder="Enter data" // Placeholder text
-              className="text-sm pl-2 py-2" // Styling
+              className="text-sm pl-2 py-2" // Add focus style
             />
           )}
         </td>
       ))}
-      <td className="border border-gray-300 p-3">
+      <td className="border border-gray-300 p-3 flex justify-center">
         <button onClick={() => onRemove(rowIndex)}>
-          <MdOutlineDeleteOutline className="text-[23px] text-red-600" />
+          <MdOutlineDeleteOutline className="text-[20px] text-red-600" />
         </button>
       </td>
     </tr>
   );
 };
 
+// LocationDropdownTable component
 const LocationDropdownTable = ({ id, options, value = [], required, onChange, locationdata }) => {
   // Ensure the first row is always displayed if value is empty
   useEffect(() => {
@@ -59,7 +58,7 @@ const LocationDropdownTable = ({ id, options, value = [], required, onChange, lo
     }
   }, [value, options.titles, onChange]);
 
-  // Function to update a field in a row
+
   const updateField = (index, key, newValue) => {
     const newData = value.map((item, i) => {
       if (i === index) {
@@ -133,7 +132,6 @@ const LocationDropdownTable = ({ id, options, value = [], required, onChange, lo
         </thead>
         <tbody>
           {value.map((item, rowIndex) => (
-            
             <Row
               key={rowIndex}
               rowIndex={rowIndex}

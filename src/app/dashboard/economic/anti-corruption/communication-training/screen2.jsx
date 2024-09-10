@@ -16,7 +16,7 @@ import LocationDropdownTableGrid from "../../../../shared/widgets/Economic/locti
 const widgets = {
   LocationDropdownTableGrid: LocationDropdownTableGrid,
 };
-const view_path = "";
+const view_path = "gri-economic-anti_corruption-comm_and_training-205-2b-employees";
 const view_path2 =
   "gri-economic-anti_corruption-comm_and_training-205-2a-governance_body_members";
 const client_id = 1;
@@ -82,7 +82,7 @@ const uiSchema = {
   },
 };
 
-const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen2 = ({ selectedOrg, year, selectedCorp,datarefresh }) => {
   const [formData, setFormData] = useState([{}]);
   const [locationdata, setLocationdata] = useState(); // Initialize as empty array
   const [r_schema, setRemoteSchema] = useState({});
@@ -158,20 +158,21 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
   };
   const loadFormData2 = async () => {
     LoaderOpen();
-
+    setLocationdata();
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path2}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log(response.data.form_data[0].data);
       setLocationdata(response.data.form_data[0].data);
     } catch (error) {
+      setLocationdata();
     } finally {
       LoaderClose();
     }
   };
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([]);
+    setFormData([{}]);
 
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
@@ -196,11 +197,11 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
     } else if (!toastShown.current) {
       toastShown.current = true;
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp,datarefresh]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // updateFormData();
+    updateFormData();
     console.log("Form data:", formData);
   };
   console.log("Location data: locationdata", locationdata);
@@ -254,8 +255,8 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
         {Array.isArray(locationdata) && locationdata.length > 0 ? (
           <div className="mx-2">
             <Form
-              schema={schema}
-              uiSchema={uiSchema}
+              schema={r_schema}
+              uiSchema={r_ui_schema}
               formData={formData}
               onChange={handleChange}
               validator={validator}
@@ -271,7 +272,129 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
             />
           </div>
         ) : (
-          <div className="mx-2"></div>
+          <div className="mx-2 pb-6">
+<table  className="table-fixed border-collapse w-full">
+    <thead className="gradient-background">
+        <tr className="h-[102px]">
+            <th className="text-[12px] border border-gray-300 px-2 py-2 text-center"   style={{ width: "17vw", textAlign: "left" }}>
+                <div className="flex items-center relative justify-center">
+                    <p>Location Name</p>
+                    <p>
+                    <MdInfoOutline
+                data-tooltip-id={`es279`}
+                data-tooltip-html="Specify the Total number of employees that the organization’s anti-corruption policies and procedures have been communicated to, broken down by employee category and region."
+                className="mt-1 ml-2 text-[14px]"
+              />
+              <ReactTooltip
+                id={`es279`}
+                place="top"
+                effect="solid"
+                style={{
+                  width: "290px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  textAlign: "left",
+                }}
+              />
+                    </p>
+                </div>
+            </th>
+            <th className="text-[12px] border border-gray-300 px-2 py-2 text-center"   style={{ width: "17vw", textAlign: "left" }}>
+                <div className="flex items-center relative justify-center">
+                    <p>Employee Category</p>
+                    <p>
+                    <MdInfoOutline
+                data-tooltip-id={`es280`}
+                data-tooltip-html="Specify employee category."
+                className="mt-1 ml-2 text-[14px]"
+              />
+              <ReactTooltip
+                id={`es280`}
+                place="top"
+                effect="solid"
+                style={{
+                  width: "290px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  textAlign: "left",
+                }}
+              />
+                    </p>
+                </div>
+            </th>
+            <th className="text-[12px] border border-gray-300 px-2 py-2 text-center"   style={{ width: "17vw", textAlign: "left" }}>
+                <div className="flex items-center relative justify-center">
+                    <p>Total number of employees that the organization's anti-corruption policies and procedures have been communicated to</p>
+                    <p>
+                    <MdInfoOutline
+                data-tooltip-id={`es281`}
+                data-tooltip-html="Mention the total number of employees that the organization's anti-corruption policies and procedures have been communicated to."
+                className="mt-1 ml-2 text-[14px]"
+              />
+              <ReactTooltip
+                id={`es281`}
+                place="top"
+                effect="solid"
+                style={{
+                  width: "290px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  textAlign: "left",
+                }}
+              />
+                    </p>
+                </div>
+            </th>
+            <th className="text-[12px] border border-gray-300 px-2 py-2 text-center"   style={{ width: "17vw", textAlign: "left" }}>
+                <div className="flex items-center relative justify-center">
+                    <p>Total number of employee in this region</p>
+                    <p>
+                    <MdInfoOutline
+                data-tooltip-id={`es282`}
+                data-tooltip-html="Mention the total number of employee in the particular category."
+                className="mt-1 ml-2 text-[14px]"
+              />
+              <ReactTooltip
+                id={`es282`}
+                place="top"
+                effect="solid"
+                style={{
+                  width: "290px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  textAlign: "left",
+                }}
+              />
+                    </p>
+                </div>
+            </th>
+           
+        </tr>
+    </thead>
+    <tbody className="border border-gray-300">
+        <tr className="text-center flex justify-center">
+            Plese slsect
+            
+         
+        </tr>
+      
+    </tbody>
+</table>
+
+
+          </div>
         )}
 
         <div className="mb-6">
@@ -281,7 +404,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>
