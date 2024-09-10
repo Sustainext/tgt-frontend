@@ -16,9 +16,9 @@ import LocationDropdownTableGrid from "../../../../shared/widgets/Economic/locti
 const widgets = {
   LocationDropdownTableGrid: LocationDropdownTableGrid,
 };
-const view_path = "";
+const view_path = "gri-economic-anti_corruption-comm_and_training-205-2e-policies";
 const view_path2 =
-  "gri-economic-anti_corruption-comm_and_training-205-2a-governance_body_members";
+  "gri-economic-anti_corruption-comm_and_training-205-2d-training";
 const client_id = 1;
 const user_id = 1;
 
@@ -82,7 +82,7 @@ const uiSchema = {
   },
 };
 
-const Screen5 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen5 = ({ selectedOrg, year, selectedCorp,datarefreshtwo }) => {
   const [formData, setFormData] = useState([{}]);
   const [locationdata, setLocationdata] = useState(); // Initialize as empty array
   const [r_schema, setRemoteSchema] = useState({});
@@ -158,7 +158,7 @@ const Screen5 = ({ selectedOrg, year, selectedCorp }) => {
   };
   const loadFormData2 = async () => {
     LoaderOpen();
-
+    setLocationdata();
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path2}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
@@ -171,7 +171,7 @@ const Screen5 = ({ selectedOrg, year, selectedCorp }) => {
   };
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([]);
+    setFormData([{}]);
 
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
@@ -196,11 +196,11 @@ const Screen5 = ({ selectedOrg, year, selectedCorp }) => {
     } else if (!toastShown.current) {
       toastShown.current = true;
     }
-  }, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp,datarefreshtwo]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // updateFormData();
+    updateFormData();
     console.log("Form data:", formData);
   };
   console.log("Location data: locationdata", locationdata);
@@ -254,8 +254,8 @@ const Screen5 = ({ selectedOrg, year, selectedCorp }) => {
         {Array.isArray(locationdata) && locationdata.length > 0 ? (
           <div className="mx-2">
             <Form
-              schema={schema}
-              uiSchema={uiSchema}
+              schema={r_schema}
+              uiSchema={r_ui_schema}
               formData={formData}
               onChange={handleChange}
               validator={validator}
@@ -281,7 +281,7 @@ const Screen5 = ({ selectedOrg, year, selectedCorp }) => {
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

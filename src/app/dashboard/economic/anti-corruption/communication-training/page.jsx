@@ -21,6 +21,8 @@ const Communicationtraining = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
+  const [datarefresh, setDatarefresh] = useState(0);
+  const [datarefreshtwo, setDatarefreshtwo] = useState(0);
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -142,30 +144,35 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         selectedCorp={selectedCorp}
         year={year}
         month={activeMonth}
+        setDatarefresh={setDatarefresh}
       />
       <Screen2
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
         month={activeMonth}
+        datarefresh={datarefresh}
       />
       <Screen3
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
         month={activeMonth}
+        datarefresh={datarefresh}
       />
           <Screen4
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
         month={activeMonth}
+        setDatarefreshtwo={setDatarefreshtwo}
       />
              <Screen5
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
         month={activeMonth}
+        datarefreshtwo={datarefreshtwo}
       />
     </>
   );

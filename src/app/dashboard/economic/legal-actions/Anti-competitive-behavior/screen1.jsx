@@ -86,11 +86,11 @@ const uiSchema = {
       "ui:hading":
         "If yes, pleas specify the number of legal actions pending or completed during the reporting period regarding anti-competitive behavior.",
       "ui:hadingtooltip":
-        "Specify the number of public legal cases regarding corruption brought against the organization or its employees during the reporting period ",
+        "<p>i) Anti-competitive behavior: action of the organization or employees that can result in collusion with potential competitors,with the purpose of limiting the effects of market competition.</p><p>ii) Anti-trust and monopoly practice: action of the organization that can result in collusion to erect barriers for entry</p>",
       "ui:hadingtooltipdisplay": "block",
       "ui:title": "Legal action(s) pending ",
       "ui:tooltip":
-        " Please specify what has been assured and on what basis it has been assured.",
+        "Please specify what has been assured and on what basis it has been assured.",
       "ui:tooltipdisplay": "none",
       "ui:widget": "WithhaddinginputWidget",
       "ui:inputfildtype": "number",

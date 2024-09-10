@@ -204,7 +204,7 @@ const LocationDropdownTableGrid = ({
             <th className="w-[5vw] border border-gray-300"></th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="border-b border-gray-300">
           {Object.entries(locationMap).map(([locationName]) => (
             <React.Fragment key={locationName}>
               {(localValue[locationName] || []).map((row, rowIndex) => (
@@ -212,18 +212,18 @@ const LocationDropdownTableGrid = ({
                   {rowIndex === 0 && (
                     <td
                       rowSpan={(localValue[locationName] || []).length}
-                      className="p-2 border border-gray-300 text-center"
+                      className="p-2 border-l border-t border-r border-gray-300 text-center text-sm"
                     >
                       {locationName}
                     </td>
                   )}
                   {options.titles.map((title, colIndex) => (
-                    <td key={colIndex} className="p-2 border border-gray-300">
+                    <td key={colIndex} className="p-1 border border-gray-300">
                       {title.widgettype === "number" ? (
                         <input
                           type="number"
-                          className="w-full p-2 border-b border-gray-300 rounded"
-                          placeholder="enter data"
+                          className="w-full p-2 rounded text-sm"
+                          placeholder="Enter Value"
                           value={row[title.tittlekey] || ""}
                           onChange={(e) =>
                             updateField(
@@ -237,8 +237,8 @@ const LocationDropdownTableGrid = ({
                       ) : title.widgettype === "text" ? (
                         <input
                           type="text"
-                          className="w-full p-2 border-b border-gray-300 rounded"
-                          placeholder="enter data"
+                          className="w-full p-2   rounded text-sm"
+                          placeholder="Enter Value"
                           value={row[title.tittlekey] || ""}
                           onChange={(e) =>
                             updateField(
@@ -250,15 +250,15 @@ const LocationDropdownTableGrid = ({
                           }
                         />
                       ) : (
-                        <div className="w-full p-2 border-b border-gray-300 rounded"></div>
+                        <div className="w-full  border-b border-gray-300 rounded"></div>
                       )}
                     </td>
                   ))}
-                  <td className="p-2 border border-gray-300 text-center">
+                  <td className="p-4 border-r  border-b border-gray-300 flex justify-center">
                     <button
                       type="button"
                       onClick={() => onRemove(locationName, rowIndex)}
-                      className="text-red-500"
+                      className="text-[20px] text-red-600"
                     >
                       <MdOutlineDeleteOutline />
                     </button>
@@ -267,17 +267,23 @@ const LocationDropdownTableGrid = ({
               ))}
               <tr>
                 <td
-                  colSpan={options.titles.length + 1}
-                  className="p-2 border border-gray-300 text-center"
+                  rowSpan={1}
+                  className="p-2 border-l border-gray-300   text-center"
+                ></td>
+                <td
+                  colSpan={3}
+                  className="p-2 border-l border-gray-300  text-center"
                 >
                   <button
                     type="button"
                     onClick={() => addRow(locationName)}
-                    className="text-blue-500 flex items-center"
+                    className="text-blue-500 flex items-center text-sm"
                   >
-                    Add Row <MdAdd />
+                    Add Category
+                    <MdAdd />
                   </button>
                 </td>
+                <td className="p-4 border-x border-b border-gray-300 text-center"></td>
               </tr>
             </React.Fragment>
           ))}

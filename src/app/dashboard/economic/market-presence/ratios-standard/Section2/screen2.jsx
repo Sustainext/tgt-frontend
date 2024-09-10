@@ -16,7 +16,7 @@ const widgets = {
   inputWidget: CommoninputWidget,
 };
 
-const view_path = "gri-economic-financial_implications-201-2-no_system";
+const view_path = "gri-economic-ratios_of_standard_entry-202-1d-definition";
 const client_id = 1;
 const user_id = 1;
 
@@ -138,32 +138,32 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
     }
   };
 
-  // const loadFormData = async () => {
-  //   LoaderOpen();
-  //   setFormData([{}]);
-  //   const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
-  //   try {
-  //     const response = await axiosInstance.get(url);
-  //     console.log("API called successfully:", response.data);
-  //     setRemoteSchema(response.data.form[0].schema);
-  //     setRemoteUiSchema(response.data.form[0].ui_schema);
-  //     setFormData(response.data.form_data[0].data);
-  //   } catch (error) {
-  //     setFormData([{}]);
-  //   } finally {
-  //     LoaderClose();
-  //   }
-  // };
-  // useEffect(() => {
-  //   if (selectedOrg && year) {
-  //     loadFormData();
-  //     toastShown.current = false;
-  //   } else {
-  //     if (!toastShown.current) {
-  //       toastShown.current = true;
-  //     }
-  //   }
-  // }, [selectedOrg, year, selectedCorp]);
+  const loadFormData = async () => {
+    LoaderOpen();
+    setFormData([{}]);
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
+    try {
+      const response = await axiosInstance.get(url);
+      console.log("API called successfully:", response.data);
+      setRemoteSchema(response.data.form[0].schema);
+      setRemoteUiSchema(response.data.form[0].ui_schema);
+      setFormData(response.data.form_data[0].data);
+    } catch (error) {
+      setFormData([{}]);
+    } finally {
+      LoaderClose();
+    }
+  };
+  useEffect(() => {
+    if (selectedOrg && year) {
+      loadFormData();
+      toastShown.current = false;
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
+    }
+  }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -217,8 +217,8 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -232,7 +232,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

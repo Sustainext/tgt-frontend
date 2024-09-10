@@ -319,10 +319,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
             Provide details of the total monetary value of financial assistance received by the organization from any government during the reporting period, including
               <MdInfoOutline
                 data-tooltip-id={`es25`}
-                data-tooltip-html="
-               This section documents the data corresponding to the
-type and scope of programs implemented and assistance
-provided to upgrade employee skills.  "
+                data-tooltip-html="Provide details of the total monetary value of financial assistance received by the organization from any government during the reporting period for all countries in which the organisation operates. "
                 className="mt-1.5 ml-2 text-[18px]"
               />
               <ReactTooltip
@@ -346,12 +343,12 @@ provided to upgrade employee skills.  "
             <div className="flex float-end gap-2">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 204-1a
+                  GRI 204-4a
                 </div>
               </div>
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 204-2b
+                  GRI 204-4b
                 </div>
               </div>
             </div>
