@@ -7,7 +7,7 @@ const nextConfig = {
       NEXT_APP_SUPERSET_URL_ENV_EMISSIONS: 'https://superset-dev.sustainext.ai/superset/dashboard/p/78Vx0pKxNqZ&standalone=true',
       NEXT_APP_POWERBI_URL_ENV_ENERGY: 'https://app.powerbi.com/view?r=eyJrIjoiZmIzMTc5NWQtOTgyZS00NmQyLWE3ZjYtNmQxZTUxOGI2NWFmIiwidCI6ImIwZjhlODRjLWU0YTgtNDc5OS04MWIwLWRmMTUwMDY0MDM3ZCJ9',
       NEXT_APP_POWERBI_URL_ENV_WASTE: 'https://app.powerbi.com/view?r=eyJrIjoiZGMwZTgzNzMtNjM0My00NWQ4LWEzMTEtMjVjZTM3MGUyZmU3IiwidCI6ImIwZjhlODRjLWU0YTgtNDc5OS04MWIwLWRmMTUwMDY0MDM3ZCJ9',
-      NEXT_APP_SUPERSET_URL_ENV_WASTE: 'https://superset-dev.sustainext.ai/superset/dashboard/p/vgmxy0BzP4Q/',
+      NEXT_APP_SUPERSET_URL_ENV_WASTE: 'https://superset-dev.sustainext.ai/superset/dashboard/12/',
       NEXT_APP_POWERBI_URL_SOCIAL_EMPLOYMENT: 'https://app.powerbi.com/view?r=eyJrIjoiNmQyNjhlN2YtMzNiZi00Y2ZjLTk2MGEtYzQyMGM4ODZiYjYxIiwidCI6ImIwZjhlODRjLWU0YTgtNDc5OS04MWIwLWRmMTUwMDY0MDM3ZCJ9',
       NEXT_APP_POWERBI_URL_SOCIAL_OHS: 'https://app.powerbi.com/view?r=eyJrIjoiZDhlNzgxMTItMjk5NC00OGRiLTk4OTYtNWVlYmI2NzZiZDU4IiwidCI6ImIwZjhlODRjLWU0YTgtNDc5OS04MWIwLWRmMTUwMDY0MDM3ZCJ9',
       NEXT_APP_POWERBI_URL_SOCIAL_DIVERSITYINCLUSION: 'https://app.powerbi.com/view?r=eyJrIjoiYTg0NzMzYTAtMjM1Ni00MGEwLTlkYTUtMjM4Y2M1MDlkYmFmIiwidCI6ImIwZjhlODRjLWU0YTgtNDc5OS04MWIwLWRmMTUwMDY0MDM3ZCJ9',
