@@ -14,7 +14,7 @@ export default function DashboardLayout({ children }) {
   useEffect(() => {
     if (!document.getElementById('gtranslate-script')) {
       window.gtranslateSettings = {
-        default_language: defaultLanguage,
+        default_language: 'en',
         native_language_names: true,
         languages: ['en', 'fr', 'ja', 'hi'],
         wrapper_selector: '.gtranslate_wrapper',
