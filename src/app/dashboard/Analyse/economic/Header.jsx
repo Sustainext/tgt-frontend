@@ -30,7 +30,7 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
   const gri = [
     {
       category: "Tab1",
-      tag: "GRI 201",
+      tag: "GRI 202",
       data: [
         { tagid: "1", infoid: "41" },
       ],

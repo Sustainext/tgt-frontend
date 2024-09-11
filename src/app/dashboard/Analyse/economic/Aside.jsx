@@ -22,9 +22,9 @@ const Aside = ({ activeTab, handleTabClick }) => {
             onClick={() => handleTabClick("Tab1")}
           >
             {/* <IoBusinessOutline className="w-5 h-5 mr-5" /> */}
-            <span className="mr-7 text-left">Market Presence </span>
+            <span className="mr-7 text-left">Ratio of the entry-level wage to the minimum wage by gender at significant locations of operation  </span>
           </button>
-          <div>
+      
             <button
               className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
                 activeTab === "Tab2"
@@ -34,10 +34,21 @@ const Aside = ({ activeTab, handleTabClick }) => {
               onClick={() => handleTabClick("Tab2")}
             >
               {/* <IoBulbOutline className="w-5 h-5 mr-5" /> */}
-              <span className="mr-12 text-left">Strategy, policies and practices</span>
-              <div className="inset-y-0 -right-2 flex items-center pointer-events-none"></div>
+              <span className="mr-12 text-left">Operations assessed for risks related to corruption</span>
+           
             </button>
-          </div>
+            <button
+              className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
+                activeTab === "Tab2"
+                  ? "text-[#007EEF] "
+                  : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
+              }`}
+              onClick={() => handleTabClick("Tab3")}
+            >
+              {/* <IoBulbOutline className="w-5 h-5 mr-5" /> */}
+              <span className="mr-12 text-left">Communication and training about anti-corruption policies and procedures</span>
+           
+            </button>
 
 
         </div>
