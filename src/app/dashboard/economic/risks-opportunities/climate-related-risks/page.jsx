@@ -141,18 +141,18 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         selectedLocation={selectedLocation}
       />
-      <Screen2
+      {/* <Screen2
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
         selectedLocation={selectedLocation}
-      />
-      <Screen3
+      /> */}
+      {/* <Screen3
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
         selectedLocation={selectedLocation}
-      />
+      /> */}
     </>
   );
 };

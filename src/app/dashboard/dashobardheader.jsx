@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { loadFromLocalStorage } from "../utils/storage";
 import Link from "next/link";
 import Profile from "./Profile";
+import { Oval } from 'react-loader-spinner';
+
 
 const DashboardHeader = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -72,6 +74,45 @@ const DashboardHeader = () => {
     setProfileVisible(true);
     setDropdownVisible(false);
   };
+
+  const [open, setOpen] = useState(false);  // State to control the Backdrop
+  
+  useEffect(() => {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+          mutation.addedNodes.forEach(node => {
+            if (node.nodeType === Node.ELEMENT_NODE) {
+              if (node.matches('._fluentc_widget-language-manager.show')) {
+                node.classList.remove('show');
+              }
+            }
+          });
+        }
+        
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          const target = mutation.target;
+          if (target === document.body && target.classList.contains('_fluentc_widget-banner-show')) {
+            target.classList.remove('_fluentc_widget-banner-show');
+            const widget_div = document.querySelector('._fluentc_widget-language-manager.show');
+            widget_div?.classList.remove('show');
+          }
+          
+          // Check if the mutation target is the loader div
+          if (target.matches('._fluentc_widget-language-manager')) {
+            const isLoading = target.classList.contains('loading');
+            setOpen(isLoading);
+            console.log('loading', isLoading);
+          }
+        }
+      });
+    });
+  
+    const config = { attributes: true, childList: true, subtree: true };
+    observer.observe(document.body, config);
+  
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <>
@@ -193,6 +234,18 @@ const DashboardHeader = () => {
           <Profile onClose={() => setProfileVisible(false)} />
         </div>
       )}
+      {open && (
+          <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 z-[100]">
+            <Oval
+              height={50}
+              width={50}
+              color="#00BFFF"
+              secondaryColor="#f3f3f3"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
+          </div>
+        )}
     </>
   );
 };

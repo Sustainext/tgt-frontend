@@ -295,6 +295,13 @@ input[type='number']::-webkit-outer-spin-button {
   z-index: 1;
 }
 
+div._fluentc_widget-language-manager.show{
+  display: none !important;
+}
+
+body._fluentc_widget-banner-show{
+  top: 0px !important;
+}
 .gtranslate_wrapper {
   margin: 20px;
   text-align: right;

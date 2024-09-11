@@ -176,11 +176,11 @@ const Reference = () => {
    const data={
         "assessment_id":id,
         "topics":arr,
-        "esg_selected":{environmentChecked:envChecked,socialChecked:socChecked,governanceChecked:govChecked}
+        // "esg_selected":{environmentChecked:envChecked,socialChecked:socChecked,governanceChecked:govChecked}
     }
     const url = dataPresent?`${process.env.BACKEND_API_URL}/materiality_dashboard/assessment-topic-selections/${id}/edit/`:`${process.env.BACKEND_API_URL}/materiality_dashboard/assessment-topic-selection/`
   try {
-    const response = dataPresent?await axiosInstance.put(url,data):await axiosInstance.post(url,data);
+    const response = dataPresent?await axiosInstance.patch(url,data):await axiosInstance.post(url,data);
     
     if(response.status>=200&&response.status<300){
       const markComplete={
@@ -236,6 +236,8 @@ const Reference = () => {
   }
    
 };
+
+console.log(formData,"seee")
 
 const convertDate=(dateStr)=>{
   const date = new Date(dateStr);

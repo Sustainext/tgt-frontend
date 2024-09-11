@@ -12,7 +12,7 @@ const nextConfig = {
       NEXT_APP_POWERBI_URL_SOCIAL_COMMUNITYDEVELOPMENT: 'https://app.powerbi.com/view?r=eyJrIjoiMzE0ZjgzNjgtYzhmMS00MmVhLWEzNmQtZTRmYzViZTg5MjI1IiwidCI6ImIwZjhlODRjLWU0YTgtNDc5OS04MWIwLWRmMTUwMDY0MDM3ZCJ9',
       NEXT_PUBLIC_APP_CLIMATIQ_KEY: 'HE3SK2V2F04MTSG9210JSQXB2QCX',
       NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION: '8',
-
+ 
   },
   images: {
       domains: ['udm-be-dev.sustainext.ai'],
@@ -38,7 +38,7 @@ const nextConfig = {
         // In production, you may want to handle errors differently
         // For example, ignore certain types of errors or warnings
         // Modify webpack config as needed
-
+ 
       // }
       return config;
   },
@@ -60,5 +60,5 @@ const nextConfig = {
     ];
   },
 };
-
+ 
 export default nextConfig;
