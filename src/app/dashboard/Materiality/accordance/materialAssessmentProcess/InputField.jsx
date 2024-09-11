@@ -297,14 +297,14 @@ const InputField = ({ handleTabClick }) => {
             <div className="mt-7">
             <div className="flex mb-8 mx-2">
           <div className=" relative w-[55%] flex">
-            <p className="text-[15px] text-gray-700 flex w-full">
+            <p className="text-[15px] text-gray-700 w-auto">
             Describe the process organisation has followed to determine its material topics including:
               
             </p>
             <MdInfoOutline
                 data-tooltip-id={`tooltip-3-1-a`}
                 data-tooltip-html={`<p>This section documents the data corresponding to the process to determine material topics.</p>`}
-                className="mt-1 ml-2 w-[30px] text-[14px]"
+                className="mt-1 ml-2 w-[14px] flex-shrink-0"
               />
               {/* Tooltip */}
               <ReactTooltip

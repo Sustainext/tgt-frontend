@@ -26,23 +26,35 @@ const MaterialityRadioWidget = ({
 
     <div className='mb-6 pb-4'>
     <div className='flex mb-2'>
-        <div className='relative w-[55%]'>
-        <p className='text-[15px] text-gray-700 w-full mb-2'>
-          {uiSchema['ui:title']}
-          <MdInfoOutline
-            data-tooltip-id={`tooltip-${uiSchema['ui:title'].replace(/\s+/g, '-')}`}
-            data-tooltip-html={`${uiSchema["ui:tooltip"]}`}
-            className='ml-2 text-[14px] align-middle'
-            style={{ display: uiSchema['ui:tooltip'] ? 'inline' : 'none' }}
-          />
-          <ReactTooltip
-            id={`tooltip-${uiSchema['ui:title'].replace(/\s+/g, '-')}`}
-            place='top'
-            effect='solid'
-            className='!max-w-xs !bg-black !text-white !text-xs !rounded-lg !shadow-md'
-          />
-        </p>
-        </div>
+    <div className="relative w-[55%] flex">
+  <p className="text-[15px] text-gray-700 w-auto">
+    {uiSchema["ui:title"]}
+  </p>
+  <MdInfoOutline
+    data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(/\s+/g, "-")}`}
+    data-tooltip-html={`${uiSchema["ui:tooltip"]}`}
+    className="ml-2 flex-shrink-0 mt-1"
+    style={{
+      width: '14px',
+      // height: '30px',  // Ensure the icon always stays at 30x30
+      display: uiSchema["ui:tooltipdisplay"],
+    }}
+  />
+  {/* Tooltip */}
+  <ReactTooltip
+    id={`tooltip-${uiSchema["ui:title"].replace(/\s+/g, "-")}`}
+    place="top"
+    effect="solid"
+    style={{
+      width: "300px",
+      backgroundColor: "#000",
+      color: "white",
+      fontSize: "12px",
+      boxShadow: 3,
+      borderRadius: "8px",
+    }}
+  />
+</div>
         
         <button className="text-[#007EEF] bg-slate-200 rounded-md text-[11px] w-[72px] h-[22px] ml-6 text-center mt-1">
             {uiSchema['ui:tag']}
