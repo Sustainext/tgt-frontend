@@ -226,7 +226,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, datarefresh }) => {
               <MdInfoOutline
                 data-tooltip-id={`es278`}
                 data-tooltip-html="Specify the Total number of employees that the organization’s anti-corruption policies and procedures have been communicated to, broken down by employee category and region."
-                className="mt-1.5 ml-2 text-[20px]"
+                className="mt-1.5 ml-2 text-[21px]"
               />
               <ReactTooltip
                 id={`es278`}
