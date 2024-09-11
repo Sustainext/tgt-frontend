@@ -16,7 +16,7 @@ const widgets = {
   TableWidget: Economictable,
 };
 
-const view_path = "gri-general-workforce_other_workers-workers-2-8-a";
+const view_path = "gri-economic-climate_related_risks-202-2a-other_risk";
 const client_id = 1;
 const user_id = 1;
 
@@ -107,7 +107,7 @@ const uiSchema = {
       titles: [
         {
             key: "RiskCategory",
-            title: "Type of Risk",
+            title: "Risk Category",
             tooltip:
               "Please choose the specific type of risk within the selected category",
             tooltipdisplay: "none",
@@ -302,7 +302,7 @@ const Screen3 = ({ selectedOrg, selectedCorp, selectedLocation, year, month }) =
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
     console.log("Form data:", formData);
-    // updateFormData();
+    updateFormData();
   };
 
   return (
@@ -355,17 +355,13 @@ their contractual relationships with your organization, and the types of work th
         </div>
         <div className="mx-2 ">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
-            formContext={{
-              colhadding: "Risk Category",
-              colname: "Transition Risk",
-              view: 0,
-            }}
+       
           />
         </div>
 
@@ -376,7 +372,7 @@ their contractual relationships with your organization, and the types of work th
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

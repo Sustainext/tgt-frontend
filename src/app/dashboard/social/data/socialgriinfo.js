@@ -9126,4 +9126,235 @@ export const Socialdata = [
       </>,
     ],
   },
+  {
+    category: ["132"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">GRI 202: Market Presence 2016</h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Disclosure 202-1 Ratios of standard entry level wage
+          by gender compared to local minimum wage
+
+          </p>
+          <div className="h-[520px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">
+            Background:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            This disclosure applies to those organizations in which a substantial portion of their employees, and workers (excluding employees) performing the organization’s activities, are compensated in a manner or scale that is closely linked to laws or regulations on minimum wage. Providing wages above the minimum wage can help contribute to the economic well-being of workers performing the organization’s activities. The impacts of wage levels are immediate, and they directly affect individuals, organizations, countries and economies. The distribution of wages is crucial for eliminating inequalities, such as wage gap differences between women and men, or nationals and migrants. Also, entry level wages paid compared to local minimum wages show the competitiveness of an organization’s wages and provide information relevant for assessing the effect of wages on the local labor market. Comparing this information by gender can also be a measure of an organization’s approach to equal opportunity in the workplace.
+            </p>
+
+           
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12379"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["133"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-01.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-[#EA1D2D] text-[17px] font-bold ml-2">SDG 1</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 1: End poverty in all its forms
+            everywhere
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 1.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, eradicate extreme poverty for all people everywhere,
+              currently measured as people living on less than $1.25 a day
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">1.2.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of population living below the national poverty line,
+              by sex and age
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">1.2.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of men, women and children of all ages living in
+              poverty in all its dimensions according to national definitions
+            </p>
+           
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["134"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-05.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-orange-600 text-[17px] font-bold ml-2">SDG 5</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 5: Gender equality
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+        
+          
+            <p className="text-[13px] text-[#222222] mb-2">Target 5.4</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Recognize and value unpaid care and domestic work through the
+              provision of public services, infrastructure and social protection
+              policies and the promotion of shared responsibility within the
+              household and the family as nationally appropriate.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#727272] mb-2">5.4.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of time spent on unpaid domestic and care work, by sex,
+              age and location.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal5"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["135"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-08.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-red-900 text-[17px] font-bold ml-2">SDG 8</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 8: Promote sustained, inclusive and
+            sustainable economic growth, full and productive employment and
+            decent work for all
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 8.5</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, achieve full and productive employment and decent work
+              for all women and men, including for young people and persons with
+              disabilities, and equal pay for work of equal value.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.5.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Average hourly earnings of female and male employees, by
+              occupation, age and persons with disabilities.
+            </p>
+
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.5.2</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Unemployment rate, by sex, age and persons with disabilities.
+            </p>
+           
+         
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal8"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["136"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+      GRI 205: Anti-corruption 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Disclosure 205-2 Communication and training about anti-corruption policies and procedures
+          </p>
+          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-4">Guidance :</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            In the context of this GRI Standard, the term ‘business partners’ includes, among others, suppliers, agents, lobbyists and other intermediaries, joint venture and consortia partners, governments, customers, and clients.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-4">
+            Background:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Communication and training build the internal and external awareness and the necessary capacity to combat corruption.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12412"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
 ];

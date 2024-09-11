@@ -218,7 +218,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
             Restatements of Information
-              <MdInfoOutline data-tooltip-id={`tooltip-employees`}
+              {/* <MdInfoOutline data-tooltip-id={`tooltip-employees`}
                 data-tooltip-content="This section documents data regarding the specific workers, activities, and
 workplaces encompassed by the occupational health and safety
 management system. It highlights which groups of employees,
@@ -232,7 +232,7 @@ and explains any exclusions that may exist." className="mt-1.5 ml-2 text-[14px]"
                 borderRadius: "8px",
                 textAlign: 'left',
               }}>
-              </ReactTooltip>
+              </ReactTooltip> */}
             </h2>
           </div>
 

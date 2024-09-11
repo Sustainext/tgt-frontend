@@ -15,6 +15,7 @@ const LocationDropdownTableGrid = ({
   required,
   onChange,
   locationdata,
+  formContext,
 }) => {
   const [localValue, setLocalValue] = useState({});
   const [shortKeyMap, setShortKeyMap] = useState({});
@@ -161,7 +162,7 @@ const LocationDropdownTableGrid = ({
                 <p>
                   <MdInfoOutline
                     data-tooltip-id="223"
-                    data-tooltip-content="hi"
+                    data-tooltip-content={formContext.locationtooltip}
                     className="ml-2 cursor-pointer"
                   />
                   <ReactTooltip

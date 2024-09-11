@@ -1,9 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import Select from "react-select";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { Currency } from "../../data/currency";
+
+// Debounce function to delay state updates
+const useDebounce = (callback, delay) => {
+  const timer = useRef(null);
+  return (...args) => {
+    if (timer.current) clearTimeout(timer.current);
+    timer.current = setTimeout(() => {
+      callback(...args);
+    }, delay);
+  };
+};
 
 const options = { enumOptions: ["Yes", "No", "Variable"] };
 
@@ -44,13 +55,18 @@ const currencyOptions = Currency.map(({ currency, country, currency_name }) => (
   label: `${currency} - ${currency_name}`,
 }));
 
-const GRI2021combinWidhet = ({ locationdata, onChange, value = [] }) => {
+const GRI2021combinWidhet = ({ locationdata, onChange, value = {} }) => {
   const [locations, setLocations] = useState(
     Array.isArray(value.locations) ? value.locations : [{ id: 1, value: "" }]
   );
   const [radioValue, setRadioValue] = useState(value.radioValue || "");
   const [currencyValue, setCurrencyValue] = useState(value.currencyValue || "");
   const [wages, setWages] = useState(value.wages || {});
+
+  // Debounce the onChange handler to prevent too many updates
+  const debouncedOnChange = useDebounce((formData) => {
+    onChange(formData);
+  }, 300);
 
   useEffect(() => {
     const formData = {
@@ -59,26 +75,31 @@ const GRI2021combinWidhet = ({ locationdata, onChange, value = [] }) => {
       currencyValue,
       wages,
     };
-    onChange(formData); // Call onChange to pass data up
-  }, [locations, radioValue, currencyValue, wages, onChange]);
+    debouncedOnChange(formData);
+  }, [locations, radioValue, currencyValue, wages, debouncedOnChange]);
 
+  // Handle location selection change
   const handleLocationChange = (id, selectedOption) => {
-    const updatedLocations = locations.map((location) =>
-      location.id === id
-        ? { ...location, value: selectedOption ? selectedOption.value : "" }
-        : location
+    setLocations((prevLocations) =>
+      prevLocations.map((location) =>
+        location.id === id
+          ? { ...location, value: selectedOption ? selectedOption.value : "" }
+          : location
+      )
     );
-    setLocations(updatedLocations);
   };
 
+  // Handle radio button change for minimum wage
   const handleRadioChange = (e) => {
     setRadioValue(e.target.value);
   };
 
+  // Handle currency selection change
   const handleCurrencyChange = (selectedOption) => {
     setCurrencyValue(selectedOption ? selectedOption.value : "");
   };
 
+  // Handle wage input change
   const handleWageChange = (locationValue, gender, wageValue) => {
     setWages((prevWages) => ({
       ...prevWages,
@@ -89,10 +110,12 @@ const GRI2021combinWidhet = ({ locationdata, onChange, value = [] }) => {
     }));
   };
 
+  // Add new location row
   const addRow = () => {
     setLocations([...locations, { id: Date.now(), value: "" }]);
   };
 
+  // Remove a location row
   const removeRow = (id) => {
     setLocations(locations.filter((location) => location.id !== id));
     setWages((prevWages) => {
@@ -260,19 +283,19 @@ const GRI2021combinWidhet = ({ locationdata, onChange, value = [] }) => {
                         {gender}
                       </td>
                       <td className="p-2 border border-gray-300">
-                      <input
-                type="number"
-                className="w-full p-2 border-b border-gray-300 rounded"
-                placeholder="Enter Value"
-                value={wages[location.value]?.[gender] || ""}
-                onChange={(e) =>
-                  handleWageChange(
-                    location.value,
-                    gender,
-                    e.target.value
-                  )
-                }
-              />
+                        <input
+                          type="number"
+                          className="w-full p-2 border-b border-gray-300 rounded"
+                          placeholder="Enter Value"
+                          value={wages[location.value]?.[gender] || ""}
+                          onChange={(e) =>
+                            handleWageChange(
+                              location.value,
+                              gender,
+                              e.target.value
+                            )
+                          }
+                        />
                       </td>
                     </tr>
                   ))

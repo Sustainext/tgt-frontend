@@ -6,7 +6,7 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import EconomicHeader2 from "../../EconomicHeader2";
+import EconomicHeader5 from "../../EconomicHeader5";
 
 import Screen1 from "./screen1";
 const Climaterelated = () => {
@@ -18,6 +18,7 @@ const Climaterelated = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState("");
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -125,18 +126,21 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
             ))}
         </div>
       </div>
-      <EconomicHeader2
+      <EconomicHeader5
         selectedOrg={selectedOrg}
         setSelectedOrg={setSelectedOrg}
         selectedCorp={selectedCorp}
         setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
+        setSelectedLocation={setSelectedLocation}
+        selectedLocation={selectedLocation}
       />
       <Screen1
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}
+        selectedLocation={selectedLocation}
       />
    
     </>

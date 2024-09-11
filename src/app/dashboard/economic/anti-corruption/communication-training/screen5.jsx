@@ -59,13 +59,13 @@ const uiSchema = {
           {
             title:
               "Total number of employees s that have received training on anti-corruption",
-            tooltip: "Mention the total number of employees that the organization's anti-corruption policies and procedures have been communicated to.",
+            tooltip: "Mention the total number of employees that have received training on anti-corruption.",
             widgettype: "number",
             tooltipdisplay: "block",
             tittlekey: "Totalnumberemployees",
           },
           {
-            title: "TTotal number of employee",
+            title: "Total number of employee",
             tooltip: "Mention the total number of employee in the particular category.",
             widgettype: "number",
             tooltipdisplay: "block",
@@ -221,7 +221,7 @@ const Screen5 = ({ selectedOrg, year, selectedCorp,datarefreshtwo }) => {
               employee category and region.
               <MdInfoOutline
                 data-tooltip-id={`es278`}
-                data-tooltip-html="Specify the Total number of employees that the organization’s anti-corruption policies and procedures have been communicated to, broken down by employee category and region."
+                data-tooltip-html="Total number of employees that have received training on anti-corruption, broken down by employee category and region."
                 className="mt-1.5 ml-2 text-[20px]"
               />
               <ReactTooltip
@@ -259,6 +259,9 @@ const Screen5 = ({ selectedOrg, year, selectedCorp,datarefreshtwo }) => {
               formData={formData}
               onChange={handleChange}
               validator={validator}
+              formContext={{
+                locationtooltip: "Specify the name of the locations where the organisations's employees have received training on anti-corruption.",
+              }}
               widgets={{
                 ...widgets,
                 LocationDropdownTableGrid: (props) => (
@@ -271,7 +274,145 @@ const Screen5 = ({ selectedOrg, year, selectedCorp,datarefreshtwo }) => {
             />
           </div>
         ) : (
-          <div className="mx-2"></div>
+          <>
+          {selectedOrg && year && (
+            <div className="mx-2 pb-6">
+              <table className="table-fixed border-collapse w-full">
+                <thead className="gradient-background">
+                  <tr className="h-[102px]">
+                    <th
+                      className="text-[12px] border border-gray-300 px-2 py-2 text-left"
+                      style={{ width: "17vw" }}
+                    >
+                      <div className="flex items-center justify-center">
+                        <p>Location Name</p>
+                        <p>
+                          <MdInfoOutline
+                            data-tooltip-id={`es279`}
+                            data-tooltip-html="Specify the name of the locations where the organisations's employees have received training on anti-corruption."
+                            className="mt-1 ml-2 text-[14px]"
+                          />
+                          <ReactTooltip
+                            id={`es279`}
+                            place="top"
+                            effect="solid"
+                            style={{
+                              width: "290px",
+                              backgroundColor: "#000",
+                              color: "white",
+                              fontSize: "12px",
+                              boxShadow: 3,
+                              borderRadius: "8px",
+                              textAlign: "left",
+                            }}
+                          />
+                        </p>
+                      </div>
+                    </th>
+                    <th
+                      className="text-[12px] border border-gray-300 px-2 py-2 text-left"
+                      style={{ width: "17vw" }}
+                    >
+                      <div className="flex items-center justify-center">
+                        <p>Employee Category</p>
+                        <p>
+                          <MdInfoOutline
+                            data-tooltip-id={`es280`}
+                            data-tooltip-html="Specify employee category."
+                            className="mt-1 ml-2 text-[14px]"
+                          />
+                          <ReactTooltip
+                            id={`es280`}
+                            place="top"
+                            effect="solid"
+                            style={{
+                              width: "290px",
+                              backgroundColor: "#000",
+                              color: "white",
+                              fontSize: "12px",
+                              boxShadow: 3,
+                              borderRadius: "8px",
+                              textAlign: "left",
+                            }}
+                          />
+                        </p>
+                      </div>
+                    </th>
+                    <th
+                      className="text-[12px] border border-gray-300 px-2 py-2 text-left"
+                      style={{ width: "17vw" }}
+                    >
+                      <div className="flex items-center justify-center">
+                        <p>
+                          Total number of employees that the organization's
+                          anti-corruption policies and procedures have been
+                          communicated to
+                        </p>
+                        <p>
+                          <MdInfoOutline
+                            data-tooltip-id={`es281`}
+                            data-tooltip-html="Mention the total number of employees that have received training on anti-corruption."
+                            className="mt-1 ml-2 text-[14px]"
+                          />
+                          <ReactTooltip
+                            id={`es281`}
+                            place="top"
+                            effect="solid"
+                            style={{
+                              width: "290px",
+                              backgroundColor: "#000",
+                              color: "white",
+                              fontSize: "12px",
+                              boxShadow: 3,
+                              borderRadius: "8px",
+                              textAlign: "left",
+                            }}
+                          />
+                        </p>
+                      </div>
+                    </th>
+                    <th
+                      className="text-[12px] border border-gray-300 px-2 py-2 text-left"
+                      style={{ width: "17vw" }}
+                    >
+                      <div className="flex items-center justify-center">
+                        <p>Total number of employees in this region</p>
+                        <p>
+                          <MdInfoOutline
+                            data-tooltip-id={`es282`}
+                            data-tooltip-html="Mention the total number of employee in the particular category."
+                            className="mt-1 ml-2 text-[14px]"
+                          />
+                          <ReactTooltip
+                            id={`es282`}
+                            place="top"
+                            effect="solid"
+                            style={{
+                              width: "290px",
+                              backgroundColor: "#000",
+                              color: "white",
+                              fontSize: "12px",
+                              boxShadow: 3,
+                              borderRadius: "8px",
+                              textAlign: "left",
+                            }}
+                          />
+                        </p>
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="border border-gray-300">
+                  <tr>
+                    <td colSpan="4" className="text-center py-4">
+                      Please select the location below
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          )}
+        </>
         )}
 
         <div className="mb-6">
