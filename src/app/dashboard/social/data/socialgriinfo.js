@@ -9319,4 +9319,42 @@ export const Socialdata = [
       </>,
     ],
   },
+  {
+    category: ["136"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+      GRI 205: Anti-corruption 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Disclosure 205-2 Communication and training about anti-corruption policies and procedures
+          </p>
+          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-4">Guidance :</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            In the context of this GRI Standard, the term ‘business partners’ includes, among others, suppliers, agents, lobbyists and other intermediaries, joint venture and consortia partners, governments, customers, and clients.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-4">
+            Background:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Communication and training build the internal and external awareness and the necessary capacity to combat corruption.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12412"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
 ];

@@ -263,6 +263,9 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, datarefresh }) => {
               formData={formData}
               onChange={handleChange}
               validator={validator}
+              formContext={{
+                locationtooltip: "Specify the Total number of employees that the organization’s anti-corruption policies and procedures have been communicated to, broken down by employee category and region.",
+              }}
               widgets={{
                 ...widgets,
                 LocationDropdownTableGrid: (props) => (
@@ -290,7 +293,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, datarefresh }) => {
                           <p>
                             <MdInfoOutline
                               data-tooltip-id={`es279`}
-                              data-tooltip-html="Specify the Total number of employees that the organization’s anti-corruption policies and procedures have been communicated to, broken down by employee category and region."
+                              data-tooltip-html="Specify the name of the locations where the organization’s anti-corruption policies and procedures have been communicated to the business partners."
                               className="mt-1 ml-2 text-[14px]"
                             />
                             <ReactTooltip
@@ -381,7 +384,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, datarefresh }) => {
                           <p>
                             <MdInfoOutline
                               data-tooltip-id={`es282`}
-                              data-tooltip-html="Mention the total number of employees in the particular category."
+                              data-tooltip-html="Mention the total number of employee in the particular category."
                               className="mt-1 ml-2 text-[14px]"
                             />
                             <ReactTooltip

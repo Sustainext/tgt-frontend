@@ -59,7 +59,7 @@ const uiSchema = {
           {
             title:
               "Total number of employees s that have received training on anti-corruption",
-            tooltip: "Mention the total number of employees that the organization's anti-corruption policies and procedures have been communicated to.",
+            tooltip: "Mention the total number of employees that have received training on anti-corruption.",
             widgettype: "number",
             tooltipdisplay: "block",
             tittlekey: "Totalnumberemployees",
@@ -221,7 +221,7 @@ const Screen5 = ({ selectedOrg, year, selectedCorp,datarefreshtwo }) => {
               employee category and region.
               <MdInfoOutline
                 data-tooltip-id={`es278`}
-                data-tooltip-html="Specify the Total number of employees that the organization’s anti-corruption policies and procedures have been communicated to, broken down by employee category and region."
+                data-tooltip-html="Total number of employees that have received training on anti-corruption, broken down by employee category and region."
                 className="mt-1.5 ml-2 text-[20px]"
               />
               <ReactTooltip
@@ -259,6 +259,9 @@ const Screen5 = ({ selectedOrg, year, selectedCorp,datarefreshtwo }) => {
               formData={formData}
               onChange={handleChange}
               validator={validator}
+              formContext={{
+                locationtooltip: "Specify the name of the locations where the organisations's employees have received training on anti-corruption.",
+              }}
               widgets={{
                 ...widgets,
                 LocationDropdownTableGrid: (props) => (
@@ -286,7 +289,7 @@ const Screen5 = ({ selectedOrg, year, selectedCorp,datarefreshtwo }) => {
                         <p>
                           <MdInfoOutline
                             data-tooltip-id={`es279`}
-                            data-tooltip-html="Specify the Total number of employees that the organization’s anti-corruption policies and procedures have been communicated to, broken down by employee category and region."
+                            data-tooltip-html="Specify the name of the locations where the organisations's employees have received training on anti-corruption."
                             className="mt-1 ml-2 text-[14px]"
                           />
                           <ReactTooltip
@@ -348,7 +351,7 @@ const Screen5 = ({ selectedOrg, year, selectedCorp,datarefreshtwo }) => {
                         <p>
                           <MdInfoOutline
                             data-tooltip-id={`es281`}
-                            data-tooltip-html="Mention the total number of employees that the organization's anti-corruption policies and procedures have been communicated to."
+                            data-tooltip-html="Mention the total number of employees that have received training on anti-corruption."
                             className="mt-1 ml-2 text-[14px]"
                           />
                           <ReactTooltip
@@ -377,7 +380,7 @@ const Screen5 = ({ selectedOrg, year, selectedCorp,datarefreshtwo }) => {
                         <p>
                           <MdInfoOutline
                             data-tooltip-id={`es282`}
-                            data-tooltip-html="Mention the total number of employees in the particular category."
+                            data-tooltip-html="Mention the total number of employee in the particular category."
                             className="mt-1 ml-2 text-[14px]"
                           />
                           <ReactTooltip

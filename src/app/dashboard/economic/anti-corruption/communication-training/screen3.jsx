@@ -75,7 +75,7 @@ const uiSchema = {
           {
             title: "Total number of business partners in this region",
             tooltip:
-              "Mention the total number of business partners in this region.",
+              "Mention the total number of business partners.",
             widgettype: "number",
             tooltipdisplay: "block",
             tittlekey: "Totalemployeeinthisregion",
@@ -87,7 +87,7 @@ const uiSchema = {
       "ui:title":
         "Describe if the organization’s anti-corruption policies and procedures have been communicated to any other persons or organizations.",
       "ui:tooltip":
-        "What are the actions taken to determine whether these workers are paid abovethe minimum wage?",
+        "Mention the total number of business partners that the organization’s anti-corruption policies and procedures have been communicated to.",
       "ui:tooltipdisplay": "none",
       "ui:titledisplay": "block",
       "ui:widgetType": "textarea",
@@ -246,7 +246,8 @@ const Screen3 = ({ selectedOrg, year, selectedCorp, datarefresh }) => {
               broken down by type of business partner and region.
               <MdInfoOutline
                 data-tooltip-id={`es278`}
-                data-tooltip-html="Specify the total number of business partners that the organization’s anti-corruption policies and procedures have been communicated to, broken down by type of business partner and region."
+                data-tooltip-html="Specify the total number of business partners that the organization’s anti-corruption policies 
+and procedures have been communicated to, broken down by type of business partner and region"
                 className="mt-1.5 ml-2 text-[20px]"
               />
               <ReactTooltip
@@ -284,6 +285,9 @@ const Screen3 = ({ selectedOrg, year, selectedCorp, datarefresh }) => {
               formData={formData}
               onChange={handleChange}
               validator={validator}
+              formContext={{
+                locationtooltip: "Specify the name of the locations where the organization’s anti-corruption policies and procedures have been communicated to the business partners.",
+              }}
               widgets={{
                 ...widgets,
                 LocationDropdownTableGrid: (props) => (
@@ -311,7 +315,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp, datarefresh }) => {
                           <p>
                             <MdInfoOutline
                               data-tooltip-id={`es279`}
-                              data-tooltip-html="Specify the Total number of employees that the organization’s anti-corruption policies and procedures have been communicated to, broken down by employee category and region."
+                              data-tooltip-html="Specify the name of the locations where the organization’s anti-corruption policies and procedures have been communicated to the business partners."
                               className="mt-1 ml-2 text-[14px]"
                             />
                             <ReactTooltip
