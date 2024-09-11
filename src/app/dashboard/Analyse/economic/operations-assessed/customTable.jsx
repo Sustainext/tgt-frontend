@@ -13,7 +13,7 @@ const DynamicTable2 = ({ data, columns }) => {
               <th
                 key={column}
                 className={`px-2 py-3 font-semibold text-gray-600 block md:table-cell text-[12px] capitalize border border-slate-300`}
-                style={index === 0 ? { width: '28rem', textAlign: 'left' } : { textAlign: 'left' }}
+                style={index === 0 ? { width: '11rem', textAlign: 'left' } : { textAlign: 'left' }}
               >
                 {column}
               </th>
