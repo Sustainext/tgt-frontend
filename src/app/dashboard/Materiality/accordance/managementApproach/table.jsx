@@ -137,19 +137,19 @@ const LoaderClose = () => {
         {
           key: "MaterialTopic",
           title: "Material Topic",
-          tooltip: "Specify if this is a material topic.",
+          tooltip: "Specify name of the material topic.",
           // type:"number"
         },
         {
           key: "ImpactType",
           title: "Impact Type",
-          tooltip: "Specify the impact type.",
+          tooltip: "Indicate if a topic is material to the organisation because of negative impacts, positive impacts, or both.",
           type:"string"
         },
         {
           key: "ImpactOverview",
           title: "Impact Overview (if any)",
-          tooltip: "Provide an overview of the impact, if any.",
+          tooltip: "Provide an overview of the impact for the mentioned material topic.",
           type:"string"
         },
       ],

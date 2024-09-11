@@ -442,7 +442,7 @@ const handleDateChange = (newRange) => {
     try {
       const response = await axiosInstance.post(url, data);
       if (response.status === 201) {
-        toast.success("Assessment Created successfully", {
+        toast.success("Assessment Created", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,

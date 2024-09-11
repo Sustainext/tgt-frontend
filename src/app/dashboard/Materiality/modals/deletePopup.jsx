@@ -9,14 +9,14 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 const DeletePopup = ({ setRefresh,refresh,isModalOpen, setIsModalOpen,deleteData }) => {
 
   const handleDelete= async(id)=>{
-    
+   
     const url = `${process.env.BACKEND_API_URL}/materiality_dashboard/materiality-assessments/${id}/`;
     try {
       const response = await axiosInstance.delete(url);
       if(response.status===204){
         toast.success(
           <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-            <RiDeleteBin6Line style={{ marginRight: '10px', color: '#EB9042',fontSize:'26px' }} />
+            <RiDeleteBin6Line style={{ marginRight: '10px', color: '#EB9042',fontSize:'37px' }} />
             <div>
             <strong style={{ display: 'block', marginBottom: '4px', fontSize: '16px' }}> {/* Main heading */}
           Materiality Assessment Deleted
@@ -26,7 +26,7 @@ const DeletePopup = ({ setRefresh,refresh,isModalOpen, setIsModalOpen,deleteData
          </p>
           </div>
           </div>, {
-            position: "top-left",
+            position: "top-right",
             autoClose: 3000, 
             hideProgressBar: false,
             closeOnClick: true,
@@ -38,8 +38,7 @@ const DeletePopup = ({ setRefresh,refresh,isModalOpen, setIsModalOpen,deleteData
               borderRadius: '8px', 
               border: '1px solid #E5E5E5', 
               boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-              width:'500px'
-             
+              width:'371px',
             },
             icon: false, 
         });

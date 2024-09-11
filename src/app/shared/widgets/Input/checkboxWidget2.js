@@ -11,7 +11,7 @@ const CheckboxWidget2 = ({
   uiSchema,
 }) => {
   const [selectedValues, setSelectedValues] = useState(value); // Initialize state with the provided array
-  const [showTextbox, setShowTextbox] = useState(false);
+  
 
   // useEffect to monitor changes in value and set textbox visibility
   useEffect(() => {
@@ -20,9 +20,9 @@ const CheckboxWidget2 = ({
     }
     
     if (value.includes('13')) {  // Adjust this condition based on your specific "Others please specify" value
-      setShowTextbox(true);
+      options.setShowTextbox(true);
     } else {
-      setShowTextbox(false);
+      options.setShowTextbox(false);
       options.setTextboxValue(''); // Clear the textbox value when not needed
     }
   }, [value, options]); // Remove
@@ -46,6 +46,9 @@ const CheckboxWidget2 = ({
   const handleTextboxChange = (event) => {
     const value = event.target.value;
     options.setTextboxValue(value);
+    if(value){
+      options.setCheckedOthers(false)
+    }
   };
 
   return (
@@ -104,7 +107,8 @@ const CheckboxWidget2 = ({
           </label>
         ))}
       </div>
-      {showTextbox && (
+      {options && options.showTextbox && (
+        <div>
         <textarea
           placeholder="Enter a description..."
           className={`border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer mx-3 mt-2 sm:w-[48rem] md:w-[60%] lg:w-[63%] xl:w-[67%] 2xl:w-[67%] `}
@@ -113,7 +117,16 @@ const CheckboxWidget2 = ({
           value={options.textboxValue}
           onChange={handleTextboxChange} // Update the state when the textarea changes
         />
+        {options&&options.checkedOthers?(
+          <div className="text-red-600 text-xs mt-1 pl-3">
+          This field is required
+        </div>
+        ):(
+          <div></div>
+        )}
+        </div>
       )}
+      
     </div>
   );
 };

@@ -175,8 +175,8 @@ const Materiality = ({ open }) => {
           />
         </div>
       )}
-
-      <ToastContainer />
+      
+      <ToastContainer style={{marginRight:'50px'}}  />
     </>
   );
 };
