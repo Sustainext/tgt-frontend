@@ -170,19 +170,26 @@ const EconomicHeader5 = ({
                     className={`w-[111px] px-4 py-2.5 border-r rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Organization" ? "bg-sky-100" : "bg-white"}`}
                     onClick={() => setReportType("Organization")}
                   >
-                    Organization
+                    <div className="text-slate-800 text-[13px] font-medium font-['Manrope'] leading-tight">
+                      Organization
+                    </div>
                   </div>
                   <div
                     className={`w-[111px] px-4 py-2.5 border-r border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Corporate" ? "bg-sky-100" : "bg-white"}`}
                     onClick={() => setReportType("Corporate")}
                   >
+                    <div className="text-slate-800 text-[13px] font-medium font-['Manrope'] leading-tight">
                     Corporate
+                    </div>
                   </div>
                   <div
                     className={`w-[111px] px-4 py-2.5 border-r border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Location" ? "bg-sky-100" : "bg-white"}`}
                     onClick={() => setReportType("Location")}
                   >
+                    
+                    <div className="text-slate-800 text-[13px] font-medium font-['Manrope'] leading-tight">
                     Location
+                    </div>
                   </div>
                 </div>
               </div>

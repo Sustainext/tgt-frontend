@@ -169,6 +169,7 @@ const Screen4 = ({ selectedOrg, year, selectedCorp,setDatarefreshtwo }) => {
     }
   };
   const facthloctiondata = async () => {
+    setLocationdata();
     const url = `${process.env.BACKEND_API_URL}/sustainapp/get_location_as_per_org_or_corp/?corporate=${selectedCorp}&organization=${selectedOrg}`;
     try {
       const response = await axiosInstance.get(url);
@@ -182,7 +183,7 @@ const Screen4 = ({ selectedOrg, year, selectedCorp,setDatarefreshtwo }) => {
   };
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([]);
+    setFormData([{}]);
 
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
