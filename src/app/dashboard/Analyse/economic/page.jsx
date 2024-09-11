@@ -2,7 +2,9 @@
 import React, { useState } from "react";
 import Header from "./Header";
 import Aside from "./Aside";
-import Ratioentrylevel from "./ratio-entry-level/page"
+import Operationsassessed from "./operations-assessed/page";
+import Ratioentrylevels from "./ratio-entry-levels/page";
+import Anticorruptions from "./anti-corruption/page"
 const AnalyseEconomic = () => {
   const [activeTab, setActiveTab] = useState("Tab1");
   const [isBoxOpen, setIsBoxOpen] = useState(false);
@@ -20,8 +22,9 @@ const AnalyseEconomic = () => {
         <div className="sticky top-14 bg-white z-[100]">
           <Header activeTab={activeTab} setIsBoxOpen={setIsBoxOpen} />
         </div>
-       {activeTab === "Tab1" && <Ratioentrylevel />}
-        {/* {activeTab === "Tab2" && <StrategyPolicyPractices />} */}
+       {activeTab === "Tab1" && <Ratioentrylevels />}
+        {activeTab === "Tab2" && <Operationsassessed />}
+        {activeTab === "Tab3" && <Anticorruptions />}   
 
       </div>
     </div>

@@ -314,3 +314,13 @@ body._fluentc_widget-banner-show{
   border-radius: 4px;
   cursor: pointer;
 }
+.total {
+  position: relative;
+  font-size: 13px;
+  line-height: 20px;
+  font-family: Manrope;
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), linear-gradient(90deg, #007eef, #2ae4ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+ 
+  }

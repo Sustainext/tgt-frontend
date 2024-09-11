@@ -39,7 +39,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
             </button>
             <button
               className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
-                activeTab === "Tab2"
+                activeTab === "Tab3"
                   ? "text-[#007EEF] "
                   : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
               }`}

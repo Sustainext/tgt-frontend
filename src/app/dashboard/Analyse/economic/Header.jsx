@@ -61,13 +61,13 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
     {
       category: "Tab2",
       data: [
-        { id: 'sd15', label:'SDG 16', bgColor: 'bg-red-900' },
+        { id: 'sd15', label:'SDG 16', bgColor: 'bg-[#00558A]' },
       ]
     },
     {
-      category: "Tab2",
+      category: "Tab3",
       data: [
-        { id: 'sd15', label:'SDG 16', bgColor: 'bg-[#00558A' },
+        { id: 'sd15', label:'SDG 16', bgColor: 'bg-[#00558A]' },
       ]
     },
   ];
@@ -84,6 +84,8 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
                 {activeTab === "Tab1"
                   ? "Economic Performance"
                   : activeTab === "Tab2"
+                  ? "Anti Corruption"
+                  :activeTab === "Tab3"
                   ? "Anti Corruption"
                   : ""}
               </div>

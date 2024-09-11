@@ -56,28 +56,28 @@ const Section2 = () => {
             </div>
           </div>
           <div className="w-full float-end ">
-            <div className="flex float-end border-l">
+          <div className="flex float-end border-l">
               <button
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("118")}
+                onClick={() => toggleDrawer("132")}
               >
                 GRI 202 - 1
               </button>
               <button
                 className="text-[#fff] bg-[#EF412A] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("119")}
+                onClick={() => toggleDrawer("133")}
               >
                 SDG 1
               </button>
               <button
                 className="text-[#fff] bg-[#EF402B] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("119")}
+                onClick={() => toggleDrawer("134")}
               >
                 SDG 5
               </button>
               <button
                 className="text-[#fff] bg-[#A21942] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("119")}
+                onClick={() => toggleDrawer("135")}
               >
                 SDG 8
               </button>

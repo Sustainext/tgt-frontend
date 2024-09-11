@@ -6,7 +6,7 @@ import axiosInstance from "../../../../utils/axiosMiddleware";
 import { columns1 } from "./data";
 import { yearInfo } from "@/app/shared/data/yearInfo";
 import { Oval } from 'react-loader-spinner';
-const Ratioentrylevel = () => {
+const Operationsassessed = () => {
 
   const [strategypolicy, setStrategypolicy] = useState([]);
   const [organisations, setOrganisations] = useState([]);
@@ -72,11 +72,11 @@ const Ratioentrylevel = () => {
           const percentage = parseFloat(data.percentage).toFixed(2);
           const formattedPercentage = percentage.endsWith('.00') ? percentage.slice(0, -3) : percentage;
           return {
-       
-            "Location":data.org_or_corp,
-            "Male": formattedPercentage,
-            "Female": formattedPercentage,
-            "Non-binary": formattedPercentage,
+   
+            "Total number of operations assessed for risks related to corruption":data.org_or_corp,
+            "Total number of operations": formattedPercentage,
+            "Percentage of operations asssessed for risks related to corruption": formattedPercentage,
+         
           };
         });
 
@@ -306,12 +306,12 @@ const Ratioentrylevel = () => {
 
                 <div className="flex justify-between items-center mb-2">
                   <p className="text-gray-500">
-                  Ratio of the entry-level wage to the minimum wage by gender at significant locations of operation
+                  Operations assessed for risks related to corruption
                   </p>
 
                   <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                     <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                      GRI 202-1a
+                      GRI 205-1a
                     </div>
                   </div>
                 </div>
@@ -347,4 +347,4 @@ const Ratioentrylevel = () => {
   );
 };
 
-export default Ratioentrylevel;
+export default Operationsassessed;
