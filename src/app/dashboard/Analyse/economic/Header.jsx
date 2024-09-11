@@ -32,21 +32,21 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       category: "Tab1",
       tag: "GRI 202",
       data: [
-        { tagid: "1", infoid: "41" },
+        { tagid: "1", infoid: "48" },
       ],
     },
     {
       category: "Tab2",
       tag: "GRI 205",
       data: [
-        { tagid: "1", infoid: "42" },
+        { tagid: "1", infoid: "47" },
       ],
     },
     {
       category: "Tab3",
       tag: "GRI 205",
       data: [
-        { tagid: "2", infoid: "42" },
+        { tagid: "2", infoid: "46" },
       ],
     },
   ];
@@ -54,20 +54,21 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
     {
       category: "Tab1",
       data: [
-        { id: 'sd12', label: 'SDG 8', bgColor: 'bg-red-900' },
-        { id: 'sd13', label: 'SDG 9', bgColor: 'bg-[#DD1367]' },
+        { id: 'sd26', label: 'SDG 1', bgColor: 'bg-[#EF412A]' },
+        { id: 'sd27', label: 'SDG 5', bgColor: 'bg-[#EF402B]' },
+        { id: 'sd28', label: 'SDG 8', bgColor: 'bg-[#A21942]' },
       ]
     },
     {
       category: "Tab2",
       data: [
-        { id: 'sd15', label:'SDG 16', bgColor: 'bg-[#00558A]' },
+        { id: 'sd25', label:'SDG 16', bgColor: 'bg-[#00558A]' },
       ]
     },
     {
       category: "Tab3",
       data: [
-        { id: 'sd15', label:'SDG 16', bgColor: 'bg-[#00558A]' },
+        { id: 'sd25', label:'SDG 16', bgColor: 'bg-[#00558A]' },
       ]
     },
   ];

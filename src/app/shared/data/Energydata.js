@@ -3406,6 +3406,438 @@ export const Energydata = [
       </>,
     ],
   },
+  {
+    category: ["43"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 305: Emissions 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+            <p className="text-[#0056a4] text-[15px] mb-2">
+              Disclosure 305-1 Direct (Scope 1) GHG emissions
+            </p>
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-4">
+              Compilation requirements:
+            </div>
+            <div>
+              <p className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-4">
+                2.1 When compiling the information specified in Disclosure
+                305-1, the reporting organization shall:
+              </p>
+              <p className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+                2.1.1 exclude any GHG trades from the calculation of gross
+                direct (Scope 1) GHG emissions; <br />
+                2.1.2 report biogenic emissions of CO2 from the combustion or
+                biodegradation of biomass separately from the gross direct
+                (Scope 1) GHG emissions. Exclude biogenic emissions of other
+                types of GHG (such as CH and N O), and biogenic emissions of CO
+                that occur in the life cycle of biomass other than from
+                combustion or biodegradation (such as GHG emissions from
+                processing or transporting biomass).
+              </p>
+            </div>
+
+            <div className="text-[#0056a4] text-[15px] font-normal font-['Manrope'] leading-none my-4">
+              Guidance for Disclosure 305-1:
+            </div>
+            <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+              Direct (Scope 1) GHG emissions include, but are not limited to,
+              the CO emissions from the fuel consumption as reported in
+              Disclosure 302-1 of GRI 302: Energy 2016.Direct (Scope 1) GHG
+              emissions can come from the following sources owned or controlled
+              by an organization:
+              <br />
+              •Generation of electricity, heating, cooling and steam: these
+              emissions result from
+              <br />
+              combustion of fuels in stationary sources, such as boilers,
+              furnaces, and turbines – and from other combustion processes such
+              as flaring;
+              <br />• Physical or chemical processing: most of these emissions
+              result from the manufacturing or processing of chemicals and
+              materials, such as cement, steel, aluminum, ammonia, and waste
+              processing;
+              <br />• Transportation of materials, products, waste, workers, and
+              passengers: these emissions result from the combustion of fuels in
+              mobile combustion sources owned or controlled by the organization,
+              such as trucks, trains, ships, airplanes, buses, and cars;
+              <br />• Fugitive emissions: these are emissions that are not
+              physically controlled but result from intentional or unintentional
+              releases of GHGs. These can include equipment leaks from joints,
+              seals, packing, and gaskets; methane emissions (e.g., from coal
+              mines) and venting; HFC emissions from refrigeration and air
+              conditioning equipment; and methane leakages (e.g., from gas
+              transport).
+              <br />
+              If estimations are used due to a lack of default figures, the
+              reporting organization can indicate the basis and assumptions on
+              which figures were estimated.
+              <br />
+              For recalculations of prior year emissions, the organization can
+              follow the approach in the ‘GHG Protocol Corporate Standard’. The
+              chosen emission factors can originate from mandatory reporting
+              requirements, voluntary reporting frameworks, or industry groups.
+              Estimates of GWP rates change over time as scientific research
+              develops.
+              <br />
+              <br />
+              GWP rates from the Second Assessment Report of the
+              Intergovernmental Panel on Climate Change (IPCC) are used as the
+              basis for international negotiations under the ‘Kyoto Protocol’.
+              Thus, such rates can be used for disclosing GHG emissions where it
+              does not conflict with national or regional reporting
+              requirements. The organization can also use the latest GWP rates
+              from the most recent IPCC assessment report.
+              <br />
+              The organization can combine Disclosure 305-1 with Disclosures
+              305-2 (energy indirect/Scope 2 GHG emissions) and 305-3 (other
+              indirect/Scope 3 GHG emissions) to disclose total GHG emissions.
+            </div>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["44"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 305: Emissions 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+            <p className="text-[#0056a4] text-[15px] mb-2">
+              Disclosure 305-2 Indirect (Scope 2) GHG emissions
+            </p>
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-4">
+              Compilation requirements:
+            </div>
+            <div>
+              <p className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-4">
+                2.3 When compiling the information specified in Disclosure
+                305-2, the reporting organization shall:
+              </p>
+              <p className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+                2.3.1 exclude any GHG trades from the calculation of gross
+                energy indirect (Scope 2) GHG emissions; 2.3.2 exclude other
+                indirect (Scope 3) GHG emissions that are disclosed as specified
+                in Disclosure 305-3; 2.3.3 account and report energy indirect
+                (Scope 2) GHG emissions based on the location- based method, if
+                it has operations in markets without product or
+                supplier-specific data; 2.3.4 account and report energy indirect
+                (Scope 2) GHG emissions based on both the location-based and
+                market-based methods, if it has any operations in markets
+                providing product or supplier-specific data in the form of
+                contractual instruments.
+              </p>
+            </div>
+
+            <div className="text-[#727272] text-[13px] font-normal font-['Manrope'] leading-none my-4">
+              Guidance for Disclosure 305-2:
+            </div>
+            <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+              Energy indirect (Scope 2) GHG emissions include, but are not
+              limited to, the CO2
+              <br /> emissions from the generation of purchased or acquired
+              electricity, heating, cooling, and steam consumed by an
+              organization – disclosed as specified in Disclosure 302-1 of GRI
+              302: Energy 2016. For many organizations, the energy indirect
+              (Scope 2) GHG emissions that result from the generation of
+              purchased electricity can be much greater than their direct (Scope
+              1) GHG emissions.
+              <br />
+              <br />
+              The market-based method calculation also includes the use of a
+              residual mix, if the organization does not have specified
+              emissions-intensity from its contractual instruments. This helps
+              prevent double counting between consumers’ market-based method
+              figures. If a residual mix is unavailable, the organization can
+              disclose this and use grid-average emission factors as a<br />
+              proxy (which can mean that the location-based and market- based
+              are the same number until information on the residual mix is
+              available).
+              <br />
+              <br />
+              The reporting organization can apply the Quality Criteria in the
+              ‘GHG Protocol Scope 2 Guidance’ so that contractual instruments
+              convey GHG emission rate claims and to prevent double counting.
+              See reference [18] in the Bibliography.
+              <br />
+              For recalculations of prior year emissions, the organization can
+              follow the approach in the ‘GHG Protocol Corporate Standard’. The
+              chosen emission factors can originate from mandatory reporting
+              requirements, voluntary reporting frameworks, or industry groups.
+              <br />
+              <br />
+              Estimates of GWP rates change over time as scientific research
+              develops. GWP rates from the Second Assessment Report of the IPCC
+              are used as the basis for international negotiations under the
+              ‘Kyoto Protocol’. Thus, such rates can be used for disclosing GHG
+              emissions where it does not conflict with national or regional
+              reporting requirements. The organization can also use
+              <br />
+              the latest GWP rates from the most recent IPCC assessment report.
+              <br />
+              <br />
+              The organization can combine Disclosure 305-2 with Disclosures
+              305-1 (direct/Scope 1 GHG emissions) and 305-3 (other
+              indirect/Scope 3 GHG emissions) to disclose total GHG emissions
+              <br />
+            </div>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["45"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 305: Emissions 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+            <p className=" mb-2 text-[#0056a4] text-[15px]">
+              Disclosure 305-3 Other indirect (Scope 3) GHG emissions
+            </p>
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-4">
+              Compilation requirements:
+            </div>
+            <div>
+              <p className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-4">
+                2.5 When compiling the information specified in Disclosure
+                305-3, the reporting organization shall:
+              </p>
+              <p className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+                2.5.1 exclude any GHG trades from the calculation of gross other
+                indirect (Scope 3) GHG emissions; 2.5.2 exclude energy indirect
+                (Scope 2) GHG emissions from this disclosure. Energy indirect
+                (Scope 2) GHG emissions are disclosed as specified in Disclosure
+                305-2; 2.5.3 report biogenic emissions of CO from the combustion
+                or biodegradation of biomass that occur in its value chain
+                separately from the gross other indirect (Scope 3) GHG
+                emissions. Exclude biogenic emissions of other types of GHG
+                (such as CH and N O), and biogenic emissions of CO that occur in
+                the life cycle of biomass other than from combustion or
+                biodegradation (such as GHG emissions from processing or
+                transporting biomass).
+              </p>
+            </div>
+
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-4">
+              Guidance for Disclosure 305-2:
+            </div>
+            <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+              Other indirect (Scope 3) GHG emissions are a consequence of an
+              organization’s activities, but occur from sources not owned or
+              controlled by the organization. Other indirect (Scope 3) GHG
+              emissions include both upstream and downstream emissions. Some
+              examples of Scope 3 activities include extracting and producing
+              purchased materials; transporting purchased fuels in vehicles not
+              owned or controlled by the organization; and the end use of
+              products and services.
+              <br />
+              <br />
+              Other indirect emissions can also come from the decomposing of the
+              organization’s waste. Process-related emissions during the
+              manufacture of purchased goods and fugitive emissions in
+              facilities not owned by the organization can also produce indirect
+              emissions.
+              <br />
+              <br />
+              For some organizations, GHG emissions that result from energy
+              consumption outside of theorganization can be much greater than
+              their direct (Scope 1) or energy indirect (Scope 2) GHG emissions.
+              <br />
+              <br />
+              The reporting organization can identify other indirect (Scope 3)
+              GHG emissions by assessing which of its activities’ emissions:
+              <br />
+              •contribute significantly to the organization’s total anticipated
+              other indirect (Scope 3) GHG emissions;
+              <br />• offer potential for reductions the organization can
+              undertake or influence;
+              <br />
+              •contribute to climate change-related risks, such as financial,
+              regulatory, supply chain, product and customer, litigation, and
+              reputational risks;
+              <br />
+              •are deemed material by stakeholders, such as customers,
+              suppliers, investors, or civil society;
+              <br />• result from outsourced activities previously performed
+              in-house, or that are typically performed in-house by other
+              organizations in the same sector;
+              <br />• have been identified as significant for the organization’s
+              sector;
+              <br />
+              meet any additional criteria for determining relevance, developed
+              by the organization or by organizations in its sector.
+            </div>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["46"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+      GRI 205: Anti-corruption 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Disclosure 205-2 Communication and training about anti-corruption policies and procedures
+          </p>
+          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-4">Guidance :</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            In the context of this GRI Standard, the term ‘business partners’ includes, among others, suppliers, agents, lobbyists and other intermediaries, joint venture and consortia partners, governments, customers, and clients.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-4">
+            Background:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Communication and training build the internal and external awareness and the necessary capacity to combat corruption.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12412"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["47"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 205: Anti-corruption 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 205-1 Operations assessed for risks related to corruption
+          </p>
+          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-4">Guidance :</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure can include a risk assessment focused on
+              corruption or the inclusion of corruption as a risk factor in
+              overall risk assessments. The term ‘operation’ refers to a single
+              location used by the organization for the production, storage
+              and/or distribution of its goods and services, or for
+              administrative purposes. Within a single operation, there can be
+              multiple production lines, warehouses, or other activities. For
+              example, a single factory can be used for multiple products or a
+              single retail outlet can contain several different retail
+              operations that are owned or managed by the organization.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-4">Background:</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure measures the extent of the risk assessment’s
+              implementation across an organization. Risk assessments can help
+              to assess the potential for incidents of corruption within and
+              related to the organization, and help the organization to design
+              policies and procedures to combat corruption.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12412"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["48"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">GRI 202: Market Presence 2016</h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Disclosure 202-1 Ratios of standard entry level wage
+          by gender compared to local minimum wage
+
+          </p>
+          <div className="h-[520px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">
+            Background:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            This disclosure applies to those organizations in which a substantial portion of their employees, and workers (excluding employees) performing the organization’s activities, are compensated in a manner or scale that is closely linked to laws or regulations on minimum wage. Providing wages above the minimum wage can help contribute to the economic well-being of workers performing the organization’s activities. The impacts of wage levels are immediate, and they directly affect individuals, organizations, countries and economies. The distribution of wages is crucial for eliminating inequalities, such as wage gap differences between women and men, or nationals and migrants. Also, entry level wages paid compared to local minimum wages show the competitiveness of an organization’s wages and provide information relevant for assessing the effect of wages on the local labor market. Comparing this information by gender can also be a measure of an organization’s approach to equal opportunity in the workplace.
+            </p>
+
+           
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12379"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
   //  sdg contet start//
   {
     category: ["sd1"],
@@ -4886,6 +5318,280 @@ export const Energydata = [
               target="_blank"
             >
               Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["sd24"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-14.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-[##007dbc] text-[17px] font-bold ml-2">SDG 14</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 8: Decent work and economic growth
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 8.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Conserve and sustainably use the oceans, seas and marine resources
+              for sustainable development
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 14.3</p>
+            <div class="w-[232px]">
+              <span class="text-[#727272] text-[11px] font-normal leading-[14px]">
+                Minimize and address the impacts of ocean acidification,
+                including through enhanced scientific cooperation at all levels
+                <br />
+                <br />
+              </span>
+              <span class="text-[#727272] text-[10px] font-bold leading-[13px]">
+                Indicators
+                <br />
+              </span>
+              <span class="text-[#222222] text-[11px] font-normal leading-[14px]">
+                14.3.1
+                <br />
+              </span>
+              <span class="text-[#727272] text-[11px] font-normal leading-[14px]">
+                Average marine acidity (pH) measured at agreed suite of
+                representative sampling stations
+                <br />
+              </span>
+            </div>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal8"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["sd25"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-16.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-blue-900 text-[17px] font-bold ml-2">SDG 16</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Promote peaceful and inclusive societies for sustainable
+            development, provide access to justice for all and build effective,
+            accountable and inclusive institutions at all levels
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 16.5</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Substantially reduce corruption and bribery in all their forms
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.5.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of persons who had at least one contact with a public
+              official and who paid a bribe to a public official, or were asked
+              for a bribe by those public officials, during the previous 12
+              months
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.5.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of businesses that had at least one contact with a
+              public official and that paid a bribe to a public official, or
+              were asked for a bribe by those public officials during the
+              previous 12 months
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal16"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["sd26"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-01.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-[#EA1D2D] text-[17px] font-bold ml-2">SDG 1</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 1: End poverty in all its forms
+            everywhere
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 1.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, eradicate extreme poverty for all people everywhere,
+              currently measured as people living on less than $1.25 a day
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">1.2.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of population living below the national poverty line,
+              by sex and age
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">1.2.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of men, women and children of all ages living in
+              poverty in all its dimensions according to national definitions
+            </p>
+           
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["sd27"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-05.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-orange-600 text-[17px] font-bold ml-2">SDG 5</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 5: Gender equality
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+        
+          
+            <p className="text-[13px] text-[#222222] mb-2">Target 5.4</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Recognize and value unpaid care and domestic work through the
+              provision of public services, infrastructure and social protection
+              policies and the promotion of shared responsibility within the
+              household and the family as nationally appropriate.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#727272] mb-2">5.4.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of time spent on unpaid domestic and care work, by sex,
+              age and location.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal5"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["sd28"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-08.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-red-900 text-[17px] font-bold ml-2">SDG 8</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 8: Promote sustained, inclusive and
+            sustainable economic growth, full and productive employment and
+            decent work for all
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 8.5</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, achieve full and productive employment and decent work
+              for all women and men, including for young people and persons with
+              disabilities, and equal pay for work of equal value.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.5.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Average hourly earnings of female and male employees, by
+              occupation, age and persons with disabilities.
+            </p>
+
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.5.2</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Unemployment rate, by sex, age and persons with disabilities.
+            </p>
+           
+         
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal8"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
