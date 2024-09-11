@@ -65,7 +65,7 @@ const uiSchema = {
             tittlekey: "Totalnumberemployees",
           },
           {
-            title: "TTotal number of employee",
+            title: "Total number of employee",
             tooltip: "Mention the total number of employee in the particular category.",
             widgettype: "number",
             tooltipdisplay: "block",

@@ -1,7 +1,8 @@
 
 'use client'
+
 import HomeDashboard from "./Home/page";
-import { useState} from "react";
+import { useState,useEffect} from "react";
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("tab1");
 
@@ -9,6 +10,7 @@ const Dashboard = () => {
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
+ 
 
   return (
     <>
@@ -18,6 +20,7 @@ const Dashboard = () => {
           <div className="my-4 gradient-text text-opacity-20 text-[22px] font-semibold leading-relaxed ">
             Sustainext HQ
           </div>
+         
           <div className="flex flex-col h-screen">
             <div className={`flex my-6 border-b`}>
               <button
