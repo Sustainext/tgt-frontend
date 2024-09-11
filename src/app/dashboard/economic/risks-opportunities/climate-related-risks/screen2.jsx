@@ -341,16 +341,14 @@ const Screen2 = ({ selectedOrg, selectedCorp, selectedLocation, year, month }) =
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold mb-2">
             Transition Risk:
-              {/* <MdInfoOutline
-                data-tooltip-id={`tooltip-$e87`}
-                data-tooltip-content="This section documents data corresponding to the number of
-workers who are not employees but whose work is controlled by your organization.
-It also describes the most common types of these workers,
-their contractual relationships with your organization, and the types of work they perform."
+              <MdInfoOutline
+                data-tooltip-id={`tooltip-$e878`}
+                data-tooltip-content="Transition risk
+refers to the financial and operational risks that organizations may face during the shift towards a lower-carbon economy."
                 className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip
-                id={`tooltip-$e87`}
+                id={`tooltip-$e878`}
                 place="top"
                 effect="solid"
                 style={{
@@ -362,7 +360,7 @@ their contractual relationships with your organization, and the types of work th
                   borderRadius: "8px",
                   textAlign: "left",
                 }}
-              ></ReactTooltip> */}
+              ></ReactTooltip>
             </h2>
           </div>
 
