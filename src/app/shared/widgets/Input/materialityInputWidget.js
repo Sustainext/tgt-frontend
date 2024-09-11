@@ -4,7 +4,7 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
 const MaterialityInputWidget = (props) => {
-  const { onChange, value = "", uiSchema = {} } = props;
+  const { onChange, value = "", uiSchema = {},options } = props;
  
   const handleChange = (event) => {
     onChange(event.target.value);
@@ -61,6 +61,18 @@ const MaterialityInputWidget = (props) => {
           onChange={handleChange}
           rows={7}
         />
+
+        {
+          options&&options.yesChecked?(
+            <div className="text-red-600 text-xs mt-1 pl-3">
+            This field is required
+          </div>
+          ):(
+            <div>
+
+            </div>
+          )
+        }
       </div>
     </>
   );

@@ -23,74 +23,6 @@ const view_path = "gri-governance-critical_concerns-2-16-a-critical_concerns";
 const client_id = 1;
 const user_id = 1;
 
-const schema = {
-    type: "array",
-    items: {
-      type: "object",
-      properties: {
-        Q1: {
-          type: "string",
-          title: "Are there any changes to the list of material topics compared to the previous reporting period?",
-          enum: ["Yes", "No"],
-        },
-      },
-      dependencies: {
-        Q1: {
-          oneOf: [
-            {
-              properties: {
-                Q1: {
-                  enum: ["Yes"],
-                },
-                Q2: {
-                  type: "string",
-                  title: "If yes, specify the changes to the list of material topics compared to the previous reporting period?",
-                },
-  
-              },
-            },
-          ],
-        },
-      },
-    },
-  };
-  
-  const uiSchema = {
-    items: {
-      "ui:order": ["Q1", "Q2"],
-      Q1: {
-        "ui:title": "Are there any changes to the list of material topics compared to the previous reporting period?",
-        "ui:tooltip":
-        "<p>Indicate whether any changes are there to the list of material topics compared to the previous reporting period.</p> <p>Reporting period: </p> <p>Specific time period covered by the reported information.</p>",
-        "ui:tooltipdisplay": "block",
-        "ui:widget": "MaterialityRadioWidget",
-        "ui:tag":"GRI-3-2-b",
-        "ui:horizontal": true,
-        "ui:options": {
-          label: false,
-        },
-      },
-      Q2: {
-        "ui:title":
-          "If yes, specify the changes to the list of material topics compared to the previous reporting period?",
-          "ui:tooltip":
-          "<p>Here organization can explain why a topic that it determined as material in the previous reporting period is no longer considered to be material or why a new topic has been determined as material for the current reporting period.</p> <p>Reporting period: </p> <p>Specific time period covered by the reported information.</p>",
-        "ui:tooltipdisplay": "block",
-        "ui:widget": "MaterialityInputWidget",
-        "ui:tag":"GRI-3-2-b",
-        "ui:horizontal": true,
-        "ui:options": {
-          label: false,
-        },
-      },
-      "ui:options": {
-        orderable: false, // Prevent reordering of items
-        addable: false, // Prevent adding items from UI
-        removable: false, // Prevent removing items from UI
-        layout: "horizontal", // Set layout to horizontal
-      },
-    },
-  };
 
 const Step3 = ({handleTabClick,handlePrevious}) => {
 
@@ -101,6 +33,7 @@ const Step3 = ({handleTabClick,handlePrevious}) => {
     const [loopen, setLoOpen] = useState(false);
     const [dataPresent,setDatapresent]=useState(false)
     const toastShown = useRef(false);
+    const [yesChecked,setYesChecked] = useState(false)
     const { open } = GlobalState();
 
     const LoaderOpen = () => {
@@ -116,7 +49,81 @@ const Step3 = ({handleTabClick,handlePrevious}) => {
       if (newFormData.Q1 === "No") {
         newFormData.Q2 = "";
       }
+      
+     if(newFormData.Q1==="Yes" && newFormData.Q2!=""){
+        setYesChecked(false)
+      }
       setFormData([newFormData]);
+    };
+    
+    const schema = {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          Q1: {
+            type: "string",
+            title: "Are there any changes to the list of material topics compared to the previous reporting period?",
+            enum: ["Yes", "No"],
+          },
+        },
+        dependencies: {
+          Q1: {
+            oneOf: [
+              {
+                properties: {
+                  Q1: {
+                    enum: ["Yes"],
+                  },
+                  Q2: {
+                    type: "string",
+                    title: "If yes, specify the changes to the list of material topics compared to the previous reporting period?",
+                  },
+    
+                },
+              },
+            ],
+          },
+        },
+      },
+    };
+    
+    const uiSchema = {
+      items: {
+        "ui:order": ["Q1", "Q2"],
+        Q1: {
+          "ui:title": "Are there any changes to the list of material topics compared to the previous reporting period?",
+          "ui:tooltip":
+          "<p>Indicate whether any changes are there to the list of material topics compared to the previous reporting period.</p> <p>Reporting period: </p> <p>Specific time period covered by the reported information.</p>",
+          "ui:tooltipdisplay": "block",
+          "ui:widget": "MaterialityRadioWidget",
+          "ui:tag":"GRI-3-2-b",
+          "ui:horizontal": true,
+          "ui:options": {
+            label: false,
+          },
+        },
+        Q2: {
+          "ui:title":
+            "If yes, specify the changes to the list of material topics compared to the previous reporting period?",
+            "ui:tooltip":
+            "<p>Here organization can explain why a topic that it determined as material in the previous reporting period is no longer considered to be material or why a new topic has been determined as material for the current reporting period.</p> <p>Reporting period: </p> <p>Specific time period covered by the reported information.</p>",
+          "ui:tooltipdisplay": "block",
+          "ui:widget": "MaterialityInputWidget",
+          "ui:tag":"GRI-3-2-b",
+          "ui:horizontal": true,
+          "ui:options": {
+            label: false,
+            yesChecked:yesChecked
+          },
+        },
+        "ui:options": {
+          orderable: false, // Prevent reordering of items
+          addable: false, // Prevent adding items from UI
+          removable: false, // Prevent removing items from UI
+          layout: "horizontal", // Set layout to horizontal
+        },
+      },
     };
   
 
@@ -127,15 +134,18 @@ const Step3 = ({handleTabClick,handlePrevious}) => {
       try {
         const response = await axiosInstance.get(url);
         if(response.status==200){
-          setFormData(
-            [
-              {Q1:response.data.change_made==true?"Yes":"No",
-                Q2:response.data.reason_for_change
-
-              }
-            ]
-          )
-          setDatapresent(true)
+          if(response.data){
+            setFormData(
+              [
+                {Q1:response.data.change_made==true?"Yes":"No",
+                  Q2:response.data.reason_for_change
+  
+                }
+              ]
+            )
+            setDatapresent(true)
+          }
+          
         }
         
         }
@@ -163,6 +173,10 @@ const Step3 = ({handleTabClick,handlePrevious}) => {
    
     const handleSubmit = async(e) => {
         e.preventDefault();
+        if(!formData[0].Q2 && formData[0].Q1=="Yes"){
+          setYesChecked(true)
+          return
+        }
        const data={
             "assessment":assessment_id,
             "change_made":formData[0].Q1=="Yes"?true:false,

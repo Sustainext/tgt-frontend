@@ -22,6 +22,7 @@ const LoaderClose = () => {
     setLoOpen(false);
 };
 
+
   // Fetch the disclosure topics from the API
   const fetchDisclosure = async () => {
     LoaderOpen()
@@ -262,7 +263,7 @@ const LoaderClose = () => {
 
   return (
     <>
-      {disclosureTopics.environment ? (
+      {disclosureTopics.environment || disclosureTopics.social || disclosureTopics.governance   ? (
         <div className="mt-3 mb-3">
           {/* Render Environment */}
           {disclosureTopics.environment &&

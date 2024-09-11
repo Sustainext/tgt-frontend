@@ -3,24 +3,44 @@ import React, { useState } from "react";
 import { MdOutlineEdit, MdOutlineDeleteOutline } from "react-icons/md";
 import axiosInstance from "../../../utils/axiosMiddleware";
 import {  toast } from "react-toastify";
+import { RiDeleteBin6Line } from "react-icons/ri";
 // import "react-toastify/dist/ReactToastify.css";
 
 const DeletePopup = ({ setRefresh,refresh,isModalOpen, setIsModalOpen,deleteData }) => {
 
   const handleDelete= async(id)=>{
+   
     const url = `${process.env.BACKEND_API_URL}/materiality_dashboard/materiality-assessments/${id}/`;
     try {
       const response = await axiosInstance.delete(url);
       if(response.status===204){
-        toast.success("Deleted successfully", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
+        toast.success(
+          <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+            <RiDeleteBin6Line style={{ marginRight: '10px', color: '#EB9042',fontSize:'37px' }} />
+            <div>
+            <strong style={{ display: 'block', marginBottom: '4px', fontSize: '16px' }}> {/* Main heading */}
+          Materiality Assessment Deleted
+         </strong>
+         <p style={{ margin: 0, fontSize: '14px', lineHeight: '1.4' }}> {/* Paragraph aligned below heading */}
+           Materiality Assessment has been successfully deleted. Changes are made in the platform.
+         </p>
+          </div>
+          </div>, {
+            position: "top-right",
+            autoClose: 3000, 
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light", 
+            style: {
+              borderRadius: '8px', 
+              border: '1px solid #E5E5E5', 
+              boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+              width:'371px',
+            },
+            icon: false, 
         });
 
         setRefresh((prevRefresh) => !prevRefresh);

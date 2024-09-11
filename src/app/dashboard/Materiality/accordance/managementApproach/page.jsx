@@ -13,6 +13,7 @@ const ManagementApproach = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState();
   const [category,setCategory]=useState("")
+  const [tableDataSubmit,setTableDataSubmit]=useState(false)
   
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
@@ -88,8 +89,8 @@ const ManagementApproach = () => {
         </div>
       </div>
 
-      <Table/>
-    <InputField/>
+      <Table setTableDataSubmit={setTableDataSubmit} tableDataSubmit={tableDataSubmit}/>
+    <InputField setTableDataSubmit={setTableDataSubmit} tableDataSubmit={tableDataSubmit} />
     
     
       

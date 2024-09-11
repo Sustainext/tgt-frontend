@@ -96,7 +96,7 @@ const DataTable = ({ data,setRefresh,refresh }) => {
                           ? "bg-yellow-500"
                           : item.status === "Completed"
                           ? "bg-green-800"
-                          : "bg-gray-500"
+                          : "bg-gray-300"
                       }`}
                     ></span>
                     <span className="leading-none self-start">

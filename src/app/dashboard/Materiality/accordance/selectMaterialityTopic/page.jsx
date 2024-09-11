@@ -55,7 +55,7 @@ const SelectMaterialityTopic = ({ handleTabClick,cardData}) => {
     },
     {
       title:"Report changes in the list of material topics",
-      subHeading:"Select Organization and year"
+      subHeading:"Enter changes to the list of material topics"
     },
 
   ]

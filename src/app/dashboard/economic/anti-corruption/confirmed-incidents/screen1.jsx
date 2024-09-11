@@ -203,7 +203,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp,month }) => {
         <div className="flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
-            Total number of operations assessed for risks related to corruption.
+            Total number of confirmed incidents of corruption.
               <MdInfoOutline
                 data-tooltip-id={`es30`}
                 data-tooltip-html=

@@ -19,7 +19,7 @@ const view_path = "gri-governance-critical_concerns-2-16-a-critical_concerns";
 const client_id = 1;
 const user_id = 1;
 
-const Table = ({ selectedOrg, year, selectedCorp }) => {
+const Table = ({ selectedOrg, year, selectedCorp,setTableDataSubmit,tableDataSubmit }) => {
   const assessment_id = typeof window !== 'undefined' ?localStorage.getItem("id"):'';
   const [materialTopics, setMaterialTopics] = useState([]);
   const [dataPresent,setDatapresent]=useState(false)
@@ -72,7 +72,8 @@ const LoaderClose = () => {
       const response = await axiosInstance.get(url);
       if (response.status === 200) {
         LoaderClose()
-        const arr=[]
+        if(response.data.length>0){
+          const arr=[]
         response.data.map((val)=>{
           const obj={
             MaterialTopic: val.material_topic,
@@ -83,6 +84,7 @@ const LoaderClose = () => {
         })
         setFormData(arr)
         setDatapresent(true)
+        }
        
       }
     } catch (error) {
@@ -111,14 +113,14 @@ const LoaderClose = () => {
       type: "object",
       properties: {
         MaterialTopic: {
-          type: "number",
+          // type: "number",
           title: "Material Topic",
-          enum: materialTopics.map(topic => topic.topic.id), // Store topic IDs in enum
+          // enum: materialTopics.map(topic => topic.topic.id), // Store topic IDs in enum
         },
         ImpactType: {
           type: "string",
           title: "Impact Type",
-          enum: ["Positive Impact", "Negative Impact"],
+          // enum: ["Positive Impact", "Negative Impact"],
         },
         ImpactOverview: {
           type: "string",
@@ -135,17 +137,20 @@ const LoaderClose = () => {
         {
           key: "MaterialTopic",
           title: "Material Topic",
-          tooltip: "Specify if this is a material topic.",
+          tooltip: "Specify name of the material topic.",
+          // type:"number"
         },
         {
           key: "ImpactType",
           title: "Impact Type",
-          tooltip: "Specify the impact type.",
+          tooltip: "Indicate if a topic is material to the organisation because of negative impacts, positive impacts, or both.",
+          type:"string"
         },
         {
           key: "ImpactOverview",
           title: "Impact Overview (if any)",
-          tooltip: "Provide an overview of the impact, if any.",
+          tooltip: "Provide an overview of the impact for the mentioned material topic.",
+          type:"string"
         },
       ],
       materialTopics: materialTopics, // Pass the fetched material topics to the widget
@@ -156,15 +161,31 @@ const LoaderClose = () => {
     setFormData(e.formData);
   };
 
+  // const handleRemoveCommittee = (index) => {
+  //   const newFormData = formData.filter((_, i) => i !== index);
+  //   setFormData(newFormData);
+  // };
+
   const handleRemoveCommittee = (index) => {
     const newFormData = formData.filter((_, i) => i !== index);
+    // Ensure that we always have at least one row with default values
+    if (newFormData.length === 0) {
+      newFormData.push({
+        MaterialTopic: "", 
+        ImpactType: "", 
+        ImpactOverview: "",
+      });
+    }
     setFormData(newFormData);
   };
-
+  
+  
+ 
+  
   const handleAddCommittee = () => {
     const newCommittee = {
-      MaterialTopic: "Select Material Topic",
-      ImpactType: "Select Impact Type",
+      MaterialTopic: "",
+      ImpactType: "",
       ImpactOverview: "",
     };
     setFormData([...formData, newCommittee]);
@@ -195,8 +216,9 @@ try {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "colored",
+      theme: "light",
     });
+    setTableDataSubmit(true)
   }
   else{
     toast.error("Oops, something went wrong", {
@@ -227,6 +249,8 @@ catch (error) {
 }
     
   };
+
+  
 
   return (
     <>
@@ -290,9 +314,17 @@ catch (error) {
           <div>
             <button
               type="button"
-              className={`mt-5 text-center py-1 text-sm w-[100px] ${materialTopics.length!=0?"bg-blue-500 text-white hover:bg-blue-600":"bg-gray-200"} rounded  focus:outline-none focus:shadow-outline`}
+              className={`mt-5 text-center py-1 text-sm w-[100px] ${materialTopics.length === 0 ||
+                (materialTopics.length > 0 &&
+                 (!formData[0].MaterialTopic || !formData[0].ImpactType))
+?"bg-gray-200":"bg-blue-500 text-white hover:bg-blue-600"} rounded  focus:outline-none focus:shadow-outline`}
               onClick={handleSubmit}
-              disabled={materialTopics.length==0}
+              disabled={
+                materialTopics.length === 0 ||
+                (materialTopics.length > 0 &&
+                 (!formData[0].MaterialTopic || !formData[0].ImpactType))
+              }
+              
             >
               Submit
             </button>

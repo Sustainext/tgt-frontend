@@ -10,13 +10,14 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import Economictable from "../../../../../shared/widgets/Economic/economictable";
-// Simple Custom Table Widget
+import GRI2021combinWidhet from "../../../../../shared/widgets/Economic/gri2021combinWidhet"
+import CurrencyWidget from "../../../../../shared/widgets/Economic/currencyWidget";
 const widgets = {
-  TableWidget: Economictable,
+  GRI2021combinWidhet: GRI2021combinWidhet,
+  CurrencyWidget: CurrencyWidget,
 };
 
-const view_path = "gri-general-workforce_other_workers-workers-2-8-a";
+const view_path = "gri-economic-ratios_of_standard_entry-202-1c-location";
 const client_id = 1;
 const user_id = 1;
 
@@ -25,195 +26,55 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      TypeofRisk: {
+      Locationofoperation:{
         type: "string",
-        title: "Type of Risk",
-        enum: [
-          "Extreme weather events",
-          "Temperature changes",
-          "Sea level rise",
-          "Changes in precipitation patterns",
-          "Natural disasters",
-          "Air Quality Degradation",
-          "Heatwaves",
-        ],
+        title:
+          "Select your significant Location of operation",
+
       },
-      PotentialImpact: {
+      Currency: {
         type: "string",
-        title: "Potential Impact",
-        enum: [
-          "Increased or decreased capital costs",
-          "Increased or decreased operational costs",
-          "Increased or decreased demand for products and services",
-          "Increased or decreased capital availability and investment opportunities",
-          "Increased or decreased investment opportunities",
-          "Others (please specify)",
-        ],
-      },
-      Likelihoodofimpact: {
-        type: "string",
-        title: "Likelihood of impact",
-        enum: ["Low", "Moderate", "High", "Not Sure"],
-      },
-      MagnitudeofImpact: {
-        type: "string",
-        title: "Magnitude of Impact",
-        enum: ["Low", "Moderate", "High", "Not Sure"],
-      },
-      FinancialEffect: {
-        type: "string",
-        title: "Financial Effect",
-        enum: ["Very High", "High", "Moderate", "Low", "Very Low"],
-      },
-      FinancialImplications: {
-        type: "string",
-        title: "Financial Implications",
-        enum: [
-          "Increased maintenance costs",
-          "Potential fines and revenue loss",
-          "Higher premiums",
-          "Reduced energy costs",
-          "Decreased sales revenue",
-          "Others (please specify)",
-        ],
-      },
-      ManagementMethods: {
-        type: "string",
-        title: "Management Methods",
-        enum: [
-          "Business continuity planning",
-          "Diversification of supply chain",
-          "Infrastructure improvements",
-          "Insurance coverage",
-          "Emergency response planning",
-          "Others (please specify)",
-        ],
-      },
-      TimeFrame: {
-        type: "string",
-        title: "Time Frame",
-        enum: [
-          "Immediate-term (0-1 year)",
-          "Short-term (1-3 years)",
-          "Medium-term (3-5 years)",
-          "Long-term (5+ years)",
-        ],
-      },
-      DirectImpacts: {
-        type: "string",
-        title: "Direct or Indirect Impacts",
-        enum: ["Indirect", "Direct", "Not Sure"],
-      },
-      ImplementedMitigationStrategies: {
-        type: "string",
-        title: "Implemented Mitigation Strategies",
-        enum: ["Yes", "No"],
-      },
-      MitigationStrategies: {
-        type: "string",
-        title: "Mitigation Strategies",
-        enum: [
-          "Installation of early warning systems",
-          "Community engagement and education",
-          "Investment in resilient infrastructure",
-          "Enhanced weather monitoring",
-          "Improved drainage systems",
-          "Structural reinforcements",
-          "Emergency preparedness programs",
-          "Backup power systems",
-          "Others (please specify)",
-        ],
+        title: "If minimum wages vary across locations,  specify which minimum wage is being used as a reference.",
       },
     },
   },
 };
 
 const uiSchema = {
-  "ui:widget": "TableWidget",
-  "ui:options": {
-    titles: [
-      {
-        key: "TypeofRisk",
-        title: "Type of Risk",
-        tooltip:
-          "Please choose the specific type of risk within the selected category",
-        tooltipdisplay: "block",
+  items: {
+    "ui:order": ["Locationofoperation","Currency"],
+    Locationofoperation: {
+  
+      "ui:widget": "GRI2021combinWidhet",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
-      {
-        key: "PotentialImpact",
-        title: "Potential Impact",
-        tooltip:
-          "Please identify all potential impacts associated with the selected risk.",
-        tooltipdisplay: "block",
+    },
+    Currency: {
+      "ui:title": "If minimum wages vary across locations,  specify which minimum wage is being used as a reference.)",
+      "ui:tooltip":
+        "Mention the estimated value of the liabilities, if the plan liabilities are met by the organisation's general resources.",
+      "ui:tooltipdisplay": "none",
+      "ui:titledisplay": "block",
+      "ui:inputfildtype": "number",
+      "ui:widget": "CurrencyWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
-      {
-        key: "Likelihoodofimpact",
-        title: "Likelihood of impact",
-        tooltip:
-          "Please specify the probability of the impact of the risk on the organization.",
-        tooltipdisplay: "block",
-      },
-      {
-        key: "MagnitudeofImpact",
-        title: "Magnitude of Impact",
-        tooltip:
-          "Indicate the estimated magnitude of the impact of the chosen risk.",
-        tooltipdisplay: "block",
-      },
-      {
-        key: "FinancialEffect",
-        title: "Financial Effect",
-        tooltip:
-          "Indicate the estimated magnitude of the financial impact of the chosen risk",
-        tooltipdisplay: "block",
-      },
-      {
-        key: "FinancialImplications ",
-        title: "Financial Implications",
-        tooltip:
-          "Please describe the specific financial consequences that may result from the chosen risk.",
-        tooltipdisplay: "block",
-      },
-      {
-        key: "ManagementMethods ",
-        title: "Management Methods",
-        tooltip:
-          "Select the strategies and actions the organization will implement to manage and mitigate the chosen risk.",
-        tooltipdisplay: "block",
-      },
-      {
-        key: "TimeFrame",
-        title: "Time Frame",
-        tooltip:
-          "Please indicate the expected period for the selected risk to materialize.",
-        tooltipdisplay: "block",
-      },
-      {
-        key: "DirectImpacts",
-        title: "Direct or Indirect Impacts",
-        tooltip:
-          "Please specify whether the impacts of the selected risk on the organization are direct,indirect, or uncertain.",
-        tooltipdisplay: "block",
-      },
-      {
-        key: "ImplementedMitigationStrategies",
-        title: "Implemented Mitigation Strategies",
-        textdriction: "start",
-        tooltip:
-          "Indicate whether any mitigation strategies have already been implemented for the chosen risk (Yes/No).",
-        tooltipdisplay: "block",
-      },
-      {
-        key: "MitigationStrategies",
-        title: "Mitigation Strategies",
-        tooltip:
-          "If yes, Please select the actions taken by the organization to mitigate or reduce the selected risk.",
-        tooltipdisplay: "block",
-      },
-    ],
+    },
+
+    "ui:options": {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: "horizontal",
+    },
   },
 };
-const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
+const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
+  const [locationdata, setLocationdata] = useState(); 
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -288,11 +149,25 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
     // console.error('Error:', error);
     // }
   };
-
+  const facthloctiondata = async () => {
+ 
+    const url = `${process.env.BACKEND_API_URL}/sustainapp/get_location_as_per_org_or_corp/?corporate=${selectedCorp}&organization=${selectedOrg}`;
+    try {
+      const response = await axiosInstance.get(url);
+      console.log("Location data:", response.data);
+      setLocationdata(response.data);
+  
+    } catch (error) {
+      setLocationdata();
+    
+    } finally {
+      LoaderClose();
+    }
+  };
   const loadFormData = async () => {
     console.log("loadFormData screen 2");
     LoaderOpen();
-    setFormData(initialFormData);
+    setFormData([{}]);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
@@ -301,7 +176,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData(initialFormData);
+      setFormData([{}]);
     } finally {
       LoaderClose();
     }
@@ -310,6 +185,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   useEffect(() => {
     if (selectedOrg && year) {
       loadFormData();
+      facthloctiondata();
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
@@ -321,7 +197,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
     console.log("Form data:", formData);
-    // updateFormData();
+    updateFormData();
   };
 
   return (
@@ -336,9 +212,8 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold mb-2">
-            Report the risks posed by climate change that have the potential to generate substantive changes in operations, revenue, or expenditure of the organisation including:
-            Physical Risk:
-              <MdInfoOutline
+            Select your significant Location of operation
+              {/* <MdInfoOutline
                 data-tooltip-id={`tooltip-$e86`}
                 data-tooltip-content="Mention risks posed by climate change that have the potential to generate
 substantive changes in operations, revenue, or expenditure of the organisation. "
@@ -357,7 +232,7 @@ substantive changes in operations, revenue, or expenditure of the organisation. 
                   borderRadius: "8px",
                   textAlign: "left",
                 }}
-              ></ReactTooltip>
+              ></ReactTooltip> */}
             </h2>
           </div>
 
@@ -365,28 +240,35 @@ substantive changes in operations, revenue, or expenditure of the organisation. 
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 201-2a
+                  GRI 202-1c
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="mx-2 ">
-          <Form
-            schema={schema}
-            uiSchema={uiSchema}
-            formData={formData}
-            onChange={handleChange}
-            validator={validator}
-            widgets={widgets}
-            formContext={{
-              colhadding: "Risk Category",
-              colname: "Physical Risk",
-              view: 1,
-            }}
-          />
-        </div>
-
+        {Array.isArray(locationdata) && locationdata.length > 0 ? (
+          <div className="mx-2">
+            <Form
+              schema={r_schema}
+              uiSchema={r_ui_schema}
+              formData={formData}
+              onChange={handleChange}
+              validator={validator}
+              widgets={{
+                ...widgets,
+                GRI2021combinWidhet: (props) => (
+                  <GRI2021combinWidhet
+                    {...props}
+                    locationdata={locationdata}
+                  />
+                ),
+              }}
+            />
+          </div>
+        ) : (
+          <div className="mx-2"></div>
+        )}
+      
         <div className="mb-6">
           <button
             type="button"
@@ -394,7 +276,7 @@ substantive changes in operations, revenue, or expenditure of the organisation. 
               !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            // disabled={!selectedOrg || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

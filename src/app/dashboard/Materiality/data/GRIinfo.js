@@ -49,8 +49,8 @@ export const GRIData = [
           <div>
             <a
               className="text-[14px] text-[#2196F3] pt-5 inline-flex"
-              //   href="https://sdgs.un.org/goals/goal7"
-              //   target="_blank"
+                href="https://www.globalreporting.org/pdf.ashx?id=12453"
+                target="_blank"
             >
               Learn more <MdChevronRight className="mt-1"
                />
@@ -171,8 +171,8 @@ export const GRIData = [
           <div>
             <a
               className="text-[14px] text-[#2196F3] pt-5 inline-flex"
-              //   href="https://sdgs.un.org/goals/goal7"
-              //   target="_blank"
+                href="https://www.globalreporting.org/pdf.ashx?id=12453"
+                target="_blank"
             >
               Learn more <MdChevronRight className="mt-1"/>
             </a>
@@ -383,8 +383,8 @@ export const GRIData = [
           <div>
             <a
               className="text-[14px] text-[#2196F3] pt-5 inline-flex"
-              //   href="https://sdgs.un.org/goals/goal7"
-              //   target="_blank"
+                href="https://www.globalreporting.org/pdf.ashx?id=12453"
+                target="_blank"
             >
               Learn more <MdChevronRight className="mt-1" />
             </a>

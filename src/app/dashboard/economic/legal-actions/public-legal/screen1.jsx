@@ -79,7 +79,7 @@ const uiSchema = {
     Q2: {
       "ui:title": " If yes, mention the number  of public legal cases regarding corruption brought against the organization or its employees during the reporting period.",
       "ui:tooltip": "Specify the number of public legal cases regarding corruption brought against the organization or its employees during the reporting period ",
-      "ui:tooltipdisplay": "none",
+      "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget2",
       "ui:options": {
         label: false,
@@ -88,7 +88,7 @@ const uiSchema = {
     Q3: {
       "ui:title": "Explain the outcome of public legal cases regarding corruption brought against the organization or its employees during the reporting period.",
       "ui:tooltip": "What were the outcomes of public legal cases regarding corruption brought against the organization or its employees during the reporting period?",
-      "ui:tooltipdisplay": "none",
+      "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget2",
       "ui:options": {
         label: false,

@@ -77,7 +77,7 @@ const Publiclegal = () => {
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Public legal cases regarding corruption, GRI 206: Anti-competitive Behavior 2016
+          Public legal cases regarding corruption
             <MdInfoOutline
               data-tooltip-id={`tooltip-$es10`}
               data-tooltip-content="This section documents the data corresponding to the public legal cases  regarding corruption and actions taken."

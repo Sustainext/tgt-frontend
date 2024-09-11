@@ -53,7 +53,7 @@ const uiSchema = {
         Q2: {
             "ui:title": "Report whether the organization is involved with the negative impacts through its activities or as a result of its business relationships, and describe the activities or business relationships",
             "ui:tooltip":
-                "<p>Describe the methods used to identify organisations impacts on the economy, environment and people. E.g. economic, environment and social impact assessment, grievance mechanisms etc.</p> <p>Impact: </p> <p>Effect the organization has or could have on the economy, environment and people including on their human rights, which in turn can indicate its contribution (negative or positive) to sustainable development.</p> <p>Human rights: </p> <p>Rights inherent to all human beings, which include, at a minimum, the rights set out in the United Nations (UN) International Bill of Human Rights and the principles concerning fundamental rights set out in the International Labour Organization (ILO) Declaration on Fundamental Principles and Rights at Work.</p> <p>Business relationships: </p> <p>Relationships that the organization has with business partners, with \entities in its value chain including those beyond the first tier, and with any other entities directly linked to its operations, products, or service.</p>",
+                "<p>Indicate whether the organisation is involved with the negative impacts through its activities or as a result of its business relationships. Also, specify the activities or business relationships for which organisation is involved with the negative impacts.</p> <p>Business relationships: </p><p>Relationships that the organization has with business partners, with entities in its value chain including those beyond the first tier, and with any other entities directly linked to its operations, products, or services</p>",
             "ui:tooltipdisplay": "block",
             "ui:widget": "MaterialityInputWidget",
             "ui:tag":"GRI-3-3-b",
@@ -85,7 +85,7 @@ const uiSchema = {
     },
 };
 
-const InputField = ({ selectedOrg, year, selectedCorp }) => {
+const InputField = ({ selectedOrg, year, selectedCorp,setTableDataSubmit,tableDataSubmit }) => {
     const [formData, setFormData] = useState([{}]);
     const [r_schema, setRemoteSchema] = useState({});
     const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -115,15 +115,18 @@ const InputField = ({ selectedOrg, year, selectedCorp }) => {
       try {
         const response = await axiosInstance.get(url);
         if(response.status==200){
-          setFormData(
-            [
-              {Q2:response.data.negative_impact_involvement_description,
-                Q3:response.data.stakeholder_engagement_effectiveness_description
-
-              }
-            ]
-          ) 
-          setDatapresent(true)
+          if(response.data){
+            setFormData(
+              [
+                {Q2:response.data.negative_impact_involvement_description,
+                  Q3:response.data.stakeholder_engagement_effectiveness_description
+  
+                }
+              ]
+            ) 
+            setDatapresent(true)
+          }
+          
         }
         
         }
@@ -172,7 +175,7 @@ const InputField = ({ selectedOrg, year, selectedCorp }) => {
     useEffect(()=>{
       fetchDetails()
       fetchData()
-    },[])
+    },[tableDataSubmit])
 
     
     const handleSubmit = async(e) => {
@@ -197,7 +200,7 @@ const InputField = ({ selectedOrg, year, selectedCorp }) => {
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-                theme: "colored",
+                theme: "light",
               });
               if(dataSubmit){
                 const markComplete={

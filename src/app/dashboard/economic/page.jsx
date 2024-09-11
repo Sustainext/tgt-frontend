@@ -7,7 +7,7 @@ import ProcurementPractices from "./procurement-practices/page";
 import Significantindirecteconomic from "./indirect-economic-impacts/significant-indirect-economic/page";
 import PortionOfSeniorManagement from "./market-presence/Proportion-of-senior-management-hired-from-the-local-community/page";
 import Directeconomic from "./economic-performance/direct-economic/page";
-// import Financialimplications from "./economic-performance/financial-implications/page";
+import Financialimplications from "./risks-opportunities/financial-implications/page"
 import Definedbenefit from "./economic-performance/defined-benefit/page";
 import Financialassistance from "./economic-performance/financial-assistance/page";
 import Publiclegal from "./legal-actions/public-legal/page";
@@ -18,7 +18,10 @@ import Stakeholderengagement from "./tax/stakeholder-engagement/page";
 import Countrybycountryreporting from "./tax/country-by-country-reporting/page";
 import Operationsassessed from "./anti-corruption/operations-assessed/page";
 import Confirmedincidents from "./anti-corruption/confirmed-incidents/page";
-// import Ratiosstandard from "./market-presence/ratios-standard/page"
+import Ratiosstandard from "./market-presence/ratios-standard/page";
+import Communicationtraining from "./anti-corruption/communication-training/page"
+import Climaterelated from "./risks-opportunities/climate-related/page"
+import Climaterelatedrisks from "./risks-opportunities/climate-related-risks/page"
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -144,7 +147,8 @@ const Economic = () => {
                         )}
                       </div>
                     </li>
-                    {/* <li
+                    
+                    <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(2)}
                     >
@@ -190,71 +194,6 @@ const Economic = () => {
                         {isStepCompleted(2) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Financial implications and other risks and
-                              opportunities due to climate change
-                            </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
-                          </>
-                        ) : (
-                          <p
-                            className={`${
-                              activeStep === 2
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[12px]  text-gray-600"
-                            } `}
-                          >
-                            Financial implications and other risks and
-                            opportunities due to climate change
-                          </p>
-                        )}
-                      </div>
-                    </li> */}
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(3)}
-                    >
-                      {isStepCompleted(3) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${
-                            activeStep === 3
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${
-                              activeStep === 3
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(3) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
                               Defined benefit plan obligations and other
                               retirement plans
                             </p>
@@ -263,7 +202,7 @@ const Economic = () => {
                         ) : (
                           <p
                             className={`${
-                              activeStep === 3
+                              activeStep === 2
                                 ? "text-[12px] text-sky-800  font-bold"
                                 : " text-[12px]  text-gray-600"
                             } `}
@@ -276,9 +215,9 @@ const Economic = () => {
                     </li>
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(4)}
+                      onClick={() => activeSteps(3)}
                     >
-                      {isStepCompleted(4) ? (
+                      {isStepCompleted(3) ? (
                         <>
                           <div className="before:bg-sky-800  font-bold">
                             <svg
@@ -299,6 +238,71 @@ const Economic = () => {
                             width="12"
                             height="12"
                             className={`${
+                              activeStep === 3
+                                ? "bi bi-circle-fill fill-sky-800  font-bold "
+                                : " bi bi-circle-fill fill-gray-400"
+                            } `}
+                            viewBox="0 0 16 16"
+                          >
+                            <circle cx="8" cy="8" r="8" />
+                          </svg>
+                        </div>
+                      )}
+
+                      <div className="flex items-center">
+                        {isStepCompleted(3) ? (
+                          <>
+                            <p className="text-[12px] text-sky-800  font-bold">
+                              Financial assistance received from government
+                            </p>
+                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                          </>
+                        ) : (
+                          <p
+                            className={`${
+                              activeStep === 3
+                                ? "text-[12px] text-sky-800  font-bold"
+                                : " text-[12px]  text-gray-600"
+                            } `}
+                          >
+                            Financial assistance received from government
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                  </AccordionItem>
+                  <AccordionItem title="Risks & Opportunities">
+                    <li
+                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+                      onClick={() => activeSteps(4)}
+                    >
+                      {isStepCompleted(4) ? (
+                        <>
+                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              className="bi bi-circle-fill fill-sky-800  font-bold "
+                              viewBox="0 0 16 16"
+                            >
+                              <circle cx="8" cy="8" r="8" />
+                            </svg>
+                          </div>
+                        </>
+                      ) : (
+                        <div
+                          className={`${
+                            activeStep === 4
+                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                          } `}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            className={`${
                               activeStep === 4
                                 ? "bi bi-circle-fill fill-sky-800  font-bold "
                                 : " bi bi-circle-fill fill-gray-400"
@@ -314,7 +318,7 @@ const Economic = () => {
                         {isStepCompleted(4) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Financial assistance received from government
+                            Financial Implications due to climate change
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -326,14 +330,13 @@ const Economic = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                            Financial assistance received from government
+                            Financial Implications due to climate change
                           </p>
                         )}
                       </div>
                     </li>
-                  </AccordionItem>
-                  <AccordionItem title="Market Presence">
-                    {/* <li
+                    
+                    <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(5)}
                     >
@@ -379,8 +382,7 @@ const Economic = () => {
                         {isStepCompleted(5) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Ratios of Standard Entry level wage by gender
-                              compared to local minimum wage
+                            Climate related Risks
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -392,12 +394,11 @@ const Economic = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                            Ratios of Standard Entry level wage by gender
-                            compared to local minimum wage
+                         Climate related Risks
                           </p>
                         )}
                       </div>
-                    </li> */}
+                    </li>
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(6)}
@@ -438,8 +439,7 @@ const Economic = () => {
                         {isStepCompleted(6) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Proportion of senior management hired from the
-                              local community
+                            Climate Related Opportunities
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -451,14 +451,13 @@ const Economic = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                            Proportion of senior management hired from the local
-                            community
+                          Climate Related Opportunities
                           </p>
                         )}
                       </div>
                     </li>
                   </AccordionItem>
-                  <AccordionItem title="Indirect Economic Impacts">
+                  <AccordionItem title="Market Presence">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(7)}
@@ -505,7 +504,8 @@ const Economic = () => {
                         {isStepCompleted(7) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Infrastructure investments and services supported
+                              Ratios of Standard Entry level wage by gender
+                              compared to local minimum wage
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -517,7 +517,8 @@ const Economic = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                            Infrastructure investments and services supported
+                            Ratios of Standard Entry level wage by gender
+                            compared to local minimum wage
                           </p>
                         )}
                       </div>
@@ -562,7 +563,8 @@ const Economic = () => {
                         {isStepCompleted(8) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Significant indirect economic impacts
+                              Proportion of senior management hired from the
+                              local community
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -574,79 +576,19 @@ const Economic = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                            Significant indirect economic impacts
+                            Proportion of senior management hired from the local
+                            community
                           </p>
                         )}
                       </div>
                     </li>
                   </AccordionItem>
-
-                  <AccordionItem title="Procurement Practices">
+                  <AccordionItem title="Indirect Economic Impacts">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(9)}
                     >
                       {isStepCompleted(9) ? (
-                        <>
-                          <div className="before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${
-                              activeStep === 9
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(9) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Proportion of spending on local suppliers
-                            </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
-                          </>
-                        ) : (
-                          <p
-                            className={`${
-                              activeStep === 9
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[12px]  text-gray-600"
-                            } `}
-                          >
-                            Proportion of spending on local suppliers
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                  </AccordionItem>
-
-                  <AccordionItem title="Anti Corruption">
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(10)}
-                    >
-                      {isStepCompleted(10) ? (
                         <>
                           <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
                             <svg
@@ -663,11 +605,68 @@ const Economic = () => {
                       ) : (
                         <div
                           className={`${
-                            activeStep === 10
+                            activeStep === 9
                               ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
                               : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
                           } `}
                         >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            className={`${
+                              activeStep ===9
+                                ? "bi bi-circle-fill fill-sky-800  font-bold "
+                                : " bi bi-circle-fill fill-gray-400"
+                            } `}
+                            viewBox="0 0 16 16"
+                          >
+                            <circle cx="8" cy="8" r="8" />
+                          </svg>
+                        </div>
+                      )}
+
+                      <div className="flex items-center">
+                        {isStepCompleted(9) ? (
+                          <>
+                            <p className="text-[12px] text-sky-800  font-bold">
+                              Infrastructure investments and services supported
+                            </p>
+                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                          </>
+                        ) : (
+                          <p
+                            className={`${
+                              activeStep === 9
+                                ? "text-[12px] text-sky-800  font-bold"
+                                : " text-[12px]  text-gray-600"
+                            } `}
+                          >
+                            Infrastructure investments and services supported
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                    <li
+                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+                      onClick={() => activeSteps(10)}
+                    >
+                      {isStepCompleted(10) ? (
+                        <>
+                          <div className="before:bg-sky-800  font-bold">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              className="bi bi-circle-fill fill-sky-800  font-bold "
+                              viewBox="0 0 16 16"
+                            >
+                              <circle cx="8" cy="8" r="8" />
+                            </svg>
+                          </div>
+                        </>
+                      ) : (
+                        <div>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
@@ -688,8 +687,7 @@ const Economic = () => {
                         {isStepCompleted(10) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Operations assessed for risks related to
-                              corruption
+                              Significant indirect economic impacts
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -701,81 +699,19 @@ const Economic = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                            Operations assessed for risks related to corruption
+                            Significant indirect economic impacts
                           </p>
                         )}
                       </div>
                     </li>
+                  </AccordionItem>
+
+                  <AccordionItem title="Procurement Practices">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(11)}
                     >
                       {isStepCompleted(11) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${
-                            activeStep === 11
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${
-                              activeStep === 11
-                                ? "bi bi-circle-fill fill-sky-800  font-bold "
-                                : " bi bi-circle-fill fill-gray-400"
-                            } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(11) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Communication and training about anti-corruption
-                              policies and procedures
-                            </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
-                          </>
-                        ) : (
-                          <p
-                            className={`${
-                              activeStep === 11
-                                ? "text-[12px] text-sky-800  font-bold"
-                                : " text-[12px]  text-gray-600"
-                            } `}
-                          >
-                            Communication and training about anti-corruption
-                            policies and procedures
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(12)}
-                    >
-                      {isStepCompleted(12) ? (
                         <>
                           <div className="before:bg-sky-800  font-bold">
                             <svg
@@ -796,6 +732,72 @@ const Economic = () => {
                             width="12"
                             height="12"
                             className={`${
+                              activeStep === 11
+                                ? "bi bi-circle-fill fill-sky-800  font-bold "
+                                : " bi bi-circle-fill fill-gray-400"
+                            } `}
+                            viewBox="0 0 16 16"
+                          >
+                            <circle cx="8" cy="8" r="8" />
+                          </svg>
+                        </div>
+                      )}
+
+                      <div className="flex items-center">
+                        {isStepCompleted(11) ? (
+                          <>
+                            <p className="text-[12px] text-sky-800  font-bold">
+                              Proportion of spending on local suppliers
+                            </p>
+                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                          </>
+                        ) : (
+                          <p
+                            className={`${
+                              activeStep === 11
+                                ? "text-[12px] text-sky-800  font-bold"
+                                : " text-[12px]  text-gray-600"
+                            } `}
+                          >
+                            Proportion of spending on local suppliers
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                  </AccordionItem>
+
+                  <AccordionItem title="Anti Corruption">
+                    <li
+                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+                      onClick={() => activeSteps(12)}
+                    >
+                      {isStepCompleted(12) ? (
+                        <>
+                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              className="bi bi-circle-fill fill-sky-800  font-bold "
+                              viewBox="0 0 16 16"
+                            >
+                              <circle cx="8" cy="8" r="8" />
+                            </svg>
+                          </div>
+                        </>
+                      ) : (
+                        <div
+                          className={`${
+                            activeStep === 12
+                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                          } `}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            className={`${
                               activeStep === 12
                                 ? "bi bi-circle-fill fill-sky-800  font-bold "
                                 : " bi bi-circle-fill fill-gray-400"
@@ -811,8 +813,8 @@ const Economic = () => {
                         {isStepCompleted(12) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Confirmed incidents of corruption and actions
-                              taken
+                              Operations assessed for risks related to
+                              corruption
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -824,13 +826,11 @@ const Economic = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                            Confirmed incidents of corruption and actions taken
+                            Operations assessed for risks related to corruption
                           </p>
                         )}
                       </div>
                     </li>
-                  </AccordionItem>
-                  <AccordionItem title="Legal Actions">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(13)}
@@ -877,7 +877,8 @@ const Economic = () => {
                         {isStepCompleted(13) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Public legal cases regarding corruption
+                              Communication and training about anti-corruption
+                              policies and procedures
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -889,7 +890,8 @@ const Economic = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                            Public legal cases regarding corruption
+                            Communication and training about anti-corruption
+                            policies and procedures
                           </p>
                         )}
                       </div>
@@ -934,7 +936,8 @@ const Economic = () => {
                         {isStepCompleted(14) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Anti Competitive Behavior
+                              Confirmed incidents of corruption and actions
+                              taken
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -946,13 +949,13 @@ const Economic = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                            Anti Competitive Behavior
+                            Confirmed incidents of corruption and actions taken
                           </p>
                         )}
                       </div>
                     </li>
                   </AccordionItem>
-                  <AccordionItem title="Tax">
+                  <AccordionItem title="Legal Actions">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(15)}
@@ -999,7 +1002,7 @@ const Economic = () => {
                         {isStepCompleted(15) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Approach to tax
+                              Public legal cases regarding corruption
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -1011,7 +1014,7 @@ const Economic = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                            Approach to tax
+                            Public legal cases regarding corruption
                           </p>
                         )}
                       </div>
@@ -1022,7 +1025,7 @@ const Economic = () => {
                     >
                       {isStepCompleted(16) ? (
                         <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
+                          <div className="before:bg-sky-800  font-bold">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="12"
@@ -1035,13 +1038,7 @@ const Economic = () => {
                           </div>
                         </>
                       ) : (
-                        <div
-                          className={`${
-                            activeStep === 16
-                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                          } `}
-                        >
+                        <div>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
@@ -1062,7 +1059,7 @@ const Economic = () => {
                         {isStepCompleted(16) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Tax governance, control, and risk management
+                              Anti Competitive Behavior
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -1074,11 +1071,13 @@ const Economic = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                            Tax governance, control, and risk management
+                            Anti Competitive Behavior
                           </p>
                         )}
                       </div>
                     </li>
+                  </AccordionItem>
+                  <AccordionItem title="Tax">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(17)}
@@ -1125,8 +1124,7 @@ const Economic = () => {
                         {isStepCompleted(17) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Stakeholder engagement and management of concerns
-                              related to tax
+                              Approach to tax
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -1138,8 +1136,7 @@ const Economic = () => {
                                 : " text-[12px]  text-gray-600"
                             } `}
                           >
-                            Stakeholder engagement and management of concerns
-                            related to tax
+                            Approach to tax
                           </p>
                         )}
                       </div>
@@ -1150,7 +1147,7 @@ const Economic = () => {
                     >
                       {isStepCompleted(18) ? (
                         <>
-                          <div className="before:bg-sky-800  font-bold">
+                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="12"
@@ -1163,7 +1160,13 @@ const Economic = () => {
                           </div>
                         </>
                       ) : (
-                        <div>
+                        <div
+                          className={`${
+                            activeStep === 18
+                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                          } `}
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
@@ -1184,7 +1187,7 @@ const Economic = () => {
                         {isStepCompleted(18) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
-                              Country-by-country reporting
+                              Tax governance, control, and risk management
                             </p>
                             <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
                           </>
@@ -1192,6 +1195,128 @@ const Economic = () => {
                           <p
                             className={`${
                               activeStep === 18
+                                ? "text-[12px] text-sky-800  font-bold"
+                                : " text-[12px]  text-gray-600"
+                            } `}
+                          >
+                            Tax governance, control, and risk management
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                    <li
+                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+                      onClick={() => activeSteps(19)}
+                    >
+                      {isStepCompleted(19) ? (
+                        <>
+                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              className="bi bi-circle-fill fill-sky-800  font-bold "
+                              viewBox="0 0 16 16"
+                            >
+                              <circle cx="8" cy="8" r="8" />
+                            </svg>
+                          </div>
+                        </>
+                      ) : (
+                        <div
+                          className={`${
+                            activeStep === 19
+                              ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
+                              : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
+                          } `}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            className={`${
+                              activeStep === 19
+                                ? "bi bi-circle-fill fill-sky-800  font-bold "
+                                : " bi bi-circle-fill fill-gray-400"
+                            } `}
+                            viewBox="0 0 16 16"
+                          >
+                            <circle cx="8" cy="8" r="8" />
+                          </svg>
+                        </div>
+                      )}
+
+                      <div className="flex items-center">
+                        {isStepCompleted(19) ? (
+                          <>
+                            <p className="text-[12px] text-sky-800  font-bold">
+                              Stakeholder engagement and management of concerns
+                              related to tax
+                            </p>
+                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                          </>
+                        ) : (
+                          <p
+                            className={`${
+                              activeStep === 19
+                                ? "text-[12px] text-sky-800  font-bold"
+                                : " text-[12px]  text-gray-600"
+                            } `}
+                          >
+                            Stakeholder engagement and management of concerns
+                            related to tax
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                    <li
+                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
+                      onClick={() => activeSteps(20)}
+                    >
+                      {isStepCompleted(20) ? (
+                        <>
+                          <div className="before:bg-sky-800  font-bold">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              className="bi bi-circle-fill fill-sky-800  font-bold "
+                              viewBox="0 0 16 16"
+                            >
+                              <circle cx="8" cy="8" r="8" />
+                            </svg>
+                          </div>
+                        </>
+                      ) : (
+                        <div>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            className={`${
+                              activeStep === 20
+                                ? "bi bi-circle-fill fill-sky-800  font-bold "
+                                : " bi bi-circle-fill fill-gray-400"
+                            } `}
+                            viewBox="0 0 16 16"
+                          >
+                            <circle cx="8" cy="8" r="8" />
+                          </svg>
+                        </div>
+                      )}
+
+                      <div className="flex items-center">
+                        {isStepCompleted(20) ? (
+                          <>
+                            <p className="text-[12px] text-sky-800  font-bold">
+                              Country-by-country reporting
+                            </p>
+                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                          </>
+                        ) : (
+                          <p
+                            className={`${
+                              activeStep === 20
                                 ? "text-[12px] text-sky-800  font-bold"
                                 : " text-[12px]  text-gray-600"
                             } `}
@@ -1215,119 +1340,135 @@ const Economic = () => {
                   </div>
                 </>
               )}
-              {/* {activeStep === 2 && (
-                <>
-                  <div>
-                    <Financialimplications />
-                  </div>
-                </>
-              )} */}
-              {activeStep === 3 && (
+           
+              {activeStep === 2 && (
                 <>
                   <div>
                     <Definedbenefit />
                   </div>
                 </>
               )}
-              {activeStep === 4 && (
+              {activeStep === 3 && (
                 <>
                   <div>
                     <Financialassistance />
                   </div>
                 </>
               )}
-              {/* {activeStep === 5 && (
+                 {activeStep === 4 && (
                 <>
                   <div>
-                    <Ratiosstandard />
+                    <Financialimplications />
                   </div>
                 </>
-              )} */}
-              {activeStep === 6 && (
+              )} 
+               {activeStep === 5 && (
                 <>
                   <div>
-                    <PortionOfSeniorManagement />
+                    <Climaterelatedrisks />
                   </div>
                 </>
               )}
+                     {activeStep === 6 && (
+                <>
+                  <div>
+                    <Climaterelated />
+                  </div>
+                </>
+              )}
+              
               {activeStep === 7 && (
                 <>
                   <div>
-                    <Infrastructureinvestmentsservices />
+                    <Ratiosstandard />
                   </div>
                 </>
               )}
               {activeStep === 8 && (
                 <>
                   <div>
-                    <Significantindirecteconomic />
+                    <PortionOfSeniorManagement />
                   </div>
                 </>
               )}
               {activeStep === 9 && (
                 <>
                   <div>
-                    <ProcurementPractices />
+                    <Infrastructureinvestmentsservices />
                   </div>
                 </>
               )}
               {activeStep === 10 && (
                 <>
                   <div>
-                    <Operationsassessed />
+                    <Significantindirecteconomic />
                   </div>
                 </>
               )}
-              {/* {activeStep === 11 && (
+              {activeStep === 11 && (
                 <>
                   <div>
-                    <StakeholderEngagement />
+                    <ProcurementPractices />
                   </div>
                 </>
-              )} */}
-                 {activeStep === 12 && (
+              )}
+              {activeStep === 12 && (
                 <>
                   <div>
-                    <Confirmedincidents />
+                    <Operationsassessed />
                   </div>
                 </>
               )}
               {activeStep === 13 && (
                 <>
                   <div>
-                    <Publiclegal />
+                    <Communicationtraining />
                   </div>
                 </>
               )}
-              {activeStep === 14 && (
+                 {activeStep === 14 && (
                 <>
                   <div>
-                    <Anticompetitivebehavior />
+                    <Confirmedincidents />
                   </div>
                 </>
               )}
               {activeStep === 15 && (
                 <>
                   <div>
-                    <Approachtotax />
+                    <Publiclegal />
                   </div>
                 </>
               )}
               {activeStep === 16 && (
                 <>
                   <div>
-                    <Taxgovernance />
+                    <Anticompetitivebehavior />
                   </div>
                 </>
               )}
               {activeStep === 17 && (
                 <>
                   <div>
-                    <Stakeholderengagement />
+                    <Approachtotax />
                   </div>
                 </>
               )}
               {activeStep === 18 && (
+                <>
+                  <div>
+                    <Taxgovernance />
+                  </div>
+                </>
+              )}
+              {activeStep === 19 && (
+                <>
+                  <div>
+                    <Stakeholderengagement />
+                  </div>
+                </>
+              )}
+              {activeStep === 20 && (
                 <>
                   <div>
                     <Countrybycountryreporting />
