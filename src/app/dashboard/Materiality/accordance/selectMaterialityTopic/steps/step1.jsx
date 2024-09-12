@@ -8,7 +8,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axiosInstance from "../../../../../utils/axiosMiddleware";
 
-const Step1 = ({handleNext}) => {
+const Step1 = ({handleNext,esgSeleted}) => {
+  
   const router = useRouter()
   const [envChecked,setEnvChecked]=useState(false)
   const [socChecked,setSocChecked]=useState(false)
@@ -16,6 +17,7 @@ const Step1 = ({handleNext}) => {
   const [formData, setFormData] = useState([{}]);
   const [dataPresent,setDatapresent]=useState(false)
 
+  
   const handleChecked=(event)=>{
    if(event.target.name=="env"){
     setEnvChecked(event.target.checked)
@@ -101,7 +103,12 @@ const Step1 = ({handleNext}) => {
 
   useEffect(()=>{
     fetchSelectedTopic()
-  },[])
+    if(esgSeleted){
+      setEnvChecked(esgSeleted.environmentChecked)
+      setSocChecked(esgSeleted.socialChecked)
+      setGovChecked(esgSeleted.governanceChecked)
+    }
+  },[esgSeleted])
 
   const handleSubmit = async(e) => {
     const arr=Object.values(formData[0]).flat();
@@ -109,14 +116,36 @@ const Step1 = ({handleNext}) => {
    const data={
         "assessment_id":id,
         "topics":arr,
-        // "esg_selected":{environmentChecked:envChecked,socialChecked:socChecked,governanceChecked:govChecked}
     }
     const url = dataPresent?`${process.env.BACKEND_API_URL}/materiality_dashboard/assessment-topic-selections/${id}/edit/`:`${process.env.BACKEND_API_URL}/materiality_dashboard/assessment-topic-selection/`
   try {
     const response = dataPresent?await axiosInstance.patch(url,data):await axiosInstance.post(url,data);
     
     if(response.status>=200&&response.status<300){
+     
+      const esg_selected_data={
+        "esg_selected":{"environmentChecked":envChecked,"socialChecked":socChecked,"governanceChecked":govChecked}
+       }
+   
+   const esg_selected_url =`${process.env.BACKEND_API_URL}/materiality_dashboard/materiality-assessments/${id}/`
+   try{
+    const response = await axiosInstance.patch(esg_selected_url,esg_selected_data)
+    if(response.status==200){
       handleNext()
+    }
+   }
+   catch (error) {
+    toast.error("Oops, something went wrong", {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  }
     }
     else{
       toast.error("Oops, something went wrong", {

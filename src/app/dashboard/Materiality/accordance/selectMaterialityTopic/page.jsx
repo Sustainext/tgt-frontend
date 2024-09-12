@@ -8,7 +8,7 @@ import Step3 from "./steps/step3";
 import { useRouter } from 'next/navigation'
 import TopicSelectedPopup from "../../modals/topicSelectedPopup";
 
-const SelectMaterialityTopic = ({ handleTabClick,cardData}) => {
+const SelectMaterialityTopic = ({ handleTabClick,cardData,esgSeleted}) => {
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState();
@@ -103,7 +103,7 @@ const SelectMaterialityTopic = ({ handleTabClick,cardData}) => {
               <div className="text-left mb-4 ml-3 pt-5">
                 <div className="flex justify-between items-center">
                   <div className="w-[70%]">
-                    <p className="gradient-text text-[22px] font-bold pt-4 pb-4 ml-3">
+                    <p className="gradient-text text-[22px] font-bold pt-4 pb-4 mx-2">
                       Select Materiality Topic
                     </p>
                   </div>
@@ -218,7 +218,7 @@ const SelectMaterialityTopic = ({ handleTabClick,cardData}) => {
         {/* steps */}
         <div>
           {currentStep==0?(
-            <Step1 handleNext={handleNext}/>
+            <Step1 handleNext={handleNext} esgSeleted={esgSeleted}/>
           ):(
             <div>
             {currentStep==1?(
