@@ -222,7 +222,7 @@ const Screen5 = ({ selectedOrg, year, selectedCorp,datarefreshtwo }) => {
               <MdInfoOutline
                 data-tooltip-id={`es278`}
                 data-tooltip-html="Total number of employees that have received training on anti-corruption, broken down by employee category and region."
-                className="mt-1.5 ml-2 text-[20px]"
+                className="mt-1.5 ml-2 text-[21px]"
               />
               <ReactTooltip
                 id={`es278`}
