@@ -1,9 +1,20 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { GiPublicSpeaker } from "react-icons/gi";
-import { PowerBIEmbed } from "powerbi-client-react";
-import { models } from "powerbi-client";
+// import { PowerBIEmbed } from "powerbi-client-react";
+// import { models } from "powerbi-client";
 import axiosInstance from '../../../utils/axiosMiddleware'
+import dynamic from 'next/dynamic'
+
+const PowerBIEmbed = dynamic(
+  () => import("powerbi-client-react").then(mod => mod.PowerBIEmbed),
+  { ssr: false }
+);
+
+const models = dynamic(
+  () => import("powerbi-client").then(mod => mod.models),
+  { ssr: false }
+);
 
 const SocialTrack = ({ contentSize, dashboardData }) => {
   const [activeTab, setActiveTab] = useState('powerbiSocialEmployment');

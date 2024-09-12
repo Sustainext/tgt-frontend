@@ -4,7 +4,7 @@ import Aside from './Aside';
 import EnvironmentTrack from './Environment/page';
 import SocialTrack from './Social/page'
 import GovernanceTrack from './Governance/page'
-import { GlobalState } from '@/Context/page';
+import { GlobalState } from '../../../Context/page';
 import axiosInstance from '../../utils/axiosMiddleware'
 
 const Index = () => {
