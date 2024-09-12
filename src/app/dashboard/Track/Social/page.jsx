@@ -115,6 +115,8 @@ const SocialTrack = ({ contentSize, dashboardData }) => {
     height: `${height - 50}px`,
   };
 
+  if (!models || !PowerBIEmbed) return <p>Loading...</p>;
+
   return (
     <div
       className="flex flex-col justify-start items-center"
