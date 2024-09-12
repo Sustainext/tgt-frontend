@@ -69,7 +69,6 @@ const Anticorruptions = () => {
       );
 
       const data = response.data;
-console.log(data,"test data");
       const { analyze_205_2a,analyze_205_2b,analyze_205_2c,analyze_205_2d,analyze_205_2e } = data;
 
       const formatcollectivebargaining = (data) => {
