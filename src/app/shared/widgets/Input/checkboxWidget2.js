@@ -55,7 +55,7 @@ const CheckboxWidget2 = ({
     <div className="mb-1">
       <div className="flex mb-2">
       <div className="relative w-[55%] flex">
-  <p className="text-[15px] text-gray-700 w-auto">
+  <p className="text-[15px] text-gray-700 w-auto mx-3 ">
     {uiSchema["ui:title"]}
   </p>
   <MdInfoOutline
@@ -90,7 +90,7 @@ const CheckboxWidget2 = ({
           </button>
         )}
       </div>
-      <div className={`p-2 mx-1 mt-2 green-checkbox ${uiSchema['ui:section']}`}>
+      <div className={`p-2 mx-1 mt-2 green-checkbox ${uiSchema['ui:section']} w-[55%]`}>
         {options.enumOptions.map((option, index) => (
           <label key={index} className="flex items-center gap-2 text-sm mb-4 cursor-pointer">
             <input

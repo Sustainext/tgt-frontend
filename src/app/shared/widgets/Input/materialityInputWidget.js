@@ -14,7 +14,7 @@ const MaterialityInputWidget = (props) => {
       <div className="mb-6">
         <div className="flex mb-2">
         <div className="relative w-[55%] flex">
-  <p className="text-[15px] text-gray-700 w-auto">
+  <p className="text-[15px] text-gray-700 w-auto mx-3">
     {uiSchema["ui:title"]}
   </p>
   <MdInfoOutline

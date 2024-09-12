@@ -295,7 +295,7 @@ const InputField = ({ handleTabClick }) => {
     return (
         <>
             <div className="mt-7">
-            <div className="flex mb-8 mx-2">
+            <div className="flex mb-8 mx-5">
           <div className=" relative w-[55%] flex">
             <p className="text-[15px] text-gray-700 w-auto">
             Describe the process organisation has followed to determine its material topics including:
@@ -339,7 +339,7 @@ const InputField = ({ handleTabClick }) => {
                 </div>
             </div>
             <div className="flex justify-end w-full gap-4 mt-4 ">
-        <button className="w-[15%] h-full mr-2 py-2 px-2 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer"
+        <button className="w-[auto] h-full mr-2 py-2 px-3 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer"
         onClick={handleSubmit}
         >
           Save and Proceed {">"}
