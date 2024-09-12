@@ -57,7 +57,7 @@ const Operationsassessed = () => {
     setStrategypolicy([]);
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_general_collective_bargaining_analysis`,
+        `/sustainapp/get_economic_operations_assessed/`,
         {
           params: params
         }
@@ -65,16 +65,16 @@ const Operationsassessed = () => {
 
       const data = response.data;
 
-      const { collective_bargaining } = data;
+      const { operations_assesed } = data;
 
       const formatcollectivebargaining = (data) => {
         return data.map((data, index) => {
           const percentage = parseFloat(data.percentage).toFixed(2);
           const formattedPercentage = percentage.endsWith('.00') ? percentage.slice(0, -3) : percentage;
           return {
-   
-            "Total number of operations assessed for risks related to corruption":data.org_or_corp,
-            "Total number of operations": formattedPercentage,
+   "Organisation/Corporation":data.org_or_corp,
+            "Total number of operations assessed for risks related to corruption":data.total_number_of_operations_assesed,
+            "Total number of operations": data.number_of_operations,
             "Percentage of operations asssessed for risks related to corruption": formattedPercentage,
          
           };
@@ -83,7 +83,7 @@ const Operationsassessed = () => {
       };
       setStrategypolicy(
         formatcollectivebargaining(
-          collective_bargaining
+          operations_assesed
         )
       );
       LoaderClose();

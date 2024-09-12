@@ -6,10 +6,9 @@ import { GlobalState } from '../../Context/page';
 
 export default function DashboardLayout({ children }) {
   const { open } = GlobalState();
-  const [defaultLanguage, setDefaultLanguage] = useState('ja'); // Define state for default language
+  const [defaultLanguage, setDefaultLanguage] = useState('ja'); 
 
-  // For example, you can change the default language dynamically here
-  // setDefaultLanguage('en'); // Use this function to update the language
+
 
   useEffect(() => {
     if (!document.getElementById('gtranslate-script')) {
@@ -26,7 +25,7 @@ export default function DashboardLayout({ children }) {
       script.id = 'gtranslate-script';
       document.body.appendChild(script);
     }
-  }, [defaultLanguage]); // This will trigger if the defaultLanguage changes
+  }, [defaultLanguage]); 
 
   return (
     <>

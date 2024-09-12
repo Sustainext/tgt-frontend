@@ -14,7 +14,9 @@ const Accordance = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("selectMaterialityTopic");
   const [cardData,setCarddata]= useState({})
+  const [esgSeleted,setEsgSelected]=useState({})
 
+  
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
@@ -34,6 +36,10 @@ const Accordance = () => {
       const response = await axiosInstance.get(url);
       if(response.status==200){
         setCarddata(response.data)
+        if(response.data.esg_selected){
+          setEsgSelected(response.data.esg_selected)
+        }
+        
       }
       else{
         toast.error("Oops, something went wrong", {
@@ -76,7 +82,7 @@ const Accordance = () => {
 
         {/* main content */}
         <div className="w-full">
-          {activeTab === "selectMaterialityTopic" && <SelectMaterialityTopic  handleTabClick={handleTabClick} cardData={cardData} />}
+          {activeTab === "selectMaterialityTopic" && <SelectMaterialityTopic  handleTabClick={handleTabClick} cardData={cardData} esgSeleted={esgSeleted} />}
           {activeTab === "materialAssessmentProcess" && (
             <MaterialAssessmentProcess handleTabClick={handleTabClick} />
           )}

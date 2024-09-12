@@ -248,7 +248,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp, datarefresh }) => {
                 data-tooltip-id={`es278`}
                 data-tooltip-html="Specify the total number of business partners that the organization’s anti-corruption policies 
 and procedures have been communicated to, broken down by type of business partner and region"
-                className="mt-1.5 ml-2 text-[20px]"
+                className="mt-1.5 ml-2 text-[23px]"
               />
               <ReactTooltip
                 id={`es278`}

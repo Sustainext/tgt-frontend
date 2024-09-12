@@ -136,6 +136,12 @@ const Reference = () => {
       const response = await axiosInstance.get(url);
       if(response.status==200){
         setCarddata(response.data)
+        if(response.data.esg_selected){
+          setEnvChecked(response.data.esg_selected.environmentChecked)
+        setSocChecked(response.data.esg_selected.socialChecked)
+        setGovChecked(response.data.esg_selected.governanceChecked)
+        }
+        
       }
       else{
         toast.error("Oops, something went wrong", {
@@ -185,6 +191,8 @@ const Reference = () => {
     if(response.status>=200&&response.status<300){
       const markComplete={
         "status":"completed",
+        "esg_selected":{"environmentChecked":envChecked,"socialChecked":socChecked,"governanceChecked":govChecked}
+
     }
     const CompleteUrl = `${process.env.BACKEND_API_URL}/materiality_dashboard/materiality-assessments/${id}/`
     try{
@@ -237,7 +245,7 @@ const Reference = () => {
    
 };
 
-console.log(formData,"seee")
+
 
 const convertDate=(dateStr)=>{
   const date = new Date(dateStr);

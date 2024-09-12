@@ -435,6 +435,7 @@ const handleDateChange = (newRange) => {
       framework: framework,
       approach: assessmentApproach === "accordance" ? "GRI: In accordance with" : "GRI: With Reference to",
       status: "in_progress",
+      esg_selected:{"environmentChecked":false,"socialChecked":false,"governanceChecked":false}
     };
 
     const url = `${process.env.BACKEND_API_URL}/materiality_dashboard/materiality-assessments/`;

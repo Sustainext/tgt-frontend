@@ -254,7 +254,7 @@ catch (error) {
 
   return (
     <>
-      <div className="p-3 mb-6 pb-6 rounded-md shadow-lg mx-2 mt-10">
+      <div className="p-3 mb-6 pb-6 rounded-md shadow-lg mx-4 mt-10">
         <div className="mb-4 flex">
           <div className="w-full relative">
             <h2 className="flex mx-2 text-[15px] mb-2">
