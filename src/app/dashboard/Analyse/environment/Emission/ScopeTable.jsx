@@ -25,7 +25,7 @@ const ScopeTable = ({ data }) => {
     },
   ];
 
-  return <ReusableTable columns={columns} data={data} />;
+  return <ReusableTable type='Scope' columns={columns} data={data} />;
 };
 
 export default ScopeTable;

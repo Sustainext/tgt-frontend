@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { Energydata } from "./../../../shared/data/Energydata";
-import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
-import { toast } from 'react-toastify';
-import { patch } from '../../../utils/axiosMiddleware';
+import { MdOutlineClear } from "react-icons/md";
 
 const Header = ({ activeTab, setIsBoxOpen }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,6 +26,15 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
   }, [category]);
 
   const gri = [
+    {
+      category: "Emissions",
+      tag: "GRI 305",
+      data: [
+        { tagid: "1", infoid: "43" },
+        { tagid: "2", infoid: "44" },
+        { tagid: "3", infoid: "45" },
+      ]
+    },
     {
       category: "Energy",
       tag: "GRI 302",
@@ -75,6 +82,16 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
   ];
   const sdg = [
     {
+      category: "Emissions",
+      data: [
+        { id: 'sd5', label: 'SDG 3', bgColor: 'bg-[#4c9f38]' },
+        { id: 'sd3', label: 'SDG 12', bgColor: 'bg-yellow-600' },
+        { id: 'sd4', label: 'SDG 13', bgColor: 'bg-[#3f7e44]' },
+        { id: 'sd24', label: 'SDG 14', bgColor: 'bg-[#007dbc]' },
+        { id: 'sd8', label: 'SDG 15', bgColor: 'bg-[#4c9f38]' },
+      ]
+    },
+    {
       category: "Energy",
       data: [
         { id: 'sd1', label: 'SDG 7', bgColor: 'bg-amber-400' },
@@ -108,8 +125,6 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       data: [
 
         { id: 'sd6', label: 'SDG 6', bgColor: 'bg-cyan-500' },
-
-
       ]
     }
   ];

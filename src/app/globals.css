@@ -302,25 +302,9 @@ div._fluentc_widget-language-manager.show{
 body._fluentc_widget-banner-show{
   top: 0px !important;
 }
-.gtranslate_wrapper {
-  margin: 20px;
-  text-align: right;
-}
 
-.gtranslate_wrapper select {
-  padding: 5px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  cursor: pointer;
+.Embed-container{
+  height: 500px;
+  width: 1000px;
+  padding-bottom: 30px;
 }
-.total {
-  position: relative;
-  font-size: 13px;
-  line-height: 20px;
-  font-family: Manrope;
-  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), linear-gradient(90deg, #007eef, #2ae4ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
- 
-  }
