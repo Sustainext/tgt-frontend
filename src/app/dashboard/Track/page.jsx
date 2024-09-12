@@ -11,7 +11,7 @@ const Index = () => {
   const [activeModule, setActiveModule] = useState("Environment");
   const [contentSize, setContentSize] = useState({ width: 0, height: 0 });
   const [containerWidth, setContainerWidth] = useState('100%');
-  // const [dashboardData, setDashboardData] = useState(null);
+  const [dashboardData, setDashboardData] = useState(null);
   const open = GlobalState();
 
   const handleTabClick = (module) => {
