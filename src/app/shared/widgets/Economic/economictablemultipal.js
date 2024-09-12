@@ -70,7 +70,7 @@ const Economictablemultipal = ({ id, value, onChange }) => {
       tooltip:
         "Indicate the estimated magnitude of the financial impact of the chosen opportunity.",
       tooltipdisplay: "block",
-      options: ["Very High", "High", "Moderate", "Low","Very Low"],
+      options: ["Very High", "High", "Moderate", "Low", "Very Low"],
     },
     {
       id: 6,
@@ -163,7 +163,7 @@ const Economictablemultipal = ({ id, value, onChange }) => {
     if (key === "TypeofRisk") {
       updatedValues[index]["FinancialImplications"] = [];
       updatedValues[index]["ManagementMethods"] = [];
-      updatedValues[index]["MitigationStrategies"] = [];  // Clear selected ManagementMethods
+      updatedValues[index]["MitigationStrategies"] = []; // Clear selected ManagementMethods
     }
     updatedValues[index][key] = newValue;
 
@@ -173,7 +173,9 @@ const Economictablemultipal = ({ id, value, onChange }) => {
     }
 
     if (Array.isArray(newValue)) {
-      updatedOthersInputs[index][key] = newValue.includes("Others (please specify)");
+      updatedOthersInputs[index][key] = newValue.includes(
+        "Others (please specify)"
+      );
     } else {
       updatedOthersInputs[index][key] = newValue === "Others (please specify)";
     }
@@ -182,7 +184,6 @@ const Economictablemultipal = ({ id, value, onChange }) => {
     setLocalValue(updatedValues);
   };
 
- 
   const debouncedUpdate = useCallback(debounce(onChange, 200), [onChange]);
 
   useEffect(() => {
@@ -226,91 +227,89 @@ const Economictablemultipal = ({ id, value, onChange }) => {
           "Others (please specify)",
         ],
         "Green Building Initiatives": [
-            "Lower Utility Costs",
-            "High Initial Construction Costs",
-            "Increased Property Value",
-            "Tax Credits and Incentives",
-            "Long-term Operational Savings",
-            "Others (please specify)",
-          ],
-          "Sustainable Supply Chain": [
-            "Competitive Advantage",
-            "Cost Reduction through Efficiency",
-            "Increased Supplier Costs",
-            "Improved Risk Management",
-            "Enhanced Brand Reputation",
-            "Others (please specify)"
-          ],
-          "Water Conservation": [
-            "Reduced Water Costs",
-            "Initial Infrastructure Investment",
-            "Ongoing Maintenance Savings",
-            "Enhanced Resource Efficiency",
-            "Lowered Utility Bills",
-            "Others (please specify)"
-          ],
-          "Carbon Offsetting Programs": [
-            "Tax Benefits",
-            "Purchase Costs",
-            "Market Price Stability",
-            "Long-term Financial Gains",
-            "Reputation Enhancement",
-            "Others (please specify)"
-          ],
-          "Climate-Resilient Infrastructure": [
-            "High Initial Investment",
-            "Long-term Savings",
-            "Insurance Premium Reductions",
-            "Enhanced Property Value",
-            "Disaster Recovery Savings",
-            "Others (please specify)"
-          ],
-          "Policy Advocacy": [
-            "Lobbying Costs",
-            "Potential Subsidies",
-            "Enhanced Regulatory Environment",
-            "Market Access",
-            "Reputation Enhancement",
-            "Others (please specify)"
-          ],
-          "Financial Incentives": [
-            "Direct Subsidies",
-            "Tax Breaks",
-            "Grants",
-            "Lower Loan Rates",
-            "Investment Incentives",
-            "Others (please specify)"
-          ],
-          "Technological Advancements": [
-            "R&D Costs",
-            "Increased Efficiency",
-            "Market Differentiation",
-            "Long-term Savings",
-            "High Initial Investment",
-            "Others (please specify)"
-          ],
-          "Circular Economy Initiatives": [
-            "Reduced Material Costs",
-            "Increased Revenue from Recycled Products",
-            "Cost Savings from Waste Reduction",
-            "New Revenue Streams",
-            "Others (please specify)"
-          ],
-          "Eco-Friendly Packaging": [
-            "Reduced Packaging Costs",
-            "Increased Revenue",
-            "Enhanced Brand Value",
-            "Cost Savings",
-            "Others (please specify)"
-          ],
-          "Renewable Energy Trading": [
-            "Development of Energy Trading Platforms",
-            "Investment in Renewable Energy Infrastructure",
-            "Implementation of Smart Grid Technologies",
-            "Partnerships with Energy Providers",
-            "Energy Storage Solutions",
-            "Others (please specify)"
-          ]
+          "Lower Utility Costs",
+          "High Initial Construction Costs",
+          "Increased Property Value",
+          "Tax Credits and Incentives",
+          "Long-term Operational Savings",
+          "Others (please specify)",
+        ],
+        "Sustainable Supply Chain": [
+          "Competitive Advantage",
+          "Cost Reduction through Efficiency",
+          "Increased Supplier Costs",
+          "Improved Risk Management",
+          "Enhanced Brand Reputation",
+          "Others (please specify)",
+        ],
+        "Water Conservation": [
+          "Reduced Water Costs",
+          "Initial Infrastructure Investment",
+          "Ongoing Maintenance Savings",
+          "Enhanced Resource Efficiency",
+          "Lowered Utility Bills",
+          "Others (please specify)",
+        ],
+        "Carbon Offsetting Programs": [
+          "Tax Benefits",
+          "Purchase Costs",
+          "Market Price Stability",
+          "Long-term Financial Gains",
+          "Reputation Enhancement",
+          "Others (please specify)",
+        ],
+        "Climate-Resilient Infrastructure": [
+          "High Initial Investment",
+          "Long-term Savings",
+          "Insurance Premium Reductions",
+          "Enhanced Property Value",
+          "Disaster Recovery Savings",
+          "Others (please specify)",
+        ],
+        "Policy Advocacy": [
+          "Lobbying Costs",
+          "Potential Subsidies",
+          "Enhanced Regulatory Environment",
+          "Market Access",
+          "Reputation Enhancement",
+          "Others (please specify)",
+        ],
+        "Financial Incentives": [
+          "Direct Subsidies",
+          "Tax Breaks",
+          "Grants",
+          "Lower Loan Rates",
+          "Investment Incentives",
+          "Others (please specify)",
+        ],
+        "Technological Advancements": [
+          "R&D Costs",
+          "Increased Efficiency",
+          "Market Differentiation",
+          "Long-term Savings",
+          "High Initial Investment",
+          "Others (please specify)",
+        ],
+        "Circular Economy Initiatives": [
+          "Reduced Material Costs",
+          "Increased Revenue from Recycled Products",
+          "Cost Savings from Waste Reduction",
+          "New Revenue Streams",
+          "Others (please specify)",
+        ],
+        "Eco-Friendly Packaging": [
+          "Reduced Packaging Costs",
+          "Increased Revenue",
+          "Enhanced Brand Value",
+          "Cost Savings",
+          "Others (please specify)",
+        ],
+        "Renewable Energy Trading": [
+          "Increased revenue from energy trading",
+          "Reduced energy costs",
+          "Capital investment in energy infrastructure",
+          "Others (please specify)",
+        ],
       },
       ManagementMethods: {
         "Renewable Energy Adoption": [
@@ -329,91 +328,89 @@ const Economictablemultipal = ({ id, value, onChange }) => {
         ],
 
         "Green Building Initiatives": [
-            "Green Building Standards",
-            "Sustainable Materials",
-            "Energy-efficient HVAC Systems",
-            "Water-saving Fixtures",
-            "Building Automation Systems",
-            "Others (please specify)",
-          ],
-          "Sustainable Supply Chain": [
-            "Supplier Audits",
-            "Sustainable Procurement Policies",
-            "Supplier Training Programs",
-            "Supplier Engagement",
-            "Continuous Improvement Programs",
-            "Others (please specify)"
-          ],
-          "Water Conservation": [
-            "Water-efficient Technologies",
-            "Rainwater Harvesting",
-            "Leak Detection Systems",
-            "Public Awareness Campaigns",
-            "Others (please specify)"
-          ],
-          "Carbon Offsetting Programs": [
-            "Carbon Offset Purchases",
-            "Reforestation Projects",
-            "Investment in Verified Projects",
-            "Partnerships with NGOs",
-            "Others (please specify)"
-          ],
-          "Climate-Resilient Infrastructure": [
-            "Comprehensive Risk Assessments",
-            "Emergency Preparedness Plans",
-            "Investment in Technology",
-            "Government Grants",
-            "Public-Private Partnerships",
-            "Others (please specify)"
-          ],
-          "Policy Advocacy": [
-            "Building Coalitions",
-            "Strategic Partnerships",
-            "Continuous Engagement",
-            "Funding Research",
-            "Public Relations Campaigns",
-            "Others (please specify)"
-          ],
-          "Financial Incentives": [
-            "Policy Monitoring",
-            "Engaging Financial Advisors",
-            "Applying for Incentives",
-            "Financial Reporting",
-            "Strategic Financial Planning",
-            "Others (please specify)"
-          ],
-          "Technological Advancements": [
-            "Investing in R&D",
-            "Continuous Monitoring",
-            "Technology Pilots",
-            "Collaboration with Tech Firms",
-            "Training Programs",
-            "Others (please specify)"
-          ],
-          "Circular Economy Initiatives": [
-            "Recycling Programs",
-            "Resource Recovery",
-            "Waste Minimization",
-            "Supplier Engagement",
-            "Consumer Awareness Campaigns",
-            "Others (please specify)"
-          ],
-          "Eco-Friendly Packaging": [
-            "Use of Biodegradable Materials",
-            "Packaging Redesign for Efficiency",
-            "Recycling Programs",
-            "Supplier Engagement",
-            "Consumer Awareness Campaigns",
-            "Others (please specify)"
-          ],
-          "Renewable Energy Trading": [
-            "Development of Energy Trading Platforms",
-            "Investment in Renewable Energy Infrastructure",
-            "Implementation of Smart Grid Technologies",
-            "Partnerships with Energy Providers",
-            "Energy Storage Solutions",
-            "Others (please specify)"
-          ]
+          "Green Building Standards",
+          "Sustainable Materials",
+          "Energy-efficient HVAC Systems",
+          "Water-saving Fixtures",
+          "Building Automation Systems",
+          "Others (please specify)",
+        ],
+        "Sustainable Supply Chain": [
+          "Supplier Engagement",
+          "Sustainable Procurement Policies",
+          "Transparency and Reporting",
+          "Collaboration with Suppliers",
+          "Lifecycle Analysis",
+        ],
+        "Water Conservation": [
+          "Efficient Irrigation",
+          "Rainwater Harvesting",
+          "Greywater Recycling",
+          "Water-efficient Fixtures",
+          "Water Usage Monitoring",
+        ],
+        "Carbon Offsetting Programs": [
+          "Verified Carbon Standard (VCS)",
+          "Gold Standard",
+          "Carbon Credit Trading",
+          "Afforestation Projects",
+          "Carbon Capture and Storage",
+        ],
+        "Climate-Resilient Infrastructure": [
+          "Resilient Building Materials",
+          "Flood Defense Systems",
+          "Elevated Structures",
+          "Redundant Power Systems",
+          "Early Warning Systems",
+          "Others (please specify)",
+        ],
+        "Policy Advocacy": [
+          "Engaging with Policymakers",
+          "Public Campaigns",
+          "Industry Coalition Building",
+          "Research and Publication",
+          "Stakeholder Engagement",
+          "Others (please specify)",
+        ],
+        "Financial Incentives": [
+          "Tax Planning",
+          "Grant Applications",
+          "Subsidy Management",
+          "Financial Analysis",
+          "Investor Relations",
+          "Others (please specify)",
+        ],
+        "Technological Advancements": [
+          "Innovation Programs",
+          "Patenting",
+          "Technology Partnerships",
+          "Continuous Improvement",
+          "Employee Training",
+          "Others (please specify)",
+        ],
+        "Circular Economy Initiatives": [
+          "Implementation of recycling programs",
+          "Development of closed-loop systems",
+          "Collaboration with suppliers and customers",
+          "Investment in circular technologies",
+          "Employee training on circular practices",
+          "Others (please specify)",
+        ],
+        "Eco-Friendly Packaging": [
+          "Development of sustainable packaging materials",
+          "Collaboration with packaging suppliers",
+          "Implementation of packaging recycling programs",
+          "Customer education on packaging disposal",
+          "Employee training",
+          "Others (please specify)",
+        ],
+        "Renewable Energy Trading": [
+          "Development of renewable energy projects",
+          "Investment in energy storage systems",
+          "Collaboration with energy traders",
+          "Implementation of smart grid technologies",
+          "Others (please specify)",
+        ],
       },
       MitigationStrategies: {
         "Renewable Energy Adoption": [
@@ -433,27 +430,27 @@ const Economictablemultipal = ({ id, value, onChange }) => {
         ],
 
         "Green Building Initiatives": [
-            "LEED Certification ",
-            "BREEAM Certification",
-            "Regular Maintenance Programs",
-            "Tenant Engagement Programs",
-            "Green Lease Agreements",
-            "Others (please specify)",
-          ],
-          "Sustainable Supply Chain": [
+          "LEED Certification ",
+          "BREEAM Certification",
+          "Regular Maintenance Programs",
+          "Tenant Engagement Programs",
+          "Green Lease Agreements",
+          "Others (please specify)",
+        ],
+        "Sustainable Supply Chain": [
           "Diversify Suppliers",
           "Establish Long-term Contracts",
           "Invest in Supplier Capacity Building",
           "Third-Party Certifications",
           "Continuous Improvement Programs",
-          "Others (please specify)"
+          "Others (please specify)",
         ],
         "Water Conservation": [
           "Rainwater Harvesting",
           "Drip Irrigation Systems",
           "Leak Detection Systems",
           "Public Awareness Campaigns",
-          "Others (please specify)"
+          "Others (please specify)",
         ],
         "Carbon Offsetting Programs": [
           "Investment in Verified Projects",
@@ -461,7 +458,7 @@ const Economictablemultipal = ({ id, value, onChange }) => {
           "Long-term Contracts",
           "Public Reporting",
           "Continuous Monitoring",
-          "Others (please specify)"
+          "Others (please specify)",
         ],
         "Climate-Resilient Infrastructure": [
           "Comprehensive Risk Assessments",
@@ -469,25 +466,24 @@ const Economictablemultipal = ({ id, value, onChange }) => {
           "Investment in Technology",
           "Government Grants",
           "Public-Private Partnerships",
-          "Others (please specify)"
+          "Others (please specify)",
         ],
 
-
         "Policy Advocacy": [
-          "Engaging with Policymakers",
-          "Public Campaigns",
-          "Industry Coalition Building",
-          "Research and Publication",
-          "Stakeholder Engagement",
+          "Building Coalitions",
+          "Strategic Partnerships",
+          "Continuous Engagement",
+          "Funding Research",
+          "Public Relations Campaigns",
           "Others (please specify)",
         ],
         "Financial Incentives": [
-          "Direct Subsidies",
-          "Tax Breaks",
-          "Grants",
-          "Lower Loan Rates",
-          "Investment Incentives",
-          "Others (please specify)"
+          "Policy Monitoring",
+          "Engaging Financial Advisors",
+          "Applying for Incentives",
+          "Financial Reporting",
+          "Strategic Financial Planning",
+          "Others (please specify)",
         ],
         "Technological Advancements": [
           "Investing in R&D",
@@ -495,15 +491,15 @@ const Economictablemultipal = ({ id, value, onChange }) => {
           "Technology Pilots",
           "Collaboration with Tech Firms",
           "Training Programs",
-          "Others (please specify)"
+          "Others (please specify)",
         ],
         "Circular Economy Initiatives": [
-          "Recycling Programs",
-          "Resource Recovery",
-          "Waste Minimization",
-          "Supplier Engagement",
-          "Consumer Awareness Campaigns",
-          "Others (please specify)"
+          "Building Coalitions",
+          "Strategic Partnerships",
+          "Continuous Engagement",
+          "Funding Research",
+          "Public Relations Campaigns",
+          "Others (please specify)",
         ],
         "Eco-Friendly Packaging": [
           "Use of Biodegradable Materials",
@@ -511,7 +507,7 @@ const Economictablemultipal = ({ id, value, onChange }) => {
           "Recycling Programs",
           "Supplier Engagement",
           "Consumer Awareness Campaigns",
-          "Others (please specify)"
+          "Others (please specify)",
         ],
         "Renewable Energy Trading": [
           "Development of Energy Trading Platforms",
@@ -519,8 +515,8 @@ const Economictablemultipal = ({ id, value, onChange }) => {
           "Implementation of Smart Grid Technologies",
           "Partnerships with Energy Providers",
           "Energy Storage Solutions",
-          "Others (please specify)"
-        ]
+          "Others (please specify)",
+        ],
       },
     };
 
@@ -533,7 +529,11 @@ const Economictablemultipal = ({ id, value, onChange }) => {
   };
 
   const isMultiSelect = (key) => {
-    return ["ManagementMethods", "FinancialImplications", "PotentialImpact"].includes(key);
+    return [
+      "ManagementMethods",
+      "FinancialImplications",
+      "PotentialImpact",
+    ].includes(key);
   };
   const CustomOption = ({ children, ...props }) => {
     const { isSelected, isFocused, innerProps } = props;
@@ -541,14 +541,23 @@ const Economictablemultipal = ({ id, value, onChange }) => {
       <div
         {...innerProps}
         style={{
-          backgroundColor: isSelected ? "#e0e0e0" : isFocused ? "#f0f0f0" : "white",
+          backgroundColor: isSelected
+            ? "#e0e0e0"
+            : isFocused
+            ? "#f0f0f0"
+            : "white",
           padding: "8px",
           display: "flex",
           alignItems: "center",
-          textAlign:"left"
+          textAlign: "left",
         }}
       >
-        <input type="checkbox" checked={isSelected} readOnly style={{ marginRight: "8px" }} />
+        <input
+          type="checkbox"
+          checked={isSelected}
+          readOnly
+          style={{ marginRight: "8px" }}
+        />
         {children}
       </div>
     );
@@ -556,15 +565,15 @@ const Economictablemultipal = ({ id, value, onChange }) => {
   const customStyles = {
     control: (provided) => ({
       ...provided,
-      border: 'none',
-      boxShadow: 'none',
+      border: "none",
+      boxShadow: "none",
       padding: 0, // Ensure no padding that might cause a gap
       margin: 0, // Remove any margin
-      minHeight: 'auto',
+      minHeight: "auto",
     }),
     placeholder: (provided) => ({
       ...provided,
-     textAlign:"left"
+      textAlign: "left",
     }),
     input: (provided) => ({
       ...provided,
@@ -573,18 +582,24 @@ const Economictablemultipal = ({ id, value, onChange }) => {
     }),
     menu: (provided) => ({
       ...provided,
-      position: 'relative',
-      bottom: '100%',
-      top:0,
+      position: "relative",
+      bottom: "100%",
+      top: 0,
       zIndex: 1000,
     }),
     menuList: (provided) => ({
       ...provided,
-      maxHeight: '200px', // Adjust this value as needed
+      maxHeight: "200px", // Adjust this value as needed
     }),
   };
   const getColumnWidth = (key) => {
-    if (["ManagementMethods", "FinancialImplications", "PotentialImpact"].includes(key)) {
+    if (
+      [
+        "ManagementMethods",
+        "FinancialImplications",
+        "PotentialImpact",
+      ].includes(key)
+    ) {
       return "25vw";
     }
     return "17vw";
@@ -649,7 +664,7 @@ const Economictablemultipal = ({ id, value, onChange }) => {
             </tr>
           </thead>
           <tbody>
-          {localValue.map((row, rowIndex) => (
+            {localValue.map((row, rowIndex) => (
               <tr key={rowIndex} className="border border-gray-300">
                 {titles.map((item, cellIndex) => {
                   const isEnum = Array.isArray(item.options);
@@ -667,10 +682,12 @@ const Economictablemultipal = ({ id, value, onChange }) => {
                               isMulti
                               value={
                                 localValue[rowIndex][item.key]
-                                  ? localValue[rowIndex][item.key].map((val) => ({
-                                      value: val,
-                                      label: val,
-                                    }))
+                                  ? localValue[rowIndex][item.key].map(
+                                      (val) => ({
+                                        value: val,
+                                        label: val,
+                                      })
+                                    )
                                   : []
                               }
                               onChange={(selectedOptions) =>
@@ -680,16 +697,14 @@ const Economictablemultipal = ({ id, value, onChange }) => {
                                   selectedOptions.map((option) => option.value)
                                 )
                               }
-                              options={
-                                (item.key === "FinancialImplications" ||
-                                item.key === "ManagementMethods"
-                                  ? getConditionalOptions(rowIndex, item.key)
-                                  : item.options
-                                ).map((option) => ({
-                                  value: option,
-                                  label: option,
-                                }))
-                              }
+                              options={(item.key === "FinancialImplications" ||
+                              item.key === "ManagementMethods"
+                                ? getConditionalOptions(rowIndex, item.key)
+                                : item.options
+                              ).map((option) => ({
+                                value: option,
+                                label: option,
+                              }))}
                               className="text-sm w-full"
                               placeholder="Select options"
                               components={{ Option: CustomOption }}

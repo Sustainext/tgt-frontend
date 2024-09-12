@@ -57,33 +57,37 @@ const Ratioentrylevels = () => {
     setStrategypolicy([]);
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_general_collective_bargaining_analysis`,
+        `/sustainapp/get_economic_market_presence/`,
         {
           params: params
         }
       );
 
       const data = response.data;
-
-      const { collective_bargaining } = data;
+console.log(response.data,"responsedata");
+      const { marketing_presence} = data;
 
       const formatcollectivebargaining = (data) => {
         return data.map((data, index) => {
-          const percentage = parseFloat(data.percentage).toFixed(2);
-          const formattedPercentage = percentage.endsWith('.00') ? percentage.slice(0, -3) : percentage;
+          const Male = parseFloat(data.Male).toFixed(2);
+          const formattedMale = Male.endsWith('.00') ? Male.slice(0, -3) : Male;
+          const Female = parseFloat(data.Female).toFixed(2);
+          const formattedFemale= Female.endsWith('.00') ? Female.slice(0, -3) : Female;
+          const Nonbinary = parseFloat(data['Non-binary']).toFixed(2);
+          const formattedNonbinary = Nonbinary.endsWith('.00') ? Nonbinary.slice(0, -3) : Nonbinary;
           return {
        
-            "Location":data.org_or_corp,
-            "Male": formattedPercentage,
-            "Female": formattedPercentage,
-            "Non-binary": formattedPercentage,
+            "Location":data.Location,
+            "Male": formattedMale,
+            "Female": formattedFemale,
+            "Non-binary": formattedNonbinary,
           };
         });
 
       };
       setStrategypolicy(
         formatcollectivebargaining(
-          collective_bargaining
+          marketing_presence
         )
       );
       LoaderClose();

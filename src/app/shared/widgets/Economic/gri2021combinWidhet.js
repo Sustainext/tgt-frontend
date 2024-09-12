@@ -62,6 +62,7 @@ const GRI2021combinWidhet = ({ locationdata, onChange, value = {} }) => {
   const [radioValue, setRadioValue] = useState(value.radioValue || "");
   const [currencyValue, setCurrencyValue] = useState(value.currencyValue || "");
   const [wages, setWages] = useState(value.wages || {});
+  const [error, setError] = useState(""); // Error state for duplicate locations
 
   // Debounce the onChange handler to prevent too many updates
   const debouncedOnChange = useDebounce((formData) => {
@@ -80,11 +81,23 @@ const GRI2021combinWidhet = ({ locationdata, onChange, value = {} }) => {
 
   // Handle location selection change
   const handleLocationChange = (id, selectedOption) => {
+    const selectedValue = selectedOption ? selectedOption.value : "";
+
+    // Check if the selected location is already chosen
+    const isDuplicate = locations.some(
+      (location) => location.value === selectedValue && location.id !== id
+    );
+
+    if (isDuplicate) {
+      setError("This location is already selected. Please choose another location.");
+      return; // Prevent updating the state
+    }
+
+    setError(""); // Clear error if the location is unique
+
     setLocations((prevLocations) =>
       prevLocations.map((location) =>
-        location.id === id
-          ? { ...location, value: selectedOption ? selectedOption.value : "" }
-          : location
+        location.id === id ? { ...location, value: selectedValue } : location
       )
     );
   };
@@ -166,6 +179,9 @@ const GRI2021combinWidhet = ({ locationdata, onChange, value = {} }) => {
           ))
         ) : (
           <p>No locations added</p>
+        )}
+        {error && (
+          <p className="text-red-500 text-sm">{error}</p> // Error message
         )}
         <div className="mt-2">
           {/* Show Add button only if there are locations left to add */}
