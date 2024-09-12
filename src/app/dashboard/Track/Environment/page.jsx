@@ -11,15 +11,10 @@ const PowerBIEmbed = dynamic(
   { ssr: false }
 );
 
-const models = dynamic(
-  () => import("powerbi-client").then(mod => mod.models),
-  { ssr: false }
-);
-
-
 const EnvironmentTrack = ({ contentSize, dashboardData }) => {
   const [activeTab, setActiveTab] = useState("zohoEmissions");
   const [powerBIToken, setPowerBIToken] = useState(null);
+  const [models, setModels] = useState(null);
   const { width, height } = contentSize || { width: 800, height: 600 };
 
   const tabs = [
@@ -30,6 +25,15 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
     { id: "powerbiWaste", label: "Waste (PowerBI)" },
     { id: "superSetWaste", label: "Waste (Superset)" },
   ];
+
+  useEffect(() => {
+    const loadModels = async () => {
+      const powerbiClient = await import("powerbi-client");
+      setModels(powerbiClient.models);
+    };
+
+    loadModels();
+  }, []);
 
   useEffect(() => {
     const fetchPowerBIToken = async () => {

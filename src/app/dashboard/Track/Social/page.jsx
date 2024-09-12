@@ -11,14 +11,10 @@ const PowerBIEmbed = dynamic(
   { ssr: false }
 );
 
-const models = dynamic(
-  () => import("powerbi-client").then(mod => mod.models),
-  { ssr: false }
-);
-
 const SocialTrack = ({ contentSize, dashboardData }) => {
   const [activeTab, setActiveTab] = useState('powerbiSocialEmployment');
   const [powerBIToken, setPowerBIToken] = useState(null);
+  const [models, setModels] = useState(null);
   const { width, height } = contentSize || { width: 800, height: 600 }; // Fallback values
 
   const tabs = [
@@ -27,6 +23,15 @@ const SocialTrack = ({ contentSize, dashboardData }) => {
     { id: 'powerbiSocialDiversityInclusion', label: 'Diversity & Inclusion (PowerBI)' },
     { id: 'powerbiSocialCommunityDevelopment', label: 'Community Development (PowerBI)' },
   ];
+
+  useEffect(() => {
+    const loadModels = async () => {
+      const powerbiClient = await import("powerbi-client");
+      setModels(powerbiClient.models);
+    };
+
+    loadModels();
+  }, []);
   
   const getIframeUrl = (tabId) => {
     switch (tabId) {
@@ -185,11 +190,10 @@ const SocialTrack = ({ contentSize, dashboardData }) => {
         ) : (
           <div className="coming-soon-container">
             <div className="flex justify-center">
-              <GiPublicSpeaker style={{ fontSize: "100px" }} />
+              {/* <GiPublicSpeaker style={{ fontSize: "100px" }} /> */}
             </div>
             <div className="text-xl font-bold my-4">
-              <span className="">Coming </span>
-              <span className="">Soon !</span>
+              <span className="">Loading... </span>
             </div>
           </div>
         )}
