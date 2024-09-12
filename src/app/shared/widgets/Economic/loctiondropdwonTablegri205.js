@@ -19,7 +19,7 @@ const LocationDropdownTableGrid = ({
 }) => {
   const [localValue, setLocalValue] = useState({});
   const [shortKeyMap, setShortKeyMap] = useState({});
-  console.log("test loaction", localValue);
+
   // Initialize localValue and shortKeyMap
   useEffect(() => {
     const initializeValue = () => {
@@ -65,7 +65,7 @@ const LocationDropdownTableGrid = ({
     }
   }, [value, locationdata, options.titles, onChange]);
 
-  // Create a debounced onChange function
+  // Debounced onChange function
   const debouncedOnChange = useCallback(
     debounce((newData) => {
       onChange(newData);
@@ -73,43 +73,43 @@ const LocationDropdownTableGrid = ({
     [onChange]
   );
 
-  // Function to update a field in a row
+  // Update a field in the localValue state
   const updateField = (locationName, index, key, newValue) => {
     const newData = { ...localValue };
     if (!newData[locationName]) {
       newData[locationName] = [];
     }
-    const updatedRow = { ...newData[locationName][index], [key]: newValue };
-    newData[locationName] = newData[locationName].map((row, idx) =>
-      idx === index ? updatedRow : row
-    );
+    newData[locationName][index] = {
+      ...newData[locationName][index],
+      [key]: newValue,
+    };
     setLocalValue(newData);
-    debouncedOnChange(newData); // Use the debounced function
+    debouncedOnChange(newData); // Trigger debounced update
   };
 
-  // Function to add a new row
+  // Add a new row
   const addRow = (locationName) => {
     const newData = { ...localValue };
-    if (!newData[locationName]) {
-      newData[locationName] = [];
-    }
     const newRow = {};
     options.titles.forEach((title) => {
       newRow[title.tittlekey] = "";
     });
-    newData[locationName].push(newRow);
+    if (!newData[locationName]) {
+      newData[locationName] = [newRow];
+    } else {
+      newData[locationName].push(newRow);
+    }
     setLocalValue(newData);
-    debouncedOnChange(newData); // Use the debounced function
+    debouncedOnChange(newData); // Trigger debounced update
   };
 
-  // Function to remove a row by index
+  // Remove a row by index
   const onRemove = (locationName, indexToRemove) => {
     const newData = { ...localValue };
     if (newData[locationName]) {
       newData[locationName] = newData[locationName].filter(
         (_, index) => index !== indexToRemove
       );
-      // Ensure at least one row is present
       if (newData[locationName].length === 0) {
         const newRow = {};
         options.titles.forEach((title) => {
@@ -118,7 +118,7 @@ const LocationDropdownTableGrid = ({
         newData[locationName].push(newRow);
       }
       setLocalValue(newData);
-      debouncedOnChange(newData); // Use the debounced function
+      debouncedOnChange(newData); // Trigger debounced update
     }
   };
 
@@ -135,8 +135,6 @@ const LocationDropdownTableGrid = ({
     });
     return map;
   }, {});
-
-  console.log("Location Data Map:", locationMap); // Log location data
 
   return (
     <div
@@ -158,7 +156,6 @@ const LocationDropdownTableGrid = ({
             >
               <div className="flex items-center relative justify-center">
                 <p>Location Name</p>
-
                 <p>
                   <MdInfoOutline
                     data-tooltip-id="223"
@@ -185,9 +182,7 @@ const LocationDropdownTableGrid = ({
                   {item.tooltipdisplay === "block" && (
                     <p>
                       <MdInfoOutline
-                        data-tooltip-id={`tooltip-${
-                          shortKeyMap[item.tittlekey]
-                        }`}
+                        data-tooltip-id={`tooltip-${shortKeyMap[item.tittlekey]}`}
                         data-tooltip-content={item.tooltip}
                         className="ml-2 cursor-pointer"
                       />
@@ -220,19 +215,12 @@ const LocationDropdownTableGrid = ({
                     {options.titles.map((title, colIndex) => (
                       <td key={colIndex} className="p-1 border border-gray-300">
                         <input
-                          type={
-                            title.widgettype === "number" ? "number" : "text"
-                          }
+                          type={title.widgettype === "number" ? "number" : "text"}
                           className="w-full p-2 rounded text-sm"
                           placeholder="Enter Value"
                           value=""
                           onChange={(e) =>
-                            updateField(
-                              locationName,
-                              0,
-                              title.tittlekey,
-                              e.target.value
-                            )
+                            updateField(locationName, 0, title.tittlekey, e.target.value)
                           }
                         />
                       </td>
@@ -259,24 +247,14 @@ const LocationDropdownTableGrid = ({
                         </td>
                       )}
                       {options.titles.map((title, colIndex) => (
-                        <td
-                          key={colIndex}
-                          className="p-1 border border-gray-300"
-                        >
+                        <td key={colIndex} className="p-1 border border-gray-300">
                           <input
-                            type={
-                              title.widgettype === "number" ? "number" : "text"
-                            }
+                            type={title.widgettype === "number" ? "number" : "text"}
                             className="w-full p-2 rounded text-sm"
                             placeholder="Enter Value"
                             value={row[title.tittlekey] || ""}
                             onChange={(e) =>
-                              updateField(
-                                locationName,
-                                rowIndex,
-                                title.tittlekey,
-                                e.target.value
-                              )
+                              updateField(locationName, rowIndex, title.tittlekey, e.target.value)
                             }
                           />
                         </td>
