@@ -1,16 +1,14 @@
 "use client";
-import React, { useEffect, useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import { GiPublicSpeaker } from "react-icons/gi";
-import { embedDashboard } from "@superset-ui/embedded-sdk";
-import axios from 'axios'
+import { PowerBIEmbed } from "powerbi-client-react";
+import { models } from "powerbi-client";
+import axiosInstance from '../../../utils/axiosMiddleware'
 
-const EnvironmentTrack = ({ contentSize }) => {
+const EnvironmentTrack = ({ contentSize, dashboardData }) => {
   const [activeTab, setActiveTab] = useState("zohoEmissions");
-
-  const supersetUrl = "https://superset-dev.sustainext.ai";
-  const supersetApiUrl = supersetUrl + "/api/v1/security";
-  const dashboardId = "239841c1-c7ee-4bfe-938c-0da7724b0d06";
-
+  const [powerBIToken, setPowerBIToken] = useState(null);
   const { width, height } = contentSize || { width: 800, height: 600 };
 
   const tabs = [
@@ -22,18 +20,26 @@ const EnvironmentTrack = ({ contentSize }) => {
     { id: "superSetWaste", label: "Waste (Superset)" },
   ];
 
+  useEffect(() => {
+    const fetchPowerBIToken = async () => {
+      try {
+        const response = await axiosInstance('api/auth/powerbi_token/');        
+        const data = response.data;          
+        setPowerBIToken(data.access_token);
+      } catch (error) {
+        console.error("Error fetching PowerBI token:", error);
+      }
+    };
+  
+    fetchPowerBIToken();
+  }, []);
+  
   const getIframeUrl = (tabId) => {
     switch (tabId) {
       case "zohoEmissions":
         return process.env.NEXT_APP_ZOHO_URL_EMISSIONS;
-      case "powerbiEmissions":
-        return process.env.NEXT_APP_POWERBI_URL_ENV_EMISSIONS;
       case "superSetEmissions":
         return process.env.NEXT_APP_SUPERSET_URL_ENV_EMISSIONS;
-      case "powerbiEnergy":
-        return process.env.NEXT_APP_POWERBI_URL_ENV_ENERGY;
-      case "powerbiWaste":
-        return process.env.NEXT_APP_POWERBI_URL_ENV_WASTE;
       case "superSetWaste":
         return process.env.NEXT_APP_SUPERSET_URL_ENV_WASTE;
       default:
@@ -41,84 +47,66 @@ const EnvironmentTrack = ({ contentSize }) => {
     }
   };
 
-  async function getToken() {
-    // This uses admin creds to fetch the token
-    const login_body = {
-      password: "sustainext@1234",
-      provider: "db",
-      refresh: true,
-      username: "admin@sustainext.ai",
-    };
-    const csrfToken = 'IjY5NzZhY2M3Y2ZjZmJlODIxMjIzNmVmMzA2MzVkYWVhOWU4NTQ5MDIi.Zt_kIQ.2grXIEJjtGg5S8Xpf1ASaqmbh3Q'
-    const login_headers = {
-      headers: {
-        "Content-Type": "application/json",
-        'X-CSRFToken': csrfToken, 
-      },
-    };
+  const getPowerBIConfig = (tabId) => {
+    if (!dashboardData) return null;
 
-    const { data } = await axios.post(
-      supersetApiUrl + "/login",
-      login_body,
-      login_headers
-    );
-    const access_token = data["access_token"];
-    console.log(access_token);
+    let reportConfig;
+    switch (tabId) {
+      case "powerbiEmissions":
+        reportConfig = dashboardData.find(item => item.emission)?.emission;
+        break;
+      case "powerbiEnergy":
+        reportConfig = dashboardData.find(item => item.energy)?.energy;
+        break;
+      case "powerbiWaste":
+        reportConfig = dashboardData.find(item => item.waste)?.waste;
+        break;
+      default:
+        return null;
+    }
 
-    // Calling guest token
-    const guest_token_body = JSON.stringify({
-      resources: [
-        {
-          type: "dashboard",
-          id: dashboardId,
-        },
-      ],
-      rls: [],
-      user: {
-        username: "",
-        first_name: "",
-        last_name: "",
-      },
-    });
+    if (!reportConfig) return null;
 
-    const guest_token_headers = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + access_token,
-      },
-    };
-
-    // Calling guest token endpoint to get the guest_token
-    await axios
-      .post(
-        supersetApiUrl + "/guest_token/",
-        guest_token_body,
-        guest_token_headers
-      )
-      .then((dt) => {
-        console.log(dt.data["token"]);
-        embedDashboard({
-          id: dashboardId, // Use the id obtained from enabling embedding dashboard option
-          supersetDomain: supersetUrl,
-          mountPoint: document.getElementById("superset-container"), // html element in which iframe will be mounted to show the dashboard
-          fetchGuestToken: () => dt.data["token"],
-          dashboardUiConfig: {
-            // hideTitle: true,
-            // hideTab:true
-            filters: {
-              expanded: true,
-            },
-            urlParams: {
-              standalone: 3, // here you can add the url_params and there values
-            },
+    return {
+      type: "report",
+      id: reportConfig.report_id,
+      embedUrl: `https://app.powerbi.com/reportEmbed?reportId=${reportConfig.report_id}&groupId=${reportConfig.group_id}&w=2`,
+      accessToken: powerBIToken,
+      tokenType: models.TokenType.Aad,
+      settings: {
+        panes: {
+          filters: {
+            expanded: false,
+            visible: false,
           },
-        });
-      });
-  }
+        },
+        background: models.BackgroundType.Default,
+      },
+    };
+  };
 
-  // useEffect(()=>{
-  //   getToken();
-  // },[])
+  useEffect(() => {
+    const refreshReport = async () => {
+      if (window.report) {
+        try {
+          await window.report.refresh();
+          console.log("Report refreshed");
+        } catch (errors) {
+          console.log(errors);
+        }
+      }
+    };
+    const intervalId = setInterval(() => {
+      refreshReport();
+    }, 15000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  const embedContainerStyle = {
+    width: `${width}px`,
+    height: `${height - 50}px`,
+  };
 
   return (
     <div
@@ -144,7 +132,41 @@ const EnvironmentTrack = ({ contentSize }) => {
         </ul>
       </div>
       <div className="w-full flex-grow flex justify-center items-center">
-        {getIframeUrl(activeTab) ? (
+        {activeTab.startsWith("powerbi") && powerBIToken ? (
+          <div style={embedContainerStyle}>
+            <PowerBIEmbed
+              embedConfig={getPowerBIConfig(activeTab)}
+              eventHandlers={
+                new Map([
+                  [
+                    "loaded",
+                    function () {
+                      console.log("Report loaded");
+                    },
+                  ],
+                  [
+                    "rendered",
+                    function () {
+                      console.log("Report rendered");
+                    },
+                  ],
+                  [
+                    "error",
+                    function (event) {
+                      console.log(event.detail);
+                    },
+                  ],
+                  ["visualClicked", () => console.log("visual clicked")],
+                  ["pageChanged", (event) => console.log(event)],
+                ])
+              }
+              cssClassName="w-full h-full"
+              getEmbeddedComponent={(embeddedReport) => {
+                window.report = embeddedReport;
+              }}
+            />
+          </div>
+        ) : getIframeUrl(activeTab) ? (
           <iframe
             frameBorder="0"
             width={width}
@@ -168,5 +190,3 @@ const EnvironmentTrack = ({ contentSize }) => {
 };
 
 export default EnvironmentTrack;
-
-

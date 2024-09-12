@@ -405,20 +405,20 @@ const AnalyseEmission = () => {
         </div>
 
       </div>
-      <div className="mt-8">
+      <div className="mt-8 mr-10">
         <div className="mx-4">
           <h2 className="font-bold text-[15px]">Top Emissions by Scope</h2>
         </div>
         <ScopeTable data={scopeData} organisation={organisationName} corporate={corporateName} location={locationName} fromDate={fromDate} toDate={toDate} />
       </div>
-      <div className="mt-4">
+      <div className="mt-4 mr-10">
         <div className="mx-4">
           <h2 className="font-bold text-[15px]">Top Emissions by Source</h2>
         </div>
         <SourceTable data={sourceData} fullData={sourceDataAll} organisation={organisationName} corporate={corporateName} location={locationName} fromDate={fromDate} toDate={toDate} />
       </div>
 
-      <div className="mt-8">
+      <div className="mt-8 mr-10">
         <div className="mx-4">
           <h2 className="font-bold text-[15px]">Top Emissions by Location</h2>
         </div>

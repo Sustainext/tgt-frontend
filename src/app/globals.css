@@ -302,3 +302,9 @@ div._fluentc_widget-language-manager.show{
 body._fluentc_widget-banner-show{
   top: 0px !important;
 }
+
+.Embed-container{
+  height: 500px;
+  width: 1000px;
+  padding-bottom: 30px;
+}
