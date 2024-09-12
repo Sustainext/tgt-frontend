@@ -63,7 +63,7 @@ const MaterialAssessmentProcess = ({handleTabClick}) => {
               <div className="text-left mb-4 ml-3 pt-5">
                 <div className="flex justify-between items-center">
                   <div className="w-[70%]">
-                    <p className="gradient-text text-[22px] font-bold pt-4 pb-4 ml-3">
+                    <p className="gradient-text text-[22px] font-bold pt-4 pb-4 mx-2">
                       Materiality Assessment Process
                     </p>
                   </div>

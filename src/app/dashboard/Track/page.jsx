@@ -1,15 +1,17 @@
 'use client'
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import Aside from './Aside';
 import EnvironmentTrack from './Environment/page';
 import SocialTrack from './Social/page'
 import GovernanceTrack from './Governance/page'
-import { GlobalState } from '@/Context/page';
+import { GlobalState } from '../../../Context/page';
+import axiosInstance from '../../utils/axiosMiddleware'
 
 const Index = () => {
   const [activeModule, setActiveModule] = useState("Environment");
   const [contentSize, setContentSize] = useState({ width: 0, height: 0 });
   const [containerWidth, setContainerWidth] = useState('100%');
+  const [dashboardData, setDashboardData] = useState(null);
   const open = GlobalState();
 
   const handleTabClick = (module) => {
@@ -44,6 +46,17 @@ const Index = () => {
     return () => window.removeEventListener('resize', updateSizes);
   }, [open]); 
 
+  useEffect(()=>{
+    const fetchDashboardData = async () => {
+      const response = await axiosInstance('/sustainapp/track_dashboards/');
+      console.log('response',response);
+      
+      const data = response.data;
+      setDashboardData(data);
+    }
+    fetchDashboardData();
+  },[])
+
   return (
     <div className="flex justify-center overflow-x-auto">
       <div className="flex justify-start" style={{ width: containerWidth, minWidth: '100%' }}>
@@ -52,10 +65,10 @@ const Index = () => {
         </div>
         <div className='flex-grow flex justify-center items-center'>
           {activeModule === 'Environment' && (
-            <EnvironmentTrack contentSize={contentSize} />
+            <EnvironmentTrack contentSize={contentSize} dashboardData={dashboardData} />
           )}
           {activeModule === 'Social' && 
-          <SocialTrack contentSize={contentSize} />
+          <SocialTrack contentSize={contentSize} dashboardData={dashboardData} />
           }
           {/* {activeModule === 'Governance' && 
           <GovernanceTrack contentSize={contentSize} />
