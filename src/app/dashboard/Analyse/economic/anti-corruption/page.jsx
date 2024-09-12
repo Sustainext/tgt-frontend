@@ -4,12 +4,16 @@ import DynamicTable2 from "./customTable";
 import DynamicTable from "./customTable2"
 import DateRangePicker from "../../../../utils/DatePickerComponent";
 import axiosInstance from "../../../../utils/axiosMiddleware";
-import { columns1,columns2,columns3,columns4,columns5,data1,data2,data3 } from "./data";
+import { columns1,columns2,columns3,columns4,columns5} from "./data";
 import { yearInfo } from "@/app/shared/data/yearInfo";
 import { Oval } from 'react-loader-spinner';
 const Anticorruptions = () => {
 
   const [strategypolicy, setStrategypolicy] = useState([]);
+  const [strategypolicy2, setStrategypolicy2] = useState([]);
+  const [strategypolicy3, setStrategypolicy3] = useState([]);
+  const [strategypolicy4, setStrategypolicy4] = useState([]);
+  const [strategypolicy5, setStrategypolicy5] = useState([]);
   const [organisations, setOrganisations] = useState([]);
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
@@ -58,34 +62,149 @@ const Anticorruptions = () => {
     setStrategypolicy([]);
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_general_collective_bargaining_analysis`,
+        `/sustainapp/get_economic_communication_and_training`,
         {
           params: params
         }
       );
 
       const data = response.data;
-
-      const { collective_bargaining } = data;
+      const { analyze_205_2a,analyze_205_2b,analyze_205_2c,analyze_205_2d,analyze_205_2e } = data;
 
       const formatcollectivebargaining = (data) => {
         return data.map((data, index) => {
           const percentage = parseFloat(data.percentage).toFixed(2);
           const formattedPercentage = percentage.endsWith('.00') ? percentage.slice(0, -3) : percentage;
           return {
-            "Location":data.org_or_corp,
-            "Total number of governance body members that the organization's anti-corruption policies and procedures have been communicated to":data.org_or_corp,
-            "Total number of governance body members in that region.":data.org_or_corp,
-            "Percentage of governance body members that the organization's anti-corruption policies and procedures have been communicated to":data.org_or_corp,
+            "Location":data.loc,
+            "Total number of governance body members that the organization's anti-corruption policies and procedures have been communicated to":data.total_communicated,
+            "Total number of governance body members in that region":data.total_region,
+            "Percentage of governance body members that the organization's anti-corruption policies and procedures have been communicated to":formattedPercentage,
       
          
           };
         });
 
       };
+      const formatcollectivebargaining2 = (data) => {
+        const formattedData = {};
+      
+        // Iterate over each location
+        Object.keys(data).forEach((location) => {
+          // For each location, iterate over the array of employee data
+          data[location].forEach((employeeData) => {
+            const percentage = parseFloat(employeeData.percentage).toFixed(2);
+            const formattedPercentage = percentage.endsWith('.00') ? percentage.slice(0, -3) : percentage;
+    
+            // If the location is not already in the formattedData, initialize it
+            if (!formattedData[location]) {
+              formattedData[location] = [];
+            }
+    
+            // Push the formatted data into the location array
+            formattedData[location].push({
+              "Employee Category": employeeData.EmployeeCategory,
+              "Total number of employees that the organization's anti-corruption policies and procedures have been communicated to": employeeData.Totalnumberemployees,
+              "Total number of employee in this region": employeeData.Totalemployeeinthisregion,
+              "Percentage of employees that the organization's anti-corruption policies and procedures have been communicated to": formattedPercentage,
+            });
+          });
+        });
+    
+        return formattedData;
+    };
+    const formatcollectivebargaining3 = (data) => {
+      const formattedData = {};
+    
+      // Iterate over each location
+      Object.keys(data).forEach((location) => {
+        // For each location, iterate over the array of employee data
+        data[location].forEach((employeeData) => {
+          const percentage = parseFloat(employeeData.percentage).toFixed(2);
+          const formattedPercentage = percentage.endsWith('.00') ? percentage.slice(0, -3) : percentage;
+  
+          // If the location is not already in the formattedData, initialize it
+          if (!formattedData[location]) {
+            formattedData[location] = [];
+          }
+  
+          // Push the formatted data into the location array
+          formattedData[location].push({
+            "Type of business partner": employeeData.Typeofbusinesspartner,
+            "Total number of business partners that the organization's anti-corruption policies and procedures have been communicated to": employeeData.Totalnumberemployees,
+            "Total number of business partners in this region": employeeData.Totalemployeeinthisregion,
+            "Percentage of business partners that the organization's anti-corruption policies and procedures have been communicated to": formattedPercentage,
+          });
+        });
+      });
+  
+      return formattedData;
+  };
+  const formatcollectivebargaining4 = (data) => {
+    return data.map((data, index) => {
+      const percentage = parseFloat(data.percentage).toFixed(2);
+      const formattedPercentage = percentage.endsWith('.00') ? percentage.slice(0, -3) : percentage;
+      return {
+        "Location":data.loc,
+        "Total number of governance body members that have received training on anti-corruption":data.total_communicated,
+        "Total number of governance body members":data.total_region,
+        "Percentage of governance body members that have received training on anti-corruption":formattedPercentage,
+  
+     
+      };
+    });
+
+  };
+  const formatcollectivebargaining5 = (data) => {
+    const formattedData = {};
+  
+    // Iterate over each location
+    Object.keys(data).forEach((location) => {
+      // For each location, iterate over the array of employee data
+      data[location].forEach((employeeData) => {
+        const percentage = parseFloat(employeeData.percentage).toFixed(2);
+        const formattedPercentage = percentage.endsWith('.00') ? percentage.slice(0, -3) : percentage;
+
+        // If the location is not already in the formattedData, initialize it
+        if (!formattedData[location]) {
+          formattedData[location] = [];
+        }
+
+        // Push the formatted data into the location array
+        formattedData[location].push({
+          "Employee Category": employeeData.EmployeeCategory,
+          "Total number of employees  that have received training on anti-corruption": employeeData.Totalnumberemployees,
+          "Total number of employee": employeeData.Totalemployeeinthisregion,
+          "Percentage of employees that have received training on anti-corruption": formattedPercentage,
+        });
+      });
+    });
+
+    return formattedData;
+};
       setStrategypolicy(
         formatcollectivebargaining(
-          collective_bargaining
+          analyze_205_2a
+        )
+      );
+      setStrategypolicy2(
+        formatcollectivebargaining2(
+          analyze_205_2b
+        )
+      );
+      setStrategypolicy3(
+        formatcollectivebargaining3(
+          analyze_205_2c
+        )
+      );
+      setStrategypolicy4(
+        formatcollectivebargaining4(
+          analyze_205_2d
+        )
+      );
+      setStrategypolicy5(
+        formatcollectivebargaining5(
+          analyze_205_2e
         )
       );
       LoaderClose();
@@ -346,7 +465,7 @@ const Anticorruptions = () => {
                 <div className="mb-4">
                   <DynamicTable
                     columns={columns2}
-                    data={data1}
+                    data={strategypolicy2}
                   />
                 </div>
               </div>
@@ -371,7 +490,7 @@ const Anticorruptions = () => {
                 <div className="mb-4">
                   <DynamicTable
                     columns={columns3}
-                    data={data2}
+                    data={strategypolicy3}
                   />
                 </div>
               </div>
@@ -396,7 +515,7 @@ const Anticorruptions = () => {
                 <div className="mb-4">
                   <DynamicTable2
                     columns={columns4}
-                    data={strategypolicy}
+                    data={strategypolicy4}
                   />
                 </div>
               </div>
@@ -421,7 +540,7 @@ const Anticorruptions = () => {
                 <div className="mb-4">
                   <DynamicTable
                       columns={columns5}
-                      data={data3}
+                      data={strategypolicy5}
                   />
                 </div>
               </div>
