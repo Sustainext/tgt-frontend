@@ -46,8 +46,8 @@ const uiSchema = {
         "Number of Suppliers identified as having significant actual and potential negative environmental impacts:",
       "ui:tooltip":
         "<p>Specify the total number of suppliers that were identified as having significant actual and potential negative environmental impacts during the reporting period.</p>",
-      "ui:tooltipdisplay": "block",
-      "ui:titledisplay": "block",
+      "ui:tooltipdisplay": "none",
+      "ui:titledisplay": "none",
       "ui:widgetType": "input",
       "ui:inputfildtype": "number",
       "ui:widget": "inputWidget",
@@ -185,10 +185,10 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
         <div className="flex">
           <div className="w-[80%] relative mb-6">
             <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
-            {/* Number of new suppliers that were screened using environmental criteria.
+            Number of Suppliers identified as having significant actual and potential negative environmental impacts:
               <MdInfoOutline
                 data-tooltip-id={`es30`}
-                data-tooltip-html="Specify the total number of operations assessed for risks related to corruption."
+                data-tooltip-html="<p>Specify the total number of suppliers that were identified as having significant actual and potential negative environmental impacts during the reporting period.</p>"
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
@@ -204,7 +204,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
                   borderRadius: "8px",
                   textAlign: "left",
                 }}
-              ></ReactTooltip> */}
+              ></ReactTooltip>
             </h2>
           </div>
           <div className="w-[20%]">

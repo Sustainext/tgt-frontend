@@ -183,13 +183,13 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
         }}
       >
         <div className="flex">
-          <div className="w-[80%] relative mb-6">
+          <div className="relative mb-6">
             <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
-            {/* Number of new suppliers that were screened using environmental criteria.
+            Number of suppliers identified as having significant actual and potential negative environmental impacts with which  improvements were agreed upon
               <MdInfoOutline
                 data-tooltip-id={`es30`}
-                data-tooltip-html="Specify the total number of operations assessed for risks related to corruption."
-                className="mt-1.5 ml-2 text-[15px]"
+                data-tooltip-html="<p>Specify the number of suppliers identified as having significant actual and potential negative environmental impacts with which improvements were agreed upon as a result of the assessment during the reporting period.</p>"
+                className="mt-1.5 ml-2 text-[15px] flex-shrink-0"
               />
               <ReactTooltip
                 id={`es30`}
@@ -204,7 +204,7 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
                   borderRadius: "8px",
                   textAlign: "left",
                 }}
-              ></ReactTooltip> */}
+              ></ReactTooltip>
             </h2>
           </div>
           <div className="w-[20%]">
