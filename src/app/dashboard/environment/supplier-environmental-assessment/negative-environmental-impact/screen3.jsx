@@ -19,7 +19,7 @@ const widgets = {
   RichtextWidget: RichtextWidget,
 };
 
-const view_path = "gri-economic-operations_assessed_for_risks_related_to_corruption-205-1a-total";
+const view_path = "gri-supplier_environmental_assessment-negative_environmental-308-2c";
 const client_id = 1;
 const user_id = 1;
 
@@ -219,8 +219,8 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

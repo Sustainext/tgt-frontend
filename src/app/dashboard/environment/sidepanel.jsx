@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from "react";
-import { MdOutlineFactory,MdOutlineDeleteOutline,MdOutlineTungsten,MdKeyboardArrowDown,MdOutlineWater, MdOutlineEmojiNature   } from "react-icons/md";
-import { CgHome } from "react-icons/cg";
+import { MdOutlineWarehouse,MdOutlineFactory,MdOutlineDeleteOutline,MdOutlineTungsten,MdKeyboardArrowDown,MdOutlineWater, MdOutlineEmojiNature   } from "react-icons/md";
+
 import { GiWoodPile } from "react-icons/gi";
 
 const Aside = ({ activeTab, handleTabClick }) => {
@@ -59,7 +59,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setIsSupplierVisible(false)
   };
   return (
-    <div className="m-3 ml-2 p-2 border border-r-2 border-b-2 shadow-lg rounded-l min-h-[120vh]">
+    <div className="m-3 ml-2 p-2 border border-r-2 border-b-2 shadow-lg rounded-l h-full">
       <div className="flex items-start py-4 min-h-[84vh] rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[200px] lg:w-[200px] xl:w-[200px] 2xl:w-[200px] 3xl:w-[351px] scrollable-content">
         <div className="flex flex-col w-full font-medium">
           <button className="flex items-center px-4 py-2 -mt-4 mb-8 rounded-none focus:outline-none text-[#727272] font-bold">
@@ -325,7 +325,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
       }`}
     onClick={toggleSupplierSectionVisibility}
   >
-    <CgHome  className="w-5 h-5 mr-2" />
+    <MdOutlineWarehouse  className="w-5 h-5 mr-2" />
     <span className="text-left sm:w-[92px] md:w-[92px] lg:w-[92px] xl:w-[92px] 2xl:w-[92px] 3xl:w-[198px]">Supplier Environmental Assessment</span>
     <div className="inset-y-0 -right-2 flex items-center pointer-events-none">
     <MdKeyboardArrowDown className={`text-lg text-neutral-500${isSupplierVisible && "rotate-i80"}`}/>

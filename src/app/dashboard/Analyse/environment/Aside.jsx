@@ -6,7 +6,7 @@ import {
   IoWaterOutline,
   IoLeafOutline,
 } from "react-icons/io5";
-import { CgHome } from "react-icons/cg";
+import { MdOutlineWarehouse } from "react-icons/md";
 import material from "../../../../../public/material.svg";
 import Image from "next/image";
 
@@ -103,7 +103,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
       }`}
       onClick={() => handleTabClick("Supplier Environmental Assessment")}
   >
-    <CgHome  className="w-5 h-5 mr-5" />
+    <MdOutlineWarehouse  className="w-5 h-5 mr-5" />
     <span className="text-left sm:w-[92px] md:w-[92px] lg:w-[92px] xl:w-[92px] 2xl:w-[92px] 3xl:w-[198px]">Supplier Environmental Assessment</span>
     <div className="inset-y-0 -right-2 flex items-center pointer-events-none">
     {/* <MdKeyboardArrowDown className={`text-lg text-neutral-500${isSupplierVisible && "rotate-i80"}`}/> */}
