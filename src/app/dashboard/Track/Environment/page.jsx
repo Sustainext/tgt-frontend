@@ -1,14 +1,20 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import { GiPublicSpeaker } from "react-icons/gi";
-import { PowerBIEmbed } from "powerbi-client-react";
-import { models } from "powerbi-client";
-import axiosInstance from '../../../utils/axiosMiddleware'
+// import { PowerBIEmbed } from "powerbi-client-react";
+// import { models } from "powerbi-client";
+import axiosInstance from '../../../utils/axiosMiddleware';
+import dynamic from 'next/dynamic'
+
+const PowerBIEmbed = dynamic(
+  () => import("powerbi-client-react").then(mod => mod.PowerBIEmbed),
+  { ssr: false }
+);
 
 const EnvironmentTrack = ({ contentSize, dashboardData }) => {
   const [activeTab, setActiveTab] = useState("zohoEmissions");
   const [powerBIToken, setPowerBIToken] = useState(null);
+  const [models, setModels] = useState(null);
   const { width, height } = contentSize || { width: 800, height: 600 };
 
   const tabs = [
@@ -19,6 +25,15 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
     { id: "powerbiWaste", label: "Waste (PowerBI)" },
     { id: "superSetWaste", label: "Waste (Superset)" },
   ];
+
+  useEffect(() => {
+    const loadModels = async () => {
+      const powerbiClient = await import("powerbi-client");
+      setModels(powerbiClient.models);
+    };
+
+    loadModels();
+  }, []);
 
   useEffect(() => {
     const fetchPowerBIToken = async () => {
@@ -107,6 +122,8 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
     width: `${width}px`,
     height: `${height - 50}px`,
   };
+
+  if (!models || !PowerBIEmbed) return <p>Loading...</p>;
 
   return (
     <div

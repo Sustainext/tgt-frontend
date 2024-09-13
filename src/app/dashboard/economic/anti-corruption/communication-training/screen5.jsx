@@ -82,7 +82,7 @@ const uiSchema = {
   },
 };
 
-const Screen5 = ({ selectedOrg, year, selectedCorp,datarefreshtwo }) => {
+const Screen5 = ({ selectedOrg, year, selectedCorp,datarefreshtwo,setDatarefreshtwo }) => {
   const [formData, setFormData] = useState([{}]);
   const [locationdata, setLocationdata] = useState(); // Initialize as empty array
   const [r_schema, setRemoteSchema] = useState({});
@@ -164,6 +164,7 @@ const Screen5 = ({ selectedOrg, year, selectedCorp,datarefreshtwo }) => {
       const response = await axiosInstance.get(url);
       console.log(response.data.form_data[0].data);
       setLocationdata(response.data.form_data[0].data);
+      setDatarefreshtwo(0);
     } catch (error) {
     } finally {
       LoaderClose();

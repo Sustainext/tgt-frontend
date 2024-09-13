@@ -152,6 +152,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         month={activeMonth}
         datarefresh={datarefresh}
+        setDatarefresh={setDatarefresh}
       />
       <Screen3
         selectedOrg={selectedOrg}
@@ -159,6 +160,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         month={activeMonth}
         datarefresh={datarefresh}
+        setDatarefresh={setDatarefresh}
       />
           <Screen4
         selectedOrg={selectedOrg}
@@ -173,6 +175,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         month={activeMonth}
         datarefreshtwo={datarefreshtwo}
+        setDatarefreshtwo={setDatarefreshtwo}
       />
     </>
   );

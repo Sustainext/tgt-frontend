@@ -65,7 +65,7 @@ const LocationDropdownTableGrid = ({
     }
   }, [value, locationdata, options.titles, onChange]);
 
-  // Create a debounced onChange function
+  // Debounced onChange function
   const debouncedOnChange = useCallback(
     debounce((newData) => {
       onChange(newData);
@@ -73,43 +73,43 @@ const LocationDropdownTableGrid = ({
     [onChange]
   );
 
-  // Function to update a field in a row
+  // Update a field in the localValue state
   const updateField = (locationName, index, key, newValue) => {
     const newData = { ...localValue };
     if (!newData[locationName]) {
       newData[locationName] = [];
     }
-    const updatedRow = { ...newData[locationName][index], [key]: newValue };
-    newData[locationName] = newData[locationName].map((row, idx) =>
-      idx === index ? updatedRow : row
-    );
+    newData[locationName][index] = {
+      ...newData[locationName][index],
+      [key]: newValue,
+    };
     setLocalValue(newData);
-    debouncedOnChange(newData); // Use the debounced function
+    debouncedOnChange(newData); // Trigger debounced update
   };
 
-  // Function to add a new row
+  // Add a new row
   const addRow = (locationName) => {
     const newData = { ...localValue };
-    if (!newData[locationName]) {
-      newData[locationName] = [];
-    }
     const newRow = {};
     options.titles.forEach((title) => {
       newRow[title.tittlekey] = "";
     });
-    newData[locationName].push(newRow);
+    if (!newData[locationName]) {
+      newData[locationName] = [newRow];
+    } else {
+      newData[locationName].push(newRow);
+    }
     setLocalValue(newData);
-    debouncedOnChange(newData); // Use the debounced function
+    debouncedOnChange(newData); // Trigger debounced update
   };
 
-  // Function to remove a row by index
+  // Remove a row by index
   const onRemove = (locationName, indexToRemove) => {
     const newData = { ...localValue };
     if (newData[locationName]) {
       newData[locationName] = newData[locationName].filter(
         (_, index) => index !== indexToRemove
       );
-      // Ensure at least one row is present
       if (newData[locationName].length === 0) {
         const newRow = {};
         options.titles.forEach((title) => {
@@ -118,7 +118,7 @@ const LocationDropdownTableGrid = ({
         newData[locationName].push(newRow);
       }
       setLocalValue(newData);
-      debouncedOnChange(newData); // Use the debounced function
+      debouncedOnChange(newData); // Trigger debounced update
     }
   };
 
@@ -135,8 +135,6 @@ const LocationDropdownTableGrid = ({
     });
     return map;
   }, {});
-
-  console.log("Location Data Map:", locationMap); // Log location data
 
   return (
     <div
@@ -158,7 +156,6 @@ const LocationDropdownTableGrid = ({
             >
               <div className="flex items-center relative justify-center">
                 <p>Location Name</p>
-
                 <p>
                   <MdInfoOutline
                     data-tooltip-id="223"
@@ -185,9 +182,7 @@ const LocationDropdownTableGrid = ({
                   {item.tooltipdisplay === "block" && (
                     <p>
                       <MdInfoOutline
-                        data-tooltip-id={`tooltip-${
-                          shortKeyMap[item.tittlekey]
-                        }`}
+                        data-tooltip-id={`tooltip-${shortKeyMap[item.tittlekey]}`}
                         data-tooltip-content={item.tooltip}
                         className="ml-2 cursor-pointer"
                       />
@@ -206,88 +201,101 @@ const LocationDropdownTableGrid = ({
           </tr>
         </thead>
         <tbody className="border-b border-gray-300">
-          {Object.entries(locationMap).map(([locationName]) => (
-            <React.Fragment key={locationName}>
-              {(localValue[locationName] || []).map((row, rowIndex) => (
-                <tr key={rowIndex}>
-                  {rowIndex === 0 && (
-                    <td
-                      rowSpan={(localValue[locationName] || []).length}
-                      className="p-2 border-l border-t border-r border-gray-300 text-center text-sm"
-                    >
+          {Object.entries(locationMap).map(([locationName]) => {
+            const rows = localValue[locationName] || [];
+            const isEmpty = rows.length === 0;
+
+            return (
+              <React.Fragment key={locationName}>
+                {isEmpty ? (
+                  <tr key={0}>
+                    <td className="p-2 border-l border-t border-r border-gray-300 text-center text-sm">
                       {locationName}
                     </td>
-                  )}
-                  {options.titles.map((title, colIndex) => (
-                    <td key={colIndex} className="p-1 border border-gray-300">
-                      {title.widgettype === "number" ? (
+                    {options.titles.map((title, colIndex) => (
+                      <td key={colIndex} className="p-1 border border-gray-300">
                         <input
-                          type="number"
+                          type={title.widgettype === "number" ? "number" : "text"}
                           className="w-full p-2 rounded text-sm"
                           placeholder="Enter Value"
-                          value={row[title.tittlekey] || ""}
+                          value=""
                           onChange={(e) =>
-                            updateField(
-                              locationName,
-                              rowIndex,
-                              title.tittlekey,
-                              e.target.value
-                            )
+                            updateField(locationName, 0, title.tittlekey, e.target.value)
                           }
                         />
-                      ) : title.widgettype === "text" ? (
-                        <input
-                          type="text"
-                          className="w-full p-2   rounded text-sm"
-                          placeholder="Enter Value"
-                          value={row[title.tittlekey] || ""}
-                          onChange={(e) =>
-                            updateField(
-                              locationName,
-                              rowIndex,
-                              title.tittlekey,
-                              e.target.value
-                            )
-                          }
-                        />
-                      ) : (
-                        <div className="w-full  border-b border-gray-300 rounded"></div>
-                      )}
+                      </td>
+                    ))}
+                    <td className="p-4 border-r  border-b border-gray-300 flex justify-center">
+                      <button
+                        type="button"
+                        onClick={() => onRemove(locationName, 0)}
+                        className="text-[20px] text-red-600"
+                      >
+                        <MdOutlineDeleteOutline />
+                      </button>
                     </td>
-                  ))}
-                  <td className="p-4 border-r  border-b border-gray-300 flex justify-center">
+                  </tr>
+                ) : (
+                  rows.map((row, rowIndex) => (
+                    <tr key={rowIndex}>
+                      {rowIndex === 0 && (
+                        <td
+                          rowSpan={rows.length}
+                          className="p-2 border-l border-t border-r border-gray-300 text-center text-sm"
+                        >
+                          {locationName}
+                        </td>
+                      )}
+                      {options.titles.map((title, colIndex) => (
+                        <td key={colIndex} className="p-1 border border-gray-300">
+                          <input
+                            type={title.widgettype === "number" ? "number" : "text"}
+                            className="w-full p-2 rounded text-sm"
+                            placeholder="Enter Value"
+                            value={row[title.tittlekey] || ""}
+                            onChange={(e) =>
+                              updateField(locationName, rowIndex, title.tittlekey, e.target.value)
+                            }
+                          />
+                        </td>
+                      ))}
+                      <td className="p-4 border-r  border-b border-gray-300 flex justify-center">
+                        <button
+                          type="button"
+                          onClick={() => onRemove(locationName, rowIndex)}
+                          className="text-[20px] text-red-600"
+                        >
+                          <MdOutlineDeleteOutline />
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+
+                {/* Add new row button */}
+                <tr>
+                  <td
+                    rowSpan={1}
+                    className="p-2 border-l border-gray-300   text-center"
+                  ></td>
+                  <td
+                    colSpan={3}
+                    className="p-2 border-l border-gray-300  text-center"
+                  >
                     <button
                       type="button"
-                      onClick={() => onRemove(locationName, rowIndex)}
-                      className="text-[20px] text-red-600"
+                      onClick={() => addRow(locationName)}
+                      className="text-blue-500 flex items-center text-sm"
                     >
-                      <MdOutlineDeleteOutline />
+                      Add Category
+                      <MdAdd />
                     </button>
                   </td>
+                  <td className="p-4 border-x border-b border-gray-300 text-center"></td>
                 </tr>
-              ))}
-              <tr>
-                <td
-                  rowSpan={1}
-                  className="p-2 border-l border-gray-300   text-center"
-                ></td>
-                <td
-                  colSpan={3}
-                  className="p-2 border-l border-gray-300  text-center"
-                >
-                  <button
-                    type="button"
-                    onClick={() => addRow(locationName)}
-                    className="text-blue-500 flex items-center text-sm"
-                  >
-                    Add Category
-                    <MdAdd />
-                  </button>
-                </td>
-                <td className="p-4 border-x border-b border-gray-300 text-center"></td>
-              </tr>
-            </React.Fragment>
-          ))}
+              </React.Fragment>
+            );
+          })}
         </tbody>
       </table>
     </div>
