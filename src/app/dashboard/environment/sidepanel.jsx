@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { MdOutlineFactory,MdOutlineDeleteOutline,MdOutlineTungsten,MdKeyboardArrowDown,MdOutlineWater, MdOutlineEmojiNature   } from "react-icons/md";
+import { CgHome } from "react-icons/cg";
 import { GiWoodPile } from "react-icons/gi";
 
 const Aside = ({ activeTab, handleTabClick }) => {
@@ -9,23 +10,35 @@ const Aside = ({ activeTab, handleTabClick }) => {
   const [isWasteVisible, setWasteVisible] = useState(false);
   const [isWaterVisible, setWaterVisible] = useState(false);
   const [isMaterialsVisible, setMaterialsVisible] = useState(false);
+  const [isSupplierVisible, setIsSupplierVisible] = useState(false);
+
+  const toggleSupplierSectionVisibility = () => {
+    setIsSupplierVisible(!isSupplierVisible);
+    setWasteVisible(false);
+    setMaterialsVisible(false);
+    setWaterVisible(false);
+    setEnergySectionVisible(false)
+  };
   const toggleEnergySectionVisibility = () => {
     setEnergySectionVisible(!isEnergySectionVisible);
     setWasteVisible(false);
     setMaterialsVisible(false);
     setWaterVisible(false);
+    setIsSupplierVisible(false)
   };
   const toggleWasteVisible = () => {
     setWasteVisible(!isWasteVisible);
     setEnergySectionVisible(false);
     setMaterialsVisible(false);
     setWaterVisible(false);
+    setIsSupplierVisible(false)
   };
   const toggleWaterVisible = () => {
     setWaterVisible(!isWaterVisible);
     setEnergySectionVisible(false);
     setWasteVisible(false);
     setMaterialsVisible(false);
+    setIsSupplierVisible(false)
   };
 
   const toggleMaterialsVisible = () => {
@@ -33,6 +46,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setEnergySectionVisible(false);
     setWasteVisible(false);
     setWaterVisible(false);
+    setIsSupplierVisible(false)
 
   };
   const handleemssionClick = (option) => {
@@ -42,6 +56,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setWasteVisible(false);
     setWaterVisible(false);
     setMaterialsVisible(false);// Hide the section after clicking an option
+    setIsSupplierVisible(false)
   };
   return (
     <div className="m-3 ml-2 p-2 border border-r-2 border-b-2 shadow-lg rounded-l min-h-[120vh]">
@@ -297,6 +312,45 @@ const Aside = ({ activeTab, handleTabClick }) => {
               </>
             )}
           </div>
+
+          {/* supplier environmental assessment */}
+          <div
+
+>
+  <button
+    className={`flex items-center justify-between px-2 py-2 mb-2 focus:outline-none w-full ${activeTab === "New suppliers that were screened using environmental criteria" ||
+      activeTab === "Negative environmental impacts in the supply chain and actions taken"
+      ? "text-[#007EEF]"
+      : "bg-white text-[#727272] "
+      }`}
+    onClick={toggleSupplierSectionVisibility}
+  >
+    <CgHome  className="w-5 h-5 mr-2" />
+    <span className="text-left sm:w-[92px] md:w-[92px] lg:w-[92px] xl:w-[92px] 2xl:w-[92px] 3xl:w-[198px]">Supplier Environmental Assessment</span>
+    <div className="inset-y-0 -right-2 flex items-center pointer-events-none">
+    <MdKeyboardArrowDown className={`text-lg text-neutral-500${isSupplierVisible && "rotate-i80"}`}/>
+
+    </div>
+  </button>
+
+  {/* Energy section content */}
+  {isSupplierVisible && (
+    <>
+      <div className="bg-white px-2 ml-5 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+        <div><p className="text-[12px]  ml-3  text-[#727272]">Topic disclosure</p></div>
+        <div><p className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${activeTab === "New suppliers that were screened using environmental criteria"
+          ? "text-blue-400"
+          : "bg-transparent text-[#727272]"
+          }`} onClick={() => handleTabClick("New suppliers that were screened using environmental criteria")}>New suppliers that were screened using environmental criteria</p></div>
+        <div><p className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${activeTab === "Negative environmental impacts in the supply chain and actions taken"
+          ? "text-blue-400"
+          : "bg-transparent text-[#727272] "
+          }`} onClick={() => handleTabClick("Negative environmental impacts in the supply chain and actions taken")}>Negative environmental impacts in the supply chain and actions taken</p></div>
+        
+      </div>
+    </>
+  )}
+</div>
           {/* <button
             className={`flex items-center justify-between  px-2 py-2 mb-2 focus:outline-none ${activeTab === "Bio diversity"
               ? "text-[#007EEF] border-l-4 border-[#007EEF]"
