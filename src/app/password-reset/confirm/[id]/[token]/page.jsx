@@ -115,6 +115,8 @@ const PasswordReset = () => {
   }
 
   return (
+  <>
+    <ToastContainer style={{ fontSize: "12px" }} />
     <div className='min-h-screen grid place-items-center bg-[#f2f2f2]'>
       <div className='bg-white w-80 rounded-md'>
         <div className='w-12 h-12 bg-purple-50 rounded-full mx-auto mt-8'>
@@ -228,6 +230,7 @@ const PasswordReset = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 
