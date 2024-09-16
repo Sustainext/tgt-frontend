@@ -78,6 +78,14 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
         { tagid: "5", infoid: "18" },
 
       ]
+    },
+    {
+      category: "Supplier Environmental Assessment",
+      tag: "GRI 308",
+      data: [
+        { tagid: "1", infoid: "49" },
+        { tagid: "2", infoid: "50" },
+      ]
     }
   ];
   const sdg = [

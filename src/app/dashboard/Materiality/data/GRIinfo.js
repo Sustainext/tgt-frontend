@@ -69,7 +69,7 @@ export const GRIData = [
     ],
     data: [
       <>
-        <div className="p-2 pt-5 h-[650px] overflow-y-auto custom-scrollbar">
+        <div className="p-2 pt-5 h-[450px] overflow-y-auto custom-scrollbar">
           <p className="text-[13px] text-[#222] mb-1">
             Guidance for Disclosure 3-1
           </p>
@@ -168,7 +168,9 @@ export const GRIData = [
             </p>
           </div>
 
-          <div>
+         
+        </div>
+        <div>
             <a
               className="text-[14px] text-[#2196F3] pt-5 inline-flex"
                 href="https://www.globalreporting.org/pdf.ashx?id=12453"
@@ -177,7 +179,6 @@ export const GRIData = [
               Learn more <MdChevronRight className="mt-1"/>
             </a>
           </div>
-        </div>
       </>,
     ],
   },
@@ -190,7 +191,7 @@ export const GRIData = [
     ],
     data: [
       <>
-        <div className="p-2 pt-5 h-[650px] overflow-y-auto custom-scrollbar">
+        <div className="p-2 pt-5 h-[450px] overflow-y-auto custom-scrollbar">
           <p className="text-[13px] text-[#222] mb-1">
             Guidance for Disclosure 3-3
           </p>
@@ -380,7 +381,9 @@ export const GRIData = [
             </p>
           </div>
 
-          <div>
+         
+        </div>
+        <div>
             <a
               className="text-[14px] text-[#2196F3] pt-5 inline-flex"
                 href="https://www.globalreporting.org/pdf.ashx?id=12453"
@@ -389,7 +392,6 @@ export const GRIData = [
               Learn more <MdChevronRight className="mt-1" />
             </a>
           </div>
-        </div>
       </>,
     ],
   },
