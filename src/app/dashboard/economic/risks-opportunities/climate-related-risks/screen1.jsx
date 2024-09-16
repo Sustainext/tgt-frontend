@@ -327,7 +327,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, selectedLocation, year }) => {
               expenditure of the organisation including:
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e86`}
-                data-tooltip-content="This section documents data corresponding to the number of employees by gender and geographic area, categorized by employment type."
+                data-tooltip-content="Mention risks posed by climate change that have the potential to generate substantive changes in operations, revenue, or expenditure of the organisation."
                 className="mt-1.5 ml-2 text-[24px]"
               />
               <ReactTooltip
