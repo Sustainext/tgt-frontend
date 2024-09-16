@@ -98,7 +98,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
           <button
     className={`flex items-center justify-start px-2 py-2 mb-2 focus:outline-none w-full ${
       activeTab === "Supplier Environmental Assessment"
-      ? "text-[#007EEF]"
+      ? "text-[#007EEF] border-l-4 border-[#007EEF]"
       : "bg-white text-[#727272] "
       }`}
       onClick={() => handleTabClick("Supplier Environmental Assessment")}

@@ -83,8 +83,8 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       category: "Supplier Environmental Assessment",
       tag: "GRI 308",
       data: [
-        { tagid: "1", infoid: "14" },
-        { tagid: "2", infoid: "15" },
+        { tagid: "1", infoid: "49" },
+        { tagid: "2", infoid: "50" },
       ]
     }
   ];

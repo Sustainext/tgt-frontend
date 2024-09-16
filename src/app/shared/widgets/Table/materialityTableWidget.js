@@ -75,7 +75,7 @@ const MaterialityTableWidget = ({ id, options, value, required, onChange, schema
                                             <select
                                                 value={localValue[rowIndex][key]}
                                                 onChange={(e) => handleFieldChange(rowIndex, key, e.target.value)}
-                                                className="text-sm pl-2 py-2 w-full border-b"
+                                                className="text-sm pl-2 py-2 w-full border-b text-center"
                                                 required={required}
                                                 disabled={options.materialTopics.length==0}
                                             >
@@ -90,7 +90,7 @@ const MaterialityTableWidget = ({ id, options, value, required, onChange, schema
                                             <select
                                                 value={localValue[rowIndex][key]}
                                                 onChange={(e) => handleFieldChange(rowIndex, key, e.target.value)}
-                                                className="text-sm pl-2 py-2 w-full border-b"
+                                                className="text-sm pl-2 py-2 w-full border-b text-center"
                                                 required={required}
                                                 disabled={options.materialTopics.length==0}
                                             >
@@ -107,7 +107,7 @@ const MaterialityTableWidget = ({ id, options, value, required, onChange, schema
                                                 disabled={options.materialTopics.length==0}
                                                 value={localValue[rowIndex][key] || ""}
                                                 onChange={(e) => handleFieldChange(rowIndex, key, e.target.value)}
-                                                className="text-sm pl-2 py-2 w-full border-b"
+                                                className="text-sm pl-2 py-2 w-full border-b text-center"
                                                 placeholder="Enter"
                                             />
                                         )}

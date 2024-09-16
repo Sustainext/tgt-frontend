@@ -46,8 +46,8 @@ const uiSchema = {
         "Number of suppliers identified as having significant actual and potential negative environmental impacts with which  improvements were agreed upon",
       "ui:tooltip":
         "<p>Specify the number of suppliers identified as having significant actual and potential negative environmental impacts with which improvements were agreed upon as a result of the assessment during the reporting period.</p>",
-      "ui:tooltipdisplay": "block",
-      "ui:titledisplay": "block",
+      "ui:tooltipdisplay": "none",
+      "ui:titledisplay": "none",
       "ui:widgetType": "input",
       "ui:inputfildtype": "number",
       "ui:widget": "inputWidget",

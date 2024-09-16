@@ -8,7 +8,6 @@ import { Oval } from 'react-loader-spinner';
 
 const AnalyseSupplierEnvironment = ({ isBoxOpen }) => {
 
-  const [customerhealth, setCustomerhealth] = useState([]);
   const [newSuppliers, setNewSuppliers] = useState([]);
   const [negativeEnvImpact, setNegativeEnvImpact] = useState([]);
   const [terminatedRelationship, setTerminatedRelationship] = useState([]);
@@ -60,32 +59,63 @@ const AnalyseSupplierEnvironment = ({ isBoxOpen }) => {
     setNewSuppliers([]);
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_customer_health_safety_analysis`,
+        `/sustainapp/get_analyze_supplier_assesment/`,
         {
           params: params
         }
       );
 
       const data = response.data;
+       
 
-      const { customer_health_percent } = data;
-
-      const formatcustomerhealth = (data) => {
+      const formatNewSppliers = (data) => {
         return data.map((data, index) => {
           const percentage = parseFloat(data.percentage).toFixed(2);
           const formattedPercentage = percentage.endsWith('.00') ? percentage.slice(0, -3) : percentage;
           return {
             "Organisation/Corporation": data.org_or_corp,
-            "Percentage of significant product and service categories for which health and safety impacts are assessed for improvement": formattedPercentage,
+            "Percentage of new suppliers that were screened using environmental criteria": formattedPercentage,
+          };
+        });
+
+      };
+      const formatNegativeEnvImpact = (data) => {
+        return data.map((data, index) => {
+          const percentage = parseFloat(data.percentage).toFixed(2);
+          const formattedPercentage = percentage.endsWith('.00') ? percentage.slice(0, -3) : percentage;
+          return {
+            "Organisation/Corporation": data.org_or_corp,
+            "Percentage of suppliers identified as having significant actual and potential negative environmental impacts with which improvements were agreed upon as a result of assessment": formattedPercentage,
+          };
+        });
+
+      };
+      const formatTerminatedRelationship = (data) => {
+        return data.map((data, index) => {
+          const percentage = parseFloat(data.percentage).toFixed(2);
+          const formattedPercentage = percentage.endsWith('.00') ? percentage.slice(0, -3) : percentage;
+          return {
+            "Organisation/Corporation": data.org_or_corp,
+            "Percentage of Suppliers identified as having significant actual and potential negative environmental impacts with terminated Relationship": formattedPercentage,
           };
         });
 
       };
       setNewSuppliers(
-        formatcustomerhealth(
-          customer_health_percent
+        formatNewSppliers(
+       data.gri_308_1a
         )
       );
+      setTerminatedRelationship(
+        formatTerminatedRelationship(
+        data.gri_308_2e
+        )
+      )
+      setNegativeEnvImpact(
+        formatNegativeEnvImpact(
+        data.gri_308_2d
+        )
+      )
       LoaderClose();
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);

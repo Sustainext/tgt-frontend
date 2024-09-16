@@ -6,13 +6,13 @@ const DynamicTable2 = ({ data, columns }) => {
 
   return (
     <div className="overflow-x-auto">
-      <table className="min-w-full border-collapse block md:table w-full rounded-lg overflow-hidden">
+      <table className="min-w-full border-collapse  block md:table w-full rounded-lg overflow-hidden">
         <thead className="block md:table-header-group border">
           <tr className="border border-gray-300 md:table-row gradient-background">
             {columns.map((column, index) => (
               <th
                 key={column}
-                className={`px-2 py-3 font-semibold text-gray-600 block md:table-cell text-sm text-left`}
+                className={`px-2 py-3 font-semibold text-gray-600 block md:table-cell w-[50%] text-sm ${index==0?'text-center':'text-left'} `}
               >
                 {column}
               </th>
@@ -35,9 +35,7 @@ const DynamicTable2 = ({ data, columns }) => {
                 {columns.map((column, colIndex) => (
                   <td
                     key={colIndex}
-                    className={`p-2 block md:table-cell ${
-                      colIndex === 0 ? 'text-center' : 'text-center'
-                    } text-sm`}
+                    className={`p-2 block md:table-cell text-sm text-center w-[50%]`}
                   >
                        {row[column] !== undefined && row[column] !== null
                       ? colIndex === 0 ? row[column] : `${row[column]}%`
