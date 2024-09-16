@@ -177,16 +177,12 @@ const InputField = ({ selectedOrg, year, selectedCorp,setTableDataSubmit,tableDa
       fetchData()
     },[tableDataSubmit])
 
-    
     const handleSubmit = async(e) => {
-        if(!formData[0].Q2){
-            return
-        }
         e.preventDefault();
        const data={
             "assessment":assessment_id,
-            "negative_impact_involvement_description":formData[0].Q2,
-            "stakeholder_engagement_effectiveness_description":formData[0].Q3
+            "negative_impact_involvement_description":formData[0].Q2?formData[0].Q2:"",
+            "stakeholder_engagement_effectiveness_description":formData[0].Q3?formData[0].Q3:""
         }
         const url = dataPresent?`${process.env.BACKEND_API_URL}/materiality_dashboard/management-approach-question/${assessment_id}/edit/`:`${process.env.BACKEND_API_URL}/materiality_dashboard/management-approach-question/create/`;
       try {
@@ -226,6 +222,9 @@ const InputField = ({ selectedOrg, year, selectedCorp,setTableDataSubmit,tableDa
                     theme: "colored",
                   });
                 }
+              }
+              else{
+                setIsCompleteModalOpen(true)
               }
         }
         else{

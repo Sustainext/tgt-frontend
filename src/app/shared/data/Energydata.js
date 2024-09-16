@@ -3838,6 +3838,110 @@ export const Energydata = [
       </>,
     ],
   },
+  {
+    category: ["49"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 308: Supplier Environmental
+        Assessment 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Disclosure 308-1 New suppliers that were screened
+          using environmental criteria
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            {/* <p className="text-[11px] text-black mb-2">
+              Compilation Requirements
+            </p> */}
+            <p className="text-[11px] text-[#727272] mb-2">
+            Environmental criteria can include the topics covered in other GRI Topic Standards (e.g., GRI
+
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            302: Energy 2016, GRI 303: Water and Effluents 2018, GRI 305: Emissions 2016)
+            </p>
+            <p className="text-[11px] text-black mb-2">Background</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            This disclosure informs stakeholders about the percentage of suppliers selected or contracted subject to due diligence processes for environmental impacts.
+
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            An organization is expected to initiate due diligence as early as possible in the development of a new relationship with a supplier.
+
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Impacts may be prevented or mitigated at the stage of structuring contracts or other agreements,
+as well as via ongoing collaboration with suppliers.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12532"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["50"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+      GRI 308: Supplier Environmental
+      Assessment 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Disclosure 308-2 Negative environmental impacts in
+the supply chain and actions taken
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+            Guidance :
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            Negative impacts include those that are either caused or contributed to by an organization, or that are directly linked to its operations, products, or services by its relationship with a supplier. Assessments for environmental impacts can include the topics covered in other GRI Topic Standards (e.g., GRI 302: Energy 2016, GRI 303: Water and Effluents 2018, GRI 305: Emissions
+2016).
+
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            Assessments can be made against agreed performance expectations that are set and communicated to the suppliers prior to the assessment. Assessments can be informed by audits, contractual reviews, two-way engagement, and complaint and grievance mechanisms.
+
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Improvements can include changing an organization’s procurement practices, the adjustment of performance expectations, capacity building, training, and changes to processes
+            </p>
+            <p className="text-[11px] text-black mb-2">Background</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            This disclosure informs stakeholders about an organization’s awareness of significant actual
+            and potential negative environmental impacts in the supply chain.
+            </p>
+            
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12532"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
   //  sdg contet start//
   {
     category: ["sd1"],
