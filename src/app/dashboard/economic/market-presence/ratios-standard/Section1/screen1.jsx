@@ -111,7 +111,7 @@ const uiSchema = {
       "ui:hadding":
         "If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
       "ui:haddingtooltips":
-        "If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
+        "Mention the relevant entry level wage by gender at significant locations of operation to the minimum wage.Entry level wage: full-time wage in the lowest employment category.:",
       "ui:haddingdisplay": "block",
       "ui:haddingtooltipdisplay": "block",
       "ui:title": "Select Currency",
@@ -345,7 +345,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 201-1a
+                  GRI 202-1a
                 </div>
               </div>
             </div>

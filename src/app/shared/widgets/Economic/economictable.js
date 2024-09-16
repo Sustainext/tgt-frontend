@@ -152,7 +152,7 @@ const Economictable = ({
           "Ventilation improvements",
           "Others (please specify)",
         ],
-        Heatwaves: [
+        "Heatwaves": [
           "Investment in cooling technologies",
           "Adjusting work schedules",
           "Health and safety programs",
@@ -192,7 +192,7 @@ const Economictable = ({
           "Transparency and communication",
           "Others (please specify)",
         ],
-        "Legal Risks": [
+        "Legal risks": [
           "Legal compliance",
           "Risk management frameworks",
           "Regular audits",
@@ -326,7 +326,7 @@ const Economictable = ({
           "Others (please specify)",
         ],
 
-        Heatwaves: [
+        "Heatwaves": [
           "Installation of air conditioning systems",
           "Shading and ventilation improvements",
           "Employee wellness programs",
@@ -360,7 +360,7 @@ const Economictable = ({
           "Regular stakeholder updates",
           "Others (please specify)",
         ],
-        "Legal Risks": [
+        "Legal risks": [
           "Regular legal audits",
           "Risk mitigation strategies",
           "Legal awareness training",
@@ -372,6 +372,15 @@ const Economictable = ({
           "Implementation of energy-saving technologies",
           "Sustainability reporting",
           "Carbon offset programs",
+          "Others (please specify)",
+        ],
+        "Investor Pressure": [
+          "Conduct ESG risk assessments",
+          "Implement sustainability initiatives",
+          "Develop comprehensive ESG policies",
+          "Engage with shareholders on ESG issues",
+          "Provide ESG training for management",
+          "Improve disclosure practices",
           "Others (please specify)",
         ],
         "Consumer Preference Changes": [

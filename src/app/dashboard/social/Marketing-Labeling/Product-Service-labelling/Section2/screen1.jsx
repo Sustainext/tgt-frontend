@@ -199,7 +199,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
         }}
       >
         <div className="mb-4 flex">
-          <div className="w-[80%]">
+          <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
             Number of product or service categories covered by and assessed for compliance
               <MdInfoOutline

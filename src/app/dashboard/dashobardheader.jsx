@@ -1,23 +1,25 @@
-"use client";
-import React, { useEffect, useState, useRef } from "react";
-import { useAuth } from "../../Context/auth";
-import { useRouter } from "next/navigation";
-import { loadFromLocalStorage } from "../utils/storage";
-import Link from "next/link";
-import Profile from "./Profile";
+'use client'; // Ensure this is a client-side component
+import React, { useEffect, useState, useRef } from 'react';
+import { useAuth } from '../../Context/auth';
+import { useRouter } from 'next/navigation';
+import { loadFromLocalStorage } from '../utils/storage';
+import Link from 'next/link';
+import Profile from './Profile';
 import { Oval } from 'react-loader-spinner';
-
+// import { useTranslation } from 'react-i18next';
 
 const DashboardHeader = () => {
+  // const { t } = useTranslation();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [profileVisible, setProfileVisible] = useState(false);
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [initials, setInitials] = useState("");
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [initials, setInitials] = useState('');
   const { logout } = useAuth();
   const router = useRouter();
-  const userDetails = loadFromLocalStorage("userData");
+  const userDetails = loadFromLocalStorage('userData');
   const profileRef = useRef(null);
+
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
@@ -26,30 +28,30 @@ const DashboardHeader = () => {
   const handleLogout = async () => {
     try {
       await logout();
-      router.push("/");
+      router.push('/');
     } catch (error) {
-      console.error("Logout failed:", error);
+      console.error('Logout failed:', error);
     }
   };
 
   const getInitials = (email) => {
-    const username = email?.split("@")[0];
-    const nameParts = username?.split(".");
+    const username = email?.split('@')[0];
+    const nameParts = username?.split('.');
     const initials = nameParts
       ?.map((part) => part.charAt(0).toUpperCase())
-      .join("");
+      .join('');
     return initials;
   };
 
   const extractUsername = (input) => {
-    if (input?.includes("@")) {
-      return input.split("@")[0];
+    if (input?.includes('@')) {
+      return input.split('@')[0];
     }
     return input;
   };
 
   useEffect(() => {
-    const userDetails = loadFromLocalStorage("userData");
+    const userDetails = loadFromLocalStorage('userData');
     if (userDetails) {
       const userEmail = userDetails.user_detail[0].username;
       setUsername(extractUsername(userEmail));
@@ -63,11 +65,11 @@ const DashboardHeader = () => {
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [userDetails]);
+  }, []);
 
   const handleProfileClick = (e) => {
     e.stopPropagation();
@@ -75,30 +77,27 @@ const DashboardHeader = () => {
     setDropdownVisible(false);
   };
 
-  const [open, setOpen] = useState(false);  // State to control the Backdrop
-  
+  const [open, setOpen] = useState(false);  // State to control the Backdrop for the spinner
+
   useEffect(() => {
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-          mutation.addedNodes.forEach(node => {
-            if (node.nodeType === Node.ELEMENT_NODE) {
-              if (node.matches('._fluentc_widget-language-manager.show')) {
-                node.classList.remove('show');
-              }
+          mutation.addedNodes.forEach((node) => {
+            if (node.nodeType === Node.ELEMENT_NODE && node.matches('._fluentc_widget-language-manager.show')) {
+              node.classList.remove('show');
             }
           });
         }
-        
+
         if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
           const target = mutation.target;
           if (target === document.body && target.classList.contains('_fluentc_widget-banner-show')) {
             target.classList.remove('_fluentc_widget-banner-show');
-            const widget_div = document.querySelector('._fluentc_widget-language-manager.show');
-            widget_div?.classList.remove('show');
+            const widgetDiv = document.querySelector('._fluentc_widget-language-manager.show');
+            widgetDiv?.classList.remove('show');
           }
-          
-          // Check if the mutation target is the loader div
+
           if (target.matches('._fluentc_widget-language-manager')) {
             const isLoading = target.classList.contains('loading');
             setOpen(isLoading);
@@ -107,10 +106,9 @@ const DashboardHeader = () => {
         }
       });
     });
-  
-    const config = { attributes: true, childList: true, subtree: true };
-    observer.observe(document.body, config);
-  
+
+    observer.observe(document.body, { attributes: true, childList: true, subtree: true });
+
     return () => observer.disconnect();
   }, []);
 
@@ -121,12 +119,9 @@ const DashboardHeader = () => {
           <Link href="/dashboard">
             <span className="text-[#007EEF] hover:text-[#0057A5]">Home</span>
           </Link>
-
           <span className="text-[#222222] mx-1">&gt;</span>
           <a href="/home/sustainextHQ">
-            <span className="text-[#222222] hover:text-[#0057A5] mx-2">
-              SustainextHQ
-            </span>
+            <span className="text-[#222222] hover:text-[#0057A5] mx-2">SustainextHQ</span>
           </a>
         </div>
         <div className="flex justify-center items-center">
@@ -139,17 +134,16 @@ const DashboardHeader = () => {
               <div className="flex justify-center items-center">
                 <div
                   style={{
-                    background:
-                      "linear-gradient(rgb(0, 126, 239), rgb(42, 228, 255))",
-                    width: "30px",
-                    height: "30px",
-                    borderRadius: "50%",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    color: "white",
-                    fontSize: "14px",
-                    fontWeight: "bold",
+                    background: 'linear-gradient(rgb(0, 126, 239), rgb(42, 228, 255))',
+                    width: '30px',
+                    height: '30px',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    color: 'white',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
                   }}
                 >
                   {initials}
@@ -169,54 +163,28 @@ const DashboardHeader = () => {
               {dropdownVisible && (
                 <div className="w-[220px] h-[128px] flex-col justify-start items-start absolute right-0 mt-2 bg-white border border-gray-300 rounded shadow-lg">
                   <div className="self-stretch h-[128px] bg-white rounded shadow flex-col justify-start items-start flex">
-                    <div className="self-stretch h-[128px] rounded flex-col justify-start items-start flex">
-                      <div className="self-stretch h-[45px] flex-col justify-start items-start flex">
-                        <div className="self-stretch px-4 py-1 justify-start items-center inline-flex">
-                          <div className="grow shrink basis-0 py-1 flex-col justify-start items-start inline-flex">
-                            <div className="self-stretch text-black/opacity-90 text-[13px] font-normal font-['Manrope'] leading-none">
-                              {username}
-                            </div>
-                            <div className="self-stretch text-black/opacity-60 text-xs font-normal font-['Manrope'] leading-[15px]">
-                              {email}
-                            </div>
+                    <div className="self-stretch h-[45px] flex-col justify-start items-start flex">
+                      <div className="self-stretch px-4 py-1 justify-start items-center inline-flex">
+                        <div className="grow shrink basis-0 py-1 flex-col justify-start items-start inline-flex">
+                          <div className="self-stretch text-black/opacity-90 text-[13px] font-normal font-['Manrope'] leading-none">
+                            {username}
+                          </div>
+                          <div className="self-stretch text-black/opacity-60 text-xs font-normal font-['Manrope'] leading-[15px]">
+                            {email}
                           </div>
                         </div>
                       </div>
-                      <div className="self-stretch h-px flex-col justify-start items-start flex">
-                        <div className="w-[0px] h-px relative" />
-                        <div className="self-stretch h-[0px] border border-black/opacity-10"></div>
+                    </div>
+                    <div className="self-stretch h-[85px] py-1 flex-col justify-start items-start flex">
+                      <div className="self-stretch px-4 py-1.5 justify-start items-center inline-flex">
+                        <div className="grow shrink basis-0 text-black/opacity-90 text-[13px] font-normal font-['Manrope'] leading-none cursor-pointer" onClick={handleProfileClick}>
+                          Profile
+                        </div>
                       </div>
-                      <div className="self-stretch h-[85px] py-1 flex-col justify-start items-start flex">
-                        <div className="self-stretch h-9 flex-col justify-center items-start flex">
-                          <div className="self-stretch px-4 py-1.5 justify-start items-center inline-flex">
-                            <div className="grow shrink basis-0 h-4 justify-start items-center flex">
-                              <div
-                                className="grow shrink basis-0 text-black/opacity-90 text-[13px] font-normal font-['Manrope'] leading-none cursor-pointer"
-                                onClick={handleProfileClick}
-                              >
-                                Profile
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="self-stretch h-[7px] flex-col justify-start items-start flex">
-                          <div className="w-[0px] h-px relative" />
-                          <div className="self-stretch h-[0px] border border-black/opacity-10"></div>
-                        </div>
-                        <div className="self-stretch flex-col justify-center items-start flex">
-                          <div className="self-stretch px-4 py-1.5 justify-start items-center inline-flex">
-                            <div className="pr-8 flex-col justify-start items-start inline-flex">
-                              <div className="grow shrink basis-0 h-4 justify-start items-center flex">
-                                <button
-                                  onClick={handleLogout}
-                                  className="grow shrink basis-0 text-red-600 text-[13px] font-normal font-['Manrope'] leading-none"
-                                >
-                                  Log out
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                      <div className="self-stretch px-4 py-1.5 justify-start items-center inline-flex">
+                        <button onClick={handleLogout} className="text-red-600 text-[13px] font-normal">
+                          Log out
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -227,25 +195,15 @@ const DashboardHeader = () => {
         </div>
       </div>
       {profileVisible && (
-        <div
-          ref={profileRef}
-          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
-        >
+        <div ref={profileRef} className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <Profile onClose={() => setProfileVisible(false)} />
         </div>
       )}
       {open && (
-          <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 z-[100]">
-            <Oval
-              height={50}
-              width={50}
-              color="#00BFFF"
-              secondaryColor="#f3f3f3"
-              strokeWidth={2}
-              strokeWidthSecondary={2}
-            />
-          </div>
-        )}
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <Oval height={50} width={50} color="#00BFFF" secondaryColor="#f3f3f3" strokeWidth={2} strokeWidthSecondary={2} />
+        </div>
+      )}
     </>
   );
 };

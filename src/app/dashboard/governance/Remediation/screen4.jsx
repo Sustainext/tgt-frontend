@@ -175,7 +175,7 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
         }}
       >
         <div className="mb-4 flex">
-          <div className="w-[80%]">
+          <div className="w-[80%] relative">
             {/* <h2 className='flex mx-2 text-[15px] text-gray-500 font-semibold mb-2'>
                         Highest governance body processes to prevent conflict of interest
                             <MdInfoOutline data-tooltip-id={`tooltip-$e1`}

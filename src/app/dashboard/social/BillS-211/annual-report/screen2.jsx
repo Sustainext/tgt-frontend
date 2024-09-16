@@ -622,7 +622,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
         <>
           <div className="container mx-auto mt-5">
             <div className="flex">
-              <div className="w-[80%]">
+              <div className="w-[80%] relative">
                 <p className="font-bold  text-md mx-4 "> Annual Report</p>
               </div>
               <div className="text-md flex">
@@ -798,7 +798,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                         Importing into Canada goods produced outside Canada
                       </label>
                     </div>
-                    <div className="w-[80%]">
+                    <div className="w-[80%] relative">
                       <label className="ml-2 text-[15px]  text-gray-600">
                         <input
                           type="checkbox"
@@ -895,7 +895,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
         <>
           <div className="container mx-auto mt-5">
             <div className="flex">
-              <div className="w-[80%]">
+              <div className="w-[80%] relative">
                 <p className="font-bold  text-md mx-4 "> Annual Report</p>
               </div>
               <div className="text-md flex">
@@ -1077,7 +1077,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                             Importing into Canada goods produced outside Canada
                           </label>
                         </div>
-                        <div className="w-[80%]">
+                        <div className="w-[80%] relative">
                           <label className="ml-2 text-[15px]  text-gray-600">
                             <input
                               type="checkbox"
@@ -1301,7 +1301,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
                             Importing into Canada goods produced outside Canada
                           </label>
                         </div>
-                        <div className="w-[80%]">
+                        <div className="w-[80%] relative">
                           <label className="ml-2 text-[15px]  text-gray-600">
                             <input
                               type="checkbox"

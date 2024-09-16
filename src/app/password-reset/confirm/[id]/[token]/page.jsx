@@ -8,7 +8,8 @@ import { Tooltip as ReactTooltip } from 'react-tooltip';
 import PasswordChecklist from 'react-password-checklist';
 import 'react-tooltip/dist/react-tooltip.css';
 import { MdKey } from "react-icons/md";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const PasswordReset = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -62,17 +63,54 @@ const PasswordReset = () => {
         }
       );
       if (response.status === 200) {
+        toast.success("Password reset successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         setSuccess(true);
       }
     } catch (error) {
-      console.error('Error:', error);
+      // Extract error messages from the backend response
+      if (error.response && error.response.data) {
+        const errorMessage = error.response.data.new_password2 
+          ? error.response.data.new_password2[0] 
+          : "Oops, something went wrong";
+  
+        toast.error(errorMessage, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      } else {
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
     } finally {
       setLoading(false);
     }
   };
 
   if (!isClient) {
-    // Render a loading state or nothing until the component is mounted on the client
+
     return null;
   }
 
