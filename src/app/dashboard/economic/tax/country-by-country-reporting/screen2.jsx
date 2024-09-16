@@ -359,7 +359,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
               period),
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e18`}
-                data-tooltip-content="This section documents data corresponding to the number of employees by gender and geographic area, categorized by employment type."
+                data-tooltip-content="In this disclosure, country-by-country information is to be reported at the level of tax jurisdictions and not at the level of individual entities."
                 className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip

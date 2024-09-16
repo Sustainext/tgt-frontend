@@ -32,6 +32,7 @@ const schema = {
           "Extreme weather events",
           "Temperature changes",
           "Sea level rise",
+          "Water scarcity",
           "Changes in precipitation patterns",
           "Natural disasters",
           "Air Quality Degradation",

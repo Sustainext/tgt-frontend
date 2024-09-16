@@ -345,9 +345,7 @@ const Screen5 = ({ selectedOrg, year, selectedCorp,datarefreshtwo,setDatarefresh
                     >
                       <div className="flex items-center justify-center">
                         <p>
-                          Total number of employees that the organization's
-                          anti-corruption policies and procedures have been
-                          communicated to
+                        Total number of employees that have received training on anti-corruption
                         </p>
                         <p>
                           <MdInfoOutline
@@ -377,7 +375,7 @@ const Screen5 = ({ selectedOrg, year, selectedCorp,datarefreshtwo,setDatarefresh
                       style={{ width: "17vw" }}
                     >
                       <div className="flex items-center justify-center">
-                        <p>Total number of employees in this region</p>
+                        <p>Total number of employee</p>
                         <p>
                           <MdInfoOutline
                             data-tooltip-id={`es282`}

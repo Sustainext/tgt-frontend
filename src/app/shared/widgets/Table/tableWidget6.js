@@ -85,7 +85,7 @@ const CustomTableWidget6 = ({
             <tr key={rowIndex}>
               <td className="border-t border-gray-300 py-2 px-2 text-[13px]">
               <div className="flex items-center justify-center">
-                  <p className="w-[80%]">   {rowLabel.title}</p>
+                  <p className="w-[80%] relative">   {rowLabel.title}</p>
                   <p>
                   <MdInfoOutline
                   data-tooltip-id={`tooltip-${rowLabel.title.replace(/\s+/g, '-')}`}
