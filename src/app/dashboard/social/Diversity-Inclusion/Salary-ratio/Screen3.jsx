@@ -180,7 +180,7 @@ const Screen3 = ({ location, year, month }) => {
         }}
       >
         <div className="mb-4 flex">
-          <div className="w-[80%]">
+          <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
               Define "Significant Locations of Operation"
               <MdInfoOutline

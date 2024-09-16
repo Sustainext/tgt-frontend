@@ -235,11 +235,11 @@ const Economictablemultipal = ({ id, value, onChange }) => {
           "Others (please specify)",
         ],
         "Sustainable Supply Chain": [
-          "Competitive Advantage",
-          "Cost Reduction through Efficiency",
+          "Competitive Advantage", 
+          "Cost Reduction through Efficiency",   
           "Increased Supplier Costs",
-          "Improved Risk Management",
-          "Enhanced Brand Reputation",
+          "Improved Risk Management  Enhanced", 
+          "Brand Reputation",
           "Others (please specify)",
         ],
         "Water Conservation": [
@@ -298,10 +298,10 @@ const Economictablemultipal = ({ id, value, onChange }) => {
           "Others (please specify)",
         ],
         "Eco-Friendly Packaging": [
-          "Reduced Packaging Costs",
-          "Increased Revenue",
-          "Enhanced Brand Value",
-          "Cost Savings",
+          "Reduced packaging costs",
+          "Increased sales from eco-friendly products",
+          "Potential subsidies",
+          "Reduced waste disposal costs",
           "Others (please specify)",
         ],
         "Renewable Energy Trading": [
@@ -414,6 +414,7 @@ const Economictablemultipal = ({ id, value, onChange }) => {
       },
       MitigationStrategies: {
         "Renewable Energy Adoption": [
+          "Investment in R&D",
           "Policy Advocacy",
           "Partnership with Renewable Energy Providers",
           "Employee Training Programs",

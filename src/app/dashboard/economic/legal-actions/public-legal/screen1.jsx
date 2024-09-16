@@ -4,6 +4,7 @@ import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import CommoninputWidget from "../../../../shared/widgets/Input/commoninputWidget";
 import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2.js";
+import inputWidget3 from "../../../../shared/widgets/Input/inputWidget3.js";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -16,6 +17,7 @@ import axiosInstance from "@/app/utils/axiosMiddleware";
 const widgets = {
   inputWidget: CommoninputWidget,
   inputWidget2:inputWidget2,
+  inputWidget3:inputWidget3,
 };
 
 const view_path = "gri-economic-public_legal_cases-205-3d";
@@ -80,7 +82,7 @@ const uiSchema = {
       "ui:title": " If yes, mention the number  of public legal cases regarding corruption brought against the organization or its employees during the reporting period.",
       "ui:tooltip": "Specify the number of public legal cases regarding corruption brought against the organization or its employees during the reporting period ",
       "ui:tooltipdisplay": "block",
-      "ui:widget": "inputWidget2",
+      "ui:widget": "inputWidget3",
       "ui:options": {
         label: false,
       },

@@ -244,17 +244,17 @@ const CompositionOfHighestGovernanceBody = ({
         }}
       >
         <div className="mb-4 flex">
-          <div className="w-[80%]">
+          <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
               Describe the composition of the highest governance body and its
               committees by the following:
               <MdInfoOutline
-                data-tooltip-id={`tooltip-$e1`}
-                data-tooltip-content="This section documents data corresponding to the organisation's governance structure, including the committees of the highest governance body."
+                data-tooltip-id={`tooltip-$e166`}
+                data-tooltip-content="This section documents data corresponding to the composition of the highest governance body and its committees by executive and non-executive members, independence, tenure of members on the governance body, gender etc."
                 className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip
-                id={`tooltip-$e1`}
+                id={`tooltip-$e166`}
                 place="top"
                 effect="solid"
                 style={{

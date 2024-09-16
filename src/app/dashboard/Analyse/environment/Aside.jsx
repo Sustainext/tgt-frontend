@@ -6,6 +6,7 @@ import {
   IoWaterOutline,
   IoLeafOutline,
 } from "react-icons/io5";
+import { MdOutlineWarehouse } from "react-icons/md";
 import material from "../../../../../public/material.svg";
 import Image from "next/image";
 
@@ -92,6 +93,23 @@ const Aside = ({ activeTab, handleTabClick }) => {
             <IoLeafOutline className="w-5 h-5 mr-5" />
             <span className="mr-4">Bio diversity</span>
           </button> */}
+          
+
+          <button
+    className={`flex items-center justify-start px-2 py-2 mb-2 focus:outline-none w-full ${
+      activeTab === "Supplier Environmental Assessment"
+      ? "text-[#007EEF] border-l-4 border-[#007EEF]"
+      : "bg-white text-[#727272] "
+      }`}
+      onClick={() => handleTabClick("Supplier Environmental Assessment")}
+  >
+    <MdOutlineWarehouse  className="w-5 h-5 mr-5" />
+    <span className="text-left sm:w-[92px] md:w-[92px] lg:w-[92px] xl:w-[92px] 2xl:w-[92px] 3xl:w-[198px]">Supplier Environmental Assessment</span>
+    <div className="inset-y-0 -right-2 flex items-center pointer-events-none">
+    {/* <MdKeyboardArrowDown className={`text-lg text-neutral-500${isSupplierVisible && "rotate-i80"}`}/> */}
+
+    </div>
+  </button>
         </div>
       </div>
     </div>

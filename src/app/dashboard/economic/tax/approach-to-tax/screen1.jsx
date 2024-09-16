@@ -128,7 +128,7 @@ const uiSchema = {
       "ui:title":
       "Please provide a description of the approach your organisation takes for tax related  regulatory compliance",
     "ui:tooltip":
-      "Describe organisation's approach to regulatory compliance. ",
+      "Describe organisation's approach to regulatory compliance.",
     "ui:tooltipdisplay": "block",
     "ui:titledisplay": "block",
     "ui:widgetType": "textarea",
@@ -141,7 +141,7 @@ const uiSchema = {
     },
     Q6: {
       "ui:title":
-      "Please provide a description of the approach your organisation takes for tax related  regulatory compliance",
+      "How is the tax approach linked to the business and sustainable development strategies of the organization?",
     "ui:tooltip":
       "<p>When describing how its approach to tax is linked to its business strategy, the organization can explain how its tax planning is aligned with its commercial activities. When describing how its approach to tax is linked to its sustainable development strategy, the organization can explain the following:</p><ul><li>•Whether it considered the economic and social impacts of its approach to tax when developing its tax strategy.</li><li> • Any organizational commitments to sustainable development in the jurisdictions in which it operates and whether its approach to tax is aligned with these commitments.</li></ul>",
     "ui:tooltipdisplay": "block",

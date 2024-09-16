@@ -42,7 +42,7 @@ const uiSchema = {
     "ui:order": ["Q1"],
     Q1: {
       "ui:title":
-      "Describe the approach to engagement with tax authorities.",
+      "List jurisdictions",
     "ui:tooltip":
       "Explain the approach to interact with tax authorities. For example, frequency of engagement, method of engagement, outcomes of the engagement etc.",
     "ui:tooltipdisplay": "block",
