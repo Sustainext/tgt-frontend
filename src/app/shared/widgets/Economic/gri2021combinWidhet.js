@@ -68,7 +68,11 @@ const GRI2021combinWidhet = ({ locationdata, onChange, value = {} }) => {
   const debouncedOnChange = useDebounce((formData) => {
     onChange(formData);
   }, 300);
-
+  const handleKeyDown = (event) => {
+    if (["e", "E", "+", "-"].includes(event.key)) {
+      event.preventDefault();
+    }
+  };
   useEffect(() => {
     const formData = {
       locations,
@@ -232,7 +236,8 @@ const GRI2021combinWidhet = ({ locationdata, onChange, value = {} }) => {
         </div>
       </div>
 
-      {/* Currency Selection */}
+      {radioValue === "Variable" && (
+        <>
       <div className="flex mb-4 items-center relative">
         <p className="text-[15px] text-gray-500 font-semibold flex mb-2">
           If a local minimum wage exists or variable at significant locations of
@@ -266,7 +271,6 @@ const GRI2021combinWidhet = ({ locationdata, onChange, value = {} }) => {
         />
       </div>
 
-      {/* Dynamic Table */}
       <div className="mb-4">
         <table className="min-w-full border-collapse border border-gray-300">
           <thead className="gradient-background h-[80px]">
@@ -304,6 +308,7 @@ const GRI2021combinWidhet = ({ locationdata, onChange, value = {} }) => {
                           className="w-full p-2 border-b border-gray-300 rounded"
                           placeholder="Enter Value"
                           value={wages[location.value]?.[gender] || ""}
+                          onKeyDown={handleKeyDown} 
                           onChange={(e) =>
                             handleWageChange(
                               location.value,
@@ -320,6 +325,8 @@ const GRI2021combinWidhet = ({ locationdata, onChange, value = {} }) => {
           </tbody>
         </table>
       </div>
+      </>
+)}
     </>
   );
 };
