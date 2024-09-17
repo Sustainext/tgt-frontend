@@ -50,7 +50,7 @@ const Climaterelatedrisks = () => {
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] font-bold pt-1">
-                    Economic Performance
+                  Risks & Opportunities
                   </p>
                 </div>
               </div>
@@ -76,10 +76,10 @@ const Climaterelatedrisks = () => {
 
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Financial implications and other risks and opportunities due to climate change 
+          Climate related Risks (2/3)
             <MdInfoOutline
               data-tooltip-id={`tooltip-$e10`}
-              data-tooltip-content="This section documents the data corresponding to the financial implications and other risks and opportunities due to climate change."
+              data-tooltip-content="This section documents the data corresponding to the climate related risks."
               className="mt-1.5 ml-2 text-[14px]"
             />
             <ReactTooltip
