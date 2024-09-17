@@ -1,0 +1,189 @@
+'use client'
+import { useState, useRef, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Oval } from 'react-loader-spinner';
+import { MdDownload, MdDelete, MdKeyboardArrowDown, MdFileDownload } from "react-icons/md";
+import axiosInstance,{patch} from "../../../utils/axiosMiddleware";
+import Link from 'next/link'
+import { GlobalState } from "@/Context/page";
+import Sidebar from './sidebar'
+
+const ESGReport =()=>{
+
+    const [activeStep, setActiveStep] = useState(1);
+    const handleNext = () => {
+        setActiveStep(activeStep + 1);
+      };
+    
+      const handlePrevious = () => {
+        setActiveStep(activeStep - 1);
+      };
+
+    return (
+        <>
+        <div className="flex">
+        <Sidebar activeStep={activeStep}/>
+         <div className="w-full mb-5">
+        
+        <div className="flex flex-col justify-start overflow-x-hidden ">
+        <div className="flex justify-between items-center border-b border-gray-200 mb-3 w-full">
+          <div className="w-[70%]">
+            <div className="text-left mb-3 ml-3 pt-3">
+              <div className="flex">
+                <div>
+                  <p className="gradient-text text-[22px] font-bold pt-4 pb-4 ml-3">
+                   Report
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="float-right mr-2 flex items-center justify-center ">
+              <div className="flex items-center justify-center">
+                <button
+                  style={{
+                    display: activeStep === 1 ? "none" : "inline-block",
+                  }}
+                  className={`${
+                    activeStep === 1 ? "" : "text-gray-500"
+                  } px-3 py-1.5 rounded font-semibold`}
+                  onClick={handlePrevious}
+                  disabled={activeStep === 1}
+                >
+                  &lt; Back to Reports
+                </button>
+
+                {activeStep < 15 ? (
+                  <button
+                    className={`${
+                      activeStep === 15
+                        ? "bg-gray-300"
+                        : "bg-blue-500 text-white"
+                    } px-3 py-1.5 rounded ml-2 font-semibold w-[100px]`}
+                    onClick={handleNext}
+                    disabled={activeStep === 15}
+                  >
+                    Next &gt;
+                  </button>
+                ) : (
+                  <button
+                    className="flex w-[120px] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                    // onClick={submitForm}
+                  >
+                    Submit
+                  </button>
+                )}
+              </div>
+            </div>
+        </div>
+       
+        </div>
+          <div className="mx-3 my-2">
+            <div className="h-[800px] overflow-y-auto">
+              {/* Step 1 */}
+              {activeStep === 1 && (
+                <>
+                  <div>
+                    {/* <CoverSheet
+                      display={display}
+                      imageSrc={imageSrc}
+                      setImage={setImage}
+                      setSelectedImage={setSelectedImage}
+                      selectedImage={selectedImage}
+                    /> */}
+                  </div>
+                </>
+              )}
+              {/* Step 2 */}
+              {activeStep === 2 && (
+                <div>
+                  {/* <Executivesummary
+                    exdata={exdata}
+                    totalContributionScope={totalContributionScope}
+                    highestContributionSource={highestContributionSource}
+                  /> */}
+                  {/* Your Step 2 form content goes here */}
+                </div>
+              )}
+
+              {/* Step 3 */}
+              {activeStep === 3 && (
+                <div>
+                  <div className="mb-4">
+                    {/* <Aboutthereport
+                      reportingdateform={reportingdateform}
+                      setReportingdateform={setReportingdateform}
+                      reportingdateto={reportingdateto}
+                      setReportingdateto={setReportingdateto}
+                      reportingcy={reportingcy}
+                      setReportingCy={setReportingCy}
+                      firstSelection={firstSelection}
+                      setFirstSelection={setFirstSelection}
+                      content={content}
+                      setContent={setContent}
+                    /> */}
+                  </div>
+                </div>
+              )}
+              {activeStep === 4 && (
+                <div>
+                  <div className="mb-4">
+                    {/* <Carbonaccountingobjectives
+                      value={childValue}
+                      setValue={setChildValue}
+                      roles={roles}
+                      setRoles={setRoles}
+                    /> */}
+                  </div>
+                </div>
+              )}
+              {activeStep === 5 && (
+                <div>
+                  <div className="mb-4">
+                    {/* <Organizationalboundaries
+                      locatiodata={locatiodata}
+                      boundaries={boundaries}
+                      setBoundaries={setBoundaries}
+                    /> */}
+                  </div>
+                </div>
+              )}
+              {activeStep === 6 && (
+                <div>
+                  <div className="mb-4">
+                    {/* <Datacollection
+                      souresdata={souresdata}
+                      display={display}
+                      selectedOptions={selectedOptions}
+                      setSelectedOptions={setSelectedOptions}
+                      excludedsources={excludedsources}
+                      setExcludedsources={setExcludedsources}
+                    /> */}
+                  </div>
+                </div>
+              )}
+              {activeStep === 7 && (
+                <div>
+                  <>
+                    <div className="mb-4">
+                      {/* <Results
+                        exdata={exdata}
+                        totalContributionScope={totalContributionScope}
+                        souresdata={souresdata}
+                        locatiodata={locatiodata}
+                      /> */}
+                    </div>
+                  </>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        </div>
+        
+        </>
+    )
+}
+
+export default ESGReport
