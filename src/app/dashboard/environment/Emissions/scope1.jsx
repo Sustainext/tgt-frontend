@@ -26,7 +26,7 @@ const view_path = "gri-environment-emissions-301-a-scope-1";
 const client_id = 1;
 const user_id = 1;
 
-const Scope1 = forwardRef(({ location, year, month, successCallback, countryCode }, ref) => {
+const Scope1 = forwardRef(({ location, year, month, successCallback, countryCode, setAccordionOpen  }, ref) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -102,34 +102,34 @@ const Scope1 = forwardRef(({ location, year, month, successCallback, countryCode
     });
   };
 
-
   const handleAddNew = () => {
     setFormData((prevFormData) => [...prevFormData, { Emission: {} }]);
-
-    console.log(formData,"test data");
+    console.log(formData, "test data");
   };
+
   const handleRemove = async (index) => {
-    console.log(index, "updatedData data index");
-
-    let updatedData;
-
-    // Update the state and get the updated data
-    setFormData((prevFormData) => {
-      const newFormData = prevFormData.filter((_, i) => i !== index);
-      console.log(newFormData, "updatedData after removing index");
-      updatedData = newFormData; // Capture the updated data
-      return newFormData;
-    });
-
+    console.log(index, "Removing row at index");
+  
+    // Update form data by removing the selected row
+    const updatedData = formData.filter((_, i) => i !== index); // Prepare updated form data without the removed row
+  
+    // Set the form data state
+    setFormData(updatedData);
+  
     try {
-      // Wait for the state update to complete and then call updateFormData
-      await updateFormData(updatedData);
-      successCallback();
+      // Always call updateFormData, even if the form data is empty
+      await updateFormData(updatedData); // Wait for updateFormData to complete
+      successCallback(); // Trigger success callback after data is updated
+  
+      // Close the accordion or modal if the first row is deleted
+      if (index === 0) {
+        setAccordionOpen(false);
+      }
     } catch (error) {
       console.error("Failed to update form data:", error);
     }
   };
-
+  
   const updateFormData = async (formData) => {
     LoaderOpen();
     const data = {
@@ -170,10 +170,9 @@ const Scope1 = forwardRef(({ location, year, month, successCallback, countryCode
         setFormData(f_data);
 
         LoaderClose();
-
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
         LoaderClose();
       });
   };
@@ -190,16 +189,6 @@ const Scope1 = forwardRef(({ location, year, month, successCallback, countryCode
   const updateFormDatanew = (updatedData) => {
     setFormData(updatedData);
   };
-
-  // const handleRemove = (index) => {
-  //   const updatedData = [...formData];
-  //   updatedData.splice(index, 1);
-  //   setFormData(updatedData);
-  //   // updateFormData();
-  //   // successCallback();
-  // };
-
-
 
   const updateCache = (subcategory, activities) => {
     setActivityCache((prevCache) => ({
@@ -276,7 +265,6 @@ const Scope1 = forwardRef(({ location, year, month, successCallback, countryCode
         >
           <MdAdd className="text-lg" /> Add Row
         </button>
-
       </div>
 
       {loopen && (
