@@ -84,7 +84,7 @@ const LocationDropdownTableGrid = ({
       [key]: newValue,
     };
     setLocalValue(newData);
-    debouncedOnChange(newData); // Trigger debounced update
+    debouncedOnChange(newData);
   };
 
   // Add a new row
@@ -102,8 +102,12 @@ const LocationDropdownTableGrid = ({
     setLocalValue(newData);
     debouncedOnChange(newData); // Trigger debounced update
   };
-
-  // Remove a row by index
+  const handleKeyDown = (event) => {
+    if (["e", "E", "+", "-"].includes(event.key)) {
+      event.preventDefault();
+    }
+  };
+ 
   const onRemove = (locationName, indexToRemove) => {
     const newData = { ...localValue };
     if (newData[locationName]) {
@@ -222,6 +226,7 @@ const LocationDropdownTableGrid = ({
                           onChange={(e) =>
                             updateField(locationName, 0, title.tittlekey, e.target.value)
                           }
+                          onKeyDown={handleKeyDown} 
                         />
                       </td>
                     ))}
@@ -256,6 +261,7 @@ const LocationDropdownTableGrid = ({
                             onChange={(e) =>
                               updateField(locationName, rowIndex, title.tittlekey, e.target.value)
                             }
+                            onKeyDown={handleKeyDown} 
                           />
                         </td>
                       ))}

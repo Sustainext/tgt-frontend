@@ -110,7 +110,7 @@ const uiSchema = {
         },
         Q3: {
             "ui:title":
-                "",
+                "If yes",
             "ui:tooltip":
                 "Provide an explanation of how the highest governance body engages with stakeholders to support these processes? ",
             "ui:tooltipdisplay": "none",
@@ -134,10 +134,10 @@ const uiSchema = {
         },
         Q5: {
             "ui:title":
-                "If yes, ",
+                "If yes",
             "ui:tooltip":
                 "Provide an explanation of how the highest governance body engages with stakeholders to support these processes?",
-            "ui:tooltipdisplay": "block",
+            "ui:tooltipdisplay": "none",
             "ui:widget": "inputWidget",
             "ui:horizontal": true,
             "ui:options": {

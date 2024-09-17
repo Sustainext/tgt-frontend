@@ -1717,7 +1717,7 @@ const MyTask = () => {
                 </div>
               </div>
               <div className="flex mb-4">
-                <div className="w-[80%]">
+                <div className="w-[80%] relative">
                   <h5 className="text-left  text-sm text-gray-500 mb-1">
                     Assigned to
                   </h5>
@@ -1747,7 +1747,7 @@ const MyTask = () => {
               <div className=" border-b-2 border-gray-200 mb-4"></div>
               <div className="px-5 mb-4">
                 <div className="flex mb-4">
-                  <div className="w-[80%]">
+                  <div className="w-[80%] relative">
                     <h5 className="text-left text-black text-sm mb-1">
                       Location
                     </h5>
@@ -1782,7 +1782,7 @@ const MyTask = () => {
                     {taskassigndata.category}
                   </p>
                 </div>
-                <div className="w-[80%]">
+                <div className="w-[80%] relative">
                   <h5 className="text-left text-black text-sm mb-1">
                     Sub-Category
                   </h5>
@@ -2186,7 +2186,7 @@ const MyTask = () => {
               </div>
             </div>
             <div className="flex mb-4">
-              <div className="w-[80%]">
+              <div className="w-[80%] relative">
                 <h5 className="text-left  text-sm text-gray-500 mb-1">
                   Assigned by
                 </h5>
@@ -2214,7 +2214,7 @@ const MyTask = () => {
             <div className=" border-b-2 border-gray-200 mb-4"></div>
             <div className="px-5 mb-4">
               <div className="flex mb-4">
-                <div className="w-[80%]">
+                <div className="w-[80%] relative">
                   <h5 className="text-left text-black text-sm mb-1">
                     Location
                   </h5>
@@ -2256,7 +2256,7 @@ const MyTask = () => {
                 </p>
               </div>
               {isActivityReceived && taskassigndata.status !== 4 ? (
-                <div className="w-[80%]">
+                <div className="w-[80%] relative">
                   <h5 className="text-left text-black text-sm mb-1">
                     Activity
                   </h5>

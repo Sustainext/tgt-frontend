@@ -59,13 +59,13 @@ const uiSchema = {
             tooltipdisplay: "block",
           },
           {
-            title: "Total number of governance body members that the organization's anti-corruption policies and procedures have been communicated to",
+            title: "Total number of governance body members that have received training on anti-corruption",
             tooltip: "Mention the total number of governance body members that have received training on anti-corruption.",
             widgettype: "input",
             tooltipdisplay: "block",
           },
           {
-            title: "Total number of governance body members in that region.",
+            title: "Total number of governance body members",
             tooltip: "Mention the total number of governance body members.",
             widgettype: "input",
             tooltipdisplay: "block",

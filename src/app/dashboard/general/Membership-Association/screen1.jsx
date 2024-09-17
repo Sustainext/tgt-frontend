@@ -186,7 +186,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
         }}
       >
         <div className="mb-4 flex">
-          <div className="w-[80%]"></div>
+          <div className="w-[80%] relative"></div>
 
           <div className="w-[20%]">
             <div className="float-end">

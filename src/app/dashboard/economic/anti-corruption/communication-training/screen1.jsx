@@ -53,10 +53,10 @@ const uiSchema = {
       "ui:options": {
         titles: [
           {
-            title: "Region Name",
-            tooltip: "Enter the region name.",
+            title: "Location Name",
+            tooltip: "Specify the name of the location where the organization’s anti-corruption policies and procedures have been communicated to governance body members.",
             widgettype: "select",
-            tooltipdisplay: "none",
+            tooltipdisplay: "block",
           },
           {
             title: "Total number of governance body members that the organization's anti-corruption policies and procedures have been communicated to",

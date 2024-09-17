@@ -245,9 +245,9 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
           <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
             Provide a description of the tax governance and control framework:
-              {/* <MdInfoOutline
+            <MdInfoOutline
                 data-tooltip-id={`es30`}
-                data-tooltip-html="Indicate whether your organisation has a tax strategy. "
+                data-tooltip-html="When describing the tax governance and control framework, the reporting organization can provide examples of effective implementation of its tax governance, control, and risk management systems."
                 className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip
@@ -263,7 +263,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
                   borderRadius: "8px",
                   textAlign: "left",
                 }}
-              ></ReactTooltip> */}
+              ></ReactTooltip> 
             </h2>
           </div>
           <div className="w-[20%]">

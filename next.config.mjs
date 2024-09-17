@@ -8,6 +8,11 @@ const nextConfig = {
       NEXT_PUBLIC_APP_CLIMATIQ_KEY: 'HE3SK2V2F04MTSG9210JSQXB2QCX',
       NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION: '16',
   },
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'fr'], // Add all the supported languages
+  },
+
   images: {
       domains: ['udm-be-dev.sustainext.ai'],
   },

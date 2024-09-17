@@ -343,7 +343,7 @@ if(reportradio === "Yes" || reportradio === "Yesone"){
         <>
           <div className="container mx-auto mt-5">
             <div className="flex">
-              <div className="w-[80%]">
+              <div className="w-[80%] relative">
                 <p className="font-bold  text-md mx-4 "> Annual Report</p>
               </div>
               <div className="text-md flex">

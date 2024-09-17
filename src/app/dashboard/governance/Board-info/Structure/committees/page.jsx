@@ -204,16 +204,16 @@ const CommitteeOfHighestGovernanceBody = ({
         }}
       >
         <div className="mb-4 flex">
-          <div className="w-[80%]">
+          <div className="w-[80%] relative">
             <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
               Committees of the highest governance body
               <MdInfoOutline
-                data-tooltip-id={`tooltip-$e1`}
+                data-tooltip-id={`tooltip-$e155`}
                 data-tooltip-content="This section documents data corresponding to the committees of the highest governance body that are responsible for decision making on and overseeing the management of the organization’s impacts on the economy, environment, and people."
                 className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip
-                id={`tooltip-$e1`}
+                id={`tooltip-$e155`}
                 place="top"
                 effect="solid"
                 style={{

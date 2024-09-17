@@ -66,7 +66,7 @@ const uiSchema = {
     },
     Q2: {
       "ui:title":
-        "Does your organisation subject to minimum wage rules?",
+        "Are a significant proportion of other workers (excluding employees) performing the organization’s activities compensated based on wages subject to minimum wage rules?",
       "ui:tooltip":
         "Indicate whether a significant proportion of other workers (excluding employees) are compensated based on wages subject to minimum wage rules",
       "ui:tooltipdisplay": "block",

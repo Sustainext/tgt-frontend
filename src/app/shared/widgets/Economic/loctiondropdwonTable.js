@@ -3,18 +3,15 @@ import { MdInfoOutline, MdOutlineDeleteOutline, MdAdd } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { debounce } from "lodash";
-
-// Row component to handle each row
 const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove, selectedLocations }) => {
-  const [localValues, setLocalValues] = useState(item); // Local state to store input values
-  const [error, setError] = useState(""); // State to store error message
-  const inputRefs = useRef({}); // Store references to input elements
+  const [localValues, setLocalValues] = useState(item); 
+  const [error, setError] = useState(""); 
+  const inputRefs = useRef({}); 
 
   useEffect(() => {
-    setLocalValues(item); // Sync the local state with the passed item prop
+    setLocalValues(item); 
   }, [item]);
 
-  // Debounce function for updating the state after a small delay
   const debouncedUpdate = debounce((key, value) => {
     updateField(rowIndex, key, value);
   }, 400);
@@ -36,17 +33,20 @@ const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove, sel
     // Use debounce for updating the parent state to avoid focus loss
     debouncedUpdate(key, value);
   };
-
+  const handleKeyDown = (event) => {
+    if (["e", "E", "+", "-"].includes(event.key)) {
+      event.preventDefault();
+    }
+  };
   return (
     <>
       <tr key={rowIndex}>
         {Object.keys(localValues).map((key, cellIndex) => (
           <td key={cellIndex} className="border border-gray-300 px-2">
-            {/* Handle Location dropdown */}
             {options?.titles?.[cellIndex]?.widgettype === "select" ? (
               <select
                 value={localValues[key]}
-                onChange={(e) => handleChange(key, e.target.value)} // Trigger validation and update onChange
+                onChange={(e) => handleChange(key, e.target.value)}
                 className="text-sm pl-2 py-2 w-full"
               >
                 <option value="">Select location</option>
@@ -59,13 +59,15 @@ const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove, sel
               </select>
             ) : (
               <input
-                ref={(el) => (inputRefs.current[cellIndex] = el)} // Store input reference
-                type="number" // Default to number input if no type is defined
-                value={localValues[key] || ""} // Ensure the value is either the item value or an empty string
-                onChange={(e) => handleChange(key, e.target.value)} // Trigger update when input loses focus
-                style={{ width: "100%" }} // Set full width for the input
-                placeholder="Enter data" // Placeholder text
-                className="text-sm pl-2 py-2" // Styling
+                ref={(el) => (inputRefs.current[cellIndex] = el)} 
+                type="number" 
+                value={localValues[key] || ""} 
+                onChange={(e) => handleChange(key, e.target.value)}
+                onKeyDown={handleKeyDown} 
+                style={{ width: "100%" }} 
+                placeholder="Enter data" 
+                className="text-sm pl-2 py-2" 
+                min="0" 
               />
             )}
           </td>
@@ -81,7 +83,7 @@ const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove, sel
       {error && (
         <tr>
           <td colSpan={Object.keys(localValues).length + 1}>
-            <p className="text-red-600 text-sm text-left mt-1">{error}</p> {/* Error message display */}
+            <p className="text-red-600 text-sm text-left mt-1">{error}</p> 
           </td>
         </tr>
       )}
@@ -90,7 +92,6 @@ const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove, sel
 };
 
 const LocationDropdownTable = ({ id, options, value = [], required, onChange, locationdata }) => {
-  // Ensure the first row is always displayed if value is empty
   useEffect(() => {
     if (value.length === 0 && options?.titles) {
       const newRow = {};
@@ -101,7 +102,6 @@ const LocationDropdownTable = ({ id, options, value = [], required, onChange, lo
     }
   }, [value, options?.titles, onChange]);
 
-  // Get all selected locations to avoid duplicates
   const selectedLocations = value
     .map((item) => {
       const locationKey = Object.keys(item).find(
@@ -109,9 +109,8 @@ const LocationDropdownTable = ({ id, options, value = [], required, onChange, lo
       );
       return item[locationKey];
     })
-    .filter(Boolean); // Filter out any falsy values
+    .filter(Boolean); 
 
-  // Function to update a field in a row
   const updateField = (index, key, newValue) => {
     const newData = value.map((item, i) => {
       if (i === index) {
@@ -119,10 +118,9 @@ const LocationDropdownTable = ({ id, options, value = [], required, onChange, lo
       }
       return item;
     });
-    onChange(newData); // Notify parent of changes
+    onChange(newData); 
   };
 
-  // Function to add a new row
   const addRow = () => {
     if (options?.titles) {
       const newRow = {};
@@ -133,14 +131,14 @@ const LocationDropdownTable = ({ id, options, value = [], required, onChange, lo
     }
   };
 
-  // Function to remove a row by index
+
   const onRemove = (indexToRemove) => {
     const newData = value.filter((_, index) => index !== indexToRemove);
     onChange(newData);
   };
 
   if (!options?.titles) {
-    return <p>Loading...</p>; // Return a loading message if options or titles are not yet available
+    return <p>Loading...</p>; 
   }
 
   return (
@@ -198,7 +196,7 @@ const LocationDropdownTable = ({ id, options, value = [], required, onChange, lo
               locationdata={locationdata}
               updateField={updateField}
               onRemove={onRemove}
-              selectedLocations={selectedLocations} // Pass selected locations to Row
+              selectedLocations={selectedLocations}
             />
           ))}
         </tbody>
