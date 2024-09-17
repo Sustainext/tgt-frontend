@@ -8,6 +8,9 @@ import axiosInstance,{patch} from "../../../utils/axiosMiddleware";
 import Link from 'next/link'
 import { GlobalState } from "@/Context/page";
 import Sidebar from './sidebar'
+import MissionVission from "./mission-vision/page";
+import AwardsRecognition from "./awards-recognition/page";
+import SustainibilityRoadmap from "./sustainibility-roadmap/page";
 
 const ESGReport =()=>{
 
@@ -111,41 +114,21 @@ const ESGReport =()=>{
               {activeStep === 3 && (
                 <div>
                   <div className="mb-4">
-                    {/* <Aboutthereport
-                      reportingdateform={reportingdateform}
-                      setReportingdateform={setReportingdateform}
-                      reportingdateto={reportingdateto}
-                      setReportingdateto={setReportingdateto}
-                      reportingcy={reportingcy}
-                      setReportingCy={setReportingCy}
-                      firstSelection={firstSelection}
-                      setFirstSelection={setFirstSelection}
-                      content={content}
-                      setContent={setContent}
-                    /> */}
+                   <MissionVission/>
                   </div>
                 </div>
               )}
               {activeStep === 4 && (
                 <div>
                   <div className="mb-4">
-                    {/* <Carbonaccountingobjectives
-                      value={childValue}
-                      setValue={setChildValue}
-                      roles={roles}
-                      setRoles={setRoles}
-                    /> */}
+                    <SustainibilityRoadmap/>
                   </div>
                 </div>
               )}
               {activeStep === 5 && (
                 <div>
                   <div className="mb-4">
-                    {/* <Organizationalboundaries
-                      locatiodata={locatiodata}
-                      boundaries={boundaries}
-                      setBoundaries={setBoundaries}
-                    /> */}
+                    <AwardsRecognition/>
                   </div>
                 </div>
               )}
