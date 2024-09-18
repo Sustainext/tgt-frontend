@@ -11,6 +11,8 @@ import Sidebar from './sidebar'
 import MissionVission from "./mission-vision/page";
 import AwardsRecognition from "./awards-recognition/page";
 import SustainibilityRoadmap from "./sustainibility-roadmap/page";
+import StakeholderEngagement from "./stakeholder-engagement/page";
+import AboutTheReport from './about-report/page'
 
 const ESGReport =()=>{
 
@@ -83,7 +85,7 @@ const ESGReport =()=>{
        
         </div>
           <div className="mx-3 my-2">
-            <div className="h-[800px] overflow-y-auto">
+            <div>
               {/* Step 1 */}
               {activeStep === 1 && (
                 <>
@@ -135,14 +137,7 @@ const ESGReport =()=>{
               {activeStep === 6 && (
                 <div>
                   <div className="mb-4">
-                    {/* <Datacollection
-                      souresdata={souresdata}
-                      display={display}
-                      selectedOptions={selectedOptions}
-                      setSelectedOptions={setSelectedOptions}
-                      excludedsources={excludedsources}
-                      setExcludedsources={setExcludedsources}
-                    /> */}
+                    <StakeholderEngagement/>
                   </div>
                 </div>
               )}
@@ -150,12 +145,7 @@ const ESGReport =()=>{
                 <div>
                   <>
                     <div className="mb-4">
-                      {/* <Results
-                        exdata={exdata}
-                        totalContributionScope={totalContributionScope}
-                        souresdata={souresdata}
-                        locatiodata={locatiodata}
-                      /> */}
+                      <AboutTheReport/>
                     </div>
                   </>
                 </div>
