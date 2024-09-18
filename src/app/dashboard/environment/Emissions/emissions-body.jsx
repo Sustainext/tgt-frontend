@@ -11,16 +11,12 @@ import CalculateSuccess from "./calculateSuccess";
 
 const AccordionItem = ({
   title,
-  children,
+  children,  // Expecting children to be a function that takes { setAccordionOpen }
   scops,
   icons,
-  tooltiptext,
-  sdg,
-  visible,
-  open,
-  onAccordionClick
+  onAccordionClick,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);  // This controls the open/close state of the accordion
 
   const handleAccordionClick = () => {
     const canExpand = onAccordionClick();
@@ -30,42 +26,30 @@ const AccordionItem = ({
   };
 
   return (
-    <div
-      className={`shadow-md py-1 mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200 ${
-        open ? "w-[100%]" : "w-[100%]"
-      }`}
-    >
-      <button
-        className="py-3 w-[100%] text-left flex"
-        onClick={handleAccordionClick}
-      >
+    <div className="shadow-md py-1 mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200">
+      <button className="py-3 w-[100%] text-left flex" onClick={handleAccordionClick}>
         <div className="flex items-center px-3 w-[30%]">
           <h5 className="text-[18px]">{icons}</h5>{" "}
-          <h5 className="text-[12px] text-[#344054] pt-1 px-3 font-semibold">
-            {scops}
-          </h5>
+          <h5 className="text-[12px] text-[#344054] pt-1 px-3 font-semibold">{scops}</h5>
         </div>
         <div className="w-[40%]">
-          <h5 className="text-[12px] text-[#344054] pt-1 px-3 font-semibold text-center">
-            {title}
-          </h5>
+          <h5 className="text-[12px] text-[#344054] pt-1 px-3 font-semibold text-center">{title}</h5>
         </div>
         <div className="w-[30%]">
           <div className="float-end">
             <span>
-              <MdKeyboardArrowDown
-                className={`text-2xl ${isOpen && "rotate-i80"}`}
-              />
+              <MdKeyboardArrowDown className={`text-2xl ${isOpen && "rotate-180"}`} />
             </span>
           </div>
         </div>
       </button>
-      {isOpen && <div className="p-4">{children}</div>}
+      {isOpen && <div className="p-4">{children({ setAccordionOpen: setIsOpen })}</div>} {/* Pass setIsOpen as setAccordionOpen */}
     </div>
   );
 };
 
-const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setLocationError,locationname }) => {
+
+const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setLocationError, locationname }) => {
   const { climatiqData, setClimatiqData } = useEmissions();
   const scope1Ref = useRef();
   const scope2Ref = useRef();
@@ -75,7 +59,7 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
   const getLatestComputedData = () => {
     const base_url = `${process.env.BACKEND_API_URL}/datametric/get-climatiq-score?`;
     const url = `${base_url}location=${location}&&year=${year}&&month=${month}`;
-
+console.log(url,"test datas new");
     axiosInstance
       .get(url)
       .then((response) => {
@@ -109,7 +93,7 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
     getLatestComputedData();
   }, [year, location, month]);
 
-  const handleCalculate =async () => {
+  const handleCalculate = async () => {
     const updatePromises = [
       scope1Ref.current?.updateFormData(),
       scope2Ref.current?.updateFormData(),
@@ -127,7 +111,6 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
         location,
         month,
         message: "Emission has been created",
-        // monthly_emissions: localClimatiq
       });
     }
   };
@@ -145,7 +128,17 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
           icons={<IoHomeOutline />}
           onAccordionClick={handleAccordionClick}
         >
-          <Scope1 ref={scope1Ref} location={location} year={year} month={month} countryCode={countryCode} successCallback={getLatestComputedData} />
+          {({ setAccordionOpen }) => (
+            <Scope1
+              ref={scope1Ref}
+              location={location}
+              year={year}
+              month={month}
+              countryCode={countryCode}
+              successCallback={getLatestComputedData}
+              setAccordionOpen={setAccordionOpen}  // Passing setAccordionOpen to Scope1
+            />
+          )}
         </AccordionItem>
 
         <AccordionItem
@@ -154,7 +147,17 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
           icons={<IoHomeOutline />}
           onAccordionClick={handleAccordionClick}
         >
-          <Scope2 ref={scope2Ref} location={location} year={year} month={month} countryCode={countryCode} successCallback={getLatestComputedData}/>
+          {({ setAccordionOpen }) => (
+            <Scope2
+              ref={scope2Ref}
+              location={location}
+              year={year}
+              month={month}
+              countryCode={countryCode}
+              successCallback={getLatestComputedData}
+              setAccordionOpen={setAccordionOpen}  // Pass setAccordionOpen to Scope2
+            />
+          )}
         </AccordionItem>
 
         <AccordionItem
@@ -163,7 +166,17 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
           icons={<IoHomeOutline />}
           onAccordionClick={handleAccordionClick}
         >
-          <Scope3 ref={scope3Ref} location={location} year={year} month={month} countryCode={countryCode} successCallback={getLatestComputedData}/>
+          {({ setAccordionOpen }) => (
+            <Scope3
+              ref={scope3Ref}
+              location={location}
+              year={year}
+              month={month}
+              countryCode={countryCode}
+              successCallback={getLatestComputedData}
+              setAccordionOpen={setAccordionOpen}  // Pass setAccordionOpen to Scope3
+            />
+          )}
         </AccordionItem>
       </div>
       <div className="flex justify-end items-center mt-[24] me-5">
@@ -171,15 +184,12 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
           onClick={handleCalculate}
           className="w-[172px] h-8 px-[22px] py-2 bg-sky-600 rounded shadow flex-col justify-center items-center inline-flex text-white text-xs font-bold leading-[15px] cursor-pointer"
         >
-            Calculate
+          Calculate
         </button>
       </div>
 
       {modalData && (
-        <CalculateSuccess
-          data={modalData}
-          onClose={handleCloseModal}
-        />
+        <CalculateSuccess data={modalData} onClose={handleCloseModal} />
       )}
     </>
   );

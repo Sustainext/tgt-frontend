@@ -11,6 +11,7 @@ import Sidebar from './sidebar'
 import MissionVission from "./mission-vision/page";
 import AwardsRecognition from "./awards-recognition/page";
 import SustainibilityRoadmap from "./sustainibility-roadmap/page";
+import Companyoperations from "./company-operations/page";
 import StakeholderEngagement from "./stakeholder-engagement/page";
 import AboutTheReport from './about-report/page'
 
@@ -103,12 +104,8 @@ const ESGReport =()=>{
               {/* Step 2 */}
               {activeStep === 2 && (
                 <div>
-                  {/* <Executivesummary
-                    exdata={exdata}
-                    totalContributionScope={totalContributionScope}
-                    highestContributionSource={highestContributionSource}
-                  /> */}
-                  {/* Your Step 2 form content goes here */}
+               <Companyoperations/>
+                  
                 </div>
               )}
 

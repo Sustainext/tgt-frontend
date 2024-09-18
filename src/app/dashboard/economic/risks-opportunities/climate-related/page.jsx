@@ -79,8 +79,7 @@ const Climaterelated = () => {
           Climate Related Opportunities
             <MdInfoOutline
               data-tooltip-id={`tooltip-$e10`}
-              data-tooltip-content="This section documents the data corresponding to the financial
-implications and other risks and opportunities due to climate change."
+              data-tooltip-content="This section documents the data corresponding to the climate related opportunities."
               className="mt-1.5 ml-2 text-[14px]"
             />
             <ReactTooltip

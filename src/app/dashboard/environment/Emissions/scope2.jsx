@@ -38,7 +38,7 @@ const schema = {
   }
 };
 
-const Scope2 = forwardRef(({ location, year, month, successCallback, countryCode }, ref) => {
+const Scope2 = forwardRef(({ location, year, month, successCallback, countryCode,setAccordionOpen }, ref) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -115,34 +115,37 @@ const Scope2 = forwardRef(({ location, year, month, successCallback, countryCode
   const handleAddNew = () => {
     setFormData((prevFormData) => [...prevFormData, { Emission: {} }]);
   };
+
   const handleRemove = async (index) => {
-    console.log(index, "updatedData data index");
-
-    let updatedData;
-
-    // Update the state and get the updated data
-    setFormData((prevFormData) => {
-      const newFormData = prevFormData.filter((_, i) => i !== index);
-      console.log(newFormData, "updatedData after removing index");
-      updatedData = newFormData; // Capture the updated data
-      return newFormData;
-    });
-
+    console.log(index, "Removing row at index");
+  
+    // Update form data by removing the selected row
+    const updatedData = formData.filter((_, i) => i !== index); // Prepare updated form data without the removed row
+  
+    // Set the form data state
+    setFormData(updatedData);
+  
     try {
-      // Wait for the state update to complete and then call updateFormData
-      await updateFormData(updatedData);
-      successCallback();
+      // Always call updateFormData, even if the form data is empty
+      await updateFormData(updatedData); // Wait for updateFormData to complete
+      successCallback(); // Trigger success callback after data is updated
+  
+      // Close the accordion or modal if the first row is deleted
+      if (index === 0) {
+        setAccordionOpen(false);
+      }
     } catch (error) {
       console.error("Failed to update form data:", error);
     }
   };
-  const updateFormData = async (form_data) => {
+  
+  const updateFormData = async (formData) => {
     LoaderOpen();
     const data = {
       client_id: client_id,
       user_id: user_id,
       path: view_path,
-      form_data: form_data,
+      form_data: formData,
       location,
       year,
       month,
@@ -151,7 +154,6 @@ const Scope2 = forwardRef(({ location, year, month, successCallback, countryCode
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
       const response = await post(url, { ...data });
-
     } catch (error) {
       setModalData({
         message: "Oops, something went wrong"

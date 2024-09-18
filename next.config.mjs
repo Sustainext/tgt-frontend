@@ -5,7 +5,7 @@ const nextConfig = {
       NEXT_APP_ZOHO_URL_EMISSIONS: 'https://analytics.zoho.in/open-view/283231000002209106',
       NEXT_APP_SUPERSET_URL_ENV_EMISSIONS: 'https://superset-dev.sustainext.ai/superset/dashboard/11/?standalone=3&refreshTime=120',
       NEXT_APP_SUPERSET_URL_ENV_WASTE: 'https://superset-dev.sustainext.ai/superset/dashboard/12/?standalone=3&refreshTime=120',
-      NEXT_PUBLIC_APP_CLIMATIQ_KEY: 'HE3SK2V2F04MTSG9210JSQXB2QCX',
+      NEXT_PUBLIC_APP_CLIMATIQ_KEY: '98YJN6V0VC4M5KPQNSVHWCVEM8NT',
       NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION: '16',
   },
   i18n: {
