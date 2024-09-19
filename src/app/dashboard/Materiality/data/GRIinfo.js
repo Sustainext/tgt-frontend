@@ -212,6 +212,9 @@ export const GRIData = [
               provide a reference to this information to fulfill the
               corresponding requirements in Disclosure 3-3.
             </p>
+            <p  className="text-[11px] text-[#727272] mb-2">
+            If the organization’s approach to managing a material topic, such as its policies or actions taken, applies to other material topics, the organization does not need to repeat this information for each topic. The organization can report this information once, with a clear explanation of all the topics it covers.
+            </p>
             <p className="text-[11px] text-[#727272] mb-2">
               If the organization cannot report the required information about
               an item specified in this disclosure because the item (e.g.,
@@ -370,6 +373,171 @@ export const GRIData = [
               report the estimated number of sub-contractors using child labor
               that do embroidery work for the organization
             </p>
+          </div>
+          <p className="text-[13px] text-[#222] mb-1">Guidance to 3-3-c</p>
+          <div className="h-auto mb-2">
+            <p className="text-[11px] text-[#727272] mb-2">
+            Requirement 3-3-c entails describing the policies or commitments the organization has developed specifically for the topic, in addition to the policy commitments reported under Disclosure 2-23 in GRI 2: General Disclosures 2021. If the organization has described its policies for a material topic under Disclosure 2-23, it can provide a reference to this information under 3-3-c and does not need to repeat the information. See Disclosure 2-23 in GRI 2 for guidance on how to report information about policies. When reporting its commitments regarding the material topic, the organization should provide a statement of intent to manage the topic or explain:
+            </p>
+            <ul className="text-[11px] text-[#727272] mb-2 list-disc ml-6">
+              <li>
+              the organization’s stance on the topic;
+              </li>
+              <li>
+              whether the commitment to manage the topic is based on regulatory compliance or extends beyond it;
+              </li>
+              <li>
+              compliance with authoritative intergovernmental instruments related to the topic.
+              </li>
+            </ul>
+          </div>
+          <p className="text-[13px] text-[#222] mb-1">Guidance to 3-3-d</p>
+          <div className="h-auto mb-2">
+            <p className="text-[11px] text-[#727272] mb-2">
+            Requirement 3-3-d enables the organization to explain how it responds to its impacts. It does not require a detailed description of actions taken in relation to each impact. Instead, the organization can provide a high-level overview of how it manages its impacts.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            The organization should report how it integrates the findings from its identification and assessment of impacts across relevant internal functions and processes, including:
+            </p>
+            <ul className="text-[11px] text-[#727272] mb-2 list-disc ml-6">
+              <li>
+              the level and function within the organization that has been assigned responsibility for managing the impacts;
+              </li>
+              <li>
+              the internal decision-making, budget allocation, and oversight processes (e.g., internal audit) to enable effective actions to manage the impacts.
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-2">
+            Disclosure 2-12 and Disclosure 2-13 in GRI 2 require information on the role of the highest governance body in overseeing the management of the organization’s impacts and on how it delegates responsibility for this. The organization should also report how it manages actual impacts identified in previous reporting periods and which it continues to manage during the current reporting period.
+            </p>
+          </div>
+          <p className="text-[13px] text-[#222] mb-1">Guidance to 3-3-d-i</p>
+          <div className="h-auto mb-2">
+            <p className="text-[11px] text-[#727272] mb-2">
+            The organization should report:
+            </p>
+            <ul className="text-[11px] text-[#727272] mb-2 list-disc ml-6">
+              <li>
+              examples of actions taken to prevent or mitigate potential negative impacts (e.g., adaptation/modification measures, facility upgrading, training, red-flag systems);
+              </li>
+              <li>
+              approaches taken to prevent or mitigate systemic negative impacts; how the organization applies the precautionary principle, including:
+              <ul className="ml-6">
+                <li>- how the organization proactively informs the public about potential negative impacts of its activities, products, and services, and how it deals with related questions and complaints;</li>
+                <li>- the organization’s support or contribution to scientific research related to evaluating potential negative impacts of its activities, products, and services;</li>
+                <li>- the organization’s participation in collaborative efforts to share knowledge and to prevent negative impacts of its activities, products, and services;</li>
+                </ul>
+              </li>
+              <li>
+              how the organization uses or increases its leverage to motivate its business relationships to
+              prevent or mitigate potential negative impacts. For example, whether the organization usesor increases its leverage by enforcing contractual requirements, implements incentives such as future orders, provides training and support, or actively collaborates with other actors to motivate its business relationships to prevent or mitigate potential negative impacts;
+              </li>
+              <li>
+              whether the organization has terminated a business relationship because it lacks the leverage to prevent or mitigate potential negative impacts and, if so, whether it has assessed if terminating the relationship could itself result in negative impacts.
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-2">
+            See Guidance to 2-23-a-iii in GRI 2 for more information on ‘precautionary principle’.
+            </p>
+          </div>
+          <p className="text-[13px] text-[#222] mb-1">Guidance to 3-3-d-ii</p>
+          <div className="h-auto mb-2">
+            <p className="text-[11px] text-[#727272] mb-2">
+            The organization should report:
+            </p>
+            <ul className="text-[11px] text-[#727272] mb-2 list-disc ml-6">
+              <li>
+              examples of actions taken to remediate actual negative impacts, including examples of specific remedies or types of remedy provided;
+              </li>
+              <li>
+              how grievance mechanisms or other remediation processes (reported under Disclosure 2- 25 in GRI 2) have made it possible for actual negative impacts to be remediated.
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-2">
+            See Disclosure 2-25 in GRI 2 for more information on processes to remediate negative impacts.
+            </p>
+          </div>
+          <p className="text-[13px] text-[#222] mb-1">Guidance to 3-3-e</p>
+          <div className="h-auto mb-2">
+            <p className="text-[11px] text-[#727272] mb-2">
+            Requirement 3-3-e enables the organization to report information about the effectiveness of its actions to manage its impacts. Tracking the effectiveness of its actions is necessary for an organization to learn if its policies and processes are being implemented optimally. It is also necessary for knowing if it has responded effectively to its impacts and to drive continuous
+            improvement.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            The organization should also report information about the effectiveness of its actions to manage actual impacts from previous reporting periods. This applies in cases where the organization has assessed the effectiveness of these actions or derived lessons during the current reporting period.
+            </p>
+          </div>
+          <p className="text-[13px] text-[#222] mb-1">Guidance to 3-3-e-i</p>
+          <div className="h-auto mb-2">
+            <p className="text-[11px] text-[#727272] mb-2">
+            Processes used to track the effectiveness of actions can include internal or external auditing or verification, impact assessments, measurement systems, stakeholder feedback, grievance mechanisms, external performance ratings, and benchmarking.
+            </p>
+          </div>
+          <p className="text-[13px] text-[#222] mb-1">Guidance to 3-3-e-ii</p>
+          <div className="h-auto mb-2">
+            <p className="text-[11px] text-[#727272] mb-2">
+            When reporting on goals and targets, the organization should report:
+            </p>
+            <ul className="text-[11px] text-[#727272] mb-2 list-disc ml-6">
+              <li>
+              how the goals and targets are set;
+              </li>
+              <li>
+              whether and how the goals and targets take into account the sustainability context in which the impacts take place (e.g., sustainable development goals and conditions, the limits and demands placed on environmental resources). See the Sustainability context principle in GRI 1 for more information;
+              </li>
+              <li>
+              whether the goals and targets are informed by expectations in authoritative intergovernmental instruments and, where relevant, by scientific consensus;
+              </li>
+              <li>
+              whether goals and targets are mandatory (based on legislation) or voluntary. If they are mandatory, the organization can list the relevant legislation;
+              </li>
+              <li>
+              the organization’s activities or business relationships to which the goals and targets apply;
+              </li>
+              <li>
+              the baseline for the goals and targets;
+              </li>
+              <li>
+              the timeline for achieving the goals and targets
+
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-2">
+            Targets can be qualitative (e.g., implementing a management system by a certain date) or quantitative (e.g., reducing greenhouse gas [GHG] emissions by a certain percentage by a certain date).
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            The indicators used to evaluate progress can also be qualitative or quantitative. Quantitative indicators can bring precision and enable comparisons. Qualitative information is often needed to put quantitative information into context, enable its interpretation, and determine which comparisons and conclusions are likely to be most valid. The Topic Standards and Sector Standards include qualitative and quantitative indicators.
+            </p>
+          </div>
+          <p className="text-[13px] text-[#222] mb-1">Guidance to 3-3-e-iii</p>
+          <div className="h-auto mb-2">
+            <p className="text-[11px] text-[#727272] mb-2">
+            Requirement 3-3-e-iii enables the organization to show the extent to which the actions taken have been effective. Information on the effectiveness of the actions can be obtained, for example,from the outcomes of internal or external auditing or verification, data collected through measurement systems, and stakeholder feedback. The organization should show that there is a credible link between the specific action taken by the organization and the effective management of impacts.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            For example, to show the effectiveness of its actions to support its suppliers with improving their working conditions, the organization can report survey feedback from the suppliers’ workers showing that working conditions have improved. Additional information the organization can provide includes data showing a decrease in the number of incidents identified through
+            independent audits.</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            Similarly, to demonstrate the effectiveness of its actions to improve the quality of its water discharge, the organization can report data showing a decrease in the concentration of total dissolved solids (mg/L) in the water discharge.
+
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            When reporting progress toward its goals and targets, the organization should report whether progress is satisfactory or not. If a goal or target has not been achieved, the organization should explain why.
+            </p>
+          </div>
+          <p className="text-[13px] text-[#222] mb-1">Guidance to 3-3-e-iv</p>
+          <div className="h-auto mb-2">
+            <p className="text-[11px] text-[#727272] mb-2">
+            Managing impacts is typically an ongoing process requiring continuous improvement based on learning from practice.  </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            The organization is not required to provide a detailed description of lessons learned in relation to each material topic. Instead, the organization can provide examples to show how it incorporates lessons learned to manage impacts more successfully in the future. </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            For example, the organization can briefly describe lessons learned that have led to changes in its policies or practices (e.g., training for workers, giving additional attention to the performance of suppliers), or that have led to plans for changes that will manage impacts more successfully in the future.
+
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            Lessons learned may be derived from the organization’s own processes (e.g., root cause analysis), from its business relationships, or from stakeholder or expert feedback.
+             </p>
           </div>
           <p className="text-[13px] text-[#222] mb-1">Guidance to 3-3-f</p>
           <div className="h-auto mb-2">

@@ -44,7 +44,7 @@ const uiSchema = {
       "ui:title":
       "List jurisdictions",
     "ui:tooltip":
-      "Explain the approach to interact with tax authorities. For example, frequency of engagement, method of engagement, outcomes of the engagement etc.",
+      "Mention all tax jurisdictions.",
     "ui:tooltipdisplay": "block",
     "ui:titledisplay": "block",
     "ui:widget": "Addmultisigleinput",

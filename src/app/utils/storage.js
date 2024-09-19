@@ -9,10 +9,18 @@ export const saveToLocalStorage = (key, value) => {
   // Load data from LocalStorage
   export const loadFromLocalStorage = (key) => {
     if (typeof window !== "undefined") {
-      const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : null;
+        const item = window.localStorage.getItem(key);
+        if (item) {
+            try {
+                return JSON.parse(item);
+            } catch (e) {
+                return item;
+            }
+        }
+        return null;
     }
-  };
+    return null;
+};
   
   // Remove data from LocalStorage
   export const removeFromLocalStorage = (key) => {

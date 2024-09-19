@@ -26,9 +26,9 @@ h1,h2,h3,h4,h5,h6,p,div {
     }
   }
   .gradient-text {
-    background: linear-gradient(90deg, #007EEF 7.92%, #2AE4FF 89.75%);
+    background: linear-gradient(90deg, #0065BF 7.92%, #22B6CC 89.75%);
     font-style: normal;
-    font-weight:bold;
+    font-weight:500;
     line-height: 20px;
     background-clip: text;
     color: transparent;

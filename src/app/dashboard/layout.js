@@ -34,10 +34,10 @@ export default function DashboardLayout({ children }) {
           <div className="block float-left">
             <Sidenav />
           </div>
-          <div className={`mx-2 w-full ${open ? 'ml-[243px]' : 'ml-[87px]'}`}>
+          <div className={`mx-2 w-full ${open ? 'ml-[243px]' : 'ml-[74px]'}`}>
             <div className="mb-5">
               <DashboardHeader />
-              <div className="gtranslate_wrapper" style={{ margin: '2px 0' }}></div>
+             
               <div>{children}</div>
             </div>
           </div>

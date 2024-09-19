@@ -18,9 +18,10 @@ import {
 } from "react-icons/md";
 import { LiaHomeSolid } from "react-icons/lia";
 import Link from "next/link";
-import DashboardHeader from "./dashobardheader";
 import { GlobalState } from "../../Context/page";
 import { CiSettings } from "react-icons/ci";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 const Sidenav = () => {
   const { open, setOpen } = GlobalState();
@@ -36,6 +37,7 @@ const Sidenav = () => {
     },
     {
       title: "Collect",
+      id: 1,
       icon: <MdOutlineAddBox />,
       submenu: true,
       submenuItems: [
@@ -98,27 +100,31 @@ const Sidenav = () => {
         },
       ],
     },
-    // { title: "Analyse", icon: <MdOutlineBarChart />, link: "/dashboard/Analyse" },
     { title: "Report", icon: <MdEditNote />, link: "/dashboard/Report" },
     { title: "Optimise", icon: <MdOutlineSettingsSuggest />, link: "#" },
-    { title: "Track", icon: <MdOutlineSearch />, spacing: true, link: "/dashboard/Track" },
+    {
+      title: "Track",
+      icon: <MdOutlineSearch />,
+      spacing: true,
+      link: "/dashboard/Track",
+    },
     {
       title: "Organizational Structure",
       icon: <MdOutlineAccountTree />,
       link: "/dashboard/OrgStructure",
     },
-    {
-      title: "Settings",
-      icon: <CiSettings />,
-      link: "/dashboard/Settings",
-    },
+    { title: "Settings", icon: <CiSettings />, link: "/dashboard/Settings" },
     { title: "About", icon: <MdInfoOutline />, link: "#" },
   ];
 
-  const [submenuOpen, setSubmenuOpen] = useState(new Array(Menus.length).fill(false));
+  const [submenuOpen, setSubmenuOpen] = useState(
+    new Array(Menus.length).fill(false)
+  );
 
   const toggleSubmenu = (index) => {
-    const newSubmenuOpen = submenuOpen.map((item, i) => i === index ? !item : false);
+    const newSubmenuOpen = submenuOpen.map((item, i) =>
+      i === index ? !item : false
+    );
     setSubmenuOpen(newSubmenuOpen);
   };
 
@@ -126,88 +132,149 @@ const Sidenav = () => {
     <>
       <div className="min-h-[100vh] fixed z-[100]">
         <div
-          className={`bg-[#0a0528] min-h-[135vh] ps-3 pt-8 ${
-            open ? "w-[15rem]" : "w-16"
+          className={`bg-[#0a0528] min-h-[135vh] pt-8 ${
+            open ? "w-[15rem]" : "w-[4.5rem]"
           } duration-300 relative`}
         >
-          <MdKeyboardDoubleArrowLeft
-            className={`bg-white text-[#0a0528] text-3xl rounded-full absolute -right-3 top-9 border  cursor-pointer ${
-              !open && "rotate-180"
-            }`}
-            onClick={() => setOpen(!open)}
-          />
-          <div className="inline-flex">
-            <img src="/download.png" alt="Logo" className="h-10 w-auto" />
-
-            <h1 className={`text-white text-2xl pt-1 ${!open && "scale-0"}`}>
-              Sustainext
-            </h1>
+          <div className="flex justify-center">
+            <div className={`flex ${open ? "me-10" : "-me-[7rem]"}`}>
+              <img src="/download.png" alt="Logo" className="h-10 w-auto" />
+              <h1 className={`text-white text-2xl pt-1 ${!open && "scale-0"}`}>
+                Sustainext
+              </h1>
+            </div>
+            <div>
+              <MdKeyboardDoubleArrowLeft
+                className={`text-[#fff] text-2xl absolute cursor-pointer transition-transform duration-300 ${
+                  !open ? "rotate-180 right-0 top-10" : "right-0 top-10"
+                }`}
+                onClick={() => setOpen(!open)}
+              />
+            </div>
           </div>
-          <ul className="pt-2">
+          <ul className="pt-2 overflow-y-scroll h-[616px] scrollable-content">
             {Menus.map((menu, index) => (
               <React.Fragment key={index}>
                 {menu.submenu ? (
                   <li
-                    className={`text-white text-sm p-2 flex items-center gap-x-4 cursor-pointer hover:bg-[#007EEF] rounded-md mt-2 ${
-                      activeIndex === index ? "bg-[#081746]" : ""
-                    }`}
+                    className={`text-white text-sm flex items-center gap-x-4 cursor-pointer rounded-md mt-2 w-full p-2
+                      ${open ? "hover:bg-[#007EEF]" : ""} 
+                      ${open && activeIndex === index ? "bg-[#081746]" : ""}`}
                     onClick={() => {
                       toggleSubmenu(index);
                       setActiveIndex(index);
+                  
+                      
                     }}
                   >
-                    <span className="text-2xl block float-left">
+                    <span
+                      className={`text-2xl flex items-center justify-center w-12 h-8 rounded-md 
+                      ${!open ? "hover:bg-[#007EEF]" : ""}
+                      ${!open && activeIndex === index ? "bg-[#081746]" : ""}`}
+                      data-tooltip-id={`tooltip-${index}`}
+                      data-tooltip-content={menu.title}
+                      onClick={() => {
+                        setOpen(!open);
+                        
+                      }}
+                    >
                       {menu.icon ? menu.icon : <LiaHomeSolid />}
                     </span>
                     <span
-                      className={`text-sm font-medium flex-1 ${!open && "hidden"}`}
+                      className={`text-sm font-medium flex-1 ${
+                        !open && "hidden"
+                      }`}
                     >
                       {menu.title}
                     </span>
                     {menu.submenu && open && (
                       <MdKeyboardArrowDown
-                        className={`text-2xl ${submenuOpen[index] ? "rotate-180" : ""}`}
+                        className={`text-2xl ${
+                          submenuOpen[index] ? "rotate-180" : ""
+                        }`}
+                      />
+                    )}
+                    {!open && (
+                      <ReactTooltip
+                        id={`tooltip-${index}`}
+                        place="right"
+                        effect="solid"
+                        style={{ fontSize: "10px",background:'#0a0528',boxShadow: 3,
+                          borderRadius: "8px",zIndex:1000 }}
                       />
                     )}
                   </li>
                 ) : (
                   <Link href={menu.link} key={index}>
                     <li
-                      className={`text-white text-sm p-2 flex items-center gap-x-4 cursor-pointer hover:bg-[#007EEF] rounded-md mt-2 ${
-                        activeIndex === index ? "bg-[#081746]" : ""
-                      }`}
-                      onClick={() => setActiveIndex(index)}
+                      className={`text-white text-sm flex items-center gap-x-4 cursor-pointer rounded-md mt-2 w-full p-2
+                        ${open ? "hover:bg-[#007EEF]" : ""}
+                        ${open && activeIndex === index ? "bg-[#081746]" : ""}`}
+                      onClick={() => {
+                        setActiveIndex(index);
+                        setOpen(!open);
+                      }}
                     >
-                      <span className="text-2xl block float-left">
+                      <span
+                        className={`text-2xl flex items-center justify-center w-12 h-8 rounded-md 
+                          ${!open ? "hover:bg-[#007EEF]" : ""}
+                          ${
+                            !open && activeIndex === index ? "bg-[#081746]" : ""
+                          }`}
+                        data-tooltip-id={`tooltip-${index}`}
+                        data-tooltip-content={menu.title}
+                      >
                         {menu.icon ? menu.icon : <LiaHomeSolid />}
                       </span>
                       <span
-                        className={`text-sm font-medium flex-1 ${!open && "hidden"}`}
+                        className={`text-sm font-medium flex-1 ${
+                          !open && "hidden"
+                        }`}
                       >
                         {menu.title}
                       </span>
+                      {!open && (
+                        <ReactTooltip
+                          id={`tooltip-${index}`}
+                          place="right"
+                          effect="solid"
+                          style={{ fontSize: "10px",background:'#0a0528',boxShadow: 3,
+                            borderRadius: "8px",zIndex:1000 }}
+                        />
+                      )}
                     </li>
                   </Link>
                 )}
                 {menu.spacing && (
                   <hr className="bg-[rgba(217, 217, 217, 1)] h-[0.0625rem] my-4 mx-3 opacity-30" />
                 )}
-
                 {menu.submenu && submenuOpen[index] && open && (
                   <ul>
                     {menu.submenuItems.map((submenuItem, subIndex) => (
                       <Link href={submenuItem.link} key={subIndex}>
                         <li
                           className={`text-white text-sm p-2 px-5 flex items-center gap-x-4 cursor-pointer hover:bg-[#007EEF] rounded-md mt-2 ${
-                            activeIndex === `${index}-${subIndex}` ? "bg-[#081746]" : ""
+                            activeIndex === `${index}-${subIndex}`
+                              ? "bg-[#081746]"
+                              : ""
                           }`}
-                          onClick={() => setActiveIndex(`${index}-${subIndex}`)}
+                          onClick={() => {
+                            toggleSubmenu(index); 
+                            setActiveIndex(index); 
+                            setOpen(!open); 
+                          }}
                         >
                           <span className="text-2xl block float-left">
-                            {submenuItem.icon ? submenuItem.icon : <LiaHomeSolid />}
+                            {submenuItem.icon ? (
+                              submenuItem.icon
+                            ) : (
+                              <LiaHomeSolid />
+                            )}
                           </span>
                           <span
-                            className={`text-sm font-medium flex-1 ${!open && "hidden"}`}
+                            className={`text-sm font-medium flex-1 ${
+                              !open && "hidden"
+                            }`}
                           >
                             {submenuItem.title}
                           </span>
