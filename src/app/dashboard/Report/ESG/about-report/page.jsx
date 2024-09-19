@@ -15,6 +15,11 @@ const AboutTheReport=()=>{
     const [content,setContent] = useState(
         `This ESG report, prepared in accordance with the Global Reporting Initiative (GRI) standards, provides a comprehensive overview of [Company Name]'s environmental, social, and governance (ESG) performance for the reporting period [Year]. It reflects our commitment to transparency, accountability, and continuous improvement in our sustainability practices. `
     )
+    const [content2,setContent2]=useState(
+        `This report covers the period from [Start Date] to [End Date] and is part of our annual sustainability reporting cycle. 
+We are committed to providing regular updates on our ESG performance to ensure transparency and keep our 
+stakeholders informed of our progress.`
+    )
     const [activeSection, setActiveSection] = useState('section7_1');
 
     const section7_1Ref = useRef(null);
@@ -47,8 +52,8 @@ const scrollToSection = (sectionRef, sectionId) => {
             <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
                 7. About the Report
             </h3>
-            <div className="flex gap-10">
-            <div className="w-[85%]">
+            <div className="flex gap-4">
+            <div className="w-[80%]">
             <p className="text-[15px] text-[#344054] mb-4">
             Edit Statement
             </p>
@@ -61,9 +66,14 @@ const scrollToSection = (sectionRef, sectionId) => {
         <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
                 7.1 Reporting Period, Frequency, and Point of Contact
         </h3>
-        <p className="text-[15px] text-[#344054] mb-4 font-semibold">
+        <p className="text-[15px] text-[#344054] mb-2 font-semibold">
         Reporting Period and Frequency: 
             </p>
+            <p className="mb-4 text-sm">{content2}</p>
+            <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+        Point of Contact: 
+            </p>
+            <p className="mb-4 text-sm">{content2}</p>
         </div>
 
         <div id="setion7_1_1" ref={section7_1_1Ref}>
@@ -148,7 +158,9 @@ const scrollToSection = (sectionRef, sectionId) => {
 
             </div>
             {/* page sidebar */}
-            <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-full mt-2 w-[15%]">
+           
+
+<div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[550px] top-36 sticky mt-2 w-[20%]">
             <p className="text-[11px] text-[#727272] mb-2 uppercase">About The Report</p>
             <p
               className={`text-[12px] mb-2 cursor-pointer ${
@@ -183,6 +195,7 @@ const scrollToSection = (sectionRef, sectionId) => {
               7.3 External Assurance
             </p>
           </div>
+            
             </div>
            
            

@@ -29,10 +29,11 @@ const ESGReport =()=>{
     return (
         <>
         <div className="flex">
+          
         <Sidebar activeStep={activeStep}/>
          <div className="w-full mb-5">
         
-        <div className="flex flex-col justify-start overflow-x-hidden ">
+        <div className="flex flex-col justify-start overflow-x-hidden">
         <div className="flex justify-between items-center border-b border-gray-200 mb-3 w-full">
           <div className="w-[70%]">
             <div className="text-left mb-3 ml-3 pt-3">

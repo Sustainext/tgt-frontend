@@ -44,8 +44,8 @@ const MissionVission=()=>{
             <h3 className="text-[22px] text-[#344054] mb-4 text-left">
                 3. Mission, Vision, and Values
             </h3>
-            <div className="flex gap-10">
-            <div className="w-[85%]">
+            <div className="flex gap-4">
+            <div className="w-[80%]">
             <p className="text-[15px] text-[#344054] mb-4">
             Enter data and images related to company awards and recognitions
             </p>
@@ -61,7 +61,7 @@ const MissionVission=()=>{
             </div>
             </div>
             {/* page sidebar */}
-            <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-full mt-2 w-[15%]">
+            <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[550px] top-36 sticky mt-2 w-[20%]">
                 <p className="text-[11px] text-[#727272] mb-2">
                 MISSION, VISION, AND VALUES
                 </p>
