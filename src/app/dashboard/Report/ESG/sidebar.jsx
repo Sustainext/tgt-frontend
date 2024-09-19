@@ -11,7 +11,7 @@ import { GlobalState } from "@/Context/page";
 const ESGSidebar=({activeStep})=>{
     return (
         <>
-         <div className="m-3 ml-2  border border-r-2 border-b-2 shadow-lg rounded-lg h-full">
+         <div className="m-3 ml-2  border border-r-2 border-b-2 shadow-lg rounded-lg h-auto">
       <div className="flex items-start py-4 min-h-[84vh] rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[200px] lg:w-[240px] xl:w-[240px] 2xl:w-[240px] 3xl:w-[351px] scrollable-content">
         <div className="w-full font-medium">
           <div className="flex items-center px-2 py-2 -mt-4  rounded-none focus:outline-none text-[#727272] font-bold">
