@@ -8,7 +8,7 @@ const Emissions = ({ open }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [locationname, setLocationname] = useState("");
-  const [year, setYear] = useState(2024);
+  const [year, setYear] = useState();
   const [countryCode, setCountryCode] = useState('');
   const [locationError, setLocationError] = useState('');
   const [yearError,setYearError] = useState('');
@@ -22,7 +22,7 @@ const Emissions = ({ open }) => {
               <div className="text-left mb-4 ml-3 pt-5">
                 <div className="flex">
                   <div>
-                    <p className="gradient-text text-[22px] font-bold pt-1">
+                    <p className="gradient-text text-[22px] font-bold pt-1 mb-2">
                       Emissions
                     </p>
                     <p className="text-[10px]">
