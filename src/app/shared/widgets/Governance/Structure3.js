@@ -2,10 +2,10 @@
 import React, { useState, useEffect } from "react";
 import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
-
+import {GlobalState}  from '../../../../Context/page';
 const GovernanceRowWidget = ({ value, onChange, options }) => {
   const [hydrated, setHydrated] = useState(false);
-
+  const { open } = GlobalState();
   useEffect(() => {
     setHydrated(true);
   }, []);
@@ -21,7 +21,7 @@ const GovernanceRowWidget = ({ value, onChange, options }) => {
   };
 
   return (
-    <div className="flex max-w-[83vw] overflow-x-auto pb-3 mb-4 custom-scrollbar">
+    <div className={`flex overflow-x-auto pb-3 mb-4 custom-scrollbar ${open ? 'max-w-[83vw] ' : 'max-w-[92vw] '}`}> 
       {value.map((item, index) => (
         <div key={index} className="flex">
           <InputField
@@ -29,7 +29,7 @@ const GovernanceRowWidget = ({ value, onChange, options }) => {
             value={item.name}
             onChange={(e) => handleChange(index, "name", e.target.value)}
             options={options}
-            divclass="flex text-center justify-center h-[23px]"
+            divclass="flex text-center justify-center h-[47px]"
           />
           <SelectField2
             label="Executive Power"
@@ -42,7 +42,7 @@ const GovernanceRowWidget = ({ value, onChange, options }) => {
             handleChange={(newField, newValue) =>
               handleChange(index, newField, newValue)
             }
-               divclass="flex justify-left h-[24px]"
+               divclass="flex justify-left h-[49px]"
           />
           <SelectField
             label="Independence"
@@ -51,14 +51,14 @@ const GovernanceRowWidget = ({ value, onChange, options }) => {
               handleChange(index, "independence", e.target.value)
             }
             options={options}
-               divclass="flex justify-left h-[24px]"
+               divclass="flex justify-left h-[49px]"
           />
           <InputField
             label="Tenure On The Governance Body"
             value={item.tenure}
             onChange={(e) => handleChange(index, "tenure", e.target.value)}
             options={options}
-            divclass="flex justify-left h-[23px]"
+            divclass="flex justify-left h-[47px]"
           />
           <InputField
             label="Number Of Significant Positions"
@@ -67,7 +67,7 @@ const GovernanceRowWidget = ({ value, onChange, options }) => {
               handleChange(index, "significantPositions", e.target.value)
             }
             options={options}
-            divclass="flex justify-left h-[23px]"
+            divclass="flex justify-left h-[47px]"
           />
           <InputField
             label="Commitments Held By Member"
@@ -76,7 +76,7 @@ const GovernanceRowWidget = ({ value, onChange, options }) => {
               handleChange(index, "commitmentsHeld", e.target.value)
             }
             options={options}
-            divclass="flex justify-left h-[23px]"
+            divclass="flex justify-left h-[47px]"
           />
           <InputField
             label="The Nature Of Commitments"
@@ -85,14 +85,14 @@ const GovernanceRowWidget = ({ value, onChange, options }) => {
               handleChange(index, "natureOfCommitments", e.target.value)
             }
             options={options}
-            divclass="flex justify-left h-[23px]"
+            divclass="flex justify-left h-[47px]"
           />
           <SelectField
             label="Gender"
             value={item.gender}
             onChange={(e) => handleChange(index, "gender", e.target.value)}
             options={options}
-               divclass="flex justify-left h-[24px]"
+               divclass="flex justify-left h-[48px]"
           />
           <InputField
             label="Under-Represented Social Groups"
@@ -101,7 +101,7 @@ const GovernanceRowWidget = ({ value, onChange, options }) => {
               handleChange(index, "underRepresentedGroups", e.target.value)
             }
             options={options}
-            divclass="flex justify-left h-[23px]"
+            divclass="flex justify-left h-[47px]"
           />
           <InputField
             label="Competencies Relevant To The Impacts Of The Organization"
@@ -110,7 +110,7 @@ const GovernanceRowWidget = ({ value, onChange, options }) => {
               handleChange(index, "competencies", e.target.value)
             }
             options={options}
-            divclass="flex justify-left w-[275px] h-[23px]"
+            divclass="flex justify-left w-[275px] h-[47px]"
           />
           <InputField
             label="Stakeholder Representation"
@@ -119,7 +119,7 @@ const GovernanceRowWidget = ({ value, onChange, options }) => {
               handleChange(index, "stakeholderRepresentation", e.target.value)
             }
             options={options}
-            divclass="flex justify-left h-[24px]"
+            divclass="flex justify-left h-[47px]"
           />
         </div>
       ))}

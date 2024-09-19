@@ -155,7 +155,7 @@ const EmissionsHeader = ({
             >
               <option value="">Select year</option>
               {yearInfo.map((item) => (
-                <option value={item.slice(0, 4)} key={item}>
+                <option value={item.slice(17, 0)} key={item}>
                   {item.slice(0, 4)}
                 </option>
               ))}
@@ -177,8 +177,8 @@ const EmissionsHeader = ({
           </div>
 
           <div className="w-full flex items-center justify-end">
-            <div className="float-end">
-              <p className="text-[12px]">
+            <div>
+              <p className="text-[13px] me-4 text-[#0057A5]">
                 GHG Emissions for the month ={" "}
                 <span className="text-[#6adf23]">
                   {localClimatiq} tCO2e{" "}

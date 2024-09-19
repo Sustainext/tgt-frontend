@@ -40,7 +40,7 @@ const environment = ({  }) => {
                 </div>
 
                 <div
-                    className={`${open ? " w-[87vw]" :" w-[98vw]" }`}
+                    className={`${open ? " w-[87vw]" :" w-[100vw]" }`}
                 >
                     {/* Emissions start  */}
                     {activeTab === 'Emissions' && <Emission />}
