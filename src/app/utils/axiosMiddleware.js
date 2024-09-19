@@ -42,7 +42,8 @@ axiosInstance.interceptors.response.use(
                         refresh: refreshToken,
                     });
 
-                    const { access } = refreshTokenResponse.key;
+                    const { access } = refreshTokenResponse.data;
+                    
                     localStorage.setItem('token', access);
 
                     originalRequest.headers['Authorization'] = `Bearer ${access}`;
