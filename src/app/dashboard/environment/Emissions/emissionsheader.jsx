@@ -155,7 +155,7 @@ const EmissionsHeader = ({
             >
               <option value="">Select year</option>
               {yearInfo.map((item) => (
-                <option value={item.slice(17, 0)} key={item}>
+                <option value={item.slice(0, 4)} key={item}>
                   {item.slice(0, 4)}
                 </option>
               ))}

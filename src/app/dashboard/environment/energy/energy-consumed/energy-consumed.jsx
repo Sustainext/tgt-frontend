@@ -45,7 +45,7 @@ const Energyconsumed = ({ open }) => {
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className='w-full'>
             <div className="text-left mb-4 ml-3 pt-5">
-              <p className="text-sm">Environment</p>
+              <p className="text-[11px]">Environment</p>
               <div className='flex h-[28px]'>
                 <div className='h-[28px]'>
                   <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">

@@ -375,7 +375,7 @@ const Purchased = ({ location, year, month }) => {
     <>
 
       <div className={`overflow-auto custom-scrollbar flex`}>
-        <div>
+        <div className='w-[80%]'>
             <div className='flex'>
               {renderFields()}
             </div>

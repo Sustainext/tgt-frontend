@@ -29,8 +29,8 @@ export default function DashboardLayout({ children }) {
 
   return (
     <>
-      <section>
-        <div className="flex w-full">
+      <section className='min-h-[100vh]'>
+        <div className="flex w-full min-h-[100vh]">
           <div className="block float-left">
             <Sidenav />
           </div>
