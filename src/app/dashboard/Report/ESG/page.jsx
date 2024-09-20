@@ -14,6 +14,9 @@ import SustainibilityRoadmap from "./sustainibility-roadmap/page";
 import Companyoperations from "./company-operations/page";
 import StakeholderEngagement from "./stakeholder-engagement/page";
 import AboutTheReport from './about-report/page'
+import Materiality from './materilality/page'
+import SustainibilityJourney from './sustainibility-journey/page'
+import CorporateGovernance from './corporate-governance/page'
 
 const ESGReport =()=>{
 
@@ -144,6 +147,33 @@ const ESGReport =()=>{
                   <>
                     <div className="mb-4">
                       <AboutTheReport/>
+                    </div>
+                  </>
+                </div>
+              )}
+               {activeStep === 8 && (
+                <div>
+                  <>
+                    <div className="mb-4">
+                      <Materiality/>
+                    </div>
+                  </>
+                </div>
+              )}
+               {activeStep === 9 && (
+                <div>
+                  <>
+                    <div className="mb-4">
+                      <CorporateGovernance/>
+                    </div>
+                  </>
+                </div>
+              )}
+               {activeStep === 10 && (
+                <div>
+                  <>
+                    <div className="mb-4">
+                      <SustainibilityJourney/>
                     </div>
                   </>
                 </div>
