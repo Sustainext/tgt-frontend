@@ -1,14 +1,7 @@
 'use client'
 import { useState, useRef, useEffect } from "react";
-import dynamic from 'next/dynamic';
-import HighestGovernanceTable from "../tables/highestGovernanceTable";
-import NominationTable from "../tables/nominationTable";
 
-
-const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
-
-
-const Section3=()=>{
+const Section7=()=>{
     const [content,setContent] = useState(
         `Our Board of Directors comprises a diverse group of experienced professionals who bring a broad range of expertise and perspectives. The Board is structured to provide balanced oversight and strategic guidance, with committees dedicated to specific areas such as audit, risk management, and sustainability. `
     )
@@ -16,21 +9,16 @@ const Section3=()=>{
         <>
         <div>
         <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
-        9.2 General Governance
+        9.3. Responsibility, Evaluation, and Remuneration of the Board 
             </h3>
             <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-            9.2.1 Nomination, Selection of the Highest Governance Body
+            9.3.1 Role of the Highest Governance Body
             </h3>
             <p className="text-sm mb-4">{content}</p>
-            <p className="text-[15px] text-[#344054] mb-2 font-semibold">
-            Criteria considered for nomination and selection of the highest governance body 
-            </p>
-            <div  className="mb-4 shadow-md rounded-md">
-                <NominationTable/>
-            </div>
+        
         </div>
         </>
     )
 }
 
-export default Section3
+export default Section7

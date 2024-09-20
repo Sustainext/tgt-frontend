@@ -2,18 +2,12 @@
 import { useState, useRef, useEffect } from "react";
 
 
-const NominationTable=()=>{
+const RatioTable=()=>{
 
     const col=[
-        "Criteria",
-        "Whether taken into consideration?",
-        "How?",
-    ]
-    const rowLabels=[
-        "Views of stakeholders (including shareholders)",
-        "Diversity",
-        "Independence",
-        "Competencies relevant to the impacts of the Organization "
+        "Ratio of annual total compensation",
+        "Ratio of percentage  increase in annual total compensation",
+        
     ]
     return (
         <>
@@ -41,21 +35,13 @@ const NominationTable=()=>{
             </tr>
         </thead>
         <tbody>
-        {rowLabels.map((label, rowIndex) => (
-                        <tr key={rowIndex}>
-                            <td className="border-t border-r border-gray-200 p-4 text-left">
-                                {label}
-
-                            </td>
-                            <td className="border-t border-r border-gray-200 p-4 text-center">
-                                row1
-                            </td>
-                            <td className="border-t border-r border-gray-200 p-4 text-center">
-                                row2
-
-                            </td>
-                        </tr>
-                    ))}
+            <tr>
+                <td className="border-t border-r border-gray-200 p-4 text-center">Customer</td>
+                <td className="border border-gray-200 p-4 rounded-bl-md text-center">Row 2, Cell 1</td>
+                {/* <td className="border border-gray-200 p-4 rounded-br-md text-center">Row 2, Cell 2</td>
+                <td className="border border-gray-200 p-4 rounded-bl-md text-center">Row 2, Cell 1</td> */}
+                
+            </tr>
            
         </tbody>
     </table>
@@ -64,4 +50,4 @@ const NominationTable=()=>{
         </>
     )
 }
-export default NominationTable
+export default RatioTable

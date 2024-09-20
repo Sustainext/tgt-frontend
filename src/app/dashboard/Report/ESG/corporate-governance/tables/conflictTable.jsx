@@ -2,18 +2,18 @@
 import { useState, useRef, useEffect } from "react";
 
 
-const NominationTable=()=>{
+const ConflictTable=()=>{
 
     const col=[
-        "Criteria",
-        "Whether taken into consideration?",
-        "How?",
+        "Conflict of interest relating to:",
+        "Disclosed?",
     ]
     const rowLabels=[
-        "Views of stakeholders (including shareholders)",
-        "Diversity",
-        "Independence",
-        "Competencies relevant to the impacts of the Organization "
+        "Cross-board membership ",
+        "Cross-shareholding with suppliers and other stakeholders ",
+        "Existence of controlling shareholders ",
+        "Related parties, their relationships, transactions, and outstanding balances",
+        "Others"
     ]
     return (
         <>
@@ -48,12 +48,9 @@ const NominationTable=()=>{
 
                             </td>
                             <td className="border-t border-r border-gray-200 p-4 text-center">
-                                row1
+                               Yes
                             </td>
-                            <td className="border-t border-r border-gray-200 p-4 text-center">
-                                row2
-
-                            </td>
+                            
                         </tr>
                     ))}
            
@@ -64,4 +61,4 @@ const NominationTable=()=>{
         </>
     )
 }
-export default NominationTable
+export default ConflictTable

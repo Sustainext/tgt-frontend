@@ -2,24 +2,14 @@
 import { useState, useRef, useEffect } from "react";
 
 
-const NominationTable=()=>{
+const ComplianceTable=({rowLabels})=>{
 
-    const col=[
-        "Criteria",
-        "Whether taken into consideration?",
-        "How?",
-    ]
-    const rowLabels=[
-        "Views of stakeholders (including shareholders)",
-        "Diversity",
-        "Independence",
-        "Competencies relevant to the impacts of the Organization "
-    ]
+   
     return (
         <>
        <div style={{ maxHeight: "400px", overflowY: "auto" }} className="mb-2">
     <table className="w-full border border-gray-200 rounded-md overflow-hidden">
-        <thead className="gradient-background">
+        {/* <thead className="gradient-background">
             <tr>
                 {col.map((item, idx) => (
                     <th
@@ -39,7 +29,7 @@ const NominationTable=()=>{
                     </th>
                 ))}
             </tr>
-        </thead>
+        </thead> */}
         <tbody>
         {rowLabels.map((label, rowIndex) => (
                         <tr key={rowIndex}>
@@ -48,10 +38,10 @@ const NominationTable=()=>{
 
                             </td>
                             <td className="border-t border-r border-gray-200 p-4 text-center">
-                                row1
+                                23
                             </td>
                             <td className="border-t border-r border-gray-200 p-4 text-center">
-                                row2
+                                13
 
                             </td>
                         </tr>
@@ -64,4 +54,4 @@ const NominationTable=()=>{
         </>
     )
 }
-export default NominationTable
+export default ComplianceTable
