@@ -1,21 +1,27 @@
-
-import React from 'react';
+import React from "react";
 import { MdOutlineDeleteOutline } from "react-icons/md";
-const RemoveWidget = ({ id, onRemove}) => {
-
-  const index = id.split('_')[1]; // Extract index from id (assuming id is like "root_0", "root_1", etc.)
-
+const RemoveWidget = ({ index, onRemove, label, id }) => {
   const handleClick = () => {
-    onRemove(parseInt(index)); // Convert index to integer and pass to onRemove function
+    if (index !== null) {
+      onRemove(index);
+    } else {
+      console.error("Index could not be determined from id:", id);
+    }
   };
 
   return (
-    <div className='flex justify-between items-center mt-2 ml-2'>
-
-      <button type="button" onClick={handleClick} className="text-red-500">
-        <MdOutlineDeleteOutline className='text-[23px]' />
-      </button>
-    </div>
+    <>
+      <div className={id.startsWith("root_0") ? "mb-[2.2rem]" : "mb-[0.8rem]"}>
+        <p className="text-[14px] text-neutral-950 font-[400] mb-1 hidden">
+          {label}
+        </p>
+      </div>
+      <div className="flex justify-between items-center mt-2">
+        <button type="button" onClick={handleClick} className="text-red-500">
+          <MdOutlineDeleteOutline className="text-[23px]" />
+        </button>
+      </div>
+    </>
   );
 };
 

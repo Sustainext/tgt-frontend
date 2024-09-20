@@ -209,7 +209,7 @@ const Receivingwaterbody = ({location, year, month}) => {
         <>
             <div>
                 <div className='flex mb-2'>
-                    <div className='w-[80%] relative'>
+                    <div className='w-[95%] relative'>
                         <h2 className="text-sm font-medium text-[#344054]">Profile of Receiving Waterbody</h2>
                         <p className='text-sm text-[#727272] w-[560px] flex'>Have you considered the profile of the receiving waterbody?
                             <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
@@ -228,8 +228,8 @@ const Receivingwaterbody = ({location, year, month}) => {
 
                     </div>
                     <div>
-                        <div className={`${open ? "w-[20%]" : "w-[20%]"}`}  >
-                            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2">
+                        <div   >
+                            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md">
                                 <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
                                     GRI 303-2a
                                 </p>
@@ -250,10 +250,7 @@ const Receivingwaterbody = ({location, year, month}) => {
                             <h2 className='mb-2 text-sm'>If yes please specify</h2>
                             <textarea
                                 placeholder="Enter a description..."
-                                className={`backdrop:before:w-[48rem] border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer ${open
-                                    ? "sm:w-[48rem] md:w-[89%] lg:w-[87%] xl:w-[90.5%] 2xl:w-[85%]"
-                                    : "sm:w-[85%] md:w-[92%] lg:w-[88%] xl:w-[88.5%] 2xl:sm:w-[86%]"
-                                    }`}
+                                className={`backdrop:before:w-[48rem] border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full `}
                                 id="details"
                                 value={formData[0].details}
                                 onChange={e => setFormData([{...formData[0], details: e.target.value }])}

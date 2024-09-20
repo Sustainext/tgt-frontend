@@ -40,12 +40,12 @@ const Managementwaste = () => {
 
   return (
     <>
-       <ToastContainer style={{ fontSize: "12px" }} />
+      <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
             <div className="text-left mb-4 ml-3 pt-5">
-              <p className="text-sm">Environment</p>
+            <p className="text-[11px]">Environment</p>
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] font-bold">Waste</p>
@@ -58,7 +58,7 @@ const Managementwaste = () => {
               </div>
             </div>
           </div>
-          <div className="w-full float-end ">
+          <div className="w-full float-end me-2">
             <div className="flex float-end border-l">
               <button
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
@@ -100,7 +100,7 @@ const Managementwaste = () => {
           </div>
         </div>
 
-      <div className="ml-3 flex relative">
+        <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
             Topic management disclosure
             {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}

@@ -8,7 +8,7 @@ const monthMapping = [
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 ];
 
-const AssignToWidget = ({ id, scope, location, year, month, data, countryCode }) => {
+const AssignToWidget = ({ id, scope, location, year, month, data, countryCode,label}) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [rowId, setRowId] = useState(null);
   const [rowData, setRowData] = useState(null);
@@ -106,13 +106,20 @@ const AssignToWidget = ({ id, scope, location, year, month, data, countryCode })
 
   return (
     <>
-  <div className="flex justify-center items-center mt-2 mx-2">
+    <div className={id.startsWith("root_0") ? "mb-8" : ""}>
+    <p className="text-[14px] text-neutral-950 font-[400] mb-1 hidden">
+            {label}
+      
+          </p>
+    </div>
+  <div className="flex justify-center items-center mt-2 ">
+
       <button
-        className="text-center py-1 pl-2 text-sm w-[100px] bg-blue-500 text-white rounded focus:outline-none focus:shadow-outline flex items-center justify-center"
+        className="text-center py-1 pl-2 h-[30px] text-sm w-[100px] bg-blue-500 text-white rounded focus:outline-none focus:shadow-outline flex items-center justify-center"
         type="button"
         onClick={openModal}
       >
-        Assign To <FiChevronDown className="ml-2 text-[20px]" />
+        Assign To <FiChevronDown className="ml-2 text-[15px]" />
       </button>
     </div>
     </>
