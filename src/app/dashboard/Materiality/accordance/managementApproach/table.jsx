@@ -258,12 +258,19 @@ catch (error) {
         <div className="mb-4 flex">
           <div className="w-full relative">
             <h2 className="flex mx-2 text-[15px] mb-2">
-              Describe actual and potential, negative and positive impacts.
+            Describe actual and potential, negative and positive impacts on the economy, environment and people including impacts on their human rights.
               <MdInfoOutline
                 data-tooltip-id="tooltip-$e86"
                 data-tooltip-html={`
-                  <p>Impact: Effect the organization has on the economy, environment, and people.</p>
-                  <p>Human rights: Rights inherent to all human beings.</p>
+                  <p>Impact: Effect the organization has or could have on the economy including 
+on their human rights, which in turn can indicate its contribution 
+(negative or positive) to sustainable development.
+</p>
+                  <p>Human rights: Rights inherent to all human beings, which include, at a 
+minimum, the rights set out in the United Nations (UN) 
+International Bill of Human Rights and the principles concerning 
+fundamental rights set out in the International Labour Organization 
+(ILO) Declaration on Fundamental Principles and Rights at Work.</p>
                 `}
                 className="mt-1.5 ml-2 text-[14px]"
               />

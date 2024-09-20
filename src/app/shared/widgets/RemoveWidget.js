@@ -16,7 +16,7 @@ const RemoveWidget = ({ index, onRemove, label, id }) => {
           {label}
         </p>
       </div>
-      <div className="flex justify-between items-center mt-2 ml-2">
+      <div className="flex justify-between items-center mt-2">
         <button type="button" onClick={handleClick} className="text-red-500">
           <MdOutlineDeleteOutline className="text-[23px]" />
         </button>

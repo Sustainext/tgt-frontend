@@ -112,7 +112,7 @@ const AssignToWidget = ({ id, scope, location, year, month, data, countryCode,la
       
           </p>
     </div>
-  <div className="flex justify-center items-center mt-2 mx-2">
+  <div className="flex justify-center items-center mt-2 ">
 
       <button
         className="text-center py-1 pl-2 h-[30px] text-sm w-[100px] bg-blue-500 text-white rounded focus:outline-none focus:shadow-outline flex items-center justify-center"

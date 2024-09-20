@@ -79,7 +79,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
 
 
       </button>
-      {isOpen && <div className="p-4">{children}</div>}
+      {isOpen && <div className="py-4 px-3">{children}</div>}
     </div>
   );
 };

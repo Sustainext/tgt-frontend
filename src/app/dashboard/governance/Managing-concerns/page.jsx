@@ -77,12 +77,14 @@ const ManagingConcerns = () => {
           <h6 className="text-[17px] mb-4 font-semibold flex">
           Mechanisms for seeking advice and raising concerns
           <MdInfoOutline
-                data-tooltip-id={`tooltip-$e1`}
-                data-tooltip-content="This section documents the data corresponding to the Processes to remediate negative impacts."
+                data-tooltip-id={`tooltip-$e17`}
+                data-tooltip-content="This section documents the data corresponding to the organization’s mechanisms for individuals to seek advice and raise
+concerns about responsible business conduct in the organization's operations and business
+relationships."
                 className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip
-                id={`tooltip-$e1`}
+                id={`tooltip-$e17`}
                 place="top"
                 effect="solid"
                 style={{

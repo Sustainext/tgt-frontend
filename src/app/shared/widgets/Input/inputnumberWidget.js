@@ -22,10 +22,10 @@ const inputnumberWidget = ({
     }
   };
   return (
-    <div className="mb-3">
+    <div className="mb-3 px-1">
       {id.startsWith("root_0") && (
-        <div className="relative mx-2 flex justify-end">
-          <p className="flex text-[14px] text-neutral-950 font-[400] mb-1">
+        <div className="relative flex justify-end">
+          <p className="flex text-[13px] text-neutral-950 font-[400] mb-1">
             {label}
             <MdInfoOutline
               data-tooltip-id={`tooltip-${schema.title?.replace(/\s+/g, "-")}`}
@@ -48,14 +48,17 @@ const inputnumberWidget = ({
           </p>
         </div>
       )}
+      <div>
       <input
-        className="block w-[20vw] py-2 mx-2 text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300 mb-3 text-right placeholders pr-2 "
+        className="block w-[20vw] py-2 text-[13px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300  sm:leading-5 border-b-2 border-gray-300 mb-3 text-right placeholders pr-2 "
         placeholder={placeholder || `Enter ${label}`}
         type="number"
         value={value}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
       />
+      </div>
+  
     </div>
   );
 };

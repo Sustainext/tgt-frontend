@@ -13,10 +13,10 @@ const SelectWidget =  ({onChange, value = "", placeholder, label, title, uiSchem
 
 
   return (
-    <div className="mb-3">
+    <div className="mb-3 px-1">
          {id.startsWith("root_0") && ( 
-        <div className="relative mx-3">
-          <p className="flex text-[14px] text-neutral-950 font-[400] mb-1">
+        <div className="relative h-[23px]">
+          <p className="flex text-[13px] w-[20vw]  text-neutral-950 font-[400] mb-1 leading-[15px]">
             {label}
             <MdInfoOutline
               data-tooltip-id={`tooltip-${schema.title?.replace(/\s+/g, "-")}`}
@@ -28,7 +28,7 @@ const SelectWidget =  ({onChange, value = "", placeholder, label, title, uiSchem
               place="top"
               effect="solid"
               style={{
-                width: "300px",
+                width: "390px",
                 backgroundColor: "#000",
                 color: "white",
                 fontSize: "12px",
@@ -39,8 +39,11 @@ const SelectWidget =  ({onChange, value = "", placeholder, label, title, uiSchem
           </p>
         </div>
       )}
+      <div>
+
+  
       <select
-        className={`block w-[20vw] py-2 mx-2 px-0text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300 capitalize `}
+        className={`block w-[20vw] py-2 text-[13px] custom-select focus:outline-none  focus:border-blue-300  border-b-2 border-gray-300 capitalize `}
         value={value}
         onChange={handleChange}
 
@@ -58,6 +61,7 @@ const SelectWidget =  ({onChange, value = "", placeholder, label, title, uiSchem
           </option>
         ))}
       </select>
+      </div>
     </div>
   );
 };

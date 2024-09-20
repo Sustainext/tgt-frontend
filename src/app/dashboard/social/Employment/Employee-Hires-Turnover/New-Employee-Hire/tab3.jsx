@@ -16,7 +16,7 @@ const widgets = {
     TableWidget: CustomTableWidget5,
 };
 
-const view_path = 'gri-social-employee_hires-401-1a-new_emp_hire-nongauranteed'
+const view_path = 'gri-social-employee_hires-401-1a-new_emp_hire-nonguaranteed'
 const client_id = 1
 const user_id = 1
 

@@ -311,3 +311,7 @@ body._fluentc_widget-banner-show{
 .placeholders::placeholder{
 text-align: right;
 }
+.custom-select {
+
+  text-align: start;   /* Padding inside each option */
+}

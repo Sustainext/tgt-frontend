@@ -14,7 +14,7 @@ const Companyoperations=()=>{
          <Section1/>
             </div>
             {/* page sidebar */}
-            <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-full w-[20%] mt-2">
+            <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[550px] top-36 sticky w-[20%] mt-2">
                 <p className="text-[11px] text-[#727272] mb-2">
                 About the company 
                 and operations

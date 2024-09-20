@@ -143,7 +143,7 @@ const CustomFileUploadWidget = ({
       
           </p>
     </div>
-    <div className="flex justify-center items-center mx-2  w-[80px]">
+    <div className="flex justify-center items-center ml-2  w-[80px]">
       <input
         type="file"
         id={id + scopes}

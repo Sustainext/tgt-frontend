@@ -46,7 +46,7 @@ const NewSupplier = () => {
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
             <div className="text-left mb-4 ml-3 pt-5">
-              <p className="text-sm">Environment</p>
+            <p className="text-[11px]">Environment</p>
               <div className="flex">
                          <div className="h-[29px]">
                   <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
@@ -78,7 +78,7 @@ const NewSupplier = () => {
           </h6>
           <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
-                data-tooltip-content="This section documents the data corresponding to the negative environmental impacts in the supply chain and actions taken."
+                data-tooltip-content="This section documents the data corresponding to the new suppliers that were screened using environmental criteria."
                 className="mt-1.5 ml-2 text-[14px]"
               />
               <ReactTooltip

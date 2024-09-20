@@ -19,7 +19,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
 import selectWidget3 from '../../../../../shared/widgets/Select/selectWidget3';
 import inputnumberWidget from "../../../../../shared/widgets/Input/inputnumberWidget"
-
+import axiosInstance from "../../../../../utils/axiosMiddleware";
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
@@ -178,58 +178,33 @@ const uiSchema = {
 const Consumedfuel = ({location, year, month}) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
-  const [r_schema, setRemoteSchema] = useState({})
-  const [r_ui_schema, setRemoteUiSchema] = useState({})
+  const [r_schema, setRemoteSchema] = useState({});
+  const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-  const getAuthToken = () => {
-      if (typeof window !== 'undefined') {
-          return localStorage.getItem('token')?.replace(/"/g, "");
-      }
-      return '';
-  };
-  const token = getAuthToken();
-
   const LoaderOpen = () => {
     setLoOpen(true);
   };
   const LoaderClose = () => {
     setLoOpen(false);
   };
-  const handleChange = (e) => {
-    const newData = e.formData.map((item, index) => ({
-      ...item, // Ensure each item retains its structure
-    }));
-    setFormData(newData); // Update the formData with new values
-  };
 
-  const handleAddNew = () => {
-    const newData = [...formData, {}];
-    setFormData(newData);
-  
-  };
 
-  // The below code on updateFormData
-  let axiosConfig = {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  };
   const updateFormData = async () => {
     LoaderOpen();
     const data = {
-      client_id : client_id,
-      user_id : user_id,
+      client_id: client_id,
+      user_id: user_id,
       path: view_path,
       form_data: formData,
       location,
       year,
-      month
-    }
+      month,
+    };
 
-    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
-    try{
-      const response = await axios.post(url,data, axiosConfig);
+    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
+    try {
+      const response = await axiosInstance.post(url, data);
       if (response.status === 200) {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -243,8 +218,7 @@ const Consumedfuel = ({location, year, month}) => {
         });
         LoaderClose();
         loadFormData();
-
-      }else {
+      } else {
         toast.error("Oops, something went wrong", {
           position: "top-right",
           autoClose: 1000,
@@ -273,68 +247,66 @@ const Consumedfuel = ({location, year, month}) => {
   };
 
   const loadFormData = async () => {
-      LoaderOpen();
-      setFormData([{}])
-      const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
-      try {
-          const response = await axios.get(url, axiosConfig);
-          console.log('API called successfully:', response.data);
-          setRemoteSchema(response.data.form[0].schema);
-          setRemoteUiSchema(response.data.form[0].ui_schema);
-          const form_parent = response.data.form_data;
-          setFormData(form_parent[0].data);
-      } catch (error) {
-          console.error('API call failed:', error);
-      } finally {
-          LoaderClose();
-      }
-  };
-  //Reloading the forms
-  useEffect(() => {
-    //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-  },[r_schema, r_ui_schema])
-
-  // console log the form data change
-  useEffect(() => {
-    // console.log('Form data is changed -', formData)
-  },[formData])
-
-  // fetch backend and replace initialized forms
-  useEffect (()=> {
-    if (location && year && month) {
-        loadFormData();
-        toastShown.current = false; // Reset the flag when valid data is present
-    } else {
-        // Only show the toast if it has not been shown already
-       if (!toastShown.current) {
-
-            toastShown.current = true; // Set the flag to true after showing the toast
-        }
+    LoaderOpen();
+    setFormData([{}]);
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    try {
+      const response = await axiosInstance.get(url);
+      console.log("API called successfully:", response.data);
+      setRemoteSchema(response.data.form[0].schema);
+      setRemoteUiSchema(response.data.form[0].ui_schema);
+      const form_parent = response.data.form_data;
+      setFormData(form_parent[0].data);
+    } catch (error) {
+      console.error("API call failed:", error);
+    } finally {
+      LoaderClose();
     }
-    // console.log('From loaded , ready for trigger')
-    // loadFormData()
-  },[location, year, month])
-
-
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission
-    // console.log('Form data:', formData);
-    updateFormData()
-
   };
+  useEffect(() => {
+    if (location && year && month) {
+      loadFormData();
+      toastShown.current = false; // Reset the flag when valid data is present
+    } else {
+      // Only show the toast if it has not been shown already
+      if (!toastShown.current) {
+        toastShown.current = true; // Set the flag to true after showing the toast
+      }
+    }
+  }, [location, year, month]); // Dependencies // React only triggers this effect if these dependencies change
+  const handleChange = (e) => {
+    const newData = e.formData.map((item, index) => ({
+      ...item, // Ensure each item retains its structure
+    }));
+    setFormData(newData); // Update the formData with new values
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    updateFormData();
+  };
+
+  const handleAddNew = () => {
+    const newData = [...formData, {}];
+    setFormData(newData);
+  
+  };
+ 
+
   const updateFormDatanew = (updatedData) => {
     setFormData(updatedData);
-
   };
+
   const handleRemove = (index) => {
     const updatedData = [...formData];
     updatedData.splice(index, 1);
     setFormData(updatedData);
+ 
   };
+
 
   return (
     <>
-     <div className={`overflow-auto custom-scrollbar flex`}>
+      <div className={`overflow-auto custom-scrollbar flex`}>
         <div>
           <Form
             className="flex"
@@ -402,7 +374,6 @@ const Consumedfuel = ({location, year, month}) => {
           Submit
         </button>
       </div>
-
     </>
   );
 };
