@@ -14,6 +14,7 @@ const CustomFileUploadWidget = ({
   value = {},
   scopes,
   setFormData,
+  label
 }) => {
   const [fileName, setFileName] = useState(value?.name || null);
   const [showModal, setShowModal] = useState(false);
@@ -134,6 +135,14 @@ const CustomFileUploadWidget = ({
   };
 
   return (
+    <>
+   
+    <div className={id.startsWith("root_0") ? "mb-[2.2rem]" : "mb-[0.8rem]"}>
+    <p className="text-[14px] text-neutral-950 font-[400] mb-1 hidden">
+            {label}
+      
+          </p>
+    </div>
     <div className="flex justify-center items-center mx-2  w-[80px]">
       <input
         type="file"
@@ -145,7 +154,7 @@ const CustomFileUploadWidget = ({
       {fileName ? (
         <label className="flex cursor-pointer ml-1">
           <div
-            className="flex items-center mt-2 px-2"
+            className="flex items-center px-2"
             onClick={handlePreview}
           >
             <MdFilePresent
@@ -158,7 +167,7 @@ const CustomFileUploadWidget = ({
         </label>
       ) : (
         <label htmlFor={id + scopes} className="flex cursor-pointer ml-1">
-          <div className="flex items-center mt-2 ">
+          <div className="flex items-center  ">
             <MdOutlineFileUpload
               className="w-6 h-6 mr-1 text-[#007EEF]"
             />
@@ -258,6 +267,7 @@ const CustomFileUploadWidget = ({
         </div>
       )}
     </div>
+    </>
   );
 };
 

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
-import { yearInfo, months } from "@/app/shared/data/yearInfo";
+import { months } from "@/app/shared/data/yearInfo";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 
 const monthMapping = {
@@ -37,13 +37,23 @@ const EnvironmentHeader = ({
   yearMessage,
   setYearMessage,
 }) => {
+  const currentYear = new Date().getFullYear(); // Get the current year
+
+  // Set the default form state for year to currentYear if no year is passed
   const [formState, setFormState] = useState({
-    location: location,
-    year: year,
-    month: activeMonth,
+    location: location || "",
+    year: year || currentYear, // Default to current year if year is not passed as a prop
+    month: activeMonth || monthMapping[new Date().toLocaleString("en-US", { month: "short" })],
   });
 
   const [locations, setLocations] = useState([]);
+
+  const startYear = 1991; // Define the start year
+  
+  const yearOptions = [];
+  for (let i = startYear; i <= currentYear; i++) {
+    yearOptions.push(i.toString());
+  }
 
   useEffect(() => {
     const fetchLocations = async () => {
@@ -79,7 +89,7 @@ const EnvironmentHeader = ({
   useEffect(() => {
     setFormState({
       location: location,
-      year: year,
+      year: year || currentYear, // Update the year in the form state if no year is set
       month: activeMonth,
     });
   }, [location, year, activeMonth]);
@@ -125,9 +135,9 @@ const EnvironmentHeader = ({
                 onChange={handleChange}
               >
                 <option value="">Select year</option>
-                {yearInfo.map((item) => (
-                  <option value={item.slice(0, 4)} key={item}>
-                    {item.slice(0, 4)}
+                {yearOptions.map((year) => (
+                  <option value={year} key={year}>
+                    {year}
                   </option>
                 ))}
               </select>

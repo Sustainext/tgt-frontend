@@ -308,3 +308,6 @@ body._fluentc_widget-banner-show{
   width: 1000px;
   padding-bottom: 30px;
 }
+.placeholders::placeholder{
+text-align: right;
+}

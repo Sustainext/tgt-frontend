@@ -174,45 +174,6 @@ const uiSchema = {
     }
   }
 };
-const generateUniqueId = (field) => {
-  return `${field}-${new Date().getTime()}`;
-};
-const generateTooltip = (field, title, tooltipText) => {
-  if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
-    return null; // Return null to skip rendering tooltip for these fields
-  }
-  const uniqueId = generateUniqueId(field);
-  return (
-    <div className={`mx-2 flex  ${field === 'Quantity' ? ' w-[22vw]' : ' w-[20vw]'}`}>
-      <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
-      <div>
-      <MdInfoOutline
-        data-tooltip-id={uniqueId}
-        data-tooltip-content={tooltipText}
-        className="mt-1 ml-2 text-[12px]"
-      />
-      <ReactTooltip
-        id={uniqueId}
-        place="top"
-        effect="solid"
-
-        style={{
-          width: "290px",
-          backgroundColor: "#000",
-          color: "white",
-          fontSize: "12px",
-          boxShadow: 3,
-          borderRadius: "8px",
-          textAlign: 'left',
-
-        }}
-
-      />
-      </div>
-
-    </div>
-  );
-};
 
 const Consumedfuel = ({location, year, month}) => {
   const { open } = GlobalState();
@@ -236,14 +197,16 @@ const Consumedfuel = ({location, year, month}) => {
     setLoOpen(false);
   };
   const handleChange = (e) => {
-    setFormData(e.formData);
-
+    const newData = e.formData.map((item, index) => ({
+      ...item, // Ensure each item retains its structure
+    }));
+    setFormData(newData); // Update the formData with new values
   };
 
   const handleAddNew = () => {
     const newData = [...formData, {}];
     setFormData(newData);
-
+  
   };
 
   // The below code on updateFormData
@@ -368,31 +331,13 @@ const Consumedfuel = ({location, year, month}) => {
     updatedData.splice(index, 1);
     setFormData(updatedData);
   };
-  const renderFields = () => {
-    if (!r_schema || !r_schema.items || !r_schema.items.properties) {
-      return null;
-    }
-    const fields = Object.keys(r_schema.items.properties);
-    return fields.map((field, index) => (
-      <div key={index}>
-        {generateTooltip(field, r_schema.items.properties[field].title, r_schema.items.properties[field].tooltiptext)}
-      </div>
-    ));
-  };
+
   return (
     <>
-
-
-        <div className={`overflow-auto custom-scrollbar flex`}>
+     <div className={`overflow-auto custom-scrollbar flex`}>
         <div>
-          <div>
-            <div className='flex'>
-              {renderFields()} {/* Render dynamic fields with tooltips */}
-            </div>
-          </div>
-
           <Form
-          className='flex'
+            className="flex"
             schema={r_schema}
             uiSchema={r_ui_schema}
             formData={formData}
@@ -400,24 +345,28 @@ const Consumedfuel = ({location, year, month}) => {
             validator={validator}
             widgets={{
               ...widgets,
-              RemoveWidget: (props) => (
-                <RemoveWidget
-                  {...props}
-                  index={props.id.split('_')[1]} // Pass the index
-                  onRemove={handleRemove}
-                />
-              ),
+
+              RemoveWidget: (props) => {
+                const match = props.id.match(/^root_(\d+)/);
+                const index = match ? parseInt(match[1], 10) : null;
+    
+                return (
+                  <RemoveWidget
+                    {...props}
+                    index={index}
+                    onRemove={handleRemove}
+                  />
+                );
+              },
               FileUploadWidget: (props) => (
                 <CustomFileUploadWidget
                   {...props}
                   scopes="ec2"
                   setFormData={updateFormDatanew}
                 />
-              )
-
+              ),
             }}
-
-          />
+          ></Form>
         </div>
 
         {loopen && (
@@ -432,16 +381,26 @@ const Consumedfuel = ({location, year, month}) => {
             />
           </div>
         )}
-
       </div>
+      <div></div>
 
       <div className="flex justify-start mt-4 right-1">
-        <button type="button" className="text-[#007EEF] text-[12px] flex cursor-pointer mt-5 mb-5" onClick={handleAddNew}>
-          <MdAdd className='text-lg' /> Add Row
+        <button
+          type="button"
+          className="text-[#007EEF] text-[12px] flex cursor-pointer mt-5 mb-5"
+          onClick={handleAddNew}
+        >
+          <MdAdd className="text-lg" /> Add Row
         </button>
       </div>
-      <div className='mb-4'>
-      <button type="button"  className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
+      <div className="mb-4">
+        <button
+          type="button"
+          className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end"
+          onClick={handleSubmit}
+        >
+          Submit
+        </button>
       </div>
 
     </>
