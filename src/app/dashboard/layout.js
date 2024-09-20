@@ -3,12 +3,12 @@ import { useState, useEffect } from 'react';
 import DashboardHeader from './dashobardheader';
 import Sidenav from './sidebar';
 import { GlobalState } from '../../Context/page';
+import StoreProvider from '../../Context/storeProvider';
+import GlobalErrorHandler from '../shared/components/GlobalErrorHandler';
 
 export default function DashboardLayout({ children }) {
   const { open } = GlobalState();
   const [defaultLanguage, setDefaultLanguage] = useState('ja'); 
-
-
 
   useEffect(() => {
     if (!document.getElementById('gtranslate-script')) {
@@ -30,6 +30,8 @@ export default function DashboardLayout({ children }) {
   return (
     <>
       <section>
+      <GlobalErrorHandler />
+        <StoreProvider>
         <div className="flex w-full">
           <div className="block float-left">
             <Sidenav />
@@ -42,6 +44,7 @@ export default function DashboardLayout({ children }) {
             </div>
           </div>
         </div>
+        </StoreProvider>
       </section>
     </>
   );
