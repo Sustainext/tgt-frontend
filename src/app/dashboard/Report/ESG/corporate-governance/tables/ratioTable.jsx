@@ -33,7 +33,7 @@ const RatioTable=({col,values})=>{
         <tbody>
             <tr>
                 {values.map((val)=>(
-                    <td className="border border-gray-200 p-4 rounded-bl-md text-center">Data</td>
+                    <td className="border border-gray-200 p-4 rounded-bl-md text-center text-sm">Data</td>
                 ))}
             </tr>
            

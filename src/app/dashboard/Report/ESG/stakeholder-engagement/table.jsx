@@ -39,21 +39,21 @@ const StakeholderTable=()=>{
         </thead>
         <tbody>
             <tr>
-                <td className="border-t border-r border-gray-200 p-4 text-center">Customer</td>
-                <td className="border border-gray-200 p-4 rounded-bl-md text-center">Row 2, Cell 1</td>
-                <td className="border border-gray-200 p-4 rounded-br-md text-center">Row 2, Cell 2</td>
-                <td className="border border-gray-200 p-4 rounded-bl-md text-center">Row 2, Cell 1</td>
-                <td className="border border-gray-200 p-4 rounded-br-md text-center">Row 2, Cell 2</td>
-                <td className="border border-gray-200 p-4 rounded-br-md text-center">Row 2, Cell 2</td>
+                <td className="border-t border-r border-gray-200 p-4 text-center text-sm">Data</td>
+                <td className="border border-gray-200 p-4 rounded-bl-md text-center text-sm">Data</td>
+                <td className="border border-gray-200 p-4 rounded-br-md text-center text-sm">Data</td>
+                <td className="border border-gray-200 p-4 rounded-bl-md text-center text-sm">Data</td>
+                <td className="border border-gray-200 p-4 rounded-br-md text-center text-sm">Data</td>
+                <td className="border border-gray-200 p-4 rounded-br-md text-center text-sm">Data</td>
                 {/* Ensure all cells have border applied */}
             </tr>
             <tr>
-                <td className="border border-gray-200 p-4 rounded-bl-md text-center">Row 2, Cell 1</td>
-                <td className="border border-gray-200 p-4 rounded-br-md text-center">Row 2, Cell 2</td>
-                <td className="border border-gray-200 p-4 rounded-bl-md text-center">Row 2, Cell 1</td>
-                <td className="border border-gray-200 p-4 rounded-br-md text-center">Row 2, Cell 2</td>
-                <td className="border border-gray-200 p-4 rounded-bl-md text-center">Row 2, Cell 1</td>
-                <td className="border border-gray-200 p-4 rounded-br-md text-center">Row 2, Cell 2</td>
+                <td className="border border-gray-200 p-4 rounded-bl-md text-center text-sm">Data</td>
+                <td className="border border-gray-200 p-4 rounded-br-md text-center text-sm">Data</td>
+                <td className="border border-gray-200 p-4 rounded-bl-md text-center text-sm">Data</td>
+                <td className="border border-gray-200 p-4 rounded-br-md text-center text-sm">Data</td>
+                <td className="border border-gray-200 p-4 rounded-bl-md text-center text-sm">Data</td>
+                <td className="border border-gray-200 p-4 rounded-br-md text-center text-sm">Data</td>
             </tr>
         </tbody>
     </table>

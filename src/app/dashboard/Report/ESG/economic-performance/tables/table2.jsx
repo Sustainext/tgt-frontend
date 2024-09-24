@@ -15,7 +15,7 @@ const Table2=({col,values})=>{
                     <th
                         key={idx}
                         style={{textAlign: "left" }}
-                        className={`text-[12px] border-r px-3.5 py-3.5  ${
+                        className={`text-[12px] border-r px-1 py-1  ${
                             idx === 0 ? 'rounded-tl-md' : '' // Top-left corner
                         } ${
                             idx === col.length - 1 ? 'rounded-tr-md' : '' // Top-right corner

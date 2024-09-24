@@ -25,7 +25,8 @@ import CorporateGovernance from "./corporate-governance/page";
 import Community from "./community/page";
 import EconomicPerformance from './economic-performance/page'
 import CustomerProductService from  './customer-product-services/page'
-
+import People from "./people/page";
+// import MessageFromCEO from  './message-from-ceo/page'
 
 const ESGReport = () => {
   const [activeStep, setActiveStep] = useState(1);
@@ -97,19 +98,13 @@ const ESGReport = () => {
           <div className="mx-3 my-2">
             <div>
               {/* Step 1 */}
-              {activeStep === 1 && (
+              {/* {activeStep === 1 && (
                 <>
                   <div>
-                    {/* <CoverSheet
-                      display={display}
-                      imageSrc={imageSrc}
-                      setImage={setImage}
-                      setSelectedImage={setSelectedImage}
-                      selectedImage={selectedImage}
-                    /> */}
+                   <MessageFromCEO/>
                   </div>
                 </>
-              )}
+              )} */}
               {/* Step 2 */}
               {activeStep === 2 && (
                 <div>
@@ -200,15 +195,15 @@ const ESGReport = () => {
                   </>
                 </div>
               )}  */}
-              {/* {activeStep === 13 && (
+              {activeStep === 13 && (
                 <div>
                   <>
                     <div className="mb-4">
-                      <Community/>
+                      <People/>
                     </div>
                   </>
                 </div>
-              )}  */}
+              )} 
               {activeStep === 14 && (
                 <div>
                   <>

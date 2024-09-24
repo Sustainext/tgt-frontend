@@ -40,7 +40,7 @@ const HighestGovernanceTable=()=>{
                     <th
                         key={idx}
                         style={{textAlign: "left"}}
-                        className={`text-[12px] border-r px-2 py-2 ${
+                        className={`text-[12px] border-r px-1 py-1  ${
                             idx === 0 ? 'rounded-tl-md' : '' // Top-left corner
                         } ${
                             idx === col.length - 1 ? 'rounded-tr-md' : '' // Top-right corner

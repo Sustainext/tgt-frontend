@@ -24,15 +24,15 @@ const ConflictTable=()=>{
                 {col.map((item, idx) => (
                     <th
                         key={idx}
-                        style={{ minWidth: "120px", textAlign: "center" }}
+                        style={{ minWidth: "120px", textAlign: "left" }}
                         className={`text-[12px] border-r px-4 py-4 ${
                             idx === 0 ? 'rounded-tl-md' : '' // Top-left corner
                         } ${
                             idx === col.length - 1 ? 'rounded-tr-md' : '' // Top-right corner
                         } text-gray-500`}
                     >
-                        <div className="flex justify-center items-center">
-                            <p className="flex items-center">
+                        <div className="flex ">
+                            <p className="flex">
                                 {item}
                             </p>
                         </div>
@@ -43,11 +43,11 @@ const ConflictTable=()=>{
         <tbody>
         {rowLabels.map((label, rowIndex) => (
                         <tr key={rowIndex}>
-                            <td className="border-t border-r border-gray-200 p-4 text-left">
+                            <td className="border-t border-r border-gray-200 p-4 text-left text-sm">
                                 {label}
 
                             </td>
-                            <td className="border-t border-r border-gray-200 p-4 text-center">
+                            <td className="border-t border-r border-gray-200 p-4 text-left text-sm">
                                Yes
                             </td>
                             

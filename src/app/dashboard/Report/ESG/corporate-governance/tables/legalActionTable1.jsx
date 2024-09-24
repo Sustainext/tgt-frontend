@@ -23,11 +23,11 @@ const ConflictTable=()=>{
         <tbody>
         {rowLabels.map((label, rowIndex) => (
                         <tr key={rowIndex}>
-                            <td className="border-t border-r border-gray-200 p-4 text-left">
+                            <td className="border-t border-r border-gray-200 p-4 text-left text-sm">
                                 {label}
 
                             </td>
-                            <td className="border-t border-r border-gray-200 p-4 text-center">
+                            <td className="border-t border-r border-gray-200 p-4 text-center text-sm">
                                Yes
                             </td>
                             

@@ -38,7 +38,7 @@ const LegalActionTable2 = () => {
             {col.map((item, idx) => (
               <th
                 key={idx}
-                style={{ minWidth: "120px", textAlign: "left" }}
+                style={{ minWidth: "120px", textAlign: "center" }}
                 className={`text-[12px] border-r px-4 py-4 ${
                   idx === 0 ? "rounded-tl-md" : "" // Top-left corner
                 } ${
@@ -53,13 +53,13 @@ const LegalActionTable2 = () => {
         <tbody className="border border-gray-300">
           {data.map((row, rowIndex) => (
             <tr key={rowIndex} className="text-[11px]">
-              <td className="border-t border-r border-gray-200 p-4 text-start">
+              <td className="border-t border-r border-gray-200 p-4 text-center text-sm">
                 {row.location}
               </td>
-              <td className="border-t border-r border-gray-200 p-4 text-start">
+              <td className="border-t border-r border-gray-200 p-4 text-center text-sm">
                 {row.potentialImpact}
               </td>
-              <td className="border-t border-gray-200 p-4 text-start">
+              <td className="border-t border-gray-200 p-4 text-center text-sm">
                 {row.actualImpact}
               </td>
             </tr>

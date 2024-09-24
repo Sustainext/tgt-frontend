@@ -29,7 +29,7 @@ const Section1 =()=>{
     // Nature
     // Protecting biodiversity and natural resources is a priority for us.`);
     const config = {
-      height: 525, // Set the height in pixels
+      height: 500, // Set the height in pixels
     };
     
     return (
