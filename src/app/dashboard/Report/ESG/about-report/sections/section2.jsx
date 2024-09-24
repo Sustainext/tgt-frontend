@@ -22,7 +22,7 @@ stakeholders informed of our progress.`
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
                 7.1.1 Restatement of Information
         </h3>
-        <p className="mb-4 text-sm">{content2}</p>
+        <p className="mb-4 text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, alias amet? Aliquid sunt beatae quam eligendi nesciunt nam enim iure veniam, explicabo dicta! Vitae dolores dolorem assumenda magnam, quos iure?</p>
         </div>
         </div>
         </>

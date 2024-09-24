@@ -35,9 +35,9 @@ const Section1 =()=>{
     return (
         <>
         <div>
-        <p className="text-[15px] text-[#344054] mb-4">
-            Enter data and images related to company awards and recognitions
-            </p>
+        {/* <p className="text-[15px] text-[#344054] mb-4">
+        Enter data and images related to sustainability roadmap  of the company
+            </p> */}
             <div>
               <JoditEditor
                 // ref={editor}

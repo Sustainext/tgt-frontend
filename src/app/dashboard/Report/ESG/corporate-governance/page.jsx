@@ -19,6 +19,10 @@ import Section16 from './sections/section16'
 import Section17 from './sections/section17'
 import Section18 from './sections/section18'
 import Section19 from './sections/section19'
+import Section20 from './sections/section20'
+import Section21 from './sections/section21'
+import Section22 from './sections/section22'
+import Section23 from './sections/section23'
 import Section25 from './sections/section25'
 
 const CorporateGovernance=()=>{
@@ -28,6 +32,9 @@ const CorporateGovernance=()=>{
     const section9_1Ref = useRef(null);
   const section9_2Ref = useRef(null);
   const section9_3Ref = useRef(null);
+  const section9_4Ref = useRef(null);
+  const section9_5Ref = useRef(null);
+  const section9_6Ref = useRef(null);
   const section9_1_1Ref = useRef(null);
   const section9_2_1Ref = useRef(null);
   const section9_2_2Ref = useRef(null);
@@ -81,7 +88,7 @@ const scrollToSection = (sectionRef, sectionId) => {
             <Section4 section9_2_2Ref={section9_2_2Ref} />
             <Section5  section9_2_3Ref={section9_2_3Ref} />
             <Section6  section9_2_4Ref={section9_2_4Ref} />
-            <Section7  section9_3_1Ref={section9_3_1Ref} />
+            <Section7  section9_3_1Ref={section9_3_1Ref} section9_3Ref={section9_3Ref} />
             <Section8  section9_3_2Ref={section9_3_2Ref} />
             <Section9  section9_3_3Ref={section9_3_3Ref} />
             <Section10  section9_3_4Ref={section9_3_4Ref} />
@@ -89,18 +96,22 @@ const scrollToSection = (sectionRef, sectionId) => {
             <Section12  section9_3_6Ref={section9_3_6Ref} />
             <Section13  section9_3_7Ref={section9_3_7Ref} />
             <Section14  section9_3_8Ref={section9_3_8Ref} />
-            <Section15  section9_4_1Ref={section9_4_1Ref} />
+            <Section15  section9_4_1Ref={section9_4_1Ref} section9_4Ref={section9_4Ref} />
             <Section16  section9_4_2Ref={section9_4_2Ref} />
-            <Section17  section9_5_1Ref={section9_5_1Ref} />
+            <Section17  section9_5_1Ref={section9_5_1Ref} section9_5Ref={section9_5Ref} />
             <Section18  section9_5_2Ref={section9_5_2Ref} />
             <Section19  section9_5_3Ref={section9_5_3Ref} />
+            <Section20  section9_6_1Ref={section9_6_1Ref} section9_6Ref={section9_6Ref}  />
+            <Section21  section9_6_2Ref={section9_6_2Ref} />
+            <Section22  section9_6_3Ref={section9_6_3Ref} />
+            <Section23  section9_6_4Ref={section9_6_4Ref} />
             <Section25  section9_7Ref={section9_7Ref} />
        
             </div>
             {/* page sidebar */}
            
 
-            <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[1070px] top-36 sticky mt-2 w-[20%]">
+            <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[1130px] top-36 sticky mt-2 w-[20%]">
   <p className="text-[11px] text-[#727272] mb-2 uppercase">Corporate Governance</p>
   
   <p className={`text-[12px] mb-2 cursor-pointer ${activeSection === 'section9_1' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section9_1Ref, 'section9_1')}>
@@ -124,11 +135,12 @@ const scrollToSection = (sectionRef, sectionId) => {
   </p>
   
   <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section9_2_3' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section9_2_3Ref, 'section9_2_3')}>
-    9.2.3 Management of material topic
+  9.2.3 Senior management hired from local community
   </p>
   
   <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section9_2_4' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section9_2_4Ref, 'section9_2_4')}>
-    9.2.4 Senior management hired from local community
+   
+    9.2.4 Management of material topic
   </p>
   
   <p className={`text-[12px] mb-2 cursor-pointer ${activeSection === 'section9_3' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section9_3Ref, 'section9_3')}>
@@ -200,11 +212,12 @@ const scrollToSection = (sectionRef, sectionId) => {
   </p>
   
   <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section9_6_1' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section9_6_1Ref, 'section9_6_1')}>
-    9.6.1 Embedding policy Commitment
+    9.6.1 Management of material topic
+   
   </p>
   
   <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section9_6_2' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section9_6_2Ref, 'section9_6_2')}>
-    9.6.2 Management of material topic
+    9.6.2 Embedding policy Commitment
   </p>
   
   <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section9_6_3' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section9_6_3Ref, 'section9_6_3')}>
@@ -212,12 +225,9 @@ const scrollToSection = (sectionRef, sectionId) => {
   </p>
   
   <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section9_6_4' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section9_6_4Ref, 'section9_6_4')}>
-    9.6.4 Management of material topic
+    9.6.4 Defined benefit plan obligations and other retirement plans
   </p>
-  
-  <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section9_6_5' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section9_6_5Ref, 'section9_6_5')}>
-    9.6.5 Defined benefit plan obligations and other retirement plans
-  </p>
+
   
   <p className={`text-[12px] mb-2 cursor-pointer ${activeSection === 'section9_7' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section9_7Ref, 'section9_7')}>
     9.7 Conflict of interest

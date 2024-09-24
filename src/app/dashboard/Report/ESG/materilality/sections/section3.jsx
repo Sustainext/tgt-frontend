@@ -6,7 +6,7 @@ import { useState, useRef, useEffect } from "react";
 
 const Section3=({section8_1_2Ref})=>{
     const [content,setContent] = useState(
-        `Understanding the issues that matter most to our stakeholders and our business is fundamental to [Company Name]'s approach to sustainability. Our materiality assessment identifies and prioritizes the environmental, social, and governance (ESG) issues that are most significant to our stakeholders and our ability to create long-term value. `
+        `In line with our commitment to transparency and continuous improvement, we regularly review and update our list of material topics to reflect the evolving landscape of our business and the broader external environment. As a result of our materiality assessment, we have made several changes to our list of material topics to better reflect the current priorities and challenges. The following key changes have been made `
     )
     return (
         <>

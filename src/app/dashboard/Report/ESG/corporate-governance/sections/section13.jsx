@@ -1,13 +1,13 @@
 'use client'
 import { useState, useRef, useEffect } from "react";
 
-const Section13=()=>{
+const Section13=({section9_3_7Ref})=>{
     const [content,setContent] = useState(
         `Our remuneration policies are designed to attract, retain, and motivate high-caliber Board members and executives. Compensation is based on industry benchmarks, individual performance, and the achievement of strategic objectives`
     )
     return (
         <>
-        <div>
+        <div id="section9_3_7" ref={section9_3_7Ref} >
         
             <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
             9.3.7 Remuneration Policies & Process to Determine Remuneration

@@ -15,7 +15,7 @@ const Section5=({section8_1_4Ref})=>{
         8.1.4 Management of material topic
             </p>
 
-            <p className="text-sm mb-4">{content}</p>
+            <p className="text-sm mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet ab odit, delectus quis id nesciunt. Repellendus earum quasi illo modi maxime at molestias voluptas quia esse, neque inventore sint deserunt.</p>
             
         </div>
         </>

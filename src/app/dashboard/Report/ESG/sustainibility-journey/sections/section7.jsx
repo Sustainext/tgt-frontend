@@ -20,23 +20,23 @@ const Section7=({section10_3_3Ref})=>{
         <p className="text-[15px] text-[#344054] mb-2 font-semibold">
         We recognize that our supply chain can have negative environmental and social impacts, and we are committed to mitigating these risks. Our approach includes:
             </p>
-            <p className="text-sm mb-4">{content}</p>
+            <p className="text-sm mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore ducimus repellendus voluptatem laudantium quaerat adipisci repudiandae. Odit commodi officia voluptatum accusamus. Pariatur, voluptate officiis nemo harum ut eos placeat porro?</p>
             <p className="text-[15px] text-[#344054] mb-2 font-semibold">
             Percentage of suppliers identified as having significant actual and potential negative environmental impacts with which improvements were agreed upon as a result of assessment: 
             </p>
-            <p className="text-sm mb-4">{content}</p>
+            <p className="text-sm mb-4">40%</p>
             <p className="text-[15px] text-[#344054] mb-2 font-semibold">
             Percentage of Suppliers identified as having significant actual and potential negative environmental impacts with terminated Relationship:
             </p>
-            <p className="text-sm mb-4">{content}</p>
+            <p className="text-sm mb-4">50%</p>
             <p className="text-[15px] text-[#344054] mb-2 font-semibold">
             Number of suppliers screened using social criteria:
             </p>
-            <p className="text-sm mb-4">{content}</p>
+            <p className="text-sm mb-4">200</p>
             <p className="text-[15px] text-[#344054] mb-2 font-semibold">
             Percentage of suppliers screened using social criteria: 
             </p>
-            <p className="text-sm mb-4">{content}</p>
+            <p className="text-sm mb-4">20%</p>
             <p className="text-[15px] text-[#344054] mb-4 font-semibold">
 Number of suppliers identified having significant actual and potential negative social impacts. 
             </p>

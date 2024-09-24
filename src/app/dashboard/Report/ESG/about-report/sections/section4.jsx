@@ -8,7 +8,7 @@ const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 
 const Section4=({section7_3Ref})=>{
     const [content,setContent] = useState(
-        `This ESG report, prepared in accordance with the Global Reporting Initiative (GRI) standards, provides a comprehensive overview of [Company Name]'s environmental, social, and governance (ESG) performance for the reporting period [Year]. It reflects our commitment to transparency, accountability, and continuous improvement in our sustainability practices. `
+        `To ensure the credibility and reliability of our ESG disclosures, we have engaged an independent third-party assurance provider to verify selected information in this report.`
     )
     const [content2,setContent2]=useState(
         `This report covers the period from [Start Date] to [End Date] and is part of our annual sustainability reporting cycle. 
@@ -32,7 +32,7 @@ stakeholders informed of our progress.`
           <p className="text-[15px] text-[#344054] mb-4 font-semibold">
           The scope of the assurance includes 
             </p>
-            <p className="mb-2 text-sm">{content}</p>
+            <p className="mb-2 text-sm">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio accusamus consectetur praesentium assumenda in. Soluta dolores accusantium ratione aperiam culpa sunt in officiis fuga molestiae consectetur, labore architecto amet aliquam.</p>
         </div>
         </div>
         </>

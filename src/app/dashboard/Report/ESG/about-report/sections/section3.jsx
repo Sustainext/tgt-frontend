@@ -8,7 +8,8 @@ const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 
 const Section3=({section7_2Ref})=>{
     const [content,setContent] = useState(
-        `This ESG report, prepared in accordance with the Global Reporting Initiative (GRI) standards, provides a comprehensive overview of [Company Name]'s environmental, social, and governance (ESG) performance for the reporting period [Year]. It reflects our commitment to transparency, accountability, and continuous improvement in our sustainability practices. `
+        `This report has been prepared in accordance with the GRI Standards, the leading global framework for sustainability reporting. We also align our reporting with other relevant frameworks and guidelines, including: 
+United Nations Sustainable Development Goals (SDGs): Our initiatives and performance metrics are mapped to specific SDGs to demonstrate our contribution to global sustainability targets. `
     )
     const [content2,setContent2]=useState(
         `This report covers the period from [Start Date] to [End Date] and is part of our annual sustainability reporting cycle. 

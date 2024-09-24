@@ -2,13 +2,9 @@
 import { useState, useRef, useEffect } from "react";
 
 
-const RatioTable=()=>{
+const RatioTable=({col,values})=>{
 
-    const col=[
-        "Ratio of annual total compensation",
-        "Ratio of percentage  increase in annual total compensation",
-        
-    ]
+    
     return (
         <>
        <div style={{ maxHeight: "400px", overflowY: "auto" }} className="mb-2">
@@ -36,11 +32,9 @@ const RatioTable=()=>{
         </thead>
         <tbody>
             <tr>
-                <td className="border-t border-r border-gray-200 p-4 text-center">Customer</td>
-                <td className="border border-gray-200 p-4 rounded-bl-md text-center">Row 2, Cell 1</td>
-                {/* <td className="border border-gray-200 p-4 rounded-br-md text-center">Row 2, Cell 2</td>
-                <td className="border border-gray-200 p-4 rounded-bl-md text-center">Row 2, Cell 1</td> */}
-                
+                {values.map((val)=>(
+                    <td className="border border-gray-200 p-4 rounded-bl-md text-center">Data</td>
+                ))}
             </tr>
            
         </tbody>

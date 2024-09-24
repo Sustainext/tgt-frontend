@@ -23,6 +23,10 @@ import Materiality from "./materilality/page";
 import SustainibilityJourney from "./sustainibility-journey/page";
 import CorporateGovernance from "./corporate-governance/page";
 import Community from "./community/page";
+import EconomicPerformance from './economic-performance/page'
+import CustomerProductService from  './customer-product-services/page'
+
+
 const ESGReport = () => {
   const [activeStep, setActiveStep] = useState(1);
   const handleNext = () => {
@@ -178,15 +182,15 @@ const ESGReport = () => {
                   </>
                 </div>
               )}
-              {/* {activeStep === 11 && (
+              {activeStep === 11 && (
                 <div>
                   <>
                     <div className="mb-4">
-                      <Community/>
+                      <EconomicPerformance/>
                     </div>
                   </>
                 </div>
-              )}  */}
+              )} 
               {/* {activeStep === 12 && (
                 <div>
                   <>
@@ -210,6 +214,15 @@ const ESGReport = () => {
                   <>
                     <div className="mb-4">
                       <Community />
+                    </div>
+                  </>
+                </div>
+              )}
+               {activeStep === 15 && (
+                <div>
+                  <>
+                    <div className="mb-4">
+                      <CustomerProductService />
                     </div>
                   </>
                 </div>

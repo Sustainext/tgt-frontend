@@ -2,13 +2,13 @@
 import { useState, useRef, useEffect } from "react";
 import ConflictTable from "../tables/conflictTable";
 
-const Section25=()=>{
+const Section25=({section9_7Ref})=>{
     const [content,setContent] = useState(
         `We have a comprehensive conflict of interest policy to ensure that all potential conflicts are disclosed and managed appropriately. Board members and employees are required to avoid situations that could result in a conflict between personal interests and the interests of the company.`
     )
     return (
         <>
-        <div>
+        <div id="section9_7" ref={section9_7Ref} >
         <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
         9.7 Conflict of Interest
             </h3>
