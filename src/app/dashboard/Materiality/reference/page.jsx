@@ -373,7 +373,7 @@ const Reference = () => {
       <div className="mx-5">
         <div className="flex justify-between items-start">
           <div className="shadow-lg rounded-lg  w-[32.5%]">
-            <div className="gradient-background p-2 rounded-t-lg flex justify-between green-checkbox">
+            <div className=" relative gradient-background p-2 rounded-t-lg flex justify-between green-checkbox">
               <p className="text-[##2E0B34] text-[17px] mx-2 pt-2 flex">
                 Environmental
                 <MdInfoOutline
@@ -419,7 +419,7 @@ pollution, climate change mitigation,
             />
           </div>
           <div className="shadow-lg rounded-lg  w-[32.5%]">
-            <div className="gradient-background p-2 rounded-t-lg flex justify-between green-checkbox">
+            <div className=" relative gradient-background p-2 rounded-t-lg flex justify-between green-checkbox">
               <p className="text-[##2E0B34] text-[17px] mx-2 pt-2 flex">
                 Social
                 <MdInfoOutline
@@ -462,7 +462,7 @@ customer relations, and community engagement. </p>`}
             />
           </div>
           <div className="shadow-lg rounded-lg  w-[32.5%]">
-            <div className="gradient-background p-2 rounded-t-lg flex justify-between green-checkbox">
+            <div className="relative gradient-background p-2 rounded-t-lg flex justify-between green-checkbox">
               <p className="text-[##2E0B34] text-[17px] mx-2 pt-2 flex">
                 Governance
                 <MdInfoOutline
