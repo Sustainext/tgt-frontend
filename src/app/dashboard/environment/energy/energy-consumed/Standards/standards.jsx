@@ -1,113 +1,113 @@
-'use client'
-import React, { useState, useEffect, useRef } from 'react';
-import Form from '@rjsf/core';
-import validator from '@rjsf/validator-ajv8';
-import { GlobalState } from '../../../../../../Context/page';
-import TextareaWidget from '../../../../../shared/widgets//Textarea/TextareaWidget';
-import axios from 'axios';
+"use client";
+import React, { useState, useEffect, useRef } from "react";
+import Form from "@rjsf/core";
+import validator from "@rjsf/validator-ajv8";
+import { GlobalState } from "../../../../../../Context/page";
+import TextareaWidget from "../../../../../shared/widgets//Textarea/TextareaWidget";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Oval } from 'react-loader-spinner';
+import { Oval } from "react-loader-spinner";
+import axiosInstance from "../../../../../utils/axiosMiddleware";
 const widgets = {
   TextareaWidgetnew: TextareaWidget,
 };
 
-const view_path = 'gri-environment-energy-302-1f-smac'
-const client_id = 1
-const user_id = 1
+const view_path = "gri-environment-energy-302-1f-smac";
+const client_id = 1;
+const user_id = 1;
 
 const schema = {
-  type: 'array',
+  type: "array",
   items: {
-    type: 'object',
+    type: "object",
     properties: {
       textareaQ1: {
-        type: 'string',
-        title: 'Please mention the standards used while compiling the information for 302-1 ?',
-        format: 'textarea',
+        type: "string",
+        title:
+          "Please mention the standards used while compiling the information for 302-1 ?",
+        format: "textarea",
       },
       textareaQ2: {
-        type: 'string',
-        title: 'Please mention the methodologies used while compiling the information for 302-1 ?',
-        format: 'textarea',
+        type: "string",
+        title:
+          "Please mention the methodologies used while compiling the information for 302-1 ?",
+        format: "textarea",
       },
       textareaQ3: {
-        type: 'string',
-        title: 'Please mention the assumptions used while compiling the information for 302-1 ?',
-        format: 'textarea',
+        type: "string",
+        title:
+          "Please mention the assumptions used while compiling the information for 302-1 ?",
+        format: "textarea",
       },
       textareaQ4: {
-        type: 'string',
-        title: 'Please mention the calculation tools used while compiling the information for 302-1 ?',
-        format: 'textarea',
-      }
+        type: "string",
+        title:
+          "Please mention the calculation tools used while compiling the information for 302-1 ?",
+        format: "textarea",
+      },
 
       // Define other properties as needed
-    }
-  }
+    },
+  },
 };
-
 
 const uiSchema = {
   items: {
     textareaQ1: {
-      "ui:title": "Please mention the standards used while compiling the information for 302-1 ?",
+      "ui:title":
+        "Please mention the standards used while compiling the information for 302-1 ?",
       "ui:Gri": "GRI 302-1f",
-      'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
-      'ui:options': {
-        label: false
+      "ui:widget": "TextareaWidgetnew", // Use your custom widget for QuantityUnit
+      "ui:options": {
+        label: false,
       },
     },
     textareaQ2: {
-      "ui:title": "Please mention the methodologies used while compiling the information for 302-1 ?",
+      "ui:title":
+        "Please mention the methodologies used while compiling the information for 302-1 ?",
       "ui:Gri": "GRI 302-1f",
-      'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
-      'ui:options': {
-        label: false
+      "ui:widget": "TextareaWidgetnew", // Use your custom widget for QuantityUnit
+      "ui:options": {
+        label: false,
       },
     },
     textareaQ3: {
-      "ui:title": "Please mention the assumptions used while compiling the information for 302-1 ?",
+      "ui:title":
+        "Please mention the assumptions used while compiling the information for 302-1 ?",
       "ui:Gri": "GRI 302-1f",
-      'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
-      'ui:options': {
-        label: false
+      "ui:widget": "TextareaWidgetnew", // Use your custom widget for QuantityUnit
+      "ui:options": {
+        label: false,
       },
     },
 
     textareaQ4: {
-      "ui:title": "Please mention the calculation tools used while compiling the information for 302-1 ?",
+      "ui:title":
+        "Please mention the calculation tools used while compiling the information for 302-1 ?",
       "ui:Gri": "GRI 302-1f",
-      'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
-      'ui:options': {
-        label: false
+      "ui:widget": "TextareaWidgetnew", // Use your custom widget for QuantityUnit
+      "ui:options": {
+        label: false,
       },
     },
 
-      'ui:options': {
+    "ui:options": {
       orderable: false,
       addable: false,
       removable: false,
-      layout: 'horizontal',
-    }
-  }
+      layout: "horizontal",
+    },
+  },
 };
 
-const Standards = ({location, year, month}) => {
+const Standards = ({ location, year, month }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
-  const [r_schema, setRemoteSchema] = useState({})
-  const [r_ui_schema, setRemoteUiSchema] = useState({})
+  const [r_schema, setRemoteSchema] = useState({});
+  const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-  const getAuthToken = () => {
-      if (typeof window !== 'undefined') {
-          return localStorage.getItem('token')?.replace(/"/g, "");
-      }
-      return '';
-  };
-  const token = getAuthToken();
-
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -116,30 +116,23 @@ const Standards = ({location, year, month}) => {
   };
   const handleChange = (e) => {
     setFormData(e.formData);
-
   };
 
-  //The below code
-  let axiosConfig = {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  };
   const updateFormData = async () => {
     LoaderOpen();
     const data = {
-      client_id : client_id,
-      user_id : user_id,
+      client_id: client_id,
+      user_id: user_id,
       path: view_path,
       form_data: formData,
       location,
       year,
-      month
-    }
+      month,
+    };
 
-    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
-    try{
-      const response = await axios.post(url,data, axiosConfig);
+    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
+    try {
+      const response = await axiosInstance.post(url, data);
       if (response.status === 200) {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -153,8 +146,7 @@ const Standards = ({location, year, month}) => {
         });
         LoaderClose();
         loadFormData();
-
-      }else {
+      } else {
         toast.error("Oops, something went wrong", {
           position: "top-right",
           autoClose: 1000,
@@ -183,66 +175,64 @@ const Standards = ({location, year, month}) => {
   };
 
   const loadFormData = async () => {
-      LoaderOpen();
-      setFormData([{}])
-      const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
-      try {
-          const response = await axios.get(url, axiosConfig);
-          console.log('API called successfully:', response.data);
-          setRemoteSchema(response.data.form[0].schema);
-          setRemoteUiSchema(response.data.form[0].ui_schema);
-          const form_parent = response.data.form_data;
-          setFormData(form_parent[0].data);
-      } catch (error) {
-          console.error('API call failed:', error);
-      } finally {
-          LoaderClose();
-      }
+    LoaderOpen();
+    setFormData([{}]);
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    try {
+      const response = await axiosInstance.get(url);
+      console.log("API called successfully:", response.data);
+      setRemoteSchema(response.data.form[0].schema);
+      setRemoteUiSchema(response.data.form[0].ui_schema);
+      const form_parent = response.data.form_data;
+      setFormData(form_parent[0].data);
+    } catch (error) {
+      console.error("API call failed:", error);
+    } finally {
+      LoaderClose();
+    }
   };
   //Reloading the forms -- White Beard
   useEffect(() => {
     //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-  },[r_schema, r_ui_schema])
+  }, [r_schema, r_ui_schema]);
 
   // console log the form data change
   useEffect(() => {
-    console.log('Form data is changed -', formData)
-  },[formData])
+    console.log("Form data is changed -", formData);
+  }, [formData]);
 
   // fetch backend and replace initialized forms
-  useEffect (()=> {
+  useEffect(() => {
     if (location && year && month) {
-        loadFormData();
-        toastShown.current = false; // Reset the flag when valid data is present
+      loadFormData();
+      toastShown.current = false; // Reset the flag when valid data is present
     } else {
-        // Only show the toast if it has not been shown already
-       if (!toastShown.current) {
-
-            toastShown.current = true; // Set the flag to true after showing the toast
-        }
+      // Only show the toast if it has not been shown already
+      if (!toastShown.current) {
+        toastShown.current = true; // Set the flag to true after showing the toast
+      }
     }
     // console.log('From loaded , ready for trigger')
     // loadFormData()
-  },[location, year, month])
+  }, [location, year, month]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
-    console.log('Form data:', formData);
-    updateFormData()
-
+    console.log("Form data:", formData);
+    updateFormData();
   };
   return (
     <>
-      <div >
+      <div>
         <div>
-        <Form
-          schema={r_schema}
-          uiSchema={r_ui_schema}
-          formData={formData}
-          onChange={handleChange}
-          validator={validator}
-          widgets={widgets}
-        />
+          <Form
+            schema={r_schema}
+            uiSchema={r_ui_schema}
+            formData={formData}
+            onChange={handleChange}
+            validator={validator}
+            widgets={widgets}
+          />
         </div>
         {loopen && (
           <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
@@ -257,12 +247,17 @@ const Standards = ({location, year, month}) => {
           </div>
         )}
       </div>
-      <div className='mb-4'>
-      <button type="button"  className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
+      <div className="mb-4">
+        <button
+          type="button"
+          className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end"
+          onClick={handleSubmit}
+        >
+          Submit
+        </button>
       </div>
     </>
   );
 };
-
 
 export default Standards;

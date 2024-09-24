@@ -53,7 +53,7 @@ const uiSchema = {
       "ui:options": {
         titles: [
           {
-            title: "Region Name",
+            title: "Location Name",
             tooltip: "Specify name of the region from which governance body members have received training on anti-corruption,",
             widgettype: "select",
             tooltipdisplay: "block",
@@ -264,8 +264,8 @@ const Screen4 = ({ selectedOrg, year, selectedCorp,setDatarefreshtwo }) => {
         {Array.isArray(locationdata) && locationdata.length > 0 ? (
           <div className="mx-2">
             <Form
-              schema={r_schema}
-              uiSchema={r_ui_schema}
+              schema={schema}
+              uiSchema={uiSchema}
               formData={formData}
               onChange={handleChange}
               validator={validator}
