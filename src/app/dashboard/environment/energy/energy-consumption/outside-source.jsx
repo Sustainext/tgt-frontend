@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
 import { GlobalState } from '../../../../../Context/page';
+import axiosInstance from "../../../../utils/axiosMiddleware";
 const widgets = {
   TextareaWidgetnew: TextareaWidget,
 };
@@ -55,13 +56,7 @@ const OutsideSource = ({location, year, month}) => {
   const [r_ui_schema, setRemoteUiSchema] = useState({})
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-  const getAuthToken = () => {
-      if (typeof window !== 'undefined') {
-          return localStorage.getItem('token')?.replace(/"/g, "");
-      }
-      return '';
-  };
-  const token = getAuthToken();
+
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -73,12 +68,7 @@ const OutsideSource = ({location, year, month}) => {
     setFormData(e.formData);
   };
 
-  // The below code
-  let axiosConfig = {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  };
+
   const updateFormData = async () => {
     const data = {
       client_id : client_id,
@@ -92,7 +82,7 @@ const OutsideSource = ({location, year, month}) => {
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
     try{
-      const response = await axios.post(url,data, axiosConfig);
+      const response = await axiosInstance.post(url,data);
 
       if (response.status === 200) {
         toast.success("Data added successfully", {
@@ -141,7 +131,7 @@ const OutsideSource = ({location, year, month}) => {
       setFormData([{}])
       const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
       try {
-          const response = await axios.get(url, axiosConfig);
+          const response = await axiosInstance.get(url);
           console.log('API called successfully:', response.data);
           setRemoteSchema(response.data.form[0].schema);
           setRemoteUiSchema(response.data.form[0].ui_schema);

@@ -36,7 +36,7 @@ const AccordionItem = ({
           <h5 className="text-[12px] text-[#344054] pt-1 px-3 font-semibold text-center">{title}</h5>
         </div>
         <div className="w-[30%]">
-          <div className="float-end">
+          <div className="float-end me-4">
             <span>
               <MdKeyboardArrowDown className={`text-2xl ${isOpen && "rotate-180"}`} />
             </span>

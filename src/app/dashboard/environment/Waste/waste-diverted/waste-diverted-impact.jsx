@@ -18,6 +18,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
 import selectWidget3 from '../../../../shared/widgets/Select/selectWidget3';
+import axiosInstance from "../../../../utils/axiosMiddleware";
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
@@ -173,93 +174,36 @@ const uiSchema = {
     }
   }
 };
-
-const generateTooltip = (field, title, tooltipText, display) => {
-  if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
-    return null; // Return null to skip rendering tooltip for these fields
-  }
-
-  return (
-    <div className={`mx-2 flex ${field === 'WasteType' ? 'w-[22vw]' :   field === 'Unit' ? 'w-[5.2vw]' : 'w-[20vw]'
-    }`}>
-        <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
-      <MdInfoOutline
-        data-tooltip-id={field}
-        data-tooltip-content={tooltipText}
-        className="mt-1 ml-2 text-[12px]"
-        style={{display:display}}
-      />
-      <ReactTooltip
-        id={field}
-        place="top"
-        effect="solid"
-        style={{
-          width: "290px",
-          backgroundColor: "#000",
-          color: "white",
-          fontSize: "12px",
-          boxShadow: 3,
-          borderRadius: "8px",
-          textAlign: 'left',
-        }}
-      />
-    </div>
-  );
-};
-
 const Wastedivertedimpact = ({location, year, month}) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
-  const [r_schema, setRemoteSchema] = useState({})
-  const [r_ui_schema, setRemoteUiSchema] = useState({})
+  const [r_schema, setRemoteSchema] = useState({});
+  const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-  const getAuthToken = () => {
-      if (typeof window !== 'undefined') {
-          return localStorage.getItem('token')?.replace(/"/g, "");
-      }
-      return '';
-  };
-  const token = getAuthToken();
-
   const LoaderOpen = () => {
     setLoOpen(true);
   };
   const LoaderClose = () => {
     setLoOpen(false);
   };
-  const handleChange = (e) => {
-    setFormData(e.formData);
 
-  };
 
-  const handleAddNew = () => {
-    const newData = [...formData, {}];
-    setFormData(newData);
-
-  };
-
-  // The below code on updateFormData
-  let axiosConfig = {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  };
   const updateFormData = async () => {
+    LoaderOpen();
     const data = {
-      client_id : client_id,
-      user_id : user_id,
+      client_id: client_id,
+      user_id: user_id,
       path: view_path,
       form_data: formData,
       location,
       year,
-      month
-    }
+      month,
+    };
 
-    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
-    try{
-      const response = await axios.post(url,data, axiosConfig);
-
+    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
+    try {
+      const response = await axiosInstance.post(url, data);
       if (response.status === 200) {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -273,8 +217,7 @@ const Wastedivertedimpact = ({location, year, month}) => {
         });
         LoaderClose();
         loadFormData();
-
-      }else {
+      } else {
         toast.error("Oops, something went wrong", {
           position: "top-right",
           autoClose: 1000,
@@ -302,86 +245,70 @@ const Wastedivertedimpact = ({location, year, month}) => {
     }
   };
 
-    const loadFormData = async () => {
-      LoaderOpen();
-      setFormData([{}])
-      const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
-      try {
-          const response = await axios.get(url, axiosConfig);
-          console.log('API called successfully:', response.data);
-          setRemoteSchema(response.data.form[0].schema);
-          setRemoteUiSchema(response.data.form[0].ui_schema);
-          const form_parent = response.data.form_data;
-          setFormData(form_parent[0].data);
-      } catch (error) {
-          console.error('API call failed:', error);
-      } finally {
-          LoaderClose();
-      }
-  };
-  //Reloading the forms -- White Beard
-  useEffect(() => {
-    //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-  },[r_schema, r_ui_schema])
-
-  // console log the form data change
-  useEffect(() => {
-    console.log('Form data is changed -', formData)
-  },[formData])
-
-  // fetch backend and replace initialized forms
-  useEffect (()=> {
-    if (location && year && month) {
-        loadFormData();
-        toastShown.current = false; // Reset the flag when valid data is present
-    } else {
-        // Only show the toast if it has not been shown already
-       if (!toastShown.current) {
-
-            toastShown.current = true; // Set the flag to true after showing the toast
-        }
+  const loadFormData = async () => {
+    LoaderOpen();
+    setFormData([{}]);
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    try {
+      const response = await axiosInstance.get(url);
+      console.log("API called successfully:", response.data);
+      setRemoteSchema(response.data.form[0].schema);
+      setRemoteUiSchema(response.data.form[0].ui_schema);
+      const form_parent = response.data.form_data;
+      setFormData(form_parent[0].data);
+    } catch (error) {
+      console.error("API call failed:", error);
+    } finally {
+      LoaderClose();
     }
-  },[location, year, month])
-
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission
-    console.log('Form data:', formData);
-    updateFormData()
-
   };
+  useEffect(() => {
+    if (location && year && month) {
+      loadFormData();
+      toastShown.current = false; // Reset the flag when valid data is present
+    } else {
+      // Only show the toast if it has not been shown already
+      if (!toastShown.current) {
+        toastShown.current = true; // Set the flag to true after showing the toast
+      }
+    }
+  }, [location, year, month]); // Dependencies // React only triggers this effect if these dependencies change
+  const handleChange = (e) => {
+    const newData = e.formData.map((item, index) => ({
+      ...item, // Ensure each item retains its structure
+    }));
+    setFormData(newData); // Update the formData with new values
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    updateFormData();
+  };
+
+  const handleAddNew = () => {
+    const newData = [...formData, {}];
+    setFormData(newData);
+  
+  };
+ 
+
   const updateFormDatanew = (updatedData) => {
     setFormData(updatedData);
-
   };
+
   const handleRemove = (index) => {
     const updatedData = [...formData];
     updatedData.splice(index, 1);
     setFormData(updatedData);
+ 
   };
-  const renderFields = () => {
-    if (!r_schema || !r_schema.items || !r_schema.items.properties) {
-      return null;
-    }
-    const fields = Object.keys(r_schema.items.properties);
-    return fields.map((field, index) => (
-      <div key={index}>
-        {generateTooltip(field, r_schema.items.properties[field].title, r_schema.items.properties[field].tooltiptext, r_schema.items.properties[field].display)}
-      </div>
-    ));
-  };
+
+
   return (
     <>
-
-        <div className={`overflow-auto custom-scrollbar flex`}>
+      <div className={`overflow-auto custom-scrollbar flex`}>
         <div>
-          <div>
-            <div className='flex'>
-              {renderFields()} {/* Render dynamic fields with tooltips */}
-            </div>
-          </div>
-
           <Form
-          className='flex'
+            className="flex"
             schema={r_schema}
             uiSchema={r_ui_schema}
             formData={formData}
@@ -389,25 +316,30 @@ const Wastedivertedimpact = ({location, year, month}) => {
             validator={validator}
             widgets={{
               ...widgets,
-              RemoveWidget: (props) => (
-                <RemoveWidget
-                  {...props}
-                  index={props.id.split('_')[1]} // Pass the index
-                  onRemove={handleRemove}
-                />
-              ),
+
+              RemoveWidget: (props) => {
+                const match = props.id.match(/^root_(\d+)/);
+                const index = match ? parseInt(match[1], 10) : null;
+    
+                return (
+                  <RemoveWidget
+                    {...props}
+                    index={index}
+                    onRemove={handleRemove}
+                  />
+                );
+              },
               FileUploadWidget: (props) => (
                 <CustomFileUploadWidget
                   {...props}
-                  scopes="in1"
+                  scopes="ec2"
                   setFormData={updateFormDatanew}
                 />
-              )
-
+              ),
             }}
-
-          />
+          ></Form>
         </div>
+
         {loopen && (
           <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
             <Oval
@@ -421,16 +353,26 @@ const Wastedivertedimpact = ({location, year, month}) => {
           </div>
         )}
       </div>
+      <div></div>
 
       <div className="flex justify-start mt-4 right-1">
-        <button type="button" className="text-[#007EEF] text-[12px] flex cursor-pointer mt-5 mb-5" onClick={handleAddNew}>
-          <MdAdd className='text-lg' /> Add Row
+        <button
+          type="button"
+          className="text-[#007EEF] text-[12px] flex cursor-pointer mt-5 mb-5"
+          onClick={handleAddNew}
+        >
+          <MdAdd className="text-lg" /> Add Row
         </button>
       </div>
-      <div className='mb-4'>
-      <button type="button"  className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
+      <div className="mb-4">
+        <button
+          type="button"
+          className=" text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end"
+          onClick={handleSubmit}
+        >
+          Submit
+        </button>
       </div>
-
     </>
   );
 };

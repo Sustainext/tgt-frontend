@@ -19,6 +19,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
 import selectWidget3 from '../../../../shared/widgets/Select/selectWidget3';
 import inputnumberWidget from "../../../../shared/widgets/Input/inputnumberWidget"
+import axiosInstance from "../../../../utils/axiosMiddleware";
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
@@ -190,46 +191,6 @@ const uiSchema = {
   }
 };
 
-const generateUniqueId = (field) => {
-  return `${field}-${new Date().getTime()}`;
-};
-const generateTooltip = (field, title, tooltipText) => {
-  if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
-    return null; // Return null to skip rendering tooltip for these fields
-  }
-  const uniqueId = generateUniqueId(field);
-  return (
-     <div className={`mx-2 flex ${field === 'Quantitysavedduetointervention' ? 'w-[22vw]' : field === 'Unit'  ? 'w-[5.2vw]' : 'w-[20vw]'}`}>
-
-      <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
-      <div>
-      <MdInfoOutline
-        data-tooltip-id={uniqueId}
-        data-tooltip-content={tooltipText}
-        className="mt-1 ml-2 text-[12px]"
-      />
-      <ReactTooltip
-        id={uniqueId}
-        place="top"
-        effect="solid"
-
-        style={{
-          width: "290px",
-          backgroundColor: "#000",
-          color: "white",
-          fontSize: "12px",
-          boxShadow: 3,
-          borderRadius: "8px",
-          textAlign: 'left',
-
-        }}
-
-      />
-      </div>
-
-    </div>
-  );
-};
 const Reductionenergy = ({location, year, month}) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
@@ -237,36 +198,25 @@ const Reductionenergy = ({location, year, month}) => {
   const [r_ui_schema, setRemoteUiSchema] = useState({})
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-  const getAuthToken = () => {
-      if (typeof window !== 'undefined') {
-          return localStorage.getItem('token')?.replace(/"/g, "");
-      }
-      return '';
-  };
-  const token = getAuthToken();
+
+
   const LoaderOpen = () => {
     setLoOpen(true);
   };
   const LoaderClose = () => {
     setLoOpen(false);
   };
-  const handleChange = (e) => {
-    setFormData(e.formData);
+  // const handleChange = (e) => {
+  //   setFormData(e.formData);
 
-  };
+  // };
 
-  const handleAddNew = () => {
-    const newData = [...formData, {}];
-    setFormData(newData);
+  // const handleAddNew = () => {
+  //   const newData = [...formData, {}];
+  //   setFormData(newData);
 
-  };
+  // };
 
-  // The below code on updateFormData
-  let axiosConfig = {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  };
   const updateFormData = async () => {
     const data = {
       client_id : client_id,
@@ -280,7 +230,7 @@ const Reductionenergy = ({location, year, month}) => {
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
     try{
-      const response = await axios.post(url, data, axiosConfig);
+      const response = await axiosInstance.post(url,data);
 
       if (response.status === 200) {
         toast.success("Data added successfully", {
@@ -329,7 +279,7 @@ const Reductionenergy = ({location, year, month}) => {
       setFormData([{}])
       const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
       try {
-          const response = await axios.get(url, axiosConfig);
+          const response = await axiosInstance.get(url);
           console.log('API called successfully:', response.data);
           setRemoteSchema(response.data.form[0].schema);
           setRemoteUiSchema(response.data.form[0].ui_schema);
@@ -365,43 +315,45 @@ const Reductionenergy = ({location, year, month}) => {
     }
   },[location, year, month])
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission
-    console.log('Form data:', formData);
-    updateFormData()
-
+  const handleChange = (e) => {
+    const newData = e.formData.map((item, index) => ({
+      ...item, // Ensure each item retains its structure
+    }));
+    setFormData(newData); // Update the formData with new values
   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    updateFormData();
+  };
+
+  const handleAddNew = () => {
+    const newData = [...formData, {}];
+    setFormData(newData);
+  
+  };
+ 
+
   const updateFormDatanew = (updatedData) => {
     setFormData(updatedData);
-
   };
+
   const handleRemove = (index) => {
     const updatedData = [...formData];
     updatedData.splice(index, 1);
     setFormData(updatedData);
-  }
-  const renderFields = () => {
-    if (!r_schema || !r_schema.items || !r_schema.items.properties) {
-      return null;
-    }
-    const fields = Object.keys(r_schema.items.properties);
-    return fields.map((field, index) => (
-      <div key={index}>
-        {generateTooltip(field, r_schema.items.properties[field].title, r_schema.items.properties[field].tooltiptext)}
-      </div>
-    ));
+ 
   };
+  
 
 
   return (
     <>
 
+
         <div className={`overflow-auto custom-scrollbar flex`}>
         <div>
           <div>
-            <div className='flex'>
-              {renderFields()} {/* Render dynamic fields with tooltips */}
-            </div>
+         
           </div>
 
           <Form
@@ -413,13 +365,18 @@ const Reductionenergy = ({location, year, month}) => {
             validator={validator}
             widgets={{
               ...widgets,
-              RemoveWidget: (props) => (
-                <RemoveWidget
-                  {...props}
-                  index={props.id.split('_')[1]} // Pass the index
-                  onRemove={handleRemove}
-                />
-              ),
+              RemoveWidget: (props) => {
+                const match = props.id.match(/^root_(\d+)/);
+                const index = match ? parseInt(match[1], 10) : null;
+    
+                return (
+                  <RemoveWidget
+                    {...props}
+                    index={index}
+                    onRemove={handleRemove}
+                  />
+                );
+              },
               FileUploadWidget: (props) => (
                 <CustomFileUploadWidget
                   {...props}

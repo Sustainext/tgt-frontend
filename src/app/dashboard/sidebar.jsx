@@ -130,9 +130,9 @@ const Sidenav = () => {
 
   return (
     <>
-      <div className="min-h-[100vh] fixed z-[100]">
+      <div className="min-h-[120vh] fixed z-[100]">
         <div
-          className={`bg-[#0a0528] min-h-[135vh] pt-8 ${
+          className={`bg-[#0a0528] min-h-[130vh] pt-8 ${
             open ? "w-[15rem]" : "w-[4.5rem]"
           } duration-300 relative`}
         >
@@ -152,7 +152,7 @@ const Sidenav = () => {
               />
             </div>
           </div>
-          <ul className="pt-2 overflow-y-scroll h-[616px] scrollable-content">
+          <ul className="pt-2 overflow-y-scroll h-[110vh] scrollable-content">
             {Menus.map((menu, index) => (
               <React.Fragment key={index}>
                 {menu.submenu ? (
