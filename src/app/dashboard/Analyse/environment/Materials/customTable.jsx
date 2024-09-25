@@ -10,11 +10,21 @@ function DynamicTable({ columns, data }) {
   };
 
   const renderRows = () => {
+    if (data.length === 0) {
+      // Return a row with a message that there is no data, spanning all columns
+      return (
+        <tr className='border'>
+          <td colSpan={columns.length} className="text-center py-4">
+            No data available
+          </td>
+        </tr>
+      );
+    }
     return data.map((row, rowIndex) => (
       <tr key={rowIndex}>
         {row.type.includes('Total') ? (
           <>
-            <td colSpan={columns.length - 3} className="h-14 gradient-text px-4 py-2 border-y text-right font-bold text-sm">
+            <td colSpan={columns.length - 3} className="h-14  px-4 py-2 border-y text-right gradient-text text-opacity-20 font-bold text-sm">
               {row.type}
             </td>
             <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-sm">
@@ -23,6 +33,7 @@ function DynamicTable({ columns, data }) {
             <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-sm">
               {row.units}
             </td>
+            <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-sm"></td>
           </>
         ) : (
           columns.map((column, columnIndex) => (

@@ -11,7 +11,7 @@ import Parentaleavescreen from "./Parenta-leave"
 const Parentalleave = () => {
     const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
-  const [year, setYear] = useState("");
+  const [year, setYear] = useState(2024);
     const [data, setData] = useState();
     const [category, setCategory] = useState("");
     const [isOpen, setIsOpen] = useState(false);
@@ -45,7 +45,7 @@ const Parentalleave = () => {
                             <p className="text-sm">Social</p>
                             <div className='flex'>
                                 <div>
-                                    <p className="gradient-text text-[22px] font-bold">
+                                    <p className="gradient-text text-[22px] font-bold pt-1">
                                         Employment 2016
                                     </p>
                                 </div>

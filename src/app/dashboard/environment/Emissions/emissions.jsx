@@ -7,9 +7,11 @@ import { EmissionsProvider } from "./EmissionsContext";
 const Emissions = ({ open }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
-  const [year, setYear] = useState("");
+  const [locationname, setLocationname] = useState("");
+  const [year, setYear] = useState(2024);
   const [countryCode, setCountryCode] = useState('');
   const [locationError, setLocationError] = useState('');
+  const [yearError,setYearError] = useState('');
 
   return (
     <EmissionsProvider>
@@ -20,7 +22,7 @@ const Emissions = ({ open }) => {
               <div className="text-left mb-4 ml-3 pt-5">
                 <div className="flex">
                   <div>
-                    <p className="gradient-text text-[22px] font-bold">
+                    <p className="gradient-text text-[22px] font-bold pt-1">
                       Emissions
                     </p>
                     <p className="text-[10px]">
@@ -43,6 +45,9 @@ const Emissions = ({ open }) => {
           setCountryCode={setCountryCode}
           locationError={locationError}
           setLocationError={setLocationError}
+          yearError={yearError}
+          setYearError={setYearError}
+          setLocationname={setLocationname}
         />
         <Emissionsnbody
           open={open}
@@ -51,6 +56,8 @@ const Emissions = ({ open }) => {
           month={activeMonth}
           countryCode={countryCode}
           setLocationError={setLocationError}
+          setYearError={setYearError}
+          locationname={locationname}
         />
       </>
     </EmissionsProvider>

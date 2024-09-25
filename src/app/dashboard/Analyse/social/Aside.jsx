@@ -61,7 +61,103 @@ const Aside = ({ activeTab, handleTabClick }) => {
 
             <span className="mr-8 text-left">Forced or Compulsory Labour</span>
           </button>
+          <button
+            className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
+              activeTab === "Tab5"
+                ? "text-[#007EEF] "
+                : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
+            }`}
+            onClick={() => handleTabClick("Tab5")}
+          >
 
+            <span className="mr-8 text-left">Diversity & Inclusion</span>
+          </button>
+          <button
+            className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
+              activeTab === "Tab6"
+                ? "text-[#007EEF] "
+                : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
+            }`}
+            onClick={() => handleTabClick("Tab6")}
+          >
+            <span className="mr-8 text-left">Supplier Social assessment</span>
+          </button>
+          <button
+            className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
+              activeTab === "Tab7"
+                ? "text-[#007EEF] "
+                : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
+            }`}
+            onClick={() => handleTabClick("Tab7")}
+          >
+
+            <span className="mr-8 text-left">Training</span>
+          </button>
+          <button
+            className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
+              activeTab === "Tab8"
+                ? "text-[#007EEF] "
+                : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
+            }`}
+            onClick={() => handleTabClick("Tab8")}
+          >
+
+            <span className="mr-8 text-left">Non-Discrimination</span>
+          </button>
+
+          <button
+            className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
+              activeTab === "Tab9"
+                ? "text-[#007EEF] "
+                : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
+            }`}
+            onClick={() => handleTabClick("Tab9")}
+          >
+
+            <span className="mr-8 text-left">Collective Bargaining</span>
+          </button>
+
+          <button
+            className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
+              activeTab === "Tab10"
+                ? "text-[#007EEF] "
+                : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
+            }`}
+            onClick={() => handleTabClick("Tab10")}
+          >
+
+            <span className="mr-8 text-left">Community Development</span>
+          </button>
+          <button
+            className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
+              activeTab === "Tab12"
+                ? "text-[#007EEF] "
+                : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
+            }`}
+            onClick={() => handleTabClick("Tab12")}
+          >
+            <span className="mr-8 text-left">Customer Health and Safety</span>
+          </button>
+          <button
+            className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
+              activeTab === "Tab13"
+                ? "text-[#007EEF] "
+                : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
+            }`}
+            onClick={() => handleTabClick("Tab13")}
+          >
+            <span className="mr-8 text-left">Marketing and Labeling</span>
+          </button>
+          <button
+            className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
+              activeTab === "Tab14"
+                ? "text-[#007EEF] "
+                : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
+            }`}
+            onClick={() => handleTabClick("Tab14")}
+          >
+            <span className="mr-8 text-left">Customer Privacy</span>
+          </button>
         </div>
       </div>
     </div>

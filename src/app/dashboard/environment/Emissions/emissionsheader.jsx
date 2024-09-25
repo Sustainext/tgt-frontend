@@ -1,41 +1,62 @@
-'use client';
+"use client";
 import { useEffect, useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { yearInfo, months } from "@/app/shared/data/yearInfo";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import { useEmissions } from './EmissionsContext';
+// import { useEmissions } from "./EmissionsContext";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPreviousMonthData, setClimatiqData, resetPreviousMonthData } from '@/lib/redux/features/emissionSlice';
 
 const monthMapping = {
-  "Jan": 1,
-  "Feb": 2,
-  "Mar": 3,
-  "Apr": 4,
-  "May": 5,
-  "Jun": 6,
-  "Jul": 7,
-  "Aug": 8,
-  "Sep": 9,
-  "Oct": 10,
-  "Nov": 11,
-  "Dec": 12
+  Jan: 1,
+  Feb: 2,
+  Mar: 3,
+  Apr: 4,
+  May: 5,
+  Jun: 6,
+  Jul: 7,
+  Aug: 8,
+  Sep: 9,
+  Oct: 10,
+  Nov: 11,
+  Dec: 12,
 };
 
 const getMonthString = (monthNumber) => {
-  return Object.keys(monthMapping).find(key => monthMapping[key] === monthNumber);
+  return Object.keys(monthMapping).find(
+    (key) => monthMapping[key] === monthNumber
+  );
 };
 
-const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, year, setYear, setCountryCode, locationError, setLocationError }) => {
+const EmissionsHeader = ({
+  activeMonth,
+  setActiveMonth,
+  location,
+  setLocation,
+  year,
+  setYear,
+  setCountryCode,
+  locationError,
+  setLocationError,
+  yearError,
+  setYearError,
+  setLocationname
+}) => {
+
+  const dispatch = useDispatch();
+  const climatiqData = useSelector(state => state.emissions.climatiqData);
+
   const [formState, setFormState] = useState({
     location: location,
     year: year,
     month: activeMonth,
   });
 
-  const { climatiqData } = useEmissions();
+  // const { climatiqData } = useEmissions();
 
   const [locations, setLocations] = useState([]);
   const [localClimatiq, setlocalClimatiq] = useState(0);
-  const [countryCode, setCountryCodeState] = useState('');
+  const [countryCode, setCountryCodeState] = useState("");
 
   useEffect(() => {
     const fetchLocations = async () => {
@@ -51,15 +72,20 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, y
   }, []);
 
   useEffect(() => {
-    console.log('Got the climatiqData in header --- ');
-    if (climatiqData?.result?.[0]) {
+    if (climatiqData.result?.[0]) {
       let sum = 0;
       for (const item of climatiqData.result) {
         sum += item.co2e;
       }
-      setlocalClimatiq(sum);
+      sum = (sum / 1000).toFixed(3);
+      setlocalClimatiq((sum / 1000).toFixed(3));
+      dispatch(setClimatiqData(sum));
+    } else {
+      setlocalClimatiq(0);
+      dispatch(setClimatiqData(0));
     }
   }, [climatiqData]);
+
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -69,19 +95,24 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, y
       [name]: value,
     }));
 
-    setLocationError(""); // Clear any existing location error
+    setLocationError("");
+    setYearError("");
 
     if (name === "month") {
       setActiveMonth(monthMapping[value]);
+      dispatch(fetchPreviousMonthData({ location, year, month: monthMapping[value] }));
     } else if (name === "location") {
-      const selectedLocation = locations.find(loc => loc.name === value);
+      const selectedLocation = locations.find((loc) => loc.id === Number(value));
       if (selectedLocation) {
         setCountryCodeState(selectedLocation.country);
         setCountryCode(selectedLocation.country);
+        setLocationname(selectedLocation.name);
       }
-      setLocation(value);
+      setLocation(Number(value));
+      dispatch(resetPreviousMonthData());
     } else if (name === "year") {
       setYear(value);
+      dispatch(resetPreviousMonthData());
     }
   };
 
@@ -96,7 +127,7 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, y
   return (
     <>
       <div className="ml-2 mb-5">
-        <div className="flex gap-4 mb-5">
+        <div className="flex gap-4 mb-8">
           <div className="relative">
             <select
               name="location"
@@ -106,18 +137,25 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, y
             >
               <option value="">Select location</option>
               {locations.map((location, index) => (
-                <option key={index} value={location.name}>
+                <option key={index} value={location.id}>
                   {location.name}
                 </option>
               ))}
             </select>
-            <div className="absolute inset-y-0 right-2 flex items-center pl-3 pointer-events-none">
+            <div
+              className="absolute inset-y-0 right-2 flex items-center pointer-events-none"
+              style={{ top: "50%", transform: "translateY(-50%)" }}
+            >
               <MdKeyboardArrowDown
                 className="text-neutral-500"
                 style={{ fontSize: "16px" }}
               />
             </div>
-            {locationError && <p className="text-red-500 text-sm ps-2">{locationError}</p>}
+            {locationError && (
+              <p className="text-red-500 text-sm absolute top-9 left-0 pl-3">
+                {locationError}
+              </p>
+            )}
           </div>
           <div className="ml-3 relative">
             <select
@@ -133,18 +171,29 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, y
                 </option>
               ))}
             </select>
-            <div className="absolute inset-y-0 right-2 flex items-center pl-3 pointer-events-none">
+            <div
+              className="absolute inset-y-0 right-2 flex items-center pointer-events-none"
+              style={{ top: "50%", transform: "translateY(-50%)" }}
+            >
               <MdKeyboardArrowDown
                 className="text-neutral-500"
                 style={{ fontSize: "16px" }}
               />
             </div>
+            {yearError && (
+              <p className="text-red-500 text-sm absolute top-9 left-0 pl-3">
+                {yearError}
+              </p>
+            )}
           </div>
+
           <div className="w-full flex items-center justify-end">
             <div className="float-end">
               <p className="text-[12px]">
                 GHG Emissions for the month ={" "}
-                <span className="text-[#6adf23]">{localClimatiq} - kg - tCO2e </span>
+                <span className="text-[#6adf23]">
+                  {localClimatiq} tCO2e{" "}
+                </span>
               </p>
             </div>
           </div>
@@ -155,9 +204,13 @@ const EmissionsHeader = ({ activeMonth, setActiveMonth, location, setLocation, y
               <button
                 key={index}
                 className={`text-[12px] border-r mx-1 ${
-                  formState.month === monthMapping[month] ? "bg-white shadow-md rounded-lg" : ""
+                  formState.month === monthMapping[month]
+                    ? "bg-white shadow-md rounded-lg"
+                    : ""
                 }`}
-                onClick={() => handleChange({ target: { name: "month", value: month } })}
+                onClick={() =>
+                  handleChange({ target: { name: "month", value: month } })
+                }
               >
                 <p
                   className={`text-center ${

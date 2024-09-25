@@ -83,7 +83,7 @@ function Executivesummary({
                       Scope 1
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      {totalScope1.toFixed(2)} {uint1}
+                      {totalScope1.toFixed(2)}
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       {percentScope1.toFixed(2)}%
@@ -94,7 +94,7 @@ function Executivesummary({
                       Scope 2
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      {totalScope2.toFixed(2)} {uint2}
+                      {totalScope2.toFixed(2)}
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       {percentScope2.toFixed(2)}%
@@ -105,7 +105,7 @@ function Executivesummary({
                       Scope 3
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      {totalScope3.toFixed(2)} {uint3}
+                      {totalScope3.toFixed(2)}
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       {percentScope3.toFixed(2)}%
@@ -145,7 +145,7 @@ function Executivesummary({
                               {scope.scope_name}
                             </td>
                             <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                              {scope.total_co2e} {scope.co2e_unit}
+                            {scope.total_co2e.toFixed(2)}
                             </td>
                             <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                               {scope.contribution_scope}%

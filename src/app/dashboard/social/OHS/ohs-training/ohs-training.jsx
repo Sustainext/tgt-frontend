@@ -52,13 +52,16 @@ const uiSchema = {
     },
 };
 const Ohstrainingscreen = ({location, year, month}) => {
-    const [formData, setFormData] = useState([{
-        occupational: "",
-        generictraining: "",
-        specificworkre: "",
-        hazardousactivities: "",
-        hazardoussituations: ""
-    }]);
+    const initialFormData = [
+        {
+            occupational: "",
+            generictraining: "",
+            specificworkre: "",
+            hazardousactivities: "",
+            hazardoussituations: ""
+        }
+    ];
+    const [formData, setFormData] = useState(initialFormData);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
     const [loopen, setLoOpen] = useState(false);
@@ -70,7 +73,7 @@ const Ohstrainingscreen = ({location, year, month}) => {
         return '';
     };
     const token = getAuthToken();
-    
+
     const LoaderOpen = () => {
         setLoOpen(true);
       };
@@ -116,7 +119,7 @@ const Ohstrainingscreen = ({location, year, month}) => {
             });
             LoaderClose();
             loadFormData();
-    
+
           }else {
             toast.error("Oops, something went wrong", {
               position: "top-right",
@@ -149,25 +152,22 @@ const Ohstrainingscreen = ({location, year, month}) => {
         // }
     };
 
-    const loadFormData = async () => {
+   const loadFormData = async () => {
         LoaderOpen();
+        setFormData(initialFormData);
         const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
-        
         try {
             const response = await axios.get(url, axiosConfig);
             console.log('API called successfully:', response.data);
             setRemoteSchema(response.data.form[0].schema);
             setRemoteUiSchema(response.data.form[0].ui_schema);
-            const form_parent = response.data.form_data;
-            setFormData(form_parent[0].data);
-            // const f_data = form_parent[0].data
-            // setFormData(f_data)
+            setFormData(response.data.form_data[0].data);
         } catch (error) {
-            console.error('API call failed:', error);
+            setFormData(initialFormData);
         } finally {
             LoaderClose();
         }
-    }
+    };
     //Reloading the forms
     useEffect(() => {
         //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
@@ -186,16 +186,7 @@ const Ohstrainingscreen = ({location, year, month}) => {
         } else {
             // Only show the toast if it has not been shown already
             if (!toastShown.current) {
-                toast.warn("Please select location, year, and month first", {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
+
                 toastShown.current = true; // Set the flag to true after showing the toast
             }
         }
@@ -227,8 +218,8 @@ const Ohstrainingscreen = ({location, year, month}) => {
         <>
             <div className="mx-2 p-3 mb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
                 <div className='mb-4 flex'>
-                    <div className='w-[80%]'>
-                        <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold mb-2'>
+                   <div className="w-[80%] relative">
+                        <h2 className='flex mx-2 text-[15px] text-gray-500 font-semibold mb-2'>
                         Occupational health and safety training
                             <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                                 data-tooltip-content="This section documents data corresponding to the
@@ -270,13 +261,21 @@ const Ohstrainingscreen = ({location, year, month}) => {
                     />
                 </div>
                 <div className="flex right-1 mx-2">
-                    <button type="button" className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5" onClick={handleAddCommittee}>
-                    Add category  <MdAdd className='text-lg' />
-                    </button>
+                {location && year && (
+                         <button type="button" className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5" onClick={handleAddCommittee}>
+                         Add category  <MdAdd className='text-lg' />
+                         </button>
+                    )}
+
                 </div>
 
-                <div className='mb-6'>
-                    <button type="button" className="text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
+               <div className='mb-6'>
+                <button type="button"
+                        className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? 'cursor-not-allowed' : ''}`}
+                        onClick={handleSubmit}
+                        disabled={!location || !year}>
+                        Submit
+                    </button>
                 </div>
             </div>
             {loopen && (

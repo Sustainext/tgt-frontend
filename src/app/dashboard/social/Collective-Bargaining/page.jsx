@@ -1,0 +1,141 @@
+"use client";
+import React, { useState, useEffect } from "react";
+import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
+import { Socialdata } from "../data/socialgriinfo";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+import Socialheader2 from "../socialheader2";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Screen1 from "./Screen1";
+import Screen2 from "./Screen2";
+import Screen3 from "./Screen3";
+const CollectiveBargaining = () => {
+  const [activeMonth, setActiveMonth] = useState(1);
+  const [location, setLocation] = useState("");
+  const [year, setYear] = useState(2024);
+  const [data, setData] = useState();
+  const [category, setCategory] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedOrg, setSelectedOrg] = useState("");
+  const [selectedCorp, setSelectedCorp] = useState("");
+  const toggleDrawerclose = () => {
+    setIsOpen(!isOpen);
+  };
+  const toggleDrawer = (selected) => {
+    setIsOpen(!isOpen);
+    setCategory(selected);
+  };
+  useEffect(() => {
+    var newData = [];
+    Socialdata.map((program) => {
+      program.category.map((tag) => {
+        if (tag === category) {
+          newData.push(program);
+        }
+      });
+    });
+    // //console.log(newData);
+    setData(newData);
+  }, [category]);
+
+  return (
+    <>
+     <ToastContainer style={{ fontSize: "12px" }} />
+      <div className="flex flex-col justify-start overflow-x-hidden ">
+        <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
+          <div className="w-[80%] relative">
+            <div className="text-left mb-4 ml-3 pt-5">
+              <p className="text-sm">Social</p>
+              <div className="flex">
+                <div >
+                  <p className="gradient-text text-[22px] h-[30px] font-bold pt-1">
+                  Freedom of Association and Collective Bargaining 2016
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="w-[20%] mt-2 float-end ">
+            <div className="flex float-end border-l">
+              <button
+                className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                onClick={() => toggleDrawer("58")}
+              >
+                GRI 407 - 1
+              </button>
+              <button
+                className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                onClick={() => toggleDrawer("22")}
+              >
+                SDG 8
+              </button>
+
+            </div>
+          </div>
+        </div>
+
+      <div className="ml-3 flex relative">
+          <h6 className="text-[17px] mb-4 font-semibold flex">
+          Freedom of Association and Collective Bargaining 2016
+            {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
+                            data-tooltip-content="This section documents data corresponding to total water
+                            withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[14px]" />
+                        <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
+                            width: "290px", backgroundColor: "#000",
+                            color: "white",
+                            fontSize: "12px",
+                            boxShadow: 3,
+                            borderRadius: "8px",
+                            textAlign: 'left',
+                        }}>
+
+                        </ReactTooltip> */}
+          </h6>
+        </div>
+        <div
+          className={`${
+            isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"
+          }
+fixed right-[51px]  w-[340px] h-full bg-white  rounded-md
+transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
+        >
+          {data &&
+            data.map((program) => (
+              <>
+                <div className="flex justify-between p-2 pt-5 pb-4 border-b-2 ">
+                  <div className="ml-2">{program.header}</div>
+
+                  <div className="ml-2 float-right">
+                    <h5
+                      className="text-[#727272] text-[17px] font-bold cursor-pointer"
+                      onClick={toggleDrawerclose}
+                    >
+                      <MdOutlineClear />
+                    </h5>
+                  </div>
+                </div>
+                <div> {program.data}</div>
+              </>
+            ))}
+        </div>
+      </div>
+      <Socialheader2
+        activeMonth={activeMonth}
+        setActiveMonth={setActiveMonth}
+        selectedOrg={selectedOrg}
+        setSelectedOrg={setSelectedOrg}
+        selectedCorp={selectedCorp}
+        setSelectedCorp={setSelectedCorp}
+        year={year}
+        setYear={setYear}
+      />
+      <Screen1 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year}  />
+      <Screen2 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year}  />
+      <Screen3 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year}  />
+      {/* <Screen2 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year} month={activeMonth} />
+      <Screen3 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year} month={activeMonth} /> */}
+    </>
+  );
+};
+export default CollectiveBargaining;

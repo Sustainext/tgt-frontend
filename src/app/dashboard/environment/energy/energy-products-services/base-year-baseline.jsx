@@ -37,20 +37,20 @@ const uiSchema = {
       "ui:Gri": "GRI 302-5b",
       'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
-    'ui:options': {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: 'horizontal', // Set layout to horizontal
+      'ui:options': {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: 'horizontal',
     }
   }
 };
 
 const Baseyearenergybaseline = ({location, year, month}) => {
-  
+
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({})
@@ -134,22 +134,23 @@ const Baseyearenergybaseline = ({location, year, month}) => {
     }
   };
 
-  const loadFormData = async () => {
-    LoaderOpen();
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
-    try {
-        const response = await axios.get(url, axiosConfig);
-        console.log('API called successfully:', response.data);
-        setRemoteSchema(response.data.form[0].schema);
-        setRemoteUiSchema(response.data.form[0].ui_schema);
-        const form_parent = response.data.form_data;
-        setFormData(form_parent[0].data);
-    } catch (error) {
-        console.error('API call failed:', error);
-    } finally {
-        LoaderClose();
-    }
-  }
+    const loadFormData = async () => {
+      LoaderOpen();
+      setFormData([{}])
+      const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+      try {
+          const response = await axios.get(url, axiosConfig);
+          console.log('API called successfully:', response.data);
+          setRemoteSchema(response.data.form[0].schema);
+          setRemoteUiSchema(response.data.form[0].ui_schema);
+          const form_parent = response.data.form_data;
+          setFormData(form_parent[0].data);
+      } catch (error) {
+          console.error('API call failed:', error);
+      } finally {
+          LoaderClose();
+      }
+  };
   //Reloading the forms -- White Beard
   useEffect(() => {
     //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
@@ -167,17 +168,8 @@ const Baseyearenergybaseline = ({location, year, month}) => {
         toastShown.current = false; // Reset the flag when valid data is present
     } else {
         // Only show the toast if it has not been shown already
-        if (!toastShown.current) {
-            toast.warn("Please select location, year, and month first", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
+       if (!toastShown.current) {
+
             toastShown.current = true; // Set the flag to true after showing the toast
         }
     }

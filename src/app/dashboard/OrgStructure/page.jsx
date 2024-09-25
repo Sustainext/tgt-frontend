@@ -269,7 +269,7 @@ const Table = ({ data, labels, currentIndex, rawData }) => {
         <td className='py-4 h-12 flex justify-center items-center'>
           {data.children ? (
             expanded ? (
-              <div className='relative'>
+              <div>
                 <div onClick={handleExpand}>
                   <FaAngleDown />
                 </div>
@@ -440,8 +440,8 @@ const token = getAuthToken();
   }, [token]);
 
   const fetchHierarchy = () => {
-    axios
-      .get(`${process.env.BACKEND_API_URL}/structure`,axiosConfig)
+    axiosInstance
+      .get(`${process.env.BACKEND_API_URL}/structure`)
       .then((response) => {
         setRawData(response.data);
         const filtered = filterData(response.data);

@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { Energydata } from "./../../../shared/data/Energydata";
-import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
-import { toast } from 'react-toastify';
-import { patch } from '../../../utils/axiosMiddleware';
+import { MdOutlineClear } from "react-icons/md";
 
 const Header = ({ activeTab, setIsBoxOpen }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,6 +26,15 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
   }, [category]);
 
   const gri = [
+    {
+      category: "Emissions",
+      tag: "GRI 305",
+      data: [
+        { tagid: "1", infoid: "43" },
+        { tagid: "2", infoid: "44" },
+        { tagid: "3", infoid: "45" },
+      ]
+    },
     {
       category: "Energy",
       tag: "GRI 302",
@@ -71,9 +78,27 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
         { tagid: "5", infoid: "18" },
 
       ]
+    },
+    {
+      category: "Supplier Environmental Assessment",
+      tag: "GRI 308",
+      data: [
+        { tagid: "1", infoid: "49" },
+        { tagid: "2", infoid: "50" },
+      ]
     }
   ];
   const sdg = [
+    {
+      category: "Emissions",
+      data: [
+        { id: 'sd5', label: 'SDG 3', bgColor: 'bg-[#4c9f38]' },
+        { id: 'sd3', label: 'SDG 12', bgColor: 'bg-yellow-600' },
+        { id: 'sd4', label: 'SDG 13', bgColor: 'bg-[#3f7e44]' },
+        { id: 'sd24', label: 'SDG 14', bgColor: 'bg-[#007dbc]' },
+        { id: 'sd8', label: 'SDG 15', bgColor: 'bg-[#4c9f38]' },
+      ]
+    },
     {
       category: "Energy",
       data: [
@@ -108,21 +133,19 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
       data: [
 
         { id: 'sd6', label: 'SDG 6', bgColor: 'bg-cyan-500' },
-
-
       ]
     }
   ];
   return (
     <>
     <div className="flex justify-between items-center border-b border-gray-200 pb-4 z-[100] relative">
-      <div className="h-[46px] flex-col justify-start items-start gap-0.5 inline-flex ms-8 mt-8">
+      <div className="h-[46px] flex-col justify-start items-start gap-0.5 inline-flex ms-4 mt-8">
         <div className="text-black text-opacity-50 text-[11px] font-semibold font-['Manrope'] capitalize leading-[14px]">
           Environment
         </div>
         <div className="h-[30px]">
-          <div className="h-[26px] flex justify-start items-end gap-3">
-            <div className="gradient-text text-opacity-20 text-[22px] font-medium font-['Manrope'] leading-[1.425rem]">
+          <div className=" flex justify-start items-end gap-3">
+            <div className="h-[28px] gradient-text text-opacity-20 text-[22px] font-medium font-['Manrope'] leading-[1.425rem] pt-1">
               {activeTab}
             </div>
             <div className="w-[95px] pl-1 pr-0.5 bg-slate-200 rounded justify-center items-center flex">

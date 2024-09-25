@@ -31,64 +31,64 @@ const view_path = 'gri-environment-water-303-4d-substances_of_concern'
 const client_id = 1
 const user_id = 1
 
-const schema = {
-  type: 'array',
-  items: {
-    type: 'object',
-    properties: {
-        Discharge: {
-        type: "string",
-        title: "Do you discharge any substances of concern",
-        enum: ['Yes', 'No'],
-        tooltiptext: "Do you withdraw water from third parties? if yes then please provide a breakdown of the total third party-water withdrawn by the withdrawal sources. Third-party water: municipal water suppliers and municipal wastewater treatment plants, public or private utilities, and other organizations involved in the provision, transport, treatment, disposal, or use of water and effluent",
-        display:"none",
-      },
-      Substanceconcern: {
-        type: "string",
-        title: "Substance of concern",
-        tooltiptext: "Mention the substances of concern for which discharges are treated.In the context of GRI Standard, substances of concern are those that cause irreversible damage to the waterbody,ecosystem, or human health. For example: chemicals, pollutants, heavy metals, contaminants or any toxic substances.",
-        display:"block",
-      },
-      Priority: {
-        type: "string",
-        title: "Method used to define priority",
-        enum: ['international standard', 'authoritative list','others'],
-        tooltiptext: "Indicate how does the company define the priority substances of concern",
-        display:"block",
-      },
-      Noncompliance: {
-        type: "string",
-        title: "No of noncompliance incident",
-        tooltiptext: "Indicate the number of times the organization has engaged in unauthorized discharges (non-compliance incidents) exceeding compliance limits? (if any)",
-        display:"block",
-      },
-      Approach: {
-        type: "string",
-        title: "Approach for setting discharge limits for priority substances of concern",
-        tooltiptext: "Provide a description of the approach used for setting discharge limits for priority substances of concern.",
-        display:"block",
-      },
+// const schema = {
+//   type: 'array',
+//   items: {
+//     type: 'object',
+//     properties: {
+//         Discharge: {
+//         type: "string",
+//         title: "Do you discharge any substances of concern",
+//         enum: ['Yes', 'No'],
+//         tooltiptext: "Do you withdraw water from third parties? if yes then please provide a breakdown of the total third party-water withdrawn by the withdrawal sources. Third-party water: municipal water suppliers and municipal wastewater treatment plants, public or private utilities, and other organizations involved in the provision, transport, treatment, disposal, or use of water and effluent",
+//         display:"none",
+//       },
+//       Substanceconcern: {
+//         type: "string",
+//         title: "Substance of concern",
+//         tooltiptext: "Mention the substances of concern for which discharges are treated.In the context of GRI Standard, substances of concern are those that cause irreversible damage to the waterbody,ecosystem, or human health. For example: chemicals, pollutants, heavy metals, contaminants or any toxic substances.",
+//         display:"block",
+//       },
+//       Priority: {
+//         type: "string",
+//         title: "Method used to define priority",
+//         enum: ['international standard', 'authoritative list','others'],
+//         tooltiptext: "Indicate how does the company define the priority substances of concern",
+//         display:"block",
+//       },
+//       Noncompliance: {
+//         type: "string",
+//         title: "No of noncompliance incident",
+//         tooltiptext: "Indicate the number of times the organization has engaged in unauthorized discharges (non-compliance incidents) exceeding compliance limits? (if any)",
+//         display:"block",
+//       },
+//       Approach: {
+//         type: "string",
+//         title: "Approach for setting discharge limits for priority substances of concern",
+//         tooltiptext: "Provide a description of the approach used for setting discharge limits for priority substances of concern.",
+//         display:"block",
+//       },
 
-      AssignTo: {
-        type: "string",
-        title: "Assign To",
-      },
-      FileUpload: {
-        type: "string",
-        format: "data-url",
-        title: "File Upload",
-      },
-      Remove: {
-        type: "string",
-        title: "Remove",
-      },
-      // Define other properties as needed
-    }
-  }
-};
+//       AssignTo: {
+//         type: "string",
+//         title: "Assign To",
+//       },
+//       FileUpload: {
+//         type: "string",
+//         format: "data-url",
+//         title: "File Upload",
+//       },
+//       Remove: {
+//         type: "string",
+//         title: "Remove",
+//       },
+//       // Define other properties as needed
+//     }
+//   }
+// };
 
 const uiSchema = {
- // Add flex-wrap to wrap fields to the next line
+
   items: {
     classNames: 'fieldset',
     'ui:order': [
@@ -109,13 +109,14 @@ const uiSchema = {
         },
       },
       Priority: {
-        'ui:widget': 'selectWidget', // Use your custom widget for QuantityUnit
+        'ui:widget': 'selectWidget',
         'ui:options': {
-          label: false // This disables the label for this field
+          label: false
         },
       },
       Noncompliance: {
         'ui:widget': 'inputWidget',
+        'ui:inputtype':'number',
         'ui:horizontal': true,
         'ui:options': {
           label: false,
@@ -133,27 +134,27 @@ const uiSchema = {
       "ui:widget": "AssignTobutton",
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     FileUpload: {
       'ui:widget': 'FileUploadWidget',
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     Remove: {
       "ui:widget": "RemoveWidget",
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
-    'ui:options': {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: 'horizontal', // Set layout to horizontal
+      'ui:options': {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: 'horizontal',
     }
   }
 };
@@ -165,7 +166,7 @@ const generateTooltip = (field, title, tooltipText,display) => {
 
   return (
     <div className='mx-2 flex w-[20vw]'>
-      <label className="text-[13px] leading-5 text-gray-700 flex">{title}</label>
+        <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
       <MdInfoOutline
         data-tooltip-id={field}
         data-tooltip-content={tooltipText}
@@ -285,22 +286,23 @@ const SubstancesconcernQ1 = ({location, year, month}) => {
     }
   };
 
-  const loadFormData = async () => {
-    LoaderOpen();
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
-    try {
-        const response = await axios.get(url, axiosConfig);
-        console.log('API called successfully:', response.data);
-        setRemoteSchema(response.data.form[0].schema);
-        setRemoteUiSchema(response.data.form[0].ui_schema);
-        const form_parent = response.data.form_data;
-        setFormData(form_parent[0].data);
-    } catch (error) {
-        console.error('API call failed:', error);
-    } finally {
-        LoaderClose();
-    }
-  }
+    const loadFormData = async () => {
+      LoaderOpen();
+      setFormData([{}])
+      const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+      try {
+          const response = await axios.get(url, axiosConfig);
+          console.log('API called successfully:', response.data);
+          setRemoteSchema(response.data.form[0].schema);
+          setRemoteUiSchema(response.data.form[0].ui_schema);
+          const form_parent = response.data.form_data;
+          setFormData(form_parent[0].data);
+      } catch (error) {
+          console.error('API call failed:', error);
+      } finally {
+          LoaderClose();
+      }
+  };
   //Reloading the forms -- White Beard
   useEffect(() => {
     //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
@@ -318,17 +320,8 @@ const SubstancesconcernQ1 = ({location, year, month}) => {
         toastShown.current = false; // Reset the flag when valid data is present
     } else {
         // Only show the toast if it has not been shown already
-        if (!toastShown.current) {
-            toast.warn("Please select location, year, and month first", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
+       if (!toastShown.current) {
+
             toastShown.current = true; // Set the flag to true after showing the toast
         }
     }
@@ -349,17 +342,20 @@ const SubstancesconcernQ1 = ({location, year, month}) => {
     setFormData(updatedData);
   };
   const renderFields = () => {
-    const fields = Object.keys(schema.items.properties);
+    if (!r_schema || !r_schema.items || !r_schema.items.properties) {
+      return null;
+    }
+    const fields = Object.keys(r_schema.items.properties);
     return fields.map((field, index) => (
       <div key={index}>
-        {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext,schema.items.properties[field].display)}
+        {generateTooltip(field, r_schema.items.properties[field].title, r_schema.items.properties[field].tooltiptext, r_schema.items.properties[field].display)}
       </div>
     ));
   };
   return (
     <>
 
-<div className={`overflow-auto custom-scrollbar flex`}>
+        <div className={`overflow-auto custom-scrollbar flex`}>
         <div>
           <div>
             <div className='flex'>

@@ -16,7 +16,7 @@ import { Oval } from 'react-loader-spinner';
 const widgets = {
     inputWidget: inputWidget2,
     RadioWidget: RadioWidget,
-    RadioWidget2:RadioWidget2,
+    RadioWidget2: RadioWidget2,
 };
 
 const view_path = 'gri-social-ohs-403-2d-work_related_incident'
@@ -98,7 +98,7 @@ const schema = {
 
 const uiSchema = {
     items: {
-        'ui:order': ['Q1', 'Q2', 'Q3', 'Q4', 'Q5','Q6','Q7'],
+        'ui:order': ['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6', 'Q7'],
         Q1: {
             "ui:title": "Description of Incident",
             "ui:tooltip": "Please describe the processes used to investigate work-related incidents.Example: Incidents might be due to, for example, electrical problems, explosion, fire; overflow, overturning, leakage, flow; breakage, bursting, splitting; loss of control, slipping, stumbling and falling; body movement without stress; body movement under/with stress; shock, fright; workplace violence or harassment.",
@@ -106,7 +106,7 @@ const uiSchema = {
             'ui:widget': 'inputWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Q2: {
@@ -116,7 +116,7 @@ const uiSchema = {
             'ui:widget': 'RadioWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Q3: {
@@ -126,7 +126,7 @@ const uiSchema = {
             'ui:widget': 'RadioWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Q4: {
@@ -136,7 +136,7 @@ const uiSchema = {
             'ui:widget': 'RadioWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Q5: {
@@ -146,7 +146,7 @@ const uiSchema = {
             'ui:widget': 'inputWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Q6: {
@@ -156,7 +156,7 @@ const uiSchema = {
             'ui:widget': 'RadioWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Q7: {
@@ -166,19 +166,19 @@ const uiSchema = {
             'ui:widget': 'inputWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
-        'ui:options': {
-            orderable: false, // Prevent reordering of items
-            addable: false, // Prevent adding items from UI
-            removable: false, // Prevent removing items from UI
-            layout: 'horizontal', // Set layout to horizontal
+     'ui:options': {
+            orderable: false,
+            addable: false,
+            removable: false,
+            layout: 'horizontal',
         },
     },
 };
 
-const Screen4 = ({location, year, month}) => {
+const Screen4 = ({ location, year, month }) => {
     const [formData, setFormData] = useState([{}]);
     const [r_schema, setRemoteSchema] = useState({})
     const [r_ui_schema, setRemoteUiSchema] = useState({})
@@ -194,10 +194,10 @@ const Screen4 = ({location, year, month}) => {
 
     const LoaderOpen = () => {
         setLoOpen(true);
-      };
-      const LoaderClose = () => {
+    };
+    const LoaderClose = () => {
         setLoOpen(false);
-      };
+    };
 
     const handleChange = (e) => {
         setFormData(e.formData);
@@ -206,111 +206,108 @@ const Screen4 = ({location, year, month}) => {
     // The below code on updateFormData
     let axiosConfig = {
         headers: {
-          Authorization: 'Bearer ' + token,
+            Authorization: 'Bearer ' + token,
         },
-      };
-  const updateFormData = async () => {
-    LoaderOpen();
-    const data = {
-      client_id : client_id,
-      user_id : user_id,
-      path: view_path,
-      form_data: formData,
-      location,
-      year,
-      month
-    }
-
-    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
-    try{
-      const response = await axios.post(url,data, axiosConfig);
-      if (response.status === 200) {
-        toast.success("Data added successfully", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        LoaderClose();
-        loadFormData();
-
-      }else {
-        toast.error("Oops, something went wrong", {
-          position: "top-right",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-        LoaderClose();
-      }
-    } catch (error) {
-      toast.error("Oops, something went wrong", {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-      LoaderClose();
-    }
-    //   console.log('Response:', response.data);
-    // } catch (error) {
-    //   console.error('Error:', error);
-    // }
-  };
-
-  const loadFormData = async () => {
-    LoaderOpen();
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
-    
-    try {
-        const response = await axios.get(url, axiosConfig);
-        console.log('API called successfully:', response.data);
-        setRemoteSchema(response.data.form[0].schema);
-        setRemoteUiSchema(response.data.form[0].ui_schema);
-        const form_parent = response.data.form_data;
-        setFormData(form_parent[0].data);
-        // const f_data = form_parent[0].data
-        // setFormData(f_data)
-    } catch (error) {
-        console.error('API call failed:', error);
-    } finally {
-        LoaderClose();
-    }
-  }
-  //Reloading the forms -- White Beard
-  useEffect(() => {
-    //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-  },[r_schema, r_ui_schema])
-
-  // console log the form data change
-  useEffect(() => {
-    console.log('Form data is changed -', formData)
-  },[formData])
-
-  // fetch backend and replace initialized forms
-  useEffect (()=> {
-    if (location && year && month) {
-        loadFormData();
-        toastShown.current = false; // Reset the flag when valid data is present
-    } else {
-        // Only show the toast if it has not been shown already
-        if (!toastShown.current) {
-            toastShown.current = true; // Set the flag to true after showing the toast
+    };
+    const updateFormData = async () => {
+        LoaderOpen();
+        const data = {
+            client_id: client_id,
+            user_id: user_id,
+            path: view_path,
+            form_data: formData,
+            location,
+            year,
+            month
         }
-    }
-  },[location, year, month])
+
+        const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
+        try {
+            const response = await axios.post(url, data, axiosConfig);
+            if (response.status === 200) {
+                toast.success("Data added successfully", {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+                LoaderClose();
+                loadFormData();
+
+            } else {
+                toast.error("Oops, something went wrong", {
+                    position: "top-right",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+                LoaderClose();
+            }
+        } catch (error) {
+            toast.error("Oops, something went wrong", {
+                position: "top-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+            LoaderClose();
+        }
+        //   console.log('Response:', response.data);
+        // } catch (error) {
+        //   console.error('Error:', error);
+        // }
+    };
+
+    const loadFormData = async () => {
+        LoaderOpen();
+        setFormData([{}]);
+        const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+        try {
+            const response = await axios.get(url, axiosConfig);
+            console.log('API called successfully:', response.data);
+            setRemoteSchema(response.data.form[0].schema);
+            setRemoteUiSchema(response.data.form[0].ui_schema);
+            setFormData(response.data.form_data[0].data);
+        } catch (error) {
+            setFormData([{}]);
+        } finally {
+            LoaderClose();
+        }
+    };
+    //Reloading the forms -- White Beard
+    useEffect(() => {
+        //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
+    }, [r_schema, r_ui_schema])
+
+    // console log the form data change
+    useEffect(() => {
+        console.log('Form data is changed -', formData)
+    }, [formData])
+
+    // fetch backend and replace initialized forms
+    useEffect(() => {
+        if (location && year && month) {
+            loadFormData();
+            toastShown.current = false; // Reset the flag when valid data is present
+        } else {
+            // Only show the toast if it has not been shown already
+            if (!toastShown.current) {
+                toastShown.current = true; // Set the flag to true after showing the toast
+            }
+        }
+    }, [location, year, month])
 
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent the default form submission
@@ -320,33 +317,33 @@ const Screen4 = ({location, year, month}) => {
 
     return (
         <>
-            <div className="mx-2  p-3 mb-6 rounded-md" style={{boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px"}}>
+            <div className="mx-2  p-3 mb-6 pb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
                 <div className='mb-4 flex'>
-                    <div className='w-[80%]'>
-                    <h2 className='flex mx-2 text-[16px] text-[#344054CC] font-semibold'>
-                    Work-Related Incident Investigation
-                        <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
-                            data-tooltip-content="This section documents data corresponding to the
+                   <div className="w-[80%] relative">
+                        <h2 className='flex mx-2 text-[16px] text-[#344054CC] font-semibold'>
+                            Work-Related Incident Investigation
+                            <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
+                                data-tooltip-content="This section documents data corresponding to the
                             organization's processes for investigating work-related incidents." className="mt-1.5 ml-2 text-[14px]" />
-                        <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
-                            width: "290px", backgroundColor: "#000",
-                            color: "white",
-                            fontSize: "12px",
-                            boxShadow: 3,
-                            borderRadius: "8px",
-                            textAlign: 'left',
-                        }}>
-                        </ReactTooltip>
-                    </h2>
+                            <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
+                                width: "290px", backgroundColor: "#000",
+                                color: "white",
+                                fontSize: "12px",
+                                boxShadow: 3,
+                                borderRadius: "8px",
+                                textAlign: 'left',
+                            }}>
+                            </ReactTooltip>
+                        </h2>
                     </div>
 
-                    <div   className='w-[20%]'>
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-              GRI 403-2d
-              </p>
-            </div>
-          </div>
+                    <div className='w-[20%]'>
+                        <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
+                            <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
+                                GRI 403-2d
+                            </p>
+                        </div>
+                    </div>
                 </div>
                 <div className='mx-2'>
                     <Form
@@ -358,21 +355,26 @@ const Screen4 = ({location, year, month}) => {
                         widgets={widgets}
                     />
                 </div>
-                <div className='mb-6'>
-                    <button type="button" className="text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end" onClick={handleSubmit}>Submit</button>
+               <div className='mb-6'>
+                <button type="button"
+                        className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? 'cursor-not-allowed' : ''}`}
+                        onClick={handleSubmit}
+                        disabled={!location || !year}>
+                        Submit
+                    </button>
                 </div>
             </div>
             {loopen && (
-            <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-                <Oval
-                height={50}
-                width={50}
-                color="#00BFFF"
-                secondaryColor="#f3f3f3"
-                strokeWidth={2}
-                strokeWidthSecondary={2}
-                />
-            </div>
+                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                    <Oval
+                        height={50}
+                        width={50}
+                        color="#00BFFF"
+                        secondaryColor="#f3f3f3"
+                        strokeWidth={2}
+                        strokeWidthSecondary={2}
+                    />
+                </div>
             )}
         </>
     );

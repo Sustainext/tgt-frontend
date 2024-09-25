@@ -1,7 +1,6 @@
-
-'use client'
-import React, { useState, useCallback } from "react";
-import { MdInfoOutline,MdOutlineDeleteOutline } from "react-icons/md";
+"use client";
+import React, { useState, useCallback, useEffect } from "react";
+import { MdInfoOutline, MdOutlineDeleteOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { debounce } from "lodash";
@@ -28,11 +27,13 @@ const CustomTableWidget = ({
     newData[index][key] = newValue;
     handleInputChange(newData);
   };
-
+  useEffect(() => {
+    console.log("CustomTableWidget value:", value);
+  }, [value]);
 
   return (
     <div style={{ overflowY: "auto", maxHeight: "400px" }}>
-      <table id={id}  className="rounded-md border border-gray-300 w-full">
+      <table id={id} className="rounded-md border border-gray-300 w-full">
         <thead className="gradient-background">
           <tr>
             {options.titles.map((item, idx) => (
@@ -41,49 +42,55 @@ const CustomTableWidget = ({
                 style={{ minWidth: "120px", textAlign: "left" }}
                 className="text-[12px] border border-gray-300 px-2 py-2"
               >
-                <div className="flex items-center">
-                  <p>{item.title}
-                    </p>
-                    <p>
+                <div className="flex items-center relative">
+                  <p>{item.title}</p>
+                  <p>
                     <MdInfoOutline
-                   data-tooltip-id={`tooltip-${item.title.replace(/\s+/g, '-')}`}
-                   data-tooltip-content={item.tooltip}
-                   style={{display:`${item.display}`}}
-
-                  className="ml-2 cursor-pointer" />
-                  <ReactTooltip
-                    id={`tooltip-${item.title.replace(/\s+/g, '-')}`}
-                    place="top"
-                    effect="solid"
-                    className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
-                  />
-                    </p>
-
-
+                      data-tooltip-id={`tooltip-${item.title.replace(
+                        /\s+/g,
+                        "-"
+                      )}`}
+                      data-tooltip-content={item.tooltip}
+                      style={{ display: `${item.display}` }}
+                      className="ml-2 cursor-pointer"
+                    />
+                    <ReactTooltip
+                      id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
+                      place="top"
+                      effect="solid"
+                      className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
+                    />
+                  </p>
                 </div>
               </th>
             ))}
+                   {formContext.view !== "0" && (
             <th></th>
+          )}
           </tr>
         </thead>
         <tbody>
-          {value.map((item, rowIndex) => (
+          {value?.map((item, rowIndex) => (
             <tr key={rowIndex}>
               {Object.keys(item).map((key, cellIndex) => (
                 <td key={cellIndex} className="border border-gray-300 p-3">
                   <InputField
-                    type="text"
+                    type={options.titles[cellIndex].type || "text"}
                     required={required}
                     value={item[key]}
-                    onChange={(newValue) => updateField(rowIndex, key, newValue)}
+                    onChange={(newValue) =>
+                      updateField(rowIndex, key, newValue)
+                    }
                   />
                 </td>
               ))}
-              <td className="border border-gray-300 p-3">
-                <button onClick={() => formContext.onRemove(rowIndex)}>
-                <MdOutlineDeleteOutline className='text-[23px] text-red-600' />
-                </button>
-              </td>
+               {formContext.view !== "0" && (
+                <td className="border border-gray-300 p-3">
+                  <button onClick={() => formContext.onRemove(rowIndex)}>
+                    <MdOutlineDeleteOutline className="text-[23px] text-red-600" />
+                  </button>
+                </td>
+              )}
             </tr>
           ))}
         </tbody>
@@ -95,7 +102,9 @@ const CustomTableWidget = ({
 // Component to handle individual input fields
 const InputField = ({ type, required, value, onChange }) => {
   const [inputValue, setInputValue] = useState(value);
-
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
   const handleInputChange = (e) => {
     const newValue = e.target.value;
     setInputValue(newValue);

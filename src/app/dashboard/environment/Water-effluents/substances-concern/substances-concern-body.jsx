@@ -6,12 +6,18 @@ import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import SubstancesconcernQ1 from "./substances-concernQ1"
 import SubstancesconcernQ2 from "./substances-concernQ2"
-const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year }) => {
+
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year, setYearMessage }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
   const handleClick = () => {
     if (!location) {
-      setLocationMessage("Please select a location and year")
+      setLocationMessage("Please select a location")
+
+      return;
+    }
+    if (!year) {
+      setYearMessage("Please select a year")
 
       return;
     }
@@ -24,11 +30,14 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
         className="py-3 w-[100%] text-left flex"
         onClick={handleClick}// Unique ID for the tooltip, spaces replaced by dashes
       >
+       <div className="flex justify-between">
+        <div className={`flex ${open ? "w-[65vw]" : "w-[74vw]"}`}>
         <div className="flex items-center">
           <h5 className="text-[14px] text-[#344054] px-3">{title}</h5>
         </div>
 
-        <div className="flex items-center justify-center">
+
+        <div className="flex items-center justify-center relative">
           <MdInfoOutline
             data-tooltip-id={`tooltip-${title.replace(/\s+/g, '-')}`} data-tooltip-content={tooltiptext} className="mt-1 text-[14px]" style={{display:display}} />
           {/* Tooltip */}
@@ -42,9 +51,11 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
 
           </ReactTooltip>
         </div>
-        <div className={`absolute flex justify-between ${isOpen ? 'right-[3rem]' : 'right-[3rem]'}`}>
+        </div>
+       <div className=" w-[20vw] ">
+       <div className={`flex float-end`}>
 
-            <>
+              <>
               {sdg && sdg.map((sdgItem, index) => (
                 <div key={index} className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2">
                   <p className="text-[#0057A5] text-[10px] inline-block align-middle px-2 font-semibold">{sdgItem}</p>
@@ -52,7 +63,10 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
               ))}
             </>
 
+
           <MdKeyboardArrowDown className={`text-2xl ${isOpen ? "rotate-180" : ""}`} />
+        </div>
+       </div>
         </div>
       </button>
       {isOpen && <div className="p-4">{children}</div>}
@@ -60,7 +74,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
   );
 };
 
-const Substancesconcernbody = ({location, year, month,setLocationMessage}) => {
+const Substancesconcernbody = ({location, year, month,setLocationMessage,setYearMessage}) => {
 
 
   return (
@@ -73,6 +87,8 @@ const Substancesconcernbody = ({location, year, month,setLocationMessage}) => {
           display="block"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
 
           <SubstancesconcernQ1 location={location} year={year} month={month}/>
@@ -86,6 +102,8 @@ const Substancesconcernbody = ({location, year, month,setLocationMessage}) => {
           display="block"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
 
           <SubstancesconcernQ2 location={location} year={year} month={month}/>

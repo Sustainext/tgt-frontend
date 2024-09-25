@@ -10,29 +10,76 @@ function DynamicTable({ columns, data }) {
   };
 
   const renderRows = () => {
-    return data.map((row, rowIndex) => (
-      <tr key={rowIndex}>
-        {row.type.includes('Total') ? (
-          <>
-            <td colSpan={columns.length - 2} className="h-14 gradient-text px-4 py-2 border-y text-right font-bold text-sm">
-              {row.type}
-            </td>
-            <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-sm">
-              {row.consumption}
-            </td>
-            <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-sm">
-              {row.units}
-            </td>
-          </>
-        ) : (
-          columns.map((column, columnIndex) => (
-            <td key={columnIndex} className={column.cellClass}>
-              {column.render ? column.render(row[column.dataIndex], row) : row[column.dataIndex]}
-            </td>
-          ))
-        )}
-      </tr>
-    ));
+    if (data.length === 0) {
+      // Return a row with a message that there is no data, spanning all columns
+      return (
+        <tr className='border'>
+          <td colSpan={columns.length} className="text-center py-4">
+            No data available
+          </td>
+        </tr>
+      );
+    }
+    return data.map((row, rowIndex) => {
+      const isTotalRow = row['Energy_type']?.toString().includes('Total');
+      const hasDoubleTotals = row.hasOwnProperty('Quantity2') && row.hasOwnProperty('Unit2');
+
+      if (isTotalRow) {
+        const colSpanValue = columns.length - (hasDoubleTotals ? 4 : 2);
+
+        if (hasDoubleTotals) {
+          return (
+            <tr key={rowIndex}>
+              <td
+                colSpan={colSpanValue}
+                className="h-14 gradient-text px-4 py-2 border-y text-right font-bold text-sm"
+              >
+                {row['Energy_type']}
+              </td>
+              <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-sm">
+                {row['Quantity1']}
+              </td>
+              <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-sm">
+                {row['Unit1']}
+              </td>
+              <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-sm">
+                {row['Quantity2']}
+              </td>
+              <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-sm">
+                {row['Unit2']}
+              </td>
+            </tr>
+          );
+        } else {
+          return (
+            <tr key={rowIndex}>
+              <td
+                colSpan={colSpanValue}
+                className="h-14 gradient-text px-4 py-2 border-y text-right font-bold text-sm"
+              >
+                {row['Energy_type']}
+              </td>
+              <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-sm">
+                {row['Quantity']}
+              </td>
+              <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-sm">
+                {row['Unit']}
+              </td>
+            </tr>
+          );
+        }
+      } else {
+        return (
+          <tr key={rowIndex}>
+            {columns.map((column, columnIndex) => (
+              <td key={columnIndex} className={column.cellClass}>
+                {column.render ? column.render(row[column.dataIndex], row) : row[column.dataIndex]}
+              </td>
+            ))}
+          </tr>
+        );
+      }
+    });
   };
 
   return (

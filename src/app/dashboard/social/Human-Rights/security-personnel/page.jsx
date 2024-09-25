@@ -10,7 +10,7 @@ import Securitypersonnelscreen from "./security-personnel"
 const Securitypersonnel = () => {
     const [activeMonth, setActiveMonth] = useState(1);
     const [location, setLocation] = useState("");
-    const [year, setYear] = useState("");
+    const [year, setYear] = useState(2024);
     const [data, setData] = useState();
     const [category, setCategory] = useState("");
     const [isOpen, setIsOpen] = useState(false);
@@ -44,7 +44,7 @@ const Securitypersonnel = () => {
                             <p className="text-sm">Social</p>
                             <div className='flex'>
                                 <div>
-                                    <p className="gradient-text text-[22px] font-bold">
+                                    <p className="gradient-text text-[22px] font-bold pt-1">
                                     Security Practices 2016
                                     </p>
                                 </div>
@@ -103,7 +103,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
 
                 </div>
             </div>
-            <Socialheader 
+            <Socialheader
             activeMonth={activeMonth}
             setActiveMonth={setActiveMonth}
             location={location}

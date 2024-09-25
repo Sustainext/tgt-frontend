@@ -954,51 +954,64 @@ export const Energydata = [
     category: ["11"],
     header: [
       <h5 className="text-sky-600 text-[17px] font-bold">
-      GRI 301: Materials 2016
+        GRI 301: Materials 2016
       </h5>,
     ],
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Disclosure 301-1 Materials used by weight or volume
+            Disclosure 301-1 Materials used by weight or volume
           </p>
 
           <div className="h-[350px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-[#222222] mb-2">
-            Renewable Materials:
+              Renewable Materials:
             </p>
 
             <p className="text-[11px] text-[#727272] mb-2">
-            Materials that can be replenished naturally over time, such as Wood, Paper, Leather.
+              Materials that can be replenished naturally over time, such as
+              Wood, Paper, Leather.
             </p>
 
             <p className="text-[11px] text-[#222222] mb-2">
-            Non-Renewable Materials:
+              Non-Renewable Materials:
             </p>
 
             <p className="text-[11px] text-[#727272] mb-2">
-            Materials that cannot be replenished naturally over time. They are typically formed from geological processes that take millions of years, such as Fossil Fuel, Glass, Fuel.
-</p>
-            <p className="text-[11px] text-[#222222] mb-2">Internally sourced materials  </p>
-            <p className="text-[11px] text-[#727272] mb-2">
-            Materials that the company makes itself.
+              Materials that cannot be replenished naturally over time. They are
+              typically formed from geological processes that take millions of
+              years, such as Fossil Fuel, Glass, Fuel.
             </p>
-            <p className="text-[11px] text-[#222222] mb-2">Estimation  </p>
-            <p className="text-[11px] text-[#727272] mb-2">
-            Process of making an approximate calculation of something.
-            </p>
-            <p className="text-[11px] text-[#222222] mb-2">Direct measurement</p>
-            <p className="text-[11px] text-[#727272] mb-2">
-            Process of measuring something directly. For example, a company might directly measure the total weight or volume of materials used by weighing or measuring each batch of materials used.
+            <p className="text-[11px] text-[#222222] mb-2">
+              Internally sourced materials{" "}
             </p>
             <p className="text-[11px] text-[#727272] mb-2">
-            GRI 301-1 focuses on the materials an organization uses, measured by weight or volume. This data is important to understand the organization's resource consumption.
+              Materials that the company makes itself.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Estimation </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Process of making an approximate calculation of something.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">
+              Direct measurement
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Process of measuring something directly. For example, a company
+              might directly measure the total weight or volume of materials
+              used by weighing or measuring each batch of materials used.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              GRI 301-1 focuses on the materials an organization uses, measured
+              by weight or volume. This data is important to understand the
+              organization's resource consumption.
             </p>
 
             <p className="text-[11px] text-[#222222] mb-2">GRI Guidance: </p>
             <p className="text-[11px] text-[#727272] mb-2">
-            The reported usage data are to reflect the material in its original state, and not to be presented with further data manipulation, such as reporting it as ‘dry weight’.
+              The reported usage data are to reflect the material in its
+              original state, and not to be presented with further data
+              manipulation, such as reporting it as ‘dry weight’.
             </p>
           </div>
           <div>
@@ -1067,8 +1080,8 @@ export const Energydata = [
               </li>
             </ul>
             <p className="text-[11px] text-[#727272] mb-2">
-              Percentage of recycled input materials used = [Total recycled input
-              materials used/Total input materials used] * 100
+              Percentage of recycled input materials used = [Total recycled
+              input materials used/Total input materials used] * 100
             </p>
 
             <p className="text-[11px] text-[#222222] mb-2">GRI Guidance:</p>
@@ -1616,12 +1629,16 @@ export const Energydata = [
   },
   {
     category: ["19"],
-    header: [<h5 className="text-sky-600 text-[17px] font-bold">GRI 401: Employment 2016</h5>],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 401: Employment 2016
+      </h5>,
+    ],
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          GRI 401-1:New employee hires and employee turnover
+            GRI 401-1:New employee hires and employee turnover
           </p>
           <div className="h-[350px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-4">GRI Guidance:</p>
@@ -1652,12 +1669,17 @@ export const Energydata = [
   },
   {
     category: ["20"],
-    header: [<h5 className="text-sky-600 text-[17px] font-bold">GRI 401: Employment 2016</h5>],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 401: Employment 2016
+      </h5>,
+    ],
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          GRI 401-2: Benefits provided to full-time employees that are not provided to temporary or part-time employees
+            GRI 401-2: Benefits provided to full-time employees that are not
+            provided to temporary or part-time employees
           </p>
           <div className="h-[350px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-4">Background</p>
@@ -1694,11 +1716,17 @@ export const Energydata = [
   },
   {
     category: ["21"],
-    header: [<h5 className="text-sky-600 text-[17px] font-bold">GRI 401: Employment 2016</h5>],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 401: Employment 2016
+      </h5>,
+    ],
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <p className="text-[15px] text-[#0057A5] mb-4">GRI 401-3: Parental Leave</p>
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            GRI 401-3: Parental Leave
+          </p>
           <div className="h-[350px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-[#727272] mb-4">
               Employees entitled to parental leave means those employees that
@@ -1716,6 +1744,2198 @@ export const Energydata = [
               target="_blank"
             >
               Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+
+  {
+    category: ["22"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 403: Occupational Health and Safety 2018
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            GRI 403-4: Worker participation, consultation and communication on
+            occupational health and safety
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">GRI Guidance 403-4a:</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              When describing the processes for worker participation in
+              occupational health and safety, the reporting organization can
+              include information on:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                Formal participation, based on legal requirements;
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                Participation through engagement with formally recognized
+                workers’ representatives;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Direct participation, particularly by affected workers (e.g.,
+                the direct involvement of all workers in occupational health and
+                safety decisions in small organizations);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                The use of committees, and how these committees are established
+                and operated;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Participation in the occupational health and safety management
+                system (e.g., participation in identification of hazards,
+                assessment of risks, application of the hierarchy of controls,
+                investigation of incidents, audits, decision-making about the
+                use of contractors and outsourcing);
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                How obstacles to participation are identified and removed (e.g.,
+                by providing training, by protecting workers against reprisals).
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-4">
+              When describing the processes for providing access to and
+              communicating relevant information on occupational health and
+              safety to workers, the organization can report whether it provides
+              information about work-related incidents and the actions taken in
+              response.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 403-4-b
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              A common form of worker participation in occupational health and
+              safety is through joint management-worker health and safety
+              committees. In addition to direct participation of workers from
+              all job levels in these committees, workers’ representatives,
+              where they exist, might also be involved in these joint
+              activities, as they might be authorized to make decisions about
+              occupational health and safety, among other workplace decisions.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Where formal joint management-worker health and safety committees
+              exist, the organization can also describe the level at which each
+              committee operates within the organization, its dispute resolution
+              mechanism, its chairing responsibilities, and how the committee
+              members are protected against reprisals.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Disclosure 403-4-b requires a description of whether and, if so,
+              why any workers are not represented by these committees. It does
+              not require information on which workers are or are not members of
+              such committees.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["23"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 403: Occupational Health and Safety 2018
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            GRI 403-8: Workers covered by an occupational health and safety
+            management system
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">GRI Guidance 403-8a:</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure indicates what proportion of an organization’s
+              employees, and workers who are not employees but whose work and/or
+              workplace is controlled by the organization, are covered by an
+              occupational health and safety management system based on legal
+              requirements and/or recognized standards/guidelines. The list of
+              legal requirements and/or recognized standards/guidelines used by
+              the reporting organization in its occupational health and safety
+              management system are reported using Disclosures 403-1-a-i and
+              403-1-a-ii in the Topic management disclosures section. If not all
+              workers are covered by the occupational health and safety
+              management system, the organization can report whether any of the
+              workers not covered are at high risk of work-related injury or ill
+              health. In addition to the information required by this
+              disclosure, the organization can report the number and percentage
+              of sites covered by an occupational health and safety management
+              system based on legal requirements and/or recognized
+              standards/guidelines. The organization can also describe:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                The approach used for internal audits (e.g., whether they are
+                carried out following an internally-developed audit standard or
+                a recognized audit standard, what is the qualification of the
+                auditors);
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                Whether any processes or functions have been excluded from the
+                scope of the audit or certification, and how occupational health
+                and safety performance is being monitored in those areas;
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                The audit or certification standard used.
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Audits by external parties may include both second-party and
+              third-party audits. Second-party audits are usually performed by
+              customers or others on behalf of customers, or by any other
+              external parties that have a formal interest in the organization.
+              Third-party audits are performed by independent organizations such
+              as registrars (i.e., certification bodies) or regulators.
+            </p>
+            <p className="text-[11px] text-black mb-2">GRI Guidance 403-8b:</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Types of worker can be based on criteria such as full-time,
+              part-time, non-guaranteed hours, permanent or temporary basis,
+              type or degree of control (e.g., control of work or workplace,
+              sole or shared control), and location, among others.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["24"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 403: Occupational Health and Safety 2018
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            GRI 403-9: Work-related injuries
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+              Compilation requirements:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              2.1 When compiling the information specified in Disclosure 403-9,
+              the reporting organization shall:
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-4">
+              2.1.1 exclude fatalities in the calculation of the number and rate
+              of high consequence work-related injuries;
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              2.1.2 include fatalities as a result of work-related injury in the
+              calculation of the number and rate of recordable work-related
+              injuries;
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              2.1.3 include injuries as a result of commuting incidents only
+              where the transport has been organized by the organization;
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              2.1.4calculate the rates based on either 200,000 or 1,000,000
+              hours worked, using the following formulas:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Rate of fatalities as a result of work-related injury = Number of
+              fatalities as a result of work-related injury
+              ______________________ Number of hours worked x [200,000 or
+              1,000,000] Rate of high-consequence work-related injuries
+              (excluding fatalities) = Number of high-consequence work-related
+              injuries (excluding fatalities) ______________________ Number of
+              hours worked x [200,000 or 1,000,000] Rate of recordable
+              work-related injuries = Number of recordable work-related injuries
+              ______________________ Number of hours worked x [200,000 or
+              1,000,000]
+            </p>
+            <p className="text-[11px] text-black mb-2">GRI Guidance 403-9:</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              An increase in the number or rate of reported incidents does not
+              necessarily mean that there have been a greater number of
+              incidents than before; it can indicate an improvement in the
+              recording and reporting of incidents. If an increase in the number
+              or rate of reported incidents is the result of the organization’s
+              actions to improve the reporting and recording of fatalities,
+              injuries, and ill health, or its actions to expand the scope of
+              its management system to cover more workers or workplaces, the
+              reporting organization can explain this and report on these
+              actions and their results. Types of work-related injury can
+              include death, amputation of a limb, laceration, fracture, hernia,
+              burns, loss of consciousness, and paralysis, among others. In the
+              context of this Standard, work-related musculoskeletal disorders
+              are covered under ill health (and not injuries) and are to be
+              reported using Disclosure 403-10. If the organization operates in
+              a jurisdiction where worker compensation systems classify
+              musculoskeletal disorders as injuries, the organization can
+              explain this and report these disorders using Disclosure 403-9.
+              Injuries involving members of the public as a result of a
+              work-related incident are not included in this disclosure, but the
+              organization can report this information separately. For example,
+              the organization can report incidents where a vehicle driven by a
+              worker causes the deaths of other road users or incidents where
+              visitors are injured during their visit to the organization’s
+              workplace.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for reporting on high-consequence work-related injuries
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              As per the definition of recordable work-related injury, the
+              organization is required to report all work-related injuries as
+              part of the ‘number and rate of recordable work-related injuries’.
+              In addition, the organization is required to separately report
+              high-consequence work- related injuries, with a breakdown by:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                Fatalities, to be reported using Disclosures 403-9-a-i and
+                403-9-b-i.
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                Other injuries from which the worker cannot recover (e.g.,
+                amputation of a limb), or does not or is not expected to recover
+                fully to pre-injury health status within 6 months (e.g.,
+                fracture with complications), to be reported using Disclosures
+                403-9-a-ii and 403-9-b-ii.
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The definition of ‘high-consequence work-related injury’ uses
+              ‘recovery time’, instead of ‘lost time’, as the criterion for
+              determining the severity of an injury. Lost time is an indicator
+              of the loss of productivity for an organization as a result of a
+              work-related injury; it does not necessarily indicate the extent
+              of harm suffered by a worker.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              ‘Recovery time’, in contrast, refers to the time needed for a
+              worker to recover fully to pre-injury health status; it does not
+              refer to the time needed for a worker to return to work. In some
+              cases, a worker might return to work before full recovery.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              In addition to reporting information on high- consequence
+              work-related injuries based on recovery time as required by this
+              disclosure, the organization can also report the number and rate
+              of work-related injuries that resulted in lost-workday cases, the
+              average number of lost days per lost-workday case, the number of
+              lost workdays, and the absentee rate.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 403-9-c
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure covers work-related hazards that pose a risk of
+              high-consequence injury if not controlled, even when there are
+              control measures in place. The hazards might have been identified
+              proactively through risk assessment, or reactively as a result of
+              either a high- potential incident or a high-consequence injury.
+              Examples of work-related hazards causing or contributing to
+              high-consequence injuries include excessive workload demands,
+              tripping hazards, or exposure to flammable materials. If the
+              identified work-related hazards vary significantly across
+              different locations, the organization may group or disaggregate
+              these by relevant categories, such as by geographical area or
+              business line. Similarly, if there are a high number of hazards,
+              the organization may group or categorize them to facilitate
+              reporting. When reporting how it has determined which work-
+              related hazards pose a risk of high-consequence injury using
+              Disclosure 403-9-c-i, the organization can describe the criteria
+              or threshold used to determine which hazards pose such a risk and
+              which do not. The processes to identify hazards and assess risks,
+              and to apply the hierarchy of controls, are reported using
+              Disclosure 403-2-a.
+              <b>Disclosure 403-9-c-ii</b> does not require reporting which
+              work-related hazards have caused or contributed to which
+              high-consequence injuries during the reporting period; it requires
+              the aggregate analysis of all work- related hazards that resulted
+              in high-consequence injuries. If a work-related incident resulting
+              in a high-consequence injury is still under investigation at the
+              end of the reporting period, the organization can state this in
+              the report. The organization can report on actions taken during
+              the reporting period to eliminate hazards and minimize risks that
+              were identified, or to address work- related incidents that took
+              place, in prior reporting periods.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 403-9-d
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure covers any actions taken or underway to eliminate
+              other work-related hazards and minimize risks (i.e., not covered
+              in Disclosure 403-9-c) using the hierarchy of controls. This
+              disclosure can include actions taken in response to
+              non-high-consequence work- related injuries, and work-related
+              incidents with low probability of causing high-consequence
+              injuries.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 403-9-f
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Types of worker can be based on criteria such as employment type
+              (full-time or part-time), employment contract (permanent or
+              temporary), type or degree of control (e.g., control of work or
+              workplace, sole or shared control), and location, among others.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 403-9-g
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              If the organization follows the ILO code of practice on Recording
+              and notiflcation of occupational accidents and diseases, it can
+              state this in response to Disclosure 403-9-g. If the organization
+              does not follow the ILO code of practice, it can indicate which
+              system of rules it applies in recording and reporting work-related
+              injuries and its relationship to the ILO code of practice. If the
+              organization cannot directly calculate the number of hours worked,
+              it may estimate this on the basis of normal or standard hours of
+              work, taking into account entitlements to periods of paid leave of
+              absence from work (e.g., paid vacations, paid sick leave, public
+              holidays) and explain this in the report. When the organization
+              cannot directly calculate or estimate the number of hours worked
+              (e.g., because the workers performed non-routine work during an
+              emergency situation, or because the performed work was not paid
+              for by the hour), it is required to provide a reason for this
+              omission as set out in GRI 101: Foundation. See clause 3.2 in GRI
+              101 for requirements on reasons for omission
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for clauses 2.2.1 and 2.2.2
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Target 8.8 of the UN Sustainable Development Goals aims to
+              ‘protect labour rights and promote safe and secure working
+              environments for all workers, including migrant workers, in
+              particular women migrants, and those in precarious employment’.
+              Some groups might be at increased risk of work-related injury due
+              to demographic factors such as sex, gender, migrant status, or
+              age; it can thus be beneficial to break down data on work-related
+              injuries by these demographic criteria. ILO Convention 143
+              ‘Migrant Workers (Supplementary Provisions) Convention’ defines
+              ‘migrant worker’ as ‘a person who migrates or who has migrated
+              from one country to another with a view to being employed
+              otherwise than on his own account and includes any person
+              regularly admitted as a migrant worker’. If the data on
+              work-related injuries are driven primarily by certain types of
+              injury (e.g., amputation, paralysis) or incident (e.g., explosion,
+              road accident), the organization can provide a breakdown of this
+              information.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for clause 2.1.3
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Clause 2.1.3 requires the organization to include injuries as a
+              result of commuting incidents in cases where the transport has
+              been organized by the organization (e.g., company or contracted
+              bus or vehicle). The organization can report other commuting
+              incidents separately; for example if this information is to be
+              reported under local law.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for clause 2.1.4
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Clause 2.1.4 requires the organization to calculate the rates
+              based on either 200,000 or 1,000,000 hours worked. Standardized
+              rates allow for meaningful comparisons of statistics, for example
+              between different periods or organizations, or help account for
+              differences in the number of workers in the reference group and
+              the number of hours worked by them. A rate based on 200,000 hours
+              worked indicates the number of work-related injuries per 100
+              full-time workers over a one-year timeframe, based on the
+              assumption that one full-time worker works 2,000 hours per year.
+              For example, a rate of 1.0 means that, on average, there is one
+              work-related injury for every group of 100 full-time workers over
+              a one-year timeframe. A rate based on 1,000,000 hours worked
+              indicates the number of work-related injuries per 500 full-time
+              workers over a one-year timeframe. A rate based on 200,000 hours
+              worked might be more suitable for small organizations. In addition
+              to standardized rates, this disclosure requires the organization
+              to report absolute data (i.e., numbers), to allow information
+              users to calculate the rates themselves using other methodologies
+              if needed.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["25"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 403: Occupational Health and Safety 2018
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            GRI 403-10: Work-related ill health
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+              Compilation requirements:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              When compiling the information specified in Disclosure 403-10, the
+              reporting organization shall include fatalities as a result of
+              work-related ill health in the calculation of the number of cases
+              of recordable work-related ill health.
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-4">
+              Work-related ill health can include acute, recurring, and chronic
+              health problems caused or aggravated by work conditions or
+              practices. They include musculoskeletal disorders, skin and
+              respiratory diseases, malignant cancers, diseases caused by
+              physical agents (e.g., noise-induced hearing loss,
+              vibration-caused diseases), and mental illnesses (e.g., anxiety,
+              post-traumatic stress disorder).
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure covers, but is not limited to, the diseases
+              included in the ILO List of Occupational Diseases. In the context
+              of this Standard, work-related musculoskeletal disorders are
+              covered under ill health (and not injuries) and are to be reported
+              using this disclosure. See references 5 and 16 in the References
+              section.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure covers all cases of work-related ill health
+              notified to the reporting organization or identified by the
+              organization through medical surveillance, during the reporting
+              period. The organization might be notified of cases of
+              work-related ill health through reports by affected workers,
+              compensation agencies, or healthcare professionals. The disclosure
+              may include cases of work-related ill health that were detected
+              during the reporting period among former workers. If the
+              organization determines, for example through investigation, that
+              the notified case of work-related ill health is not due to
+              exposure whilst working for the organization, it can explain this
+              in the report.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure covers both short-latency and long- latency
+              work-related ill health. Latency refers to the time period between
+              exposure and the onset of ill health. Many cases of long-latency
+              work-related ill health go undetected; if detected, they might not
+              necessarily be due to exposures with one employer. For example, a
+              worker might be exposed to asbestos while working for different
+              employers over time, or might suffer from a long-latency disease
+              that turns fatal many years after the worker has left the
+              organization. For this reason, data on work-related ill health are
+              to be complemented with information on work-related hazards. In
+              some situations, an organization might not be able to collect or
+              publicly disclose data on work-related ill health. The following
+              are examples of these situations:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                National or regional regulations, contractual obligations,
+                health insurance provisions, and other legal requirements
+                related to the privacy of workers’ health-related information,
+                might prevent organizations from collecting, maintaining, and
+                publicly reporting these data.
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                The nature of information on workers’ exposure to psychosocial
+                factors, largely based on self-disclosure and in many instances
+                protected under healthcare privacy regulations, might limit
+                organizations in disclosing this information.
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-4">
+              In these situations, the organization is required to provide a
+              reason for omission of these data as set out in GRI 101:
+              Foundation. See clause 3.2 in GRI 101 for requirements on reasons
+              for omission. Cases of ill health involving members of the public
+              as a result of a work-related incident are not included in this
+              disclosure, but the organization can report this information
+              separately. An example of such an incident is when a chemical
+              substance spill causes ill health among members of a nearby
+              community.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 403-10-c
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure includes exposures to the 'International Agency
+              for Research on Cancer (IARC) Group 1’ (carcinogenic to humans),
+              ‘IARC Group 2A’ (probably carcinogenic to humans), and ‘IARC Group
+              2B’ (possibly carcinogenic to humans) agents.
+            </p>
+
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 403-10-d
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Types of worker can be based on criteria such as employment type
+              (full-time or part-time), employment contract (permanent or
+              temporary), type or degree of control (e.g., control of work or
+              workplace, sole or shared control), and location, among others.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 403-10-e
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              If the organization follows the ILO code of practice on Recording
+              and notiflcation of occupational accidents and diseases, it can
+              state this in response to Disclosure 403-10-e. If the organization
+              does not follow the ILO code of practice, it can indicate which
+              system of rules it applies in recording and reporting work-related
+              ill health and its relationship to the ILO code of practice.
+            </p>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for clause 2.4.1
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              If the data on work-related ill health are driven primarily by
+              certain types of ill health or disease (e.g., respiratory
+              diseases, skin diseases) or incident (e.g., exposure to bacteria
+              or viruses), the organization can provide a breakdown of this
+              information.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["26"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 408: Child Labor 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            GRI 408-1 Operations and suppliers at significant risk for incidents
+            of child labor
+          </p>
+          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 408-1
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The process for identifying operations and suppliers, as specified
+              in Disclosure 408-1, canreflect the reporting organization’s
+              approach to risk assessment on this issue. It can also drawfrom
+              recognized international data sources, such as the ILO Information
+              and reports on theapplication of Conventions and Recommendations
+              (see reference [1] in the Bibliography).When reporting the
+              measures taken, the organization can refer to the ILO ‘Tripartite
+              Declarationof Principles Concerning Multinational Enterprises and
+              Social Policy’ and Organisation forEconomic Co-operation and
+              Development (OECD) OECD Guidelines for MultinationalEnterprises
+              for further guidance.In the context of the GRI Standards, a ‘young
+              worker’ is defined as a person above theapplicable minimum working
+              age and younger than 18 years of age. Note that Disclosure
+              408-1does not require quantitative reporting on child labor or the
+              number of young workers. Rather, itasks for reporting on the
+              operations and suppliers considered to have significant risk
+              forincidents of child labor or young workers exposed to hazardous
+              work.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12622&page=7"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["27"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 409: Forced or Compulsory Labor 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            GRI 409-1: Operations and suppliers at significant risk for
+            incidents of forced or compulsory labor
+          </p>
+          <div className="h-[310px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 409-1
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The process for identifying operations and suppliers, as specified
+              in Disclosure 409-1, can reflect the reporting organization’s
+              approach to risk assessment on this issue. It can also draw from
+              recognized international data sources, such as the ILO Information
+              and reports on the application of Conventions and Recommendations
+              (see reference [1] in the Bibliography).When reporting the
+              measures taken, the organization can refer to the ILO ‘Tripartite
+              Declaration of Principles Concerning Multinational Enterprises and
+              Social Policy’ and Organisation for Economic Co-operation and
+              Development (OECD) OECD Guidelines for Multinational Enterprises
+              for further guidance
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12633&page=7"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["28"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 405: Diversity and Equal Opportunity 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            GRI 405-1: Diversity of governance bodies and employees
+          </p>
+          <div className="overflow-y-auto custom-scrollbar">
+            <div className="w-[232px] text-neutral-500 text-[11px] font-normal font-['Manrope'] leading-[14px] mb-5">
+              Examples of governance bodies that exist within an organization
+              can be the board of directors, management committee, or a similar
+              body for a non-corporate organization.
+              <br />
+              An organization can identify any other indicators of diversity
+              used in its own monitoring and recording that are relevant for
+              reporting.
+            </div>
+          </div>
+          <div className="text-neutral-800 text-[13px] font-normal font-['Manrope'] leading-none mb-5">
+            Background
+          </div>
+          <div className="w-[232px] text-neutral-500 text-[11px] font-normal font-['Manrope'] leading-[14px] mb-5">
+            This disclosure provides a quantitative measure of diversity within
+            an organization and can be used in conjunction with sectoral or
+            regional benchmarks. Comparisons between broad employee diversity
+            and management team diversity offer information on equal
+            opportunity. Information reported in this disclosure also helps in
+            assessing which issues can be of particular relevance to certain
+            segments of the governance bodies or employees.
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["29"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 414: Supplier Social Assessment 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            GRI 414-1: New suppliers that were screened using social criteria
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 414-1
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Social criteria can include the topics covered in other GRI Topic
+              Standards(e.g., GRI 401:Employment 2016, GRI 403: Occupational
+              Health and Safety 2018, GRI 408: Child Labor 2016,GRI 409: Forced
+              or Compulsory Labor 2016)
+            </p>
+            <p className="text-[11px] text-black mb-2">Background</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure informs stakeholders about the percentage of
+              suppliers selected or contracted subject to due diligence
+              processes for social impacts. An organization is expected to
+              initiate due diligence as early as possible in the development of
+              a new relationship with a supplier. Impacts may be prevented or
+              mitigated at the stage of structuring contracts or other
+              agreements, as well as via ongoing collaboration with suppliers.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12677&page=9"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["30"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 414: Supplier Social Assessment 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            GRI 414-2 Negative social impacts in the supply chain and actions
+            taken
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 414-2
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Negative impacts include those that are either caused or
+              contributed to by an organization, or that are directly linked to
+              its activities, products, or services by its relationship with a
+              supplier. Assessments for social impacts can include the topics in
+              the 400 series (Social topics). Assessments can be made against
+              agreed performance expectations that are set and communicated to
+              the suppliers prior to the assessment. Assessments can be informed
+              by audits, contractual reviews, two-way engagement, and complaint
+              and grievance mechanisms. Improvements can include changing an
+              organization’s procurement practices, the adjustment of
+              performance expectations, capacity building, training, and changes
+              to processes.
+            </p>
+            <p className="text-[11px] text-black mb-2">Background</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure informs stakeholders about an organization’s
+              awareness of significant actual and potential negative social
+              impacts in the supply chain
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12677&page=9"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["32"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 416: Customer Health and Safety 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            GRI 416-1 Assessment of the health and safety impacts of product and
+            service categories
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+              Compilation Requirements
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              2.1 When compiling the information specified in Disclosure 416-2,
+              the reporting organization shall:2.1.1 exclude incidents of
+              non-compliance in which the organization was determined not to be
+              at fault;2.1.2 exclude incidents of non-compliance related to
+              labeling. Incidents related to labeling are reported in Disclosure
+              417-2 of GRI 417: Marketing and Labeling;2.1.3 if applicable,
+              identify any incidents of non-compliance that relate to events in
+              periods prior to the reporting period.
+            </p>
+            <p className="text-[11px] text-black mb-2">Guidance:-</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The incidents of non-compliance that occur within the reporting
+              period can relate to incidents formally resolved during the
+              reporting period, whether they occurred in periods prior to the
+              reporting period or not.
+            </p>
+            <p className="text-[11px] text-black mb-2">Background</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Protection of health and safety is a recognized goal of many
+              national and international regulations. Customers expect products
+              and services to perform their intended functions satisfactorily,
+              and not pose a risk to health and safety. Customers have a right
+              to non-hazardous products. Where their health and safety is
+              affected, customers also have the right to seek redress. This
+              disclosure addresses the life cycle of the product or service once
+              it is available for use, and therefore subject to regulations and
+              voluntary codes concerning the health and safety of products and
+              services.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12699&page=8"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["33"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 417: Marketing and Labeling 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            GRI 417-1: Requirements for product and service information and
+            labeling
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">Background:</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Customers and end users need accessible and adequate information
+              about the positive and negative environmental and social impacts
+              of products and services. This can include information on the safe
+              use of a product or service, the disposal of the product, or the
+              sourcing of its components. Access to this information helps
+              customers to make informed purchasing choices.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12710&page=1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["34"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 418: Customer Privacy 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            GRI 418-1: Substantiated complaints concerning breaches of customer
+            privacy and losses of customer data
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+              Compilation Requirements
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              2.1 When compiling the information specified in Disclosure 418-1,
+              the reporting organization shall indicate if a substantial number
+              of these breaches relate to events in preceding years.
+            </p>
+
+            <p className="text-[11px] text-black mb-2">Background</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Protection of customer privacy is a generally recognized goal in
+              national regulations and organizational policies. As set out in
+              the Organisation for Economic Co-operation and Development (OECD)
+              OECD Guidelines for Multinational Enterprises, organizations are
+              expected to ‘respect consumer privacy and take reasonable measures
+              to ensure the security of personal data that they collect, store,
+              process or disseminate’. To protect customer privacy, an
+              organization is expected to limit its collection of personal data,
+              to collect data by lawful means, and to be transparent.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12721"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["35"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 406: Non-discrimination 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            GRI 406-1: Incidents of discrimination and corrective actions taken
+          </p>
+          <h6>Compilation Requirements:</h6>
+          <div className="text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+            2.1When compiling the information specified in Disclosure 406-1, the
+            reporting
+            <br />
+            organization shall include incidents of discrimination on grounds of
+            race,
+            <br />
+            color, sex, religion, political opinion, national extraction, or
+            social origin as
+            <br />
+            defined by the ILO, or other relevant forms of discrimination
+            involving
+            <br />
+            internal and/or external stakeholders across operations in the
+            reporting
+            <br />
+            period.
+            <br />
+            <br />
+            In the context of this disclosure, an ‘incident’ refers to a legal
+            action or complaint registered with the reporting organization or
+            competent authorities through a formal process, or an instance of
+            non-compliance identified by the organization through established
+            procedures. Established procedures to identify instances of
+            non-compliance can include management system audits, formal
+            monitoring programs, or grievance mechanisms.
+            <br />
+            An incident is no longer subject to action if it is resolved, the
+            case is completed, or no further action is required by the
+            organization. For example, an incident for which no further action
+            is required can include cases that were withdrawn or where the
+            underlying circumstances that led to the incident no longer exist.
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12677&page=9"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["36"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 407: Freedom of Association and Collective Bargaining 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            GRI 407-1: Operations and suppliers in which the right to freedom of
+            association and collective bargaining may be at risk
+          </p>
+          <h6>Compilation Requirements:</h6>
+          <div className="text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+            The process for identifying operations and suppliers, as specified
+            in Disclosure 407-1, can reflect the reporting organization’s
+            approach to risk assessment on this issue. It can also draw from
+            recognized international data sources, such as the various outcomes
+            of the ILO Supervisory bodies and the recommendations of the ILO
+            Committee of Freedom of Association (see reference [4] in the
+            Bibliography). When reporting the measures taken, the organization
+            can refer to the ILO ‘Tripartite Declaration of Principles
+            Concerning Multinational Enterprises and Social Policy’ and
+            Organization for Economic Co-operation and Development (OECD) OECD
+            Guidelines for Multinational Enterprises for further guidance
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12677&page=9"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["37"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 413: Local Communities 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            GRI 413-1: Operations with local community engagement, impact
+            assessments, and development programs
+          </p>
+          <h6>Guidance for Disclosure 413-1</h6>
+          <div className="text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+            A key element in managing impacts on people in local communities is
+            assessment and planning in order to understand the actual and
+            potential impacts, and strong engagement with local communities to
+            understand their expectations and needs. There are many elements
+            that can be incorporated into local community engagement, impact
+            assessments, and development programs. This disclosure seeks to
+            identify which elements have been consistently applied,
+            organization-wide. 
+            <br />
+            Where possible, organizations are expected to anticipate and avoid
+            negative impacts on local communities. Where this is not possible,
+            or where residual impacts remain, organizations are expected to
+            manage those impacts appropriately, including grievances, and to
+            compensate local communities for negative impacts. 
+            <br /> <br />
+            Establishing a timely and effective stakeholder identification and
+            engagement process is important to help organizations understand the
+            vulnerability of local communities and how these might be affected
+            by the organization’s activities. A stakeholder engagement process
+            both in early planning stages as well as during operations, can help
+            establish lines of communication between an organization’s various
+            departments (planning, finance, environment, production, etc.) and
+            key stakeholder interest groups in the community. This enables an
+            organization to consider the views of community stakeholders in its
+            decisions, and to address its potential impacts on local communities
+            in a timely manner. 
+            <br /> <br />
+            Organizations can utilize a number of useful tools to engage
+            communities, including social and human rights impact assessments,
+            which include a diverse set of approaches for proper identification
+            of stakeholders and community characteristics. These can be based on
+            issues such as ethnic background, indigenous descent, gender, age,
+            migrant status, socioeconomic status, literacy levels, disabilities,
+            income level, infrastructure availability or specific human health
+            vulnerabilities which may exist within stakeholder communities. 
+            <br /> <br />
+            An organization is expected to consider the differentiated nature of
+            local communities and to take specific action to identify and engage
+            vulnerable groups. This might require adopting differentiated
+            measures to allow the effective participation of vulnerable groups,
+            such as making information available in alternate languages or
+            format for those who are not literate or who do not have access to
+            printed materials. Where necessary, organizations are expected to
+            establish additional or separate processes so that negative impacts
+            on vulnerable or disadvantaged groups are avoided, minimized,
+            mitigated or compensated
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12677&page=9"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["38"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 404: Training and Education 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            GRI 404-1: Average hours of training per year per employee
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 404-1
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure provides insight into the scale of an
+              organization’s investment in training, and the degree to which the
+              investment is made across the entire employee base. In the context
+              of this Standard, ‘training’ refers to:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                all types of vocational training and instruction
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                paid educational leave provided by an organization for its
+                employees
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                training or education pursued externally and paid for in whole
+                or in part by an organization
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                training on specific topics.
+              </li>
+            </ul>
+            <p className="text-[11px] text-black mb-2">
+              Training does not include on-site coaching by supervisors
+            </p>
+
+            <p className="text-[11px] text-black mb-2">
+              To calculate the information in Disclosure 404-1, the reporting
+              organization can use the following formulas:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Average training hours per employee = Total number of training
+              hours provided to employees / Total number of employees
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Average training hours per female = Total number of training hours
+              provided to female employees / Total number of female employees
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Average training hours per male =Total number of training hours
+              provided to male employees / Total number of male employees
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Average training hours peremployee category =Total number of
+              training hours provided to each category of employees / Total
+              number of employees in category
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12576&page=7"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["39"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 404: Training and Education 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            GRI 404-3: Percentage of employees receiving regular performance and
+            career development reviews
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">Background</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure measures the extent to which an organization
+              regularly appraises employee performance. This aids the personal
+              development of individual employees. It also contributes to skills
+              management and to the development of human capital within the
+              organization. This disclosure also demonstrates the extent to
+              which this system is applied throughout the organization, and
+              whether there is inequity of access to these opportunities.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Regular performance and career development reviews can also
+              enhance employee satisfaction, which correlates with improved
+              organizational performance. This disclosure helps demonstrate how
+              an organization works to monitor and maintain the skill sets of
+              its employees. When reported in conjunction with Disclosure 404-2,
+              the disclosure also helps to illustrate how the organization
+              approaches skills enhancement.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12576&page=7"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["40"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-21: Annual total compensation ratio
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+              Guidance to 2-21-a and 2-21-b
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure covers all employees as reported under Disclosure
+              2-7 in this Standard. Annual total compensation includes salary,
+              bonus, stock awards, option awards, non-equity incentive plan
+              compensation, change in pension value, and nonqualified deferred
+              compensation earnings provided over the course of a year. When
+              calculating the ratio, the organization should, depending on the
+              organization’s remuneration policies and availability of data,
+              consider all of the following:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                Base salary, which is the sum of guaranteed, short-term, and
+                non-variable cash compensation.
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                Total cash compensation, which is the sum of the base salary and
+                cash allowances, bonuses, commissions, cash profit-sharing, and
+                other forms of variable cash payments.
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                Direct compensation, which is the sum of total cash compensation
+                and total fair value of all annual long-term incentives (e.g.,
+                stock option awards, restricted stock shares or units,
+                performance stock shares or units, phantom stock shares, stock
+                appreciation rights, and long-term cash awards).
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The annual total compensation ratio can be calculated using the
+              following formula: (Annual total compensation for the
+              organization's highest paid-individual / Median annual total
+              compensation for all of the organization's employees excluding the
+              highest-paid individual)
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The change in the annual total compensation ratio can be
+              calculated using the following formula: (Percentage increase in
+              annual total compensation for the organization's highest-paid
+              individual / Median percentage increase in annual total
+              compensation for all of the organization's employees excluding the
+              highest-paid individual)
+            </p>
+            <p className="text-[11px] text-black mb-2">Guidance to 2-21-c</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Quantitative data, such as the annual total compensation ratio,
+              may not be sufficient on its own to understand pay disparity and
+              its drivers. For example, pay ratios can be influenced by the size
+              of the organization (e.g., revenue, number of employees), its
+              sector, its employment strategy (e.g., reliance on outsourced
+              workers or part-time employees, a high degree of automation), or
+              currency volatility.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The difference in pay disparity reported over the years may be the
+              result of a change in the organization’s compensation policy or
+              the level of compensation for its highest-paid individual or
+              employees, a change in calculation methodology (e.g., selection of
+              the median annual total compensation, inclusions or exclusions) or
+              an improvement in data collection processes. For this reason, the
+              organization is required to report contextual information to help
+              information users interpret the data and understand how it has
+              been compiled.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization should provide the following contextual
+              information:
+            </p>
+            <ul className="list-disc ml-6 mb-4">
+              <li className="text-[11px] text-[#727272]">
+                Whether any employees reported under Disclosure 2-7 in this
+                Standard have been excluded.
+              </li>
+
+              <li className="text-[11px] text-[#727272]">
+                Whether full-time equivalent (FTE) pay rates are used for each
+                part-time employee.
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                A list of the types of compensation included.
+              </li>
+              <li className="text-[11px] text-[#727272]">
+                The title of the highest-paid individual.
+              </li>
+            </ul>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12576&page=7"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["41"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-7: Employees
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-black mb-2">Guidance to 2-7-a</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              An employee is an individual who is in an employment relationship
+              with the organization according to national law or practice.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Providing a breakdown of employees by gender gives insight into
+              gender representation across the organization. Providing a
+              breakdown of employees by region gives insight into regional
+              variations. A region can refer to a country or other geographic
+              locations, such as a city or a world region.
+            </p>
+
+            <p className="text-[13px] text-black mb-2">Guidance to 2-7-b</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The definitions of permanent, temporary, non-guaranteed hours,
+              full-time, and part-time employees differ between countries. If
+              the organization has employees in more than one country, it should
+              use the definitions as per the national laws of the countries
+              where the employees are based to calculate country-level data. The
+              country-level data should then be added up to calculate total
+              numbers, disregarding differences in national legal definitions.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Non-guaranteed hours employees are employed by the organization
+              without a guarantee of a minimum or fixed number of working hours.
+              The employee may need to make themselves available for work as
+              required, but the organization is not contractually obligated to
+              offer the employee a minimum or fixed number of working hours per
+              day, week, or month. Casual employees, employees with zero-hour
+              contracts, and on-call employees are examples that fall under this
+              category. If the organization is unable to report exact figures,
+              it can report estimates of the number of employees to the nearest
+              ten or, where the number of employees is greater than 1,000, to
+              the nearest 100, and explain this under 2-7-c.
+            </p>
+
+            <p className="text-[13px] text-black mb-2">Guidance to 2-7-c</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization can report the total number of employees and the
+              number of permanent, temporary, non-guaranteed hours, full-time,
+              and part-time employees in head count or full-time equivalent
+              (FTE). Reporting these numbers in head count gives insight into
+              the number of individual employees, whether full-time or part-time
+              employed. Reporting these numbers in FTE gives insight into the
+              hours worked. The organization can use another methodology for
+              reporting these numbers. Reporting the number of employees at the
+              end of the reporting period provides information for that point in
+              time, without capturing fluctuations during the reporting period.
+              Reporting these numbers in averages across the reporting period
+              takes into account fluctuations during the reporting period.
+            </p>
+
+            <p className="text-[13px] text-black mb-2">Guidance to 2-7-d</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Quantitative data, such as the number of temporary or part-time
+              employees, is unlikely to be sufficient on its own. For example, a
+              high proportion of temporary or part-time employees could indicate
+              lack of employment security for employees, but it could equally
+              signal workplace flexibility when offered as a voluntary choice.
+              For this reason, the organization is required to report contextual
+              information to help information users interpret the data. The
+              organization can explain the reasons for temporary employment. An
+              example of such a reason is the recruitment of employees to
+              undertake work on a temporary or seasonal project or event.
+              Another example is the standard practice to offer a temporary
+              contract (e.g., six months) to new employees before an offer of
+              permanent employment is made. The organization can also explain
+              the reasons for non-guaranteed hours employment.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization can explain how it defines full-time employment.
+              If the organization has employees in more than one country, it can
+              report the definitions of full-time employment it uses for the
+              regions that cover these countries. The organization can also
+              explain the reasons for part-time employment. Examples of such
+              reasons are to accommodate employees’ requests to work reduced
+              hours, or because the organization is unable to provide full-time
+              employment to all employees. If there are differences in
+              permanent, temporary, non-guaranteed hours, full-time, and
+              part-time employment between genders or between regions, the
+              organization can explain the reasons for these differences.
+            </p>
+
+            <p className="text-[13px] text-black mb-2">Guidance to 2-7-e</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Requirement 2-7-e enables the organization to explain how the
+              numbers of employees vary during the reporting period compared to
+              the previous reporting periods (i.e., whether the numbers have
+              increased or decreased). It can also include the reasons for the
+              fluctuations. For example, an increase in the number of employees
+              during the reporting period could be due to a seasonal event.
+              Conversely, a decrease in the number of employees compared to the
+              previous reporting period could be due to the completion of a
+              temporary project.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              It is up to the organization to determine which fluctuations in
+              the number of employees it considers significant to report under
+              2-7-e. The organization should report its threshold for
+              determining significant fluctuations. If there are no significant
+              fluctuations in the number of employees during the reporting
+              period or between reporting periods, a brief statement of this
+              fact is sufficient to comply with the requirement.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["42"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 2-30: Collective bargaining agreements
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-black mb-2">Guidance</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              This disclosure provides insights into how the organization
+              engages in collective bargaining with its employees. Collective
+              bargaining is a fundamental right at work covered in the
+              International Labour Organization (ILO) Right to Organise and
+              Collective Bargaining Convention [8].
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Collective bargaining refers to negotiations that take place
+              between one or more employers or employers' organizations and one
+              or more workers' organizations (e.g., trade unions). The objective
+              of these negotiations is to reach a collective agreement on
+              working conditions and terms of employment (e.g., wages, working
+              time) and to regulate relations between employers and workers. [3]
+              These negotiations are an important means through which employers’
+              organizations and workers’ organizations can improve working
+              conditions and labor relations.
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              Collective agreements can be made at the level of the
+              organization, at the level of a particular site, at the industry
+              level, and at the national level in countries where this is the
+              practice. Collective agreements can cover specific groups of
+              workers, for example, those performing a specific activity or
+              working at a specific location.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              If the organization has a statement or policy commitment on
+              freedom of association and collective bargaining, this is reported
+              under 2-23-b-i in this Standard or 3-3-c in GRI 3: Material Topics
+              2021.
+            </p>
+
+            <p className="text-[13px] text-black mb-2">Guidance to 2-30-a</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization is required to report the percentage of its
+              employees whose working conditions and terms of employment are
+              regulated by one or more collective bargaining agreements.
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The percentage of employees covered by collective bargaining
+              agreements is calculated using the following formula: (Number of
+              employees covered by collective bargaining agreements / Total
+              number of employees reported under 2-7-a) * 100 The employees
+              covered by collective bargaining agreements are those employees to
+              whom the organization is obligated to apply the agreement. This
+              means that if none of the employees are covered by a collective
+              bargaining agreement, the percentage reported is zero. An employee
+              covered by more than one collective bargaining agreement only
+              needs to be counted once. This requirement does not ask for the
+              percentage of employees represented by a works council or
+              belonging to trade unions, which can be different. The percentage
+              of employees covered by collective bargaining agreements can be
+              higher than the percentage of unionized employees when the
+              collective bargaining agreements apply to both union and non-union
+              members. Alternatively, the percentage of employees covered by
+              collective bargaining agreements can be lower than the percentage
+              of unionized employees. This may be the case when there are no
+              collective bargaining agreements available or when the collective
+              bargaining agreements do not cover all unionized employees.
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-4">
+              The organization can also provide a breakdown of the percentage of
+              employees covered by collective bargaining agreements by region,
+              or provide comparisons with industry benchmarks.
+            </p>
+
+            <p className="text-[13px] text-black mb-2">Guidance to 2-30-b</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              There may be instances where collective bargaining agreements
+              cover some or none of the organization’s employees. However, the
+              working conditions and terms of employment of these employees may
+              be influenced or determined by the organization based on other
+              collective bargaining agreements, such as agreements that cover
+              other employees or agreements from other organizations. If this is
+              the case, the organization is required to report it under 2-30-b.
+              If this is not the case, and the working conditions and terms of
+              employment of these employees are not influenced or determined
+              based on other collective bargaining agreements, a brief statement
+              of this fact is sufficient to comply with this requirement.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["43"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 305: Emissions 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+            <p className="text-[#0056a4] text-[15px] mb-2">
+              Disclosure 305-1 Direct (Scope 1) GHG emissions
+            </p>
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-4">
+              Compilation requirements:
+            </div>
+            <div>
+              <p className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-4">
+                2.1 When compiling the information specified in Disclosure
+                305-1, the reporting organization shall:
+              </p>
+              <p className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+                2.1.1 exclude any GHG trades from the calculation of gross
+                direct (Scope 1) GHG emissions; <br />
+                2.1.2 report biogenic emissions of CO2 from the combustion or
+                biodegradation of biomass separately from the gross direct
+                (Scope 1) GHG emissions. Exclude biogenic emissions of other
+                types of GHG (such as CH and N O), and biogenic emissions of CO
+                that occur in the life cycle of biomass other than from
+                combustion or biodegradation (such as GHG emissions from
+                processing or transporting biomass).
+              </p>
+            </div>
+
+            <div className="text-[#0056a4] text-[15px] font-normal font-['Manrope'] leading-none my-4">
+              Guidance for Disclosure 305-1:
+            </div>
+            <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+              Direct (Scope 1) GHG emissions include, but are not limited to,
+              the CO emissions from the fuel consumption as reported in
+              Disclosure 302-1 of GRI 302: Energy 2016.Direct (Scope 1) GHG
+              emissions can come from the following sources owned or controlled
+              by an organization:
+              <br />
+              •Generation of electricity, heating, cooling and steam: these
+              emissions result from
+              <br />
+              combustion of fuels in stationary sources, such as boilers,
+              furnaces, and turbines – and from other combustion processes such
+              as flaring;
+              <br />• Physical or chemical processing: most of these emissions
+              result from the manufacturing or processing of chemicals and
+              materials, such as cement, steel, aluminum, ammonia, and waste
+              processing;
+              <br />• Transportation of materials, products, waste, workers, and
+              passengers: these emissions result from the combustion of fuels in
+              mobile combustion sources owned or controlled by the organization,
+              such as trucks, trains, ships, airplanes, buses, and cars;
+              <br />• Fugitive emissions: these are emissions that are not
+              physically controlled but result from intentional or unintentional
+              releases of GHGs. These can include equipment leaks from joints,
+              seals, packing, and gaskets; methane emissions (e.g., from coal
+              mines) and venting; HFC emissions from refrigeration and air
+              conditioning equipment; and methane leakages (e.g., from gas
+              transport).
+              <br />
+              If estimations are used due to a lack of default figures, the
+              reporting organization can indicate the basis and assumptions on
+              which figures were estimated.
+              <br />
+              For recalculations of prior year emissions, the organization can
+              follow the approach in the ‘GHG Protocol Corporate Standard’. The
+              chosen emission factors can originate from mandatory reporting
+              requirements, voluntary reporting frameworks, or industry groups.
+              Estimates of GWP rates change over time as scientific research
+              develops.
+              <br />
+              <br />
+              GWP rates from the Second Assessment Report of the
+              Intergovernmental Panel on Climate Change (IPCC) are used as the
+              basis for international negotiations under the ‘Kyoto Protocol’.
+              Thus, such rates can be used for disclosing GHG emissions where it
+              does not conflict with national or regional reporting
+              requirements. The organization can also use the latest GWP rates
+              from the most recent IPCC assessment report.
+              <br />
+              The organization can combine Disclosure 305-1 with Disclosures
+              305-2 (energy indirect/Scope 2 GHG emissions) and 305-3 (other
+              indirect/Scope 3 GHG emissions) to disclose total GHG emissions.
+            </div>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["44"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 305: Emissions 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+            <p className="text-[#0056a4] text-[15px] mb-2">
+              Disclosure 305-2 Indirect (Scope 2) GHG emissions
+            </p>
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-4">
+              Compilation requirements:
+            </div>
+            <div>
+              <p className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-4">
+                2.3 When compiling the information specified in Disclosure
+                305-2, the reporting organization shall:
+              </p>
+              <p className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+                2.3.1 exclude any GHG trades from the calculation of gross
+                energy indirect (Scope 2) GHG emissions; 2.3.2 exclude other
+                indirect (Scope 3) GHG emissions that are disclosed as specified
+                in Disclosure 305-3; 2.3.3 account and report energy indirect
+                (Scope 2) GHG emissions based on the location- based method, if
+                it has operations in markets without product or
+                supplier-specific data; 2.3.4 account and report energy indirect
+                (Scope 2) GHG emissions based on both the location-based and
+                market-based methods, if it has any operations in markets
+                providing product or supplier-specific data in the form of
+                contractual instruments.
+              </p>
+            </div>
+
+            <div className="text-[#727272] text-[13px] font-normal font-['Manrope'] leading-none my-4">
+              Guidance for Disclosure 305-2:
+            </div>
+            <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+              Energy indirect (Scope 2) GHG emissions include, but are not
+              limited to, the CO2
+              <br /> emissions from the generation of purchased or acquired
+              electricity, heating, cooling, and steam consumed by an
+              organization – disclosed as specified in Disclosure 302-1 of GRI
+              302: Energy 2016. For many organizations, the energy indirect
+              (Scope 2) GHG emissions that result from the generation of
+              purchased electricity can be much greater than their direct (Scope
+              1) GHG emissions.
+              <br />
+              <br />
+              The market-based method calculation also includes the use of a
+              residual mix, if the organization does not have specified
+              emissions-intensity from its contractual instruments. This helps
+              prevent double counting between consumers’ market-based method
+              figures. If a residual mix is unavailable, the organization can
+              disclose this and use grid-average emission factors as a<br />
+              proxy (which can mean that the location-based and market- based
+              are the same number until information on the residual mix is
+              available).
+              <br />
+              <br />
+              The reporting organization can apply the Quality Criteria in the
+              ‘GHG Protocol Scope 2 Guidance’ so that contractual instruments
+              convey GHG emission rate claims and to prevent double counting.
+              See reference [18] in the Bibliography.
+              <br />
+              For recalculations of prior year emissions, the organization can
+              follow the approach in the ‘GHG Protocol Corporate Standard’. The
+              chosen emission factors can originate from mandatory reporting
+              requirements, voluntary reporting frameworks, or industry groups.
+              <br />
+              <br />
+              Estimates of GWP rates change over time as scientific research
+              develops. GWP rates from the Second Assessment Report of the IPCC
+              are used as the basis for international negotiations under the
+              ‘Kyoto Protocol’. Thus, such rates can be used for disclosing GHG
+              emissions where it does not conflict with national or regional
+              reporting requirements. The organization can also use
+              <br />
+              the latest GWP rates from the most recent IPCC assessment report.
+              <br />
+              <br />
+              The organization can combine Disclosure 305-2 with Disclosures
+              305-1 (direct/Scope 1 GHG emissions) and 305-3 (other
+              indirect/Scope 3 GHG emissions) to disclose total GHG emissions
+              <br />
+            </div>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["45"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 305: Emissions 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+            <p className=" mb-2 text-[#0056a4] text-[15px]">
+              Disclosure 305-3 Other indirect (Scope 3) GHG emissions
+            </p>
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-4">
+              Compilation requirements:
+            </div>
+            <div>
+              <p className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-4">
+                2.5 When compiling the information specified in Disclosure
+                305-3, the reporting organization shall:
+              </p>
+              <p className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+                2.5.1 exclude any GHG trades from the calculation of gross other
+                indirect (Scope 3) GHG emissions; 2.5.2 exclude energy indirect
+                (Scope 2) GHG emissions from this disclosure. Energy indirect
+                (Scope 2) GHG emissions are disclosed as specified in Disclosure
+                305-2; 2.5.3 report biogenic emissions of CO from the combustion
+                or biodegradation of biomass that occur in its value chain
+                separately from the gross other indirect (Scope 3) GHG
+                emissions. Exclude biogenic emissions of other types of GHG
+                (such as CH and N O), and biogenic emissions of CO that occur in
+                the life cycle of biomass other than from combustion or
+                biodegradation (such as GHG emissions from processing or
+                transporting biomass).
+              </p>
+            </div>
+
+            <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-4">
+              Guidance for Disclosure 305-2:
+            </div>
+            <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+              Other indirect (Scope 3) GHG emissions are a consequence of an
+              organization’s activities, but occur from sources not owned or
+              controlled by the organization. Other indirect (Scope 3) GHG
+              emissions include both upstream and downstream emissions. Some
+              examples of Scope 3 activities include extracting and producing
+              purchased materials; transporting purchased fuels in vehicles not
+              owned or controlled by the organization; and the end use of
+              products and services.
+              <br />
+              <br />
+              Other indirect emissions can also come from the decomposing of the
+              organization’s waste. Process-related emissions during the
+              manufacture of purchased goods and fugitive emissions in
+              facilities not owned by the organization can also produce indirect
+              emissions.
+              <br />
+              <br />
+              For some organizations, GHG emissions that result from energy
+              consumption outside of theorganization can be much greater than
+              their direct (Scope 1) or energy indirect (Scope 2) GHG emissions.
+              <br />
+              <br />
+              The reporting organization can identify other indirect (Scope 3)
+              GHG emissions by assessing which of its activities’ emissions:
+              <br />
+              •contribute significantly to the organization’s total anticipated
+              other indirect (Scope 3) GHG emissions;
+              <br />• offer potential for reductions the organization can
+              undertake or influence;
+              <br />
+              •contribute to climate change-related risks, such as financial,
+              regulatory, supply chain, product and customer, litigation, and
+              reputational risks;
+              <br />
+              •are deemed material by stakeholders, such as customers,
+              suppliers, investors, or civil society;
+              <br />• result from outsourced activities previously performed
+              in-house, or that are typically performed in-house by other
+              organizations in the same sector;
+              <br />• have been identified as significant for the organization’s
+              sector;
+              <br />
+              meet any additional criteria for determining relevance, developed
+              by the organization or by organizations in its sector.
+            </div>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12358"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["46"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+      GRI 205: Anti-corruption 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Disclosure 205-2 Communication and training about anti-corruption policies and procedures
+          </p>
+          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-4">Guidance :</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            In the context of this GRI Standard, the term ‘business partners’ includes, among others, suppliers, agents, lobbyists and other intermediaries, joint venture and consortia partners, governments, customers, and clients.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-4">
+            Background:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Communication and training build the internal and external awareness and the necessary capacity to combat corruption.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12412"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["47"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 205: Anti-corruption 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 205-1 Operations assessed for risks related to corruption
+          </p>
+          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-4">Guidance :</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure can include a risk assessment focused on
+              corruption or the inclusion of corruption as a risk factor in
+              overall risk assessments. The term ‘operation’ refers to a single
+              location used by the organization for the production, storage
+              and/or distribution of its goods and services, or for
+              administrative purposes. Within a single operation, there can be
+              multiple production lines, warehouses, or other activities. For
+              example, a single factory can be used for multiple products or a
+              single retail outlet can contain several different retail
+              operations that are owned or managed by the organization.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-4">Background:</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              This disclosure measures the extent of the risk assessment’s
+              implementation across an organization. Risk assessments can help
+              to assess the potential for incidents of corruption within and
+              related to the organization, and help the organization to design
+              policies and procedures to combat corruption.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12412"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["48"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">GRI 202: Market Presence 2016</h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Disclosure 202-1 Ratios of standard entry level wage
+          by gender compared to local minimum wage
+
+          </p>
+          <div className="h-[520px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">
+            Background:
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            This disclosure applies to those organizations in which a substantial portion of their employees, and workers (excluding employees) performing the organization’s activities, are compensated in a manner or scale that is closely linked to laws or regulations on minimum wage. Providing wages above the minimum wage can help contribute to the economic well-being of workers performing the organization’s activities. The impacts of wage levels are immediate, and they directly affect individuals, organizations, countries and economies. The distribution of wages is crucial for eliminating inequalities, such as wage gap differences between women and men, or nationals and migrants. Also, entry level wages paid compared to local minimum wages show the competitiveness of an organization’s wages and provide information relevant for assessing the effect of wages on the local labor market. Comparing this information by gender can also be a measure of an organization’s approach to equal opportunity in the workplace.
+            </p>
+
+           
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12379"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["49"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 308: Supplier Environmental
+        Assessment 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Disclosure 308-1 New suppliers that were screened
+          using environmental criteria
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            {/* <p className="text-[11px] text-black mb-2">
+              Compilation Requirements
+            </p> */}
+            <p className="text-[11px] text-[#727272] mb-2">
+            Environmental criteria can include the topics covered in other GRI Topic Standards (e.g., GRI
+
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            302: Energy 2016, GRI 303: Water and Effluents 2018, GRI 305: Emissions 2016)
+            </p>
+            <p className="text-[11px] text-black mb-2">Background</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            This disclosure informs stakeholders about the percentage of suppliers selected or contracted subject to due diligence processes for environmental impacts.
+
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            An organization is expected to initiate due diligence as early as possible in the development of a new relationship with a supplier.
+
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Impacts may be prevented or mitigated at the stage of structuring contracts or other agreements,
+as well as via ongoing collaboration with suppliers.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12532"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["50"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+      GRI 308: Supplier Environmental
+      Assessment 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Disclosure 308-2 Negative environmental impacts in
+the supply chain and actions taken
+          </p>
+          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+            <p className="text-[11px] text-black mb-2">
+            Guidance :
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            Negative impacts include those that are either caused or contributed to by an organization, or that are directly linked to its operations, products, or services by its relationship with a supplier. Assessments for environmental impacts can include the topics covered in other GRI Topic Standards (e.g., GRI 302: Energy 2016, GRI 303: Water and Effluents 2018, GRI 305: Emissions
+2016).
+
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            Assessments can be made against agreed performance expectations that are set and communicated to the suppliers prior to the assessment. Assessments can be informed by audits, contractual reviews, two-way engagement, and complaint and grievance mechanisms.
+
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Improvements can include changing an organization’s procurement practices, the adjustment of performance expectations, capacity building, training, and changes to processes
+            </p>
+            <p className="text-[11px] text-black mb-2">Background</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            This disclosure informs stakeholders about an organization’s awareness of significant actual
+            and potential negative environmental impacts in the supply chain.
+            </p>
+            
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://www.globalreporting.org/pdf.ashx?id=12532"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>
@@ -2477,12 +4697,14 @@ export const Energydata = [
             </p>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.6</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            By 2020, substantially reduce the proportion of youth not in employment, education or training.
+              By 2020, substantially reduce the proportion of youth not in
+              employment, education or training.
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">8.6.1</p>
             <p className="text-[11px] text-[#727272] mb-2">
-            Proportion of youth (aged 15-24 years) not in education, employment or training.
+              Proportion of youth (aged 15-24 years) not in education,
+              employment or training.
             </p>
           </div>
           <div>
@@ -2542,6 +4764,938 @@ export const Energydata = [
               target="_blank"
             >
               Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["sd14"],
+    header: [
+      <>
+        <div className="flex w-[100px]">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-03.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-green-500 text-[17px] font-bold ml-2">SDG 3</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 3: Ensure healthy lives and promote
+            well-being for all at all ages
+          </p>
+          <div className="h-[280px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 3.3</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, end the epidemics of AIDS, tuberculosis, malaria and
+              neglected tropical diseases and combat hepatitis, water-borne
+              diseases and other communicable diseases.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">3.3.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Number of new HIV infections per 1,000 uninfected population, by
+              sex, age and key populations.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">3.3.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Tuberculosis incidence per 100,000 population.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">3.3.3</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Malaria incidence per 1,000 population.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">3.3.4</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Hepatitis B incidence per 100,000 population.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">3.3.5</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Number of people requiring interventions against neglected
+              tropical diseases.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 3.4</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, reduce by one third premature mortality from
+              non-communicable diseases through prevention and treatment and
+              promote mental health and well-being.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">3.4.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Mortality rate attributed to cardiovascular disease, cancer,
+              diabetes or chronic respiratory disease.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">3.4.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Suicide mortality rate.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 3.6</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2020, halve the number of global deaths and injuries from road
+              traffic accidents
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">3.6.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Death rate due to road traffic injuries
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 3.9</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, substantially reduce the number of deaths and illnesses
+              from hazardous chemicals and air, water and soil pollution and
+              contamination.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">3.9.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Mortality rate attributed to household and ambient air pollution.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">3.9.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Mortality rate attributed to unsafe water, unsafe sanitation and
+              lack of hygiene (exposure to unsafe Water, Sanitation and Hygiene
+              for All (WASH) services).
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">3.9.3</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Mortality rate attributed to unintentional poisoning.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal3"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["sd15"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-08.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-red-900 text-[17px] font-bold ml-2">SDG 8</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 8: Decent work and economic growth
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 8.8</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Protect labour rights and promote safe and secure working
+              environments for all workers, including migrant workers, in
+              particular women migrants, and those in precarious employment.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.8.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Fatal and non-fatal occupational injuries per 100,000 workers, by
+              sex and migrant status.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.8.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Level of national compliance with labour rights (freedom of
+              association and collective bargaining) based on International
+              Labour Organization (ILO) textual sources and national
+              legislation, by sex and migrant status.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal8"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["sd16"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-16.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-blue-900 text-[17px] font-bold ml-2">SDG 16</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Promote peaceful and inclusive societies for sustainable
+            development, provide access to justice for all and build effective,
+            accountable and inclusive institutions at all levels
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 16.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Significantly reduce all forms of violence and related death rates
+              everywhere.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.1.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Number of victims of intentional homicide per 100,000 population,
+              by sex and age.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.1.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Conflict-related deaths per 100,000 population, by sex, age and
+              cause.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.1.3</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of population subjected to (a) physical violence, (b)
+              psychological violence and (c) sexual violence in the previous 12
+              months.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.1.4</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of population that feel safe walking alone around the
+              area they live after dark.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 16.7</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Ensure responsive, inclusive, participatory and representative
+              decision-making at all levels.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.7.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportions of positions in national and local institutions,
+              including (a) the legislatures; (b) the public service; and (c)
+              the judiciary, compared to national distributions, by sex, age,
+              persons with disabilities and population groups.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.7.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of population who believe decision-making is inclusive
+              and responsive, by sex, age, disability and population group.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal16"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["sd17"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-16.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-blue-900 text-[17px] font-bold ml-2">SDG 16</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Promote peaceful and inclusive societies for sustainable
+            development, provide access to justice for all and build effective,
+            accountable and inclusive institutions at all levels
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 16.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Significantly reduce all forms of violence and related death rates
+              everywhere.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.1.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Number of victims of intentional homicide per 100,000 population,
+              by sex and age.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.1.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Conflict-related deaths per 100,000 population, by sex, age and
+              cause.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.1.3</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of population subjected to (a) physical violence, (b)
+              psychological violence and (c) sexual violence in the previous 12
+              months.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.1.4</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of population that feel safe walking alone around the
+              area they live after dark.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal16"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["sd18"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-08.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-red-900 text-[17px] font-bold ml-2">SDG 8</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 8: Decent work and economic growth
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 8.7</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Take immediate and effective measures to eradicate forced labour,
+              end modern slavery and human trafficking and secure the
+              prohibition and elimination of the worst forms of child labour,
+              including recruitment and use of child soldiers, and by 2025 end
+              child labour in all its forms.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.7.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion and number of children aged 5‑17 years engaged in child
+              labour, by sex and age.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal8"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["sd19"],
+    header: [
+      <>
+        <div className="flex w-[100px]">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-12.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-[#CD8B2A] text-[17px] font-bold ml-2">SDG 12</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Ensure sustainable consumption and production patterns
+          </p>
+          <div className="h-[280px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 12.8</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, ensure that people everywhere have the relevant
+              information and awareness for sustainable development and
+              lifestyles in harmony with nature.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">12.8.1</p>
+            <p className="text-[11px] text-[#727272] mb-1">Extent to which</p>
+            <p className="text-[11px] text-[#727272] mb-1">
+              (i) global citizenship education and
+            </p>
+            <p className="text-[11px] text-[#727272] mb-1">
+              (ii) education for sustainable development are mainstreamed in
+            </p>
+            <p className="text-[11px] text-[#727272] mb-1">
+              (a) national education policies; (b) curricula; (c) teacher
+              education; and (d) student assessment.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal12"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["sd20"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-16.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-blue-900 text-[17px] font-bold ml-2">SDG 16</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Promote peaceful and inclusive societies for sustainable
+            development, provide access to justice for all and build effective,
+            accountable and inclusive institutions at all levels
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 16.3</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Promote the rule of law at the national and international levels
+              and ensure equal access to justice for all.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.3.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of victims of violence in the previous 12 months who
+              reported their victimization to competent authorities or other
+              officially recognized conflict resolution mechanisms.
+            </p>
+
+            <p className="text-[11px] text-[#222222] mb-2">16.3.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Unsentenced detainees as a proportion of overall prison
+              population.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">16.3.3</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of the population who have experienced a dispute in the
+              past two years and who accessed a formal or informal dispute
+              resolution mechanism, by type of mechanism.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal16"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["sd21"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-04.png"
+            className="w-[32px] h-[32px]"
+          />{" "}
+          <h5 className="text-[#C22033] text-[17px] font-bold ml-2">SDG 4</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Ensure inclusive and equitable quality education and promote
+            lifelong learning opportunities for all
+          </p>
+          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 4.3</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, ensure equal access for all women and men to affordable
+              and quality technical, vocational and tertiary education,
+              including university.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">4.3.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Participation rate of youth and adults in formal and non-formal
+              education and training in the previous 12 months, by sex.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 4.4</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, substantially increase the number of youth and adults who
+              have relevant skills, including technical and vocational skills,
+              for employment, decent jobs and entrepreneurship.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">4.4.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of youth and adults with information and communications
+              technology (ICT) skills, by type of skill.
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 4.5</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, eliminate gender disparities in education and ensure
+              equal access to all levels of education and vocational training
+              for the vulnerable, including persons with disabilities,
+              indigenous peoples and children in vulnerable situations.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">4.5.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Parity indices (female/male, rural/urban, bottom/top wealth
+              quintile and others such as disability status, indigenous peoples
+              and conflict-affected, as data become available) for all education
+              indicators on this list that can be disaggregated.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3]  flex"
+              href="https://sdgs.un.org/goals/goal4"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["sd22"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-05.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-orange-600 text-[17px] font-bold ml-2">SDG 5</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 5: Achieve gender equality and empower
+            all women and girls
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 5.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              End all forms of discrimination against all women and girls
+              everywhere
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#727272] mb-2">5.1.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Whether or not legal frameworks are in place to promote, enforce
+              and monitor equality and non‑discrimination on the basis of sex
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal5"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["sd23"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-08.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-red-900 text-[17px] font-bold ml-2">SDG 8</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 8: Decent work and economic growth
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 8.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Achieve higher levels of economic productivity through
+              diversification, technological upgrading and innovation, including
+              through a focus on high-value added and labour-intensive sectors
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.2.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Annual growth rate of real GDP per employed person
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 8.5</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, achieve full and productive employment and decent work
+              for all women and men, including for young people and persons with
+              disabilities, and equal pay for work of equal value
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.5.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Average hourly earnings of female and male employees, by
+              occupation, age and persons with disabilities
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">8.5.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Unemployment rate, by sex, age and persons with disabilities
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal8"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["sd24"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-14.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-[##007dbc] text-[17px] font-bold ml-2">SDG 14</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 8: Decent work and economic growth
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 8.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Conserve and sustainably use the oceans, seas and marine resources
+              for sustainable development
+            </p>
+            <p className="text-[13px] text-[#222222] mb-2">Target 14.3</p>
+            <div class="w-[232px]">
+              <span class="text-[#727272] text-[11px] font-normal leading-[14px]">
+                Minimize and address the impacts of ocean acidification,
+                including through enhanced scientific cooperation at all levels
+                <br />
+                <br />
+              </span>
+              <span class="text-[#727272] text-[10px] font-bold leading-[13px]">
+                Indicators
+                <br />
+              </span>
+              <span class="text-[#222222] text-[11px] font-normal leading-[14px]">
+                14.3.1
+                <br />
+              </span>
+              <span class="text-[#727272] text-[11px] font-normal leading-[14px]">
+                Average marine acidity (pH) measured at agreed suite of
+                representative sampling stations
+                <br />
+              </span>
+            </div>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal8"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-1" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["sd25"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-16.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-blue-900 text-[17px] font-bold ml-2">SDG 16</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Promote peaceful and inclusive societies for sustainable
+            development, provide access to justice for all and build effective,
+            accountable and inclusive institutions at all levels
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 16.5</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Substantially reduce corruption and bribery in all their forms
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.5.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of persons who had at least one contact with a public
+              official and who paid a bribe to a public official, or were asked
+              for a bribe by those public officials, during the previous 12
+              months
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.5.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of businesses that had at least one contact with a
+              public official and that paid a bribe to a public official, or
+              were asked for a bribe by those public officials during the
+              previous 12 months
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal16"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["sd26"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-01.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-[#EA1D2D] text-[17px] font-bold ml-2">SDG 1</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 1: End poverty in all its forms
+            everywhere
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 1.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, eradicate extreme poverty for all people everywhere,
+              currently measured as people living on less than $1.25 a day
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">1.2.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of population living below the national poverty line,
+              by sex and age
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">1.2.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of men, women and children of all ages living in
+              poverty in all its dimensions according to national definitions
+            </p>
+           
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal1"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["sd27"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-05.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-orange-600 text-[17px] font-bold ml-2">SDG 5</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 5: Gender equality
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+        
+          
+            <p className="text-[13px] text-[#222222] mb-2">Target 5.4</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Recognize and value unpaid care and domestic work through the
+              provision of public services, infrastructure and social protection
+              policies and the promotion of shared responsibility within the
+              household and the family as nationally appropriate.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#727272] mb-2">5.4.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of time spent on unpaid domestic and care work, by sex,
+              age and location.
+            </p>
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal5"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
+            </a>
+          </div>
+        </div>
+      </>,
+    ],
+  },
+  {
+    category: ["sd28"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-08.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-red-900 text-[17px] font-bold ml-2">SDG 8</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Sustainable Development Goal 8: Promote sustained, inclusive and
+            sustainable economic growth, full and productive employment and
+            decent work for all
+          </p>
+          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+            <p className="text-[13px] text-[#222222] mb-2">Target 8.5</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              By 2030, achieve full and productive employment and decent work
+              for all women and men, including for young people and persons with
+              disabilities, and equal pay for work of equal value.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.5.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Average hourly earnings of female and male employees, by
+              occupation, age and persons with disabilities.
+            </p>
+
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">8.5.2</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Unemployment rate, by sex, age and persons with disabilities.
+            </p>
+           
+         
+          </div>
+          <div>
+            <a
+              className="text-[14px] text-[#2196F3] inline-flex"
+              href="https://sdgs.un.org/goals/goal8"
+              target="_blank"
+            >
+              Learn more <MdChevronRight className="text-lg mt-0.5" />
             </a>
           </div>
         </div>

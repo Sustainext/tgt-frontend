@@ -33,7 +33,7 @@ const NewEmployeeHire = ({ location, year, month,activeMonth }) => {
         <>
             <div className='mb-10'>
                 <div className='mb-4 flex mx-2 '>
-                    <div className='w-[80%]'>
+                   <div className="w-[80%] relative">
                         <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold'>
                             New Employee Hire
                             <MdInfoOutline data-tooltip-id={`tooltip-$e1`} data-tooltip-content="This section documents data corresponding to the total number and rate of new employee hires during the reporting period, categorized by age group, gender, and region. Note: When compiling the information specified in Disclosure 401-1, the reporting organization should use data from Disclosure 2-7 in GRI 2: General Disclosures 2021 to identify the total number of employees" className="mt-1.5 ml-2 text-[14px]" />
@@ -55,7 +55,7 @@ const NewEmployeeHire = ({ location, year, month,activeMonth }) => {
                         {tabs.map((tab, index) => (
                             <li
                                 key={index}
-                                className={`flex-1 text-center border-b-2 py-2 text-[12px] ${activeTabIndex === index ? 'border-blue-500 text-blue-600' : 'border-gray-300 text-gray-600'} `}
+                                className={`flex-1 text-center relative border-b-2 py-2 text-[12px] ${activeTabIndex === index ? 'border-blue-500 text-blue-600' : 'border-gray-300 text-gray-600'} `}
                                 onClick={() => setActiveTabIndex(index)}
                             >
                                 <div className='flex justify-center items-center space-x-1'>

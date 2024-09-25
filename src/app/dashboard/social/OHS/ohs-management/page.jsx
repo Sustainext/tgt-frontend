@@ -7,10 +7,12 @@ import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import Socialheader from "../../socialheader"
 import Ohsscreeen1 from "./ohs-screeen"
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Ohsmanagment = () => {
     const [activeMonth, setActiveMonth] = useState(1);
     const [location, setLocation] = useState("");
-    const [year, setYear] = useState("");
+    const [year, setYear] = useState(2024);
     const [data, setData] = useState();
     const [category, setCategory] = useState("");
     const [isOpen, setIsOpen] = useState(false);
@@ -37,6 +39,7 @@ const Ohsmanagment = () => {
 
     return (
         <>
+            <ToastContainer style={{ fontSize: "12px" }} />
             <div className="flex flex-col justify-start overflow-x-hidden ">
                 <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
                     <div className='w-full'>
@@ -44,7 +47,7 @@ const Ohsmanagment = () => {
                             <p className="text-sm">Social</p>
                             <div className='flex'>
                                 <div>
-                                    <p className="gradient-text text-[22px] font-bold">
+                                    <p className="gradient-text text-[22px] font-bold pt-1">
                                         Occupational Health and Safety 2018
                                     </p>
                                 </div>
@@ -104,7 +107,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
 
                 </div>
             </div>
-            <Socialheader 
+            <Socialheader
             activeMonth={activeMonth}
             setActiveMonth={setActiveMonth}
             location={location}

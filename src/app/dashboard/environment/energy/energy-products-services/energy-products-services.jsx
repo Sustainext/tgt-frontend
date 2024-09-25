@@ -7,15 +7,17 @@ import { Energydata } from '../../data/griinfo';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import Reductionenergyconsumptionbody from './energy-products-services-body';
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Energyproductsservices = () => {
-    const [activeMonth, setActiveMonth] = useState("Jan");
+    const [activeMonth, setActiveMonth] = useState(1);
     const [location, setLocation] = useState("");
-    const [year, setYear] = useState("");
+    const [year, setYear] = useState(2024);
     const [data, setData] = useState();
     const [category, setCategory] = useState("");
     const [isOpen, setIsOpen] = useState(false);
     const [locationMessage, setLocationMessage] = useState("");
+    const [yearMessage, setYearMessage] = useState('')
 
     const toggleDrawerclose = () => {
         setIsOpen(!isOpen);
@@ -39,14 +41,15 @@ const Energyproductsservices = () => {
 
     return (
         <>
+        <ToastContainer style={{ fontSize: "12px" }} />
             <div className="flex flex-col justify-start overflow-x-hidden ">
                 <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
                     <div className='w-full'>
                         <div className="text-left mb-4 ml-3 pt-5">
                             <p className="text-sm">Environment</p>
-                            <div className='flex'>
-                                <div>
-                                    <p className="gradient-text text-[22px] font-bold">
+                           <div className='flex h-[28px]'>
+                                <div className='h-[28px]'>
+                                    <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
                                         Energy
                                     </p>
                                 </div>
@@ -77,13 +80,14 @@ const Energyproductsservices = () => {
                             data-tooltip-content="This section documents data related to the reduction in energy
                             requirements of a product or service. Please mention the
                             approach for choosing the standards utilized for calculation." className="mt-1.5 ml-2 text-[14px]" />
-                        <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
+                        <ReactTooltip id={`tooltip-$e1`} place="bottom" effect="solid" style={{
                             width: "290px", backgroundColor: "#000",
                             color: "white",
                             fontSize: "12px",
                             boxShadow: 3,
                             borderRadius: "8px",
                             textAlign: 'left',
+                            zIndex:100,
                         }}>
 
                         </ReactTooltip>
@@ -111,16 +115,19 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
 
                 </div>
             </div>
-            <EnvironmentHeader 
-            activeMonth={activeMonth} 
+            <EnvironmentHeader
+            activeMonth={activeMonth}
             setActiveMonth={setActiveMonth}
             location={location}
             setLocation={setLocation}
             year={year}
             setYear={setYear}
             locationMessage={locationMessage}
-            setLocationMessage={setLocationMessage} />
-            <Reductionenergyconsumptionbody location={location} year={year} month={activeMonth} setLocationMessage={setLocationMessage}/>
+            setLocationMessage={setLocationMessage}
+            yearMessage={yearMessage}
+            setYearMessage={setYearMessage}
+             />
+            <Reductionenergyconsumptionbody location={location} year={year} month={activeMonth} setLocationMessage={setLocationMessage} setYearMessage={setYearMessage} />
         </>
     );
 };

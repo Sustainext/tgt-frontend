@@ -20,16 +20,19 @@ import { LiaHomeSolid } from "react-icons/lia";
 import Link from "next/link";
 import DashboardHeader from "./dashobardheader";
 import { GlobalState } from "../../Context/page";
+import { CiSettings } from "react-icons/ci";
 
 const Sidenav = () => {
   const { open, setOpen } = GlobalState();
+  const [activeIndex, setActiveIndex] = useState(null);
+
   const Menus = [
     { title: "Sustainext HQ", icon: <LiaHomeSolid />, link: "/dashboard" },
     {
       title: "Materiality Dashboard",
       icon: <MdOutlinePieChartOutline />,
       spacing: true,
-      link: "#",
+      link: "/dashboard/Materiality",
     },
     {
       title: "Collect",
@@ -49,17 +52,17 @@ const Sidenav = () => {
         {
           title: "Governance",
           icon: <MdOutlineDiversity1 />,
-          link: "/dashboard/environment",
+          link: "/dashboard/governance",
         },
         {
           title: "General",
           icon: <MdOutlineDiversity2 />,
-          link: "/dashboard/environment",
+          link: "/dashboard/general",
         },
         {
           title: "Economic",
           icon: <MdOutlineDiversity3 />,
-          link: "/dashboard/environment",
+          link: "/dashboard/economic",
         },
       ],
     },
@@ -81,17 +84,17 @@ const Sidenav = () => {
         {
           title: "Governance",
           icon: <MdOutlineDiversity1 />,
-          link: "/dashboard/environment",
+          link: "/dashboard/Analyse/governance",
         },
         {
           title: "General",
           icon: <MdOutlineDiversity2 />,
-          link: "/dashboard/environment",
+          link: "/dashboard/Analyse/general",
         },
         {
           title: "Economic",
           icon: <MdOutlineDiversity3 />,
-          link: "/dashboard/environment",
+          link: "/dashboard/Analyse/economic",
         },
       ],
     },
@@ -103,6 +106,11 @@ const Sidenav = () => {
       title: "Organizational Structure",
       icon: <MdOutlineAccountTree />,
       link: "/dashboard/OrgStructure",
+    },
+    {
+      title: "Settings",
+      icon: <CiSettings />,
+      link: "/dashboard/Settings",
     },
     { title: "About", icon: <MdInfoOutline />, link: "#" },
   ];
@@ -119,7 +127,7 @@ const Sidenav = () => {
       <div className="min-h-[100vh] fixed z-[100]">
         <div
           className={`bg-[#0a0528] min-h-[135vh] ps-3 pt-8 ${
-            open ? "w-[15rem]" : "w-20"
+            open ? "w-[15rem]" : "w-16"
           } duration-300 relative`}
         >
           <MdKeyboardDoubleArrowLeft
@@ -140,8 +148,13 @@ const Sidenav = () => {
               <React.Fragment key={index}>
                 {menu.submenu ? (
                   <li
-                    className=" text-white text-sm p-2 flex items-center gap-x-4 cursor-pointer hover:bg-[#007EEF] rounded-md mt-2"
-                    onClick={() => toggleSubmenu(index)}
+                    className={`text-white text-sm p-2 flex items-center gap-x-4 cursor-pointer hover:bg-[#007EEF] rounded-md mt-2 ${
+                      activeIndex === index ? "bg-[#081746]" : ""
+                    }`}
+                    onClick={() => {
+                      toggleSubmenu(index);
+                      setActiveIndex(index);
+                    }}
                   >
                     <span className="text-2xl block float-left">
                       {menu.icon ? menu.icon : <LiaHomeSolid />}
@@ -160,7 +173,10 @@ const Sidenav = () => {
                 ) : (
                   <Link href={menu.link} key={index}>
                     <li
-                      className=" text-white text-sm p-2 flex items-center gap-x-4 cursor-pointer hover:bg-[#007EEF] rounded-md mt-2"
+                      className={`text-white text-sm p-2 flex items-center gap-x-4 cursor-pointer hover:bg-[#007EEF] rounded-md mt-2 ${
+                        activeIndex === index ? "bg-[#081746]" : ""
+                      }`}
+                      onClick={() => setActiveIndex(index)}
                     >
                       <span className="text-2xl block float-left">
                         {menu.icon ? menu.icon : <LiaHomeSolid />}
@@ -170,11 +186,6 @@ const Sidenav = () => {
                       >
                         {menu.title}
                       </span>
-                      {menu.submenu && open && (
-                        <MdKeyboardArrowDown
-                          className={`text-2xl ${submenuOpen[index] ? "rotate-180" : ""}`}
-                        />
-                      )}
                     </li>
                   </Link>
                 )}
@@ -187,7 +198,10 @@ const Sidenav = () => {
                     {menu.submenuItems.map((submenuItem, subIndex) => (
                       <Link href={submenuItem.link} key={subIndex}>
                         <li
-                          className=" text-white text-sm p-2 px-5 flex items-center gap-x-4 cursor-pointer hover:bg-[#007EEF] rounded-md mt-2"
+                          className={`text-white text-sm p-2 px-5 flex items-center gap-x-4 cursor-pointer hover:bg-[#007EEF] rounded-md mt-2 ${
+                            activeIndex === `${index}-${subIndex}` ? "bg-[#081746]" : ""
+                          }`}
+                          onClick={() => setActiveIndex(`${index}-${subIndex}`)}
                         >
                           <span className="text-2xl block float-left">
                             {submenuItem.icon ? submenuItem.icon : <LiaHomeSolid />}

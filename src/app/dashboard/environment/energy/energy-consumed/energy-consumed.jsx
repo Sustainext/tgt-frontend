@@ -7,14 +7,17 @@ import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
 import { Energydata } from '../../data/griinfo';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Energyconsumed = ({ open }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
-  const [year, setYear] = useState("");
+  const [year, setYear] = useState(2024);
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [locationMessage, setLocationMessage] = useState("");
+  const [yearMessage,setYearMessage] = useState("")
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   }
@@ -37,17 +40,15 @@ const Energyconsumed = ({ open }) => {
 
   return (
     <>
+    <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
-
-
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
-
           <div className='w-full'>
             <div className="text-left mb-4 ml-3 pt-5">
               <p className="text-sm">Environment</p>
-              <div className='flex'>
-                <div>
-                  <p className="gradient-text text-[22px] font-bold">
+              <div className='flex h-[28px]'>
+                <div className='h-[28px]'>
+                  <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
                     Energy
                   </p>
                 </div>
@@ -70,7 +71,7 @@ const Energyconsumed = ({ open }) => {
         </div>
 
 
-        <div className="ml-3 flex">
+      <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
 
             Energy consumed inside the organization
@@ -118,8 +119,12 @@ const Energyconsumed = ({ open }) => {
             year={year}
             setYear={setYear}
             locationMessage={locationMessage}
-            setLocationMessage={setLocationMessage}/>
-      <EnergyConsumedBody  location={location} year={year} month={activeMonth} setLocationMessage={setLocationMessage}/>
+            setLocationMessage={setLocationMessage}
+            yearMessage={yearMessage}
+            setYearMessage={setYearMessage}
+
+            />
+      <EnergyConsumedBody  location={location} year={year} month={activeMonth} setLocationMessage={setLocationMessage} setYearMessage={setYearMessage} />
 
 
 

@@ -7,12 +7,17 @@ import 'react-tooltip/dist/react-tooltip.css'
 import Wastedivertedimpact from "./waste-diverted-impact";
 import Wastedivertedcontextualinformation from "./waste-diverted-contextual-information";
 
-const AccordionItem = ({ title, children, tooltiptext, sdg, display,tooltipblock,location,setLocationMessage,year }) => {
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,tooltipblock,location,setLocationMessage,year, setYearMessage }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
   const handleClick = () => {
     if (!location) {
-      setLocationMessage("Please select a location and year")
+      setLocationMessage("Please select a location")
+
+      return;
+    }
+    if (!year) {
+      setYearMessage("Please select a year")
 
       return;
     }
@@ -27,14 +32,15 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,tooltipblock
         onClick={handleClick}// Unique ID for the tooltip, spaces replaced by dashes
       >
           <div className="flex justify-between">
-        <div className="flex w-[65vw]">
+        <div className={`flex ${open ? "w-[65vw]" : "w-[74vw]"}`}>
         <div className="flex items-center">
           <h5 className="text-[14px] text-[#344054] px-3">{title}</h5>
         </div>
 
-        <div className="flex items-center justify-center">
+
+        <div className="flex items-center justify-center relative">
           <MdInfoOutline
-            data-tooltip-id={`tooltip-${title.replace(/\s+/g, '-')}`} data-tooltip-content={tooltiptext} className="mt-1 text-[14px]" style={{display:display}} />
+            data-tooltip-id={`tooltip-${title.replace(/\s+/g, '-')}`} data-tooltip-content={tooltiptext} className="mt-1 text-[14px]" style={{display:tooltipblock}} />
           {/* Tooltip */}
           <ReactTooltip id={`tooltip-${title.replace(/\s+/g, '-')}`} place="top" effect="solid" style={{
             width: "300px", backgroundColor: "#000",
@@ -76,7 +82,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,tooltipblock
   );
 };
 
-const Wastedivertedbody = ({location, year, month,setLocationMessage}) => {
+const Wastedivertedbody = ({location, year, month,setLocationMessage, setYearMessage}) => {
 
 
   return (
@@ -91,6 +97,8 @@ const Wastedivertedbody = ({location, year, month,setLocationMessage}) => {
           tooltipblock="none"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
 
           <Wastedivertedimpact location={location} year={year} month={month}/>
@@ -104,6 +112,8 @@ const Wastedivertedbody = ({location, year, month,setLocationMessage}) => {
           tooltipblock="block"
           location={location}
           setLocationMessage={setLocationMessage}
+          year={year}
+          setYearMessage={setYearMessage}
         >
 
           <Wastedivertedcontextualinformation location={location} year={year} month={month}/>

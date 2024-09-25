@@ -40,7 +40,7 @@ const schema = {
 };
 
 
-const uiSchema = { // Add flex-wrap to wrap fields to the next line
+const uiSchema = {
     items: {
         Q1: {
             "ui:hadding": "Actions taken to prevent waste generation and to manage significant impacts from waste generated",
@@ -51,10 +51,10 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
             "ui:titlediplay": "block",
             "ui:haddingtooltipdisplay": "block",
             "ui:titletooltipdisplay": "none",
-            "ui:Gri": "GRI 306-1a",
+            "ui:Gri": "GRI 306-2a",
             'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Q2: {
@@ -66,10 +66,10 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
             "ui:titlediplay": "block",
             "ui:haddingtooltipdisplay": "block",
             "ui:titletooltipdisplay": "block",
-            "ui:Gri": "GRI 306-1b",
+            "ui:Gri": "GRI 306-2b",
             'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Q3: {
@@ -81,10 +81,10 @@ const uiSchema = { // Add flex-wrap to wrap fields to the next line
             "ui:titlediplay": "block",
             "ui:haddingtooltipdisplay": "block",
             "ui:titletooltipdisplay": "block",
-            "ui:Gri": "GRI 306-1b",
+            "ui:Gri": "GRI 306-2c",
             'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         'ui:options': {
@@ -183,22 +183,23 @@ const Managementwasteimpact = ({location, year, month}) => {
         }
     };
 
-    const loadFormData = async () => {
-        LoaderOpen();
-        const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
-        try {
-            const response = await axios.get(url, axiosConfig);
-            console.log('API called successfully:', response.data);
-            setRemoteSchema(response.data.form[0].schema);
-            setRemoteUiSchema(response.data.form[0].ui_schema);
-            const form_parent = response.data.form_data;
-            setFormData(form_parent[0].data);
-        } catch (error) {
-            console.error('API call failed:', error);
-        } finally {
-            LoaderClose();
-        }
-    }
+      const loadFormData = async () => {
+      LoaderOpen();
+      setFormData([{}])
+      const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+      try {
+          const response = await axios.get(url, axiosConfig);
+          console.log('API called successfully:', response.data);
+          setRemoteSchema(response.data.form[0].schema);
+          setRemoteUiSchema(response.data.form[0].ui_schema);
+          const form_parent = response.data.form_data;
+          setFormData(form_parent[0].data);
+      } catch (error) {
+          console.error('API call failed:', error);
+      } finally {
+          LoaderClose();
+      }
+  };
     //Reloading the forms -- White Beard
     useEffect(() => {
         //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
@@ -240,7 +241,8 @@ const Managementwasteimpact = ({location, year, month}) => {
 
     return (
       <>
-        <div >
+
+     <div >
           <div>
           <Form
             schema={r_schema}

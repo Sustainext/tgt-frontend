@@ -10,7 +10,7 @@ import Workinvolvementscreen from "./work-involvement"
 const Workinvolvement = () => {
     const [activeMonth, setActiveMonth] = useState(1);
     const [location, setLocation] = useState("");
-    const [year, setYear] = useState("");
+    const [year, setYear] = useState(2024);
     const [data, setData] = useState();
     const [category, setCategory] = useState("");
     const [isOpen, setIsOpen] = useState(false);
@@ -44,7 +44,7 @@ const Workinvolvement = () => {
                             <p className="text-sm">Social</p>
                             <div className='flex'>
                                 <div>
-                                    <p className="gradient-text text-[22px] font-bold">
+                                    <p className="gradient-text text-[22px] font-bold pt-1">
                                         Ocupational Health and Safety 2018
                                     </p>
                                 </div>

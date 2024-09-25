@@ -18,7 +18,7 @@ export const columns1 = [
       ageAbove50: 'x%',
     },
     {
-      type: 'col3 Employees',
+      type: 'Temporary Employees',
       male: 'x%',
       female: 'x%',
       nonBinary: 'x%',
@@ -74,7 +74,7 @@ export const columns1 = [
         ageAbove50: 'x%',
       },
       {
-        type: 'col3 Employees',
+        type: 'Temporary Employees',
         male: 'x%',
         female: 'x%',
         nonBinary: 'x%',
@@ -110,14 +110,14 @@ export const columns1 = [
         ageAbove50: 'x%',
       },
     ];
-    export const columns3 = ['Benefit', 'Full-Time Employees', 'Part-Time Employees', 'col3 Employees'];
+    export const columns3 = ['Benefit', 'Full-Time Employees', 'Part-Time Employees', 'Temporary Employees'];
     export const data3 = [
-      { Benefit: 'Life Insurance', 'Full-Time Employees': "", 'Part-Time Employees': "", 'col3 Employees': "" },
-      { Benefit: 'Health Care', 'Full-Time Employees': "", 'Part-Time Employees': "", 'col3 Employees': "" },
-      { Benefit: 'Disability & Invalidity Coverage', 'Full-Time Employees': "", 'Part-Time Employees': "", 'col3 Employees': "" },
-      { Benefit: 'Parental Leave', 'Full-Time Employees': "", 'Part-Time Employees': "", 'col3 Employees': "" },
-      { Benefit: 'Retirement Provision', 'Full-Time Employees': "", 'Part-Time Employees': "", 'col3 Employees': "" },
-      { Benefit: 'Stock Ownership', 'Full-Time Employees': "", 'Part-Time Employees': "", 'col3 Employees': "" },
+      { Benefit: 'Life Insurance', 'Full-Time Employees': "", 'Part-Time Employees': "", 'Temporary Employees': "" },
+      { Benefit: 'Health Care', 'Full-Time Employees': "", 'Part-Time Employees': "", 'Temporary Employees': "" },
+      { Benefit: 'Disability & Invalidity Coverage', 'Full-Time Employees': "", 'Part-Time Employees': "", 'Temporary Employees': "" },
+      { Benefit: 'Parental Leave', 'Full-Time Employees': "", 'Part-Time Employees': "", 'Temporary Employees': "" },
+      { Benefit: 'Retirement Provision', 'Full-Time Employees': "", 'Part-Time Employees': "", 'Temporary Employees': "" },
+      { Benefit: 'Stock Ownership', 'Full-Time Employees': "", 'Part-Time Employees': "", 'Temporary Employees': "" },
     ];
 
     // Updated data4 to match column names

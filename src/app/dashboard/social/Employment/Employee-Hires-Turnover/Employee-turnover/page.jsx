@@ -9,6 +9,7 @@ import Tab2 from "./tab2";
 import Tab3 from "./tab3";
 import Tab4 from "./tab4";
 import Tab5 from "./tab5";
+
 function convertShortNameToFullName(shortName) {
     const shortMonthNames = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     const fullMonthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -30,8 +31,9 @@ const Employeeturnover = ({ location, year, month,activeMonth }) => {
     const fullName = convertShortNameToFullName(activeMonth);
     return (
         <>
+
             <div className='mb-4 flex mx-2'>
-                <div className='w-[80%]'>
+               <div className="w-[80%] relative">
                     <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold'>
                     Employee turnover
                         <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
@@ -60,10 +62,10 @@ const Employeeturnover = ({ location, year, month,activeMonth }) => {
                     {tabs.map((tab, index) => (
                         <li
                             key={index}
-                            className={`flex-1 text-center border-b-2 py-2 text-[12px] ${activeTabIndex === index ? 'border-blue-500 text-blue-600' : 'border-gray-300 text-gray-600'} `}
+                            className={`flex-1 text-center relative border-b-2 py-2 text-[12px] ${activeTabIndex === index ? 'border-blue-500 text-blue-600' : 'border-gray-300 text-gray-600'} `}
                             onClick={() => setActiveTabIndex(index)}
                         >
-                            <div className='flex justify-center items-center space-x-1'>
+                            <div className='flex justify-center items-center space-x-1 '>
                                 <span>{tab.title}</span>
                                 <MdInfoOutline data-tooltip-id={`tooltip-${tab.title.replace(/\s+/g, '-')}`}
                                     data-tooltip-content={tab.tooltip}

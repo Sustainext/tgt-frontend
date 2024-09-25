@@ -17,6 +17,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
+import selectWidget3 from '../../../../shared/widgets/Select/selectWidget3';
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
@@ -25,6 +26,7 @@ const widgets = {
   AssignTobutton: AssignToWidget,
   CustomSelectInputWidget: CustomSelectInputWidget,
   RemoveWidget: RemoveWidget,
+  selectWidget3: selectWidget3,
 };
 
 const view_path = 'gri-environment-waste-306-4b-4c-4d-waste_diverted_from_disposal'
@@ -65,7 +67,7 @@ const schema = {
       RecoveryOperations: {
         type: "string",
         title: "Recovery Operations",
-        enum: ['Preparation for reuse', 'Recycing', 'other'],
+        enum: ['Preparation for reuse', 'Recycling', 'other'],
         tooltiptext: "Recovery: Operation wherein products, components of products,or materials that have become waste are prepared to fulfill a purpose in place of new products, components, or materials that would otherwise have been used for that purpose.Recovery Methods: Preparation for reuse: Checking, cleaning, or repairing operations, by which products or components of products that have become waste are prepared to be put to use for the same purpose for which they were conceived.Recycling: Reprocessing of products or components of products that have become waste, to make new materials",
         display:"block",
       },
@@ -89,13 +91,12 @@ const schema = {
         type: "string",
         title: "Remove",
       },
-      // Define other properties as needed
     }
   }
 };
 
 const uiSchema = {
- // Add flex-wrap to wrap fields to the next line
+
   items: {
     classNames: 'fieldset',
     'ui:order': [
@@ -111,21 +112,22 @@ const uiSchema = {
     WasteType: {
       'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     Unit: {
-      'ui:widget': 'selectWidget',
+      'ui:widget': 'selectWidget3',
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     Wastediverted: {
       'ui:widget': 'inputWidget',
+      'ui:inputtype':'number',
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
 
@@ -133,41 +135,41 @@ const uiSchema = {
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     Site: {
       'ui:widget': 'selectWidget',
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     AssignTo: {
       "ui:widget": "AssignTobutton",
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     FileUpload: {
       'ui:widget': 'FileUploadWidget',
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     Remove: {
       "ui:widget": "RemoveWidget",
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
-    'ui:options': {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: 'horizontal', // Set layout to horizontal
+      'ui:options': {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: 'horizontal',
     }
   }
 };
@@ -178,8 +180,9 @@ const generateTooltip = (field, title, tooltipText, display) => {
   }
 
   return (
-    <div className='mx-2 flex w-[20vw]'>
-      <label className="text-[13px] leading-5 text-gray-700 flex">{title}</label>
+    <div className={`mx-2 flex ${field === 'WasteType' ? 'w-[22vw]' :   field === 'Unit' ? 'w-[5.2vw]' : 'w-[20vw]'
+    }`}>
+        <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
       <MdInfoOutline
         data-tooltip-id={field}
         data-tooltip-content={tooltipText}
@@ -299,22 +302,23 @@ const Wastedivertedimpact = ({location, year, month}) => {
     }
   };
 
-  const loadFormData = async () => {
-    LoaderOpen();
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
-    try {
-        const response = await axios.get(url, axiosConfig);
-        console.log('API called successfully:', response.data);
-        setRemoteSchema(response.data.form[0].schema);
-        setRemoteUiSchema(response.data.form[0].ui_schema);
-        const form_parent = response.data.form_data;
-        setFormData(form_parent[0].data);
-    } catch (error) {
-        console.error('API call failed:', error);
-    } finally {
-        LoaderClose();
-    }
-  }
+    const loadFormData = async () => {
+      LoaderOpen();
+      setFormData([{}])
+      const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+      try {
+          const response = await axios.get(url, axiosConfig);
+          console.log('API called successfully:', response.data);
+          setRemoteSchema(response.data.form[0].schema);
+          setRemoteUiSchema(response.data.form[0].ui_schema);
+          const form_parent = response.data.form_data;
+          setFormData(form_parent[0].data);
+      } catch (error) {
+          console.error('API call failed:', error);
+      } finally {
+          LoaderClose();
+      }
+  };
   //Reloading the forms -- White Beard
   useEffect(() => {
     //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
@@ -332,17 +336,8 @@ const Wastedivertedimpact = ({location, year, month}) => {
         toastShown.current = false; // Reset the flag when valid data is present
     } else {
         // Only show the toast if it has not been shown already
-        if (!toastShown.current) {
-            toast.warn("Please select location, year, and month first", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
+       if (!toastShown.current) {
+
             toastShown.current = true; // Set the flag to true after showing the toast
         }
     }
@@ -364,17 +359,20 @@ const Wastedivertedimpact = ({location, year, month}) => {
     setFormData(updatedData);
   };
   const renderFields = () => {
-    const fields = Object.keys(schema.items.properties);
+    if (!r_schema || !r_schema.items || !r_schema.items.properties) {
+      return null;
+    }
+    const fields = Object.keys(r_schema.items.properties);
     return fields.map((field, index) => (
       <div key={index}>
-        {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext, schema.items.properties[field].display)}
+        {generateTooltip(field, r_schema.items.properties[field].title, r_schema.items.properties[field].tooltiptext, r_schema.items.properties[field].display)}
       </div>
     ));
   };
   return (
     <>
 
-<div className={`overflow-auto custom-scrollbar flex`}>
+        <div className={`overflow-auto custom-scrollbar flex`}>
         <div>
           <div>
             <div className='flex'>

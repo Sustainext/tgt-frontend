@@ -1,3 +1,4 @@
+// location year and month//
 'use client';
 import { useEffect, useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
@@ -31,6 +32,10 @@ const Socialheader = ({ activeMonth, setActiveMonth, location, setLocation, year
   });
 
   const [locations, setLocations] = useState([]);
+  const [errors, setErrors] = useState({
+    location: location ? "" : "Please select a location",
+    year: year ? "" : "Please select a year"
+  });
 
   useEffect(() => {
     const fetchLocations = async () => {
@@ -56,9 +61,17 @@ const Socialheader = ({ activeMonth, setActiveMonth, location, setLocation, year
     if (name === "month") {
       setActiveMonth(monthMapping[value]);
     } else if (name === "location") {
-      setLocation(value);
+      setLocation(Number(value));
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        location: value ? "" : "Please select a location",
+      }));
     } else if (name === "year") {
       setYear(value);
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        year: value ? "" : "Please select a year",
+      }));
     }
   };
 
@@ -74,7 +87,7 @@ const Socialheader = ({ activeMonth, setActiveMonth, location, setLocation, year
     <>
       <div className="ml-2 mb-5">
         <div className="flex mb-5 gap-4">
-          <div className="relative">
+          <div className="relative mb-2">
             <select
               name="location"
               className="border m-0.5 text-sm text-neutral-500 appearance-none pr-24 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -83,19 +96,23 @@ const Socialheader = ({ activeMonth, setActiveMonth, location, setLocation, year
             >
               <option value="">Select location</option>
               {locations.map((location, index) => (
-                <option key={index} value={location.name}>
+                <option key={index} value={location.id}>
                   {location.name}
                 </option>
               ))}
             </select>
-            <div className="absolute inset-y-0 right-2 flex items-center pl-3 pointer-events-none">
+            <div
+              className="absolute inset-y-0 right-2 flex items-center pointer-events-none"
+              style={{ top: "50%", transform: "translateY(-50%)" }}
+            >
               <MdKeyboardArrowDown
                 className="text-neutral-500"
                 style={{ fontSize: "16px" }}
               />
             </div>
+            {errors.location && <p className="text-red-500 text-sm absolute top-10 left-0 pl-2">{errors.location}</p>}
           </div>
-          <div className="ml-3 relative">
+          <div className="ml-3 relative mb-2">
             <select
               name="year"
               className="border m-0.5 text-sm text-neutral-500 appearance-none pr-32 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -109,14 +126,17 @@ const Socialheader = ({ activeMonth, setActiveMonth, location, setLocation, year
                 </option>
               ))}
             </select>
-            <div className="absolute inset-y-0 right-2 flex items-center pl-3 pointer-events-none">
+            <div
+              className="absolute inset-y-0 right-2 flex items-center pointer-events-none"
+              style={{ top: "50%", transform: "translateY(-50%)" }}
+            >
               <MdKeyboardArrowDown
                 className="text-neutral-500"
                 style={{ fontSize: "16px" }}
               />
             </div>
+            {errors.year && <p className="text-red-500 text-sm absolute top-10 left-0 pl-2">{errors.year}</p>}
           </div>
-
         </div>
         <div className="flex justify-between mb-4">
           <div className="flex bg-[#f7f7f7] py-1 rounded-lg">
@@ -147,5 +167,5 @@ const Socialheader = ({ activeMonth, setActiveMonth, location, setLocation, year
     </>
   );
 };
-export default Socialheader;
 
+export default Socialheader;

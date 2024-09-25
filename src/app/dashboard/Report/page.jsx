@@ -1,12 +1,12 @@
-'use client'
-import React, {useState, useEffect, useRef } from "react";
-import { useRouter } from 'next/navigation';
+"use client";
+import React, { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdAdd } from "react-icons/md";
 import TableWithPagination from "./Data-table/TablePagination";
-import { Oval } from 'react-loader-spinner';
+import { Oval } from "react-loader-spinner";
 import axiosInstance, { post } from "../../utils/axiosMiddleware";
 const Report = () => {
   const [isExpandedpage, setIsExpandedpage] = useState(true);
@@ -27,14 +27,46 @@ const Report = () => {
   const [selectedCorp, setSelectedCorp] = useState();
   const [error, setError] = useState({});
   const router = useRouter();
+  const [entities, setEntities] = useState([]);
+
+  const handleCheckboxChange = (index) => {
+    const newEntities = [...entities];
+    newEntities[index].checked = !newEntities[index].checked;
+    setEntities(newEntities);
+  };
+
+  const handleOwnershipRatioChange = (index, value) => {
+    const newValue = Number(value);
+    if (newValue >= 0 && newValue <= 99) {
+      const newEntities = [...entities];
+      newEntities[index].ownershipRatio = newValue;
+      setEntities(newEntities);
+    }
+  };
+  const handleChangeallcrop = async (event) => {
+
+    const selectedId = event.target.value;
+    setSelectedOrg(selectedId);
+    try {
+      const response = await axiosInstance.get(`/sustainapp/all_corporate_list/`, {
+        params: { organization_id: selectedId },
+      });
+      setEntities(response.data);
+    } catch (e) {
+      console.log(
+        "failed fetching organization",
+        process.env.REACT_APP_BACKEND_URL
+      );
+    }
+  };
+
   const fetchOrg = async () => {
     try {
-      const response = await axiosInstance.get(
-        `/orggetonly`
-      );
+      const response = await axiosInstance.get(`/orggetonly`);
       // console.log("orgs:", response.data[0].name);
       setOrganisations(response.data);
       // setSelectedOrg(response.data[0].name);
+
     } catch (e) {
       console.log(
         "failed fetching organization",
@@ -46,6 +78,7 @@ const Report = () => {
     if (isMounted.current) {
       fetchOrg();
       fetchReoprts();
+
       isMounted.current = false;
     }
     return () => {
@@ -61,6 +94,7 @@ const Report = () => {
     localStorage.removeItem("organizationcountry");
     localStorage.removeItem("reportname");
     localStorage.removeItem("selectedImage");
+
   }, []);
   const handleChangecrop = async (event) => {
     // Update the state with the new selection
@@ -69,12 +103,9 @@ const Report = () => {
 
     // Perform the API call with the selected ID
     try {
-        const response = await axiosInstance.get(
-            `/corporate/`,
-            {
-              params: { organization_id: selectedId },
-            }
-          );
+      const response = await axiosInstance.get(`/corporate/`, {
+        params: { organization_id: selectedId },
+      });
 
       console.log("Corporates:", response.data);
       setCorporates(response.data);
@@ -125,9 +156,8 @@ const Report = () => {
     LoaderOpen();
 
     // console.log("user id ", localStorage.getItem("user_id"));
-    const response = await axiosInstance.get(
-        `/sustainapp/report_details/`
-      )
+    const response = await axiosInstance
+      .get(`/sustainapp/report_details/`)
       .then((response) => {
         // Handle the response here.
         console.log(response.data, "reprotdetilles");
@@ -159,7 +189,12 @@ const Report = () => {
 
   const submitForm = async () => {
     LoaderOpen();
-
+    const selectedEntities = entities
+    .filter((entity) => entity.checked)
+    .map((entity) => ({
+      corporate_id: entity.id,
+      ownership_ratio: entity.ownershipRatio,
+    }));
     const sandData = {
       name: reportname,
       report_type: reporttype,
@@ -168,7 +203,9 @@ const Report = () => {
       end_date: enddate,
       organization: selectedOrg,
       corporate: selectedCorp,
+      investment_corporates:selectedEntities,
     };
+
     await post(`/sustainapp/report_create/`, sandData)
       .then((response) => {
         if (response.status == "200") {
@@ -193,15 +230,46 @@ const Report = () => {
           setSelectedCorp();
           setFirstSelection();
 
-          window.localStorage.setItem("reportid", response.data.id);
-    window.localStorage.setItem("reportorgname", response.data.organization_name);
-    window.localStorage.setItem("reportstartdate", response.data.start_date);
-    window.localStorage.setItem("reportenddate", response.data.end_date);
-    window.localStorage.setItem("organizationcountry", response.data.organization_country);
 
-          router.push('/dashboard/Report/Ghgtemplates');
-        //   navigate(`/report/GHGtemplate`, { state: { data: response.data } });
+          window.localStorage.setItem("reportid", response.data.id);
+          window.localStorage.setItem(
+            "reportorgname",
+            response.data.organization_name
+          );
+          window.localStorage.setItem(
+            "reportstartdate",
+            response.data.start_date
+          );
+          window.localStorage.setItem("reportenddate", response.data.end_date);
+          window.localStorage.setItem(
+            "organizationcountry",
+            response.data.organization_country
+          );
+
+          router.push("/dashboard/Report/Ghgtemplates");
+          //   navigate(`/report/GHGtemplate`, { state: { data: response.data } });
         }
+        else if(response.status == "204"){
+          toast.error("No data available for the given corporate IDs", {
+         position: "top-right",
+         autoClose: 3000,
+         hideProgressBar: false,
+         closeOnClick: true,
+         pauseOnHover: true,
+         draggable: true,
+         progress: undefined,
+         theme: "light",
+       });
+       LoaderClose();
+       handleCloseModal();
+       setReportname();
+       setReporttype();
+       setStartdate();
+       setEnddate();
+       setSelectedOrg();
+       setSelectedCorp();
+       setFirstSelection();
+     }
       })
       .catch((error) => {
         const errorMessage =
@@ -228,8 +296,9 @@ const Report = () => {
         setSelectedCorp();
         LoaderClose();
         setFirstSelection();
+
       });
-    // console.log(response,"response");
+
   };
   const validateForm = () => {
     let newErrors = {};
@@ -283,7 +352,8 @@ const Report = () => {
           <select
             className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             value={selectedOrg}
-            onChange={(e) => setSelectedOrg(e.target.value)}
+            onChange={handleChangeallcrop}
+            // onChange={(e) => setSelectedOrg(e.target.value)}
           >
             <option value="">--Select Organization--- </option>
             {organisations?.map((org) => (
@@ -393,13 +463,15 @@ const Report = () => {
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
       <div className="my-4 pb-5 mx-8 text-left">
-        <h1 className="gradient-text mb-8 text-[1.375rem] font-bold ml-3">Report</h1>
+        <h1 className="gradient-text mb-8 text-[1.375rem] font-bold ml-3">
+          Report
+        </h1>
         <div className="">
           <div
             className="flex items-center space-x-2 text-sky-500 text-xs font-bold leading-[15px] cursor-pointer ml-2"
             onClick={handleOpenModal}
           >
-            <MdAdd className="text-[15px]"/>
+            <MdAdd className="text-[15px]" />
             <div className="text-sky-500 text-[15px] font-bold leading-[15px]">
               Add Report
             </div>
@@ -488,10 +560,7 @@ const Report = () => {
                         >
                           <option>Select Report Type</option>
                           <option>GHG Accounting Report</option>
-                          {/* <option>GRI</option>
-                           <option>TCFD</option>
-                           <option>SASB</option>
-                           <option>BRSR</option> */}
+                          <option>GHG Report - Investments</option>
                         </select>
                         {error.reporttype && (
                           <p className="text-red-500 ml-1">
@@ -529,6 +598,54 @@ const Report = () => {
                   <div className="mb-3">
                     {showSecondSelect && renderSecondSelect()}
                   </div>
+                  {reporttype === "GHG Report - Investments" && (
+                  <div className="mr-2 h-[250px] overflow-y-auto">
+                    <label
+                      htmlFor="sdate"
+                      className="block text-neutral-800 text-[13px] font-normal"
+                    >
+                      Select Investment Corporate
+                    </label>
+                    <div className="mt-2 mr-2">
+                      <div className="p-4">
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="text-gray-400 font-semibold text-[13px]">
+                            Investment Corporate
+                          </div>
+                          <div className="text-gray-400 font-semibold text-[13px]">
+                            Ownership Ratio %
+                          </div>
+
+                          {entities.map((entity, index) => (
+                            <React.Fragment key={index}>
+                              <div className="flex items-center space-x-2">
+                                <input
+                                id={entity.id}
+                                  type="checkbox"
+                                  checked={entity.checked}
+                                  onChange={() => handleCheckboxChange(index)}
+                                  className="form-checkbox h-5 w-5 text-green-600"
+                                  value={entity.id}
+                                />
+                                <label    htmlFor={entity.id}  className="text-gray-800 text-[13px]">
+                                  {entity.name}
+                                </label>
+                              </div>
+                              <input
+                                type="number"
+                                placeholder="Enter Ownership Ratio %"
+                                className="border p-2 rounded w-full text-[13px]"
+                                disabled={!entity.checked}
+                                value={entity.ownershipRatio}
+                                onChange={(e) => handleOwnershipRatioChange(index, e.target.value)}
+                              />
+                            </React.Fragment>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  )}
                   <div className="grid grid-cols-1 md:grid-cols-2 mb-4">
                     <div>
                       <label
@@ -606,18 +723,18 @@ const Report = () => {
           </div>
         </div>
       )}
-   {loopen && (
-          <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-            <Oval
-              height={50}
-              width={50}
-              color="#00BFFF"
-              secondaryColor="#f3f3f3"
-              strokeWidth={2}
-              strokeWidthSecondary={2}
-            />
-          </div>
-        )}
+      {loopen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
     </>
   );
 };

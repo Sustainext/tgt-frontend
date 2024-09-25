@@ -1,18 +1,19 @@
-"use client";
-import React, { useState, useEffect } from "react";
+'use client';
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import { MdAdd } from "react-icons/md";
-import CustomFileUploadWidget from "../../../shared/widgets/CustomFileUploadWidget";
-import CombinedWidget from "../../../shared/widgets/emissioncombinedWidget";
-import { GlobalState } from "../../../../Context/page";
-import RemoveWidget from "../../../shared/widgets/RemoveWidget";
-import axiosInstance, { post } from "@/app/utils/axiosMiddleware";
-import "react-toastify/dist/ReactToastify.css";
-import { Oval } from "react-loader-spinner";
-import CalculateSuccess from "./calculateSuccess";
-import { useEmissions } from "./EmissionsContext";
+import CustomFileUploadWidget from '../../../shared/widgets/CustomFileUploadWidget';
 import AssignToWidgetEmission from "@/app/shared/widgets/assignToWidgetEmission";
+import CombinedWidget from '../../../shared/widgets/emissioncombinedWidget';
+import { GlobalState } from '../../../../Context/page';
+import RemoveWidget from '../../../shared/widgets/RemoveWidget';
+import axiosInstance, { post } from '@/app/utils/axiosMiddleware';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Oval } from 'react-loader-spinner';
+import { useEmissions } from "./EmissionsContext";
+import CalculateSuccess from "./calculateSuccess";
 
 const widgets = {
   EmissonCombinedWidget: CombinedWidget,
@@ -25,7 +26,7 @@ const view_path = "gri-environment-emissions-301-a-scope-1";
 const client_id = 1;
 const user_id = 1;
 
-const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
+const Scope1 = forwardRef(({ location, year, month, successCallback, countryCode }, ref) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -33,15 +34,14 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
   const [loopen, setLoOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
   const { climatiqData, setScope1Data } = useEmissions();
-  const [localClimatiq, setlocalClimatiq] = useState(0);
+  const [localClimatiq, setLocalClimatiq] = useState(0);
   const [activityCache, setActivityCache] = useState({});
 
-  useEffect(() => {
-    if (climatiqData?.result?.length > 0) {
-      const sum = climatiqData.result.reduce((acc, item) => acc + item.co2e, 0);
-      setlocalClimatiq(sum);
+  useImperativeHandle(ref, () => ({
+    updateFormData() {
+      return updateFormData(formData);
     }
-  }, [climatiqData]);
+  }));
 
   useEffect(() => {
     setScope1Data(formData);
@@ -56,14 +56,16 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
   };
 
   const handleChange = (e) => {
+    console.log("handleChange triggered");
     setFormData(e.formData);
+    console.log("Updated form data in handleChange:", e.formData);
   };
 
   const handleCombinedWidgetChange = (index, field, value, activityId, unitType) => {
     setFormData(prevFormData => {
       const updatedFormData = [...prevFormData];
       const currentEmission = updatedFormData[index]?.Emission || {};
-  
+
       updatedFormData[index] = {
         ...updatedFormData[index],
         Emission: {
@@ -73,17 +75,16 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
           ...(unitType !== undefined && { unit_type: unitType })
         }
       };
-  
+
       return updatedFormData;
     });
   };
-  
 
   const handleFileWidgetChange = (index, name, url, type, size, uploadDateTime) => {
     setFormData(prevFormData => {
       const updatedFormData = [...prevFormData];
       const currentEmission = updatedFormData[index]?.Emission || {};
-      
+
       updatedFormData[index] = {
         ...updatedFormData[index],
         Emission: currentEmission,
@@ -95,18 +96,41 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
           uploadDateTime: uploadDateTime
         }
       };
-  
+
       console.log('Updated form data:', updatedFormData);
       return updatedFormData;
     });
   };
-  
+
 
   const handleAddNew = () => {
     setFormData((prevFormData) => [...prevFormData, { Emission: {} }]);
+
+    console.log(formData,"test data");
+  };
+  const handleRemove = async (index) => {
+    console.log(index, "updatedData data index");
+
+    let updatedData;
+
+    // Update the state and get the updated data
+    setFormData((prevFormData) => {
+      const newFormData = prevFormData.filter((_, i) => i !== index);
+      console.log(newFormData, "updatedData after removing index");
+      updatedData = newFormData; // Capture the updated data
+      return newFormData;
+    });
+
+    try {
+      // Wait for the state update to complete and then call updateFormData
+      await updateFormData(updatedData);
+      successCallback();
+    } catch (error) {
+      console.error("Failed to update form data:", error);
+    }
   };
 
-  const updateFormData = async () => {
+  const updateFormData = async (formData) => {
     LoaderOpen();
     const data = {
       client_id: client_id,
@@ -120,25 +144,10 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
-      const response = await post(url, data);
-
-      await successCallback();
-      await loadFormData();
-      if (response.status === 200) {
-        setModalData({
-          location,
-          month,
-          message: "Emission has been created",
-          monthly_emissions: localClimatiq,
-        });
-      } else {
-        setModalData({
-          message: "Oops, something went wrong",
-        });
-      }
+      const response = await post(url, { ...data });
     } catch (error) {
       setModalData({
-        message: "Oops, something went wrong",
+        message: "Oops, something went wrong"
       });
     } finally {
       LoaderClose();
@@ -147,45 +156,50 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
 
   const loadFormData = async () => {
     LoaderOpen();
+    setFormData([{}]);
     const base_url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=`;
     const url = `${base_url}${view_path}&&client_id=${client_id}&&user_id=${user_id}&&location=${location}&&year=${year}&&month=${month}`;
 
-    try {
-      const response = await axiosInstance.get(url);
-      setRemoteSchema(response.data.form[0].schema);
-      setRemoteUiSchema(response.data.form[0].ui_schema);
-      const form_parent = response.data.form_data;
-      const f_data = form_parent[0].data;
-      setFormData(f_data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      LoaderClose();
-    }
+    axiosInstance
+      .get(url)
+      .then((response) => {
+        setRemoteSchema(response.data.form[0].schema);
+        setRemoteUiSchema(response.data.form[0].ui_schema);
+        const form_parent = response.data.form_data;
+        const f_data = form_parent[0].data;
+        setFormData(f_data);
+
+        LoaderClose();
+
+      })
+      .catch((error) => {
+        console.log(error)
+        LoaderClose();
+      });
   };
 
   useEffect(() => {
     loadFormData();
-  }, [location, year, month]);
+  }, [year, month, location]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateFormData();
+    updateFormData(formData);
   };
 
   const updateFormDatanew = (updatedData) => {
     setFormData(updatedData);
   };
 
-  const handleRemove = (index) => {
-    const updatedData = [...formData];
-    updatedData.splice(index, 1);
-    setFormData(updatedData);
-  };
+  // const handleRemove = (index) => {
+  //   const updatedData = [...formData];
+  //   updatedData.splice(index, 1);
+  //   setFormData(updatedData);
+  //   // updateFormData();
+  //   // successCallback();
+  // };
 
-  const handleCloseModal = () => {
-    setModalData(null);
-  };
+
 
   const updateCache = (subcategory, activities) => {
     setActivityCache((prevCache) => ({
@@ -196,10 +210,7 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
 
   return (
     <>
-      <div
-        className={`overflow-y-visible custom-scrollbar flex`}
-        style={{ position: "relative" }}
-      >
+      <div className={`overflow-y-visible custom-scrollbar flex`} style={{ position: 'relative' }}>
         <div>
           <Form
             className="flex"
@@ -222,10 +233,10 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
                   {...props}
                   scopes="scope1"
                   setFormData={updateFormDatanew}
-                  onChange={({ name,url,type,size,uploadDateTime }) =>
+                  onChange={({ name, url, type, size, uploadDateTime }) =>
                     handleFileWidgetChange(
                       props.id.split("_")[1],
-                      name,url,type,size,uploadDateTime
+                      name, url, type, size, uploadDateTime
                     )
                   }
                 />
@@ -250,15 +261,7 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
                 />
               ),
               AssignTobutton: (props) => (
-                <AssignToWidgetEmission
-                  {...props}
-                  scope="scope1"
-                  location={location}
-                  year={year}
-                  month={month}
-                  data={formData}
-                  countryCode={countryCode}
-                />
+                <AssignToWidgetEmission {...props} scope="scope1" location={location} year={year} month={month} data={formData} />
               ),
             }}
           />
@@ -274,13 +277,6 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
           <MdAdd className="text-lg" /> Add Row
         </button>
 
-        <button
-          type="button"
-          className="h-8 text-center py-1 text-sm w-[100px] bg-[rgb(2,132,199)] text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline"
-          onClick={handleSubmit}
-        >
-          Submit
-        </button>
       </div>
 
       {loopen && (
@@ -297,10 +293,15 @@ const Scope1 = ({ location, year, month, successCallback, countryCode }) => {
       )}
 
       {modalData && (
-        <CalculateSuccess data={modalData} onClose={handleCloseModal} />
+        <CalculateSuccess
+          data={modalData}
+          onClose={() => setModalData(null)}
+        />
       )}
+
+      <ToastContainer />
     </>
   );
-};
+});
 
 export default Scope1;

@@ -13,8 +13,11 @@ const CustomTableWidget6 = ({
   formContext,
   onChange,
 }) => {
-  const [localValue, setLocalValue] = useState(value || []);
+  const [localValue, setLocalValue] = useState(value);
 
+  useEffect(() => {
+    setLocalValue(value);
+  }, [value]);
   // Check if the current month is January
   const isJanuary = formContext.newMonth === "January";
 
@@ -49,10 +52,10 @@ const CustomTableWidget6 = ({
               Age group
             </th>
             {options.titles.map((item, idx) => (
-              <th key={idx} className="text-[12px] border border-gray-300 px-2 py-2 text-center">
+              <th key={idx} className="text-[12px] border border-gray-300 px-2 py-2 text-center relative">
                 <div className="flex items-center justify-center">
                   <p>{item.title}</p>
-                  <p>
+                  <p className=" relative">
                   <MdInfoOutline
                     data-tooltip-id={`tooltip-${item.title.replace(/\s+/g, '-')}`}
                     data-tooltip-content={item.tooltip}
@@ -82,7 +85,7 @@ const CustomTableWidget6 = ({
             <tr key={rowIndex}>
               <td className="border-t border-gray-300 py-2 px-2 text-[13px]">
               <div className="flex items-center justify-center">
-                  <p className="w-[80%]">   {rowLabel.title}</p>
+                  <p className="w-[80%] relative">   {rowLabel.title}</p>
                   <p>
                   <MdInfoOutline
                   data-tooltip-id={`tooltip-${rowLabel.title.replace(/\s+/g, '-')}`}

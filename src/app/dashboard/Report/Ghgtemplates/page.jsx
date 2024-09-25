@@ -42,10 +42,11 @@ const { open } = GlobalState();
   const [loading, setLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState();
   const isMounted = useRef(true);
-
+  const reportreportorgname = typeof window !== 'undefined' ? localStorage.getItem("reportorgname") : '';
   const reportname = typeof window !== 'undefined' ? localStorage.getItem("reportname") : '';
   const reportstartdateStr = typeof window !== 'undefined' ? localStorage.getItem("reportstartdate"): '';
-  const reportenddateStr = typeof window !== 'undefined' ? localStorage.getItem("reportenddate") : ''
+  const reportenddateStr = typeof window !== 'undefined' ? localStorage.getItem("reportenddate") : '';
+
   const reportId = typeof window !== 'undefined' ? localStorage.getItem("reportid") : '';
   const reportstartdate = reportstartdateStr ? new Date(reportstartdateStr) : null;
   const reportenddate = reportenddateStr ? new Date(reportenddateStr) : null;
@@ -305,7 +306,7 @@ let axiosConfig = {
       <ToastContainer style={{ fontSize: "12px" }} />
 
       <div   className={`${open ? " w-[105vw]" :" w-[115vw]" } flex` } >
-        <div className="bg-[#f2f2f2] items-start py-4 px-3 min-w-[270px] min-h-[100vh] rounded-lg text-sm">
+        <div className="bg-[#f2f2f2] items-start py-4 px-3 ml-1 min-w-[270px] min-h-[100vh] rounded-lg text-sm">
           <section className="flex min-h-screen justify-center">
             <div className="w-80">
               <h2 className="text-xl text-[#727272] mb-2 text-left">

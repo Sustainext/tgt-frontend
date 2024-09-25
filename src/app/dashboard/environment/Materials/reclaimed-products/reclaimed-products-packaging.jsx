@@ -17,6 +17,8 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
+import selectWidget3 from '../../../../shared/widgets/Select/selectWidget3';
+import inputnumberWidget from "../../../../shared/widgets/Input/inputnumberWidget"
 const widgets = {
     inputWidget: inputWidget,
     dateWidget: dateWidget,
@@ -25,9 +27,11 @@ const widgets = {
     AssignTobutton: AssignToWidget,
     CustomSelectInputWidget: CustomSelectInputWidget,
     RemoveWidget: RemoveWidget,
+    selectWidget3: selectWidget3,
+    inputnumberWidget: inputnumberWidget,
 };
 
-const view_path = '	gri-environment-materials-301-3a-3b-reclaimed_products'
+const view_path = 'gri-environment-materials-301-3a-3b-reclaimed_products'
 const client_id = 1
 const user_id = 1
 
@@ -84,7 +88,7 @@ const schema = {
             },
             Typesofrecycledmaterials: {
                 type: "string",
-                title: "Recycled materials used ",
+                title: "Types of recycled materials",
                 enum: ['Cardboard', 'Folding carton', 'Glass Bottles', 'Glass Jars', 'Metal cans', 'Paper', 'Plastic', 'Wooden crates', 'Wood', 'Bamboo', 'Cellulose', 'Corn starch', 'Mushroom packaging', 'Organic Fabric', 'Others'],
                 tooltiptext: "Does the company use recycled materials in its packaging?",
                 display: "block",
@@ -93,14 +97,6 @@ const schema = {
                 type: "string",
                 title: "Amounts of product and packaging materials recycled",
                 tooltiptext: "Please specify the amount of material the company recycled during the reporting period.",
-                display: "block",
-            },
-
-
-            Amountofrecycledinputmaterialused: {
-                type: "string",
-                title: "Amount of recycled input material used ",
-                tooltiptext: "How much recycled material is used for the production of goods or services? Recycled Input Materials: Materials that have been used and then processed into new materials. ",
                 display: "block",
             },
 
@@ -130,23 +126,23 @@ const schema = {
                 type: "string",
                 title: "Remove",
             },
-            // Define other properties as needed
+
         }
     }
 };
 
 const uiSchema = {
-    // Add flex-wrap to wrap fields to the next line
+
     items: {
         classNames: 'fieldset',
         'ui:order': [
-            'Typesofproducts', 'Productclassification', 'Productcode', 'Productname','Amountofproducts', 'Unit', 'Recycledmaterialsused','Typesofrecycledmaterials','Amountsproduct','Amountofrecycledinputmaterialused', 'Unit2','Datacollectionmethod', 'AssignTo', 'FileUpload', 'Remove'
+            'Typesofproducts', 'Productclassification', 'Productcode', 'Productname','Amountofproducts', 'Unit', 'Recycledmaterialsused','Typesofrecycledmaterials','Amountsproduct', 'Unit2','Datacollectionmethod', 'AssignTo', 'FileUpload', 'Remove'
         ],
         Typesofproducts: {
             'ui:widget': 'inputWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Productclassification: {
@@ -157,135 +153,138 @@ const uiSchema = {
             },
         },
         Productcode: {
-            'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
+            'ui:widget': 'inputWidget',
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Productname: {
             'ui:widget': 'inputWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Amountofproducts: {
-            'ui:widget': 'inputWidget',
+            'ui:widget': 'inputnumberWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
 
         Unit: {
-            'ui:widget': 'selectWidget',
+            'ui:widget': 'selectWidget3',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Recycledmaterialsused: {
             'ui:widget': 'selectWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Typesofrecycledmaterials: {
             'ui:widget': 'selectWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Amountsproduct: {
-            'ui:widget': 'inputWidget',
+            'ui:widget': 'inputnumberWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
-        Amountofrecycledinputmaterialused: {
-            'ui:widget': 'inputWidget',
-            'ui:horizontal': true,
-            'ui:options': {
-                label: false // This disables the label for this field
-            },
-        },
+
         Unit2: {
-            'ui:widget': 'selectWidget',
+            'ui:widget': 'selectWidget3',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Datacollectionmethod: {
             'ui:widget': 'inputWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         AssignTo: {
             "ui:widget": "AssignTobutton",
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         FileUpload: {
             'ui:widget': 'FileUploadWidget',
             'ui:horizontal': true,
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         Remove: {
             "ui:widget": "RemoveWidget",
             'ui:options': {
-                label: false // This disables the label for this field
+                label: false
             },
         },
         'ui:options': {
-            orderable: false, // Prevent reordering of items
-            addable: false, // Prevent adding items from UI
-            removable: false, // Prevent removing items from UI
-            layout: 'horizontal', // Set layout to horizontal
+            orderable: false,
+            addable: false,
+            removable: false,
+            layout: 'horizontal',
         }
     }
 };
 
-const generateTooltip = (field, title, tooltipText, display) => {
+const generateUniqueId = (field) => {
+    return `${field}-${new Date().getTime()}`;
+  };
+  const generateTooltip = (field, title, tooltipText) => {
     if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
-        return null; // Return null to skip rendering tooltip for these fields
+      return null; // Return null to skip rendering tooltip for these fields
     }
-
+    const uniqueId = generateUniqueId(field);
     return (
-        <div className='mx-2 flex w-[20vw]'>
-            <label className="text-[13px] leading-5 text-gray-700 flex">{title}</label>
-            <MdInfoOutline
-                data-tooltip-id={field}
-                data-tooltip-content={tooltipText}
-                className="mt-1 ml-1 text-[12px]"
-                style={{ display: display }}
-            />
-            <ReactTooltip
-                id={field}
-                place="top"
-                effect="solid"
-                style={{
-                    width: "290px",
-                    backgroundColor: "#000",
-                    color: "white",
-                    fontSize: "12px",
-                    boxShadow: 3,
-                    borderRadius: "8px",
-                    textAlign: 'left',
-                }}
-            />
+      <div className={`mx-2 flex ${field === 'Amountofproducts' || field === 'Amountsproduct'   ? 'w-[22vw]' :   field === 'Unit' || field === 'Unit2' ? 'w-[5.2vw]' : 'w-[20vw]'
+      }`}>
+        <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
+        <div>
+        <MdInfoOutline
+          data-tooltip-id={uniqueId}
+          data-tooltip-content={tooltipText}
+          className="mt-1 ml-2 text-[12px]"
+        />
+        <ReactTooltip
+          id={uniqueId}
+          place="top"
+          effect="solid"
+
+          style={{
+            width: "290px",
+            backgroundColor: "#000",
+            color: "white",
+            fontSize: "12px",
+            boxShadow: 3,
+            borderRadius: "8px",
+            textAlign: 'left',
+
+          }}
+
+        />
         </div>
+
+      </div>
     );
-};
+  };
 
 const Reclaimedproductspackdging = ({location, year, month}) => {
     const { open } = GlobalState();
@@ -381,22 +380,23 @@ const Reclaimedproductspackdging = ({location, year, month}) => {
     }
   };
 
-  const loadFormData = async () => {
-    LoaderOpen();
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
-    try {
-        const response = await axios.get(url, axiosConfig);
-        console.log('API called successfully:', response.data);
-        setRemoteSchema(response.data.form[0].schema);
-        setRemoteUiSchema(response.data.form[0].ui_schema);
-        const form_parent = response.data.form_data;
-        setFormData(form_parent[0].data);
-    } catch (error) {
-        console.error('API call failed:', error);
-    } finally {
-        LoaderClose();
-    }
-  }
+    const loadFormData = async () => {
+      LoaderOpen();
+      setFormData([{}])
+      const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+      try {
+          const response = await axios.get(url, axiosConfig);
+          console.log('API called successfully:', response.data);
+          setRemoteSchema(response.data.form[0].schema);
+          setRemoteUiSchema(response.data.form[0].ui_schema);
+          const form_parent = response.data.form_data;
+          setFormData(form_parent[0].data);
+      } catch (error) {
+          console.error('API call failed:', error);
+      } finally {
+          LoaderClose();
+      }
+  };
   //Reloading the forms -- White Beard
   useEffect(() => {
     //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
@@ -414,17 +414,8 @@ const Reclaimedproductspackdging = ({location, year, month}) => {
         toastShown.current = false; // Reset the flag when valid data is present
     } else {
         // Only show the toast if it has not been shown already
-        if (!toastShown.current) {
-            toast.warn("Please select location, year, and month first", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
+       if (!toastShown.current) {
+
             toastShown.current = true; // Set the flag to true after showing the toast
         }
     }
@@ -445,17 +436,21 @@ const Reclaimedproductspackdging = ({location, year, month}) => {
         setFormData(updatedData);
     };
     const renderFields = () => {
-        const fields = Object.keys(schema.items.properties);
+        if (!r_schema || !r_schema.items || !r_schema.items.properties) {
+          return null;
+        }
+        const fields = Object.keys(r_schema.items.properties);
         return fields.map((field, index) => (
-            <div key={index}>
-                {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext, schema.items.properties[field].display)}
-            </div>
+          <div key={index}>
+            {generateTooltip(field, r_schema.items.properties[field].title, r_schema.items.properties[field].tooltiptext, r_schema.items.properties[field].display)}
+          </div>
         ));
-    };
+      };
     return (
         <>
 
-            <div className={`overflow-auto custom-scrollbar flex`}>
+
+        <div className={`overflow-auto custom-scrollbar flex`}>
                 <div>
                     <div>
                         <div className='flex'>
@@ -465,8 +460,8 @@ const Reclaimedproductspackdging = ({location, year, month}) => {
 
                     <Form
                         className='flex'
-                        schema={r_schema}
-                        uiSchema={r_ui_schema}
+                        schema={schema}
+                        uiSchema={uiSchema}
                         formData={formData}
                         onChange={handleChange}
                         validator={validator}

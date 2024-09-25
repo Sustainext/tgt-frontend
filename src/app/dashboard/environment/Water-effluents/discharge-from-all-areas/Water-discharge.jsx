@@ -17,6 +17,8 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
+import selectWidget3 from '../../../../shared/widgets/Select/selectWidget3';
+import inputnumberWidget from "../../../../shared/widgets/Input/inputnumberWidget"
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
@@ -25,6 +27,8 @@ const widgets = {
   AssignTobutton: AssignToWidget,
   CustomSelectInputWidget: CustomSelectInputWidget,
   RemoveWidget: RemoveWidget,
+  selectWidget3: selectWidget3,
+  inputnumberWidget: inputnumberWidget,
 };
 
 const view_path = 'gri-environment-water-303-4a-third_party'
@@ -68,13 +72,12 @@ const schema = {
         type: "string",
         title: "Remove",
       },
-      // Define other properties as needed
     }
   }
 };
 
 const uiSchema = {
- // Add flex-wrap to wrap fields to the next line
+
   items: {
     classNames: 'fieldset',
     'ui:order': [
@@ -88,16 +91,16 @@ const uiSchema = {
       },
     },
     Volume: {
-        'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
+        'ui:widget': 'inputnumberWidget',
         'ui:options': {
-          label: false // This disables the label for this field
+          label: false
         },
       },
     Unit: {
-      'ui:widget': 'selectWidget',
+      'ui:widget': 'selectWidget3',
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
 
@@ -105,46 +108,50 @@ const uiSchema = {
       "ui:widget": "AssignTobutton",
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     FileUpload: {
       'ui:widget': 'FileUploadWidget',
       'ui:horizontal': true,
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
     Remove: {
       "ui:widget": "RemoveWidget",
       'ui:options': {
-        label: false // This disables the label for this field
+        label: false
       },
     },
-    'ui:options': {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: 'horizontal', // Set layout to horizontal
+      'ui:options': {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: 'horizontal',
     }
   }
 };
 
+const generateUniqueId = (field) => {
+  return `${field}-${new Date().getTime()}`;
+};
 const generateTooltip = (field, title, tooltipText) => {
   if (field === "FileUpload" || field === "AssignTo" || field === "Remove") {
     return null; // Return null to skip rendering tooltip for these fields
   }
-
+  const uniqueId = generateUniqueId(field);
   return (
-    <div className='mx-2 flex w-[20vw]'>
-      <label className="text-[13px] leading-5 text-gray-700 flex">{title}</label>
+    <div className={`mx-2 flex  ${field === 'Volume' ? ' w-[22vw]' : ' w-[20vw]'}`}>
+      <label className={`text-[15px] leading-5 text-gray-700 flex `}>{title}</label>
+      <div>
       <MdInfoOutline
-        data-tooltip-id={field}
+        data-tooltip-id={uniqueId}
         data-tooltip-content={tooltipText}
-        className="mt-1 ml-2 w-[30px] text-[12px]"
+        className="mt-1 ml-2 text-[12px]"
       />
       <ReactTooltip
-        id={field}
+        id={uniqueId}
         place="top"
         effect="solid"
         style={{
@@ -155,8 +162,12 @@ const generateTooltip = (field, title, tooltipText) => {
           boxShadow: 3,
           borderRadius: "8px",
           textAlign: 'left',
+
         }}
+
       />
+      </div>
+
     </div>
   );
 };
@@ -254,22 +265,23 @@ const Waterdischarge = ({location, year, month}) => {
     }
   };
 
-  const loadFormData = async () => {
-    LoaderOpen();
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
-    try {
-        const response = await axios.get(url, axiosConfig);
-        console.log('API called successfully:', response.data);
-        setRemoteSchema(response.data.form[0].schema);
-        setRemoteUiSchema(response.data.form[0].ui_schema);
-        const form_parent = response.data.form_data;
-        setFormData(form_parent[0].data);
-    } catch (error) {
-        console.error('API call failed:', error);
-    } finally {
-        LoaderClose();
-    }
-  }
+    const loadFormData = async () => {
+      LoaderOpen();
+      setFormData([{}])
+      const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+      try {
+          const response = await axios.get(url, axiosConfig);
+          console.log('API called successfully:', response.data);
+          setRemoteSchema(response.data.form[0].schema);
+          setRemoteUiSchema(response.data.form[0].ui_schema);
+          const form_parent = response.data.form_data;
+          setFormData(form_parent[0].data);
+      } catch (error) {
+          console.error('API call failed:', error);
+      } finally {
+          LoaderClose();
+      }
+  };
   //Reloading the forms -- White Beard
   useEffect(() => {
     //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
@@ -287,17 +299,8 @@ const Waterdischarge = ({location, year, month}) => {
         toastShown.current = false; // Reset the flag when valid data is present
     } else {
         // Only show the toast if it has not been shown already
-        if (!toastShown.current) {
-            toast.warn("Please select location, year, and month first", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
+       if (!toastShown.current) {
+
             toastShown.current = true; // Set the flag to true after showing the toast
         }
     }
@@ -318,17 +321,19 @@ const Waterdischarge = ({location, year, month}) => {
     setFormData(updatedData);
   };
   const renderFields = () => {
-    const fields = Object.keys(schema.items.properties);
+    if (!r_schema || !r_schema.items || !r_schema.items.properties) {
+      return null;
+    }
+    const fields = Object.keys(r_schema.items.properties);
     return fields.map((field, index) => (
       <div key={index}>
-        {generateTooltip(field, schema.items.properties[field].title, schema.items.properties[field].tooltiptext)}
+        {generateTooltip(field, r_schema.items.properties[field].title, r_schema.items.properties[field].tooltiptext)}
       </div>
     ));
   };
   return (
     <>
-
-<div className={`overflow-auto custom-scrollbar flex`}>
+        <div className={`overflow-auto custom-scrollbar flex`}>
         <div>
           <div>
             <div className='flex'>

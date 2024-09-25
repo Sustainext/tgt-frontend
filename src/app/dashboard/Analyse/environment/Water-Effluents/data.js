@@ -1,7 +1,8 @@
+//Total Water Consumption
 export const columns1 = [
   {
     label: "Total water Consumption",
-    dataIndex: "type",
+    dataIndex: "total_water_consumption",
     headerClass:
       "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -9,7 +10,7 @@ export const columns1 = [
   },
   {
     label: "Water consumption from areas with water stress ",
-    dataIndex: "contribution",
+    dataIndex: "water_consumption_from_areas_with_water_stress",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
@@ -17,7 +18,7 @@ export const columns1 = [
 
   {
     label: "Units",
-    dataIndex: "units",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -25,35 +26,11 @@ export const columns1 = [
   },
 ];
 
-export const data1 = [
-  {
-    type: "212123545",
-    contribution: "Wind",
-    units: "Megalitre",
-  },
-  {
-    type: "212123545",
-    contribution: "Wind",
-    units: "Megalitre",
-  },
-  {
-    type: "212123545",
-    contribution: "Wind",
-    units: "Megalitre",
-  },
-  {
-    type: "212123545",
-    contribution: "Wind",
-    units: "Megalitre",
-  },
-];
-
-// ------------------------Fuel Consumption within the organisation from Non-renewable sources
-
+//Total Water Consumption in water stress areas
 export const columns2 = [
   {
     label: "Name of water stress area",
-    dataIndex: "type",
+    dataIndex: "WaterStress",
     headerClass:
       "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -62,21 +39,21 @@ export const columns2 = [
 
   {
     label: "Contribution %",
-    dataIndex: "contribution",
+    dataIndex: "consumption_percentage",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Water Consumption",
-    dataIndex: "total",
+    dataIndex: "total_consumed",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Units",
-    dataIndex: "units",
+    dataIndex: "Units",
     headerClass:
       "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -84,45 +61,11 @@ export const columns2 = [
   },
 ];
 
-export const data2 = [
-  {
-    type: "Raw water",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Raw water",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Raw water",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Raw water",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Total Water Consumption",
-
-    total: "212123545",
-    units: "Megalitre",
-  },
-];
-
-// ------------------------------------Energy Consumption Within the organisation
-
+//Total Water Consumption by business operation
 export const columns3 = [
   {
     label: "Business Operation",
-    dataIndex: "type",
+    dataIndex: "Businessoperations",
     headerClass:
       "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -130,21 +73,21 @@ export const columns3 = [
   },
   {
     label: "Contribution %",
-    dataIndex: "contribution",
+    dataIndex: "consumption_percentage",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Total water Consumption",
-    dataIndex: "total",
+    dataIndex: "total_consumed",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Units",
-    dataIndex: "units",
+    dataIndex: "Units",
     headerClass:
       "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -152,40 +95,11 @@ export const columns3 = [
   },
 ];
 
-export const data3 = [
-  {
-    type: "Upstream operations",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Onsite water usage",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "downstream operations",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Total Water Consumption",
-    contribution: "",
-
-    total: "212123545",
-    units: "Megalitre",
-  },
-];
-
-// ------------------------------Direct Purchased Heating, Cooling, Electricity and Steam from renewable sources
-
+//Total Water Consumption by Location
 export const columns4 = [
   {
     label: "Location/country",
-    dataIndex: "type",
+    dataIndex: "location",
     headerClass:
       "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -193,21 +107,21 @@ export const columns4 = [
   },
   {
     label: "Contribution %",
-    dataIndex: "contribution",
+    dataIndex: "consumption_contribution",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Total water Consumption",
-    dataIndex: "total",
+    dataIndex: "total_consumption",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Units",
-    dataIndex: "units",
+    dataIndex: "unit",
     headerClass:
       "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -215,40 +129,11 @@ export const columns4 = [
   },
 ];
 
-export const data4 = [
-  {
-    type: "Location 1",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Location 2",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Location 3",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Total Water Consumption",
-    contribution: "",
-
-    total: "212123545",
-    units: "Megalitre",
-  },
-];
-
-// -------------------Direct Purchased Heating, Cooling, Electricity and Steam from non-renewable sources
-
+//Total Water Consumption by source
 export const columns5 = [
   {
     label: "Source",
-    dataIndex: "type",
+    dataIndex: "Source",
     headerClass:
       "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -256,7 +141,7 @@ export const columns5 = [
   },
   {
     label: "Water Type",
-    dataIndex: "water",
+    dataIndex: "WaterType",
     headerClass:
       "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -264,21 +149,21 @@ export const columns5 = [
   },
   {
     label: "Contribution %",
-    dataIndex: "contribution",
+    dataIndex: "consumption_percentage",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Total water Consumption",
-    dataIndex: "total",
+    dataIndex: "total_consumed",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Units",
-    dataIndex: "units",
+    dataIndex: "Units",
     headerClass:
       "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -286,57 +171,11 @@ export const columns5 = [
   },
 ];
 
-export const data5 = [
-  {
-    type: "Surface water",
-    water:"Freshwater (≤1000 mg/L Total Dissolved Solids)",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Ground Water",
-    water:"other water (>1000 mg/L Total Dissolved Solids)",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Sea Water",
-    water:"other water (>1000 mg/L Total Dissolved Solids)",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Municipal Water",
-    water:"other water (>1000 mg/L Total Dissolved Solids)",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Other (Please specify)",
-    water:"other water (>1000 mg/L Total Dissolved Solids)",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Total Water Consumption",
-    water:"",
-    contribution: "",
-    total: "212123545",
-    units: "Megalitre",
-  },
-];
-
-// --------------------Self Generated Energy - not consumed or sold (Renewable Energy)
-
+//Total Fresh Water withdrawal by business operation
 export const columns6 = [
   {
     label: "Business Operation",
-    dataIndex: "type",
+    dataIndex: "Businessoperations",
     headerClass:
       "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -344,21 +183,21 @@ export const columns6 = [
   },
   {
     label: "Contribution %",
-    dataIndex: "contribution",
+    dataIndex: "withdrawal_percentage",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Total water withdrawal",
-    dataIndex: "total",
+    dataIndex: "Total Withdrawal",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Units",
-    dataIndex: "units",
+    dataIndex: "Units",
     headerClass:
       "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -366,39 +205,11 @@ export const columns6 = [
   },
 ];
 
-export const data6 = [
-  {
-    type: "Upstream operations",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Onsite water usage",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "downstream operations",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Total Water Consumption",
-    contribution: "",
-    total: "212123545",
-    units: "Megalitre",
-  },
-];
-
-//Self Generated Energy - not consumed or sold (non-renewable Energy)
-
+//Total Fresh Water withdrawal by source (from water stress area)
 export const columns7 = [
   {
     label: "Source",
-    dataIndex: "type",
+    dataIndex: "Source",
     headerClass:
       "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -406,35 +217,35 @@ export const columns7 = [
   },
   {
     label: "Name of Water Stress Area",
-    dataIndex: "stressarea",
+    dataIndex: "WaterStress",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Water Type",
-    dataIndex: "water",
+    dataIndex: "WaterType",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Contribution %",
-    dataIndex: "contribution",
+    dataIndex: "withdrawal_percentage",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Total water withdrawal",
-    dataIndex: "total",
+    dataIndex: "Total Withdrawal",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Units",
-    dataIndex: "units",
+    dataIndex: "Units",
     headerClass:
       "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -443,62 +254,11 @@ export const columns7 = [
 
 ];
 
-export const data7 = [
-  {
-    type: "Surface water",
-    stressarea:"x%",
-    water:"Freshwater (≤1000 mg/L Total Dissolved Solids)",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-  type: "Ground Water",
-  stressarea:"x%",
-  water:"other water (>1000 mg/L Total Dissolved Solids)",
-  contribution: "x%",
-  total: "212123545",
-  units: "Megalitre",
-  },
-  {
-    type: "Sea Water",
-    stressarea:"x%",
-    water:"other water (>1000 mg/L Total Dissolved Solids)",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-    },
-    {
-      type: "Municipal Water",
-      stressarea:"x%",
-      water:"other water (>1000 mg/L Total Dissolved Solids)",
-      contribution: "x%",
-      total: "212123545",
-      units: "Megalitre",
-      },
-      {
-        type: "Other (Please specify)",
-        stressarea:"x%",
-        water:"other water (>1000 mg/L Total Dissolved Solids)",
-        contribution: "x%",
-        total: "212123545",
-        units: "Megalitre",
-        },
-        {
-          type: "Total Water Consumption",
-          stressarea:"",
-          water:"",
-          contribution: "",
-          total: "212123545",
-          units: "Megalitre",
-          },
-];
-// -------------------------Energy Sold (Renewable energy)
-
+//Total Fresh Water withdrawal by Location/Country
 export const columns8 = [
   {
     label: "Location/country",
-    dataIndex: "type",
+    dataIndex: "location",
     headerClass:
       "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -506,21 +266,21 @@ export const columns8 = [
   },
   {
     label: "Contribution %",
-    dataIndex: "contribution",
+    dataIndex: "withdrawal_contribution",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Total water Withdrawal",
-    dataIndex: "total",
+    dataIndex: "total_withdrawal",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Units",
-    dataIndex: "units",
+    dataIndex: "unit",
     headerClass:
       "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -528,41 +288,12 @@ export const columns8 = [
   },
 ];
 
-export const data8 = [
-  {
-    type: "Location 1",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Location 2",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Location 3",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Total Water Withdrawal",
-    contribution: "",
-
-    total: "212123545",
-    units: "Megalitre",
-  },
-];
-
-// --------------------- Energy Sold (non-renewable energy)
-
+//Total Water withdrawal by Water type
 export const columns9 = [
 
   {
     label: "Water Type",
-    dataIndex: "water",
+    dataIndex: "Watertype",
     headerClass:
       "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -570,7 +301,7 @@ export const columns9 = [
   },
   {
     label: "Source",
-    dataIndex: "type",
+    dataIndex: "Source",
     headerClass:
       "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -578,21 +309,21 @@ export const columns9 = [
   },
   {
     label: "Contribution %",
-    dataIndex: "contribution",
+    dataIndex: "withdrawal_percentage",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Total water Consumption",
-    dataIndex: "total",
+    dataIndex: "total_consumed",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Units",
-    dataIndex: "units",
+    dataIndex: "Units",
     headerClass:
       "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -600,35 +331,11 @@ export const columns9 = [
   },
 ];
 
-export const data9 = [
-  {
-    type: "Surface water",
-    water:"Freshwater (≤1000 mg/L Total Dissolved Solids)",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Ground Water",
-    water:"other water (>1000 mg/L Total Dissolved Solids)",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-
-  {
-    type: "Total Water Consumption",
-    water:"",
-    contribution: "",
-    total: "212123545",
-    units: "Megalitre",
-  },
-];
-
+//Water withdrawal from third-parties
 export const columns10 = [
   {
     label: "Source of Water withdrawal from third party",
-    dataIndex: "type",
+    dataIndex: "Source",
     headerClass:
       "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -636,21 +343,21 @@ export const columns10 = [
   },
   {
     label: "Contribution %",
-    dataIndex: "contribution",
+    dataIndex: "withdrawal_percentage",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Water Withdrawal",
-    dataIndex: "total",
+    dataIndex: "Total Withdrawal",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Units",
-    dataIndex: "units",
+    dataIndex: "Units",
     headerClass:
       "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -658,48 +365,11 @@ export const columns10 = [
   },
 ];
 
-export const data10 = [
-  {
-    type: "Ground water",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Third-party water",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Sea Water",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Municipal Water",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Surface water",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Total Water Withdrawal",
-    contribution: "",
-    total: "212123545",
-    units: "Megalitre",
-  },
-];
+//Total Water Discharge by Location
 export const columns11 = [
   {
     label: "Location/country",
-    dataIndex: "type",
+    dataIndex: "location",
     headerClass:
       "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -707,21 +377,21 @@ export const columns11 = [
   },
   {
     label: "Contribution %",
-    dataIndex: "contribution",
+    dataIndex: "discharge_contribution",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Total water Discharge",
-    dataIndex: "total",
+    dataIndex: "total_discharge",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Units",
-    dataIndex: "units",
+    dataIndex: "unit",
     headerClass:
       "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -729,36 +399,11 @@ export const columns11 = [
   },
 ];
 
-export const data11 = [
-  {
-    type: "Location 1",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Location 2",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Location 3",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Total Water Discharge",
-    contribution: "",
-    total: "212123545",
-    units: "Megalitre",
-  },
-];
+//Total Water Discharge by source and type of water
 export const columns12 = [
   {
     label: "Source",
-    dataIndex: "type",
+    dataIndex: "Source",
     headerClass:
       "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -766,7 +411,7 @@ export const columns12 = [
   },
   {
     label: "Type of water",
-    dataIndex: "water",
+    dataIndex: "WaterType",
     headerClass:
       "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -781,14 +426,14 @@ export const columns12 = [
   },
   {
     label: "Total water Discharge",
-    dataIndex: "total",
+    dataIndex: "discharge_percentage",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Units",
-    dataIndex: "units",
+    dataIndex: "Units",
     headerClass:
       "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -796,54 +441,11 @@ export const columns12 = [
   },
 ];
 
-export const data12 = [
-  {
-    type: "Surface water",
-    water:"Freshwater (≤1000 mg/L Total Dissolved Solids)",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Ground Water",
-    water:"other water (>1000 mg/L Total Dissolved Solids)",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Sea Water",
-    water:"other water (>1000 mg/L Total Dissolved Solids)",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Municipal Water",
-    water:"other water (>1000 mg/L Total Dissolved Solids)",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Other (Please specify)",
-    water:"other water (>1000 mg/L Total Dissolved Solids)",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "Total Water Consumption",
-    water:"",
-    contribution: "",
-    total: "212123545",
-    units: "Megalitre",
-  },
-];
+//Total Water Discharge (from water stress area) by Business Operation
 export const columns13 = [
   {
     label: "Name of Water Stress Area",
-    dataIndex: "area",
+    dataIndex: "WaterStress",
     headerClass:
       "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -851,7 +453,7 @@ export const columns13 = [
   },
   {
     label: "Business Operation",
-    dataIndex: "type",
+    dataIndex: "Businessoperations",
     headerClass:
       "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -859,21 +461,21 @@ export const columns13 = [
   },
   {
     label: "Contribution %",
-    dataIndex: "contribution",
+    dataIndex: "discharge_percentage",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Total water Discharge",
-    dataIndex: "total",
+    dataIndex: "Total Discharge",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Units",
-    dataIndex: "units",
+    dataIndex: "Units",
     headerClass:
       "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -881,41 +483,12 @@ export const columns13 = [
   },
 ];
 
-export const data13 = [
-  {
-    area:"Area 1",
-    type: "Upstream operations",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    area:"Area 2",
-    type: "Onsite water usage",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    area:"Area 3",
-    type: "downstream operations",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    area:"",
-    type: "Total Water Consumption",
-    contribution: "",
-    total: "212123545",
-    units: "Megalitre",
-  },
-];
+//Total Water Discharge by Business Operation
 export const columns14 = [
 
   {
     label: "Business Operation",
-    dataIndex: "type",
+    dataIndex: "Businessoperations",
     headerClass:
       "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -923,21 +496,21 @@ export const columns14 = [
   },
   {
     label: "Contribution %",
-    dataIndex: "contribution",
+    dataIndex: "discharge_percentage",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Total water Discharge",
-    dataIndex: "total",
+    dataIndex: "Total Discharge",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Units",
-    dataIndex: "units",
+    dataIndex: "Units",
     headerClass:
       "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -945,40 +518,11 @@ export const columns14 = [
   },
 ];
 
-export const data14 = [
-  {
-
-    type: "Upstream operations",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-
-    type: "Onsite water usage",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-
-    type: "downstream operations",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-
-    type: "Total Water Consumption",
-    contribution: "",
-    total: "212123545",
-    units: "Megalitre",
-  },
-];
+//Total Water Discharge by Water type (from water stress area)
 export const columns15 = [
   {
     label: "Name of Water Stress Area",
-    dataIndex: "area",
+    dataIndex: "WaterStress",
     headerClass:
       "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -986,7 +530,7 @@ export const columns15 = [
   },
   {
     label: "Type of water",
-    dataIndex: "type",
+    dataIndex: "Watertype",
     headerClass:
       "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -994,21 +538,21 @@ export const columns15 = [
   },
   {
     label: "Contribution %",
-    dataIndex: "contribution",
+    dataIndex: "discharge_percentage",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Total water Discharge",
-    dataIndex: "total",
+    dataIndex: "Total Discharge",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
   },
   {
     label: "Units",
-    dataIndex: "units",
+    dataIndex: "Units",
     headerClass:
       "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -1016,33 +560,11 @@ export const columns15 = [
   },
 ];
 
-export const data15 = [
-  {
-    area:"Area 1",
-    type: "Freshwater (≤1000 mg/L total Dissolved Solids)",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    area:"Area 2",
-    type: "other water (>1000 mg/L total Dissolved Solids)",
-    contribution: "x%",
-    total: "212123545",
-    units: "Megalitre",
-  },
-  {
-    area:"",
-    type: "Total Water Consumption",
-    contribution: "",
-    total: "212123545",
-    units: "Megalitre",
-  },
-];
+//Third-party Water discharge sent to use for other organizations
 export const columns16 = [
   {
     label: "Volume of third-party water send  to use for other organizations",
-    dataIndex: "type",
+    dataIndex: "Volume",
     headerClass:
       "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
     cellClass:
@@ -1050,7 +572,7 @@ export const columns16 = [
   },
   {
     label: "Contribution %",
-    dataIndex: "contribution",
+    dataIndex: "Discharge Percentage",
     headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
@@ -1058,7 +580,7 @@ export const columns16 = [
 
   {
     label: "Units",
-    dataIndex: "units",
+    dataIndex: "Units",
     headerClass:
       "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
@@ -1066,47 +588,22 @@ export const columns16 = [
   },
 ];
 
-export const data16 = [
-  {
-    type: "212123545",
-    contribution: "Wind",
-    units: "Megalitre",
-  },
-  {
-    type: "212123545",
-    contribution: "Wind",
-    units: "Megalitre",
-  },
-];
+//Change in water storage
 export const columns17 = [
   {
+    label: "Change in water storage",
+    dataIndex: "WaterStorage",
+    headerClass:
+      "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tl-lg rounded-tr-lg h-[44px]",
+    cellClass:
+      "px-4 py-2 border-y text-slate-500 font-normal text-sm w-[13%] text-center h-14",
+  },
+  {
     label: "Units",
-    dataIndex: "units",
+    dataIndex: "Unit",
     headerClass:
       "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
     cellClass:
       "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
-  },
-  {
-    label: "Change in water storage",
-    dataIndex: "type",
-    headerClass:
-      "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
-    cellClass:
-      "px-4 py-2 border-y text-slate-500 font-normal text-sm w-[13%] text-left h-14",
-  },
-
-
-
-];
-
-export const data17 = [
-  {
-    type: "212123545",
-    units: "Megalitre",
-  },
-  {
-    type: "212123545",
-    units: "Megalitre",
-  },
+  }
 ];

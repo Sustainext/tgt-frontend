@@ -20,6 +20,8 @@ import Dischargefromareas from "./Water-effluents/discharge-from-all-areas/disch
 import Waterstres from "./Water-effluents/water-stres/water-stres";
 import Substancesconcern from "./Water-effluents/substances-concern/substances-concern";
 import Waterstorage from "./Water-effluents/water-storage/water-storage"
+import NewSupplier from "./supplier-environmental-assessment/new-supplier/page"
+import NegativeEnvironmentImpact from "./supplier-environmental-assessment/negative-environmental-impact/page"
 import { GlobalState } from "@/Context/page";
 const environment = ({  }) => {
     const { open } = GlobalState();
@@ -33,7 +35,7 @@ const environment = ({  }) => {
     return (
         <>
             <div className="flex w-full">
-                <div className="min-h-[135vh]">
+                <div className="">
                     <Aside activeTab={activeTab} handleTabClick={handleTabClick} />
                 </div>
 
@@ -61,6 +63,8 @@ const environment = ({  }) => {
                     {activeTab === 'Water withdrawal/Discharge from areas with water stress' && <Waterstres />}
                     {activeTab === 'Substances of concern' && <Substancesconcern />}
                     {activeTab === 'Change in water storage' && <Waterstorage />}
+                    {activeTab === 'New suppliers that were screened using environmental criteria' && <NewSupplier />}
+                    {activeTab === 'Negative environmental impacts in the supply chain and actions taken' && <NegativeEnvironmentImpact />}
                 </div>
             </div>
         </>
