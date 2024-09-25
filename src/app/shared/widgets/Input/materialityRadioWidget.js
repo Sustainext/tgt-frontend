@@ -27,7 +27,7 @@ const MaterialityRadioWidget = ({
     <div className='mb-6 pb-4'>
     <div className='flex mb-2'>
     <div className="relative w-[55%] flex">
-  <p className="text-[15px] text-gray-700 w-auto mx-3">
+  <p className="text-[12px] text-gray-700 w-auto mx-3">
     {uiSchema["ui:title"]}
   </p>
   <MdInfoOutline
@@ -62,7 +62,7 @@ const MaterialityRadioWidget = ({
       </div>
       <div className='flex gap-2 ml-4'>
         {options.enumOptions.map((option, index) => (
-          <label key={index} className='flex items-center gap-2 text-sm mb-2'>
+          <label key={index} className='flex items-center gap-2 text-[12px] mb-2'>
             <input
               type='radio'
               name={options.name}
@@ -70,7 +70,7 @@ const MaterialityRadioWidget = ({
               checked={inputState === option.value}
               autoFocus={autofocus && index === 0}
               onChange={handleChange}
-              className='form-radio h-3 w-3'
+              className='form-radio h-3 w-3 text-[12px]'
             />
             {option.label}
           </label>

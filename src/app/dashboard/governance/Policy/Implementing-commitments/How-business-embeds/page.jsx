@@ -221,7 +221,7 @@ const HowBusinessEmbeds = ({ selectedOrg, selectedCorp, year }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative flex">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold mb-2">
+            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
               Describe how organisation embeds each of its policy commitments
               for responsible business conduct throughout its activities and
               business relationships, including:

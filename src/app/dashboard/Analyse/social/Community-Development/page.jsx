@@ -1,15 +1,14 @@
-'use client'
+"use client";
 import { useState, useEffect } from "react";
 import TableSidebar from "./TableSidebar";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import Table1 from "./Table";
 import DateRangePicker from "../../../../utils/DatePickerComponent"; // Ensure this is the correct import path
 import { columns, data } from "./data";
-import { Oval } from 'react-loader-spinner';
+import { Oval } from "react-loader-spinner";
 const AnalyseCommunityDevelopment = ({ isBoxOpen }) => {
-  const [OperationsWithLocalCommunity, setOperationsWithLocalCommunity] = useState(
-    []
-  );
+  const [OperationsWithLocalCommunity, setOperationsWithLocalCommunity] =
+    useState([]);
   const [selectedLocation, setSelectedLocation] = useState([]);
   const [selectedSetLocation, setSelectedSetLocation] = useState("");
   const [dateRange, setDateRange] = useState({ start: null, end: null });
@@ -124,13 +123,13 @@ const AnalyseCommunityDevelopment = ({ isBoxOpen }) => {
               <div className="mr-2">
                 <label
                   htmlFor="cname"
-                  className="text-neutral-800 text-[13px] font-normal"
+                  className="text-neutral-800 text-[12px] font-normal"
                 >
                   Select Location
                 </label>
                 <div className="mt-2">
                   <select
-                    className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                     value={selectedSetLocation}
                     onChange={handleLocationChange}
                   >
@@ -142,7 +141,7 @@ const AnalyseCommunityDevelopment = ({ isBoxOpen }) => {
                     ))}
                   </select>
                   {errors.selectedLocation && (
-                    <div className="text-red-600 text-sm">
+                    <div className="text-red-600 text-[12px]">
                       {errors.selectedLocation}
                     </div>
                   )}
@@ -151,7 +150,7 @@ const AnalyseCommunityDevelopment = ({ isBoxOpen }) => {
               <div className="mr-2">
                 <label
                   htmlFor="cname"
-                  className="text-neutral-800 text-[13px] font-normal"
+                  className="text-neutral-800 text-[12px] font-normal"
                 >
                   Select Date Range
                 </label>
@@ -162,7 +161,7 @@ const AnalyseCommunityDevelopment = ({ isBoxOpen }) => {
                     onDateChange={handleDateChange}
                   />
                   {errors.dateRange && (
-                    <div className="text-red-600 text-xs">
+                    <div className="text-red-600 text-[12px]">
                       {errors.dateRange}
                     </div>
                   )}
@@ -172,15 +171,18 @@ const AnalyseCommunityDevelopment = ({ isBoxOpen }) => {
           </div>
         </div>
       </div>
-      <div className="flex justify-between">
-        <div className={`ps-4 w-[78%] me-4`}>
+      <div className="flex">
+        <div className={`ps-4 w-[100%] me-4`}>
           <div className="mb-6">
             <div
               id="ep1"
-              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3"
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3"
             >
               <div className="flex justify-between items-center mb-2">
-                <p>Operations with local community engagement, impact assessments, and development programs</p>
+                <p>
+                  Operations with local community engagement, impact
+                  assessments, and development programs
+                </p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 413-1a
@@ -197,27 +199,28 @@ const AnalyseCommunityDevelopment = ({ isBoxOpen }) => {
           style={{
             position: `${isBoxOpen ? "unset" : "sticky"}`,
             top: "10rem",
+            // zIndex: "0",
             height: "fit-content",
             backgroundColor: "white",
             paddingBottom: "1rem",
           }}
-          className="me-8 mb-8 -right-2"
+          className=" mb-8 me-2"
         >
           <TableSidebar />
         </div>
       </div>
       {loopen && (
-          <div className=" fixed inset-0 flex items-center justify-center z-[100] bg-black bg-opacity-50">
-            <Oval
-              height={50}
-              width={50}
-              color="#00BFFF"
-              secondaryColor="#f3f3f3"
-              strokeWidth={2}
-              strokeWidthSecondary={2}
-            />
-          </div>
-        )}
+        <div className=" fixed inset-0 flex items-center justify-center z-[100] bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
     </div>
   );
 };

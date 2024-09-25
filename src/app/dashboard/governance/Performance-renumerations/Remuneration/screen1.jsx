@@ -254,7 +254,7 @@ const screen1 = ({ selectedOrg, selectedCorp, year }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
               Describe the remuneration policies for members of the highest
               governance body and senior executives, including:
               <MdInfoOutline

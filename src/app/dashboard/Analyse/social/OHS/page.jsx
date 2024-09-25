@@ -14,7 +14,7 @@ import {
   columns6,
   data2,
 } from "./data";
-import { Oval } from 'react-loader-spinner';
+import { Oval } from "react-loader-spinner";
 const AnalyseOHS = ({ isBoxOpen }) => {
   const [analyseData, setAnalyseData] = useState([]);
   const [organisations, setOrganisations] = useState([]);
@@ -105,28 +105,45 @@ const AnalyseOHS = ({ isBoxOpen }) => {
           Responsibilities: operation.responsibilities,
           "Meeting Frequency": operation.meetingFrequency,
           "Decision-making authority": operation.decisionMaking,
-          "Exclusions (if any) & Reason for Exclusions":
-            operation.exclusions,
+          "Exclusions (if any) & Reason for Exclusions": operation.exclusions,
         }));
       }
 
       function formatArray3(operations) {
         return operations.map((operation, index) => ({
-          "Rate of fatalities as a result of work-related injury": Number(operation.rate_of_fatalities_as_a_result_of_work_related_injury.toFixed(2)),
+          "Rate of fatalities as a result of work-related injury": Number(
+            operation.rate_of_fatalities_as_a_result_of_work_related_injury.toFixed(
+              2
+            )
+          ),
           "Rate of high-consequence work-related injuries (excluding fatalities)":
-           Number(operation.rate_of_high_consequence_work_related_injuries_excluding_fatalities.toFixed(2)) ,
-          "Rate  of recordable work-related injuries":
-            Number(operation.rate_of_recordable_work_related_injuries.toFixed(2)),
+            Number(
+              operation.rate_of_high_consequence_work_related_injuries_excluding_fatalities.toFixed(
+                2
+              )
+            ),
+          "Rate  of recordable work-related injuries": Number(
+            operation.rate_of_recordable_work_related_injuries.toFixed(2)
+          ),
         }));
       }
 
       function formatArray4(operations) {
         return operations.map((operation, index) => ({
-          "Rate of fatalities as a result of work-related injury": Number(operation.rate_of_fatalities_as_a_result_of_work_related_injury.toFixed(2)),
+          "Rate of fatalities as a result of work-related injury": Number(
+            operation.rate_of_fatalities_as_a_result_of_work_related_injury.toFixed(
+              2
+            )
+          ),
           "Rate of high-consequence work-related injuries (excluding fatalities)":
-            Number(operation.rate_of_high_consequence_work_related_injuries_excluding_fatalities.toFixed(2)),
-          "Rate  of recordable work-related injuries":
-            Number(operation.rate_of_recordable_work_related_injuries.toFixed(2)),
+            Number(
+              operation.rate_of_high_consequence_work_related_injuries_excluding_fatalities.toFixed(
+                2
+              )
+            ),
+          "Rate  of recordable work-related injuries": Number(
+            operation.rate_of_recordable_work_related_injuries.toFixed(2)
+          ),
         }));
       }
 
@@ -153,11 +170,17 @@ const AnalyseOHS = ({ isBoxOpen }) => {
       }
 
       setOHSData1(formatArray1(formal_joint_management));
-      setOHSData2(workers_covered_by_an_occupational_health_and_safety_management_system);
+      setOHSData2(
+        workers_covered_by_an_occupational_health_and_safety_management_system
+      );
       setOHSData3(formatArray3(rate_of_injuries_for_all_employees));
-      setOHSData4(formatArray4(rate_of_injuries_for_not_included_in_company_employees));
+      setOHSData4(
+        formatArray4(rate_of_injuries_for_not_included_in_company_employees)
+      );
       setOHSData5(formatArray5(ill_health_for_all_employees_analysis));
-      setOHSData6(formatArray6(ill_health_for_all_workers_who_are_not_employees_analysis));
+      setOHSData6(
+        formatArray6(ill_health_for_all_workers_who_are_not_employees_analysis)
+      );
 
       const resultArray = Object.keys(data).map((key) => ({
         key: key,
@@ -290,7 +313,7 @@ const AnalyseOHS = ({ isBoxOpen }) => {
         <div className="mt-4 pb-3 mx-5 text-left">
           <div className="mb-2 flex-col items-center pt-2  gap-6">
             <div className="justify-start items-center gap-4 inline-flex">
-              <div className="text-zinc-600 text-[15px] font-semibold font-['Manrope']">
+              <div className="text-zinc-600 text-[12px] font-semibold font-['Manrope']">
                 View By:
               </div>
               <div className="rounded-lg shadow border border-gray-300 justify-start items-start flex">
@@ -300,7 +323,7 @@ const AnalyseOHS = ({ isBoxOpen }) => {
                   }`}
                   onClick={() => handleReportTypeChange("Organization")}
                 >
-                  <div className="text-slate-800 text-[13px] font-medium font-['Manrope'] leading-tight">
+                  <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
                     Organization
                   </div>
                 </div>
@@ -310,7 +333,7 @@ const AnalyseOHS = ({ isBoxOpen }) => {
                   }`}
                   onClick={() => handleReportTypeChange("Corporate")}
                 >
-                  <div className="text-slate-700 text-[13px] font-medium font-['Manrope'] leading-tight">
+                  <div className="text-slate-700 text-[12px] font-medium font-['Manrope'] leading-tight">
                     Corporate
                   </div>
                 </div>
@@ -320,7 +343,7 @@ const AnalyseOHS = ({ isBoxOpen }) => {
                   }`}
                   onClick={() => handleReportTypeChange("Location")}
                 >
-                  <div className="text-slate-700 text-[13px] font-medium font-['Manrope'] leading-tight">
+                  <div className="text-slate-700 text-[12px] font-medium font-['Manrope'] leading-tight">
                     Location
                   </div>
                 </div>
@@ -334,13 +357,13 @@ const AnalyseOHS = ({ isBoxOpen }) => {
               <div className="mr-2">
                 <label
                   htmlFor="cname"
-                  className="text-neutral-800 text-[13px] font-normal"
+                  className="text-neutral-800 text-[12px] font-normal"
                 >
                   Select Organization*
                 </label>
                 <div className="mt-2">
                   <select
-                    className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
                     value={selectedOrg}
                     onChange={handleOrganizationChange}
                   >
@@ -358,13 +381,13 @@ const AnalyseOHS = ({ isBoxOpen }) => {
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[13px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal"
                   >
                     Select Corporate
                   </label>
                   <div className="mt-2">
                     <select
-                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
                       value={selectedCorp}
                       onChange={handleOrgChange}
                     >
@@ -383,13 +406,13 @@ const AnalyseOHS = ({ isBoxOpen }) => {
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[13px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal"
                   >
                     Select Location
                   </label>
                   <div className="mt-2">
                     <select
-                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                       value={selectedsetLocation}
                       onChange={handleLocationChange}
                     >
@@ -407,7 +430,7 @@ const AnalyseOHS = ({ isBoxOpen }) => {
               <div className="mr-2">
                 <label
                   htmlFor="cname"
-                  className="text-neutral-800 text-[13px] font-normal"
+                  className="text-neutral-800 text-[12px] font-normal"
                 >
                   Select Date
                 </label>
@@ -418,7 +441,7 @@ const AnalyseOHS = ({ isBoxOpen }) => {
                     onDateChange={handleDateChange}
                   />
                   {!isDateRangeValid && (
-                    <div className="text-red-600 text-xs mt-2">
+                    <div className="text-red-600 text-[12px] mt-2">
                       Please select a valid date range.
                     </div>
                   )}
@@ -428,18 +451,18 @@ const AnalyseOHS = ({ isBoxOpen }) => {
           </div>
         </div>
       </div>
-      <div className="flex justify-between">
-        <div className={`ps-4  w-[78%] me-4`}>
+      <div className="flex">
+        <div className={`ps-4 w-[100%] me-4`}>
           <div className="mb-6">
-            <p className="text-black text-[16px] ">
+            <p className="text-black text-[15px] font-bold  ">
               Formal joint management-worker health and safety committees
             </p>
             <div
               id="ep1"
-              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
+              className="text-neutral-700 text-[13px] font-normal font-['Manrope'] leading-tight mb-3 "
             >
               <div className="flex justify-between items-center mb-2">
-                <p>
+                <p className="text-black text-[13px] font-[400]">
                   Formal joint management-worker health and safety committees
                 </p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
@@ -456,7 +479,7 @@ const AnalyseOHS = ({ isBoxOpen }) => {
           </div>
 
           <div className="mb-6">
-            <p className="text-black text-[16px] ">
+            <p className="text-black text-[15px] font-bold  ">
               Workers covered by an occupational health and safety management
               system 
             </p>
@@ -465,7 +488,9 @@ const AnalyseOHS = ({ isBoxOpen }) => {
               className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
             >
               <div className="flex justify-between items-center mb-2">
-                <p>Percentage of employees/workers who are not employees</p>
+                <p className="text-black text-[13px] font-[400]">
+                  Percentage of employees/workers who are not employees
+                </p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 403-8a
@@ -479,15 +504,21 @@ const AnalyseOHS = ({ isBoxOpen }) => {
             </div>
           </div>
           <div className="mb-6">
-            <p className="text-black text-[16px] ">Work related ill health  </p>
+            <p className="text-black text-[15px] font-bold  ">
+              Work related ill health  
+            </p>
             <div
               id="ep3"
               className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
             >
               <div className="flex justify-between items-center mb-2">
                 <div>
-                  <p>Rate of injuries</p>
-                  <p>For all employees</p>
+                  <p className="text-black text-[13px] font-[400]">
+                    Rate of injuries
+                  </p>
+                  <p className="text-black text-[13px] font-[400]">
+                    For all employees
+                  </p>
                 </div>
 
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
@@ -503,8 +534,10 @@ const AnalyseOHS = ({ isBoxOpen }) => {
 
               <div className="flex justify-between items-center mb-2">
                 <div>
-                  <p>Rate of injuries</p>
-                  <p>
+                  <p className="text-black text-[13px] font-[400]">
+                    Rate of injuries
+                  </p>
+                  <p className="text-black text-[13px] font-[400]">
                     For all workers who are not employees but whose work and/or
                     workplace is controlled by the organization
                   </p>
@@ -523,15 +556,19 @@ const AnalyseOHS = ({ isBoxOpen }) => {
             </div>
           </div>
           <div className="mb-6">
-            <p className="text-black text-[16px] ">Ill Health  </p>
+            <p className="text-black text-[15px] font-bold  ">Ill Health  </p>
             <div
               id="ep4"
               className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
             >
               <div className="flex justify-between items-center mb-2">
                 <div>
-                  <p>Ill health</p>
-                  <p>For all employees</p>
+                  <p className="text-black text-[13px] font-[400]">
+                    Ill health
+                  </p>
+                  <p className="text-black text-[13px] font-[400]">
+                    For all employees
+                  </p>
                 </div>
 
                 <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
@@ -547,8 +584,10 @@ const AnalyseOHS = ({ isBoxOpen }) => {
 
               <div className="flex justify-between items-center mb-2">
                 <div>
-                  <p>Ill health</p>
-                  <p>
+                  <p className="text-black text-[15px] font-bold  ">
+                    Ill health
+                  </p>
+                  <p className="text-black text-[13px] font-[400]">
                     for workers who are not employees but whose work and
                     workplace is controlled by the organization
                   </p>
@@ -576,23 +615,23 @@ const AnalyseOHS = ({ isBoxOpen }) => {
             backgroundColor: "white",
             paddingBottom: "1rem",
           }}
-          className="me-8 mb-8 -right-2"
+          className=" mb-8 me-2"
         >
           <TableSidebar />
         </div>
       </div>
       {loopen && (
-          <div className=" fixed inset-0 flex items-center justify-center z-[100] bg-black bg-opacity-50">
-            <Oval
-              height={50}
-              width={50}
-              color="#00BFFF"
-              secondaryColor="#f3f3f3"
-              strokeWidth={2}
-              strokeWidthSecondary={2}
-            />
-          </div>
-        )}
+        <div className=" fixed inset-0 flex items-center justify-center z-[100] bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
     </div>
   );
 };

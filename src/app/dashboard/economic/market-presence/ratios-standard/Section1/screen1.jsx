@@ -318,7 +318,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-2 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
               Does your organisation subject to minimum wage rules?
               <MdInfoOutline
                 data-tooltip-id={`es26`}

@@ -177,7 +177,7 @@ const Screen1 = ({ selectedOrg,selectedCorp, year}) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-          <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+          <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
           If the plan’s liabilities are met by the organization’s general resources, provide the estimated value of those liabilities. (for the reporting period)
               <MdInfoOutline data-tooltip-id={`es250`}
                 data-tooltip-html="Mention the estimated value of the liabilities, if the plan liabilities are met by the organisation's general resources. " className="mt-1.5 ml-2 text-[18px]" />

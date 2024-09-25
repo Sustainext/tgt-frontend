@@ -647,7 +647,7 @@ const handleDateChange = (newRange) => {
                     handleTabClick(1);
                   }}
                 >
-                  <div className="text-slate-800 text-[13px] font-medium font-['Manrope'] leading-tight">
+                  <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
                     Organization
                   </div>
                 </div>
@@ -679,7 +679,7 @@ const handleDateChange = (newRange) => {
 
                   }}
                 >
-                  <div className="text-slate-800 text-[13px] font-medium font-['Manrope'] leading-tight">
+                  <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
                     Corporate
                   </div>
                 </div>
@@ -691,7 +691,7 @@ const handleDateChange = (newRange) => {
                     <div className="mr-2 w-full">
                       <label
                         htmlFor="cname"
-                        className="text-neutral-800 text-[13px] font-normal"
+                        className="text-neutral-800 text-[12px] font-normal"
                       >
                         Select Organization
                       </label>
@@ -722,7 +722,7 @@ const handleDateChange = (newRange) => {
                     <div className="mr-2 w-full">
                       <label
                         htmlFor="cname"
-                        className="text-neutral-800 text-[13px] font-normal"
+                        className="text-neutral-800 text-[12px] font-normal"
                       >
                         Specify Reporting Period
                       </label>
@@ -751,7 +751,7 @@ const handleDateChange = (newRange) => {
                       <div className="mr-2 w-full">
                         <label
                           htmlFor="cname"
-                          className="text-neutral-800 text-[13px] font-normal"
+                          className="text-neutral-800 text-[12px] font-normal"
                         >
                           Select Organization
                         </label>
@@ -782,7 +782,7 @@ const handleDateChange = (newRange) => {
                       <div className="mr-2 w-full">
                         <label
                           htmlFor="cname"
-                          className="text-neutral-800 text-[13px] font-normal"
+                          className="text-neutral-800 text-[12px] font-normal"
                         >
                           Select Corporate
                         </label>
@@ -814,7 +814,7 @@ const handleDateChange = (newRange) => {
                       <div className="mr-2 w-full mt-2">
                         <label
                           htmlFor="cname"
-                          className="text-neutral-800 text-[13px] font-normal"
+                          className="text-neutral-800 text-[12px] font-normal"
                         >
                           Specify Reporting Period
                         </label>

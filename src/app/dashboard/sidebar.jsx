@@ -132,7 +132,7 @@ const Sidenav = () => {
     <>
       <div className="min-h-[120vh] fixed z-[100]">
         <div
-          className={`bg-[#0a0528] min-h-[130vh] pt-8 ${
+          className={`bg-[#0a0528] min-h-[130vh] pt-[1.5rem] ${
             open ? "w-[15rem]" : "w-[4.5rem]"
           } duration-300 relative`}
         >
@@ -146,7 +146,7 @@ const Sidenav = () => {
             <div>
               <MdKeyboardDoubleArrowLeft
                 className={`text-[#fff] text-2xl absolute cursor-pointer transition-transform duration-300 ${
-                  !open ? "rotate-180 right-0 top-10" : "right-0 top-10"
+                  !open ? "rotate-180 right-0 top-9" : "right-0 top-9"
                 }`}
                 onClick={() => setOpen(!open)}
               />
@@ -249,11 +249,11 @@ const Sidenav = () => {
                   <hr className="bg-[rgba(217, 217, 217, 1)] h-[0.0625rem] my-4 mx-3 opacity-30" />
                 )}
                 {menu.submenu && submenuOpen[index] && open && (
-                  <ul>
+                  <ul className="">
                     {menu.submenuItems.map((submenuItem, subIndex) => (
                       <Link href={submenuItem.link} key={subIndex}>
                         <li
-                          className={`text-white text-sm p-2 px-5 flex items-center gap-x-4 cursor-pointer hover:bg-[#007EEF] rounded-md mt-2 ${
+                          className={`text-white text-sm p-2 px-5 mx-5 flex items-center gap-x-4 cursor-pointer hover:bg-[#007EEF] rounded-md  mt-2 ${
                             activeIndex === `${index}-${subIndex}`
                               ? "bg-[#081746]"
                               : ""

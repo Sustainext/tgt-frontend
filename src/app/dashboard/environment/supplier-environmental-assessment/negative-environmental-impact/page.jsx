@@ -15,7 +15,7 @@ import Screen5 from "./screen5";
 
 const NegativeEnvironmentalImpact = () => {
   const [activeMonth, setActiveMonth] = useState(1);
-  const [year, setYear] = useState(2024);
+  const [year, setYear] = useState();
   const [data, setData] = useState([]);
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);

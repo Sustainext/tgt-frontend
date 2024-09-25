@@ -120,7 +120,7 @@ const EmissionsHeader = ({
           <div className="relative">
             <select
               name="location"
-              className="border m-0.5 text-sm text-neutral-500 appearance-none pr-24 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="border m-0.5 text-[12px] text-neutral-500 appearance-none pr-24 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               value={formState.location}
               onChange={handleChange}
             >
@@ -141,7 +141,7 @@ const EmissionsHeader = ({
               />
             </div>
             {locationError && (
-              <p className="text-red-500 text-sm absolute top-9 left-0 pl-3">
+              <p className="text-red-500 text-[12px] absolute top-9 left-0 pl-3">
                 {locationError}
               </p>
             )}
@@ -149,7 +149,7 @@ const EmissionsHeader = ({
           <div className="ml-3 relative">
             <select
               name="year"
-              className="border m-0.5 text-sm text-neutral-500 appearance-none pr-32 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="border m-0.5 text-[12px] text-neutral-500 appearance-none pr-32 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               value={formState.year}
               onChange={handleChange}
             >
@@ -170,7 +170,7 @@ const EmissionsHeader = ({
               />
             </div>
             {yearError && (
-              <p className="text-red-500 text-sm absolute top-9 left-0 pl-3">
+              <p className="text-red-500 text-[12px] absolute top-9 left-0 pl-3">
                 {yearError}
               </p>
             )}

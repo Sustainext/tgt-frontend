@@ -182,7 +182,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
             The definition used for significant locations of operation.		
               <MdInfoOutline
                 data-tooltip-id={`es67`}

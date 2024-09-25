@@ -11,7 +11,7 @@ import PercentageIncrease from "./Percentage-increase/page";
 import ContextualInformation from './Contextual-information/page'
 
 const CompensationRatio = () => {
-  const [year, setYear] = useState(2024);
+  const [year, setYear] = useState();
   const [data, setData] = useState([]);
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);

@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import EmissionsHeader from "./emissionsheader";
 import Emissionsnbody from "./emissions-body";
 import { EmissionsProvider } from "./EmissionsContext";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Emissions = ({ open }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
@@ -14,6 +15,8 @@ const Emissions = ({ open }) => {
   const [yearError, setYearError] = useState("");
 
   return (
+    <>
+    <ToastContainer style={{ fontSize: "12px" }} />
     <EmissionsProvider>
       <>
         <div className="flex flex-col justify-start overflow-x-hidden ">
@@ -116,6 +119,7 @@ const Emissions = ({ open }) => {
         />
       </>
     </EmissionsProvider>
+    </>
   );
 };
 

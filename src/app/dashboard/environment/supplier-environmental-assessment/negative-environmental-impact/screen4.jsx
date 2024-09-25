@@ -184,7 +184,7 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="flex">
           <div className="relative mb-6">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
             Number of suppliers identified as having significant actual and potential negative environmental impacts with which  improvements were agreed upon
               <MdInfoOutline
                 data-tooltip-id={`es30`}

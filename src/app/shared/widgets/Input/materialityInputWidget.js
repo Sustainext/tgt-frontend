@@ -14,7 +14,7 @@ const MaterialityInputWidget = (props) => {
       <div className="mb-6">
         <div className="flex mb-2">
         <div className="relative w-[55%] flex">
-  <p className="text-[15px] text-gray-700 w-auto mx-3">
+  <p className="text-[12px] text-gray-700 w-auto mx-3">
     {uiSchema["ui:title"]}
   </p>
   <MdInfoOutline
@@ -49,14 +49,14 @@ const MaterialityInputWidget = (props) => {
         </div>
         {/* <textarea
           placeholder="Enter data"
-          className={`backdrop:before:w-[48rem] border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
+          className={`backdrop:before:w-[48rem] border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
           value={value}
           onChange={handleChange}
           rows={4}
         /> */}
          <textarea
           placeholder="Enter a description..."
-          className={`backdrop:before:w-[60%] border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer mx-3 mt-2 sm:w-[60%] md:w-[60%] lg:w-[63%] xl:w-[62%] 2xl:w-[60%] `}
+          className={`backdrop:before:w-[60%] border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer mx-3 mt-2 sm:w-[60%] md:w-[60%] lg:w-[63%] xl:w-[62%] 2xl:w-[60%] `}
          
           value={value}
           onChange={handleChange}
@@ -65,7 +65,7 @@ const MaterialityInputWidget = (props) => {
 
         {
           options&&options.yesChecked?(
-            <div className="text-red-600 text-xs mt-1 pl-3">
+            <div className="text-red-600 text-[12px] mt-1 pl-3">
             This field is required
           </div>
           ):(

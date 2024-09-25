@@ -14,7 +14,7 @@ function DynamicTable({ columns, data }) {
       // Return a row with a message that there is no data, spanning all columns
       return (
         <tr className='border'>
-          <td colSpan={columns.length} className="text-center py-4">
+          <td colSpan={columns.length} className="text-center py-4 text-[12px]">
             No data available
           </td>
         </tr>
@@ -27,16 +27,16 @@ function DynamicTable({ columns, data }) {
         <tr key={rowIndex}>
           {isTotalRow ? (
             <>
-              <td colSpan={columns.length - row.totalrow} className="h-14 gradient-text px-4 py-2 border-y text-right font-bold text-sm">
+              <td colSpan={columns.length - row.totalrow} className="h-14 gradient-text px-4 py-2 border-y text-right font-bold text-[12px]">
                 {row.material_type}
               </td>
-              <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-sm">
+              <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-[12px]">
               {Number(row.total_waste).toFixed(2)}
               </td>
               {row.maprow === 1 && (
-                <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-sm"></td>
+                <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-[12px]"></td>
               )}
-              <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-sm">
+              <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-[12px]">
                 {row.units}
               </td>
             </>
