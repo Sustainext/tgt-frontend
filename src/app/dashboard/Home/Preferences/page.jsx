@@ -37,13 +37,8 @@ const Preferences = () => {
     LoaderOpen();
     const token = localStorage.getItem('token')?.replace(/"/g, "");
     try {
-      const response = await axios.get(
-        `${process.env.BACKEND_API_URL}/organization_preference/`,
-        {
-          headers: {
-            Authorization: 'Bearer ' + token,
-          },
-        }
+      const response = await axiosInstance.get(
+        `${process.env.BACKEND_API_URL}/organization_preference/`
       );
       const { org_data } = response.data;
       setData(org_data.sdg);
