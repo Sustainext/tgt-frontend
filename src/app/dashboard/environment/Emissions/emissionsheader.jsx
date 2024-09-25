@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { yearInfo, months } from "@/app/shared/data/yearInfo";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import { useEmissions } from "./EmissionsContext";
+// import { useEmissions } from "./EmissionsContext";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPreviousMonthData, setClimatiqData, resetPreviousMonthData } from '@/lib/redux/features/emissionSlice';
 
 const monthMapping = {
   Jan: 1,
@@ -40,13 +42,17 @@ const EmissionsHeader = ({
   setYearError,
   setLocationname
 }) => {
+
+  const dispatch = useDispatch();
+  const climatiqData = useSelector(state => state.emissions.climatiqData);
+
   const [formState, setFormState] = useState({
     location: location,
     year: year,
     month: activeMonth,
   });
 
-  const { climatiqData } = useEmissions();
+  // const { climatiqData } = useEmissions();
 
   const [locations, setLocations] = useState([]);
   const [localClimatiq, setlocalClimatiq] = useState(0);
@@ -66,15 +72,17 @@ const EmissionsHeader = ({
   }, []);
 
   useEffect(() => {
-    // console.log("Got the climatiqData in header --- ",climatiqData);
     if (climatiqData.result?.[0]) {
       let sum = 0;
       for (const item of climatiqData.result) {
         sum += item.co2e;
       }
+      sum = (sum / 1000).toFixed(3);
       setlocalClimatiq((sum / 1000).toFixed(3));
+      dispatch(setClimatiqData(sum));
     } else {
       setlocalClimatiq(0);
+      dispatch(setClimatiqData(0));
     }
   }, [climatiqData]);
 
@@ -92,6 +100,7 @@ const EmissionsHeader = ({
 
     if (name === "month") {
       setActiveMonth(monthMapping[value]);
+      dispatch(fetchPreviousMonthData({ location, year, month: monthMapping[value] }));
     } else if (name === "location") {
       const selectedLocation = locations.find((loc) => loc.id === Number(value));
       if (selectedLocation) {
@@ -100,8 +109,10 @@ const EmissionsHeader = ({
         setLocationname(selectedLocation.name);
       }
       setLocation(Number(value));
+      dispatch(resetPreviousMonthData());
     } else if (name === "year") {
       setYear(value);
+      dispatch(resetPreviousMonthData());
     }
   };
 
