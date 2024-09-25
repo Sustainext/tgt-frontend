@@ -56,7 +56,7 @@ export const fetchPreviousMonthData = createAsyncThunk(
 const calculateTotalClimatiqScore = (data) => {
   if (data && data.result && Array.isArray(data.result)) {
     const total = data.result.reduce((sum, item) => sum + (item.co2e || 0), 0);
-    return (total / 1000).toFixed(3); // Convert to tCO2e and round to 3 decimal places
+    return (total / 1000).toFixed(3);
   }
   return 0;
 };
@@ -64,6 +64,10 @@ const calculateTotalClimatiqScore = (data) => {
 const emissionsSlice = createSlice({
   name: 'emissions',
   initialState: {
+    organization:'',
+    corporate:'',
+    location:'',
+    month:'',
     climatiqData: {
       rawData: {},
       totalScore: 0
