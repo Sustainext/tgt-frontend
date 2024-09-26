@@ -195,13 +195,14 @@ const Significantlocations = ({ location, year, month }) => {
     return (
         <>
             <div className="pb-11 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
-                <div className='mb-4 flex mt-4'>
+                <div className='mb-4 flex mt-4 pt-4'>
                    <div className="w-[80%] relative">
                        <h2 className="flex mx-2 text-[15px] font-[500] mb-2">
                             Significant locations of operation
                             <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                                 data-tooltip-content="This section documents data corresponding to the organization's definition of significant locations of operation" className="mt-1.5 ml-2 text-[15px]" />
-                            <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
+                            <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" 
+                            style={{
                                 width: "290px", backgroundColor: "#000",
                                 color: "white",
                                 fontSize: "12px",
