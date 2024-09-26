@@ -14,9 +14,9 @@ const EconomicTable3 = () => {
   const data = [
     {
     //   operation: "Operation 1",
-      Operation: "data",
-      TotalOperation: "data",
-      Percentage: "data",
+      Operation: "Data",
+      TotalOperation: "Data",
+      Percentage: "Data",
     },
     // {
     //   operation: "Operation 2",
@@ -53,7 +53,7 @@ const EconomicTable3 = () => {
         </thead>
         <tbody className="border border-gray-300">
           {data.map((row, rowIndex) => (
-            <tr key={rowIndex} className="text-[11px]">
+            <tr key={rowIndex} className="text-[13px]">
              
               <td className="border-t border-r border-gray-200 p-4 text-start">
                 {row.Operation}

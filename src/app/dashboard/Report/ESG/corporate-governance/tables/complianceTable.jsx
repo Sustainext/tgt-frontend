@@ -32,7 +32,7 @@ const ComplianceTable=({rowLabels})=>{
         </thead> */}
         <tbody>
         {rowLabels.map((label, rowIndex) => (
-                        <tr key={rowIndex}>
+                        <tr key={rowIndex} className="text-[13px]">
                             <td className="border-t border-r border-gray-200 p-4 text-left">
                                 {label}
 

@@ -25,6 +25,11 @@ const Companyoperations = () => {
   return (
     <>
       <div className="mx-2 p-2">
+      <div>
+              <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
+                2. About the company and operations
+              </h3>
+            </div>
         <div className="flex gap-4">
           <div className="w-[80%]">
             <Section1/>
@@ -32,7 +37,7 @@ const Companyoperations = () => {
             <Section3 section2_2Ref={section2_2Ref}/>
           </div>
           {/* page sidebar */}
-          <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[550px] top-36 sticky mt-2 w-[20%]">
+          <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[500px] top-36 sticky mt-2 w-[20%]">
             <p className="text-[11px] text-[#727272] mb-2 uppercase">About the company and operations</p>
             <p
               className={`text-[12px] mb-2 cursor-pointer ${

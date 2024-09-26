@@ -6,6 +6,7 @@ const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
 const Section3 = ({ section14_2Ref }) => {
   const [content, setContent] = useState(`
+    <p>
         Corporate Social Responsibility (CSR) is a cornerstone of our community engagement strategy. Our CSR efforts are guided by the principles of ethical business practices, sustainability, and social equity. We are committed to making a positive impact through strategic investments and partnerships that address critical social and environmental challenges. 
 <br/>
         CSR Framework 
@@ -16,7 +17,7 @@ const Section3 = ({ section14_2Ref }) => {
         Climate Change<br/>
        Collaboration with stakeholders is key to the success of our CSR initiatives. We partner with local governments, NGOs, and other organizations to leverage resources, expertise, and networks. These partnerships enable us to scale our impact and ensure that our CSR activities are aligned with community needs and priorities. 
 <br/>
-      
+ </p>     
     `);
 
   // const [content, setContent] = useState(`Mission
@@ -30,7 +31,10 @@ const Section3 = ({ section14_2Ref }) => {
   // Nature
   // Protecting biodiversity and natural resources is a priority for us.`);
   const config = {
-    height: 525, // Set the height in pixels
+    style: {
+      fontSize: '14px',
+    },
+    allowResizeY: false,
   };
 
   return (

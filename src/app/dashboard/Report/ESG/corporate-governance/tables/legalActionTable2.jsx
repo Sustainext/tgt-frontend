@@ -52,14 +52,14 @@ const LegalActionTable2 = () => {
         </thead>
         <tbody className="border border-gray-300">
           {data.map((row, rowIndex) => (
-            <tr key={rowIndex} className="text-[11px]">
-              <td className="border-t border-r border-gray-200 p-4 text-start">
+            <tr key={rowIndex} className="text-[13px]">
+              <td className="border-t border-r border-gray-200 p-4 text-left">
                 {row.location}
               </td>
-              <td className="border-t border-r border-gray-200 p-4 text-start">
+              <td className="border-t border-r border-gray-200 p-4 text-left">
                 {row.potentialImpact}
               </td>
-              <td className="border-t border-gray-200 p-4 text-start">
+              <td className="border-t border-gray-200 p-4 text-left">
                 {row.actualImpact}
               </td>
             </tr>

@@ -53,7 +53,7 @@ const CommunityTable2 = () => {
         </thead>
         <tbody className="border border-gray-300">
           {data.map((row, rowIndex) => (
-            <tr key={rowIndex} className="text-[11px]">
+            <tr key={rowIndex} className="text-[13px]">
               <td className="border-t border-r border-gray-200 p-4 text-start">
                 {row.operation}
               </td>

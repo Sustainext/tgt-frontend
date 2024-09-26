@@ -11,7 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
 import { MdDownload, MdDelete, MdKeyboardArrowDown, MdFileDownload } from "react-icons/md";
-import axiosInstance,{patch} from "../../../utils/axiosMiddleware";
+import axiosInstance,{patch} from "../../../../utils/axiosMiddleware";
 import Link from 'next/link'
 import { GlobalState } from "@/Context/page";
 function Ghgtemplates() {

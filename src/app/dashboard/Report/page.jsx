@@ -29,6 +29,7 @@ const Report = () => {
   const router = useRouter();
   const [entities, setEntities] = useState([]);
 
+
   const handleCheckboxChange = (index) => {
     const newEntities = [...entities];
     newEntities[index].checked = !newEntities[index].checked;
@@ -246,7 +247,7 @@ const Report = () => {
             response.data.organization_country
           );
 
-          router.push("/dashboard/Report/Ghgtemplates");
+          router.push("/dashboard/Report/GHG/Ghgtemplates");
           //   navigate(`/report/GHGtemplate`, { state: { data: response.data } });
         }
         else if(response.status == "204"){
@@ -340,11 +341,19 @@ const Report = () => {
     const formErrors = validateForm();
     if (Object.keys(formErrors).length === 0) {
       setError({}); // Clear any existing errors
-      await submitForm(); // Proceed with the form submission
+      if(reporttype=='GRI Report: In accordance With' || reporttype=='GRI Report: With Reference to'){
+        router.push("/dashboard/Report/ESG")
+      }
+      else{
+        await submitForm(); // Proceed with the form submission
+      }
+      
     } else {
       setError(formErrors); // Update the state with the validation errors
     }
   };
+
+
   const renderSecondSelect = () => {
     if (firstSelection === "Organization") {
       return (
@@ -561,6 +570,8 @@ const Report = () => {
                           <option>Select Report Type</option>
                           <option>GHG Accounting Report</option>
                           <option>GHG Report - Investments</option>
+                          <option>GRI Report: In accordance With</option>
+                          <option>GRI Report: With Reference to</option>
                         </select>
                         {error.reporttype && (
                           <p className="text-red-500 ml-1">

@@ -14,15 +14,15 @@ const RatioTable=({col,values})=>{
                 {col.map((item, idx) => (
                     <th
                         key={idx}
-                        style={{ minWidth: "120px", textAlign: "center" }}
+                        style={{ minWidth: "120px", textAlign: "left" }}
                         className={`text-[12px] border-r px-4 py-4 ${
                             idx === 0 ? 'rounded-tl-md' : '' // Top-left corner
                         } ${
                             idx === col.length - 1 ? 'rounded-tr-md' : '' // Top-right corner
                         } text-gray-500`}
                     >
-                        <div className="flex justify-center items-center">
-                            <p className="flex items-center">
+                        <div className="flex ">
+                            <p className="flex">
                                 {item}
                             </p>
                         </div>
@@ -31,9 +31,9 @@ const RatioTable=({col,values})=>{
             </tr>
         </thead>
         <tbody>
-            <tr>
+            <tr className="text-[13px]">
                 {values.map((val)=>(
-                    <td className="border border-gray-200 p-4 rounded-bl-md text-center">Data</td>
+                    <td className="border border-gray-200 p-4 rounded-bl-md text-left">Data</td>
                 ))}
             </tr>
            
