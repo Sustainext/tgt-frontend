@@ -9,7 +9,10 @@ const selectWidget3 =  ({onChange, value = "", placeholder, label, title, uiSche
       // Call props.onChange to ensure RJSF handles the state update
       onChange(e.target.value);
     };
-
+    const randomId = Math.floor(Math.random() * 10000); // Generate a random number between 0 and 9999
+    const tooltipId = schema.title
+      ? `tooltip-${schema.title.replace(/\s+/g, "-")}-${randomId}`
+      : `tooltip-${id}-${randomId}`;
     return (
       <div className="mb-3 px-1">
        {id.startsWith("root_0") && ( 
@@ -17,12 +20,12 @@ const selectWidget3 =  ({onChange, value = "", placeholder, label, title, uiSche
           <p className={`flex text-[13px] text-neutral-950 font-[400] mb-1 ${label!== "Metric Unit" ? 'pl-5' : ''}`}>
             {label}
             <MdInfoOutline
-              data-tooltip-id={`tooltip-${schema.title?.replace(/\s+/g, "-")}`}
+              data-tooltip-id={tooltipId}
               data-tooltip-content={schema.tooltiptext}
               className={`mt-1   text-[14px] ${label!== "Metric Unit" ? 'ml-5 w-[30px]' : 'w-[20px] ml-1'}`}
             />
             <ReactTooltip
-              id={`tooltip-${schema.title?.replace(/\s+/g, "-")}`}
+              id={tooltipId}
               place="top"
               effect="solid"
               style={{

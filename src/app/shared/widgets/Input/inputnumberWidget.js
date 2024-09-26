@@ -21,6 +21,10 @@ const inputnumberWidget = ({
       event.preventDefault();
     }
   };
+  const randomId = Math.floor(Math.random() * 10000);
+  const tooltipId = schema.title
+  ? `tooltip-${schema.title.replace(/\s+/g, "-")}-${randomId}`
+  : `tooltip-${id}-${randomId}`;
   return (
     <div className="mb-3 px-1">
       {id.startsWith("root_0") && (
@@ -28,16 +32,15 @@ const inputnumberWidget = ({
           <p className="flex text-[13px] text-neutral-950 font-[400] mb-1">
             {label}
             <MdInfoOutline
-              data-tooltip-id={`tooltip-${schema.title?.replace(/\s+/g, "-")}`}
+              data-tooltip-id={tooltipId}
               data-tooltip-content={schema.tooltiptext}
               className="mt-1 ml-2 w-[30px] text-[14px]"
             />
             <ReactTooltip
-              id={`tooltip-${schema.title?.replace(/\s+/g, "-")}`}
+              id={tooltipId}
               place="top"
               effect="solid"
               style={{
-                width: "300px",
                 backgroundColor: "#000",
                 color: "white",
                 fontSize: "12px",

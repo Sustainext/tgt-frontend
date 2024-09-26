@@ -31,7 +31,10 @@ const inputWidget = ({
       event.preventDefault();
     }
   };
-
+  const randomId = Math.floor(Math.random() * 10000); // Generate a random number between 0 and 9999
+  const tooltipId = schema.title
+    ? `tooltip-${schema.title.replace(/\s+/g, "-")}-${randomId}`
+    : `tooltip-${id}-${randomId}`;
   return (
     <div className="mb-3 px-1">
       {/* Conditionally show label and tooltip based on the id */}
@@ -40,16 +43,16 @@ const inputWidget = ({
           <p className="flex text-[12px] w-[20vw]  text-neutral-950 font-[400] mb-1 leading-[15px]">
             {label}
             <MdInfoOutline
-              data-tooltip-id={`tooltip-${schema.title?.replace(/\s+/g, "-")}`}
+              data-tooltip-id={tooltipId}
               data-tooltip-content={schema.tooltiptext}
               className="mt-1 ml-2 w-[30px] text-[14px]"
             />
             <ReactTooltip
-              id={`tooltip-${schema.title?.replace(/\s+/g, "-")}`}
+              id={tooltipId}
               place="top"
               effect="solid"
               style={{
-                width: "300px",
+                width: "400px",
                 backgroundColor: "#000",
                 color: "white",
                 fontSize: "12px",
