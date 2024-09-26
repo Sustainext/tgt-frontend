@@ -241,7 +241,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp, datarefresh,setDatarefresh }
       >
         <div className="mb-2 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
               Total number of business partners that the organization’s
               anti-corruption policies and procedures have been communicated to,
               broken down by type of business partner and region.

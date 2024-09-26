@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const Table1 = ({ data, columns }) => {
-  const isEmptyData = data.every(row => Object.keys(row).length === 0);
+  const isEmptyData = data.every((row) => Object.keys(row).length === 0);
   const columnWidth = `${100 / columns.length}%`;
 
   return (
@@ -12,7 +12,7 @@ const Table1 = ({ data, columns }) => {
             {columns.map((column, index) => (
               <th
                 key={column}
-                className={`px-2 py-3 font-semibold text-gray-600 block md:table-cell text-sm text-center`}
+                className={`px-2 py-3  text-[#727272] block md:table-cell text-[12px] text-center`}
                 style={{ width: columnWidth }}
               >
                 {column}
@@ -25,21 +25,24 @@ const Table1 = ({ data, columns }) => {
             <tr className="border border-gray-300 md:table-row">
               <td
                 colSpan={columns.length}
-                className="text-center p-2 block md:table-cell text-sm h-20"
+                className="text-center p-2 block md:table-cell text-[12px] font-normal text-slate-500"
               >
                 No data available
               </td>
             </tr>
           ) : (
             data.map((row, rowIndex) => (
-              <tr key={rowIndex} className="border border-gray-300 md:table-row">
+              <tr
+                key={rowIndex}
+                className="border border-gray-300 md:table-row"
+              >
                 {columns.map((column, colIndex) => (
                   <td
                     key={colIndex}
-                    className={`p-2 block md:table-cell h-20 text-center text-sm`}
+                    className={`p-2 block md:table-cell h-20 text-center text-[12px] font-normal text-slate-500`}
                     style={{ width: columnWidth }}
                   >
-                    {row[column] || 'N/A'}
+                    {row[column] || "N/A"}
                   </td>
                 ))}
               </tr>

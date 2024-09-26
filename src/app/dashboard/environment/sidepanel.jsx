@@ -318,7 +318,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
 
 >
   <button
-    className={`flex items-center justify-between px-2 py-2 mb-2 focus:outline-none w-full ${activeTab === "New suppliers that were screened using environmental criteria" ||
+    className={`flex justify-between px-2  mb-2 focus:outline-none w-full ${activeTab === "New suppliers that were screened using environmental criteria" ||
       activeTab === "Negative environmental impacts in the supply chain and actions taken"
       ? "text-[#007EEF]"
       : "bg-white text-[#727272] "

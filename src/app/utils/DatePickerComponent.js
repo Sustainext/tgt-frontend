@@ -93,7 +93,7 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
       </div>
       <div className="relative flex items-center space-x-1">
         <span
-          className="text-sm font-semibold cursor-pointer"
+          className="text-[12px] font-semibold cursor-pointer"
           onClick={() => toggleMonthDropdown(dropdownType)}
         >
           {format(month, 'MMMM')}
@@ -112,7 +112,7 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
           </div>
         )}
         <span
-          className="text-sm font-semibold cursor-pointer"
+          className="text-[12px] font-semibold cursor-pointer"
           onClick={() => toggleYearDropdown(dropdownType)}
         >
           {format(month, 'yyyy')}
@@ -143,7 +143,7 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
     let startDate = startOfWeek(startMonth);
     for (let i = 0; i < 7; i++) {
       days.push(
-        <div className="text-center text-sm font-medium" key={i}>
+        <div className="text-[12px] font-medium text-center" key={i}>
           {format(addDays(startDate, i), 'EEE')}
         </div>
       );
@@ -171,7 +171,7 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
 
         days.push(
           <div
-            className={`p-1 w-[35px] text-center cursor-pointer rounded-md ${!isSameMonth(day, monthStart) ? "text-gray-400" :
+            className={`p-1 w-[35px] text-[12px] text-center cursor-pointer rounded-md ${!isSameMonth(day, monthStart) ? "text-gray-400" :
               isStartOrEnd ? "bg-blue-500 text-white rounded-full" :
               isInRange ? "bg-blue-300" : isHoveredInRange ? "bg-blue-100" : "bg-white"}`}
             key={day}
@@ -228,13 +228,13 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
           readOnly
           value={startDate && endDate ? `${format(startDate, 'dd/MMM/yyyy')} ~ ${format(endDate, 'dd/MMM/yyyy')}` : ""}
           onClick={toggleDatePicker}
-          className="py-1.5 border border-gray-300 rounded-md w-full text-sm pl-2"
+          className="py-[0.375rem] border border-gray-300 rounded-md w-full text-[12px] pl-2"
         />
         <AiOutlineCalendar className="absolute right-2 cursor-pointer" onClick={toggleDatePicker} />
       </div>
       {showDatePicker && (
         <div
-          className={`absolute z-10 mt-2 p-4 bg-white border border-gray-300 rounded-md w-[53vw] ${
+          className={`absolute z-10 mt-2 p-4 bg-white border border-gray-300 rounded-md w-[42vw] ${
             position === 'top' ? 'bottom-full mb-2' : position === 'left' ? 'right-full mr-2' : position === 'right' ? 'left-full ml-2' : 'top-full mt-2'
           }`}
         >
@@ -251,8 +251,8 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
             </div>
           </div>
           <div className="flex justify-between mt-4">
-            <button className="px-4 py-2 bg-gray-200 rounded-md text-sm" onClick={() => setShowDatePicker(false)}>Cancel</button>
-            <button className="px-4 py-2 bg-blue-500 text-white rounded-md text-sm" onClick={() => setShowDatePicker(false)}>Apply</button>
+            <button className="px-4 py-1 bg-gray-200 rounded-md text-[12px]" onClick={() => setShowDatePicker(false)}>Cancel</button>
+            <button className="px-4 py-1 bg-blue-500 text-white rounded-md text-[12px]" onClick={() => setShowDatePicker(false)}>Apply</button>
           </div>
         </div>
       )}

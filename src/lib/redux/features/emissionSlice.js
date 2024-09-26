@@ -18,7 +18,7 @@ export const fetchEmissionsData = createAsyncThunk(
         axiosInstance.get(scope1Url),
         axiosInstance.get(scope2Url),
         axiosInstance.get(scope3Url)
-      ]);
+      ]);      
 
       return {
         climatiqData: climatiqResponse.data,
@@ -26,6 +26,12 @@ export const fetchEmissionsData = createAsyncThunk(
         scope2Data: scope2Response.data.form_data[0].data,
         scope3Data: scope3Response.data.form_data[0].data
       };
+      console.log({
+        climatiqData: climatiqResponse.data,
+        scope1Data: scope1Response.data.form_data[0].data,
+        scope2Data: scope2Response.data.form_data[0].data,
+        scope3Data: scope3Response.data.form_data[0].data
+      })
     } catch (error) {
       throw error;
     }

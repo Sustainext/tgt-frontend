@@ -17,7 +17,7 @@ const Table = ({ type, columns, data,fullData, organisation, corporate, location
             {columns.map((column, index) => (
               <th
                 key={column.accessor} 
-                className={`px-2 py-3 font-semibold text-gray-600 block md:table-cell text-sm w-1/5 ${
+                className={`px-2 py-3  text-[#727272] block md:table-cell  text-[12px] w-1/5 ${
                   index === 0 ? "text-left pl-4" : "text-center"
                 }`}
               >
@@ -37,8 +37,8 @@ const Table = ({ type, columns, data,fullData, organisation, corporate, location
                   <td
                     key={colIndex}
                     className={`p-2 block md:table-cell ${
-                      colIndex === 0 ? "text-left font-bold pl-4" : "text-center"
-                    } text-sm`}
+                      colIndex === 0 ? "text-left  pl-4" : "text-center"
+                    } text-[12px]`}
                   >
                     {row[column.accessor]}
                   </td>
@@ -49,7 +49,7 @@ const Table = ({ type, columns, data,fullData, organisation, corporate, location
             <tr className="border border-gray-300 md:table-row">
               <td
                 colSpan={columns.length}
-                className="p-2 text-center text-sm font-bold block md:table-cell"
+                className="text-center py-4 text-[12px] font-[400]"
               >
                 No data available
               </td>

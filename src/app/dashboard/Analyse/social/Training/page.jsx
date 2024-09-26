@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React, { useState, useEffect } from "react";
 import TableSidebar from "./TableSidebar";
 import DynamicTable2 from "./customTable2";
@@ -6,7 +6,7 @@ import DateRangePicker from "../../../../utils/DatePickerComponent";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import { columns1, columns2, columns3, columns4 } from "./data";
 import { yearInfo } from "@/app/shared/data/yearInfo";
-import { Oval } from 'react-loader-spinner';
+import { Oval } from "react-loader-spinner";
 const AnalyseTraining = ({ isBoxOpen }) => {
   const [table1, setTable1] = useState([]);
   const [table2, setTable2] = useState([]);
@@ -65,97 +65,171 @@ const AnalyseTraining = ({ isBoxOpen }) => {
       const response = await axiosInstance.get(
         `/sustainapp/get_training_social_analysis`,
         {
-          params: params
+          params: params,
         }
       );
 
       const data = response.data;
 
-      const { average_hours_of_training_provided_to_employees,
+      const {
+        average_hours_of_training_provided_to_employees,
         average_training_hours_per_employee_category,
         percentage_of_employees_receiving_regular_performance_and_career_development_reviews,
-        percentage_of_employees_receiving_regular_performance_and_career_development_reviews_by_gender
+        percentage_of_employees_receiving_regular_performance_and_career_development_reviews_by_gender,
       } = data;
 
       const formatTable1 = (data) => {
         return data.map((data, index) => {
-          const average_training_hours_per_employee = parseFloat(data.average_training_hours_per_employee).toFixed(2);
-          const formattedPercentage1 = average_training_hours_per_employee.endsWith('.00') ? average_training_hours_per_employee.slice(0, -3) : average_training_hours_per_employee;
-          const formattedPercentageWithIcon1 = formattedPercentage1 + '%';
-          const average_training_hours_per_female_employee = parseFloat(data.average_training_hours_per_female_employee).toFixed(2);
-          const formattedPercentage2 = average_training_hours_per_female_employee.endsWith('.00') ? average_training_hours_per_female_employee.slice(0, -3) : average_training_hours_per_employee;
-          const average_training_hours_per_male_employee = parseFloat(data.average_training_hours_per_male_employee).toFixed(2);
-          const formattedPercentage3 = average_training_hours_per_male_employee.endsWith('.00') ? average_training_hours_per_male_employee.slice(0, -3) : average_training_hours_per_male_employee;
+          const average_training_hours_per_employee = parseFloat(
+            data.average_training_hours_per_employee
+          ).toFixed(2);
+          const formattedPercentage1 =
+            average_training_hours_per_employee.endsWith(".00")
+              ? average_training_hours_per_employee.slice(0, -3)
+              : average_training_hours_per_employee;
+          const formattedPercentageWithIcon1 = formattedPercentage1 + "%";
+          const average_training_hours_per_female_employee = parseFloat(
+            data.average_training_hours_per_female_employee
+          ).toFixed(2);
+          const formattedPercentage2 =
+            average_training_hours_per_female_employee.endsWith(".00")
+              ? average_training_hours_per_female_employee.slice(0, -3)
+              : average_training_hours_per_employee;
+          const average_training_hours_per_male_employee = parseFloat(
+            data.average_training_hours_per_male_employee
+          ).toFixed(2);
+          const formattedPercentage3 =
+            average_training_hours_per_male_employee.endsWith(".00")
+              ? average_training_hours_per_male_employee.slice(0, -3)
+              : average_training_hours_per_male_employee;
           return {
             "Average training hours per employee": formattedPercentageWithIcon1,
             "Average training hours per Female employee": formattedPercentage2,
             "Average training hours per Male employee": formattedPercentage3,
           };
         });
-
       };
       const formatTable2 = (data) => {
         return data.map((data, index) => {
-          const average_training_hours_per_employee = parseFloat(data.average_training_hours_per_employee).toFixed(2);
-          const formattedPercentage1 = average_training_hours_per_employee.endsWith('.00') ? average_training_hours_per_employee.slice(0, -3) : average_training_hours_per_employee;
-          const average_training_hours_per_female_employee = parseFloat(data.average_training_hours_per_female_employee).toFixed(2);
-          const formattedPercentage2 = average_training_hours_per_female_employee.endsWith('.00') ? average_training_hours_per_female_employee.slice(0, -3) : average_training_hours_per_female_employee;
-          const average_training_hours_per_male_employee = parseFloat(data.average_training_hours_per_male_employee).toFixed(2);
-          const formattedPercentage3 = average_training_hours_per_male_employee.endsWith('.00') ? average_training_hours_per_male_employee.slice(0, -3) : average_training_hours_per_male_employee;
-          const average_training_hours_per_non_binary_employee = parseFloat(data.average_training_hours_per_male_employee).toFixed(2);
-          const formattedPercentage4 = average_training_hours_per_non_binary_employee.endsWith('.00') ? average_training_hours_per_non_binary_employee.slice(0, -3) : average_training_hours_per_non_binary_employee;
+          const average_training_hours_per_employee = parseFloat(
+            data.average_training_hours_per_employee
+          ).toFixed(2);
+          const formattedPercentage1 =
+            average_training_hours_per_employee.endsWith(".00")
+              ? average_training_hours_per_employee.slice(0, -3)
+              : average_training_hours_per_employee;
+          const average_training_hours_per_female_employee = parseFloat(
+            data.average_training_hours_per_female_employee
+          ).toFixed(2);
+          const formattedPercentage2 =
+            average_training_hours_per_female_employee.endsWith(".00")
+              ? average_training_hours_per_female_employee.slice(0, -3)
+              : average_training_hours_per_female_employee;
+          const average_training_hours_per_male_employee = parseFloat(
+            data.average_training_hours_per_male_employee
+          ).toFixed(2);
+          const formattedPercentage3 =
+            average_training_hours_per_male_employee.endsWith(".00")
+              ? average_training_hours_per_male_employee.slice(0, -3)
+              : average_training_hours_per_male_employee;
+          const average_training_hours_per_non_binary_employee = parseFloat(
+            data.average_training_hours_per_male_employee
+          ).toFixed(2);
+          const formattedPercentage4 =
+            average_training_hours_per_non_binary_employee.endsWith(".00")
+              ? average_training_hours_per_non_binary_employee.slice(0, -3)
+              : average_training_hours_per_non_binary_employee;
           return {
-            "Categories": data.category,
-            "Average training hours per employee category": formattedPercentage1,
-            "Average training hours of male employee in category": formattedPercentage2,
-            "Average training hours of female employee in category": formattedPercentage3,
-            "Average training hours of non-binary employee in category": formattedPercentage4,
+            Categories: data.category,
+            "Average training hours per employee category":
+              formattedPercentage1,
+            "Average training hours of male employee in category":
+              formattedPercentage2,
+            "Average training hours of female employee in category":
+              formattedPercentage3,
+            "Average training hours of non-binary employee in category":
+              formattedPercentage4,
           };
         });
-
       };
       const formatTable3 = (data) => {
         return data.map((data, index) => {
-          const percentage_of_employees_who_received_regular_performance_reviews = parseFloat(data.percentage_of_employees_who_received_regular_performance_reviews).toFixed(2);
-          const formattedPercentage1 = percentage_of_employees_who_received_regular_performance_reviews.endsWith('.00') ? percentage_of_employees_who_received_regular_performance_reviews.slice(0, -3) : percentage_of_employees_who_received_regular_performance_reviews;
-          const percentage_of_employees_who_received_regular_career_development_reviews = parseFloat(data.percentage_of_employees_who_received_regular_career_development_reviews).toFixed(2);
-          const formattedPercentage2 = percentage_of_employees_who_received_regular_career_development_reviews.endsWith('.00') ? percentage_of_employees_who_received_regular_career_development_reviews.slice(0, -3) : percentage_of_employees_who_received_regular_career_development_reviews;
+          const percentage_of_employees_who_received_regular_performance_reviews =
+            parseFloat(
+              data.percentage_of_employees_who_received_regular_performance_reviews
+            ).toFixed(2);
+          const formattedPercentage1 =
+            percentage_of_employees_who_received_regular_performance_reviews.endsWith(
+              ".00"
+            )
+              ? percentage_of_employees_who_received_regular_performance_reviews.slice(
+                  0,
+                  -3
+                )
+              : percentage_of_employees_who_received_regular_performance_reviews;
+          const percentage_of_employees_who_received_regular_career_development_reviews =
+            parseFloat(
+              data.percentage_of_employees_who_received_regular_career_development_reviews
+            ).toFixed(2);
+          const formattedPercentage2 =
+            percentage_of_employees_who_received_regular_career_development_reviews.endsWith(
+              ".00"
+            )
+              ? percentage_of_employees_who_received_regular_career_development_reviews.slice(
+                  0,
+                  -3
+                )
+              : percentage_of_employees_who_received_regular_career_development_reviews;
 
           return {
             "Employee Category": data.Category,
-            "Percentage of employees who received regular performance review": formattedPercentage1,
-            "Percentage of employees who received regular career development review": formattedPercentage2,
-
+            "Percentage of employees who received regular performance review":
+              formattedPercentage1,
+            "Percentage of employees who received regular career development review":
+              formattedPercentage2,
           };
         });
-
       };
       const formatTable4 = (data) => {
         return data.map((data, index) => {
-          const percentage_of_employees_who_received_regular_performance_reviews = parseFloat(data.percentage_of_employees_who_received_regular_performance_reviews).toFixed(2);
-          const formattedPercentage1 = percentage_of_employees_who_received_regular_performance_reviews.endsWith('.00') ? percentage_of_employees_who_received_regular_performance_reviews.slice(0, -3) : percentage_of_employees_who_received_regular_performance_reviews;
-          const percentage_of_employees_who_received_regular_career_development_reviews = parseFloat(data.percentage_of_employees_who_received_regular_career_development_reviews).toFixed(2);
-          const formattedPercentage2 = percentage_of_employees_who_received_regular_career_development_reviews.endsWith('.00') ? percentage_of_employees_who_received_regular_career_development_reviews.slice(0, -3) : percentage_of_employees_who_received_regular_career_development_reviews;
+          const percentage_of_employees_who_received_regular_performance_reviews =
+            parseFloat(
+              data.percentage_of_employees_who_received_regular_performance_reviews
+            ).toFixed(2);
+          const formattedPercentage1 =
+            percentage_of_employees_who_received_regular_performance_reviews.endsWith(
+              ".00"
+            )
+              ? percentage_of_employees_who_received_regular_performance_reviews.slice(
+                  0,
+                  -3
+                )
+              : percentage_of_employees_who_received_regular_performance_reviews;
+          const percentage_of_employees_who_received_regular_career_development_reviews =
+            parseFloat(
+              data.percentage_of_employees_who_received_regular_career_development_reviews
+            ).toFixed(2);
+          const formattedPercentage2 =
+            percentage_of_employees_who_received_regular_career_development_reviews.endsWith(
+              ".00"
+            )
+              ? percentage_of_employees_who_received_regular_career_development_reviews.slice(
+                  0,
+                  -3
+                )
+              : percentage_of_employees_who_received_regular_career_development_reviews;
 
           return {
-            "Gender": data.Gender,
-            "Percentage of employees who received regular performance review": formattedPercentage1,
-            "Percentage of employees who received regular career development review": formattedPercentage2,
-
+            Gender: data.Gender,
+            "Percentage of employees who received regular performance review":
+              formattedPercentage1,
+            "Percentage of employees who received regular career development review":
+              formattedPercentage2,
           };
         });
-
       };
-      setTable1(
-        formatTable1(
-          average_hours_of_training_provided_to_employees
-        )
-      );
-      setTable2(
-        formatTable2(
-          average_training_hours_per_employee_category
-        )
-      );
+      setTable1(formatTable1(average_hours_of_training_provided_to_employees));
+      setTable2(formatTable2(average_training_hours_per_employee_category));
       setTable3(
         formatTable3(
           percentage_of_employees_receiving_regular_performance_and_career_development_reviews
@@ -265,44 +339,47 @@ const AnalyseTraining = ({ isBoxOpen }) => {
           <div className="mt-4 pb-3 mx-5 text-left">
             <div className="mb-2 flex-col items-center pt-2 gap-6">
               <div className="justify-start items-center gap-4 inline-flex mt-4">
-                <div className="text-zinc-600 text-[15px] font-semibold font-['Manrope']">
+                <div className="text-zinc-600 text-[12px] font-semibold font-['Manrope']">
                   View By:
                 </div>
                 <div className="rounded-lg shadow border border-gray-300 justify-start items-start flex">
                   <div
-                    className={`w-[111px] px-4 py-2.5 border-r rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Organization" ? "bg-sky-100" : "bg-white"
-                      }`}
+                    className={`w-[111px] px-4 py-2.5 border-r rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                      reportType === "Organization" ? "bg-sky-100" : "bg-white"
+                    }`}
                     onClick={() => handleReportTypeChange("Organization")}
                   >
-                    <div className="text-slate-800 text-[13px] font-medium font-['Manrope'] leading-tight">
+                    <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
                       Organization
                     </div>
                   </div>
                   <div
-                    className={`w-[111px] px-4 py-2.5 border-r rounded-r-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Corporate" ? "bg-sky-100" : "bg-white"
-                      }`}
+                    className={`w-[111px] px-4 py-2.5 border-r rounded-r-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                      reportType === "Corporate" ? "bg-sky-100" : "bg-white"
+                    }`}
                     onClick={() => handleReportTypeChange("Corporate")}
                   >
-                    <div className="text-slate-700 text-[13px] font-medium font-['Manrope'] leading-tight">
+                    <div className="text-slate-700 text-[12px] font-medium font-['Manrope'] leading-tight">
                       Corporate
                     </div>
                   </div>
                 </div>
               </div>
               <div
-                className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${reportType !== "" ? "visible" : "hidden"
-                  }`}
+                className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${
+                  reportType !== "" ? "visible" : "hidden"
+                }`}
               >
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[13px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal"
                   >
                     Select Organization*
                   </label>
                   <div className="mt-2">
                     <select
-                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                       value={selectedOrg}
                       onChange={handleOrganizationChange}
                     >
@@ -315,49 +392,48 @@ const AnalyseTraining = ({ isBoxOpen }) => {
                         ))}
                     </select>
                     {errors.selectedOrg && (
-                      <div className="text-red-600 text-sm">
+                      <div className="text-red-600 text-[12px] ml-2">
                         {errors.selectedOrg}
                       </div>
                     )}
                   </div>
                 </div>
-                {(reportType === "Corporate" ||
-                  reportType === "Location") && (
-                    <div className="mr-2">
-                      <label
-                        htmlFor="cname"
-                        className="text-neutral-800 text-[13px] font-normal"
+                {(reportType === "Corporate" || reportType === "Location") && (
+                  <div className="mr-2">
+                    <label
+                      htmlFor="cname"
+                      className="text-neutral-800 text-[12px] font-normal"
+                    >
+                      Select Corporate
+                    </label>
+                    <div className="mt-2">
+                      <select
+                        className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                        value={selectedCorp}
+                        onChange={handleOrgChange}
                       >
-                        Select Corporate
-                      </label>
-                      <div className="mt-2">
-                        <select
-                          className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          value={selectedCorp}
-                          onChange={handleOrgChange}
-                        >
-                          <option value="">--Select Corporate--- </option>
-                          {corporate &&
-                            corporate.map((corp) => (
-                              <option key={corp.id} value={corp.id}>
-                                {corp.name}
-                              </option>
-                            ))}
-                        </select>
-                      </div>
+                        <option value="">--Select Corporate--- </option>
+                        {corporate &&
+                          corporate.map((corp) => (
+                            <option key={corp.id} value={corp.id}>
+                              {corp.name}
+                            </option>
+                          ))}
+                      </select>
                     </div>
-                  )}
+                  </div>
+                )}
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[13px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal"
                   >
                     Select Year
                   </label>
                   <div className="mt-2">
                     <select
                       name="year"
-                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                       value={selectedYear}
                       onChange={handleYearChange}
                     >
@@ -369,7 +445,7 @@ const AnalyseTraining = ({ isBoxOpen }) => {
                       ))}
                     </select>
                     {errors.selectedYear && (
-                      <div className="text-red-600 text-sm">
+                      <div className="text-red-600 text-[12px] ml-2">
                         {errors.selectedYear}
                       </div>
                     )}
@@ -379,20 +455,20 @@ const AnalyseTraining = ({ isBoxOpen }) => {
             </div>
           </div>
         </div>
-        <div className="flex justify-between">
-          <div className={`ps-4  w-[78%] me-4`}>
+        <div className="flex">
+          <div className={`ps-4 w-[100%] me-4`}>
             <div className="mb-6">
               <div
                 id="ep1"
                 className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
               >
                 <div>
-                  <p className="text-[18px] font-semibold">
+                  <p className="text-[15px] font-bold">
                     Average hours of training provided to employees
                   </p>
                 </div>
                 <div className="flex justify-between items-center mb-2">
-                  <p className="text-gray-500">
+                  <p className="text-gray-500 text-[13px]">
                     Average hours of training provided to employees
                   </p>
 
@@ -403,10 +479,7 @@ const AnalyseTraining = ({ isBoxOpen }) => {
                   </div>
                 </div>
                 <div className="mb-4">
-                  <DynamicTable2
-                    columns={columns1}
-                    data={table1}
-                  />
+                  <DynamicTable2 columns={columns1} data={table1} />
                 </div>
               </div>
             </div>
@@ -416,12 +489,12 @@ const AnalyseTraining = ({ isBoxOpen }) => {
                 className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
               >
                 <div>
-                  <p className="text-[18px] font-semibold">
+                  <p className="text-[15px] font-bold">
                     Average hours of training provided to employees
                   </p>
                 </div>
                 <div className="flex justify-between items-center mb-2">
-                  <p className="text-gray-500">
+                  <p className="text-gray-500 text-[13px]">
                     Average hours of training provided to employees
                   </p>
 
@@ -432,10 +505,7 @@ const AnalyseTraining = ({ isBoxOpen }) => {
                   </div>
                 </div>
                 <div className="mb-4">
-                  <DynamicTable2
-                    columns={columns2}
-                    data={table2}
-                  />
+                  <DynamicTable2 columns={columns2} data={table2} />
                 </div>
               </div>
             </div>
@@ -445,13 +515,15 @@ const AnalyseTraining = ({ isBoxOpen }) => {
                 className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
               >
                 <div>
-                  <p className="text-[18px] font-semibold">
-                    Percentage of employees receiving regular performance and career development reviews
+                  <p className="text-[15px] font-bold">
+                    Percentage of employees receiving regular performance and
+                    career development reviews
                   </p>
                 </div>
                 <div className="flex justify-between items-center mb-2">
                   <p className="text-gray-500">
-                    Percentage of employees receiving regular performance and career development reviews by employee category
+                    Percentage of employees receiving regular performance and
+                    career development reviews by employee category
                   </p>
 
                   <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
@@ -461,10 +533,7 @@ const AnalyseTraining = ({ isBoxOpen }) => {
                   </div>
                 </div>
                 <div className="mb-4">
-                  <DynamicTable2
-                    columns={columns3}
-                    data={table3}
-                  />
+                  <DynamicTable2 columns={columns3} data={table3} />
                 </div>
               </div>
             </div>
@@ -473,10 +542,10 @@ const AnalyseTraining = ({ isBoxOpen }) => {
                 id="ep3"
                 className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
               >
-
                 <div className="flex justify-between items-center mb-2">
-                  <p className="text-[18px] font-semibold">
-                    Percentage of employees receiving regular performance and career development reviews by gender
+                  <p className="text-[15px] font-bold">
+                    Percentage of employees receiving regular performance and
+                    career development reviews by gender
                   </p>
 
                   <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
@@ -486,10 +555,7 @@ const AnalyseTraining = ({ isBoxOpen }) => {
                   </div>
                 </div>
                 <div className="mb-4">
-                  <DynamicTable2
-                    columns={columns4}
-                    data={table4}
-                  />
+                  <DynamicTable2 columns={columns4} data={table4} />
                 </div>
               </div>
             </div>
@@ -498,15 +564,15 @@ const AnalyseTraining = ({ isBoxOpen }) => {
             style={{
               position: `${isBoxOpen ? "unset" : "sticky"}`,
               top: "10rem",
+              // zIndex: "0",
               height: "fit-content",
               backgroundColor: "white",
               paddingBottom: "1rem",
             }}
-            className="me-8 mb-8 -right-2"
+            className=" mb-8 me-2"
           >
             <TableSidebar />
           </div>
-
         </div>
         {loopen && (
           <div className=" fixed inset-0 flex items-center justify-center z-[100] bg-black bg-opacity-50">
@@ -521,9 +587,7 @@ const AnalyseTraining = ({ isBoxOpen }) => {
           </div>
         )}
       </div>
-
     </div>
-
   );
 };
 

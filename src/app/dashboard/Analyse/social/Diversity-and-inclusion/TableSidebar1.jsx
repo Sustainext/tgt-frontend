@@ -43,9 +43,9 @@ const TableSidebar = () => {
   }, []);
 
   return (
-    <div className="w-[199px] h-[580px] pl-[17px] pr-[21px] py-[21px] rounded-lg border flex-col justify-start items-end gap-2 inline-flex">
+    <div className="w-[200px] h-[600px] pl-[17px] pr-[21px] py-[21px] rounded-lg border flex-col justify-start items-end gap-2 inline-flex">
       <div className="w-[161px] justify-end items-center gap-2 inline-flex">
-        <div className="text-right text-neutral-500 text-[10px] font-semibold font-['Manrope'] leading-[14px] tracking-wide">
+        <div className="text-right text-neutral-500 text-[12px] font-semibold font-['Manrope'] leading-[14px] tracking-wide">
           Tables
         </div>
       </div>
@@ -64,7 +64,7 @@ const TableSidebar = () => {
             }}
             className={`grow shrink basis-0 text-right ${
               activeId === link.id ? "text-teal-500 font-semibold" : "text-sky-600"
-            } text-[10px] font-normal font-['Manrope'] leading-[14px] hover:text-teal-500`}
+            } text-[11px] font-normal font-['Manrope'] leading-[14px] hover:text-teal-500`}
           >
             <AiOutlineLink className="inline-block mr-1" />
             {link.name}

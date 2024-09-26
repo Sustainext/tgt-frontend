@@ -227,7 +227,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp,setDatarefresh }) => {
       >
         <div className="mb-2 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
             Total number of governance body members that the organization’s anti-corruption policies and procedures have been communicated to, broken down by region.
               <MdInfoOutline
                 data-tooltip-id={`es26`}
