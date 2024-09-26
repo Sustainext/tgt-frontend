@@ -257,7 +257,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Are there any legal actions pending or completed in the
               organisation during the reporting period regarding
               anti-competitive behavior?
@@ -276,7 +276,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
                     </li>
                 </ul>
                 "
-                className="mt-1.5 ml-2 text-[18px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`es88`}

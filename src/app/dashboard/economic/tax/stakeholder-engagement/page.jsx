@@ -92,7 +92,7 @@ const Stakeholderengagement = () => {
             <MdInfoOutline
               data-tooltip-id={`tooltip-$es25`}
               data-tooltip-content="This section documents the dat corresponding to the stakeholder engagement and management of concerns related to tax."
-              className="mt-1.5 ml-2 text-[14px]"
+              className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
               id={`tooltip-$es25`}

@@ -104,7 +104,7 @@ const Energyproductsservices = () => {
               data-tooltip-content="This section documents data related to the reduction in energy
                             requirements of a product or service. Please mention the
                             approach for choosing the standards utilized for calculation."
-              className="mt-1.5 ml-2 text-[14px]"
+              className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
               id={`tooltip-$e1`}

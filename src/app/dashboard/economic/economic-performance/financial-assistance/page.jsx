@@ -76,7 +76,7 @@ const Financialassistance = () => {
             <MdInfoOutline
               data-tooltip-id={`tooltip-$es10`}
               data-tooltip-content="This section documents the data corresponding to the financial assistance received from government. Financial assistance: direct or indirect financial benefits that do not represent a transaction of goods and services, but which are an incentive or compensation for actions taken, the cost of an asset, or expenses incurred."
-              className="mt-1.5 ml-2 text-[14px]"
+              className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
               id={`tooltip-$es10`}

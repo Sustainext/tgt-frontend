@@ -13,6 +13,8 @@ import { BlobServiceClient } from "@azure/storage-blob";
 import { MdFilePresent, MdClose } from "react-icons/md";
 import { RiFileExcel2Line } from "react-icons/ri";
 import { BsFiletypePdf, BsFileEarmarkImage } from "react-icons/bs";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 const EmissionWidget = React.memo(
   ({
     value = {},
@@ -627,6 +629,16 @@ const EmissionWidget = React.memo(
     };
     return (
       <div className="w-full">
+         {id.startsWith("root_0") && (
+        <div className="mb-2">
+        <button
+                  type="button"
+                  className=" text-slate-300  border border-slate-300 text-[12px] w-[100px]   py-1 rounded-md"
+                >
+                  Assign user
+                </button>
+        </div>
+            )}
         <table className="min-w-full w-full">
           {id.startsWith("root_0") && (
             <thead className="bg-gray-50">
@@ -659,7 +671,7 @@ const EmissionWidget = React.memo(
             </thead>
           )}
           <tbody className="bg-white">
-            <tr className="border-t border-gray-200">
+            <tr className="border-b border-gray-200">
               {/* Checkbox */}
               <td className="py-2 text-center w-[1vw] ">
                 <input
@@ -673,7 +685,12 @@ const EmissionWidget = React.memo(
                 <select
                   value={category}
                   onChange={(e) => handleCategoryChange(e.target.value)}
-                  className="border-b border-zinc-800 text-[12px] focus:border-blue-500 focus:outline-none w-full py-1"
+                  className={`text-[12px] focus:border-blue-500 focus:outline-none w-full py-1 ${
+                    category
+                      ? "border-b border-zinc-800"
+                      : ""
+                  }`}
+                  
                 >
                   <option className="emissionscopc">Select Category</option>
                   {baseCategories.map((categoryName, index) => (
@@ -689,7 +706,12 @@ const EmissionWidget = React.memo(
                 <select
                   value={subcategory}
                   onChange={(e) => handleSubcategoryChange(e.target.value)}
-                  className="border-b border-zinc-800 text-[12px] focus:border-blue-500 focus:outline-none w-full py-1"
+                  className={`text-[12px] focus:border-blue-500 focus:outline-none w-full py-1 ${
+                    subcategory
+                      ? "border-b border-zinc-800"
+                      : ""
+                  }`}
+             
                 >
                   <option className="emissionscopc">Select Sub-Category</option>
                   {subcategories.map((sub, index) => (
@@ -702,7 +724,9 @@ const EmissionWidget = React.memo(
 
               {/* Activity Dropdown */}
               <td className="py-2  w-[15vw]">
-                <div className="relative">
+                <div    className={`relative ${
+                        activity ==! "No relevant activities found" ? "": "border-b border-zinc-800"
+                      }`}>
                   <input
                     ref={inputRef}
                     type="text"
@@ -718,7 +742,8 @@ const EmissionWidget = React.memo(
                     value={activitySearch}
                     onChange={(e) => setActivitySearch(e.target.value)}
                     onFocus={toggleDropdown}
-                    className="border-b border-zinc-800 text-[12px] focus:border-blue-500 focus:outline-none w-full py-1"
+                    className={`text-[12px] focus:border-blue-500 focus:outline-none w-full py-1 `}
+           
                   />
 
                   {isDropdownActive && (
@@ -731,7 +756,7 @@ const EmissionWidget = React.memo(
                         toggleDropdown();
                         setActivitySearch("");
                       }}
-                      className="border-b border-zinc-800 text-[12px] focus:border-blue-500 focus:outline-none w-full absolute left-0 top-8 z-[1000]"
+                      className={`text-[12px] focus:border-blue-500 focus:outline-none w-full absolute left-0 top-8 z-[1000]`}
                     >
                       <option value="" className="px-1">
                         {isFetching.current
@@ -764,7 +789,7 @@ const EmissionWidget = React.memo(
               </td>
 
               {/* Quantity Input */}
-              <td className="w-[25vw]">
+              <td className="w-[2vw]">
                 <div className="grid grid-flow-col-dense">
                   {unit_type.includes("Over") ? (
                     <>
@@ -782,7 +807,7 @@ const EmissionWidget = React.memo(
                         <select
                           value={unit}
                           onChange={(e) => handleUnitChange(e.target.value)}
-                          className={` text-[12px] w-[66px]   text-center rounded-md py-1 shadow ${
+                          className={` text-[12px] w-[100px]   text-center rounded-md py-1 shadow ${
                             unit
                               ? "bg-white text-blue-500 "
                               : "bg-blue-500 text-white hover:bg-blue-600"
@@ -810,7 +835,7 @@ const EmissionWidget = React.memo(
                         <select
                           value={unit2}
                           onChange={(e) => handleUnit2Change(e.target.value)}
-                          className={` text-[12px] w-[66px]   text-center rounded-md py-1 shadow ${
+                          className={` text-[12px] w-[100px]   text-center rounded-md py-1 shadow ${
                             unit2
                               ? "bg-white text-blue-500 "
                               : "bg-blue-500 text-white hover:bg-blue-600"
@@ -840,7 +865,7 @@ const EmissionWidget = React.memo(
                       <select
                         value={unit}
                         onChange={(e) => handleUnitChange(e.target.value)}
-                        className={` text-[12px] w-[66px]   text-center rounded-md py-1 shadow ${
+                        className={` text-[12px] w-[100px]   text-center rounded-md py-1 shadow ${
                           unit
                             ? "bg-white text-blue-500 "
                             : "bg-blue-500 text-white hover:bg-blue-600"
@@ -859,7 +884,7 @@ const EmissionWidget = React.memo(
               </td>
 
               {/* Assignee Button */}
-              <td className="py-2 text-center w-[10vw]">
+              <td className="py-2 text-center w-[5vw]">
                 <button
                   type="button"
                   className="bg-blue-500 text-white text-[12px] w-[112px]   py-1 rounded-md shadow hover:bg-blue-600"
@@ -869,7 +894,7 @@ const EmissionWidget = React.memo(
               </td>
 
               {/* Actions - Delete & Upload */}
-              <td className="py-3 w-[5vw]">
+              <td className="py-3 w-[3vw]">
                 <div className=" flex justify-center">
                   <div className="pt-1">
                     <label className="cursor-pointer">
@@ -889,30 +914,53 @@ const EmissionWidget = React.memo(
                     />
 
                     {fileName ? (
-                      <label className="cursor-pointer">
+                      <label className="cursor-pointer relative">
                         {fileType.includes(
                           "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                         ) ? (
                           <RiFileExcel2Line
                             className="text-green-500 ml-2"
                             onClick={handlePreview}
+                            data-tooltip-id={fileName}
+                            data-tooltip-content={fileName}
+                       
+                       
                           />
                         ) : fileType.includes("application/pdf") ? (
                           <BsFiletypePdf
                             className="text-red-500 ml-2"
                             onClick={handlePreview}
+                            data-tooltip-id={fileName}
+                            data-tooltip-content={fileName}
                           />
                         ) : fileType.includes("image") ? (
                           <BsFileEarmarkImage
                             className="text-blue-500 ml-2"
                             onClick={handlePreview}
+                            data-tooltip-id={fileName}
+                            data-tooltip-content={fileName}
                           />
                         ) : (
                           <RiFileExcel2Line
                             className="text-gray-500 ml-2"
                             onClick={handlePreview}
+                            data-tooltip-id={fileName}
+                            data-tooltip-content={fileName}
                           />
                         )}
+                           <ReactTooltip
+                            id={fileName}
+                            place="top"
+                            effect="solid"
+                            style={{
+                             
+                              backgroundColor: "#000",
+                              color: "white",
+                              fontSize: "10px",
+                              boxShadow: 3,
+                              borderRadius: "8px",
+                            }}
+                          />
                       </label>
                     ) : (
                       <label htmlFor={id + scope} className="cursor-pointer">

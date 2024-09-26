@@ -178,9 +178,9 @@ const EmissionsHeader = ({
 
           <div className="w-full flex items-center justify-end me-4">
             <div className="float-end">
-              <p className="text-[12px]">
+              <p className="text-[14px] text-[#0057A5]">
                 GHG Emissions for the month ={" "}
-                <span className="text-[#6adf23]">
+                <span className="text-[#146152] text-[14px]">
                   {localClimatiq} tCO2e{" "}
                 </span>
               </p>

@@ -217,7 +217,7 @@ in Disclosure 401-1, the reporting organization
 should use data from Disclosure 2-7 in
 GRI 2: General Disclosures 2021 to identify the
 total number of employees"
-                    className="mt-1.5 ml-2 text-[14px]"
+                    className="mt-1.5 ml-2 text-[15px]"
                   />
                   <ReactTooltip
                     id={`tooltip-$e1`}

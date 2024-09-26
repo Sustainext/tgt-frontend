@@ -33,7 +33,7 @@ const LocationDropdownTableGrid = ({
       locationdata.forEach((quarterData) => {
         Object.values(quarterData).forEach((locations) => {
           locations.forEach((location) => {
-            const name = location["Region Name"];
+            const name = location["Location Name"];
             if (!newData[name]) {
               newData[name] = [];
             }
@@ -130,7 +130,7 @@ const LocationDropdownTableGrid = ({
   const locationMap = locationdata.reduce((map, quarterData) => {
     Object.values(quarterData).forEach((locations) => {
       locations.forEach((location) => {
-        const name = location["Region Name"];
+        const name = location["Location Name"];
         if (!map[name]) {
           map[name] = [];
         }

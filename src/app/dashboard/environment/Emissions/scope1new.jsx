@@ -279,7 +279,7 @@ const Scope1 = forwardRef(
         </div>
         <div>
           <button
-            className="mt-4  text-[#007EEF] px-4 py-2 rounded-md text-[12px]"
+            className="mt-4  text-[#007EEF] px-4 py-2 rounded-md text-[14px]"
             onClick={handleAddNew}
           >
             + Add new

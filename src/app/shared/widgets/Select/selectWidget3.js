@@ -39,8 +39,8 @@ const selectWidget3 =  ({onChange, value = "", placeholder, label, title, uiSche
       )}
        <div className="flex justify-center items-center mt-2">
         <select
-          className={`text-center py-1 pl-2 h-[30px] text-sm w-[100px] rounded focus:outline-none focus:shadow-outline  ${
-            value ? 'bg-white text-blue-500 shadow-sm border border-blue-500' : 'bg-blue-500 text-white'
+          className={`text-center py-1 text-[12px] w-[100px] rounded-md ${
+            value ? 'bg-white text-blue-500 shadow' : 'bg-blue-500 text-white'
           }`}
           value={value || ''}
           onChange={handleChange}

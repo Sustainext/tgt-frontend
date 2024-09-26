@@ -204,14 +204,14 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
             If a separate fund exists to pay the plan’s pension liabilities,
               <MdInfoOutline
                 data-tooltip-id={`tooltip-125`}
                 data-tooltip-content="Mention the estimated value of the liabilities,
 if the plan liabilities are met by the organisation's
 general resources. "
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-125`}

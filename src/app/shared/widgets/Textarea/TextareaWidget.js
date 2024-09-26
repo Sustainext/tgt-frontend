@@ -14,7 +14,7 @@ const TextareaWidget = (props) => {
       <div className="px-1">
         <div className="flex justify-between items-center mb-2">
           <div>
-            <h6 className="text-[13px] text-[#727272]">
+            <h6 className="text-[14px] text-[#727272]">
               {uiSchema["ui:title"]}
             </h6>
           </div>
@@ -29,7 +29,7 @@ const TextareaWidget = (props) => {
         <div className="">
           <textarea
             placeholder="Enter a description..."
-            className={`backdrop:before:w-[48rem] border appearance-none text-[15px] border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full
+            className={`backdrop:before:w-[48rem] border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full
           `}
             value={value}
             onChange={handleChange}

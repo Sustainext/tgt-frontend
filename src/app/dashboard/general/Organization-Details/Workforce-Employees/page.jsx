@@ -91,7 +91,7 @@ const WorkforceEmployees = () => {
               data-tooltip-content="This section documents the data corresponding
 to the total number of
 employee by gender, type and region."
-              className="mt-1.5 ml-2 text-[14px]"
+              className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
               id={`tooltip-$e10`}

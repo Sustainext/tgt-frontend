@@ -82,7 +82,7 @@ const ProcurementPractices = () => {
             <MdInfoOutline
               data-tooltip-id={`tooltip-$es10`}
               data-tooltip-content="This section documents the data corresponding to the proportion of spending on local suppliers."
-              className="mt-1.5 ml-2 text-[14px]"
+              className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
               id={`tooltip-$es10`}

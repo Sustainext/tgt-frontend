@@ -180,12 +180,12 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
             Percentage of salary contributed by employee or employer.
               <MdInfoOutline
                 data-tooltip-id={`es685`}
                 data-tooltip-html="What is the percentage of salary contributed by employee or employer?"
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`es685`}

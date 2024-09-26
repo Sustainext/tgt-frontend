@@ -206,12 +206,12 @@ const Screen2 = ({ location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Scope of access
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
                 data-tooltip-content="This section documents data corresponding to the scope of access provided to workers."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e1`}

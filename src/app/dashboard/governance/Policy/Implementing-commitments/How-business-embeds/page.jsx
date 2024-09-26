@@ -221,7 +221,7 @@ const HowBusinessEmbeds = ({ selectedOrg, selectedCorp, year }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative flex">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Describe how organisation embeds each of its policy commitments
               for responsible business conduct throughout its activities and
               business relationships, including:
@@ -229,7 +229,7 @@ const HowBusinessEmbeds = ({ selectedOrg, selectedCorp, year }) => {
             {/* <MdInfoOutline
               data-tooltip-id={`tooltip-$e85`}
               data-tooltip-content="Provide a description of organisation's specific policy commitment to respect human rights.				"
-              className="mt-1.5 ml-2 text-[14px]"
+              className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
               id={`tooltip-$e85`}

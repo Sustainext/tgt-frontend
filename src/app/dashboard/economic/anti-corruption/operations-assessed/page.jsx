@@ -81,7 +81,7 @@ const Operationsassessed = () => {
             <MdInfoOutline
               data-tooltip-id={`tooltip-$es35`}
               data-tooltip-content="This section documents the data corresponding to the operations assessed for risks related to corruption."
-              className="mt-1.5 ml-2 text-[14px]"
+              className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
               id={`tooltip-$es35`}

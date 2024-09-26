@@ -72,7 +72,7 @@ const SustainabilityReporting = () => {
           <h6 className="text-[17px] mb-4 font-semibold flex">
           Role of highest governance body in sustainability reporting
             <MdInfoOutline data-tooltip-id={`tooltip-$e10`}
-              data-tooltip-content="This section documents the data corresponding to  the role of the highest governance bodyin sustainability reporting." className="mt-1.5 ml-2 text-[14px]" />
+              data-tooltip-content="This section documents the data corresponding to  the role of the highest governance bodyin sustainability reporting." className="mt-1.5 ml-2 text-[15px]" />
             <ReactTooltip id={`tooltip-$e10`} place="top" effect="solid" style={{
               width: "290px", backgroundColor: "#000",
               color: "white",
