@@ -10,7 +10,7 @@ import { ToastContainer } from "react-toastify";
 
 const ManagingConcerns = () => {
   const [activeMonth, setActiveMonth] = useState(1);
-  const [year, setYear] = useState(2024);
+  const [year, setYear] = useState();
   const [data, setData] = useState([]);
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);

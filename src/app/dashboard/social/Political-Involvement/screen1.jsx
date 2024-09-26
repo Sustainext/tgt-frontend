@@ -217,7 +217,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
               Financial and in-kind political contributions made directly or indirectly by the organization
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e15`}

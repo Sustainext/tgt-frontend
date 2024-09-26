@@ -5,7 +5,7 @@ import { yearInfo, months } from "@/app/shared/data/yearInfo";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 // import { useEmissions } from "./EmissionsContext";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPreviousMonthData, setClimatiqData, resetPreviousMonthData } from '@/lib/redux/features/emissionSlice';
+import { fetchPreviousMonthData, setClimatiqData, resetPreviousMonthData, fetchEmissionsData } from '@/lib/redux/features/emissionSlice';
 
 const monthMapping = {
   Jan: 1,
@@ -57,6 +57,12 @@ const EmissionsHeader = ({
   const [locations, setLocations] = useState([]);
   const [localClimatiq, setlocalClimatiq] = useState(0);
   const [countryCode, setCountryCodeState] = useState("");
+
+  useEffect(() => {
+    if (location && year && activeMonth) {
+      dispatch(fetchEmissionsData({ location, year, month: activeMonth }));
+    }
+  }, [location, year, activeMonth, dispatch]);
 
   useEffect(() => {
     const fetchLocations = async () => {
@@ -131,7 +137,7 @@ const EmissionsHeader = ({
           <div className="relative">
             <select
               name="location"
-              className="border m-0.5 text-sm text-neutral-500 appearance-none pr-24 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="border m-0.5 text-[12px] text-neutral-500 appearance-none pr-24 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               value={formState.location}
               onChange={handleChange}
             >
@@ -152,7 +158,7 @@ const EmissionsHeader = ({
               />
             </div>
             {locationError && (
-              <p className="text-red-500 text-sm absolute top-9 left-0 pl-3">
+              <p className="text-red-500 text-[12px] absolute top-9 left-0 pl-3">
                 {locationError}
               </p>
             )}
@@ -160,7 +166,7 @@ const EmissionsHeader = ({
           <div className="ml-3 relative">
             <select
               name="year"
-              className="border m-0.5 text-sm text-neutral-500 appearance-none pr-32 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="border m-0.5 text-[12px] text-neutral-500 appearance-none pr-32 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               value={formState.year}
               onChange={handleChange}
             >
@@ -181,7 +187,7 @@ const EmissionsHeader = ({
               />
             </div>
             {yearError && (
-              <p className="text-red-500 text-sm absolute top-9 left-0 pl-3">
+              <p className="text-red-500 text-[12px] absolute top-9 left-0 pl-3">
                 {yearError}
               </p>
             )}

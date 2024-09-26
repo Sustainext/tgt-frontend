@@ -99,7 +99,7 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
       embedUrl: `https://app.powerbi.com/reportEmbed?reportId=${reportConfig.report_id}&groupId=${reportConfig.group_id}&w=2`,
       accessToken: powerBIToken,
       tokenType: models.TokenType.Aad,
-      // filters: [filter],
+      filters: [filter],
       settings: {
         panes: {
           filters: {

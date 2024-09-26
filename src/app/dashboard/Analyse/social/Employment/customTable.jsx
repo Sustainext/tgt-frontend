@@ -13,7 +13,7 @@ function DynamicTable({ columns, data }) {
               <th
                 key={index}
                 colSpan={column.colSpan ? column.colSpan : 1}
-                className="p-2 text-gray-600 font-bold border-x border-b block md:table-cell text-sm"
+                className="p-2 text-[#727272] border-x border-b block md:table-cell text-[12px]"
               >
                 {column.header}
               </th>
@@ -21,13 +21,13 @@ function DynamicTable({ columns, data }) {
           </tr>
           <tr className="gradient-background block md:table-row">
             {/* Simplified headers for age groups */}
-            <th className="p-2 text-gray-600 font-bold border-x block md:table-cell"></th>
-            <th className="p-2 text-gray-600 font-bold block md:table-cell"></th>
-            <th className="p-2 text-gray-600 font-bold block md:table-cell"></th>
-            <th className="p-2 text-gray-600 font-bold block md:table-cell"></th>
-            <th className="p-2 text-gray-600 font-bold border-l border-t block md:table-cell text-sm">&lt;30 year old</th>
-            <th className="p-2 text-gray-600 font-bold border-l border-t block md:table-cell text-sm">30-50 years old</th>
-            <th className="p-2 text-gray-600 font-bold border-l border-t border-r block md:table-cell text-sm">&gt;50 year old</th>
+            <th className="p-2 text-slate-500 font-bold border-x block md:table-cell"></th>
+            <th className="p-2 text-slate-500 font-bold block md:table-cell"></th>
+            <th className="p-2 text-slate-500 font-bold block md:table-cell"></th>
+            <th className="p-2 text-slate-500 font-bold block md:table-cell"></th>
+            <th className="p-2 text-slate-500 font-bold border-l border-t block md:table-cell text-[12px]">&lt;30 year old</th>
+            <th className="p-2 text-slate-500 font-bold border-l border-t block md:table-cell text-[12px]">30-50 years old</th>
+            <th className="p-2 text-slate-500 font-bold border-l border-t border-r block md:table-cell text-[12px]">&gt;50 year old</th>
           </tr>
         </thead>
         <tbody className="block md:table-row-group">
@@ -37,18 +37,18 @@ function DynamicTable({ columns, data }) {
                 key={index}
                 className={`bg-white border-l border-b block md:table-row ${index % 2 === 0 ? 'bg-gray-100' : ''}`}
               >
-                <td className="p-2 text-left block md:table-cell text-sm font-bold border-x ">{row.type}</td>
-                <td className="p-2 text-center block md:table-cell text-sm text-gray-600">{row.male} %</td>
-                <td className="p-2 text-center block md:table-cell text-sm text-gray-600">{row.female} %</td>
-                <td className="p-2 text-center block md:table-cell text-sm text-gray-600 border-r ">{row.nonBinary} %</td>
-                <td className="p-2 text-center block md:table-cell text-sm text-gray-600 border-r">{row.ageBelow30} %</td>
-                <td className="p-2 text-center block md:table-cell text-sm text-gray-600 border-r">{row.age30To50} %</td>
-                <td className="p-2 text-center block md:table-cell text-sm text-gray-600 border-r">{row.ageAbove50} %</td>
+                <td className="p-2 text-left block md:table-cell text-[12px] font-bold border-x ">{row.type}</td>
+                <td className="p-2 text-center block md:table-cell text-[12px] text-slate-500 font-normal">{row.male} %</td>
+                <td className="p-2 text-center block md:table-cell text-[12px] text-slate-500 font-normal">{row.female} %</td>
+                <td className="p-2 text-center block md:table-cell text-[12px] text-slate-500 font-normal border-r ">{row.nonBinary} %</td>
+                <td className="p-2 text-center block md:table-cell text-[12px] text-slate-500 font-normal border-r">{row.ageBelow30} %</td>
+                <td className="p-2 text-center block md:table-cell text-[12px] text-slate-500 font-normal border-r">{row.age30To50} %</td>
+                <td className="p-2 text-center block md:table-cell text-[12px] text-slate-500 font-normal border-r">{row.ageAbove50} %</td>
               </tr>
             ))
           ) : (
             <tr className="bg-white border">
-              <td colSpan={totalColumns} className="p-2 text-center text-sm font-bold text-gray-600 block md:table-cell">
+              <td colSpan={totalColumns} className="p-2 text-center text-[12px] font-[400]">
                 No data available
               </td>
             </tr>

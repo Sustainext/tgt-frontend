@@ -156,7 +156,7 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col border-l gap-2 absolute right-12 top-8">
+      <div className="flex flex-col border-l gap-2 absolute right-[1rem] top-8">
         <div className="flex">
           {gri.filter(g => g.category === activeTab).map((g) => (
             g.data.map((item) => (

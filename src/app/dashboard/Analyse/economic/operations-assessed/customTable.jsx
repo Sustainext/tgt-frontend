@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
 const DynamicTable2 = ({ data, columns }) => {
   // Check if all rows are empty objects
-  const isEmptyData = data.every(row => Object.keys(row).length === 0);
+  const isEmptyData = data.every((row) => Object.keys(row).length === 0);
 
   return (
     <div className="overflow-hidden rounded-lg border border-slate-200">
@@ -12,8 +12,12 @@ const DynamicTable2 = ({ data, columns }) => {
             {columns.map((column, index) => (
               <th
                 key={column}
-                className={`px-2 py-3 font-semibold text-gray-600 block md:table-cell text-[12px] capitalize border border-slate-300`}
-                style={index === 0 ? { width: '11rem', textAlign: 'left' } : { textAlign: 'left' }}
+                className={`px-2 py-3  text-[#727272]  block md:table-cell text-center text-[12px] capitalize border border-slate-300`}
+                style={
+                  index === 0
+                    ? { width: "11rem", textAlign: "left" }
+                    : { textAlign: "left" }
+                }
               >
                 {column}
               </th>
@@ -25,7 +29,7 @@ const DynamicTable2 = ({ data, columns }) => {
             <tr className="md:table-row">
               <td
                 colSpan={columns.length}
-                className="text-center p-2 block md:table-cell text-sm border border-slate-300"
+                className="text-center p-2 block md:table-cell text-[12px] font-normal text-slate-500"
               >
                 No data available
               </td>
@@ -36,15 +40,17 @@ const DynamicTable2 = ({ data, columns }) => {
                 {columns.map((column, colIndex) => (
                   <td
                     key={colIndex}
-                    className={`p-2 block md:table-cell text-sm border border-slate-300 ${
-                      colIndex === 0 ? 'text-center' : 'text-center'
-                    }`}
+                    className={`p-2 block md:table-cell ${
+                      colIndex === 0
+                        ? "text-center font-normal text-slate-500"
+                        : "text-center font-normal text-slate-500"
+                    } text-[12px]`}
                   >
                     {row[column] !== undefined && row[column] !== null
                       ? colIndex === 0 || colIndex === 1 || colIndex === 2
                         ? row[column]
                         : `${row[column]}%`
-                      : 'N/A'}
+                      : "N/A"}
                   </td>
                 ))}
               </tr>

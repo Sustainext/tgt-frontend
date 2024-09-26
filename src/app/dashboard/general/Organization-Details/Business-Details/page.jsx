@@ -14,7 +14,7 @@ import Screen4 from "./screen4";
 const BusinessDetails = () => {
   const [activeMonth, setActiveMonth] = useState("");
   const [location, setLocation] = useState("");
-  const [year, setYear] = useState(2024);
+  const [year, setYear] = useState();
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);

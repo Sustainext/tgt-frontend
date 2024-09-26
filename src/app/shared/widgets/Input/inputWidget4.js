@@ -24,7 +24,7 @@ const InputWidget4 = (props) => {
           <div>
             <div className="flex relative">
               <div className="mb-2">
-                <h6 className="text-sm font-medium text-[#344054] flex" style={{ display: uiSchema["ui:haddingdisplay"] }}>
+                <h6 className="text-[12px] font-medium text-[#344054] flex" style={{ display: uiSchema["ui:haddingdisplay"] }}>
                   {uiSchema["ui:hadding"]}
 
                 </h6>
@@ -59,7 +59,7 @@ const InputWidget4 = (props) => {
             </div>
             <div className="flex">
               <div className=" relative">
-                <h6 className="text-sm text-[#727272] w-[860px] flex">
+                <h6 className="text-[12px] text-[#727272] w-[860px] flex">
                   {uiSchema["ui:title"]} <MdInfoOutline
                   data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(/\s+/g, "-")}`}
                   data-tooltip-content={uiSchema["ui:tooltipstitle"]}
