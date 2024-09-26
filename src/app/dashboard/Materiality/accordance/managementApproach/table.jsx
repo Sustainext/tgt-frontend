@@ -272,7 +272,7 @@ International Bill of Human Rights and the principles concerning
 fundamental rights set out in the International Labour Organization 
 (ILO) Declaration on Fundamental Principles and Rights at Work.</p>
                 `}
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id="tooltip-$e86"

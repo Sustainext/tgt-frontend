@@ -96,7 +96,7 @@ const Reclaimedproducts = () => {
                            Examples include refurbished electronics, recycled clothing, reclaimed wood, and
                            reclaimed building materials.
                            Exclude: rejects and recalls of products"
-              className="mt-1.5 ml-2 text-[14px]"
+              className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
               id={`tooltip-$e1`}

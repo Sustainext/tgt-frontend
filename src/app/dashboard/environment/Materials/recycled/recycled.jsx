@@ -90,7 +90,7 @@ const Recycled = () => {
               data-tooltip-content="This section documents data corresponding to the
                             amount of recycled material used for production
                             of goods/services during the reporting period."
-              className="mt-1.5 ml-2 text-[14px]"
+              className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
               id={`tooltip-$e1`}

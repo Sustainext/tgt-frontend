@@ -82,7 +82,7 @@ const ImpactonCommunity = () => {
                         Operations with significant actual and  potential negative impacts on local communities
                         {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
-                            withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[14px]" />
+                            withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />
                         <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
                             width: "290px", backgroundColor: "#000",
                             color: "white",

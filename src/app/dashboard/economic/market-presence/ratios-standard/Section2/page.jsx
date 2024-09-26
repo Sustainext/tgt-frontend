@@ -91,7 +91,7 @@ const Section2 = () => {
             <MdInfoOutline
               data-tooltip-id={`tooltip-$e10`}
               data-tooltip-content="This section documents the data corresponding to the ratios of standard entry level wage by gender compared to local minimum wage."
-              className="mt-1.5 ml-2 text-[14px]"
+              className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
               id={`tooltip-$e10`}

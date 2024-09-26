@@ -187,12 +187,12 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
             Provide a description of the mechanisms to raise concerns about the organization’s business conduct and the organization’s integrity in relation to tax.
               <MdInfoOutline
                 data-tooltip-id={`es38`}
                 data-tooltip-html="Disclosure 207-2-b is related to Disclosure 2-26 in GRI 2: General Disclosures 2021. If the information reported by the organization in Disclosure 2-26 covers mechanisms used to raise concerns about the organization’s business conduct in relation to tax, the organization can provide a reference to this information."
-                className="mt-1.5 ml-2 text-[18px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`es38`}

@@ -310,7 +310,7 @@ const WaterstorageQ1 = ({location, year, month}) => {
                     Does water storage have a significant water-related impact?
                     <div className="ml-2">
                         <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
-                            data-tooltip-content="Indicate whether the water storage have a significant water-related impact." className="mt-1.5 ml-2 text-[14px]" />
+                            data-tooltip-content="Indicate whether the water storage have a significant water-related impact." className="mt-1.5 ml-2 text-[15px]" />
                         <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
                             width: "290px", backgroundColor: "#000",
                             color: "white",

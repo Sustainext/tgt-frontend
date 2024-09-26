@@ -214,12 +214,12 @@ const Screen2 = ({ location, year, month }) => {
       <div className="mx-2 p-3 mb-6 pb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
         <div className='mb-4 flex'>
          <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px]  font-bold mb-2">
+           <h2 className="flex mx-2 text-[15px] font-[500] mb-2">
               Ratio of remuneration of women to men
               <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                 data-tooltip-content="This section documents the data corresponding to the ratio of
 remuneration of women to men for each employee category,
-by significant locations of operation. " className="mt-1.5 ml-2 text-[14px]" />
+by significant locations of operation. " className="mt-1.5 ml-2 text-[15px]" />
               <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
                 width: "290px", backgroundColor: "#000",
                 color: "white",

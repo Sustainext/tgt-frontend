@@ -243,12 +243,12 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
             Provide a description of the tax governance and control framework:
             <MdInfoOutline
                 data-tooltip-id={`es30`}
                 data-tooltip-html="When describing the tax governance and control framework, the reporting organization can provide examples of effective implementation of its tax governance, control, and risk management systems."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`es30`}

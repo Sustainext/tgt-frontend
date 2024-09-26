@@ -181,7 +181,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
             Is there a system to calculate the financial implications or costs, or to make revenue projections?
               <MdInfoOutline
                 data-tooltip-id={`es26`}

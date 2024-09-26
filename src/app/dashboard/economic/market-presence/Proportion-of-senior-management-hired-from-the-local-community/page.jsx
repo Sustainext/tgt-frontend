@@ -84,7 +84,7 @@ const PortionForSeniorManagement = () => {
             <MdInfoOutline
               data-tooltip-id={`tooltip-$es10`}
               data-tooltip-content="This section documents the data corresponding to the proportion of senior management hired from the local community."
-              className="mt-1.5 ml-2 text-[14px]"
+              className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
               id={`tooltip-$es10`}

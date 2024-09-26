@@ -214,7 +214,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Audited, consolidated financial statements
               {/* <MdInfoOutline data-tooltip-id={`tooltip-employees`}
                 data-tooltip-content="This section documents the data corresponding to the r product and
@@ -225,7 +225,7 @@ ii. Content, particularly with regard to substances that might produce an
 environmental or social impact;
 iii. Safe use of the product or service;
 iv. Disposal of the product and environmental or social impacts.
- " className="mt-1.5 ml-2 text-[14px]" />
+ " className="mt-1.5 ml-2 text-[15px]" />
               <ReactTooltip id={`tooltip-employees`} place="top" effect="solid" style={{
                 width: "290px", backgroundColor: "#000",
                 color: "white",

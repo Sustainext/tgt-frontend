@@ -75,7 +75,7 @@ const SustainabilityStrategyPage = () => {
           <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
                 data-tooltip-content="This section documents the data corresponding to the statement on sustainable development strategy."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e1`}

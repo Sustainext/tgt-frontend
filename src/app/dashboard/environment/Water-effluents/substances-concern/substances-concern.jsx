@@ -92,7 +92,7 @@ const Substancesconcern = () => {
               data-tooltip-content="This section documents data corresponding to
                             substances of concern which the discharges are
                             treated for."
-              className="mt-1.5 ml-2 text-[14px]"
+              className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
               id={`tooltip-$e1`}
