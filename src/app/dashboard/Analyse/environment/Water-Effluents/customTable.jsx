@@ -14,7 +14,7 @@ function DynamicTable({ columns, data }) {
       // Return a row with a message that there is no data, spanning all columns
       return (
         <tr className='border'>
-          <td colSpan={columns.length} className="text-center py-4">
+          <td colSpan={columns.length} className="text-center py-4 text-[12px]">
             No data available
           </td>
         </tr>

@@ -34,7 +34,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
         <div className="flex w-full">
         <div className={`flex ${open ? "w-[75%]" : "w-[75%]"}`}>
         <div className="flex items-center">
-          <h5 className="text-[14px] text-[#344054] px-3">{title}</h5>
+            <h5 className="text-[15px] text-[#344054] px-3 font-bold">{title}</h5>
         </div>
 
         <div className="flex items-center justify-center relative">

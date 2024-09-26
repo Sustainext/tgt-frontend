@@ -15,7 +15,7 @@ console.log(data, "test data");
             {columns.map((column, index) => (
               <th
                 key={column.accessor}
-                className={`px-2 py-3 font-semibold text-gray-600 block md:table-cell text-sm ${
+                className={`px-2 py-3  text-[#727272] block md:table-cell text-[12px] ${
                   index === 0 ? 'text-left' : 'text-center'
                 }`}
               >
@@ -27,7 +27,7 @@ console.log(data, "test data");
         <tbody className="block md:table-row-group">
           {isDataEmpty ? (
             <tr className="border border-gray-300 md:table-row">
-              <td colSpan={columns.length} className="text-center font-semibold p-5 text-sm">
+              <td colSpan={columns.length}   className="text-center py-4 text-[12px] font-[400]">
                 No available data
               </td>
             </tr>
@@ -38,7 +38,7 @@ console.log(data, "test data");
                   <td
                     key={colIndex}
                     className={`p-2 block md:table-cell ${
-                      colIndex === 0 ? 'text-left font-bold' : 'text-center'
+                      colIndex === 0 ? 'text-left font-bold' : 'text-center font-normal text-slate-500'
                     } text-sm`}
                   >
                     {row[column.accessor]}

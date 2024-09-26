@@ -199,7 +199,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
               Explain the strategy (if any) adopted by the employer to work
               towards full coverage if a fund set up to pay the plan’s pension
               liabilities is not fully covered.

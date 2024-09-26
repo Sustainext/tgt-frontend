@@ -180,7 +180,7 @@ const Screen2 = ({ location, year}) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-          <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+          <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
           Explain the current or expected impacts on communities and local economies, including positive and negative impacts where relevant.
               <MdInfoOutline data-tooltip-id={`es26`}
                 data-tooltip-html="The answer should include the extent to which different communities or local economies areimpacted by the organization’s infrastructure investments and services supported." className="mt-1.5 ml-2 text-[18px]" />

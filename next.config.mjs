@@ -9,55 +9,55 @@ const nextConfig = {
       NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION: '16',
   },
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en', 'fr'], // Add all the supported languages
+    defaultLocale: "en",
+    locales: ["en", "fr"], // Add all the supported languages
   },
 
   images: {
       domains: ['udm-be.sustainext.ai'],
   },
   eslint: {
-      ignoreDuringBuilds: true,
+    ignoreDuringBuilds: true,
   },
   typescript: {
-      // !! WARN !!
-      // Dangerously allow production builds to successfully complete even if
-      // your project has type errors.
-      // !! WARN !!
-      ignoreBuildErrors: true,
-    },
-    webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-      // Handling build errors
-      config.plugins.push(
-          new webpack.DefinePlugin({
-            'process.env.IGNORE_BUILD_ERRORS': JSON.stringify('true'),
-          })
-        );
-      // if (!dev) {
-        // In production, you may want to handle errors differently
-        // For example, ignore certain types of errors or warnings
-        // Modify webpack config as needed
- 
-      // }
-      return config;
+    // !! WARN !!
+    // Dangerously allow production builds to successfully complete even if
+    // your project has type errors.
+    // !! WARN !!
+    ignoreBuildErrors: true,
   },
-  distDir: 'custom_build',
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    // Handling build errors
+    config.plugins.push(
+      new webpack.DefinePlugin({
+        "process.env.IGNORE_BUILD_ERRORS": JSON.stringify("true"),
+      })
+    );
+    // if (!dev) {
+    // In production, you may want to handle errors differently
+    // For example, ignore certain types of errors or warnings
+    // Modify webpack config as needed
+
+    // }
+    return config;
+  },
+  distDir: "custom_build",
   experimental: {
-      missingSuspenseWithCSRBailout: false,
-    },
+    missingSuspenseWithCSRBailout: false,
+  },
   async headers() {
     return [
       {
-        source: '/(.*)', // Match all routes
+        source: "/(.*)", // Match all routes
         headers: [
           {
-            key: 'X-Frame-Options',
-            value: 'DENY', // or 'SAMEORIGIN'
+            key: "X-Frame-Options",
+            value: "DENY", // or 'SAMEORIGIN'
           },
         ],
       },
     ];
   },
 };
- 
+
 export default nextConfig;

@@ -279,7 +279,7 @@ const ChairOfHighestGovernance = ({ selectedOrg, year, selectedCorp }) => {
         }}
       >
         <div className="w-[80%] relative">
-          <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+          <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
           Chair of the highest governance body
             <MdInfoOutline
               data-tooltip-id={`tooltip-$e1`}

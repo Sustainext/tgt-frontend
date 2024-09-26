@@ -185,7 +185,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
             Please mention all tax jurisdictions where the entities included in the organization’s audited consolidated financial statements, or in the financial information filed on public record, are resident for tax purposes.
               <MdInfoOutline
                 data-tooltip-id={`es38`}

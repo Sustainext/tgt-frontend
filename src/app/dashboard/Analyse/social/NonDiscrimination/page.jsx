@@ -1,13 +1,15 @@
-'use client'
+"use client";
 import { useState, useEffect } from "react";
 import TableSidebar from "./TableSidebar";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import Table1 from "./Table";
 import DateRangePicker from "../../../../utils/DatePickerComponent";
 import { columns, data } from "./data";
-import { Oval } from 'react-loader-spinner';
+import { Oval } from "react-loader-spinner";
 const AnalyseNonDiscrimination = ({ isBoxOpen }) => {
-  const [incidentsOfDiscrimination, setIncidentsOfDiscrimination] = useState([]);
+  const [incidentsOfDiscrimination, setIncidentsOfDiscrimination] = useState(
+    []
+  );
   const [selectedLocation, setSelectedLocation] = useState([]);
   const [selectedSetLocation, setSelectedSetLocation] = useState("");
   const [dateRange, setDateRange] = useState({ start: null, end: null });
@@ -38,7 +40,7 @@ const AnalyseNonDiscrimination = ({ isBoxOpen }) => {
     }
 
     if (!dateRange.start || !dateRange.end) {
-      newErrors.dateRange = "Please  select a valid date range";;
+      newErrors.dateRange = "Please  select a valid date range";
       setIsDateRangeValid(false);
     } else if (new Date(dateRange.start) >= new Date(dateRange.end)) {
       newErrors.dateRange = "Start date must be before the end date";
@@ -124,33 +126,41 @@ const AnalyseNonDiscrimination = ({ isBoxOpen }) => {
       <div className="mb-2 flex-col items-center gap-6">
         <div className="pb-3 mx-5 text-left">
           <div className="mb-2 flex-col items-center gap-6">
-            <div className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4`}>
+            <div
+              className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4`}
+            >
               <div className="mr-2">
-                <label htmlFor="cname" className="text-neutral-800 text-[13px] font-normal">
+                <label
+                  htmlFor="cname"
+                  className="text-neutral-800 text-[12px] font-normal"
+                >
                   Select Location
                 </label>
                 <div className="mt-2">
                   <select
-                    className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                     value={selectedSetLocation}
                     onChange={handleLocationChange}
                   >
                     <option value="">--Select Location--- </option>
                     {selectedLocation.map((location) => (
-                        <option key={location.id} value={location.id}>
-                          {location.name}
-                        </option>
-                      ))}
+                      <option key={location.id} value={location.id}>
+                        {location.name}
+                      </option>
+                    ))}
                   </select>
                   {errors.selectedLocation && (
-                    <div className="text-red-600 text-sm">
+                    <div className="text-red-600 text-[12px]">
                       {errors.selectedLocation}
                     </div>
                   )}
                 </div>
               </div>
               <div className="mr-2">
-                <label htmlFor="cname" className="text-neutral-800 text-[13px] font-normal">
+                <label
+                  htmlFor="cname"
+                  className="text-neutral-800 text-[12px] font-normal"
+                >
                   Select Date Range
                 </label>
                 <div className="mt-2">
@@ -160,7 +170,7 @@ const AnalyseNonDiscrimination = ({ isBoxOpen }) => {
                     onDateChange={handleDateChange}
                   />
                   {errors.dateRange && (
-                    <div className="text-red-600 text-xs mt-2">
+                    <div className="text-red-600 text-[12px]">
                       {errors.dateRange}
                     </div>
                   )}
@@ -170,12 +180,12 @@ const AnalyseNonDiscrimination = ({ isBoxOpen }) => {
           </div>
         </div>
       </div>
-      <div className="flex justify-between">
-        <div className={`ps-4 w-[78%] me-4`}>
+      <div className="flex">
+        <div className={`ps-4 w-[100%] me-4`}>
           <div className="mb-6">
             <div
               id="ep1"
-              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3"
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3"
             >
               <div className="flex justify-between items-center mb-2">
                 <p>Incidents of discrimination and corrective actions taken</p>
@@ -195,27 +205,28 @@ const AnalyseNonDiscrimination = ({ isBoxOpen }) => {
           style={{
             position: `${isBoxOpen ? "unset" : "sticky"}`,
             top: "10rem",
+            // zIndex: "0",
             height: "fit-content",
             backgroundColor: "white",
             paddingBottom: "1rem",
           }}
-          className="me-8 mb-8 -right-2"
+          className=" mb-8 me-2"
         >
           <TableSidebar />
         </div>
       </div>
       {loopen && (
-          <div className=" fixed inset-0 flex items-center justify-center z-[100] bg-black bg-opacity-50">
-            <Oval
-              height={50}
-              width={50}
-              color="#00BFFF"
-              secondaryColor="#f3f3f3"
-              strokeWidth={2}
-              strokeWidthSecondary={2}
-            />
-          </div>
-        )}
+        <div className=" fixed inset-0 flex items-center justify-center z-[100] bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
     </div>
   );
 };

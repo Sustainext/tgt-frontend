@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { yearInfo, months } from "@/app/shared/data/yearInfo";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import { useEmissions } from "./EmissionsContext";
+// import { useEmissions } from "./EmissionsContext";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPreviousMonthData, setClimatiqData, resetPreviousMonthData, fetchEmissionsData } from '@/lib/redux/features/emissionSlice';
 
 const monthMapping = {
   Jan: 1,
@@ -40,17 +42,27 @@ const EmissionsHeader = ({
   setYearError,
   setLocationname
 }) => {
+
+  const dispatch = useDispatch();
+  const climatiqData = useSelector(state => state.emissions.climatiqData);
+
   const [formState, setFormState] = useState({
     location: location,
     year: year,
     month: activeMonth,
   });
 
-  const { climatiqData } = useEmissions();
+  // const { climatiqData } = useEmissions();
 
   const [locations, setLocations] = useState([]);
   const [localClimatiq, setlocalClimatiq] = useState(0);
   const [countryCode, setCountryCodeState] = useState("");
+
+  useEffect(() => {
+    if (location && year && activeMonth) {
+      dispatch(fetchEmissionsData({ location, year, month: activeMonth }));
+    }
+  }, [location, year, activeMonth, dispatch]);
 
   useEffect(() => {
     const fetchLocations = async () => {
@@ -66,15 +78,17 @@ const EmissionsHeader = ({
   }, []);
 
   useEffect(() => {
-    // console.log("Got the climatiqData in header --- ",climatiqData);
     if (climatiqData.result?.[0]) {
       let sum = 0;
       for (const item of climatiqData.result) {
         sum += item.co2e;
       }
+      sum = (sum / 1000).toFixed(3);
       setlocalClimatiq((sum / 1000).toFixed(3));
+      dispatch(setClimatiqData(sum));
     } else {
       setlocalClimatiq(0);
+      dispatch(setClimatiqData(0));
     }
   }, [climatiqData]);
 
@@ -92,6 +106,7 @@ const EmissionsHeader = ({
 
     if (name === "month") {
       setActiveMonth(monthMapping[value]);
+      dispatch(fetchPreviousMonthData({ location, year, month: monthMapping[value] }));
     } else if (name === "location") {
       const selectedLocation = locations.find((loc) => loc.id === Number(value));
       if (selectedLocation) {
@@ -100,8 +115,10 @@ const EmissionsHeader = ({
         setLocationname(selectedLocation.name);
       }
       setLocation(Number(value));
+      dispatch(resetPreviousMonthData());
     } else if (name === "year") {
       setYear(value);
+      dispatch(resetPreviousMonthData());
     }
   };
 
@@ -120,7 +137,7 @@ const EmissionsHeader = ({
           <div className="relative">
             <select
               name="location"
-              className="border m-0.5 text-sm text-neutral-500 appearance-none pr-24 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="border m-0.5 text-[12px] text-neutral-500 appearance-none pr-24 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               value={formState.location}
               onChange={handleChange}
             >
@@ -141,7 +158,7 @@ const EmissionsHeader = ({
               />
             </div>
             {locationError && (
-              <p className="text-red-500 text-sm absolute top-9 left-0 pl-3">
+              <p className="text-red-500 text-[12px] absolute top-9 left-0 pl-3">
                 {locationError}
               </p>
             )}
@@ -149,7 +166,7 @@ const EmissionsHeader = ({
           <div className="ml-3 relative">
             <select
               name="year"
-              className="border m-0.5 text-sm text-neutral-500 appearance-none pr-32 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="border m-0.5 text-[12px] text-neutral-500 appearance-none pr-32 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               value={formState.year}
               onChange={handleChange}
             >
@@ -170,7 +187,7 @@ const EmissionsHeader = ({
               />
             </div>
             {yearError && (
-              <p className="text-red-500 text-sm absolute top-9 left-0 pl-3">
+              <p className="text-red-500 text-[12px] absolute top-9 left-0 pl-3">
                 {yearError}
               </p>
             )}

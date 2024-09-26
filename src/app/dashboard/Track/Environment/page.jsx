@@ -5,6 +5,7 @@ import { GiPublicSpeaker } from "react-icons/gi";
 // import { models } from "powerbi-client";
 import axiosInstance from '../../../utils/axiosMiddleware';
 import dynamic from 'next/dynamic'
+import { loadFromLocalStorage } from "@/app/utils/storage";
 
 const PowerBIEmbed = dynamic(
   () => import("powerbi-client-react").then(mod => mod.PowerBIEmbed),
@@ -16,6 +17,16 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
   const [powerBIToken, setPowerBIToken] = useState(null);
   const [models, setModels] = useState(null);
   const { width, height } = contentSize || { width: 800, height: 600 };
+  // const [filter, setFilter] = useState()
+  const filter = {
+    $schema: "http://powerbi.com/product/schema#basic",
+    target: {
+        table: "Client_Info",
+        column: "uuid"
+    },
+    operator: "In",
+    values: [loadFromLocalStorage('client_key')]
+};
 
   const tabs = [
     { id: "zohoEmissions", label: "Emissions (Zoho)" },
@@ -88,6 +99,7 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
       embedUrl: `https://app.powerbi.com/reportEmbed?reportId=${reportConfig.report_id}&groupId=${reportConfig.group_id}&w=2`,
       accessToken: powerBIToken,
       tokenType: models.TokenType.Aad,
+      filters: [filter],
       settings: {
         panes: {
           filters: {

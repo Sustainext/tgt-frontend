@@ -16,7 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Moment from "react-moment";
 import ImageUpload from "../../shared/components/ImageUpload";
 import { unitTypes } from "../../shared/data/units";
-import { post, del, patch } from "../../utils/axiosMiddleware";
+import axiosInstance,{ post, del, patch } from "../../utils/axiosMiddleware";
 
 const MyTask = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -327,7 +327,7 @@ const MyTask = () => {
       },
     };
     LoaderOpen();
-    const response = await axios
+    const response = await axiosInstance
       .get(
         `${process.env.BACKEND_API_URL}/sustainapp/user_client/`,
         options
@@ -609,11 +609,16 @@ const MyTask = () => {
         Authorization: `Bearer ${stringWithoutQuotes}`,
       },
     };
-    const response = await axios.get(
-      `${process.env.BACKEND_API_URL}/organization_task_dashboard/`,
-      options
-    );
-    setTasks(response.data);
+    try{
+      const response = await axiosInstance.get(
+        `${process.env.BACKEND_API_URL}/organization_task_dashboard/`,
+        options
+      );
+      setTasks(response.data);
+    }
+    catch(error){
+      console.log(error);
+    }
   };
 
   useEffect(() => {

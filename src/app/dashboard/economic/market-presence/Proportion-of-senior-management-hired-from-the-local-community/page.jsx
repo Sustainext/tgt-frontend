@@ -15,7 +15,7 @@ import Screen4 from "./screen4";
 const PortionForSeniorManagement = () => {
   const [activeMonth, setActiveMonth] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
-  const [year, setYear] = useState(2024);
+  const [year, setYear] = useState();
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);

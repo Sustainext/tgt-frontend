@@ -94,13 +94,13 @@ const CustomTableWidget5 = ({
                     required={required}
                     value={localValue[rowIndex] && localValue[rowIndex][column.key] || ""}
                     onChange={(e) => handleFieldChange(rowIndex, column.key, e.target.value)}
-                    className="text-sm pl-2 py-2 w-full text-center"
+                    className="text-[12px] pl-2 py-2 w-full text-center"
                     placeholder="10"
 
                   />
                 </td>
               ))}
-              <td className="border-b border-gray-300 text-center text-sm">
+              <td className="border-b border-gray-300 text-center text-[12px]">
                 {" "}
                 {localValue[rowIndex].total}
               </td>

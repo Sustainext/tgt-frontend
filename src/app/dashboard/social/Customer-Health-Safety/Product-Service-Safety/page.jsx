@@ -13,7 +13,7 @@ import Screen1 from "./screen1";
 const ProductServiceSafety = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
-  const [year, setYear] = useState(2024);
+  const [year, setYear] = useState();
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -46,7 +46,7 @@ const ProductServiceSafety = () => {
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
             <div className="text-left mb-4 ml-3 pt-5">
-              <p className="text-sm">Social</p>
+              <p className="text-[11px]">Social</p>
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] h-[30px] font-bold pt-1">

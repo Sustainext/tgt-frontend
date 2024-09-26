@@ -3,31 +3,31 @@ export const columns1 = [
       label: "Energy Type",
       dataIndex: "Energy_type",
       headerClass:
-        "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-sm w-[13%] text-left h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-left h-14",
     },
     {
       label: "Source",
       dataIndex: "Source",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Energy Consumption",
       dataIndex: "Quantity",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Units",
       dataIndex: "Unit",
       headerClass:
-        "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
   ];
   
@@ -39,31 +39,31 @@ export const columns1 = [
       label: "Energy Type",
       dataIndex: "Energy_type",
       headerClass:
-        "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-sm w-[13%] text-left h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-left h-14",
     },
     {
       label: "Source",
       dataIndex: "Source",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Energy Consumption",
       dataIndex: "Quantity",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Units",
       dataIndex: "Unit",
       headerClass:
-        "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
   ];
   
@@ -75,24 +75,24 @@ export const columns1 = [
       label: "Types of Energy Consumption",
       dataIndex: "Energy_type",
       headerClass:
-        "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-sm w-[13%] text-left h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-left h-14",
     },
     {
       label: "Consumption",
       dataIndex: "consumption",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Units",
       dataIndex: "unit",
       headerClass:
-        "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
   ];
   
@@ -103,38 +103,38 @@ export const columns1 = [
       label: "Energy Type",
       dataIndex: "Energy_type",
       headerClass:
-        "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-sm w-[13%] text-left h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-left h-14",
     },
     {
       label: "Source",
       dataIndex: "Source",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Purpose",
       dataIndex: "Purpose",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Energy Consumption",
       dataIndex: "Quantity",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Units",
       dataIndex: "Unit",
       headerClass:
-        "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
   ];
   
@@ -146,38 +146,38 @@ export const columns1 = [
       label: "Energy Type",
       dataIndex: "Energy_type",
       headerClass:
-        "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-sm w-[13%] text-left h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-left h-14",
     },
     {
       label: "Source",
       dataIndex: "Source",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Purpose",
       dataIndex: "Purpose",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Energy Consumption",
       dataIndex: "Quantity",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Units",
       dataIndex: "Unit",
       headerClass:
-        "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
   ];
   
@@ -226,31 +226,31 @@ export const columns1 = [
       label: "Types of self generated Electricity",
       dataIndex: "Energy_type",
       headerClass:
-        "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-sm w-[13%] text-left h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-left h-14",
     },
     {
       label: "Source",
       dataIndex: "Source",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Consumption",
       dataIndex: "Quantity",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Units",
       dataIndex: "Unit",
       headerClass:
-        "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
   ];
   
@@ -294,31 +294,31 @@ export const columns1 = [
       label: "Types of self generated Electricity",
       dataIndex: "Energy_type",
       headerClass:
-        "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-sm w-[13%] text-left h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-left h-14",
     },
     {
       label: "Source",
       dataIndex: "Source",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Consumption",
       dataIndex: "Quantity",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Units",
       dataIndex: "Unit",
       headerClass:
-        "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
   ];
   
@@ -362,45 +362,45 @@ export const columns1 = [
       label: "Energy Type",
       dataIndex: "Energy_type",
       headerClass:
-        "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-sm w-[13%] text-left h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-left h-14",
     },
     {
       label: "Source",
       dataIndex: "Source",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Type of Entity",
       dataIndex: "Entity_type",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Name of Entity",
       dataIndex: "Entity_name",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Energy Consumption",
       dataIndex: "Quantity",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Units",
       dataIndex: "Unit",
       headerClass:
-        "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
   ];
   
@@ -454,45 +454,45 @@ export const columns1 = [
       label: "Energy Type",
       dataIndex: "Energy_type",
       headerClass:
-        "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-sm w-[13%] text-left h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-left h-14",
     },
     {
       label: "Source",
       dataIndex: "Source",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Type of Entity",
       dataIndex: "Entity_type",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Name of Entity",
       dataIndex: "Entity_name",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Energy Consumption",
       dataIndex: "Quantity",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Units",
       dataIndex: "Unit",
       headerClass:
-        "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
   ];
   
@@ -546,31 +546,31 @@ export const columns1 = [
       label: "Energy Type",
       dataIndex: "Energy_type",
       headerClass:
-        "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-sm w-[13%] text-left h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-left h-14",
     },
     {
       label: "Purpose",
       dataIndex: "Purpose",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Consumption",
       dataIndex: "Quantity",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Units",
       dataIndex: "Unit",
       headerClass:
-        "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
   ];
   
@@ -620,71 +620,71 @@ export const columns1 = [
       label: "Type of Intervention",
       dataIndex: "Type_of_intervention",
       headerClass:
-        "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-sm w-[13%] text-left h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-left h-14",
     },
     {
       label: "Energy Type",
       dataIndex: "Energy_type",
       headerClass:
-        "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-center rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-sm w-[13%] text-center h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-center h-14",
     },
     {
       label: "Energy Reduction",
       dataIndex: "Energy_reduction",
       headerClass:
-        "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-center rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-sm w-[13%] text-center h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-center h-14",
     },
     {
       label: "Base Year",
       dataIndex: "Base_year",
       headerClass:
-        "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-center rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-sm w-[13%] text-center h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-center h-14",
     },
     {
       label: "Methodology",
       dataIndex: "Methodology",
       headerClass:
-        "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-center rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-sm w-[13%] text-center h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-center h-14",
     },
     {
       label: "Quantity",
       dataIndex: "Quantity1",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Unit",
       dataIndex: "Unit1",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Quantity",
       dataIndex: "Quantity2",
       headerClass:
-        "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-center rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-sm w-[13%] text-center h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-center h-14",
     },
     {
       label: "Units",
       dataIndex: "Unit2",
       headerClass:
-        "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
   ];
   
@@ -748,48 +748,48 @@ export const columns1 = [
       label: "Energy Quantity",
       dataIndex: "Energy_quantity",
       headerClass:
-        "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-sm w-[13%] text-left h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-left h-14",
     },
     {
       label: "Organization Metric",
       dataIndex: "Organization_metric",
       headerClass:
-        "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-center rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-sm w-[13%] text-center h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-center h-14",
     },
     {
       label: "Energy Intensity",
       dataIndex: "Energy_intensity1",
       headerClass:
-        "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-center rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-sm w-[13%] text-center h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-center h-14",
     },
     {
       label: "Units",
       dataIndex: "Unit1",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Energy Intensity",
       dataIndex: "Energy_intensity2",
       headerClass:
-        "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-center rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-sm w-[13%] text-center h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-center h-14",
     },
     {
       label: "Units",
       dataIndex: "Unit2",
       headerClass:
-        "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
   ];
   
@@ -819,39 +819,39 @@ export const columns1 = [
       label: "Name of Product/Service",
       dataIndex: "Product",
       headerClass:
-        "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-sm w-[13%] text-left h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[13%] text-left h-14",
     },
     {
       label: "Reduction in Energy Consumption",
       dataIndex: "Quantity1",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Units",
       dataIndex: "Unit1",
       headerClass:
-        "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Reduction in Energy Consumption",
       dataIndex: "Quantity2",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
     {
       label: "Units",
       dataIndex: "Unit2",
       headerClass:
-        "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px] text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px]",
     },
   ];
   

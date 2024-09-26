@@ -15,7 +15,7 @@ const DynamicTable2 = ({ data, columns }) => {
           {columns.map((column, index) => (
             <th
               key={index} // Using index as key since column might not be unique or string
-              className={`px-2 py-3 font-semibold text-gray-600 block md:table-cell text-sm ${
+              className={`px-2 py-3  text-[#727272] block md:table-cell text-[12px] ${
                 index === 0 ? 'text-left' : 'text-center'
               }`}
             >
@@ -31,9 +31,9 @@ const DynamicTable2 = ({ data, columns }) => {
               {columns.map((column, colIndex) => (
                 <td
                   key={colIndex}
-                  className={`p-2 block md:table-cell ${
-                    colIndex === 0 ? 'text-left font-bold' : 'text-center'
-                  } text-sm`}
+                  className={`p-2 block md:table-cell  ${
+                    colIndex === 0 ? 'text-left font-bold' : 'text-center font-normal text-slate-500'
+                  } text-[12px]`}
                 >
                    {renderCellContent(row[column])}
                 </td>
@@ -42,7 +42,7 @@ const DynamicTable2 = ({ data, columns }) => {
           ))
         ) : (
           <tr className="border border-gray-300 md:table-row">
-            <td colSpan={columns.length} className="p-2 text-center text-sm font-bold block md:table-cell">
+            <td colSpan={columns.length} className="p-2 text-center text-[12px] text-slate-500 font-normal">
               No data available
             </td>
           </tr>

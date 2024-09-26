@@ -176,7 +176,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold mb-2">
+            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
               Worker Fluctuations
               <MdInfoOutline
                 data-tooltip-id={`tooltip-144`}

@@ -13,7 +13,7 @@ import Screen3 from "./screen3";
 const Infrastructureinvestmentsservices = () => {
   const [activeMonth, setActiveMonth] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
-  const [year, setYear] = useState(2024);
+  const [year, setYear] = useState();
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);

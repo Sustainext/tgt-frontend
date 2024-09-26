@@ -1,18 +1,12 @@
-'use client'
+"use client";
 import { useState, useEffect } from "react";
 import TableSidebar from "./TableSidebar";
 import DynamicTable from "./customTable";
 import DynamicTable2 from "./customTable2";
 import DateRangePicker from "../../../../utils/DatePickerComponent";
 import axiosInstance from "../../../../utils/axiosMiddleware";
-import {
-  columns1,
-  columns2,
-  columns3,
-  columns4,
-  columns5,
-} from "./data";
-import { Oval } from 'react-loader-spinner';
+import { columns1, columns2, columns3, columns4, columns5 } from "./data";
+import { Oval } from "react-loader-spinner";
 const AnalyseEmployment = ({ isBoxOpen }) => {
   const [analyseData, setAnalyseData] = useState([]);
   const [organisations, setOrganisations] = useState([]);
@@ -52,39 +46,45 @@ const AnalyseEmployment = ({ isBoxOpen }) => {
       setIsDateRangeValid(false);
       console.error("Invalid date range selected");
       return;
-  } else {
+    } else {
       const startDate = new Date(params.start);
       const endDate = new Date(params.end);
 
       if (endDate < startDate) {
-          setIsDateRangeValid(false);
-          setDateRange({
-            start: null,
-            end: null
-          });
-          console.error("End date cannot be before start date");
-          return;
+        setIsDateRangeValid(false);
+        setDateRange({
+          start: null,
+          end: null,
+        });
+        console.error("End date cannot be before start date");
+        return;
       } else {
-          setIsDateRangeValid(true);
+        setIsDateRangeValid(true);
       }
-  }
-  setChilddata1([]);
-  setChilddata2([]);
-  setChilddata3([]);
-  setChilddata4([]);
+    }
+    setChilddata1([]);
+    setChilddata2([]);
+    setChilddata3([]);
+    setChilddata4([]);
     LoaderOpen();
     try {
       const response = await axiosInstance.get(
         `/sustainapp/get_employment_analysis`,
         {
-          params: params
+          params: params,
         }
       );
 
       const data = response.data.data;
       console.log(data, "testing");
 
-      const { new_employee_hires, employee_turnover, benefits, parental_leave,return_to_work_rate_and_retention_rate_of_employee} = data;
+      const {
+        new_employee_hires,
+        employee_turnover,
+        benefits,
+        parental_leave,
+        return_to_work_rate_and_retention_rate_of_employee,
+      } = data;
       const formattedLocation = new_employee_hires.map((neh) => ({
         type: neh.type_of_employee,
         male: neh.percentage_of_male_employee,
@@ -105,22 +105,22 @@ const AnalyseEmployment = ({ isBoxOpen }) => {
       }));
       const formattedSource = benefits.map((bf) => ({
         Benefit: bf.benefits,
-        'Full-Time Employees': bf.full_time,
-       'Part-Time Employees': bf.part_time,
-       'Temporary Employees': bf.temporary,
-
+        "Full-Time Employees": bf.full_time,
+        "Part-Time Employees": bf.part_time,
+        "Temporary Employees": bf.temporary,
       }));
       const formattedSuppliers = parental_leave.map((pl) => ({
-        'Employee category': pl.employee_category,
-        Male:  pl.male,
-        Female:  pl.female,
-        Total:  pl.total,
+        "Employee category": pl.employee_category,
+        Male: pl.male,
+        Female: pl.female,
+        Total: pl.total,
       }));
-      const returnemployee = return_to_work_rate_and_retention_rate_of_employee.map((rt) => ({
-        'Employee category': rt.employee_category,
-        Male:  rt.male,
-        Female:  rt.female,
-      }));
+      const returnemployee =
+        return_to_work_rate_and_retention_rate_of_employee.map((rt) => ({
+          "Employee category": rt.employee_category,
+          Male: rt.male,
+          Female: rt.female,
+        }));
       setChilddata1(formattedLocation);
       setChilddata2(formattedScope);
       setChilddata3(formattedSource);
@@ -138,7 +138,6 @@ const AnalyseEmployment = ({ isBoxOpen }) => {
       LoaderClose();
     }
   };
-
 
   useEffect(() => {
     fetchData(datasetparams);
@@ -256,53 +255,57 @@ const AnalyseEmployment = ({ isBoxOpen }) => {
         <div className="mt-4 pb-3 mx-5 text-left">
           <div className="mb-2 flex-col items-center pt-2  gap-6">
             <div className="justify-start items-center gap-4 inline-flex">
-              <div className="text-zinc-600 text-[15px] font-semibold font-['Manrope']">
+              <div className="text-zinc-600 text-[12px] font-semibold font-['Manrope']">
                 View By:
               </div>
               <div className="rounded-lg shadow border border-gray-300 justify-start items-start flex">
                 <div
-                  className={`w-[111px] px-4 py-2.5 border-r rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Organization" ? "bg-sky-100" : "bg-white"
-                    }`}
+                  className={`w-[111px] px-4 py-2.5 border-r rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                    reportType === "Organization" ? "bg-sky-100" : "bg-white"
+                  }`}
                   onClick={() => handleReportTypeChange("Organization")}
                 >
-                  <div className="text-slate-800 text-[13px] font-medium font-['Manrope'] leading-tight">
+                  <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
                     Organization
                   </div>
                 </div>
                 <div
-                  className={`w-[111px] px-4 py-2.5 border-r border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Corporate" ? "bg-sky-100" : "bg-white"
-                    }`}
+                  className={`w-[111px] px-4 py-2.5 border-r border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                    reportType === "Corporate" ? "bg-sky-100" : "bg-white"
+                  }`}
                   onClick={() => handleReportTypeChange("Corporate")}
                 >
-                  <div className="text-slate-700 text-[13px] font-medium font-['Manrope'] leading-tight">
+                  <div className="text-slate-700 text-[12px] font-medium font-['Manrope'] leading-tight">
                     Corporate
                   </div>
                 </div>
                 <div
-                  className={`w-[111px] px-4 py-2.5 border-r rounded-r-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Location" ? "bg-sky-100" : "bg-white"
-                    }`}
+                  className={`w-[111px] px-4 py-2.5 border-r rounded-r-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                    reportType === "Location" ? "bg-sky-100" : "bg-white"
+                  }`}
                   onClick={() => handleReportTypeChange("Location")}
                 >
-                  <div className="text-slate-700 text-[13px] font-medium font-['Manrope'] leading-tight">
+                  <div className="text-slate-700 text-[12px] font-medium font-['Manrope'] leading-tight">
                     Location
                   </div>
                 </div>
               </div>
             </div>
             <div
-              className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${reportType !== "" ? "visible" : "hidden"
-                }`}
+              className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${
+                reportType !== "" ? "visible" : "hidden"
+              }`}
             >
               <div className="mr-2">
                 <label
                   htmlFor="cname"
-                  className="text-neutral-800 text-[13px] font-normal"
+                  className="text-neutral-800 text-[12px] font-normal"
                 >
                   Select Organization*
                 </label>
                 <div className="mt-2">
                   <select
-                    className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
                     value={selectedOrg}
                     onChange={handleOrganizationChange}
                   >
@@ -320,13 +323,13 @@ const AnalyseEmployment = ({ isBoxOpen }) => {
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[13px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal"
                   >
                     Select Corporate
                   </label>
                   <div className="mt-2">
                     <select
-                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
                       value={selectedCorp}
                       onChange={handleOrgChange}
                     >
@@ -345,13 +348,13 @@ const AnalyseEmployment = ({ isBoxOpen }) => {
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[13px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal"
                   >
                     Select Location
                   </label>
                   <div className="mt-2">
                     <select
-                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
                       value={selectedsetLocation}
                       onChange={handleLocationChange}
                     >
@@ -369,7 +372,7 @@ const AnalyseEmployment = ({ isBoxOpen }) => {
               <div className="mr-2">
                 <label
                   htmlFor="cname"
-                  className="text-neutral-800 text-[13px] font-normal"
+                  className="text-neutral-800 text-[12px] font-normal"
                 >
                   Select Date
                 </label>
@@ -380,7 +383,7 @@ const AnalyseEmployment = ({ isBoxOpen }) => {
                     onDateChange={handleDateChange}
                   />
                   {!isDateRangeValid && (
-                    <div className="text-red-600 text-xs mt-2">
+                    <div className="text-red-600 text-[12px] mt-2">
                       Please select a valid date range.
                     </div>
                   )}
@@ -389,18 +392,19 @@ const AnalyseEmployment = ({ isBoxOpen }) => {
             </div>
           </div>
         </div>
-
       </div>
-      <div className="flex justify-between">
-        <div className={`ps-4  w-[78%] me-4`}>
+      <div className="flex">
+        <div className={`ps-4 w-[100%] me-4`}>
           <div className="mb-6">
-            <p className="text-black text-[16px] ">Employee Hires  & Turnover</p>
+            <p className="text-black text-[15px] font-bold ">
+              Employee Hires & Turnover
+            </p>
             <div
               id="ep1"
-              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
             >
               <div className="flex justify-between items-center mb-2">
-                <p>
+                <p className="text-black text-[13px] font-[400]">
                   New Employee Hires
                 </p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
@@ -414,7 +418,7 @@ const AnalyseEmployment = ({ isBoxOpen }) => {
                 <DynamicTable columns={columns1} data={childdata1} />
               </div>
               <div className="flex justify-between items-center mb-2">
-                <p>
+                <p className="text-black text-[13px] font-[400]">
                   New Employee Turnover
                 </p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
@@ -428,18 +432,18 @@ const AnalyseEmployment = ({ isBoxOpen }) => {
                 <DynamicTable columns={columns2} data={childdata2} />
               </div>
             </div>
-
           </div>
 
           <div className="mb-6">
-            <p className="text-black text-[16px] ">Benefits</p>
+            <p className="text-black text-[15px] font-bold ">Benefits</p>
             <div
               id="ep2"
-              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
             >
               <div className="flex justify-between items-center mb-2">
-                <p>
-                Benefits provided to full-time employees that are not provided to temporary or part-time employees
+                <p className="text-black text-[13px] font-[400]">
+                  Benefits provided to full-time employees that are not provided
+                  to temporary or part-time employees
                 </p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
@@ -451,53 +455,49 @@ const AnalyseEmployment = ({ isBoxOpen }) => {
               <div className="mb-4">
                 <DynamicTable2 columns={columns3} data={childdata3} />
               </div>
-
-
-
             </div>
-
           </div>
 
           <div className="mb-6">
-            <p className="text-black text-[16px] ">Parental leave</p>
+            <p className="text-black text-[15px] font-bold ">Parental leave</p>
             <div
               id="ep3"
-              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
             >
               <div className="flex justify-between items-center mb-2">
-                <p>
-                Parental leave
+                <p className="text-black text-[13px] font-[400]">
+                  Parental leave
                 </p>
                 <div className="flex gap-2">
-                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                    GRI 401-3a
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 401-3a
+                    </div>
+                  </div>
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 401-3b
+                    </div>
+                  </div>
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 401-3c
+                    </div>
+                  </div>
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 401-3d
+                    </div>
                   </div>
                 </div>
-                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 401-3b
-                  </div>
-                </div>
-                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 401-3c
-                  </div>
-                </div>
-                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 401-3d
-                  </div>
-                </div>
-              </div>
               </div>
 
               <div className="mb-4">
-              <DynamicTable2 columns={columns4} data={childdata4} />
+                <DynamicTable2 columns={columns4} data={childdata4} />
               </div>
               <div className="flex justify-between items-center mb-2">
-                <p>
-                Return to work rate and retention rate of employee
+                <p className="text-black text-[15px] font-bold ">
+                  Return to work rate and retention rate of employee
                 </p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
@@ -507,13 +507,10 @@ const AnalyseEmployment = ({ isBoxOpen }) => {
               </div>
 
               <div>
-              <DynamicTable2 columns={columns5} data={childdata5} />
+                <DynamicTable2 columns={columns5} data={childdata5} />
               </div>
             </div>
-
           </div>
-
-
         </div>
         <div
           style={{
@@ -524,23 +521,23 @@ const AnalyseEmployment = ({ isBoxOpen }) => {
             backgroundColor: "white",
             paddingBottom: "1rem",
           }}
-          className="me-8 mb-8 -right-2"
+          className=" mb-8 me-2"
         >
           <TableSidebar />
         </div>
       </div>
       {loopen && (
-          <div className=" fixed inset-0 flex items-center justify-center z-[100] bg-black bg-opacity-50">
-            <Oval
-              height={50}
-              width={50}
-              color="#00BFFF"
-              secondaryColor="#f3f3f3"
-              strokeWidth={2}
-              strokeWidthSecondary={2}
-            />
-          </div>
-        )}
+        <div className=" fixed inset-0 flex items-center justify-center z-[100] bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
     </div>
   );
 };

@@ -117,7 +117,7 @@ const DashboardHeader = () => {
 
   return (
     <>
-      <div className="flex bg-white sticky top-0 right-0 border-b border-sky-600 border-opacity-50 pt-1 w-full mx-2 -z--1000">
+      <div className="flex bg-white sticky top-0 right-0 border-b border-sky-600 border-opacity-50 pt-2 w-full mx-2 z-[1000]">
         <div className={`flex justify-start items-center my-4 gap-1 px-2 ${open ? 'w-[84%]' : 'w-[84%]'}`}>
           <Link href="/dashboard">
             <span className="text-[#007EEF] hover:text-[#0057A5]">Home</span>
@@ -129,7 +129,7 @@ const DashboardHeader = () => {
         </div>
         <div className="flex justify-end items-center w-[15%]">
           <div className="flex">
-            <div className="text-[#007EEF] items-center">
+            <div className="text-[#007EEF] flex items-center">
               <span className="text-[#007EEF]"> Hi,</span>
               <span className="me-4 text-[#007EEF]">{username}</span>
             </div>

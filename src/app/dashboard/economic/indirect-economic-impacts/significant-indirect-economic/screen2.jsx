@@ -180,7 +180,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
               Explain the significance of the indirect economic impacts in the
               context of external benchmarks and stakeholder priorities.
               <MdInfoOutline

@@ -270,7 +270,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold mb-2">
+            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
               Describe the organization's policy commitments for "responsible
               business conduct", including:
               <MdInfoOutline

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React, { useState, useEffect } from "react";
 import TableSidebar from "./TableSidebar";
 import DynamicTable2 from "./customTable2";
@@ -6,9 +6,8 @@ import DateRangePicker from "../../../../utils/DatePickerComponent";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import { columns1 } from "./data";
 import { yearInfo } from "@/app/shared/data/yearInfo";
-import { Oval } from 'react-loader-spinner';
+import { Oval } from "react-loader-spinner";
 const AnalyseCustomerHealthSafety = ({ isBoxOpen }) => {
-
   const [customerhealth, setCustomerhealth] = useState([]);
   const [organisations, setOrganisations] = useState([]);
   const [selectedOrg, setSelectedOrg] = useState("");
@@ -60,7 +59,7 @@ const AnalyseCustomerHealthSafety = ({ isBoxOpen }) => {
       const response = await axiosInstance.get(
         `/sustainapp/get_customer_health_safety_analysis`,
         {
-          params: params
+          params: params,
         }
       );
 
@@ -71,19 +70,17 @@ const AnalyseCustomerHealthSafety = ({ isBoxOpen }) => {
       const formatcustomerhealth = (data) => {
         return data.map((data, index) => {
           const percentage = parseFloat(data.percentage).toFixed(2);
-          const formattedPercentage = percentage.endsWith('.00') ? percentage.slice(0, -3) : percentage;
+          const formattedPercentage = percentage.endsWith(".00")
+            ? percentage.slice(0, -3)
+            : percentage;
           return {
             "Organisation/Corporation": data.org_or_corp,
-            "Percentage of significant product and service categories for which health and safety impacts are assessed for improvement": formattedPercentage,
+            "Percentage of significant product and service categories for which health and safety impacts are assessed for improvement":
+              formattedPercentage,
           };
         });
-
       };
-      setCustomerhealth(
-        formatcustomerhealth(
-          customer_health_percent
-        )
-      );
+      setCustomerhealth(formatcustomerhealth(customer_health_percent));
       LoaderClose();
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
@@ -180,44 +177,47 @@ const AnalyseCustomerHealthSafety = ({ isBoxOpen }) => {
           <div className="mt-4 pb-3 mx-5 text-left">
             <div className="mb-2 flex-col items-center pt-2 gap-6">
               <div className="justify-start items-center gap-4 inline-flex mt-4">
-                <div className="text-zinc-600 text-[15px] font-semibold font-['Manrope']">
+                <div className="text-zinc-600 text-[12px] font-semibold font-['Manrope']">
                   View By:
                 </div>
                 <div className="rounded-lg shadow border border-gray-300 justify-start items-start flex">
                   <div
-                    className={`w-[111px] px-4 py-2.5 border-r rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Organization" ? "bg-sky-100" : "bg-white"
-                      }`}
+                    className={`w-[111px] px-4 py-2.5 border-r rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                      reportType === "Organization" ? "bg-sky-100" : "bg-white"
+                    }`}
                     onClick={() => handleReportTypeChange("Organization")}
                   >
-                    <div className="text-slate-800 text-[13px] font-medium font-['Manrope'] leading-tight">
+                    <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
                       Organization
                     </div>
                   </div>
                   <div
-                    className={`w-[111px] px-4 py-2.5 border-r rounded-r-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Corporate" ? "bg-sky-100" : "bg-white"
-                      }`}
+                    className={`w-[111px] px-4 py-2.5 border-r rounded-r-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                      reportType === "Corporate" ? "bg-sky-100" : "bg-white"
+                    }`}
                     onClick={() => handleReportTypeChange("Corporate")}
                   >
-                    <div className="text-slate-700 text-[13px] font-medium font-['Manrope'] leading-tight">
+                    <div className="text-slate-700 text-[12px] font-medium font-['Manrope'] leading-tight">
                       Corporate
                     </div>
                   </div>
                 </div>
               </div>
               <div
-                className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${reportType !== "" ? "visible" : "hidden"
-                  }`}
+                className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${
+                  reportType !== "" ? "visible" : "hidden"
+                }`}
               >
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[13px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal"
                   >
                     Select Organization*
                   </label>
                   <div className="mt-2">
                     <select
-                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                       value={selectedOrg}
                       onChange={handleOrganizationChange}
                     >
@@ -230,49 +230,48 @@ const AnalyseCustomerHealthSafety = ({ isBoxOpen }) => {
                         ))}
                     </select>
                     {errors.selectedOrg && (
-                      <div className="text-red-600 text-sm">
+                      <div className="text-red-600 text-[12px] ml-2">
                         {errors.selectedOrg}
                       </div>
                     )}
                   </div>
                 </div>
-                {(reportType === "Corporate" ||
-                  reportType === "Location") && (
-                    <div className="mr-2">
-                      <label
-                        htmlFor="cname"
-                        className="text-neutral-800 text-[13px] font-normal"
+                {(reportType === "Corporate" || reportType === "Location") && (
+                  <div className="mr-2">
+                    <label
+                      htmlFor="cname"
+                      className="text-neutral-800 text-[12px] font-normal"
+                    >
+                      Select Corporate
+                    </label>
+                    <div className="mt-2">
+                      <select
+                        className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                        value={selectedCorp}
+                        onChange={handleOrgChange}
                       >
-                        Select Corporate
-                      </label>
-                      <div className="mt-2">
-                        <select
-                          className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          value={selectedCorp}
-                          onChange={handleOrgChange}
-                        >
-                          <option value="">--Select Corporate--- </option>
-                          {corporate &&
-                            corporate.map((corp) => (
-                              <option key={corp.id} value={corp.id}>
-                                {corp.name}
-                              </option>
-                            ))}
-                        </select>
-                      </div>
+                        <option value="">--Select Corporate--- </option>
+                        {corporate &&
+                          corporate.map((corp) => (
+                            <option key={corp.id} value={corp.id}>
+                              {corp.name}
+                            </option>
+                          ))}
+                      </select>
                     </div>
-                  )}
+                  </div>
+                )}
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[13px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal"
                   >
                     Select Year
                   </label>
                   <div className="mt-2">
                     <select
                       name="year"
-                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                       value={selectedYear}
                       onChange={handleYearChange}
                     >
@@ -284,7 +283,7 @@ const AnalyseCustomerHealthSafety = ({ isBoxOpen }) => {
                       ))}
                     </select>
                     {errors.selectedYear && (
-                      <div className="text-red-600 text-sm">
+                      <div className="text-red-600 text-[12px] ml-2">
                         {errors.selectedYear}
                       </div>
                     )}
@@ -294,20 +293,21 @@ const AnalyseCustomerHealthSafety = ({ isBoxOpen }) => {
             </div>
           </div>
         </div>
-        <div className="flex justify-between">
-          <div className={`ps-4  w-[78%] me-4`}>
+        <div className="flex">
+          <div className={`ps-4 w-[100%] me-4`}>
             <div className="mb-6">
               <div
                 id="ep1"
                 className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
               >
                 <div>
-                  <p className="text-[18px] font-semibold">
-                    Assessment of the health and safety impacts of product and service categories
+                  <p className="text-[15px] font-bold">
+                    Assessment of the health and safety impacts of product and
+                    service categories
                   </p>
                 </div>
                 <div className="flex justify-between items-center mb-2">
-                  <p className="text-gray-500">
+                  <p className="text-gray-500 text-[13px]">
                     Percentage of significant product and service categories
                   </p>
 
@@ -318,28 +318,24 @@ const AnalyseCustomerHealthSafety = ({ isBoxOpen }) => {
                   </div>
                 </div>
                 <div className="mb-4">
-                  <DynamicTable2
-                    columns={columns1}
-                    data={customerhealth}
-                  />
+                  <DynamicTable2 columns={columns1} data={customerhealth} />
                 </div>
               </div>
             </div>
-
           </div>
           <div
             style={{
               position: `${isBoxOpen ? "unset" : "sticky"}`,
               top: "10rem",
+              // zIndex: "0",
               height: "fit-content",
               backgroundColor: "white",
               paddingBottom: "1rem",
             }}
-            className="me-8 mb-8 -right-2"
+            className=" mb-8 me-2"
           >
             <TableSidebar />
           </div>
-
         </div>
         {loopen && (
           <div className=" fixed inset-0 flex items-center justify-center z-[100] bg-black bg-opacity-50">
@@ -354,9 +350,7 @@ const AnalyseCustomerHealthSafety = ({ isBoxOpen }) => {
           </div>
         )}
       </div>
-
     </div>
-
   );
 };
 

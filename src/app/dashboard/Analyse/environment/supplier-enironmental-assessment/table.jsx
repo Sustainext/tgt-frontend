@@ -12,8 +12,9 @@ const DynamicTable2 = ({ data, columns }) => {
             {columns.map((column, index) => (
               <th
                 key={column}
-                className={`px-2 py-3 font-semibold text-gray-600 block md:table-cell w-[50%] text-sm ${index==0?'text-center':'text-left'} `}
+                className={`px-2 py-3  text-[#727272] block md:table-cell w-[50%] text-[12px] ${index==0?'text-center':'text-left'} `}
               >
+                
                 {column}
               </th>
             ))}
@@ -21,10 +22,10 @@ const DynamicTable2 = ({ data, columns }) => {
         </thead>
         <tbody className="block md:table-row-group">
           {data.length === 0 || isEmptyData ? (
-            <tr className="border border-gray-300 md:table-row">
+               <tr className='border'>
               <td
                 colSpan={columns.length}
-                className="text-center p-2 block md:table-cell text-sm"
+               className="text-center py-4 text-[12px] font-[400]"
               >
                 No data available
               </td>
@@ -35,7 +36,7 @@ const DynamicTable2 = ({ data, columns }) => {
                 {columns.map((column, colIndex) => (
                   <td
                     key={colIndex}
-                    className={`p-2 block md:table-cell text-sm text-center w-[50%]`}
+                    className={`px-4 py-2 border-y text-slate-500 font-normal text-[12px] w-[50%] text-center h-14`}
                   >
                        {row[column] !== undefined && row[column] !== null
                       ? colIndex === 0 ? row[column] : `${row[column]}%`
