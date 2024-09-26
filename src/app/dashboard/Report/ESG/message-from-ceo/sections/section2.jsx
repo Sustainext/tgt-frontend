@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import dynamic from "next/dynamic";
-import { MdOutlineCloudUpload } from "react-icons/md";
+import { MdOutlineFileUpload } from "react-icons/md";
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
@@ -90,7 +90,7 @@ Chief Executive Officer <br/>
             className="flex bg-transparent py-2 text-center text-[#007EEF] text-[15px] rounded-md"
           >
             <p>
-              <MdOutlineCloudUpload className="mt-1" />
+              <MdOutlineFileUpload className="mt-1" style={{fontSize:"16px"}} />
             </p>
             <p className="ml-2">Upload Image </p>
             

@@ -3,36 +3,37 @@ import { useState, useRef, useEffect } from "react";
 import Section1 from "./sections/section1";
 import Section2 from "./sections/section2";
 import Section3 from "./sections/section3";
-// import Section4 from "./sections/section4";
-// import Section5 from './sections/section5';
-// import Section6 from './sections/section6';
-// import Section7 from  './sections/section7';
-// import Section8 from  './sections/section8';
-// import Section9 from './sections/section9';
-// import Section10 from './sections/section10'
-// import Section11 from './sections/section11'
-// import Section12 from './sections/section12'
-// import Section13 from './sections/section13'
-// import Section14 from './sections/section14'
-// import Section15 from './sections/section15'
-// import Section16 from './sections/section16'
-// import Section17 from './sections/section17'
-// import Section18 from './sections/section18'
-// import Section19 from './sections/section19'
-// import Section20 from './sections/section20'
-// import Section21 from './sections/section21'
-// import Section22 from './sections/section22'
-// import Section23 from './sections/section23'
-// import Section24 from './sections/section24'
-// import Section25 from './sections/section25'
-// import Section26 from './sections/section26'
-// import Section27 from './sections/section27'
-// import Section28 from './sections/section28'
-// import Section29 from './sections/section29'
-// import Section30 from './sections/section30'
-// import Section31 from './sections/section31'
-// import Section32 from './sections/section32'
-// import Section33 from './sections/section33'
+import Section4 from "./sections/section4";
+import Section5 from './sections/section5';
+import Section6 from './sections/section6';
+import Section7 from  './sections/section7';
+import Section8 from  './sections/section8';
+import Section9 from './sections/section9';
+import Section10 from './sections/section10'
+import Section11 from './sections/section11'
+import Section12 from './sections/section12'
+import Section13 from './sections/section13'
+import Section14 from './sections/section14'
+import Section15 from './sections/section15'
+import Section16 from './sections/section16'
+import Section17 from './sections/section17'
+import Section18 from './sections/section18'
+import Section19 from './sections/section19'
+import Section20 from './sections/section20'
+import Section21 from './sections/section21'
+import Section22 from './sections/section22'
+import Section23 from './sections/section23'
+import Section24 from './sections/section24'
+import Section25 from './sections/section25'
+import Section26 from './sections/section26'
+import Section27 from './sections/section27'
+import Section28 from './sections/section28'
+import Section29 from './sections/section29'
+import Section30 from './sections/section30'
+import Section31 from './sections/section31'
+import Section32 from './sections/section32'
+import Section33 from './sections/section33'
+import Section34 from './sections/section34'
 
 const Environment=()=>{
     
@@ -100,7 +101,37 @@ const scrollToSection = (sectionRef, sectionId) => {
             <Section1/>
             <Section2 section12_1Ref={{section12_1Ref}} />
             <Section3 section12_1_1Ref={section12_1_1Ref}/>
-            
+            <Section4 section12_1_2Ref={section12_1_2Ref}/>
+            <Section5 section12_1_3Ref={section12_1_3Ref}/>
+            <Section6 section12_1_4Ref={section12_1_4Ref}/>
+            <Section7 section12_1_5Ref={section12_1_5Ref}/>
+            <Section8 section12_1_6Ref={section12_1_6Ref}/>
+            <Section9 section12_1_7Ref={section12_1_7Ref}/>
+            <Section10 section12_2Ref={section12_2Ref}/>
+            <Section11 section12_2_1Ref={section12_2_1Ref}/>
+            <Section12 section12_2_2Ref={section12_2_2Ref}/>
+            <Section13 section12_2_3Ref={section12_2_3Ref}/>
+            <Section14 section12_3Ref={section12_3Ref}/>
+            <Section15 section12_3_1Ref={section12_3_1Ref}/>
+            <Section16 section12_3_2Ref={section12_3_2Ref}/>
+            <Section17 section12_3_3Ref={section12_3_3Ref}/>
+            <Section18 section12_3_4Ref={section12_3_4Ref}/>
+            <Section19 section12_4_1Ref={section12_4_1Ref} section12_4Ref={section12_4Ref}/>
+            <Section20 section12_4_2Ref={section12_4_2Ref}/>
+            <Section21 section12_4_3Ref={section12_4_3Ref}/>
+            <Section22 section12_4_4Ref={section12_4_4Ref}/>
+            <Section23 section12_4_5Ref={section12_4_5Ref}/>
+            <Section24 section12_5_1Ref={section12_5_1Ref} section12_5Ref={section12_5Ref}/>
+            <Section25 section12_5_2Ref={section12_5_2Ref}/>
+            <Section26 section12_5_3Ref={section12_5_3Ref}/>
+            <Section27 section12_5_4Ref={section12_5_4Ref}/>
+            <Section28 section12_5_5Ref={section12_5_5Ref}/>
+            <Section29 section12_5_6Ref={section12_5_6Ref}/>
+            <Section30 section12_6Ref={section12_6Ref}/>
+            <Section31 section12_6_1Ref={section12_6_1Ref}/>
+            <Section32 section12_6_2Ref={section12_6_2Ref}/>
+            <Section33 section12_7Ref={section12_7Ref}/>
+            <Section34 section12_7_1Ref={section12_7_1Ref}/>
             </div>
             {/* page sidebar */}
            
