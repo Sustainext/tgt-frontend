@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import axiosInstance from '../app/utils/axiosMiddleware';
-
 const AuthContext = createContext(null);
 
 export const useAuth = () => useContext(AuthContext);
@@ -21,7 +20,7 @@ export function AuthProvider({ children }) {
     }
   }, [token]);
 
-  const login = async (username, password) => {
+  const login = async (username, password, remember_me) => {
     const backendUrl = process.env.BACKEND_API_URL;
     const loginUrl = `${backendUrl}/api/auth/login/`;
 
@@ -31,7 +30,7 @@ export function AuthProvider({ children }) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password, remember_me }),
       });
 
       if (!response.ok) {
@@ -46,10 +45,12 @@ export function AuthProvider({ children }) {
       const userData = await response.json();
       const receivedToken = userData.key.access;
       const refreshToken = userData.key.refresh;
+      const client_key = userData.client_key;
 
       setToken(receivedToken);
       saveToLocalStorage('token', receivedToken);
       saveToLocalStorage('refresh',refreshToken)
+      saveToLocalStorage('client_key',client_key)
 
       const isFirstLogin = userData.needs_password_reset;
       // const isFirstLogin = 1;
@@ -93,7 +94,10 @@ export function AuthProvider({ children }) {
       return response.data;
     } catch (error) {
       console.error('Fetch user details error:', error);
-      // router.replace('/');
+      if (error.redirectToLogin) {
+        router.push('/');
+        localStorage.clear();
+    }
       return null;
     }
   };

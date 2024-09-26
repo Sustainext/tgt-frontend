@@ -53,7 +53,6 @@ export const categoryMappings = {
       { source: "EXIOBASE", year: "2019" },
       { source: "EPA", year: "2018" },
       { source: "EPA", year: "2019" },
-      
     ],
     "Paper Products": [{ source: "EPA", year: "2018" },{ source: "EXIOBASE", year: "2019" },{ source: "BEIS", year: "2020" },],
     // "Utilities": [{ source: "EXIOBASE", year: "2019" }],

@@ -11,21 +11,19 @@ const axiosInstance = axios.create({
     baseURL: process.env.BACKEND_API_URL,
 });
 
-// Add a request interceptor to include the token in the headers
 axiosInstance.interceptors.request.use(
     async (config) => {
         const token = getAuthToken();
-
+        
         if (token) {
             config.headers['Authorization'] = `Bearer ${token}`;
         }
-
+        
         return config;
     },
     (error) => Promise.reject(error)
 );
 
-// Add a response interceptor to handle 403 errors
 axiosInstance.interceptors.response.use(
     (response) => response,
     async (error) => {
@@ -42,22 +40,38 @@ axiosInstance.interceptors.response.use(
                         refresh: refreshToken,
                     });
 
-                    const { access } = refreshTokenResponse.data;
+                    const { access } = refreshTokenResponse?.data;
                     
                     localStorage.setItem('token', access);
 
                     originalRequest.headers['Authorization'] = `Bearer ${access}`;
                     return axiosInstance(originalRequest);
                 } else {
-                    // Handle the case where the refresh token is missing
                     console.error('No refresh token available');
-                    // Optionally handle missing refresh token (e.g., redirect to login)
-                    // router.push('/')
+                    // Dispatch the global event here
+                    if (typeof window !== 'undefined') {
+                        const event = new CustomEvent('api-error', {
+                            detail: {
+                                redirectToLogin: true,
+                                message: 'No refresh token available',
+                            },
+                        });
+                        window.dispatchEvent(event);
+                    }
+                    return Promise.reject(error);
                 }
             } catch (refreshError) {
                 console.error('Token refresh failed:', refreshError);
-                // Optionally handle token refresh failure (e.g., redirect to login)
-                // router.push('/')
+                // Dispatch the global event here
+                if (typeof window !== 'undefined') {
+                    const event = new CustomEvent('api-error', {
+                        detail: {
+                            redirectToLogin: true,
+                            message: 'Token refresh failed',
+                        },
+                    });
+                    window.dispatchEvent(event);
+                }
                 return Promise.reject(refreshError);
             }
         }
@@ -66,6 +80,7 @@ axiosInstance.interceptors.response.use(
     }
 );
 
+// HTTP methods
 const put = async (url, data, config) => {
     return axiosInstance.put(url, data, config);
 };
@@ -78,13 +93,13 @@ const post = async (url, data, config) => {
     return axiosInstance.post(url, data, config);
 };
 
-const del = async (url, data, config) => {
-    return axiosInstance.delete(url, data, config);
+const del = async (url, config) => {
+    return axiosInstance.delete(url, config);
 };
 
-export { put, patch, post, del };
+const get = async (url, config) => {
+    return axiosInstance.get(url, config);
+};
+
+export { put, patch, post, del, get };
 export default axiosInstance;
-
-
-
-

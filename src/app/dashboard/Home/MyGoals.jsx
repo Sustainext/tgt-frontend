@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import Moment from 'react-moment';
 import axios from 'axios';
 import { useAuth } from '../../../Context/auth';
-import { del, patch, post } from '../../utils/axiosMiddleware';
+import axiosInstance,{ del, patch, post } from '../../utils/axiosMiddleware';
 
 const MyGoals = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -178,12 +178,18 @@ const MyGoals = () => {
   const [activeTab, setActiveTab] = useState('upcoming');
 
   const fetchMygoleDetails = async () => {
+   try{
     LoaderOpen();
-    const response = await axios.get(
+    const response = await axiosInstance.get(
       `${process.env.BACKEND_API_URL}/mygoal/?assigned_to=${userId}`, options
     );
     setGoals(response.data);
     LoaderClose();
+   }
+   catch(error){
+    LoaderClose();
+    console.log(error);
+   }
   };
 
   useEffect(() => {
