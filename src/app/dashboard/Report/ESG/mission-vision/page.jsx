@@ -31,7 +31,7 @@ const MissionVission=()=>{
                 MISSION, VISION, AND VALUES
                 </p>
                 <p className="text-[12px] text-blue-400 mb-2">
-                Mission, Vision, and Values
+                1. Mission, Vision, and Values
                 </p>
             </div>
             </div>

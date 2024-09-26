@@ -24,8 +24,8 @@ const CustomerTable=()=>{
                             idx === col.length - 1 ? 'rounded-tr-md' : '' // Top-right corner
                         } text-gray-500`}
                     >
-                        <div className="flex justify-center items-center">
-                            <p className="flex items-center">
+                        <div className="flex">
+                            <p className="flex">
                                 {item}
                             </p>
                         </div>
@@ -34,9 +34,9 @@ const CustomerTable=()=>{
             </tr>
         </thead>
         <tbody>
-            <tr>
-            <td className="border border-gray-200 p-4 rounded-bl-md text-center">Data</td>
-            <td className="border border-gray-200 p-4 rounded-bl-md text-center">Data</td>
+            <tr className="text-[13px]">
+            <td className="border border-gray-200 p-4 rounded-bl-md text-left">Data</td>
+            <td className="border border-gray-200 p-4 rounded-bl-md text-left">Data</td>
             </tr>
            
         </tbody>

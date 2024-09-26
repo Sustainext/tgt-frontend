@@ -27,7 +27,7 @@ const AwardsRecognition=()=>{
                Awards & Recognition
                 </p>
                 <p className="text-[12px] text-blue-400 mb-2">
-               Awards & Recognition
+               1. Awards & Recognition
                 </p>
             </div>
             </div>

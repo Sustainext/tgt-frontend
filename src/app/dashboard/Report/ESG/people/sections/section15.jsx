@@ -1,11 +1,55 @@
 'use client'
 import { useState, useRef, useEffect } from "react";
-
+import EmployeeCategoryTable from "../tables/employeeCategoryTable";
 
 const Section15=({section13_4_3Ref})=>{
     const [content,setContent] = useState(
         `We ensure equitable remuneration practices across our organization. Our compensation policies are designed to eliminate pay disparities and promote fairness. `
     )
+    const columns = [
+        { header: "Basic Salary per Employee Category", subHeaders: [] }, // No sub-headers for this column
+        { header: "Gender", subHeaders: ["Male", "Female", "Non-Binary"] },
+        { header: "Significant Location of Operations", subHeaders: [] } // No sub-headers
+      ];
+      const columns2 = [
+        { header: "Remuneration per Employee Category ", subHeaders: [] }, // No sub-headers for this column
+        { header: "Gender", subHeaders: ["Male", "Female", "Non-Binary"] },
+        { header: "Significant Location of Operations", subHeaders: [] } // No sub-headers
+      ];
+      const basicSalaryData = [
+        {
+          "Basic Salary per Employee Category": "A",
+          Male: "data",
+          Female: "data",
+          "Non-Binary": "data",
+          "Significant Location of Operations": "data",
+        },
+        {
+          "Basic Salary per Employee Category": "B",
+          Male: "data",
+          Female: "data",
+          "Non-Binary": "data",
+          "Significant Location of Operations": "data",
+        }
+      ];
+      
+      const remunerationData = [
+        {
+          "Remuneration per Employee Category": "A",
+          Male: "data",
+          Female: "data",
+          "Non-Binary": "data",
+          "Significant Location of Operations": "data",
+        },
+        {
+          "Remuneration per Employee Category": "B",
+          Male: "data",
+          Female: "data",
+          "Non-Binary": "data",
+          "Significant Location of Operations": "data",
+        }
+      ];
+      
     
     return (
         <>
@@ -26,9 +70,15 @@ const Section15=({section13_4_3Ref})=>{
         <p className="text-[15px]  mb-2 font-semibold">
         Ratio of basic salary of women to men   
             </p>
+            <div className="shadow-md rounded-md mb-4">
+                <EmployeeCategoryTable columns={columns} data={basicSalaryData} />
+            </div>
             <p className="text-[15px]  mb-2 font-semibold">
             Ratio of remuneration of women to men
             </p>
+            <div className="shadow-md rounded-md mb-4">
+                <EmployeeCategoryTable columns={columns2} data={remunerationData} />
+            </div>
             
 
 </div>

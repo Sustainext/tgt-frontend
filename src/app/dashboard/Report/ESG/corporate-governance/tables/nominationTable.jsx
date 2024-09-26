@@ -42,15 +42,15 @@ const NominationTable=()=>{
         </thead>
         <tbody>
         {rowLabels.map((label, rowIndex) => (
-                        <tr key={rowIndex}>
-                            <td className="border-t border-r border-gray-200 p-4 text-left text-sm">
+                        <tr key={rowIndex} className="text-[13px]">
+                            <td className="border-t border-r border-gray-200 p-4 text-left">
                                 {label}
 
                             </td>
-                            <td className="border-t border-r border-gray-200 p-4 text-left text-sm">
+                            <td className="border-t border-r border-gray-200 p-4 text-left">
                                 Data
                             </td>
-                            <td className="border-t border-r border-gray-200 p-4 text-left text-sm">
+                            <td className="border-t border-r border-gray-200 p-4 text-left">
                                 Data
 
                             </td>

@@ -26,7 +26,8 @@ import Community from "./community/page";
 import EconomicPerformance from './economic-performance/page'
 import CustomerProductService from  './customer-product-services/page'
 import People from "./people/page";
-// import MessageFromCEO from  './message-from-ceo/page'
+import MessageFromCEO from  './message-from-ceo/page'
+import Environment from "./environment/page";
 
 const ESGReport = () => {
   const [activeStep, setActiveStep] = useState(1);
@@ -98,13 +99,13 @@ const ESGReport = () => {
           <div className="mx-3 my-2">
             <div>
               {/* Step 1 */}
-              {/* {activeStep === 1 && (
+              {activeStep === 1 && (
                 <>
                   <div>
                    <MessageFromCEO/>
                   </div>
                 </>
-              )} */}
+              )}
               {/* Step 2 */}
               {activeStep === 2 && (
                 <div>
@@ -186,15 +187,15 @@ const ESGReport = () => {
                   </>
                 </div>
               )} 
-              {/* {activeStep === 12 && (
+              {activeStep === 12 && (
                 <div>
                   <>
                     <div className="mb-4">
-                      <Community/>
+                      <Environment/>
                     </div>
                   </>
                 </div>
-              )}  */}
+              )} 
               {activeStep === 13 && (
                 <div>
                   <>

@@ -32,15 +32,24 @@ const HighestGovernanceTable=()=>{
     ]
     return (
         <>
-       <div style={{ maxHeight: "400px", overflowX: "auto" }} className="mb-2">
-    <table className="w-full border border-gray-200 rounded-md overflow-hidden">
+       <div 
+        style={{
+            display: "block",
+            overflowX: "auto",
+            maxWidth: "100%",
+            minWidth: "100%",
+            width: "40vw",
+          }}
+          className="mb-2"
+       >
+    <table className="w-full border border-gray-200 rounded-md">
         <thead className="gradient-background">
             <tr>
                 {col.map((item, idx) => (
                     <th
                         key={idx}
                         style={{textAlign: "left"}}
-                        className={`text-[12px] border-r px-1 py-1  ${
+                        className={`text-[12px] border-r px-4 py-4  ${
                             idx === 0 ? 'rounded-tl-md' : '' // Top-left corner
                         } ${
                             idx === col.length - 1 ? 'rounded-tr-md' : '' // Top-right corner
@@ -56,9 +65,9 @@ const HighestGovernanceTable=()=>{
             </tr>
         </thead>
         <tbody>
-            <tr>
+            <tr className="text-[13px]">
                 {values.map((val)=>(
-                     <td className="border border-gray-200 p-4 rounded-bl-md text-center text-sm">Data</td>
+                     <td className="border border-gray-200 p-4 rounded-bl-md text-center">Data</td>
                 ))}
                 
                 

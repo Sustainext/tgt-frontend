@@ -10,7 +10,7 @@ const Table1 = ({rowLabels,values}) => {
                 <table className="w-full border border-gray-200 rounded-md overflow-hidden">
                     <tbody>
                         {rowLabels.map((label, rowIndex) => (
-                            <tr key={rowIndex}>
+                            <tr key={rowIndex} className="text-[13px]">
                                 <td className="border-t border-r border-gray-200 p-4 text-left">
                                     {label}
                                 </td>

@@ -27,7 +27,7 @@ const SustainibilityRoadmap=()=>{
                Sustainability Roadmap  
                 </p>
                 <p className="text-[12px] text-blue-400 mb-2">
-               Sustainability Roadmap  
+              1. Sustainability Roadmap  
                 </p>
             </div>
             </div>

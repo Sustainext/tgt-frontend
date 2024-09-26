@@ -17,13 +17,22 @@ import Section14 from './sections/section14'
 import Section15 from './sections/section15'
 import Section16 from './sections/section16'
 import Section17 from './sections/section17'
-// import Section18 from './sections/section18'
-// import Section19 from './sections/section19'
-// import Section20 from './sections/section20'
-// import Section21 from './sections/section21'
-// import Section22 from './sections/section22'
-// import Section23 from './sections/section23'
-// import Section25 from './sections/section25'
+import Section18 from './sections/section18'
+import Section19 from './sections/section19'
+import Section20 from './sections/section20'
+import Section21 from './sections/section21'
+import Section22 from './sections/section22'
+import Section23 from './sections/section23'
+import Section24 from './sections/section24'
+import Section25 from './sections/section25'
+import Section26 from './sections/section26'
+import Section27 from './sections/section27'
+import Section28 from './sections/section28'
+import Section29 from './sections/section29'
+import Section30 from './sections/section30'
+import Section31 from './sections/section31'
+import Section32 from './sections/section32'
+import Section33 from './sections/section33'
 
 const People=()=>{
     
@@ -105,6 +114,22 @@ const scrollToSection = (sectionRef, sectionId) => {
             <Section15 section13_4_3Ref={section13_4_3Ref}/>
             <Section16 section13_5Ref={section13_5Ref} section13_5_1Ref={section13_5_1Ref}/>
             <Section17   section13_5_2Ref={section13_5_2Ref}/>
+            <Section18  section13_6Ref={section13_6Ref} section13_6_1Ref={section13_6_1Ref}/>
+            <Section19   section13_6_2Ref={section13_6_2Ref}/>
+            <Section20   section13_6_3Ref={section13_6_3Ref}/>
+            <Section21   section13_6_4Ref={section13_6_4Ref}/>
+            <Section22   section13_6_5Ref={section13_6_5Ref}/>
+            <Section23  section13_6_6Ref={section13_6_6Ref}/>
+            <Section24   section13_6_7Ref={section13_6_7Ref}/>
+            <Section25   section13_6_8Ref={section13_6_8Ref}/>
+            <Section26  section13_6_9Ref={section13_6_9Ref}/>
+            <Section27   section13_6_10Ref={section13_6_10Ref}/>
+            <Section28   section13_7Ref={section13_7Ref}/>
+            <Section29   section13_7_1Ref={section13_7_1Ref}/>
+            <Section30   section13_7_2Ref={section13_7_2Ref}/>
+            <Section31   section13_8Ref={section13_8Ref}/>
+            <Section32   section13_8_1Ref={section13_8_1Ref}/>
+            <Section33   section13_8_2Ref={section13_8_2Ref}/>
             </div>
             {/* page sidebar */}
            
