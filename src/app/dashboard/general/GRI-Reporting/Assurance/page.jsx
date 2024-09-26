@@ -75,7 +75,7 @@ const Assurance = () => {
             <MdInfoOutline
               data-tooltip-id={`tooltip-$e10`}
               data-tooltip-content="This section documents the data corresponding to the external assurance."
-              className="mt-1.5 ml-2 text-[14px]"
+              className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
               id={`tooltip-$e10`}

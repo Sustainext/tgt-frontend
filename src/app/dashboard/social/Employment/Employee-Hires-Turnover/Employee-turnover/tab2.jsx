@@ -192,8 +192,7 @@ const Tab2 = ({ fullName, location, year, month }) => {
     return (
         <>
 
-            <div className="mx-2 p-3 mb-6 rounded-md">
-
+<div className="pb-11 rounded-md">
                 <Form
                     schema={r_schema}
                     uiSchema={r_ui_schema}
@@ -203,13 +202,15 @@ const Tab2 = ({ fullName, location, year, month }) => {
                     formContext={{ newMonth: fullName }}
                     widgets={widgets}
                 />
-                <div className='mb-8'>
-                <button type="button"
+                <div className='mt-4 me-1'>
+
+                    <button type="button"
                         className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? 'cursor-not-allowed' : ''}`}
                         onClick={handleSubmit}
                         disabled={!location || !year}>
                         Submit
                     </button>
+
                 </div>
             </div>
             {loopen && (

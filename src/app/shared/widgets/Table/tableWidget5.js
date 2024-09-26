@@ -53,7 +53,7 @@ const CustomTableWidget5 = ({
 
   return (
     <div style={{ maxHeight: "400px" }} className="mb-2">
-      <table id={id} className="rounded-md border border-gray-300 w-full">
+      <table id={id} className="rounded-md  w-full">
         <thead className="gradient-background">
           <tr>
             <th className="border-r"></th>
@@ -65,18 +65,18 @@ const CustomTableWidget5 = ({
             <th className="border-l"></th>
           </tr>
           <tr>
-            <th className="text-[12px] border-b border-gray-300 px-2 py-2 w-auto text-center">
+            <th className="text-[12px] border-b border-r border-gray-300 px-2 py-2 w-auto text-center">
               Age group
             </th>
             {options.titles.map((item, idx) => (
               <th
                 key={idx}
-                className="text-[12px] border border-gray-300 px-2 py-2 w-auto text-center"
+                className="text-[12px] border-t border-b  border-gray-300 px-2 py-2 w-auto text-center h-[32.246px]"
               >
                 {item.title}
               </th>
             ))}
-            <th className="text-[12px] border-b border-gray-300 px-2 py-2 w-auto text-center">
+            <th className="text-[12px] border-b border-l border-gray-300 px-2 py-2 w-auto text-center">
               Total
             </th>
           </tr>
@@ -84,11 +84,11 @@ const CustomTableWidget5 = ({
         <tbody>
           {options.rowLabels.map((rowLabel, rowIndex) => (
             <tr key={rowIndex}>
-              <td className="border-t border-gray-300 py-2 px-2 text-[13px] text-center">
+              <td className="border-b border-r border-gray-300 py-2 px-2 text-[12px] text-center">
                 {rowLabel.title}
               </td>
               {options.titles.map((column, columnIndex) => (
-                <td key={columnIndex} className="border border-gray-300">
+                <td key={columnIndex} className="border-b border-gray-300">
                   <input
                     type="number"
                     required={required}
@@ -100,7 +100,7 @@ const CustomTableWidget5 = ({
                   />
                 </td>
               ))}
-              <td className="border-b border-gray-300 text-center text-[12px]">
+              <td className="border-b border-l border-gray-300 text-center text-[12px]">
                 {" "}
                 {localValue[rowIndex].total}
               </td>

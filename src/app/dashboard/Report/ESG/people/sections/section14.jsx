@@ -1,0 +1,97 @@
+'use client'
+import { useState, useRef, useEffect } from "react";
+import DiversityTable from "../tables/diversityTable";
+import EmployeeCategoryTable from "../tables/employeeCategoryTable";
+
+const Section14=({section13_4_2Ref})=>{
+    const [content,setContent] = useState(
+        `We believe in the power of diversity and strive to create an inclusive workplace. Our commitment to diversity is reflected in the composition of our governance bodies and workforce. `
+    )
+    const [columns] = useState([
+        { header: "Gender", subHeaders: ["Male", "Female", "Non-Binary"] },
+        { header: "Age Group", subHeaders: ["< 30 years", "30-50 years", ">50 years"] },
+        { header: "Diversity groups", subHeaders: ["Minority group","Vulnerable Groups"] },
+        // { header: "Vulnerable Groups", subHeaders: ["Type of vulnerable group - (Number of individuals)"] }
+      ]);
+    
+      const [data] = useState([
+        {
+          Male: "Data",
+          Female: "Data",
+          "Non-Binary": "Data",
+          "< 30 years": "Data",
+          "30-50 years": "Data",
+          ">50 years": "Data",
+          "Minority group": "Data",
+          "Vulnerable Groups":"Data"
+        //   "Type of vulnerable group - (Number of individuals)": ""
+        }
+      ]);
+
+      const [Categorycolumns] = useState([
+        { header: "Type of Employees", subHeaders: [] }, // No sub-headers for this column
+        { header: "Gender", subHeaders: ["Male", "Female", "Non-Binary"] },
+        { header: "Age Group", subHeaders: ["<30 years", "30-50 years", ">50 years"] },
+        { header: "Age Group", subHeaders: ["Minority group"] }
+      ]);
+    
+      const [Categorydata] = useState([
+        {
+          "Type of Employees": "Category A",
+          Male: "data",
+          Female: "data",
+          "Non-Binary": "data",
+          "<30 years": "data",
+          "30-50 years": "data",
+          ">50 years": "data",
+          "Minority group": "data",
+        },
+        {
+          "Type of Employees": "Category B",
+          Male: "data",
+          Female: "data",
+          "Non-Binary": "data",
+          "<30 years": "data",
+          "30-50 years": "data",
+          ">50 years": "data",
+          "Minority group": "data",
+        }
+      ]);
+    
+    return (
+        <>
+        <div id="section13_4_2" ref={section13_4_2Ref}>
+
+<h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
+13.4.2 Diversity of Governance Bodies and Employees
+</h3>
+<p className="text-[15px] text-[#344054] mb-2">
+            Edit Data
+            </p>
+            <textarea
+          value={content}
+          className={`border appearance-none text-sm border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  mt-2 w-full mb-4 `}
+          rows={4}
+        />
+<p className="text-[15px]  mb-2 font-semibold">Governance Bodies</p>
+        <p className="text-[15px]  mb-2 font-semibold">
+        Percentage of individuals within the organization’s governance bodies by diversity categories. 
+            </p>
+            <div className="shadow-md rounded-md mb-4">
+                <DiversityTable columns={columns} data={data} />
+            </div>
+            <p className="text-[15px]  mb-2 font-semibold">
+            Percentage of Employees per employee category 
+            </p>
+
+            <div className="shadow-md rounded-md mb-4">
+                <EmployeeCategoryTable columns={Categorycolumns} data={Categorydata} />
+            </div>
+            
+
+</div>
+        </>
+    )
+}
+
+export default Section14

@@ -227,12 +227,12 @@ const Screen4 = ({ selectedOrg, year, selectedCorp,setDatarefreshtwo }) => {
       >
         <div className="mb-2 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
             Total number of governance body members that have received training on anti-corruption, broken down by region.
               <MdInfoOutline
                 data-tooltip-id={`es26`}
                 data-tooltip-html="Specify the total number of governance body members that have received training on anti-corruption, broken down by region."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`es26`}

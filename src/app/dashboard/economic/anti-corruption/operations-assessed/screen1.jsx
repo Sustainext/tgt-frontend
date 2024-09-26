@@ -201,7 +201,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Total number of operations assessed for risks related to
               corruption.
               <MdInfoOutline

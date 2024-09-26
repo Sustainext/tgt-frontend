@@ -198,14 +198,14 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Describe the organisation's approach to engaging with
               stakeholders, including:
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e86`}
                 data-tooltip-content="Stakeholders are individuals or groups that have interests that are affected or could be affected
 by the organization’s activities."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e86`}

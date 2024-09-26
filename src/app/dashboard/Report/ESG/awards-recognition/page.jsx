@@ -22,12 +22,12 @@ const AwardsRecognition=()=>{
             <Screen1/>
             </div>
             {/* page sidebar */}
-            <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[550px] top-36 sticky mt-2 w-[20%]">
+            <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[500px] top-36 sticky  w-[20%]">
                 <p className="text-[11px] text-[#727272] mb-2 uppercase">
                Awards & Recognition
                 </p>
                 <p className="text-[12px] text-blue-400 mb-2">
-               Awards & Recognition
+               1. Awards & Recognition
                 </p>
             </div>
             </div>

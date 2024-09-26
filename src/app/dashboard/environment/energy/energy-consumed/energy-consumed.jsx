@@ -75,7 +75,7 @@ const Energyconsumed = ({ open }) => {
           <h6 className="text-[17px] mb-4 font-semibold flex">
 
             Energy consumed inside the organization
-            <MdInfoOutline data-tooltip-id={`tooltip-$e1`} data-tooltip-content="This section documents data corresponding to the energy consumption within the organisation" className="mt-1.5 ml-2 text-[14px]" />
+            <MdInfoOutline data-tooltip-id={`tooltip-$e1`} data-tooltip-content="This section documents data corresponding to the energy consumption within the organisation" className="mt-1.5 ml-2 text-[15px]" />
 
             <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
               width: "290px", backgroundColor: "#000",

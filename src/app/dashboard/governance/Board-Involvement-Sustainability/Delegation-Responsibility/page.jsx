@@ -73,7 +73,7 @@ const DelegationResponsibility = () => {
           <h6 className="text-[17px] mb-4 font-semibold flex">
           Delegation of responsibility for managing impacts
             <MdInfoOutline data-tooltip-id={`tooltip-$e10`}
-              data-tooltip-content="This section documents the data corresponding to  the delegation of responsibility for managing impacts. " className="mt-1.5 ml-2 text-[14px]" />
+              data-tooltip-content="This section documents the data corresponding to  the delegation of responsibility for managing impacts. " className="mt-1.5 ml-2 text-[15px]" />
             <ReactTooltip id={`tooltip-$e10`} place="top" effect="solid" style={{
               width: "290px", backgroundColor: "#000",
               color: "white",

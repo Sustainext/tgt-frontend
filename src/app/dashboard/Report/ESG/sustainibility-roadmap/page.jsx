@@ -22,12 +22,12 @@ const SustainibilityRoadmap=()=>{
                 <Screen1/>
             </div>
             {/* page sidebar */}
-            <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[550px] top-36 sticky mt-2 w-[20%]">
+            <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[500px] top-36 sticky  w-[20%]">
                 <p className="text-[11px] text-[#727272] mb-2 uppercase">
                Sustainability Roadmap  
                 </p>
                 <p className="text-[12px] text-blue-400 mb-2">
-               Sustainability Roadmap  
+              1. Sustainability Roadmap  
                 </p>
             </div>
             </div>

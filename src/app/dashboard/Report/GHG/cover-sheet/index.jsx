@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import valentaimage from "../../../../../public/sustainext.png"; // Update the import path
+import valentaimage from "../../../../../../public/sustainext.png"; // Update the import path
 import { MdOutlineCloudUpload } from "react-icons/md";
 
 function CoverSheet({

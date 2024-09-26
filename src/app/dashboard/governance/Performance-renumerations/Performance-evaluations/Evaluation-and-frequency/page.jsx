@@ -211,12 +211,12 @@ const EvaluationAndFrequency = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Evaluation and frequency of the evaluation
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e10`}
                 data-tooltip-content="This section documents the data corresponding to whether the evaluations are independent or not and frequency of the evaluations."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e10`}

@@ -103,7 +103,7 @@ const Reductionenergyconsumption = () => {
               data-tooltip-id={`tooltip-$e1`}
               data-tooltip-content="This section is dedicated to reporting the reduction in energy consumption within an organization. While calculating
                             Reduction in Energy Consumption exclude reductions resulting from reduced production capacity or outsourcing"
-              className="mt-1.5 ml-2 text-[14px]"
+              className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
               id={`tooltip-$e1`}

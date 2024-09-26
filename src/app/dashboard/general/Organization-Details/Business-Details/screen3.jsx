@@ -174,13 +174,13 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Other relevant business relationships
               <MdInfoOutline
                 data-tooltip-id={`tooltip-144`}
                 data-tooltip-content="This section documents data corresponding to the other
 relevant business relationships of the organization."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-144`}

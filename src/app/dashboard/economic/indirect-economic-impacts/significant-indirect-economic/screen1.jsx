@@ -180,14 +180,14 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Provide examples of significant identified indirect economic
               impacts of the organization, including positive and negative
               impacts.
               <MdInfoOutline
                 data-tooltip-id={`es25`}
                 data-tooltip-html="<p>Examples of significant indirect economic impacts, both positive and negative, can include:</p><ul><li>• Changes in the productivity of organizations, sectors, or the whole economy.</li><li>•Economic development in areas of high poverty</li><li>• Economic impacts of improving or deteriorating social or environmental conditions.</li><li>• Availability of products and services for those on low incomes.</li><li>• Enhanced skills and knowledge in a professional community or in a geographic location. etc.</li></ul>"
-                className="mt-1.5 ml-2 text-[18px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`es25`}

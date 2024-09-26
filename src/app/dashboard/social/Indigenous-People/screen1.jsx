@@ -211,12 +211,12 @@ const Screen1 = ({ location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Incidents of violations involving the rights of indigenous people
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e11`}
                 data-tooltip-content="This section documents the data corresponding to the identified incidents of violations involving the rights of indigenous peoples during the reporting period."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e11`}

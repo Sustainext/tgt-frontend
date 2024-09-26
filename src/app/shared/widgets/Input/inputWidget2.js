@@ -8,6 +8,7 @@ const inputWidget2 = (props) => {
   const handleChange = (event) => {
     onChange(event.target.value);
   };
+  
   return (
     <>
       <div className="mb-6">

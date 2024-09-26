@@ -7,15 +7,24 @@ const Table2=({col,values})=>{
     
     return (
         <>
-       <div style={{ overflowX: "auto" }} className="mb-2">
-    <table className="w-full border border-gray-200 rounded-md overflow-hidden">
+       <div
+        style={{
+            display: "block",
+            overflowX: "auto",
+            maxWidth: "100%",
+            minWidth: "100%",
+            width: "40vw",
+          }}
+          className="mb-2"
+       >
+    <table className="w-full border border-gray-200 rounded-md">
         <thead className="gradient-background">
             <tr>
                 {col.map((item, idx) => (
                     <th
                         key={idx}
                         style={{textAlign: "left" }}
-                        className={`text-[12px] border-r px-3.5 py-3.5  ${
+                        className={`text-[12px] border-r px-4 py-4  ${
                             idx === 0 ? 'rounded-tl-md' : '' // Top-left corner
                         } ${
                             idx === col.length - 1 ? 'rounded-tr-md' : '' // Top-right corner
@@ -31,9 +40,9 @@ const Table2=({col,values})=>{
             </tr>
         </thead>
         <tbody>
-            <tr>
+            <tr className="text-[13px]">
                 {values.map((val)=>(
-                     <td className="border border-gray-200 p-4 rounded-bl-md text-left text-sm">{val}</td>
+                     <td className="border border-gray-200 p-4 rounded-bl-md text-left">{val}</td>
                 ))}
                 
                 

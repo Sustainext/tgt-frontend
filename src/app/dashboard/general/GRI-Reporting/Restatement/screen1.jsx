@@ -216,14 +216,14 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
             Restatements of Information
               {/* <MdInfoOutline data-tooltip-id={`tooltip-employees`}
                 data-tooltip-content="This section documents data regarding the specific workers, activities, and
 workplaces encompassed by the occupational health and safety
 management system. It highlights which groups of employees,
 types of activities, and workplaces fall within the scope of the system,
-and explains any exclusions that may exist." className="mt-1.5 ml-2 text-[14px]" />
+and explains any exclusions that may exist." className="mt-1.5 ml-2 text-[15px]" />
               <ReactTooltip id={`tooltip-employees`} place="top" effect="solid" style={{
                 width: "290px", backgroundColor: "#000",
                 color: "white",

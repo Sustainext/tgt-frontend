@@ -13,7 +13,7 @@ const TextareaWidget3 = (props) => {
       <div className="mb-6">
         <div className="flex mb-2">
           <div className=" relative">
-            <h2 className="mb-2 text-[17px] text-gray-500 font-semibold flex">
+            <h2 className="mb-2 text-[14px] text-gray-500 font-semibold flex">
               {uiSchema["ui:hading"]}
 
             <MdInfoOutline
@@ -40,7 +40,7 @@ const TextareaWidget3 = (props) => {
                 }}
               ></ReactTooltip>
             </h2>
-            <p className="text-sm text-gray-700 flex">
+            <p className="text-[14px] text-gray-700 flex">
               {uiSchema["ui:title"]}
               <MdInfoOutline
                 data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(
@@ -70,7 +70,7 @@ const TextareaWidget3 = (props) => {
         </div>
         <textarea
           placeholder="Enter data"
-          className={`backdrop:before:w-[48rem] border appearance-none text-[15px] border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
+          className={`backdrop:before:w-[48rem] border appearance-none text-[14px] border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
           value={value}
           onChange={handleChange}
           rows={4}

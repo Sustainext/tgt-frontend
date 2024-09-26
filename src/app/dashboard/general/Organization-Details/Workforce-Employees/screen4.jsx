@@ -176,13 +176,13 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Employee Fluctuations
               <MdInfoOutline
                 data-tooltip-id={`tooltip-126`}
                 data-tooltip-content="This section documents data corresponding to any significant changes
 in employee numbers experienced during or between reporting periods."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-126`}

@@ -272,7 +272,7 @@ const Benefitsscreen = ({ location, year, month }) => {
   return (
     <>
       <div
-        className="mx-2 p-3 mb-6 rounded-md"
+        className="pb-11 rounded-md"
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
@@ -280,14 +280,14 @@ const Benefitsscreen = ({ location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] font-bold mb-2">
+            <h2 className="flex mx-2 text-[15px] font-[500] mb-2">
               Benefits provided to full-time employees that are not provided to
               temporary or part-time employees
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
                 data-tooltip-content="This table documents data corresponding to the standard benefits offered to full-time employees
-                                of the organization, which are generally not available to temporary or part-time employees."
-                className="mt-1.5 ml-2 text-[14px]"
+                of the organization, which are generally not available to temporary or part-time employees."
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e1`}
@@ -339,7 +339,7 @@ const Benefitsscreen = ({ location, year, month }) => {
           )}
         </div>
 
-        <div className="mb-6">
+        <div className='mt-4 me-1'>
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${

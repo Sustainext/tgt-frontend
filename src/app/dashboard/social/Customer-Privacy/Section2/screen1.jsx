@@ -196,7 +196,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
 has  identified any substantiated complaints,
 and if not then a brief statement of
 this fact is sufficient. "
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e20`}

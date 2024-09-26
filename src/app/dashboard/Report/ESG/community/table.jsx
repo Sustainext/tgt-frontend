@@ -71,7 +71,7 @@ const CommunityTable = () => {
           </thead>
           <tbody>
             {data[0][0].map((row, rowIndex) => (
-              <tr key={rowIndex} className="text-[11px]">
+              <tr key={rowIndex} className="text-[13px]">
                 <td className="border-t border-r border-gray-200 p-4 text-center">
                   {row[""]}
                 </td>

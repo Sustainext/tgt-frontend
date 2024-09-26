@@ -85,7 +85,7 @@ const Waterstorage = () => {
               data-tooltip-id={`tooltip-$e1`}
               data-tooltip-content="This section documents data corresponding to change in water storage where water storage
                             has been identified as having a significant water-related impact."
-              className="mt-1.5 ml-2 text-[14px]"
+              className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
               id={`tooltip-$e1`}

@@ -194,7 +194,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
                 data-tooltip-content="This section documents the data corresponding to whether the
 organization has not identified any non-compliance with regulations and/or
 voluntary codes and if so then a brief statement of this fact is sufficient."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e1`}

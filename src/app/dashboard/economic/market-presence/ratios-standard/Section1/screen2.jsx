@@ -221,12 +221,12 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
             Does your organisation subject to minimum wage rules?				
               <MdInfoOutline
                 data-tooltip-id={`es29`}
                 data-tooltip-html="Indicate whether your organisation is subject to minimum wage rules."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`es29`}

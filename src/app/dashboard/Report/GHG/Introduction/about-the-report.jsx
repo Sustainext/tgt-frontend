@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import Moment from 'react-moment';
-import { Countryname } from '../../../shared/data/countryname';
+import { Countryname } from '../../../../shared/data/countryname';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 import { MdInfoOutline } from 'react-icons/md';

@@ -185,7 +185,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
                 data-tooltip-content="Specify the remuneration policies for members of the highest governance body and senior executives."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e1`}
