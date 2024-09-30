@@ -29,14 +29,14 @@ const CustomtextareaTableWidget = ({
 
   return (
     <div style={{ overflowY: "auto", maxHeight: "400px" }} className="mb-2">
-      <table id={id} className="rounded-md border border-gray-300 w-full">
-        <thead className="gradient-background">
+      <table id={id} className="rounded-md border border-gray-300 w-full"  style={{ borderCollapse: "separate", borderSpacing: 0 }}>
+        <thead className="gradient-background h-[54px]">
           <tr>
             {options.titles.map((item, idx) => (
               <th
                 key={idx}
                 style={{ minWidth: "120px" }}
-                className="text-[12px] border border-gray-300 px-2 py-2 text-center"
+                className={` ${idx === 0 ? "" :"border-l" } text-[12px] px-2 py-2  border-gray-300`}
               >
                 <div className="flex items-center justify-center relative">
                   <p>{item.title}</p>
@@ -54,7 +54,15 @@ const CustomtextareaTableWidget = ({
                       id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
                       place="top"
                       effect="solid"
-                      className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
+                      style={{
+                        width:"400px",
+                        backgroundColor: "#000",
+                        color: "white",
+                        fontSize: "12px",
+                        boxShadow: 3,
+                        borderRadius: "8px",
+                        zIndex:"1000",
+                      }}
                     />
                   </p>
                 </div>
@@ -67,7 +75,9 @@ const CustomtextareaTableWidget = ({
           {value?.map((item, rowIndex) => (
             <tr key={rowIndex}>
               {Object.keys(item).map((key, cellIndex) => (
-                <td key={cellIndex} className="border border-gray-300 p-3">
+                <td key={cellIndex} 
+                className={` ${cellIndex === 0 ? "" :"border-l" } border-t text-[12px] p-3 border-gray-300`}
+             >
                   <textarea
                     placeholder="Enter data"
                     className="border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
@@ -77,7 +87,7 @@ const CustomtextareaTableWidget = ({
                   />
                 </td>
               ))}
-              <td className="border border-gray-300 p-3 text-center">
+              <td className="border-t  border-gray-300 p-3 text-center">
                 <button onClick={() => formContext.onRemove(rowIndex)}>
                   <MdOutlineDeleteOutline className="text-[23px] text-red-600" />
                 </button>

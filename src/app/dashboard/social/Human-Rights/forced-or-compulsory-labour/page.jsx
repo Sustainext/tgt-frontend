@@ -40,11 +40,11 @@ const Forcedorcompulsorylabour = () => {
             <div className="flex flex-col justify-start overflow-x-hidden ">
                 <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
                     <div className='w-full'>
-                        <div className="text-left mb-4 ml-3 pt-5">
+                       <div className="text-left mb-2 ml-3 pt-5">
                             <p className="text-[11px]">Social</p>
                             <div className='flex'>
                                 <div>
-                                    <p className="gradient-text text-[22px] font-bold pt-1">
+                                   <p className="gradient-text text-[22px] font-bold py-2">
                                     Forced or Compulsory Labor 2016
                                     </p>
                                 </div>
@@ -53,7 +53,7 @@ const Forcedorcompulsorylabour = () => {
 
                         </div>
                     </div>
-                    <div className='w-full float-end '>
+                 <div className="w-full float-end pt-5 me-1">
                         <div className="flex float-end border-l">
                             <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('16')}>GRI 409 - 1</button>
                             <button className="text-[#fff] bg-orange-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('17')}>SDG 5</button>

@@ -17,7 +17,7 @@ const selectWidget3 =  ({onChange, value = "", placeholder, label, title, uiSche
       <div className="mb-3 px-1">
        {id.startsWith("root_0") && ( 
          <div className={`relative flex ${label!== "Metric Unit" ? 'justify-center' : 'pl-2'}`}>
-          <p className={`flex text-[13px] text-neutral-950 font-[400] mb-1 ${label!== "Metric Unit" ? 'pl-5' : ''}`}>
+          <p className={`flex text-[13px] h-[35px] text-neutral-950 font-[400] mb-1 ${label!== "Metric Unit" ? 'pl-5' : ''}`}>
             {label}
             <MdInfoOutline
               data-tooltip-id={tooltipId}

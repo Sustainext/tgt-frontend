@@ -31,11 +31,11 @@ const Section1 =()=>{
             <li className="text-[15px] text-[#344054] mb-2 font-semibold">
             Identification and Prioritization 
             </li>
-           <p className="mb-4">{content}</p>
+           <p className="mb-4">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius voluptatibus saepe, nemo unde animi accusantium illo ex alias fugiat? Voluptas animi placeat ad quos commodi laborum incidunt facere corrupti natus.</p>
             <li className="text-[15px] text-[#344054] mb-2 font-semibold">
             Stakeholder Categories 
             </li>
-            <p className="mb-2">{content}</p>
+            <p className="mb-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates quaerat debitis quia provident possimus nostrum, nobis, consequatur pariatur magnam quo iure minus suscipit vitae tempora ex qui? Fugiat, voluptatem ipsam.</p>
             </ul>  
         
         </div>
@@ -58,11 +58,11 @@ const Section1 =()=>{
             <li className="text-[15px] text-[#344054] mb-2 font-semibold ml-4">
             Engagement with stakeholders
             </li>
-           <p className="mb-4 ml-4">{content}</p>
+           <p className="mb-4 ml-4">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus ipsa ducimus, aperiam exercitationem fugit accusantium minus deleniti cum impedit reprehenderit maiores mollitia nihil, culpa est quisquam maxime rem voluptates consequuntur.</p>
             <li className="text-[15px] text-[#344054] mb-2 font-semibold ml-4">
             Stakeholder’s Feedback
             </li>
-            <p className="mb-2 ml-4">{content}</p>
+            <p className="mb-2 ml-4">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus ipsa ducimus, aperiam exercitationem fugit accusantium minus deleniti cum impedit reprehenderit maiores mollitia nihil, culpa est quisquam maxime rem voluptates consequuntur.</p>
             </ul>  
         
         </div>

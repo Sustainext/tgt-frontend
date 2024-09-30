@@ -19,7 +19,7 @@ const DateWidget = (props) => {
       <div className="mb-6">
         <div className="flex mb-2">
           <div className="relative">
-            <p className="text-sm text-gray-700 flex">
+            <p className="text-sm text-gray-700 font-[500] flex">
               {uiSchema["ui:title"]}
               <MdInfoOutline
                 data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(

@@ -29,15 +29,15 @@ const Section1 =()=>{
     // Nature
     // Protecting biodiversity and natural resources is a priority for us.`);
     const config = {
-      height: 525, // Set the height in pixels
+      height: 500, // Set the height in pixels
     };
     
     return (
         <>
         <div>
-        <p className="text-[15px] text-[#344054] mb-4">
+        {/* <p className="text-[15px] text-[#344054] mb-4">
             Enter data and images related to company awards and recognitions
-            </p>
+            </p> */}
             <div>
               <JoditEditor
                 // ref={editor}

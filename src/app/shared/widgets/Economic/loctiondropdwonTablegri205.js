@@ -151,12 +151,12 @@ const LocationDropdownTableGrid = ({
       }}
       className="mb-2 pb-2"
     >
-      <table id={id} className="table-fixed border-collapse w-full">
+      <table id={id} className="table-fixed border-collapse w-full rounded-md border border-gray-300" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
         <thead className="gradient-background">
           <tr className="h-[102px]">
             <th
               style={{ width: "17vw", textAlign: "left" }}
-              className="text-[12px] border border-gray-300 px-2 py-2 text-center"
+              className="text-[12px]  px-2 py-2 text-center"
             >
               <div className="flex items-center relative justify-center">
                 <p>Location Name</p>
@@ -170,7 +170,15 @@ const LocationDropdownTableGrid = ({
                     id="223"
                     place="top"
                     effect="solid"
-                    className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
+                    style={{
+                      width:"400px",
+                      backgroundColor: "#000",
+                      color: "white",
+                      fontSize: "12px",
+                      boxShadow: 3,
+                      borderRadius: "8px",
+                      zIndex:"1000",
+                    }}
                   />
                 </p>
               </div>
@@ -179,7 +187,7 @@ const LocationDropdownTableGrid = ({
               <th
                 key={idx}
                 style={{ width: "17vw", textAlign: "left" }}
-                className="text-[12px] border border-gray-300 px-2 py-2 text-center"
+                className="text-[12px] border-l border-gray-300 px-2 py-2 text-center"
               >
                 <div className="flex items-center relative justify-center">
                   <p>{item.title}</p>
@@ -194,17 +202,25 @@ const LocationDropdownTableGrid = ({
                         id={`tooltip-${shortKeyMap[item.tittlekey]}`}
                         place="top"
                         effect="solid"
-                        className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
+                        style={{
+                          width:"400px",
+                          backgroundColor: "#000",
+                          color: "white",
+                          fontSize: "12px",
+                          boxShadow: 3,
+                          borderRadius: "8px",
+                          zIndex:"1000",
+                        }}
                       />
                     </p>
                   )}
                 </div>
               </th>
             ))}
-            <th className="w-[5vw] border border-gray-300"></th>
+            <th className="w-[5vw]"></th>
           </tr>
         </thead>
-        <tbody className="border-b border-gray-300">
+        <tbody className="">
           {Object.entries(locationMap).map(([locationName]) => {
             const rows = localValue[locationName] || [];
             const isEmpty = rows.length === 0;
@@ -213,14 +229,14 @@ const LocationDropdownTableGrid = ({
               <React.Fragment key={locationName}>
                 {isEmpty ? (
                   <tr key={0}>
-                    <td className="p-2 border-l border-t border-r border-gray-300 text-center text-sm">
+                    <td className="p-2 border-t  border-gray-300 text-center text-[12px]">
                       {locationName}
                     </td>
                     {options.titles.map((title, colIndex) => (
-                      <td key={colIndex} className="p-1 border border-gray-300">
+                      <td key={colIndex} className="p-1 ">
                         <input
                           type={title.widgettype === "number" ? "number" : "text"}
-                          className="w-full p-2 rounded text-sm"
+                          className="w-full p-2 rounded text-[12px]"
                           placeholder="Enter Value"
                           value=""
                           onChange={(e) =>
@@ -246,16 +262,16 @@ const LocationDropdownTableGrid = ({
                       {rowIndex === 0 && (
                         <td
                           rowSpan={rows.length}
-                          className="p-2 border-l border-t border-r border-gray-300 text-center text-sm"
+                          className="p-2  border-t  border-gray-300 text-center text-[12px]"
                         >
                           {locationName}
                         </td>
                       )}
                       {options.titles.map((title, colIndex) => (
-                        <td key={colIndex} className="p-1 border border-gray-300">
+                        <td key={colIndex} className="p-1 border-l border-y border-gray-300">
                           <input
                             type={title.widgettype === "number" ? "number" : "text"}
-                            className="w-full p-2 rounded text-sm"
+                            className="w-full p-2 rounded text-[12px]"
                             placeholder="Enter Value"
                             value={row[title.tittlekey] || ""}
                             onChange={(e) =>
@@ -265,7 +281,7 @@ const LocationDropdownTableGrid = ({
                           />
                         </td>
                       ))}
-                      <td className="p-4 border-r  border-b border-gray-300 flex justify-center">
+                      <td className="p-4   border-y border-gray-300 flex justify-center">
                         <button
                           type="button"
                           onClick={() => onRemove(locationName, rowIndex)}
@@ -282,7 +298,7 @@ const LocationDropdownTableGrid = ({
                 <tr>
                   <td
                     rowSpan={1}
-                    className="p-2 border-l border-gray-300   text-center"
+                    className="p-2  text-center"
                   ></td>
                   <td
                     colSpan={3}
@@ -291,13 +307,13 @@ const LocationDropdownTableGrid = ({
                     <button
                       type="button"
                       onClick={() => addRow(locationName)}
-                      className="text-blue-500 flex items-center text-sm"
+                      className="text-blue-500 flex items-center text-[12px]"
                     >
                       Add Category
                       <MdAdd />
                     </button>
                   </td>
-                  <td className="p-4 border-x border-b border-gray-300 text-center"></td>
+                  <td className="p-4   text-center"></td>
                 </tr>
               </React.Fragment>
             );

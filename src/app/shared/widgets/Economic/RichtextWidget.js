@@ -23,7 +23,7 @@ const RichtextWidget = (props) => {
           <div className="relative flex">
             <div>
               <h2
-                className="flex text-[15px] text-gray-500 font-semibold"
+                className="flex text-[14px] text-gray-700 font-[500]"
                 style={{ display: uiSchema["ui:titledisplay"] }}
               >
                 {uiSchema["ui:title"]}

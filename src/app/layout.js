@@ -21,7 +21,6 @@ export default function RootLayout({ children }) {
       </head>
 
       <body className='min-h-[100vh]'>
-       
         <GlobalStateProvider>
           <FluentCProvider>
             <AuthProvider>
@@ -29,7 +28,6 @@ export default function RootLayout({ children }) {
             </AuthProvider>
           </FluentCProvider>
         </GlobalStateProvider>
-      
       </body>
     </html>
   );

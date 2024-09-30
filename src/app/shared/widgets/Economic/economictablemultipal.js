@@ -618,14 +618,15 @@ const Economictablemultipal = ({ id, value, onChange }) => {
         }}
         className="mb-2 pb-2"
       >
-        <table id={id} className="table-fixed border-collapse w-full">
+        <table id={id} className="table-fixed border border-gray-300  w-full rounded-md" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
           <thead className="gradient-background">
             <tr className="h-[102px]">
               {titles.map((item, idx) => (
                 <th
                   key={idx}
                   style={{ width: getColumnWidth(item.key), textAlign: "left" }}
-                  className="text-[13px] border border-gray-300 px-2 py-3 relative"
+                  className={` ${idx === 0 ? "" :"border-l" } text-[12px] px-4 py-3 relative border-gray-300`}
+
                 >
                   <div
                     className={`flex items-center ${
@@ -634,7 +635,7 @@ const Economictablemultipal = ({ id, value, onChange }) => {
                         : "justify-center"
                     }`}
                   >
-                    <p>{item.title}</p>
+                    <p className="text-[12px]">{item.title}</p>
                     {item.tooltipdisplay !== "none" && (
                       <p>
                         <MdInfoOutline
@@ -649,7 +650,15 @@ const Economictablemultipal = ({ id, value, onChange }) => {
                           id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
                           place="top"
                           effect="solid"
-                          className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
+                          style={{
+                            width:"400px",
+                            backgroundColor: "#000",
+                            color: "white",
+                            fontSize: "12px",
+                            boxShadow: 3,
+                            borderRadius: "8px",
+                            zIndex:"1000",
+                          }}
                         />
                       </p>
                     )}
@@ -657,7 +666,7 @@ const Economictablemultipal = ({ id, value, onChange }) => {
                 </th>
               ))}
               <th
-                className="text-[12px] border border-gray-300 px-4 py-3 relative"
+              className="text-[12px] px-4 py-3 relative"
                 style={{ width: "5vw" }}
               >
                 {" "}
@@ -666,7 +675,8 @@ const Economictablemultipal = ({ id, value, onChange }) => {
           </thead>
           <tbody>
             {localValue.map((row, rowIndex) => (
-              <tr key={rowIndex} className="border border-gray-300">
+              <tr key={rowIndex} 
+              className="border-r border-gray-300">
                 {titles.map((item, cellIndex) => {
                   const isEnum = Array.isArray(item.options);
                   const isMulti = isMultiSelect(item.key);
@@ -674,7 +684,8 @@ const Economictablemultipal = ({ id, value, onChange }) => {
                   return (
                     <td
                       key={cellIndex}
-                      className="border border-gray-300 text-center"
+                      className={` ${cellIndex === 0 ? "" :"border-l " }  border-t border-gray-300 text-center`}
+                 
                     >
                       {isEnum ? (
                         isMulti ? (
@@ -706,7 +717,7 @@ const Economictablemultipal = ({ id, value, onChange }) => {
                                 value: option,
                                 label: option,
                               }))}
-                              className="text-sm w-full"
+                              className="text-[12px] w-full"
                               placeholder="Select options"
                               components={{ Option: CustomOption }}
                               closeMenuOnSelect={false}
@@ -725,7 +736,7 @@ const Economictablemultipal = ({ id, value, onChange }) => {
                                   e.target.value
                                 )
                               }
-                              className="text-sm pl-2 py-2 w-full border-b"
+                              className="text-[12px] pl-2 py-2 w-full border-b"
                             >
                               <option value="">Select</option>
                               {(item.key === "MitigationStrategies"
@@ -750,7 +761,7 @@ const Economictablemultipal = ({ id, value, onChange }) => {
                               e.target.value
                             )
                           }
-                          className="text-sm pl-2 py-2 w-full"
+                          className="text-[12px] pl-2 py-2 w-full"
                           placeholder="Enter value"
                         />
                       )}
@@ -768,14 +779,14 @@ const Economictablemultipal = ({ id, value, onChange }) => {
                                 e.target.value
                               )
                             }
-                            className="text-sm pl-2 py-2 w-full mt-2"
+                            className="text-[12px] pl-2 py-2 w-full mt-2"
                             placeholder="Please specify"
                           />
                         )}
                     </td>
                   );
                 })}
-                <td className="border border-gray-300 p-4 text-center w-[45%]">
+                <td className="  border-t border-gray-300  p-4 text-center w-[45%]">
                   <button
                     type="button"
                     onClick={() => removeRow(rowIndex)}

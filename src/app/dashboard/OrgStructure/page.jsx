@@ -440,8 +440,8 @@ const token = getAuthToken();
   }, [token]);
 
   const fetchHierarchy = () => {
-    axios
-      .get(`${process.env.BACKEND_API_URL}/structure`,axiosConfig)
+    axiosInstance
+      .get(`${process.env.BACKEND_API_URL}/structure`)
       .then((response) => {
         setRawData(response.data);
         const filtered = filterData(response.data);

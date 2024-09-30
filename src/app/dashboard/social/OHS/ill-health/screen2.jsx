@@ -208,8 +208,8 @@ const Screen2 = ({ location, year, month }) => {
 
   return (
     <>
-      <div
-        className="mx-2 p-3 mb-6 pb-6 rounded-md"
+    <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
@@ -217,7 +217,7 @@ const Screen2 = ({ location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Ill health
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
@@ -247,19 +247,21 @@ const Screen2 = ({ location, year, month }) => {
                 }}
               ></ReactTooltip>
             </h2>
-            <h2 className="flex mx-2 text-[11px] text-gray-500 font-semibold mb-2">
+            <h2 className="flex mx-2 text-[13px] text-gray-500 font-semibold mb-2">
               for workers who are not employees but whose work and workplace is
               controlled by the organization
             </h2>
           </div>
-
           <div className="w-[20%]">
-          <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-          <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 403-10b
+            <div className="float-end">
+              <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 403-10b
+                </div>
               </div>
             </div>
           </div>
+     
         </div>
         <div className="mx-2">
           <Form
@@ -276,27 +278,27 @@ const Screen2 = ({ location, year, month }) => {
         </div>
         <div className="flex right-1 mx-2">
           {location && year && (
-            <button
+        <button
               type="button"
               className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
               onClick={handleAddCommittee}
             >
-              Add category <MdAdd className="text-lg" />
+              Add category <MdAdd className="text-[14px] mt-1 text-[#007EEF]" />
             </button>
           )}
         </div>
 
-        <div className="mb-6">
+    <div className='mt-4'>
           <button
             type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !location || !year ? "cursor-not-allowed" : ""
-            }`}
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? "cursor-not-allowed" : ""
+              }`}
             onClick={handleSubmit}
             disabled={!location || !year}
           >
             Submit
           </button>
+
         </div>
       </div>
       {loopen && (

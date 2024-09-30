@@ -4,9 +4,10 @@ import { IoClose } from "react-icons/io5";
 import { AiOutlineEdit, AiOutlineWarning } from "react-icons/ai";
 import ProfileImage from "@/app/shared/components/ProfileImage";
 import { Oval } from "react-loader-spinner";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axiosInstance, { patch } from "../utils/axiosMiddleware";
+import { useRouter } from "next/navigation";
 
 const Modal = dynamic(() => import("@/app/shared/components/Modal"), {
   ssr: false,
@@ -24,6 +25,8 @@ const Profile = ({ onClose }) => {
   const [isShow, setIsShow] = useState(false);
   const isMounted = useRef(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     const user_id = parseInt(localStorage.getItem("user_id") || "0");
@@ -44,6 +47,9 @@ const Profile = ({ onClose }) => {
       } catch (error) {
         setIsModalOpen(true);
         console.error("Error fetching user details:", error);
+        if (error.redirectToLogin) {
+          router.push('/login');
+      }
       }
       setLoading(false);
     };

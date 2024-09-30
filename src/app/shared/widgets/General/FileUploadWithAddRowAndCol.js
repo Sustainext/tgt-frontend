@@ -109,7 +109,7 @@ const FileUploadWithAddRowAndCol = (props) => {
     <>
       <div className="mb-6">
         <div className="flex mb-2">
-          <div className="relative w-full">
+          {/* <div className="relative w-full">
             <p className="text-sm text-gray-700 flex">
               {uiSchema["ui:title"]}
               <MdInfoOutline
@@ -132,7 +132,7 @@ const FileUploadWithAddRowAndCol = (props) => {
                 }}
               />
             </p>
-          </div>
+          </div> */}
         </div>
 
         {localMembershipAssociations.length > 0 && localMembershipAssociations[0].length > 0 && (

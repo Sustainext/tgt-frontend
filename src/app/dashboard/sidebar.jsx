@@ -259,8 +259,8 @@ const Sidenav = () => {
                               : ""
                           }`}
                           onClick={() => {
-                            toggleSubmenu(index); 
-                            setActiveIndex(index); 
+                            toggleSubmenu(subIndex); 
+                            setActiveIndex(subIndex); 
                             setOpen(!open); 
                           }}
                         >

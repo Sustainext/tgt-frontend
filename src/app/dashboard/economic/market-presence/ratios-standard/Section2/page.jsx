@@ -44,11 +44,11 @@ const Section2 = () => {
       <div className="flex flex-col justify-start overflow-x-hidden ">
         <div className="flex items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-[60%]">
-            <div className="text-left mb-4 ml-3 pt-5">
+           <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-sm">Economic </p>
               <div className="flex">
                 <div>
-                  <p className="gradient-text text-[22px] font-bold pt-1">
+                 <p className="gradient-text text-[22px] font-bold py-2">
                     Economic Performance
                   </p>
                 </div>

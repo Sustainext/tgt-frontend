@@ -37,7 +37,7 @@ stakeholders informed of our progress.`
             <p className="text-[15px] text-[#344054] mb-2 font-semibold">
         Point of Contact: 
             </p>
-            <p className="mb-4 text-sm">{content2}</p>
+            <p className="mb-4 text-sm">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore omnis eaque itaque exercitationem iure cupiditate error maiores corrupti perspiciatis laudantium fuga dolorem ea vero reiciendis atque harum, neque fugiat velit.</p>
         </div>
         </div>
         </>

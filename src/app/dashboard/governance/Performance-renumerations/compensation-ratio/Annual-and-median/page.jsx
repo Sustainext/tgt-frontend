@@ -188,7 +188,7 @@ const AnnualAndMedian = ({ selectedLocation, year }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
             Annual total compensation & Median annual total compensation
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
@@ -234,7 +234,7 @@ const AnnualAndMedian = ({ selectedLocation, year }) => {
             widgets={widgets}
           />
         </div>
-        <div className="mb-6">
+        <div className="mt-4">
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${

@@ -5,7 +5,7 @@ const Section2 = ({ section14_1_1Ref }) => {
   return (
     <>
       <div ref={section14_1_1Ref} id="section14_1_1">
-        <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
+        <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
           14.1.1 Management of material topic
         </h3>
         <div className="mb-6">

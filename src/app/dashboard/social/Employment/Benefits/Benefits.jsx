@@ -272,7 +272,7 @@ const Benefitsscreen = ({ location, year, month }) => {
   return (
     <>
       <div
-        className="pb-11 rounded-md"
+        className="pb-11 mx-2 rounded-md"
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",

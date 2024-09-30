@@ -13,7 +13,7 @@ const TextareaWidget3 = (props) => {
       <div className="mb-6">
         <div className="flex mb-2">
           <div className=" relative">
-            <h2 className="mb-2 text-[14px] text-gray-500 font-semibold flex">
+            <h2 className="mb-2 text-[14px] text-gray-700 font-[500] flex">
               {uiSchema["ui:hading"]}
 
             <MdInfoOutline
@@ -40,7 +40,7 @@ const TextareaWidget3 = (props) => {
                 }}
               ></ReactTooltip>
             </h2>
-            <p className="text-[14px] text-gray-700 flex">
+            <p className="text-[14px] text-gray-700 font-[500] flex">
               {uiSchema["ui:title"]}
               <MdInfoOutline
                 data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(

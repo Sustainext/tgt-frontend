@@ -11,9 +11,11 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
+import CommoninputWidget from "../../../shared/widgets/Input/commoninputWidget";
 const widgets = {
-  inputWidget: inputWidget2,
+  CommoninputWidget: CommoninputWidget,
 };
+
 
 const view_path = "gri-governance-process-2-25-d-stakeholders";
 const client_id = 1;
@@ -33,30 +35,35 @@ const schema = {
   },
 };
 
-const uiSchema = {
-  items: {
-    "ui:order": ["Q1"],
-    Q1: {
-      "ui:title":
+
+    const uiSchema = {
+      items: {
+        "ui:order": ["Q1"],
+        Q1: {
+          "ui:title":
         "Describe how the stakeholders who are the intended users of the grievance mechanisms are involved in the design, review, operation, and improvement of these mechanisms",
       "ui:tooltip":
         "The organization can describe, for example, how it engages with stakeholders who are the intended users of the grievance mechanisms, to understand how they want to access the mechanisms to raise concerns, and their expectations about how the mechanisms will operate.",
-      "ui:tooltipdisplay": "block",
-      "ui:widget": "inputWidget",
-      "ui:horizontal": true,
-      "ui:options": {
-        label: false,
+          "ui:titledisplay": "none",
+          "ui:widgetType": "textarea",
+          "ui:inputfildtype": "text",
+          "ui:widget": "CommoninputWidget",
+          "ui:horizontal": true,
+          "ui:options": {
+            label: false,
+          },
+        },
+    
+        "ui:options": {
+          orderable: false,
+          addable: false,
+          removable: false,
+          layout: "horizontal",
+        },
       },
-    },
+    };
 
-    "ui:options": {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: "horizontal", // Set layout to horizontal
-    },
-  },
-};
+
 
 const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
   const [formData, setFormData] = useState([{}]);
@@ -167,21 +174,14 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
 
   return (
     <>
-      <div
-        className="mx-2 p-3 mb-6 pb-6 rounded-md"
-        style={{
-          boxShadow:
-            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
-        }}
-      >
-        <div className="mb-4 flex">
+   <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+        <div className=" flex">
           <div className="w-[80%] relative">
-            {/*<h2 className="flex mx-2 text-[15px] font-[500] mb-2">
-                        Highest governance body processes to prevent conflict of interest
-                            <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
-                                data-tooltip-content="This section documents the data corresponding to the processes for the highest governance body to ensure that conflicts of
-interest are prevented and mitigated." className="mt-1.5 ml-2 text-[15px]" />
-                            <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
+            <h2 className="flex mx-2 text-[15px] font-[500] mb-2">
+            Describe how the stakeholders who are the intended users of the grievance mechanisms are involved in the design, review, operation, and improvement of these mechanisms
+                            <MdInfoOutline data-tooltip-id={`tooltip-$e189`}
+                                data-tooltip-content="The organization can describe, for example, how it engages with stakeholders who are the intended users of the grievance mechanisms, to understand how they want to access the mechanisms to raise concerns, and their expectations about how the mechanisms will operate." className="mt-1.5 ml-2 text-[15px]" />
+                            <ReactTooltip id={`tooltip-$e189`} place="top" effect="solid" style={{
                                 width: "290px", backgroundColor: "#000",
                                 color: "white",
                                 fontSize: "12px",
@@ -190,7 +190,7 @@ interest are prevented and mitigated." className="mt-1.5 ml-2 text-[15px]" />
                                 textAlign: 'left',
                             }}>
                             </ReactTooltip>
-                        </h2> */}
+                        </h2>
           </div>
 
           <div className="w-[20%]">
@@ -214,7 +214,7 @@ interest are prevented and mitigated." className="mt-1.5 ml-2 text-[15px]" />
           />
         </div>
 
-        <div className="mb-6">
+        <div className="mt-4">
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${

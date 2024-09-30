@@ -29,7 +29,7 @@ const GovernanceRowWidget = ({ value, onChange, options }) => {
             value={item.name}
             onChange={(e) => handleChange(index, "name", e.target.value)}
             options={options}
-            divclass="flex text-center justify-center h-[47px]"
+            divclass="flex text-center justify-left h-[47px]"
           />
           <SelectField2
             label="Executive Power"
@@ -42,7 +42,7 @@ const GovernanceRowWidget = ({ value, onChange, options }) => {
             handleChange={(newField, newValue) =>
               handleChange(index, newField, newValue)
             }
-               divclass="flex justify-left h-[49px]"
+               divclass="flex justify-left h-[47px]"
           />
           <SelectField
             label="Independence"
@@ -51,7 +51,7 @@ const GovernanceRowWidget = ({ value, onChange, options }) => {
               handleChange(index, "independence", e.target.value)
             }
             options={options}
-               divclass="flex justify-left h-[49px]"
+               divclass="flex justify-left h-[47px]"
           />
           <InputField
             label="Tenure On The Governance Body"
@@ -92,7 +92,7 @@ const GovernanceRowWidget = ({ value, onChange, options }) => {
             value={item.gender}
             onChange={(e) => handleChange(index, "gender", e.target.value)}
             options={options}
-               divclass="flex justify-left h-[48px]"
+               divclass="flex justify-left h-[47px]"
           />
           <InputField
             label="Under-Represented Social Groups"
@@ -135,7 +135,7 @@ const InputField = ({ label, value, onChange, options, divclass }) => {
     <div className="relative ml-2">
       <div className={divclass}>
         <div>
-          <label className=" text-black/60 text-sm font-bold mb-2  ">
+          <label className="text-gray-700 font-[500] text-[13px]  mb-2  ">
             {label}
           </label>
         </div>
@@ -145,7 +145,7 @@ const InputField = ({ label, value, onChange, options, divclass }) => {
         </div>
       </div>
       <input
-        className="appearance-none border-b rounded w-[175px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        className="appearance-none border-b rounded w-[175px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-[12px]"
         type="text"
         value={value || ""}
         onChange={onChange}
@@ -163,7 +163,7 @@ const SelectField = ({ label, value, onChange, options,divclass }) => {
     <div className=" relative">
       <div className={divclass}>
         <div className="ml-4">
-          <label className=" text-black/60 text-sm font-bold mb-2  ">
+          <label className=" text-gray-700 font-[500] text-[13px]  mb-2  ">
             {label}
           </label>
         </div>
@@ -173,7 +173,7 @@ const SelectField = ({ label, value, onChange, options,divclass }) => {
         </div>
       </div>
       <select
-        className="appearance-none text-sm border-b rounded w-[175px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        className="appearance-none text-[12px] border-b rounded w-[175px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         value={value || ""}
         onChange={onChange}
       >
@@ -204,7 +204,7 @@ const SelectField2 = ({
     <div className=" relative">
      <div className={divclass}>
         <div className="ml-4">
-          <label className=" text-black/60 text-sm font-bold mb-2   ">
+          <label className=" text-gray-700 font-[500] text-[13px]  mb-2   ">
             {label}
           </label>
         </div>
@@ -214,7 +214,7 @@ const SelectField2 = ({
         </div>
       </div>
       <select
-        className="appearance-none text-sm border-b rounded w-[175px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        className="appearance-none text-[12px] border-b rounded w-[175px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         value={value || ""}
         onChange={(e) => {
           onChange(e);
@@ -230,7 +230,7 @@ const SelectField2 = ({
       </select>
       {value === "Others (Please specify)" && (
         <input
-          className="appearance-none border-b rounded w-[175px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="appearance-none border-b rounded w-[175px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-[12px]"
           type="text"
           value={otherValue}
           onChange={(e) => handleChange("otherExecutivePower", e.target.value)}

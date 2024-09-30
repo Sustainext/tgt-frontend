@@ -18,15 +18,15 @@ const SustainabilityJourneyTable=()=>{
                 {col.map((item, idx) => (
                     <th
                         key={idx}
-                        style={{ minWidth: "120px", textAlign: "center" }}
+                        style={{ minWidth: "120px", textAlign: "left" }}
                         className={`text-[12px] border-r px-4 py-4 ${
                             idx === 0 ? 'rounded-tl-md' : '' // Top-left corner
                         } ${
                             idx === col.length - 1 ? 'rounded-tr-md' : '' // Top-right corner
                         } text-gray-500`}
                     >
-                        <div className="flex justify-center items-center">
-                            <p className="flex items-center">
+                        <div className="flex">
+                            <p className="flex">
                                 {item}
                             </p>
                         </div>
@@ -35,10 +35,10 @@ const SustainabilityJourneyTable=()=>{
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td className="border-t border-r border-gray-200 p-4 text-center">Customer</td>
-                <td className="border border-gray-200 p-4 rounded-bl-md text-center">Row 2, Cell 1</td>
-                <td className="border border-gray-200 p-4 rounded-br-md text-center">Row 2, Cell 2</td>
+            <tr className="text-[13px]">
+                <td className="border-t border-r border-gray-200 p-4 text-left">Data</td>
+                <td className="border border-gray-200 p-4 rounded-bl-md text-left">Data</td>
+                <td className="border border-gray-200 p-4 rounded-br-md text-left">Data</td>
                 {/* Ensure all cells have border applied */}
             </tr>
            

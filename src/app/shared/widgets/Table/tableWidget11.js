@@ -34,12 +34,16 @@ const CustomTableWidget11 = ({ id, schema, uiSchema, value, required, onChange, 
     };
     return (
         <div style={{ overflowY: 'auto', maxHeight: '400px' }}>
-            <table id={id} className="rounded-md border border-gray-300 w-full">
-                <thead className="gradient-background">
-                    <tr>
+            <table id={id} className="border border-gray-300 w-full" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
+                <thead className="gradient-background h-[54px]">
+                    <tr >
                         {uiSchema['ui:options'].titles.map((item, idx) => (
-                            <th key={idx} style={{ minWidth: '120px', textAlign: 'left' }} className="text-[12px] border border-gray-300 px-2 py-2">
-                                <div className='flex'>
+                            <th key={idx} style={{ minWidth: '120px'}} 
+                            className={`text-[12px] w-[30%] px-2 py-2 ${
+                                idx === 0 ? "" : " border-l border-gray-300"
+                              }`}
+                           >
+                                <div className='flex justify-center relative'>
                                     <p>{item.title}</p>
                                     <MdInfoOutline
                                         data-tooltip-id={`tooltip-${item.title2}`}
@@ -50,12 +54,20 @@ const CustomTableWidget11 = ({ id, schema, uiSchema, value, required, onChange, 
                                         id={`tooltip-${item.title2}`}
                                         place="top"
                                         effect="solid"
-                                        className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
+                                        style={{
+                                            width:"400px",
+                                            backgroundColor: "#000",
+                                            color: "white",
+                                            fontSize: "12px",
+                                            boxShadow: 3,
+                                            borderRadius: "8px",
+                                            zIndex:"1000",
+                                          }}
                                     />
                                 </div>
                             </th>
                         ))}
-                        <th className="text-[12px] border border-gray-300 px-2 py-2">Actions</th>
+                        <th className="text-[12px]  px-2 py-2"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,13 +79,16 @@ const CustomTableWidget11 = ({ id, schema, uiSchema, value, required, onChange, 
                                 const inputType = uiSchema['ui:options'].titles.find(t => t.title2 === key)?.type || 'text';
 
                                 return (
-                                    <td key={cellIndex} className="border border-gray-300 p-3 text-center">
+                                    <td key={cellIndex} 
+                                    className={`p-3 text-center ${
+                                        cellIndex === 3 ? "border-t border-gray-300" : "border-t border-l border-gray-300"
+                                      }`}>
                                         {isEnum ? (
                                             <>
                                                 <select
                                                     value={item[key]}
                                                     onChange={(e) => updateField(rowIndex, key, e.target.value, isEnum)}
-                                                    className="text-sm pl-2 py-2 w-full"
+                                                    className="text-[12px]  py-2 w-full border-b border-gray-700"
                                                     required={required}>
                                                     <option value="">Select Type of Incident</option>
                                                     {schema.items.properties[key].enum.map((option) => (
@@ -81,13 +96,13 @@ const CustomTableWidget11 = ({ id, schema, uiSchema, value, required, onChange, 
                                                     ))}
                                                 </select>
                                                 {key === 'typeofincident' && item[key] === 'Others' && (
-                                                    <div className="flex items-center mt-2">
+                                                    <div className="flex items-center justify-center mt-2">
                                                         <input
                                                             type="text"
                                                             placeholder="Please specify"
                                                             value={item['otherDetails'] || ''}
                                                             onChange={(e) => updateField(rowIndex, 'otherDetails', e.target.value, false)}
-                                                            className="text-sm pl-2 py-2 w-full border"
+                                                            className="text-[12px] py-2 w-full  border-b border-gray-700"
                                                         />
                                                     </div>
                                                 )}
@@ -101,7 +116,8 @@ const CustomTableWidget11 = ({ id, schema, uiSchema, value, required, onChange, 
                                                         required={required}
                                                         value={item[key]}
                                                         onChange={(e) => updateField(rowIndex, key, e.target.value, false)}
-                                                        className="text-sm pl-2 py-2 w-full border"
+                                                        className="text-[12px] pl-2 py-2 w-[60%] "
+                                                           placeholder="Enter data"
                                                     />
                                                 ) : (
                                                     <button onClick={() => formContext.onRemove(rowIndex)} title="Remove row" className='text-center mx-auto'>

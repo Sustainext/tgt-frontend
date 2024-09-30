@@ -18,9 +18,9 @@ const LanguageSettings = () => {
       const widget = new window.fluentcWidget({
         widgetID: "33d7c1ce-b762-41c9-8b89-1606844f8707",
       });
-      widget.setupWidget('fluentc-widget');
+      widget.setupWidget('fluentc-widget',{defaultLanguage: 'ja'});
 
-      widget.setupWidget('fluentc-widget', {defaultLanguage: 'ja'});
+      // widget.setupWidget('fluentc-widget', {defaultLanguage: 'ja'});
       hasLoadedWidget.current = true;
     }
   }, []);

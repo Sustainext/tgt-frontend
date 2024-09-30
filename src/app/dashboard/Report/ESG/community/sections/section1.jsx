@@ -24,7 +24,7 @@ const Section1 = ({ section14_1Ref }) => {
         />
         </div>
     
-        <div>
+        <div className="shadow-md rounded-md mb-4">
             <CommunityTable/>
         </div>
         <div>
@@ -35,7 +35,7 @@ const Section1 = ({ section14_1Ref }) => {
           rows={4}
         />
         </div>
-        <div>
+        <div className="shadow-md rounded-md mb-4">
           <CommunityTable2/>
         </div>
       </div>

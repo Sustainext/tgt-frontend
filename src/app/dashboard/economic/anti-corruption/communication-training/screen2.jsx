@@ -211,16 +211,10 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, datarefresh,setDatarefresh }
 
   return (
     <>
-      <div
-        className="mx-2 p-3 mb-6 pb-6 rounded-md"
-        style={{
-          boxShadow:
-            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
-        }}
-      >
+   <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
         <div className="mb-2 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Total number of employees that the organization’s anti-corruption
               policies and procedures have been communicated to, broken down by
               employee category and region.
@@ -282,11 +276,11 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, datarefresh,setDatarefresh }
           <>
             {selectedOrg && year && (
               <div className="mx-2 pb-6">
-                <table className="table-fixed border-collapse w-full">
+            <table  className="table-fixed border-collapse w-full rounded-md border border-gray-300" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
                   <thead className="gradient-background">
                     <tr className="h-[102px]">
                       <th
-                        className="text-[12px] border border-gray-300 px-2 py-2 text-left"
+                        className="text-[12px] border-b border-gray-300 px-2 py-2 text-left"
                         style={{ width: "17vw" }}
                       >
                         <div className="flex items-center justify-center">
@@ -315,7 +309,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, datarefresh,setDatarefresh }
                         </div>
                       </th>
                       <th
-                        className="text-[12px] border border-gray-300 px-2 py-2 text-left"
+                        className="text-[12px] border-l border-b border-gray-300 px-2 py-2 text-left"
                         style={{ width: "17vw" }}
                       >
                         <div className="flex items-center justify-center">
@@ -344,7 +338,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, datarefresh,setDatarefresh }
                         </div>
                       </th>
                       <th
-                        className="text-[12px] border border-gray-300 px-2 py-2 text-left"
+                        className="text-[12px] border-l border-b border-gray-300 px-2 py-2 text-left"
                         style={{ width: "17vw" }}
                       >
                         <div className="flex items-center justify-center">
@@ -377,7 +371,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, datarefresh,setDatarefresh }
                         </div>
                       </th>
                       <th
-                        className="text-[12px] border border-gray-300 px-2 py-2 text-left"
+                        className="text-[12px] border-l border-b border-gray-300 px-2 py-2 text-left"
                         style={{ width: "17vw" }}
                       >
                         <div className="flex items-center justify-center">
@@ -409,7 +403,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, datarefresh,setDatarefresh }
                   </thead>
                   <tbody className="border border-gray-300">
                     <tr>
-                      <td colSpan="4" className="text-center py-4">
+                      <td colSpan="4" className="text-center py-4 text-[12px]">
                         Please select the location below
                       </td>
                     </tr>
@@ -420,7 +414,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, datarefresh,setDatarefresh }
           </>
         )}
 
-        <div className="mb-6">
+        <div className="mt-4">
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${

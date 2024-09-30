@@ -28,7 +28,7 @@ const schema = {
   items: {
     type: 'object',
     properties: {
-      category: { type: "string", title: "Category" },
+      category: { type: "string", title: "Employee Category" },
       male: { type: "integer", title: "Male" },
       female: { type: "integer", title: "Female" },
       nonBinary: { type: "integer", title: "Non-Binary" },
@@ -48,7 +48,7 @@ const uiSchema = {
   "ui:widget": "TableWidget",
   'ui:options': {
     titles: [
-      { title: "Number of employees per employee category", tooltip: "Please specify the category.", colSpan: 1 },
+      { title: "Employee Category", tooltip: "Please specify the category.", colSpan: 1 },
       { title: "Gender", tooltip: "Please specify the gender of individuals.", colSpan: 4 },
       { title: "Age Group", tooltip: "Please specify the age group of individuals.", colSpan: 4 },
       { title: "Diversity groups", tooltip: "Please specify the diversity groups of individuals.", colSpan: 2 },
@@ -64,7 +64,7 @@ const uiSchema = {
       { title: "> 50 years", title2: "MoreThan50", tooltip: "Please specify the number of individuals over 50 years old.", colSpan: 1, type: "number" },
       { title: "Total number of employee", title2: "totalAge", tooltip: "Please specify the total number of individuals.", colSpan: 1, type: "number" },
       { title: "Minority group", title2: "Minoritygroup",tooltip: "Please specify the number of minority group individuals.", colSpan: 1, type: "number" },
-      { title: "Vulnerable Communities", title2: "vulnerableCommunities", tooltip: "Please specify the number of vulnerable community individuals.", colSpan: 1, type: "number" },
+      { title: "Vulnerable Groups", title2: "vulnerableCommunities", tooltip: "Please specify the number of vulnerable community individuals.", colSpan: 1, type: "number" },
 
     ]
   }
@@ -202,7 +202,7 @@ const Screen1 = ({ location, year }) => {
 
   return (
     <>
-      <div className="mx-2 p-3 mb-6 pb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+     <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
         <div className='mb-4 flex'>
          <div className="w-[80%] relative">
            <h2 className="flex mx-2 text-[15px] font-[500] mb-2">
@@ -224,11 +224,14 @@ within the organization’s governance bodies by gender, age group and diversity
           </div>
 
           <div className='w-[20%]'>
+            <div className='float-end'>
             <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                 GRI 405-1b
               </div>
             </div>
+            </div>
+         
           </div>
         </div>
         <div className='mx-2'>

@@ -28,7 +28,7 @@ const customStyles = {
   }),
   placeholder: (provided) => ({
     ...provided,
-    fontSize: '15px',
+    fontSize: '12px',
     color: '#6B7280',  
   }),
   singleValue: (provided) => ({
@@ -107,7 +107,7 @@ const CurrencyWidget = (props) => {
           <input
             type={uiSchema["ui:inputfildtype"] || "text"}
             placeholder="Enter amount"
-            className="py-4 text-[15px] text-neutral-600 pl-2 leading-tight border-r border-gray-300 focus:outline-none focus:bg-white cursor-pointer w-[50%]"
+            className="py-4 text-[12px] text-neutral-900 pl-2 leading-tight border-r border-gray-300 focus:outline-none focus:bg-white cursor-pointer w-[50%]"
             value={inputValue}
             onChange={handleInputChange}
             min="0"
@@ -115,7 +115,7 @@ const CurrencyWidget = (props) => {
           />
           <Select
             styles={customStyles}
-            className="w-[50%] border-none"
+            className="w-[50%] border-none text-[12px] text-neutral-900"
             placeholder="Select Currency"
             value={currencyOptions.find(option => option.value === selectedCurrency) || null}
             onChange={handleCurrencyChange}

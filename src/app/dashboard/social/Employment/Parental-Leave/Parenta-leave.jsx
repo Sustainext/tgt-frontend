@@ -76,10 +76,10 @@ const Parentaleavescreen = ({ location, year, month }) => {
     };
 
     const handleChange = (e) => {
-        setFormData(e.formData); // Ensure you are extracting formData from the event
+        setFormData(e.formData); 
     };
 
-    // The below code on updateFormData
+   
     let axiosConfig = {
         headers: {
             Authorization: 'Bearer ' + token,
@@ -158,17 +158,15 @@ const Parentaleavescreen = ({ location, year, month }) => {
             LoaderClose();
         }
     };
-    //Reloading the forms -- White Beard
-    useEffect(() => {
-        //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-    }, [r_schema, r_ui_schema])
+    
 
-    // console log the form data change
+
+
     useEffect(() => {
         console.log('Form data is changed -', formData)
     }, [formData])
 
-    // fetch backend and replace initialized forms
+
     useEffect(() => {
         if (location && year && month) {
             loadFormData();
@@ -192,8 +190,8 @@ const Parentaleavescreen = ({ location, year, month }) => {
     return (
         <>
             <ToastContainer style={{ fontSize: "12px" }} />
-            <div className="mx-2 p-3 mb-6 pb-4 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
-                <div className='mb-4 flex'>
+            <div className="pb-11 mx-2 p-3 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+                <div className='mb-4 flex '>
                    <div className="w-[80%] relative">
                        <h2 className="flex mx-2 text-[15px] font-[500] mb-2">
                             Parental leave
@@ -201,7 +199,7 @@ const Parentaleavescreen = ({ location, year, month }) => {
                                 data-tooltip-content="This section documents data corresponding
                                 to the number of employees entitled to, taking,
                                returning from, and remaining employed after
-                               parental leave, broken down by gender." className="mt-1.5 ml-2 text-[15px]" />
+                               parental leave, broken down by gender." className="mt-1 ml-2 text-[15px]" />
                             <ReactTooltip id={`tooltip-employees`} place="top" effect="solid" style={{
                                 width: "290px", backgroundColor: "#000",
                                 color: "white",
@@ -244,7 +242,7 @@ const Parentaleavescreen = ({ location, year, month }) => {
                     validator={validator}
                     widgets={widgets}
                 />
-                <div className='mb-8'>
+                <div className='mt-4 me-1'>
                 <button type="button"
                         className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? 'cursor-not-allowed' : ''}`}
                         onClick={handleSubmit}

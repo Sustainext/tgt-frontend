@@ -23,6 +23,12 @@ import Materiality from "./materilality/page";
 import SustainibilityJourney from "./sustainibility-journey/page";
 import CorporateGovernance from "./corporate-governance/page";
 import Community from "./community/page";
+import EconomicPerformance from './economic-performance/page'
+import CustomerProductService from  './customer-product-services/page'
+import People from "./people/page";
+import MessageFromCEO from  './message-from-ceo/page'
+import Environment from "./environment/page";
+
 const ESGReport = () => {
   const [activeStep, setActiveStep] = useState(1);
   const handleNext = () => {
@@ -96,13 +102,7 @@ const ESGReport = () => {
               {activeStep === 1 && (
                 <>
                   <div>
-                    {/* <CoverSheet
-                      display={display}
-                      imageSrc={imageSrc}
-                      setImage={setImage}
-                      setSelectedImage={setSelectedImage}
-                      selectedImage={selectedImage}
-                    /> */}
+                   <MessageFromCEO/>
                   </div>
                 </>
               )}
@@ -178,38 +178,47 @@ const ESGReport = () => {
                   </>
                 </div>
               )}
-              {/* {activeStep === 11 && (
+              {activeStep === 11 && (
                 <div>
                   <>
                     <div className="mb-4">
-                      <Community/>
+                      <EconomicPerformance/>
                     </div>
                   </>
                 </div>
-              )}  */}
-              {/* {activeStep === 12 && (
+              )} 
+              {activeStep === 12 && (
                 <div>
                   <>
                     <div className="mb-4">
-                      <Community/>
+                      <Environment/>
                     </div>
                   </>
                 </div>
-              )}  */}
-              {/* {activeStep === 13 && (
+              )} 
+              {activeStep === 13 && (
                 <div>
                   <>
                     <div className="mb-4">
-                      <Community/>
+                      <People/>
                     </div>
                   </>
                 </div>
-              )}  */}
+              )} 
               {activeStep === 14 && (
                 <div>
                   <>
                     <div className="mb-4">
                       <Community />
+                    </div>
+                  </>
+                </div>
+              )}
+               {activeStep === 15 && (
+                <div>
+                  <>
+                    <div className="mb-4">
+                      <CustomerProductService />
                     </div>
                   </>
                 </div>

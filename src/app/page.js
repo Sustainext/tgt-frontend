@@ -27,7 +27,7 @@ export default function Home() {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      await login(email, password);
+      await login(email, password, rememberMe);
       if (rememberMe) {
         localStorage.setItem("rememberedUser", JSON.stringify({ email, password }));
       } else {

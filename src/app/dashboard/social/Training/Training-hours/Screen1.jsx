@@ -1,29 +1,37 @@
-import React, { useState, useEffect, useRef } from 'react';
-import Form from '@rjsf/core';
-import validator from '@rjsf/validator-ajv8';
-import CustomTableWidget9 from "../../../../shared/widgets/Table/tableWidget9"
-import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline, MdOutlineFileUpload, MdFilePresent, MdDelete, MdClose } from "react-icons/md";
-import { Tooltip as ReactTooltip } from 'react-tooltip';
-import 'react-tooltip/dist/react-tooltip.css';
-import axios from 'axios';
+import React, { useState, useEffect, useRef } from "react";
+import Form from "@rjsf/core";
+import validator from "@rjsf/validator-ajv8";
+import CustomTableWidget9 from "../../../../shared/widgets/Table/tableWidget9";
+import {
+  MdAdd,
+  MdOutlineDeleteOutline,
+  MdInfoOutline,
+  MdOutlineFileUpload,
+  MdFilePresent,
+  MdDelete,
+  MdClose,
+} from "react-icons/md";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Oval } from 'react-loader-spinner';
+import { Oval } from "react-loader-spinner";
 import { BlobServiceClient } from "@azure/storage-blob";
-import axiosInstance from '@/app/utils/axiosMiddleware'
+import axiosInstance from "@/app/utils/axiosMiddleware";
 
 const widgets = {
   TableWidget: CustomTableWidget9,
 };
 
-const view_path = 'gri-social-training_hours-404-1a-number_of_hours'
-const client_id = 1
-const user_id = 1
+const view_path = "gri-social-training_hours-404-1a-number_of_hours";
+const client_id = 1;
+const user_id = 1;
 
 const schema = {
-  type: 'array',
+  type: "array",
   items: {
-    type: 'object',
+    type: "object",
     properties: {
       category: { type: "string", title: "Category" },
       male: { type: "string", title: "Male" },
@@ -35,35 +43,110 @@ const schema = {
       totalEmployees: { type: "string", title: "Total number of Employee" },
       totalTrainingHours: { type: "string", title: "Total number of Employee" },
     },
-
-  }
+  },
 };
 
 const uiSchema = {
   "ui:widget": "TableWidget",
-  'ui:options': {
+  "ui:options": {
     titles: [
-      { title: "Employee Category", tooltip: "Please specify the employee category. Employee category:breakdown of employees by level (such as senior management, middle management) and function (such as technical, administrative, production).", colSpan: 1 },
-      { title: "Number of training hours provided to employees", tooltip: "Please specify the number of training hours provided to employees.", colSpan: 4 },
-      { title: "Number of Employees", tooltip: "Specify the number of employee to which training has been provided. ", colSpan: 4 },
+      {
+        title: "Employee Category",
+        tooltip:
+          "Please specify the employee category. Employee category:breakdown of employees by level (such as senior management, middle management) and function (such as technical, administrative, production).",
+        colSpan: 1,
+      },
+      {
+        title: "Number of training hours provided to employees",
+        tooltip:
+          "Please specify the number of training hours provided to employees.",
+        colSpan: 4,
+      },
+      {
+        title: "Number of Employees",
+        tooltip:
+          "Specify the number of employee to which training has been provided. ",
+        colSpan: 4,
+      },
     ],
     tbtilte: [
-
-      { title: "Gender", tooltip: "Please specify the training hours.", colSpan: 4 },
-      { title: "Gender", tooltip: "Please specify the number of employees.", colSpan: 4 },
+      {
+        title: "Gender",
+        tooltip: "Please specify the training hours.",
+        colSpan: 4,
+      },
+      {
+        title: "Gender",
+        tooltip: "Please specify the number of employees.",
+        colSpan: 4,
+      },
     ],
     subTitles: [
-      { title: "", title2:"Category", tooltip: "Please specify the category.", colSpan: 1, type: "text" },
-      { title: "Male",title2:"Male", tooltip: "Please specify the number of male individuals.", colSpan: 1, type: "number" },
-      { title: "Female",title2:"Female", tooltip: "Please specify the number of female individuals.", colSpan: 1, type: "number" },
-      { title: "Others",title2:"Others", tooltip: "Please specify the number of others individuals.", colSpan: 1, type: "number" },
-      { title: "Total number of Employee",title2:"totalEmployees", tooltip: "Please specify the total number of employees.", colSpan: 1, type: "number" },
-      { title: "Male", title2:"Male1", tooltip: "Please specify the number of male individuals.", colSpan: 1, type: "number" },
-      { title: "Female", title2:"Female1", tooltip: "Please specify the number of female individuals.", colSpan: 1, type: "number" },
-      { title: "Others", title2:"Others1", tooltip: "Please specify the number of others individuals.", colSpan: 1, type: "number" },
-      { title: "Total number of Employee", title2:"totalTrainingHours", tooltip: "Please specify the total number of employees.", colSpan: 1, type: "number" },
-    ]
-  }
+      {
+        title: "",
+        title2: "Category",
+        tooltip: "Please specify the category.",
+        colSpan: 1,
+        type: "text",
+      },
+      {
+        title: "Male",
+        title2: "Male",
+        tooltip: "Please specify the number of male individuals.",
+        colSpan: 1,
+        type: "number",
+      },
+      {
+        title: "Female",
+        title2: "Female",
+        tooltip: "Please specify the number of female individuals.",
+        colSpan: 1,
+        type: "number",
+      },
+      {
+        title: "Others",
+        title2: "Others",
+        tooltip: "Please specify the number of others individuals.",
+        colSpan: 1,
+        type: "number",
+      },
+      {
+        title: "Total number of Employee",
+        title2: "totalEmployees",
+        tooltip: "Please specify the total number of employees.",
+        colSpan: 1,
+        type: "number",
+      },
+      {
+        title: "Male",
+        title2: "Male1",
+        tooltip: "Please specify the number of male individuals.",
+        colSpan: 1,
+        type: "number",
+      },
+      {
+        title: "Female",
+        title2: "Female1",
+        tooltip: "Please specify the number of female individuals.",
+        colSpan: 1,
+        type: "number",
+      },
+      {
+        title: "Others",
+        title2: "Others1",
+        tooltip: "Please specify the number of others individuals.",
+        colSpan: 1,
+        type: "number",
+      },
+      {
+        title: "Total number of Employee",
+        title2: "totalTrainingHours",
+        tooltip: "Please specify the total number of employees.",
+        colSpan: 1,
+        type: "number",
+      },
+    ],
+  },
 };
 
 const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
@@ -78,7 +161,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       female1: "",
       others1: "",
       totalTrainingHours: "",
-    }
+    },
   ];
 
   const [formData, setFormData] = useState(initialFormData);
@@ -94,8 +177,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const [uploadDateTime, setUploadDateTime] = useState("");
   const [file, setFile] = useState(null);
   const [newfile, setNewfile] = useState(null);
-const [fleg ,setfleg] = useState(null);
-
+  const [fleg, setfleg] = useState(null);
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -111,10 +193,11 @@ const [fleg ,setfleg] = useState(null);
   const handleRemoveCommittee = (index) => {
     const newFormData = formData.filter((_, i) => i !== index);
     setFormData(newFormData);
-    if (index === 0) { // if the first row is removed
-        setFile(null); // Reset or handle file object accordingly
+    if (index === 0) {
+      // if the first row is removed
+      setFile(null); // Reset or handle file object accordingly
     }
-};
+  };
   const updateFormData = async () => {
     const data = {
       client_id: client_id,
@@ -193,9 +276,9 @@ const [fleg ,setfleg] = useState(null);
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
       setFileName(response.data.form_data[0].data[0].fileName);
-      setFileType(response.data.form_data[0].data[0].fileType)
-      setFileSize(response.data.form_data[0].data[0].fileSize)
-      setUploadDateTime(response.data.form_data[0].data[0].uploadDateTime)
+      setFileType(response.data.form_data[0].data[0].fileType);
+      setFileSize(response.data.form_data[0].data[0].fileSize);
+      setUploadDateTime(response.data.form_data[0].data[0].uploadDateTime);
       setfleg(response.data.form_data[0].data[0].fileName);
       setNewfile(response.data.form_data[0].data[0].fileUrl);
     } catch (error) {
@@ -223,7 +306,7 @@ const [fleg ,setfleg] = useState(null);
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [selectedOrg, year, month,selectedCorp]);
+  }, [selectedOrg, year, month, selectedCorp]);
 
   // const handleSubmit = (e) => {
   //   e.preventDefault(); // Prevent the default form submission
@@ -312,11 +395,12 @@ const [fleg ,setfleg] = useState(null);
 
     // Prepare updated form data including the file URL
     const updatedFormData = formData.map((item, index) => {
-      if (index === 0) { // Check if it's the first item
+      if (index === 0) {
+        // Check if it's the first item
         return {
           ...item,
-          fileUrl: uploadedFileUrl,  // Only the first item gets the new file URL
-          fileName,                  // and other file properties
+          fileUrl: uploadedFileUrl, // Only the first item gets the new file URL
+          fileName, // and other file properties
           fileType,
           fileSize,
           uploadDateTime,
@@ -376,7 +460,6 @@ const [fleg ,setfleg] = useState(null);
     }
   };
 
-
   // Button click handler uses the form submission function
   const buttonClickHandler = (e) => handleFormSubmit(e);
   const handlePreview = () => {
@@ -402,50 +485,65 @@ const [fleg ,setfleg] = useState(null);
 
   return (
     <>
-      <div className="mx-2 p-3 mb-6 pb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
-        <div className='mb-4 flex'>
-         <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] font-[500] mb-2">
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
+        <div className="mb-4 flex">
+          <div className="w-[80%] relative">
+            <h2 className="flex mx-2 text-[15px] font-[500] mb-2">
               Number of  hours of training provided to employees
-              <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
+              <MdInfoOutline
+                data-tooltip-id={`tooltip-$e1`}
                 data-tooltip-content="This section documents the data corresponding to the average hours of training
                 that the organization’s employees have undertaken during the reporting period,
-                by gender and employee category." className="mt-1.5 ml-2 text-[15px]" />
-              <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
-                width: "290px", backgroundColor: "#000",
-                color: "white",
-                fontSize: "12px",
-                boxShadow: 3,
-                borderRadius: "8px",
-                textAlign: 'left',
-              }}>
-              </ReactTooltip>
+                by gender and employee category."
+                className="mt-1.5 ml-2 text-[15px]"
+              />
+              <ReactTooltip
+                id={`tooltip-$e1`}
+                place="top"
+                effect="solid"
+                style={{
+                  width: "290px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  textAlign: "left",
+                }}
+              ></ReactTooltip>
             </h2>
           </div>
-          <div className='w-[20%]'>
-            <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 404-1a
+          <div className="w-[20%]">
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 404-1a
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div className='mx-2'>
+        <div className="mx-2">
           <Form
-             schema={r_schema}
-             uiSchema={r_ui_schema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
             formContext={{
-              onRemove: handleRemoveCommittee
+              onRemove: handleRemoveCommittee,
             }}
           />
         </div>
 
-
-        <div className='-mt-12 float-end'>
+        <div className="-mt-12 float-end">
           {selectedOrg && year && (
             <div className="flex right-1 mx-2 ">
               <input
@@ -458,11 +556,9 @@ const [fleg ,setfleg] = useState(null);
                 <label className="flex cursor-pointer float-end">
                   <div
                     className="flex items-center text-center mt-2"
-                  onClick={handlePreview}
+                    onClick={handlePreview}
                   >
-                    <MdFilePresent
-                      className="w-6 h-6 mr-1 text-green-500 "
-                    />
+                    <MdFilePresent className="w-6 h-6 mr-1 text-green-500 " />
                     <div className="w-[150px] truncate  text-sky-600 text-sm">
                       {fileName}
                     </div>
@@ -471,10 +567,8 @@ const [fleg ,setfleg] = useState(null);
               ) : (
                 <label htmlFor="fileInput" className="flex cursor-pointer ml-1">
                   <div className="flex items-center mt-2">
-                    <MdOutlineFileUpload
-                      className="w-6 h-6 mr-1 text-[#007EEF]"
-                    />
-                    <div className="w-[150px] truncate text-[#007EEF] text-sm ml-1">
+                    <MdOutlineFileUpload className="w-6 h-6 mr-1 text-[#007EEF]" />
+                    <div className="w-[150px] truncate text-[#007EEF] text-[13px] ml-1">
                       Upload Documentation
                     </div>
                   </div>
@@ -484,16 +578,18 @@ const [fleg ,setfleg] = useState(null);
           )}
         </div>
 
-        <div className='mb-6'>
-          <button type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year || !month ? "cursor-not-allowed" : ""}`}
+        <div className="mt-4">
+          <button
+            type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              !selectedOrg || !year || !month ? "cursor-not-allowed" : ""
+            }`}
             onClick={buttonClickHandler}
             disabled={!selectedOrg || !year || !month}
           >
             Submit
           </button>
         </div>
-
       </div>
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
@@ -507,7 +603,7 @@ const [fleg ,setfleg] = useState(null);
           />
         </div>
       )}
-      {showModal  && (
+      {showModal && (
         <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-1 rounded-lg w-[60%] h-[90%] mt-12">
             <div className="flex justify-between mt-4 mb-4">
@@ -535,25 +631,40 @@ const [fleg ,setfleg] = useState(null);
             </div>
             <div className="flex justify-between">
               <div className="relative w-[760px] h-[580px]">
-                    {fleg ? (
-                    fileType.startsWith("image") ? (
-                    <img src={newfile} alt="Preview" className="max-w-full max-h-full object-contain" />
-                    ) : fileType === "application/pdf" ? (
-                    <iframe src={newfile} title="PDF Preview" className="w-full h-full" />
-                    ) : (
-                    <p>File preview not available. Please download and verify</p>
-                    )
-                    ) : (
-                    fileType.startsWith("image") ? (
-                    <img src={previewData} alt="Preview" className="max-w-full max-h-full object-contain" />
-                    ) : fileType === "application/pdf" ? (
-                    <iframe src={previewData} title="PDF Preview" className="w-full h-full" />
-                    ) : (
-                    <p>File preview not available. Please download and verify</p>
-                    )
-                    )}
-</div>
-
+                {fleg ? (
+                  fileType.startsWith("image") ? (
+                    <img
+                      src={newfile}
+                      alt="Preview"
+                      className="max-w-full max-h-full object-contain"
+                    />
+                  ) : fileType === "application/pdf" ? (
+                    <iframe
+                      src={newfile}
+                      title="PDF Preview"
+                      className="w-full h-full"
+                    />
+                  ) : (
+                    <p>
+                      File preview not available. Please download and verify
+                    </p>
+                  )
+                ) : fileType.startsWith("image") ? (
+                  <img
+                    src={previewData}
+                    alt="Preview"
+                    className="max-w-full max-h-full object-contain"
+                  />
+                ) : fileType === "application/pdf" ? (
+                  <iframe
+                    src={previewData}
+                    title="PDF Preview"
+                    className="w-full h-full"
+                  />
+                ) : (
+                  <p>File preview not available. Please download and verify</p>
+                )}
+              </div>
 
               <div className="w-[211px]">
                 <div className="mb-4 mt-2">

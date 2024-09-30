@@ -8,18 +8,20 @@ import { useEmissions } from "./EmissionsContext";
 // import Scope2 from "./scope2";
 // import Scope3 from "./scope3";
 import CalculateSuccess from "./calculateSuccess";
+import { fetchEmissionsData, setClimatiqData } from '@/lib/redux/features/emissionSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import Scope1 from "./scope1new";
 import Scope2 from "./scope2new";
 import Scope3 from "./scope3new";
 
 const AccordionItem = ({
   title,
-  children, // Expecting children to be a function that takes { setAccordionOpen }
+  children,
   scops,
   icons,
-  onAccordionClick,
+  onAccordionClick
 }) => {
-  const [isOpen, setIsOpen] = useState(false); // This controls the open/close state of the accordion
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleAccordionClick = () => {
     const canExpand = onAccordionClick();
@@ -46,7 +48,7 @@ const AccordionItem = ({
           </h5>
         </div>
         <div className="w-[30%]">
-          <div className="float-end me-4">
+          <div className="float-end">
             <span>
               <MdKeyboardArrowDown
                 className={`text-2xl ${isOpen && "rotate-180"}`}
@@ -63,26 +65,17 @@ const AccordionItem = ({
   );
 };
 
-const Emissionsnbody = ({
-  location,
-  year,
-  month,
-  countryCode,
-  setYearError,
-  setLocationError,
-  locationname,
-}) => {
+const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setLocationError, locationname }) => {
   const { climatiqData, setClimatiqData } = useEmissions();
   const scope1Ref = useRef();
   const scope2Ref = useRef();
   const scope3Ref = useRef();
-  // const scope1newRef = useRef();
   const [modalData, setModalData] = useState(null);
 
   const getLatestComputedData = () => {
     const base_url = `${process.env.BACKEND_API_URL}/datametric/get-climatiq-score?`;
     const url = `${base_url}location=${location}&&year=${year}&&month=${month}`;
-    console.log(url, "test datas new");
+console.log(url,"test datas new");
     axiosInstance
       .get(url)
       .then((response) => {
@@ -94,7 +87,7 @@ const Emissionsnbody = ({
       })
       .catch((error) => {
         setClimatiqData({});
-        console.log(error, " -got error");
+        console.log(error, ' -got error');
       });
   };
 
@@ -176,7 +169,7 @@ const Emissionsnbody = ({
               year={year}
               month={month}
               countryCode={countryCode}
-              successCallback={getLatestComputedData}
+              successCallback={() => dispatch(fetchEmissionsData({ location, year, month }))}
               setAccordionOpen={setAccordionOpen}
             />
           )}
@@ -194,7 +187,7 @@ const Emissionsnbody = ({
               year={year}
               month={month}
               countryCode={countryCode}
-              successCallback={getLatestComputedData}
+              successCallback={() => dispatch(fetchEmissionsData({ location, year, month }))}
               setAccordionOpen={setAccordionOpen} // Pass setAccordionOpen to Scope2
             />
           )}
@@ -213,7 +206,7 @@ const Emissionsnbody = ({
               year={year}
               month={month}
               countryCode={countryCode}
-              successCallback={getLatestComputedData}
+              successCallback={() => dispatch(fetchEmissionsData({ location, year, month }))}
               setAccordionOpen={setAccordionOpen} // Pass setAccordionOpen to Scope3
             />
           )}
@@ -224,12 +217,15 @@ const Emissionsnbody = ({
           onClick={handleCalculate}
           className="w-[172px] h-8 px-[22px] py-2 bg-sky-600 rounded shadow flex-col justify-center items-center inline-flex text-white text-xs font-bold leading-[15px] cursor-pointer"
         >
-          Calculate
+            Calculate
         </button>
       </div>
 
       {modalData && (
-        <CalculateSuccess data={modalData} onClose={handleCloseModal} />
+        <CalculateSuccess
+          data={modalData}
+          onClose={handleCloseModal}
+        />
       )}
     </>
   );

@@ -14,13 +14,13 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
+import CommoninputWidget from "../../../../shared/widgets/Input/commoninputWidget";
 
 const widgets = {
-  inputWidget: inputWidget2,
-  RadioWidget2: RadioWidget2,
-  TextareaWidget3: TextareaWidget3,
-  Textboxwithfileupload: Textboxwithfileupload,
+  inputWidget: CommoninputWidget,
 };
+
+
 
 const view_path = "gri-general-laws_and_regulation-organization-2-27-d";
 const client_id = 1;
@@ -39,31 +39,36 @@ const schema = {
     },
   },
 };
-
 const uiSchema = {
   items: {
     "ui:order": ["Q1"],
     Q1: {
-      "ui:title":
+    "ui:title":
         "Describe how the organisation has determined significant instances of non-compliance",
       "ui:tooltip":
         "Explain the process of determining significant instances of non-compliance.",
-      "ui:tooltipdisplay": "block",
-      "ui:widget": "inputWidget",
-      "ui:horizontal": true,
-      "ui:options": {
-        label: false,
+        "ui:tooltipdisplay": "none",
+        "ui:titledisplay": "none",
+        "ui:widgetType": "textarea",
+        "ui:inputfildtype": "text",
+        "ui:widget": "inputWidget",
+        "ui:horizontal": true,
+        "ui:options": {
+          label: false,
+        },
       },
-    },
+  
 
     "ui:options": {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: "horizontal", // Set layout to horizontal
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: "horizontal",
     },
   },
 };
+
+
 
 const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
   const [formData, setFormData] = useState([{}]);
@@ -178,15 +183,32 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
 
   return (
     <>
-      <div
-        className="mx-2  p-3 mb-6 pb-6 rounded-md"
-        style={{
-          boxShadow:
-            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
-        }}
-      >
-        <div className="mb-4 flex">
-          <div className="w-[80%] relative"></div>
+      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div className="flex">
+          <div className="w-[80%] relative">
+            <h2 className="flex mx-2 text-[15px] font-[500] mb-2">
+            Describe how the organisation has determined significant instances of non-compliance
+              <MdInfoOutline
+                data-tooltip-id={`tooltip-$e14556`}
+                data-tooltip-content="Explain the process of determining significant instances of non-compliance."
+                className="mt-1.5 ml-2 text-[15px]"
+              />
+              <ReactTooltip
+                id={`tooltip-$e14556`}
+                place="top"
+                effect="solid"
+                style={{
+                  width: "290px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  textAlign: "left",
+                }}
+              ></ReactTooltip>
+            </h2>
+          </div>
           <div className="w-[20%]">
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
@@ -207,7 +229,7 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
             widgets={widgets}
           />
         </div>
-        <div className="mb-6">
+        <div className="mt-4">
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${

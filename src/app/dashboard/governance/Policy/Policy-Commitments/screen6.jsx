@@ -11,8 +11,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
+import CommoninputWidget from "../../../../shared/widgets/Input/commoninputWidget";
 const widgets = {
-  inputWidget: inputWidget2,
+  CommoninputWidget: CommoninputWidget,
 };
 
 const view_path = "gri-governance-policy_commitments-2-23-f-describe";
@@ -32,7 +33,6 @@ const schema = {
     },
   },
 };
-
 const uiSchema = {
   items: {
     "ui:order": ["Q1"],
@@ -42,7 +42,10 @@ const uiSchema = {
       "ui:tooltip":
         "If the policy commitments apply to all of the organization’s activities and business relationships equally, a brief statement of this fact is sufficient to comply with the requirement.Business relationships: relationships that the organization has with business partners, with entities in its value chain including those beyond the first tier, and with any other entities directly linked to its operations,products, or services.",
       "ui:tooltipdisplay": "none",
-      "ui:widget": "inputWidget",
+      "ui:titledisplay": "none",
+      "ui:widgetType": "textarea",
+      "ui:inputfildtype": "text",
+      "ui:widget": "CommoninputWidget",
       "ui:horizontal": true,
       "ui:options": {
         label: false,
@@ -50,10 +53,10 @@ const uiSchema = {
     },
 
     "ui:options": {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: "horizontal", // Set layout to horizontal
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: "horizontal",
     },
   },
 };
@@ -168,29 +171,37 @@ const Screen6 = ({ selectedOrg, year, selectedCorp }) => {
   return (
     <>
       <div
-        className="mx-2 p-3 mb-6 pb-6 rounded-md"
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
         }}
       >
-        <div className="mb-4 flex">
+        <div className="flex">
           <div className="w-[80%] relative">
-            {/*<h2 className="flex mx-2 text-[15px] font-[500] mb-2">
-                        Highest governance body processes to prevent conflict of interest
-                            <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
-                                data-tooltip-content="This section documents the data corresponding to the processes for the highest governance body to ensure that conflicts of
-interest are prevented and mitigated." className="mt-1.5 ml-2 text-[15px]" />
-                            <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
-                                width: "290px", backgroundColor: "#000",
-                                color: "white",
-                                fontSize: "12px",
-                                boxShadow: 3,
-                                borderRadius: "8px",
-                                textAlign: 'left',
-                            }}>
-                            </ReactTooltip>
-                        </h2> */}
+            <h2 className="flex mx-2 text-[15px] font-[500] mb-2">
+              Describe how the policy commitments are communicated to workers,
+              business partners, and other relevant parties.
+              <MdInfoOutline
+                data-tooltip-id={`tooltip-$e167`}
+                data-tooltip-content="If the policy commitments apply to all of the organization’s activities and business relationships equally, a brief statement of this fact is sufficient to comply with the requirement.Business relationships: relationships that the organization has with business partners, with entities in its value chain including those beyond the first tier, and with any other entities directly linked to its operations,products, or services."
+                className="mt-1.5 ml-2 text-[15px]"
+              />
+              <ReactTooltip
+                id={`tooltip-$e167`}
+                place="top"
+                effect="solid"
+                style={{
+                  width: "290px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  textAlign: "left",
+                }}
+              ></ReactTooltip>
+            </h2>
           </div>
 
           <div className="w-[20%]">
@@ -214,7 +225,7 @@ interest are prevented and mitigated." className="mt-1.5 ml-2 text-[15px]" />
           />
         </div>
 
-        <div className="mb-6">
+        <div className="mt-4">
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
