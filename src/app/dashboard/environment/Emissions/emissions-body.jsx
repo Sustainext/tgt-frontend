@@ -65,31 +65,36 @@ const AccordionItem = ({
   );
 };
 
-const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setLocationError, locationname }) => {
+const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setLocationError, locationname, getLatestComputedData }) => {
   const { climatiqData, setClimatiqData } = useEmissions();
   const scope1Ref = useRef();
   const scope2Ref = useRef();
   const scope3Ref = useRef();
   const [modalData, setModalData] = useState(null);
 
-  const getLatestComputedData = () => {
-    const base_url = `${process.env.BACKEND_API_URL}/datametric/get-climatiq-score?`;
-    const url = `${base_url}location=${location}&&year=${year}&&month=${month}`;
-console.log(url,"test datas new");
-    axiosInstance
-      .get(url)
-      .then((response) => {
-        if (response.status == 200) {
-          setClimatiqData(response.data);
-        } else {
-          setClimatiqData(0);
-        }
-      })
-      .catch((error) => {
-        setClimatiqData({});
-        console.log(error, ' -got error');
-      });
-  };
+//   const getLatestComputedData = () => {
+//     const base_url = `${process.env.BACKEND_API_URL}/datametric/get-climatiq-score?`;
+//     const url = `${base_url}location=${location}&&year=${year}&&month=${month}`;
+// console.log(url,"test datas new");
+//     axiosInstance
+//       .get(url)
+//       .then((response) => {
+//         if (response.status == 200) {
+//           const sum = response.data.result.reduce(
+//             (accumulator, currentValue) =>
+//               accumulator + currentValue.total_emissions,
+//             0
+//           );
+//           setClimatiqData((sum/1000).toFixed(2));
+//         } else {
+//           setClimatiqData(0);
+//         }
+//       })
+//       .catch((error) => {
+//         setClimatiqData({});
+//         console.log(error, ' -got error');
+//       });
+//   };
 
   const handleAccordionClick = () => {
     if (!location) {

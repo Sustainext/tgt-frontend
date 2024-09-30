@@ -22,16 +22,10 @@ export const fetchEmissionsData = createAsyncThunk(
 
       return {
         climatiqData: climatiqResponse.data,
-        scope1Data: scope1Response.data.form_data[0].data,
-        scope2Data: scope2Response.data.form_data[0].data,
-        scope3Data: scope3Response.data.form_data[0].data
+        scope1Data: scope1Response.data.form_data[0],
+        scope2Data: scope2Response.data.form_data[0],
+        scope3Data: scope3Response.data.form_data[0]
       };
-      console.log({
-        climatiqData: climatiqResponse.data,
-        scope1Data: scope1Response.data.form_data[0].data,
-        scope2Data: scope2Response.data.form_data[0].data,
-        scope3Data: scope3Response.data.form_data[0].data
-      })
     } catch (error) {
       throw error;
     }
@@ -59,6 +53,29 @@ export const fetchPreviousMonthData = createAsyncThunk(
   }
 );
 
+export const updateScopeData = createAsyncThunk(
+  'emissions/updateScopeData',
+  async ({ scope, data, location, year, month }) => {
+    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
+    const body = {
+      client_id: 1,
+      user_id: 1,
+      path: `gri-environment-emissions-301-a-scope-${scope}`,
+      form_data: data,
+      location,
+      year,
+      month,
+    };
+
+    try {
+      const response = await axiosInstance.post(url, body);
+      return { scope, data: response.data };
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
 const calculateTotalClimatiqScore = (data) => {
   if (data && data.result && Array.isArray(data.result)) {
     const total = data.result.reduce((sum, item) => sum + (item.co2e || 0), 0);
@@ -70,75 +87,122 @@ const calculateTotalClimatiqScore = (data) => {
 const emissionsSlice = createSlice({
   name: 'emissions',
   initialState: {
-    organization:'',
-    corporate:'',
-    location:'',
-    month:'',
+    location: '',
+    year: '',
+    month: 1,
     climatiqData: {
       rawData: {},
-      totalScore: 0
+      totalScore: 0,
+      status: 'idle',
+      error: null
     },
-    scope1Data: [],
-    scope2Data: [],
-    scope3Data: [],
-    previousMonthData: null,
-    status: 'idle',
-    error: null
+    scope1Data: {
+      data: [],
+      status: 'idle',
+      error: null
+    },
+    scope2Data: {
+      data: [],
+      status: 'idle',
+      error: null
+    },
+    scope3Data: {
+      data: [],
+      status: 'idle',
+      error: null
+    },
+    previousMonthData: {
+      data: null,
+      status: 'idle',
+      error: null
+    },
+    updateScopeStatus: 'idle',
+    updateScopeError: null
   },
   reducers: {
-    setClimatiqData: (state, action) => {
-      state.climatiqData.rawData = action.payload;
-      state.climatiqData.totalScore = calculateTotalClimatiqScore(action.payload);
+    setLocation: (state, action) => {
+      state.location = action.payload;
     },
-    setScope1Data: (state, action) => {
-      state.scope1Data = action.payload;
+    setYear: (state, action) => {
+      state.year = action.payload;
     },
-    setScope2Data: (state, action) => {
-      state.scope2Data = action.payload;
+    setMonth: (state, action) => {
+      state.month = action.payload;
     },
-    setScope3Data: (state, action) => {
-      state.scope3Data = action.payload;
+    updateScopeDataLocal: (state, action) => {
+      const { scope, data } = action.payload;
+      state[`scope${scope}Data`].data = data;
     },
     resetPreviousMonthData: (state) => {
-      state.previousMonthData = null;
+      state.previousMonthData = {
+        data: null,
+        status: 'idle',
+        error: null
+      };
     }
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchEmissionsData.pending, (state) => {
-        state.status = 'loading';
+        state.climatiqData.status = 'loading';
+        state.scope1Data.status = 'loading';
+        state.scope2Data.status = 'loading';
+        state.scope3Data.status = 'loading';
       })
       .addCase(fetchEmissionsData.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.climatiqData.status = 'succeeded';
+        state.scope1Data.status = 'succeeded';
+        state.scope2Data.status = 'succeeded';
+        state.scope3Data.status = 'succeeded';
+        
         state.climatiqData.rawData = action.payload.climatiqData;
         state.climatiqData.totalScore = calculateTotalClimatiqScore(action.payload.climatiqData);
-        state.scope1Data = action.payload.scope1Data;
-        state.scope2Data = action.payload.scope2Data;
-        state.scope3Data = action.payload.scope3Data;
+        state.scope1Data.data = action.payload.scope1Data;
+        state.scope2Data.data = action.payload.scope2Data;
+        state.scope3Data.data = action.payload.scope3Data;
       })
       .addCase(fetchEmissionsData.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
+        state.climatiqData.status = 'failed';
+        state.scope1Data.status = 'failed';
+        state.scope2Data.status = 'failed';
+        state.scope3Data.status = 'failed';
+        
+        state.climatiqData.error = action.error.message;
+        state.scope1Data.error = action.error.message;
+        state.scope2Data.error = action.error.message;
+        state.scope3Data.error = action.error.message;
+      })
+      .addCase(updateScopeData.pending, (state) => {
+        state.updateScopeStatus = 'loading';
+      })
+      .addCase(updateScopeData.fulfilled, (state, action) => {
+        state.updateScopeStatus = 'succeeded';
+        const { scope, data } = action.payload;
+        state[`scope${scope}Data`].data = data;
+      })
+      .addCase(updateScopeData.rejected, (state, action) => {
+        state.updateScopeStatus = 'failed';
+        state.updateScopeError = action.error.message;
       })
       .addCase(fetchPreviousMonthData.pending, (state) => {
-        state.status = 'loading';
+        state.previousMonthData.status = 'loading';
       })
       .addCase(fetchPreviousMonthData.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.previousMonthData = action.payload;
+        state.previousMonthData.status = 'succeeded';
+        state.previousMonthData.data = action.payload;
       })
       .addCase(fetchPreviousMonthData.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
+        state.previousMonthData.status = 'failed';
+        state.previousMonthData.error = action.error.message;
       });
   }
 });
 
 export const {
-  setClimatiqData,
-  setScope1Data,
-  setScope2Data,
-  setScope3Data,
+  setLocation,
+  setYear,
+  setMonth,
+  updateScopeDataLocal,
   resetPreviousMonthData
 } = emissionsSlice.actions;
 

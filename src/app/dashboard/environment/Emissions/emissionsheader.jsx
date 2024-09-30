@@ -1,68 +1,32 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { yearInfo, months } from "@/app/shared/data/yearInfo";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-// import { useEmissions } from "./EmissionsContext";
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchPreviousMonthData, setClimatiqData, resetPreviousMonthData, fetchEmissionsData } from '@/lib/redux/features/emissionSlice';
+import { fetchPreviousMonthData, fetchEmissionsData, setLocation, setYear, setMonth } from '@/lib/redux/features/emissionSlice';
 
 const monthMapping = {
-  Jan: 1,
-  Feb: 2,
-  Mar: 3,
-  Apr: 4,
-  May: 5,
-  Jun: 6,
-  Jul: 7,
-  Aug: 8,
-  Sep: 9,
-  Oct: 10,
-  Nov: 11,
-  Dec: 12,
+  Jan: 1, Feb: 2, Mar: 3, Apr: 4, May: 5, Jun: 6,
+  Jul: 7, Aug: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12,
 };
 
 const getMonthString = (monthNumber) => {
-  return Object.keys(monthMapping).find(
-    (key) => monthMapping[key] === monthNumber
-  );
+  return Object.keys(monthMapping).find(key => monthMapping[key] === monthNumber);
 };
 
 const EmissionsHeader = ({
-  activeMonth,
-  setActiveMonth,
-  location,
-  setLocation,
-  year,
-  setYear,
   setCountryCode,
   locationError,
   setLocationError,
   yearError,
   setYearError,
-  setLocationname
+  setLocationname,
 }) => {
-
   const dispatch = useDispatch();
-  const climatiqData = useSelector(state => state.emissions.climatiqData);
-
-  const [formState, setFormState] = useState({
-    location: location,
-    year: year,
-    month: activeMonth,
-  });
-
-  // const { climatiqData } = useEmissions();
+  const { location, year, month, climatiqData } = useSelector(state => state.emissions);
 
   const [locations, setLocations] = useState([]);
-  const [localClimatiq, setlocalClimatiq] = useState(0);
-  const [countryCode, setCountryCodeState] = useState("");
-
-  useEffect(() => {
-    if (location && year && activeMonth) {
-      dispatch(fetchEmissionsData({ location, year, month: activeMonth }));
-    }
-  }, [location, year, activeMonth, dispatch]);
 
   useEffect(() => {
     const fetchLocations = async () => {
@@ -78,57 +42,32 @@ const EmissionsHeader = ({
   }, []);
 
   useEffect(() => {
-    if (climatiqData.result?.[0]) {
-      let sum = 0;
-      for (const item of climatiqData.result) {
-        sum += item.co2e;
-      }
-      sum = (sum / 1000).toFixed(3);
-      setlocalClimatiq((sum / 1000).toFixed(3));
-      dispatch(setClimatiqData(sum));
-    } else {
-      setlocalClimatiq(0);
-      dispatch(setClimatiqData(0));
+    if (location && year) {
+      dispatch(fetchEmissionsData({ location, year, month }));
+      dispatch(fetchPreviousMonthData({ location, year, month }));
     }
-  }, [climatiqData]);
-
+  }, [location, year, month, dispatch]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-
-    setFormState((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
 
     setLocationError("");
     setYearError("");
 
     if (name === "month") {
-      setActiveMonth(monthMapping[value]);
-      dispatch(fetchPreviousMonthData({ location, year, month: monthMapping[value] }));
+      const monthNumber = monthMapping[value];
+      dispatch(setMonth(monthNumber));
     } else if (name === "location") {
       const selectedLocation = locations.find((loc) => loc.id === Number(value));
       if (selectedLocation) {
-        setCountryCodeState(selectedLocation.country);
         setCountryCode(selectedLocation.country);
         setLocationname(selectedLocation.name);
       }
-      setLocation(Number(value));
-      dispatch(resetPreviousMonthData());
+      dispatch(setLocation(Number(value)));
     } else if (name === "year") {
-      setYear(value);
-      dispatch(resetPreviousMonthData());
+      dispatch(setYear(value));
     }
   };
-
-  useEffect(() => {
-    setFormState({
-      location: location,
-      year: year,
-      month: activeMonth,
-    });
-  }, [location, year, activeMonth]);
 
   return (
     <>
@@ -138,13 +77,13 @@ const EmissionsHeader = ({
             <select
               name="location"
               className="border m-0.5 text-[12px] text-neutral-500 appearance-none pr-24 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              value={formState.location}
+              value={location}
               onChange={handleChange}
             >
               <option value="">Select location</option>
-              {locations.map((location, index) => (
-                <option key={index} value={location.id}>
-                  {location.name}
+              {locations.map((loc, index) => (
+                <option key={index} value={loc.id}>
+                  {loc.name}
                 </option>
               ))}
             </select>
@@ -167,7 +106,7 @@ const EmissionsHeader = ({
             <select
               name="year"
               className="border m-0.5 text-[12px] text-neutral-500 appearance-none pr-32 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              value={formState.year}
+              value={year}
               onChange={handleChange}
             >
               <option value="">Select year</option>
@@ -198,7 +137,7 @@ const EmissionsHeader = ({
               <p className="text-[14px] text-[#0057A5]">
                 GHG Emissions for the month ={" "}
                 <span className="text-[#146152] text-[14px]">
-                  {localClimatiq} tCO2e{" "}
+                  {climatiqData.totalScore} tCO2e{" "}
                 </span>
               </p>
             </div>
@@ -206,28 +145,28 @@ const EmissionsHeader = ({
         </div>
         <div className="flex justify-between mb-4">
           <div className="flex bg-[#f7f7f7] py-1 rounded-lg">
-            {months.map((month, index) => (
+            {months.map((monthName, index) => (
               <button
                 key={index}
                 className={`text-[12px] border-r mx-1 ${
-                  formState.month === monthMapping[month]
+                  month === monthMapping[monthName]
                     ? "bg-white shadow-md rounded-lg"
                     : ""
                 }`}
                 onClick={() =>
-                  handleChange({ target: { name: "month", value: month } })
+                  handleChange({ target: { name: "month", value: monthName } })
                 }
               >
                 <p
                   className={`text-center ${
-                    formState.month === monthMapping[month]
+                    month === monthMapping[monthName]
                       ? "custom-gradient-text"
                       : "text-[#A1A1A1]"
                   } hover:bg-[#f7f7f7] py-1 w-[55px] ${
                     index === 0 ? "rounded-l" : ""
                   } ${index === months.length - 1 ? "rounded-r" : ""}`}
                 >
-                  {month}
+                  {monthName}
                 </p>
               </button>
             ))}

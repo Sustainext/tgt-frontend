@@ -5,14 +5,40 @@ import Emissionsnbody from "./emissions-body";
 import { EmissionsProvider } from "./EmissionsContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axiosInstance from "@/app/utils/axiosMiddleware";
+import { useDispatch, useSelector } from 'react-redux';
+import { setLocation, setYear, setMonth } from '@/lib/redux/features/emissionSlice';
+
 const Emissions = ({ open }) => {
-  const [activeMonth, setActiveMonth] = useState(1);
-  const [location, setLocation] = useState("");
-  const [locationname, setLocationname] = useState("");
-  const [year, setYear] = useState();
+  const dispatch = useDispatch();
+  const { location, year, month } = useSelector(state => state.emissions);
   const [countryCode, setCountryCode] = useState("");
+  const [locationname, setLocationname] = useState("");
   const [locationError, setLocationError] = useState("");
   const [yearError, setYearError] = useState("");
+
+  const getLatestComputedData = () => {
+    const base_url = `${process.env.BACKEND_API_URL}/datametric/get-climatiq-score?`;
+    const url = `${base_url}location=${location}&&year=${year}&&month=${month}`;
+    axiosInstance
+      .get(url)
+      .then((response) => {
+        if (response.status == 200) {
+          const sum = response.data.result.reduce(
+            (accumulator, currentValue) =>
+              accumulator + currentValue.total_emissions,
+            0
+          );
+          // dispatch(setClimatiqData((sum/1000).toFixed(2)));
+        } else {
+          // dispatch(setClimatiqData(0));
+        }
+      })
+      .catch((error) => {
+        // dispatch(setClimatiqData(0));
+        console.log(error, ' -got error');
+      });
+  };
 
   return (
     <>
@@ -94,28 +120,30 @@ const Emissions = ({ open }) => {
           </div>
         </div>
         <EmissionsHeader
-          activeMonth={activeMonth}
-          setActiveMonth={setActiveMonth}
+          activeMonth={month}
+          setActiveMonth={(newMonth) => dispatch(setMonth(newMonth))}
           location={location}
-          setLocation={setLocation}
+          setLocation={(newLocation) => dispatch(setLocation(newLocation))}
           year={year}
-          setYear={setYear}
+          setYear={(newYear) => dispatch(setYear(newYear))}
           setCountryCode={setCountryCode}
           locationError={locationError}
           setLocationError={setLocationError}
           yearError={yearError}
           setYearError={setYearError}
           setLocationname={setLocationname}
+          getLatestComputedData={getLatestComputedData}
         />
         <Emissionsnbody
           open={open}
           location={location}
           year={year}
-          month={activeMonth}
+          month={month}
           countryCode={countryCode}
           setLocationError={setLocationError}
           setYearError={setYearError}
           locationname={locationname}
+          getLatestComputedData={getLatestComputedData}
         />
       </>
     </EmissionsProvider>
