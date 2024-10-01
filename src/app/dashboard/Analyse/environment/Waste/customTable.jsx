@@ -58,11 +58,11 @@ function DynamicTable({ columns, data }) {
   };
 
   return (
-    <table className="w-full rounded-lg border border-inherit">
-      <thead className="border rounded-lg">
-        <tr className="border-t border-b gradient-background">{renderHeaders()}</tr>
+    <table className="rounded-md border border-gray-300  w-full" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
+      <thead >
+        <tr className="border-t border-b  border-gray-300 gradient-background">{renderHeaders()}</tr>
       </thead>
-      <tbody className="border-l border-r rounded-lg">
+      <tbody className="border-l border-t  border-r border-gray-300 ">
         {renderRows()}
       </tbody>
     </table>
