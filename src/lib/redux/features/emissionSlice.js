@@ -24,7 +24,8 @@ export const fetchEmissionsData = createAsyncThunk(
         climatiqData: climatiqResponse.data,
         scope1Data: scope1Response.data.form_data[0],
         scope2Data: scope2Response.data.form_data[0],
-        scope3Data: scope3Response.data.form_data[0]
+        scope3Data: scope3Response.data.form_data[0],
+        params: { location, year, month }
       };
     } catch (error) {
       throw error;
@@ -46,7 +47,10 @@ export const fetchPreviousMonthData = createAsyncThunk(
 
     try {
       const response = await axiosInstance.get(url);
-      return response.data.form_data[0];
+      return {
+        data: response.data.form_data[0],
+        params: { location, year: prevYear, month: prevMonth }
+      };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
@@ -69,7 +73,7 @@ export const updateScopeData = createAsyncThunk(
 
     try {
       const response = await axiosInstance.post(url, body);
-      return { scope, data: response.data };
+      return { scope, data: response.data, params: { location, year, month } };
     } catch (error) {
       throw error;
     }
@@ -94,30 +98,36 @@ const emissionsSlice = createSlice({
       rawData: {},
       totalScore: 0,
       status: 'idle',
-      error: null
+      error: null,
+      params: null
     },
     scope1Data: {
       data: [],
       status: 'idle',
-      error: null
+      error: null,
+      params: null
     },
     scope2Data: {
       data: [],
       status: 'idle',
-      error: null
+      error: null,
+      params: null
     },
     scope3Data: {
       data: [],
       status: 'idle',
-      error: null
+      error: null,
+      params: null
     },
     previousMonthData: {
       data: null,
       status: 'idle',
-      error: null
+      error: null,
+      params: null
     },
     updateScopeStatus: 'idle',
-    updateScopeError: null
+    updateScopeError: null,
+    updateScopeParams: null
   },
   reducers: {
     setLocation: (state, action) => {
@@ -137,7 +147,8 @@ const emissionsSlice = createSlice({
       state.previousMonthData = {
         data: null,
         status: 'idle',
-        error: null
+        error: null,
+        params: null
       };
     }
   },
@@ -160,6 +171,11 @@ const emissionsSlice = createSlice({
         state.scope1Data.data = action.payload.scope1Data;
         state.scope2Data.data = action.payload.scope2Data;
         state.scope3Data.data = action.payload.scope3Data;
+
+        state.climatiqData.params = action.payload.params;
+        state.scope1Data.params = action.payload.params;
+        state.scope2Data.params = action.payload.params;
+        state.scope3Data.params = action.payload.params;
       })
       .addCase(fetchEmissionsData.rejected, (state, action) => {
         state.climatiqData.status = 'failed';
@@ -177,8 +193,9 @@ const emissionsSlice = createSlice({
       })
       .addCase(updateScopeData.fulfilled, (state, action) => {
         state.updateScopeStatus = 'succeeded';
-        const { scope, data } = action.payload;
+        const { scope, data, params } = action.payload;
         state[`scope${scope}Data`].data = data;
+        state.updateScopeParams = params;
       })
       .addCase(updateScopeData.rejected, (state, action) => {
         state.updateScopeStatus = 'failed';
@@ -188,9 +205,10 @@ const emissionsSlice = createSlice({
         state.previousMonthData.status = 'loading';
       })
       .addCase(fetchPreviousMonthData.fulfilled, (state, action) => {
-        state.previousMonthData.status = 'succeeded';
-        state.previousMonthData.data = action.payload;
         state.previousMonthData.error = null;
+        state.previousMonthData.status = 'succeeded';
+        state.previousMonthData.params = action.payload.params;
+        state.previousMonthData.data = action.payload.data;
       })
       .addCase(fetchPreviousMonthData.rejected, (state, action) => {
         state.previousMonthData.status = 'failed';

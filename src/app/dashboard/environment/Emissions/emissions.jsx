@@ -17,29 +17,6 @@ const Emissions = ({ open }) => {
   const [locationError, setLocationError] = useState("");
   const [yearError, setYearError] = useState("");
 
-  const getLatestComputedData = () => {
-    const base_url = `${process.env.BACKEND_API_URL}/datametric/get-climatiq-score?`;
-    const url = `${base_url}location=${location}&&year=${year}&&month=${month}`;
-    axiosInstance
-      .get(url)
-      .then((response) => {
-        if (response.status == 200) {
-          const sum = response.data.result.reduce(
-            (accumulator, currentValue) =>
-              accumulator + currentValue.total_emissions,
-            0
-          );
-          // dispatch(setClimatiqData((sum/1000).toFixed(2)));
-        } else {
-          // dispatch(setClimatiqData(0));
-        }
-      })
-      .catch((error) => {
-        // dispatch(setClimatiqData(0));
-        console.log(error, ' -got error');
-      });
-  };
-
   return (
     <>
     <ToastContainer style={{ fontSize: "12px" }} />
@@ -132,7 +109,6 @@ const Emissions = ({ open }) => {
           yearError={yearError}
           setYearError={setYearError}
           setLocationname={setLocationname}
-          getLatestComputedData={getLatestComputedData}
         />
         <Emissionsnbody
           open={open}
@@ -143,7 +119,6 @@ const Emissions = ({ open }) => {
           setLocationError={setLocationError}
           setYearError={setYearError}
           locationname={locationname}
-          getLatestComputedData={getLatestComputedData}
         />
       </>
     </EmissionsProvider>
