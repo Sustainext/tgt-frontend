@@ -1,14 +1,9 @@
 "use client";
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoHomeOutline } from "react-icons/io5";
-import axiosInstance, { post } from "@/app/utils/axiosMiddleware";
-import { useEmissions } from "./EmissionsContext";
-// import Scope1 from "./scope1";
-// import Scope2 from "./scope2";
-// import Scope3 from "./scope3";
 import CalculateSuccess from "./calculateSuccess";
-import { fetchEmissionsData, setClimatiqData } from '@/lib/redux/features/emissionSlice';
+import { fetchEmissionsData } from '@/lib/redux/features/emissionSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Scope1 from "./scope1new";
 import Scope2 from "./scope2new";
@@ -65,36 +60,13 @@ const AccordionItem = ({
   );
 };
 
-const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setLocationError, locationname, getLatestComputedData }) => {
-  const { climatiqData, setClimatiqData } = useEmissions();
+const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setLocationError, locationname }) => {
+  const dispatch = useDispatch();
   const scope1Ref = useRef();
   const scope2Ref = useRef();
   const scope3Ref = useRef();
   const [modalData, setModalData] = useState(null);
-
-//   const getLatestComputedData = () => {
-//     const base_url = `${process.env.BACKEND_API_URL}/datametric/get-climatiq-score?`;
-//     const url = `${base_url}location=${location}&&year=${year}&&month=${month}`;
-// console.log(url,"test datas new");
-//     axiosInstance
-//       .get(url)
-//       .then((response) => {
-//         if (response.status == 200) {
-//           const sum = response.data.result.reduce(
-//             (accumulator, currentValue) =>
-//               accumulator + currentValue.total_emissions,
-//             0
-//           );
-//           setClimatiqData((sum/1000).toFixed(2));
-//         } else {
-//           setClimatiqData(0);
-//         }
-//       })
-//       .catch((error) => {
-//         setClimatiqData({});
-//         console.log(error, ' -got error');
-//       });
-//   };
+  const climatiqData = useSelector((state) => state.emissions.climatiqData);
 
   const handleAccordionClick = () => {
     if (!location) {
@@ -110,10 +82,6 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
     return true;
   };
 
-  useEffect(() => {
-    getLatestComputedData();
-  }, [year, location, month]);
-
   const handleCalculate = async () => {
     const updatePromises = [
       scope1Ref.current?.updateFormData(),
@@ -123,7 +91,7 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
 
     await Promise.all(updatePromises);
 
-    await getLatestComputedData();
+    await dispatch(fetchEmissionsData({ location, year, month }));
 
     if (climatiqData !== 0) {
       setModalData({
