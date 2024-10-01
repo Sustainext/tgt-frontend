@@ -12,8 +12,6 @@ const LanguageSettings = () => {
       window.fluentcWidgetV2 &&
       widgetContainerRef.current
     ) {
-      // const userLanguage = navigator.language || navigator.userLanguage;
-
       const widget = new window.fluentcWidgetV2({
         widgetId: "33d7c1ce-b762-41c9-8b89-1606844f8707",
       });

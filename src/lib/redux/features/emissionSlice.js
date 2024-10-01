@@ -46,7 +46,7 @@ export const fetchPreviousMonthData = createAsyncThunk(
 
     try {
       const response = await axiosInstance.get(url);
-      return response.data.form_data[0].data;
+      return response.data.form_data[0];
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
@@ -190,6 +190,7 @@ const emissionsSlice = createSlice({
       .addCase(fetchPreviousMonthData.fulfilled, (state, action) => {
         state.previousMonthData.status = 'succeeded';
         state.previousMonthData.data = action.payload;
+        state.previousMonthData.error = null;
       })
       .addCase(fetchPreviousMonthData.rejected, (state, action) => {
         state.previousMonthData.status = 'failed';
