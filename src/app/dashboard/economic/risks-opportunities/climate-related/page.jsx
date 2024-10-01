@@ -102,7 +102,7 @@ const Climaterelated = () => {
           className={`${
             isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"
           }
-fixed right-[51px]  w-[340px] h-full bg-white  rounded-md
+fixed right-[51px]  w-[340px] h-[93%] bg-white  rounded-md
 transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         >
           {data &&

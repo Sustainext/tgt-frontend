@@ -186,7 +186,7 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
       <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
       <div className="flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] font-[500] mb-2">
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
             Describe how the organisation has determined significant instances of non-compliance
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e14556`}

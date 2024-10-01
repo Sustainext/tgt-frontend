@@ -211,7 +211,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] font-[500] mb-2">
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Role of the highest governance body and of senior executives
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
@@ -236,7 +236,7 @@ statements, strategies, policies, and goals related to sustainable development."
               ></ReactTooltip>
             </h2>
 
-            <h2 className="flex mx-2 text-[15px] font-[500] mb-2">
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Describe the role of the highest governance body and of senior
               executives in developing, approving, and updating the following:{" "}
             </h2>

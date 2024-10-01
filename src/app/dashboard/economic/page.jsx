@@ -132,7 +132,7 @@ const Economic = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Direct economic value generated & distributed
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -197,7 +197,7 @@ const Economic = () => {
                               Defined benefit plan obligations and other
                               retirement plans
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -255,7 +255,7 @@ const Economic = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Financial assistance received from government
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -320,7 +320,7 @@ const Economic = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                             Financial Implications due to climate change
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -384,7 +384,7 @@ const Economic = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                             Climate related Risks
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -441,7 +441,7 @@ const Economic = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                             Climate Related Opportunities
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -507,7 +507,7 @@ const Economic = () => {
                               Ratios of Standard Entry level wage by gender
                               compared to local minimum wage
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -566,7 +566,7 @@ const Economic = () => {
                               Proportion of senior management hired from the
                               local community
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -632,7 +632,7 @@ const Economic = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Infrastructure investments and services supported
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -689,7 +689,7 @@ const Economic = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Significant indirect economic impacts
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -749,7 +749,7 @@ const Economic = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Proportion of spending on local suppliers
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -816,7 +816,7 @@ const Economic = () => {
                               Operations assessed for risks related to
                               corruption
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -880,7 +880,7 @@ const Economic = () => {
                               Communication and training about anti-corruption
                               policies and procedures
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -939,7 +939,7 @@ const Economic = () => {
                               Confirmed incidents of corruption and actions
                               taken
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1004,7 +1004,7 @@ const Economic = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Public legal cases regarding corruption
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1061,7 +1061,7 @@ const Economic = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Anti Competitive Behavior
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1126,7 +1126,7 @@ const Economic = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Approach to tax
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1189,7 +1189,7 @@ const Economic = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Tax governance, control, and risk management
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1253,7 +1253,7 @@ const Economic = () => {
                               Stakeholder engagement and management of concerns
                               related to tax
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1311,7 +1311,7 @@ const Economic = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Country-by-country reporting
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p

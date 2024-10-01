@@ -280,7 +280,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] font-[500] mb-2">
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Describe how the highest governance body delegates responsibility
               for managing the organization's impacts on economy, environment
               and people:

@@ -45,6 +45,7 @@ const schema = {
       "ui:tooltip":
         "The organization can describe, for example, how it engages with stakeholders who are the intended users of the grievance mechanisms, to understand how they want to access the mechanisms to raise concerns, and their expectations about how the mechanisms will operate.",
           "ui:titledisplay": "none",
+          "ui:tooltipdisplay": "none",
           "ui:widgetType": "textarea",
           "ui:inputfildtype": "text",
           "ui:widget": "CommoninputWidget",
@@ -177,7 +178,7 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
    <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
         <div className=" flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] font-[500] mb-2">
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
             Describe how the stakeholders who are the intended users of the grievance mechanisms are involved in the design, review, operation, and improvement of these mechanisms
                             <MdInfoOutline data-tooltip-id={`tooltip-$e189`}
                                 data-tooltip-content="The organization can describe, for example, how it engages with stakeholders who are the intended users of the grievance mechanisms, to understand how they want to access the mechanisms to raise concerns, and their expectations about how the mechanisms will operate." className="mt-1.5 ml-2 text-[15px]" />

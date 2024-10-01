@@ -245,7 +245,7 @@ const Screen2 = ({ location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] font-[500] mb-2">
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               The Number of Injuries
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}

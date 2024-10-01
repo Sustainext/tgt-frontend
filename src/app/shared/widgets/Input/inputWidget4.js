@@ -24,7 +24,7 @@ const InputWidget4 = (props) => {
           <div>
             <div className="flex relative">
               <div className="mb-2">
-                <h6 className="text-[12px] font-medium text-[#344054] flex" style={{ display: uiSchema["ui:haddingdisplay"] }}>
+                <h6 className="text-[14px] font-medium text-[#344054] flex" style={{ display: uiSchema["ui:haddingdisplay"] }}>
                   {uiSchema["ui:hadding"]}
 
                 </h6>
@@ -59,7 +59,7 @@ const InputWidget4 = (props) => {
             </div>
             <div className="flex">
               <div className=" relative">
-                <h6 className="text-[12px] text-[#727272] w-[860px] flex">
+                <h6 className="text-[13px] w-[860px] flex text-gray-700 font-[500]">
                   {uiSchema["ui:title"]} <MdInfoOutline
                   data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(/\s+/g, "-")}`}
                   data-tooltip-content={uiSchema["ui:tooltipstitle"]}
@@ -90,11 +90,12 @@ const InputWidget4 = (props) => {
             </div>
           </div>
           <div className={`float-end`}   style={{ display: uiSchema["ui:gridisplay"] }}>
-            <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
+          <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                 {uiSchema["ui:Gri"]}
-              </p>
-            </div>
+                </div>
+              </div>
+        
           </div>
         </div>
 

@@ -220,7 +220,7 @@ const Screen3 = ({ location, year, month }) => {
                 }}
               ></ReactTooltip>
             </h2>
-            <p className="text-sm mx-2  w-[560px] flex">
+            <p className="text-[13px] mx-2 flex">
               Specify if training requirements apply to third-party
               organizations providing security personnel.
               <MdInfoOutline

@@ -260,7 +260,7 @@ const Screen3 = ({ location, year, month }) => {
                 }}
               ></ReactTooltip>
             </h2>
-            <h2 className="flex mx-2 text-[15px] font-[500] mb-2">
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Only where they exist, please provide descriptions
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e2`}

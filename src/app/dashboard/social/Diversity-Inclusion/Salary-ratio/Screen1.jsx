@@ -11,10 +11,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-
+import CurrencyselectWidget from "../../../../shared/widgets/Select/currencyselectWidget";
 // Simple Custom Table Widget
 const widgets = {
   TableWidget: CustomTableWidget8,
+  CurrencyselectWidget:CurrencyselectWidget,
 };
 
 const view_path = "gri-social-salary_ratio-405-2a-number_of_individuals";
@@ -26,88 +27,141 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      category: { type: "string", title: "Category" },
-      male: { type: "integer", title: "Male" },
-      female: { type: "integer", title: "Female" },
-      nonBinary: { type: "integer", title: "Non-Binary" },
-      locationandoperation: {
+      Q1: {
         type: "string",
-        title: "Significant Location of Operation",
+        title: "Select a currency to fill the  below table",
+       
       },
+      Q2: {
+        type: "array",
+        items: {
+          type: "object",
+          properties: {
+            category: { type: "string", title: "Category" },
+            male: { type: "integer", title: "Male" },
+            female: { type: "integer", title: "Female" },
+            nonBinary: { type: "integer", title: "Non-Binary" },
+            locationandoperation: {
+              type: "string",
+              title: "Significant Location of Operation",
+            },
+          },
+        },
+      },
+  
+ 
     },
   },
 };
 
 const uiSchema = {
-  "ui:widget": "TableWidget",
-  "ui:options": {
-    titles: [
-      {
-        title: "Basic Salary per Employee Category",
-        tooltip: "Please specify the category.",
-        colSpan: 1,
+  items: {
+    "ui:order": ["Q1", "Q2"],
+
+    Q1: {
+      "ui:hadding":
+        "If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
+      "ui:haddingtooltips":
+        "Mention the relevant entry level wage by gender at significant locations of operation to the minimum wage.Entry level wage: full-time wage in the lowest employment category.:",
+      "ui:haddingdisplay": "none",
+      "ui:haddingtooltipdisplay": "none",
+      "ui:title": "Select a currency to fill the  below table.",
+      "ui:tooltip": "Specify the frequency of sustainability reporting..",
+      "ui:tooltipdisplay": "none",
+      "ui:widget": "CurrencyselectWidget",
+      "ui:widgtclass":
+        "block w-[20vw] text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300 mb-4",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
-      {
-        title: "Gender",
-        tooltip: "Please specify the gender of individuals.",
-        colSpan: 3,
+    },
+    Q2: {
+      "ui:widget": "TableWidget",
+      "ui:options": {
+        titles: [
+          {
+            title: "Basic Salary per Employee Category",
+            tooltip: "What is the ratio of the basic salary of women to men for each employee category. Basic salary is the fixed, minimum amount paid to an employee for performing his or her duties.",
+            colSpan: 1,
+          },
+          {
+            title: "Gender",
+            tooltip: "Please specify the gender of individuals.",
+            colSpan: 3,
+          },
+          {
+            title: "Significant Location of Operation",
+            tooltip: "This section allows you to enter the organization's significant locations of operation.",
+            colSpan: 1,
+          },
+        ],
+        subTitles: [
+          {
+            title: "",
+            tooltip: "Please specify the category.",
+            colSpan: 1,
+            type: "text",
+            title2: "Category",
+          },
+          {
+            title: "Male",
+            tooltip: "Please specify the number of male individuals.",
+            colSpan: 1,
+            type: "number",
+            title2: "Male",
+          },
+          {
+            title: "Female",
+            tooltip: "Please specify the number of female individuals.",
+            colSpan: 1,
+            type: "number",
+            title2: "Female",
+          },
+          {
+            title: "Non-Binary",
+            tooltip: "Please specify the number of non-binary individuals.",
+            colSpan: 1,
+            type: "number",
+            title2: "NonBinary",
+          },
+          {
+            title: "",
+            tooltip:
+              "Please specify the number of vulnerable community individuals.",
+            colSpan: 1,
+            type: "text",
+            title2: "locationandoperation",
+          },
+        ],
       },
-      {
-        title: "Significant Location of Operation",
-        tooltip: "Please specify the diversity groups of individuals.",
-        colSpan: 1,
-      },
-    ],
-    subTitles: [
-      {
-        title: "",
-        tooltip: "Please specify the category.",
-        colSpan: 1,
-        type: "text",
-        title2: "Category",
-      },
-      {
-        title: "Male",
-        tooltip: "Please specify the number of male individuals.",
-        colSpan: 1,
-        type: "number",
-        title2: "Male",
-      },
-      {
-        title: "Female",
-        tooltip: "Please specify the number of female individuals.",
-        colSpan: 1,
-        type: "number",
-        title2: "Female",
-      },
-      {
-        title: "Non-Binary",
-        tooltip: "Please specify the number of non-binary individuals.",
-        colSpan: 1,
-        type: "number",
-        title2: "NonBinary",
-      },
-      {
-        title: "",
-        tooltip:
-          "Please specify the number of vulnerable community individuals.",
-        colSpan: 1,
-        type: "text",
-        title2: "locationandoperation",
-      },
-    ],
+    },
+    "ui:options": {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: "horizontal",
+    },
   },
+
+
 };
 
 const Screen1 = ({ location, year, month }) => {
   const initialFormData = [
     {
+      Q1: "",
+      Q2: [
+        {
       category: "",
       male: 0,
       female: 0,
       nonBinary: 0,
       locationandoperation: "",
+        },
+      ],
     },
+    
   ];
   const [formData, setFormData] = useState(initialFormData);
   const [r_schema, setRemoteSchema] = useState({});
@@ -235,12 +289,15 @@ const Screen1 = ({ location, year, month }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-              Number of individuals within the organization’s governance bodies
+           Ratio of basic salary of women to men
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
-                data-tooltip-content="This section documents the data corresponding to the number of
-individuals within the organization’s governance bodies by gender,
-age group and diversity group. "
+                data-tooltip-content="This section documents the data 
+corresponding to the 
+ratio of the basic salary  of women 
+to men for each 
+employee category, by significant 
+locations of operation. "
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip

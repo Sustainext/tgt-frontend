@@ -11,10 +11,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
 import axiosInstance from "@/app/utils/axiosMiddleware";
-
+import CurrencyselectWidget from "../../../../shared/widgets/Select/currencyselectWidget";
 // Simple Custom Table Widget
 const widgets = {
   TableWidget: CustomTableWidget8,
+  CurrencyselectWidget:CurrencyselectWidget,
 
 };
 
@@ -22,28 +23,65 @@ const view_path = 'gri-social-salary_ratio-405-2a-ratio_of_remuneration'
 const client_id = 1
 const user_id = 1
 
-const schema = {
-  type: 'array',
-  items: {
-    type: 'object',
-    properties: {
-      category: { type: "string", title: "Category" },
-      male: { type: "integer", title: "Male" },
-      female: { type: "integer", title: "Female" },
-      nonBinary: { type: "integer", title: "Non-Binary" },
-      locationandoperation: { type: "string", title: "Significant Location of Operation" },
 
-    }
-  }
+const schema = {
+  type: "array",
+  items: {
+    type: "object",
+    properties: {
+      Q1: {
+        type: "string",
+        title: "Select a currency to fill the  below table",
+       
+      },
+      Q2: {
+        type: "array",
+        items: {
+          type: "object",
+          properties: {
+            category: { type: "string", title: "Category" },
+            male: { type: "integer", title: "Male" },
+            female: { type: "integer", title: "Female" },
+            nonBinary: { type: "integer", title: "Non-Binary" },
+            locationandoperation: { type: "string", title: "Significant Location of Operation" },
+          },
+        },
+      },
+  
+ 
+    },
+  },
 };
 
 const uiSchema = {
-  "ui:widget": "TableWidget",
+  items: {
+    "ui:order": ["Q1", "Q2"],
+
+    Q1: {
+      "ui:hadding":
+        "If yes, then specify the relevant entry level wage by gender at significant locations of operation to the minimum wage:",
+      "ui:haddingtooltips":
+        "Mention the relevant entry level wage by gender at significant locations of operation to the minimum wage.Entry level wage: full-time wage in the lowest employment category.:",
+      "ui:haddingdisplay": "none",
+      "ui:haddingtooltipdisplay": "none",
+      "ui:title": "Select a currency to fill the  below table.",
+      "ui:tooltip": "Specify the frequency of sustainability reporting..",
+      "ui:tooltipdisplay": "none",
+      "ui:widget": "CurrencyselectWidget",
+      "ui:widgtclass":
+        "block w-[20vw] text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300 mb-4",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
+    },
+    Q2: {
+      "ui:widget": "TableWidget",
   'ui:options': {
     titles: [
-      { title: "Remuneration per Employee Category", tooltip: "Please specify the category.", colSpan: 1 },
+      { title: "Remuneration per Employee Category", tooltip: "What is the ratio of the remuneration of women to men for each employee category. Remuneration: basic salary plus additional amounts paid to a worker.", colSpan: 1 },
       { title: "Gender", tooltip: "Please specify the gender of individuals.", colSpan: 3 },
-      { title: "Significant Location of Operation", tooltip: "Please specify the diversity groups of individuals.", colSpan: 1 },
+      { title: "Significant Location of Operation", tooltip: "This section allows you to enter the organization's significant locations of operation.", colSpan: 1 },
     ],
     subTitles: [
       {
@@ -84,18 +122,37 @@ const uiSchema = {
       },
     ],
   }
+    },
+    "ui:options": {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: "horizontal",
+    },
+  },
+
+
 };
+
+
 
 const Screen2 = ({ location, year, month }) => {
   const initialFormData = [
     {
+      Q1: "",
+      Q2: [
+        {
       category: "",
       male: 0,
       female: 0,
       nonBinary: 0,
       locationandoperation: "",
-    }
+        },
+      ],
+    },
+    
   ];
+ 
   const [formData, setFormData] = useState(initialFormData);
   const [r_schema, setRemoteSchema] = useState({})
   const [r_ui_schema, setRemoteUiSchema] = useState({})
@@ -214,7 +271,7 @@ const Screen2 = ({ location, year, month }) => {
      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
         <div className='mb-4 flex'>
          <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] font-[500] mb-2">
+          <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Ratio of remuneration of women to men
               <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                 data-tooltip-content="This section documents the data corresponding to the ratio of
@@ -232,14 +289,16 @@ by significant locations of operation. " className="mt-1.5 ml-2 text-[15px]" />
             </h2>
 
           </div>
-
-          <div className='w-[20%]'>
-            <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+          <div className="w-[20%]">
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                 GRI 405-2a
+                </div>
               </div>
             </div>
           </div>
+    
         </div>
         <div className='mx-2'>
           <Form

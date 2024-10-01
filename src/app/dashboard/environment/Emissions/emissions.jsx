@@ -1,10 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import EmissionsHeader from "./emissionsheader";
 import Emissionsnbody from "./emissions-body";
 import { EmissionsProvider } from "./EmissionsContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Energydata } from "../../../shared/data/Energydata";
+import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
 const Emissions = ({ open }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
@@ -13,6 +15,28 @@ const Emissions = ({ open }) => {
   const [countryCode, setCountryCode] = useState("");
   const [locationError, setLocationError] = useState("");
   const [yearError, setYearError] = useState("");
+  const [data, setData] = useState();
+  const [isOpen, setIsOpen] = useState(false);
+  const [category, setCategory] = useState("");
+  const toggleDrawerclose = () => {
+    setIsOpen(!isOpen);
+  }
+  const toggleDrawer = (selected) => {
+    setIsOpen(!isOpen);
+    setCategory(selected);
+  };
+  useEffect(() => {
+    var newData = [];
+    Energydata.map((program) => {
+      program.category.map((tag) => {
+        if (tag === category) {
+          newData.push(program);
+        }
+      })
+    })
+    // //console.log(newData);
+    setData(newData);
+  }, [category])
 
   return (
     <>
@@ -38,19 +62,19 @@ const Emissions = ({ open }) => {
                 <div className="flex mb-2">
                   <button
                     className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                    onClick={() => toggleDrawer("1")}
+                    onClick={() => toggleDrawer("43")}
                   >
                     GRI 305 - 1
                   </button>
                   <button
                     className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                    onClick={() => toggleDrawer("1")}
+                    onClick={() => toggleDrawer("44")}
                   >
                     GRI 305 - 2
                   </button>
                   <button
                     className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                    onClick={() => toggleDrawer("1")}
+                    onClick={() => toggleDrawer("45")}
                   >
                     GRI 305 - 3
                   </button>
@@ -59,32 +83,32 @@ const Emissions = ({ open }) => {
                 <div className="flex">
                   <button
                     className="text-[#fff] bg-[#4C9F38] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 "
-                    onClick={() => toggleDrawer("2")}
+                    onClick={() => toggleDrawer("sd5")}
                   >
                     SDG 3
                   </button>
                
                   <button
                     className="text-[#fff] bg-[#BF8B2E] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 "
-                    onClick={() => toggleDrawer("4")}
+                    onClick={() => toggleDrawer("sd3")}
                   >
                     SDG 12
                   </button>
                   <button
                     className="text-[#fff] bg-lime-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                    onClick={() => toggleDrawer("5")}
+                    onClick={() => toggleDrawer("sd4")}
                   >
                     SDG 13
                   </button>
                   <button
                     className="text-[#fff] bg-[#007DBC] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                    onClick={() => toggleDrawer("5")}
+                    onClick={() => toggleDrawer("sd24")}
                   >
                     SDG 14
                   </button>
                   <button
                     className="text-[#fff] bg-[#40AE49] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                    onClick={() => toggleDrawer("5")}
+                    onClick={() => toggleDrawer("sd8")}
                   >
                     SDG 15
                   </button>
@@ -92,6 +116,27 @@ const Emissions = ({ open }) => {
               </div>
             </div>
           </div>
+          <div className={`${isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"}
+      fixed right-[51px]  w-[340px] h-[93%] bg-white  rounded-md
+      transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
+
+          {data && data.map((program) => (
+            <>
+              <div className="flex justify-between p-2 pt-5 pb-4 border-b-2 ">
+                <div className="ml-2">
+                  {program.header}
+                </div>
+
+                <div className="ml-2 float-right">
+                  <h5 className="text-[#727272] text-[17px] font-bold cursor-pointer" onClick={toggleDrawerclose}><MdOutlineClear /></h5>
+                </div>
+
+              </div>
+              <div> {program.data}</div>
+            </>
+          ))}
+
+        </div>
         </div>
         <EmissionsHeader
           activeMonth={activeMonth}

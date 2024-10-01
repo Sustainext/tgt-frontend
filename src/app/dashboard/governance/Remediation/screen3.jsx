@@ -41,6 +41,7 @@ const uiSchema = {
         "Describe other processes by which the organization provides for or cooperates in the remediation of negative impacts that it identifies it has caused or contributed to.",
       "ui:tooltip":
         "This disclosure can include remediation processes other than grievance mechanisms. Such processes lead to the remediation of an impact without mechanisms for filing a formal complaint.Examples include instances where the organization takes action to remediate an actual impact evidenced in an impact assessment or a report published by a civil society organization.",
+        "ui:tooltipdisplay": "none",
       "ui:titledisplay": "none",
       "ui:widgetType": "textarea",
       "ui:inputfildtype": "text",
@@ -178,7 +179,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] font-[500] mb-2">
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Describe other processes by which the organization provides for or
               cooperates in the remediation of negative impacts that it
               identifies it has caused or contributed to.

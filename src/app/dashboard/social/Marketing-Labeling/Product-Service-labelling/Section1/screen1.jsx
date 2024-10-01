@@ -297,16 +297,16 @@ iv. Disposal of the product and environmental or social impacts.
               </ReactTooltip>
             </h2>
           </div>
-
-          <div className={`${open ? "w-[20%]" : "w-[20%]"}`}>
-            <div className={`flex float-end`}>
-              <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 ">
-                <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                  GRI 417-1a
-                </p>
+          <div className="w-[20%]">
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                GRI 417-1a
+                </div>
               </div>
             </div>
           </div>
+     
         </div>
         <div className="mx-2">
           <Form
@@ -318,7 +318,7 @@ iv. Disposal of the product and environmental or social impacts.
             widgets={widgets}
           />
         </div>
-        <div className="mb-6">
+        <div className="mt-4">
           <button type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year || !month ? 'cursor-not-allowed' : ''}`}
             onClick={handleSubmit}

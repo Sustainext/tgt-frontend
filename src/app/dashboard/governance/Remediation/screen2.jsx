@@ -37,10 +37,10 @@ const uiSchema = {
     "ui:order": ["Q1"],
     Q1: {
       "ui:title":
-        "Describe organisation's approach to identify and address grievances, including the grievance mechanisms that the organization has established or participates in",
+        "",
       "ui:tooltip":
         "Grievance mechanisms refer to any routinized, state-based or non-state-based, judicial or non judicial processes through which stakeholders can raise grievances and seek remedy.",
-      "ui:tooltipdisplay": "block",
+      "ui:tooltipdisplay": "none",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
       "ui:options": {
@@ -171,18 +171,17 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
   return (
     <>
       <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
-        <div className="mb-4 flex">
+        <div className="mb-2 flex">
           <div className="w-[80%] relative">
-            {/* <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
-            Describe the remuneration policies for members of the highest governance body and
-            senior executives, including:
+         <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+            Describe organisation's approach to identify and address grievances, including the grievance mechanisms that the organization has established or participates in
               <MdInfoOutline
-                data-tooltip-id={`tooltip-$e1`}
-                data-tooltip-content="Specify the remuneration policies for members of the highest governance body and senior executives."
+                data-tooltip-id={`tooltip-$e1546`}
+                data-tooltip-content="Grievance mechanisms refer to any routinized, state-based or non-state-based, judicial or non judicial processes through which stakeholders can raise grievances and seek remedy."
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
-                id={`tooltip-$e1`}
+                id={`tooltip-$e1546`}
                 place="top"
                 effect="solid"
                 style={{
@@ -195,7 +194,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
                   textAlign: "left",
                 }}
               ></ReactTooltip>
-            </h2> */}
+            </h2>
             {/* <p className="text-[12px] text-gray-500">Describe the governance structure, including the committees of the highest governance body</p> */}
           </div>
 

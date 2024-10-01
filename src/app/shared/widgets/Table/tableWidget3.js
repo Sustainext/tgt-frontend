@@ -44,18 +44,18 @@ const CustomTableWidget3 = ({ id, options, value, required, onChange }) => {
       <table id={id} className="rounded-md w-full border-x border-t border-gray-300" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
         <thead className="gradient-background h-[54px] " >
           <tr>
-            <th className="text-[12px]  border-r  border-gray-300 px-2 py-2 w-auto text-left">
+            <th className="text-[12px]  border-r border-b  border-gray-300 px-2 py-2 w-auto text-left">
               Employee Category
             </th>
             {options.titles.map((item, idx) => (
               <th
                 key={idx}
-                className="text-[12px] border-r border-gray-300 px-2 py-2 w-auto text-center"
+                className="text-[12px] border-r border-b  border-gray-300 px-2 py-2 w-auto text-center"
               >
                 {item.title}
               </th>
             ))}
-            <th className="text-[12px] px-2 py-2 w-auto text-center">
+            <th className="text-[12px] px-2 py-2 w-auto text-center border-b  border-gray-300">
               Total
             </th>
           </tr>

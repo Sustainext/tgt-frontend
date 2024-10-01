@@ -32,11 +32,17 @@ const CustomTableWidget11 = ({ id, schema, uiSchema, value, required, onChange, 
         }, {});
         onChange([...value, newRow]);
     };
+
+    const removeRow = (indexToRemove) => {
+        const newData = value.filter((_, idx) => idx !== indexToRemove);
+        onChange(newData);
+    };
+
     return (
         <div style={{ overflowY: 'auto', maxHeight: '400px' }}>
-            <table id={id} className="border border-gray-300 w-full" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
+            <table id={id} className="border border-gray-300 w-full rounded-md" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
                 <thead className="gradient-background h-[54px]">
-                    <tr >
+                    <tr>
                         {uiSchema['ui:options'].titles.map((item, idx) => (
                             <th key={idx} style={{ minWidth: '120px'}} 
                             className={`text-[12px] w-[30%] px-2 py-2 ${
@@ -81,7 +87,11 @@ const CustomTableWidget11 = ({ id, schema, uiSchema, value, required, onChange, 
                                 return (
                                     <td key={cellIndex} 
                                     className={`p-3 text-center ${
-                                        cellIndex === 3 ? "border-t border-gray-300" : "border-t border-l border-gray-300"
+                                        cellIndex === 0 
+                                          ? "border-t border-gray-300"  
+                                          : cellIndex === 3 
+                                          ? "border-t border-gray-300"  
+                                          : "border-t border-l border-gray-300"  
                                       }`}>
                                         {isEnum ? (
                                             <>
@@ -109,7 +119,6 @@ const CustomTableWidget11 = ({ id, schema, uiSchema, value, required, onChange, 
                                             </>
                                         ) : (
                                             <>
-
                                                 {(key === 'totalnumberofincidentsofdiscrimination' || key === 'describetheincident') ? (
                                                     <input
                                                         type={inputType}
@@ -120,7 +129,7 @@ const CustomTableWidget11 = ({ id, schema, uiSchema, value, required, onChange, 
                                                            placeholder="Enter data"
                                                     />
                                                 ) : (
-                                                    <button onClick={() => formContext.onRemove(rowIndex)} title="Remove row" className='text-center mx-auto'>
+                                                    <button onClick={() => removeRow(rowIndex)} title="Remove row" className='text-center mx-auto'>
                                                         <MdOutlineDeleteOutline className='text-[23px] text-red-600' />
                                                     </button>
                                                 )}
