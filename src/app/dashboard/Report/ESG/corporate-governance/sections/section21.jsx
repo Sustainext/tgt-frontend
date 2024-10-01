@@ -30,7 +30,7 @@ const Section21=({section9_6_2Ref})=>{
 [Company Name] is committed to integrating sustainable development into our core business strategy. Our approach focuses on reducing environmental impact, enhancing social value, and maintaining strong governance. We aim to create long-term value for our stakeholders while contributing to a more sustainable future. 
             </p>
 <p className="text-[15px] text-[#344054] mb-2 font-semibold">
-Overall organization's policy commitments for "responsible business conduct",
+Overall organization's policy commitments for "responsible business conduct"
 </p>
 <p className="text-sm mb-4">{content}</p>
 <p className="text-[15px] text-[#344054] mb-2 font-semibold">
@@ -72,7 +72,7 @@ Edit Statement
             </p>
             <textarea
           value={'Our commitment to sustainability is embedded in our corporate policies and practices. These policies are regularly reviewed and updated to reflect evolving best practices and stakeholder expectations. [Can include policy document]'}
-          className={`border appearance-none text-sm border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  mt-2 w-full mb-4 `}
+          className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  mt-2 w-full mb-4 `}
           rows={4}
         />
 

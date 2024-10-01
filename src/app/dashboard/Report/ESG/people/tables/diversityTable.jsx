@@ -15,7 +15,7 @@ const DiversityTable = ({columns,data}) => {
         width: "40vw",
         maxHeight:"450px"
       }}
-      className="mb-2 rounded-md"
+      className="mb-2 rounded-md table-scrollbar"
       >
         <table className="w-full border border-gray-200 rounded-md">
           <thead className="gradient-background">

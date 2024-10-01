@@ -10,7 +10,7 @@ const Section10=({section9_3_4Ref})=>{
         <div id="section9_3_4" ref={section9_3_4Ref} >
         
             <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-            9.3.4 Role of the highest governance body in sustainability reporting
+            9.3.4 Delegation of Responsibility for Managing Impacts
             </h3>
             <p className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
             Description of  how the highest governance body delegates responsibility for managing 

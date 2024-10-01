@@ -42,7 +42,7 @@ const ESGReport = () => {
   return (
     <>
       <div className="flex">
-        <Sidebar activeStep={activeStep} />
+        <Sidebar activeStep={activeStep} setActiveStep={setActiveStep} />
         <div className="w-full mb-5">
           <div className="flex flex-col justify-start overflow-x-hidden">
             <div className="flex justify-between items-center border-b border-gray-200 mb-3 w-full">

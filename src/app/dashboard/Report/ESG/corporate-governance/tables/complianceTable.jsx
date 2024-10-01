@@ -40,10 +40,6 @@ const ComplianceTable=({rowLabels})=>{
                             <td className="border-t border-r border-gray-200 p-4 text-center">
                                 23
                             </td>
-                            <td className="border-t border-r border-gray-200 p-4 text-center">
-                                13
-
-                            </td>
                         </tr>
                     ))}
            

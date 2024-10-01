@@ -11,6 +11,7 @@ import Screen1 from './sections/section1'
 import Screen2 from './sections/section2'
 
 const MessageFromCeo=()=>{
+    const orgName= typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
     return (
         <>
         <div className="mx-2 p-2">
@@ -19,8 +20,8 @@ const MessageFromCeo=()=>{
             </h3>
             <div className="flex gap-4">
             <div className="w-[80%]">
-            <Screen1/>
-            <Screen2/>
+            <Screen1 orgName={orgName}/>
+            <Screen2 orgName={orgName} />
             </div>
             {/* page sidebar */}
             <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[500px] top-36 sticky  w-[20%]">

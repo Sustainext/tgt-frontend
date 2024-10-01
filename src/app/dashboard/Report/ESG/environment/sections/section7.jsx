@@ -1,28 +1,56 @@
 'use client'
 import { useState, useRef, useEffect } from "react";
-import LeaveTable from "../../people/tables/leaveTable";
+import EmissionTable from '../tables/emissionTable'
 
 const Section7=({section12_1_5Ref})=>{
     const [content,setContent] = useState(
         `We track GHG emission intensity to understand our emissions in relation to our business growth and efficiency improvements`
     )
 
-    const col1=[
-        "Organization Metric",
-       "Quantity",
-        "Unit",
-        "Type of GHGs",
-        "Unit"
-    ]
-    const data1=[
+    const columns = [
+        { header: "Organisation Metric" },
+        { header: "Quantity" },
+        { header: "Unit" },
+        { header: "Type of GHGs", subHeaders: ["Direct (Scope 1)", "Energy indirect (Scope 2)", "Other indirect (Scope 3)"] },
+        { header: "GHG Emission Intensity" },
+        { header: "Units" },
+        { header: "Gases included in the calculation", subHeaders: ["CO2", "N2O", "CH4", "HFCs", "PFCs", "SF6"] },
+      ];
+      
+      const data = [
         {
-            "Organization Metric":"data",
-        "Quantity":"data",
-        "Unit":"data",
-        "Type of GHGs":"data",
-        "Unit":"data"
+          "Organisation Metric": "Production volume (metric tons)",
+          "Quantity": "Metric tons",
+          "Unit": "tCO2e/organisation metric unit",
+          "Direct (Scope 1)": "data",
+          "Energy indirect (Scope 2)": "data",
+          "Other indirect (Scope 3)": "data",
+          "GHG Emission Intensity": "tCO2e",
+          "Units": "tCO2e",
+          "CO2": "data",
+          "N2O": "data",
+          "CH4": "data",
+          "HFCs": "data",
+          "PFCs": "data",
+          "SF6": "data"
+        },
+        {
+          "Organisation Metric": "Number of full-time employees",
+          "Quantity": "data",
+          "Unit": "tCO2e",
+          "Direct (Scope 1)": "data",
+          "Energy indirect (Scope 2)": "data",
+          "Other indirect (Scope 3)": "data",
+          "GHG Emission Intensity": "tCO2e",
+          "Units": "tCO2e",
+          "CO2": "data",
+          "N2O": "data",
+          "CH4": "data",
+          "HFCs": "data",
+          "PFCs": "data",
+          "SF6": "data"
         }
-    ]
+      ];
     
     
     return (
@@ -39,11 +67,14 @@ const Section7=({section12_1_5Ref})=>{
             </p>
             <textarea
           value={content}
-          className={`border appearance-none text-sm border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  mt-2 w-full mb-4 `}
+          className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  mt-2 w-full mb-4 `}
           rows={4}
         />
+        <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+        GHG Emission Intensity
+            </p>
 <div className="shadow-md rounded-md mb-4">
-{/* <LeaveTable columns={col1} data={data1}/> */}
+<EmissionTable columns={columns} data={data}/>
 </div>
 
 </div>
