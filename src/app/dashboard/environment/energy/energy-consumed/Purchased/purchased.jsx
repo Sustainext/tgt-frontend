@@ -209,7 +209,6 @@ const Purchased = ({ location, year, month }) => {
     setLoOpen(false);
   };
 
-
   const updateFormData = async () => {
     LoaderOpen();
     const data = {
@@ -286,19 +285,21 @@ const Purchased = ({ location, year, month }) => {
   useEffect(() => {
     if (location && year && month) {
       loadFormData();
-      toastShown.current = false; // Reset the flag when valid data is present
+      toastShown.current = false;
     } else {
-      // Only show the toast if it has not been shown already
       if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
+        toastShown.current = true;
       }
     }
-  }, [location, year, month]); // Dependencies // React only triggers this effect if these dependencies change
+  }, [location, year, month]);
+  useEffect(() => {
+    console.log("formData has been updated:", formData);
+  }, [formData]);
   const handleChange = (e) => {
     const newData = e.formData.map((item, index) => ({
-      ...item, // Ensure each item retains its structure
+      ...item,
     }));
-    setFormData(newData); // Update the formData with new values
+    setFormData(newData);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -308,9 +309,7 @@ const Purchased = ({ location, year, month }) => {
   const handleAddNew = () => {
     const newData = [...formData, {}];
     setFormData(newData);
-  
   };
- 
 
   const updateFormDatanew = (updatedData) => {
     setFormData(updatedData);
@@ -320,9 +319,7 @@ const Purchased = ({ location, year, month }) => {
     const updatedData = [...formData];
     updatedData.splice(index, 1);
     setFormData(updatedData);
- 
   };
-
 
   return (
     <>
@@ -341,7 +338,7 @@ const Purchased = ({ location, year, month }) => {
               RemoveWidget: (props) => {
                 const match = props.id.match(/^root_(\d+)/);
                 const index = match ? parseInt(match[1], 10) : null;
-    
+
                 return (
                   <RemoveWidget
                     {...props}

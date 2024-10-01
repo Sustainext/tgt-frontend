@@ -176,21 +176,15 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
   return (
     <>
-      <div
-        className="mx-2  p-3 mb-6 pb-6 rounded-md"
-        style={{
-          boxShadow:
-            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
-        }}
-      >
+      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
             Please mention all tax jurisdictions where the entities included in the organization’s audited consolidated financial statements, or in the financial information filed on public record, are resident for tax purposes.
               <MdInfoOutline
                 data-tooltip-id={`es38`}
                 data-tooltip-html="The organization shall report information for the time period covered by the most recent audited consolidated financial statements or financial information filed on public record. If information is not available for this time period, the organization may report information for the time period covered by the audited consolidated financial statements, or the financial information filed on public record, immediately preceding the most recent ones."
-               className="mt-1.5 ml-2 text-[15px]"
+               className="mt-1.5 ml-1 text-[20px]"
               />
               <ReactTooltip
                 id={`es38`}
@@ -228,7 +222,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
             widgets={widgets}
           />
         </div>
-        <div className="mb-6">
+        <div className="mt-4">
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${

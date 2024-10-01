@@ -62,7 +62,7 @@ const GovernanceWidget = ({ onChange, value = [], uiSchema = {} }) => {
       <div className="mb-6">
         <div className="flex mb-2">
           <div className="relative">
-            <p className="text-sm text-gray-700 flex">
+            <p className="text-[14px] text-gray-700 font-[500] flex">
               {uiSchema["ui:title"]}
               <MdInfoOutline
                 data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(
@@ -115,14 +115,14 @@ const GovernanceWidget = ({ onChange, value = [], uiSchema = {} }) => {
         <div className="flex gap-2 mt-2">
           <button
             type="button"
-            className="text-blue-500 hover:text-blue-700 flex items-center gap-1"
+            className="text-blue-500 hover:text-blue-700 flex items-center gap-1 text-[14px]"
             onClick={addRow}
           >
             <MdAdd /> Add Row
           </button>
           <button
             type="button"
-            className="text-blue-500 hover:text-blue-700 flex items-center gap-1"
+            className="text-blue-500 hover:text-blue-700 flex items-center gap-1 text-[14px]"
             onClick={addColumn}
           >
             <MdAdd /> Add Column

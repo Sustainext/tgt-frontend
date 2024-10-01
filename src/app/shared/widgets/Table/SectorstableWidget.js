@@ -52,7 +52,7 @@ const SectorstableWidget = ({ value = [], onChange, uiSchema = {} }) => {
     <div className="mb-6">
       <div className="flex mb-2">
         <div className="relative">
-          <p className="text-sm text-gray-700 flex">
+          <p className="text-[12px] text-gray-700 font-[500] flex">
             {uiSchema["ui:title"]}
             <MdInfoOutline
               data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(
@@ -85,8 +85,8 @@ const SectorstableWidget = ({ value = [], onChange, uiSchema = {} }) => {
         <table className="w-full text-left">
           <thead className="gradient-background">
             <tr className="text-center">
-              <th className="py-2 px-4 font-medium">Sector</th>
-              <th className="py-2 px-4 font-medium">Sub Industry</th>
+              <th className="py-2 px-4 font-[500] text-[12px]">Sector</th>
+              <th className="py-2 px-4 font-[500] text-[12px]">Sub Industry</th>
             </tr>
           </thead>
           <tbody>
@@ -98,14 +98,14 @@ const SectorstableWidget = ({ value = [], onChange, uiSchema = {} }) => {
                     key={index}
                     className="border-b border-gray-200 text-center"
                   >
-                    <td className="py-2 px-4">{row.Sector}</td>
-                    <td className="py-2 px-4">{row.Sub_industry || "-"}</td>{" "}
+                    <td className="py-2 px-4 text-[12px]">{row.Sector}</td>
+                    <td className="py-2 px-4 text-[12px]">{row.Sub_industry || "-"}</td>{" "}
                     {/* Show empty string if Sub_industry is null */}
                   </tr>
                 ))
             ) : (
               <tr>
-                <td colSpan={2} className="py-2 px-4 text-center">
+                <td colSpan={2} className="py-2 px-4 text-center text-[12px]">
                   No data available
                 </td>
               </tr>
@@ -124,7 +124,7 @@ const SectorstableWidget = ({ value = [], onChange, uiSchema = {} }) => {
                         handleSectorChange(input.id, e.target.value)
                       }
                       placeholder="Enter Sector/Industry"
-                      className="w-full border-b border-gray-300 p-2 focus:outline-none"
+                      className="w-full border-b border-gray-300 p-2 focus:outline-none text-[12px]"
                     />
                     <button
                       type="button"
@@ -144,10 +144,10 @@ const SectorstableWidget = ({ value = [], onChange, uiSchema = {} }) => {
       {/* Button to add more input boxes */}
       <button
         type="button"
-        className="text-blue-500 mt-4 flex items-center"
+        className="text-blue-500 mt-4 flex items-center text-[12px]"
         onClick={addInputBox}
       >
-        Add another sector <span className="ml-2 text-xl">+</span>
+        Add another sector <span className="ml-2 text-[14px]">+</span>
       </button>
     </div>
   );

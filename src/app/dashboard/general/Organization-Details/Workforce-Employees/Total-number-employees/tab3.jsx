@@ -156,7 +156,10 @@ const Tab3 = ({ fullName, selectedOrg, year, selectedCorp }) => {
 
   return (
     <>
-        <div className="pb-3 mb-6 rounded-md">
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+    
+      >
         <Form
           schema={r_schema}
           uiSchema={r_ui_schema}
@@ -166,7 +169,7 @@ const Tab3 = ({ fullName, selectedOrg, year, selectedCorp }) => {
           formContext={{ newMonth: fullName }}
           widgets={widgets}
         />
-        <div className="mb-8">
+        <div className="mt-4">
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${

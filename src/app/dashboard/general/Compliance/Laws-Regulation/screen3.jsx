@@ -14,12 +14,10 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from '@/app/utils/axiosMiddleware'
+import CommoninputWidget from "../../../../shared/widgets/Input/commoninputWidget";
 
 const widgets = {
-  inputWidget: inputWidget2,
-  RadioWidget2: RadioWidget2,
-  TextareaWidget3:TextareaWidget3,
-  Textboxwithfileupload:Textboxwithfileupload,
+  inputWidget: CommoninputWidget,
 };
 
 const view_path = "gri-general-laws_and_regulation-significant-2-27-c";
@@ -38,7 +36,6 @@ const schema = {
     },
   },
 };
-
 const uiSchema = {
   items: {
     "ui:order": ["Q1"],
@@ -46,22 +43,27 @@ const uiSchema = {
       "ui:title": "Describe the significant instances of non-compliance",
       "ui:tooltip":
         "The description of significant instances of non-compliance can include the geographic location where the instance occurred, and the matter to which the instance relates, such as a tax fraud or a spill. The organization is required to report sufficient information for information users to understand the type and the context of significant instances of non-compliance.",
-      "ui:tooltipdisplay": "block",
-      "ui:widget": "inputWidget",
-      "ui:horizontal": true,
-      "ui:options": {
-        label: false,
+        "ui:tooltipdisplay": "none",
+        "ui:titledisplay": "none",
+        "ui:widgetType": "textarea",
+        "ui:inputfildtype": "text",
+        "ui:widget": "inputWidget",
+        "ui:horizontal": true,
+        "ui:options": {
+          label: false,
+        },
       },
-    },
+  
 
     "ui:options": {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: "horizontal", // Set layout to horizontal
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: "horizontal",
     },
   },
 };
+
 
 const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
   const [formData, setFormData] = useState([{}]);
@@ -177,15 +179,31 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
 
   return (
     <>
-      <div
-        className="mx-2  p-3 mb-6 pb-6 rounded-md"
-        style={{
-          boxShadow:
-            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
-        }}
-      >
-        <div className="mb-4 flex">
+      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div className="flex">
           <div className="w-[80%] relative">
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+            Describe the significant instances of non-compliance
+              <MdInfoOutline
+                data-tooltip-id={`tooltip-$e1455`}
+                data-tooltip-content="The description of significant instances of non-compliance can include the geographic location where the instance occurred, and the matter to which the instance relates, such as a tax fraud or a spill. The organization is required to report sufficient information for information users to understand the type and the context of significant instances of non-compliance."
+                className="mt-1.5 ml-2 text-[15px]"
+              />
+              <ReactTooltip
+                id={`tooltip-$e1455`}
+                place="top"
+                effect="solid"
+                style={{
+                  width: "290px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  textAlign: "left",
+                }}
+              ></ReactTooltip>
+            </h2>
           </div>
           <div className="w-[20%]">
             <div className="float-end">

@@ -58,14 +58,15 @@ const GeneralWorkersEmployees = ({ id, options, value, required, onChange, schem
 
     return (
         <div style={{ maxHeight: "400px" }} className="mb-2">
-            <table id={id} className="rounded-md border border-gray-300 w-full">
+            <table id={id} className="rounded-md border border-gray-300 w-full" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
                 <thead className="gradient-background">
                     <tr>
                         {options.titles.map((item, idx) => (
                             <th
                                 key={idx}
                                 style={{ minWidth: "120px", textAlign: "left" }}
-                                className="text-[12px] border border-gray-300 px-2 py-2 relative"
+                                className={` ${idx == 0 ? "" :" border-l" } text-[12px] p-3 text-center border-gray-300 px-2 py-2 relative`}
+                               
                             >
                                 <div className="flex items-center ">
                                     <p>{item.title}</p>
@@ -80,7 +81,15 @@ const GeneralWorkersEmployees = ({ id, options, value, required, onChange, schem
                                             id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
                                             place="top"
                                             effect="solid"
-                                            className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
+                                            style={{
+                                                width:"400px",
+                                                backgroundColor: "#000",
+                                                color: "white",
+                                                fontSize: "12px",
+                                                boxShadow: 3,
+                                                borderRadius: "8px",
+                                                zIndex:"1000",
+                                              }}
                                         />
                                     </p>
                                 </div>
@@ -90,19 +99,22 @@ const GeneralWorkersEmployees = ({ id, options, value, required, onChange, schem
                 </thead>
                 <tbody>
                     {localValue.map((row, rowIndex) => (
-                        <tr key={rowIndex} className="border border-gray-300">
+                        <tr key={rowIndex} >
                             {Object.keys(schema.items.properties).map((key, cellIndex) => {
                                 const propertySchema = schema.items.properties[key];
                                 const isEnum = propertySchema && propertySchema.hasOwnProperty('enum');
 
                                 return (
-                                    <td key={cellIndex} className="border border-gray-300 p-3 text-center">
+                                    <td key={cellIndex} 
+                                    className={` ${cellIndex == 0 ? "" :" border-l" } border-t p-3 text-center border-gray-300`}
+                              >
                                         {isEnum ? (
                                             <>
                                                 <select
+
                                                     value={localValue[rowIndex][key]}
                                                     onChange={(e) => handleFieldChange(rowIndex, key, e.target.value)}
-                                                    className="text-sm pl-2 py-2 w-full border-b"
+                                                    className="text-[12px] pl-2 py-2 w-full border-b"
                                                     required={required}
                                                 >
                                                     <option value="">Select</option>
@@ -116,7 +128,7 @@ const GeneralWorkersEmployees = ({ id, options, value, required, onChange, schem
                                                         required={required}
                                                         value={localValue[rowIndex][`${key}_others`] || ""}
                                                         onChange={(e) => handleFieldChange(rowIndex, `${key}_others`, e.target.value)}
-                                                        className="text-sm pl-2 py-2 w-full mt-2"
+                                                        className="text-[12px] pl-2 py-2 w-full mt-2"
                                                         placeholder="Please specify"
                                                     />
                                                 )}
@@ -127,7 +139,7 @@ const GeneralWorkersEmployees = ({ id, options, value, required, onChange, schem
                                                 required={required}
                                                 value={localValue[rowIndex][key] || ""}
                                                 onChange={(e) => handleFieldChange(rowIndex, key, e.target.value)}
-                                                className="text-sm pl-2 py-2 w-full"
+                                                className="text-[12px] pl-2 py-2 w-full"
                                                 placeholder="Enter"
                                             />
                                         )}

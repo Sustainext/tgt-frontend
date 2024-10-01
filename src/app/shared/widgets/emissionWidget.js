@@ -800,7 +800,7 @@ const EmissionWidget = React.memo(
                           value={quantity}
                           onChange={handleQuantityChange}
                           placeholder="Enter Value"
-                          className="focus:border-blue-500 focus:outline-none text-[12px] w-[6vw] text-right pe-1"
+                          className="focus:border-blue-500 focus:outline-none text-[12px] w-[7vw] text-right pe-1"
                           step="1"
                           min="0"
                         />
@@ -858,7 +858,7 @@ const EmissionWidget = React.memo(
                         value={quantity}
                         onChange={handleQuantityChange}
                         placeholder="Enter Value"
-                        className="focus:border-blue-500 focus:outline-none text-[12px] w-[10vw] text-right pe-1"
+                        className="focus:border-blue-500 focus:outline-none text-[12px] w-[19.7vw] text-right pe-1"
                         step="1"
                         min="0"
                       />

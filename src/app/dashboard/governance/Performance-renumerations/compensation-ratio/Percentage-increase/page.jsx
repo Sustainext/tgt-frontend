@@ -192,7 +192,7 @@ const PercentageIncrease = ({ selectedLocation, year }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Percentage increase in annual total compensation
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}

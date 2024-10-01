@@ -24,7 +24,7 @@ const RadioWidget2 = ({
   return (
     <div className="mb-6">
       <div className="flex mb-4 items-center relative">
-        <p className="text-[12px] text-gray-500 font-semibold flex">
+        <p className="text-[14px] text-gray-700 font-[500] flex">
           {uiSchema["ui:title"]}
           <MdInfoOutline
             data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(
@@ -39,7 +39,15 @@ const RadioWidget2 = ({
             id={`tooltip-${uiSchema["ui:title"].replace(/\s+/g, "-")}`}
             place="top"
             effect="solid"
-            className="!max-w-xs !bg-black !text-white !text-xs !rounded-lg !shadow-md"
+            style={{
+              width:"400px",
+              backgroundColor: "#000",
+              color: "white",
+              fontSize: "12px",
+              boxShadow: 3,
+              borderRadius: "8px",
+              zIndex:"1000",
+            }}
           />
         </p>
       </div>
@@ -47,7 +55,7 @@ const RadioWidget2 = ({
         {options.enumOptions.map((option, index) => (
           <label
             key={index}
-            className="flex items-center gap-2 text-[12px] mb-2"
+            className="flex items-center gap-2 text-[14px] mb-2"
           >
             <input
               type="radio"
@@ -56,7 +64,7 @@ const RadioWidget2 = ({
               checked={inputState === option.value}
               autoFocus={autofocus && index === 0}
               onChange={handleChange}
-              className="form-radio h-2.5 w-2.5"
+              className="form-radio h-3 w-3"
             />
             {option.label}
           </label>

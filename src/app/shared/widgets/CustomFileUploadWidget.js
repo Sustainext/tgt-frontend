@@ -137,7 +137,7 @@ const CustomFileUploadWidget = ({
   return (
     <>
    
-    <div className={id.startsWith("root_0") ? "mb-[2.2rem]" : "mb-[0.8rem]"}>
+    <div className={id.startsWith("root_0") ? "mb-[3.2rem]" : "mb-[0.8rem]"}>
     <p className="text-[14px] text-neutral-950 font-[400] mb-1 hidden">
             {label}
       
@@ -158,9 +158,9 @@ const CustomFileUploadWidget = ({
             onClick={handlePreview}
           >
             <MdFilePresent
-              className="w-6 h-6 mr-1 text-green-500"
+              className="w-5 h-5 mr-1 text-green-500"
             />
-            <div className="w-[60px] truncate text-sky-600 text-sm">
+            <div className="w-[60px] truncate text-sky-600 text-[12px]">
               {fileName}
             </div>
           </div>
@@ -169,9 +169,9 @@ const CustomFileUploadWidget = ({
         <label htmlFor={id + scopes} className="flex cursor-pointer ml-1">
           <div className="flex items-center  ">
             <MdOutlineFileUpload
-              className="w-6 h-6 mr-1 text-[#007EEF]"
+              className="w-5 h-5 mr-1 text-[#007EEF]"
             />
-            <div className="w-[60px] truncate text-[#007EEF] text-sm ml-1">
+            <div className="w-[60px] truncate text-[#007EEF] text-[12px] ml-1">
               Upload
             </div>
           </div>

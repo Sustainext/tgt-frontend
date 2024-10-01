@@ -4588,7 +4588,7 @@ the supply chain and actions taken
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal3"
               target="_blank"
             >
@@ -4644,7 +4644,7 @@ the supply chain and actions taken
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal5"
               target="_blank"
             >
@@ -4709,7 +4709,7 @@ the supply chain and actions taken
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal8"
               target="_blank"
             >
@@ -4759,7 +4759,7 @@ the supply chain and actions taken
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal12"
               target="_blank"
             >
@@ -4870,7 +4870,7 @@ the supply chain and actions taken
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal3"
               target="_blank"
             >
@@ -4924,7 +4924,7 @@ the supply chain and actions taken
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal8"
               target="_blank"
             >
@@ -5009,7 +5009,7 @@ the supply chain and actions taken
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal16"
               target="_blank"
             >
@@ -5075,7 +5075,7 @@ the supply chain and actions taken
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal16"
               target="_blank"
             >
@@ -5123,7 +5123,7 @@ the supply chain and actions taken
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal8"
               target="_blank"
             >
@@ -5176,7 +5176,7 @@ the supply chain and actions taken
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal12"
               target="_blank"
             >
@@ -5236,7 +5236,7 @@ the supply chain and actions taken
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal16"
               target="_blank"
             >
@@ -5356,7 +5356,7 @@ the supply chain and actions taken
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal5"
               target="_blank"
             >
@@ -5417,7 +5417,7 @@ the supply chain and actions taken
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal8"
               target="_blank"
             >
@@ -5478,7 +5478,7 @@ the supply chain and actions taken
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal8"
               target="_blank"
             >
@@ -5534,7 +5534,7 @@ the supply chain and actions taken
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal16"
               target="_blank"
             >
@@ -5586,7 +5586,7 @@ the supply chain and actions taken
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal1"
               target="_blank"
             >
@@ -5635,7 +5635,7 @@ the supply chain and actions taken
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal5"
               target="_blank"
             >
@@ -5691,7 +5691,7 @@ the supply chain and actions taken
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal8"
               target="_blank"
             >

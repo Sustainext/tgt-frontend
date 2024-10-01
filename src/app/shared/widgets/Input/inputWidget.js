@@ -38,9 +38,12 @@ const inputWidget = ({
   return (
     <div className="mb-3 px-1">
       {/* Conditionally show label and tooltip based on the id */}
-      {id.startsWith("root_0") && (
-        <div className="relative h-[23px]">
-          <p className="flex text-[12px] w-[20vw]  text-neutral-950 font-[400] mb-1 leading-[15px]">
+     
+        <div className="relative w-[68%]">
+         
+          {id.startsWith("root_0") && (
+            <>
+             <p className="flex text-[13px] w-[20vw]  h-[35px] text-neutral-950 font-[400] mb-1 leading-[15px]">
             {label}
             <MdInfoOutline
               data-tooltip-id={tooltipId}
@@ -52,17 +55,22 @@ const inputWidget = ({
               place="top"
               effect="solid"
               style={{
-                width: "400px",
+                width:"400px",
                 backgroundColor: "#000",
                 color: "white",
                 fontSize: "12px",
                 boxShadow: 3,
                 borderRadius: "8px",
+                padding: "10px",
+                zIndex:"1000",
               }}
             />
-          </p>
+            </p>
+            </>
+          )}
+        
         </div>
-      )}
+   
       <div>
         <input
           className="block w-[20vw] py-2  text-[12px]  leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300"

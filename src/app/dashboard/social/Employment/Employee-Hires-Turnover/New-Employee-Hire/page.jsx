@@ -64,7 +64,7 @@ const NewEmployeeHire = ({ location, year, month, activeMonth }) => {
       <div className="mb-10">
         <div className="mb-4 flex mx-2 ">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] font-bold">
+            <h2 className="flex ml-1 text-[15px] font-bold">
               New Employee Hire
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
@@ -88,7 +88,7 @@ const NewEmployeeHire = ({ location, year, month, activeMonth }) => {
             </h2>
           </div>
         </div>
-        <div className="shadow-md rounded-md">
+        <div className="shadow-md rounded-md mx-2">
           {/* Tabs */}
           <ul className="flex justify-evenly cursor-pointer">
             {tabs.map((tab, index) => (

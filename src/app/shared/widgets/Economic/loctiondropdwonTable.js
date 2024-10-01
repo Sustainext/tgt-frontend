@@ -42,7 +42,9 @@ const Row = ({ item, rowIndex, options, locationdata, updateField, onRemove, sel
     <>
       <tr key={rowIndex}>
         {Object.keys(localValues).map((key, cellIndex) => (
-          <td key={cellIndex} className="border border-gray-300 px-2">
+          <td key={cellIndex} 
+          className={` ${cellIndex == 0 ? "border-t" :"border-l border-t" } border-gray-300 px-2`}>
+       
             {options?.titles?.[cellIndex]?.widgettype === "select" ? (
               <select
                 value={localValues[key]}
@@ -152,14 +154,15 @@ const LocationDropdownTable = ({ id, options, value = [], required, onChange, lo
       }}
       className="mb-2 pb-2"
     >
-      <table id={id} className="table-fixed border-collapse w-full">
+      <table id={id} className="table-fixed border-collapse w-full rounded-md border border-gray-300" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
         <thead className="gradient-background">
           <tr className="h-[102px]">
             {options.titles.map((item, idx) => (
               <th
                 key={idx}
                 style={{ width: "17vw", textAlign: "left" }}
-                className="text-[12px] border border-gray-300 px-2 py-2 text-center"
+                className={` ${idx === 0 ? "" :"border-l" } text-[12px] px-2 py-2 text-center border-gray-300 `}
+              
               >
                 <div className="flex items-center relative justify-center">
                   <p>{item.title}</p>
@@ -174,7 +177,15 @@ const LocationDropdownTable = ({ id, options, value = [], required, onChange, lo
                         id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
                         place="top"
                         effect="solid"
-                        className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
+                           style={{
+                        width:"400px",
+                        backgroundColor: "#000",
+                        color: "white",
+                        fontSize: "12px",
+                        boxShadow: 3,
+                        borderRadius: "8px",
+                        zIndex:"1000",
+                      }}
                       />
                     </p>
                   )}

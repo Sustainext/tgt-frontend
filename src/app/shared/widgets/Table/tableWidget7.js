@@ -69,14 +69,14 @@ const CustomTableWidget7 = ({
 
   return (
     <div style={{ overflowY: "auto", maxHeight: "400px" }}>
-      <table id={id} className="rounded-md border border-gray-300 w-full">
+      <table id={id} className="rounded-md border border-gray-300 w-full" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
         <thead className="gradient-background">
           <tr>
             {options.titles.map((item, idx) => (
               <th
                 key={`header-${idx}`}
                 className={`text-[12px] px-2 py-2 ${
-                  idx === 0 ? "text-left" : "text-center border border-gray-300"
+                  idx === 0 ? "text-left border-r border-gray-300" : "text-center border-r border-gray-300"
                 }`}
                 colSpan={item.colSpan}
               >
@@ -94,7 +94,7 @@ const CustomTableWidget7 = ({
               <th
                 key={`sub-header-${idx}`}
                 style={{ textAlign: "center" }}
-                className="text-[12px] border border-gray-300 px-2 py-2"
+                className="text-[12px] border-t border-r border-gray-300  px-2 py-2"
                 colSpan={item.colSpan}
               >
                 <div className="">
@@ -121,7 +121,7 @@ const CustomTableWidget7 = ({
                 return (
                   <td
                     key={`cell-${rowIndex}-${cellIndex}`}
-                    className="border border-gray-300 p-3"
+                    className="border-r border-t border-gray-300 p-3"
                   >
                     <InputField
                       type={inputType}
@@ -135,7 +135,7 @@ const CustomTableWidget7 = ({
                   </td>
                 );
               })}
-              <td className="border border-gray-300 p-3">
+              <td className="p-3">
                 <button onClick={() => formContext.onRemove(rowIndex)}>
                   <MdOutlineDeleteOutline className="text-[23px] text-red-600" />
                 </button>
