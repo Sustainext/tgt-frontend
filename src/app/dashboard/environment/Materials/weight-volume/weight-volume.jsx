@@ -90,7 +90,7 @@ const Weightvolume = () => {
               data-tooltip-content="This section documents data corresponding to the renewable
                             and/or non-renewable materials used in the production of
                             goods/services during the reporting period."
-              className="mt-1.5 ml-2 text-[14px]"
+              className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
               id={`tooltip-$e1`}

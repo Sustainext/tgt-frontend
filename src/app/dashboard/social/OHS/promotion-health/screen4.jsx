@@ -206,7 +206,7 @@ const Screen4 = ({ location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Health risk addressed
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
@@ -214,7 +214,7 @@ const Screen4 = ({ location, year, month }) => {
                             any major non-work-related health risks addressed
                             by any voluntary health promotion services and programs offered to
                             workers."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e1`}

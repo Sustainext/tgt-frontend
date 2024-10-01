@@ -199,14 +199,14 @@ const Screen3 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Explain the strategy (if any) adopted by the employer to work
               towards full coverage if a fund set up to pay the plan’s pension
               liabilities is not fully covered.
               <MdInfoOutline
                 data-tooltip-id={`es7415`}
                 data-tooltip-html="What is the strategy adopted by the employer to work towards full coverage,if a fund set up to pay the plan's pension liabilities is not fully covered?"
-                className="mt-1.5 ml-2 text-[18px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`es7415`}

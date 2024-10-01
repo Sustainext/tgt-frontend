@@ -10,7 +10,7 @@ const selectWidget2 = (props) => {
       <div className="mb-3">
 
         <select
-          className="block w-full  p-2 text-[#727272] text-[14px] bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 capitalize"
+          className="block w-full  p-2 text-[#727272] text-[12px] bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 capitalize"
           value={props.value || ''}
           onChange={handleChange}
         >

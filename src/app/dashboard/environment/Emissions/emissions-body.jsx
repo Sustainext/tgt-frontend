@@ -38,12 +38,12 @@ const AccordionItem = ({
       >
         <div className="flex items-center px-3 w-[30%]">
           <h5 className="text-[18px]">{icons}</h5>{" "}
-          <h5 className="text-[15px] text-[#344054] pt-1 px-3 font-semibold">
+          <h5 className="text-[15px] text-[#344054] pt-1 px-3 font-[500]">
             {scops}
           </h5>
         </div>
         <div className="w-[40%]">
-          <h5 className="text-[15px] text-[#344054] pt-1 px-3 font-semibold text-center">
+          <h5 className="text-[15px] text-[#344054] pt-1 px-3 font-[500] text-center">
             {title}
           </h5>
         </div>

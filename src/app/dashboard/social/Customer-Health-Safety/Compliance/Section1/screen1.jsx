@@ -222,7 +222,7 @@ Total number of incidents of non compliance with regulations
 and/or voluntary codes concerning the health and safety
 impacts of products and services within the reporting
 period"
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e1`}

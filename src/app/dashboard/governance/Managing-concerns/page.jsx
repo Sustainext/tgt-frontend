@@ -81,7 +81,7 @@ const ManagingConcerns = () => {
                 data-tooltip-content="This section documents the data corresponding to the organization’s mechanisms for individuals to seek advice and raise
 concerns about responsible business conduct in the organization's operations and business
 relationships."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e17`}

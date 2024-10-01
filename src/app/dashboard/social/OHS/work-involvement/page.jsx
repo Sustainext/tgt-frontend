@@ -69,7 +69,7 @@ const Workinvolvement = () => {
                         Hazard identification, risk assessment, and incident investigation
                         <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="For employees and for workers who are not employees
-                            but whose work and/or workplace is controlled by the organization:" className="mt-1.5 ml-2 text-[14px]" />
+                            but whose work and/or workplace is controlled by the organization:" className="mt-1.5 ml-2 text-[15px]" />
                         <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
                             width: "290px", backgroundColor: "#000",
                             color: "white",

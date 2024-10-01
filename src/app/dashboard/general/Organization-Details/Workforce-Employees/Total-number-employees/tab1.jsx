@@ -167,7 +167,7 @@ const Tab1 = ({ fullName, selectedOrg, year, selectedCorp }) => {
 
     return (
         <>
-            <div className="mx-2 p-3 mb-6 rounded-md">
+              <div className="pb-3 mb-6 rounded-md">
                 <Form
                     schema={r_schema}
                     uiSchema={r_ui_schema}

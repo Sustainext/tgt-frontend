@@ -91,7 +91,7 @@ const Dischargefromareas = () => {
               data-tooltip-id={`tooltip-$e1`}
               data-tooltip-content="This section documents data corresponding to total
                             water withdrawal and total water discharge from all areas."
-              className="mt-1.5 ml-2 text-[14px]"
+              className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
               id={`tooltip-$e1`}

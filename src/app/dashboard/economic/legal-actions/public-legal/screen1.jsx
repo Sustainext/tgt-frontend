@@ -228,7 +228,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
             Are there any public legal cases regarding corruption brought against the organization or its employees during the reporting period?
               <MdInfoOutline
                 data-tooltip-id={`es30`}
@@ -243,7 +243,7 @@ illegal, or a breach of trust in the conduct of the enterprise’s business. Thi
 in-kind benefits, such as free goods, gifts, and holidays, or special personal services provided
 for the purpose of an improper advantage, or that can result in moral pressure to receive such
 an advantage."
-                className="mt-1.5 ml-2 text-[18px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`es30`}

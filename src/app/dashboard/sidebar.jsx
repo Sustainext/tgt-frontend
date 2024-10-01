@@ -132,7 +132,7 @@ const Sidenav = () => {
     <>
       <div className="min-h-[120vh] fixed z-[100]">
         <div
-          className={`bg-[#0a0528] min-h-[130vh] pt-[1.5rem] ${
+          className={`bg-[#0a0528] min-h-[130vh] pt-[1.25rem] ${
             open ? "w-[15rem]" : "w-[4.5rem]"
           } duration-300 relative`}
         >
@@ -146,7 +146,7 @@ const Sidenav = () => {
             <div>
               <MdKeyboardDoubleArrowLeft
                 className={`text-[#fff] text-2xl absolute cursor-pointer transition-transform duration-300 ${
-                  !open ? "rotate-180 right-0 top-9" : "right-0 top-9"
+                  !open ? "rotate-180 right-0 top-7" : "right-0 top-7"
                 }`}
                 onClick={() => setOpen(!open)}
               />

@@ -115,11 +115,11 @@ const AssignToWidget = ({ id, scope, location, year, month, data, countryCode,la
   <div className="flex justify-center items-center mt-2 ">
 
       <button
-        className="text-center py-1 pl-2 h-[30px] text-sm w-[100px] bg-blue-500 text-white rounded focus:outline-none focus:shadow-outline flex items-center justify-center"
+        className="bg-blue-500 text-white text-[12px] w-[112px]   py-1 rounded-md shadow hover:bg-blue-600"
         type="button"
         onClick={openModal}
       >
-        Assign To <FiChevronDown className="ml-2 text-[15px]" />
+        Assign To 
       </button>
     </div>
     </>

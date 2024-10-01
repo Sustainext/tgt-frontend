@@ -198,11 +198,11 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
             Percentage of total employees covered by collective bargaining agreements
               <MdInfoOutline data-tooltip-id={`tooltip-employees`}
                 data-tooltip-content="This section documents the data corresponding to the percentage
-of employees covered by collective bargaining agreements." className="mt-1.5 ml-2 text-[14px]" />
+of employees covered by collective bargaining agreements." className="mt-1.5 ml-2 text-[15px]" />
               <ReactTooltip id={`tooltip-employees`} place="top" effect="solid" style={{
                 width: "290px", backgroundColor: "#000",
                 color: "white",

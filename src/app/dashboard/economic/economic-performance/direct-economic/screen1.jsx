@@ -351,7 +351,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
             Report the direct economic value generated and distributed (EVG&D) on an accruals basis for the reporting period, including the basic components for the organization’s global operations as listed below:
               <MdInfoOutline
                 data-tooltip-id={`es25`}
@@ -363,7 +363,7 @@ report EVG&D separately at country, regional, or market levels, and the criteria
 <p>
 Note: Compile the EVG&D from data in the organization’s audited financial or profit and loss
 (P&L) statement, or its internally audited management accounts.</p> "
-                className=" ml-2 text-[25px]"
+                className="text-[18px] mt-1"
               />
               <ReactTooltip
                 id={`es25`}

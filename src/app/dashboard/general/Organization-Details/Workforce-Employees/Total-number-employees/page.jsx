@@ -70,13 +70,13 @@ const Totalnumberemployees = ({
       <div className="mb-10">
         <div className="mb-4 flex mx-2 ">
           <div className="w-[85%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Total number of employees
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
                 data-tooltip-content="This section documents data corresponding to the number of employees
 by gender and geographic area, categorized by employment type."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e1`}

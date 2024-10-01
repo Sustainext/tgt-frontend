@@ -197,7 +197,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Describe the specific policy commitment to "respect human rights",
               including:
               <MdInfoOutline
@@ -206,7 +206,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
 organisation's specific
 policy commitment
 to respect human rights."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e81`}

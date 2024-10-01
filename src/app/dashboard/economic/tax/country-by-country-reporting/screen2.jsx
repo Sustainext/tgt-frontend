@@ -354,13 +354,13 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               For each tax jurisdiction reported above (for the reporting
               period),
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e18`}
                 data-tooltip-content="In this disclosure, country-by-country information is to be reported at the level of tax jurisdictions and not at the level of individual entities."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e18`}

@@ -216,14 +216,14 @@ const Screen5 = ({ selectedOrg, year, selectedCorp,datarefreshtwo,setDatarefresh
       >
         <div className="mb-2 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Total number of employees that the organization’s anti-corruption
               policies and procedures have been communicated to, broken down by
               employee category and region.
               <MdInfoOutline
                 data-tooltip-id={`es278`}
                 data-tooltip-html="Total number of employees that have received training on anti-corruption, broken down by employee category and region."
-                className="mt-1.5 ml-2 text-[21px]"
+               className="mt-1.5 ml-2 text-[18px]"
               />
               <ReactTooltip
                 id={`es278`}

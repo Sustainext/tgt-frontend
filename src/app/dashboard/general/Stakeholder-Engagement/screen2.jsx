@@ -236,7 +236,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               How the organization seeks to ensure meaningful engagement with
               stakeholders
               <MdInfoOutline
@@ -250,7 +250,7 @@ const Screen2 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   <li>5.How it seeks to respect the human rights of all stakeholders engaged, for example, their rights to privacy, freedom of expression.</li>
   <li>6.How it works with business partners to engage with stakeholders in a meaningful way.</li>
 </ul>"
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e86`}

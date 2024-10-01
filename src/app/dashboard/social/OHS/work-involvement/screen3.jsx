@@ -218,14 +218,14 @@ const Screen3 = ({ location, year, month }) => {
             <div className="mx-2 p-3 mb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
                 <div className='mb-4 flex'>
                    <div className="w-[80%] relative">
-                        <h2 className="flex mx-2 text-[15px]  font-bold mb-2">
+                       <h2 className="flex mx-2 text-[15px] font-[500] mb-2">
                             Formal joint management-worker health and safety committees
                             <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                                 data-tooltip-content="This section documents data corresponding to the formal
                                 joint management-worker health and safety committees.
                                 Include: Their responsibilities, meeting frequency,
                                 decision-making authority, and whether and, if so, why
-                                any workers are not represented by these committees " className="mt-1.5 ml-2 text-[14px]" />
+                                any workers are not represented by these committees " className="mt-1.5 ml-2 text-[15px]" />
                             <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
                                 width: "290px", backgroundColor: "#000",
                                 color: "white",
@@ -236,12 +236,12 @@ const Screen3 = ({ location, year, month }) => {
                             }}>
                             </ReactTooltip>
                         </h2>
-                        <h2 className="flex mx-2 text-[15px]  font-bold mb-2">
+                       <h2 className="flex mx-2 text-[15px] font-[500] mb-2">
                             Only where they exist, please provide descriptions
                             <MdInfoOutline data-tooltip-id={`tooltip-$e2`}
                                 data-tooltip-content="Please provide a description only if the formal joint
                                 management-worker health and safety committees
-                               exit. " className="mt-1.5 ml-2 text-[14px]" />
+                               exit. " className="mt-1.5 ml-2 text-[15px]" />
                             <ReactTooltip id={`tooltip-$e2`} place="top" effect="solid" style={{
                                 width: "290px", backgroundColor: "#000",
                                 color: "white",

@@ -83,7 +83,7 @@ const Anticompetitivebehavior = () => {
               data-tooltip-id={`tooltip-$es10`}
               data-tooltip-content="This section documents the data corresponding to the legal actions for
 anti-competitive behavior, antitrust, and monopoly practices."
-              className="mt-1.5 ml-2 text-[14px]"
+              className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
               id={`tooltip-$es10`}

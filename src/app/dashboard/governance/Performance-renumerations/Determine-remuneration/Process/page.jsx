@@ -231,14 +231,14 @@ const Process = ({ selectedLocation, year }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative flex">
-            <h2 className="flex mx-2 ext-[15px] text-[#344054] font-bold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Describe the process for designing its remuneration policies and
               for determining remuneration
             </h2>
             <MdInfoOutline
               data-tooltip-id={`tooltip-$e1`}
               data-tooltip-content="What is the process for designing its remuneration policies and for determining remuneration?"
-              className="mt-1.5 ml-2 text-[14px]"
+              className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
               id={`tooltip-$e1`}
