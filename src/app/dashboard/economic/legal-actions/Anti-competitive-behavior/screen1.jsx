@@ -213,7 +213,6 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       LoaderClose();
     }
   };
-
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
