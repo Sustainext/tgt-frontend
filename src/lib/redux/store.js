@@ -4,12 +4,13 @@ import { combineReducers } from 'redux'
 // Import reducers
 import counterReducer from './features/counterSlice'
 import emissionReducer from './features/emissionSlice'
-// Import other reducers as needed
+import screen1SliceReducer from './features/ESGSlice/screen1Slice'
 
 const rootReducer = combineReducers({
   counter: counterReducer,
   emissions: emissionReducer,
-  // Add other reducers here
+  screen1Slice:screen1SliceReducer,
+  
 })
 
 export const makeStore = () => {

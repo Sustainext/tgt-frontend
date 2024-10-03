@@ -13,6 +13,7 @@ const Companyoperations = () => {
     const section2_1_2Ref = useRef(null);
     const section2_2Ref = useRef(null);
 
+
   //   useEffect(() => {
   //     const handleScroll = () => {
   //         const sections = [
@@ -22,18 +23,19 @@ const Companyoperations = () => {
   //             { id: 'section2_2', ref: section2_2Ref }
   //         ];
 
-  //         const threshold = 150;
+  //         const threshold = 250;
 
   //         for (const section of sections) {
   //             const element = section.ref.current;
   //             if (element) {
   //                 const rect = element.getBoundingClientRect();
-  //                 if (rect.top >= -threshold && rect.top <= window.innerHeight - threshold) {
+  //                 if (rect.top <= window.innerHeight && rect.bottom >= 0) {
   //                     setActiveSection(section.id);
   //                     break;
   //                 }
   //             }
   //         }
+          
   //     };
 
   //     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -41,65 +43,64 @@ const Companyoperations = () => {
   //     return () => window.removeEventListener("scroll", handleScroll);
   // }, []);
   
+
+  
+
+
   const scrollToSection = (sectionRef, sectionId) => {
       setActiveSection(sectionId); 
     
-      const elementTop = sectionRef.current?.getBoundingClientRect().top + window.scrollY;
+      const elementTop = sectionRef.current?.getBoundingClientRect().top + window.pageYOffset;
     
       window.scrollTo({
-        top: elementTop - 100,
+        top: elementTop - 250,
         behavior: 'smooth',
       });
     };
-    
 
-//   useEffect(() => {
-//     const handleScroll = () => {
-//         if (isScrolling) return; // Prevent running if smooth scroll is in progress
+  // useEffect(() => {
+  //   console.log("hhh")
+  //   const handleScroll = () => {
+  //     const sections = [
+  //       { id: 'section2_1', ref: section2_1Ref },
+  //       { id: 'section2_1_1', ref: section2_1_1Ref },
+  //       { id: 'section2_1_2', ref: section2_1_2Ref },
+  //       { id: 'section2_2', ref: section2_2Ref }
+  //     ];
+  
+  //     let foundActiveSection = false;
+  
+  //     for (const section of sections) {
+  //       const element = section.ref.current;
+  //       if (element) {
+  //         console.log(element,"ppp")
+  //         const rect = element.getBoundingClientRect();
+  //         // Check if the section is at least partially visible in the viewport
+  //         if (rect.top < window.innerHeight * 0.6 && rect.bottom >= window.innerHeight * 0.2) {
+  //           setActiveSection(section.id);
+  //           foundActiveSection = true;
+  //           break; // Stop checking other sections once the active section is found
+  //         }
+  //       }
+  //     }
+  
+  //     // If no section is active, reset to an empty state or the first section as default
+  //     // if (!foundActiveSection) {
+  //     //   setActiveSection(''); // or set it to a default section id if needed
+  //     // }
+  //   };
+  
+  //   window.addEventListener("scroll", handleScroll, { passive: true });
+  
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, []);
+  
+  // const scrollToSection = (ref,id) => {
+  //   const section = document.getElementById(id);
+  //   section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // };
 
-//         const sections = [
-//             { id: 'section2_1', ref: section2_1Ref },
-//             { id: 'section2_1_1', ref: section2_1_1Ref },
-//             { id: 'section2_1_2', ref: section2_1_2Ref },
-//             { id: 'section2_2', ref: section2_2Ref }
-//         ];
 
-//         const threshold = 150;
-
-//         for (const section of sections) {
-//             const element = section.ref.current;
-//             if (element) {
-//                 const rect = element.getBoundingClientRect();
-//                 if (rect.top >= -threshold && rect.top <= window.innerHeight - threshold) {
-//                     setActiveSection(section.id);
-//                     break;
-//                 }
-//             }
-//         }
-//     };
-
-//     window.addEventListener("scroll", handleScroll, { passive: true });
-
-//     return () => window.removeEventListener("scroll", handleScroll);
-// }, [isScrolling]); // Add isScrolling to dependencies
-
-// // Smooth scrolling to the section when clicking a sidebar link
-// const scrollToSection = (sectionRef, sectionId) => {
-//     setIsScrolling(true); // Disable scroll listener
-
-//     setActiveSection(sectionId);
-//     const elementTop = sectionRef.current?.getBoundingClientRect().top + window.scrollY;
-
-//     window.scrollTo({
-//         top: elementTop - 100, // Adjust this offset based on your header size
-//         behavior: 'smooth',
-//     });
-
-//     // Re-enable the scroll listener after smooth scrolling is done
-//     setTimeout(() => {
-//         setIsScrolling(false); // Re-enable scroll listener
-//     }, 0); // Adjust the timeout based on the smooth scroll duration
-// };
   return (
     <>
       <div className="mx-2 p-2">

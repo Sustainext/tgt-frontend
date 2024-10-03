@@ -38,6 +38,7 @@ const ESGReport = () => {
   const handlePrevious = () => {
     setActiveStep(activeStep - 1);
   };
+  const reportName= typeof window !== "undefined" ? localStorage.getItem("reportname") : "";
 
   return (
     <>
@@ -51,7 +52,7 @@ const ESGReport = () => {
                   <div className="flex">
                     <div>
                       <p className="gradient-text text-[22px] font-bold pt-4 pb-4 ml-3">
-                        Report
+                       {/* {reportName? reportName:"Report"} */}
                       </p>
                     </div>
                   </div>
@@ -69,7 +70,7 @@ const ESGReport = () => {
                     onClick={handlePrevious}
                     disabled={activeStep === 1}
                   >
-                    &lt; Back to Reports
+                    &lt; Previous
                   </button>
 
                   {activeStep < 15 ? (

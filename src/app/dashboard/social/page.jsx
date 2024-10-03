@@ -2765,9 +2765,9 @@ const Social = () => {
 
             </div>
             <div>
-              <div className="w-full mb-5">
-                <div className="absolute right-5">
-                  <div className="flex  me-2  mb-5">
+              <div className="w-full mb-5 mt-4 ">
+                <div className="">
+                  <div className="flex  me-2  mb-5 justify-end">
                     {(activeStep !== 39 && activeStep !== 40) && (
                       <button
                         className={`${activeStep === 1 ? "text-gray-500" : "text-blue-500"
