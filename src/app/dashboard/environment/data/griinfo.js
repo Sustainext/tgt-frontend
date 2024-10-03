@@ -137,7 +137,7 @@ export const Energydata = [
             sustainable economic growth, full and productive employment and
             decent work for all
           </p>
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div className="h-[580px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Improve progressively, through 2030, global resource efficiency in

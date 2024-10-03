@@ -20,7 +20,7 @@ const Section2 = ({ orgName }) => {
     (state) => state.screen1Slice.signature_image
   );
 
-
+  const [imageviw2, setImageview2] = useState("");
   const handleCompanyname = (e) => {
     dispatch(setCompanyname(e.target.value));
     // setCompanyName(e.target.value)
@@ -46,9 +46,9 @@ const Section2 = ({ orgName }) => {
 
       reader.onloadend = () => {
         const base64String = reader.result;
-  
+        setImageview2(base64String);
     
-        dispatch(setSignatureimage(selectedFile)); // Set the image preview
+        dispatch(setSignatureimage(base64String)); // Set the image preview
       };
       reader.readAsDataURL(selectedFile);
     }
@@ -112,9 +112,13 @@ const Section2 = ({ orgName }) => {
         <p className="text-[15px] text-[#344054] mb-2">
           Upload Signature Image:
         </p>
-        {imagePreview && (
+        {(imageviw2 || imagePreview) && (
           <div className="mb-4">
-       <img src={`${process.env.BACKEND_API_URL}${imagePreview}`} alt="CEO" className="w-[150px] h-[150px] object-cover rounded-md" />
+            <img 
+              src={imageviw2 ? imageviw2 : `${imagePreview}`} 
+              alt="CEO" 
+              className="w-[150px] h-[150px] object-cover rounded-md" 
+            />
           </div>
         )}
         <div className="flex gap-4 mt-2 mb-4">

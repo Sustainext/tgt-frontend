@@ -12,7 +12,7 @@ const Section1 = ({ orgName }) => {
   const dispatch = useDispatch();
   const [error, setError] = useState("");
   const imagePreview = useSelector(state => state.screen1Slice.message_image); 
-
+  const [imageviw, setImageview] = useState("");
 
   const loadContent = () => {
     dispatch(setMessage(`
@@ -51,13 +51,12 @@ const Section1 = ({ orgName }) => {
 
       reader.onloadend = () => {
         const base64String = reader.result;
-        localStorage.setItem('message_image', base64String);
-        dispatch(setMessageimage(selectedFile)); 
+        setImageview(base64String);
+        dispatch(setMessageimage(base64String)); 
       };
       reader.readAsDataURL(selectedFile);
     }
     setError(errorMessages);
-
   };
 
   const fileInputRef = useRef(null);
@@ -104,9 +103,13 @@ const Section1 = ({ orgName }) => {
     <>
       <div>
         <p className="text-[15px] text-[#344054] mb-2">Upload CEO’s Image:</p>
-        {imagePreview && (
+        {(imageviw || imagePreview) && (
           <div className="mb-4">
-            <img src={`${process.env.BACKEND_API_URL}${imagePreview}`} alt="CEO" className="w-[150px] h-[150px] object-cover rounded-md" />
+            <img 
+              src={imageviw ? imageviw : `${imagePreview}`} 
+              alt="CEO" 
+              className="w-[150px] h-[150px] object-cover rounded-md" 
+            />
           </div>
         )}
         <div className="flex gap-4 mt-2 mb-4">
@@ -127,8 +130,6 @@ const Section1 = ({ orgName }) => {
             <p className="ml-2">Upload Image</p>
           </button>
         </div>
-
-      
 
         {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
 
