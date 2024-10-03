@@ -71,7 +71,7 @@ const Screen2Slice = createSlice({
   name: 'about organization',
   initialState: {
     about_the_company:'',
-    company_operations:'',
+    business_relations:'',
     entities_included:'',
     supply_chain_description:'',
     error: null
@@ -81,8 +81,8 @@ const Screen2Slice = createSlice({
     setAboutTheCompany: (state, action) => {
       state.about_the_company = action.payload;
     },
-    setCompanyOperation: (state, action) => {
-      state.company_operations = action.payload;
+    setBusinessRelation: (state, action) => {
+      state.business_relations = action.payload;
     },
     setEntitiesInclude: (state, action) => {
       state.entities_included = action.payload;
@@ -124,7 +124,7 @@ const Screen2Slice = createSlice({
 
 export const {
     setAboutTheCompany,
-    setCompanyOperation,
+    setBusinessRelation,
     setEntitiesInclude,
     setSupplyChain,
 } = Screen2Slice.actions;

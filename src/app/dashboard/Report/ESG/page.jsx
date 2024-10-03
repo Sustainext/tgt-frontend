@@ -31,12 +31,12 @@ const ESGReport = () => {
         setActiveStep((prev) => prev + 1); // Only move to the next step if form is successfully submitted
       }
     } 
-    // else if (activeStep===2) {
-    //   const isSubmitted = await aboutTheCompany.current.submitForm(); // Call submitForm for step 1
-    //   if (isSubmitted) {
-    //     setActiveStep((prev) => prev + 1); // Only move to the next step if form is successfully submitted
-    //   }
-    // }
+    else if (activeStep===2) {
+      const isSubmitted = await aboutTheCompany.current.submitForm(); // Call submitForm for step 1
+      if (isSubmitted) {
+        setActiveStep((prev) => prev + 1); // Only move to the next step if form is successfully submitted
+      }
+    }
     else{
       setActiveStep((prev) => prev + 1);
     }
@@ -117,7 +117,7 @@ const ESGReport = () => {
               )}
               {activeStep === 2 && (
                 <div>
-                  <Companyoperations />
+                  <Companyoperations ref={aboutTheCompany} />
                 </div>
               )}
               {activeStep === 3 && (
