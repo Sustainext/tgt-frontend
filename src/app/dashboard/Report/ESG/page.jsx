@@ -1,5 +1,5 @@
 'use client'
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Sidebar from "./sidebar";
 import MissionVission from "./mission-vision/page";
 import AwardsRecognition from "./awards-recognition/page";
@@ -19,16 +19,26 @@ import Environment from "./environment/page";
 
 const ESGReport = () => {
   const [activeStep, setActiveStep] = useState(1);
+  const [reportName,setReportName]=useState("Report")
   const messageFromCeoRef = useRef(); // Use useRef to store a reference to submitForm
+  const aboutTheCompany=useRef();
 
   // Move to the next step when submission is successful
   const handleNextStep = async () => {
     if (activeStep === 1) {
-      const isSubmitted = await messageFromCeoRef.current.submitForm(); // Call submitForm for step 1
-      if (isSubmitted) {
-        setActiveStep((prev) => prev + 1); // Only move to the next step if form is successfully submitted
-      }
-    } else {
+      // const isSubmitted = await messageFromCeoRef.current.submitForm(); // Call submitForm for step 1
+      // if (isSubmitted) {
+      //   setActiveStep((prev) => prev + 1); // Only move to the next step if form is successfully submitted
+      // }
+      setActiveStep((prev) => prev + 1);
+    } 
+    // else if (activeStep===2) {
+    //   const isSubmitted = await aboutTheCompany.current.submitForm(); // Call submitForm for step 1
+    //   if (isSubmitted) {
+    //     setActiveStep((prev) => prev + 1); // Only move to the next step if form is successfully submitted
+    //   }
+    // }
+    else{
       setActiveStep((prev) => prev + 1);
     }
   };
@@ -37,6 +47,11 @@ const ESGReport = () => {
     setActiveStep((prev) => prev - 1);
   };
 
+  useEffect(()=>{
+    if(localStorage.getItem("reportname")){
+      setReportName(localStorage.getItem("reportname"))
+    }
+  },[])
 
   return (
     <>

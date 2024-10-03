@@ -13,6 +13,7 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
 
     const [loopen, setLoOpen] = useState(false);
     const reportid = typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+    const orgname = typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
     const apiCalledRef = useRef(false);
     const content = useSelector(state => state.screen1Slice.message);
     const imageceo = useSelector(state => state.screen1Slice.message_image);  // Assuming imageceo is a File object
@@ -21,9 +22,9 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
     const imagesing = useSelector(state => state.screen1Slice.signature_image); // Assuming signature image is a file too
     const dispatch = useDispatch();
     // Expose submitForm using the ref
-    useImperativeHandle(ref, () => ({
-        submitForm
-    }));
+    // useImperativeHandle(ref, () => ({
+    //     submitForm
+    // }));
     const LoaderOpen = () => {
         setLoOpen(true);
       };
@@ -31,70 +32,70 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
       const LoaderClose = () => {
         setLoOpen(false);
       };
-    const submitForm = async () => {
-        LoaderOpen();
-        const formData = new FormData();
-        formData.append('message', content);
-        formData.append('message_image', imageceo); // If imageceo is a file, this will work
-        formData.append('ceo_name', ceoname);
-        formData.append('company_name', companyName);
-        formData.append('signature_image', imagesing); // If signature_image is also a file
+    // const submitForm = async () => {
+    //     LoaderOpen();
+    //     const formData = new FormData();
+    //     formData.append('message', content);
+    //     formData.append('message_image', imageceo); // If imageceo is a file, this will work
+    //     formData.append('ceo_name', ceoname);
+    //     formData.append('company_name', companyName);
+    //     formData.append('signature_image', imagesing); // If signature_image is also a file
 
-        const url = `${process.env.BACKEND_API_URL}/esg_report/screen_one/${reportid}/`;
+    //     const url = `${process.env.BACKEND_API_URL}/esg_report/screen_one/${reportid}/`;
 
-        try {
-            const response = await axiosInstance.put(url, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data', // Ensure multipart request
-                },
-            });
+    //     try {
+    //         const response = await axiosInstance.put(url, formData, {
+    //             headers: {
+    //                 'Content-Type': 'multipart/form-data', // Ensure multipart request
+    //             },
+    //         });
 
-            if (response.status === 200) {
-                toast.success("Data added successfully", {
-                    position: "top-right",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
-                if (onSubmitSuccess) {
-                    onSubmitSuccess(true); // Notify the parent of successful submission
-                }
-                LoaderClose();
-                return true; 
+    //         if (response.status === 200) {
+    //             toast.success("Data added successfully", {
+    //                 position: "top-right",
+    //                 autoClose: 3000,
+    //                 hideProgressBar: false,
+    //                 closeOnClick: true,
+    //                 pauseOnHover: true,
+    //                 draggable: true,
+    //                 progress: undefined,
+    //                 theme: "light",
+    //             });
+    //             if (onSubmitSuccess) {
+    //                 onSubmitSuccess(true); // Notify the parent of successful submission
+    //             }
+    //             LoaderClose();
+    //             return true; 
             
-            } else {
-                toast.error("Oops, something went wrong", {
-                    position: "top-right",
-                    autoClose: 1000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
-                LoaderClose();
-                return false; 
+    //         } else {
+    //             toast.error("Oops, something went wrong", {
+    //                 position: "top-right",
+    //                 autoClose: 1000,
+    //                 hideProgressBar: false,
+    //                 closeOnClick: true,
+    //                 pauseOnHover: true,
+    //                 draggable: true,
+    //                 progress: undefined,
+    //                 theme: "colored",
+    //             });
+    //             LoaderClose();
+    //             return false; 
                
-            }
-        } catch (error) {
-            toast.error("Oops, something went wrong", {
-                position: "top-right",
-                autoClose: 1000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
-            return false; // Indicate failure
-        }
-    };
+    //         }
+    //     } catch (error) {
+    //         toast.error("Oops, something went wrong", {
+    //             position: "top-right",
+    //             autoClose: 1000,
+    //             hideProgressBar: false,
+    //             closeOnClick: true,
+    //             pauseOnHover: true,
+    //             draggable: true,
+    //             progress: undefined,
+    //             theme: "colored",
+    //         });
+    //         return false; // Indicate failure
+    //     }
+    // };
 
     const loadFormData = async () => {
         LoaderOpen();
@@ -116,13 +117,13 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
     };
 
     
-    useEffect(() => {
-        // Ensure API is only called once
-        if (!apiCalledRef.current && reportid) {
-            apiCalledRef.current = true;  // Set the flag to true to prevent future calls
-            loadFormData();  // Call the API only once
-        }
-    }, [reportid]);
+    // useEffect(() => {
+    //     // Ensure API is only called once
+    //     if (!apiCalledRef.current && reportid) {
+    //         apiCalledRef.current = true;  // Set the flag to true to prevent future calls
+    //         loadFormData();  // Call the API only once
+    //     }
+    // }, [reportid]);
 
     return (
         <>
@@ -132,8 +133,8 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
                 </h3>
                 <div className="flex gap-4">
                     <div className="w-[80%]">
-                        <Screen1 />
-                        <Screen2 />
+                        <Screen1 orgName={orgname} />
+                        <Screen2 orgName={orgname} />
                     </div>
                     <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[500px] top-36 sticky w-[20%]">
                         <p className="text-[11px] text-[#727272] mb-2 uppercase">
