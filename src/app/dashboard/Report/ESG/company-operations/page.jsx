@@ -3,11 +3,22 @@ import { forwardRef, useImperativeHandle, useState, useRef, useEffect } from "re
 import Section1 from './sections/section1'
 import Section2 from  './sections/section2'
 import Section3 from  './sections/section3'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from "react-redux";
+import { Oval } from "react-loader-spinner";
+import axiosInstance from "../../../../utils/axiosMiddleware";
+import {setAboutTheCompany,
+  setBusinessRelation,
+  setEntitiesInclude,
+  setSupplyChain} from "../../../../../lib/redux/features/ESGSlice/screen2Slice"
 
 const Companyoperations= forwardRef(({ onSubmitSuccess }, ref) => 
   {
+  const reportid = typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
   const orgName= typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
     const [activeSection, setActiveSection] = useState('section2_1');
+    const [screenTwoData,setScreentwoData]=useState("")
     const [loopen, setLoOpen] = useState(false);
     const apiCalledRef = useRef(false);
     const [isScrolling, setIsScrolling] = useState(false); 
@@ -15,10 +26,15 @@ const Companyoperations= forwardRef(({ onSubmitSuccess }, ref) =>
     const section2_1_1Ref = useRef(null);
     const section2_1_2Ref = useRef(null);
     const section2_2Ref = useRef(null);
+    const about_the_company = useSelector((state) => state.screen2Slice.about_the_company);
+    const business_relations = useSelector((state) => state.screen2Slice.business_relations); // Assuming imageceo is a File object
+    const entities_included = useSelector((state) => state.screen2Slice.entities_included);
+    const supply_chain_description = useSelector((state) => state.screen2Slice.supply_chain_description);
+    const dispatch = useDispatch()
 
     useImperativeHandle(ref, () => ({
-      submitForm
-  }));
+      submitForm,
+    }));
 
   //   useEffect(() => {
   //     const handleScroll = () => {
@@ -108,104 +124,106 @@ const Companyoperations= forwardRef(({ onSubmitSuccess }, ref) =>
 
 
 
-//   const LoaderOpen = () => {
-//     setLoOpen(true);
-//   };
+  const LoaderOpen = () => {
+    setLoOpen(true);
+  };
 
-//   const LoaderClose = () => {
-//     setLoOpen(false);
-//   };
-// const submitForm = async () => {
-//     LoaderOpen();
-//     const formData = new FormData();
-//     formData.append('message', content);
-//     formData.append('message_image', imageceo); // If imageceo is a file, this will work
-//     formData.append('ceo_name', ceoname);
-//     formData.append('company_name', companyName);
-//     formData.append('signature_image', imagesing); // If signature_image is also a file
+  const LoaderClose = () => {
+    setLoOpen(false);
+  };
+const submitForm = async () => {
+    LoaderOpen();
+    const data={
+      "about_the_company":about_the_company,
+      "entities_included":entities_included,
+      "supply_chain_description":supply_chain_description,
+      "business_relations":business_relations
+    }
 
-//     const url = `${process.env.BACKEND_API_URL}/esg_report/screen_one/${reportid}/`;
+    const url = `${process.env.BACKEND_API_URL}/esg_report/screen_two/${reportid}/`;
+    try {
+        const response = await axiosInstance.put(url, data);
 
-//     try {
-//         const response = await axiosInstance.put(url, formData, {
-//             headers: {
-//                 'Content-Type': 'multipart/form-data', // Ensure multipart request
-//             },
-//         });
-
-//         if (response.status === 200) {
-//             toast.success("Data added successfully", {
-//                 position: "top-right",
-//                 autoClose: 3000,
-//                 hideProgressBar: false,
-//                 closeOnClick: true,
-//                 pauseOnHover: true,
-//                 draggable: true,
-//                 progress: undefined,
-//                 theme: "light",
-//             });
-//             if (onSubmitSuccess) {
-//                 onSubmitSuccess(true); // Notify the parent of successful submission
-//             }
-//             LoaderClose();
-//             return true; 
+        if (response.status === 200) {
+            toast.success("Data added successfully", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            if (onSubmitSuccess) {
+                onSubmitSuccess(true); // Notify the parent of successful submission
+            }
+            LoaderClose();
+            return true; 
         
-//         } else {
-//             toast.error("Oops, something went wrong", {
-//                 position: "top-right",
-//                 autoClose: 1000,
-//                 hideProgressBar: false,
-//                 closeOnClick: true,
-//                 pauseOnHover: true,
-//                 draggable: true,
-//                 progress: undefined,
-//                 theme: "colored",
-//             });
-//             LoaderClose();
-//             return false; 
+        } else {
+            toast.error("Oops, something went wrong 1", {
+                position: "top-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+            LoaderClose();
+            return false; 
            
-//         }
-//     } catch (error) {
-//         toast.error("Oops, something went wrong", {
-//             position: "top-right",
-//             autoClose: 1000,
-//             hideProgressBar: false,
-//             closeOnClick: true,
-//             pauseOnHover: true,
-//             draggable: true,
-//             progress: undefined,
-//             theme: "colored",
-//         });
-//         return false; // Indicate failure
-//     }
-// };
+        }
+    } catch (error) {
+      LoaderClose();
+        toast.error("Oops, something went wrong 2", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
+        return false; // Indicate failure
+    }
+};
 
-// const loadFormData = async () => {
-//     LoaderOpen();
-//     const url = `${process.env.BACKEND_API_URL}/esg_report/screen_one/${reportid}/`;
-//     try {
-//         const response = await axiosInstance.get(url);
-//         dispatch(setMessage(response.data.message));
-//         dispatch(setMessageimage(response.data.message_image));
-//         dispatch(setCompanyname(response.data.company_name));
-//         dispatch(setCeoname(response.data.ceo_name));
-//         dispatch(setSignatureimage(response.data.signature_image));
-//         console.log('API called successfully:', response.data);
-//         LoaderClose();
+const loadFormData = async () => {
+    LoaderOpen();
+    dispatch(setAboutTheCompany(''));
+    dispatch(setBusinessRelation(''));
+    dispatch(setEntitiesInclude(''));
+    dispatch(setSupplyChain(''));
+    const url = `${process.env.BACKEND_API_URL}/esg_report/screen_two/${reportid}/`;
+    try {
+        const response = await axiosInstance.get(url);
+        if(response.data){
+          setScreentwoData(response.data)
+          dispatch(setAboutTheCompany(response.data.about_the_company));
+        dispatch(setBusinessRelation(response.data.business_relations));
+        dispatch(setEntitiesInclude(response.data.entities_included));
+        dispatch(setSupplyChain(response.data.supply_chain_description));
+        }
+        
+        LoaderClose();
     
-//     } catch (error) {
-//         console.error('API call failed:', error);
-//         LoaderClose();
-//     }
-// };
+    } catch (error) {
+        console.error('API call failed:', error);
+        LoaderClose();
+    }
+};
 
-// useEffect(() => {
-//   // Ensure API is only called once
-//   if (!apiCalledRef.current && reportid) {
-//       apiCalledRef.current = true;  // Set the flag to true to prevent future calls
-//       loadFormData();  // Call the API only once
-//   }
-// }, [reportid]);
+useEffect(() => {
+  // Ensure API is only called once
+  if (!apiCalledRef.current && reportid) {
+      apiCalledRef.current = true;  // Set the flag to true to prevent future calls
+      loadFormData();  // Call the API only once
+  }
+}, [reportid]);
 
   return (
     <>
@@ -217,9 +235,9 @@ const Companyoperations= forwardRef(({ onSubmitSuccess }, ref) =>
             </div>
         <div className="flex gap-4">
           <div className="w-[80%]">
-            <Section1 orgName={orgName}/>
-            <Section2 orgName={orgName} section2_1Ref={section2_1Ref} section2_1_1Ref={section2_1_1Ref} section2_1_2Ref={section2_1_2Ref} />
-            <Section3 orgName={orgName} section2_2Ref={section2_2Ref}/>
+            <Section1 orgName={orgName} data={screenTwoData}/>
+            <Section2 orgName={orgName} section2_1Ref={section2_1Ref} section2_1_1Ref={section2_1_1Ref} section2_1_2Ref={section2_1_2Ref}  data={screenTwoData} />
+            <Section3 orgName={orgName} section2_2Ref={section2_2Ref} data={screenTwoData} />
           </div>
           {/* page sidebar */}
           <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[500px] top-36 sticky mt-2 w-[20%]">

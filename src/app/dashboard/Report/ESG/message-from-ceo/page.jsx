@@ -94,6 +94,7 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
         return false;
       }
     } catch (error) {
+        LoaderClose();
       toast.error("Oops, something went wrong", {
         position: "top-right",
         autoClose: 1000,
