@@ -2,6 +2,8 @@
 import { useState, useRef } from "react";
 import dynamic from "next/dynamic";
 import { MdOutlineFileUpload, MdOutlinePlaylistAdd } from "react-icons/md";
+import STARSVG from "../../../../../../../public/star.svg";
+import Image from "next/image";
 import { useDispatch, useSelector } from 'react-redux';
 import { setMessage, setMessageimage } from "../../../../../../lib/redux/features/ESGSlice/screen1Slice";
 
@@ -134,14 +136,14 @@ const Section1 = ({ orgName }) => {
         {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
 
         <div className="flex justify-between">
-          <p className="text-[15px] text-[#344054] mb-2">Add message from CEO</p>
-          <button
-            className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-4 flex"
-            onClick={loadContent}
-          >
-            <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]" />
-            Auto Fill
-          </button>
+        <p className="text-[15px] text-[#344054] mb-2 mt-3">Add message from CEO</p>
+        <button className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
+        onClick={loadContent}
+        >
+          {/* <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/> */}
+          <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
+          Auto Fill
+        </button>
         </div>
 
         <div className="mb-4">

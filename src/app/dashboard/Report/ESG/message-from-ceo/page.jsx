@@ -25,6 +25,7 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
   const [loopen, setLoOpen] = useState(false);
   const reportid =
     typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+    const orgname = typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
   const apiCalledRef = useRef(false);
   const content = useSelector((state) => state.screen1Slice.message);
   const imageceo = useSelector((state) => state.screen1Slice.message_image); // Assuming imageceo is a File object
@@ -45,6 +46,7 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
   };
   const submitForm = async () => {
     LoaderOpen();
+    localStorage.setItem('reportorgname',companyName)
     const formData = new FormData();
     formData.append("message", content);
     formData.append("message_image", imageceo); // If imageceo is a file, this will work
@@ -111,6 +113,7 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
     dispatch(setMessage(''));
     dispatch(setMessageimage());
     dispatch(setCeoname(''));
+    dispatch(setCompanyname(orgname));
     dispatch(setSignatureimage());
     const url = `${process.env.BACKEND_API_URL}/esg_report/screen_one/${reportid}/`;
     try {
@@ -140,42 +143,42 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
     }
   }, [reportid]);
 
-  return (
-    <>
-      <div className="mx-2 p-2">
-        <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
-          1. Message from CEO
-        </h3>
-        <div className="flex gap-4">
-          <div className="w-[80%]">
-            <Screen1 />
-            <Screen2 />
+    return (
+        <>
+            <div className="mx-2 p-2">
+                <h3 className="text-[22px] text-[#344054] mb-4 text-left font-semibold">
+                    1. Message from CEO
+                </h3>
+                <div className="flex gap-4">
+                    <div className="w-[80%]">
+                        <Screen1 orgName={orgname} />
+                        <Screen2 orgName={orgname} />
+                    </div>
+                    <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[500px] top-36 sticky w-[20%]">
+                        <p className="text-[11px] text-[#727272] mb-2 uppercase">
+                            Message from CEO
+                        </p>
+                        <p className="text-[12px] text-blue-400 mb-2">
+                            1. Message from CEO
+                        </p>
+                    </div>
+                </div>
+                <ToastContainer />
+            </div>
+            {loopen && (
+          <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+            <Oval
+              height={50}
+              width={50}
+              color="#00BFFF"
+              secondaryColor="#f3f3f3"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
           </div>
-          <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[500px] top-36 sticky w-[20%]">
-            <p className="text-[11px] text-[#727272] mb-2 uppercase">
-              Message from CEO
-            </p>
-            <p className="text-[12px] text-blue-400 mb-2">
-              1. Message from CEO
-            </p>
-          </div>
-        </div>
-        <ToastContainer />
-      </div>
-      {loopen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <Oval
-            height={50}
-            width={50}
-            color="#00BFFF"
-            secondaryColor="#f3f3f3"
-            strokeWidth={2}
-            strokeWidthSecondary={2}
-          />
-        </div>
-      )}
-    </>
-  );
+        )}
+        </>
+    );
 });
 
 export default MessageFromCeo;

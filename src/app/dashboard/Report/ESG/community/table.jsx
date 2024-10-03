@@ -48,7 +48,7 @@ const CommunityTable = () => {
 
   return (
     <>
-      <div style={{ maxHeight: "450px", overflowY: "auto" }} className="mb-2">
+      <div style={{ maxHeight: "450px", overflowY: "auto" }} className="mb-2 table-scrollbar">
         <table className="w-full border border-gray-200 rounded-md overflow-hidden">
           <thead className="gradient-background">
           <tr className="text-[12px] border border-gray-200">
