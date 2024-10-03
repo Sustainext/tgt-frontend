@@ -93,7 +93,7 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
 
     await dispatch(fetchEmissionsData({ location, year, month }));
 
-    if (climatiqData !== 0) {
+    if (climatiqData.status==='succeeded') {
       setModalData({
         ...modalData,
         locationname,
@@ -111,24 +111,6 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
   return (
     <>
       <div className="mx-3">
-        {/* <AccordionItem
-          title="Direct emission from operations"
-          scops="Scope 1"
-          icons={<IoHomeOutline />}
-          onAccordionClick={handleAccordionClick}
-        >
-          {({ setAccordionOpen }) => (
-            <Scope1
-              ref={scope1Ref}
-              location={location}
-              year={year}
-              month={month}
-              countryCode={countryCode}
-              successCallback={getLatestComputedData}
-              setAccordionOpen={setAccordionOpen}  // Passing setAccordionOpen to Scope1
-            />
-          )}
-        </AccordionItem> */}
         <AccordionItem
           title="Direct emission from operations"
           scops="Scope 1"

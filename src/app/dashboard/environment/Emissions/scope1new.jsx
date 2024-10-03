@@ -96,12 +96,13 @@ const Scope1 = forwardRef(
     const handleRemoveRow = useCallback(async (index) => {
       const parsedIndex = parseInt(index, 10);
       const updatedData = formData.filter((_, i) => i !== parsedIndex);
+      console.log('updated data',updatedData," for index ",parsedIndex)
 
       dispatch(updateScopeDataLocal({ scope: 1, data: { data: updatedData } }));
 
       try {
         await updateFormData(updatedData);
-        successCallback();
+        // successCallback();
 
         if (parsedIndex === 0 && updatedData.length === 0) {
           setAccordionOpen(false);
