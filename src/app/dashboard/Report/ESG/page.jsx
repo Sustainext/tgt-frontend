@@ -31,6 +31,7 @@ import Environment from "./environment/page";
 
 const ESGReport = () => {
   const [activeStep, setActiveStep] = useState(1);
+  const [reportName,setReportName]=useState("Report")
   const handleNext = () => {
     setActiveStep(activeStep + 1);
   };
@@ -38,7 +39,13 @@ const ESGReport = () => {
   const handlePrevious = () => {
     setActiveStep(activeStep - 1);
   };
-  const reportName= typeof window !== "undefined" ? localStorage.getItem("reportname") : "";
+  useEffect(()=>{
+    if(localStorage.getItem("reportname")){
+      setReportName(localStorage.getItem("reportname"))
+    }
+    
+  },[])
+  // const reportName= typeof window !== "undefined" ? localStorage.getItem("reportname") : "";
 
   return (
     <>
@@ -52,7 +59,7 @@ const ESGReport = () => {
                   <div className="flex">
                     <div>
                       <p className="gradient-text text-[22px] font-bold pt-4 pb-4 ml-3">
-                       {reportName?reportName:"Report"}
+                       {reportName}
                       </p>
                     </div>
                   </div>
@@ -79,11 +86,11 @@ const ESGReport = () => {
                         activeStep === 15
                           ? "bg-gray-300"
                           : "bg-blue-500 text-white"
-                      } px-3 py-1.5 rounded ml-2 font-semibold w-[100px]`}
+                      } px-1.5 py-1 rounded ml-2 font-semibold w-[auto]`}
                       onClick={handleNext}
                       disabled={activeStep === 15}
                     >
-                      Next &gt;
+                      Next & Submit &gt;
                     </button>
                   ) : (
                     <button

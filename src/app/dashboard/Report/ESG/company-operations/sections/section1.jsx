@@ -2,16 +2,20 @@
 
 "use client";
 import { useState, useRef, useEffect } from "react";
-
+import { MdOutlinePlaylistAdd } from "react-icons/md";
 import dynamic from "next/dynamic";
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
 const Section1=({orgName})=>{
-    const [content,setContent]=useState(
+    const [content,setContent]=useState("")
+
+    const loadContent=()=>{
+      setContent(
         `
         <p>Effective stakeholder engagement is vital to ${orgName?orgName:"[Company Name]"}'s sustainability strategy and overall business success. We recognize that our actions impact a wide range of stakeholders, including employees, customers, suppliers, investors, local communities, and regulatory bodies.</p>
         `
-    )
+      )
+    }
 
     const config = {
         style: {
@@ -51,8 +55,16 @@ const Section1=({orgName})=>{
       }
     return (
         <>
-       
-            <p className="text-[15px] text-[#344054] mb-2">Edit Statement</p>
+            <div className="flex justify-between">
+            <p className="text-[15px] text-[#344054] mb-2 mt-3">Edit Statement</p>
+            <button className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
+        onClick={loadContent}
+        >
+          <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/>
+          Auto Fill
+        </button>
+            </div>
+            
             <div className="mb-4">
               <JoditEditor
               // ref={editor}
