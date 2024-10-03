@@ -29,8 +29,42 @@ const Section1 =()=>{
     // Nature
     // Protecting biodiversity and natural resources is a priority for us.`);
     const config = {
-      height: 500, // Set the height in pixels
+      style: {
+        fontSize: "14px",
+        color:"#667085"
+      },
+      height:500,
+      allowResizeY: false,
+      defaultActionOnPaste: 'insert_clear_html',
+      toolbarSticky: false,
+      toolbar: true,
+      buttons: [
+          'bold',
+          'italic',
+          'underline',
+          'strikeThrough',
+          'align',
+          'outdent',
+          'indent',
+          'ul',
+          'ol',
+          'paragraph',
+          'link',
+          'table',
+          'undo',
+          'redo',
+          'hr',
+          'fontsize',
+          'selectall'
+      ],
+      // Remove buttons from the extra buttons list
+      removeButtons: ['fullsize', 'preview', 'source', 'print', 'about', 'find', 'changeMode','paintFormat','image','brush','font'],
     };
+  
+  
+    const handleEditorChange=(value)=>{
+      setContent(value)
+    }
     
     return (
         <>
@@ -44,8 +78,8 @@ const Section1 =()=>{
                 // className="whitespace-pre-wrap"
                 // value={content}
                 config={config}
-                // tabIndex={1} 
-                // onBlur={handleEditorChange}
+                tabIndex={1} 
+                onBlur={handleEditorChange}
               />
             </div>
         </div>

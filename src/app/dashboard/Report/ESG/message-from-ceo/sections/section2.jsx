@@ -5,13 +5,13 @@ import { MdOutlineFileUpload } from "react-icons/md";
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-const Section2 = () => {
+const Section2 = ({orgName}) => {
   const [content, setContent] = useState(`
     <p>
 Sincerely, <br/>
 [Your Name] <br/>
 Chief Executive Officer <br/>
-[Company Name] 
+${orgName?orgName:"[Company Name]"}
  </p>     
     `);
   const [error, setError] = useState("");
@@ -57,26 +57,44 @@ Chief Executive Officer <br/>
   const config = {
     style: {
       fontSize: "14px",
+      color:"#667085"
     },
     allowResizeY: false,
+    defaultActionOnPaste: 'insert_clear_html',
+    toolbarSticky: false,
+    toolbar: true,
+    buttons: [
+        'bold',
+        'italic',
+        'underline',
+        'strikeThrough',
+        'align',
+        'outdent',
+        'indent',
+        'ul',
+        'ol',
+        'paragraph',
+        'link',
+        'table',
+        'undo',
+        'redo',
+        'hr',
+        'fontsize',
+        'selectall'
+    ],
+    // Remove buttons from the extra buttons list
+    removeButtons: ['fullsize', 'preview', 'source', 'print', 'about', 'find', 'changeMode','paintFormat','image','brush','font'],
   };
+
+
+  const handleEditorChange=(value)=>{
+    setContent(value)
+  }
 
   return (
     <>
       <div>
-       
-        <p className="text-[15px] text-[#344054] mb-2">Edit Signature Statement</p>
-        <div className="mb-4">
-          <JoditEditor
-            // ref={editor}
-            // className="whitespace-pre-wrap"
-            value={content}
-            config={config}
-            // tabIndex={1}
-            // onBlur={handleEditorChange}
-          />
-        </div>
-        <p className="text-[15px] text-[#344054] mb-2">Upload Signature Image:</p>
+      <p className="text-[15px] text-[#344054] mb-2">Upload Signature Image:</p>
         <div className="flex mt-2 mb-4">
           <input
             type="file"
@@ -96,6 +114,18 @@ Chief Executive Officer <br/>
             
           </button>
         </div>
+        <p className="text-[15px] text-[#344054] mb-2">Edit Signature Statement</p>
+        <div className="mb-4">
+          <JoditEditor
+            // ref={editor}
+            // className="whitespace-pre-wrap"
+            value={content}
+            config={config}
+            tabIndex={1}
+            onBlur={handleEditorChange}
+          />
+        </div>
+       
       </div>
     </>
   );

@@ -25,7 +25,7 @@ const Section25=({section13_6_8Ref})=>{
         "Employee Category ",
        "Number of fatalities as a result of work-related ill health ",
         "Number of cases of recordable work-related ill health",
-        "Countries or Geographic Areas "
+        "Main types of work-related ill health"
        
     ]
 
@@ -34,13 +34,13 @@ const Section25=({section13_6_8Ref})=>{
             "Employee Category ":"A",
             "Number of fatalities as a result of work-related ill health":"",
             "Number of cases of recordable work-related ill health":"",
-            "Countries or Geographic Areas":""
+            "Main types of work-related ill health":""
         },
         {
             "Employee Category ":"B",
             "Number of fatalities as a result of work-related ill health":"",
             "Number of cases of recordable work-related ill health":"",
-            "Countries or Geographic Areas":""
+            "Main types of work-related ill health":""
         }
     ]
 
@@ -48,7 +48,7 @@ const Section25=({section13_6_8Ref})=>{
         "Workers who are not employees but whose work and/or workplace is controlled  by the organization ",
         "Number of fatalities as a result of work-related ill health ",
         "Number of cases of recordable work-related ill health",
-        "Countries or Geographic Areas "
+        "Main types of work-related ill health "
        
     ]
 
@@ -57,13 +57,13 @@ const Section25=({section13_6_8Ref})=>{
             "Workers who are not employees but whose work and/or workplace is controlled  by the organization ":"A",
            "Number of fatalities as a result of work-related ill health":"",
             "Number of cases of recordable work-related ill health":"",
-            "Countries or Geographic Areas": "",
+            "Main types of work-related ill health": "",
         },
         {
             "Workers who are not employees but whose work and/or workplace is controlled  by the organization ":"B",
             "Number of fatalities as a result of work-related ill health":"",
             "Number of cases of recordable work-related ill health":"",
-            "Countries or Geographic Areas":""
+            "Main types of work-related ill health":""
         }
     ]
     
@@ -79,7 +79,7 @@ const Section25=({section13_6_8Ref})=>{
             </p>
             <textarea
           value={content}
-          className={`border appearance-none text-sm border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  mt-2 w-full mb-4 `}
+          className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  mt-2 w-full mb-4 `}
           rows={4}
         />
 

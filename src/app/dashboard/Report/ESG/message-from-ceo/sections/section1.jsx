@@ -5,15 +5,15 @@ import { MdOutlineFileUpload } from "react-icons/md";
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-const Section1 = () => {
+const Section1 = ({orgName}) => {
   const [content, setContent] = useState(`
     <p>
-       At [Company Name], our commitment to sustainability and responsible business practices is deeply rooted in our mission and values. As a leading manufacturing company, we recognize our role in driving positive environmental, social, and governance (ESG) impacts. This ESG report, aligned with the Global Reporting Initiative (GRI) standards, marks a significant milestone in our journey towards greater transparency and accountability. 
+       At ${orgName?orgName:"[Company Name]"}, our commitment to sustainability and responsible business practices is deeply rooted in our mission and values. As a leading manufacturing company, we recognize our role in driving positive environmental, social, and governance (ESG) impacts. This ESG report, aligned with the Global Reporting Initiative (GRI) standards, marks a significant milestone in our journey towards greater transparency and accountability. 
 
 <br/>
         Environmental Stewardship 
 <br/>
-      The industrial sector plays a critical role in addressing climate change and environmental degradation. At [Company Name], we have implemented
+      The industrial sector plays a critical role in addressing climate change and environmental degradation. At ${orgName?orgName:"[Company Name]"}, we have implemented
 <br/>
         Social Responsibility<br/>
        People are at the heart of our success. We are dedicated to fostering a diverse, inclusive, and equitable workplace where all employees feel valued and empowered
@@ -21,12 +21,8 @@ const Section1 = () => {
 Governance and Ethical Conduct <br/>
 Strong governance is the foundation of our business integrity and long-term success. We have reinforced our governance structures to ensure robust oversight and accountability at all levels of the organization. Our Board of Directors is committed to<br/>
 Looking Ahead <br/>
-As we look to the future, we are committed to further integrating ESG considerations into our core business strategy. We will continue to innovate.     
+As we look to the future, we are committed to further integrating ESG considerations into our core business strategy. We will continue to innovate. <br/>
 Thank you for your continued trust and support. <br/>
-Sincerely, <br/>
-[Your Name] <br/>
-Chief Executive Officer <br/>
-[Company Name] 
  </p>     
     `);
   const [error, setError] = useState("");
@@ -72,9 +68,39 @@ Chief Executive Officer <br/>
   const config = {
     style: {
       fontSize: "14px",
+      color:"#667085"
     },
     allowResizeY: false,
+    defaultActionOnPaste: 'insert_clear_html',
+    toolbarSticky: false,
+    toolbar: true,
+    buttons: [
+        'bold',
+        'italic',
+        'underline',
+        'strikeThrough',
+        'align',
+        'outdent',
+        'indent',
+        'ul',
+        'ol',
+        'paragraph',
+        'link',
+        'table',
+        'undo',
+        'redo',
+        'hr',
+        'fontsize',
+        'selectall'
+    ],
+    // Remove buttons from the extra buttons list
+    removeButtons: ['fullsize', 'preview', 'source', 'print', 'about', 'find', 'changeMode','paintFormat','image','brush','font'],
   };
+
+
+  const handleEditorChange=(value)=>{
+    setContent(value)
+  }
 
   return (
     <>
@@ -103,11 +129,10 @@ Chief Executive Officer <br/>
         <div className="mb-4">
           <JoditEditor
             // ref={editor}
-            // className="whitespace-pre-wrap"
             value={content}
             config={config}
-            // tabIndex={1}
-            // onBlur={handleEditorChange}
+            tabIndex={1}
+            onBlur={handleEditorChange}
           />
         </div>
       </div>

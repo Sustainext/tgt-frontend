@@ -13,13 +13,10 @@ const Section6=({section10_3_2Ref})=>{
     return (
         <>
         <div ref={section10_3_2Ref} id="section10_3_2">
-        <h3 className="text-[16px] text-[#344054] mb-4 text-left font-semibold">
-        10.3.2. Local Suppliers 
+        <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
+        10.3.2 Local Suppliers 
         </h3>   
-        <p className="text-[15px] text-[#344054] mb-2 font-semibold">
-        Percentage of new suppliers that were screened using environmental criteria: 
-            </p>
-            <p className="text-sm mb-4">100%</p>
+            <p className="text-sm mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem natus dolore corrupti perspiciatis sit aut voluptatibus magni dignissimos voluptatum odit! Ut ullam iure porro obcaecati quae cum ab provident deserunt!</p>
         </div>
         </>
     )

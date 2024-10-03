@@ -6,7 +6,7 @@ const Table1 = ({rowLabels,values}) => {
 
     return (
         <>
-            <div style={{ maxHeight: "400px", overflowY: "auto" }} className="mb-2">
+            <div style={{ maxHeight: "400px", overflowY: "auto" }} className="mb-2 table-scrollbar">
                 <table className="w-full border border-gray-200 rounded-md overflow-hidden">
                     <tbody>
                         {rowLabels.map((label, rowIndex) => (

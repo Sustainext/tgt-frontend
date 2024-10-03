@@ -8,7 +8,7 @@ import Section4 from "./sections/section4";
 const AboutTheReport=()=>{
     
     const [activeSection, setActiveSection] = useState('section7_1');
-
+    const [isScrolling, setIsScrolling] = useState(false); 
     const section7_1Ref = useRef(null);
   const section7_1_1Ref = useRef(null);
   const section7_2Ref = useRef(null);
@@ -19,6 +19,8 @@ const AboutTheReport=()=>{
 //     setActiveSection(sectionId); 
 //     sectionRef.current?.scrollIntoView({ behavior: 'smooth' });
 //   };
+
+
 
 const scrollToSection = (sectionRef, sectionId) => {
     setActiveSection(sectionId); 
@@ -31,6 +33,7 @@ const scrollToSection = (sectionRef, sectionId) => {
       behavior: 'smooth',
     });
   };
+
   
 
     return (

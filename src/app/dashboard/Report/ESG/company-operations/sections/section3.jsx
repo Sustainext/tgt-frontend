@@ -6,7 +6,48 @@ import { useState, useRef, useEffect } from "react";
 import dynamic from "next/dynamic";
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-const Section3=({section2_2Ref})=>{
+const Section3=({section2_2Ref,orgName})=>{
+  const [content,setContent]=useState(
+    `
+    <p>Our supply chain is integral to our sustainability strategy. We work closely with our suppliers to ensure they meet our high standards for environmental and social responsibility. Key initiatives in our supply chain include</p>
+    `
+)
+const config = {
+  style: {
+    fontSize: "14px",
+    color:"#667085"
+  },
+  allowResizeY: false,
+  defaultActionOnPaste: 'insert_clear_html',
+  toolbarSticky: false,
+  toolbar: true,
+  buttons: [
+      'bold',
+      'italic',
+      'underline',
+      'strikeThrough',
+      'align',
+      'outdent',
+      'indent',
+      'ul',
+      'ol',
+      'paragraph',
+      'link',
+      'table',
+      'undo',
+      'redo',
+      'hr',
+      'fontsize',
+      'selectall'
+  ],
+  // Remove buttons from the extra buttons list
+  removeButtons: ['fullsize', 'preview', 'source', 'print', 'about', 'find', 'changeMode','paintFormat','image','brush','font'],
+};
+
+
+const handleEditorChange=(value)=>{
+  setContent(value)
+}
     return (
         <>
         <div id="setion2_2" ref={section2_2Ref}>
@@ -18,10 +59,10 @@ const Section3=({section2_2Ref})=>{
             <div className="mb-6">
               <JoditEditor
               // ref={editor}
-              // value={content}
-              // config={config}
-              // tabIndex={1}
-              // onBlur={handleEditorChange}
+              value={content}
+              config={config}
+              tabIndex={1}
+              onBlur={handleEditorChange}
               />
             </div>
         </>

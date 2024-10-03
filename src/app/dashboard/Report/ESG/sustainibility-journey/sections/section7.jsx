@@ -14,8 +14,8 @@ const Section7=({section10_3_3Ref})=>{
     return (
         <>
         <div ref={section10_3_3Ref} id="section10_3_3">
-        <h3 className="text-[16px] text-[#344054] mb-4 text-left font-semibold">
-        10.3.3. Negative Environmental & Social Impacts in the Supply Chain
+        <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
+        10.3.3 Negative Environmental & Social Impacts in the Supply Chain
         </h3>   
         <p className="text-[15px] text-[#344054] mb-2 font-semibold">
         We recognize that our supply chain can have negative environmental and social impacts, and we are committed to mitigating these risks. Our approach includes:

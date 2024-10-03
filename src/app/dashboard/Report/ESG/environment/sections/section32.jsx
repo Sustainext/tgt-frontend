@@ -10,11 +10,41 @@ const Section32=({section12_6_2Ref})=>{
     `<p>We work to protect and restore habitats affected by our operations. This includes creating conservation areas, rehabilitating disturbed lands, and supporting biodiversity projects.</p> `
     )
     const config = {
-        style: {
-          fontSize: '14px',
-        },
-        allowResizeY: false,
-      };
+      style: {
+        fontSize: "14px",
+        color:"#667085"
+      },
+      allowResizeY: false,
+      defaultActionOnPaste: 'insert_clear_html',
+      toolbarSticky: false,
+      toolbar: true,
+      buttons: [
+          'bold',
+          'italic',
+          'underline',
+          'strikeThrough',
+          'align',
+          'outdent',
+          'indent',
+          'ul',
+          'ol',
+          'paragraph',
+          'link',
+          'table',
+          'undo',
+          'redo',
+          'hr',
+          'fontsize',
+          'selectall'
+      ],
+      // Remove buttons from the extra buttons list
+      removeButtons: ['fullsize', 'preview', 'source', 'print', 'about', 'find', 'changeMode','paintFormat','image','brush','font'],
+    };
+    
+    
+    const handleEditorChange=(value)=>{
+      setContent(value)
+    }
 
     return (
         <>
@@ -25,7 +55,7 @@ const Section32=({section12_6_2Ref})=>{
 12.6.2 Habitat Protected and Restored 
 </h3>
 
-<p className="text-sm mb-4">We report on the quantity of waste disposed of through landfilling, incineration, or other methods. Our aim is to reduce the amount of waste sent to disposal by increasing recycling and reuse. </p>
+<p className="text-sm mb-4">We work to protect and restore habitats affected by our operations. This includes creating conservation areas, rehabilitating disturbed lands, and supporting biodiversity projects</p>
 <p className="text-[15px] text-[#344054] mb-2">
             Edit data
             </p>
@@ -35,8 +65,8 @@ const Section32=({section12_6_2Ref})=>{
               // ref={editor}
               value={content}
               config={config}
-              // tabIndex={1}
-              // onBlur={handleEditorChange}
+              tabIndex={1}
+              onBlur={handleEditorChange}
               />
             </div>
 </div>

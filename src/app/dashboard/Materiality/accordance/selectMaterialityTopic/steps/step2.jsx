@@ -1,39 +1,83 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../../../../../utils/axiosMiddleware";
-import materialImage from "../../../../../../../public/materiality.jpg"; 
+import materialImage from "../../../../../../../public/materiality.jpg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import Image from "next/image";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+
 
 const Step2 = ({ data, setCurrentStep, handleNext, handlePrevious }) => {
   const [disclosureTopics, setDisclosureTopics] = useState([]);
   const [selectedDisclosures, setSelectedDisclosures] = useState({});
-  const [dataPresent,setDatapresent]=useState(false)
-  const id = typeof window !== 'undefined' ?localStorage.getItem("id"):'';
+  const [dataPresent, setDatapresent] = useState(false);
+  const id = typeof window !== "undefined" ? localStorage.getItem("id") : "";
   const [loopen, setLoOpen] = useState(false);
-
 
   const LoaderOpen = () => {
     setLoOpen(true);
-};
+  };
 
-const LoaderClose = () => {
+  const LoaderClose = () => {
     setLoOpen(false);
-};
-
+  };
 
   // Fetch the disclosure topics from the API
   const fetchDisclosure = async () => {
-    LoaderOpen()
+    LoaderOpen();
     const url = `${process.env.BACKEND_API_URL}/materiality_dashboard/get-material-topic-disclosures/${id}/`;
     try {
       const response = await axiosInstance.get(url);
       if (response.status === 200) {
         setDisclosureTopics(response.data);
-        LoaderClose()
+        // const disclosureData = response.data;
+        // // set initial selected disclosure
+        // const initialSelectedDisclosures = {};
+
+        // // Function to add disclosures where can_edit is false to selectedDisclosures
+        // const processDisclosures = (section) => {
+        //   section.forEach((topicObj) => {
+        //     const topicName = Object.keys(topicObj)[0];
+        //     const disclosures = topicObj[topicName];
+
+        //     disclosures.forEach((disclosure) => {
+        //       if (!disclosure.can_edit) {
+        //         const { selected_material_topic_id, disclosure_id } = disclosure;
+
+        //         // Add to initialSelectedDisclosures in the correct format
+        //         if (!initialSelectedDisclosures[selected_material_topic_id]) {
+        //           initialSelectedDisclosures[selected_material_topic_id] = [];
+        //         }
+
+        //         // Only add the disclosure_id if it's not already present
+        //         if (!initialSelectedDisclosures[selected_material_topic_id].includes(disclosure_id)) {
+        //           initialSelectedDisclosures[selected_material_topic_id].push(disclosure_id);
+        //         }
+        //       }
+        //     });
+        //   });
+        // };
+
+        // // Process each section (environment, social, governance)
+        // if (disclosureData.environment) {
+        //   processDisclosures(disclosureData.environment);
+        // }
+        // if (disclosureData.social) {
+        //   processDisclosures(disclosureData.social);
+        // }
+        // if (disclosureData.governance) {
+        //   processDisclosures(disclosureData.governance);
+        // }
+        // setSelectedDisclosures(initialSelectedDisclosures);
+        // setSelectedDisclosures((prevState) => ({
+        //   ...prevState,
+        //   ...initialSelectedDisclosures
+        // }));
+        LoaderClose();
       } else {
-        LoaderClose()
+        LoaderClose();
         toast.error("Oops, something went wrong", {
           position: "top-right",
           autoClose: 1000,
@@ -46,7 +90,7 @@ const LoaderClose = () => {
         });
       }
     } catch (error) {
-      LoaderClose()
+      LoaderClose();
       toast.error("Oops, something went wrong", {
         position: "top-right",
         autoClose: 1000,
@@ -60,17 +104,15 @@ const LoaderClose = () => {
     }
   };
 
-
-  const fetchSelectedDisclosure= async ()=>{
-    LoaderOpen()
+  const fetchSelectedDisclosure = async () => {
+    LoaderOpen();
     const url = `${process.env.BACKEND_API_URL}/materiality_dashboard/assessment-disclosure-selection/${id}/`;
     try {
       const response = await axiosInstance.get(url);
-      console.log(response,"res")
-      if (response.status === 200 && response.data.length>0) {
-        initializeSelectedDisclosures(response.data)
-        setDatapresent(true)
-        LoaderClose()
+      if (response.status === 200 && response.data.length > 0) {
+        initializeSelectedDisclosures(response.data);
+        setDatapresent(true);
+        LoaderClose();
       }
       //  else {
       //   LoaderClose()
@@ -86,7 +128,7 @@ const LoaderClose = () => {
       //   });
       // }
     } catch (error) {
-      LoaderClose()
+      LoaderClose();
       toast.error("Oops, something went wrong", {
         position: "top-right",
         autoClose: 1000,
@@ -98,9 +140,7 @@ const LoaderClose = () => {
         theme: "colored",
       });
     }
-  }
-
- 
+  };
 
   // Handle checkbox change
   const handleCheckboxChange = (topicSelectionId, disclosureId) => {
@@ -167,30 +207,50 @@ const LoaderClose = () => {
                   <p className="text-[#2E0B34] text-[15px] mx-2 pt-2 min-w-[200px]">
                     {topicName}
                   </p>
-                  <div>
+                  <div className="relative">
                     {disclosures.map((disclosure) => (
-                      <div key={disclosure.disclosure_id} className="mx-2 pt-1 green-checkbox">
+                      <div
+                        key={disclosure.disclosure_id}
+                        className="mx-2 pt-1 green-checkbox"
+                      >
                         <label className="flex items-center gap-2 text-sm mb-4 cursor-pointer">
                           <input
                             type="checkbox"
                             value={disclosure.disclosure_id}
                             checked={
-                              selectedDisclosures[disclosure.selected_material_topic_id]?.includes(
-                                disclosure.disclosure_id
-                              ) || false
+                              selectedDisclosures[
+                                disclosure.selected_material_topic_id
+                              ]?.includes(disclosure.disclosure_id) || false
                             }
+                            disabled={!disclosure.can_edit}
                             onChange={() =>
                               handleCheckboxChange(
                                 disclosure.selected_material_topic_id,
                                 disclosure.disclosure_id
                               )
                             }
-                            className="form-checkbox h-3 w-3"
+                            className={`form-checkbox h-3 w-3  ${disclosure.can_edit?"cursor-pointer":""}`}
+                            data-tooltip-html={
+                              !disclosure.can_edit
+                                ? "<p>This is a Topic Management Disclosure and cannot be skipped.</p>"
+                                : ""
+                            }
+                            data-tooltip-id={'checked'}
                           />
                           {disclosure.name}
                         </label>
                       </div>
                     ))}
+                    <ReactTooltip
+                    id="checked"
+                      place="top"
+                      effect="solid"
+                      backgroundColor="#000"
+                      textColor="white"
+                      fontSize="12px"
+                      borderRadius="8px"
+                      delayShow={200}
+                    />
                   </div>
                 </div>
               </div>
@@ -201,37 +261,67 @@ const LoaderClose = () => {
     );
   };
 
+  // const initializeSelectedDisclosures = (disclosureData) => {
+
+  //   const initialState = disclosureData.reduce((acc, curr) => {
+  //     if (!acc[curr.topic_selection_id]) {
+  //       acc[curr.topic_selection_id] = [];
+  //     }
+  //     acc[curr.topic_selection_id].push(curr.disclosure_id);
+  //     return acc;
+  //   }, {});
+  //   setSelectedDisclosures(initialState);
+  // };
+
   const initializeSelectedDisclosures = (disclosureData) => {
-    
     const initialState = disclosureData.reduce((acc, curr) => {
       if (!acc[curr.topic_selection_id]) {
         acc[curr.topic_selection_id] = [];
       }
-      acc[curr.topic_selection_id].push(curr.disclosure_id);
+
+      if (!acc[curr.topic_selection_id].includes(curr.disclosure_id)) {
+        acc[curr.topic_selection_id].push(curr.disclosure_id);
+      }
+
       return acc;
     }, {});
-   
+
     setSelectedDisclosures(initialState);
   };
 
   useEffect(() => {
     fetchDisclosure();
-    fetchSelectedDisclosure()
+    fetchSelectedDisclosure();
   }, []);
 
-  const handleSubmit = async(selectedData) => {
-   const data={
-        "assessment_id":id,
-        "topic_disclosures":selectedData,
-    }
-    const url = dataPresent?`${process.env.BACKEND_API_URL}/materiality_dashboard/assessment-disclosure-selection/${id}/edit/`:`${process.env.BACKEND_API_URL}/materiality_dashboard/assessment-disclosure-selection/`
-  try {
-    const response = dataPresent?await axiosInstance.put(url,data):await axiosInstance.post(url,data);
-    
-    if(response.status>=200&&response.status<300){
-      handleNext()
-    }
-    else{
+  const handleSubmit = async (selectedData) => {
+    const data = {
+      assessment_id: id,
+      topic_disclosures: selectedData,
+    };
+    const url = dataPresent
+      ? `${process.env.BACKEND_API_URL}/materiality_dashboard/assessment-disclosure-selection/${id}/edit/`
+      : `${process.env.BACKEND_API_URL}/materiality_dashboard/assessment-disclosure-selection/`;
+    try {
+      const response = dataPresent
+        ? await axiosInstance.put(url, data)
+        : await axiosInstance.post(url, data);
+
+      if (response.status >= 200 && response.status < 300) {
+        handleNext();
+      } else {
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    } catch (error) {
       toast.error("Oops, something went wrong", {
         position: "top-right",
         autoClose: 1000,
@@ -243,27 +333,13 @@ const LoaderClose = () => {
         theme: "colored",
       });
     }
-    
-    }
-   
-  catch (error) {
-    toast.error("Oops, something went wrong", {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-  }
-   
-};
+  };
 
   return (
     <>
-      {disclosureTopics.environment || disclosureTopics.social || disclosureTopics.governance   ? (
+      {disclosureTopics.environment ||
+      disclosureTopics.social ||
+      disclosureTopics.governance ? (
         <div className="mt-3 mb-3">
           {/* Render Environment */}
           {disclosureTopics.environment &&
@@ -273,45 +349,36 @@ const LoaderClose = () => {
             renderDisclosureTopics(disclosureTopics.social, "Social")}
           {/* Render Governance */}
           {disclosureTopics.governance &&
-            renderDisclosureTopics(
-              disclosureTopics.governance,
-              "Governance"
-            )}
+            renderDisclosureTopics(disclosureTopics.governance, "Governance")}
         </div>
       ) : (
         <div className="border mt-4 mx-5 rounded-md">
-             <div className="flex justify-center items-center p-3">
-                <div>
-                  <div  className="flex justify-center items-center my-2 mt-5">
-                  <Image
-                src={materialImage}
-                alt="img"
-                width={250}
-                height={250}
-               
-              />
-                  </div>
-               
-                  <div className="mb-4">
-                  <p className="text-[24px] font-bold mb-3 text-center">
-                  No ESG Topics Selected
-                    </p>
-                    <p className="text-[16px] text-[#2E0B34] mb-4 text-center">
-                    Select ESG Topics from the previous screen to select the GRI disclosures here
-                    </p>
-                    <button className="w-full h-full  py-2 px-3 text-[#007EEF]  cursor-pointer"
-                    onClick={()=>{
-                      setCurrentStep(0)
-                    }}
-                    >
-                   {"<"} Back to Select ESG Topics 
-                    </button>
-                  </div>
-                </div>
-                  
+          <div className="flex justify-center items-center p-3">
+            <div>
+              <div className="flex justify-center items-center my-2 mt-5">
+                <Image src={materialImage} alt="img" width={250} height={250} />
               </div>
-          </div>
 
+              <div className="mb-4">
+                <p className="text-[24px] font-bold mb-3 text-center">
+                  No ESG Topics Selected
+                </p>
+                <p className="text-[16px] text-[#2E0B34] mb-4 text-center">
+                  Select ESG Topics from the previous screen to select the GRI
+                  disclosures here
+                </p>
+                <button
+                  className="w-full h-full  py-2 px-3 text-[#007EEF]  cursor-pointer"
+                  onClick={() => {
+                    setCurrentStep(0);
+                  }}
+                >
+                  {"<"} Back to Select ESG Topics
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Buttons */}
@@ -328,24 +395,24 @@ const LoaderClose = () => {
           className="w-[16%] h-full mr-4 py-2 px-2 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer"
           onClick={() => {
             const formattedDisclosures = formatSelectedDisclosures();
-            handleSubmit(formattedDisclosures)
+            handleSubmit(formattedDisclosures);
           }}
         >
           Next {">"}
         </button>
       </div>
       {loopen && (
-                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-                    <Oval
-                        height={50}
-                        width={50}
-                        color="#00BFFF"
-                        secondaryColor="#f3f3f3"
-                        strokeWidth={2}
-                        strokeWidthSecondary={2}
-                    />
-                </div>
-            )}
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
       {/* Toast Container */}
       <ToastContainer />
     </>

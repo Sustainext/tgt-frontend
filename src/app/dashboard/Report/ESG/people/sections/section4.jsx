@@ -14,6 +14,7 @@ const Section4=({section13_1_3Ref})=>{
 <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
 13.1.3 Employee Benefits and Health Services
 </h3>
+<p className="text-sm mb-4">We offer comprehensive benefits and health services to support the well-being of our employees, including medical insurance, wellness programs, and mental health resources.</p>
 
         <p className="text-[15px]  mb-2 font-semibold">
         Benefits provided to full-time employees by location
