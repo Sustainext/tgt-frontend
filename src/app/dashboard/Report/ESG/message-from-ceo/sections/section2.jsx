@@ -48,7 +48,7 @@ const Section2 = ({ orgName }) => {
         const base64String = reader.result;
   
     
-        dispatch(setSignatureimage(base64String)); // Set the image preview
+        dispatch(setSignatureimage(selectedFile)); // Set the image preview
       };
       reader.readAsDataURL(selectedFile);
     }
@@ -114,7 +114,7 @@ const Section2 = ({ orgName }) => {
         </p>
         {imagePreview && (
           <div className="mb-4">
-            <img src={imagePreview} alt="CEO" className="w-[150px] h-[150px] object-cover rounded-md" />
+       <img src={`${process.env.BACKEND_API_URL}${imagePreview}`} alt="CEO" className="w-[150px] h-[150px] object-cover rounded-md" />
           </div>
         )}
         <div className="flex gap-4 mt-2 mb-4">

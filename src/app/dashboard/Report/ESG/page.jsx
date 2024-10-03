@@ -1,17 +1,5 @@
-"use client";
-import { useState, useRef, useEffect } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { Oval } from "react-loader-spinner";
-import {
-  MdDownload,
-  MdDelete,
-  MdKeyboardArrowDown,
-  MdFileDownload,
-} from "react-icons/md";
-import axiosInstance, { patch } from "../../../utils/axiosMiddleware";
-import Link from "next/link";
-import { GlobalState } from "@/Context/page";
+'use client'
+import { useState, useRef } from "react";
 import Sidebar from "./sidebar";
 import MissionVission from "./mission-vision/page";
 import AwardsRecognition from "./awards-recognition/page";
@@ -23,29 +11,32 @@ import Materiality from "./materilality/page";
 import SustainibilityJourney from "./sustainibility-journey/page";
 import CorporateGovernance from "./corporate-governance/page";
 import Community from "./community/page";
-import EconomicPerformance from './economic-performance/page'
-import CustomerProductService from  './customer-product-services/page'
+import EconomicPerformance from "./economic-performance/page";
+import CustomerProductService from "./customer-product-services/page";
 import People from "./people/page";
-import MessageFromCEO from  './message-from-ceo/page'
+import MessageFromCEO from "./message-from-ceo/page";
 import Environment from "./environment/page";
 
 const ESGReport = () => {
   const [activeStep, setActiveStep] = useState(1);
-  const [reportName,setReportName]=useState("Report")
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
+  const messageFromCeoRef = useRef(); // Use useRef to store a reference to submitForm
+
+  // Move to the next step when submission is successful
+  const handleNextStep = async () => {
+    if (activeStep === 1) {
+      const isSubmitted = await messageFromCeoRef.current.submitForm(); // Call submitForm for step 1
+      if (isSubmitted) {
+        setActiveStep((prev) => prev + 1); // Only move to the next step if form is successfully submitted
+      }
+    } else {
+      setActiveStep((prev) => prev + 1);
+    }
   };
 
-  const handlePrevious = () => {
-    setActiveStep(activeStep - 1);
+  const handlePreviousStep = () => {
+    setActiveStep((prev) => prev - 1);
   };
-  useEffect(()=>{
-    if(localStorage.getItem("reportname")){
-      setReportName(localStorage.getItem("reportname"))
-    }
-    
-  },[])
-  // const reportName= typeof window !== "undefined" ? localStorage.getItem("reportname") : "";
+
 
   return (
     <>
@@ -65,7 +56,7 @@ const ESGReport = () => {
                   </div>
                 </div>
               </div>
-              <div className="float-right mr-2 flex items-center justify-center ">
+              <div className="float-right mr-2 flex items-center justify-center">
                 <div className="flex items-center justify-center">
                   <button
                     style={{
@@ -74,7 +65,7 @@ const ESGReport = () => {
                     className={`${
                       activeStep === 1 ? "" : "text-gray-500"
                     } px-3 py-1.5 rounded font-semibold`}
-                    onClick={handlePrevious}
+                    onClick={handlePreviousStep}
                     disabled={activeStep === 1}
                   >
                     &lt; Previous
@@ -87,7 +78,7 @@ const ESGReport = () => {
                           ? "bg-gray-300"
                           : "bg-blue-500 text-white"
                       } px-3 py-1.5 rounded ml-2 font-semibold w-[100px]`}
-                      onClick={handleNext}
+                      onClick={handleNextStep}// Call the form submit and next step handler
                       disabled={activeStep === 15}
                     >
                       Next &gt;
@@ -95,7 +86,6 @@ const ESGReport = () => {
                   ) : (
                     <button
                       className="flex w-[120px] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
-                      // onClick={submitForm}
                     >
                       Submit
                     </button>
@@ -106,22 +96,16 @@ const ESGReport = () => {
           </div>
           <div className="mx-3 my-2">
             <div>
-              {/* Step 1 */}
               {activeStep === 1 && (
-                <>
-                  <div>
-                   <MessageFromCEO/>
-                  </div>
-                </>
+                <div>
+             <MessageFromCEO ref={messageFromCeoRef} />
+                </div>
               )}
-              {/* Step 2 */}
               {activeStep === 2 && (
                 <div>
                   <Companyoperations />
                 </div>
               )}
-
-              {/* Step 3 */}
               {activeStep === 3 && (
                 <div>
                   <div className="mb-4">
@@ -152,83 +136,65 @@ const ESGReport = () => {
               )}
               {activeStep === 7 && (
                 <div>
-                  <>
-                    <div className="mb-4">
-                      <AboutTheReport />
-                    </div>
-                  </>
+                  <div className="mb-4">
+                    <AboutTheReport />
+                  </div>
                 </div>
               )}
               {activeStep === 8 && (
                 <div>
-                  <>
-                    <div className="mb-4">
-                      <Materiality />
-                    </div>
-                  </>
+                  <div className="mb-4">
+                    <Materiality />
+                  </div>
                 </div>
               )}
               {activeStep === 9 && (
                 <div>
-                  <>
-                    <div className="mb-4">
-                      <CorporateGovernance />
-                    </div>
-                  </>
+                  <div className="mb-4">
+                    <CorporateGovernance />
+                  </div>
                 </div>
               )}
               {activeStep === 10 && (
                 <div>
-                  <>
-                    <div className="mb-4">
-                      <SustainibilityJourney />
-                    </div>
-                  </>
+                  <div className="mb-4">
+                    <SustainibilityJourney />
+                  </div>
                 </div>
               )}
               {activeStep === 11 && (
                 <div>
-                  <>
-                    <div className="mb-4">
-                      <EconomicPerformance/>
-                    </div>
-                  </>
-                </div>
-              )} 
-              {activeStep === 12 && (
-                <div>
-                  <>
-                    <div className="mb-4">
-                      <Environment/>
-                    </div>
-                  </>
-                </div>
-              )} 
-              {activeStep === 13 && (
-                <div>
-                  <>
-                    <div className="mb-4">
-                      <People/>
-                    </div>
-                  </>
-                </div>
-              )} 
-              {activeStep === 14 && (
-                <div>
-                  <>
-                    <div className="mb-4">
-                      <Community />
-                    </div>
-                  </>
+                  <div className="mb-4">
+                    <EconomicPerformance />
+                  </div>
                 </div>
               )}
-               {activeStep === 15 && (
+              {activeStep === 12 && (
                 <div>
-                  <>
-                    <div className="mb-4">
-                      <CustomerProductService />
-                    </div>
-                  </>
+                  <div className="mb-4">
+                    <Environment />
+                  </div>
+                </div>
+              )}
+              {activeStep === 13 && (
+                <div>
+                  <div className="mb-4">
+                    <People />
+                  </div>
+                </div>
+              )}
+              {activeStep === 14 && (
+                <div>
+                  <div className="mb-4">
+                    <Community />
+                  </div>
+                </div>
+              )}
+              {activeStep === 15 && (
+                <div>
+                  <div className="mb-4">
+                    <CustomerProductService />
+                  </div>
                 </div>
               )}
             </div>

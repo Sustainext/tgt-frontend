@@ -15,23 +15,23 @@ const Section1 = ({ orgName }) => {
   const [error, setError] = useState("");
   const imagePreview = useSelector(state => state.screen1Slice.message_image); 
 
+
   const loadContent = () => {
     dispatch(setMessage(`
-      <p>
-       At ${orgName ? orgName : "[Company Name]"}, our commitment to sustainability and responsible business practices is deeply rooted in our mission and values. As a leading manufacturing company, we recognize our role in driving positive environmental, social, and governance (ESG) impacts. This ESG report, aligned with the Global Reporting Initiative (GRI) standards, marks a significant milestone in our journey towards greater transparency and accountability. 
+      <p>At ${orgName ? orgName : "[Company Name]"}, our commitment to sustainability and responsible business practices is deeply rooted in our mission and values. As a leading manufacturing company, we recognize our role in driving positive environmental, social, and governance (ESG) impacts. This ESG report, aligned with the Global Reporting Initiative (GRI) standards, marks a significant milestone in our journey towards greater transparency and accountability. 
        <br/>
-       Environmental Stewardship 
+       Environmental Stewardship
        <br/>
        The industrial sector plays a critical role in addressing climate change and environmental degradation. At ${orgName ? orgName : "[Company Name]"}, we have implemented
        <br/>
        Social Responsibility<br/>
        People are at the heart of our success. We are dedicated to fostering a diverse, inclusive, and equitable workplace where all employees feel valued and empowered
        <br/>
-       Governance and Ethical Conduct <br/>
+       Governance and Ethical Conduct <br/>
        Strong governance is the foundation of our business integrity and long-term success. We have reinforced our governance structures to ensure robust oversight and accountability at all levels of the organization. Our Board of Directors is committed to<br/>
        Looking Ahead <br/>
        As we look to the future, we are committed to further integrating ESG considerations into our core business strategy. We will continue to innovate. <br/>
-       Thank you for your continued trust and support. <br/>
+       Thank you for your continued trust and support. <br/>
       </p>
     `));
   };
@@ -53,8 +53,8 @@ const Section1 = ({ orgName }) => {
 
       reader.onloadend = () => {
         const base64String = reader.result;
-    
-        dispatch(setMessageimage(base64String)); // Set the image preview
+        localStorage.setItem('message_image', base64String);
+        dispatch(setMessageimage(selectedFile)); 
       };
       reader.readAsDataURL(selectedFile);
     }
@@ -108,7 +108,7 @@ const Section1 = ({ orgName }) => {
         <p className="text-[15px] text-[#344054] mb-2">Upload CEO’s Image:</p>
         {imagePreview && (
           <div className="mb-4">
-            <img src={imagePreview} alt="CEO" className="w-[150px] h-[150px] object-cover rounded-md" />
+            <img src={`${process.env.BACKEND_API_URL}${imagePreview}`} alt="CEO" className="w-[150px] h-[150px] object-cover rounded-md" />
           </div>
         )}
         <div className="flex gap-4 mt-2 mb-4">
