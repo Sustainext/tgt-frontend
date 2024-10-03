@@ -26,11 +26,10 @@ const ESGReport = () => {
   // Move to the next step when submission is successful
   const handleNextStep = async () => {
     if (activeStep === 1) {
-      // const isSubmitted = await messageFromCeoRef.current.submitForm(); // Call submitForm for step 1
-      // if (isSubmitted) {
-      //   setActiveStep((prev) => prev + 1); // Only move to the next step if form is successfully submitted
-      // }
-      setActiveStep((prev) => prev + 1);
+      const isSubmitted = await messageFromCeoRef.current.submitForm(); // Call submitForm for step 1
+      if (isSubmitted) {
+        setActiveStep((prev) => prev + 1); // Only move to the next step if form is successfully submitted
+      }
     } 
     // else if (activeStep===2) {
     //   const isSubmitted = await aboutTheCompany.current.submitForm(); // Call submitForm for step 1
