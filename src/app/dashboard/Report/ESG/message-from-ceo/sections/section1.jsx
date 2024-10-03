@@ -1,13 +1,15 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import dynamic from "next/dynamic";
-import { MdOutlineFileUpload } from "react-icons/md";
+import { MdOutlineFileUpload,MdFilePresent,MdOutlinePlaylistAdd } from "react-icons/md";
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
 const Section1 = ({orgName}) => {
-  const [content, setContent] = useState(`
-    <p>
+  const [content, setContent] = useState(``);
+    const loadContent=()=>{
+      setContent(`
+         <p>
        At ${orgName?orgName:"[Company Name]"}, our commitment to sustainability and responsible business practices is deeply rooted in our mission and values. As a leading manufacturing company, we recognize our role in driving positive environmental, social, and governance (ESG) impacts. This ESG report, aligned with the Global Reporting Initiative (GRI) standards, marks a significant milestone in our journey towards greater transparency and accountability. 
 
 <br/>
@@ -23,8 +25,9 @@ Strong governance is the foundation of our business integrity and long-term succ
 Looking Ahead <br/>
 As we look to the future, we are committed to further integrating ESG considerations into our core business strategy. We will continue to innovate. <br/>
 Thank you for your continued trust and support. <br/>
- </p>     
-    `);
+ </p>   
+        `)
+    }
   const [error, setError] = useState("");
   const [selectedImage, setSelectedImage] = useState("");
   const [imageSrc, setImage] = useState("");
@@ -105,8 +108,8 @@ Thank you for your continued trust and support. <br/>
   return (
     <>
       <div>
-        <p className="text-[15px] text-[#344054] mb-2">Upload Profile Image:</p>
-        <div className="flex mt-2 mb-4">
+        <p className="text-[15px] text-[#344054] mb-2">Upload CEO’s Image:</p>
+        <div className="flex gap-4 mt-2 mb-4">
           <input
             type="file"
             ref={fileInputRef}
@@ -114,18 +117,43 @@ Thank you for your continued trust and support. <br/>
             style={{ display: "none" }}
             accept="image/png"
           />
-          <button
-            onClick={handleButtonClick}
-            className="flex bg-transparent py-2 text-center text-[#007EEF] text-[15px] rounded-md"
-          >
-            <p>
-              <MdOutlineFileUpload className="mt-1" style={{fontSize:"16px"}}  />
-            </p>
-            <p className="ml-2">Upload Image </p>
+          {/* {imageSrc.name?(
             
-          </button>
+          ):(
+             
+          )} */}
+          <button
+             onClick={handleButtonClick}
+             className="flex bg-transparent py-2 text-center text-[#007EEF] text-[15px] rounded-md"
+           >
+             <p>
+               <MdOutlineFileUpload className="mt-1" style={{fontSize:"16px"}}  />
+             </p>
+             <p className="ml-2">Upload Image </p>
+             
+           </button>
+
+           {imageSrc.name?(
+            <label className="flex">
+            <div className="flex items-center text-center mt-2">
+              <div className="truncate text-sky-600 text-[12px] flex text-center">
+                <MdFilePresent className="w-6 h-6 mr-1 text-green-500" /> {imageSrc.name}
+              </div>
+            </div>
+          </label>
+          ):(<div></div>)}
+         
         </div>
-        <p className="text-[15px] text-[#344054] mb-2">Edit Statement</p>
+        <div className="flex justify-between">
+        <p className="text-[15px] text-[#344054] mb-2">Add message from CEO</p>
+        <button className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-4 flex"
+        onClick={loadContent}
+        >
+          <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/>
+          Auto Fill
+        </button>
+        </div>
+       
         <div className="mb-4">
           <JoditEditor
             // ref={editor}

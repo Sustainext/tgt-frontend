@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import dynamic from "next/dynamic";
-import { MdOutlineFileUpload } from "react-icons/md";
+import { MdOutlineFileUpload,MdFilePresent } from "react-icons/md";
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
@@ -17,12 +17,18 @@ ${orgName?orgName:"[Company Name]"}
   const [error, setError] = useState("");
   const [selectedImage, setSelectedImage] = useState("");
   const [imageSrc, setImage] = useState("");
+  const [companyName,setCompanyName] = useState(orgName)
+
   useEffect(() => {
     const storedImage = localStorage.getItem("selectedImage");
     if (storedImage) {
       setSelectedImage(storedImage);
     }
   }, []);
+
+  const handleCompanyname=(e)=>{
+    setCompanyName(e.target.value)
+  }
 
   const handleImageChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -95,7 +101,7 @@ ${orgName?orgName:"[Company Name]"}
     <>
       <div>
       <p className="text-[15px] text-[#344054] mb-2">Upload Signature Image:</p>
-        <div className="flex mt-2 mb-4">
+        <div className="flex gap-4 mt-2 mb-4">
           <input
             type="file"
             ref={fileInputRef}
@@ -113,8 +119,19 @@ ${orgName?orgName:"[Company Name]"}
             <p className="ml-2">Upload Image </p>
             
           </button>
+          {imageSrc.name?(
+            <label className="flex">
+            <div className="flex items-center text-center mt-2">
+              <div className="truncate text-sky-600 text-[12px] flex text-center">
+                <MdFilePresent className="w-6 h-6 mr-1 text-green-500" /> {imageSrc.name}
+              </div>
+            </div>
+          </label>
+          ):(<div></div>)}
+          
         </div>
-        <p className="text-[15px] text-[#344054] mb-2">Edit Signature Statement</p>
+        <p className="text-[15px] text-[#344054] mb-4">Sincerely,</p>
+        {/* <p className="text-[15px] text-[#344054] mb-2">Edit Signature Statement</p>
         <div className="mb-4">
           <JoditEditor
             // ref={editor}
@@ -124,8 +141,12 @@ ${orgName?orgName:"[Company Name]"}
             tabIndex={1}
             onBlur={handleEditorChange}
           />
-        </div>
-       
+        </div> */}
+  <p className="text-[15px] text-[#344054] mb-2">CEO’s Name</p>
+  <input type="text" placeholder="Enter CEO’s Name" className="border border-gray-300 height-[44px] px-2 py-3 rounded-md text-[13px] w-full bg-white shadow-sm mb-4"/>
+  <p className="text-[15px] text-[#344054] mb-2">Company Name</p>
+  <input onChange={handleCompanyname} type="text" placeholder="Enter Company Name" className="border border-gray-300 height-[44px] px-2 py-3 rounded-md text-[13px] w-full bg-white shadow-sm" value={companyName}/>
+      
       </div>
     </>
   );

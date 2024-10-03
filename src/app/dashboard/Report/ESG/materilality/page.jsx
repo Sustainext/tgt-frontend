@@ -6,7 +6,7 @@ import Section3 from "./sections/section3";
 import Section4 from "./sections/section4";
 import Section5 from "./sections/section5";
 
-const AboutTheReport=()=>{
+const Materiality=()=>{
     
     const [activeSection, setActiveSection] = useState('section8_1');
 
@@ -30,6 +30,35 @@ const scrollToSection = (sectionRef, sectionId) => {
     });
   };
   
+  // useEffect(() => {
+  //   const observerCallback = (entries) => {
+  //     entries.forEach((entry) => {
+  //       if (entry.isIntersecting) {
+  //         setActiveSection(entry.target.id); // Update the active section based on its id
+  //       }
+  //     });
+  //   };
+
+  //   const observerOptions = {
+  //     root: null, // Use the viewport as the root
+  //     rootMargin: '-100px 0px -50% 0px', // Adjust margin to trigger at a different point
+  //     threshold: 0.2, // Trigger when 20% of the section is visible
+  //   };
+
+  //   const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+  //   // Attach observer to each section
+  //   if (section8_1Ref.current) observer.observe(section8_1Ref.current);
+  //   if (section8_1_1Ref.current) observer.observe(section8_1_1Ref.current);
+  //   if (section8_1_2Ref.current) observer.observe(section8_1_2Ref.current);
+  //   if (section8_1_3Ref.current) observer.observe(section8_1_3Ref.current);
+  //   if (section8_1_4Ref.current) observer.observe(section8_1_4Ref.current);
+
+  //   return () => {
+  //     // Cleanup observer on unmount
+  //     observer.disconnect();
+  //   };
+  // }, []);
 
     return (
         <>
@@ -74,7 +103,7 @@ const scrollToSection = (sectionRef, sectionId) => {
               8.1.1. List of material topics 
             </p>
             <p
-              className={`text-[12px] mb-2 cursor-pointer ${
+              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === 'section8_1_2' ? 'text-blue-400' : ''
               }`}
               onClick={() => scrollToSection(section8_1_2Ref, 'section8_1_2')}
@@ -82,7 +111,7 @@ const scrollToSection = (sectionRef, sectionId) => {
               8.1.2. Changes in the list of material topics 
             </p>
             <p
-              className={`text-[12px] mb-2 cursor-pointer ${
+              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === 'section8_1_3' ? 'text-blue-400' : ''
               }`}
               onClick={() => scrollToSection(section8_1_3Ref, 'section8_1_3')}
@@ -90,7 +119,7 @@ const scrollToSection = (sectionRef, sectionId) => {
               8.1.3. Materiality assessment – Process 
             </p>
             <p
-              className={`text-[12px] mb-2 cursor-pointer ${
+              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === 'section8_1_4' ? 'text-blue-400' : ''
               }`}
               onClick={() => scrollToSection(section8_1_4Ref, 'section8_1_4')}
@@ -107,4 +136,4 @@ const scrollToSection = (sectionRef, sectionId) => {
     )
 }
 
-export default AboutTheReport
+export default Materiality

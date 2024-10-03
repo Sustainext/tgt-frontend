@@ -45,11 +45,14 @@ const Section2=({section2_1_1Ref,section2_1_2Ref,section2_1Ref,orgName})=>{
     }
     return (
         <>
-        <div className="mb-4">
+        <div className="mb-2" id="setion2_1" ref={section2_1Ref}>
               <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
                 2.1 Business Model and Impact 
               </h3>
-              <div className="mb-2" id="setion2_1_1" ref={section2_1_1Ref}>
+              
+              
+            </div>
+            <div className="mb-2" id="setion2_1_1" ref={section2_1_1Ref}>
               <p className="text-[15px] text-[#344054] mb-2 font-semibold">
                 2.1.1 Activities, Value Chain, and Other Business Relationships
               </p>
@@ -105,8 +108,7 @@ const Section2=({section2_1_1Ref,section2_1_2Ref,section2_1Ref,orgName})=>{
         </div>
 
               </div>
-              
-              <div id="setion2_1_2" ref={section2_1_2Ref}>
+              <div className="mb-2" id="setion2_1_2" ref={section2_1_2Ref}>
         <p className="text-[15px] text-[#344054] mb-2 font-semibold">
         2.1.2 Entities Included in the Organization's Sustainability Reporting
         </p>
@@ -127,7 +129,7 @@ const Section2=({section2_1_1Ref,section2_1_2Ref,section2_1Ref,orgName})=>{
             Each entity adheres to our comprehensive sustainability framework, ensuring consistent ESG practices across our entire organization. 
             </p>
         </div>
-            </div>
+              
         </>
     )
 }
