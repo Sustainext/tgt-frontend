@@ -3,18 +3,22 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
+import STARSVG from "../../../../../../../public/star.svg";
+import Image from "next/image";
+import { useDispatch, useSelector } from 'react-redux';
+import { setAboutTheCompany} from "../../../../../../lib/redux/features/ESGSlice/screen2Slice";
 import dynamic from "next/dynamic";
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
 const Section1=({orgName})=>{
-    const [content,setContent]=useState("")
+    const content = useSelector(state => state.screen2Slice.about_the_company);
+  const dispatch = useDispatch();
 
     const loadContent=()=>{
-      setContent(
-        `
-        <p>Effective stakeholder engagement is vital to ${orgName?orgName:"[Company Name]"}'s sustainability strategy and overall business success. We recognize that our actions impact a wide range of stakeholders, including employees, customers, suppliers, investors, local communities, and regulatory bodies.</p>
-        `
+      dispatch(setAboutTheCompany(
+        `<p>Effective stakeholder engagement is vital to ${orgName?orgName:"[Company Name]"}'s sustainability strategy and overall business success. We recognize that our actions impact a wide range of stakeholders, including employees, customers, suppliers, investors, local communities, and regulatory bodies.</p>`
       )
+    )
     }
 
     const config = {
@@ -51,7 +55,7 @@ const Section1=({orgName})=>{
     
     
       const handleEditorChange=(value)=>{
-        setContent(value)
+        dispatch(setAboutTheCompany(value))
       }
     return (
         <>
@@ -60,7 +64,8 @@ const Section1=({orgName})=>{
             <button className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
         onClick={loadContent}
         >
-          <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/>
+          {/* <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/> */}
+          <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
           Auto Fill
         </button>
             </div>

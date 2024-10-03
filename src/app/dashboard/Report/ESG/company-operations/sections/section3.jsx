@@ -3,18 +3,22 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
+import STARSVG from "../../../../../../../public/star.svg";
+import Image from "next/image";
+import { useDispatch, useSelector } from 'react-redux';
+import { setSupplyChain} from "../../../../../../lib/redux/features/ESGSlice/screen2Slice";
 import dynamic from "next/dynamic";
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
 const Section3=({section2_2Ref,orgName})=>{
-  const [content,setContent]=useState()
+  const content = useSelector(state => state.screen2Slice.supply_chain_description);
+  const dispatch = useDispatch();
 
 const loadContent=()=>{
-  setContent(
-    `
-    <p>Our supply chain is integral to our sustainability strategy. We work closely with our suppliers to ensure they meet our high standards for environmental and social responsibility. Key initiatives in our supply chain include</p>
-    `
+  dispatch(setSupplyChain(
+    `<p>Our supply chain is integral to our sustainability strategy. We work closely with our suppliers to ensure they meet our high standards for environmental and social responsibility. Key initiatives in our supply chain include</p>`
   )
+)
 }
 const config = {
   style: {
@@ -50,7 +54,7 @@ const config = {
 
 
 const handleEditorChange=(value)=>{
-  setContent(value)
+  dispatch(setSupplyChain(value))
 }
     return (
         <>
@@ -64,7 +68,8 @@ const handleEditorChange=(value)=>{
             <button className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
         onClick={loadContent}
         >
-          <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/>
+          {/* <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/> */}
+          <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
           Auto Fill
         </button>
             </div>

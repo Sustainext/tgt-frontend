@@ -86,11 +86,11 @@ const ESGReport = () => {
                         activeStep === 15
                           ? "bg-gray-300"
                           : "bg-blue-500 text-white"
-                      } px-1.5 py-1 rounded ml-2 font-semibold w-[auto]`}
+                      } px-3 py-1.5 rounded ml-2 font-semibold w-[100px]`}
                       onClick={handleNext}
                       disabled={activeStep === 15}
                     >
-                      Next & Submit &gt;
+                      Next &gt;
                     </button>
                   ) : (
                     <button

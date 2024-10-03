@@ -4,26 +4,32 @@
 import { useState, useRef, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
+import STARSVG from "../../../../../../../public/star.svg";
+import Image from "next/image";
+import { useDispatch, useSelector } from 'react-redux';
+import { setCompanyOperation,setEntitiesInclude} from "../../../../../../lib/redux/features/ESGSlice/screen2Slice";
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
 const Section2=({section2_1_1Ref,section2_1_2Ref,section2_1Ref,orgName})=>{
     const [content,setContent]=useState('Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut at ipsum molestias dicta blanditiis harum laborum saepe expedita')
-    const [content2,setContent2]=useState("")
-    const [content3,setContent3]=useState("")
+    const content2 = useSelector(state => state.screen2Slice.company_operations);
+  const dispatch = useDispatch();
+  const content3 = useSelector(state => state.screen2Slice.entities_included);
     const loadContent=()=>{
-      setContent2(
+      dispatch(setCompanyOperation(
        `<p>This report includes sustainability performance data from all entities under ${orgName?orgName:"[Company Name]"} operational control.</p>`
       )
+    )
     }
 
     const loadContent2=()=>{
-      setContent3(
-        `
-        <p>
+      dispatch(setEntitiesInclude(
+        `<p>
         ${orgName?orgName:"[Company Name]"} is a leading manufacturer of [Products], serving a diverse range of industries including [Industries]. Our business model is built on innovation, quality, and sustainability. From raw material sourcing to product delivery, we aim to minimize our environmental footprint and maximize social value. In the current reporting period, we observed the following significant changes in these categories
         </p>
         `
       )
+    )
     }
     const config = {
       style: {
@@ -59,10 +65,10 @@ const Section2=({section2_1_1Ref,section2_1_2Ref,section2_1Ref,orgName})=>{
   
   
     const handleEditorChange=(value)=>{
-      setContent2(value)
+      dispatch(setCompanyOperation(value))
     }
     const handleChange=(value)=>{
-      setContent3(value)
+      dispatch(setEntitiesInclude(value))
     }
     return (
         <>
@@ -82,7 +88,8 @@ const Section2=({section2_1_1Ref,section2_1_2Ref,section2_1Ref,orgName})=>{
             <button className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
         onClick={loadContent2}
         >
-          <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/>
+          {/* <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/> */}
+          <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
           Auto Fill
         </button>
             </div>
@@ -155,7 +162,8 @@ const Section2=({section2_1_1Ref,section2_1_2Ref,section2_1Ref,orgName})=>{
             <button className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
         onClick={loadContent}
         >
-          <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/>
+          {/* <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/> */}
+          <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
           Auto Fill
         </button>
             </div>

@@ -5,11 +5,13 @@ import { combineReducers } from 'redux'
 import counterReducer from './features/counterSlice'
 import emissionReducer from './features/emissionSlice'
 import screen1SliceReducer from './features/ESGSlice/screen1Slice'
+import screen2SliceReducer from './features/ESGSlice/screen2Slice'
 
 const rootReducer = combineReducers({
   counter: counterReducer,
   emissions: emissionReducer,
   screen1Slice:screen1SliceReducer,
+  screen2Slice:screen2SliceReducer,
   
 })
 
