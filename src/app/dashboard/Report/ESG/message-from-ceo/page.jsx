@@ -10,7 +10,9 @@ import { GlobalState } from "@/Context/page";
 import Screen1 from './sections/section1'
 import Screen2 from './sections/section2'
 
+
 const MessageFromCeo=()=>{
+
     const orgName= typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
     return (
         <>
@@ -20,7 +22,7 @@ const MessageFromCeo=()=>{
             </h3>
             <div className="flex gap-4">
             <div className="w-[80%]">
-            <Screen1 orgName={orgName}/>
+            <Screen1 orgName={orgName} />
             <Screen2 orgName={orgName} />
             </div>
             {/* page sidebar */}

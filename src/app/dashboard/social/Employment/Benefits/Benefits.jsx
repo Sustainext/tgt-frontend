@@ -304,10 +304,7 @@ const Benefitsscreen = ({ location, year, month }) => {
                 }}
               ></ReactTooltip>
             </h2>
-            {/* <h2 className='flex mx-2 text-[11px] text-gray-500 font-semibold mb-2'>
-                        For all employees, please report the following
-
-                        </h2> */}
+         
           </div>
           <div className="w-[20%]">
             <div className="float-end">
@@ -320,6 +317,7 @@ const Benefitsscreen = ({ location, year, month }) => {
           </div>
        
         </div>
+        <div className='mx-2'>
         <Form
           schema={r_schema}
           uiSchema={r_ui_schema}
@@ -329,8 +327,10 @@ const Benefitsscreen = ({ location, year, month }) => {
           widgets={widgets}
           formContext={{ onRemove: handleRemoveCommittee }}
         />
+        </div>
+        {location && year && (
         <div className="flex right-1 mx-2">
-          {location && year && (
+        
             <button
               type="button"
               className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
@@ -338,9 +338,9 @@ const Benefitsscreen = ({ location, year, month }) => {
             >
               Add more <MdAdd className="text-lg" />
             </button>
-          )}
+        
         </div>
-
+  )}
         <div className='mt-4 me-1'>
           <button
             type="button"
