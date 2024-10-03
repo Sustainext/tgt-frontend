@@ -82,7 +82,7 @@ const Section27=({section12_5_4Ref})=>{
 </h3>
 
         
-        <p className="text-sm mb-4">We implement measures to manage the environmental impacts of our waste, including proper disposal methods, recycling programs, and waste treatment technologies. Our waste management plan takes a comprehensive 360-degree approach to ensure circularity and environmental sustainability. To minimise vehicle emissions associated with waste transportation, we are establishing a waste management plant facility right within our premises. </p>
+        <p className="text-sm mb-4">We report on the quantity of waste disposed of through landfilling, incineration, or other methods. Our aim is to reduce the amount of waste sent to disposal by increasing recycling and reuse.</p>
 
         <p className="text-[15px]  mb-2 font-semibold">
         Waste  directed to disposal by material type

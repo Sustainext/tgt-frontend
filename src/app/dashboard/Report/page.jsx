@@ -246,8 +246,13 @@ const Report = () => {
             "organizationcountry",
             response.data.organization_country
           );
-
-          router.push("/dashboard/Report/GHG/Ghgtemplates");
+          if(reporttype=='GRI Report: In accordance With' || reporttype=='GRI Report: With Reference to'){
+            router.push("/dashboard/Report/ESG")
+          }
+          else{
+            router.push("/dashboard/Report/GHG/Ghgtemplates");
+          }
+          
           //   navigate(`/report/GHGtemplate`, { state: { data: response.data } });
         }
         else if(response.status == "204"){
@@ -341,12 +346,7 @@ const Report = () => {
     const formErrors = validateForm();
     if (Object.keys(formErrors).length === 0) {
       setError({}); // Clear any existing errors
-      if(reporttype=='GRI Report: In accordance With' || reporttype=='GRI Report: With Reference to'){
-        router.push("/dashboard/Report/ESG")
-      }
-      else{
         await submitForm(); // Proceed with the form submission
-      }
       
     } else {
       setError(formErrors); // Update the state with the validation errors

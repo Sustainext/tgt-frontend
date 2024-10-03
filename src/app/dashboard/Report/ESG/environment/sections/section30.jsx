@@ -16,7 +16,7 @@ const Section30=({section12_6Ref})=>{
 12.6 Biodiversity
 </h3>
 
-<p className="text-sm mb-4">We report on the quantity of waste disposed of through landfilling, incineration, or other methods. Our aim is to reduce the amount of waste sent to disposal by increasing recycling and reuse. </p>
+<p className="text-sm mb-4">We are committed to protecting and enhancing biodiversity in the areas where we operate. Our biodiversity management includes assessing potential impacts, implementing mitigation measures, and promoting conservation efforts.</p>
 
 
 </div>

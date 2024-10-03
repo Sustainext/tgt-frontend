@@ -34,12 +34,41 @@ const Section33=({section12_7Ref})=>{
     ]
     
     const config = {
-        style: {
-          fontSize: '14px',
-        },
-        allowResizeY: false,
-      };
+      style: {
+        fontSize: "14px",
+        color:"#667085"
+      },
+      allowResizeY: false,
+      defaultActionOnPaste: 'insert_clear_html',
+      toolbarSticky: false,
+      toolbar: true,
+      buttons: [
+          'bold',
+          'italic',
+          'underline',
+          'strikeThrough',
+          'align',
+          'outdent',
+          'indent',
+          'ul',
+          'ol',
+          'paragraph',
+          'link',
+          'table',
+          'undo',
+          'redo',
+          'hr',
+          'fontsize',
+          'selectall'
+      ],
+      // Remove buttons from the extra buttons list
+      removeButtons: ['fullsize', 'preview', 'source', 'print', 'about', 'find', 'changeMode','paintFormat','image','brush','font'],
+    };
     
+    
+    const handleEditorChange=(value)=>{
+      setContent(value)
+    }
     return (
         <>
        
@@ -57,12 +86,12 @@ const Section33=({section12_7Ref})=>{
               // ref={editor}
               value={content}
               config={config}
-              // tabIndex={1}
-              // onBlur={handleEditorChange}
+              tabIndex={1}
+              onBlur={handleEditorChange}
               />
             </div>
             <p className="text-[15px] text-[#344054] mb-2 font-semibold">
-            Non-hazardous waste diverted form disposal
+            Air Emissions by Pollutants
 </p>
 <div className="shadow-md rounded-md mb-4">
 <LeaveTable columns={col1} data={data1}/>

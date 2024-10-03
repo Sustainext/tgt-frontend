@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 // Dynamic Table Component
-const DynamicTable = ({ title, columns, data }) => {
+const EmissionTable = ({ title, columns, data }) => {
   return (
     <div>
       <div
@@ -19,9 +19,9 @@ const DynamicTable = ({ title, columns, data }) => {
         <table className="w-full border border-gray-200 rounded-md">
           <thead className="gradient-background">
           <tr className="text-[12px] border border-gray-200">
-            <th colSpan={5} className="p-4 text-start text-gray-500">
+            {/* <th colSpan={7} className="p-4 text-start text-gray-500">
               {title}
-            </th>
+            </th> */}
           </tr>
             <tr>
               {columns.map((col, index) => (
@@ -29,7 +29,7 @@ const DynamicTable = ({ title, columns, data }) => {
                   key={index}
                   colSpan={col.subHeaders ? col.subHeaders.length : 1}
                   rowSpan={col.subHeaders ? 1 : 2}
-                  className="text-[12px] border-r px-4 py-4 text-gray-500 text-left"
+                  className="text-[12px] border-r px-4 py-4 text-gray-500 text-left border-b"
                 >
                   {col.header}
                 </th>
@@ -82,4 +82,5 @@ const DynamicTable = ({ title, columns, data }) => {
 };
 
 
-export default DynamicTable;
+
+export default EmissionTable;

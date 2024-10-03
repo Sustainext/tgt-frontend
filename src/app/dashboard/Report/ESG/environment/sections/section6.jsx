@@ -41,15 +41,15 @@ const Section6=({section12_1_4Ref})=>{
     ]
 
     const col3=[
-        "S.no",
         "Method",
+        "Source",
         "Total Emission",
         "Unit"
     ]
     const data3=[
         {
-            "S.no":"1",
         "Method":"data",
+        "Source":"data",
         "Total Emission":"data",
         "Unit":"data"
         }
@@ -69,7 +69,7 @@ const Section6=({section12_1_4Ref})=>{
             </p>
             <textarea
           value={content}
-          className={`border appearance-none text-sm border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  mt-2 w-full mb-4 `}
+          className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  mt-2 w-full mb-4 `}
           rows={4}
         />
         <p className="text-[15px]  mb-2 font-semibold">
