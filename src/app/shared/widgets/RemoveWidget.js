@@ -11,14 +11,14 @@ const RemoveWidget = ({ index, onRemove, label, id }) => {
 
   return (
     <>
-      <div className={id.startsWith("root_0") ? "mb-[2.2rem]" : "mb-[0.8rem]"}>
-        <p className="text-[14px] text-neutral-950 font-[400] mb-1 hidden">
+      <div className={id.startsWith("root_0") ? "mb-[3.2rem]" : "mb-[0.8rem]"}>
+        <p className="text-[14px] h-[35px] text-neutral-950 font-[400] mb-1 hidden">
           {label}
         </p>
       </div>
       <div className="flex justify-between items-center mt-2">
         <button type="button" onClick={handleClick} className="text-red-500">
-          <MdOutlineDeleteOutline className="text-[23px]" />
+          <MdOutlineDeleteOutline className="text-[20px]" />
         </button>
       </div>
     </>

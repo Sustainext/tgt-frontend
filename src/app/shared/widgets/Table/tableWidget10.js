@@ -87,7 +87,11 @@ const CustomTableWidget10 = ({
   return (
     <>
       <div style={{ overflowY: "auto", maxHeight: "400px" }}>
-        <table id={id} className="rounded-md border border-gray-300 w-full">
+        <table
+          id={id}
+          className="rounded-md border border-gray-300 w-full"
+          style={{ borderCollapse: "separate", borderSpacing: 0 }}
+        >
           <thead className="gradient-background">
             <tr>
               {options.titles.map((item, idx) => {
@@ -97,7 +101,7 @@ const CustomTableWidget10 = ({
                     // This header will span 2 rows if the condition is met
                     <th
                       key={`header-${idx}`}
-                      className={`text-[12px] px-2 py-2 text-left`}
+                      className={`text-[12px] px-2 py-2 text-left  border-r  border-gray-300`}
                       rowSpan={2} // Spanning two rows
                     >
                       <div className="flex items-center relative">
@@ -126,8 +130,10 @@ const CustomTableWidget10 = ({
                       key={`header-${idx}`}
                       className={`text-[12px] px-2 py-2 ${
                         idx === 0
-                          ? "text-left"
-                          : "text-center border border-gray-300"
+                          ? "text-left "
+                          : idx === 1
+                          ? " text-center  border-r border-b border-gray-300"
+                          : "text-center  border-b"
                       }`}
                       colSpan={item.colSpan}
                     >
@@ -145,21 +151,31 @@ const CustomTableWidget10 = ({
                           id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
                           place="top"
                           effect="solid"
-                          className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
+                          style={{
+                            width: "400px",
+                            backgroundColor: "#000",
+                            color: "white",
+                            fontSize: "12px",
+                            boxShadow: 3,
+                            borderRadius: "8px",
+                            zIndex: "1000",
+                          }}
                         />
                       </div>
                     </th>
                   );
                 }
               })}
-              <th></th>
+                    <th className="border-b border-gray-30"></th>
             </tr>
             <tr>
               {options.tbtilte.map((item, idx) => (
                 <th
                   key={`tbtitle-${idx}`}
                   style={{ textAlign: "center" }}
-                  className="text-[12px] border border-gray-300 px-2 py-2"
+                  className={`${
+                    idx === 1 ? "" : "border-r"
+                  } text-[12px]  border-gray-300 px-2 py-2`}
                   colSpan={item.colSpan}
                 >
                   <div className="">
@@ -174,7 +190,13 @@ const CustomTableWidget10 = ({
                 <th
                   key={`sub-header-${idx}`}
                   style={{ textAlign: "center" }}
-                  className="text-[12px] border border-gray-300 px-2 py-2"
+                  className={`${
+                    idx === 8
+                      ? "border-t"
+                      : idx === 0
+                      ? "border-r border-gray-300"
+                      : "border-r border-t border-gray-300 "
+                  } px-2 py-2 text-[12px]`}
                   colSpan={item.colSpan}
                 >
                   <div className="">
@@ -182,7 +204,7 @@ const CustomTableWidget10 = ({
                   </div>
                 </th>
               ))}
-              <th></th>
+               <th className="border-t border-gray-300"></th>
             </tr>
           </thead>
           <tbody>
@@ -193,9 +215,11 @@ const CustomTableWidget10 = ({
                   .map((key, cellIndex) => (
                     <td
                       key={`cell-${rowIndex}-${cellIndex}`}
-                      className="border border-gray-300 p-3"
+                      className={`${
+                        cellIndex == 8 ? "" : "border-r border-t"
+                      } text-[12px] border-gray-300 p-3`}
                     >
-                             <InputField
+                      <InputField
                         type={
                           options.subTitles.find(
                             (sub) =>
@@ -214,7 +238,7 @@ const CustomTableWidget10 = ({
                       />
                     </td>
                   ))}
-                <td className="border border-gray-300 p-3">
+                <td className="p-3">
                   <button onClick={() => handleRemoveRow(rowIndex)}>
                     <MdOutlineDeleteOutline className="text-[23px] text-red-600" />
                   </button>
@@ -230,7 +254,7 @@ const CustomTableWidget10 = ({
             className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
             onClick={handleAddRow}
           >
-            Add category <MdAdd className="text-lg" />
+            Add category <MdAdd className="text-[14px] mt-1 text-[#007EEF]" />
           </button>
         </div>
       </div>
@@ -262,7 +286,7 @@ const InputField = ({ type, required, value, onChange }) => {
       onChange={handleInputChange}
       style={{ width: "100%" }}
       placeholder="Enter data"
-      className="text-sm pl-2 py-2 text-center"
+      className="text-[12px] pl-2 py-2 text-center"
     />
   );
 };

@@ -152,7 +152,7 @@ const GRI2021combinWidhet = ({ locationdata, onChange, value = {} }) => {
           locations.map((location, index) => (
             <div key={location.id} className="mb-2 flex items-center">
               <select
-                className="block p-2 text-[#727272] text-[14px] bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 capitalize w-[95%]"
+                className="block p-2 text-[#727272] text-[12px] bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 capitalize w-full"
                 value={location.value}
                 onChange={(e) =>
                   handleLocationChange(location.id, { value: e.target.value })
@@ -185,7 +185,7 @@ const GRI2021combinWidhet = ({ locationdata, onChange, value = {} }) => {
           <p>No locations added</p>
         )}
         {error && (
-          <p className="text-red-500 text-sm">{error}</p> // Error message
+          <p className="text-red-500 text-[12px]">{error}</p> // Error message
         )}
         <div className="mt-2">
           {/* Show Add button only if there are locations left to add */}
@@ -204,7 +204,7 @@ const GRI2021combinWidhet = ({ locationdata, onChange, value = {} }) => {
       {/* Radio Button Section */}
       <div className="mb-4">
         <div className="flex mb-4 items-center relative">
-          <p className="text-[15px] text-gray-500 font-semibold flex">
+          <p className="text-[14px] text-gray-700 font-[500] flex">
             Does a minimum local wage exist for the selected location?
             <MdInfoOutline
               data-tooltip-id={`tooltip-es231`}
@@ -215,13 +215,21 @@ const GRI2021combinWidhet = ({ locationdata, onChange, value = {} }) => {
               id={`tooltip-es231`}
               place="top"
               effect="solid"
-              className="!max-w-xs !bg-black !text-white !text-xs !rounded-lg !shadow-md"
+              style={{
+                width:"400px",
+                backgroundColor: "#000",
+                color: "white",
+                fontSize: "12px",
+                boxShadow: 3,
+                borderRadius: "8px",
+                zIndex:"1000",
+              }}
             />
           </p>
         </div>
         <div className="flex gap-2">
           {options.enumOptions.map((option, index) => (
-            <label key={index} className="flex items-center gap-2 text-sm mb-2">
+            <label key={index} className="flex items-center gap-2 text-[14px]  mb-2">
               <input
                 type="radio"
                 name="wageRadio"
@@ -239,7 +247,7 @@ const GRI2021combinWidhet = ({ locationdata, onChange, value = {} }) => {
       {radioValue === "Variable" && (
         <>
       <div className="flex mb-4 items-center relative">
-        <p className="text-[15px] text-gray-500 font-semibold flex mb-2">
+        <p className="text-[14px] text-gray-700 font-[500] flex mb-2">
           If a local minimum wage exists or variable at significant locations of
           operation, please mention a minimum local wage by gender:
           <MdInfoOutline
@@ -251,7 +259,15 @@ const GRI2021combinWidhet = ({ locationdata, onChange, value = {} }) => {
             id={`tooltip-es245`}
             place="top"
             effect="solid"
-            className="!max-w-xs !bg-black !text-white !text-xs !rounded-lg !shadow-md"
+            style={{
+              width:"400px",
+              backgroundColor: "#000",
+              color: "white",
+              fontSize: "12px",
+              boxShadow: 3,
+              borderRadius: "8px",
+              zIndex:"1000",
+            }}
           />
         </p>
       </div>
@@ -259,7 +275,7 @@ const GRI2021combinWidhet = ({ locationdata, onChange, value = {} }) => {
         <p className="text-[14px] text-gray-500  flex mb-4">Select Currency</p>
         <Select
           styles={customStyles}
-          className="block w-[20vw] text-sm leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300 mb-4"
+          className="block w-[20vw] text-[12px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-[12px] sm:leading-5 border-b-2 border-gray-300 mb-4"
           onChange={handleCurrencyChange}
           value={
             currencyOptions.find((option) => option.value === currencyValue) ||
@@ -272,16 +288,16 @@ const GRI2021combinWidhet = ({ locationdata, onChange, value = {} }) => {
       </div>
 
       <div className="mb-4">
-        <table className="min-w-full border-collapse border border-gray-300">
+        <table className="min-w-full border-collapse border border-gray-300 rounded-md" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
           <thead className="gradient-background h-[80px]">
             <tr className="text-center">
-              <th className="text-sm font-medium p-2 border border-gray-300">
+              <th className="text-[12px] font-medium p-2 border-r border-gray-300">
                 Significant location of operations
               </th>
-              <th className=" text-sm font-medium p-2 border border-gray-300">
+              <th className=" text-[12px] font-medium p-2 border-r border-gray-300">
                 Gender
               </th>
-              <th className=" text-sm font-medium p-2 border border-gray-300">
+              <th className=" text-[12px] font-medium p-2 ">
                 Minimum wage
               </th>
             </tr>
@@ -294,18 +310,18 @@ const GRI2021combinWidhet = ({ locationdata, onChange, value = {} }) => {
                       {index === 0 && (
                         <td
                           rowSpan={genders.length}
-                          className="p-2 border border-gray-300 text-center"
+                          className="p-2 border-t border-gray-300 text-center text-[12px]"
                         >
                           {location.value}
                         </td>
                       )}
-                      <td className="p-2 border border-gray-300 text-center">
+                      <td className="p-2 border-l border-t border-gray-300 text-center text-[12px]">
                         {gender}
                       </td>
-                      <td className="p-2 border border-gray-300">
+                      <td className="p-2 border-l border-t border-gray-300">
                         <input
                           type="number"
-                          className="w-full p-2 border-b border-gray-300 rounded"
+                          className="w-full p-2 border-b border-gray-300 rounded text-[12px]"
                           placeholder="Enter Value"
                           value={wages[location.value]?.[gender] || ""}
                           onKeyDown={handleKeyDown} 

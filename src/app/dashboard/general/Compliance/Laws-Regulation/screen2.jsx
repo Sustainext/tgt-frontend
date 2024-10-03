@@ -194,16 +194,10 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
 
   return (
     <>
-      <div
-        className="mx-2  p-3 mb-6 pb-6 rounded-md"
-        style={{
-          boxShadow:
-            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
-        }}
-      >
+      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               GRI 2-27-b Monetary value of fines for instances of non-compliance
               <MdInfoOutline
                 data-tooltip-id={`tooltip-employees`}
@@ -239,8 +233,8 @@ regulations that were paid during the reporting period."
             </div>
           </div>
         </div>
-        <div className="mb-6 w-[80%]">
-          <h2 className="flex mx-2 text-[15px] text-gray-500">
+        <div className="mb-6">
+          <h2 className="flex mx-2 text-[14px] text-gray-700 font-[500]">
             Provide the total number and the monetary value of fines for
             instances of non-compliance with laws and regulations that were paid
             during the reporting period, and a breakdown of this total by:
@@ -256,7 +250,7 @@ regulations that were paid during the reporting period."
             widgets={widgets}
           />
         </div>
-        <div className="mb-6">
+        <div className="mt-4">
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${

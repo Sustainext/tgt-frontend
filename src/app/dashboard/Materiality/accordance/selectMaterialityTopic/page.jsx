@@ -73,7 +73,7 @@ const SelectMaterialityTopic = ({ handleTabClick,cardData,esgSeleted}) => {
         className={`${
           isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"
         }
-      fixed right-[51px]  w-[340px] h-full bg-white  rounded-md
+      fixed right-[51px]  w-[340px] h-[93%] bg-white  rounded-md
       transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
       >
         {data &&
@@ -100,7 +100,7 @@ const SelectMaterialityTopic = ({ handleTabClick,cardData,esgSeleted}) => {
         <div className="flex flex-col justify-start overflow-x-hidden ">
           <div className="flex justify-between items-center border-b border-gray-200 w-full">
             <div className="w-full">
-              <div className="text-left mb-4 ml-3 pt-5">
+             <div className="text-left mb-2 ml-3 pt-5">
                 <div className="flex justify-between items-center">
                   <div className="w-[70%]">
                     <p className="gradient-text text-[22px] font-bold pt-4 pb-4 mx-2">

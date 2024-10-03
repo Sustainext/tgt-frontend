@@ -60,7 +60,7 @@ const Energyintensity = () => {
               </div>
             </div>
           </div>
-          <div className="w-full float-end me-2">
+          <div className="w-full float-end pt-5 me-1">
             <div className="flex float-end border-l">
               <button
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
@@ -125,7 +125,7 @@ const Energyintensity = () => {
           className={`${
             isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"
           }
-fixed right-[51px]  w-[340px] h-full bg-white  rounded-md
+fixed right-[51px]  w-[340px] h-[93%] bg-white  rounded-md
 transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         >
           {data &&

@@ -36,14 +36,15 @@ const EconmiccutomTable = ({
       }}
       className="mb-2 pb-2"
     >
-      <table id={id} className="table-fixed border-collapse w-full">
+      <table id={id} className="table-fixed border border-gray-300  w-full rounded-md" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
         <thead className="gradient-background">
           <tr className="h-[102px]">
             {options.titles.map((item, idx) => (
               <th
                 key={idx}
                 style={{ width: "17vw", textAlign: "left" }}
-                className="text-[12px] border border-gray-300 px-2 py-2"
+                className={` ${idx === 0 ? "" :"border-l" } text-[12px]  px-2 py-2 border-gray-300`}
+             
               >
                 <div className="flex items-center relative">
                   <p>{item.title}</p>
@@ -61,21 +62,31 @@ const EconmiccutomTable = ({
                         id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
                         place="top"
                         effect="solid"
-                        className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
+                        style={{
+                          width:"400px",
+                          backgroundColor: "#000",
+                          color: "white",
+                          fontSize: "12px",
+                          boxShadow: 3,
+                          borderRadius: "8px",
+                          zIndex:"1000",
+                        }}
                       />
                     </p>
                   )}
                 </div>
               </th>
             ))}
-            <th className="w-[5vw] border border-gray-300 "></th>
+            <th className="w-[5vw] "></th>
           </tr>
         </thead>
         <tbody>
           {value.map((item, rowIndex) => (
             <tr key={rowIndex}>
               {Object.keys(item).map((key, cellIndex) => (
-                <td key={cellIndex} className="border border-gray-300 px-2">
+                <td key={cellIndex} 
+                className={` ${cellIndex == 0 ? "" :"border-l" } border-t  border-gray-300 px-2`}
+               >
                   {options.titles[cellIndex].widgettype === "textarea" ? (
                     <textarea
                       required={required}
@@ -102,7 +113,7 @@ const EconmiccutomTable = ({
                   )}
                 </td>
               ))}
-             <td className="border border-gray-300 p-3">
+             <td className="border-t border-gray-300 p-3 flex justify-center">
                 <button onClick={() => formContext.onRemove(rowIndex)}>
                   <MdOutlineDeleteOutline className="text-[23px] text-red-600" />
                 </button>

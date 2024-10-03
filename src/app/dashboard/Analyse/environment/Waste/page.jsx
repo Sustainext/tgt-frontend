@@ -670,7 +670,7 @@ const AnalyseWaste = ({ isBoxOpen }) => {
                 id="waste6"
                 className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
               >
-                <p>Hazardous waste diverted form disposal</p>
+                <p>Hazardous waste diverted from disposal</p>
                 <div className="flex gap-2">
                   <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                     <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
@@ -691,7 +691,7 @@ const AnalyseWaste = ({ isBoxOpen }) => {
                 id="waste7"
                 className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
               >
-                <p>Non-hazardous waste diverted form disposal</p>
+                <p>Non-hazardous waste diverted from disposal</p>
                 <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 306-4c

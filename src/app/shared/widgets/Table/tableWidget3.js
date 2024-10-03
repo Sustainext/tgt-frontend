@@ -40,22 +40,22 @@ const CustomTableWidget3 = ({ id, options, value, required, onChange }) => {
   };
 
   return (
-    <div style={{ maxHeight: "400px" }} className="mb-2">
-      <table id={id} className="rounded-md border border-gray-300 w-full">
-        <thead className="gradient-background">
+    <div  className="mb-2">
+      <table id={id} className="rounded-md w-full border-x border-t border-gray-300" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
+        <thead className="gradient-background h-[54px] " >
           <tr>
-            <th className="text-[12px] border border-gray-300 px-2 py-2 w-auto text-left">
-              Employee Category{" "}
+            <th className="text-[12px]  border-r border-b  border-gray-300 px-2 py-2 w-auto text-left">
+              Employee Category
             </th>
             {options.titles.map((item, idx) => (
               <th
                 key={idx}
-                className="text-[12px] border border-gray-300 px-2 py-2 w-auto text-center"
+                className="text-[12px] border-r border-b  border-gray-300 px-2 py-2 w-auto text-center"
               >
                 {item.title}
               </th>
             ))}
-            <th className="text-[12px] border border-gray-300 px-2 py-2 w-auto text-center">
+            <th className="text-[12px] px-2 py-2 w-auto text-center border-b  border-gray-300">
               Total
             </th>
           </tr>
@@ -63,25 +63,37 @@ const CustomTableWidget3 = ({ id, options, value, required, onChange }) => {
         <tbody>
           {options.rowLabels.map((rowLabel, rowIndex) => (
             <tr key={rowIndex}>
-              <td className="border-t flex border-gray-300 py-2 px-2 text-[12px] relative ">
-                <p className="w-[80%]">{rowLabel.title}</p>{" "}
+              <td className=" border-r border-b border-gray-300 py-2 px-2 text-[12px] relative ">
+                <div className="flex">
+                <p>{rowLabel.title}</p>{" "}
                 <MdInfoOutline
                   data-tooltip-id={`tooltip-${rowLabel.title.replace(
                     /\s+/g,
                     "-"
                   )}`}
                   data-tooltip-content={rowLabel.tooltip}
-                  className="ml-2 cursor-pointer w-[20%]"
+                  className="cursor-pointer ml-2"
                 />
                 <ReactTooltip
                   id={`tooltip-${rowLabel.title.replace(/\s+/g, "-")}`}
                   place="top"
                   effect="solid"
-                  className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
+                  style={{
+                    width:"400px",
+                    backgroundColor: "#000",
+                    color: "white",
+                    fontSize: "12px",
+                    boxShadow: 3,
+                    borderRadius: "8px",
+                    zIndex:"1000",
+                  }}
+  
                 />
+                </div>
+           
               </td>
               {options.titles.map((column, columnIndex) => (
-                <td key={columnIndex} className="border border-gray-300">
+                <td key={columnIndex} className="border-b border-r border-gray-300  px-2 text-[12px]">
                   <input
                     type="number"
                     required={required}
@@ -93,12 +105,12 @@ const CustomTableWidget3 = ({ id, options, value, required, onChange }) => {
                     onChange={(e) =>
                       handleFieldChange(rowIndex, column.key, e.target.value)
                     }
-                    className="text-[12px] pl-2 py-2 w-full text-center"
+                    className="text-[12px] pl-2  w-full text-center p-0 m-0"
                     placeholder="10"
                   />
                 </td>
               ))}
-              <td className="border border-gray-300 text-center text-[12px]">
+              <td className="border-gray-300 border-b text-center text-[12px]">
                 {" "}
                 {localValue[rowIndex].total}
               </td>

@@ -17,7 +17,7 @@ const inputWidget3 = (props) => {
   };
   return (
     <div className="mb-3 relative">
-      <p className="flex text-[12px] text-gray-500 font-semibold mb-3">
+      <p className="flex text-[14px] text-gray-700 font-[500] mb-3">
         {label}
         <MdInfoOutline
           data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(
@@ -44,7 +44,7 @@ const inputWidget3 = (props) => {
         ></ReactTooltip>
       </p>
       <input
-        className={`backdrop:before:w-[48rem] border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
+        className={`backdrop:before:w-[48rem] border appearance-none text-[12px] border-gray-400 text-neutral-900 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
         placeholder={`Enter Value`}
         type="number"
         value={value}

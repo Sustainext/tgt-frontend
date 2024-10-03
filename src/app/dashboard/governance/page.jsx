@@ -130,7 +130,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Structure
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -193,7 +193,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Nomination and Selection
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -250,7 +250,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Chair of Board
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -315,7 +315,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Management of Impact
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -378,7 +378,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Delegation of Responsibility
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -435,7 +435,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Sustainability Reporting
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -500,7 +500,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Conflict of Interest
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -557,7 +557,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Critical Concerns
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -622,7 +622,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                             Sustainability Knowledge
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -685,7 +685,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                             Performance Evaluations
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -748,7 +748,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                             Remuneration
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -811,7 +811,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                             Determine Remuneration
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -870,7 +870,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Compensation Ratio
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -929,7 +929,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Sustainability Strategy
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -995,7 +995,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Policy Commitments
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1052,7 +1052,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Implementing Commitments
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1111,7 +1111,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Process
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1170,7 +1170,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Advice & Concerns
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p

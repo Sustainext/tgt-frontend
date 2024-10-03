@@ -70,7 +70,7 @@ const Totalnumberemployees = ({
       <div className="mb-10">
         <div className="mb-4 flex mx-2 ">
           <div className="w-[85%] relative">
-            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Total number of employees
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
@@ -115,10 +115,10 @@ by gender and geographic area, categorized by employment type."
             {tabs.map((tab, index) => (
               <li
                 key={index}
-                className={`flex-1 text-center relative border-b-2 py-2 text-[12px] ${
+                className={`flex-1 text-center relative border-b-2 py-2 text-[14px] ${
                   activeTabIndex === index
                     ? "border-blue-500 text-blue-600"
-                    : "border-gray-300 text-gray-600"
+                    : "border-gray-300 text-gray-700"
                 } `}
                 onClick={() => setActiveTabIndex(index)}
               >

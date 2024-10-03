@@ -60,7 +60,7 @@ const CurrencyselectWidget = (props) => {
       <div className="mb-6">
         <div className='relative flex'>
           <div>
-            <p className="flex text-[15px] text-gray-500 font-semibold mb-3" style={{ display: uiSchema["ui:haddingdisplay"] }}>
+            <p className="flex text-[15px] text-gray-700 font-[500] mb-3" style={{ display: uiSchema["ui:haddingdisplay"] }}>
               {uiSchema["ui:hadding"]}
             </p>
           </div>
@@ -88,7 +88,7 @@ const CurrencyselectWidget = (props) => {
           </div>
         </div>
         <div className="relative mb-2">
-          <p className="text-sm text-gray-700 flex">
+          <p className="text-[13px] text-gray-700 font-[500] flex">
             {uiSchema["ui:title"]}
             <MdInfoOutline
               data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(/\s+/g, "-")}`}

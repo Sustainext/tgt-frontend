@@ -1,127 +1,126 @@
-'use client'
-import React, { useState, useEffect, useRef } from 'react';
-import Form from '@rjsf/core';
-import validator from '@rjsf/validator-ajv8';
-import inputWidget2 from '../../../../shared/widgets/Input/inputWidget2';
+"use client";
+import React, { useState, useEffect, useRef } from "react";
+import Form from "@rjsf/core";
+import validator from "@rjsf/validator-ajv8";
+import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
-import { Tooltip as ReactTooltip } from 'react-tooltip';
-import 'react-tooltip/dist/react-tooltip.css';
-import RadioWidget2 from '../../../../shared/widgets/Input/radioWidget2';
-import axios from 'axios';
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+import RadioWidget2 from "../../../../shared/widgets/Input/radioWidget2";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Oval } from 'react-loader-spinner';
+import { Oval } from "react-loader-spinner";
 
 const widgets = {
-    inputWidget: inputWidget2,
-    RadioWidget2: RadioWidget2,
+  inputWidget: inputWidget2,
+  RadioWidget2: RadioWidget2,
 };
 
-const view_path = 'gri-social-ohs-403-4a-ohs_system_2'
-const client_id = 1
-const user_id = 1
+const view_path = "gri-social-ohs-403-4a-ohs_system_2";
+const client_id = 1;
+const user_id = 1;
 
 const schema = {
-    type: 'array',
-    items: {
-        type: 'object',
-        properties: {
-
-            Q1: {
-                type: "string",
-                title: "Describe the process and how access is provided to relevant information on occupational health and safety to workers",
-
-            },
-            Q2: {
-                type: "string",
-                title: "How the process is communicated",
-
-            },
-
-
-        },
+  type: "array",
+  items: {
+    type: "object",
+    properties: {
+      Q1: {
+        type: "string",
+        title:
+          "Describe the process and how access is provided to relevant information on occupational health and safety to workers",
+      },
+      Q2: {
+        type: "string",
+        title: "How the process is communicated",
+      },
     },
+  },
 };
 
 const uiSchema = {
-    items: {
-        'ui:order': ['Q1', 'Q2'],
+  items: {
+    "ui:order": ["Q1", "Q2"],
 
-        Q1: {
-            "ui:title": "Describe the process and how access is provided to relevant information on occupational health and safety to workers",
-            "ui:tooltip": "Provide a description of the process. The description can include the following information:•formal participation, based on legal requirements • participation through engagement with formally recognized workers’ representatives direct participation, particularly by affected workers (e.g., the direct involvement of all workers in occupational health and safety decisions in small organizations) • the use of committees, and how these committees are established and operated participation in the occupational health and safety management system (e.g., participation in identification of hazards, assessment of risks, application of the hierarchy of controls,investigation of incidents, audits, decision-making about the use of contractors and outsourcing) •how obstacles to participation are identified and removed (e.g., by providing training, by protecting workers against reprisals).",
-            "ui:tooltipdisplay": "block",
-            'ui:widget': 'inputWidget',
-            'ui:horizontal': true,
-            'ui:options': {
-                label: false
-            },
-        },
-        Q2: {
-            "ui:title": "How the process is communicated",
-            "ui:tooltip": "Provide a description of the process. The description can include the following information:•formal participation, based on legal requirements • participation through engagement with formally recognized workers’ representatives direct participation, particularly by affected workers (e.g., the direct involvement of all workers in occupational health and safety decisions in small organizations) • the use of committees, and how these committees are established and operated participation in the occupational health and safety management system (e.g., participation in identification of hazards, assessment of risks, application of the hierarchy of controls,investigation of incidents, audits, decision-making about the use of contractors and outsourcing) •how obstacles to participation are identified and removed (e.g., by providing training, by protecting workers against reprisals).",
-            "ui:tooltipdisplay": "none",
-            'ui:widget': 'inputWidget',
-            'ui:horizontal': true,
-            'ui:options': {
-                label: false
-            },
-        },
-
-     'ui:options': {
-            orderable: false,
-            addable: false,
-            removable: false,
-            layout: 'horizontal',
-        },
+    Q1: {
+      "ui:title":
+        "Describe the process and how access is provided to relevant information on occupational health and safety to workers",
+      "ui:tooltip":
+        "Provide a description of the process. The description can include the following information:•formal participation, based on legal requirements • participation through engagement with formally recognized workers’ representatives direct participation, particularly by affected workers (e.g., the direct involvement of all workers in occupational health and safety decisions in small organizations) • the use of committees, and how these committees are established and operated participation in the occupational health and safety management system (e.g., participation in identification of hazards, assessment of risks, application of the hierarchy of controls,investigation of incidents, audits, decision-making about the use of contractors and outsourcing) •how obstacles to participation are identified and removed (e.g., by providing training, by protecting workers against reprisals).",
+      "ui:tooltipdisplay": "block",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
     },
+    Q2: {
+      "ui:title": "How the process is communicated",
+      "ui:tooltip":
+        "Provide a description of the process. The description can include the following information:•formal participation, based on legal requirements • participation through engagement with formally recognized workers’ representatives direct participation, particularly by affected workers (e.g., the direct involvement of all workers in occupational health and safety decisions in small organizations) • the use of committees, and how these committees are established and operated participation in the occupational health and safety management system (e.g., participation in identification of hazards, assessment of risks, application of the hierarchy of controls,investigation of incidents, audits, decision-making about the use of contractors and outsourcing) •how obstacles to participation are identified and removed (e.g., by providing training, by protecting workers against reprisals).",
+      "ui:tooltipdisplay": "none",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
+    },
+
+    "ui:options": {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: "horizontal",
+    },
+  },
 };
 
-const Screen2 = ({location, year, month}) => {
-    const [formData, setFormData] = useState([{}]);
-    const [r_schema, setRemoteSchema] = useState({})
-    const [r_ui_schema, setRemoteUiSchema] = useState({})
-    const [loopen, setLoOpen] = useState(false);
-    const toastShown = useRef(false);
-    const getAuthToken = () => {
-        if (typeof window !== 'undefined') {
-            return localStorage.getItem('token')?.replace(/"/g, "");
-        }
-        return '';
-    };
-    const token = getAuthToken();
+const Screen2 = ({ location, year, month }) => {
+  const [formData, setFormData] = useState([{}]);
+  const [r_schema, setRemoteSchema] = useState({});
+  const [r_ui_schema, setRemoteUiSchema] = useState({});
+  const [loopen, setLoOpen] = useState(false);
+  const toastShown = useRef(false);
+  const getAuthToken = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token")?.replace(/"/g, "");
+    }
+    return "";
+  };
+  const token = getAuthToken();
 
-    const LoaderOpen = () => {
-        setLoOpen(true);
-      };
-      const LoaderClose = () => {
-        setLoOpen(false);
-      };
+  const LoaderOpen = () => {
+    setLoOpen(true);
+  };
+  const LoaderClose = () => {
+    setLoOpen(false);
+  };
 
-    const handleChange = (e) => {
-        setFormData(e.formData);
-    };
+  const handleChange = (e) => {
+    setFormData(e.formData);
+  };
 
-    // The below code on updateFormData
-    let axiosConfig = {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    };
+  // The below code on updateFormData
+  let axiosConfig = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
   const updateFormData = async () => {
     LoaderOpen();
     const data = {
-      client_id : client_id,
-      user_id : user_id,
+      client_id: client_id,
+      user_id: user_id,
       path: view_path,
       form_data: formData,
       location,
       year,
-      month
-    }
+      month,
+    };
 
-    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
-    try{
+    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
+    try {
       const response = await axios.post(url, data, axiosConfig);
       if (response.status === 200) {
         toast.success("Data added successfully", {
@@ -136,8 +135,7 @@ const Screen2 = ({location, year, month}) => {
         });
         LoaderClose();
         loadFormData();
-
-      }else {
+      } else {
         toast.error("Oops, something went wrong", {
           position: "top-right",
           autoClose: 1000,
@@ -169,116 +167,135 @@ const Screen2 = ({location, year, month}) => {
     // }
   };
 
-   const loadFormData = async () => {
-        LoaderOpen();
-        setFormData([{}]);
-        const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
-        try {
-            const response = await axios.get(url, axiosConfig);
-            console.log('API called successfully:', response.data);
-            setRemoteSchema(response.data.form[0].schema);
-            setRemoteUiSchema(response.data.form[0].ui_schema);
-            setFormData(response.data.form_data[0].data);
-        } catch (error) {
-            setFormData([{}]);
-        } finally {
-            LoaderClose();
-        }
-    };
+  const loadFormData = async () => {
+    LoaderOpen();
+    setFormData([{}]);
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    try {
+      const response = await axios.get(url, axiosConfig);
+      console.log("API called successfully:", response.data);
+      setRemoteSchema(response.data.form[0].schema);
+      setRemoteUiSchema(response.data.form[0].ui_schema);
+      setFormData(response.data.form_data[0].data);
+    } catch (error) {
+      setFormData([{}]);
+    } finally {
+      LoaderClose();
+    }
+  };
   //Reloading the forms -- White Beard
   useEffect(() => {
     //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-  },[r_schema, r_ui_schema])
+  }, [r_schema, r_ui_schema]);
 
   // console log the form data change
   useEffect(() => {
-    console.log('Form data is changed -', formData)
-  },[formData])
+    console.log("Form data is changed -", formData);
+  }, [formData]);
 
   // fetch backend and replace initialized forms
-  useEffect (()=> {
+  useEffect(() => {
     if (location && year && month) {
-        loadFormData();
-        toastShown.current = false; // Reset the flag when valid data is present
+      loadFormData();
+      toastShown.current = false; // Reset the flag when valid data is present
     } else {
-        // Only show the toast if it has not been shown already
-        if (!toastShown.current) {
-            toastShown.current = true; // Set the flag to true after showing the toast
-        }
+      // Only show the toast if it has not been shown already
+      if (!toastShown.current) {
+        toastShown.current = true; // Set the flag to true after showing the toast
+      }
     }
-  },[location, year, month])
+  }, [location, year, month]);
 
-    const handleSubmit = (e) => {
-        e.preventDefault(); // Prevent the default form submission
-        console.log('Form data:', formData);
-        updateFormData()
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent the default form submission
+    console.log("Form data:", formData);
+    updateFormData();
+  };
 
-    return (
-        <>
-            <div className="mx-2 p-3 mb-6 pb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
-                <div className='mb-4 flex'>
-                   <div className="w-[80%] relative">
-                       <h2 className="flex mx-2 text-[15px] font-[500] mb-2">
-                            Occupational health and safety management system
-                            <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
-                                data-tooltip-content="This section documents data corresponding to the processes
+  return (
+    <>
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md"
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
+        <div className="mb-4 flex">
+          <div className="w-[80%] relative">
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+              Occupational health and safety management system
+              <MdInfoOutline
+                data-tooltip-id={`tooltip-$e155`}
+                data-tooltip-content="This section documents data corresponding to the processes
                             for worker participation and consultation in the development,
                             implementation, and evaluation of the occupational health
-                            and safety management system." className="mt-1.5 ml-2 text-[15px]" />
-                            <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
-                                width: "290px", backgroundColor: "#000",
-                                color: "white",
-                                fontSize: "12px",
-                                boxShadow: 3,
-                                borderRadius: "8px",
-                                textAlign: 'left',
-                            }}>
-                            </ReactTooltip>
-                        </h2>
-                    </div>
-
-                    <div className='w-[20%]'>
-                        <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 float-end">
-                            <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                                GRI 403-4a
-                            </p>
-                        </div>
-                    </div>
+                            and safety management system."
+                className="mt-1.5 ml-2 text-[15px]"
+              />
+              <ReactTooltip
+                id={`tooltip-$e155`}
+                place="top"
+                effect="solid"
+                style={{
+                  width: "290px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  textAlign: "left",
+                }}
+              ></ReactTooltip>
+            </h2>
+          </div>
+          <div className="w-[20%]">
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 403-4a
                 </div>
-                <div className='mx-2'>
-                    <Form
-                        schema={r_schema}
-                        uiSchema={r_ui_schema}
-                        formData={formData}
-                        onChange={handleChange}
-                        validator={validator}
-                        widgets={widgets}
-                    />
-                </div>
-               <div className='mb-6'>
-                <button type="button"
-                        className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? 'cursor-not-allowed' : ''}`}
-                        onClick={handleSubmit}
-                        disabled={!location || !year}>
-                        Submit
-                    </button>
-                </div>
+              </div>
             </div>
-            {loopen && (
-            <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-                <Oval
-                height={50}
-                width={50}
-                color="#00BFFF"
-                secondaryColor="#f3f3f3"
-                strokeWidth={2}
-                strokeWidthSecondary={2}
-                />
-            </div>
-            )}
-        </>
-    );
+          </div>
+        </div>
+        <div className="mx-2">
+          <Form
+            schema={r_schema}
+            uiSchema={r_ui_schema}
+            formData={formData}
+            onChange={handleChange}
+            validator={validator}
+            widgets={widgets}
+          />
+        </div>
+        <div className="mb-4">
+          <button
+            type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              !location || !year ? "cursor-not-allowed" : ""
+            }`}
+            onClick={handleSubmit}
+            disabled={!location || !year}
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+      {loopen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
+    </>
+  );
 };
 
 export default Screen2;

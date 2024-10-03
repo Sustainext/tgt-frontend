@@ -176,16 +176,10 @@ const Screen2 = ({ location, year}) => {
 
   return (
     <>
-      <div
-        className="mx-2  p-3 mb-6 pb-6 rounded-md"
-        style={{
-          boxShadow:
-            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
-        }}
-      >
+      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-          <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
+         <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
           The organization's geographical definition of 'local'
               <MdInfoOutline data-tooltip-id={`es25`}
                 data-tooltip-html="<p>Provide the organisation's geographical definition of 'local'.</p>" className="mt-1.5 ml-2 text-[15px]" />
@@ -221,7 +215,7 @@ const Screen2 = ({ location, year}) => {
             widgets={widgets}
           />
         </div>
-        <div className="mb-6">
+        <div className="mt-4">
           <button type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year  ? 'cursor-not-allowed' : ''}`}
             onClick={handleSubmit}

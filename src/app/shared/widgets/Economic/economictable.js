@@ -510,12 +510,12 @@ const Economictable = ({
         }}
         className="mb-2 pb-2"
       >
-        <table id={id} className="table-fixed border-collapse w-full">
+        <table id={id} className="table-fixed border border-gray-300  w-full rounded-md" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
           <thead className="gradient-background">
             <tr className="h-[102px]">
               {formContext.view === 1 && (
                 <th
-                  className="text-[13px] border border-gray-300 px-4 py-3 relative"
+                  className="text-[12px] border-b border-gray-300 px-4 py-3 relative"
                   style={{ width: "17vw" }}
                 >
                   {formContext.colhadding}
@@ -525,7 +525,7 @@ const Economictable = ({
                 <th
                   key={idx}
                   style={{ width: getColumnWidth(item.key), textAlign: "left" }}
-                  className="text-[13px] border border-gray-300 px-2 py-3 relative"
+                  className="text-[12px] border-l border-gray-300 px-2 py-3 relative"
                 >
                   <div
                     className={`flex items-center ${
@@ -534,7 +534,7 @@ const Economictable = ({
                         : "justify-center"
                     }`}
                   >
-                    <p>{item.title}</p>
+                    <p className="text-[12px]">{item.title}</p>
                     {item.tooltipdisplay !== "none" && (
                       <p>
                         <MdInfoOutline
@@ -549,7 +549,15 @@ const Economictable = ({
                           id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
                           place="top"
                           effect="solid"
-                          className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
+                          style={{
+                            width:"400px",
+                            backgroundColor: "#000",
+                            color: "white",
+                            fontSize: "12px",
+                            boxShadow: 3,
+                            borderRadius: "8px",
+                            zIndex:"1000",
+                          }}
                         />
                       </p>
                     )}
@@ -557,7 +565,7 @@ const Economictable = ({
                 </th>
               ))}
               <th
-                className="text-[12px] border border-gray-300 px-4 py-3 relative"
+                className="text-[12px] px-4 py-3 relative"
                 style={{ width: "5vw" }}
               >
                 {" "}
@@ -566,13 +574,13 @@ const Economictable = ({
           </thead>
           <tbody className="border-b border-gray-300">
             {localValue.map((row, rowIndex) => (
-              <tr key={rowIndex} className="border-r border-l  border-gray-300">
+              <tr key={rowIndex} className="border-r  border-gray-300">
                 {formContext.view === 1 && rowIndex === 0 && (
                   <td
                     rowSpan={localValue.length}
                     className="p-2 text-center text-[15px] text-[#727272] "
                   >
-                    <p> {formContext.colname}</p>
+                    <p className="text-[12px]"> {formContext.colname}</p>
                   </td>
                 )}
                 {Object.keys(schema.items.properties).map((key, cellIndex) => {
@@ -584,7 +592,7 @@ const Economictable = ({
                   return (
                     <td
                       key={cellIndex}
-                      className="border border-gray-300 text-center"
+                      className="border-l border-y border-gray-300 text-center"
                     >
                       {isEnum ? (
                         isMulti ? (
@@ -613,7 +621,7 @@ const Economictable = ({
                                 value: option,
                                 label: option,
                               }))}
-                              className="text-sm w-full"
+                              className="text-[12px] w-full"
                               placeholder="Select options"
                               components={{ Option: CustomOption }}
                               closeMenuOnSelect={false}
@@ -628,7 +636,7 @@ const Economictable = ({
                               onChange={(e) =>
                                 handleFieldChange(rowIndex, key, e.target.value)
                               }
-                              className="text-sm pl-2 py-2 w-full border-b"
+                              className="text-[12px] pl-2 py-2 w-full border-b"
                             >
                               <option value="">Select</option>
                               {(key === "MitigationStrategies"
@@ -649,7 +657,7 @@ const Economictable = ({
                           onChange={(e) =>
                             handleFieldChange(rowIndex, key, e.target.value)
                           }
-                          className="text-sm pl-2 py-2 w-full"
+                          className="text-[12px] pl-2 py-2 w-full"
                           placeholder="Enter value"
                         />
                       )}
@@ -668,14 +676,14 @@ const Economictable = ({
                                 e.target.value
                               )
                             }
-                            className="text-sm pl-2 py-2 w-full mt-2"
+                            className="text-[12px] pl-2 py-2 w-full mt-2"
                             placeholder="Please specify"
                           />
                         )}
                     </td>
                   );
                 })}
-                <td className="border border-gray-300 p-4 text-center w-[45%]">
+                <td className="border-y border-gray-300 p-4 text-center w-[45%]">
                   <button
                     type="button"
                     onClick={() => removeRow(rowIndex)}

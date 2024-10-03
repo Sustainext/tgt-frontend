@@ -272,7 +272,7 @@ const Benefitsscreen = ({ location, year, month }) => {
   return (
     <>
       <div
-        className="pb-11 rounded-md"
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
@@ -280,7 +280,7 @@ const Benefitsscreen = ({ location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] font-[500] mb-2">
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Benefits provided to full-time employees that are not provided to
               temporary or part-time employees
               <MdInfoOutline
@@ -309,14 +309,16 @@ const Benefitsscreen = ({ location, year, month }) => {
 
                         </h2> */}
           </div>
-
           <div className="w-[20%]">
-            <div className="bg-sky-100 h-[25px] w-[75px] rounded-md mx-2 float-end">
-              <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                 GRI 401-2a
-              </p>
+                </div>
+              </div>
             </div>
           </div>
+       
         </div>
         <Form
           schema={r_schema}

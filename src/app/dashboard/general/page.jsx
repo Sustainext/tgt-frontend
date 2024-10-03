@@ -125,7 +125,7 @@ const General = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Org Details
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -188,7 +188,7 @@ const General = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Entities
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -251,7 +251,7 @@ const General = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Report Details
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -314,7 +314,7 @@ const General = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Restatement
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -371,7 +371,7 @@ const General = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Assurance
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -436,7 +436,7 @@ const General = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Business Details
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -499,7 +499,7 @@ const General = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Workforce-Employees
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -556,7 +556,7 @@ const General = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Workforce-Other Workers
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -615,7 +615,7 @@ const General = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Laws and Regulation
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -675,7 +675,7 @@ const General = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Membership & Association
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -735,7 +735,7 @@ const General = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Stakeholder Engagement
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -794,7 +794,7 @@ const General = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Collective Bargaining Agreements
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p

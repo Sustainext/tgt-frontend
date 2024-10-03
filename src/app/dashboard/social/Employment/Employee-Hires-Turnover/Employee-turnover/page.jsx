@@ -34,7 +34,7 @@ const Employeeturnover = ({ location, year, month,activeMonth }) => {
 
             <div className='mb-4 flex mx-2'>
                <div className="w-[80%] relative">
-                    <h2 className='flex mx-2 text-[15px] font-bold'>
+                    <h2 className='flex ml-1 text-[15px] font-bold'>
                     Employee turnover
                         <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                         data-tooltip-content="This section documents data corresponding
@@ -56,7 +56,7 @@ const Employeeturnover = ({ location, year, month,activeMonth }) => {
                 </div>
             </div>
 
-            <div className="shadow-md rounded-md">
+            <div className="shadow-md rounded-md mx-2">
                 {/* Tabs */}
                 <ul className="flex justify-evenly cursor-pointer">
                     {tabs.map((tab, index) => (

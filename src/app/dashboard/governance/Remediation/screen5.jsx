@@ -11,9 +11,11 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
+import CommoninputWidget from "../../../shared/widgets/Input/commoninputWidget";
 const widgets = {
-  inputWidget: inputWidget2,
+  CommoninputWidget: CommoninputWidget,
 };
+
 
 const view_path = "gri-governance-process-2-25-e-effectiveness";
 const client_id = 1;
@@ -32,7 +34,6 @@ const schema = {
     },
   },
 };
-
 const uiSchema = {
   items: {
     "ui:order": ["Q1"],
@@ -41,8 +42,11 @@ const uiSchema = {
         "Describe how the organization tracks the effectiveness of the grievance mechanisms and other remediation processes, and report examples of their effectiveness, including stakeholder feedback.",
       "ui:tooltip":
         "The organization can report:<ul><li>whether and how the intended users are informed about the grievance mechanisms and remediation processes;</li><li>whether and how the intended users are trained to use the grievance mechanisms and remediation processes;</li><li>the accessibility of the grievance mechanisms and remediation processes, such as the number of hours per day or days per week they are accessible, and their availability in different languages;</li><li>how the organization seeks to ensure it respects users’ human rights and protects them against reprisals;</li><li>how satisfied users are with the grievance mechanisms and remediation processes, and with the resulting outcomes, as well as how the organization assesses user satisfaction;</li><li>the number and types of grievances filed during the reporting period, and the percentage of grievances that were addressed and resolved, including the percentage that were resolved through remediation;</li><li>the number of grievances filed during the reporting period that are repeated or recurring;</li><li>changes made to the grievance mechanisms and remediation processes in response to lessons learned about their effectiveness.</li></ul>",
-      "ui:tooltipdisplay": "block",
-      "ui:widget": "inputWidget",
+      "ui:titledisplay": "none",
+      "ui:tooltipdisplay": "none",
+      "ui:widgetType": "textarea",
+      "ui:inputfildtype": "text",
+      "ui:widget": "CommoninputWidget",
       "ui:horizontal": true,
       "ui:options": {
         label: false,
@@ -50,13 +54,15 @@ const uiSchema = {
     },
 
     "ui:options": {
-      orderable: false, // Prevent reordering of items
-      addable: false, // Prevent adding items from UI
-      removable: false, // Prevent removing items from UI
-      layout: "horizontal", // Set layout to horizontal
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: "horizontal",
     },
   },
 };
+
+
 
 const Screen5 = ({ selectedOrg, year, selectedCorp }) => {
   const [formData, setFormData] = useState([{}]);
@@ -167,21 +173,14 @@ const Screen5 = ({ selectedOrg, year, selectedCorp }) => {
 
   return (
     <>
-      <div
-        className="mx-2 p-3 mb-6 pb-6 rounded-md"
-        style={{
-          boxShadow:
-            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
-        }}
-      >
+   <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            {/*<h2 className="flex mx-2 text-[15px] font-[500] mb-2">
-                        Highest governance body processes to prevent conflict of interest
-                            <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
-                                data-tooltip-content="This section documents the data corresponding to the processes for the highest governance body to ensure that conflicts of
-interest are prevented and mitigated." className="mt-1.5 ml-2 text-[15px]" />
-                            <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+            Describe how the organization tracks the effectiveness of the grievance mechanisms and other remediation processes, and report examples of their effectiveness, including stakeholder feedback
+                            <MdInfoOutline data-tooltip-id={`tooltip-$e178`}
+                                data-tooltip-html="The organization can report:<ul><li>whether and how the intended users are informed about the grievance mechanisms and remediation processes;</li><li>whether and how the intended users are trained to use the grievance mechanisms and remediation processes;</li><li>the accessibility of the grievance mechanisms and remediation processes, such as the number of hours per day or days per week they are accessible, and their availability in different languages;</li><li>how the organization seeks to ensure it respects users’ human rights and protects them against reprisals;</li><li>how satisfied users are with the grievance mechanisms and remediation processes, and with the resulting outcomes, as well as how the organization assesses user satisfaction;</li><li>the number and types of grievances filed during the reporting period, and the percentage of grievances that were addressed and resolved, including the percentage that were resolved through remediation;</li><li>the number of grievances filed during the reporting period that are repeated or recurring;</li><li>changes made to the grievance mechanisms and remediation processes in response to lessons learned about their effectiveness.</li></ul>" className="mt-1.5 ml-1 text-[16px]" />
+                            <ReactTooltip id={`tooltip-$e178`} place="top" effect="solid" style={{
                                 width: "290px", backgroundColor: "#000",
                                 color: "white",
                                 fontSize: "12px",
@@ -190,7 +189,7 @@ interest are prevented and mitigated." className="mt-1.5 ml-2 text-[15px]" />
                                 textAlign: 'left',
                             }}>
                             </ReactTooltip>
-                        </h2> */}
+                        </h2>
           </div>
 
           <div className="w-[20%]">
@@ -214,7 +213,7 @@ interest are prevented and mitigated." className="mt-1.5 ml-2 text-[15px]" />
           />
         </div>
 
-        <div className="mb-6">
+        <div className="mt-4">
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
