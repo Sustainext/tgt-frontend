@@ -6,7 +6,7 @@ import STARSVG from "../../../../../../../public/star.svg";
 import Image from "next/image";
 import { useDispatch, useSelector } from 'react-redux';
 import { setMessage, setMessageimage } from "../../../../../../lib/redux/features/ESGSlice/screen1Slice";
-
+import { BlobServiceClient } from "@azure/storage-blob";
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
 const Section1 = ({ orgName }) => {
@@ -15,7 +15,41 @@ const Section1 = ({ orgName }) => {
   const [error, setError] = useState("");
   const imagePreview = useSelector(state => state.screen1Slice.message_image); 
   const [imageviw, setImageview] = useState("");
+  const uploadFileToAzure = async (file, newFileName) => {
+    // Read file content as ArrayBuffer
+    console.log(file, " is the file object");
+    const arrayBuffer = await file.arrayBuffer();
+    const blob = new Blob([arrayBuffer]);
 
+    // Azure Storage configuration
+    const accountName = process.env.NEXT_PUBLIC_AZURE_STORAGE_ACCOUNT;
+    const containerName = process.env.NEXT_PUBLIC_AZURE_STORAGE_CONTAINER;
+    const sasToken = process.env.NEXT_PUBLIC_AZURE_SAS_TOKEN;
+
+    const blobServiceClient = new BlobServiceClient(
+      `https://${accountName}.blob.core.windows.net?${sasToken}`
+    );
+
+    const containerClient = blobServiceClient.getContainerClient(containerName);
+    const blobName = newFileName || file.name;
+    const blobClient = containerClient.getBlockBlobClient(blobName);
+
+    try {
+      // Upload the blob to Azure Blob Storage
+      const uploadOptions = {
+        blobHTTPHeaders: {
+          blobContentType: file.type,
+        },
+      };
+
+      await blobClient.uploadData(blob, uploadOptions);
+      const url = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}`;
+      return url;
+    } catch (error) {
+      console.error("Error uploading file:", error.message);
+      return null;
+    }
+  };
   const loadContent = () => {
     dispatch(setMessage(`
       <p>At ${orgName ? orgName : "[Company Name]"}, our commitment to sustainability and responsible business practices is deeply rooted in our mission and values. As a leading manufacturing company, we recognize our role in driving positive environmental, social, and governance (ESG) impacts. This ESG report, aligned with the Global Reporting Initiative (GRI) standards, marks a significant milestone in our journey towards greater transparency and accountability. 
@@ -35,31 +69,41 @@ const Section1 = ({ orgName }) => {
       </p>
     `));
   };
-
-  const handleImageChange = (e) => {
+ 
+  const handleImageChange = async (e) => {
     const selectedFile = e.target.files[0];
     let errorMessages = "";
-
+  
     if (!selectedFile) {
       return;
     }
-
+  
     if (selectedFile.type !== "image/png") {
       errorMessages = "Only PNG images are allowed.";
     } else if (selectedFile.size > 1048576) {
       errorMessages = "Maximum file size allowed is 1MB";
     } else {
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        const base64String = reader.result;
-        setImageview(base64String);
-        dispatch(setMessageimage(base64String)); 
-      };
-      reader.readAsDataURL(selectedFile);
+      const newFileName = selectedFile.name;
+  
+      try {
+        // Upload the file to Azure Blob Storage
+        const url = await uploadFileToAzure(selectedFile, newFileName);
+  
+        if (url) {
+          setImageview(url);
+          dispatch(setMessageimage(url));
+        } else {
+          errorMessages = "Failed to upload image to Azure.";
+        }
+      } catch (error) {
+        console.error("Error uploading image:", error);
+        errorMessages = "An error occurred while uploading the image.";
+      }
     }
+  
     setError(errorMessages);
   };
+  
 
   const fileInputRef = useRef(null);
   const handleButtonClick = () => {
@@ -105,10 +149,10 @@ const Section1 = ({ orgName }) => {
     <>
       <div>
         <p className="text-[15px] text-[#344054] mb-2">Upload CEO’s Image:</p>
-        {(imageviw || imagePreview) && (
+        {(imagePreview) && (
           <div className="mb-4">
             <img 
-              src={imageviw ? imageviw : `${imagePreview}`} 
+              src={imagePreview} 
               alt="CEO" 
               className="w-[150px] h-[150px] object-cover rounded-md" 
             />

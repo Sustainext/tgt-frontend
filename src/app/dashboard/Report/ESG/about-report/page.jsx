@@ -4,7 +4,8 @@ import Section1 from "./sections/section1";
 import Section2 from "./sections/section2";
 import Section3 from "./sections/section3";
 import Section4 from "./sections/section4";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const AboutTheReport=()=>{
     
     const [activeSection, setActiveSection] = useState('section7_1');

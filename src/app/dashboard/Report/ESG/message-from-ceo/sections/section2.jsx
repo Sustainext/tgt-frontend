@@ -8,19 +8,20 @@ import {
   setCeoname,
   setSignatureimage,
 } from "../../../../../../lib/redux/features/ESGSlice/screen1Slice";
+import { BlobServiceClient } from "@azure/storage-blob";
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
 const Section2 = ({ orgName }) => {
   const dispatch = useDispatch();
   const [error, setError] = useState("");
-  const [selectedImage, setSelectedImage] = useState("");
+
   const companyName = useSelector((state) =>state.screen1Slice.company_name );
   const ceoname = useSelector((state) => state.screen1Slice.ceo_name);
   const imagePreview = useSelector(
     (state) => state.screen1Slice.signature_image
   );
 
-  const [imageviw2, setImageview2] = useState("");
+
   const handleCompanyname = (e) => {
     dispatch(setCompanyname(e.target.value));
     // setCompanyName(e.target.value)
@@ -29,80 +30,79 @@ const Section2 = ({ orgName }) => {
     dispatch(setCeoname(e.target.value));
     // setCompanyName(e.target.value)
   };
-  const handleImageChange = (e) => {
+  const uploadFileToAzure = async (file, newFileName) => {
+    // Read file content as ArrayBuffer
+    console.log(file, " is the file object");
+    const arrayBuffer = await file.arrayBuffer();
+    const blob = new Blob([arrayBuffer]);
+
+    // Azure Storage configuration
+    const accountName = process.env.NEXT_PUBLIC_AZURE_STORAGE_ACCOUNT;
+    const containerName = process.env.NEXT_PUBLIC_AZURE_STORAGE_CONTAINER;
+    const sasToken = process.env.NEXT_PUBLIC_AZURE_SAS_TOKEN;
+
+    const blobServiceClient = new BlobServiceClient(
+      `https://${accountName}.blob.core.windows.net?${sasToken}`
+    );
+
+    const containerClient = blobServiceClient.getContainerClient(containerName);
+    const blobName = newFileName || file.name;
+    const blobClient = containerClient.getBlockBlobClient(blobName);
+
+    try {
+      // Upload the blob to Azure Blob Storage
+      const uploadOptions = {
+        blobHTTPHeaders: {
+          blobContentType: file.type,
+        },
+      };
+
+      await blobClient.uploadData(blob, uploadOptions);
+      const url = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}`;
+      return url;
+    } catch (error) {
+      console.error("Error uploading file:", error.message);
+      return null;
+    }
+  };
+  const handleImageChange = async (e) => {
     const selectedFile = e.target.files[0];
     let errorMessages = "";
-
+  
     if (!selectedFile) {
       return;
     }
-
+  
     if (selectedFile.type !== "image/png") {
       errorMessages = "Only PNG images are allowed.";
     } else if (selectedFile.size > 1048576) {
       errorMessages = "Maximum file size allowed is 1MB";
     } else {
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        const base64String = reader.result;
-        setImageview2(base64String);
-    
-        dispatch(setSignatureimage(base64String)); // Set the image preview
-      };
-      reader.readAsDataURL(selectedFile);
+      const newFileName = selectedFile.name;
+  
+      try {
+        // Upload the file to Azure Blob Storage
+        const url = await uploadFileToAzure(selectedFile, newFileName);
+  
+        if (url) {
+        
+          dispatch(setSignatureimage(url));
+        } else {
+          errorMessages = "Failed to upload image to Azure.";
+        }
+      } catch (error) {
+        console.error("Error uploading image:", error);
+        errorMessages = "An error occurred while uploading the image.";
+      }
     }
+  
     setError(errorMessages);
-
   };
   const fileInputRef = useRef(null);
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
 
-  const config = {
-    style: {
-      fontSize: "14px",
-      color: "#667085",
-    },
-    allowResizeY: false,
-    defaultActionOnPaste: "insert_clear_html",
-    toolbarSticky: false,
-    toolbar: true,
-    buttons: [
-      "bold",
-      "italic",
-      "underline",
-      "strikeThrough",
-      "align",
-      "outdent",
-      "indent",
-      "ul",
-      "ol",
-      "paragraph",
-      "link",
-      "table",
-      "undo",
-      "redo",
-      "hr",
-      "fontsize",
-      "selectall",
-    ],
-    // Remove buttons from the extra buttons list
-    removeButtons: [
-      "fullsize",
-      "preview",
-      "source",
-      "print",
-      "about",
-      "find",
-      "changeMode",
-      "paintFormat",
-      "image",
-      "brush",
-      "font",
-    ],
-  };
 
 
 
@@ -112,10 +112,10 @@ const Section2 = ({ orgName }) => {
         <p className="text-[15px] text-[#344054] mb-2">
           Upload Signature Image:
         </p>
-        {(imageviw2 || imagePreview) && (
+        {( imagePreview) && (
           <div className="mb-4">
             <img 
-              src={imageviw2 ? imageviw2 : `${imagePreview}`} 
+              src={imagePreview} 
               alt="CEO" 
               className="w-[150px] h-[150px] object-cover rounded-md" 
             />
