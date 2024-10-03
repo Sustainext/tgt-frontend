@@ -23,8 +23,14 @@ export const fetchEmissionsData = createAsyncThunk(
       return {
         climatiqData: climatiqResponse.data,
         scope1Data: scope1Response.data.form_data[0],
+        scope1Schema: scope1Response.data.form[0].schema,
+        scope1UiSchema: scope1Response.data.form[0].ui_schema,
         scope2Data: scope2Response.data.form_data[0],
+        scope2Schema: scope2Response.data.form[0].schema,
+        scope2UiSchema: scope2Response.data.form[0].ui_schema,
         scope3Data: scope3Response.data.form_data[0],
+        scope3Schema: scope3Response.data.form[0].schema,
+        scope3UiSchema: scope3Response.data.form[0].ui_schema,
         params: { location, year, month }
       };
     } catch (error) {
@@ -65,7 +71,7 @@ export const updateScopeData = createAsyncThunk(
       client_id: 1,
       user_id: 1,
       path: `gri-environment-emissions-301-a-scope-${scope}`,
-      form_data: data,
+      form_data: data.data,
       location,
       year,
       month,
@@ -103,18 +109,24 @@ const emissionsSlice = createSlice({
     },
     scope1Data: {
       data: [],
+      schema:{},
+      uiSchema: {},
       status: 'idle',
       error: null,
       params: null
     },
     scope2Data: {
       data: [],
+      schema:{},
+      uiSchema: {},
       status: 'idle',
       error: null,
       params: null
     },
     scope3Data: {
       data: [],
+      schema:{},
+      uiSchema: {},
       status: 'idle',
       error: null,
       params: null
@@ -171,6 +183,14 @@ const emissionsSlice = createSlice({
         state.scope1Data.data = action.payload.scope1Data;
         state.scope2Data.data = action.payload.scope2Data;
         state.scope3Data.data = action.payload.scope3Data;
+
+        state.scope1Data.schema = action.payload.scope1Schema;
+        state.scope2Data.schema = action.payload.scope2Schema;
+        state.scope3Data.schema = action.payload.scope3Schema;
+
+        state.scope1Data.uiSchema = action.payload.scope1UiSchema;
+        state.scope2Data.uiSchema = action.payload.scope2UiSchema;
+        state.scope3Data.uiSchema = action.payload.scope3UiSchema;
 
         state.climatiqData.params = action.payload.params;
         state.scope1Data.params = action.payload.params;
