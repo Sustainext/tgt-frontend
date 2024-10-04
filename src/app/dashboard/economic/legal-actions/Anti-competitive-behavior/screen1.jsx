@@ -154,7 +154,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
     let newFormData = { ...e.formData[0] };
     if (newFormData.Q1 === "No") {
       newFormData.Q2 = "";
-      newFormData.Q = "";
+      newFormData.Q3 = "";
     }
 
     setFormData([newFormData]);
@@ -213,7 +213,6 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       LoaderClose();
     }
   };
-
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
