@@ -112,7 +112,7 @@ const Section2 = ({ orgName }) => {
         <p className="text-[15px] text-[#344054] mb-2">
           Upload Signature Image:
         </p>
-        {( imagePreview) && (
+        {( imagePreview!=='undefined') && (
           <div className="mb-4">
             <img 
               src={imagePreview} 
