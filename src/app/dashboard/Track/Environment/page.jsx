@@ -25,8 +25,8 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
         column: "uuid"
     },
     operator: "In",
-    // values: [loadFromLocalStorage('client_key')]
-    values: ["8d44f5f4-8e58-4032-aa0a-4ff022288f7c"]
+    values: [loadFromLocalStorage('client_key')]
+    // values: ["8d44f5f4-8e58-4032-aa0a-4ff022288f7c"]
 };
 
   const tabs = [
