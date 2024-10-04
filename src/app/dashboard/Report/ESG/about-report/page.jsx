@@ -4,11 +4,12 @@ import Section1 from "./sections/section1";
 import Section2 from "./sections/section2";
 import Section3 from "./sections/section3";
 import Section4 from "./sections/section4";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const AboutTheReport=()=>{
     
     const [activeSection, setActiveSection] = useState('section7_1');
-
+    const [isScrolling, setIsScrolling] = useState(false); 
     const section7_1Ref = useRef(null);
   const section7_1_1Ref = useRef(null);
   const section7_2Ref = useRef(null);
@@ -19,6 +20,8 @@ const AboutTheReport=()=>{
 //     setActiveSection(sectionId); 
 //     sectionRef.current?.scrollIntoView({ behavior: 'smooth' });
 //   };
+
+
 
 const scrollToSection = (sectionRef, sectionId) => {
     setActiveSection(sectionId); 
@@ -31,6 +34,7 @@ const scrollToSection = (sectionRef, sectionId) => {
       behavior: 'smooth',
     });
   };
+
   
 
     return (

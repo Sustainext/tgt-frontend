@@ -40,7 +40,7 @@ const HighestGovernanceTable=()=>{
             minWidth: "100%",
             width: "40vw",
           }}
-          className="mb-2"
+          className="mb-2 table-scrollbar"
        >
     <table className="w-full border border-gray-200 rounded-md">
         <thead className="gradient-background">

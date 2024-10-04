@@ -155,6 +155,17 @@ const Section18=({section12_3_4Ref})=>{
         },
       ];
 
+      const column6 = [
+        'Unit', 
+        'Change in water storage', 
+      ];
+      const data6 = [
+        {
+            "Unit": 'Megalitre',
+          "Change in water storage":"",
+        },
+      ];
+
      
       
     
@@ -172,7 +183,7 @@ const Section18=({section12_3_4Ref})=>{
             </p>
             <textarea
           value={content}
-          className={`border appearance-none text-sm border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  mt-2 w-full mb-4 `}
+          className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  mt-2 w-full mb-4 `}
           rows={4}
         />
         
@@ -215,6 +226,13 @@ Total Water Consumption by source
         </p>
 <div className="shadow-md rounded-md mb-4">
 <WaterTable columns={column4} data={data4} consumption="Total Water Consumption" unit={"Megalitre"} total={'212123545'}/>
+</div>
+
+<p className="text-[15px]  mb-2 font-semibold">
+Change in water storage
+        </p>
+<div className="shadow-md rounded-md mb-4">
+<WaterTable columns={column6} data={data6}/>
 </div>
 </div>
         </>

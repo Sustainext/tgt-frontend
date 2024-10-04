@@ -47,16 +47,16 @@ const Section24=({section13_6_7Ref})=>{
     ]
 
     const col3=[
-        "Description of Incident ",
-        "Incident Reporting Personnel ",
-        "Investigation team ",
+        "Process Quality Assurance",
+        "Personnel Competency Assurance",
+        "Results Utilization and Improvement",
     ]
 
     const data3=[
         {
-            "Description of Incident ":"Committee 1",
-            "Incident Reporting Personnel ":"",
-            "Investigation team ":"Data",
+            "Process Quality Assurance":"Data",
+            "Personnel Competency Assurance":"",
+            "Results Utilization and Improvement":"Data",
         }
     ]
 
@@ -86,7 +86,7 @@ const Section24=({section13_6_7Ref})=>{
             </p>
             <textarea
           value={content}
-          className={`border appearance-none text-sm border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  mt-2 w-full mb-4 `}
+          className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  mt-2 w-full mb-4 `}
           rows={4}
         />
 
@@ -122,12 +122,10 @@ const Section24=({section13_6_7Ref})=>{
             <p className="text-[15px]  mb-2 font-semibold">
             Personal competency assurance: 
             </p>
-            <p className="text-[15px]  mb-2 font-semibold">
+            <p className="text-[15px]  mb-4 font-semibold">
             Results Utilization and Improvement:
             </p>
-            <p className="text-[15px]  mb-2 font-semibold">
-            Work related incident investigation:  
-            </p>
+           
 
             <p className="text-[15px]  mb-2 font-semibold">
             Work related incident investigation:  

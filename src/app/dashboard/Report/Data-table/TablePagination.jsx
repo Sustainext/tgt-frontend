@@ -20,6 +20,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts }) => {
   const [reportid, setReportid] = useState();
   const [reporttepname, setReportTepname] = useState();
   const router = useRouter();
+
   const togglePopup = (itemId, itemName) => {
     setIsOpen((currentOpenPopupId) => (currentOpenPopupId === itemId ? null : itemId));
     setReportid(itemId);
@@ -65,6 +66,33 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts }) => {
     window.localStorage.setItem("organizationcountry", organization_country);
     // sessionStorage.setItem('reportData',newdata);
     router.push('/dashboard/Report/GHG/Ghgtemplates');
+
+    window.localStorage.setItem("reportname", name);
+  };
+
+  const handleSetESGdata = (
+    id,
+    organization_name,
+    startdate,
+    enddate,
+    organization_country,
+    name
+  ) => {
+    const newdata = {
+      id: id,
+      organization_name: organization_name,
+      start_date: startdate,
+      end_date: enddate,
+      country_name: organization_country,
+      reportname: name,
+    };
+    window.localStorage.setItem("reportid", id);
+    window.localStorage.setItem("reportorgname", organization_name);
+    window.localStorage.setItem("reportstartdate", startdate);
+    window.localStorage.setItem("reportenddate", enddate);
+    window.localStorage.setItem("organizationcountry", organization_country);
+    // sessionStorage.setItem('reportData',newdata);
+    router.push('/dashboard/Report/ESG');
 
     window.localStorage.setItem("reportname", name);
   };
@@ -221,6 +249,62 @@ let axiosConfig = {
 
 
   };
+
+  const handleESGDownloadpdf = async () => {
+    // Set loading to true for the specific item
+    setLoadingById(prevState => ({ ...prevState, [reportid]: true }));
+
+    try {
+      const response = await fetch(
+        `${process.env.BACKEND_API_URL}/sustainapp/report_pdf/${reportid}/?download=true`,axiosConfig
+      );
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.setAttribute("download", `${reporttepname}.pdf`); // Setting the file name dynamically
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Error downloading the file:", error);
+    } finally {
+      // Set loading to false for the specific item
+      setLoadingById(prevState => ({ ...prevState, [reportid]: false }));
+      setIsOpen(null);
+    }
+  };
+  const handleESGDownloaddocx = async () => {
+
+    setLoadingById(prevState => ({ ...prevState, [reportid]: true }));
+
+    try {
+      const response = await fetch(
+        `${process.env.BACKEND_API_URL}/sustainapp/report_word_download/${reportid}/`,axiosConfig
+
+      );
+
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.setAttribute("download", `${reporttepname}.docx`); // Setting the file name dynamically
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Error downloading the file:", error);
+    } finally {
+      // Set loading to false for the specific item
+      setLoadingById(prevState => ({ ...prevState, [reportid]: false }));
+      setIsOpen(null);
+    }
+
+
+  };
+
   return (
     <>
       <div>
@@ -304,7 +388,7 @@ let axiosConfig = {
                 onClick={() => handleSort("last_report_date")}
               >
                 <div className="flex">
-                  Last report{" "}
+                  Created On{" "}
                   {sort.column === "last_report_date" ? (
                     sort.direction === "asc" ? (
                       <MdKeyboardArrowUp />
@@ -349,15 +433,29 @@ let axiosConfig = {
                   </td>
                   <td className="py-3 px-6 text-left whitespace-nowrap flex">
                     <MdEdit
-                      onClick={() =>
-                        handleSetdata(
-                          item.id,
-                          item.organization_name,
-                          item.start_date,
-                          item.end_date,
-                          item.organization_country,
-                          item.name
-                        )
+                      onClick={() =>{
+                        if(item.report_type=='GRI Report: In accordance With' || item.report_type=='GRI Report: With Reference to'){
+                          handleSetESGdata(
+                            item.id,
+                            item.organization_name,
+                            item.start_date,
+                            item.end_date,
+                            item.organization_country,
+                            item.name
+                          )
+                        }
+                        else{
+                          handleSetdata(
+                            item.id,
+                            item.organization_name,
+                            item.start_date,
+                            item.end_date,
+                            item.organization_country,
+                            item.name
+                          )
+                        }
+                      }
+                       
                       }
                       className="cursor-pointer text-[25px]"
                     />
@@ -389,8 +487,22 @@ let axiosConfig = {
                           <div className="absolute right-0 w-[11.3rem] bg-white shadow-xl z-10">
 
                             <div className="px-3 mb-1 py-2">
-                              <div className="mb-2"> <h5 className="text-drak cursor-pointer" onClick={handleDownloaddocx}>Download as Docx</h5></div>
-                              <div>  <h5 className="text-drak cursor-pointer" onClick={handleDownloadpdf}>Download as PDF</h5></div>
+                              <div className="mb-2"> <h5 className="text-drak cursor-pointer" onClick={()=>{
+                                if(item.report_type=='GRI Report: In accordance With' || item.report_type=='GRI Report: With Reference to'){
+                                  // handleESGDownloaddocx()
+                                }
+                                else{
+                                    handleDownloaddocx()
+                                }
+                              }}>Download as Docx</h5></div>
+                              <div>  <h5 className="text-drak cursor-pointer" onClick={()=>{
+                                 if(item.report_type=='GRI Report: In accordance With' || item.report_type=='GRI Report: With Reference to'){
+                                  // handleESGDownloadpdf()
+                                }
+                                else{
+                                    handleDownloadpdf()
+                                }
+                              }}>Download as PDF</h5></div>
 
                             </div>
 

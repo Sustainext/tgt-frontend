@@ -13,7 +13,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 302-1 Energy consumption within the organization
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-black mb-4">
               Compilation requirement:
             </p>
@@ -81,7 +81,7 @@ export const Energydata = [
             Sustainable Development Goal 7: Ensure access to affordable,
             reliable, sustainable and modern energy for all
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[635px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 7.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, increase substantially the share of renewable energy in
@@ -105,11 +105,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://sdgs.un.org/goals/goal7"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -137,7 +137,7 @@ export const Energydata = [
             sustainable economic growth, full and productive employment and
             decent work for all
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[580px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Improve progressively, through 2030, global resource efficiency in
@@ -167,11 +167,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://sdgs.un.org/goals/goal8"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -198,7 +198,7 @@ export const Energydata = [
             Sustainable Development Goal 12: Ensure sustainable consumption and
             production patterns
           </p>
-          <div className="h-[280px] overflow-y-auto custom-scrollbar">
+          <div className="h-[632px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 12.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, achieve the sustainable management and efficient use of
@@ -218,11 +218,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://sdgs.un.org/goals/goal12"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -249,7 +249,7 @@ export const Energydata = [
             Sustainable Development Goal 13: Take urgent action to combat
             climate change and its impacts
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[632px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 13.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Strengthen resilience and adaptive capacity to climate-related
@@ -276,11 +276,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://sdgs.un.org/goals/goal13"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -296,7 +296,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             New employee hires and employee turnover
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">GRI Guidance:</p>
             <p className="text-[11px] text-[#727272] mb-2">
               An organization can use the following age groups:
@@ -311,7 +311,7 @@ export const Energydata = [
           </div>
           <div>
             <a className="text-[14px] text-[#2196F3] mt-3">
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -338,7 +338,7 @@ export const Energydata = [
             Sustainable Development Goal 5: Achieve gender equality and empower
             all women and girls
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 5.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               End all forms of discrimination against all women and girls
@@ -353,7 +353,7 @@ export const Energydata = [
           </div>
           <div>
             <a className="text-[14px] text-[#2196F3] mt-3">
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -381,7 +381,7 @@ export const Energydata = [
             sustainable economic growth, full and productive employment and
             decent work for all
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.5</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, achieve full and productive employment and decent work
@@ -413,7 +413,7 @@ export const Energydata = [
           </div>
           <div>
             <a className="text-[14px] text-[#2196F3] mt-3">
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -440,7 +440,7 @@ export const Energydata = [
             Sustainable Development Goal 10: Reduce inequality within and among
             countries
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 10.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Ensure equal opportunity and reduce inequalities of outcome,
@@ -459,7 +459,7 @@ export const Energydata = [
           </div>
           <div>
             <a className="text-[14px] text-[#2196F3] mt-3">
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -475,7 +475,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             New employee hires and employee turnover
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Background</p>
             <p className="text-[11px] text-[#727272] mb-2">
               Data reported under this disclosure provide a measure of an
@@ -497,7 +497,7 @@ export const Energydata = [
           </div>
           <div>
             <a className="text-[14px] text-[#2196F3] mt-3">
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -524,7 +524,7 @@ export const Energydata = [
             Sustainable Development Goal 3: Ensure healthy lives and promote
             well-being for all at all ages
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 3.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, end preventable deaths of newborns and children under 5
@@ -545,7 +545,7 @@ export const Energydata = [
           </div>
           <div>
             <a className="text-[14px] text-[#2196F3] mt-3">
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -572,7 +572,7 @@ export const Energydata = [
             Sustainable Development Goal 5: Achieve gender equality and empower
             all women and girls
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 5.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Eliminate all forms of violence against all women and girls in the
@@ -597,7 +597,7 @@ export const Energydata = [
           </div>
           <div>
             <a className="text-[14px] text-[#2196F3] mt-3">
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -625,7 +625,7 @@ export const Energydata = [
             sustainable economic growth, full and productive employment and
             decent work for all
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.5</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, achieve full and productive employment and decent work
@@ -646,7 +646,7 @@ export const Energydata = [
           </div>
           <div>
             <a className="text-[14px] text-[#2196F3] mt-3">
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -662,7 +662,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             New employee hires and employee turnover
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Background</p>
             <p className="text-[11px] text-[#727272] mb-2">
               Data reported under this disclosure provide a measure of an
@@ -684,7 +684,7 @@ export const Energydata = [
           </div>
           <div>
             <a className="text-[14px] text-[#2196F3] mt-3">
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -704,7 +704,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 302-2 Energy consumption outside of the organization
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">
               Compilation requirement:
             </p>
@@ -764,11 +764,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12467&page=1"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -788,7 +788,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 302-3 Energy intensity
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">
               Compilation requirement:
             </p>
@@ -857,11 +857,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12467&page=1"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -881,7 +881,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 302-4 Reduction of energy consumption
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">
               Compilation requirement:
             </p>
@@ -945,11 +945,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12467&page=1"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -970,7 +970,7 @@ export const Energydata = [
             Disclosure 302-5 Reductions in energy requirements of products and
             services
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-[#727272] mb-2">
               The description of how the organization interacts with water can
               include information on specific catchments where water is
@@ -1023,11 +1023,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12467&page=1"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -1132,11 +1132,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://sdgs.un.org/goals/goal3"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -1220,11 +1220,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://sdgs.un.org/goals/goal6"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -1273,11 +1273,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://sdgs.un.org/goals/goal11"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -1339,11 +1339,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://sdgs.un.org/goals/goal12"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -1400,7 +1400,7 @@ export const Energydata = [
               href="https://sdgs.un.org/goals/goal15"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -1422,7 +1422,7 @@ export const Energydata = [
             impacts
           </p>
 
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-[#727272] mb-2">
               When reporting on this disclosure, the organization can specify
               the types of inputs and outputs.
@@ -1505,11 +1505,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12521"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -1530,7 +1530,7 @@ export const Energydata = [
             Disclosure 306-2 Management of significant waste related impacts
           </p>
 
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-[#727272] mb-2">
               Actions, including circularity measures, to prevent waste
               generation and to manage significant impacts from waste generated
@@ -1638,11 +1638,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12521"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -1663,7 +1663,7 @@ export const Energydata = [
             Disclosure 306-3 Waste generated
           </p>
 
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">
               Compilation requirement:
             </p>
@@ -1729,11 +1729,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12521"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -1754,7 +1754,7 @@ export const Energydata = [
             Disclosure 306-4 Waste diverted from disposal
           </p>
 
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">
               Compilation requirement:
             </p>
@@ -1837,11 +1837,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12521"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -1862,7 +1862,7 @@ export const Energydata = [
             Disclosure 306-5 Waste directed to disposal
           </p>
 
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">
               Compilation requirement:
             </p>
@@ -1941,11 +1941,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12521"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -2047,11 +2047,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://sdgs.un.org/goals/goal6"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -2105,11 +2105,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://sdgs.un.org/goals/goal12"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -2277,11 +2277,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12488"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -2318,11 +2318,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12488"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -2342,7 +2342,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 303-3 Water withdrawal
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-[#222222] mb-2">
               Compilation Requirement:
             </p>
@@ -2406,11 +2406,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12488"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -2430,7 +2430,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 303-4 Water discharge
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-[#222222] mb-2">
               Compilation Requirement:
             </p>
@@ -2497,11 +2497,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12488"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -2521,7 +2521,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 303-5 Water consumption
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-[#222222] mb-2">
               Guidance for Disclosure 303-5
             </p>
@@ -2557,11 +2557,11 @@ export const Energydata = [
           </div>
           <div className="mt-5">
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12488"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -2614,11 +2614,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://sdgs.un.org/goals/goal8"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -2645,7 +2645,7 @@ export const Energydata = [
             Sustainable Development Goal 12: Ensure sustainable consumption and
             production pattern
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 12.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, achieve the sustainable management and efficient use of
@@ -2665,11 +2665,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://sdgs.un.org/goals/goal12"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -2690,7 +2690,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 303-5 Water consumption
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-[#222222] mb-2">
               Renewable Materials:
             </p>
@@ -2746,11 +2746,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://globalreporting.org/pdf.ashx?id=12456&page=1"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -2772,7 +2772,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 301-2 Recycled input materials used
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-[#222222] mb-2">Input materials</p>
 
             <p className="text-[11px] text-[#727272] mb-2">
@@ -2825,11 +2825,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://globalreporting.org/pdf.ashx?id=12456&page=1"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -2880,11 +2880,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://sdgs.un.org/goals/goal8"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -2954,11 +2954,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://sdgs.un.org/goals/goal12"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -2980,7 +2980,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 301-3 Reclaimed products and their packaging materials
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-[#727272] mb-2">
               <b>Reclaimed products</b> are products that have been used and
               then collected, processed, and marketed for reuse. Reclaimed
@@ -3025,11 +3025,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://globalreporting.org/pdf.ashx?id=12456&page=1"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -3055,7 +3055,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Improve progressively, through 2030, global resource efficiency in
@@ -3080,11 +3080,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://sdgs.un.org/goals/goal8"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -3132,11 +3132,11 @@ export const Energydata = [
 
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://sdgs.un.org/goals/goal12"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -3198,11 +3198,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://sdgs.un.org/goals/goal12"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -3229,7 +3229,7 @@ export const Energydata = [
             Sustainable Development Goal 3: Ensure healthy lives and promote
             well-being for all at all ages
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 3.9</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, reduce the global maternal mortality ratio to less than
@@ -3305,11 +3305,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://sdgs.un.org/goals/goal3"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -3392,11 +3392,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://sdgs.un.org/goals/goal6"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -3445,11 +3445,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://sdgs.un.org/goals/goal11"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -3515,11 +3515,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://sdgs.un.org/goals/goal6"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -3539,7 +3539,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 303-5 Water consumption
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-[#222222] mb-2">
               Guidance for Disclosure 303-5
             </p>
@@ -3576,11 +3576,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12488"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -3601,7 +3601,7 @@ export const Energydata = [
           Disclosure 301-1 Materials used by weight or volume
           </p>
 
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-[#222222] mb-2">
             Renewable Materials:
             </p>
@@ -3640,11 +3640,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 flex"
               href="https://globalreporting.org/pdf.ashx?id=12456&page=1"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+            Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>

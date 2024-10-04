@@ -69,7 +69,7 @@ const scrollToSection = (sectionRef, sectionId) => {
               10.1.Management approach for sustainability/ESG topics
             </p>
             <p
-              className={`text-[11px] mb-2 cursor-pointer ${
+              className={`text-[12px] mb-2 cursor-pointer ${
                 activeSection === 'section10_2' ? 'text-blue-400' : ''
               }`}
               onClick={() => scrollToSection(section10_2Ref, 'section10_2')}
@@ -82,15 +82,15 @@ const scrollToSection = (sectionRef, sectionId) => {
               }`}
               onClick={() => scrollToSection(section10_3Ref, 'section10_3')}
             >
-             10.3 Management of material topic 
+             10.3 Supply Chain Sustainability
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${
-                activeSection === 'section10_3' ? 'text-blue-400' : ''
+                activeSection === 'section10_3_1' ? 'text-blue-400' : ''
               }`}
               onClick={() => scrollToSection(section10_3_1Ref, 'section10_3_1')}
             >
-             10.3.1. Supply Chain Sustainability
+             10.3.1. Management of material topic 
             </p>
             <p
               className={`text-[11px] mb-2 ml-2 cursor-pointer ${

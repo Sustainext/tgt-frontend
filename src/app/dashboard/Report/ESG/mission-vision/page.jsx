@@ -13,7 +13,7 @@ import Section1 from "./sections/section1";
 
 const MissionVission=()=>{
     
-    
+    const orgName= typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
     
     return (
         <>
@@ -23,7 +23,7 @@ const MissionVission=()=>{
             </h3>
             <div className="flex gap-4">
             <div className="w-[80%]">
-                <Section1/>
+                <Section1 orgName={orgName} />
             </div>
             {/* page sidebar */}
             <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[500px] top-36 sticky  w-[20%]">

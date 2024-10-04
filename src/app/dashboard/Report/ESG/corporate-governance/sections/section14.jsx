@@ -19,6 +19,7 @@ const Section14=({section9_3_8Ref})=>{
             <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
             9.3.8 Annual Compensation Ratio
             </h3>
+            <p className="text-sm mb-4">We disclose the ratio of the annual total compensation of our CEO to the median annual total compensation of all other employees. This metric provides transparency and helps stakeholders understand our compensation practices. </p>
             <p className="text-[15px] text-[#344054] mb-2">
             Ratio of annual total compensation & ratio of percentage increase in annual total compensation 
             </p>

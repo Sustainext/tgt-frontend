@@ -42,6 +42,8 @@ const scrollToSection = (sectionRef, sectionId) => {
     });
   };
   
+  
+ 
 
     return (
         <>
@@ -111,7 +113,7 @@ const scrollToSection = (sectionRef, sectionId) => {
               15.2. Product and service information and labelling
             </p>
             <p
-              className={`text-[12px] mb-2 ml-2 cursor-pointer ${
+              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === 'section15_2_1' ? 'text-blue-400' : ''
               }`}
               onClick={() => scrollToSection(section15_2_1Ref, 'section15_2_1')}
@@ -119,7 +121,7 @@ const scrollToSection = (sectionRef, sectionId) => {
               15.2.1. Management of material topic
             </p>
             <p
-              className={`text-[12px] mb-2 ml-2 cursor-pointer ${
+              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === 'section15_2_2' ? 'text-blue-400' : ''
               }`}
               onClick={() => scrollToSection(section15_2_2Ref, 'section15_2_2')}
@@ -135,7 +137,7 @@ const scrollToSection = (sectionRef, sectionId) => {
               15.3. Customers 
             </p>
             <p
-              className={`text-[12px] mb-2 ml-2 cursor-pointer ${
+              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === 'section15_3_1' ? 'text-blue-400' : ''
               }`}
               onClick={() => scrollToSection(section15_3_1Ref, 'section15_3_1')}
