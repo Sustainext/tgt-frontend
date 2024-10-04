@@ -25,11 +25,8 @@
     "axios": "^1.7.7",
     "country-state-city": "^3.2.1",
     "date-fns": "^3.6.0",
-<<<<<<< HEAD
     "framer-motion": "^11.7.0",
-=======
     "html2canvas": "^1.4.1",
->>>>>>> c7aad0136d323692ad7250be0e8a7e95d729c6fb
     "i18n-fluentc": "^1.0.2",
     "i18next": "^23.15.1",
     "i18next-browser-languagedetector": "^8.0.0",
