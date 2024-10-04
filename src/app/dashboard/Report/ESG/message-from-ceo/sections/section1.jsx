@@ -149,7 +149,7 @@ const Section1 = ({ orgName }) => {
     <>
       <div>
         <p className="text-[15px] text-[#344054] mb-2">Upload CEO’s Image:</p>
-        {(imagePreview) && (
+        {(imagePreview!=='undefined') && (
           <div className="mb-4">
             <img 
               src={imagePreview} 
