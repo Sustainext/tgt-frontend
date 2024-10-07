@@ -42,7 +42,11 @@ const AnalyseEmission = () => {
   const [locationName, setLocationName] = useState("");
   const [fromDate,setFromDate] = useState("");
   const [toDate,setToDate] = useState("");
-
+  const [errors, setErrors] = useState({
+    organization: 'Please select Organisation',
+    corporate: 'Please select Corporate',
+    location: 'Please select Location',
+  });
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -214,53 +218,80 @@ const AnalyseEmission = () => {
   const handleReportTypeChange = (type) => {
     setReportType(type);
   };
-
   const handleOrganizationChange = (e) => {
     const newOrg = e.target.value;
+    if (!newOrg) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        organization: 'Please select an organization',
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        organization: '',
+      }));
+    }
     setSelectedOrg(newOrg);
-    setSelectedCorp("");
-    setSelectedSetLocation("");
+    setSelectedCorp('');
+    setSelectedSetLocation('');
     setScopeData([]);
     setSourceData([]);
     setLocationData([]);
-
     setDatasetparams((prevParams) => ({
       ...prevParams,
       organisation: newOrg,
-      corporate: "",
-      location: ""
+      corporate: '',
+      location: '',
     }));
   };
 
   const handleOrgChange = (e) => {
     const newCorp = e.target.value;
+    if (!newCorp) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        corporate: 'Please select a corporate',
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        corporate: '',
+      }));
+    }
     setSelectedCorp(newCorp);
-    setSelectedSetLocation("");
-
+    setSelectedSetLocation('');
     setDatasetparams((prevParams) => ({
       ...prevParams,
       corporate: newCorp,
-      location: ""
+      location: '',
     }));
   };
-
   const handleLocationChange = (e) => {
     const newLocation = e.target.value;
+    if (!newLocation) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        location: 'Please select a location',
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        location: '',
+      }));
+    }
     setSelectedSetLocation(newLocation);
-
     setDatasetparams((prevParams) => ({
       ...prevParams,
-      location: newLocation
+      location: newLocation,
     }));
   };
 
   const handleDateChange = (newRange) => {
     setDateRange(newRange);
-
     setDatasetparams((prevParams) => ({
       ...prevParams,
       start: newRange.start,
-      end: newRange.end
+      end: newRange.end,
     }));
   };
 
@@ -328,13 +359,18 @@ const AnalyseEmission = () => {
                         </option>
                       ))}
                   </select>
+                  {errors.organization && (
+                    <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
+                      {errors.organization}
+                    </p>
+                  )}
                 </div>
               </div>
               {(reportType === "Corporate" || reportType === "Location") && (
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[12px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal ml-1"
                   >
                     Select Corporate
                   </label>
@@ -352,6 +388,11 @@ const AnalyseEmission = () => {
                           </option>
                         ))}
                     </select>
+                    {errors.corporate && (
+                      <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
+                        {errors.corporate}
+                      </p>
+                    )}
                   </div>
                 </div>
               )}
@@ -359,7 +400,7 @@ const AnalyseEmission = () => {
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[12px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal ml-1"
                   >
                     Select Location
                   </label>
@@ -377,6 +418,9 @@ const AnalyseEmission = () => {
                           </option>
                         ))}
                     </select>
+                    {errors.location && (
+                      <p className="text-[#007EEF] text-[12px] pl-2 mt-2">{errors.location}</p>
+                    )}
                   </div>
                 </div>
               )}
@@ -394,9 +438,9 @@ const AnalyseEmission = () => {
                     onDateChange={handleDateChange}
                   />
                   {!isDateRangeValid && (
-                    <div className="text-red-600 text-xs mt-2">
-                      Please select a valid date range.
-                    </div>
+                     <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
+                     Please select a date range
+                    </p>
                   )}
                 </div>
               </div>

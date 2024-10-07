@@ -47,9 +47,9 @@ const EconomicHeader4 = ({
   };
   console.log(activeMonth, "test month value chnages");
   const [errors, setErrors] = useState({
-    organization: "Please select an organization",
-    corporate: "Please select a location",
-    year: year ? "" : "Please select a year",
+    organization: "Please select Organisation",
+    corporate: "Please select Corporate",
+    year: year ? "" : "Please select year",
   });
   const [organisations, setOrganisations] = useState([]);
   const [corporates, setCorporates] = useState([]);
@@ -68,19 +68,19 @@ const EconomicHeader4 = ({
       setYear(value);
       setErrors((prevErrors) => ({
         ...prevErrors,
-        year: value ? "" : "Please select a year",
+        year: value ? "" : "Please select year",
       }));
     } else if (name === "selectedOrg") {
       setSelectedOrg(value);
       setErrors((prevErrors) => ({
         ...prevErrors,
-        organization: value ? "" : "Please select an organization",
+        organization: value ? "" : "Please select Organisation",
       }));
     } else if (name === "selectedCorp") {
       setSelectedCorp(value);
       setErrors((prevErrors) => ({
         ...prevErrors,
-        corporate: value ? "" : "Please select a corporate",
+        corporate: value ? "" : "Please select Corporate",
       }));
     }
   };
@@ -130,7 +130,7 @@ const EconomicHeader4 = ({
     setSelectedCorp("");
     setErrors((prevErrors) => ({
       ...prevErrors,
-      organization: newOrg ? "" : "Please select an organization",
+      organization: newOrg ? "" : "Please select Organisation",
     }));
   };
 
@@ -139,7 +139,7 @@ const EconomicHeader4 = ({
     setSelectedCorp(newCorp);
     setErrors((prevErrors) => ({
       ...prevErrors,
-      corporate: newCorp ? "" : "Please select a corporate",
+      corporate: newCorp ? "" : "Please select Corporate",
     }));
   };
 
@@ -184,7 +184,7 @@ const EconomicHeader4 = ({
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[12px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal ml-1"
                   >
                     Select Organization*
                   </label>
@@ -203,7 +203,7 @@ const EconomicHeader4 = ({
                         ))}
                     </select>
                     {errors.organization && (
-                      <p className="text-red-500 text-[12px] top=16  left-0 pl-2">
+                      <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
                         {errors.organization}
                       </p>
                     )}
@@ -213,7 +213,7 @@ const EconomicHeader4 = ({
                   <div className="mr-2">
                     <label
                       htmlFor="cname"
-                      className="text-neutral-800 text-[12px] font-normal"
+                      className="text-neutral-800 text-[12px] font-normal ml-1"
                     >
                       Select Corporate
                     </label>
@@ -232,7 +232,7 @@ const EconomicHeader4 = ({
                           ))}
                       </select>
                       {errors.corporate && (
-                        <p className="text-red-500 text-[12px] top=16  left-0 pl-2">
+                        <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
                           {errors.corporate}
                         </p>
                       )}
@@ -243,7 +243,7 @@ const EconomicHeader4 = ({
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[12px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal ml-1"
                   >
                     Select year
                   </label>
@@ -262,7 +262,7 @@ const EconomicHeader4 = ({
                       ))}
                     </select>
                     {errors.year && (
-                      <p className="text-red-500 text-[12px] top=16  left-0 pl-2">
+                      <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
                         {errors.year}
                       </p>
                     )}

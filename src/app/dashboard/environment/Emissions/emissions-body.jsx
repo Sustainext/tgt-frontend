@@ -93,11 +93,11 @@ console.log(url,"test datas new");
 
   const handleAccordionClick = () => {
     if (!location) {
-      setLocationError("Please select a location");
+      setLocationError("Please select location");
       return false;
     }
     if (!year) {
-      setYearError("Please select a year");
+      setYearError("Please select year");
       return false;
     }
     setLocationError("");

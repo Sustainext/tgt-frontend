@@ -26,9 +26,9 @@ const GeneralHeader2 = ({
   };
   const [locations, setLocations] = useState([]);
   const [errors, setErrors] = useState({
-    organization: "Please select an organization",
-    corporate: "Please select a location",
-    year: year ? "" : "Please select a year",
+    organization: "Please select Organisation",
+    corporate: "Please select Corporate",
+    year: year ? "" : "Please select year",
   });
 
   const [organisations, setOrganisations] = useState([]);
@@ -48,19 +48,19 @@ const GeneralHeader2 = ({
       setYear(value);
       setErrors((prevErrors) => ({
         ...prevErrors,
-        year: value ? "" : "Please select a year",
+        year: value ? "" : "Please select year",
       }));
     } else if (name === "selectedOrg") {
       setSelectedOrg(value);
       setErrors((prevErrors) => ({
         ...prevErrors,
-        organization: value ? "" : "Please select an organization",
+        organization: value ? "" : "Please select Organisation",
       }));
     } else if (name === "selectedCorp") {
       setSelectedCorp(value);
       setErrors((prevErrors) => ({
         ...prevErrors,
-        corporate: value ? "" : "Please select a corporate",
+        corporate: value ? "" : "Please select Corporate",
       }));
     }
   };
@@ -110,7 +110,7 @@ const GeneralHeader2 = ({
     setSelectedCorp("");
     setErrors((prevErrors) => ({
       ...prevErrors,
-      organization: newOrg ? "" : "Please select an organization",
+      organization: newOrg ? "" : "Please select Organisation",
     }));
   };
 
@@ -119,7 +119,7 @@ const GeneralHeader2 = ({
     setSelectedCorp(newCorp);
     setErrors((prevErrors) => ({
       ...prevErrors,
-      corporate: newCorp ? "" : "Please select a corporate",
+      corporate: newCorp ? "" : "Please select Corporate",
     }));
   };
 
@@ -164,7 +164,7 @@ const GeneralHeader2 = ({
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[12px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal ml-1"
                   >
                     Select Organization*
                   </label>
@@ -183,7 +183,7 @@ const GeneralHeader2 = ({
                         ))}
                     </select>
                     {errors.organization && (
-                      <p className="text-red-500 text-[12px] top=16  left-0 pl-2">
+                      <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
                         {errors.organization}
                       </p>
                     )}
@@ -193,7 +193,7 @@ const GeneralHeader2 = ({
                   <div className="mr-2">
                     <label
                       htmlFor="cname"
-                      className="text-neutral-800 text-[12px] font-normal"
+                      className="text-neutral-800 text-[12px] font-normal ml-1"
                     >
                       Select Corporate
                     </label>
@@ -212,7 +212,7 @@ const GeneralHeader2 = ({
                           ))}
                       </select>
                       {errors.corporate && (
-                        <p className="text-red-500 text-[12px] top=16  left-0 pl-2">
+                        <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
                           {errors.corporate}
                         </p>
                       )}
@@ -223,7 +223,7 @@ const GeneralHeader2 = ({
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[12px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal ml-1"
                   >
                     Select year
                   </label>
@@ -242,7 +242,7 @@ const GeneralHeader2 = ({
                       ))}
                     </select>
                     {errors.year && (
-                      <p className="text-red-500 text-[12px] top=16  left-0 pl-2">
+                      <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
                         {errors.year}
                       </p>
                     )}

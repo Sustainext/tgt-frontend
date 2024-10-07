@@ -249,7 +249,7 @@ console.log(response.data,"responsedata");
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[12px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal ml-1"
                   >
                     Select Corporate
                   </label>

@@ -53,7 +53,7 @@ const Textboxwithfileupload = (props) => {
     <>
       <div className="mb-6">
         <div className="flex relative">
-        <h2 className="mb-2 text-[15px] text-gray-500 font-semibold flex"  style={{ display: uiSchema["ui:hadingdisplay"] }}>
+        <h2 className="mb-2 text-[14px] text-gray-700 font-[500] flex"  style={{ display: uiSchema["ui:hadingdisplay"] }}>
               {uiSchema["ui:hading"]}
 
             </h2>

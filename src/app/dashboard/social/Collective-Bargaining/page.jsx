@@ -41,16 +41,16 @@ const CollectiveBargaining = () => {
 
   return (
     <>
-     <ToastContainer style={{ fontSize: "12px" }} />
+      <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-[80%] relative">
-           <div className="text-left mb-2 ml-3 pt-5">
+            <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-[11px]">Social</p>
               <div className="flex">
-                <div >
+                <div>
                   <p className="gradient-text text-[22px] h-[30px] font-bold pt-1">
-                  Freedom of Association and Collective Bargaining 2016
+                    Freedom of Association and Collective Bargaining 2016
                   </p>
                 </div>
               </div>
@@ -70,14 +70,13 @@ const CollectiveBargaining = () => {
               >
                 SDG 8
               </button>
-
             </div>
           </div>
         </div>
 
-      <div className="ml-3 flex relative">
+        <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Freedom of Association and Collective Bargaining 2016
+            Freedom of Association and Collective Bargaining 2016
             {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />
@@ -130,9 +129,21 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         setYear={setYear}
       />
-      <Screen1 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year}  />
-      <Screen2 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year}  />
-      <Screen3 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year}  />
+      <Screen1
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        year={year}
+      />
+      <Screen2
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        year={year}
+      />
+      <Screen3
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        year={year}
+      />
       {/* <Screen2 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year} month={activeMonth} />
       <Screen3 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year} month={activeMonth} /> */}
     </>

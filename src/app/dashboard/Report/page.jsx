@@ -321,14 +321,14 @@ const Report = () => {
     }
     if (firstSelection === "Organization") {
       if (!selectedOrg) {
-        newErrors.selectedOrgrs = "Please select an organization.";
+        newErrors.selectedOrgrs = "Please select Organisation.";
       }
     } else if (firstSelection === "Corporate") {
       if (!selectedOrg) {
-        newErrors.selectedOrgs = "Please select an organization";
+        newErrors.selectedOrgs = "Please select Organisation";
       }
       if (!selectedCorp) {
-        newErrors.selectedCorp = "Please select a corporate.";
+        newErrors.selectedCorp = "Please select Corporate.";
       }
     }
     if (!startdate) {
