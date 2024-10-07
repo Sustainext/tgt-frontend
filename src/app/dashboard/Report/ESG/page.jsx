@@ -1,6 +1,8 @@
 'use client'
 import { useState, useRef, useEffect } from "react";
 import Sidebar from "./sidebar";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import MissionVission from "./mission-vision/page";
 import AwardsRecognition from "./awards-recognition/page";
 import SustainibilityRoadmap from "./sustainibility-roadmap/page";
@@ -16,31 +18,186 @@ import CustomerProductService from "./customer-product-services/page";
 import People from "./people/page";
 import MessageFromCEO from "./message-from-ceo/page";
 import Environment from "./environment/page";
+import { FaArrowLeftLong } from "react-icons/fa6";
+import { useRouter } from 'next/navigation';
 
 const ESGReport = () => {
+  const router = useRouter()
   const [activeStep, setActiveStep] = useState(1);
   const [reportName,setReportName]=useState("Report")
   const messageFromCeoRef = useRef(); // Use useRef to store a reference to submitForm
   const aboutTheCompany=useRef();
+  const missionVision=useRef();
+  const sustainibilityRoadmap=useRef();
+  const awardAlliances=useRef()
 
-  // Move to the next step when submission is successful
-  const handleNextStep = async () => {
-    if (activeStep === 1) {
-      const isSubmitted = await messageFromCeoRef.current.submitForm(); // Call submitForm for step 1
-      if (isSubmitted) {
-        setActiveStep((prev) => prev + 1); // Only move to the next step if form is successfully submitted
+  const stepRefs = {
+    1: messageFromCeoRef,
+    2: aboutTheCompany,
+    3: missionVision,
+    4: sustainibilityRoadmap,
+    5: awardAlliances,
+  };
+  
+  const handleNextStep = async (type) => {
+    const currentRef = stepRefs[activeStep]?.current;
+  
+    const submitAndProceed = async () => {
+      if (currentRef) {
+        const isSubmitted = await currentRef.submitForm(type);
+        return isSubmitted;
       }
-    } 
-    else if (activeStep===2) {
-      const isSubmitted = await aboutTheCompany.current.submitForm(); // Call submitForm for step 1
+      return true; // Proceed to next step if no form reference exists
+    };
+  
+    const showDraftSavedToast = () => {
+      toast.success(
+        "The data filled in the report has been saved as draft and can be accessed from the report module",
+        {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
+    };
+  
+    if (type === "next") {
+      const isSubmitted = await submitAndProceed();
       if (isSubmitted) {
-        setActiveStep((prev) => prev + 1); // Only move to the next step if form is successfully submitted
+        setActiveStep((prev) => prev + 1);
       }
-    }
-    else{
-      setActiveStep((prev) => prev + 1);
+    } else {
+      const isSubmitted = await submitAndProceed();
+      if (isSubmitted) {
+        showDraftSavedToast();
+        setTimeout(()=>{
+          router.push('/dashboard/Report')
+        },4000)
+      }
     }
   };
+  
+  // const handleNextStep = async (type) => {
+  //   if(type=='next'){
+  //     if (activeStep === 1) {
+  //       const isSubmitted = await messageFromCeoRef.current.submitForm();
+  //       if (isSubmitted) {
+  //         setActiveStep((prev) => prev + 1); 
+  //       }
+  //     } 
+  //     else if (activeStep===2) {
+  //       const isSubmitted = await aboutTheCompany.current.submitForm();
+  //       if (isSubmitted) {
+  //         setActiveStep((prev) => prev + 1);
+  //       }
+  //     }
+  //     else if (activeStep===3) {
+  //       const isSubmitted = await missionVision.current.submitForm();
+  //       if (isSubmitted) {
+  //         setActiveStep((prev) => prev + 1); 
+  //       }
+  //     }
+  //     else if (activeStep===4) {
+  //       const isSubmitted = await sustainibilityRoadmap.current.submitForm();
+  //       if (isSubmitted) {
+  //         setActiveStep((prev) => prev + 1);
+  //       }
+  //     }
+  //     else if (activeStep===5) {
+  //       const isSubmitted = await awardAlliances.current.submitForm();
+  //       if (isSubmitted) {
+  //         setActiveStep((prev) => prev + 1);
+  //       }
+  //     }
+  //     else{
+  //       setActiveStep((prev) => prev + 1);
+  //     }
+  //   }
+  //   else{
+  //     if (activeStep === 1) {
+  //       const isSubmitted = await messageFromCeoRef.current.submitForm();
+  //       if (isSubmitted) {
+  //         toast.success("The data filled in the report has been saved as draft and can be accessed from report module", {
+  //           position: "top-right",
+  //           autoClose: 4000,
+  //           hideProgressBar: false,
+  //           closeOnClick: true,
+  //           pauseOnHover: true,
+  //           draggable: true,
+  //           progress: undefined,
+  //           theme: "light",
+  //         });
+  //       }
+  //     } 
+  //     else if (activeStep===2) {
+  //       const isSubmitted = await aboutTheCompany.current.submitForm();
+  //       if (isSubmitted) {
+  //         toast.success("The data filled in the report has been saved as draft and can be accessed from report module", {
+  //           position: "top-right",
+  //           autoClose: 4000,
+  //           hideProgressBar: false,
+  //           closeOnClick: true,
+  //           pauseOnHover: true,
+  //           draggable: true,
+  //           progress: undefined,
+  //           theme: "light",
+  //         });
+  //       }
+  //     }
+  //     else if (activeStep===3) {
+  //       const isSubmitted = await missionVision.current.submitForm();
+  //       if (isSubmitted) {
+  //         toast.success("The data filled in the report has been saved as draft and can be accessed from report module", {
+  //           position: "top-right",
+  //           autoClose: 4000,
+  //           hideProgressBar: false,
+  //           closeOnClick: true,
+  //           pauseOnHover: true,
+  //           draggable: true,
+  //           progress: undefined,
+  //           theme: "light",
+  //         });
+  //       }
+  //     }
+  //     else if (activeStep===4) {
+  //       const isSubmitted = await sustainibilityRoadmap.current.submitForm();
+  //       if (isSubmitted) {
+  //         toast.success("The data filled in the report has been saved as draft and can be accessed from report module", {
+  //           position: "top-right",
+  //           autoClose: 4000,
+  //           hideProgressBar: false,
+  //           closeOnClick: true,
+  //           pauseOnHover: true,
+  //           draggable: true,
+  //           progress: undefined,
+  //           theme: "light",
+  //         });
+  //       }
+  //     }
+  //     else if (activeStep===5) {
+  //       const isSubmitted = await awardAlliances.current.submitForm();
+  //       if (isSubmitted) {
+  //         toast.success("The data filled in the report has been saved as draft and can be accessed from report module", {
+  //           position: "top-right",
+  //           autoClose: 4000,
+  //           hideProgressBar: false,
+  //           closeOnClick: true,
+  //           pauseOnHover: true,
+  //           draggable: true,
+  //           progress: undefined,
+  //           theme: "light",
+  //         });
+          
+  //       }
+  //     }
+  //   }
+    
+  // };
 
   const handlePreviousStep = () => {
     setActiveStep((prev) => prev - 1);
@@ -63,7 +220,15 @@ const ESGReport = () => {
                 <div className="text-left mb-3 ml-3 pt-3">
                   <div className="flex">
                     <div>
-                      <p className="gradient-text text-[22px] font-bold pt-4 pb-4 ml-3">
+                      <button 
+                      onClick={()=>{
+                        handleNextStep('back')
+                      }}
+                      className="text-[12px] text-[#667085] flex gap-2 ml-3">
+                        <FaArrowLeftLong className="w-3 h-3 mt-1"/>
+                        Back to Reports
+                      </button>
+                      <p className="gradient-text text-[22px] font-bold pt-3 pb-3 ml-3">
                        {reportName}
                       </p>
                     </div>
@@ -92,7 +257,9 @@ const ESGReport = () => {
                           ? "bg-gray-300"
                           : "bg-blue-500 text-white"
                       } px-3 py-1.5 rounded ml-2 font-semibold w-[100px]`}
-                      onClick={handleNextStep}// Call the form submit and next step handler
+                      onClick={()=>{
+                        handleNextStep('next')
+                      }}// Call the form submit and next step handler
                       disabled={activeStep === 15}
                     >
                       Next &gt;
@@ -123,21 +290,21 @@ const ESGReport = () => {
               {activeStep === 3 && (
                 <div>
                   <div className="mb-4">
-                    <MissionVission />
+                    <MissionVission ref={missionVision} />
                   </div>
                 </div>
               )}
               {activeStep === 4 && (
                 <div>
                   <div className="mb-4">
-                    <SustainibilityRoadmap />
+                    <SustainibilityRoadmap ref={sustainibilityRoadmap} />
                   </div>
                 </div>
               )}
               {activeStep === 5 && (
                 <div>
                   <div className="mb-4">
-                    <AwardsRecognition />
+                    <AwardsRecognition ref={awardAlliances} />
                   </div>
                 </div>
               )}
@@ -215,6 +382,7 @@ const ESGReport = () => {
           </div>
         </div>
       </div>
+      <ToastContainer/>
     </>
   );
 };

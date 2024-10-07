@@ -131,7 +131,7 @@ const Companyoperations= forwardRef(({ onSubmitSuccess }, ref) =>
   const LoaderClose = () => {
     setLoOpen(false);
   };
-const submitForm = async () => {
+const submitForm = async (type) => {
     LoaderOpen();
     const data={
       "about_the_company":about_the_company,
@@ -145,6 +145,7 @@ const submitForm = async () => {
         const response = await axiosInstance.put(url, data);
 
         if (response.status === 200) {
+          if(type=='next'){
             toast.success("Data added successfully", {
                 position: "top-right",
                 autoClose: 3000,
@@ -155,6 +156,7 @@ const submitForm = async () => {
                 progress: undefined,
                 theme: "light",
             });
+        }
             if (onSubmitSuccess) {
                 onSubmitSuccess(true); // Notify the parent of successful submission
             }
@@ -276,7 +278,7 @@ useEffect(() => {
             </p>
           </div>
         </div>
-        <ToastContainer />
+       
       </div>
       {loopen && (
           <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
