@@ -120,8 +120,12 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
           console.log(errors);
         }
       } else if (activeTab.startsWith("superSet") && iframeRef.current) {
-        // Refresh Superset dashboard
-        iframeRef.current.contentWindow.postMessage('reload', '*');
+        const iframe = iframeRef.current;
+        const currentSrc = iframe.src;
+        iframe.src = '';
+        setTimeout(() => {
+          iframe.src = currentSrc;
+        }, 100);
         console.log("Superset dashboard refresh triggered");
       }
     };
