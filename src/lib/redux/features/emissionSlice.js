@@ -49,12 +49,22 @@ export const fetchPreviousMonthData = createAsyncThunk(
       prevYear = year - 1;
     }
 
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=gri-environment-emissions-301-a-scope-1&&client_id=1&&user_id=1&&location=${location}&&year=${prevYear}&&month=${prevMonth}`;
+    const scopeBaseUrl = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?`;
+    const scope1Url = `${scopeBaseUrl}path_slug=gri-environment-emissions-301-a-scope-1&&client_id=1&&user_id=1&&location=${location}&&year=${prevYear}&&month=${prevMonth}`;
+    const scope2Url = `${scopeBaseUrl}path_slug=gri-environment-emissions-301-a-scope-2&&client_id=1&&user_id=1&&location=${location}&&year=${prevYear}&&month=${prevMonth}`;
+    const scope3Url = `${scopeBaseUrl}path_slug=gri-environment-emissions-301-a-scope-3&&client_id=1&&user_id=1&&location=${location}&&year=${prevYear}&&month=${prevMonth}`;
 
     try {
-      const response = await axiosInstance.get(url);
+      const [scope1Response, scope2Response, scope3Response] = await Promise.all([
+        axiosInstance.get(scope1Url),
+        axiosInstance.get(scope2Url),
+        axiosInstance.get(scope3Url)
+      ]);
+
       return {
-        data: response.data.form_data[0],
+        scope1Data: scope1Response.data.form_data[0],
+        scope2Data: scope2Response.data.form_data[0],
+        scope3Data: scope3Response.data.form_data[0],
         params: { location, year: prevYear, month: prevMonth }
       };
     } catch (error) {
@@ -132,14 +142,17 @@ const emissionsSlice = createSlice({
       params: null
     },
     previousMonthData: {
-      data: null,
+      scope1Data: null,
+      scope2Data: null,
+      scope3Data: null,
       status: 'idle',
       error: null,
       params: null
     },
     updateScopeStatus: 'idle',
     updateScopeError: null,
-    updateScopeParams: null
+    updateScopeParams: null,
+    autoFill: false,
   },
   reducers: {
     setLocation: (state, action) => {
@@ -157,7 +170,9 @@ const emissionsSlice = createSlice({
     },
     resetPreviousMonthData: (state) => {
       state.previousMonthData = {
-        data: null,
+        scope1Data: null,
+        scope2Data: null,
+        scope3Data: null,
         status: 'idle',
         error: null,
         params: null
@@ -225,10 +240,12 @@ const emissionsSlice = createSlice({
         state.previousMonthData.status = 'loading';
       })
       .addCase(fetchPreviousMonthData.fulfilled, (state, action) => {
+        state.previousMonthData.scope1Data = action.payload.scope1Data;
+        state.previousMonthData.scope2Data = action.payload.scope2Data;
+        state.previousMonthData.scope3Data = action.payload.scope3Data;
         state.previousMonthData.error = null;
         state.previousMonthData.status = 'succeeded';
         state.previousMonthData.params = action.payload.params;
-        state.previousMonthData.data = action.payload.data;
       })
       .addCase(fetchPreviousMonthData.rejected, (state, action) => {
         state.previousMonthData.status = 'failed';

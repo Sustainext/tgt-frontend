@@ -26,6 +26,7 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
     },
     operator: "In",
     values: [loadFromLocalStorage('client_key')]
+    // values: ["8d44f5f4-8e58-4032-aa0a-4ff022288f7c"]
 };
 
   const tabs = [
@@ -35,6 +36,7 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
     { id: "powerbiEnergy", label: "Energy (PowerBI)" },
     { id: "powerbiWaste", label: "Waste (PowerBI)" },
     { id: "superSetWaste", label: "Waste (Superset)" },
+    { id: "powerbiWater", label: "Water & Effluents (PowerBI)" },
   ];
 
   useEffect(() => {
@@ -87,6 +89,9 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
       case "powerbiWaste":
         reportConfig = dashboardData.find(item => item.waste)?.waste;
         break;
+        case "powerbiWater":
+          reportConfig = dashboardData.find(item => item.water_and_effluents)?.water_and_effluents;
+          break;
       default:
         return null;
     }

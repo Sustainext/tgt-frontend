@@ -32,6 +32,9 @@ const Scope1 = forwardRef(
     const dispatch = useDispatch();
 
     const scope1State = useSelector((state) => state.emissions.scope1Data);
+    const climatiqData = useSelector((state) => state.emissions.climatiqData);
+    const previousMonthData = useSelector((state) => state.emissions.previousMonthData);
+    const autoFill = useSelector((state) => state.emissions.autoFill);
 
     const [r_schema, setRemoteSchema] = useState({});
     const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -136,11 +139,37 @@ const Scope1 = forwardRef(
     }, []);
 
     useEffect(() => {
-      if (scope1State.status === 'succeeded') {
+      if (scope1State.status === 'succeeded' && scope1State.schema && scope1State.uiSchema) {
         setRemoteSchema(scope1State.schema);
         setRemoteUiSchema(scope1State.uiSchema);
       }
-    }, [scope1State]);
+    }, [scope1State.status, scope1State.schema, scope1State.uiSchema]);
+
+    useEffect(() => {
+      if (autoFill && previousMonthData.status === 'succeeded') {
+        const prevMonthFormData = previousMonthData.scope1Data?.data || [];
+        
+        const formattedPrevMonthData = prevMonthFormData.map(item => {
+          const updatedEmission = { ...item.Emission };
+          
+          updatedEmission.Unit = '';
+          updatedEmission.Quantity = '';
+          
+          if (updatedEmission.unit_type && updatedEmission.unit_type.includes('Over')) {
+            updatedEmission.Unit2 = '';
+            updatedEmission.Quantity2 = '';
+          }
+          
+          return {
+            ...item,
+            Emission: updatedEmission
+          };
+        });
+        
+        const currentFormData = formData.length > 0 ? formData : formattedPrevMonthData;
+        dispatch(updateScopeDataLocal({ scope: 1, data: { data: currentFormData } }));
+      }
+    }, [climatiqData.totalScore, previousMonthData]);
 
     if (scope1State.status === 'loading') {
       return (

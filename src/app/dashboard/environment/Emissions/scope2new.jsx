@@ -32,6 +32,9 @@ const Scope2 = forwardRef(
     const dispatch = useDispatch();
 
     const scope2State = useSelector((state) => state.emissions.scope2Data);
+    const climatiqData = useSelector((state) => state.emissions.climatiqData);
+    const previousMonthData = useSelector((state) => state.emissions.previousMonthData);
+    const autoFill = useSelector((state) => state.emissions.autoFill);
 
     const [r_schema, setRemoteSchema] = useState({});
     const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -139,6 +142,32 @@ const Scope2 = forwardRef(
         setRemoteUiSchema(scope2State.uiSchema);
       }
     }, [scope2State]);
+
+    useEffect(() => {
+      if (autoFill && previousMonthData.status === 'succeeded') {
+        const prevMonthFormData = previousMonthData.scope2Data?.data || [];
+        
+        const formattedPrevMonthData = prevMonthFormData.map(item => {
+          const updatedEmission = { ...item.Emission };
+          
+          updatedEmission.Unit = '';
+          updatedEmission.Quantity = '';
+          
+          if (updatedEmission.unit_type && updatedEmission.unit_type.includes('Over')) {
+            updatedEmission.Unit2 = '';
+            updatedEmission.Quantity2 = '';
+          }
+          
+          return {
+            ...item,
+            Emission: updatedEmission
+          };
+        });
+        
+        const currentFormData = formData.length > 0 ? formData : formattedPrevMonthData;
+        dispatch(updateScopeDataLocal({ scope: 2, data: { data: currentFormData } }));
+      }
+    }, [climatiqData.totalScore, previousMonthData]);
 
     if (scope2State.status === 'loading') {
       return (
