@@ -3,7 +3,7 @@ import axiosInstance from "@/app/utils/axiosMiddleware";
 
 
 const Screen4Slice = createSlice({
-  name: 'description',
+  name: 'sustainibilityRoadmap',
   initialState: {
     description:'',
     error: null

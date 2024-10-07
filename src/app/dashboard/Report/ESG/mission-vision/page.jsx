@@ -62,7 +62,7 @@ const MissionVission=forwardRef(({ onSubmitSuccess }, ref) => {
                 return true; 
             
             } else {
-                toast.error("Oops, something went wrong 1", {
+                toast.error("Oops, something went wrong", {
                     position: "top-right",
                     autoClose: 1000,
                     hideProgressBar: false,
@@ -78,7 +78,7 @@ const MissionVission=forwardRef(({ onSubmitSuccess }, ref) => {
             }
         } catch (error) {
           LoaderClose();
-            toast.error("Oops, something went wrong 2", {
+            toast.error("Oops, something went wrong", {
                 position: "top-right",
                 autoClose: 1000,
                 hideProgressBar: false,
@@ -131,7 +131,7 @@ const MissionVission=forwardRef(({ onSubmitSuccess }, ref) => {
             {/* page sidebar */}
             <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[500px] top-36 sticky  w-[20%]">
                 <p className="text-[11px] text-[#727272] mb-2">
-                MISSION, VISION, AND VALUES
+                3. MISSION, VISION, AND VALUES
                 </p>
                 <p className="text-[12px] text-blue-400 mb-2">
                 1. Mission, Vision, and Values

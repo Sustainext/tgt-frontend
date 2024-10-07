@@ -29,7 +29,9 @@ const ESGReport = () => {
   const aboutTheCompany=useRef();
   const missionVision=useRef();
   const sustainibilityRoadmap=useRef();
-  const awardAlliances=useRef()
+  const awardAlliances=useRef();
+  const stakeholderEngagement=useRef();
+  const aboutReport =useRef();
 
   const stepRefs = {
     1: messageFromCeoRef,
@@ -37,6 +39,8 @@ const ESGReport = () => {
     3: missionVision,
     4: sustainibilityRoadmap,
     5: awardAlliances,
+    6: stakeholderEngagement,
+    7: aboutReport
   };
   
   const handleNextStep = async (type) => {
@@ -311,14 +315,14 @@ const ESGReport = () => {
               {activeStep === 6 && (
                 <div>
                   <div className="mb-4">
-                    <StakeholderEngagement />
+                    <StakeholderEngagement ref={stakeholderEngagement} />
                   </div>
                 </div>
               )}
               {activeStep === 7 && (
                 <div>
                   <div className="mb-4">
-                    <AboutTheReport />
+                    <AboutTheReport ref={aboutReport} />
                   </div>
                 </div>
               )}

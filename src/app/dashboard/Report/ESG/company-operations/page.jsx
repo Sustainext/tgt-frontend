@@ -164,7 +164,7 @@ const submitForm = async (type) => {
             return true; 
         
         } else {
-            toast.error("Oops, something went wrong 1", {
+            toast.error("Oops, something went wrong", {
                 position: "top-right",
                 autoClose: 1000,
                 hideProgressBar: false,
@@ -180,7 +180,7 @@ const submitForm = async (type) => {
         }
     } catch (error) {
       LoaderClose();
-        toast.error("Oops, something went wrong 2", {
+        toast.error("Oops, something went wrong", {
             position: "top-right",
             autoClose: 1000,
             hideProgressBar: false,
@@ -243,7 +243,7 @@ useEffect(() => {
           </div>
           {/* page sidebar */}
           <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[500px] top-36 sticky mt-2 w-[20%]">
-            <p className="text-[11px] text-[#727272] mb-2 uppercase">About the company and operations</p>
+            <p className="text-[11px] text-[#727272] mb-2 uppercase">2. About the company and operations</p>
             <p
               className={`text-[12px] mb-2 cursor-pointer ${
                 activeSection === 'section2_1' ? 'text-blue-400' : ''

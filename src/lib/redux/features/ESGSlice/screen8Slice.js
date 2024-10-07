@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from "@/app/utils/axiosMiddleware";
 
 
-const Screen5Slice = createSlice({
-  name: 'awards',
+const Screen8Slice = createSlice({
+  name: 'materilaity',
   initialState: {
     description:'',
     error: null
@@ -18,6 +18,6 @@ const Screen5Slice = createSlice({
 
 export const {
     setdescription
-} = Screen5Slice.actions;
+} = Screen8Slice.actions;
 
-export default Screen5Slice.reducer;
+export default Screen8Slice.reducer;

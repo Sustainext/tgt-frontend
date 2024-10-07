@@ -168,7 +168,7 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
                     </div>
                     <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[500px] top-36 sticky w-[20%]">
                         <p className="text-[11px] text-[#727272] mb-2 uppercase">
-                            Message from CEO
+                            1. Message from CEO
                         </p>
                         <p className="text-[12px] text-blue-400 mb-2">
                             1. Message from CEO
