@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { GiPublicSpeaker } from "react-icons/gi";
 import { MdRefresh } from "react-icons/md";
