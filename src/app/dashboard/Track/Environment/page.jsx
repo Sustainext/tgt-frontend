@@ -1,8 +1,5 @@
-"use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { GiPublicSpeaker } from "react-icons/gi";
-// import { PowerBIEmbed } from "powerbi-client-react";
-// import { models } from "powerbi-client";
 import axiosInstance from '../../../utils/axiosMiddleware';
 import dynamic from 'next/dynamic'
 import { loadFromLocalStorage } from "@/app/utils/storage";
@@ -17,17 +14,17 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
   const [powerBIToken, setPowerBIToken] = useState(null);
   const [models, setModels] = useState(null);
   const { width, height } = contentSize || { width: 800, height: 600 };
-  // const [filter, setFilter] = useState()
+  const iframeRef = useRef(null);
+
   const filter = {
     $schema: "http://powerbi.com/product/schema#basic",
     target: {
-        table: "Client_Info",
-        column: "uuid"
+      table: "Client_Info",
+      column: "uuid"
     },
     operator: "In",
     values: [loadFromLocalStorage('client_key')]
-    // values: ["8d44f5f4-8e58-4032-aa0a-4ff022288f7c"]
-};
+  };
 
   const tabs = [
     { id: "zohoEmissions", label: "Emissions (Zoho)" },
@@ -36,7 +33,6 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
     { id: "powerbiEnergy", label: "Energy (PowerBI)" },
     { id: "powerbiWaste", label: "Waste (PowerBI)" },
     { id: "superSetWaste", label: "Waste (Superset)" },
-    { id: "powerbiWater", label: "Water & Effluents (PowerBI)" },
   ];
 
   useEffect(() => {
@@ -89,9 +85,6 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
       case "powerbiWaste":
         reportConfig = dashboardData.find(item => item.waste)?.waste;
         break;
-        case "powerbiWater":
-          reportConfig = dashboardData.find(item => item.water_and_effluents)?.water_and_effluents;
-          break;
       default:
         return null;
     }
@@ -118,22 +111,25 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
   };
 
   useEffect(() => {
-    const refreshReport = async () => {
-      if (window.report) {
+    const refreshDashboard = async () => {
+      if (activeTab.startsWith("powerbi") && window.report) {
         try {
           await window.report.refresh();
-          console.log("Report refreshed");
+          console.log("PowerBI report refreshed");
         } catch (errors) {
           console.log(errors);
         }
+      } else if (activeTab.startsWith("superSet") && iframeRef.current) {
+        // Refresh Superset dashboard
+        iframeRef.current.contentWindow.postMessage('reload', '*');
+        console.log("Superset dashboard refresh triggered");
       }
     };
-    const intervalId = setInterval(() => {
-      refreshReport();
-    }, 15000);
+
+    const intervalId = setInterval(refreshDashboard, 15000);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [activeTab]);
 
   const embedContainerStyle = {
     width: `${width}px`,
@@ -202,6 +198,7 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
           </div>
         ) : getIframeUrl(activeTab) ? (
           <iframe
+            ref={iframeRef}
             frameBorder="0"
             width={width}
             height={height - 50}
