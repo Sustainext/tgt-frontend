@@ -161,13 +161,13 @@ const Screen1 = ({ selectedOrg, selectedCorp, selectedLocation, year, month }) =
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold mb-2">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
             Report the opportunitites posed by climate change that have the potential to generate substantive changes in operations, revenue, or expenditure of the organisation including:
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e88`}
                 data-tooltip-content="Mention risks posed by climate change that have the potential to generate
 substantive changes in operations, revenue, or expenditure of the organisation. "
-                className="mt-1.5 ml-2 text-[24px]"
+               className="mt-1.5 ml-1 text-[16px]"
               />
               <ReactTooltip
                 id={`tooltip-$e88`}

@@ -186,7 +186,7 @@ const Screen3 = ({ selectedOrg, year, selectedCorp,month }) => {
       >
         <div className="flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
             Total number of confirmed incidents when contracts with business partners were terminated or not renewed due to violations related to corruption
               <MdInfoOutline
                 data-tooltip-id={`es33`}

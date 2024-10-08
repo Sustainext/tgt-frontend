@@ -176,13 +176,13 @@ const Criteria = ({ selectedOrg, selectedCorp, year }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Criteria used for nomination and selection of highest governance
               body member
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
                 data-tooltip-content="This section documents data corresponding to the criteria used for nomination and selection of highest governance body members, including whether and how the views of stakeholders (including shareholders), diversity, independence, competencies relevant to the impacts of the organization are taken into consideration."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e1`}

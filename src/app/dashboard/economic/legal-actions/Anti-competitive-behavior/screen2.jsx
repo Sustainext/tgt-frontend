@@ -200,14 +200,14 @@ const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold mb-2">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Mention main outcomes of completed legal actions, including any
               decisions or judgements
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e18`}
                 data-tooltip-content="Mention main outcomes of completed legal actions,
 including any decisions or judgements in detail."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e18`}

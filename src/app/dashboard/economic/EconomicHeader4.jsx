@@ -150,7 +150,7 @@ const EconomicHeader4 = ({
           <div className="mt-4 pb-3 mx-5 text-left">
             <div className="mb-2 flex-col items-center">
               <div className="justify-start items-center gap-4 inline-flex">
-                <div className="text-zinc-600 text-[15px] font-semibold font-['Manrope']">
+                <div className="text-zinc-600 text-[12px] font-semibold font-['Manrope']">
                   Add By:
                 </div>
                 <div className="rounded-lg shadow border border-gray-300 justify-start items-start flex">
@@ -160,7 +160,7 @@ const EconomicHeader4 = ({
                     }`}
                     onClick={() => handleReportTypeChange("Organization")}
                   >
-                    <div className="text-slate-800 text-[13px] font-medium font-['Manrope'] leading-tight">
+                    <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
                       Organization
                     </div>
                   </div>
@@ -170,7 +170,7 @@ const EconomicHeader4 = ({
                     }`}
                     onClick={() => handleReportTypeChange("Corporate")}
                   >
-                    <div className="text-slate-700 text-[13px] font-medium font-['Manrope'] leading-tight">
+                    <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
                       Corporate
                     </div>
                   </div>
@@ -184,13 +184,13 @@ const EconomicHeader4 = ({
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[13px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal"
                   >
                     Select Organization*
                   </label>
                   <div className="mt-2">
                     <select
-                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                       value={selectedOrg}
                       onChange={handleOrgChange}
                     >
@@ -203,7 +203,7 @@ const EconomicHeader4 = ({
                         ))}
                     </select>
                     {errors.organization && (
-                      <p className="text-red-500 text-sm top=16  left-0 pl-2">
+                      <p className="text-red-500 text-[12px] top=16  left-0 pl-2">
                         {errors.organization}
                       </p>
                     )}
@@ -213,13 +213,13 @@ const EconomicHeader4 = ({
                   <div className="mr-2">
                     <label
                       htmlFor="cname"
-                      className="text-neutral-800 text-[13px] font-normal"
+                      className="text-neutral-800 text-[12px] font-normal"
                     >
                       Select Corporate
                     </label>
                     <div className="mt-2">
                       <select
-                        className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                         value={selectedCorp}
                         onChange={handleCorpChange}
                       >
@@ -232,7 +232,7 @@ const EconomicHeader4 = ({
                           ))}
                       </select>
                       {errors.corporate && (
-                        <p className="text-red-500 text-sm top=16  left-0 pl-2">
+                        <p className="text-red-500 text-[12px] top=16  left-0 pl-2">
                           {errors.corporate}
                         </p>
                       )}
@@ -243,14 +243,14 @@ const EconomicHeader4 = ({
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[13px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal"
                   >
                     Select year
                   </label>
                   <div className="mt-2">
                     <select
                       name="year"
-                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                       value={formState.year}
                       onChange={handleChange}
                     >
@@ -262,7 +262,7 @@ const EconomicHeader4 = ({
                       ))}
                     </select>
                     {errors.year && (
-                      <p className="text-red-500 text-sm top=16  left-0 pl-2">
+                      <p className="text-red-500 text-[12px] top=16  left-0 pl-2">
                         {errors.year}
                       </p>
                     )}

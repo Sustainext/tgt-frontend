@@ -18,13 +18,20 @@ export const fetchEmissionsData = createAsyncThunk(
         axiosInstance.get(scope1Url),
         axiosInstance.get(scope2Url),
         axiosInstance.get(scope3Url)
-      ]);
+      ]);      
 
       return {
         climatiqData: climatiqResponse.data,
-        scope1Data: scope1Response.data.form_data[0].data,
-        scope2Data: scope2Response.data.form_data[0].data,
-        scope3Data: scope3Response.data.form_data[0].data
+        scope1Data: scope1Response.data.form_data[0],
+        scope1Schema: scope1Response.data.form[0].schema,
+        scope1UiSchema: scope1Response.data.form[0].ui_schema,
+        scope2Data: scope2Response.data.form_data[0],
+        scope2Schema: scope2Response.data.form[0].schema,
+        scope2UiSchema: scope2Response.data.form[0].ui_schema,
+        scope3Data: scope3Response.data.form_data[0],
+        scope3Schema: scope3Response.data.form[0].schema,
+        scope3UiSchema: scope3Response.data.form[0].ui_schema,
+        params: { location, year, month }
       };
     } catch (error) {
       throw error;
@@ -42,13 +49,49 @@ export const fetchPreviousMonthData = createAsyncThunk(
       prevYear = year - 1;
     }
 
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=gri-environment-emissions-301-a-scope-1&&client_id=1&&user_id=1&&location=${location}&&year=${prevYear}&&month=${prevMonth}`;
+    const scopeBaseUrl = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?`;
+    const scope1Url = `${scopeBaseUrl}path_slug=gri-environment-emissions-301-a-scope-1&&client_id=1&&user_id=1&&location=${location}&&year=${prevYear}&&month=${prevMonth}`;
+    const scope2Url = `${scopeBaseUrl}path_slug=gri-environment-emissions-301-a-scope-2&&client_id=1&&user_id=1&&location=${location}&&year=${prevYear}&&month=${prevMonth}`;
+    const scope3Url = `${scopeBaseUrl}path_slug=gri-environment-emissions-301-a-scope-3&&client_id=1&&user_id=1&&location=${location}&&year=${prevYear}&&month=${prevMonth}`;
 
     try {
-      const response = await axiosInstance.get(url);
-      return response.data.form_data[0].data;
+      const [scope1Response, scope2Response, scope3Response] = await Promise.all([
+        axiosInstance.get(scope1Url),
+        axiosInstance.get(scope2Url),
+        axiosInstance.get(scope3Url)
+      ]);
+
+      return {
+        scope1Data: scope1Response.data.form_data[0],
+        scope2Data: scope2Response.data.form_data[0],
+        scope3Data: scope3Response.data.form_data[0],
+        params: { location, year: prevYear, month: prevMonth }
+      };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const updateScopeData = createAsyncThunk(
+  'emissions/updateScopeData',
+  async ({ scope, data, location, year, month }) => {
+    const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
+    const body = {
+      client_id: 1,
+      user_id: 1,
+      path: `gri-environment-emissions-301-a-scope-${scope}`,
+      form_data: data.data,
+      location,
+      year,
+      month,
+    };
+
+    try {
+      const response = await axiosInstance.post(url, body);
+      return { scope, data: response.data, params: { location, year, month } };
+    } catch (error) {
+      throw error;
     }
   }
 );
@@ -56,7 +99,7 @@ export const fetchPreviousMonthData = createAsyncThunk(
 const calculateTotalClimatiqScore = (data) => {
   if (data && data.result && Array.isArray(data.result)) {
     const total = data.result.reduce((sum, item) => sum + (item.co2e || 0), 0);
-    return (total / 1000).toFixed(3); // Convert to tCO2e and round to 3 decimal places
+    return (total / 1000).toFixed(3);
   }
   return 0;
 };
@@ -64,71 +107,158 @@ const calculateTotalClimatiqScore = (data) => {
 const emissionsSlice = createSlice({
   name: 'emissions',
   initialState: {
+    location: '',
+    year: '',
+    month: 1,
     climatiqData: {
       rawData: {},
-      totalScore: 0
+      totalScore: 0,
+      status: 'idle',
+      error: null,
+      params: null
     },
-    scope1Data: [],
-    scope2Data: [],
-    scope3Data: [],
-    previousMonthData: null,
-    status: 'idle',
-    error: null
+    scope1Data: {
+      data: [],
+      schema:{},
+      uiSchema: {},
+      status: 'idle',
+      error: null,
+      params: null
+    },
+    scope2Data: {
+      data: [],
+      schema:{},
+      uiSchema: {},
+      status: 'idle',
+      error: null,
+      params: null
+    },
+    scope3Data: {
+      data: [],
+      schema:{},
+      uiSchema: {},
+      status: 'idle',
+      error: null,
+      params: null
+    },
+    previousMonthData: {
+      scope1Data: null,
+      scope2Data: null,
+      scope3Data: null,
+      status: 'idle',
+      error: null,
+      params: null
+    },
+    updateScopeStatus: 'idle',
+    updateScopeError: null,
+    updateScopeParams: null,
+    autoFill: false,
   },
   reducers: {
-    setClimatiqData: (state, action) => {
-      state.climatiqData.rawData = action.payload;
-      state.climatiqData.totalScore = calculateTotalClimatiqScore(action.payload);
+    setLocation: (state, action) => {
+      state.location = action.payload;
     },
-    setScope1Data: (state, action) => {
-      state.scope1Data = action.payload;
+    setYear: (state, action) => {
+      state.year = action.payload;
     },
-    setScope2Data: (state, action) => {
-      state.scope2Data = action.payload;
+    setMonth: (state, action) => {
+      state.month = action.payload;
     },
-    setScope3Data: (state, action) => {
-      state.scope3Data = action.payload;
+    updateScopeDataLocal: (state, action) => {
+      const { scope, data } = action.payload;
+      state[`scope${scope}Data`].data = data;
     },
     resetPreviousMonthData: (state) => {
-      state.previousMonthData = null;
+      state.previousMonthData = {
+        scope1Data: null,
+        scope2Data: null,
+        scope3Data: null,
+        status: 'idle',
+        error: null,
+        params: null
+      };
     }
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchEmissionsData.pending, (state) => {
-        state.status = 'loading';
+        state.climatiqData.status = 'loading';
+        state.scope1Data.status = 'loading';
+        state.scope2Data.status = 'loading';
+        state.scope3Data.status = 'loading';
       })
       .addCase(fetchEmissionsData.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.climatiqData.status = 'succeeded';
+        state.scope1Data.status = 'succeeded';
+        state.scope2Data.status = 'succeeded';
+        state.scope3Data.status = 'succeeded';
+        
         state.climatiqData.rawData = action.payload.climatiqData;
         state.climatiqData.totalScore = calculateTotalClimatiqScore(action.payload.climatiqData);
-        state.scope1Data = action.payload.scope1Data;
-        state.scope2Data = action.payload.scope2Data;
-        state.scope3Data = action.payload.scope3Data;
+        state.scope1Data.data = action.payload.scope1Data;
+        state.scope2Data.data = action.payload.scope2Data;
+        state.scope3Data.data = action.payload.scope3Data;
+
+        state.scope1Data.schema = action.payload.scope1Schema;
+        state.scope2Data.schema = action.payload.scope2Schema;
+        state.scope3Data.schema = action.payload.scope3Schema;
+
+        state.scope1Data.uiSchema = action.payload.scope1UiSchema;
+        state.scope2Data.uiSchema = action.payload.scope2UiSchema;
+        state.scope3Data.uiSchema = action.payload.scope3UiSchema;
+
+        state.climatiqData.params = action.payload.params;
+        state.scope1Data.params = action.payload.params;
+        state.scope2Data.params = action.payload.params;
+        state.scope3Data.params = action.payload.params;
       })
       .addCase(fetchEmissionsData.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
+        state.climatiqData.status = 'failed';
+        state.scope1Data.status = 'failed';
+        state.scope2Data.status = 'failed';
+        state.scope3Data.status = 'failed';
+        
+        state.climatiqData.error = action.error.message;
+        state.scope1Data.error = action.error.message;
+        state.scope2Data.error = action.error.message;
+        state.scope3Data.error = action.error.message;
+      })
+      .addCase(updateScopeData.pending, (state) => {
+        state.updateScopeStatus = 'loading';
+      })
+      .addCase(updateScopeData.fulfilled, (state, action) => {
+        state.updateScopeStatus = 'succeeded';
+        const { scope, data, params } = action.payload;
+        state[`scope${scope}Data`].data = data;
+        state.updateScopeParams = params;
+      })
+      .addCase(updateScopeData.rejected, (state, action) => {
+        state.updateScopeStatus = 'failed';
+        state.updateScopeError = action.error.message;
       })
       .addCase(fetchPreviousMonthData.pending, (state) => {
-        state.status = 'loading';
+        state.previousMonthData.status = 'loading';
       })
       .addCase(fetchPreviousMonthData.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.previousMonthData = action.payload;
+        state.previousMonthData.scope1Data = action.payload.scope1Data;
+        state.previousMonthData.scope2Data = action.payload.scope2Data;
+        state.previousMonthData.scope3Data = action.payload.scope3Data;
+        state.previousMonthData.error = null;
+        state.previousMonthData.status = 'succeeded';
+        state.previousMonthData.params = action.payload.params;
       })
       .addCase(fetchPreviousMonthData.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
+        state.previousMonthData.status = 'failed';
+        state.previousMonthData.error = action.error.message;
       });
   }
 });
 
 export const {
-  setClimatiqData,
-  setScope1Data,
-  setScope2Data,
-  setScope3Data,
+  setLocation,
+  setYear,
+  setMonth,
+  updateScopeDataLocal,
   resetPreviousMonthData
 } = emissionsSlice.actions;
 

@@ -177,13 +177,13 @@ const Process = ({ selectedOrg, selectedCorp, year }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Processes for evaluating the performance of the highest governance
               body
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e5`}
                 data-tooltip-content="This section documents the data corresponding to the processes for evaluating <br/>the performance of the highest governance bodyin overseeing the management of the organization’s impacts on the economy,environment, and people."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e5`}

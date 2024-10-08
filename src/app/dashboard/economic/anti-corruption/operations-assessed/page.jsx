@@ -12,7 +12,7 @@ import Screen2 from "./screen2";
 const Operationsassessed = () => {
   const [activeMonth, setActiveMonth] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
-  const [year, setYear] = useState(2024);
+  const [year, setYear] = useState();
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -81,7 +81,7 @@ const Operationsassessed = () => {
             <MdInfoOutline
               data-tooltip-id={`tooltip-$es35`}
               data-tooltip-content="This section documents the data corresponding to the operations assessed for risks related to corruption."
-              className="mt-1.5 ml-2 text-[14px]"
+              className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
               id={`tooltip-$es35`}

@@ -417,7 +417,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
         <div className="mt-4 pb-3 mx-5 text-left">
           <div className="mb-2 flex-col items-center pt-2  gap-6">
             <div className="justify-start items-center gap-4 inline-flex">
-              <div className="text-zinc-600 text-[15px] font-semibold font-['Manrope']">
+              <div className="text-zinc-600 text-[12px]  font-semibold font-['Manrope']">
                 View By:
               </div>
               <div className="rounded-lg shadow border border-gray-300 justify-start items-start flex">
@@ -426,7 +426,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
                     }`}
                   onClick={() => handleReportTypeChange("Organization")}
                 >
-                  <div className="text-slate-800 text-[13px] font-medium font-['Manrope'] leading-tight">
+                  <div className="text-slate-800 text-[12px]  font-medium font-['Manrope'] leading-tight">
                     Organization
                   </div>
                 </div>
@@ -435,7 +435,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
                     }`}
                   onClick={() => handleReportTypeChange("Corporate")}
                 >
-                  <div className="text-slate-700 text-[13px] font-medium font-['Manrope'] leading-tight">
+                  <div className="text-slate-700 text-[12px]  font-medium font-['Manrope'] leading-tight">
                     Corporate
                   </div>
                 </div>
@@ -444,7 +444,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
                     }`}
                   onClick={() => handleReportTypeChange("Location")}
                 >
-                  <div className="text-slate-700 text-[13px] font-medium font-['Manrope'] leading-tight">
+                  <div className="text-slate-700 text-[12px]  font-medium font-['Manrope'] leading-tight">
                     Location
                   </div>
                 </div>
@@ -457,13 +457,13 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
               <div className="mr-2">
                 <label
                   htmlFor="cname"
-                  className="text-neutral-800 text-[13px] font-normal"
+                  className="text-neutral-800 text-[12px] font-normal"
                 >
                   Select Organization*
                 </label>
                 <div className="mt-2">
                   <select
-                    className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                     value={selectedOrg}
                     onChange={handleOrganizationChange}
                   >
@@ -481,13 +481,13 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[13px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal"
                   >
                     Select Corporate
                   </label>
                   <div className="mt-2">
                     <select
-                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                       value={selectedCorp}
                       onChange={handleOrgChange}
                     >
@@ -506,13 +506,13 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[13px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal"
                   >
                     Select Location
                   </label>
                   <div className="mt-2">
                     <select
-                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                       value={selectedsetLocation}
                       onChange={handleLocationChange}
                     >
@@ -530,7 +530,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
               <div className="mr-2">
                 <label
                   htmlFor="cname"
-                  className="text-neutral-800 text-[13px] font-normal"
+                  className="text-neutral-800 text-[12px] font-normal"
                 >
                   Select Date
                 </label>
@@ -541,7 +541,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
                     onDateChange={handleDateChange}
                   />
                   {!isDateRangeValid && (
-                    <div className="text-red-600 text-xs mt-2">
+                    <div className="text-red-600 text-xs mt-1 ml-1">
                       Please select a valid date range.
                     </div>
                   )}
@@ -552,12 +552,12 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
         </div>
 
       </div>
-      <div className="flex justify-between">
-        <div className={`ps-4 w-[78%] me-4`}>
+      <div className="flex">
+        <div className={`ps-4 w-[100%] me-4`}>
           <div className="mb-6">
             <div
               id="fuelFromRenewable"
-              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
             >
               <p>
                 Fuel Consumption within the organisation from Renewable sources
@@ -573,7 +573,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
           <div className="mb-6">
             <div
               id="fuelFromNonRenewable"
-              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
             >
               <p>
                 Fuel Consumption within the organisation from Non-renewable
@@ -593,7 +593,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
           <div className="mb-6">
             <div
               id="EnergyWithinOrganization"
-              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
             >
               <p>Energy Consumption Within the organisation</p>
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
@@ -607,7 +607,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
           <div className="mb-6">
             <div
               id="DirectFromRenewable"
-              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
             >
               <p>
                 Direct Purchased Heating, Cooling, Electricity and Steam from
@@ -624,7 +624,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
           <div className="mb-6">
             <div
               id="DirectFromNonRenewable"
-              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
             >
               <p>
                 Direct Purchased Heating, Cooling, Electricity and Steam from
@@ -641,7 +641,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
           <div className="mb-6">
             <div
               id="SelfGenFromRenewable"
-              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
             >
               <p>
                 Self Generated Energy - not consumed or sold (Renewable Energy)
@@ -657,7 +657,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
           <div className="mb-6">
             <div
               id="SelfGenFromNonRenewable"
-              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
             >
               <p>
                 Self Generated Energy - not consumed or sold (non-renewable
@@ -674,7 +674,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
           <div className="mb-6">
             <div
               id="EnergySoldRenewable"
-              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
             >
               <p>Energy Sold (Renewable energy)</p>
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
@@ -688,7 +688,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
           <div className="mb-6">
             <div
               id="EnergySoldNonRenewable"
-              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
             >
               <p>Energy Sold (non-renewable energy)</p>
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
@@ -702,7 +702,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
           <div className="mb-6">
             <div
               id="EnergyOutsideOrganization"
-              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
             >
               <p>Energy Consumption outside of the organization</p>
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
@@ -719,7 +719,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
           <div className="mb-6">
             <div
               id="EnergyIntensity"
-              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
             >
               <p>Energy Intensity</p>
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
@@ -733,16 +733,16 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
           <div className="mb-6">
             <div
               id="ReductionOfEnergy"
-              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
             >
               <p>Reduction of energy consumption</p>
               <div className="">
-                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center mx-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 302-5a
                   </div>
                 </div>
-                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center  inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 302-5b
                   </div>
@@ -754,16 +754,16 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
           <div className="mb-6">
             <div
               id="ReductionInEnergyOfPS"
-              className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
             >
               <p>Reductions in energy requirements of products and services</p>
-              <div className="">
-                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+              <div className="gap-4">
+                <div className="w-[70px] h-[26px] p-2  bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center mx-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 302-4a
                   </div>
                 </div>
-                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="w-[70px] h-[26px] p-2  bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center  inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                     GRI 302-4b
                   </div>
@@ -782,7 +782,7 @@ const AnalyseEnergy = ({ isBoxOpen }) => {
             backgroundColor: "white",
             paddingBottom: "1rem",
           }}
-          className="me-8 mb-8 -right-2"
+          className=" mb-8 me-2"
         >
           <TableSidebar />
         </div>

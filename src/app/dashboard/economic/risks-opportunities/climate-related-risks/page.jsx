@@ -13,7 +13,7 @@ import Screen3 from "./screen3";
 const Climaterelatedrisks = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [selectedLocation, setSelectedLocation] = useState("");
-  const [year, setYear] = useState(2024);
+  const [year, setYear] = useState();
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -50,7 +50,7 @@ const Climaterelatedrisks = () => {
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] font-bold pt-1">
-                    Economic Performance
+                  Risks & Opportunities
                   </p>
                 </div>
               </div>
@@ -76,11 +76,11 @@ const Climaterelatedrisks = () => {
 
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Financial implications and other risks and opportunities due to climate change 
+          Climate related Risks (2/3)
             <MdInfoOutline
               data-tooltip-id={`tooltip-$e10`}
-              data-tooltip-content="This section documents the data corresponding to the financial implications and other risks and opportunities due to climate change."
-              className="mt-1.5 ml-2 text-[14px]"
+              data-tooltip-content="This section documents the data corresponding to the climate related risks."
+              className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
               id={`tooltip-$e10`}

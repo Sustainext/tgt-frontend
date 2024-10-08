@@ -12,7 +12,7 @@ import Screen2 from "./screen2"
 const Remuneration = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
-  const [year, setYear] = useState(2024);
+  const [year, setYear] = useState();
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -73,7 +73,7 @@ const Remuneration = () => {
           <h6 className="text-[17px] mb-4 font-semibold flex">
           Remuneration policies highest governance body
             <MdInfoOutline data-tooltip-id={`tooltip-$e10`}
-              data-tooltip-content="This section documents the data corresponding to the remuneration policies." className="mt-1.5 ml-2 text-[14px]" />
+              data-tooltip-content="This section documents the data corresponding to the remuneration policies." className="mt-1.5 ml-2 text-[15px]" />
             <ReactTooltip id={`tooltip-$e10`} place="top" effect="solid" style={{
               width: "290px", backgroundColor: "#000",
               color: "white",

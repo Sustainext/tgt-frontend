@@ -199,7 +199,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Number of new suppliers that were screened using social criteria.
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
@@ -209,7 +209,7 @@ Definition of supplier screening - formal or documented
 process that applies a set of performance criteria as one
 of the factors in determining whether to proceed in a
 relationship with a supplier"
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e1`}

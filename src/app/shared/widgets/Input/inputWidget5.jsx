@@ -58,7 +58,7 @@ const InputWidget5 = (props) => {
       <div className="mb-6">
         <div className="flex mb-2">
           <div className="relative">
-            <p className="text-sm text-gray-700 flex">
+            <p className="text-[12px] text-gray-700 flex">
               {props.uiSchema["ui:title"]}
               <MdInfoOutline
                 data-tooltip-id={`tooltip-${props.uiSchema["ui:title"].replace(/\s+/g, "-")}`}
@@ -102,7 +102,7 @@ const InputWidget5 = (props) => {
                 <div
                   className="flex items-center text-center mt-2"
                 >
-                  <div className="truncate text-sky-600 text-sm flex text-center">
+                  <div className="truncate text-sky-600 text-[12px] flex text-center">
                     <MdFilePresent
                       className="w-6 h-6 mr-1 text-green-500"
                     /> {value.fileName}
@@ -115,7 +115,7 @@ const InputWidget5 = (props) => {
                   <MdOutlineFileUpload
                     className="w-6 h-6 mr-1 text-[#007EEF]"
                   />
-                  <div className="w-[150px] truncate text-[#007EEF] text-sm ml-1">
+                  <div className="w-[150px] truncate text-[#007EEF] text-[12px] ml-1">
                     Upload Documentation
                   </div>
                 </div>
@@ -124,7 +124,7 @@ const InputWidget5 = (props) => {
           </div>
         </div>
         {/* {fileUrl && (
-          <p className="mt-2 text-sm text-gray-500">
+          <p className="mt-2 text-[12px] text-gray-500">
             File uploaded: <a href={fileUrl} target="_blank" rel="noopener noreferrer">{fileUrl}</a>
           </p>
         )} */}

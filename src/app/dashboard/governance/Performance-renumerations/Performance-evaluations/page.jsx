@@ -12,7 +12,7 @@ import { ToastContainer } from "react-toastify";
 
 const PerformanceEvaluations = () => {
   const [activeMonth, setActiveMonth] = useState(1);
-  const [year, setYear] = useState(2024);
+  const [year, setYear] = useState();
   const [data, setData] = useState([]);
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -76,7 +76,7 @@ const PerformanceEvaluations = () => {
           <MdInfoOutline
               data-tooltip-id={`tooltip-$e1`}
               data-tooltip-content="This section documents the data corresponding to the evaluation of the performance of the highest governance body."
-              className="mt-1.5 ml-2 text-[14px]"
+              className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
               id={`tooltip-$e1`}

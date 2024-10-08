@@ -176,11 +176,11 @@ const Screen5 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            {/* <h2 className='flex mx-2 text-[15px] text-gray-500 font-semibold mb-2'>
+            {/*<h2 className="flex mx-2 text-[15px] font-[500] mb-2">
                         Highest governance body processes to prevent conflict of interest
                             <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                                 data-tooltip-content="This section documents the data corresponding to the processes for the highest governance body to ensure that conflicts of
-interest are prevented and mitigated." className="mt-1.5 ml-2 text-[14px]" />
+interest are prevented and mitigated." className="mt-1.5 ml-2 text-[15px]" />
                             <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
                                 width: "290px", backgroundColor: "#000",
                                 color: "white",

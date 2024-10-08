@@ -271,7 +271,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold mb-2">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Workers who are not Employees
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e86`}
@@ -279,7 +279,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
 workers who are not employees but whose work is controlled by your organization.
 It also describes the most common types of these workers,
 their contractual relationships with your organization, and the types of work they perform."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e86`}

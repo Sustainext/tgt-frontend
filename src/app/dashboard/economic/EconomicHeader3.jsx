@@ -66,7 +66,7 @@ const EconomicHeader3 = ({ selectedLocation, setSelectedLocation, year, setYear 
           <div className="relative mb-2">
             <select
               name="location"
-              className="border m-0.5 text-sm text-neutral-500 appearance-none pr-24 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+               className="border m-0.5 text-[12px] text-neutral-500 appearance-none pr-24 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               value={formState.location}
               onChange={handleChange}
             >
@@ -86,12 +86,12 @@ const EconomicHeader3 = ({ selectedLocation, setSelectedLocation, year, setYear 
                 style={{ fontSize: "16px" }}
               />
             </div>
-            {errors.location && <p className="text-red-500 text-sm absolute top-10 left-0 pl-2">{errors.location}</p>}
+            {errors.location && <p className="text-red-500 text-[12px] absolute top-10 left-0 pl-2">{errors.location}</p>}
           </div>
           <div className="ml-3 relative mb-2">
             <select
               name="year"
-              className="border m-0.5 text-sm text-neutral-500 appearance-none pr-32 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+               className="border m-0.5 text-[12px] text-neutral-500 appearance-none pr-32 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               value={formState.year}
               onChange={handleChange}
             >
@@ -111,7 +111,7 @@ const EconomicHeader3 = ({ selectedLocation, setSelectedLocation, year, setYear 
                 style={{ fontSize: "16px" }}
               />
             </div>
-            {errors.year && <p className="text-red-500 text-sm absolute top-10 left-0 pl-2">{errors.year}</p>}
+            {errors.year && <p className="text-red-500 text-[12px] absolute top-10 left-0 pl-2">{errors.year}</p>}
           </div>
         </div>
       </div>

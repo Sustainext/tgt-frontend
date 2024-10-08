@@ -13,7 +13,7 @@ import Screen3 from "./screen3"
 const Entities = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
-  const [year, setYear] = useState(2024);
+  const [year, setYear] = useState();
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -77,7 +77,7 @@ const Entities = () => {
               data-tooltip-id={`tooltip-$e10`}
               data-tooltip-content="This section documents the data corresponding to the  entities included in the organization’s
 sustainability report."
-              className="mt-1.5 ml-2 text-[14px]"
+              className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
               id={`tooltip-$e10`}

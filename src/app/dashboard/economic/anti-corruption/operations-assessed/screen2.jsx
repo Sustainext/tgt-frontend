@@ -186,7 +186,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
             Significant risks related to corruption identified through the risk assessment.
               <MdInfoOutline
                 data-tooltip-id={`es35`}

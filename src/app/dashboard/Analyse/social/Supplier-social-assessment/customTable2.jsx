@@ -12,7 +12,7 @@ const DynamicTable2 = ({ data, columns }) => {
             {columns.map((column, index) => (
               <th
                 key={column}
-                className={`px-2 py-3 font-semibold text-gray-600 block md:table-cell text-sm ${
+                className={`px-2 py-3  text-[#727272] block md:table-cell text-[12px] ${
                   column === 'Percentage of suppliers screened using social criteria' ? 'text-center' : 'text-left'
                 }`}
               >
@@ -26,7 +26,7 @@ const DynamicTable2 = ({ data, columns }) => {
             <tr className="border border-gray-300 md:table-row">
               <td
                 colSpan={columns.length}
-                className="text-center p-2 block md:table-cell text-sm"
+                className="text-center p-2 block md:table-cell text-[12px] font-normal text-slate-500"
               >
                 No data available
               </td>
@@ -38,8 +38,8 @@ const DynamicTable2 = ({ data, columns }) => {
                   <td
                     key={colIndex}
                     className={`p-2 block md:table-cell ${
-                      colIndex === 0 ? 'text-center' : 'text-center'
-                    } text-sm`}
+                      colIndex === 0 ? 'text-center font-normal text-slate-500' : 'text-center font-normal text-slate-500'
+                    } text-[12px]`}
                   >
                         {row[column] !== undefined && row[column] !== null ? `${row[column]}%` : 'N/A'}
                   </td>

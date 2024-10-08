@@ -53,7 +53,7 @@ const uiSchema = {
       "ui:options": {
         titles: [
           {
-            title: "Region Name",
+            title: "Location Name",
             tooltip: "Specify name of the region from which governance body members have received training on anti-corruption,",
             widgettype: "select",
             tooltipdisplay: "block",
@@ -227,12 +227,12 @@ const Screen4 = ({ selectedOrg, year, selectedCorp,setDatarefreshtwo }) => {
       >
         <div className="mb-2 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
             Total number of governance body members that have received training on anti-corruption, broken down by region.
               <MdInfoOutline
                 data-tooltip-id={`es26`}
                 data-tooltip-html="Specify the total number of governance body members that have received training on anti-corruption, broken down by region."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`es26`}
@@ -264,8 +264,8 @@ const Screen4 = ({ selectedOrg, year, selectedCorp,setDatarefreshtwo }) => {
         {Array.isArray(locationdata) && locationdata.length > 0 ? (
           <div className="mx-2">
             <Form
-              schema={r_schema}
-              uiSchema={r_ui_schema}
+              schema={schema}
+              uiSchema={uiSchema}
               formData={formData}
               onChange={handleChange}
               validator={validator}

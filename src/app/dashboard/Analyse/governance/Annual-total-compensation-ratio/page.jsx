@@ -138,13 +138,13 @@ const AnalyseAnnualtotalcompensationratio = ({ isBoxOpen }) => {
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[13px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal"
                   >
                     Select Location
                   </label>
                   <div className="mt-2">
                     <select
-                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                       value={selectedsetLocation}
                       onChange={handleLocationChange}
                     >
@@ -157,7 +157,7 @@ const AnalyseAnnualtotalcompensationratio = ({ isBoxOpen }) => {
                         ))}
                     </select>
                     {errors.selectedLocation && (
-                      <div className="text-red-600 text-sm">
+                      <div className="text-red-600 text-[12px] ml-2">
                         {errors.selectedLocation}
                       </div>
                     )}
@@ -167,14 +167,14 @@ const AnalyseAnnualtotalcompensationratio = ({ isBoxOpen }) => {
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[13px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal"
                   >
                     Select Year
                   </label>
                   <div className="mt-2">
                     <select
                       name="year"
-                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                       value={selectedYear}
                       onChange={handleYearChange}
                     >
@@ -186,7 +186,7 @@ const AnalyseAnnualtotalcompensationratio = ({ isBoxOpen }) => {
                       ))}
                     </select>
                     {errors.selectedYear && (
-                      <div className="text-red-600 text-sm">
+                      <div className="text-red-600 text-[12px] ml-2">
                         {errors.selectedYear}
                       </div>
                     )}
@@ -201,9 +201,9 @@ const AnalyseAnnualtotalcompensationratio = ({ isBoxOpen }) => {
             <div className="mb-6">
               <div
                 id="ReductionOfEnergy"
-                className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
+                className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 flex justify-between items-center"
               >
-                <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold mb-2">
+                <h2 className="flex mx-2 text-[15px] text-neutral-700  font-bold mb-2">
                   Ratio of annual total compensation & ratio of percentage
                   increase in annual total compensation
                   <MdInfoOutline
@@ -217,7 +217,7 @@ in Disclosure 401-1, the reporting organization
 should use data from Disclosure 2-7 in
 GRI 2: General Disclosures 2021 to identify the
 total number of employees"
-                    className="mt-1.5 ml-2 text-[14px]"
+                    className="mt-1.5 ml-2 text-[15px]"
                   />
                   <ReactTooltip
                     id={`tooltip-$e1`}

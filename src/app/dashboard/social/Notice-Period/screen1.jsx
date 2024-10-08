@@ -182,7 +182,7 @@ const Screen1 = ({ location, year, month }) => {
       <div className="mx-2  p-3 mb-6 pb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
         <div className='mb-4 flex'>
           <div className='w-[80%] relative'>
-            <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold'>
+           <h2 className="flex mx-2 text-[15px] font-[500] mb-2">
               Minimum number of weeks’ notice
               <MdInfoOutline data-tooltip-id={`tooltip-$e18`}
                 data-tooltip-content="This section documents data corresponding to the minimum number of weeks' notice
@@ -190,7 +190,7 @@ const Screen1 = ({ location, year, month }) => {
 substantially affect them.
 Significant operational change definition:
 alteration to the organization’s pattern of operations that can potentially have
-significant positive or negative impacts on workers performing the organization’s activities." className="mt-1.5 ml-2 text-[14px]" />
+significant positive or negative impacts on workers performing the organization’s activities." className="mt-1.5 ml-2 text-[15px]" />
               <ReactTooltip id={`tooltip-$e18`} place="top" effect="solid" style={{
                 width: "290px", backgroundColor: "#000",
                 color: "white",

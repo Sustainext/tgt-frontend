@@ -3,45 +3,45 @@ export const columns1 = [
       label: "Material Type",
       dataIndex: "type",
       headerClass:
-        "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-sm w-[13%] text-left h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left h-14",
     },
     {
       label: "Material Category",
       dataIndex: "materialcategory",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
     },
     {
       label: "Source",
       dataIndex: "source",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
     },
     {
       label: "Total quantity",
       dataIndex: "total",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
     },
     {
       label: "Units",
       dataIndex: "units",
       headerClass:
-        "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
     },
     {
       label: "Data Source",
       dataIndex: "datasource",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
     },
   ];
 
@@ -96,45 +96,45 @@ export const columns1 = [
       label: "Material Type",
       dataIndex: "type",
       headerClass:
-        "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-sm w-[13%] text-left h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left h-14",
     },
     {
       label: "Material Category",
       dataIndex: "materialcategory",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
     },
     {
       label: "Source",
       dataIndex: "source",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
     },
     {
       label: "Total quantity",
       dataIndex: "total",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
     },
     {
       label: "Units",
       dataIndex: "units",
       headerClass:
-        "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
     },
     {
       label: "Data Source",
       dataIndex: "datasource",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
     },
   ];
 
@@ -189,16 +189,16 @@ export const columns1 = [
       label: "Types of recycled material used",
       dataIndex: "type",
       headerClass:
-        "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-sm w-[13%] text-left h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left h-14",
     },
     {
       label: "Percentage of recycled input materials used",
       dataIndex: "consumption",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
     },
 
   ];
@@ -227,32 +227,32 @@ export const columns1 = [
       label: "Type of product",
       dataIndex: "type",
       headerClass:
-        "px-4 py-2 text-[14px] text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
+        "px-4 py-2 text-[12px]  text-[#727272] w-[10%] text-left rounded-tl-lg rounded-tr-lg h-[44px]",
       cellClass:
-        "px-4 py-2 border-y text-slate-500 font-normal text-sm w-[13%] text-left h-14",
+        "px-4 py-2 border-y text-slate-500 font-normal text-[12px]  w-[13%] text-left h-14",
     },
     {
       label: "Product Code",
       dataIndex: "code",
-      headerClass: "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center",
+      headerClass: "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
     },
     {
       label: "Product Name",
       dataIndex: "productname",
       headerClass:
-        "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
     },
     {
       label: "Percentage of reclaimed products and their packaging materials  (%)",
       dataIndex: "total",
       headerClass:
-        "px-2 py-2 text-[14px] text-[#727272] w-[10%] text-center rounded-tr-lg",
+        "px-2 py-2 text-[12px]  text-[#727272] w-[10%] text-center rounded-tr-lg",
       cellClass:
-        "px-4 py-2 border-y text-center text-slate-500 font-normal text-sm",
+        "px-4 py-2 border-y text-center text-slate-500 font-normal text-[12px] ",
     },
 
   ];

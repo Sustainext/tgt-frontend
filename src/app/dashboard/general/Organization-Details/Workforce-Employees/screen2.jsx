@@ -174,13 +174,13 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold mb-2">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Data Compilation Timeframe
               <MdInfoOutline
                 data-tooltip-id={`tooltip-125`}
                 data-tooltip-content="This section documents data corresponding to the specific
 timeframe utilized for compiling the reported employee data."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-125`}

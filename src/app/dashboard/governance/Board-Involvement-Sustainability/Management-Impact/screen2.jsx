@@ -247,13 +247,13 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
             >
                 <div className="mb-4 flex">
                     <div className="w-[80%] relative">
-                        <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+                        <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
                             Role of the highest governance body in overseeing  due diligence
                             <MdInfoOutline data-tooltip-id={`tooltip-employees`}
                                 data-tooltip-content="This section documents the data corresponding to  the role of the highest governance
 body in overseeing the organization’s due
 diligence and other processes to identify and manage the organization’s impacts on the
-economy, environment, and people." className="mt-1.5 ml-2 text-[14px]" />
+economy, environment, and people." className="mt-1.5 ml-2 text-[15px]" />
                             <ReactTooltip id={`tooltip-employees`} place="top" effect="solid" style={{
                                 width: "290px", backgroundColor: "#000",
                                 color: "white",

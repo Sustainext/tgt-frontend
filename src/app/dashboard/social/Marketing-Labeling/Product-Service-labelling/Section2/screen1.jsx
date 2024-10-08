@@ -200,7 +200,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
             Number of product or service categories covered by and assessed for compliance
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
@@ -208,7 +208,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
 to the number of significant product or service
 categories covered by and assessed for
 compliance with such procedures."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e1`}

@@ -9,18 +9,16 @@ const LanguageSettings = () => {
   const loadWidget = useCallback(() => {
     if (
       !hasLoadedWidget.current &&
-      window.fluentcWidget &&
+      window.fluentcWidgetV2 &&
       widgetContainerRef.current
     ) {
-      const userLanguage = navigator.language || navigator.userLanguage;
-      // console.log("User's default language:", userLanguage);
-
-      const widget = new window.fluentcWidget({
-        widgetID: "33d7c1ce-b762-41c9-8b89-1606844f8707",
+      const widget = new window.fluentcWidgetV2({
+        widgetId: "33d7c1ce-b762-41c9-8b89-1606844f8707",
       });
-      widget.setupWidget('fluentc-widget');
+      console.log('widget', widget);
+      
+      widget.setupWidget('fluentc-widget',{defaultLanguage: 'en'});
 
-      widget.setupWidget('fluentc-widget', {defaultLanguage: 'ja'});
       hasLoadedWidget.current = true;
     }
   }, []);

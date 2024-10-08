@@ -29,6 +29,7 @@ const Report = () => {
   const router = useRouter();
   const [entities, setEntities] = useState([]);
 
+
   const handleCheckboxChange = (index) => {
     const newEntities = [...entities];
     newEntities[index].checked = !newEntities[index].checked;
@@ -246,7 +247,7 @@ const Report = () => {
             response.data.organization_country
           );
 
-          router.push("/dashboard/Report/Ghgtemplates");
+          router.push("/dashboard/Report/GHG/Ghgtemplates");
           //   navigate(`/report/GHGtemplate`, { state: { data: response.data } });
         }
         else if(response.status == "204"){
@@ -340,17 +341,25 @@ const Report = () => {
     const formErrors = validateForm();
     if (Object.keys(formErrors).length === 0) {
       setError({}); // Clear any existing errors
-      await submitForm(); // Proceed with the form submission
+      if(reporttype=='GRI Report: In accordance With' || reporttype=='GRI Report: With Reference to'){
+        router.push("/dashboard/Report/ESG")
+      }
+      else{
+        await submitForm(); // Proceed with the form submission
+      }
+      
     } else {
       setError(formErrors); // Update the state with the validation errors
     }
   };
+
+
   const renderSecondSelect = () => {
     if (firstSelection === "Organization") {
       return (
         <div className="grid grid-cols-1">
           <select
-            className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
             value={selectedOrg}
             onChange={handleChangeallcrop}
             // onChange={(e) => setSelectedOrg(e.target.value)}
@@ -374,13 +383,13 @@ const Report = () => {
             <div className="mr-2">
               <label
                 htmlFor="cname"
-                className="text-neutral-800 text-[13px] font-normal"
+                className="text-neutral-800 text-[12px] font-normal"
               >
                 Select Organization
               </label>
               <div className="mt-2">
                 <select
-                  className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                   value={selectedOrg}
                   // onChange={(e) => setSelectedOrg(e.target.value)}
                   onChange={handleChangecrop}
@@ -401,13 +410,13 @@ const Report = () => {
             <div className="ml-2">
               <label
                 htmlFor="cname"
-                className="text-neutral-800 text-[13px] font-normal"
+                className="text-neutral-800 text-[12px] font-normal"
               >
                 Select Corporate
               </label>
               <div className="mt-2">
                 <select
-                  className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                   value={selectedCorp}
                   onChange={(e) => setSelectedCorp(e.target.value)}
                 >
@@ -561,6 +570,8 @@ const Report = () => {
                           <option>Select Report Type</option>
                           <option>GHG Accounting Report</option>
                           <option>GHG Report - Investments</option>
+                          <option>GRI Report: In accordance With</option>
+                          <option>GRI Report: With Reference to</option>
                         </select>
                         {error.reporttype && (
                           <p className="text-red-500 ml-1">

@@ -4,7 +4,7 @@ import { MdInfoOutline, MdOutlineDeleteOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
-const InputField = React.memo(({ type, required, value, onChange }) => {
+const InputField = React.memo(({ type, required, value, onChange,cellIndex }) => {
   const handleInputChange = (e) => {
     // Determine how to update based on the input type
     onChange(
@@ -21,7 +21,7 @@ const InputField = React.memo(({ type, required, value, onChange }) => {
       checked={type === "checkbox" ? value : undefined}
       onChange={handleInputChange}
       style={{ width: "100%" }}
-      className="text-[12px] pl-2 py-2"
+      className={`text-[12px]  py-2  ${cellIndex === 4 ? 'border-b border-slate-500' : ''} `}
       placeholder={type === "text" ? "Enter data" : ""}
     />
   );
@@ -60,8 +60,8 @@ const CustomTableWidget4 = ({
 
   return (
     <div style={{ overflowY: "auto", maxHeight: "600px" }}>
-      <table id={id} className="rounded-md border border-gray-300 w-full">
-        <thead className="gradient-background">
+      <table id={id} className="rounded-md  w-full ">
+        <thead className="gradient-background h-[40px]">
           <tr>
             {options.titles.map((item, idx) => (
               <th
@@ -70,10 +70,10 @@ const CustomTableWidget4 = ({
                   minWidth: "120px",
                   textAlign: item.title === "Benefits" ? "left" : "center",
                 }}
-                className="text-[12px] border border-gray-300 px-4 py-2"
+                className="text-[12px] px-4 py-2"
               >
                 <div
-                  className={`flex items-center ${
+                  className={`flex items-center relative ${
                     item.title === "Benefits" ? "" : "justify-center"
                   }`}
                 >
@@ -113,11 +113,12 @@ const CustomTableWidget4 = ({
               {Object.keys(item).map((key, cellIndex) => (
                 <td
                   key={cellIndex}
-                  className="border border-gray-300 p-3 w-[30%]"
+                  className=" p-3 w-[20%]"
                 >
                   <InputField
                     type={options.types[key] === "string" ? "text" : "checkbox"}
                     required={required}
+                    cellIndex={cellIndex} 
                     value={item[key]}
                     onChange={(newValue) =>
                       updateField(rowIndex, key, newValue)
@@ -125,7 +126,7 @@ const CustomTableWidget4 = ({
                   />
                 </td>
               ))}
-              <td className="border border-gray-300 p-3">
+              <td className="p-3">
                 <button onClick={() => formContext.onRemove(rowIndex)}>
                   <MdOutlineDeleteOutline className="text-[23px] text-red-600" />
                 </button>

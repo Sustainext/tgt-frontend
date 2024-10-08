@@ -610,7 +610,7 @@ const Screentwo = ({ nextStep, prevStep }) => {
           } flex justify-between items-center`}
         >
           <div className="text-left mb-5 ml-6 mt-4">
-            <p className="text-sm">Social</p>
+            <p className="text-[11px]">Social</p>
            <p className="gradient-text text-[22px] h-[24px]">
               Bill S-211 - Fighting Bill Forced Labour and Child Labour in
               Supply Chains Act

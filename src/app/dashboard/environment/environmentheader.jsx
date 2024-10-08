@@ -92,7 +92,7 @@ const EnvironmentHeader = ({
             <div className="relative">
               <select
                 name="location"
-                className="border m-0.5 text-sm text-neutral-500 appearance-none pr-24 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className="border m-0.5 text-[12px] text-neutral-500 appearance-none pr-24 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 value={formState.location}
                 onChange={handleChange}
               >
@@ -112,7 +112,7 @@ const EnvironmentHeader = ({
             </div>
             <div>
               {locationMessage && (
-                <p className="text-red-500 ml-2 text-sm">{locationMessage}</p>
+                <p className="text-red-500 ml-2 text-[12px]">{locationMessage}</p>
               )}
             </div>
           </div>
@@ -120,7 +120,7 @@ const EnvironmentHeader = ({
             <div className="ml-3 relative">
               <select
                 name="year"
-                className="border m-0.5 text-sm text-neutral-500 appearance-none pr-32 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className="border m-0.5 text-[12px] text-neutral-500 appearance-none pr-32 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 value={formState.year}
                 onChange={handleChange}
               >
@@ -140,7 +140,7 @@ const EnvironmentHeader = ({
             </div>
             <div>
               {yearMessage && (
-                <p className="text-red-500 ml-5 text-sm">{yearMessage}</p>
+                <p className="text-red-500 ml-5 text-[12px]">{yearMessage}</p>
               )}
             </div>
           </div>

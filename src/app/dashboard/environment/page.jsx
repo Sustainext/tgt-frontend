@@ -34,38 +34,40 @@ const environment = ({  }) => {
 
     return (
         <>
-            <div className="flex w-full">
+            <div className="w-full">
+                <div className="flex">
                 <div className="">
                     <Aside activeTab={activeTab} handleTabClick={handleTabClick} />
                 </div>
-
-                <div
-                    className={`${open ? " w-[87vw]" :" w-[98vw]" }`}
-                >
-                    {/* Emissions start  */}
-                    {activeTab === 'Emissions' && <Emission />}
-                    {/* Energy start  */}
-                    {activeTab === 'Energy consumed inside the organization' && <Energyconsumed/>}
-                    {activeTab === 'Energy consumption outside of the organization' && <Energyconsumption />}
-                    {activeTab === 'Energy Intensity' && <Energyintensity />}
-                    {activeTab === 'Reduction of energy consumption' && <Reductionenergyconsumption />}
-                    {activeTab === 'Reductions in energy requirements of products and services' && <Energyproductsservices />}
-                    {activeTab === 'Significant waste related impact' && <Significantwaste />}
-                    {activeTab === 'Management of significant waste related impacts' && <Managementwaste />}
-                    {activeTab === 'Waste generated' && <Wastegenerated />}
-                    {activeTab === 'Waste Diverted from disposal' && <Wastediverted />}
-                    {activeTab === 'Waste diverted to disposal' && <Wastedirected />}
-                    {activeTab === 'Materials used by weight or volume' && <Weightvolume />}
-                    {activeTab === 'Recycled input materials used' && <Recycled />}
-                    {activeTab === 'Reclaimed products and their packaging materials' && <Reclaimedproducts />}
-                    {activeTab === 'Interaction with water as shared resource' && <Watersharedresource />}
-                    {activeTab === 'Water Withdrawal and Water Discharge from All Areas' && <Dischargefromareas />}
-                    {activeTab === 'Water withdrawal/Discharge from areas with water stress' && <Waterstres />}
-                    {activeTab === 'Substances of concern' && <Substancesconcern />}
-                    {activeTab === 'Change in water storage' && <Waterstorage />}
-                    {activeTab === 'New suppliers that were screened using environmental criteria' && <NewSupplier />}
-                    {activeTab === 'Negative environmental impacts in the supply chain and actions taken' && <NegativeEnvironmentImpact />}
+                <div className={`${open ? "sm:w-[87vw] md:w-[87vw] lg:w-[87vw] xl:w-[87vw]  2xl:w-[93vw] 3xl:w-[102vw] " :" sm:w-[87vw] md:w-[100vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[104vw] 3xl:w-[108vw]" }`}>
+                  {/* Emissions start  */}
+                  {activeTab === 'Emissions' && <Emission />}
+                  {/* Energy start  */}
+                  {activeTab === 'Energy consumed inside the organization' && <Energyconsumed/>}
+                  {activeTab === 'Energy consumption outside of the organization' && <Energyconsumption />}
+                  {activeTab === 'Energy Intensity' && <Energyintensity />}
+                  {activeTab === 'Reduction of energy consumption' && <Reductionenergyconsumption />}
+                  {activeTab === 'Reductions in energy requirements of products and services' && <Energyproductsservices />}
+                  {activeTab === 'Significant waste related impact' && <Significantwaste />}
+                  {activeTab === 'Management of significant waste related impacts' && <Managementwaste />}
+                  {activeTab === 'Waste generated' && <Wastegenerated />}
+                  {activeTab === 'Waste Diverted from disposal' && <Wastediverted />}
+                  {activeTab === 'Waste diverted to disposal' && <Wastedirected />}
+                  {activeTab === 'Materials used by weight or volume' && <Weightvolume />}
+                  {activeTab === 'Recycled input materials used' && <Recycled />}
+                  {activeTab === 'Reclaimed products and their packaging materials' && <Reclaimedproducts />}
+                  {activeTab === 'Interaction with water as shared resource' && <Watersharedresource />}
+                  {activeTab === 'Water Withdrawal and Water Discharge from All Areas' && <Dischargefromareas />}
+                  {activeTab === 'Water withdrawal/Discharge from areas with water stress' && <Waterstres />}
+                  {activeTab === 'Substances of concern' && <Substancesconcern />}
+                  {activeTab === 'Change in water storage' && <Waterstorage />}
+                  {activeTab === 'New suppliers that were screened using environmental criteria' && <NewSupplier />}
+                  {activeTab === 'Negative environmental impacts in the supply chain and actions taken' && <NegativeEnvironmentImpact />}
+              </div>
                 </div>
+             
+
+           
             </div>
         </>
     );

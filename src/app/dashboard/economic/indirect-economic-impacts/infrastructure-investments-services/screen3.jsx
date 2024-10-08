@@ -180,10 +180,10 @@ const Screen3 = ({ location, year}) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-          <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+          <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
           Whether these investments and services are commercial, in-kind, or pro bono engagements.
               {/* <MdInfoOutline data-tooltip-id={`es25`}
-                data-tooltip-html="<p>The answer should include the size, cost, and duration of each significant infrastructure investment or service supported.</p><p><strong>Infrastructure:</strong></p><ul><li>Facilities built primarily to provide a public service or good rather than a commercial purpose.</li><li>From which the organization does not seek to gain direct economic benefit.</li></ul><p><strong>Services supported:</strong></p><ul><li>Services that provide a public benefit either through direct payment of operating costs.</li><li>Or through staffing the facility or service with an organization’s own employees.</li></ul>" className="mt-1.5 ml-2 text-[14px]" />
+                data-tooltip-html="<p>The answer should include the size, cost, and duration of each significant infrastructure investment or service supported.</p><p><strong>Infrastructure:</strong></p><ul><li>Facilities built primarily to provide a public service or good rather than a commercial purpose.</li><li>From which the organization does not seek to gain direct economic benefit.</li></ul><p><strong>Services supported:</strong></p><ul><li>Services that provide a public benefit either through direct payment of operating costs.</li><li>Or through staffing the facility or service with an organization’s own employees.</li></ul>" className="mt-1.5 ml-2 text-[15px]" />
               <ReactTooltip id={`es25`} place="bottom" effect="solid" style={{
                 width: "290px", backgroundColor: "#000",
                 color: "white",

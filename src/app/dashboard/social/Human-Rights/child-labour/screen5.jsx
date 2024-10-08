@@ -210,7 +210,7 @@ const Screen5 = ({ location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Measures taken by the organization
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
@@ -218,7 +218,7 @@ const Screen5 = ({ location, year, month }) => {
                             measures taken by the organization in the
                             reporting period intended to contribute to the
                             effective abolition of child labor."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e1`}

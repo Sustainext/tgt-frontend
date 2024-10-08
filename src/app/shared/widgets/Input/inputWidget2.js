@@ -8,12 +8,13 @@ const inputWidget2 = (props) => {
   const handleChange = (event) => {
     onChange(event.target.value);
   };
+  
   return (
     <>
       <div className="mb-6">
         <div className="flex mb-2">
           <div className=" relative">
-            <p className="flex text-[15px] text-gray-500 font-semibold">
+            <p className="flex text-[12px] text-gray-500 font-semibold">
               {uiSchema["ui:title"]}
               <MdInfoOutline
                 data-tooltip-id={`tooltip-${uiSchema["ui:title"].replace(
@@ -21,7 +22,7 @@ const inputWidget2 = (props) => {
                   "-"
                 )}`}
                 data-tooltip-html={uiSchema["ui:tooltip"]}
-                className="mt-1 ml-2 w-[30px] text-[14px]"
+                className="mt-1 ml-2 w-[30px] text-[13px]"
                 style={{ display: uiSchema["ui:tooltipdisplay"] }}
               />
               {/* Tooltip */}
@@ -43,7 +44,7 @@ const inputWidget2 = (props) => {
         </div>
         <textarea
           placeholder="Enter data"
-          className={`backdrop:before:w-[48rem] border appearance-none text-[15px] border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
+          className={`backdrop:before:w-[48rem] border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
           value={value}
           onChange={handleChange}
           rows={4}

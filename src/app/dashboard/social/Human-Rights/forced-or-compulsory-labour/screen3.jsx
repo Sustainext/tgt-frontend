@@ -207,12 +207,12 @@ const Screen3 = ({ location, year, month }) => {
             <div className="mx-2  p-3 mb-6 pb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
                 <div className='mb-4 flex'>
                    <div className="w-[80%] relative">
-                        <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold'>
+                       <h2 className="flex mx-2 text-[15px] font-[500] mb-2">
                             Measures taken by the organization
                             <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                                 data-tooltip-content="This section documents the data corresponding measures
                             taken by the organization in the reporting period intended to contribute to the
-                            elimination of all forms of forced or compulsory labor. " className="mt-1.5 ml-2 text-[14px]" />
+                            elimination of all forms of forced or compulsory labor. " className="mt-1.5 ml-2 text-[15px]" />
                             <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
                                 width: "290px", backgroundColor: "#000",
                                 color: "white",

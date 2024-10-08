@@ -34,7 +34,7 @@ const Employeeturnover = ({ location, year, month,activeMonth }) => {
 
             <div className='mb-4 flex mx-2'>
                <div className="w-[80%] relative">
-                    <h2 className='flex mx-2 text-[17px] text-gray-500 font-semibold'>
+                    <h2 className='flex mx-2 text-[15px] font-bold'>
                     Employee turnover
                         <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                         data-tooltip-content="This section documents data corresponding
@@ -42,7 +42,7 @@ const Employeeturnover = ({ location, year, month,activeMonth }) => {
                        turnover during the reporting period,
                        categorized by age group, gender, and region.
                        Employee turnover: employees who leave the organization
-                       voluntarily or due to dismissal, retirement, or death in service." className="mt-1.5 ml-2 text-[14px]" />
+                       voluntarily or due to dismissal, retirement, or death in service." className="mt-1.5 ml-2 text-[15px]" />
                         <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
                             width: "290px", backgroundColor: "#000",
                             color: "white",
@@ -66,7 +66,7 @@ const Employeeturnover = ({ location, year, month,activeMonth }) => {
                             onClick={() => setActiveTabIndex(index)}
                         >
                             <div className='flex justify-center items-center space-x-1 '>
-                                <span>{tab.title}</span>
+                            <span className="text-[14px]">{tab.title}</span>
                                 <MdInfoOutline data-tooltip-id={`tooltip-${tab.title.replace(/\s+/g, '-')}`}
                                     data-tooltip-content={tab.tooltip}
                                     className="text-[14px]" />

@@ -177,7 +177,7 @@ const Screen5 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Mention the level of participation in retirement plans.
               <MdInfoOutline
                 data-tooltip-id={`es785`}
@@ -185,7 +185,7 @@ const Screen5 = ({ selectedOrg, year, selectedCorp }) => {
 such as participation in mandatory
 or voluntary schemes, regional, or country-based
 schemes, or those with financial impact."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`es785`}

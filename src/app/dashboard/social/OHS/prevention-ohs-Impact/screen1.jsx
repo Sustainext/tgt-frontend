@@ -223,7 +223,7 @@ const Screen1 = ({ location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Negative occupational health and safety impacts
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
@@ -231,7 +231,7 @@ const Screen1 = ({ location, year, month }) => {
                             to preventing or mitigating significant negative occupational health and
                             safety impacts that are directly linked to its operations, products, or services
                             by its business relationships, and the related hazards and risks "
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e1`}

@@ -45,10 +45,12 @@ export function AuthProvider({ children }) {
       const userData = await response.json();
       const receivedToken = userData.key.access;
       const refreshToken = userData.key.refresh;
+      const client_key = userData.client_key;
 
       setToken(receivedToken);
       saveToLocalStorage('token', receivedToken);
       saveToLocalStorage('refresh',refreshToken)
+      saveToLocalStorage('client_key',client_key)
 
       const isFirstLogin = userData.needs_password_reset;
       // const isFirstLogin = 1;

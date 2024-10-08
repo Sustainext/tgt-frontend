@@ -1,28 +1,61 @@
 
+import React from 'react';
+import "react-tooltip/dist/react-tooltip.css";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import { MdInfoOutline } from "react-icons/md";
+const selectWidget3 =  ({onChange, value = "", placeholder, label, title, uiSchema = {}, schema = {}, id,options}) => {
 
-const selectWidget3 = (props) => {
     const handleChange = (e) => {
       // Call props.onChange to ensure RJSF handles the state update
-      props.onChange(e.target.value);
+      onChange(e.target.value);
     };
-
+    const randomId = Math.floor(Math.random() * 10000); // Generate a random number between 0 and 9999
+    const tooltipId = schema.title
+      ? `tooltip-${schema.title.replace(/\s+/g, "-")}-${randomId}`
+      : `tooltip-${id}-${randomId}`;
     return (
-      <div className="flex justify-center items-center mt-2 mx-2">
-
+      <div className="mb-3 px-1">
+       {id.startsWith("root_0") && ( 
+         <div className={`relative flex ${label!== "Metric Unit" ? 'justify-center' : 'pl-2'}`}>
+          <p className={`flex text-[13px] text-neutral-950 font-[400] mb-1 ${label!== "Metric Unit" ? 'pl-5' : ''}`}>
+            {label}
+            <MdInfoOutline
+              data-tooltip-id={tooltipId}
+              data-tooltip-content={schema.tooltiptext}
+              className={`mt-1   text-[14px] ${label!== "Metric Unit" ? 'ml-5 w-[30px]' : 'w-[20px] ml-1'}`}
+            />
+            <ReactTooltip
+              id={tooltipId}
+              place="top"
+              effect="solid"
+              style={{
+                width: "300px",
+                backgroundColor: "#000",
+                color: "white",
+                fontSize: "12px",
+                boxShadow: 3,
+                borderRadius: "8px",
+              }}
+            />
+          </p>
+        </div>
+      )}
+       <div className="flex justify-center items-center mt-2">
         <select
-          className={`text-center py-1 text-sm w-[100px] rounded focus:outline-none focus:shadow-outline  ${
-            props.value ? 'bg-white text-blue-500 shadow-md' : 'bg-blue-500 text-white'
+          className={`text-center py-1 text-[12px] w-[100px] rounded-md ${
+            value ? 'bg-white text-blue-500 shadow' : 'bg-blue-500 text-white'
           }`}
-          value={props.value || ''}
+          value={value || ''}
           onChange={handleChange}
         >
-          <option value="" disabled={!!props.value}>{`Unit` || "Select..."}</option>
-          {props.options.enumOptions.map((option) => (
+          <option value="" disabled={!!value}>{`Unit` || "Select..."}</option>
+          {options.enumOptions.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
             </option>
           ))}
         </select>
+      </div>
       </div>
     );
   };

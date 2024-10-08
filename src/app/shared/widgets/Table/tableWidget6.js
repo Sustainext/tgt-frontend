@@ -39,23 +39,29 @@ const CustomTableWidget6 = ({
 
   return (
     <div style={{ maxHeight: "400px" }} className="mb-2">
-      <table id={id} className="rounded-md border border-gray-300 w-full">
+      <table id={id} className="rounded-md w-full">
         <thead className="gradient-background">
           <tr>
             <th className="border-r"></th>
-            <th colSpan="5" className="font-normal text-[14px] py-2 border-l border-gray-300 ">
+            <th colSpan="3" className="font-normal text-[14px] py-2 border-l border-gray-300 ">
               {formContext.newMonth}
+            </th>
+            <th  rowSpan={2} className="text-[12px] border-b border-x border-gray-300 px-2 py-2 text-center w-[20%]">
+            Total number of employee turnover. (at the beginning of the reporting period)
+            </th>
+            <th rowSpan={2} className="text-[12px] border-b border-l border-gray-300 px-2 py-2 text-center w-[20%]">
+            Total number of employee turnover. (at the end of the reporting period)
             </th>
           </tr>
           <tr>
-          <th className="text-[12px] border-b border-gray-300 px-2 py-2  text-center w-[10%]">
+          <th className="text-[12px] border-b  border-r border-gray-300 px-2 py-2  text-center w-[10%]">
               Age group
             </th>
             {options.titles.map((item, idx) => (
-              <th key={idx} className="text-[12px] border border-gray-300 px-2 py-2 text-center relative">
+              <th key={idx} className="text-[12px] border-t border-b  border-gray-300 px-2 py-2 text-center relative">
                 <div className="flex items-center justify-center">
                   <p>{item.title}</p>
-                  <p className=" relative">
+                  <p className="relative">
                   <MdInfoOutline
                     data-tooltip-id={`tooltip-${item.title.replace(/\s+/g, '-')}`}
                     data-tooltip-content={item.tooltip}
@@ -72,20 +78,15 @@ const CustomTableWidget6 = ({
                 </div>
               </th>
             ))}
-            <th className="text-[12px] border border-gray-300 px-2 py-2 text-center w-[20%]">
-            Total number of employee turnover. (at the beginning of the reporting period)
-            </th>
-            <th className="text-[12px] border border-gray-300 px-2 py-2 text-center w-[20%]">
-            Total number of employee turnover. (at the end of the reporting period)
-            </th>
+      
           </tr>
         </thead>
         <tbody>
           {options.rowLabels.map((rowLabel, rowIndex) => (
             <tr key={rowIndex}>
-              <td className="border-t border-gray-300 py-2 px-2 text-[13px]">
-              <div className="flex items-center justify-center">
-                  <p className="w-[80%] relative">   {rowLabel.title}</p>
+              <td className="border-t border-b border-r border-gray-300 py-2 px-2 text-[12px]">
+              <div className="flex items-center justify-center relative">
+                  <p className="relative">{rowLabel.title}</p>
                   <p>
                   <MdInfoOutline
                   data-tooltip-id={`tooltip-${rowLabel.title.replace(/\s+/g, '-')}`}
@@ -103,34 +104,34 @@ const CustomTableWidget6 = ({
                 </div>
               </td>
               {options.titles.map((column, columnIndex) => (
-                <td key={columnIndex} className="border border-gray-300">
+                <td key={columnIndex} className="border-b border-gray-300">
                   <input
                     type="number"
                     required={required}
                     value={localValue[rowIndex] && localValue[rowIndex][column.key] || ""}
                     onChange={(e) => handleFieldChange(rowIndex, column.key, parseInt(e.target.value))}
-                    className="text-sm pl-2 py-2 w-full text-center"
+                    className="text-[12px] pl-2 py-2 w-full text-center"
                     placeholder="10"
                   />
                 </td>
               ))}
-              <td className="border-x border-b border-gray-300 text-center text-sm">
+              <td className="border-x border-b border-gray-300 text-center text-[12px]">
                 <input
                   type="number"
                   disabled={!isJanuary}
                   value={localValue[rowIndex] && localValue[rowIndex].beginning || ""}
                   onChange={(e) => handleFieldChange(rowIndex, "beginning", parseInt(e.target.value))}
-                  className="text-sm pl-2 py-2 w-full text-center"
+                  className="text-[12px] pl-2 py-2 w-full text-center"
                   placeholder={isJanuary ? "10" : "10"}
                 />
               </td>
-              <td className="border-b border-gray-300 text-center text-sm">
+              <td className="border-b border-gray-300 text-center text-[12px]">
                 <input
                   type="number"
                   disabled={!isJanuary}
                   value={localValue[rowIndex] && localValue[rowIndex].end || ""}
                   onChange={(e) => handleFieldChange(rowIndex, "end", parseInt(e.target.value))}
-                  className="text-sm pl-2 py-2 w-full text-center"
+                  className="text-[12px] pl-2 py-2 w-full text-center"
                   placeholder={isJanuary ? "10" : "10"}
                 />
               </td>

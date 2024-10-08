@@ -182,12 +182,12 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
             The definition used for significant locations of operation.		
               <MdInfoOutline
                 data-tooltip-id={`es67`}
                 data-tooltip-html="Explain the definition used for ‘significant locations of operation’. Significant locations of operation refer to the geographical areas where the organization has a substantial impact through its operations."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`es67`}

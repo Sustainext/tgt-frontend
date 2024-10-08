@@ -167,13 +167,14 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, datarefresh,setDatarefresh }
       const response = await axiosInstance.get(url);
       console.log(response.data.form_data[0].data);
       setLocationdata(response.data.form_data[0].data);
-      console.log(response.data.form_data[0].data,"test data");
+      console.log(response.data.form_data[0].data,"test data scren 2");
       setDatarefresh(0);
     } catch (error) {
       setLocationdata();
     } finally {
       LoaderClose();
     }
+    console.log("Location data: locationdata screen 2", locationdata);
   };
   const loadFormData = async () => {
     LoaderOpen();
@@ -182,7 +183,6 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, datarefresh,setDatarefresh }
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
-      console.log("API called successfully:", response.data);
 
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
@@ -207,9 +207,8 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, datarefresh,setDatarefresh }
   const handleSubmit = (e) => {
     e.preventDefault();
     updateFormData();
-    console.log("Form data:", formData);
   };
-  console.log("Location data: locationdata", locationdata);
+
   return (
     <>
       <div
@@ -221,14 +220,14 @@ const Screen2 = ({ selectedOrg, year, selectedCorp, datarefresh,setDatarefresh }
       >
         <div className="mb-2 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Total number of employees that the organization’s anti-corruption
               policies and procedures have been communicated to, broken down by
               employee category and region.
               <MdInfoOutline
                 data-tooltip-id={`es278`}
                 data-tooltip-html="Specify the Total number of employees that the organization’s anti-corruption policies and procedures have been communicated to, broken down by employee category and region."
-                className="mt-1.5 ml-2 text-[21px]"
+               className="mt-1.5 ml-2 text-[18px]"
               />
               <ReactTooltip
                 id={`es278`}

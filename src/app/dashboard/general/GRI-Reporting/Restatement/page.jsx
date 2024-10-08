@@ -12,7 +12,7 @@ import Screen1 from "./screen1"
 const Restatement = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
-  const [year, setYear] = useState(2024);
+  const [year, setYear] = useState();
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -75,7 +75,7 @@ const Restatement = () => {
             {/* <MdInfoOutline
               data-tooltip-id={`tooltip-$e10`}
               data-tooltip-content="This section documents the data corresponding to the restatements of information."
-              className="mt-1.5 ml-2 text-[14px]"
+              className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
               id={`tooltip-$e10`}

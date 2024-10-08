@@ -293,7 +293,7 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
               <div className="mb-2 flex-col items-center pt-2 gap-6">
                 <div>Diversity and Inclusion (1/2)</div>
                 <div className="justify-start items-center gap-4 inline-flex mt-4">
-                  <div className="text-zinc-600 text-[15px] font-semibold font-['Manrope']">
+                  <div className="text-zinc-600 text-[12px] font-semibold font-['Manrope']">
                     View By:
                   </div>
                   <div className="rounded-lg shadow border border-gray-300 justify-start items-start flex">
@@ -305,7 +305,7 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
                       }`}
                       onClick={() => handleReportTypeChange("Organization")}
                     >
-                      <div className="text-slate-800 text-[13px] font-medium font-['Manrope'] leading-tight">
+                      <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
                         Organization
                       </div>
                     </div>
@@ -315,7 +315,7 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
                       }`}
                       onClick={() => handleReportTypeChange("Corporate")}
                     >
-                      <div className="text-slate-700 text-[13px] font-medium font-['Manrope'] leading-tight">
+                      <div className="text-slate-700 text-[12px] font-medium font-['Manrope'] leading-tight">
                         Corporate
                       </div>
                     </div>
@@ -329,13 +329,13 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
                   <div className="mr-2">
                     <label
                       htmlFor="cname"
-                      className="text-neutral-800 text-[13px] font-normal"
+                      className="text-neutral-800 text-[12px] font-normal"
                     >
                       Select Organization*
                     </label>
                     <div className="mt-2">
                       <select
-                        className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
                         value={selectedOrg}
                         onChange={handleOrganizationChange}
                       >
@@ -348,7 +348,7 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
                           ))}
                       </select>
                       {errors.selectedOrg && (
-                        <div className="text-red-600 text-sm">
+                        <div className="text-red-600 text-[12px]">
                           {errors.selectedOrg}
                         </div>
                       )}
@@ -359,13 +359,13 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
                     <div className="mr-2">
                       <label
                         htmlFor="cname"
-                        className="text-neutral-800 text-[13px] font-normal"
+                        className="text-neutral-800 text-[12px] font-normal"
                       >
                         Select Corporate
                       </label>
                       <div className="mt-2">
                         <select
-                          className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
                           value={selectedCorp}
                           onChange={handleOrgChange}
                         >
@@ -383,14 +383,14 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
                   <div className="mr-2">
                     <label
                       htmlFor="cname"
-                      className="text-neutral-800 text-[13px] font-normal"
+                      className="text-neutral-800 text-[12px] font-normal"
                     >
                       Select Year
                     </label>
                     <div className="mt-2">
                       <select
                         name="year"
-                        className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
                         value={selectedYear}
                         onChange={handleYearChange}
                       >
@@ -402,7 +402,7 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
                         ))}
                       </select>
                       {errors.selectedYear && (
-                        <div className="text-red-600 text-sm">
+                        <div className="text-red-600 text-[12px]">
                           {errors.selectedYear}
                         </div>
                       )}
@@ -412,12 +412,12 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
               </div>
             </div>
           </div>
-          <div className="flex justify-between">
-            <div className={`ps-4  w-[78%] me-4`}>
+          <div className="flex">
+          <div className={`ps-4 w-[100%] me-4`}>
               <div className="mb-6">
                 <div
                   id="ep1"
-                  className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
+                  className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
                 >
                   <div className="flex justify-between items-center mb-2">
                     <p>
@@ -441,17 +441,18 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
               </div>
             </div>
             <div
-              style={{
-                position: `${isBoxOpen ? "unset" : "sticky"}`,
-                top: "10rem",
-                height: "fit-content",
-                backgroundColor: "white",
-                paddingBottom: "1rem",
-              }}
-              className="me-8 mb-8 -right-2"
-            >
-              <TableSidebar1 />
-            </div>
+          style={{
+            position: `${isBoxOpen ? "unset" : "sticky"}`,
+            top: "10rem",
+            // zIndex: "0",
+            height: "fit-content",
+            backgroundColor: "white",
+            paddingBottom: "1rem",
+          }}
+          className=" mb-8 me-2"
+        >
+          <TableSidebar1 />
+        </div>
           </div>
         </div>
       )}
@@ -467,13 +468,13 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
                   <div className="mr-2">
                     <label
                       htmlFor="cname"
-                      className="text-neutral-800 text-[13px] font-normal"
+                      className="text-neutral-800 text-[12px] font-normal"
                     >
                       Select Location
                     </label>
                     <div className="mt-2">
                       <select
-                        className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
                         value={selectedSetLocation}
                         onChange={handleLocationChange}
                       >
@@ -486,7 +487,7 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
                           ))}
                       </select>
                       {errors.selectedLocation && (
-                        <div className="text-red-600 text-sm">
+                        <div className="text-red-600 text-[12px]">
                           {errors.selectedLocation}
                         </div>
                       )}
@@ -495,14 +496,14 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
                   <div className="mr-2">
                     <label
                       htmlFor="cname"
-                      className="text-neutral-800 text-[13px] font-normal"
+                      className="text-neutral-800 text-[12px] font-normal"
                     >
                       Select Year
                     </label>
                     <div className="mt-2">
                       <select
                         name="year"
-                        className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-xs font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
                         value={selectedYear}
                         onChange={handleYearChange}
                       >
@@ -514,7 +515,7 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
                         ))}
                       </select>
                       {errors.selectedYear && (
-                        <div className="text-red-600 text-sm">
+                        <div className="text-red-600 text-[12px]">
                           {errors.selectedYear}
                         </div>
                       )}
@@ -524,12 +525,12 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
               </div>
             </div>
           </div>
-          <div className="flex justify-between">
-            <div className={`ps-4  w-[78%] me-4`}>
+          <div className="flex">
+        <div className={`ps-4 w-[100%] me-4`}>
               <div className="mb-6">
                 <div
                   id="ep2"
-                  className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
+                  className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
                 >
                   <div className="flex justify-between items-center mb-2">
                     <p>
@@ -551,7 +552,7 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
               <div className="mb-6">
                 <div
                   id="ep1"
-                  className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
+                  className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
                 >
                   <div className="flex justify-between items-center mb-2">
                     <p>Ratio of basic salary of women to men </p>
@@ -570,7 +571,7 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
               <div className="mb-6">
                 <div
                   id="ep2"
-                  className="text-neutral-700 text-[15px] font-normal font-['Manrope'] leading-tight mb-3 "
+                  className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
                 >
                   <div className="flex justify-between items-center mb-2">
                     <p>Ratio of remuneration of women to men</p>
@@ -588,17 +589,19 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
               </div>
             </div>
             <div
-              style={{
-                position: `${isBoxOpen ? "unset" : "sticky"}`,
-                top: "10rem",
-                height: "fit-content",
-                backgroundColor: "white",
-                paddingBottom: "1rem",
-              }}
-              className="me-8 mb-8 -right-2"
-            >
-              <TableSidebar2 />
-            </div>
+          style={{
+            position: `${isBoxOpen ? "unset" : "sticky"}`,
+            top: "10rem",
+            // zIndex: "0",
+            height: "fit-content",
+            backgroundColor: "white",
+            paddingBottom: "1rem",
+          }}
+          className=" mb-8 me-2"
+        >
+          <TableSidebar2 />
+        </div>
+       
           </div>
         </div>
       )}

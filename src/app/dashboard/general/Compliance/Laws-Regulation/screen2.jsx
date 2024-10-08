@@ -203,7 +203,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               GRI 2-27-b Monetary value of fines for instances of non-compliance
               <MdInfoOutline
                 data-tooltip-id={`tooltip-employees`}
@@ -211,7 +211,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
 to the monetary value of fines for
 instances of non-compliance with laws and
 regulations that were paid during the reporting period."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-employees`}

@@ -190,12 +190,12 @@ const GovernanceStructure = ({ selectedOrg, selectedCorp, year }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Governance Structure
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1454`}
                 data-tooltip-content="This section documents data corresponding to the organisation's governance structure, including the committees of the highest governance body."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e145`}

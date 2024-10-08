@@ -212,7 +212,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
             Incidents of non-compliance with regulations and/or voluntary codes concerning
             marketing communications,
               <MdInfoOutline
@@ -221,7 +221,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
 incidents of non-compliance with regulations and/or voluntary codes
 concerning marketing communications, including advertising, promotion, and
 sponsorship."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e1`}

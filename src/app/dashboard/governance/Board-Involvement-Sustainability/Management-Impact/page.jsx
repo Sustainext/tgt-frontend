@@ -13,7 +13,7 @@ import Screen3 from "./screen3"
 const ManagementImpact = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
-  const [year, setYear] = useState(2024);
+  const [year, setYear] = useState();
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -79,7 +79,7 @@ const ManagementImpact = () => {
           <h6 className="text-[17px] mb-4 font-semibold flex">
             Role of the highest governance body in overseeing the management of impacts
             <MdInfoOutline data-tooltip-id={`tooltip-$e10`}
-              data-tooltip-content="This section documents the data corresponding to the role of the highest governance body in overseeing the management of impacts." className="mt-1.5 ml-2 text-[14px]" />
+              data-tooltip-content="This section documents the data corresponding to the role of the highest governance body in overseeing the management of impacts." className="mt-1.5 ml-2 text-[15px]" />
             <ReactTooltip id={`tooltip-$e10`} place="top" effect="solid" style={{
               width: "290px", backgroundColor: "#000",
               color: "white",

@@ -44,7 +44,7 @@ const uiSchema = {
       "ui:title":
       "List jurisdictions",
     "ui:tooltip":
-      "Explain the approach to interact with tax authorities. For example, frequency of engagement, method of engagement, outcomes of the engagement etc.",
+      "Mention all tax jurisdictions.",
     "ui:tooltipdisplay": "block",
     "ui:titledisplay": "block",
     "ui:widget": "Addmultisigleinput",
@@ -185,12 +185,12 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
             Please mention all tax jurisdictions where the entities included in the organization’s audited consolidated financial statements, or in the financial information filed on public record, are resident for tax purposes.
               <MdInfoOutline
                 data-tooltip-id={`es38`}
                 data-tooltip-html="The organization shall report information for the time period covered by the most recent audited consolidated financial statements or financial information filed on public record. If information is not available for this time period, the organization may report information for the time period covered by the audited consolidated financial statements, or the financial information filed on public record, immediately preceding the most recent ones."
-                className="mt-1.5 ml-2 text-[24px]"
+               className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`es38`}

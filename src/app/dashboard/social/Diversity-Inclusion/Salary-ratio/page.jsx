@@ -13,7 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 const Salaryratio = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
-  const [year, setYear] = useState(2024);
+  const [year, setYear] = useState();
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -45,7 +45,7 @@ const Salaryratio = () => {
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
             <div className="text-left mb-4 ml-3 pt-5">
-              <p className="text-sm">Social</p>
+              <p className="text-[11px]">Social</p>
               <div className="flex">
                          <div className="h-[29px]">
                   <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
@@ -91,7 +91,7 @@ const Salaryratio = () => {
             development reviews
             {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
-                            withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[14px]" />
+                            withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />
                         <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
                             width: "290px", backgroundColor: "#000",
                             color: "white",

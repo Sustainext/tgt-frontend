@@ -119,7 +119,7 @@ const InputField = ({ type, required, value, onChange }) => {
       onChange={handleInputChange}
       style={{ width: "100%" }}
       placeholder="Enter data"
-      className="text-sm pl-2 py-2" // Ensures input field uses the full width of its container
+      className="text-[12px] pl-2 py-2" // Ensures input field uses the full width of its container
     />
   );
 };

@@ -64,7 +64,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts }) => {
     window.localStorage.setItem("reportenddate", enddate);
     window.localStorage.setItem("organizationcountry", organization_country);
     // sessionStorage.setItem('reportData',newdata);
-    router.push('/dashboard/Report/Ghgtemplates');
+    router.push('/dashboard/Report/GHG/Ghgtemplates');
 
     window.localStorage.setItem("reportname", name);
   };

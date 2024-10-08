@@ -6,34 +6,33 @@ import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import Wastegeneratedeimpact from "./waste-generated-impact"
 import Wastecontextualinformation from "./waste-contextual-information"
-const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year, setYearMessage }) => {
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year, setYearMessage  }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
-
   const handleClick = () => {
     if (!location) {
       setLocationMessage("Please select a location")
+
       return;
     }
     if (!year) {
       setYearMessage("Please select a year")
+
       return;
     }
     setIsOpen(!isOpen);
   };
-
   return (
-    <div className={`shadow-md py-1 mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200 ${open ? "w-[100%]" : "w-[100%]"}`}>
+    <div className={`shadow-md py-1 mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200 `}>
       <button
-        className="py-3 w-[100%] text-left flex"
+        className="py-3 text-left flex w-[100%]"
         onClick={handleClick}// Unique ID for the tooltip, spaces replaced by dashes
       >
-       <div className="flex justify-between">
-        <div className={`flex ${open ? "w-[65vw]" : "w-[74vw]"}`}>
+        <div className="flex w-full">
+        <div className={`flex ${open ? "w-[75%]" : "w-[75%]"}`}>
         <div className="flex items-center">
-          <h5 className="text-[14px] text-[#344054] px-3">{title}</h5>
+         <h5 className="text-[15px] text-[#344054] px-3 font-[500]">{title}</h5>
         </div>
-
 
         <div className="flex items-center justify-center relative">
           <MdInfoOutline
@@ -50,7 +49,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
           </ReactTooltip>
         </div>
         </div>
-       <div className=" w-[20vw] ">
+       <div className=" w-[25%] ">
        <div className={`flex float-end`}>
         {isOpen ? (
             <>
@@ -73,8 +72,10 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
         </div>
        </div>
         </div>
+
+
       </button>
-      {isOpen && <div className="p-4">{children}</div>}
+      {isOpen && <div className="py-4 px-3">{children}</div>}
     </div>
   );
 };

@@ -190,7 +190,7 @@ const Screen3 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Significant actual and potential negative social impacts
               identified in the supply chain
               <MdInfoOutline
@@ -198,7 +198,7 @@ const Screen3 = ({ selectedOrg, selectedCorp, location, year, month }) => {
                 data-tooltip-content="This section documents the data corresponding
 to the  significant actual and potential negative
 social impacts identified in the supply chain."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e1`}

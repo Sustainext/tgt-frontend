@@ -51,7 +51,7 @@ const RadioWidget = ({
   return (
     <div className='mb-6'>
       <div className='flex mb-2 items-center'>
-        <p className='text-[15px] text-gray-700 w-full mb-2'>
+        <p className='text-[12px] text-gray-700 w-full mb-2'>
           {uiSchema['ui:title']}
           <MdInfoOutline
             data-tooltip-id={`tooltip-${uiSchema['ui:title'].replace(/\s+/g, '-')}`}
@@ -69,7 +69,7 @@ const RadioWidget = ({
       </div>
       <div className='grid grid-cols-2 gap-2'>
         {options.enumOptions.map((option, index) => (
-          <label key={index} className='flex items-center gap-2 text-sm mb-2'>
+          <label key={index} className='flex items-center gap-2 text-[12px]mb-2'>
             <input
               type='radio'
               name={options.name}
@@ -83,7 +83,7 @@ const RadioWidget = ({
           </label>
         ))}
       </div>
-      <label className='flex items-center gap-2 text-[13px] mb-2 mt-2'>
+      <label className='flex items-center gap-2 text-[12px] mb-2 mt-2'>
         <input
           type="radio"
           name={options.name}
@@ -101,7 +101,7 @@ const RadioWidget = ({
           value={inputState.otherValue}
           autoFocus={autofocus}
           onChange={handleOtherChange}
-          className="block p-2 text-gray-500 text-sm bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 capitalize w-full"
+          className="block p-2 text-gray-500 text-[12px] bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 capitalize w-full"
           placeholder="Enter data"
         />
       )}

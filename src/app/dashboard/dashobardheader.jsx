@@ -7,9 +7,12 @@ import Link from 'next/link';
 import Profile from './Profile';
 import { Oval } from 'react-loader-spinner';
 // import { useTranslation } from 'react-i18next';
+import { GlobalState } from '../../Context/page';
+import { FaUser } from "react-icons/fa";
+import { MdLogout } from "react-icons/md";
 
 const DashboardHeader = () => {
-  // const { t } = useTranslation();
+  const { open } = GlobalState();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [profileVisible, setProfileVisible] = useState(false);
   const [username, setUsername] = useState('');
@@ -77,7 +80,7 @@ const DashboardHeader = () => {
     setDropdownVisible(false);
   };
 
-  const [open, setOpen] = useState(false);  // State to control the Backdrop for the spinner
+  const [opens, setOpen] = useState(false);  // State to control the Backdrop for the spinner
 
   useEffect(() => {
     const observer = new MutationObserver((mutations) => {
@@ -114,8 +117,8 @@ const DashboardHeader = () => {
 
   return (
     <>
-      <div className="flex justify-between bg-white sticky top-0 right-0 border-b border-sky-600 border-opacity-50 pt-1 w-full mx-2 -z--1000">
-        <div className="flex justify-start items-center my-4 gap-1 px-2">
+      <div className="flex bg-white sticky top-0 right-0 border-b border-sky-600 border-opacity-50 pt-4 w-full mx-2 z-[1000]">
+        <div className={`flex justify-start items-center my-2 gap-1 px-2 ${open ? 'w-[84%]' : 'w-[84%]'}`}>
           <Link href="/dashboard">
             <span className="text-[#007EEF] hover:text-[#0057A5]">Home</span>
           </Link>
@@ -124,9 +127,9 @@ const DashboardHeader = () => {
             <span className="text-[#222222] hover:text-[#0057A5] mx-2">SustainextHQ</span>
           </a>
         </div>
-        <div className="flex justify-center items-center">
-          <div className="flex mr-3">
-            <div className="text-[#007EEF] items-center">
+        <div className="flex justify-end items-center w-[15%]">
+          <div className="flex">
+            <div className="text-[#007EEF] flex items-center">
               <span className="text-[#007EEF]"> Hi,</span>
               <span className="me-4 text-[#007EEF]">{username}</span>
             </div>
@@ -161,11 +164,11 @@ const DashboardHeader = () => {
                 </div>
               </div>
               {dropdownVisible && (
-                <div className="w-[220px] h-[128px] flex-col justify-start items-start absolute right-0 mt-2 bg-white border border-gray-300 rounded shadow-lg">
-                  <div className="self-stretch h-[128px] bg-white rounded shadow flex-col justify-start items-start flex">
+                <div className="w-[220px]  absolute -right-[2px] mt-3 bg-white border border-gray-300 rounded shadow-lg">
+                  <div className="self-stretch  bg-white rounded shadow flex-col justify-start items-start flex">
                     <div className="self-stretch h-[45px] flex-col justify-start items-start flex">
-                      <div className="self-stretch px-4 py-1 justify-start items-center inline-flex">
-                        <div className="grow shrink basis-0 py-1 flex-col justify-start items-start inline-flex">
+                      <div className="self-stretch px-4 py-1 justify-start items-center inline-flex border-b-2 border-gray-300">
+                        <div className="grow shrink basis-0 py-1 flex-col justify-start items-start inline-flex ">
                           <div className="self-stretch text-black/opacity-90 text-[13px] font-normal font-['Manrope'] leading-none">
                             {username}
                           </div>
@@ -175,17 +178,33 @@ const DashboardHeader = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="self-stretch h-[85px] py-1 flex-col justify-start items-start flex">
-                      <div className="self-stretch px-4 py-1.5 justify-start items-center inline-flex">
-                        <div className="grow shrink basis-0 text-black/opacity-90 text-[13px] font-normal font-['Manrope'] leading-none cursor-pointer" onClick={handleProfileClick}>
+                    <div className="self-stretch py-1 flex-col justify-start items-start flex">
+                      <div className="self-stretch px-4 py-2 justify-start items-center inline-flex border-b-2 border-gray-300" onClick={handleProfileClick}> 
+                        <div className="grow shrink basis-0 text-black/opacity-90 text-[13px] font-normal font-['Manrope'] leading-none cursor-pointer flex" >
+                         <div>
+                         <FaUser/> 
+                          </div>
+                          <div className='ml-2'>
                           Profile
+                            </div>  
                         </div>
                       </div>
-                      <div className="self-stretch px-4 py-1.5 justify-start items-center inline-flex">
+                      <div className="self-stretch px-4 py-2 justify-start items-center inline-flex" onClick={handleLogout}>
+                        <div className="grow shrink basis-0 text-black/opacity-90 text-[13px] font-normal font-['Manrope'] leading-none cursor-pointer flex text-red-600" >
+                         <div>
+                         <MdLogout/> 
+                          </div>
+                          <div className='ml-2'>
+                          Log out
+                            </div>  
+                        </div>
+                      </div>
+                      {/* <div className="self-stretch px-4 py-1.5 justify-start items-center inline-flex">
+                        
                         <button onClick={handleLogout} className="text-red-600 text-[13px] font-normal">
                           Log out
                         </button>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -199,7 +218,7 @@ const DashboardHeader = () => {
           <Profile onClose={() => setProfileVisible(false)} />
         </div>
       )}
-      {open && (
+      {opens && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <Oval height={50} width={50} color="#00BFFF" secondaryColor="#f3f3f3" strokeWidth={2} strokeWidthSecondary={2} />
         </div>

@@ -10,7 +10,7 @@ import Workinvolvementscreen from "./work-involvement"
 const Workinvolvement = () => {
     const [activeMonth, setActiveMonth] = useState(1);
     const [location, setLocation] = useState("");
-    const [year, setYear] = useState(2024);
+    const [year, setYear] = useState();
     const [data, setData] = useState();
     const [category, setCategory] = useState("");
     const [isOpen, setIsOpen] = useState(false);
@@ -41,7 +41,7 @@ const Workinvolvement = () => {
                 <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
                     <div className='w-full'>
                         <div className="text-left mb-4 ml-3 pt-5">
-                            <p className="text-sm">Social</p>
+                            <p className="text-[11px]">Social</p>
                             <div className='flex'>
                                 <div>
                                     <p className="gradient-text text-[22px] font-bold pt-1">
@@ -69,7 +69,7 @@ const Workinvolvement = () => {
                         Hazard identification, risk assessment, and incident investigation
                         <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="For employees and for workers who are not employees
-                            but whose work and/or workplace is controlled by the organization:" className="mt-1.5 ml-2 text-[14px]" />
+                            but whose work and/or workplace is controlled by the organization:" className="mt-1.5 ml-2 text-[15px]" />
                         <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
                             width: "290px", backgroundColor: "#000",
                             color: "white",

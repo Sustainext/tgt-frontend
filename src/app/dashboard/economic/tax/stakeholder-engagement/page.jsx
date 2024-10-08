@@ -12,7 +12,7 @@ import Screen1 from "./screen1";
 const Stakeholderengagement = () => {
   const [activeMonth, setActiveMonth] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
-  const [year, setYear] = useState(2024);
+  const [year, setYear] = useState();
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -92,7 +92,7 @@ const Stakeholderengagement = () => {
             <MdInfoOutline
               data-tooltip-id={`tooltip-$es25`}
               data-tooltip-content="This section documents the dat corresponding to the stakeholder engagement and management of concerns related to tax."
-              className="mt-1.5 ml-2 text-[14px]"
+              className="mt-1.5 ml-2 text-[15px]"
             />
             <ReactTooltip
               id={`tooltip-$es25`}

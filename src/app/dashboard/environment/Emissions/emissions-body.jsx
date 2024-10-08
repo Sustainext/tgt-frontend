@@ -1,25 +1,19 @@
-'use client';
-import { useEffect, useState, useRef } from "react";
+"use client";
+import { useState, useRef } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoHomeOutline } from "react-icons/io5";
-import axiosInstance, { post } from "@/app/utils/axiosMiddleware";
-import { useEmissions } from './EmissionsContext';
-import Scope1 from "./scope1";
-import Scope2 from "./scope2";
-import Scope3 from "./scope3";
 import CalculateSuccess from "./calculateSuccess";
-import { fetchEmissionsData, setClimatiqData, setScope1Data, setScope2Data, setScope3Data } from '@/lib/redux/features/emissionSlice';
+import { fetchEmissionsData } from '@/lib/redux/features/emissionSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import Scope1 from "./scope1new";
+import Scope2 from "./scope2new";
+import Scope3 from "./scope3new";
 
 const AccordionItem = ({
   title,
   children,
   scops,
   icons,
-  tooltiptext,
-  sdg,
-  visible,
-  open,
   onAccordionClick
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,23 +26,19 @@ const AccordionItem = ({
   };
 
   return (
-    <div
-      className={`shadow-md py-1 mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200 ${
-        open ? "w-[100%]" : "w-[100%]"
-      }`}
-    >
+    <div className="shadow-md py-1 mb-4 rounded-[8px] cursor-pointer border border-b-3 border-neutral-200">
       <button
         className="py-3 w-[100%] text-left flex"
         onClick={handleAccordionClick}
       >
         <div className="flex items-center px-3 w-[30%]">
           <h5 className="text-[18px]">{icons}</h5>{" "}
-          <h5 className="text-[12px] text-[#344054] pt-1 px-3 font-semibold">
+          <h5 className="text-[15px] text-[#344054] pt-1 px-3 font-[500]">
             {scops}
           </h5>
         </div>
         <div className="w-[40%]">
-          <h5 className="text-[12px] text-[#344054] pt-1 px-3 font-semibold text-center">
+          <h5 className="text-[15px] text-[#344054] pt-1 px-3 font-[500] text-center">
             {title}
           </h5>
         </div>
@@ -56,68 +46,27 @@ const AccordionItem = ({
           <div className="float-end">
             <span>
               <MdKeyboardArrowDown
-                className={`text-2xl ${isOpen && "rotate-i80"}`}
+                className={`text-2xl ${isOpen && "rotate-180"}`}
               />
             </span>
           </div>
         </div>
       </button>
-      {isOpen && <div className="p-4">{children}</div>}
+      {isOpen && (
+        <div className="p-4">{children({ setAccordionOpen: setIsOpen })}</div>
+      )}{" "}
+      {/* Pass setIsOpen as setAccordionOpen */}
     </div>
   );
 };
 
-const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setLocationError,locationname }) => {
+const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setLocationError, locationname }) => {
   const dispatch = useDispatch();
-  const { climatiqData, status, error } = useSelector((state) => state.emissions);
-  // const { climatiqData, setClimatiqData } = useEmissions();
   const scope1Ref = useRef();
   const scope2Ref = useRef();
   const scope3Ref = useRef();
   const [modalData, setModalData] = useState(null);
-
-  useEffect(() => {
-    if (location && year && month) {
-      dispatch(fetchEmissionsData({ location, year, month }));
-    }
-  }, [dispatch, location, year, month]);
-
-  useEffect(() => {
-    if (climatiqData?.result?.length > 0) {
-      const sum = climatiqData.result.reduce((acc, item) => acc + item.co2e, 0);
-      const sumInTonnes = (sum / 1000).toFixed(3);
-      // setLocalClimatiq(sumInTonnes);
-      dispatch(setClimatiqData((sumInTonnes)));
-    } else {
-      // setLocalClimatiq(0);
-      dispatch(setClimatiqData(0));
-    }
-  }, [climatiqData]);
-
-  // const getLatestComputedData = () => {
-  //   const base_url = `${process.env.BACKEND_API_URL}/datametric/get-climatiq-score?`;
-  //   const url = `${base_url}location=${location}&&year=${year}&&month=${month}`;
-
-  //   axiosInstance
-  //     .get(url)
-  //     .then((response) => {
-  //       if (response.status == 200) {
-  //         setClimatiqData(response.data);
-  //       } else {
-  //         setClimatiqData(0);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       setClimatiqData({});
-  //       console.log(error, ' -got error');
-  //     });
-  // };
-
-
-
-  // useEffect(() => {
-  //   getLatestComputedData();
-  // }, [year, location, month]);
+  const climatiqData = useSelector((state) => state.emissions.climatiqData);
 
   const handleAccordionClick = () => {
     if (!location) {
@@ -133,7 +82,7 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
     return true;
   };
 
-  const handleCalculate =async () => {
+  const handleCalculate = async () => {
     const updatePromises = [
       scope1Ref.current?.updateFormData(),
       scope2Ref.current?.updateFormData(),
@@ -142,17 +91,15 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
 
     await Promise.all(updatePromises);
 
-    // await getLatestComputedData();
-    dispatch(fetchEmissionsData({ location, year, month }));
+    await dispatch(fetchEmissionsData({ location, year, month }));
 
-    if (climatiqData !== 0) {
+    if (climatiqData.status==='succeeded') {
       setModalData({
         ...modalData,
         locationname,
         location,
         month,
         message: "Emission has been created",
-        // monthly_emissions: localClimatiq
       });
     }
   };
@@ -170,20 +117,35 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
           icons={<IoHomeOutline />}
           onAccordionClick={handleAccordionClick}
         >
-          {/* <Scope1 ref={scope1Ref} location={location} year={year} month={month} countryCode={countryCode} successCallback={getLatestComputedData} /> */}
-          <Scope1 ref={scope1Ref} location={location} year={year} month={month} countryCode={countryCode} successCallback={() => dispatch(fetchEmissionsData({ location, year, month }))} />
-
+          {({ setAccordionOpen }) => (
+            <Scope1
+              ref={scope1Ref}
+              location={location}
+              year={year}
+              month={month}
+              countryCode={countryCode}
+              successCallback={() => dispatch(fetchEmissionsData({ location, year, month }))}
+              setAccordionOpen={setAccordionOpen}
+            />
+          )}
         </AccordionItem>
-
         <AccordionItem
           title="InDirect emission from operations"
           scops="Scope 2"
           icons={<IoHomeOutline />}
           onAccordionClick={handleAccordionClick}
         >
-          {/* <Scope2 ref={scope2Ref} location={location} year={year} month={month} countryCode={countryCode} successCallback={getLatestComputedData}/> */}
-          <Scope2 ref={scope2Ref} location={location} year={year} month={month} countryCode={countryCode} successCallback={() => dispatch(fetchEmissionsData({ location, year, month }))}/>
-
+          {({ setAccordionOpen }) => (
+            <Scope2
+              ref={scope2Ref}
+              location={location}
+              year={year}
+              month={month}
+              countryCode={countryCode}
+              successCallback={() => dispatch(fetchEmissionsData({ location, year, month }))}
+              setAccordionOpen={setAccordionOpen} // Pass setAccordionOpen to Scope2
+            />
+          )}
         </AccordionItem>
 
         <AccordionItem
@@ -192,9 +154,17 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
           icons={<IoHomeOutline />}
           onAccordionClick={handleAccordionClick}
         >
-          {/* <Scope3 ref={scope3Ref} location={location} year={year} month={month} countryCode={countryCode} successCallback={getLatestComputedData}/> */}
-          <Scope3 ref={scope3Ref} location={location} year={year} month={month} countryCode={countryCode} successCallback={() => dispatch(fetchEmissionsData({ location, year, month }))}/>
-
+          {({ setAccordionOpen }) => (
+            <Scope3
+              ref={scope3Ref}
+              location={location}
+              year={year}
+              month={month}
+              countryCode={countryCode}
+              successCallback={() => dispatch(fetchEmissionsData({ location, year, month }))}
+              setAccordionOpen={setAccordionOpen} // Pass setAccordionOpen to Scope3
+            />
+          )}
         </AccordionItem>
       </div>
       <div className="flex justify-end items-center mt-[24] me-5">

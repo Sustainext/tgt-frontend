@@ -339,13 +339,13 @@ const Screen2 = ({ selectedOrg, selectedCorp, selectedLocation, year, month }) =
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold mb-2">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
             Transition Risk:
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e878`}
                 data-tooltip-content="Transition risk
 refers to the financial and operational risks that organizations may face during the shift towards a lower-carbon economy."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e878`}

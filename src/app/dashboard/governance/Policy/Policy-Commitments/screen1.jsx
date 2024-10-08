@@ -270,13 +270,13 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-gray-500 font-semibold mb-2">
+            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
               Describe the organization's policy commitments for "responsible
               business conduct", including:
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e80`}
                 data-tooltip-content="Provide a description of organisation's policy commitments for responsible business conduct."
-                className="mt-1.5 ml-2 text-[14px]"
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
                 id={`tooltip-$e80`}
