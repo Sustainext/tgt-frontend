@@ -14,6 +14,9 @@ const OrganizationDetailsForm = ({ onNext, onPrev }) => {
   const [selectedOrg, setSelectedOrg] = useState(null); // For storing selected org ID
   const [selectedCorp, setSelectedCorp] = useState(null); // For storing selected corporate ID
 
+const [loadingOrganizations, setLoadingOrganizations] = useState(true);
+const [loadingCorporates, setLoadingCorporates] = useState(false);
+const [loadingLocations, setLoadingLocations] = useState(false);
   const [selections, setSelections] = useState({
     organization: [],
     corporate: [],
@@ -55,56 +58,61 @@ const OrganizationDetailsForm = ({ onNext, onPrev }) => {
     onNext({ ...selections });
   };
 
-  // Fetch organizations
   useEffect(() => {
     const fetchOrganizations = async () => {
+      setLoadingOrganizations(true); // Start loading organizations
       try {
         const response = await axiosInstance.get(`/orggetonly`);
         setOrganizations(response.data);
       } catch (error) {
         console.error("Failed fetching organizations:", error);
+      } finally {
+        setLoadingOrganizations(false); // Stop loading organizations
       }
     };
     fetchOrganizations();
   }, []);
-
-  // Fetch corporates based on selected organization
+  
+  // Fetch corporates based on selected organizations
   useEffect(() => {
     const fetchCorporates = async () => {
-      if (selectedOrg) {
+      if (selections.organization.length > 0) {
+        setLoadingCorporates(true); // Start loading corporates
         try {
-          const response = await axiosInstance.get(`/corporate/`, {
-            params: { organization_id: selectedOrg }, // Fetch corporates based on organization ID
+          const response = await axiosInstance.get(`/sustainapp/roles/corporates/`, {
+            params: { organization_ids: selections.organization.join(",") }, // Pass comma-separated organization IDs
           });
           setCorporates(response.data);
         } catch (error) {
           console.error("Failed fetching corporates:", error);
+        } finally {
+          setLoadingCorporates(false); // Stop loading corporates
         }
       }
     };
     fetchCorporates();
-  }, [selectedOrg]); // Trigger when selectedOrg changes
-
-  // Fetch locations based on selected corporate
+  }, [selections.organization]);
+  
+  // Fetch locations based on selected corporates
   useEffect(() => {
     const fetchLocations = async () => {
-      if (selectedCorp) {
+      if (selections.corporate.length > 0) {
+        setLoadingLocations(true); // Start loading locations
         try {
-          const response = await axiosInstance.get(
-            `/sustainapp/get_location_as_per_corporate/`,
-            {
-              params: { corporate: selectedCorp }, // Fetch locations based on corporate ID
-            }
-          );
+          const response = await axiosInstance.get(`/sustainapp/roles/locations/`, {
+            params: { corporate_ids: selections.corporate.join(",") }, // Pass comma-separated corporate IDs
+          });
           setLocations(response.data || []);
         } catch (error) {
           console.error("Failed fetching locations:", error);
           setLocations([]);
+        } finally {
+          setLoadingLocations(false); // Stop loading locations
         }
       }
     };
     fetchLocations();
-  }, [selectedCorp]); // Trigger when selectedCorp changes
+  }, [selections.corporate]);
 
   const searchParams = useSearchParams(); 
   const edit = searchParams.get("edit") === "true"; // Check if in edit mode
@@ -156,6 +164,7 @@ const OrganizationDetailsForm = ({ onNext, onPrev }) => {
             selections={selections.organization}
             isParent={false}
             tooltipContent={`Select one or more organizations.`}
+            loading={loadingOrganizations}
           />
 
           {/* Corporates */}
@@ -167,6 +176,7 @@ const OrganizationDetailsForm = ({ onNext, onPrev }) => {
             selections={selections.corporate}
             isParent={true}
             tooltipContent={`Select one or more corporates based on the selected organization.`}
+            loading={loadingCorporates}
           />
 
           {/* Locations */}
@@ -178,6 +188,7 @@ const OrganizationDetailsForm = ({ onNext, onPrev }) => {
             selections={selections.location}
             isParent={true}
             tooltipContent={`Select one or more locations based on the selected corporate.`}
+            loading={loadingLocations}
           />
         </div>
         <div className="flex justify-end items-center gap-1">

@@ -7,25 +7,26 @@ const ConfirmationModal = ({
   onClose, 
   onConfirm, 
   message, 
-  confirmText = "Confirm", 
-  confirmColor = "bg-red-600", 
-  confirmHoverColor = "bg-red-700", 
+  confirmText,
+  confirmColor,
+  confirmHoverColor, 
   cancelText = "Cancel", 
-  title = "Are you sure?", 
-  userName 
+  userName,
+  buttoncolor,
 }) => {
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
       <div className="bg-white shadow-lg rounded-lg p-6 max-w-lg min-w-[444px] mx-auto">
-        <div className="flex items-center space-x-2 mb-4">
-          <MdWarningAmber className="text-yellow-500" fontSize="large" />
-          <h2 className="text-lg font-semibold">{title}</h2>
-        </div>
-        <p className="text-gray-600 mb-6 text-md">
+        <div className="flex mb-4 gap-4">
+          <MdWarningAmber className={`${confirmColor} text-[25px] mt-1 w-[7%]`}  />
+          <p className="text-gray-600 mb-6 text-[18px]">
           {message} {userName && <strong>"{userName}"</strong>}?
         </p>
+          {/* <h2 className="text-lg font-semibold">{title}</h2> */}
+        </div>
+     
         <div className="flex justify-end items-center space-x-4 mt-8">
           <button
             className="bg-white hover:bg-gray-100 text-gray-700 px-4 py-1 rounded-lg border border-gray-300 w-full"
@@ -34,7 +35,7 @@ const ConfirmationModal = ({
             {cancelText}
           </button>
           <button
-            className={`${confirmColor} hover:${confirmHoverColor} text-white px-4 py-1 rounded-lg w-full`}
+            className={`${buttoncolor} hover:${buttoncolor} text-white px-4 py-1 rounded-lg w-full `}
             onClick={onConfirm}
           >
             {confirmText}

@@ -24,9 +24,9 @@ const AnalyseSupplierEnvironment = ({ isBoxOpen }) => {
     end: "",
   });
   const [errors, setErrors] = useState({
-    selectedOrg: "Organization is required",
-    selectedLocation: "Location is required",
-    selectedYear: "Year is required",
+    selectedOrg: "Please select Organisation",
+    selectedCorp: "Please select Corporate",
+    selectedYear: "Please select year",
   });
 
   const LoaderOpen = () => {
@@ -41,11 +41,14 @@ const AnalyseSupplierEnvironment = ({ isBoxOpen }) => {
     const newErrors = {};
 
     if (!selectedOrg) {
-      newErrors.selectedOrg = "Organization is required";
+      newErrors.selectedOrg = "Please select Organisation";
     }
 
     if (!selectedYear) {
-      newErrors.selectedYear = "Year is required";
+      newErrors.selectedYear = "Please select year";
+    }
+    if (!selectedCorp) {
+      newErrors.selectedCorp = "Please select Corporate";
     }
 
     setErrors(newErrors);
@@ -207,10 +210,10 @@ const AnalyseSupplierEnvironment = ({ isBoxOpen }) => {
                 <div className="text-zinc-600 text-[12px] font-semibold font-['Manrope']">
                   View By:
                 </div>
-                <div className="rounded-lg shadow border border-gray-300 justify-start items-start flex">
+                <div className="rounded-lg shadow justify-start items-start flex">
                   <div
-                    className={`w-[111px] px-4 py-2.5 border-r rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
-                      reportType === "Organization" ? "bg-sky-100" : "bg-white"
+                    className={`w-[111px] px-4 py-2.5 border rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                      reportType === "Organization" ? "bg-[#d2dfeb]" : "bg-white"
                     }`}
                     onClick={() => handleReportTypeChange("Organization")}
                   >
@@ -219,8 +222,8 @@ const AnalyseSupplierEnvironment = ({ isBoxOpen }) => {
                     </div>
                   </div>
                   <div
-                    className={`w-[111px] px-4 py-2.5 border-r rounded-r-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
-                      reportType === "Corporate" ? "bg-sky-100" : "bg-white"
+                    className={`w-[111px] px-4 py-2.5 border-r border-y rounded-r-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                      reportType === "Corporate" ? "bg-[#d2dfeb]" : "bg-white"
                     }`}
                     onClick={() => handleReportTypeChange("Corporate")}
                   >
@@ -257,10 +260,11 @@ const AnalyseSupplierEnvironment = ({ isBoxOpen }) => {
                         ))}
                     </select>
                     {errors.selectedOrg && (
-                      <div className="text-red-600 text-[12px] ml-2">
-                        {errors.selectedOrg}
-                      </div>
-                    )}
+                    <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
+                      {errors.selectedOrg}
+                    </p>
+                  )}
+                  
                   </div>
                 </div>
                 {(reportType === "Corporate" || reportType === "Location") && (
@@ -285,6 +289,12 @@ const AnalyseSupplierEnvironment = ({ isBoxOpen }) => {
                             </option>
                           ))}
                       </select>
+                      {errors.selectedCorp && (
+                    <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
+                      {errors.selectedCorp}
+                    </p>
+                  )}
+                 
                     </div>
                   </div>
                 )}
@@ -310,10 +320,11 @@ const AnalyseSupplierEnvironment = ({ isBoxOpen }) => {
                       ))}
                     </select>
                     {errors.selectedYear && (
-                      <div className="text-red-600 text-[12px] ml-2">
-                        {errors.selectedYear}
-                      </div>
-                    )}
+                    <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
+                      {errors.selectedYear}
+                    </p>
+                  )}
+                
                   </div>
                 </div>
               </div>

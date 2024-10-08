@@ -139,11 +139,11 @@ const PersonalDetailsForm = ({ onNext }) => {
               name="roleType"
               value={details.roleType}
               onChange={handleChange}
-              className="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-[12px]"
+              className="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-[12px] text-gray-400"
             >
              <option value="" disabled selected className="text-gray-400">Select Role Type</option>
-              <option value="Manager">Manager</option>
-              <option value="Employee">Employee</option>
+              <option value="Manager" className="text-black">Manager</option>
+              <option value="Employee" className="text-black">Employee</option>
             </select>
           </div>
           <div>
@@ -175,11 +175,11 @@ const PersonalDetailsForm = ({ onNext }) => {
               name="department"
               value={details.department}
               onChange={handleChange}
-              className="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-[12px]"
+              className="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-[12px] text-gray-400"
             >
-              <option value=""  style={{ color: 'gray' }}>Select Department</option>
-              <option value="operations">Operations</option>
-              <option value="hr">Human Resources</option>
+              <option value="" disabled selected className="text-gray-400">Select Department</option>
+              <option value="operations" className="text-black">Operations</option>
+              <option value="hr" className="text-black">Human Resources</option>
             </select>
           </div>
         </div>

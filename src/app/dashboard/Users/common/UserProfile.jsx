@@ -9,7 +9,7 @@ import {
 import { IoLocationOutline } from "react-icons/io5";
 const UserProfile = ({ onClose, user }) => {
   return (
-    <div className="relative bg-white px-6 py-4 border rounded-lg shadow-lg max-w-md w-full h-[78vh] overflow-y-auto scrollable-content">
+    <div className="relative bg-white px-6 py-4  w-full max-h-[89vh] min-h-[8vh] overflow-y-auto scrollable-content">
       {/* Close button in top-right corner */}
   
 
@@ -27,9 +27,13 @@ const UserProfile = ({ onClose, user }) => {
         <span className="text-gray-700 font-medium flex text-[14px]">
           <MdPerson className="text-gray-500 text-[18px]" /> User Role
         </span>
-        <div className="ml-2 rounded-md px-3 py-1 text-[11px] font-bold gradient-text border border-gray-300 w-[70px] text-center">
-          {user.personalDetails.roleType || "Manager"}
-        </div>
+        <div
+  className={`ml-2 rounded-sm px-2 py-1 text-[11px] font-bold w-[74px]  text-center ${
+    user.personalDetails.roleType === 'Employee' ? 'text-[#0057A5] bg-blue-200' : 'text-[#FFA701] bg-yellow-100'
+  }`}
+>
+  {user.personalDetails.roleType || 'Manager'}
+</div>
       </div>
 
       {/* User Details Section */}
