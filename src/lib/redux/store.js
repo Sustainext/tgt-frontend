@@ -6,12 +6,15 @@ import counterReducer from './features/counterSlice'
 import emissionReducer from './features/emissionSlice'
 import screen1SliceReducer from './features/ESGSlice/screen1Slice'
 import screen2SliceReducer from './features/ESGSlice/screen2Slice'
-
+import usersReducer from './features/userSlice'
+import headerReducer from "./features/topheaderSlice"
 const rootReducer = combineReducers({
   counter: counterReducer,
   emissions: emissionReducer,
   screen1Slice:screen1SliceReducer,
   screen2Slice:screen2SliceReducer,
+  users:usersReducer,
+  header:headerReducer,
   
 })
 

@@ -10,6 +10,7 @@ import { Oval } from 'react-loader-spinner';
 import { GlobalState } from '../../Context/page';
 import { FaUser } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
 
 const DashboardHeader = () => {
   const { open } = GlobalState();
@@ -22,8 +23,9 @@ const DashboardHeader = () => {
   const router = useRouter();
   const userDetails = loadFromLocalStorage('userData');
   const profileRef = useRef(null);
-
-
+  const text1 = useSelector((state) => state.header.headertext1);
+  const text2 = useSelector((state) => state.header.headertext2);
+  const headerdisplay = useSelector((state) => state.header.headerdisplay);
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
@@ -120,12 +122,21 @@ const DashboardHeader = () => {
       <div className="flex bg-white sticky top-0 right-0 border-b border-sky-600 border-opacity-50 pt-4 w-full mx-2 z-[1000]">
         <div className={`flex justify-start items-center my-2 gap-1 px-2 ${open ? 'w-[84%]' : 'w-[84%]'}`}>
           <Link href="/dashboard">
-            <span className="text-[#007EEF] hover:text-[#0057A5]">Home</span>
+            <span className="text-[#007EEF] hover:text-[#007EEF] font-semibold">Home</span>
           </Link>
           <span className="text-[#222222] mx-1">&gt;</span>
-          <a href="/home/sustainextHQ">
-            <span className="text-[#222222] hover:text-[#0057A5] mx-2">SustainextHQ</span>
-          </a>
+          <span className="text-[#007EEF] hover:text-[#007EEF] font-semibold ">{text1}</span>
+          <span className="text-[#222222] mx-1">&gt;</span>
+          
+          {/* Conditionally render the Environment breadcrumb based on headerdisplay */}
+          {headerdisplay === 'block' && (
+            <>
+              <span className="text-[#222222] hover:text-[#727272]">Environment</span>
+              <span className="text-[#222222] mx-1">&gt;</span>
+            </>
+          )}
+          
+          <span className="text-[#222222] hover:text-[#727272]">{text2}</span>
         </div>
         <div className="flex justify-end items-center w-[15%]">
           <div className="flex">
@@ -199,12 +210,6 @@ const DashboardHeader = () => {
                             </div>  
                         </div>
                       </div>
-                      {/* <div className="self-stretch px-4 py-1.5 justify-start items-center inline-flex">
-                        
-                        <button onClick={handleLogout} className="text-red-600 text-[13px] font-normal">
-                          Log out
-                        </button>
-                      </div> */}
                     </div>
                   </div>
                 </div>

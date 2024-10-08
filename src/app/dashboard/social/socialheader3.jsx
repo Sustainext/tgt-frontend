@@ -33,8 +33,8 @@ const Socialheader3 = ({ activeMonth, setActiveMonth, location, setLocation, yea
 
   const [locations, setLocations] = useState([]);
   const [errors, setErrors] = useState({
-    location: location ? "" : "Please select a location",
-    year: year ? "" : "Please select a year"
+    location: location ? "" : "Please select location",
+    year: year ? "" : "Please select year"
   });
 
   useEffect(() => {
@@ -64,13 +64,13 @@ const Socialheader3 = ({ activeMonth, setActiveMonth, location, setLocation, yea
       setLocation(Number(value));
       setErrors((prevErrors) => ({
         ...prevErrors,
-        location: value ? "" : "Please select a location",
+        location: value ? "" : "Please select location",
       }));
     } else if (name === "year") {
       setYear(value);
       setErrors((prevErrors) => ({
         ...prevErrors,
-        year: value ? "" : "Please select a year",
+        year: value ? "" : "Please select year",
       }));
     }
   };
@@ -110,7 +110,7 @@ const Socialheader3 = ({ activeMonth, setActiveMonth, location, setLocation, yea
                 style={{ fontSize: "16px" }}
               />
             </div>
-            {errors.location && <p className="text-red-500 text-[12px] absolute top-10 left-0 pl-2">{errors.location}</p>}
+            {errors.location && <p className="text-[#007EEF]  text-[12px] absolute top-10 left-0 pl-2">{errors.location}</p>}
           </div>
           <div className="ml-3 relative mb-2">
             <select
@@ -135,7 +135,7 @@ const Socialheader3 = ({ activeMonth, setActiveMonth, location, setLocation, yea
                 style={{ fontSize: "16px" }}
               />
             </div>
-            {errors.year && <p className="text-red-500 text-[12px] absolute top-10 left-0 pl-2">{errors.year}</p>}
+            {errors.year && <p className="text-[#007EEF]  text-[12px] absolute top-10 left-0 pl-2">{errors.year}</p>}
           </div>
         </div>
         {/* <div className="flex justify-between mb-4">

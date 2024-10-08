@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { MdKeyboardArrowDown, MdInfoOutline } from "react-icons/md";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import Ohsmanagment from "./OHS/ohs-management/page"
@@ -42,7 +42,12 @@ import NoncomplianceincidentsMarketing from "./Marketing-Labeling/Non-compliance
 import StatementnoncomplianceMarketing from "./Marketing-Labeling/Statement-non-compliance-Marketing/page"
 import Identifyinginformation from "./BillS-211/Identifying-information/page"
 import Annualreport from './BillS-211/annual-report/page'
-
+import {
+  setHeadertext1,
+  setHeadertext2,
+  setHeaderdisplay
+} from "../../../lib/redux/features/topheaderSlice";
+import { useDispatch} from "react-redux";
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -70,6 +75,7 @@ const AccordionItem = ({ title, children }) => {
 const Social = () => {
   const [activeStep, setActiveStep] = useState(1);
   const [completedSteps, setCompletedSteps] = useState([]);
+  const dispatch = useDispatch();
   const activeSteps = (id) => {
     setActiveStep(id);
   };
@@ -93,7 +99,12 @@ const Social = () => {
     return completedSteps.includes(stepNumber);
   };
 
-
+  useEffect(() => {
+   
+    dispatch(setHeadertext1("Collect"));
+    dispatch(setHeaderdisplay("none"));
+    dispatch(setHeadertext2('Social'));
+}, [activeStep, dispatch]);
 
   return (
     <>

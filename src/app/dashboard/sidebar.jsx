@@ -15,7 +15,10 @@ import {
   MdOutlineAccountTree,
   MdInfoOutline,
   MdEditNote,
+  MdOutlineManageAccounts ,
+  MdOutlinePersonAddAlt ,
 } from "react-icons/md";
+
 import { LiaHomeSolid } from "react-icons/lia";
 import Link from "next/link";
 import { GlobalState } from "../../Context/page";
@@ -26,95 +29,71 @@ import "react-tooltip/dist/react-tooltip.css";
 const Sidenav = () => {
   const { open, setOpen } = GlobalState();
   const [activeIndex, setActiveIndex] = useState(null);
+  const [activeSubmenuIndex, setActiveSubmenuIndex] = useState(null);
 
   const Menus = [
-    { title: "Sustainext HQ", icon: <LiaHomeSolid />, link: "/dashboard" },
+    { id: 0, title: "Sustainext HQ", icon: <LiaHomeSolid />, link: "/dashboard" },
     {
+      id: 1,
       title: "Materiality Dashboard",
       icon: <MdOutlinePieChartOutline />,
       spacing: true,
       link: "/dashboard/Materiality",
     },
     {
+      id: 2,
       title: "Collect",
-      id: 1,
       icon: <MdOutlineAddBox />,
       submenu: true,
       submenuItems: [
-        {
-          title: "Environment",
-          icon: <MdPublic />,
-          link: "/dashboard/environment",
-        },
-        {
-          title: "Social",
-          icon: <MdOutlineGroup />,
-          link: "/dashboard/social",
-        },
-        {
-          title: "Governance",
-          icon: <MdOutlineDiversity1 />,
-          link: "/dashboard/governance",
-        },
-        {
-          title: "General",
-          icon: <MdOutlineDiversity2 />,
-          link: "/dashboard/general",
-        },
-        {
-          title: "Economic",
-          icon: <MdOutlineDiversity3 />,
-          link: "/dashboard/economic",
-        },
+        { id: "2-1", title: "Environment", icon: <MdPublic />, link: "/dashboard/environment" },
+        { id: "2-2", title: "Social", icon: <MdOutlineGroup />, link: "/dashboard/social" },
+        { id: "2-3", title: "Governance", icon: <MdOutlineDiversity1 />, link: "/dashboard/governance" },
+        { id: "2-4", title: "General", icon: <MdOutlineDiversity2 />, link: "/dashboard/general" },
+        { id: "2-5", title: "Economic", icon: <MdOutlineDiversity3 />, link: "/dashboard/economic" },
       ],
     },
     {
+      id: 3,
       title: "Analyse",
       icon: <MdOutlineBarChart />,
       submenu: true,
       submenuItems: [
-        {
-          title: "Environment",
-          icon: <MdPublic />,
-          link: "/dashboard/Analyse/environment",
-        },
-        {
-          title: "Social",
-          icon: <MdOutlineGroup />,
-          link: "/dashboard/Analyse/social",
-        },
-        {
-          title: "Governance",
-          icon: <MdOutlineDiversity1 />,
-          link: "/dashboard/Analyse/governance",
-        },
-        {
-          title: "General",
-          icon: <MdOutlineDiversity2 />,
-          link: "/dashboard/Analyse/general",
-        },
-        {
-          title: "Economic",
-          icon: <MdOutlineDiversity3 />,
-          link: "/dashboard/Analyse/economic",
-        },
+        { id: "3-1", title: "Environment", icon: <MdPublic />, link: "/dashboard/Analyse/environment" },
+        { id: "3-2", title: "Social", icon: <MdOutlineGroup />, link: "/dashboard/Analyse/social" },
+        { id: "3-3", title: "Governance", icon: <MdOutlineDiversity1 />, link: "/dashboard/Analyse/governance" },
+        { id: "3-4", title: "General", icon: <MdOutlineDiversity2 />, link: "/dashboard/Analyse/general" },
+        { id: "3-5", title: "Economic", icon: <MdOutlineDiversity3 />, link: "/dashboard/Analyse/economic" },
       ],
     },
-    { title: "Report", icon: <MdEditNote />, link: "/dashboard/Report" },
-    { title: "Optimise", icon: <MdOutlineSettingsSuggest />, link: "#" },
+    { id: 4, title: "Report", icon: <MdEditNote />, link: "/dashboard/Report" },
+    { id: 5, title: "Optimise", icon: <MdOutlineSettingsSuggest />, link: "#" },
     {
+      id: 6,
       title: "Track",
       icon: <MdOutlineSearch />,
       spacing: true,
       link: "/dashboard/Track",
     },
     {
+      id: 7,
+      title: "Users",
+      icon: <MdOutlineGroup />,
+      submenu: true,
+      submenuItems: [
+        { id: "7-1", title: "Create new user", icon: <MdOutlinePersonAddAlt   />, link: "/dashboard/Users/create-new-users" },
+        { id: "7-2", title: "Manage Users", icon: <MdOutlineManageAccounts />, link: "/dashboard/Users/manage-users" },
+       
+      ],
+    },
+    {
+      id: 8,
       title: "Organizational Structure",
       icon: <MdOutlineAccountTree />,
       link: "/dashboard/OrgStructure",
     },
-    { title: "Settings", icon: <CiSettings />, link: "/dashboard/Settings" },
-    { title: "About", icon: <MdInfoOutline />, link: "#" },
+    { id: 9, title: "Settings", icon: <CiSettings />, link: "/dashboard/Settings" },
+    { id: 10, title: "About", icon: <MdInfoOutline />, link: "#" },
   ];
 
   const [submenuOpen, setSubmenuOpen] = useState(
@@ -126,6 +105,10 @@ const Sidenav = () => {
       i === index ? !item : false
     );
     setSubmenuOpen(newSubmenuOpen);
+  };
+
+  const isSubmenuActive = (menu) => {
+    return menu.submenuItems?.some((submenuItem) => submenuItem.id === activeIndex);
   };
 
   return (
@@ -154,29 +137,31 @@ const Sidenav = () => {
           </div>
           <ul className="pt-2 overflow-y-scroll h-[110vh] scrollable-content">
             {Menus.map((menu, index) => (
-              <React.Fragment key={index}>
+              <React.Fragment key={menu.id}>
                 {menu.submenu ? (
                   <li
                     className={`text-white text-sm flex items-center gap-x-4 cursor-pointer rounded-md mt-2 w-full p-2
-                      ${open ? "hover:bg-[#007EEF]" : ""} 
-                      ${open && activeIndex === index ? "bg-[#081746]" : ""}`}
+                      ${
+                        submenuOpen[index] || isSubmenuActive(menu)
+                          ? "bg-[#081746]"
+                          : ""
+                      } 
+                      ${!open && activeIndex === menu.id ? "bg-[#081746]" : ""}`}
                     onClick={() => {
                       toggleSubmenu(index);
-                      setActiveIndex(index);
-                  
-                      
+                      setActiveIndex(menu.id);
                     }}
                   >
                     <span
                       className={`text-2xl flex items-center justify-center w-12 h-8 rounded-md 
                       ${!open ? "hover:bg-[#007EEF]" : ""}
-                      ${!open && activeIndex === index ? "bg-[#081746]" : ""}`}
+                      ${
+                        !open && (activeIndex === menu.id || isSubmenuActive(menu))
+                          ? "bg-[#081746]"
+                          : ""
+                      }`}
                       data-tooltip-id={`tooltip-${index}`}
                       data-tooltip-content={menu.title}
-                      onClick={() => {
-                        setOpen(!open);
-                        
-                      }}
                     >
                       {menu.icon ? menu.icon : <LiaHomeSolid />}
                     </span>
@@ -199,19 +184,25 @@ const Sidenav = () => {
                         id={`tooltip-${index}`}
                         place="right"
                         effect="solid"
-                        style={{ fontSize: "10px",background:'#0a0528',boxShadow: 3,
-                          borderRadius: "8px",zIndex:1000 }}
+                        style={{
+                          fontSize: "10px",
+                          background: "#0a0528",
+                          boxShadow: 3,
+                          borderRadius: "8px",
+                          zIndex: 1000,
+                        }}
                       />
                     )}
                   </li>
                 ) : (
-                  <Link href={menu.link} key={index}>
+                  <Link href={menu.link} key={menu.id}>
                     <li
                       className={`text-white text-sm flex items-center gap-x-4 cursor-pointer rounded-md mt-2 w-full p-2
                         ${open ? "hover:bg-[#007EEF]" : ""}
-                        ${open && activeIndex === index ? "bg-[#081746]" : ""}`}
+                        ${open && activeIndex === menu.id ? "bg-[#081746]" : ""}
+                        ${!open && activeIndex === menu.id ? "bg-[#081746]" : ""}`}
                       onClick={() => {
-                        setActiveIndex(index);
+                        setActiveIndex(menu.id);
                         setOpen(!open);
                       }}
                     >
@@ -219,7 +210,9 @@ const Sidenav = () => {
                         className={`text-2xl flex items-center justify-center w-12 h-8 rounded-md 
                           ${!open ? "hover:bg-[#007EEF]" : ""}
                           ${
-                            !open && activeIndex === index ? "bg-[#081746]" : ""
+                            !open && activeIndex === menu.id
+                              ? "bg-[#081746]"
+                              : ""
                           }`}
                         data-tooltip-id={`tooltip-${index}`}
                         data-tooltip-content={menu.title}
@@ -238,8 +231,13 @@ const Sidenav = () => {
                           id={`tooltip-${index}`}
                           place="right"
                           effect="solid"
-                          style={{ fontSize: "10px",background:'#0a0528',boxShadow: 3,
-                            borderRadius: "8px",zIndex:1000 }}
+                          style={{
+                            fontSize: "10px",
+                            background: "#0a0528",
+                            boxShadow: 3,
+                            borderRadius: "8px",
+                            zIndex: 1000,
+                          }}
                         />
                       )}
                     </li>
@@ -249,27 +247,22 @@ const Sidenav = () => {
                   <hr className="bg-[rgba(217, 217, 217, 1)] h-[0.0625rem] my-4 mx-3 opacity-30" />
                 )}
                 {menu.submenu && submenuOpen[index] && open && (
-                  <ul className="">
-                    {menu.submenuItems.map((submenuItem, subIndex) => (
-                      <Link href={submenuItem.link} key={subIndex}>
+                  <ul>
+                    {menu.submenuItems.map((submenuItem) => (
+                      <Link href={submenuItem.link} key={submenuItem.id}>
                         <li
                           className={`text-white text-sm p-2 px-5 mx-5 flex items-center gap-x-4 cursor-pointer hover:bg-[#007EEF] rounded-md  mt-2 ${
-                            activeIndex === `${index}-${subIndex}`
+                            activeIndex === submenuItem.id
                               ? "bg-[#081746]"
                               : ""
                           }`}
                           onClick={() => {
-                            toggleSubmenu(subIndex); 
-                            setActiveIndex(subIndex); 
-                            setOpen(!open); 
+                            setActiveIndex(submenuItem.id);
+                            setOpen(!open);
                           }}
                         >
                           <span className="text-2xl block float-left">
-                            {submenuItem.icon ? (
-                              submenuItem.icon
-                            ) : (
-                              <LiaHomeSolid />
-                            )}
+                            {submenuItem.icon ? submenuItem.icon : <LiaHomeSolid />}
                           </span>
                           <span
                             className={`text-sm font-medium flex-1 ${

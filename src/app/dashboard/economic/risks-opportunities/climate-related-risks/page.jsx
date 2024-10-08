@@ -76,7 +76,7 @@ const Climaterelatedrisks = () => {
 
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Climate related Risks (2/3)
+          Climate related Risks
             <MdInfoOutline
               data-tooltip-id={`tooltip-$e10`}
               data-tooltip-content="This section documents the data corresponding to the climate related risks."

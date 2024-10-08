@@ -361,7 +361,7 @@ const Location = ({ heading }) => {
     setIsSameAsCorporate(e.target.checked);
     if (e.target.checked && !formData.generalDetails.corporateEntity) {
       setIsSameAsCorporate(false);
-      alert("Please select a corporate entity first.");
+      alert("Please select Corporate entity first.");
       return;
     }
     if (e.target.checked && selectedCorporateEntityDetails) {

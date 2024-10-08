@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import Infrastructureinvestmentsservices from "./indirect-economic-impacts/infrastructure-investments-services/page";
@@ -22,6 +22,12 @@ import Ratiosstandard from "./market-presence/ratios-standard/page";
 import Communicationtraining from "./anti-corruption/communication-training/page"
 import Climaterelated from "./risks-opportunities/climate-related/page"
 import Climaterelatedrisks from "./risks-opportunities/climate-related-risks/page"
+import {
+  setHeadertext1,
+  setHeadertext2,
+  setHeaderdisplay
+} from "../../../lib/redux/features/topheaderSlice";
+import { useDispatch} from "react-redux";
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -51,7 +57,7 @@ const AccordionItem = ({ title, children }) => {
 const Economic = () => {
   const [activeStep, setActiveStep] = useState(1);
   const [completedSteps, setCompletedSteps] = useState([]);
-
+  const dispatch = useDispatch();
   const activeSteps = (id) => {
     setActiveStep(id);
   };
@@ -74,7 +80,12 @@ const Economic = () => {
   const isStepCompleted = (stepNumber) => {
     return completedSteps.includes(stepNumber);
   };
-
+  useEffect(() => {
+   
+    dispatch(setHeadertext1("Collect"));
+    dispatch(setHeaderdisplay("none"));
+    dispatch(setHeadertext2('Economic'));
+}, [activeStep, dispatch]);
   return (
     <>
       <div>

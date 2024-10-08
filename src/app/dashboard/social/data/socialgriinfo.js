@@ -9372,7 +9372,7 @@ export const Socialdata = [
           Disclosure 308-1 New suppliers that were screened
           using environmental criteria
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[640px] overflow-y-auto custom-scrollbar">
             {/* <p className="text-[11px] text-black mb-2">
               Compilation Requirements
             </p> */}
@@ -9425,7 +9425,7 @@ as well as via ongoing collaboration with suppliers.
           Disclosure 308-2 Negative environmental impacts in
 the supply chain and actions taken
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[640px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
             Guidance :
             </p>

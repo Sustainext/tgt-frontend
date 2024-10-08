@@ -137,7 +137,7 @@ export const Energydata = [
             sustainable economic growth, full and productive employment and
             decent work for all
           </p>
-          <div className="h-[580px] overflow-y-auto custom-scrollbar">
+          <div className="h-[606px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Improve progressively, through 2030, global resource efficiency in
@@ -788,7 +788,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 302-3 Energy intensity
           </p>
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div className="h-[678px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">
               Compilation requirement:
             </p>
@@ -1055,7 +1055,7 @@ export const Energydata = [
             Sustainable Development Goal 3: Ensure healthy lives and promote
             well-being for all at all ages
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[635px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 3.9</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, reduce the global maternal mortality ratio to less than
@@ -1163,7 +1163,7 @@ export const Energydata = [
             Sustainable Development Goal 6: Ensure availability and sustainable
             management of water and sanitation for all
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[635px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 6.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, improve water quality by reducing pollution, eliminating
@@ -1251,7 +1251,7 @@ export const Energydata = [
             Sustainable Development Goal 11: Make cities and human settlements
             inclusive, safe, resilient and sustainable
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[635px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 11.6</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, reduce the adverse per capita environmental impact of
@@ -1304,7 +1304,7 @@ export const Energydata = [
             Sustainable Development Goal 12: Ensure sustainable consumption and
             production patterns
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[635px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 12.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2020, achieve the environmentally sound management of chemicals
@@ -1374,7 +1374,7 @@ export const Energydata = [
             forests, combat desertification, and halt and reverse land
             degradation and halt biodiversity loss
           </p>
-          <div className="h-[250px] overflow-y-scroll custom-scrollbar">
+          <div className="h-[570px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 15</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2020, ensure the conservation, restoration and sustainable use
@@ -1396,7 +1396,7 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3]"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal15"
               target="_blank"
             >
@@ -1663,7 +1663,7 @@ export const Energydata = [
             Disclosure 306-3 Waste generated
           </p>
 
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div className="h-[680px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">
               Compilation requirement:
             </p>
@@ -1862,7 +1862,7 @@ export const Energydata = [
             Disclosure 306-5 Waste directed to disposal
           </p>
 
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div className="h-[684px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">
               Compilation requirement:
             </p>
@@ -1973,7 +1973,7 @@ export const Energydata = [
             Sustainable Development Goal 6: Ensure availability and sustainable
             management of water and sanitation for all
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[635px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 6.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, improve water quality by reducing pollution, eliminating
@@ -2078,7 +2078,7 @@ export const Energydata = [
             Sustainable Development Goal 12: Ensure sustainable consumption and
             production pattern
           </p>
-          <div className="h-[280px] overflow-y-auto custom-scrollbar">
+          <div className="h-[635px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 12.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2020, achieve the environmentally sound management of chemicals
@@ -2130,7 +2130,7 @@ export const Energydata = [
             Disclosure 303-1 Interactions with water as a shared resource
           </p>
 
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[635px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-[#727272] mb-2">
               The description of how the organization interacts with water can
               include information on specific catchments where water is
@@ -2301,7 +2301,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 303-2 Management of water discharge related impacts
           </p>
-          <div className="h-[250px] overflow-y-auto custom-scrollbar">
+          <div className="h-[640px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-[#727272] mb-2">
               Water quality refers to the physical, chemical, biological, and
               taste-related characteristics of water. It is a measure of water
@@ -2589,7 +2589,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Improve progressively, through 2030, global resource efficiency in
@@ -2645,7 +2645,7 @@ export const Energydata = [
             Sustainable Development Goal 12: Ensure sustainable consumption and
             production pattern
           </p>
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div className="h-[635px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 12.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, achieve the sustainable management and efficient use of
@@ -2855,7 +2855,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[270px] overflow-y-auto custom-scrollbar">
+          <div className="h-[650px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Improve progressively, through 2030, global resource efficiency in
@@ -2911,7 +2911,7 @@ export const Energydata = [
             Sustainable Development Goal 12: Ensure sustainable consumption and
             production pattern
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[635px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 12.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, achieve the sustainable management and efficient use of
@@ -3055,7 +3055,7 @@ export const Energydata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Improve progressively, through 2030, global resource efficiency in
@@ -3111,7 +3111,7 @@ export const Energydata = [
             Sustainable Development Goal 12: Ensure sustainable consumption and
             production pattern
           </p>
-          <div className="h-[270px] overflow-y-auto custom-scrollbar">
+          <div className="h-[635px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 12.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, achieve the sustainable management and efficient use of
@@ -3163,7 +3163,7 @@ export const Energydata = [
             Sustainable Development Goal 12: Ensure sustainable consumption and
             production patterns
           </p>
-          <div className="h-[280px] overflow-y-auto custom-scrollbar">
+          <div className="h-[635px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 12.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2020, achieve the environmentally sound management of chemicals
@@ -3229,7 +3229,7 @@ export const Energydata = [
             Sustainable Development Goal 3: Ensure healthy lives and promote
             well-being for all at all ages
           </p>
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div className="h-[629px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 3.9</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, reduce the global maternal mortality ratio to less than
@@ -3336,7 +3336,7 @@ export const Energydata = [
             Sustainable Development Goal 6: Ensure availability and sustainable
             management of water and sanitation for all
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[635px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 6.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, improve water quality by reducing pollution, eliminating
@@ -3423,7 +3423,7 @@ export const Energydata = [
             Sustainable Development Goal 11: Make cities and human settlements
             inclusive, safe, resilient and sustainable
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[635px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 11.6</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, reduce the adverse per capita environmental impact of
@@ -3476,7 +3476,7 @@ export const Energydata = [
             Sustainable Development Goal 6: Ensure availability and sustainable
             management of water and sanitation for all
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[635px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 6.6</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2020, protect and restore water-related ecosystems, including
