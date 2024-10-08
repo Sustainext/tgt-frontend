@@ -17,23 +17,50 @@ import {
   updateScopeDataLocal,
 } from "@/lib/redux/features/emissionSlice";
 
+const local_schema = {
+  type: "array",
+  items: {
+    type: "object",
+    properties: {
+      Emission: {
+        type: "string",
+        title: "Emissionsscop2",
+      },
+    },
+  },
+};
+
+const local_ui_schema = {
+  items: {
+    Emission: {
+      "ui:widget": "EmissionWidget",
+      "ui:options": {
+        label: false,
+      },
+      "ui:horizontal": true,
+    },
+    "ui:order": ["Emission"],
+    "ui:options": {
+      layout: "horizontal",
+      addable: false,
+      orderable: false,
+      removable: false,
+    },
+  },
+};
+
 const Scope1 = forwardRef(
   (
-    {
-      location,
-      year,
-      month,
-      successCallback,
-      countryCode,
-      setAccordionOpen,
-    },
+    { location, year, month, successCallback, countryCode, setAccordionOpen },
     ref
   ) => {
     const dispatch = useDispatch();
 
     const scope1State = useSelector((state) => state.emissions.scope1Data);
     const climatiqData = useSelector((state) => state.emissions.climatiqData);
-    const previousMonthData = useSelector((state) => state.emissions.previousMonthData);
+    const previousMonthData = useSelector(
+      (state) => state.emissions.previousMonthData
+    );
     const autoFill = useSelector((state) => state.emissions.autoFill);
 
     const [r_schema, setRemoteSchema] = useState({});
@@ -42,7 +69,9 @@ const Scope1 = forwardRef(
     const [modalData, setModalData] = useState(null);
     const [activityCache, setActivityCache] = useState({});
 
-    const formData = Array.isArray(scope1State.data?.data) ? scope1State.data.data : [];
+    const formData = Array.isArray(scope1State.data?.data)
+      ? scope1State.data.data
+      : [];
 
     useImperativeHandle(ref, () => ({
       updateFormData: () => updateFormData(formData),
@@ -51,85 +80,105 @@ const Scope1 = forwardRef(
     const LoaderOpen = () => setLoOpen(true);
     const LoaderClose = () => setLoOpen(false);
 
-    const handleChange = useCallback((e) => {
-      dispatch(updateScopeDataLocal({ scope: 1, data: { data: e.formData } }));
-    }, [dispatch]);
+    const handleChange = useCallback(
+      (e) => {
+        dispatch(
+          updateScopeDataLocal({ scope: 1, data: { data: e.formData } })
+        );
+      },
+      [dispatch]
+    );
 
-    const handleCombinedWidgetChange = useCallback((
-      index,
-      field,
-      value,
-      activityId,
-      unitType,
-      name,
-      url,
-      filetype,
-      size,
-      uploadDateTime
-    ) => {
-      const updatedFormData = [...formData];
-      const currentEmission = updatedFormData[index]?.Emission || {};
+    const handleCombinedWidgetChange = useCallback(
+      (
+        index,
+        field,
+        value,
+        activityId,
+        unitType,
+        name,
+        url,
+        filetype,
+        size,
+        uploadDateTime
+      ) => {
+        const updatedFormData = [...formData];
+        const currentEmission = updatedFormData[index]?.Emission || {};
 
-      updatedFormData[index] = {
-        ...updatedFormData[index],
-        Emission: {
-          ...currentEmission,
-          [field]: value,
-          ...(activityId !== undefined && { activity_id: activityId }),
-          ...(unitType !== undefined && { unit_type: unitType }),
-          ...(name &&
-            url &&
-            filetype &&
-            size &&
-            uploadDateTime && {
-              file: { name, url, type: filetype, size, uploadDateTime },
-            }),
-        },
-      };
+        updatedFormData[index] = {
+          ...updatedFormData[index],
+          Emission: {
+            ...currentEmission,
+            [field]: value,
+            ...(activityId !== undefined && { activity_id: activityId }),
+            ...(unitType !== undefined && { unit_type: unitType }),
+            ...(name &&
+              url &&
+              filetype &&
+              size &&
+              uploadDateTime && {
+                file: { name, url, type: filetype, size, uploadDateTime },
+              }),
+          },
+        };
 
-      dispatch(updateScopeDataLocal({ scope: 1, data: { data: updatedFormData } }));
-    }, [formData, dispatch]);
+        dispatch(
+          updateScopeDataLocal({ scope: 1, data: { data: updatedFormData } })
+        );
+      },
+      [formData, dispatch]
+    );
 
     const handleAddNew = useCallback(() => {
       const newRow = { Emission: {} };
       const updatedFormData = [...formData, newRow];
-      dispatch(updateScopeDataLocal({ scope: 1, data: { data: updatedFormData } }));
+      dispatch(
+        updateScopeDataLocal({ scope: 1, data: { data: updatedFormData } })
+      );
     }, [formData, dispatch]);
 
-    const handleRemoveRow = useCallback(async (index) => {
-      const parsedIndex = parseInt(index, 10);
-      const updatedData = formData.filter((_, i) => i !== parsedIndex);
-      console.log('updated data',updatedData," for index ",parsedIndex)
+    const handleRemoveRow = useCallback(
+      async (index) => {
+        const parsedIndex = parseInt(index, 10);
+        const updatedData = formData.filter((_, i) => i !== parsedIndex);
+        console.log("updated data", updatedData, " for index ", parsedIndex);
 
-      dispatch(updateScopeDataLocal({ scope: 1, data: { data: updatedData } }));
+        dispatch(
+          updateScopeDataLocal({ scope: 1, data: { data: updatedData } })
+        );
 
-      try {
-        await updateFormData(updatedData);
-        // successCallback();
+        try {
+          await updateFormData(updatedData);
+          // successCallback();
 
-        if (parsedIndex === 0 && updatedData.length === 0) {
-          setAccordionOpen(false);
+          if (parsedIndex === 0 && updatedData.length === 0) {
+            setAccordionOpen(false);
+          }
+        } catch (error) {
+          console.error("Failed to update form data:", error);
         }
-      } catch (error) {
-        console.error("Failed to update form data:", error);
-      }
-    }, [formData, dispatch, successCallback, setAccordionOpen]);
+      },
+      [formData, dispatch, successCallback, setAccordionOpen]
+    );
 
-    const updateFormData = useCallback(async (data) => {
-      LoaderOpen();
-      try {
-        await dispatch(
-          updateScopeData({ scope: 1, data: { data }, location, year, month })
-        ).unwrap();
-        successCallback();
-      } catch (error) {
-        setModalData({
-          message: "Oops, something went wrong",
-        });
-      } finally {
-        LoaderClose();
-      }
-    }, [dispatch, location, year, month, successCallback]);
+    const updateFormData = useCallback(
+      async (data) => {
+        LoaderOpen();
+        try {
+          await dispatch(
+            updateScopeData({ scope: 1, data: { data }, location, year, month })
+          ).unwrap();
+          successCallback();
+        } catch (error) {
+          setModalData({
+            message: "Oops, something went wrong",
+          });
+        } finally {
+          LoaderClose();
+        }
+      },
+      [dispatch, location, year, month, successCallback]
+    );
 
     const updateCache = useCallback((subcategory, activities) => {
       setActivityCache((prevCache) => ({
@@ -139,39 +188,49 @@ const Scope1 = forwardRef(
     }, []);
 
     useEffect(() => {
-      if (scope1State.status === 'succeeded' && scope1State.schema && scope1State.uiSchema) {
+      if (
+        scope1State.status === "succeeded" &&
+        scope1State.schema &&
+        scope1State.uiSchema
+      ) {
         setRemoteSchema(scope1State.schema);
         setRemoteUiSchema(scope1State.uiSchema);
       }
     }, [scope1State.status, scope1State.schema, scope1State.uiSchema]);
 
     useEffect(() => {
-      if (autoFill && previousMonthData.status === 'succeeded') {
+      if (autoFill && previousMonthData.status === "succeeded") {
         const prevMonthFormData = previousMonthData.scope1Data?.data || [];
-        
-        const formattedPrevMonthData = prevMonthFormData.map(item => {
+
+        const formattedPrevMonthData = prevMonthFormData.map((item) => {
           const updatedEmission = { ...item.Emission };
-          
-          updatedEmission.Unit = '';
-          updatedEmission.Quantity = '';
-          
-          if (updatedEmission.unit_type && updatedEmission.unit_type.includes('Over')) {
-            updatedEmission.Unit2 = '';
-            updatedEmission.Quantity2 = '';
+
+          updatedEmission.Unit = "";
+          updatedEmission.Quantity = "";
+
+          if (
+            updatedEmission.unit_type &&
+            updatedEmission.unit_type.includes("Over")
+          ) {
+            updatedEmission.Unit2 = "";
+            updatedEmission.Quantity2 = "";
           }
-          
+
           return {
             ...item,
-            Emission: updatedEmission
+            Emission: updatedEmission,
           };
         });
-        
-        const currentFormData = formData.length > 0 ? formData : formattedPrevMonthData;
-        dispatch(updateScopeDataLocal({ scope: 1, data: { data: currentFormData } }));
+
+        const currentFormData =
+          formData.length > 0 ? formData : formattedPrevMonthData;
+        dispatch(
+          updateScopeDataLocal({ scope: 1, data: { data: currentFormData } })
+        );
       }
     }, [climatiqData.totalScore, previousMonthData]);
 
-    if (scope1State.status === 'loading') {
+    if (scope1State.status === "loading") {
       return (
         <div className="flex items-center justify-center">
           <Oval
@@ -186,7 +245,7 @@ const Scope1 = forwardRef(
       );
     }
 
-    if (scope1State.status === 'failed') {
+    if (scope1State.status === "failed") {
       return <div>Error loading data: {scope1State.error}</div>;
     }
 
@@ -194,8 +253,8 @@ const Scope1 = forwardRef(
       <>
         <div>
           <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+            schema={local_schema}
+            uiSchema={local_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

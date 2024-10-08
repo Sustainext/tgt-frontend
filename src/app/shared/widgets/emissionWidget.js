@@ -7,10 +7,9 @@ import axios from "axios"; // Import icons from React Icons
 import { LuTrash2 } from "react-icons/lu";
 import { TbUpload } from "react-icons/tb";
 import debounce from "lodash/debounce";
-import { GlobalState } from "@/Context/page";
 import { toast } from "react-toastify";
 import { BlobServiceClient } from "@azure/storage-blob";
-import { MdFilePresent, MdClose } from "react-icons/md";
+import { MdClose } from "react-icons/md";
 import { RiFileExcel2Line } from "react-icons/ri";
 import { BsFiletypePdf, BsFileEarmarkImage } from "react-icons/bs";
 import { Tooltip as ReactTooltip } from "react-tooltip";
