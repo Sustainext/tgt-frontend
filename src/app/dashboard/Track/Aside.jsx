@@ -23,7 +23,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
             >
               {tab === "Environment" && <MdPublic className="w-5 h-5 mr-5" />}
               {tab === "Social" && <MdOutlineGroup className="w-5 h-5 mr-5" />}
-              {/* {tab === "Governance" && <MdOutlineDiversity1 className="w-5 h-5 mr-5" />} */}
+              {tab === "Governance" && <MdOutlineDiversity1 className="w-5 h-5 mr-5" />}
               <span className="mr-7">{tab}</span>
             </button>
           ))}

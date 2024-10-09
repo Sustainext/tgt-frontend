@@ -20,15 +20,29 @@ export const fetchEmissionsData = createAsyncThunk(
         axiosInstance.get(scope3Url)
       ]);      
 
+       // Function to add rowType to Emission objects
+       const addRowType = (responseData) => {
+        return {
+          ...responseData,
+          data: responseData.data.map(item => ({
+            ...item,
+            Emission: {
+              ...item.Emission,
+              rowType: 'approved'
+            }
+          }))
+        };
+      };
+
       return {
         climatiqData: climatiqResponse.data,
-        scope1Data: scope1Response.data.form_data[0],
+        scope1Data: addRowType(scope1Response.data.form_data[0]),
         scope1Schema: scope1Response.data.form[0].schema,
         scope1UiSchema: scope1Response.data.form[0].ui_schema,
-        scope2Data: scope2Response.data.form_data[0],
+        scope2Data: addRowType(scope2Response.data.form_data[0]),
         scope2Schema: scope2Response.data.form[0].schema,
         scope2UiSchema: scope2Response.data.form[0].ui_schema,
-        scope3Data: scope3Response.data.form_data[0],
+        scope3Data: addRowType(scope3Response.data.form_data[0]),
         scope3Schema: scope3Response.data.form[0].schema,
         scope3UiSchema: scope3Response.data.form[0].ui_schema,
         params: { location, year, month }
@@ -61,10 +75,23 @@ export const fetchPreviousMonthData = createAsyncThunk(
         axiosInstance.get(scope3Url)
       ]);
 
+      const addRowType = (responseData) => {
+        return {
+          ...responseData,
+          data: responseData.data.map(item => ({
+            ...item,
+            Emission: {
+              ...item.Emission,
+              rowType: 'default'
+            }
+          }))
+        };
+      };
+
       return {
-        scope1Data: scope1Response.data.form_data[0],
-        scope2Data: scope2Response.data.form_data[0],
-        scope3Data: scope3Response.data.form_data[0],
+        scope1Data: addRowType(scope1Response.data.form_data[0]),
+        scope2Data: addRowType(scope2Response.data.form_data[0]),
+        scope3Data: addRowType(scope3Response.data.form_data[0]),
         params: { location, year: prevYear, month: prevMonth }
       };
     } catch (error) {
@@ -102,6 +129,17 @@ const calculateTotalClimatiqScore = (data) => {
     return (total / 1000).toFixed(3);
   }
   return 0;
+};
+
+ // Function to add rowType to Emission objects
+ const addRowType = (data, type) => {
+  return data.map(item => ({
+    ...item,
+    Emission: {
+      ...item.Emission,
+      rowType: type
+    }
+  }));
 };
 
 const emissionsSlice = createSlice({
@@ -153,6 +191,16 @@ const emissionsSlice = createSlice({
     updateScopeError: null,
     updateScopeParams: null,
     autoFill: false,
+    selectedRows: {
+      scope1: [],
+      scope2: [],
+      scope3: []
+    },
+    selectAllChecked:{
+      scope1: false,
+      scope2: false,
+      scope3: false
+    }
   },
   reducers: {
     setLocation: (state, action) => {
@@ -177,7 +225,52 @@ const emissionsSlice = createSlice({
         error: null,
         params: null
       };
-    }
+    },
+    setSelectedRows: (state, action) => {
+      const { scope, rowId, isSelected, rowData } = action.payload;
+      
+      if (isSelected) {
+        // If the row doesn't exist in the array, add it
+        if (!state.selectedRows[scope].some(row => row.rowId === rowId)) {
+          state.selectedRows[scope].push({ rowId, ...rowData, isSelected: true });
+        } else {
+          // If it exists, update its selection state
+          const rowIndex = state.selectedRows[scope].findIndex(row => row.rowId === rowId);
+          state.selectedRows[scope][rowIndex].isSelected = true;
+        }
+      } else {
+        // Remove the row if it's being deselected
+        state.selectedRows[scope] = state.selectedRows[scope].filter(row => row.rowId !== rowId);
+      }
+    
+      // Update selectAllChecked based on whether all selectable rows are selected
+      const allRows = state[`${scope}Data`].data?.data || [];
+      const selectableRowsCount = allRows.filter(row => !['calculated', 'approved', 'assigned'].includes(row.Emission?.rowType)).length;
+      const selectedRowsCount = state.selectedRows[scope].length;
+      state.selectAllChecked[scope] = selectableRowsCount > 0 && selectedRowsCount === selectableRowsCount;
+    },
+    toggleSelectAll: (state, action) => {
+      const { scope, isChecked } = action.payload;
+      state.selectAllChecked[scope] = isChecked;
+      const allRows = state[`${scope}Data`].data?.data || [];
+      
+      if (isChecked) {
+        state.selectedRows[scope] = allRows
+          .map((row, index) => {
+            if (!['calculated', 'approved', 'assigned'].includes(row.Emission?.rowType)) {
+              return {
+                rowId: `${scope}_${index}`,
+                ...row,
+                isSelected: true
+              };
+            }
+            return null;
+          })
+          .filter(Boolean);
+      } else {
+        state.selectedRows[scope] = [];
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -259,7 +352,9 @@ export const {
   setYear,
   setMonth,
   updateScopeDataLocal,
-  resetPreviousMonthData
+  resetPreviousMonthData,
+  setSelectedRows,
+  toggleSelectAll
 } = emissionsSlice.actions;
 
 export default emissionsSlice.reducer;
