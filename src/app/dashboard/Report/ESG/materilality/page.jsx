@@ -5,7 +5,11 @@ import Section2 from "./sections/section2";
 import Section3 from "./sections/section3";
 import Section4 from "./sections/section4";
 import Section5 from "./sections/section5";
+import axiosInstance,{patch} from "../../../../utils/axiosMiddleware";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
+import { Oval } from "react-loader-spinner";
 import {setdescription} from "../../../../../lib/redux/features/ESGSlice/screen8Slice"
 
 
@@ -32,7 +36,7 @@ const Materiality=forwardRef(({ onSubmitSuccess }, ref) => {
   const submitForm = async (type) => {
       LoaderOpen();
       const data={
-        "description":description,
+        "statement":description,
       }
   
       const url = `${process.env.BACKEND_API_URL}/esg_report/screen_eight/${reportid}/`;
@@ -98,7 +102,7 @@ const Materiality=forwardRef(({ onSubmitSuccess }, ref) => {
           const response = await axiosInstance.get(url);
           if(response.data){
               setData(response.data)
-            dispatch(setdescription(response.data.description));
+            dispatch(setdescription(response.data.statement));
           }
           
           LoaderClose();
@@ -113,7 +117,7 @@ const Materiality=forwardRef(({ onSubmitSuccess }, ref) => {
     // Ensure API is only called once
     if (!apiCalledRef.current && reportid) {
         apiCalledRef.current = true;  // Set the flag to true to prevent future calls
-        // loadFormData();  // Call the API only once
+        loadFormData();  // Call the API only once
     }
   }, [reportid]);
     

@@ -1,8 +1,23 @@
 'use client'
 import { useState, useRef, useEffect } from "react";
-import RatioTable from "../tables/ratioTable";
+import LeaveTable from "../tables/leaveTable";
+import STARSVG from "../../../../../../../public/star.svg";
+import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import {setPolicyPublic} from "../../../../../../lib/redux/features/ESGSlice/screen9Slice"
 
-const Section21=({section9_6_2Ref})=>{
+
+const Section21=({section9_6_2Ref,orgName,data})=>{
+    const policy_not_public_reason = useSelector(state => state.screen9Slice.policy_not_public_reason);
+    const dispatch = useDispatch();
+    const loadContent = () => {
+      dispatch(setPolicyPublic(
+        `Our commitment to sustainability is embedded in our corporate policies and practices. These policies are regularly reviewed and updated to reflect evolving best practices and stakeholder expectations.`))
+    }
+  
+    const handleEditorChange=(e)=>{
+      dispatch(setPolicyPublic(e.target.value))
+    }
     const [content,setContent] = useState(
         `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum ipsam minus, voluptates obcaecati velit fuga tempore laudantium consequuntur illo`
     )
@@ -12,12 +27,7 @@ const Section21=({section9_6_2Ref})=>{
         "Whether this is the most senior level",
         "If yes, specify senior level"
     ]
-    const values=[
-        "Data",
-        "Data",
-        "Data",
-        "Data"
-    ]
+    const tableData=data["2_23_d"]?data["2_23_d"]:[]
     return (
         <>
        
@@ -27,52 +37,94 @@ const Section21=({section9_6_2Ref})=>{
 9.6.2 Embedding Policy Commitment
 </h3>
 <p className="text-[15px] text-[#344054] mb-2">
-[Company Name] is committed to integrating sustainable development into our core business strategy. Our approach focuses on reducing environmental impact, enhancing social value, and maintaining strong governance. We aim to create long-term value for our stakeholders while contributing to a more sustainable future. 
+{orgName ? orgName : "[Company Name]"} is committed to integrating sustainable development into our core business strategy. Our approach focuses on reducing environmental impact, enhancing social value, and maintaining strong governance. We aim to create long-term value for our stakeholders while contributing to a more sustainable future. 
             </p>
-<p className="text-[15px] text-[#344054] mb-2 font-semibold">
-Overall organization's policy commitments for "responsible business conduct"
-</p>
-<p className="text-sm mb-4">{content}</p>
-<p className="text-[15px] text-[#344054] mb-2 font-semibold">
-Authoritative governmental instruments that the commitments reference
-</p>
-<p className="text-sm mb-4">{content}</p>
 
-<p className="text-[15px] text-[#344054] mb-2 font-semibold">
-The commitments that stipulate conducting due diligence
-</p>
-<p className="text-sm mb-4">{content}</p>
-<p className="text-[15px] text-[#344054] mb-2 font-semibold">
-The commitments that stipulate applying the precautionary principle
-</p>
-<p className="text-sm mb-4">{content}</p>
-<p className="text-[15px] text-[#344054] mb-2 font-semibold">
-The commitments that stipulate respecting human rights
-</p>
-<p className="text-sm mb-4">{content}</p>
+            <div>
+        <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+            Overall organization's policy commitments for "responsible business conduct"
+        </p>
+        <p className="text-sm mb-4">
+            {data["2_23_a"]?data["2_23_a"][0].column1:"No data available"}
+        </p>
+
+        <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+            Authoritative governmental instruments that the commitments reference
+        </p>
+        <p className="text-sm mb-4">
+        {data["2_23_a"]?data["2_23_a"][1].column1:"No data available"}
+        </p>
+
+        <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+            The commitments that stipulate conducting due diligence
+        </p>
+        <p className="text-sm mb-4">
+        {data["2_23_a"]?data["2_23_a"][2].column1:"No data available"}
+        </p>
+        {data["2_23_a"]?data["2_23_a"][2].column1_details && (
+            <p className="text-sm mb-4">
+                {data["2_23_a"][2].column1_details}
+            </p>
+        ):""}
+
+        <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+            The commitments that stipulate applying the precautionary principle
+        </p>
+        <p className="text-sm mb-4">
+        {data["2_23_a"]?data["2_23_a"][3].column1:"No data available"}
+        </p>
+        {data["2_23_a"]?data["2_23_a"][3].column1_details && (
+            <p className="text-sm mb-4">
+                {data["2_23_a"][2].column1_details}
+            </p>
+        ):""}
+
+        <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+            The commitments that stipulate respecting human rights
+        </p>
+        <p className="text-sm mb-4">
+        {data["2_23_a"]?data["2_23_a"][4].column1:"No data available"}
+        </p>
+        {data["2_23_a"]?data["2_23_a"][4].column1_details && (
+            <p className="text-sm mb-4">
+                {data["2_23_a"][2].column1_details}
+            </p>
+        ):""}
+    </div>
+
+
 <p className="text-[15px] text-[#344054] mb-2 font-semibold">
 The internationally recognized human rights that the commitment covers
 </p>
-<p className="text-sm mb-4">{content}</p>
+<p className="text-sm mb-4">{data["2_23_b"]?data["2_23_b"].the_internationally_recognized_human_rights_that_the_commitment_covers:"No data available"}</p>
 <p className="text-[15px] text-[#344054] mb-2 font-semibold">
 The categories of stakeholders, including at-risk or vulnerable groups, that the organization gives 
 particular attention to in the commitment
 </p>
-<p className="text-sm mb-4">{content}</p>
+<p className="text-sm mb-4">{data["2_23_b"]?data["2_23_b"].the_categories_of_stakeholders_including_at_risk_or_vulnerable_groups_that_the_organization_gives_particular_attention_to_in_the_commitment:"No data available"}</p>
 <p className="text-[15px] text-[#344054] mb-2 font-semibold">
 Links to policy commitments
 </p>
-<p className="text-sm mb-4">{content}</p>
+<p className="text-sm mb-4">{data["2_23_c"]?data["2_23_c"].are_the_organizations_policy_commitments_publicly_available:"No data available"}</p>
 <p className="text-[15px] text-[#344054] mb-2 font-semibold">
 Reason why policy is not publicly available
 </p>
-<p className="text-sm mb-4">{content}</p>
-<p className="text-[15px] text-[#344054] mb-2">
-Edit Statement
-            </p>
+<p className="text-sm mb-4">{data["2_23_c"]?data["2_23_c"].please_provide_links_to_the_policy_commitments:"No data available"}</p>
+<div className="flex justify-between">
+          <p className="text-[15px] text-[#344054] mb-2 mt-3">Add statement about company’s sustainability policies</p>
+          <button
+            className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
+            onClick={loadContent}
+          >
+            {/* <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/> */}
+            <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
+            Auto Fill
+          </button>
+        </div>
             <textarea
-          value={'Our commitment to sustainability is embedded in our corporate policies and practices. These policies are regularly reviewed and updated to reflect evolving best practices and stakeholder expectations. [Can include policy document]'}
-          className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  mt-2 w-full mb-4 `}
+          value={policy_not_public_reason}
+          onChange={handleEditorChange}
+          className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
           rows={4}
         />
 
@@ -80,7 +132,7 @@ Edit Statement
 Level of approval: Policy commitments
 </p>
 <div className="shadow-md rounded-md mb-4">
-        <RatioTable col={col} values={values}/>
+        <LeaveTable col={col} tableData={tableData}/>
 </div>
 </div>
         </>

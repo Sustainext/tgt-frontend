@@ -1,11 +1,11 @@
 'use client'
 import { useState, useRef, useEffect } from "react";
+import RatioTable from "../tables/ratioTable";
 
+const Section4=({section9_2_2Ref,data})=>{
+    const col=[
 
-const Section4=({section9_2_2Ref})=>{
-    const [content,setContent] = useState(
-        `Our Board of Directors comprises a diverse group of experienced professionals who bring a broad range of expertise and perspectives. The Board is structured to provide balanced oversight and strategic guidance, with committees dedicated to specific areas such as audit, risk management, and sustainability. `
-    )
+    ]
     return (
         <>
         <div id="section9_2_2" ref={section9_2_2Ref} >

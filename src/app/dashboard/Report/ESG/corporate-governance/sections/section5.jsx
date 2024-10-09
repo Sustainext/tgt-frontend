@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 
 
 
-const Section5=({section9_2_3Ref})=>{
+const Section5=({section9_2_3Ref,data})=>{
     const [content,setContent] = useState(
         `Our Board of Directors comprises a diverse group of experienced professionals who bring a broad range of expertise and perspectives. The Board is structured to provide balanced oversight and strategic guidance, with committees dedicated to specific areas such as audit, risk management, and sustainability. `
     )
@@ -13,7 +13,24 @@ const Section5=({section9_2_3Ref})=>{
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
         9.2.3 Senior Management Hired from Local Community
             </h3>
-            <p className="text-sm mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam facilis repellendus amet quia beatae, autem nobis veniam iste accusantium eligendi earum facere dolor sed vero soluta adipisci quibusdam officiis deleniti.</p>
+
+            <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+            Percentage of senior management at significant locations of operation that are hired from the local community
+            </p>
+            <p className="text-sm mb-4">{data["202_2a"]?data["202_2a"]:"No data available"}</p>
+            <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+            The definition used for 'senior management'
+            </p>
+            <p className="text-sm mb-4">{data["202_2b"]?data["202_2b"]:"No data available"}</p>
+            <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+            The organization's geographical definition of 'local'
+            </p>
+            <p className="text-sm mb-4">{data["202_2c"]?data["202_2c"]:"No data available"}</p>
+            <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+            The definition used for "significant locations of operation"
+            </p>
+            <p className="text-sm mb-4">{data["202_2d"]?data["202_2d"]:"No data available"}</p>
+            
         </div>
         </>
     )

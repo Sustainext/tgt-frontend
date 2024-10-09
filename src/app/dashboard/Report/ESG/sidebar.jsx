@@ -44,7 +44,7 @@ const ESGSidebar=({activeStep,setActiveStep})=>{
           Awards & Alliances 
           </p>
           <p className={`text-[13px] text-[#727272]  my-1 ${activeStep==6?"bg-[#007eef0d] p-2 px-5":"bg-transparent p-2 px-5"}`}
-        onClick={()=>{setActiveStep(6)}}
+        // onClick={()=>{setActiveStep(6)}}
           >
           Stakeholder Engagement 
           </p>
@@ -59,7 +59,7 @@ const ESGSidebar=({activeStep,setActiveStep})=>{
          Materiality
           </p>
           <p className={`text-[13px] text-[#727272]  my-1 ${activeStep==9?"bg-[#007eef0d] p-2 px-5":"bg-transparent p-2 px-5"}`}
-        // onClick={()=>{setActiveStep(9)}}
+        onClick={()=>{setActiveStep(9)}}
           >
          Corporate Governance 
           </p>

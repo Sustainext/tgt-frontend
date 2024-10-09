@@ -28,7 +28,7 @@ const Section4=({section7_3Ref,data})=>{
                 7.3 External Assurance
         </h3>
         <div className="flex justify-between">
-          <p className="text-[15px] text-[#344054] mb-2 mt-3">Edit Statement</p>
+          <p className="text-[15px] text-[#344054] mb-2 mt-3">Add statement about external assurance</p>
           <button
             className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
             onClick={loadContent}
@@ -47,46 +47,41 @@ const Section4=({section7_3Ref,data})=>{
           <p className="text-[15px] text-[#344054] mb-4 font-semibold">
           The scope of the assurance includes 
             </p>
-            <p className="mb-4 text-sm">
-        {data && data["2-5-a"] ? (
-    typeof data["2-5-a"] === 'object' ? (
-      <>
-        {data["2-5-a"]["assurance-policy"].Q1? data["2-5-a"]["assurance-policy"].Q1:"No Data available"}
-        <br />
-        {data["2-5-a"]["assurance-highest"].Q1? data["2-5-a"]["assurance-highest"].Q1:"No Data available"}
-      </>
-    ) : (
-      "No data available"
-    )
-  ) : (
-    "No data available"
-  )}
-  </p>
-  <p className="mb-4 text-sm">
-        {data && data["2-5-b"] ? (
-    typeof data["2-5-b"] === 'object' ? (
-      <>
-        {data["2-5-b"].Q1? data["2-5-b"].Q1:"No Data available"}
-        <br />
-        {data["2-5-b"].Q2? data["2-5-b"].Q2.text:""}
-        {data["2-5-b"].Q2?<br />:""}
-        {data["2-5-b"].Q3? data["2-5-b"].Q3:"No Data available"}
-        <br />
-        {data["2-5-b"].Q4? data["2-5-b"].Q4:"No Data available"}
-        <br />
-        {data["2-5-b"].Q5? data["2-5-b"].Q5:"No Data available"}
-        <br />
-        {data["2-5-b"].Q6? data["2-5-b"].Q6:"No Data available"}
-        <br />
-        {data["2-5-b"].Q7? data["2-5-b"].Q7:"No Data available"}
-      </>
-    ) : (
-      "No data available"
-    )
-  ) : (
-    "No data available"
-  )}
-  </p>
+            <p className="text-[15px] text-[#344054] mb-4 font-semibold">
+            Policy and practice for seeking external assurance:
+            </p>
+            <p className="text-sm mb-4">{data["2-5-a"]?data["2-5-a"]["assurance-policy"].Q1? data["2-5-a"]["assurance-policy"].Q1:"No data available":"No data available"}</p>
+            <p className="text-[15px] text-[#344054] mb-4 font-semibold">
+            Involvement of  highest governance body and senior executives in the process.
+            </p>
+            <p className="text-sm mb-4">{data["2-5-a"]?data["2-5-a"]["assurance-highest"].Q1? data["2-5-a"]["assurance-highest"].Q1:"No data available":"No data available"}</p>
+            <p className="text-[15px] text-[#344054] mb-4 font-semibold">
+            Link or reference to the external assurance reports or assurance statements:
+            </p>
+            <p className="text-sm mb-2">{data["2-5-b"]?data["2-5-b"].Q1:"No data available"}</p>
+            <p className="text-sm mb-4">{data["2-5-b"]?data["2-5-b"].Q2.text:""}</p>
+            <p className="text-[15px] text-[#344054] mb-4 font-semibold">
+            Data that was assured and the basis of assurance:
+            </p>
+            <p className="text-sm mb-2">{data["2-5-b"]?data["2-5-b"].Q3:"No data available"}</p>
+            <p className="text-[15px] text-[#344054] mb-4 font-semibold">
+            Assurance Standard used:
+            </p>
+            <p className="text-sm mb-2">{data["2-5-b"]?data["2-5-b"].Q4:"No data available"}</p>
+            <p className="text-[15px] text-[#344054] mb-4 font-semibold">
+            Level of Assurance obtained:
+            </p>
+            <p className="text-sm mb-2">{data["2-5-b"]?data["2-5-b"].Q5:"No data available"}</p>
+            <p className="text-[15px] text-[#344054] mb-4 font-semibold">
+            Limitations of the assurance process:
+            </p>
+            <p className="text-sm mb-2">{data["2-5-b"]?data["2-5-b"].Q6:"No data available"}</p>
+            <p className="text-[15px] text-[#344054] mb-4 font-semibold">
+            Relationship between the organization and the assurance provider:
+            </p>
+            <p className="text-sm mb-2">{data["2-5-b"]?data["2-5-b"].Q7:"No data available"}</p>
+           
+  
         </div>
         </div>
         </>

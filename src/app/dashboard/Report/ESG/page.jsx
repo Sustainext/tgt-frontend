@@ -1,5 +1,5 @@
 'use client'
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, use } from "react";
 import Sidebar from "./sidebar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,6 +20,7 @@ import MessageFromCEO from "./message-from-ceo/page";
 import Environment from "./environment/page";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useRouter } from 'next/navigation';
+import { IoCheckmarkDoneCircle } from "react-icons/io5";
 
 const ESGReport = () => {
   const router = useRouter()
@@ -32,6 +33,8 @@ const ESGReport = () => {
   const awardAlliances=useRef();
   const stakeholderEngagement=useRef();
   const aboutReport =useRef();
+  const materiality =useRef();
+  const corporateGovernance =useRef();
 
   const stepRefs = {
     1: messageFromCeoRef,
@@ -40,7 +43,9 @@ const ESGReport = () => {
     4: sustainibilityRoadmap,
     5: awardAlliances,
     6: stakeholderEngagement,
-    7: aboutReport
+    7: aboutReport,
+    8: materiality,
+    9: corporateGovernance
   };
   
   const handleNextStep = async (type) => {
@@ -68,6 +73,34 @@ const ESGReport = () => {
           theme: "light",
         }
       );
+      // toast.success(
+      //   <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+      //     <IoCheckmarkDoneCircle style={{ marginRight: '10px', color: 'green',fontSize:'50px' }} />
+      //     <div>
+      //     <strong style={{ display: 'block', marginBottom: '4px', fontSize: '16px' }}> {/* Main heading */}
+      //     Data Saved
+      //  </strong>
+      //  <p style={{ margin: 0, fontSize: '14px', lineHeight: '1.4' }}> {/* Paragraph aligned below heading */}
+      //  The data filled in the report has been saved as draft and can be accessed from the report module
+      //  </p>
+      //   </div>
+      //   </div>, {
+      //     position: "top-right",
+      //     autoClose: 3000, 
+      //     hideProgressBar: false,
+      //     closeOnClick: true,
+      //     pauseOnHover: true,
+      //     draggable: true,
+      //     progress: undefined,
+      //     theme: "light", 
+      //     style: {
+      //       borderRadius: '8px', 
+      //       border: '1px solid #E5E5E5', 
+      //       boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+      //       width:'320px',
+      //     },
+      //     icon: false, 
+      // });
     };
   
     if (type === "next") {
@@ -86,122 +119,8 @@ const ESGReport = () => {
     }
   };
   
-  // const handleNextStep = async (type) => {
-  //   if(type=='next'){
-  //     if (activeStep === 1) {
-  //       const isSubmitted = await messageFromCeoRef.current.submitForm();
-  //       if (isSubmitted) {
-  //         setActiveStep((prev) => prev + 1); 
-  //       }
-  //     } 
-  //     else if (activeStep===2) {
-  //       const isSubmitted = await aboutTheCompany.current.submitForm();
-  //       if (isSubmitted) {
-  //         setActiveStep((prev) => prev + 1);
-  //       }
-  //     }
-  //     else if (activeStep===3) {
-  //       const isSubmitted = await missionVision.current.submitForm();
-  //       if (isSubmitted) {
-  //         setActiveStep((prev) => prev + 1); 
-  //       }
-  //     }
-  //     else if (activeStep===4) {
-  //       const isSubmitted = await sustainibilityRoadmap.current.submitForm();
-  //       if (isSubmitted) {
-  //         setActiveStep((prev) => prev + 1);
-  //       }
-  //     }
-  //     else if (activeStep===5) {
-  //       const isSubmitted = await awardAlliances.current.submitForm();
-  //       if (isSubmitted) {
-  //         setActiveStep((prev) => prev + 1);
-  //       }
-  //     }
-  //     else{
-  //       setActiveStep((prev) => prev + 1);
-  //     }
-  //   }
-  //   else{
-  //     if (activeStep === 1) {
-  //       const isSubmitted = await messageFromCeoRef.current.submitForm();
-  //       if (isSubmitted) {
-  //         toast.success("The data filled in the report has been saved as draft and can be accessed from report module", {
-  //           position: "top-right",
-  //           autoClose: 4000,
-  //           hideProgressBar: false,
-  //           closeOnClick: true,
-  //           pauseOnHover: true,
-  //           draggable: true,
-  //           progress: undefined,
-  //           theme: "light",
-  //         });
-  //       }
-  //     } 
-  //     else if (activeStep===2) {
-  //       const isSubmitted = await aboutTheCompany.current.submitForm();
-  //       if (isSubmitted) {
-  //         toast.success("The data filled in the report has been saved as draft and can be accessed from report module", {
-  //           position: "top-right",
-  //           autoClose: 4000,
-  //           hideProgressBar: false,
-  //           closeOnClick: true,
-  //           pauseOnHover: true,
-  //           draggable: true,
-  //           progress: undefined,
-  //           theme: "light",
-  //         });
-  //       }
-  //     }
-  //     else if (activeStep===3) {
-  //       const isSubmitted = await missionVision.current.submitForm();
-  //       if (isSubmitted) {
-  //         toast.success("The data filled in the report has been saved as draft and can be accessed from report module", {
-  //           position: "top-right",
-  //           autoClose: 4000,
-  //           hideProgressBar: false,
-  //           closeOnClick: true,
-  //           pauseOnHover: true,
-  //           draggable: true,
-  //           progress: undefined,
-  //           theme: "light",
-  //         });
-  //       }
-  //     }
-  //     else if (activeStep===4) {
-  //       const isSubmitted = await sustainibilityRoadmap.current.submitForm();
-  //       if (isSubmitted) {
-  //         toast.success("The data filled in the report has been saved as draft and can be accessed from report module", {
-  //           position: "top-right",
-  //           autoClose: 4000,
-  //           hideProgressBar: false,
-  //           closeOnClick: true,
-  //           pauseOnHover: true,
-  //           draggable: true,
-  //           progress: undefined,
-  //           theme: "light",
-  //         });
-  //       }
-  //     }
-  //     else if (activeStep===5) {
-  //       const isSubmitted = await awardAlliances.current.submitForm();
-  //       if (isSubmitted) {
-  //         toast.success("The data filled in the report has been saved as draft and can be accessed from report module", {
-  //           position: "top-right",
-  //           autoClose: 4000,
-  //           hideProgressBar: false,
-  //           closeOnClick: true,
-  //           pauseOnHover: true,
-  //           draggable: true,
-  //           progress: undefined,
-  //           theme: "light",
-  //         });
-          
-  //       }
-  //     }
-  //   }
-    
-  // };
+ 
+  
 
   const handlePreviousStep = () => {
     setActiveStep((prev) => prev - 1);
@@ -329,14 +248,14 @@ const ESGReport = () => {
               {activeStep === 8 && (
                 <div>
                   <div className="mb-4">
-                    <Materiality />
+                    <Materiality ref={materiality} />
                   </div>
                 </div>
               )}
               {activeStep === 9 && (
                 <div>
                   <div className="mb-4">
-                    <CorporateGovernance />
+                    <CorporateGovernance ref={corporateGovernance} />
                   </div>
                 </div>
               )}

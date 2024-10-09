@@ -1,7 +1,7 @@
 'use client';
 import { useState, useRef, useEffect } from "react";
 
-const LegalActionTable2 = () => {
+const LegalActionTable2 = ({tabledata}) => {
   // Table headers
   const col = [
     "Completed Legal Action",
@@ -9,21 +9,6 @@ const LegalActionTable2 = () => {
     "Decision or judgement",
   ];
 
-  // Table data
-  const data = [
-    {
-    //   operation: "Operation 1",
-      location: "data",
-      potentialImpact: "data",
-      actualImpact: "data",
-    },
-    {
-    //   operation: "Operation 2",
-      location: "data",
-      potentialImpact: "data",
-      actualImpact: "data",
-    },
-  ];
 
   return (
     <div style={{ maxHeight: "450px", overflowY: "auto" }} className="mb-2">
@@ -51,16 +36,16 @@ const LegalActionTable2 = () => {
           </tr>
         </thead>
         <tbody className="border border-gray-300">
-          {data.map((row, rowIndex) => (
+          {tabledata && tabledata.map((row, rowIndex) => (
             <tr key={rowIndex} className="text-[13px]">
               <td className="border-t border-r border-gray-200 p-4 text-left">
-                {row.location}
+                {row.CompletedLegalAction?row.CompletedLegalAction:"No data available"}
               </td>
               <td className="border-t border-r border-gray-200 p-4 text-left">
-                {row.potentialImpact}
+                {row.Status?row.Status:"No data available"}
               </td>
               <td className="border-t border-gray-200 p-4 text-left">
-                {row.actualImpact}
+                {row.Decisionorjudgement?row.Decisionorjudgement:"No data available"}
               </td>
             </tr>
           ))}
