@@ -10,7 +10,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             New employee hires and employee turnover
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[685px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-4">GRI Guidance:</p>
             <p className="text-[11px] text-[#727272]">
               An organization can use the following age groups:
@@ -57,7 +57,7 @@ export const Socialdata = [
             Sustainable Development Goal 5: Achieve gender equality and empower
             all women and girls
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[633px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 5.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               End all forms of discrimination against all women and girls
@@ -104,7 +104,7 @@ export const Socialdata = [
             sustainable economic growth, full and productive employment and
             decent work for all
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[613px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.5</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, achieve full and productive employment and decent work
@@ -168,7 +168,7 @@ export const Socialdata = [
             Sustainable Development Goal 10: Reduce inequality within and among
             countries
           </p>
-          <div className="h-[280px] overflow-y-auto custom-scrollbar">
+          <div className="h-[654px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 10.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Ensure equal opportunity and reduce inequalities of outcome,
@@ -208,7 +208,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             New employee hires and employee turnover
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[685px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-4">Background</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Data reported under this disclosure provide a measure of an
@@ -261,7 +261,7 @@ export const Socialdata = [
             Sustainable Development Goal 3: Ensure healthy lives and promote
             well-being for all at all ages
           </p>
-          <div className="h-[280px] overflow-y-auto custom-scrollbar">
+          <div className="h-[632px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 3.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, end preventable deaths of newborns and children under 5
@@ -313,7 +313,7 @@ export const Socialdata = [
             Sustainable Development Goal 5: Achieve gender equality and empower
             all women and girls
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[632px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 5.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Eliminate all forms of violence against all women and girls in the
@@ -370,7 +370,7 @@ export const Socialdata = [
             sustainable economic growth, full and productive employment and
             decent work for all
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[608px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.5</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, achieve full and productive employment and decent work
@@ -411,7 +411,7 @@ export const Socialdata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">Parental leave</p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[685px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-[#727272] mb-4">
               Employees entitled to parental leave means those employees that
               are covered by organizational policies, agreements or contracts
@@ -453,7 +453,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 5: Gender equality
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 5.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               End all forms of discrimination against all women and girls
@@ -511,7 +511,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Gender equality
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.5</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, achieve full and productive employment and decent work
@@ -559,7 +559,7 @@ export const Socialdata = [
             GRI 408-1 Operations and suppliers at significant risk for incidents
             of child labor
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[669px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
               Guidance for Disclosure 408-1
             </p>
@@ -617,7 +617,7 @@ export const Socialdata = [
             Sustainable Development Goal 5: Achieve gender equality and empower
             all women and girls
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[637px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 5.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Eliminate all forms of violence against all women and girls in the
@@ -672,7 +672,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.7</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Take immediate and effective measures to eradicate forced labour,
@@ -722,7 +722,7 @@ export const Socialdata = [
             development, provide access to justice for all and build effective,
             accountable and inclusive institutions at all levels
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[591px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 16.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Significantly reduce all forms of violence and related death rates
@@ -782,7 +782,7 @@ export const Socialdata = [
             GRI 409-1: Operations and suppliers at significant risk for
             incidents of forced or compulsory labor
           </p>
-          <div className="h-[310px] overflow-y-auto custom-scrollbar">
+          <div className="h-[616px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
               Guidance for Disclosure 409-1
             </p>
@@ -833,7 +833,7 @@ export const Socialdata = [
             Sustainable Development Goal 5: Achieve gender equality and empower
             all women and girls
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[632px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 5.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Eliminate all forms of violence against all women and girls in the
@@ -888,7 +888,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.7</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Take immediate and effective measures to eradicate forced labour,
@@ -932,7 +932,7 @@ export const Socialdata = [
             GRI 410-1: Security personnel trained in human rights policies or
             procedures
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[667px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
               Guidance for Disclosure 410-1
             </p>
@@ -978,7 +978,7 @@ export const Socialdata = [
             development, provide access to justice for all and build effective,
             accountable and inclusive institutions at all levels
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[592px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 16.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Significantly reduce all forms of violence and related death rates
@@ -1033,7 +1033,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Occupational Health and Safety 2018
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[685px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">GRI Guidance 403-1:</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Disclosure 403-1 requires the reporting organization to list any
@@ -1092,7 +1092,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.8</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Protect labour rights and promote safe and secure working
@@ -1137,7 +1137,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Occupational Health and Safety 2018
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[685px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">GRI Guidance 403-2a:</p>
             <p className="text-[11px] text-[#727272] mb-4">
               When describing the processes used to identify hazards and assess
@@ -1204,7 +1204,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.8</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Protect labour rights and promote safe and secure working
@@ -1253,7 +1253,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             GRI 403-3: Occupational health services
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[667px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">GRI Guidance 403-3:</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Occupational health services aim to protect the health of workers
@@ -1319,7 +1319,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.8</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Protect labour rights and promote safe and secure working
@@ -1369,7 +1369,7 @@ export const Socialdata = [
             GRI 403-4: Worker participation, consultation and communication on
             occupational health and safety
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[620px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">GRI Guidance 403-4a:</p>
             <p className="text-[11px] text-[#727272] mb-4">
               When describing the processes for worker participation in
@@ -1471,7 +1471,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.8</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Protect labour rights and promote safe and secure working
@@ -1527,7 +1527,7 @@ export const Socialdata = [
             development, provide access to justice for all and build effective,
             accountable and inclusive institutions at all levels
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[591px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 16.7</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Ensure responsive, inclusive, participatory and representative
@@ -1575,7 +1575,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             GRI 403-5: Worker training on occupational health and safety
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[638px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">GRI Guidance 403-5:</p>
             <p className="text-[11px] text-[#727272] mb-4">
               When describing the occupational health and safety training
@@ -1639,7 +1639,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.8</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Protect labour rights and promote safe and secure working
@@ -1688,7 +1688,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             GRI 403-6: Promotion of worker health
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[670px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">GRI Guidance 403-6a:</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Achieving universal health coverage, including financial risk
@@ -1813,7 +1813,7 @@ export const Socialdata = [
             Sustainable Development Goal 3: Ensure healthy lives and promote
             well-being for all at all ages
           </p>
-          <div className="h-[280px] overflow-y-auto custom-scrollbar">
+          <div className="h-[632px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 3.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, end the epidemics of AIDS, tuberculosis, malaria and
@@ -1931,7 +1931,7 @@ export const Socialdata = [
             GRI 403-7: Prevention and mitigation of occupational health and
             safety impacts directly linked by business relationships
           </p>
-          <div className="h-[200px] overflow-y-auto custom-scrollbar">
+          <div className="h-[618px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">GRI Guidance 403-7:</p>
             <p className="text-[11px] text-black mb-2">Background:</p>
             <p className="text-[11px] text-[#727272] mb-4">
@@ -1975,7 +1975,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.8</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Protect labour rights and promote safe and secure working
@@ -2025,7 +2025,7 @@ export const Socialdata = [
             GRI 403-8: Workers covered by an occupational health and safety
             management system
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[619px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">GRI Guidance 403-8a:</p>
             <p className="text-[11px] text-[#727272] mb-4">
               This disclosure indicates what proportion of an organization’s
@@ -2111,7 +2111,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.8</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Protect labour rights and promote safe and secure working
@@ -2160,7 +2160,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             GRI 403-9: Work-related injuries
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[663px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
               Compilation requirements:
             </p>
@@ -2442,7 +2442,7 @@ export const Socialdata = [
             Sustainable Development Goal 3: Ensure healthy lives and promote
             well-being for all at all ages
           </p>
-          <div className="h-[280px] overflow-y-auto custom-scrollbar">
+          <div className="h-[632px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 3.6</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2020, halve the number of global deaths and injuries from road
@@ -2509,7 +2509,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.8</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Protect labour rights and promote safe and secure working
@@ -2565,7 +2565,7 @@ export const Socialdata = [
             development, provide access to justice for all and build effective,
             accountable and inclusive institutions at all levels
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[592px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 16.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Significantly reduce all forms of violence and related death rates
@@ -2624,7 +2624,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             GRI 403-10: Work-related ill health
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[660px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
               Compilation requirements:
             </p>
@@ -2782,7 +2782,7 @@ export const Socialdata = [
             Sustainable Development Goal 3: Ensure healthy lives and promote
             well-being for all at all ages
           </p>
-          <div className="h-[280px] overflow-y-auto custom-scrollbar">
+          <div className="h-[632px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 3.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, end the epidemics of AIDS, tuberculosis, malaria and
@@ -2882,7 +2882,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.8</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Protect labour rights and promote safe and secure working
@@ -2938,7 +2938,7 @@ export const Socialdata = [
             development, provide access to justice for all and build effective,
             accountable and inclusive institutions at all levels
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[592px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 16.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Significantly reduce all forms of violence and related death rates
@@ -2997,7 +2997,7 @@ export const Socialdata = [
             GRI 404-2: Programs for upgrading employee skills and transition
             assistance programs
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[638px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
               Guidance for Disclosure 404-2
             </p>
@@ -3089,7 +3089,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Achieve higher levels of economic productivity through
@@ -3245,7 +3245,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             GRI 405-1: Diversity of governance bodies and employees
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[638px] overflow-y-auto custom-scrollbar">
             {/* <p className="text-[11px] text-black mb-2">
             Guidance for Disclosure 414-2
             </p> */}
@@ -3300,7 +3300,7 @@ export const Socialdata = [
             Sustainable Development Goal 5: Achieve gender equality and empower
             all women and girls
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 5.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               End all forms of discrimination against all women and girls
@@ -3396,7 +3396,7 @@ export const Socialdata = [
             Sustainable Development Goal 10: Reduce inequality within and among
             countries
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[660px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 10.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Ensure equal opportunity and reduce inequalities of outcome,
@@ -3439,7 +3439,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             GRI 404-1: Average hours of training per year per employee
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[636px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
               Guidance for Disclosure 404-1
             </p>
@@ -3504,7 +3504,7 @@ export const Socialdata = [
             Ensure inclusive and equitable quality education and promote
             lifelong learning opportunities for all
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[635px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 4.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, ensure equal access for all women and men to affordable
@@ -3572,7 +3572,7 @@ export const Socialdata = [
             GRI 404-3: Percentage of employees receiving regular performance and
             career development reviews
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[618px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">Background</p>
             <p className="text-[11px] text-[#727272] mb-4">
               This disclosure measures the extent to which an organization
@@ -3619,7 +3619,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             GRI 406-1: Incidents of discrimination and corrective actions taken
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[636px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
               Compilation Requirements:
             </p>
@@ -3671,7 +3671,7 @@ export const Socialdata = [
             GRI 407-1: Operations and suppliers in which the right to freedom of
             association and collective bargaining may be at risk
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[608px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
               Compilation Requirements:
             </p>
@@ -3717,7 +3717,7 @@ export const Socialdata = [
             GRI 411-1 Incidents of violations involving rights of indigenous
             peoples
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[639px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
               Guidance for Disclosure 411-1
             </p>
@@ -3764,7 +3764,7 @@ export const Socialdata = [
             End hunger, achieve food security and improved nutrition and promote
             sustainable agriculture
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[637px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 2.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, double the agricultural productivity and incomes of
@@ -3959,7 +3959,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             End poverty in all its forms everywhere
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 1.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, ensure that all men and women, in particular the poor and
@@ -4071,7 +4071,7 @@ export const Socialdata = [
             development, provide access to justice for all and build effective,
             accountable and inclusive institutions at all levels
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 16.5</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Substantially reduce corruption and bribery in all their forms
@@ -4119,7 +4119,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             402-1 Minimum notice periods regarding operational changes
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[640px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">GRI Guidance 402-1:</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Minimum notice periods can be found in corporate policies and
@@ -4285,7 +4285,7 @@ export const Socialdata = [
             development, provide access to justice for all and build effective,
             accountable and inclusive institutions at all levels
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 16.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Promote the rule of law at the national and international levels
@@ -4395,7 +4395,7 @@ export const Socialdata = [
             development, provide access to justice for all and build effective,
             accountable and inclusive institutions at all levels
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 16.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Promote the rule of law at the national and international levels
@@ -4511,7 +4511,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Ensure sustainable consumption and production patterns
           </p>
-          <div className="h-[280px] overflow-y-auto custom-scrollbar">
+          <div className="h-[632px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 12.8</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, ensure that people everywhere have the relevant
@@ -4769,7 +4769,7 @@ export const Socialdata = [
             development, provide access to justice for all and build effective,
             accountable and inclusive institutions at all levels
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 16.6</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Develop effective, accountable and transparent institutions at all
@@ -6464,7 +6464,7 @@ export const Socialdata = [
             sustainable economic growth, full and productive employment and
             decent work for all
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Improve progressively, through 2030, global resource efficiency in
@@ -7132,7 +7132,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 203-2 Significant indirect economic impacts
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[685px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-4">Guidance:</p>
             <p className="text-[11px] text-[#727272]">
               This disclosure concerns the spectrum of indirect economic impacts
@@ -7242,7 +7242,7 @@ export const Socialdata = [
             Sustainable Development Goal 1: End poverty in all its forms
             everywhere
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 1.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, eradicate extreme poverty for all people everywhere,
@@ -7316,7 +7316,7 @@ export const Socialdata = [
             Sustainable Development Goal 1: End poverty in all its forms
             everywhere
           </p>
-          <div className="h-[280px] overflow-y-auto custom-scrollbar">
+          <div className="h-[632px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 3.7</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, ensure universal access to sexual and reproductive
@@ -7371,7 +7371,7 @@ export const Socialdata = [
             sustainable economic growth, full and productive employment and
             decent work for all
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Achieve higher levels of economic productivity through
@@ -7588,7 +7588,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 201-1 Direct economic value generated and distributed
           </p>
-          <div className="h-[350px] overflow-y-auto custom-scrollbar">
+          <div className="h-[685px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-4">
               Compilation requirements:
             </p>
@@ -7821,7 +7821,7 @@ export const Socialdata = [
             sustainable economic growth, full and productive employment and
             decent work for all
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Sustain per capita economic growth in accordance with national
@@ -8061,7 +8061,7 @@ export const Socialdata = [
             Sustainable Development Goal 13: Take urgent action to combat
             climate change and its impacts
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 13.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Strengthen resilience and adaptive capacity to climate-related
@@ -8483,7 +8483,7 @@ export const Socialdata = [
             Sustainable Development Goal 1: End poverty in all its forms
             everywhere
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 1.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, eradicate extreme poverty for all people everywhere,
@@ -8545,7 +8545,7 @@ export const Socialdata = [
             Sustainable Development Goal 10: Reduce inequality within and among
             countries
           </p>
-          <div className="h-[280px] overflow-y-auto custom-scrollbar">
+          <div className="h-[632px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 10.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Adopt policies, especially fiscal, wage and social protection
@@ -8594,7 +8594,7 @@ export const Socialdata = [
             Sustainable Development Goal 17: End poverty in all its forms
             everywhere
           </p>
-          <div className="h-[280px] overflow-y-auto custom-scrollbar">
+          <div className="h-[632px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 17.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Strengthen domestic resource mobilization, including through
@@ -9182,7 +9182,7 @@ export const Socialdata = [
             Sustainable Development Goal 1: End poverty in all its forms
             everywhere
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 1.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, eradicate extreme poverty for all people everywhere,
@@ -9233,7 +9233,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 5: Gender equality
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
         
           
             <p className="text-[13px] text-[#222222] mb-2">Target 5.4</p>
@@ -9284,7 +9284,7 @@ export const Socialdata = [
             sustainable economic growth, full and productive employment and
             decent work for all
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[655px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.5</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, achieve full and productive employment and decent work

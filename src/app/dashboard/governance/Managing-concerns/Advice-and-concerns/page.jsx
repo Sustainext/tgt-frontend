@@ -217,8 +217,7 @@ const AdviceAndConcerns = ({ selectedOrg, year, selectedCorp }) => {
             </div>
           </div>
         </div>
-        .
-        <div className="mx-2 mb-3">
+        <div className="mx-2">
           <Form
             schema={Object.keys(r_schema).length === 0 ? {} : r_schema.items}
             uiSchema={

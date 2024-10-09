@@ -8,7 +8,12 @@ import Link from 'next/link';
 import Organization from './forms/Organization/page';
 import ConfirmationModal from '../../shared/components/ConfirmationModal'
 import EntityView from '../../shared/components/EntityView'
-
+import {
+  setHeadertext1,
+  setHeadertext2,
+  setHeaderdisplay
+} from "../../../lib/redux/features/topheaderSlice";
+import { useDispatch } from "react-redux";
 const Table = ({ data, labels, currentIndex, rawData }) => {
   const router = useRouter();
   const values1 = Object.values(data);
@@ -410,6 +415,7 @@ const Structure = () => {
   const levelLabels = ['Organisation', 'Corporate Entity', 'Location'];
   const [hData, setHData] = useState([]);
   const [rawData, setRawData] = useState([]);
+  const dispatch = useDispatch();
   // const [token,setToken]=useState(localStorage.getItem('token').replace(/"/g, ''));
   const getAuthToken = () => {
     if (typeof window !== 'undefined') {
@@ -476,7 +482,12 @@ const token = getAuthToken();
     }));
     return extractedData;
   };
-
+  useEffect(() => {
+   
+    dispatch(setHeadertext1(""));
+    dispatch(setHeaderdisplay("none"));
+    dispatch(setHeadertext2('Organizational Structure'));
+}, [dispatch]);
   return (
     <div className='w-full my-4'>
       <div className='flex justify-end items-center space-x-2 me-8'>

@@ -74,7 +74,7 @@ const uiSchema = {
   },
 };
 
-const PercentageIncrease = ({ selectedLocation, year }) => {
+const PercentageIncrease = ({ selectedOrg,selectedCorp, year }) => {
   const [formData, setFormData] = useState([{ Q1: "", Q2: "" }]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -100,7 +100,8 @@ const PercentageIncrease = ({ selectedLocation, year }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      location: selectedLocation,
+      organisation: selectedOrg,
+      corporate: selectedCorp,
       year,
     };
     const url = `/datametric/update-fieldgroup`;
@@ -150,7 +151,7 @@ const PercentageIncrease = ({ selectedLocation, year }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{ Q1: "", Q2: "" }]);
-    const url = `/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${selectedLocation}&year=${year}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&corporate=${selectedCorp}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -165,7 +166,7 @@ const PercentageIncrease = ({ selectedLocation, year }) => {
   };
 
   useEffect(() => {
-    if (selectedLocation && year) {
+    if (selectedOrg && year) {
       loadFormData();
       toastShown.current = false;
     } else {
@@ -173,7 +174,7 @@ const PercentageIncrease = ({ selectedLocation, year }) => {
         toastShown.current = true;
       }
     }
-  }, [selectedLocation, year]);
+  }, [selectedOrg, selectedCorp, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -244,10 +245,10 @@ const PercentageIncrease = ({ selectedLocation, year }) => {
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedLocation || !year ? "cursor-not-allowed" : ""
+              !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedLocation || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

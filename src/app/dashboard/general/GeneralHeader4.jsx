@@ -153,9 +153,9 @@ const GeneralHeader4 = ({
                 <div className="text-zinc-600 text-[12px] font-semibold font-['Manrope']">
                   Add By:
                 </div>
-                <div className="rounded-lg shadow border border-gray-300 justify-start items-start flex">
+                <div className="rounded-lg shadow  justify-start items-start flex">
                   <div
-                    className={`w-[111px] px-4 py-2.5 border-r rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                    className={`w-[111px] px-4 py-2.5 border rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
                       reportType === "Organization" ? "bg-[#d2dfeb]" : "bg-white"
                     }`}
                     onClick={() => handleReportTypeChange("Organization")}
@@ -165,7 +165,7 @@ const GeneralHeader4 = ({
                     </div>
                   </div>
                   <div
-                    className={`w-[111px] px-4 py-2.5 rounded-r-lg justify-center items-center gap-2 flex cursor-pointer ${
+                    className={`w-[111px] px-4 py-2.5 border-r border-y border-gray-300 rounded-r-lg justify-center items-center gap-2 flex cursor-pointer ${
                       reportType === "Corporate" ? "bg-[#d2dfeb]" : "bg-white"
                     }`}
                     onClick={() => handleReportTypeChange("Corporate")}

@@ -3,14 +3,25 @@
 
 import HomeDashboard from "./Home/page";
 import { useState,useEffect} from "react";
+import {
+  setHeadertext1,
+  setHeadertext2,
+  setHeaderdisplay
+} from "../../lib/redux/features/topheaderSlice";
+import { useDispatch } from "react-redux";
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("tab1");
-
+  const dispatch = useDispatch();
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
- 
+  useEffect(() => {
+   
+    dispatch(setHeadertext1("Sustainext HQ"));
+    dispatch(setHeaderdisplay("none"));
+    dispatch(setHeadertext2('Dashboard'));
+}, [activeTab, dispatch]);
 
   return (
     <>
