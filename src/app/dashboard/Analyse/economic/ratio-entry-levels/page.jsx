@@ -1,13 +1,12 @@
-'use client';
+"use client";
 import React, { useState, useEffect } from "react";
 import DynamicTable2 from "./customTable";
-import DateRangePicker from "../../../../utils/DatePickerComponent";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import { columns1 } from "./data";
 import { yearInfo } from "@/app/shared/data/yearInfo";
-import { Oval } from 'react-loader-spinner';
-const Ratioentrylevels = () => {
+import { Oval } from "react-loader-spinner";
 
+const Ratioentrylevels = () => {
   const [strategypolicy, setStrategypolicy] = useState([]);
   const [organisations, setOrganisations] = useState([]);
   const [selectedOrg, setSelectedOrg] = useState("");
@@ -23,9 +22,9 @@ const Ratioentrylevels = () => {
     end: "",
   });
   const [errors, setErrors] = useState({
-    selectedOrg: "Organization is required",
-    selectedLocation: "Location is required",
-    selectedYear: "Year is required",
+    selectedOrg: "",
+    selectedCorp: "",
+    selectedYear: "",
   });
 
   const LoaderOpen = () => {
@@ -39,57 +38,68 @@ const Ratioentrylevels = () => {
   const validateForm = () => {
     const newErrors = {};
 
+    // Validate selectedOrg
     if (!selectedOrg) {
-      newErrors.selectedOrg = "Organization is required";
+      newErrors.selectedOrg = "Please select Organisation";
     }
 
+    // Validate selectedYear
     if (!selectedYear) {
-      newErrors.selectedYear = "Year is required";
+      newErrors.selectedYear = "Please select year";
+    }
+
+    // Validate selectedCorp only if the report type is "Corporate"
+    if (reportType === "Corporate" && !selectedCorp) {
+      newErrors.selectedCorp = "Please select Corporate";
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+
   const fetchData = async (params) => {
     if (!validateForm()) return;
 
     LoaderOpen();
     setStrategypolicy([]);
+
+    // Prepare API parameters based on report type
+
+
+
+
     try {
       const response = await axiosInstance.get(
         `/sustainapp/get_economic_market_presence/`,
-        {
-          params: params
-        }
+        { params: params }
       );
 
       const data = response.data;
-console.log(response.data,"responsedata");
-      const { marketing_presence} = data;
+      console.log(response.data, "responsedata");
+      const { marketing_presence } = data;
 
       const formatcollectivebargaining = (data) => {
-        return data.map((data, index) => {
+        return data.map((data) => {
           const Male = parseFloat(data.Male).toFixed(2);
-          const formattedMale = Male.endsWith('.00') ? Male.slice(0, -3) : Male;
+          const formattedMale = Male.endsWith(".00") ? Male.slice(0, -3) : Male;
           const Female = parseFloat(data.Female).toFixed(2);
-          const formattedFemale= Female.endsWith('.00') ? Female.slice(0, -3) : Female;
-          const Nonbinary = parseFloat(data['Non-binary']).toFixed(2);
-          const formattedNonbinary = Nonbinary.endsWith('.00') ? Nonbinary.slice(0, -3) : Nonbinary;
+          const formattedFemale = Female.endsWith(".00")
+            ? Female.slice(0, -3)
+            : Female;
+          const Nonbinary = parseFloat(data["Non-binary"]).toFixed(2);
+          const formattedNonbinary = Nonbinary.endsWith(".00")
+            ? Nonbinary.slice(0, -3)
+            : Nonbinary;
           return {
-       
-            "Location":data.Location,
-            "Male": formattedMale,
-            "Female": formattedFemale,
+            Location: data.Location,
+            Male: formattedMale,
+            Female: formattedFemale,
             "Non-binary": formattedNonbinary,
           };
         });
-
       };
-      setStrategypolicy(
-        formatcollectivebargaining(
-          marketing_presence
-        )
-      );
+
+      setStrategypolicy(formatcollectivebargaining(marketing_presence));
       LoaderClose();
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
@@ -137,6 +147,12 @@ console.log(response.data,"responsedata");
 
   const handleReportTypeChange = (type) => {
     setReportType(type);
+    setErrors({
+      selectedOrg: "",
+      selectedCorp: "",
+      selectedYear: "",
+    });
+    validateForm();
   };
 
   const handleOrganizationChange = (e) => {
@@ -145,6 +161,7 @@ console.log(response.data,"responsedata");
     setSelectedCorp("");
     setSelectedYear("");
     setStrategypolicy([]);
+    setErrors((prevErrors) => ({ ...prevErrors, selectedOrg: "" }));
 
     setDatasetparams({
       organisation: newOrg,
@@ -152,13 +169,13 @@ console.log(response.data,"responsedata");
       start: "",
       end: "",
     });
+    validateForm();
   };
 
   const handleOrgChange = (e) => {
     const newCorp = e.target.value;
     setSelectedCorp(newCorp);
-
-    setSelectedYear("");
+    setErrors((prevErrors) => ({ ...prevErrors, selectedCorp: "" }));
 
     setDatasetparams((prevParams) => ({
       ...prevParams,
@@ -166,141 +183,151 @@ console.log(response.data,"responsedata");
       start: prevParams.start,
       end: prevParams.end,
     }));
+    validateForm();
   };
 
   const handleYearChange = (e) => {
     const newYear = e.target.value;
     setSelectedYear(newYear);
+    setErrors((prevErrors) => ({ ...prevErrors, selectedYear: "" }));
 
     setDatasetparams((prevParams) => ({
       ...prevParams,
       start: `${newYear}-01-01`,
       end: `${newYear}-12-31`,
     }));
+    validateForm();
   };
 
   return (
     <div>
       <div>
         <div className="mb-2 flex-col items-center pt-4 gap-6">
-        <div className="mt-4 pb-3 mx-5 text-left">
-          <div className="mb-2 flex-col items-center pt-2 gap-6">
-            <div className="justify-start items-center gap-4 inline-flex mt-4">
-              <div className="text-zinc-600 text-[12px] font-semibold font-['Manrope']">
-                View By:
-              </div>
-              <div className="rounded-lg shadow border border-gray-300 justify-start items-start flex">
-                <div
-                  className={`w-[111px] px-4 py-2.5 border-r rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
-                    reportType === "Organization" ? "bg-sky-100" : "bg-white"
-                  }`}
-                  onClick={() => handleReportTypeChange("Organization")}
-                >
-                  <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
-                    Organization
-                  </div>
+          <div className="mt-4 pb-3 mx-5 text-left">
+            <div className="mb-2 flex-col items-center pt-2 gap-6">
+              <div className="justify-start items-center gap-4 inline-flex mt-4">
+                <div className="text-zinc-600 text-[12px] font-semibold font-['Manrope']">
+                  View By:
                 </div>
-                <div
-                  className={`w-[111px] px-4 py-2.5 border-r rounded-r-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
-                    reportType === "Corporate" ? "bg-sky-100" : "bg-white"
-                  }`}
-                  onClick={() => handleReportTypeChange("Corporate")}
-                >
-                  <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
-                    Corporate
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${
-                reportType !== "" ? "visible" : "hidden"
-              }`}
-            >
-              <div className="mr-2">
-                <label
-                  htmlFor="cname"
-                  className="text-neutral-800 text-[12px] font-normal"
-                >
-                  Select Organization*
-                </label>
-                <div className="mt-2">
-                  <select
-                    className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-                    value={selectedOrg}
-                    onChange={handleOrganizationChange}
+                <div className="rounded-lg shadow justify-start items-start flex">
+                  <div
+                    className={`w-[111px] px-4 py-2.5 border  rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                      reportType === "Organization"
+                        ? "bg-[#d2dfeb]"
+                        : "bg-white"
+                    }`}
+                    onClick={() => handleReportTypeChange("Organization")}
                   >
-                    <option value="01">--Select Organization--- </option>
-                    {organisations &&
-                      organisations.map((org) => (
-                        <option key={org.id} value={org.id}>
-                          {org.name}
-                        </option>
-                      ))}
-                  </select>
-                  {errors.selectedOrg && (
-                    <div className="text-red-600 text-[12px] ml-2">
-                      {errors.selectedOrg}
+                    <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
+                      Organization
                     </div>
-                  )}
+                  </div>
+                  <div
+                    className={`w-[111px] px-4 py-2.5 border-r border-y rounded-r-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                      reportType === "Corporate" ? "bg-[#d2dfeb]" : "bg-white"
+                    }`}
+                    onClick={() => handleReportTypeChange("Corporate")}
+                  >
+                    <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
+                      Corporate
+                    </div>
+                  </div>
                 </div>
               </div>
-              {(reportType === "Corporate" || reportType === "Location") && (
+              <div
+                className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${
+                  reportType !== "" ? "visible" : "hidden"
+                }`}
+              >
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
                     className="text-neutral-800 text-[12px] font-normal"
                   >
-                    Select Corporate
+                    Select Organization*
                   </label>
                   <div className="mt-2">
                     <select
                       className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-                      value={selectedCorp}
-                      onChange={handleOrgChange}
+                      value={selectedOrg}
+                      onChange={handleOrganizationChange}
                     >
-                      <option value="">--Select Corporate--- </option>
-                      {corporate &&
-                        corporate.map((corp) => (
-                          <option key={corp.id} value={corp.id}>
-                            {corp.name}
+                      <option value="01">--Select Organization--- </option>
+                      {organisations &&
+                        organisations.map((org) => (
+                          <option key={org.id} value={org.id}>
+                            {org.name}
                           </option>
                         ))}
                     </select>
+                    {errors.selectedOrg && (
+                      <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
+                        {errors.selectedOrg}
+                      </p>
+                    )}
                   </div>
                 </div>
-              )}
-              <div className="mr-2">
-                <label
-                  htmlFor="cname"
-                  className="text-neutral-800 text-[12px] font-normal"
-                >
-                  Select Year
-                </label>
-                <div className="mt-2">
-                  <select
-                    name="year"
-                    className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-                    value={selectedYear}
-                    onChange={handleYearChange}
-                  >
-                    <option value="">Select year</option>
-                    {yearInfo.map((item) => (
-                      <option value={item.slice(0, 4)} key={item}>
-                        {item.slice(0, 4)}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.selectedYear && (
-                    <div className="text-red-600 text-[12px] ml-2">
-                      {errors.selectedYear}
+                {reportType === "Corporate" && (
+                  <div className="mr-2">
+                    <label
+                      htmlFor="cname"
+                      className="text-neutral-800 text-[12px] font-normal ml-1"
+                    >
+                      Select Corporate
+                    </label>
+                    <div className="mt-2">
+                      <select
+                        className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                        value={selectedCorp}
+                        onChange={handleOrgChange}
+                      >
+                        <option value="">--Select Corporate--- </option>
+                        {corporate &&
+                          corporate.map((corp) => (
+                            <option key={corp.id} value={corp.id}>
+                              {corp.name}
+                            </option>
+                          ))}
+                      </select>
+                      {errors.selectedCorp && (
+                        <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
+                          {errors.selectedCorp}
+                        </p>
+                      )}
                     </div>
-                  )}
+                  </div>
+                )}
+                <div className="mr-2">
+                  <label
+                    htmlFor="cname"
+                    className="text-neutral-800 text-[12px] font-normal"
+                  >
+                    Select Year
+                  </label>
+                  <div className="mt-2">
+                    <select
+                      name="year"
+                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                      value={selectedYear}
+                      onChange={handleYearChange}
+                    >
+                      <option value="">Select year</option>
+                      {yearInfo.map((item) => (
+                        <option value={item.slice(0, 4)} key={item}>
+                          {item.slice(0, 4)}
+                        </option>
+                      ))}
+                    </select>
+                    {errors.selectedYear && (
+                      <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
+                        {errors.selectedYear}
+                      </p>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
         </div>
         <div className="flex justify-between">
           <div className={`ps-4  w-full me-4`}>
@@ -309,10 +336,10 @@ console.log(response.data,"responsedata");
                 id="ep1"
                 className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
               >
-
                 <div className="flex justify-between items-center mb-2">
                   <p>
-                  Ratio of the entry-level wage to the minimum wage by gender at significant locations of operation
+                    Ratio of the entry-level wage to the minimum wage by gender
+                    at significant locations of operation
                   </p>
 
                   <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
@@ -322,17 +349,11 @@ console.log(response.data,"responsedata");
                   </div>
                 </div>
                 <div className="mb-4">
-                  <DynamicTable2
-                    columns={columns1}
-                    data={strategypolicy}
-                  />
+                  <DynamicTable2 columns={columns1} data={strategypolicy} />
                 </div>
               </div>
             </div>
-
           </div>
-
-
         </div>
         {loopen && (
           <div className=" fixed inset-0 flex items-center justify-center z-[100] bg-black bg-opacity-50">
@@ -347,9 +368,7 @@ console.log(response.data,"responsedata");
           </div>
         )}
       </div>
-
     </div>
-
   );
 };
 

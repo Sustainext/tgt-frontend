@@ -143,7 +143,7 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
   //   setSelectedCorp("");
   //   setErrors((prevErrors) => ({
   //     ...prevErrors,
-  //     organization: newOrg ? "" : "Please select an organization",
+  //     organization: newOrg ? "" : "Please select Organisation",
   //   }));
   // };
 
@@ -164,7 +164,7 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
     setSelectedCorp("");
     setErrors((prevErrors) => ({
       ...prevErrors,
-      organization: newOrgId ? "" : "Please select an organization",
+      organization: newOrgId ? "" : "Please select Organisation",
     }));
   };
 
@@ -178,7 +178,7 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
     setCorporateName(newCorpName)
     setErrors((prevErrors) => ({
       ...prevErrors,
-      corporate: newCorp ? "" : "Please select a corporate",
+      corporate: newCorp ? "" : "Please select Corporate",
     }));
   };
   
@@ -359,11 +359,11 @@ const handleDateChange = (newRange) => {
   //   const newErrors = {};
 
   //   if (!selectedOrg) {
-  //     newErrors.organization = "Please select an organization";
+  //     newErrors.organization = "Please select Organisation";
   //   }
 
   //   if (activeTab === 2 && !selectedCorp) {
-  //     newErrors.corporate = "Please select a corporate";
+  //     newErrors.corporate = "Please select Corporate";
   //   }
 
   //   if (!dateRange.start || !dateRange.end) {
@@ -387,12 +387,12 @@ const handleDateChange = (newRange) => {
 
     // Validate organization selection
     if (!selectedOrg) {
-      newErrors.organization = "Please select an organization";
+      newErrors.organization = "Please select Organisation";
     }
 
     // If active tab requires corporate selection, validate it
     if (activeTab === 2 && !selectedCorp) {
-      newErrors.corporate = "Please select a corporate";
+      newErrors.corporate = "Please select Corporate";
     }
 
     // Validate the date range, including whether a valid date range was chosen

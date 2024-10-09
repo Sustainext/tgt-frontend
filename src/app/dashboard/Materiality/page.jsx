@@ -8,14 +8,25 @@ import axiosInstance from "../../utils/axiosMiddleware";
 import { Oval } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import {
+  setHeadertext1,
+  setHeadertext2,
+  setHeaderdisplay
+} from "../../../lib/redux/features/topheaderSlice";
+import { useDispatch } from "react-redux";
 const Materiality = ({ open }) => {
   const [data, setData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const [loopen, setLoOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true); // New loading state
-
+  const dispatch = useDispatch();
+  useEffect(() => {
+   
+    dispatch(setHeadertext1(""));
+    dispatch(setHeaderdisplay("none"));
+    dispatch(setHeadertext2('Materiality Dashboard'));
+}, [dispatch]);
   const LoaderOpen = () => {
     setLoOpen(true);
   };

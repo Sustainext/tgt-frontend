@@ -6,18 +6,28 @@ import SocialTrack from './Social/page'
 import GovernanceTrack from './Governance/page'
 import { GlobalState } from '../../../Context/page';
 import axiosInstance from '../../utils/axiosMiddleware'
-
+import {
+  setHeadertext1,
+  setHeadertext2,
+  setHeaderdisplay
+} from "../../../lib/redux/features/topheaderSlice";
+import { useDispatch } from "react-redux";
 const Index = () => {
   const [activeModule, setActiveModule] = useState("Environment");
   const [contentSize, setContentSize] = useState({ width: 0, height: 0 });
   const [containerWidth, setContainerWidth] = useState('100%');
   const [dashboardData, setDashboardData] = useState(null);
   const open = GlobalState();
-
+  const dispatch = useDispatch();
   const handleTabClick = (module) => {
     setActiveModule(module);
   };
-
+  useEffect(() => {
+   
+    dispatch(setHeadertext1(""));
+    dispatch(setHeaderdisplay("none"));
+    dispatch(setHeadertext2('Track'));
+}, [dispatch]);
   useLayoutEffect(() => {
     const updateSizes = () => {
       const mainSidebarWidth = open ? 230 : 80;
@@ -70,9 +80,9 @@ const Index = () => {
           {activeModule === 'Social' && 
           <SocialTrack contentSize={contentSize} dashboardData={dashboardData} />
           }
-          {/* {activeModule === 'Governance' && 
+          {activeModule === 'Governance' && 
           <GovernanceTrack contentSize={contentSize} />
-          } */}
+          }
         </div>
       </div>
     </div>

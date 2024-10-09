@@ -6,7 +6,8 @@ import counterReducer from './features/counterSlice'
 import emissionReducer from './features/emissionSlice'
 import screen1SliceReducer from './features/ESGSlice/screen1Slice'
 import screen2SliceReducer from './features/ESGSlice/screen2Slice'
-import screen3SliceReducer from './features/ESGSlice/screen3Slice'
+import usersReducer from './features/userSlice'
+import headerReducer from "./features/topheaderSlice"import screen3SliceReducer from './features/ESGSlice/screen3Slice'
 import screen4SliceReducer from './features/ESGSlice/screen4Slice'
 import screen5SliceReducer from './features/ESGSlice/screen5Slice'
 import screen6SliceReducer from './features/ESGSlice/screen6Slice'
@@ -19,6 +20,8 @@ const rootReducer = combineReducers({
   emissions: emissionReducer,
   screen1Slice:screen1SliceReducer,
   screen2Slice:screen2SliceReducer,
+  users:usersReducer,
+  header:headerReducer,
   screen3Slice:screen3SliceReducer,
   screen4Slice:screen4SliceReducer,
   screen5Slice:screen5SliceReducer,

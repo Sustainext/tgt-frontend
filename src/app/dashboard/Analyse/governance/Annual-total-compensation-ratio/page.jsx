@@ -11,21 +11,25 @@ import "react-tooltip/dist/react-tooltip.css";
 import { MdInfoOutline } from "react-icons/md";
 const AnalyseAnnualtotalcompensationratio = ({ isBoxOpen }) => {
   const [customerhealth, setCustomerhealth] = useState([]);
+
   const [organisations, setOrganisations] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState("");
-  const [selectedsetLocation, setSelectedSetLocation] = useState("");
+  const [selectedOrg, setSelectedOrg] = useState("");
+  const [selectedCorp, setSelectedCorp] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
   const [corporate, setCorporates] = useState([]);
-
+  const [reportType, setReportType] = useState("Organization");
   const [loopen, setLoOpen] = useState(false);
+
   const [datasetparams, setDatasetparams] = useState({
-    location: "",
+    organisation: "",
+    corporate: "",
     start: "",
     end: "",
   });
   const [errors, setErrors] = useState({
-    selectedLocation: "Location is required",
-    selectedYear: "Year is required",
+    selectedOrg: "",
+    selectedCorp: "",
+    selectedYear: "",
   });
 
   const LoaderOpen = () => {
@@ -36,15 +40,23 @@ const AnalyseAnnualtotalcompensationratio = ({ isBoxOpen }) => {
     setLoOpen(false);
   };
 
+
   const validateForm = () => {
     const newErrors = {};
 
-    if (!selectedLocation) {
-      newErrors.selectedLocation = "Location is required";
+    // Validate selectedOrg
+    if (!selectedOrg) {
+      newErrors.selectedOrg = "Please select Organisation";
     }
 
+    // Validate selectedYear
     if (!selectedYear) {
-      newErrors.selectedYear = "Year is required";
+      newErrors.selectedYear = "Please select year";
+    }
+
+    // Validate selectedCorp only if the report type is "Corporate"
+    if (reportType === "Corporate" && !selectedCorp) {
+      newErrors.selectedCorp = "Please select Corporate";
     }
 
     setErrors(newErrors);
@@ -56,18 +68,19 @@ const AnalyseAnnualtotalcompensationratio = ({ isBoxOpen }) => {
 
     LoaderOpen();
     setCustomerhealth([]);
+
+
+
+
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_governance_analysis`,
-        {
-          params: params,
-        }
+        `/sustainapp/get_governance_analysis/`,
+        { params: params }
       );
 
       const data = response.data;
 
       const { compensation_ratio_annual_total_and_increase } = data;
-
       const formatcustomerhealth = (data) => {
         return data.map((data, index) => {
 
@@ -93,77 +106,189 @@ const AnalyseAnnualtotalcompensationratio = ({ isBoxOpen }) => {
   }, [datasetparams]);
 
   useEffect(() => {
-    const fetchLocations = async () => {
+    const fetchOrg = async () => {
       try {
-        const response = await axiosInstance.get("/sustainapp/get_location");
-        setSelectedLocation(response.data);
-      } catch (error) {
-        console.error("Error fetching locations:", error);
+        const response = await axiosInstance.get(`/orggetonly`);
+        setOrganisations(response.data);
+      } catch (e) {
+        console.error("Failed fetching organization:", e);
       }
     };
 
-    fetchLocations();
+    if (organisations.length === 0) {
+      fetchOrg();
+    }
   }, []);
 
-  const handleLocationChange = (e) => {
-    const newLocation = e.target.value;
-    setSelectedSetLocation(newLocation);
+  useEffect(() => {
+    const fetchCorporates = async () => {
+      if (selectedOrg) {
+        try {
+          const response = await axiosInstance.get(`/corporate/`, {
+            params: { organization_id: selectedOrg },
+          });
+          setCorporates(response.data);
+        } catch (e) {
+          console.error("Failed fetching corporates:", e);
+        }
+      }
+    };
+
+    fetchCorporates();
+  }, [selectedOrg]);
+
+  const handleReportTypeChange = (type) => {
+    setReportType(type);
+    setErrors({
+      selectedOrg: "",
+      selectedCorp: "",
+      selectedYear: "",
+    });
+    validateForm();
+  };
+
+  const handleOrganizationChange = (e) => {
+    const newOrg = e.target.value;
+    setSelectedOrg(newOrg);
+    setSelectedCorp("");
+    setSelectedYear("");
+    setCustomerhealth([]);
+    setErrors((prevErrors) => ({ ...prevErrors, selectedOrg: "" }));
+
+    setDatasetparams({
+      organisation: newOrg,
+      corporate: "",
+      start: "",
+      end: "",
+    });
+    validateForm();
+  };
+
+  const handleOrgChange = (e) => {
+    const newCorp = e.target.value;
+    setSelectedCorp(newCorp);
+    setErrors((prevErrors) => ({ ...prevErrors, selectedCorp: "" }));
 
     setDatasetparams((prevParams) => ({
       ...prevParams,
-      location: newLocation,
+      corporate: newCorp,
+      start: prevParams.start,
+      end: prevParams.end,
     }));
+    validateForm();
   };
 
   const handleYearChange = (e) => {
     const newYear = e.target.value;
     setSelectedYear(newYear);
+    setErrors((prevErrors) => ({ ...prevErrors, selectedYear: "" }));
 
     setDatasetparams((prevParams) => ({
       ...prevParams,
       start: `${newYear}-01-01`,
       end: `${newYear}-12-31`,
     }));
+    validateForm();
   };
 
   return (
     <div>
       <div>
         <div className="mb-2 flex-col items-center pt-4 gap-6">
-          <div className="mt-4 pb-3 mx-5 text-left">
+        <div className="mt-4 pb-3 mx-5 text-left">
             <div className="mb-2 flex-col items-center pt-2 gap-6">
+              <div className="justify-start items-center gap-4 inline-flex mt-4">
+                <div className="text-zinc-600 text-[12px] font-semibold font-['Manrope']">
+                  View By:
+                </div>
+                <div className="rounded-lg shadow justify-start items-start flex">
+                  <div
+                    className={`w-[111px] px-4 py-2.5 border  rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                      reportType === "Organization"
+                        ? "bg-[#d2dfeb]"
+                        : "bg-white"
+                    }`}
+                    onClick={() => handleReportTypeChange("Organization")}
+                  >
+                    <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
+                      Organization
+                    </div>
+                  </div>
+                  <div
+                    className={`w-[111px] px-4 py-2.5 border-r border-y rounded-r-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                      reportType === "Corporate" ? "bg-[#d2dfeb]" : "bg-white"
+                    }`}
+                    onClick={() => handleReportTypeChange("Corporate")}
+                  >
+                    <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
+                      Corporate
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div
-                className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 `}
+                className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${
+                  reportType !== "" ? "visible" : "hidden"
+                }`}
               >
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
                     className="text-neutral-800 text-[12px] font-normal"
                   >
-                    Select Location
+                    Select Organization*
                   </label>
                   <div className="mt-2">
                     <select
                       className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-                      value={selectedsetLocation}
-                      onChange={handleLocationChange}
+                      value={selectedOrg}
+                      onChange={handleOrganizationChange}
                     >
-                      <option value="">--Select Location--- </option>
-                      {selectedLocation &&
-                        selectedLocation.map((location) => (
-                          <option key={location.id} value={location.id}>
-                            {location.name}
+                      <option value="01">--Select Organization--- </option>
+                      {organisations &&
+                        organisations.map((org) => (
+                          <option key={org.id} value={org.id}>
+                            {org.name}
                           </option>
                         ))}
                     </select>
-                    {errors.selectedLocation && (
-                      <div className="text-red-600 text-[12px] ml-2">
-                        {errors.selectedLocation}
-                      </div>
+                    {errors.selectedOrg && (
+                      <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
+                        {errors.selectedOrg}
+                      </p>
                     )}
                   </div>
                 </div>
-
+                {reportType === "Corporate" && (
+                  <div className="mr-2">
+                    <label
+                      htmlFor="cname"
+                      className="text-neutral-800 text-[12px] font-normal ml-1"
+                    >
+                      Select Corporate
+                    </label>
+                    <div className="mt-2">
+                      <select
+                        className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                        value={selectedCorp}
+                        onChange={handleOrgChange}
+                      >
+                        <option value="">--Select Corporate--- </option>
+                        {corporate &&
+                          corporate.map((corp) => (
+                            <option key={corp.id} value={corp.id}>
+                              {corp.name}
+                            </option>
+                          ))}
+                      </select>
+                      {errors.selectedCorp && (
+                        <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
+                          {errors.selectedCorp}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                )}
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
@@ -186,9 +311,9 @@ const AnalyseAnnualtotalcompensationratio = ({ isBoxOpen }) => {
                       ))}
                     </select>
                     {errors.selectedYear && (
-                      <div className="text-red-600 text-[12px] ml-2">
+                      <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
                         {errors.selectedYear}
-                      </div>
+                      </p>
                     )}
                   </div>
                 </div>

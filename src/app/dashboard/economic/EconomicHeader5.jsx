@@ -23,10 +23,10 @@ const EconomicHeader5 = ({
   const [reportType, setReportType] = useState("Organization");
   const [locations, setLocations] = useState([]);
   const [errors, setErrors] = useState({
-    organization: "Please select an organization",
-    corporate: "Please select a corporate", // Corporate error default message
-    year: year ? "" : "Please select a year",
-    location: "Please select a location", // Location validation error
+    organization: "Please select Organisation",
+    corporate: "Please select Corporate", // Corporate error default message
+    year: year ? "" : "Please select year",
+    location: "Please select location", // Location validation error
   });
 
   const [organisations, setOrganisations] = useState([]);
@@ -46,19 +46,19 @@ const EconomicHeader5 = ({
       setYear(value);
       setErrors((prevErrors) => ({
         ...prevErrors,
-        year: value ? "" : "Please select a year",
+        year: value ? "" : "Please select year",
       }));
     } else if (name === "selectedOrg") {
       setSelectedOrg(value);
       setErrors((prevErrors) => ({
         ...prevErrors,
-        organization: value ? "" : "Please select an organization",
+        organization: value ? "" : "Please select Organisation",
       }));
     } else if (name === "selectedCorp") {
       setSelectedCorp(value);
       setErrors((prevErrors) => ({
         ...prevErrors,
-        corporate: value ? "" : "Please select a corporate", // Corporate error logic
+        corporate: value ? "" : "Please select Corporate", // Corporate error logic
       }));
     } else if (name === "location") {
       // Handling location change
@@ -68,7 +68,7 @@ const EconomicHeader5 = ({
       }));
       setErrors((prevErrors) => ({
         ...prevErrors,
-        location: value ? "" : "Please select a location", // Location error logic
+        location: value ? "" : "Please select location", // Location error logic
       }));
     }
   };
@@ -120,8 +120,8 @@ const EconomicHeader5 = ({
     setLocations([]); // Clear locations when organization is changed
     setErrors((prevErrors) => ({
       ...prevErrors,
-      organization: newOrg ? "" : "Please select an organization",
-      corporate: "Please select a corporate", // Reset corporate error
+      organization: newOrg ? "" : "Please select Organisation",
+      corporate: "Please select Corporate", // Reset corporate error
     }));
   };
 
@@ -130,7 +130,7 @@ const EconomicHeader5 = ({
     setSelectedCorp(newCorp);
     setErrors((prevErrors) => ({
       ...prevErrors,
-      corporate: newCorp ? "" : "Please select a corporate", // Proper error handling for corporate
+      corporate: newCorp ? "" : "Please select Corporate", // Proper error handling for corporate
     }));
   };
 
@@ -165,9 +165,9 @@ const EconomicHeader5 = ({
                 <div className="text-zinc-600 text-[12px] font-semibold font-['Manrope']">
                   Add By:
                 </div>
-                <div className="rounded-lg shadow border border-gray-300 justify-start items-start flex">
+                <div className="rounded-lg shadow  justify-start items-start flex">
                   <div
-                    className={`w-[111px] px-4 py-2.5 border-r rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Organization" ? "bg-sky-100" : "bg-white"}`}
+                    className={`w-[111px] px-4 py-2.5 border rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Organization" ? "bg-[#D2DFEB]" : "bg-white"}`}
                     onClick={() => setReportType("Organization")}
                   >
                     <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
@@ -175,7 +175,7 @@ const EconomicHeader5 = ({
                     </div>
                   </div>
                   <div
-                    className={`w-[111px] px-4 py-2.5 border-r border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Corporate" ? "bg-sky-100" : "bg-white"}`}
+                    className={`w-[111px] px-4 py-2.5 border-r border-y border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Corporate" ? "bg-[#D2DFEB]" : "bg-white"}`}
                     onClick={() => setReportType("Corporate")}
                   >
                     <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
@@ -183,7 +183,7 @@ const EconomicHeader5 = ({
                     </div>
                   </div>
                   <div
-                    className={`w-[111px] px-4 py-2.5 border-r border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Location" ? "bg-sky-100" : "bg-white"}`}
+                    className={`w-[111px] px-4 py-2.5 border-r border-y border-gray-300 rounded-r-lg justify-center items-center gap-2 flex cursor-pointer ${reportType === "Location" ? "bg-[#D2DFEB]" : "bg-white"}`}
                     onClick={() => setReportType("Location")}
                   >
                     
@@ -197,7 +197,7 @@ const EconomicHeader5 = ({
                 className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${reportType !== "" ? "visible" : "hidden"}`}
               >
                 <div className="mr-2">
-                  <label htmlFor="cname" className="text-neutral-800 text-[12px] font-normal">
+                  <label htmlFor="cname" className="text-neutral-800 text-[12px] font-normal ml-1">
                     Select Organization*
                   </label>
                   <div className="mt-2">
@@ -215,7 +215,7 @@ const EconomicHeader5 = ({
                         ))}
                     </select>
                     {errors.organization && (
-                      <p className="text-red-500 text-sm top=16 left-0 pl-2">
+                       <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
                         {errors.organization}
                       </p>
                     )}
@@ -224,7 +224,7 @@ const EconomicHeader5 = ({
 
                 {(reportType === "Corporate" || reportType === "Location") && (
                   <div className="mr-2">
-                    <label htmlFor="cname" className="text-neutral-800 text-[12px] font-normal">
+                    <label htmlFor="cname" className="text-neutral-800 text-[12px] font-normal ml-1">
                       Select Corporate
                     </label>
                     <div className="mt-2">
@@ -242,7 +242,7 @@ const EconomicHeader5 = ({
                           ))}
                       </select>
                       {errors.corporate && (
-                        <p className="text-red-500 text-sm top=16 left-0 pl-2">
+                         <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
                           {errors.corporate}
                         </p>
                       )}
@@ -252,7 +252,7 @@ const EconomicHeader5 = ({
 
                 {reportType === "Location" && (
                   <div className="mr-2">
-                    <label htmlFor="cname" className="text-neutral-800 text-[12px] font-normal">
+                    <label htmlFor="cname" className="text-neutral-800 text-[12px] font-normal ml-1">
                       Select Location
                     </label>
                     <div className="mt-2">
@@ -270,7 +270,7 @@ const EconomicHeader5 = ({
                         ))}
                       </select>
                       {errors.location && (
-                        <p className="text-red-500 text-sm top=16 left-0 pl-2">
+                         <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
                           {errors.location}
                         </p>
                       )}
@@ -279,7 +279,7 @@ const EconomicHeader5 = ({
                 )}
 
                 <div className="mr-2">
-                  <label htmlFor="cname" className="text-neutral-800 text-[12px] font-normal">
+                  <label htmlFor="cname" className="text-neutral-800 text-[12px] font-normal ml-1">
                     Select year
                   </label>
                   <div className="mt-2">
@@ -297,7 +297,7 @@ const EconomicHeader5 = ({
                       ))}
                     </select>
                     {errors.year && (
-                      <p className="text-red-500 text-sm top=16 left-0 pl-2">
+                       <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
                         {errors.year}
                       </p>
                     )}

@@ -39,11 +39,11 @@ const Traininghours = () => {
 
   return (
     <>
-     <ToastContainer style={{ fontSize: "12px" }} />
+      <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
-           <div className="text-left mb-2 ml-3 pt-5">
+            <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-[11px]">Social</p>
               <div className="flex">
                 <div>
@@ -90,7 +90,7 @@ const Traininghours = () => {
           </div>
         </div>
 
-      <div className="ml-3 flex relative">
+        <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
             Average hours of training per year per employee
             {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
@@ -145,7 +145,12 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         setYear={setYear}
       />
-      <Screen1 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year} month={activeMonth} />
+      <Screen1
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        year={year}
+        month={activeMonth}
+      />
     </>
   );
 };

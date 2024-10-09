@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import OrgDetails from "./GRI-Reporting/Org-Details/page";
@@ -14,7 +14,12 @@ import BusinessDetails from "./Organization-Details/Business-Details/page"
 import CollectiveBargainingAgreements from "./Collective-Barganing-Agreements/page"
 import MembershipAndAssociation from "./Membership-Association/page"
 import StakeholderEngagement from "./Stakeholder-Engagement/page"
-
+import {
+  setHeadertext1,
+  setHeadertext2,
+  setHeaderdisplay
+} from "../../../lib/redux/features/topheaderSlice";
+import { useDispatch} from "react-redux";
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -44,7 +49,7 @@ const AccordionItem = ({ title, children }) => {
 const General = () => {
   const [activeStep, setActiveStep] = useState(1);
   const [completedSteps, setCompletedSteps] = useState([]);
-
+  const dispatch = useDispatch();
   const activeSteps = (id) => {
     setActiveStep(id);
   };
@@ -68,6 +73,12 @@ const General = () => {
     return completedSteps.includes(stepNumber);
   };
 
+  useEffect(() => {
+   
+    dispatch(setHeadertext1("Collect"));
+    dispatch(setHeaderdisplay("none"));
+    dispatch(setHeadertext2('General'));
+}, [activeStep, dispatch]);
   return (
     <>
       <div>
