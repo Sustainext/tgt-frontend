@@ -135,7 +135,7 @@ const InputField = ({ label, value, onChange, options, divclass }) => {
     <div className="relative ml-2">
       <div className={divclass}>
         <div>
-          <label className="text-gray-700 font-[500] text-[13px]  mb-2  ">
+          <label className="text-gray-700 font-[500] text-[12px]  mb-2  ">
             {label}
           </label>
         </div>
@@ -163,7 +163,7 @@ const SelectField = ({ label, value, onChange, options,divclass }) => {
     <div className=" relative">
       <div className={divclass}>
         <div className="ml-4">
-          <label className=" text-gray-700 font-[500] text-[13px]  mb-2  ">
+          <label className=" text-gray-700 font-[500] text-[12px]  mb-2  ">
             {label}
           </label>
         </div>
@@ -204,7 +204,7 @@ const SelectField2 = ({
     <div className=" relative">
      <div className={divclass}>
         <div className="ml-4">
-          <label className=" text-gray-700 font-[500] text-[13px]  mb-2   ">
+          <label className=" text-gray-700 font-[500] text-[12px]  mb-2   ">
             {label}
           </label>
         </div>

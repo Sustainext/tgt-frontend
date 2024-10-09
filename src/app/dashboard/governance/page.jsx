@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import BoardInfo from "./Board-info/Structure/page";
@@ -20,6 +20,12 @@ import CompensationRatio from "./Performance-renumerations/compensation-ratio/pa
 import DetermineRemuneration from "./Performance-renumerations/Determine-remuneration/page";
 import PolicyCommitments from "./Policy/Policy-Commitments/page";
 import ImplementingCommitments from "./Policy/Implementing-commitments/page";
+import {
+  setHeadertext1,
+  setHeadertext2,
+  setHeaderdisplay
+} from "../../../lib/redux/features/topheaderSlice";
+import { useDispatch} from "react-redux";
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -49,7 +55,7 @@ const AccordionItem = ({ title, children }) => {
 const Governance = () => {
   const [activeStep, setActiveStep] = useState(1);
   const [completedSteps, setCompletedSteps] = useState([]);
-
+  const dispatch = useDispatch();
   const activeSteps = (id) => {
     setActiveStep(id);
   };
@@ -72,7 +78,12 @@ const Governance = () => {
   const isStepCompleted = (stepNumber) => {
     return completedSteps.includes(stepNumber);
   };
-
+  useEffect(() => {
+   
+    dispatch(setHeadertext1("Collect"));
+    dispatch(setHeaderdisplay("none"));
+    dispatch(setHeadertext2('Governance'));
+}, [activeStep, dispatch]);
   return (
     <>
       <div>
@@ -627,7 +638,7 @@ const Governance = () => {
                         ) : (
                           <p
                             className={`${
-                              activeStep === 7
+                              activeStep === 9
                                 ? "text-[12px] text-sky-800  font-bold"
                                 : " text-[12px]  text-gray-600"
                             } `}
@@ -912,7 +923,7 @@ const Governance = () => {
                             width="12"
                             height="12"
                             className={`${
-                              activeStep === 13
+                              activeStep === 14
                                 ? "bi bi-circle-fill fill-sky-800  font-bold "
                                 : " bi bi-circle-fill fill-gray-400"
                             } `}

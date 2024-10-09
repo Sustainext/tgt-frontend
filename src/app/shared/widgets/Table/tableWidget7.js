@@ -1,7 +1,9 @@
 "use client";
 import React, { useState, useCallback, useEffect, useRef } from "react";
-import { MdOutlineDeleteOutline, MdAdd } from "react-icons/md";
+import { MdOutlineDeleteOutline, MdAdd, MdInfoOutline } from "react-icons/md";
 import { debounce } from "lodash";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 const CustomTableWidget7 = ({
   id,
@@ -25,27 +27,33 @@ const CustomTableWidget7 = ({
 
   const updateField = (index, key, newValue) => {
     const newData = [...value];
-    newData[index][key] = newValue;
-
+  
+    // Ensure that numeric inputs are stored as strings
+    newData[index][key] = String(newValue); 
+  
     if (["male", "female", "nonBinary"].includes(key)) {
       const totalGender = ["male", "female", "nonBinary"].reduce(
         (sum, field) => sum + (Number(newData[index][field]) || 0),
         0
       );
-      newData[index]["totalGender"] = totalGender;
+      // Store totalGender as a string
+      newData[index]["totalGender"] = String(totalGender);
     }
-
+  
     if (["lessThan30", "between30and50", "moreThan50"].includes(key)) {
       const totalAge = ["lessThan30", "between30and50", "moreThan50"].reduce(
         (sum, field) => sum + (Number(newData[index][field]) || 0),
         0
       );
-      newData[index]["totalAge"] = totalAge;
+      // Store totalAge as a string
+      newData[index]["totalAge"] = String(totalAge);
     }
-
+  
     debouncedChangeHandler(newData);
   };
+  
 
+  // Function to handle adding a new row
   const handleAddRow = () => {
     const newRow = {
       category: "",
@@ -63,26 +71,66 @@ const CustomTableWidget7 = ({
     onChange([...value, newRow]);
   };
 
+  // Function to handle row removal
+  const handleRemoveRow = (index) => {
+    const newData = [...value];
+    newData.splice(index, 1); // Remove the row at the given index
+    onChange(newData); // Update the table data
+  };
+
   useEffect(() => {
     console.log("CustomTableWidget value:", value);
   }, [value]);
 
   return (
     <div style={{ overflowY: "auto", maxHeight: "400px" }}>
-      <table id={id} className="rounded-md border border-gray-300 w-full" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
+      <table
+        id={id}
+        className="rounded-md border border-gray-300 w-full"
+        style={{ borderCollapse: "separate", borderSpacing: 0 }}
+      >
         <thead className="gradient-background">
           <tr>
             {options.titles.map((item, idx) => (
               <th
                 key={`header-${idx}`}
                 className={`text-[12px] px-2 py-2 ${
-                  idx === 0 ? "text-left border-r border-gray-300" : "text-center border-r border-gray-300"
+                  idx === 0
+                    ? "text-left border-r border-gray-300"
+                    : "text-center border-r border-gray-300"
                 }`}
                 colSpan={item.colSpan}
               >
-                <div className="">
-                  <p className={`${idx === 0 ? "text-left" : "text-center"}`}>
+                <div className="relative">
+                  <p
+                    className={`${
+                      idx === 0 || idx === 3 ? "text-left flex" : "text-center"
+                    }`}
+                  >
                     {item.title}
+                    <MdInfoOutline
+                      data-tooltip-id={`tooltip-${item.title.replace(
+                        /\s+/g,
+                        "-"
+                      )}`}
+                      data-tooltip-content={item.tooltip}
+                      style={{ display: `${item.tooltipdispaly}` }}
+                      className=" cursor-pointer mt-1 ml-1 text-[14px]"
+                    />
+                    <ReactTooltip
+                      id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
+                      place="top"
+                      effect="solid"
+                      style={{
+                        width: "400px",
+                        backgroundColor: "#000",
+                        color: "white",
+                        fontSize: "12px",
+                        boxShadow: 3,
+                        borderRadius: "8px",
+                        zIndex: "1000",
+                      }}
+                    />
                   </p>
                 </div>
               </th>
@@ -97,8 +145,33 @@ const CustomTableWidget7 = ({
                 className="text-[12px] border-t border-r border-gray-300  px-2 py-2"
                 colSpan={item.colSpan}
               >
-                <div className="">
-                  <p>{item.title}</p>
+                <div className="relative">
+                  <p className="flex justify-center">
+                    {item.title}{" "}
+                    <MdInfoOutline
+                      data-tooltip-id={`tooltip-${item.title.replace(
+                        /\s+/g,
+                        "-"
+                      )}`}
+                      data-tooltip-content={item.tooltip}
+                      style={{ display: `${item.tooltipdispaly}` }}
+                      className=" cursor-pointer mt-1 ml-1 text-[13px]"
+                    />
+                    <ReactTooltip
+                      id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
+                      place="top"
+                      effect="solid"
+                      style={{
+                        width: "400px",
+                        backgroundColor: "#000",
+                        color: "white",
+                        fontSize: "12px",
+                        boxShadow: 3,
+                        borderRadius: "8px",
+                        zIndex: "1000",
+                      }}
+                    />
+                  </p>
                 </div>
               </th>
             ))}
@@ -115,8 +188,6 @@ const CustomTableWidget7 = ({
                       sub.title2.trim().toLowerCase() ===
                       key.trim().toLowerCase()
                   )?.type || "text";
-
-                console.log(`Key: ${key}, InputType: ${inputType}`); // Debugging output
 
                 return (
                   <td
@@ -136,7 +207,7 @@ const CustomTableWidget7 = ({
                 );
               })}
               <td className="p-3">
-                <button onClick={() => formContext.onRemove(rowIndex)}>
+                <button onClick={() => handleRemoveRow(rowIndex)}>
                   <MdOutlineDeleteOutline className="text-[23px] text-red-600" />
                 </button>
               </td>
@@ -157,25 +228,30 @@ const CustomTableWidget7 = ({
   );
 };
 
-const InputField = ({ type, required, value, onChange,readOnly }) => {
+const InputField = ({ type, required, value, onChange, readOnly }) => {
   const [inputValue, setInputValue] = useState(value);
 
   useEffect(() => {
-    setInputValue(value); // Make sure to update the local state when the value prop changes
+    setInputValue(value); // Update the local state when the value prop changes
   }, [value]);
 
   const handleInputChange = (e) => {
     let newValue = e.target.value;
-    if (type === 'number') {
-      newValue = newValue ? parseInt(newValue, 10) : ""; // Parse integers; fallback to empty string if NaN
+
+    // Handle integer inputs for specific fields
+    if (type === "number") {
+      newValue = newValue ? parseInt(newValue, 10) : ""; // Parse integers
+    } else if (type === "text") {
+      newValue = String(newValue); // Ensure the value is treated as a string
     }
+
     setInputValue(newValue); // Update local state
     onChange(newValue); // Propagate changes up
   };
 
   return (
     <input
-      type={type === 'number' ? 'number' : 'text'}
+      type={type === "number" ? "number" : "text"}
       required={required}
       readOnly={readOnly}
       value={inputValue}
@@ -186,6 +262,5 @@ const InputField = ({ type, required, value, onChange,readOnly }) => {
     />
   );
 };
-
 
 export default CustomTableWidget7;

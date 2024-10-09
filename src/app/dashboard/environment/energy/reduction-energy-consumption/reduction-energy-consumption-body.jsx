@@ -12,12 +12,12 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
   const { open } = GlobalState();
   const handleClick = () => {
     if (!location) {
-      setLocationMessage("Please select a location")
+      setLocationMessage("Please select location")
 
       return;
     }
     if (!year) {
-      setYearMessage("Please select a year")
+      setYearMessage("Please select year")
 
       return;
     }

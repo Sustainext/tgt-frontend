@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { debounce } from 'lodash';
-import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-
+import { MdInfoOutline, MdOutlineDeleteOutline, MdAdd } from 'react-icons/md';
 const GeneralWorkersEmployees = ({ id, options, value, required, onChange, schema, formContext }) => {
     const [localValue, setLocalValue] = useState(value);
     const [othersInputs, setOthersInputs] = useState([]);
@@ -50,6 +49,25 @@ const GeneralWorkersEmployees = ({ id, options, value, required, onChange, schem
         setLocalValue(updatedValues);
     };
 
+    const handleAddRow = () => {
+        const newRow = {};
+        Object.keys(schema.items.properties).forEach(key => {
+            newRow[key] = ""; // Set default value for each property
+        });
+        setLocalValue([...localValue, newRow]);
+        setOthersInputs([...othersInputs, {}]); // Add an empty object for the new row in othersInputs
+    };
+
+    const handleDeleteRow = (index) => {
+        const updatedValues = [...localValue];
+        updatedValues.splice(index, 1); // Remove the row at the specified index
+        setLocalValue(updatedValues);
+
+        const updatedOthersInputs = [...othersInputs];
+        updatedOthersInputs.splice(index, 1); // Remove the corresponding entry in othersInputs
+        setOthersInputs(updatedOthersInputs);
+    };
+
     const debouncedUpdate = useCallback(debounce(onChange, 200), [onChange]);
 
     useEffect(() => {
@@ -65,8 +83,7 @@ const GeneralWorkersEmployees = ({ id, options, value, required, onChange, schem
                             <th
                                 key={idx}
                                 style={{ minWidth: "120px", textAlign: "left" }}
-                                className={` ${idx == 0 ? "" :" border-l" } text-[12px] p-3 text-center border-gray-300 px-2 py-2 relative`}
-                               
+                                className={` ${idx === 0 ? "" :" border-l" } text-[12px] p-3 text-center border-gray-300 px-2 py-2 relative`}
                             >
                                 <div className="flex items-center ">
                                     <p>{item.title}</p>
@@ -89,12 +106,13 @@ const GeneralWorkersEmployees = ({ id, options, value, required, onChange, schem
                                                 boxShadow: 3,
                                                 borderRadius: "8px",
                                                 zIndex:"1000",
-                                              }}
+                                            }}
                                         />
                                     </p>
                                 </div>
                             </th>
                         ))}
+                        <th className="text-[12px] p-3 text-center border-gray-300 px-2 py-2"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -106,12 +124,11 @@ const GeneralWorkersEmployees = ({ id, options, value, required, onChange, schem
 
                                 return (
                                     <td key={cellIndex} 
-                                    className={` ${cellIndex == 0 ? "" :" border-l" } border-t p-3 text-center border-gray-300`}
-                              >
+                                        className={` ${cellIndex === 0 ? "" :" border-l" } border-t p-3 text-center border-gray-300`}
+                                    >
                                         {isEnum ? (
                                             <>
                                                 <select
-
                                                     value={localValue[rowIndex][key]}
                                                     onChange={(e) => handleFieldChange(rowIndex, key, e.target.value)}
                                                     className="text-[12px] pl-2 py-2 w-full border-b"
@@ -146,10 +163,24 @@ const GeneralWorkersEmployees = ({ id, options, value, required, onChange, schem
                                     </td>
                                 );
                             })}
+                            <td className="border-t p-3 text-center border-gray-300">
+                            <button type='button'   onClick={() => handleDeleteRow(rowIndex)} title="Remove row" className='text-center mx-auto'>
+                                                        <MdOutlineDeleteOutline className='text-[23px] text-red-600' />
+                                                    </button>
+                         
+                            </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+            <button
+                    type="button"
+                    className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
+                    onClick={handleAddRow}
+                >
+                    Add Row <MdAdd className='text-lg' />
+                </button>
+       
         </div>
     );
 };

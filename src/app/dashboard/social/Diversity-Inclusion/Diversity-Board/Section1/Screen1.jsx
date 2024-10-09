@@ -27,41 +27,29 @@ const schema = {
     type: "object",
     properties: {
       category: { type: "string", title: "Employee Category" },
-      male: { type: "integer", title: "Male" },
-      female: { type: "integer", title: "Female" },
-      nonBinary: { type: "integer", title: "Non-Binary" },
+      male: { type: "string", title: "Male" },
+      female: { type: "string", title: "Female" },
+      nonBinary: { type: "string", title: "Non-Binary" },
       totalGender: {
-        type: "integer",
+        type: "string",
         title:
           "Total number of individuals within the organisation's governance bodies",
       },
-      lessThan30: { type: "integer", title: "< 30 years" },
-      between30and50: { type: "integer", title: "30-50 years" },
-      moreThan50: { type: "integer", title: "> 50 years" },
+      lessThan30: { type: "string", title: "< 30 years" },
+      between30and50: { type: "string", title: "30-50 years" },
+      moreThan50: { type: "string", title: "> 50 years" },
       totalAge: {
-        type: "integer",
+        type: "string",
         title:
           "Total number of individuals within the organisation's governance bodies",
       },
-      minorityGroup: { type: "integer", title: "Minority group" },
+      minorityGroup: { type: "string", title: "Minority group" },
       vulnerableCommunities: {
-        type: "integer",
+        type: "string",
         title: "Vulnerable Communities",
       },
     },
-    required: [
-      "category",
-      "male",
-      "female",
-      "nonBinary",
-      "totalGender",
-      "lessThan30",
-      "between30and50",
-      "moreThan50",
-      "totalAge",
-      "minorityGroup",
-      "vulnerableCommunities",
-    ],
+
   },
 };
 
@@ -71,23 +59,27 @@ const uiSchema = {
     titles: [
       {
         title: "Employee Category",
-        tooltip: "Please specify the category.",
+        tooltip: "Please specify the category of the organisation's governance body.",
         colSpan: 1,
+        tooltipdispaly:"block",
       },
       {
         title: "Gender",
         tooltip: "Please specify the gender of individuals.",
         colSpan: 4,
+        tooltipdispaly:"none",
       },
       {
         title: "Age Group",
         tooltip: "Please specify the age group of individuals.",
         colSpan: 4,
+        tooltipdispaly:"none",
       },
       {
         title: "Diversity groups",
-        tooltip: "Please specify the diversity groups of individuals.",
+        tooltip: "Please specify the diversity group. Indicator of diversity: indicator of diversity for which the organization gathers data Examples: age, ancestry and ethnic origin, citizenship, creed, disability, gender",
         colSpan: 2,
+        tooltipdispaly:"block",
       },
     ],
     subTitles: [
@@ -97,6 +89,7 @@ const uiSchema = {
         tooltip: "Please specify the category.",
         colSpan: 1,
         type: "text",
+        tooltipdispaly:"none",
       },
       {
         title: "Male",
@@ -104,6 +97,7 @@ const uiSchema = {
         tooltip: "Please specify the number of male individuals.",
         colSpan: 1,
         type: "number",
+        tooltipdispaly:"none",
       },
       {
         title: "Female",
@@ -111,6 +105,7 @@ const uiSchema = {
         tooltip: "Please specify the number of female individuals.",
         colSpan: 1,
         type: "number",
+        tooltipdispaly:"none",
       },
       {
         title: "Non-Binary",
@@ -118,6 +113,7 @@ const uiSchema = {
         tooltip: "Please specify the number of non-binary individuals.",
         colSpan: 1,
         type: "number",
+        tooltipdispaly:"none",
       },
       {
         title: "Total number of employee",
@@ -125,6 +121,7 @@ const uiSchema = {
         tooltip: "Please specify the total number of individuals.",
         colSpan: 1,
         type: "number",
+        tooltipdispaly:"none",
       },
       {
         title: "< 30 years",
@@ -132,6 +129,7 @@ const uiSchema = {
         tooltip: "Please specify the number of individuals under 30 years old.",
         colSpan: 1,
         type: "number",
+        tooltipdispaly:"none",
       },
       {
         title: "30-50 years",
@@ -140,6 +138,7 @@ const uiSchema = {
           "Please specify the number of individuals between 30 and 50 years old.",
         colSpan: 1,
         type: "number",
+        tooltipdispaly:"none",
       },
       {
         title: "> 50 years",
@@ -147,6 +146,7 @@ const uiSchema = {
         tooltip: "Please specify the number of individuals over 50 years old.",
         colSpan: 1,
         type: "number",
+        tooltipdispaly:"none",
       },
       {
         title: "Total number of employee",
@@ -154,6 +154,7 @@ const uiSchema = {
         tooltip: "Please specify the total number of individuals.",
         colSpan: 1,
         type: "number",
+        tooltipdispaly:"none",
       },
       {
         title: "Minority group",
@@ -161,14 +162,16 @@ const uiSchema = {
         tooltip: "Please specify the number of minority group individuals.",
         colSpan: 1,
         type: "number",
+        tooltipdispaly:"none",
       },
       {
         title: "Vulnerable Groups",
         title2: "vulnerableCommunities",
         tooltip:
-          "Please specify the number of vulnerable community individuals.",
+          "Please specify the type of vulnerable group and the number of individuals from the vulnerable groups present in the organisation's governance body. Vunerable Group definition: Group of individuals with a specific condition or characteristic (e.g., economic, physical, political, social) that could experience negative impacts as a result of the organization’s activities more severely than the general population.",
         colSpan: 1,
         type: "number",
+        tooltipdispaly:"block",
       },
     ],
   },
@@ -347,8 +350,8 @@ age group and diversity group. "
         </div>
         <div className="mx-2">
           <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+            schema={schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

@@ -75,7 +75,7 @@ const Textboxmultirowfile = (props) => {
     <>
       <div className="mb-6">
         <div className="flex mb-2 relative">
-          <p className="text-[12px] text-gray-500 font-semibold flex">
+          <p className="text-[14px] text-gray-700 font-[500] flex">
             {uiSchema["ui:title"]}
             <MdInfoOutline
               data-tooltip-id={uiSchema["ui:tooltip"]}
@@ -111,7 +111,7 @@ const Textboxmultirowfile = (props) => {
         ))}
         <button
           type="button"
-          className="text-[#007EEF] text-[12px] flex cursor-pointer my-auto"
+          className="text-[#007EEF] text-[13px] flex cursor-pointer my-auto"
           onClick={handleAddNew}
         >
         Add Data   <MdAdd className="text-lg" />
@@ -127,7 +127,7 @@ const Textboxmultirowfile = (props) => {
           {file.fileName ? (
             <label className="flex cursor-pointer">
               <div className="flex items-center text-center mt-2">
-                <div className="truncate text-sky-600 text-[12px] flex text-center">
+                <div className="truncate text-sky-600 text-[13px] flex text-center">
                   <MdFilePresent className="w-6 h-6 mr-1 text-green-500" />{" "}
                   {file.fileName}
                 </div>
@@ -140,7 +140,7 @@ const Textboxmultirowfile = (props) => {
             >
               <div className="flex items-center mt-2">
                 <MdOutlineFileUpload className="w-6 h-6 mr-1 text-[#007EEF]" />
-                <div className="w-[150px] truncate text-[#007EEF] text-[12px] ml-1">
+                <div className="w-[150px] truncate text-[#007EEF] text-[13px] ml-1">
                   Upload Documentation
                 </div>
               </div>

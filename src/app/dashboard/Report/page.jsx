@@ -8,6 +8,12 @@ import { MdAdd } from "react-icons/md";
 import TableWithPagination from "./Data-table/TablePagination";
 import { Oval } from "react-loader-spinner";
 import axiosInstance, { post } from "../../utils/axiosMiddleware";
+import {
+  setHeadertext1,
+  setHeadertext2,
+  setHeaderdisplay
+} from "../../../lib/redux/features/topheaderSlice";
+import { useDispatch } from "react-redux";
 const Report = () => {
   const [isExpandedpage, setIsExpandedpage] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,8 +34,13 @@ const Report = () => {
   const [error, setError] = useState({});
   const router = useRouter();
   const [entities, setEntities] = useState([]);
-
-
+  const dispatch = useDispatch();
+  useEffect(() => {
+   
+    dispatch(setHeadertext1(""));
+    dispatch(setHeaderdisplay("none"));
+    dispatch(setHeadertext2('Report'));
+}, [dispatch]);
   const handleCheckboxChange = (index) => {
     const newEntities = [...entities];
     newEntities[index].checked = !newEntities[index].checked;
@@ -321,14 +332,14 @@ const Report = () => {
     }
     if (firstSelection === "Organization") {
       if (!selectedOrg) {
-        newErrors.selectedOrgrs = "Please select an organization.";
+        newErrors.selectedOrgrs = "Please select Organisation.";
       }
     } else if (firstSelection === "Corporate") {
       if (!selectedOrg) {
-        newErrors.selectedOrgs = "Please select an organization";
+        newErrors.selectedOrgs = "Please select Organisation";
       }
       if (!selectedCorp) {
-        newErrors.selectedCorp = "Please select a corporate.";
+        newErrors.selectedCorp = "Please select Corporate.";
       }
     }
     if (!startdate) {

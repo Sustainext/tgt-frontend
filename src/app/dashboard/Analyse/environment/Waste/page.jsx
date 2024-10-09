@@ -52,6 +52,11 @@ const AnalyseWaste = ({ isBoxOpen }) => {
     start: null,
     end: null,
   });
+  const [errors, setErrors] = useState({
+    organization: 'Please select Organisation',
+    corporate: 'Please select Corporate',
+    location: 'Please select Location',
+  });
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -392,7 +397,6 @@ const AnalyseWaste = ({ isBoxOpen }) => {
   const handleReportTypeChange = (type) => {
     setReportType(type);
   };
-
   const handleOrganizationChange = (e) => {
     const newOrg = e.target.value;
     setSelectedOrg(newOrg);
@@ -414,6 +418,19 @@ const AnalyseWaste = ({ isBoxOpen }) => {
       corporate: "",
       location: "",
     }));
+
+    // Update error message
+    if (!newOrg) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        organization: "Please select Organisation",
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        organization: "",
+      }));
+    }
   };
 
   const handleOrgChange = (e) => {
@@ -426,6 +443,19 @@ const AnalyseWaste = ({ isBoxOpen }) => {
       corporate: newCorp,
       location: "",
     }));
+
+    // Update error message for corporate
+    if (!newCorp) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        corporate: "Please select Corporate",
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        corporate: "",
+      }));
+    }
   };
 
   const handleLocationChange = (e) => {
@@ -436,6 +466,19 @@ const AnalyseWaste = ({ isBoxOpen }) => {
       ...prevParams,
       location: newLocation,
     }));
+
+    // Update error message for location
+    if (!newLocation) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        location: "Please select Location",
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        location: "",
+      }));
+    }
   };
 
   const handleDateChange = (newRange) => {
@@ -448,20 +491,21 @@ const AnalyseWaste = ({ isBoxOpen }) => {
     }));
   };
 
+
   return (
     <>
       <div>
         <div className="mb-2 flex-col items-center pt-4  gap-6">
-          <div className="mt-4 pb-3 mx-5 text-left">
-            <div className="mb-2 flex-col items-center pt-2  gap-6">
-              <div className="justify-start items-center gap-4 inline-flex">
+        <div className="mt-4 pb-3 mx-5 text-left">
+          <div className="mb-2 flex-col items-center pt-2  gap-6">
+          <div className="justify-start items-center gap-4 inline-flex">
                 <div className="text-zinc-600 text-[12px]  font-semibold font-['Manrope']">
                   View By:
                 </div>
-                <div className="rounded-lg shadow border border-gray-300 justify-start items-start flex">
+                <div className="rounded-lg shadow  justify-start items-start flex">
                   <div
-                    className={`w-[111px] px-4 py-2.5 border-r rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
-                      reportType === "Organization" ? "bg-sky-100" : "bg-white"
+                    className={`w-[111px] px-4 py-2.5 border rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                      reportType === "Organization" ? "bg-[#d2dfeb]" : "bg-white"
                     }`}
                     onClick={() => handleReportTypeChange("Organization")}
                   >
@@ -470,8 +514,8 @@ const AnalyseWaste = ({ isBoxOpen }) => {
                     </div>
                   </div>
                   <div
-                    className={`w-[111px] px-4 py-2.5 border-r border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
-                      reportType === "Corporate" ? "bg-sky-100" : "bg-white"
+                    className={`w-[111px] px-4 py-2.5 border-y border-r border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                      reportType === "Corporate" ? "bg-[#d2dfeb]" : "bg-white"
                     }`}
                     onClick={() => handleReportTypeChange("Corporate")}
                   >
@@ -480,8 +524,8 @@ const AnalyseWaste = ({ isBoxOpen }) => {
                     </div>
                   </div>
                   <div
-                    className={`w-[111px] px-4 py-2.5 border-r rounded-r-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
-                      reportType === "Location" ? "bg-sky-100" : "bg-white"
+                    className={`w-[111px] px-4 py-2.5 border-y border-r rounded-r-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                      reportType === "Location" ? "bg-[#d2dfeb]" : "bg-white"
                     }`}
                     onClick={() => handleReportTypeChange("Location")}
                   >
@@ -491,107 +535,119 @@ const AnalyseWaste = ({ isBoxOpen }) => {
                   </div>
                 </div>
               </div>
-              <div
-                className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${
-                  reportType !== "" ? "visible" : "hidden"
+            <div
+              className={`grid grid-cols-1 md:grid-cols-4 w-[80%] mb-2 pt-4 ${reportType !== "" ? "visible" : "hidden"
                 }`}
-              >
+            >
+              <div className="mr-2">
+                <label
+                  htmlFor="cname"
+                  className="text-neutral-800 text-[12px] font-normal"
+                >
+                  Select Organization*
+                </label>
+                <div className="mt-2">
+                  <select
+                    className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
+                    value={selectedOrg}
+                    onChange={handleOrganizationChange}
+                  >
+                    <option value="01">--Select Organization--- </option>
+                    {organisations &&
+                      organisations.map((org) => (
+                        <option key={org.id} value={org.id}>
+                          {org.name}
+                        </option>
+                      ))}
+                  </select>
+                  {errors.organization && (
+                    <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
+                      {errors.organization}
+                    </p>
+                  )}
+                </div>
+              </div>
+              {(reportType === "Corporate" || reportType === "Location") && (
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[12px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal ml-1"
                   >
-                    Select Organization*
+                    Select Corporate
                   </label>
                   <div className="mt-2">
                     <select
-                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-                      value={selectedOrg}
-                      onChange={handleOrganizationChange}
+                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
+                      value={selectedCorp}
+                      onChange={handleOrgChange}
                     >
-                      <option value="01">--Select Organization--- </option>
-                      {organisations &&
-                        organisations.map((org) => (
-                          <option key={org.id} value={org.id}>
-                            {org.name}
+                      <option value="">--Select Corporate--- </option>
+                      {corporates &&
+                        corporates.map((corp) => (
+                          <option key={corp.id} value={corp.id}>
+                            {corp.name}
                           </option>
                         ))}
                     </select>
+                    {errors.corporate && (
+                      <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
+                        {errors.corporate}
+                      </p>
+                    )}
                   </div>
                 </div>
-                {(reportType === "Corporate" || reportType === "Location") && (
-                  <div className="mr-2">
-                    <label
-                      htmlFor="cname"
-                      className="text-neutral-800 text-[12px] font-normal"
-                    >
-                      Select Corporate
-                    </label>
-                    <div className="mt-2">
-                      <select
-                        className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-                        value={selectedCorp}
-                        onChange={handleOrgChange}
-                      >
-                        <option value="">--Select Corporate--- </option>
-                        {corporates &&
-                          corporates.map((corp) => (
-                            <option key={corp.id} value={corp.id}>
-                              {corp.name}
-                            </option>
-                          ))}
-                      </select>
-                    </div>
-                  </div>
-                )}
-                {reportType === "Location" && (
-                  <div className="mr-2">
-                    <label
-                      htmlFor="cname"
-                      className="text-neutral-800 text-[12px] font-normal"
-                    >
-                      Select Location
-                    </label>
-                    <div className="mt-2">
-                      <select
-                        className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-                        value={selectedsetLocation}
-                        onChange={handleLocationChange}
-                      >
-                        <option value="">--Select Location--- </option>
-                        {selectedLocation &&
-                          selectedLocation.map((location) => (
-                            <option key={location.id} value={location.id}>
-                              {location.name}
-                            </option>
-                          ))}
-                      </select>
-                    </div>
-                  </div>
-                )}
+              )}
+              {reportType === "Location" && (
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[12px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal ml-1"
                   >
-                    Select Date
+                    Select Location
                   </label>
                   <div className="mt-2">
-                    <DateRangePicker
-                      startDate={dateRange.start}
-                      endDate={dateRange.end}
-                      onDateChange={handleDateChange}
-                    />
-                    {!isDateRangeValid && (
-                      <div className="text-red-600 text-xs mt-1 ml-1">
-                        Please select a valid date range.
-                      </div>
+                    <select
+                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 "
+                      value={selectedsetLocation}
+                      onChange={handleLocationChange}
+                    >
+                      <option value="">--Select Location--- </option>
+                      {selectedLocation &&
+                        selectedLocation.map((location) => (
+                          <option key={location.id} value={location.id}>
+                            {location.name}
+                          </option>
+                        ))}
+                    </select>
+                    {errors.location && (
+                      <p className="text-[#007EEF] text-[12px] pl-2 mt-2">{errors.location}</p>
                     )}
                   </div>
+                </div>
+              )}
+              <div className="mr-2">
+                <label
+                  htmlFor="cname"
+                  className="text-neutral-800 text-[12px] font-normal"
+                >
+                  Select Date
+                </label>
+                <div className="mt-2">
+                  <DateRangePicker
+                    startDate={dateRange.start}
+                    endDate={dateRange.end}
+                    onDateChange={handleDateChange}
+                  />
+                  {!isDateRangeValid && (
+                     <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
+                     Please select a date range
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
           </div>
+        </div>
         </div>
         <div className="flex">
           <div className={`ps-4 w-[100%] me-4`}>

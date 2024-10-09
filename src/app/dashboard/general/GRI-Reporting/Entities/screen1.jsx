@@ -188,7 +188,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
           </div>
         </div>
         {selectedOrg && year && (
-          <p className="flex mx-2 text-sm text-gray-700">
+          <p className="flex mx-2 text-sm text-gray-700 relative">
             List all entities included in the sustainability report
             <MdInfoOutline
               data-tooltip-id={`tooltip-$e1`}
@@ -221,17 +221,19 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
             widgets={widgets}
           />
         </div>
+        {selectedOrg && year && (
         <div className="flex justify-between right-1  mx-2">
-          {selectedOrg && year && (
+        
             <button
               type="button"
-              className="text-[#007EEF] text-[12px] flex cursor-pointer my-auto"
+              className="text-[#007EEF] text-[13px] flex cursor-pointer my-auto"
               onClick={handleAddNew}
             >
               Add text box <MdAdd className="text-lg" />
             </button>
-          )}
+         
         </div>
+         )}
         <div className="mt-4">
           <button
             type="button"
