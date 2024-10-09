@@ -25,7 +25,11 @@ import {
 import ConfirmationModal from "../common/ConfirmationModal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import {
+  setHeadertext1,
+  setHeadertext2,
+  setHeaderdisplay,
+} from "../../../../lib/redux/features/topheaderSlice";
 const ManageUsers = () => {
   const allUsers = useSelector((state) => state.users.users);
   const [searchFocus, setSearchFocus] = useState(false);
@@ -40,7 +44,11 @@ const ManageUsers = () => {
   const currentUser = useSelector((state) => state.users.currentUser);
   const router = useRouter();
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    dispatch(setHeadertext1("Users"));
+    dispatch(setHeaderdisplay("none"));
+    dispatch(setHeadertext2("Manage Users"));
+  }, [dispatch]);
   const filteredUsers = allUsers.filter(
     (user) =>
       user.personalDetails.firstName
@@ -166,13 +174,13 @@ const ManageUsers = () => {
       <div className="w-full px-6 py-2 border-b border-[#edeae9] flex justify-between items-center">
         <h2 className="text-[22px] font-medium font-['Manrope'] py-2">Users</h2>
       </div>
-      <div className="flex justify-between items-start mt-8 mb-4 ">
+      <div className="flex justify-between items-start mt-8 mb-4">
         <div
-          className={` border-2  border-[#edeae9] rounded-lg mx-8 transition-all ${
+          className={` rounded-lg mx-8 transition-all ${
             selectedUser ? "w-full" : "w-full"
           }  h-full`}
         >
-          <div className="py-4">
+          <div className="py-4 mx-10  border-x border-t  border-[#edeae9]">
             <div className="flex justify-between">
               <div className="flex">
                 <div className="px-4">
@@ -209,12 +217,12 @@ const ManageUsers = () => {
               </div>
             </div>
           </div>
-          <div className="overflow-y-auto scrollable-content flex-grow max-h-[84vh] min-h-[84vh] ">
-            <table className="min-w-full shadow rounded-lg max-h-[84vh] min-h-[84vh] overflow-y-auto">
+          <div className="mx-10 border-x border-[#edeae9]">
+            <table className="min-w-full shadow rounded-lg  overflow-y-auto h-full ">
               <thead className="sticky top-0 bg-white">
                 <tr className="gradient-background py-4 rounded-md">
                   <th className="px-5 py-3 border-b-2 text-left text-[14px] font-semibold tracking-wider w-[55%]">
-                    User
+                    User List
                   </th>
                   <th className="px-5 py-3 border-b-2 text-[14px] font-semibold tracking-wider text-center w-[10%]">
                     Role
@@ -228,81 +236,84 @@ const ManageUsers = () => {
                 </tr>
               </thead>
               <tbody>
-  {currentUsers.map((user, index) => (
-    <tr key={index} className="border-b">
-      {/* Apply height to the <td> elements */}
-      <td className="px-5 bg-white text-[14px] min-h-[10px] h-[10px] py-0 my-0"> {/* Ensure height on td */}
-        <div className="flex items-center">
-          <MdPerson className="text-gray-500 text-[18px]" />
-          <div className="flex">
-            <div className="ml-3">
-              <p className="text-gray-900 whitespace-no-wrap font-[500] leading-tight">
-                {user.personalDetails.firstName} {user.personalDetails.lastName}
-              </p>
-              <p className="text-gray-600 whitespace-no-wrap">
-                {user.personalDetails.email}
-              </p>
-            </div>
-          </div>
-        </div>
-      </td>
+                {currentUsers.map((user, index) => (
+                  <tr key={index} className="border-b h-[80px]">
+                    {/* Apply height to the <td> elements */}
+                    <td className="px-5 bg-white text-[14px]  py-0 my-0">
+                      <div className="flex items-center">
+                        <MdPerson className="text-gray-500 text-[18px]" />
+                        <div className="flex">
+                          <div className="ml-3">
+                            <p className="text-gray-900 whitespace-no-wrap font-[500]">
+                              {user.personalDetails.firstName}{" "}
+                              {user.personalDetails.lastName}
+                            </p>
+                            <p className="text-gray-600 whitespace-no-wrap">
+                              {user.personalDetails.email}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
 
-      <td className="px-5 bg-white text-[14px] text-center text-gray-500 min-h-[10px] h-[10px] py-0 my-0 leading-[64px]">
-        {user.personalDetails.roleType}
-      </td>
+                    <td className="px-5 bg-white text-[14px] text-center text-gray-500  py-0 my-0 ">
+                      {user.personalDetails.roleType}
+                    </td>
 
-      <td className="px-5 bg-white text-[14px] min-h-[10px] h-[10px] py-0 my-0 leading-[64px]">
-        <div
-          className={`w-[90px] flex py-1 px-1 font-semibold justify-center leading-tight ${
-            user.personalDetails.status === "Active"
-              ? "text-green-700 bg-green-100 "
-              : "text-gray-700 bg-gray-200"
-          } rounded-full`}
-        >
-          <MdFiberManualRecord
-            className={`text-[10px] mt-1 ${
-              user.personalDetails.status === "Active" ? "me-3" : "me-2"
-            }`}
-          />
-          {user.personalDetails.status}
-        </div>
-      </td>
+                    <td className="px-5 bg-white text-[14px] py-0 my-0 ">
+                      <div
+                        className={`w-[90px] flex py-1 px-1 font-semibold justify-center ${
+                          user.personalDetails.status === "Active"
+                            ? "text-green-700 bg-green-100 "
+                            : "text-gray-700 bg-gray-200"
+                        } rounded-full`}
+                      >
+                        <MdFiberManualRecord
+                          className={`text-[10px] mt-1 ${
+                            user.personalDetails.status === "Active"
+                              ? "me-3"
+                              : "me-2"
+                          }`}
+                        />
+                        {user.personalDetails.status}
+                      </div>
+                    </td>
 
-      <td className="px-5 bg-white text-[14px] min-h-[10px] h-[10px] py-0 my-0 leading-[64px]">
-        <div className="flex justify-around items-center">
-          <button
-            className="text-gray-600 hover:text-gray-800 w-[25%] flex justify-center"
-            onClick={() => handleViewProfile(user)}
-          >
-            <MdOutlineVisibility className="text-[18px]" />
-          </button>
-          <button
-            className="text-gray-600 hover:text-gray-800 w-[25%] flex justify-center"
-            onClick={() => handleEditUser(user)}
-          >
-            <MdOutlineModeEdit className="text-[18px]" />
-          </button>
-          <button
-            className="text-gray-600 hover:text-gray-800 w-[25%] flex justify-center"
-            onClick={() => handleToggleUserStatus(user)}
-          >
-            {user.personalDetails.status === "Active" ? (
-              <MdRemoveCircleOutline className="text-[18px]" />
-            ) : (
-              <MdOutlineAddCircleOutline className="text-[18px]" />
-            )}
-          </button>
-          <button
-            className="text-gray-600 hover:text-gray-800 w-[25%] flex justify-center"
-            onClick={() => handleDeleteUser(user)}
-          >
-            <MdOutlineDeleteOutline className="text-[18px]" />
-          </button>
-        </div>
-      </td>
-    </tr>
-  ))}
-</tbody>
+                    <td className="px-5 bg-white text-[14px] py-0 my-0">
+                      <div className="flex justify-around items-center">
+                        <button
+                          className="text-gray-600 hover:text-gray-800 w-[25%] flex justify-center"
+                          onClick={() => handleViewProfile(user)}
+                        >
+                          <MdOutlineVisibility className="text-[18px]" />
+                        </button>
+                        <button
+                          className="text-gray-600 hover:text-gray-800 w-[25%] flex justify-center"
+                          onClick={() => handleEditUser(user)}
+                        >
+                          <MdOutlineModeEdit className="text-[18px]" />
+                        </button>
+                        <button
+                          className="text-gray-600 hover:text-gray-800 w-[25%] flex justify-center"
+                          onClick={() => handleToggleUserStatus(user)}
+                        >
+                          {user.personalDetails.status === "Active" ? (
+                            <MdRemoveCircleOutline className="text-[18px]" />
+                          ) : (
+                            <MdOutlineAddCircleOutline className="text-[18px]" />
+                          )}
+                        </button>
+                        <button
+                          className="text-gray-600 hover:text-gray-800 w-[25%] flex justify-center"
+                          onClick={() => handleDeleteUser(user)}
+                        >
+                          <MdOutlineDeleteOutline className="text-[18px]" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
 
               <tfoot className="sticky bottom-0 bg-white shadow-md">
                 <tr>
@@ -379,7 +390,7 @@ const ManageUsers = () => {
         confirmText="Deactivate User"
         confirmColor="text-yellow-500"
         confirmHoverColor="text-yellow-500"
-          buttoncolor="bg-yellow-500"
+        buttoncolor="bg-yellow-500"
       />
 
       {/* Delete User Modal */}

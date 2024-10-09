@@ -16,18 +16,61 @@ const PersonalDetailsForm = ({ onNext }) => {
     status: "Active",
   });
 
+  const [errors, setErrors] = useState({});
+
   const handleChange = (e) => {
     setDetails({ ...details, [e.target.name]: e.target.value });
   };
 
+  // Updated to reject public domains like Gmail, Yahoo, and Outlook
+  const validateEmail = (email) => {
+    const publicDomains = ["gmail.com", "yahoo.com", "outlook.com"];
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const domain = email.split("@")[1];
+    return emailRegex.test(email) && !publicDomains.includes(domain);
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!details.firstName) {
+      newErrors.firstName = "First Name is required";
+    }
+    if (!details.lastName) {
+      newErrors.lastName = "Last Name is required";
+    }
+    if (!details.email) {
+      newErrors.email = "Email is required";
+    } else if (!validateEmail(details.email)) {
+      newErrors.email = "Public domain emails (Gmail, Yahoo, Outlook) are not allowed";
+    }
+    if (!details.roleType) {
+      newErrors.roleType = "Role Type is required";
+    }
+    if (!details.jobTitle) {
+      newErrors.jobTitle = "Job Title is required";
+    }
+    if (!details.department) {
+      newErrors.department = "Department is required";
+    }
+
+    return newErrors;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onNext({ ...details });
+    const formErrors = validateForm();
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors);
+    } else {
+      setErrors({});
+      onNext({ ...details });
+      console.log("test data",details);
+    }
   };
 
   // Edit user
   const searchParams = useSearchParams(); // Get search params using Next.js API
-
   const edit = searchParams.get("edit") === "true"; // Read search param
   const currentUser = useSelector((state) => state.users.currentUser);
 
@@ -49,7 +92,7 @@ const PersonalDetailsForm = ({ onNext }) => {
   return (
     <>
       <div className="flex justify-items-center items-center gap-2 mt-6 mb-2">
-        <MdPerson className="text-[#68737D] text-[18px]"/>
+        <MdPerson className="text-[#68737D] text-[18px]" />
         <div className="text-[#0f1728] text-[18px] font-medium font-['Manrope'] leading-7">
           Personal Details
         </div>
@@ -73,8 +116,12 @@ const PersonalDetailsForm = ({ onNext }) => {
               placeholder="First Name"
               value={details.firstName}
               onChange={handleChange}
-              className="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-[12px]"
+              className={`form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-[12px] ${edit ? 'bg-gray-200' : ''}`}
+              readOnly={edit} // Make this field read-only when editing
             />
+            {errors.firstName && (
+              <p className="text-red-500 text-xs mt-1">{errors.firstName}</p>
+            )}
           </div>
           <div>
             <label
@@ -90,8 +137,12 @@ const PersonalDetailsForm = ({ onNext }) => {
               placeholder="Last Name"
               value={details.lastName}
               onChange={handleChange}
-              className="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-[12px]"
+              className={`form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-[12px] ${edit ? 'bg-gray-200' : ''}`}
+              readOnly={edit} // Make this field read-only when editing
             />
+            {errors.lastName && (
+              <p className="text-red-500 text-xs mt-1">{errors.lastName}</p>
+            )}
           </div>
           <div>
             <label
@@ -107,8 +158,12 @@ const PersonalDetailsForm = ({ onNext }) => {
               placeholder="Work Email"
               value={details.email}
               onChange={handleChange}
-              className="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-[12px] "
+              className={`form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-[12px] ${edit ? 'bg-gray-200' : ''}`}
+              readOnly={edit} // Make this field read-only when editing
             />
+            {errors.email && (
+              <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+            )}
           </div>
           <div>
             <label
@@ -141,10 +196,15 @@ const PersonalDetailsForm = ({ onNext }) => {
               onChange={handleChange}
               className="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-[12px] text-gray-400"
             >
-             <option value="" disabled selected className="text-gray-400">Select Role Type</option>
-              <option value="Manager" className="text-black">Manager</option>
-              <option value="Employee" className="text-black">Employee</option>
+              <option value="" disabled>
+                Select Role Type
+              </option>
+              <option value="Manager">Manager</option>
+              <option value="Employee">Employee</option>
             </select>
+            {errors.roleType && (
+              <p className="text-red-500 text-xs mt-1">{errors.roleType}</p>
+            )}
           </div>
           <div>
             <label
@@ -162,6 +222,9 @@ const PersonalDetailsForm = ({ onNext }) => {
               onChange={handleChange}
               className="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-[12px] "
             />
+            {errors.jobTitle && (
+              <p className="text-red-500 text-xs mt-1">{errors.jobTitle}</p>
+            )}
           </div>
           <div>
             <label
@@ -177,16 +240,21 @@ const PersonalDetailsForm = ({ onNext }) => {
               onChange={handleChange}
               className="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-[12px] text-gray-400"
             >
-              <option value="" disabled selected className="text-gray-400">Select Department</option>
-              <option value="operations" className="text-black">Operations</option>
-              <option value="hr" className="text-black">Human Resources</option>
+              <option value="" disabled>
+                Select Department
+              </option>
+              <option value="operations">Operations</option>
+              <option value="hr">Human Resources</option>
             </select>
+            {errors.department && (
+              <p className="text-red-500 text-xs mt-1">{errors.department}</p>
+            )}
           </div>
         </div>
         <div className=" float-end">
           <button
             type="submit"
-            className="mt-4 w-[12opx] bg-[#007eef] hover:shadow-lg text-white font-bold py-2 px-4 rounded flex justify-center items-center gap-2 shadow"
+            className="mt-4 w-[120px] bg-[#007eef] hover:shadow-lg text-white font-bold py-2 px-4 rounded flex justify-center items-center gap-2 shadow"
           >
             <span className="text-[12px] font-['Manrope']">Next</span>
             <MdChevronRight />

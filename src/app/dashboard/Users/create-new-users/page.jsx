@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import ProgressBar from "../common/Progressbar";
 import PersonalDetailsForm from "./forms/UserDetails";
 import OrganizationDetailsForm from "./forms/OrganizationDetails";
@@ -11,11 +11,17 @@ import {
   setOrganizationDetails,
   setPermissions,
 } from "../../../../lib/redux/features/userSlice";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSearchParams } from "next/navigation"; // Import useSearchParams
 import {MdChevronRight } from "react-icons/md";
 import Link from "next/link";
+import {
+  setHeadertext1,
+  setHeadertext2,
+  setHeaderdisplay
+} from "../../../../lib/redux/features/topheaderSlice";
 const AddNewUser = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const dispatch = useDispatch();
@@ -42,7 +48,16 @@ const AddNewUser = () => {
   const resetCurrentStep = () => {
     setCurrentStep(1);
   };
-
+  useEffect(() => {
+    dispatch(setHeadertext1("Users"));
+    dispatch(setHeaderdisplay("none"));
+    // Conditionally set the header text based on the 'edit' parameter
+    if (edit === "true") {
+      dispatch(setHeadertext2("Manage Users"));
+    } else {
+      dispatch(setHeadertext2("Create New User"));
+    }
+  }, [dispatch, edit]);
   return (
     <>
       <ToastContainer />

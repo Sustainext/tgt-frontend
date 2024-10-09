@@ -28,8 +28,8 @@ const UserProfile = ({ onClose, user }) => {
           <MdPerson className="text-gray-500 text-[18px]" /> User Role
         </span>
         <div
-  className={`ml-2 rounded-sm px-2 py-1 text-[11px] font-bold w-[74px]  text-center ${
-    user.personalDetails.roleType === 'Employee' ? 'text-[#0057A5] bg-blue-200' : 'text-[#FFA701] bg-yellow-100'
+  className={`ml-2 rounded-[4px] px-2 py-1 text-[11px] font-bold w-[74px]  text-center ${
+    user.personalDetails.roleType === 'Employee' ? 'text-[#0057A5] bg-blue-200' : user.personalDetails.roleType === 'Admin'? 'text-[#9823DF] bg-purple-100' :'text-[#EF007E] bg-pink-100'
   }`}
 >
   {user.personalDetails.roleType || 'Manager'}

@@ -56,6 +56,7 @@ const [loadingLocations, setLoadingLocations] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
     onNext({ ...selections });
+    console.log("test org",selections);
   };
 
   useEffect(() => {

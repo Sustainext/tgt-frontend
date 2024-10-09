@@ -165,9 +165,9 @@ const EconomicHeader5 = ({
                 <div className="text-zinc-600 text-[12px] font-semibold font-['Manrope']">
                   Add By:
                 </div>
-                <div className="rounded-lg shadow border border-gray-300 justify-start items-start flex">
+                <div className="rounded-lg shadow  justify-start items-start flex">
                   <div
-                    className={`w-[111px] px-4 py-2.5 border-r rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Organization" ? "bg-[#D2DFEB]" : "bg-white"}`}
+                    className={`w-[111px] px-4 py-2.5 border rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Organization" ? "bg-[#D2DFEB]" : "bg-white"}`}
                     onClick={() => setReportType("Organization")}
                   >
                     <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
@@ -175,7 +175,7 @@ const EconomicHeader5 = ({
                     </div>
                   </div>
                   <div
-                    className={`w-[111px] px-4 py-2.5 border-r border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Corporate" ? "bg-[#D2DFEB]" : "bg-white"}`}
+                    className={`w-[111px] px-4 py-2.5 border-r border-y border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${reportType === "Corporate" ? "bg-[#D2DFEB]" : "bg-white"}`}
                     onClick={() => setReportType("Corporate")}
                   >
                     <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
@@ -183,7 +183,7 @@ const EconomicHeader5 = ({
                     </div>
                   </div>
                   <div
-                    className={`w-[111px] px-4 py-2.5 rounded-r-lg justify-center items-center gap-2 flex cursor-pointer ${reportType === "Location" ? "bg-[#D2DFEB]" : "bg-white"}`}
+                    className={`w-[111px] px-4 py-2.5 border-r border-y border-gray-300 rounded-r-lg justify-center items-center gap-2 flex cursor-pointer ${reportType === "Location" ? "bg-[#D2DFEB]" : "bg-white"}`}
                     onClick={() => setReportType("Location")}
                   >
                     
