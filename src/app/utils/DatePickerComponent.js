@@ -301,13 +301,13 @@ const DateRangePicker = ({ startDate, endDate, onDateChange }) => {
       </div>
       {showDatePicker && (
         <div
-          className={`absolute z-10 mt-2 p-4 bg-white border border-gray-300 rounded-md w-[42vw] ${
+          className={`absolute z-10 mt-2 p-4 bg-white border border-gray-300 rounded-md w-[38vw] ${
             position === "top"
               ? "bottom-full mb-2"
               : position === "left"
               ? "right-full mr-2"
               : position === "right"
-              ? "left-full ml-2"
+              ? "ml-2"
               : "top-full mt-2"
           }`}
         >
