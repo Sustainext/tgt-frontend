@@ -1,6 +1,8 @@
 'use client'
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, use } from "react";
 import Sidebar from "./sidebar";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import MissionVission from "./mission-vision/page";
 import AwardsRecognition from "./awards-recognition/page";
 import SustainibilityRoadmap from "./sustainibility-roadmap/page";
@@ -16,31 +18,111 @@ import CustomerProductService from "./customer-product-services/page";
 import People from "./people/page";
 import MessageFromCEO from "./message-from-ceo/page";
 import Environment from "./environment/page";
+import { FaArrowLeftLong } from "react-icons/fa6";
+import { useRouter } from 'next/navigation';
+import { IoCheckmarkDoneCircle } from "react-icons/io5";
 
 const ESGReport = () => {
+  const router = useRouter()
   const [activeStep, setActiveStep] = useState(1);
   const [reportName,setReportName]=useState("Report")
   const messageFromCeoRef = useRef(); // Use useRef to store a reference to submitForm
   const aboutTheCompany=useRef();
+  const missionVision=useRef();
+  const sustainibilityRoadmap=useRef();
+  const awardAlliances=useRef();
+  const stakeholderEngagement=useRef();
+  const aboutReport =useRef();
+  const materiality =useRef();
+  const corporateGovernance =useRef();
 
-  // Move to the next step when submission is successful
-  const handleNextStep = async () => {
-    if (activeStep === 1) {
-      const isSubmitted = await messageFromCeoRef.current.submitForm(); // Call submitForm for step 1
-      if (isSubmitted) {
-        setActiveStep((prev) => prev + 1); // Only move to the next step if form is successfully submitted
+  const stepRefs = {
+    1: messageFromCeoRef,
+    2: aboutTheCompany,
+    3: missionVision,
+    4: sustainibilityRoadmap,
+    5: awardAlliances,
+    6: stakeholderEngagement,
+    7: aboutReport,
+    8: materiality,
+    9: corporateGovernance
+  };
+  
+  const handleNextStep = async (type) => {
+    const currentRef = stepRefs[activeStep]?.current;
+  
+    const submitAndProceed = async () => {
+      if (currentRef) {
+        const isSubmitted = await currentRef.submitForm(type);
+        return isSubmitted;
       }
-    } 
-    else if (activeStep===2) {
-      const isSubmitted = await aboutTheCompany.current.submitForm(); // Call submitForm for step 1
+      return true; // Proceed to next step if no form reference exists
+    };
+  
+    const showDraftSavedToast = () => {
+      toast.success(
+        <p style={{ margin: 0, fontSize: '13.5px', lineHeight: '1.4' }}>
+       The data filled in the report has been saved as draft and can be accessed from the report module
+      </p>,
+        {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
+      // toast.success(
+      //   <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+      //     <IoCheckmarkDoneCircle style={{ marginRight: '10px', color: 'green',fontSize:'50px' }} />
+      //     <div>
+      //     <strong style={{ display: 'block', marginBottom: '4px', fontSize: '16px' }}> {/* Main heading */}
+      //     Data Saved
+      //  </strong>
+      //  <p style={{ margin: 0, fontSize: '14px', lineHeight: '1.4' }}> {/* Paragraph aligned below heading */}
+      //  The data filled in the report has been saved as draft and can be accessed from the report module
+      //  </p>
+      //   </div>
+      //   </div>, {
+      //     position: "top-right",
+      //     autoClose: 3000, 
+      //     hideProgressBar: false,
+      //     closeOnClick: true,
+      //     pauseOnHover: true,
+      //     draggable: true,
+      //     progress: undefined,
+      //     theme: "light", 
+      //     style: {
+      //       borderRadius: '8px', 
+      //       border: '1px solid #E5E5E5', 
+      //       boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+      //       width:'320px',
+      //     },
+      //     icon: false, 
+      // });
+    };
+  
+    if (type === "next") {
+      const isSubmitted = await submitAndProceed();
       if (isSubmitted) {
-        setActiveStep((prev) => prev + 1); // Only move to the next step if form is successfully submitted
+        setActiveStep((prev) => prev + 1);
       }
-    }
-    else{
-      setActiveStep((prev) => prev + 1);
+    } else {
+      const isSubmitted = await submitAndProceed();
+      if (isSubmitted) {
+        showDraftSavedToast();
+        setTimeout(()=>{
+          router.push('/dashboard/Report')
+        },4000)
+      }
     }
   };
+  
+ 
+  
 
   const handlePreviousStep = () => {
     setActiveStep((prev) => prev - 1);
@@ -63,7 +145,15 @@ const ESGReport = () => {
                 <div className="text-left mb-3 ml-3 pt-3">
                   <div className="flex">
                     <div>
-                      <p className="gradient-text text-[22px] font-bold pt-4 pb-4 ml-3">
+                      <button 
+                      onClick={()=>{
+                        handleNextStep('back')
+                      }}
+                      className="text-[12px] text-[#667085] flex gap-2 ml-3">
+                        <FaArrowLeftLong className="w-3 h-3 mt-1"/>
+                        Back to Reports
+                      </button>
+                      <p className="gradient-text text-[22px] font-bold pt-3 pb-3 ml-3">
                        {reportName}
                       </p>
                     </div>
@@ -92,7 +182,9 @@ const ESGReport = () => {
                           ? "bg-gray-300"
                           : "bg-blue-500 text-white"
                       } px-3 py-1.5 rounded ml-2 font-semibold w-[100px]`}
-                      onClick={handleNextStep}// Call the form submit and next step handler
+                      onClick={()=>{
+                        handleNextStep('next')
+                      }}// Call the form submit and next step handler
                       disabled={activeStep === 15}
                     >
                       Next &gt;
@@ -123,49 +215,49 @@ const ESGReport = () => {
               {activeStep === 3 && (
                 <div>
                   <div className="mb-4">
-                    <MissionVission />
+                    <MissionVission ref={missionVision} />
                   </div>
                 </div>
               )}
               {activeStep === 4 && (
                 <div>
                   <div className="mb-4">
-                    <SustainibilityRoadmap />
+                    <SustainibilityRoadmap ref={sustainibilityRoadmap} />
                   </div>
                 </div>
               )}
               {activeStep === 5 && (
                 <div>
                   <div className="mb-4">
-                    <AwardsRecognition />
+                    <AwardsRecognition ref={awardAlliances} />
                   </div>
                 </div>
               )}
               {activeStep === 6 && (
                 <div>
                   <div className="mb-4">
-                    <StakeholderEngagement />
+                    <StakeholderEngagement ref={stakeholderEngagement} />
                   </div>
                 </div>
               )}
               {activeStep === 7 && (
                 <div>
                   <div className="mb-4">
-                    <AboutTheReport />
+                    <AboutTheReport ref={aboutReport} />
                   </div>
                 </div>
               )}
               {activeStep === 8 && (
                 <div>
                   <div className="mb-4">
-                    <Materiality />
+                    <Materiality ref={materiality} />
                   </div>
                 </div>
               )}
               {activeStep === 9 && (
                 <div>
                   <div className="mb-4">
-                    <CorporateGovernance />
+                    <CorporateGovernance ref={corporateGovernance} />
                   </div>
                 </div>
               )}
@@ -215,6 +307,7 @@ const ESGReport = () => {
           </div>
         </div>
       </div>
+      <ToastContainer/>
     </>
   );
 };

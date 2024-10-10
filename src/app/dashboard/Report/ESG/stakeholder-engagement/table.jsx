@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 
 
-const StakeholderTable=()=>{
+const StakeholderTable=({tableData})=>{
 
     const col=[
         "Stakeholder",
@@ -38,23 +38,28 @@ const StakeholderTable=()=>{
             </tr>
         </thead>
         <tbody>
-            <tr className="text-[13px]">
-                <td className="border-t border-r border-gray-200 p-4 text-left">Data</td>
-                <td className="border border-gray-200 p-4 rounded-bl-md text-left">Data</td>
-                <td className="border border-gray-200 p-4 rounded-br-md text-left">Data</td>
-                <td className="border border-gray-200 p-4 rounded-bl-md text-left">Data</td>
-                <td className="border border-gray-200 p-4 rounded-br-md text-left">Data</td>
-                <td className="border border-gray-200 p-4 rounded-br-md text-left">Data</td>
-                {/* Ensure all cells have border applied */}
-            </tr>
-            <tr className="text-[13px]">
-                <td className="border border-gray-200 p-4 rounded-bl-md text-left">Data</td>
-                <td className="border border-gray-200 p-4 rounded-br-md text-left">Data</td>
-                <td className="border border-gray-200 p-4 rounded-bl-md text-left">Data</td>
-                <td className="border border-gray-200 p-4 rounded-br-md text-left">Data</td>
-                <td className="border border-gray-200 p-4 rounded-bl-md text-left">Data</td>
-                <td className="border border-gray-200 p-4 rounded-br-md text-left">Data</td>
-            </tr>
+        {tableData.length>0?
+        tableData.map((row, rowIndex) => (
+                            <tr key={rowIndex} className="text-[13px]">
+                                <td className="border-t border-r border-gray-200 p-4 text-left">{row.Stakeholder}</td>
+                                <td className="border border-gray-200 p-4 text-left">{row.RepresentativeGroup}</td>
+                                <td className="border border-gray-200 p-4 text-left">{row.EngagementMethod}</td>
+                                <td className="border border-gray-200 p-4 text-left">{row.Frequency}</td>
+                                <td className="border border-gray-200 p-4 text-left">{row.Keyconcernraised}</td>
+                                <td className="border border-gray-200 p-4 text-left">{row.Responsetoconcerns}</td>
+                            </tr>
+                        )):(
+                            <tr className="text-[13px]">
+                                <td className="border-t border-r border-gray-200 p-4 text-left">No data available</td>
+                                <td className="border border-gray-200 p-4 text-left">No data available</td>
+                                <td className="border border-gray-200 p-4 text-left">No data available</td>
+                                <td className="border border-gray-200 p-4 text-left">No data available</td>
+                                <td className="border border-gray-200 p-4 text-left">No data available</td>
+                                <td className="border border-gray-200 p-4 text-left">No data available</td>
+                            </tr>
+                        )
+                    
+                    }
         </tbody>
     </table>
 </div>

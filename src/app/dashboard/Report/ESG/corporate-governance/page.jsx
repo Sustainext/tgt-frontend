@@ -1,5 +1,5 @@
 'use client'
-import { useState, useRef, useEffect } from "react";
+import {forwardRef, useImperativeHandle, useState, useRef, useEffect } from "react";
 import Section1 from "./sections/section1";
 import Section2 from "./sections/section2";
 import Section3 from "./sections/section3";
@@ -24,8 +24,15 @@ import Section21 from './sections/section21'
 import Section22 from './sections/section22'
 import Section23 from './sections/section23'
 import Section25 from './sections/section25'
+import axiosInstance,{patch} from "../../../../utils/axiosMiddleware";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from "react-redux";
+import { Oval } from "react-loader-spinner";
+import {setStatement,setBoardGov,setRemunerationPolicies,setPolicyPublic} from "../../../../../lib/redux/features/ESGSlice/screen9Slice"
 
-const CorporateGovernance=()=>{
+
+const CorporateGovernance=forwardRef(({ onSubmitSuccess }, ref) => {
     
     const [activeSection, setActiveSection] = useState('section9_1');
 
@@ -72,6 +79,126 @@ const scrollToSection = (sectionRef, sectionId) => {
       behavior: 'smooth',
     });
   };
+
+  const orgName = typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
+  const reportid = typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+  const apiCalledRef = useRef(false);
+  const [data,setData]=useState("")
+  const [loopen, setLoOpen] = useState(false);
+  const statement = useSelector((state) => state.screen9Slice.statement);
+  const board_gov_statement = useSelector((state) => state.screen9Slice.board_gov_statement);
+  const remuneration_policies = useSelector((state) => state.screen9Slice.remuneration_policies);
+  const policy_not_public_reason = useSelector((state) => state.screen9Slice.policy_not_public_reason);
+
+  const dispatch = useDispatch()
+
+  useImperativeHandle(ref, () => ({
+      submitForm,
+    }));
+
+  const LoaderOpen = () => {
+      setLoOpen(true);
+    };
+  
+    const LoaderClose = () => {
+      setLoOpen(false);
+    };
+  const submitForm = async (type) => {
+      LoaderOpen();
+      const data={
+       "statement": statement ,
+    "board_gov_statement": board_gov_statement,
+    "remuneration_policies": remuneration_policies,
+    "policy_not_public_reason": policy_not_public_reason
+      }
+  
+      const url = `${process.env.BACKEND_API_URL}/esg_report/screen_nine/${reportid}/`;
+      try {
+          const response = await axiosInstance.put(url, data);
+  
+          if (response.status === 200) {
+              if(type=='next'){
+                  toast.success("Data added successfully", {
+                      position: "top-right",
+                      autoClose: 3000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "light",
+                  });
+              }
+             
+              if (onSubmitSuccess) {
+                  onSubmitSuccess(true); // Notify the parent of successful submission
+              }
+              LoaderClose();
+              return true; 
+          
+          } else {
+              toast.error("Oops, something went wrong", {
+                  position: "top-right",
+                  autoClose: 1000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "colored",
+              });
+              LoaderClose();
+              return false; 
+             
+          }
+      } catch (error) {
+        LoaderClose();
+          toast.error("Oops, something went wrong", {
+              position: "top-right",
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+          });
+          return false; // Indicate failure
+      }
+  };
+  
+  const loadFormData = async () => {
+      LoaderOpen();
+      dispatch(setStatement(''));
+      dispatch(setBoardGov(''));
+      dispatch(setRemunerationPolicies(''));
+      dispatch(setPolicyPublic(''));
+      const url = `${process.env.BACKEND_API_URL}/esg_report/screen_nine/${reportid}/`;
+      try {
+          const response = await axiosInstance.get(url);
+          if(response.data){
+            setData(response.data)
+            dispatch(setStatement(response.data.statement));
+          dispatch(setBoardGov(response.data.board_gov_statement));
+          dispatch(setRemunerationPolicies(response.data.remuneration_policies));
+          dispatch(setPolicyPublic(response.data.policy_not_public_reason));
+          }
+          
+          LoaderClose();
+      
+      } catch (error) {
+          console.error('API call failed:', error);
+          LoaderClose();
+      }
+  };
+  
+  useEffect(() => {
+    // Ensure API is only called once
+    if (!apiCalledRef.current && reportid) {
+        apiCalledRef.current = true;  // Set the flag to true to prevent future calls
+        loadFormData();  // Call the API only once
+    }
+  }, [reportid]);
   
  
 
@@ -83,37 +210,37 @@ const scrollToSection = (sectionRef, sectionId) => {
             </h3>
             <div className="flex gap-4">
             <div className="w-[80%]">
-            <Section1/>
-            <Section2 section9_1Ref={section9_1Ref} section9_1_1Ref={section9_1_1Ref}/>
-            <Section3 section9_2Ref={section9_2Ref} section9_2_1Ref={section9_2_1Ref}/>
-            <Section4 section9_2_2Ref={section9_2_2Ref} />
-            <Section5  section9_2_3Ref={section9_2_3Ref} />
-            <Section6  section9_2_4Ref={section9_2_4Ref} />
-            <Section7  section9_3_1Ref={section9_3_1Ref} section9_3Ref={section9_3Ref} />
-            <Section8  section9_3_2Ref={section9_3_2Ref} />
-            <Section9  section9_3_3Ref={section9_3_3Ref} />
-            <Section10  section9_3_4Ref={section9_3_4Ref} />
-            <Section11  section9_3_5Ref={section9_3_5Ref} />
-            <Section12  section9_3_6Ref={section9_3_6Ref} />
-            <Section13  section9_3_7Ref={section9_3_7Ref} />
-            <Section14  section9_3_8Ref={section9_3_8Ref} />
-            <Section15  section9_4_1Ref={section9_4_1Ref} section9_4Ref={section9_4Ref} />
-            <Section16  section9_4_2Ref={section9_4_2Ref} />
-            <Section17  section9_5_1Ref={section9_5_1Ref} section9_5Ref={section9_5Ref} />
-            <Section18  section9_5_2Ref={section9_5_2Ref} />
-            <Section19  section9_5_3Ref={section9_5_3Ref} />
-            <Section20  section9_6_1Ref={section9_6_1Ref} section9_6Ref={section9_6Ref}  />
-            <Section21  section9_6_2Ref={section9_6_2Ref} />
-            <Section22  section9_6_3Ref={section9_6_3Ref} />
-            <Section23  section9_6_4Ref={section9_6_4Ref} />
-            <Section25  section9_7Ref={section9_7Ref} />
+            <Section1 orgName={orgName} />
+            <Section2 section9_1Ref={section9_1Ref} section9_1_1Ref={section9_1_1Ref} data={data}/>
+            <Section3 section9_2Ref={section9_2Ref} section9_2_1Ref={section9_2_1Ref} data={data} />
+            <Section4 section9_2_2Ref={section9_2_2Ref} data={data} />
+            <Section5  section9_2_3Ref={section9_2_3Ref} data={data} />
+            <Section6  section9_2_4Ref={section9_2_4Ref} data={data} />
+            <Section7  section9_3_1Ref={section9_3_1Ref} section9_3Ref={section9_3Ref} data={data} />
+            <Section8  section9_3_2Ref={section9_3_2Ref} data={data} />
+            <Section9  section9_3_3Ref={section9_3_3Ref} data={data} />
+            <Section10  section9_3_4Ref={section9_3_4Ref} data={data} />
+            <Section11  section9_3_5Ref={section9_3_5Ref} data={data} />
+            <Section12  section9_3_6Ref={section9_3_6Ref} data={data} />
+            <Section13  section9_3_7Ref={section9_3_7Ref} data={data} />
+            <Section14  section9_3_8Ref={section9_3_8Ref} data={data} />
+            <Section15  section9_4_1Ref={section9_4_1Ref} section9_4Ref={section9_4Ref} data={data} />
+            <Section16  section9_4_2Ref={section9_4_2Ref} data={data} />
+            <Section17  section9_5_1Ref={section9_5_1Ref} section9_5Ref={section9_5Ref} data={data} />
+            <Section18  section9_5_2Ref={section9_5_2Ref} data={data} />
+            <Section19  section9_5_3Ref={section9_5_3Ref} data={data} />
+            <Section20  section9_6_1Ref={section9_6_1Ref} section9_6Ref={section9_6Ref} data={data}  />
+            <Section21  section9_6_2Ref={section9_6_2Ref} data={data} orgName={orgName} />
+            <Section22  section9_6_3Ref={section9_6_3Ref} data={data} />
+            <Section23  section9_6_4Ref={section9_6_4Ref} data={data} />
+            <Section25  section9_7Ref={section9_7Ref} data={data} />
        
             </div>
             {/* page sidebar */}
            
 
             <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-fit top-36 sticky mt-2 w-[20%]">
-  <p className="text-[11px] text-[#727272] mb-2 uppercase">Corporate Governance</p>
+  <p className="text-[11px] text-[#727272] mb-2 uppercase">9. Corporate Governance</p>
   
   <p className={`text-[12px] mb-2 cursor-pointer ${activeSection === 'section9_1' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section9_1Ref, 'section9_1')}>
     9.1. Board of Directors
@@ -240,8 +367,20 @@ const scrollToSection = (sectionRef, sectionId) => {
            
            
         </div>
+        {loopen && (
+          <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+            <Oval
+              height={50}
+              width={50}
+              color="#00BFFF"
+              secondaryColor="#f3f3f3"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
+          </div>
+        )}
         </>
     )
-}
+})
 
 export default CorporateGovernance

@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 
 
-const ConflictTable=()=>{
+const ConflictTable=({tableData})=>{
 
     const col=[
         "Conflict of interest relating to:",
@@ -48,7 +48,7 @@ const ConflictTable=()=>{
 
                             </td>
                             <td className="border-t border-r border-gray-200 p-4 text-left">
-                               Yes
+                               {tableData?tableData[rowIndex]:"No data available"}
                             </td>
                             
                         </tr>

@@ -131,7 +131,7 @@ const Companyoperations= forwardRef(({ onSubmitSuccess }, ref) =>
   const LoaderClose = () => {
     setLoOpen(false);
   };
-const submitForm = async () => {
+const submitForm = async (type) => {
     LoaderOpen();
     const data={
       "about_the_company":about_the_company,
@@ -145,6 +145,7 @@ const submitForm = async () => {
         const response = await axiosInstance.put(url, data);
 
         if (response.status === 200) {
+          if(type=='next'){
             toast.success("Data added successfully", {
                 position: "top-right",
                 autoClose: 3000,
@@ -155,6 +156,7 @@ const submitForm = async () => {
                 progress: undefined,
                 theme: "light",
             });
+        }
             if (onSubmitSuccess) {
                 onSubmitSuccess(true); // Notify the parent of successful submission
             }
@@ -162,7 +164,7 @@ const submitForm = async () => {
             return true; 
         
         } else {
-            toast.error("Oops, something went wrong 1", {
+            toast.error("Oops, something went wrong", {
                 position: "top-right",
                 autoClose: 1000,
                 hideProgressBar: false,
@@ -178,7 +180,7 @@ const submitForm = async () => {
         }
     } catch (error) {
       LoaderClose();
-        toast.error("Oops, something went wrong 2", {
+        toast.error("Oops, something went wrong", {
             position: "top-right",
             autoClose: 1000,
             hideProgressBar: false,
@@ -241,7 +243,7 @@ useEffect(() => {
           </div>
           {/* page sidebar */}
           <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[500px] top-36 sticky mt-2 w-[20%]">
-            <p className="text-[11px] text-[#727272] mb-2 uppercase">About the company and operations</p>
+            <p className="text-[11px] text-[#727272] mb-2 uppercase">2. About the company and operations</p>
             <p
               className={`text-[12px] mb-2 cursor-pointer ${
                 activeSection === 'section2_1' ? 'text-blue-400' : ''
@@ -276,7 +278,7 @@ useEffect(() => {
             </p>
           </div>
         </div>
-        <ToastContainer />
+       
       </div>
       {loopen && (
           <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
