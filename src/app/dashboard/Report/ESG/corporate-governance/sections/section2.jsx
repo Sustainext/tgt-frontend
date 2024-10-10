@@ -27,7 +27,7 @@ const Section2 = ({ section9_1Ref, section9_1_1Ref, data }) => {
     dispatch(setBoardGov(e.target.value));
   };
 
-  const tableData = data["2_9_b"] ? Object.values(data["2_9_b"]) : "";
+  const tableData = data["2_9_b"] ? Object.values(data["2_9_b"]) : [];
 
   return (
     <>

@@ -18,7 +18,7 @@ const Section5=({section8_1_4Ref,data})=>{
         8.1.4 Management of material topic
             </p>
             <div className="shadow-md rounded-md mb-6">
-        <MaterialityTable2 col={col} value={data["3-3a"]?data["3-3a"]:["data"]}/>
+        <MaterialityTable2 col={col} value={data["3-3a"]?data["3-3a"]:[]}/>
         </div>
             <p className="text-sm mb-4">{data["3-3b"]?data["3-3b"]:'No data available'}</p>
             

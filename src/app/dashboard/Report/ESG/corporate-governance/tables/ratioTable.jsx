@@ -40,7 +40,7 @@ const RatioTable=({col,values,tableData})=>{
         ))}
 
         {/* Loop through the 'values' array to render its items */}
-        {values?.map((val, index) => (
+        {values && values?.map((val, index) => (
             <td key={index} className="border border-gray-200 p-4 rounded-bl-md text-left">
                 {val}
             </td>

@@ -31,7 +31,8 @@ const LeaveTable=({col,tableData})=>{
             </tr>
         </thead>
         <tbody>
-        {tableData && tableData.map((item, index) => (
+        {tableData.length>0?
+         tableData.map((item, index) => (
             <tr key={index} className="text-[13px]">
                 <td className="border border-gray-200 p-4 text-left">
                     {item.PolicyCommitment?item.PolicyCommitment:"No data available"}
@@ -46,7 +47,22 @@ const LeaveTable=({col,tableData})=>{
                     {item.Specifylevel?item.Specifylevel:"No data available"}
                 </td>
             </tr>
-        ))}
+        )):(
+            <tr className="text-[13px]">
+                <td className="border border-gray-200 p-4 text-left">
+                    {"No data available"}
+                </td>
+                <td className="border border-gray-200 p-4 text-left">
+                    {"No data available"}
+                </td>
+                <td className="border border-gray-200 p-4 text-left">
+                    {"No data available"}
+                </td>
+                <td className="border border-gray-200 p-4 text-left">
+                    {"No data available"}
+                </td>
+            </tr>
+        )}
        
            
         </tbody>

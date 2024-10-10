@@ -36,7 +36,8 @@ const LegalActionTable2 = ({tabledata}) => {
           </tr>
         </thead>
         <tbody className="border border-gray-300">
-          {tabledata && tabledata.map((row, rowIndex) => (
+          {tabledata.length>0?
+           tabledata.map((row, rowIndex) => (
             <tr key={rowIndex} className="text-[13px]">
               <td className="border-t border-r border-gray-200 p-4 text-left">
                 {row.CompletedLegalAction?row.CompletedLegalAction:"No data available"}
@@ -48,7 +49,21 @@ const LegalActionTable2 = ({tabledata}) => {
                 {row.Decisionorjudgement?row.Decisionorjudgement:"No data available"}
               </td>
             </tr>
-          ))}
+          )):(
+            <tr className="text-[13px]">
+            <td className="border-t border-r border-gray-200 p-4 text-left">
+              {"No data available"}
+            </td>
+            <td className="border-t border-r border-gray-200 p-4 text-left">
+              {"No data available"}
+            </td>
+            <td className="border-t border-gray-200 p-4 text-left">
+              {"No data available"}
+            </td>
+          </tr>
+          )
+        
+        }
         </tbody>
       </table>
     </div>

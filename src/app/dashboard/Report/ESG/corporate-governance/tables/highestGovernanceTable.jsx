@@ -67,7 +67,8 @@ const HighestGovernanceTable=({tableData})=>{
         </thead>
         <tbody>
             
-            {data?.map((row, rowIndex) => (
+            {data.length>0?
+            data.map((row, rowIndex) => (
               <tr key={rowIndex} className="text-[13px]">
                 <td className="border border-gray-200 p-4 text-center">{row.name}</td>
                 <td className="border border-gray-200 p-4 text-center">{row.executivePower}</td>
@@ -81,7 +82,21 @@ const HighestGovernanceTable=({tableData})=>{
                 <td className="border border-gray-200 p-4 text-center">{row.competencies}</td>
                 <td className="border border-gray-200 p-4 text-center">{row.stakeholderRepresentation}</td>
               </tr>
-            ))}
+            )):(
+                <tr className="text-[13px]">
+                <td className="border border-gray-200 p-4 text-center">No data available</td>
+                <td className="border border-gray-200 p-4 text-center">No data available</td>
+                <td className="border border-gray-200 p-4 text-center">No data available</td>
+                <td className="border border-gray-200 p-4 text-center">No data available</td>
+                <td className="border border-gray-200 p-4 text-center">No data available</td>
+                <td className="border border-gray-200 p-4 text-center">No data available</td>
+                <td className="border border-gray-200 p-4 text-center">No data available</td>
+                <td className="border border-gray-200 p-4 text-center">No data available</td>
+                <td className="border border-gray-200 p-4 text-center">No data available</td>
+                <td className="border border-gray-200 p-4 text-center">No data available</td>
+                <td className="border border-gray-200 p-4 text-center">No data available</td>
+              </tr>
+            )}
                 
                 
            

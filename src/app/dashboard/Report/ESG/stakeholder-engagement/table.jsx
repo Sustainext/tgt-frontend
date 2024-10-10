@@ -38,7 +38,8 @@ const StakeholderTable=({tableData})=>{
             </tr>
         </thead>
         <tbody>
-        {tableData?.map((row, rowIndex) => (
+        {tableData.length>0?
+        tableData.map((row, rowIndex) => (
                             <tr key={rowIndex} className="text-[13px]">
                                 <td className="border-t border-r border-gray-200 p-4 text-left">{row.Stakeholder}</td>
                                 <td className="border border-gray-200 p-4 text-left">{row.RepresentativeGroup}</td>
@@ -47,7 +48,18 @@ const StakeholderTable=({tableData})=>{
                                 <td className="border border-gray-200 p-4 text-left">{row.Keyconcernraised}</td>
                                 <td className="border border-gray-200 p-4 text-left">{row.Responsetoconcerns}</td>
                             </tr>
-                        ))}
+                        )):(
+                            <tr className="text-[13px]">
+                                <td className="border-t border-r border-gray-200 p-4 text-left">No data available</td>
+                                <td className="border border-gray-200 p-4 text-left">No data available</td>
+                                <td className="border border-gray-200 p-4 text-left">No data available</td>
+                                <td className="border border-gray-200 p-4 text-left">No data available</td>
+                                <td className="border border-gray-200 p-4 text-left">No data available</td>
+                                <td className="border border-gray-200 p-4 text-left">No data available</td>
+                            </tr>
+                        )
+                    
+                    }
         </tbody>
     </table>
 </div>
