@@ -81,7 +81,7 @@ const Index = () => {
           <SocialTrack contentSize={contentSize} dashboardData={dashboardData} />
           }
           {activeModule === 'Governance' && 
-          <GovernanceTrack contentSize={contentSize} />
+          <GovernanceTrack contentSize={contentSize} dashboardData={dashboardData}/>
           }
         </div>
       </div>
