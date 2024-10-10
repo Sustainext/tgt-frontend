@@ -5,13 +5,14 @@ import Image from "next/image";
 import { useDispatch, useSelector } from 'react-redux';
 import { setIntroductionto } from "../../../../../../lib/redux/features/ESGSlice/screen11Slice";
 
-const Section3 = ({ section11_1_2Ref, orgName, data }) => {
+const Section3 = ({ section11_1_2Ref, orgName }) => {
   const content = useSelector(state => state.screen11Slice.introduction_to_economic_value_creation);
+  const data = useSelector(state => state.screen11Slice.getdata);
   const dispatch = useDispatch();
 
   const loadContents = () => {
     dispatch(setIntroductionto(
-      `In [Year], ${orgName} generated substantial economic value through our operations, creating benefits for shareholders, employees, suppliers, and communities. Key highlights include`
+      `In ${data.year}, ${orgName} generated substantial economic value through our operations, creating benefits for shareholders, employees, suppliers, and communities. Key highlights include`
     ));
   }
 
@@ -19,24 +20,25 @@ const Section3 = ({ section11_1_2Ref, orgName, data }) => {
     dispatch(setIntroductionto(e.target.value));
   }
 
-  // Extracting the nested data from "201_1ab"
-  const economicData = data['201_1ab'];  // Access the "201_1ab" object
-  
-  const tableData = [
+  // Safely accessing the nested data from "201_1ab"
+  const economicData = data?.['201_1ab'];  // Optional chaining to prevent errors
+
+  // Ensure economicData exists before proceeding
+  const tableData = economicData ? [
     { label: "1) Direct Economic value generated (Revenues)", value: economicData.revenues },
-    { label: "2) Economic Value distributed", value: economicData.economic_value_distributed },
+    { label: "2) Economic Value distributed", value: economicData.economic_value_distributed_1 },
     { label: "   i) Operating costs", value: economicData.operating_costs },
     { label: "   ii) Employee wages & benefits", value: economicData.employee_wages_benefits },
     { label: "   iii) Payments to providers of capital", value: economicData.payments_to_providers_of_capital },
     { label: "   iv) Payments to governments by country", value: economicData.payments_to_governments_by_country },
-    ...economicData.countries_and_payments.map((country) => ({
+    ...(economicData.countries_and_payments?.map((country) => ({
       label: `      ${country.country}`,
       value: country.paymentCode
-    })),
+    })) || []),  // Default to an empty array if countries_and_payments is undefined
     { label: "   v) Community investments", value: economicData.community_investments },
     { label: "3) Direct economic value generated", value: economicData.direct_economic_value_generated },
-    { label: "4) Economic value distributed", value: economicData.economic_value_distributed }
-  ];
+    { label: "4) Economic value distributed", value: economicData.economic_value_distributed_2 }
+  ] : [];  // Fallback to an empty array if economicData is undefined
 
   return (
     <>
@@ -63,8 +65,10 @@ const Section3 = ({ section11_1_2Ref, orgName, data }) => {
           onChange={handleChange}
         />
         <div className="shadow-md rounded-md mb-4">
-          {/* Passing the table data and currency from economicData */}
-          <Table1 values={tableData} currency={economicData.currency} />
+          {/* Conditionally render the table if tableData is available */}
+          {tableData.length > 0 && (
+            <Table1 values={tableData} currency={economicData.currency} />
+          )}
         </div>
       </div>
     </>

@@ -35,6 +35,7 @@ import {
   setCompanyeconomic,
   setFinancialassistanc,
   setIntroductionto,
+  setgetdata,
 } from "../../../../../lib/redux/features/ESGSlice/screen11Slice";
 
 const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
@@ -165,10 +166,10 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
       const response = await axiosInstance.get(url);
       if (response.data) {
         console.error("API response data11", response.data);
-        setData(response.data)
-      dispatch(setCompanyeconomic(company_economic_performance_statement));
-      dispatch(setIntroductionto(introduction_to_economic_value_creation));
-      dispatch(setFinancialassistanc(financial_assistance_from_government));
+        dispatch(setgetdata(response.data));
+      dispatch(setCompanyeconomic(response.data.company_economic_performance_statement));
+      dispatch(setIntroductionto(response.data.introduction_to_economic_value_creation));
+      dispatch(setFinancialassistanc(response.data.financial_assistance_from_government));
       }
 
       LoaderClose();
@@ -185,6 +186,7 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
       loadFormData(); // Call the API only once
     }
   }, [reportid]);
+  
 
   const scrollToSection = (sectionRef, sectionId) => {
     setActiveSection(sectionId);
@@ -214,7 +216,7 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
               section11_1_1Ref={section11_1_1Ref}
               data={data}
             />
-            <Section3 section11_1_2Ref={section11_1_2Ref}  orgName={orgName} data={data}/>
+            <Section3 section11_1_2Ref={section11_1_2Ref}  orgName={orgName} />
             <Section4 section11_1_3Ref={section11_1_3Ref} orgName={orgName}/>
             <Section5 section11_2Ref={section11_2Ref} />
             <Section6 section11_2_1Ref={section11_2_1Ref} />

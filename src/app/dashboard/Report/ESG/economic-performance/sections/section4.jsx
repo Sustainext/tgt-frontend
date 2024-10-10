@@ -10,39 +10,29 @@ const Section4 = ({ section11_1_3Ref, orgName }) => {
   const content = useSelector(
     (state) => state.screen11Slice.financial_assistance_from_government
   );
+  const data = useSelector(state => state.screen11Slice.getdata);
   const dispatch = useDispatch();
   const loadContent3 = () => {
     dispatch(
       setFinancialassistanc(
-        `In [Year], ${orgName} total monetary value of financial assistance received by the organization from any government during the reporting period, including: `
+        `In ${data.year}, ${orgName} total monetary value of financial assistance received by the organization from any government during the reporting period, including: `
       )
     );
   };
   const handleChange = (e) => {
     dispatch(setFinancialassistanc(e.target.value));
   };
-
-  const rowLabels = [
-    "Tax relief and tax credits ",
-    "Subsidies",
-    "Provide details of investment grants, research and development grants, and other relevant types of grant",
-    "Awards",
-    "Royalty holidays ",
-    "Financial assistance from Export Credit Agencies (ECAs) ",
-    "Financial incentives",
-    "Other financial benefits received or receivable from any government for any operation",
-  ];
-
-  const values = [
-    "345 $",
-    "345 $",
-    "345 $",
-    "345 $",
-    "345 $",
-    "345 $",
-    "345 $",
-    "345 $",
-  ];
+  const economicData = data?.['201_4ab']; 
+  const tableData = economicData ? [
+    { label: "Tax relief and tax credits", value: economicData.tax_relief_and_tax_credits },
+    { label: "Subsidies", value: economicData.subsidies },
+    { label: "Provide details of investment grants, research and development grants, and other relevant types of grant", value: economicData.provide_details_of_investment_grants_research_and_development_grants_and_other_relevant_types_of_grant },
+    { label: "Awards", value: economicData.awards },
+    { label: "Royalty holidays", value: economicData.royalty_holidays },
+    { label: "Financial assistance from Export Credit Agencies (ECAs)", value: economicData.financial_assistance_from_export_credit_agencies },
+    { label: "Financial incentives", value: economicData.financial_incentives },
+    { label: "Other financial benefits received or receivable from any government for any operation", value: economicData.other_financial_benefits_received_or_receivable_from_any_government_for_any_operation }
+  ] : [];
 
   return (
     <>
@@ -69,8 +59,11 @@ const Section4 = ({ section11_1_3Ref, orgName }) => {
           rows={4}
           onChange={handleChange}
         />
-        <div className="shadow-md rounded-md mb-4">
-          <Table1 rowLabels={rowLabels} values={values} />
+            <div className="shadow-md rounded-md mb-4">
+          {/* Conditionally render the table if tableData is available */}
+          {tableData.length > 0 && (
+            <Table1 values={tableData} currency={economicData.currency} />
+          )}
         </div>
       </div>
     </>

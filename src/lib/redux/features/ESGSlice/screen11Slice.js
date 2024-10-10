@@ -8,6 +8,7 @@ const Screen11Slice = createSlice({
     company_economic_performance_statement:'',
     financial_assistance_from_government:'',
     introduction_to_economic_value_creation:'',
+    getdata:'',
     error: null
   },
   reducers: {
@@ -21,6 +22,9 @@ const Screen11Slice = createSlice({
     setIntroductionto: (state, action) => {
         state.introduction_to_economic_value_creation = action.payload;
     },
+    setgetdata: (state, action) => {
+        state.getdata = action.payload;
+    },
  
   },
 });
@@ -29,6 +33,7 @@ export const {
     setCompanyeconomic,
     setFinancialassistanc,
     setIntroductionto,
+    setgetdata,
 } = Screen11Slice.actions;
 
 export default Screen11Slice.reducer;
