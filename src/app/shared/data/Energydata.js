@@ -135,11 +135,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12467&page=1"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+                 Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -228,11 +228,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12467&page=1"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+                 Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -316,11 +316,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12467&page=1"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+                 Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -394,11 +394,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12467&page=1"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+                 Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -503,11 +503,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12521"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+                 Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -636,11 +636,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12521"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+                 Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -727,11 +727,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12521"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+                 Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -835,11 +835,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12521"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+                 Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -939,11 +939,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12521"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+                 Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -1016,11 +1016,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://globalreporting.org/pdf.ashx?id=12456&page=1"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+                 Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -1094,11 +1094,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://globalreporting.org/pdf.ashx?id=12456&page=1"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+                 Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -1164,11 +1164,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://globalreporting.org/pdf.ashx?id=12456&page=1"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+                 Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -1336,11 +1336,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12488"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+                 Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -1377,11 +1377,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12488"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+                 Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -1465,11 +1465,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12488"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+                 Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -1556,11 +1556,11 @@ export const Energydata = [
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12488"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+                 Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -1616,11 +1616,11 @@ export const Energydata = [
           </div>
           <div className="mt-5">
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://www.globalreporting.org/pdf.ashx?id=12488"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+                 Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -2466,7 +2466,7 @@ export const Energydata = [
             GRI 405-1: Diversity of governance bodies and employees
           </p>
           <div className="overflow-y-auto custom-scrollbar">
-            <div className="w-[232px] text-neutral-500 text-[11px] font-normal font-['Manrope'] leading-[14px] mb-5">
+            <div className=" text-neutral-500 text-[11px] font-normal font-['Manrope'] leading-[14px] mb-5">
               Examples of governance bodies that exist within an organization
               can be the board of directors, management committee, or a similar
               body for a non-corporate organization.
@@ -2479,7 +2479,7 @@ export const Energydata = [
           <div className="text-neutral-800 text-[13px] font-normal font-['Manrope'] leading-none mb-5">
             Background
           </div>
-          <div className="w-[232px] text-neutral-500 text-[11px] font-normal font-['Manrope'] leading-[14px] mb-5">
+          <div className=" text-neutral-500 text-[11px] font-normal font-['Manrope'] leading-[14px] mb-5">
             This disclosure provides a quantitative measure of diversity within
             an organization and can be used in conjunction with sectoral or
             regional benchmarks. Comparisons between broad employee diversity
@@ -3416,7 +3416,7 @@ export const Energydata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+          <div className="h-[709px] overflow-y-auto custom-scrollbar">
             <p className="text-[#0056a4] text-[15px] mb-2">
               Disclosure 305-1 Direct (Scope 1) GHG emissions
             </p>
@@ -3428,7 +3428,7 @@ export const Energydata = [
                 2.1 When compiling the information specified in Disclosure
                 305-1, the reporting organization shall:
               </p>
-              <p className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+              <p className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
                 2.1.1 exclude any GHG trades from the calculation of gross
                 direct (Scope 1) GHG emissions; <br />
                 2.1.2 report biogenic emissions of CO2 from the combustion or
@@ -3444,7 +3444,7 @@ export const Energydata = [
             <div className="text-[#0056a4] text-[15px] font-normal font-['Manrope'] leading-none my-4">
               Guidance for Disclosure 305-1:
             </div>
-            <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+            <div className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
               Direct (Scope 1) GHG emissions include, but are not limited to,
               the CO emissions from the fuel consumption as reported in
               Disclosure 302-1 of GRI 302: Energy 2016.Direct (Scope 1) GHG
@@ -3521,7 +3521,7 @@ export const Energydata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+          <div className="h-[707px] overflow-y-auto custom-scrollbar">
             <p className="text-[#0056a4] text-[15px] mb-2">
               Disclosure 305-2 Indirect (Scope 2) GHG emissions
             </p>
@@ -3533,7 +3533,7 @@ export const Energydata = [
                 2.3 When compiling the information specified in Disclosure
                 305-2, the reporting organization shall:
               </p>
-              <p className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+              <p className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
                 2.3.1 exclude any GHG trades from the calculation of gross
                 energy indirect (Scope 2) GHG emissions; 2.3.2 exclude other
                 indirect (Scope 3) GHG emissions that are disclosed as specified
@@ -3551,7 +3551,7 @@ export const Energydata = [
             <div className="text-[#727272] text-[13px] font-normal font-['Manrope'] leading-none my-4">
               Guidance for Disclosure 305-2:
             </div>
-            <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+            <div className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
               Energy indirect (Scope 2) GHG emissions include, but are not
               limited to, the CO2
               <br /> emissions from the generation of purchased or acquired
@@ -3624,7 +3624,7 @@ export const Energydata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+          <div className="h-[710px] overflow-y-auto custom-scrollbar">
             <p className=" mb-2 text-[#0056a4] text-[15px]">
               Disclosure 305-3 Other indirect (Scope 3) GHG emissions
             </p>
@@ -3636,7 +3636,7 @@ export const Energydata = [
                 2.5 When compiling the information specified in Disclosure
                 305-3, the reporting organization shall:
               </p>
-              <p className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+              <p className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
                 2.5.1 exclude any GHG trades from the calculation of gross other
                 indirect (Scope 3) GHG emissions; 2.5.2 exclude energy indirect
                 (Scope 2) GHG emissions from this disclosure. Energy indirect
@@ -3655,7 +3655,7 @@ export const Energydata = [
             <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-4">
               Guidance for Disclosure 305-2:
             </div>
-            <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+            <div className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
               Other indirect (Scope 3) GHG emissions are a consequence of an
               organization’s activities, but occur from sources not owned or
               controlled by the organization. Other indirect (Scope 3) GHG
@@ -3987,11 +3987,11 @@ the supply chain and actions taken
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal7"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+                 Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -4049,11 +4049,11 @@ the supply chain and actions taken
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal8"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+                 Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -4100,11 +4100,11 @@ the supply chain and actions taken
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal12"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+                 Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -4131,7 +4131,7 @@ the supply chain and actions taken
             Sustainable Development Goal 13: Take urgent action to combat
             climate change and its impacts
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[611px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 13.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Strengthen resilience and adaptive capacity to climate-related
@@ -4158,11 +4158,11 @@ the supply chain and actions taken
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal13"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+                 Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -4189,7 +4189,7 @@ the supply chain and actions taken
             Sustainable Development Goal 3: Ensure healthy lives and promote
             well-being for all at all ages
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[612px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 3.9</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, reduce the global maternal mortality ratio to less than
@@ -4266,11 +4266,11 @@ the supply chain and actions taken
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal3"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+                 Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -4354,11 +4354,11 @@ the supply chain and actions taken
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal6"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+                 Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -4407,11 +4407,11 @@ the supply chain and actions taken
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal11"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+                 Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -4427,7 +4427,7 @@ the supply chain and actions taken
             src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-15.png"
             className="w-[32px] h-[32px]"
           />
-          <h5 className="text-green-400 text-[17px] font-bold ml-2">SDG 15</h5>
+          <h5 className="text-green-600 text-[17px] font-bold ml-2">SDG 15</h5>
         </div>
       </>,
     ],
@@ -4440,7 +4440,7 @@ the supply chain and actions taken
             forests, combat desertification, and halt and reverse land
             degradation and halt biodiversity loss
           </p>
-          <div className="h-[250px] overflow-y-scroll custom-scrollbar">
+          <div className="h-[544px]">
             <p className="text-[13px] text-[#222222] mb-2">Target 15</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2020, ensure the conservation, restoration and sustainable use
@@ -4462,11 +4462,11 @@ the supply chain and actions taken
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3]"
+                  className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal15"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+                 Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -4493,7 +4493,7 @@ the supply chain and actions taken
             Sustainable Development Goal 12: Ensure sustainable consumption and
             production pattern
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[615px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 12.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, achieve the sustainable management and efficient use of
@@ -4536,11 +4536,11 @@ the supply chain and actions taken
           </div>
           <div>
             <a
-              className="text-[14px] text-[#2196F3] pt-5 inline-flex"
+              className="text-[14px] text-[#2196F3] pt-1 inline-flex"
               href="https://sdgs.un.org/goals/goal12"
               target="_blank"
             >
-              Learn more <MdChevronRight />
+                 Learn more <MdChevronRight className="text-lg pt-1" />
             </a>
           </div>
         </div>
@@ -5437,7 +5437,7 @@ the supply chain and actions taken
             src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-14.png"
             className="w-[32px] h-[32px]"
           />
-          <h5 className="text-[##007dbc] text-[17px] font-bold ml-2">SDG 14</h5>
+          <h5 className="text-[#007dbc] text-[17px] font-bold ml-2">SDG 14</h5>
         </div>
       </>,
     ],
@@ -5447,14 +5447,14 @@ the supply chain and actions taken
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[300px] overflow-y-auto custom-scrollbar">
+          <div className="h-[633px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Conserve and sustainably use the oceans, seas and marine resources
               for sustainable development
             </p>
             <p className="text-[13px] text-[#222222] mb-2">Target 14.3</p>
-            <div class="w-[232px]">
+            <div class="">
               <span class="text-[#727272] text-[11px] font-normal leading-[14px]">
                 Minimize and address the impacts of ocean acidification,
                 including through enhanced scientific cooperation at all levels

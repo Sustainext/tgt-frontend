@@ -66,19 +66,19 @@ const Stakeholderengagement = () => {
               </button>
               <button
                 className="text-[#fff] bg-[#FC0014] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("125")}
+                onClick={() => toggleDrawer("126")}
               >
                 SDG 1
               </button>
               <button
                 className="text-[#fff] bg-[#E01A83] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("126")}
+                onClick={() => toggleDrawer("127")}
               >
                 SDG 10
               </button>
               <button
                 className="text-[#fff] bg-[#00558A] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("127")}
+                onClick={() => toggleDrawer("128")}
               >
                 SDG 17
               </button>
