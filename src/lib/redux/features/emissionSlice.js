@@ -28,7 +28,7 @@ export const fetchEmissionsData = createAsyncThunk(
             ...item,
             Emission: {
               ...item.Emission,
-              rowType: 'approved'
+              rowType: 'calculated'
             }
           }))
         };
@@ -131,16 +131,61 @@ const calculateTotalClimatiqScore = (data) => {
   return 0;
 };
 
- // Function to add rowType to Emission objects
- const addRowType = (data, type) => {
-  return data.map(item => ({
-    ...item,
-    Emission: {
-      ...item.Emission,
-      rowType: type
+// Assign Task 
+const formatTaskData = (task, commonData) => ({
+  location: commonData.location,
+  year: commonData.year,
+  subcategory: commonData.Subcategory,
+  activity: commonData.activity || "",
+  task_name: `${commonData.location}-${commonData.month}-${commonData.Activity || commonData.Subcategory}`,
+  scope: commonData.scope,
+  month: commonData.month,
+  roles: 1, // Assuming this is always 1 for self-assigned tasks
+  deadline: commonData.deadline,
+  assigned_by: parseInt(localStorage.getItem("user_id")),
+  assigned_to: commonData.assignedTo,
+  user_client: 1, // Assuming this is always 1
+  category: commonData.Category,
+  region: commonData.countryCode,
+});
+
+export const assignEmissionTasks = createAsyncThunk(
+  'emissions/assignEmissionTasks',
+  async (payload, { getState, dispatch }) => {
+    const { tasks, commonData } = payload;
+    const state = getState().emissions;
+
+    const assignTask = async (task) => {
+      const formattedTask = formatTaskData(task, commonData);
+      try {
+        const response = await axiosInstance.post('/organization_task_dashboard/', formattedTask);
+        return { ...response, originalTask: task };
+      } catch (error) {
+        console.error('Error assigning task:', error);
+        throw error;
+      }
+    };
+
+    try {
+      const results = await Promise.all(tasks.map(assignTask));
+      
+      // Update the state to reflect the newly assigned tasks
+      results.forEach(result => {
+        const { scope } = commonData;
+        const updatedData = state[`scope${scope}Data`].data.data.map(item => 
+          item.id === result.originalTask.id 
+            ? { ...item, Emission: { ...item.Emission, rowType: 'assigned' } }
+            : item
+        );
+        dispatch(updateScopeDataLocal({ scope, data: { data: updatedData } }));
+      });
+
+      return results;
+    } catch (error) {
+      throw error;
     }
-  }));
-};
+  }
+);
 
 const emissionsSlice = createSlice({
   name: 'emissions',
@@ -148,6 +193,7 @@ const emissionsSlice = createSlice({
     location: '',
     year: '',
     month: 1,
+    countryCode: '',
     climatiqData: {
       rawData: {},
       totalScore: 0,
@@ -200,7 +246,9 @@ const emissionsSlice = createSlice({
       scope1: false,
       scope2: false,
       scope3: false
-    }
+    },
+    assignTaskStatus: 'idle',
+    assignTaskError: null
   },
   reducers: {
     setLocation: (state, action) => {
@@ -211,6 +259,9 @@ const emissionsSlice = createSlice({
     },
     setMonth: (state, action) => {
       state.month = action.payload;
+    },
+    setCountryCode: (state, action) => {
+      state.countryCode = action.payload;
     },
     updateScopeDataLocal: (state, action) => {
       const { scope, data } = action.payload;
@@ -343,6 +394,17 @@ const emissionsSlice = createSlice({
       .addCase(fetchPreviousMonthData.rejected, (state, action) => {
         state.previousMonthData.status = 'failed';
         state.previousMonthData.error = action.error.message;
+      })
+      .addCase(assignEmissionTasks.pending, (state) => {
+        state.assignTaskStatus = 'loading';
+      })
+      .addCase(assignEmissionTasks.fulfilled, (state, action) => {
+        state.assignTaskStatus = 'succeeded';
+        // The state update is handled in the thunk itself
+      })
+      .addCase(assignEmissionTasks.rejected, (state, action) => {
+        state.assignTaskStatus = 'failed';
+        state.assignTaskError = action.error.message;
       });
   }
 });
@@ -351,6 +413,7 @@ export const {
   setLocation,
   setYear,
   setMonth,
+  setCountryCode,
   updateScopeDataLocal,
   resetPreviousMonthData,
   setSelectedRows,

@@ -19,6 +19,8 @@ import {
   toggleSelectAll,
 } from "@/lib/redux/features/emissionSlice";
 import { useDispatch, useSelector } from "react-redux";
+import AssignEmissionModal from "./assignEmissionModal";
+import { getMonthName } from '@/app/utils/dateUtils';
 
 const EmissionWidget = React.memo(
   ({
@@ -55,6 +57,19 @@ const EmissionWidget = React.memo(
     const dropdownRef = useRef(null);
     const inputRef = useRef(null);
     const quantityRef = useRef(null);
+
+    // Assign To
+    const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
+    const month = useSelector(state=>state.emissions.month);
+    const location = useSelector(state=>state.emissions.location);
+
+    const handleAssignClick = () => {
+      setIsAssignModalOpen(true);
+    };
+
+    const handleCloseAssignModal = () => {
+      setIsAssignModalOpen(false);
+    };
 
     // Unit validation
 
@@ -684,7 +699,7 @@ const EmissionWidget = React.memo(
         case "approved":
           return (
             <td className="py-2 text-center w-[1vw]">
-              <div className="w-1.5 h1.5 rounded-full bg-orange-500 mx-auto"></div>
+              <div className="w-1.5 h-1.5 rounded-full bg-[#FFA701] mx-auto"></div>
             </td>
           );
         default:
@@ -956,8 +971,9 @@ const EmissionWidget = React.memo(
               <td className="py-2 text-center w-[5vw]">
                 <button
                   type="button"
-                  className="bg-blue-500 text-white text-[12px] w-[112px]   py-1 rounded-md shadow hover:bg-blue-600 disabled:opacity-50"
-                  disabled={rowType === "calculated"}
+                  className="bg-blue-500 text-white text-[12px] w-[112px] py-1 rounded-md shadow hover:bg-blue-600 disabled:opacity-50"
+                  onClick={handleAssignClick}
+                  disabled={rowType === "calculated" || rowType === "approved"}
                 >
                   Assign to
                 </button>
@@ -1137,6 +1153,21 @@ const EmissionWidget = React.memo(
             </tr>
           </tbody>
         </table>
+        <AssignEmissionModal
+          isOpen={isAssignModalOpen}
+          onClose={handleCloseAssignModal}
+          taskData={{
+            location,
+            year,
+            month: getMonthName(month),
+            scope,
+            category: value.Category,
+            subcategory: value.Subcategory,
+            activity: value.Activity,
+            countryCode,
+            // Include any other necessary data
+          }}
+        />
       </div>
     );
   }

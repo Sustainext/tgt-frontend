@@ -12,7 +12,7 @@ import { setLocation, setYear, setMonth } from '@/lib/redux/features/emissionSli
 const Emissions = ({ open }) => {
   const dispatch = useDispatch();
   const { location, year, month } = useSelector(state => state.emissions);
-  const [countryCode, setCountryCode] = useState("");
+  const countryCode = useSelector((state) => state.emissions.countryCode);
   const [locationname, setLocationname] = useState("");
   const [locationError, setLocationError] = useState("");
   const [yearError, setYearError] = useState("");
@@ -103,7 +103,6 @@ const Emissions = ({ open }) => {
           setLocation={(newLocation) => dispatch(setLocation(newLocation))}
           year={year}
           setYear={(newYear) => dispatch(setYear(newYear))}
-          setCountryCode={setCountryCode}
           locationError={locationError}
           setLocationError={setLocationError}
           yearError={yearError}
