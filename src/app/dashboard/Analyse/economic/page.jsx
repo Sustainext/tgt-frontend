@@ -20,7 +20,7 @@ const AnalyseEconomic = () => {
   };
   useEffect(() => {
    
-    dispatch(setHeadertext1("Analysis"));
+    dispatch(setHeadertext1("Analyse"));
     dispatch(setHeaderdisplay("none"));
     dispatch(setHeadertext2('Economic'));
 }, [activeTab, dispatch]);

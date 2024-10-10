@@ -8,7 +8,12 @@ import { MdAdd } from "react-icons/md";
 import TableWithPagination from "../Data-table/TablePagination";
 import { Oval } from "react-loader-spinner";
 import axiosInstance, { post } from "../../../utils/axiosMiddleware";
-
+import {
+  setHeadertext1,
+  setHeadertext2,
+  setHeaderdisplay
+} from "../../../../lib/redux/features/topheaderSlice";
+import { useDispatch} from "react-redux";
 const Report = () => {
   const [isExpandedpage, setIsExpandedpage] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,7 +34,13 @@ const Report = () => {
   const [error, setError] = useState({});
   const router = useRouter();
   const [entities, setEntities] = useState([]);
-
+  const dispatch = useDispatch();
+  useEffect(() => {
+   
+    dispatch(setHeadertext1(""));
+    dispatch(setHeaderdisplay("none"));
+    dispatch(setHeadertext2('GHG Report'));
+}, [dispatch]);
   const handleCheckboxChange = (index) => {
     const newEntities = [...entities];
     newEntities[index].checked = !newEntities[index].checked;

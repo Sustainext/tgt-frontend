@@ -25,7 +25,7 @@ const environment = () => {
   };
 
   useEffect(() => {
-    dispatch(setHeadertext1("Analysis"));
+    dispatch(setHeadertext1("Analyse"));
     dispatch(setHeaderdisplay("block"));
 
     // Dynamically set header text 2 based on the active tab
