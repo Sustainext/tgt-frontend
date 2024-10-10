@@ -214,7 +214,7 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
               section11_1_1Ref={section11_1_1Ref}
               data={data}
             />
-            <Section3 section11_1_2Ref={section11_1_2Ref}  orgName={orgName}/>
+            <Section3 section11_1_2Ref={section11_1_2Ref}  orgName={orgName} data={data}/>
             <Section4 section11_1_3Ref={section11_1_3Ref} orgName={orgName}/>
             <Section5 section11_2Ref={section11_2Ref} />
             <Section6 section11_2_1Ref={section11_2_1Ref} />

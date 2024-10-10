@@ -1,48 +1,41 @@
-"use client";
 import { useState, useRef, useEffect } from "react";
 import Table1 from "../tables/table1";
 import STARSVG from "../../../../../../../public/star.svg";
 import Image from "next/image";
 import { useDispatch, useSelector } from 'react-redux';
 import { setIntroductionto } from "../../../../../../lib/redux/features/ESGSlice/screen11Slice";
-const Section3 = ({ section11_1_2Ref,orgName }) => {
+
+const Section3 = ({ section11_1_2Ref, orgName, data }) => {
   const content = useSelector(state => state.screen11Slice.introduction_to_economic_value_creation);
   const dispatch = useDispatch();
+
   const loadContents = () => {
     dispatch(setIntroductionto(
       `In [Year], ${orgName} generated substantial economic value through our operations, creating benefits for shareholders, employees, suppliers, and communities. Key highlights include`
-    ))
-  }
-  const handleChange=(e)=>{
-    dispatch(setIntroductionto(e.target.value))
+    ));
   }
 
-  const rowLabels = [
-    "1) Direct Economic value generated (Revenues)",
-    "2) Economic Value distributed",
-    "   i) Operating costs",
-    "   ii) Employee wages & benefits",
-    "   iii) Payments to providers of capital",
-    "   iv) Payments to governments by country",
-    "      Country A",
-    "      Country B",
-    "   v) Community investments",
-    "3) Direct economic value generated",
-    "4) Economic value distributed",
-  ];
+  const handleChange = (e) => {
+    dispatch(setIntroductionto(e.target.value));
+  }
 
-  const values = [
-    "345 $",
-    "345 $",
-    "345 $",
-    "345 $",
-    "345 $",
-    "345 $",
-    "345 $",
-    "345 $",
-    "345 $",
-    "345 $",
-    "345 $",
+  // Extracting the nested data from "201_1ab"
+  const economicData = data['201_1ab'];  // Access the "201_1ab" object
+  
+  const tableData = [
+    { label: "1) Direct Economic value generated (Revenues)", value: economicData.revenues },
+    { label: "2) Economic Value distributed", value: economicData.economic_value_distributed },
+    { label: "   i) Operating costs", value: economicData.operating_costs },
+    { label: "   ii) Employee wages & benefits", value: economicData.employee_wages_benefits },
+    { label: "   iii) Payments to providers of capital", value: economicData.payments_to_providers_of_capital },
+    { label: "   iv) Payments to governments by country", value: economicData.payments_to_governments_by_country },
+    ...economicData.countries_and_payments.map((country) => ({
+      label: `      ${country.country}`,
+      value: country.paymentCode
+    })),
+    { label: "   v) Community investments", value: economicData.community_investments },
+    { label: "3) Direct economic value generated", value: economicData.direct_economic_value_generated },
+    { label: "4) Economic value distributed", value: economicData.economic_value_distributed }
   ];
 
   return (
@@ -59,19 +52,19 @@ const Section3 = ({ section11_1_2Ref,orgName }) => {
             className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
             onClick={loadContents}
           >
-            {/* <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/> */}
             <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
             Auto Fill
           </button>
         </div>
         <textarea
           value={content}
-          className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
+          className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4`}
           rows={4}
           onChange={handleChange}
         />
         <div className="shadow-md rounded-md mb-4">
-          <Table1 rowLabels={rowLabels} values={values} />
+          {/* Passing the table data and currency from economicData */}
+          <Table1 values={tableData} currency={economicData.currency} />
         </div>
       </div>
     </>
