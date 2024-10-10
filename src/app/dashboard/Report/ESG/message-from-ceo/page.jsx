@@ -23,6 +23,8 @@ import {
 import { Oval } from "react-loader-spinner";
 const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
   const [loopen, setLoOpen] = useState(false);
+  const [selectedCEOfile,setSelectedCEOFile]=useState("")
+  const [selectedSignfile,setSelectedSignFile]=useState("")
   const reportid =
     typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
     const orgname = typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
@@ -44,7 +46,7 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
-  const submitForm = async () => {
+  const submitForm = async (type) => {
     LoaderOpen();
     localStorage.setItem('reportorgname',companyName)
     const formData = new FormData();
@@ -52,7 +54,9 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
     formData.append("message_image", imageceo); // If imageceo is a file, this will work
     formData.append("ceo_name", ceoname);
     formData.append("company_name", companyName);
-    formData.append("signature_image", imagesing); // If signature_image is also a file
+    formData.append("signature_image", imagesing);
+    formData.append("signature_image_name", selectedSignfile?selectedSignfile.name:'');
+    formData.append("message_image_name", selectedCEOfile?selectedCEOfile.name:'');
 
     const url = `${process.env.BACKEND_API_URL}/esg_report/screen_one/${reportid}/`;
 
@@ -64,16 +68,18 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
       });
 
       if (response.status === 200) {
-        toast.success("Data added successfully", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        if(type=='next'){
+            toast.success("Data added successfully", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        }
         if (onSubmitSuccess) {
           onSubmitSuccess(true); // Notify the parent of successful submission
         }
@@ -126,9 +132,14 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
             dispatch(setCompanyname(response.data.company_name));
             dispatch(setCeoname(response.data.ceo_name));
             dispatch(setSignatureimage(response.data.signature_image));
+            setSelectedCEOFile({name:response.data.message_image_name})
+            setSelectedSignFile({name:response.data.signature_image_name})
+      }
+      else{
+        setSelectedCEOFile({name:''})
+        setSelectedSignFile({name:''})
       }
 
-      console.log("API called successfully:", response.data);
       LoaderClose();
     } catch (error) {
       console.error("API call failed:", error);
@@ -152,19 +163,19 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
                 </h3>
                 <div className="flex gap-4">
                     <div className="w-[80%]">
-                        <Screen1 orgName={orgname} />
-                        <Screen2 orgName={orgname} />
+                        <Screen1 orgName={orgname} selectedfile={selectedCEOfile} setSelectedFile={setSelectedCEOFile} />
+                        <Screen2 orgName={orgname} selectedfile={selectedSignfile} setSelectedFile={setSelectedSignFile}/>
                     </div>
                     <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[500px] top-36 sticky w-[20%]">
                         <p className="text-[11px] text-[#727272] mb-2 uppercase">
-                            Message from CEO
+                            1. Message from CEO
                         </p>
                         <p className="text-[12px] text-blue-400 mb-2">
                             1. Message from CEO
                         </p>
                     </div>
                 </div>
-                <ToastContainer />
+               
             </div>
             {loopen && (
           <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

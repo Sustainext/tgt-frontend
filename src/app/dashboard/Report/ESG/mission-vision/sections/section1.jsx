@@ -1,13 +1,20 @@
 'use client'
 import { useState, useRef, useEffect } from "react";
 import dynamic from 'next/dynamic';
+import STARSVG from "../../../../../../../public/star.svg";
+import Image from "next/image";
+import { useDispatch, useSelector } from 'react-redux';
+import { setMission } from "../../../../../../lib/redux/features/ESGSlice/screen3Slice";
 
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 
 const Section1 =({orgName})=>{
+  const content = useSelector(state => state.screen3Slice.mission);
+  const dispatch = useDispatch();
 
-    const [content, setContent] = useState(`
-        <p  >
+    const loadContent = () => {
+      dispatch(setMission(
+        `<p>
         Mission<br/>
         At ${orgName?orgName:"[Company Name]"}, our mission is to innovate and manufacture high-quality products that meet the evolving needs of our customers while promoting sustainability and ethical practices. We are dedicated to creating value for our stakeholders through responsible operations, minimizing our environmental footprint, and fostering a positive social impact.<br/>
         Vision<br/>
@@ -18,19 +25,10 @@ const Section1 =({orgName})=>{
         ${orgName?orgName:"[Company Name]"} recognizes the urgent need to address climate change and is committed to--<br/>
         Nature<br/>
         Protecting biodiversity and natural resources is a priority for us.
-        </p>
-    `);
+        </p>`
+      ))
+    }
 
-    // const [content, setContent] = useState(`Mission
-    // At [Company Name], our mission is to innovate and manufacture high-quality products that meet the evolving needs of our customers while promoting sustainability and ethical practices. We are dedicated to creating value for our stakeholders through responsible operations, minimizing our environmental footprint, and fostering a positive social impact. 
-    // Vision
-    // Our vision is to be a global leader in the manufacturing industry, recognized for our commitment to sustainability, innovation, and excellence. We aspire to set new benchmarks in environmental stewardship, social responsibility, and governance, driving progress towards a more sustainable and equitable future for all.
-    // Value
-    // 3.1 Position Statement
-    // Climate Change
-    // [Company Name] recognizes the urgent need to address climate change and is committed to
-    // Nature
-    // Protecting biodiversity and natural resources is a priority for us.`);
     const config = {
       style: {
         fontSize: "14px",
@@ -65,7 +63,7 @@ const Section1 =({orgName})=>{
   
   
     const handleEditorChange=(value)=>{
-      setContent(value)
+      dispatch(setMission(value))
     }
     return (
         <>
@@ -73,6 +71,17 @@ const Section1 =({orgName})=>{
         {/* <p className="text-[15px] text-[#344054] mb-4">
             Enter data and images related to company awards and recognitions
             </p> */}
+              <div className="flex justify-between">
+          <p className="text-[15px] text-[#344054] mb-2 mt-3">Edit Statement</p>
+          <button
+            className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
+            onClick={loadContent}
+          >
+            {/* <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/> */}
+            <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
+            Auto Fill
+          </button>
+        </div>
             <div>
               <JoditEditor
                 // ref={editor}

@@ -4,7 +4,7 @@ import LeaveTable from "../tables/leaveTable";
 
 const Section26=({section13_6_9Ref})=>{
     const [content,setContent] = useState(
-        `We ensure that all workers, including contractors and temporary workers, are covered by our OHS management system. `
+        `Safety training is a cornerstone of our OHS program. We provide regular training sessions to ensure that all employees are aware of safety protocols and procedures.`
     )
     const col1=[
         "Occupational health and safety training provided to workers",

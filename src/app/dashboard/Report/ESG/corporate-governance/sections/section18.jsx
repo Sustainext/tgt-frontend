@@ -1,7 +1,7 @@
 'use client'
 import { useState, useRef, useEffect } from "react";
 
-const Section18=({section9_5_2Ref})=>{
+const Section18=({section9_5_2Ref,data})=>{
     const [content,setContent] = useState(
         `Employees and stakeholders can seek advice and raise concerns through multiple channels`
     )
@@ -12,8 +12,8 @@ const Section18=({section9_5_2Ref})=>{
             <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
             9.5.2 Mechanism for Seeking Advice and Raising Concerns
             </h3>
-            <p className="text-sm mb-4">{content}</p>
-        
+            <p className="text-sm mb-2">{data["2_26_a"]?data["2_26_a"].responsible_business_conduct_advice:"No data available"}</p>
+            <p className="text-sm mb-4">{data["2_26_a"]?data["2_26_a"].business_conduct_concerns:"No data available"}</p>
         </div>
         </>
     )

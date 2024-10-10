@@ -2,19 +2,9 @@
 import { useState, useRef, useEffect } from "react";
 
 
-const ConflictTable=({tableData})=>{
+const LeaveTable=({col,tableData})=>{
 
-    const col=[
-        "Conflict of interest relating to:",
-        "Disclosed?",
-    ]
-    const rowLabels=[
-        "Cross-board membership ",
-        "Cross-shareholding with suppliers and other stakeholders ",
-        "Existence of controlling shareholders ",
-        "Related parties, their relationships, transactions, and outstanding balances",
-        "Others"
-    ]
+    
     return (
         <>
        <div style={{ maxHeight: "400px", overflowY: "auto" }} className="mb-2">
@@ -41,18 +31,23 @@ const ConflictTable=({tableData})=>{
             </tr>
         </thead>
         <tbody>
-        {rowLabels.map((label, rowIndex) => (
-                        <tr key={rowIndex} className="text-[13px]">
-                            <td className="border-t border-r border-gray-200 p-4 text-left">
-                                {label}
-
-                            </td>
-                            <td className="border-t border-r border-gray-200 p-4 text-left">
-                               {tableData?tableData[rowIndex]:"No data available"}
-                            </td>
-                            
-                        </tr>
-                    ))}
+        {tableData && tableData.map((item, index) => (
+            <tr key={index} className="text-[13px]">
+                <td className="border border-gray-200 p-4 text-left">
+                    {item.PolicyCommitment?item.PolicyCommitment:"No data available"}
+                </td>
+                <td className="border border-gray-200 p-4 text-left">
+                    {item.Levelorganization?item.Levelorganization:"No data available"}
+                </td>
+                <td className="border border-gray-200 p-4 text-left">
+                    {item.Seniorlevel?item.Seniorlevel:"No data available"}
+                </td>
+                <td className="border border-gray-200 p-4 text-left">
+                    {item.Specifylevel?item.Specifylevel:"No data available"}
+                </td>
+            </tr>
+        ))}
+       
            
         </tbody>
     </table>
@@ -61,4 +56,4 @@ const ConflictTable=({tableData})=>{
         </>
     )
 }
-export default ConflictTable
+export default LeaveTable

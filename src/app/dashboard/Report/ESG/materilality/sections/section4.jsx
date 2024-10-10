@@ -4,10 +4,8 @@ import { useState, useRef, useEffect } from "react";
 
 
 
-const Section4=({section8_1_3Ref})=>{
-    const [content,setContent] = useState(
-        `Understanding the issues that matter most to our stakeholders and our business is fundamental to [Company Name]'s approach to sustainability. Our materiality assessment identifies and prioritizes the environmental, social, and governance (ESG) issues that are most significant to our stakeholders and our ability to create long-term value. `
-    )
+const Section4=({section8_1_3Ref,data})=>{
+   
     return (
         <>
         <div id="section8_1_3" ref={section8_1_3Ref}>
@@ -15,8 +13,15 @@ const Section4=({section8_1_3Ref})=>{
         8.1.3 Materiality assessment
             </p>
 
-            <p className="text-sm mb-4">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos saepe cum nesciunt eum harum, asperiores, architecto repudiandae voluptatum fugiat dignissimos ipsum quo ducimus iusto nulla, excepturi tenetur blanditiis nisi corporis.</p>
-            
+            <p className="text-sm mb-4">Our materiality assessment process involves several key steps:</p>
+            <p className="mb-2 font-semibold text-[15px]">Identification of Relevant Issues:</p>
+            <p className="mb-4 text-sm">{data["3-1-a"]?data["3-1-a"].impact_assessment_process:"No data available"}</p>
+            <p className="mb-2 font-semibold text-[15px]">Stakeholder Engagement:</p>
+            <p className="mb-4 text-sm">{data["3-1-a"]?data["3-1-a"].selected_stakeholders.map((val,i)=>(i+1==data["3-1-a"].selected_stakeholders.length?val:`${val}, `)):"No data available"}</p>
+            <p className="mb-2 font-semibold text-[15px]">Prioritization:</p>
+            <p className="mb-4 text-sm">{data["3-1-a"]?data["3-1-a"].process_description:"No data available"}</p>
+            <p className="mb-2 font-semibold text-[15px]">Validation:</p>
+            <p className="mb-4 text-sm">The results of the materiality assessment are reviewed and validated by our senior management and Board of Directors.</p>
         </div>
         </>
     )

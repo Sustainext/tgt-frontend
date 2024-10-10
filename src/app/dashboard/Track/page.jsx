@@ -80,9 +80,9 @@ const Index = () => {
           {activeModule === 'Social' && 
           <SocialTrack contentSize={contentSize} dashboardData={dashboardData} />
           }
-          {/* {activeModule === 'Governance' && 
+          {activeModule === 'Governance' && 
           <GovernanceTrack contentSize={contentSize} />
-          } */}
+          }
         </div>
       </div>
     </div>

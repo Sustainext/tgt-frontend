@@ -1,6 +1,7 @@
 'use client'
 import { useState, useRef, useEffect } from "react";
-
+import STARSVG from "../../../../../../../public/star.svg";
+import Image from "next/image";
 
 const Section3=({section12_1_1Ref})=>{
     const [content,setContent] = useState(

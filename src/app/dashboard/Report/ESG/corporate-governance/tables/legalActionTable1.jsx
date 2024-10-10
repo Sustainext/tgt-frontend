@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 
 
-const ConflictTable=()=>{
+const ConflictTable=({tableData})=>{
 
     const rowLabels=[
         "Legal action(s) pending",
@@ -28,7 +28,7 @@ const ConflictTable=()=>{
 
                             </td>
                             <td className="border-t border-r border-gray-200 p-4 text-center">
-                               Yes
+                            {tableData?tableData[rowIndex]:"No data available"}
                             </td>
                             
                         </tr>

@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef } from "react";
 import dynamic from "next/dynamic";
-import { MdOutlineFileUpload, MdOutlinePlaylistAdd } from "react-icons/md";
+import { MdOutlineFileUpload, MdOutlinePlaylistAdd ,MdFilePresent,MdCancel} from "react-icons/md";
 import STARSVG from "../../../../../../../public/star.svg";
 import Image from "next/image";
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,7 +9,7 @@ import { setMessage, setMessageimage } from "../../../../../../lib/redux/feature
 import { BlobServiceClient } from "@azure/storage-blob";
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-const Section1 = ({ orgName }) => {
+const Section1 = ({ orgName,selectedfile,setSelectedFile }) => {
   const content = useSelector(state => state.screen1Slice.message);
   const dispatch = useDispatch();
   const [error, setError] = useState("");
@@ -17,9 +17,9 @@ const Section1 = ({ orgName }) => {
   const [imageviw, setImageview] = useState("");
   const uploadFileToAzure = async (file, newFileName) => {
     // Read file content as ArrayBuffer
-    console.log(file, " is the file object");
     const arrayBuffer = await file.arrayBuffer();
     const blob = new Blob([arrayBuffer]);
+
 
     // Azure Storage configuration
     const accountName = process.env.NEXT_PUBLIC_AZURE_STORAGE_ACCOUNT;
@@ -72,6 +72,7 @@ const Section1 = ({ orgName }) => {
  
   const handleImageChange = async (e) => {
     const selectedFile = e.target.files[0];
+    setSelectedFile(e.target.files[0])
     let errorMessages = "";
   
     if (!selectedFile) {
@@ -145,11 +146,16 @@ const Section1 = ({ orgName }) => {
     dispatch(setMessage(value));
   };
 
+  const handleFileCancel=()=>{
+    setSelectedFile('')
+    dispatch(setMessageimage(''));
+  }
+
   return (
     <>
       <div>
         <p className="text-[15px] text-[#344054] mb-2">Upload CEO’s Image:</p>
-        {(imagePreview) && (
+        {(imagePreview && imagePreview!=='undefined') && (
           <div className="mb-4">
             <img 
               src={imagePreview} 
@@ -166,7 +172,24 @@ const Section1 = ({ orgName }) => {
             style={{ display: "none" }}
             accept="image/png"
           />
-          <button
+          {selectedfile && selectedfile.name?(
+              <label className="flex">
+              <div className="flex items-center text-center mt-2 relative">
+                <div className="truncate text-sky-600 text-sm flex text-center">
+                  <MdFilePresent className="w-6 h-6 mr-2 text-green-500" />
+                  {selectedfile.name}
+                </div>
+                <div className="absolute right-[-15px] top-[-2px]">
+      <MdCancel
+        className="w-4 h-4 text-gray-500 cursor-pointer"
+        onClick={handleFileCancel}
+      />
+    </div>
+              </div>
+            </label>
+            
+          ):(
+            <button
             onClick={handleButtonClick}
             className="flex bg-transparent py-2 text-center text-[#007EEF] text-[15px] rounded-md"
           >
@@ -175,6 +198,8 @@ const Section1 = ({ orgName }) => {
             </p>
             <p className="ml-2">Upload Image</p>
           </button>
+          )}
+         
         </div>
 
         {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
