@@ -50,7 +50,8 @@ const Section7=({section12_1_5Ref})=>{
           "CH4": "data",
           "HFCs": "data",
           "PFCs": "data",
-          "SF6": "data"
+          "SF6": "data",
+          "NF3":"data"
         }
       ];
     
