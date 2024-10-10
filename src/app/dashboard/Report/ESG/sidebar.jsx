@@ -69,7 +69,7 @@ const ESGSidebar=({activeStep,setActiveStep})=>{
          Sustainability Journey
           </p>
           <p className={`text-[13px] text-[#727272]  my-1 ${activeStep==11?"bg-[#007eef0d] p-2 px-5":"bg-transparent p-2 px-5"}`}
-        // onClick={()=>{setActiveStep(11)}}
+        onClick={()=>{setActiveStep(11)}}
           >
         Economic Performance
           </p>

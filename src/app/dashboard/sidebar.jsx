@@ -150,6 +150,7 @@ const Sidenav = () => {
                     onClick={() => {
                       toggleSubmenu(index);
                       setActiveIndex(menu.id);
+                      
                     }}
                   >
                     <span
@@ -162,6 +163,7 @@ const Sidenav = () => {
                       }`}
                       data-tooltip-id={`tooltip-${index}`}
                       data-tooltip-content={menu.title}
+                      onClick={() => setOpen(!open)}
                     >
                       {menu.icon ? menu.icon : <LiaHomeSolid />}
                     </span>

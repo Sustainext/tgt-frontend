@@ -21,7 +21,12 @@ import Environment from "./environment/page";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useRouter } from 'next/navigation';
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
-
+import {
+  setHeadertext1,
+  setHeadertext2,
+  setHeaderdisplay
+} from "../../../../lib/redux/features/topheaderSlice";
+import { useDispatch} from "react-redux";
 const ESGReport = () => {
   const router = useRouter()
   const [activeStep, setActiveStep] = useState(1);
@@ -35,7 +40,14 @@ const ESGReport = () => {
   const aboutReport =useRef();
   const materiality =useRef();
   const corporateGovernance =useRef();
-
+  const economicperformance  =useRef();
+  const dispatch = useDispatch();
+  useEffect(() => {
+   
+    dispatch(setHeadertext1(""));
+    dispatch(setHeaderdisplay("none"));
+    dispatch(setHeadertext2('ESG Report'));
+}, [dispatch]);
   const stepRefs = {
     1: messageFromCeoRef,
     2: aboutTheCompany,
@@ -45,7 +57,8 @@ const ESGReport = () => {
     6: stakeholderEngagement,
     7: aboutReport,
     8: materiality,
-    9: corporateGovernance
+    9: corporateGovernance,
+    11:economicperformance,
   };
   
   const handleNextStep = async (type) => {
@@ -269,7 +282,7 @@ const ESGReport = () => {
               {activeStep === 11 && (
                 <div>
                   <div className="mb-4">
-                    <EconomicPerformance />
+                    <EconomicPerformance ref={economicperformance} />
                   </div>
                 </div>
               )}
