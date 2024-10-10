@@ -155,37 +155,37 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
     }
   };
 
-  const loadFormData = async () => {
-    LoaderOpen();
-    dispatch(setCompanyeconomic(""));
-    dispatch(setFinancialassistanc(""));
-    dispatch(setIntroductionto(""));
+  // const loadFormData = async () => {
+  //   LoaderOpen();
+  //   dispatch(setCompanyeconomic(""));
+  //   dispatch(setFinancialassistanc(""));
+  //   dispatch(setIntroductionto(""));
 
-    const url = `${process.env.BACKEND_API_URL}/esg_report/screen_eleven/${reportid}/`;
-    try {
-      const response = await axiosInstance.get(url);
-      if (response.data) {
-        console.error("API response data11", response.data);
-        dispatch(setgetdata(response.data));
-      dispatch(setCompanyeconomic(response.data.company_economic_performance_statement));
-      dispatch(setIntroductionto(response.data.introduction_to_economic_value_creation));
-      dispatch(setFinancialassistanc(response.data.financial_assistance_from_government));
-      }
+  //   const url = `${process.env.BACKEND_API_URL}/esg_report/screen_eleven/${reportid}/`;
+  //   try {
+  //     const response = await axiosInstance.get(url);
+  //     if (response.data) {
+  //       console.error("API response data11", response.data);
+  //       dispatch(setgetdata(response.data));
+  //     dispatch(setCompanyeconomic(response.data.company_economic_performance_statement));
+  //     dispatch(setIntroductionto(response.data.introduction_to_economic_value_creation));
+  //     dispatch(setFinancialassistanc(response.data.financial_assistance_from_government));
+  //     }
 
-      LoaderClose();
-    } catch (error) {
-      console.error("API call failed:", error);
-      LoaderClose();
-    }
-  };
+  //     LoaderClose();
+  //   } catch (error) {
+  //     console.error("API call failed:", error);
+  //     LoaderClose();
+  //   }
+  // };
 
-  useEffect(() => {
-    // Ensure API is only called once
-    if (!apiCalledRef.current && reportid) {
-      apiCalledRef.current = true; // Set the flag to true to prevent future calls
-      loadFormData(); // Call the API only once
-    }
-  }, [reportid]);
+  // useEffect(() => {
+ 
+  //   if (!apiCalledRef.current && reportid) {
+  //     apiCalledRef.current = true; 
+  //     loadFormData(); 
+  //   }
+  // }, [reportid]);
   
 
   const scrollToSection = (sectionRef, sectionId) => {
