@@ -16,7 +16,7 @@ const Section7=({section12_1_5Ref})=>{
         { header: "Type of GHGs", subHeaders: ["Direct (Scope 1)", "Energy indirect (Scope 2)", "Other indirect (Scope 3)"] },
         { header: "GHG Emission Intensity" },
         { header: "Units" },
-        { header: "Gases included in the calculation", subHeaders: ["CO2", "N2O", "CH4", "HFCs", "PFCs", "SF6"] },
+        { header: "Gases included in the calculation", subHeaders: ["CO2", "N2O", "CH4", "HFCs", "PFCs", "SF6","NF3"] },
       ];
       
       const data = [
@@ -34,7 +34,8 @@ const Section7=({section12_1_5Ref})=>{
           "CH4": "data",
           "HFCs": "data",
           "PFCs": "data",
-          "SF6": "data"
+          "SF6": "data",
+          "NF3":"data"
         },
         {
           "Organisation Metric": "Number of full-time employees",
