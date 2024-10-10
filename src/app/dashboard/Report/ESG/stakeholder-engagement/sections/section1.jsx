@@ -64,7 +64,7 @@ const Section1 =({orgName,data})=>{
         Approach to Stakeholder engagement.
         </p>
         <div className="shadow-md rounded-md">
-        <StakeholderTable tableData={data.approach_to_stakeholder_engagement}/>
+        <StakeholderTable tableData={data.approach_to_stakeholder_engagement?data.approach_to_stakeholder_engagement:[]}/>
         </div>
        
         </div>
@@ -77,7 +77,7 @@ const Section1 =({orgName,data})=>{
             <li className="text-[15px] text-[#344054] mb-2 font-semibold ml-4">
             Engagement with stakeholders
             </li>
-           <p className="mb-4 ml-4">{data["Stakeholderengagement"]?data["Stakeholderengagement"]:""}</p>
+           <p className="mb-4 ml-4">{data["Stakeholderengagement"]?data["Stakeholderengagement"]:"No data available"}</p>
             <li className="text-[15px] text-[#344054] mb-2 font-semibold ml-4">
             Stakeholder’s Feedback
             </li>

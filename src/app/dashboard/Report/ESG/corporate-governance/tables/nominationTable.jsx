@@ -36,7 +36,8 @@ const NominationTable=({tableData})=>{
             </tr>
         </thead>
         <tbody>
-        {tableData?.map((val, rowIndex) => (
+        {tableData.length>0?
+        tableData.map((val, rowIndex) => (
                         <tr key={rowIndex} className="text-[13px]">
                             <td className="border-t border-r border-gray-200 p-4 text-left">
                                 {val.Label}
@@ -50,7 +51,21 @@ const NominationTable=({tableData})=>{
 
                             </td>
                         </tr>
-                    ))}
+                    )):(
+                        <tr className="text-[13px]">
+                            <td className="border-t border-r border-gray-200 p-4 text-left">
+                                No data available
+
+                            </td>
+                            <td className="border-t border-r border-gray-200 p-4 text-left">
+                            No data available
+                            </td>
+                            <td className="border-t border-r border-gray-200 p-4 text-left">
+                            No data available
+
+                            </td>
+                        </tr>
+                    )}
            
         </tbody>
     </table>

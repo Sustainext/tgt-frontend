@@ -74,7 +74,9 @@ const ESGReport = () => {
   
     const showDraftSavedToast = () => {
       toast.success(
-        "The data filled in the report has been saved as draft and can be accessed from the report module",
+        <p style={{ margin: 0, fontSize: '13.5px', lineHeight: '1.4' }}>
+       The data filled in the report has been saved as draft and can be accessed from the report module
+      </p>,
         {
           position: "top-right",
           autoClose: 4000,

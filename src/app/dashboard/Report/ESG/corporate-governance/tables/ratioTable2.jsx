@@ -2,9 +2,9 @@
 import { useState, useRef, useEffect } from "react";
 
 
-const MaterialityTable2=({col,value})=>{
+const RatioTable2=({col,values,tableData})=>{
 
-   
+    
     return (
         <>
        <div style={{ maxHeight: "400px", overflowY: "auto" }} className="mb-2">
@@ -21,7 +21,7 @@ const MaterialityTable2=({col,value})=>{
                             idx === col.length - 1 ? 'rounded-tr-md' : '' // Top-right corner
                         } text-gray-500`}
                     >
-                        <div className="flex">
+                        <div className="flex ">
                             <p className="flex">
                                 {item}
                             </p>
@@ -31,23 +31,26 @@ const MaterialityTable2=({col,value})=>{
             </tr>
         </thead>
         <tbody>
-            {value.length>0?
-            value.map((val)=>(
-                <tr className="text-[13px]">
-                     <td className="border-t border-r border-gray-200 p-4 text-left">{val.material_topic_name}</td>
-                     <td className="border-t border-r border-gray-200 p-4 text-left">{val.impact_type}</td>
-                     <td className="border-t border-r border-gray-200 p-4 text-left">{val.impact_overview}</td>
-                </tr>
-            )):(
-                <tr className="text-[13px]">
-                     <td className="border-t border-r border-gray-200 p-4 text-left">No data available</td>
-                     <td className="border-t border-r border-gray-200 p-4 text-left">No data available</td>
-                     <td className="border-t border-r border-gray-200 p-4 text-left">No data available</td>
-                </tr>
-            )
-        
-        }
-            
+        {values.length>0?values.map((val,index)=>(
+            <tr className="text-[13px]">
+                <td key={index} className="border border-gray-200 p-4 text-left">
+                    {val.ratio_of_annual_total_compensation}
+                </td>
+                <td key={index} className="border border-gray-200 p-4 text-left">
+                    {val.ratio_of_percentage_increase_in_annual_total_compensation}
+                </td>
+            </tr>
+        )):(
+            <tr className="text-[13px]">
+                <td  className="border border-gray-200 p-4 text-left">
+               No data available
+            </td>
+            <td  className="border border-gray-200 p-4 text-left">
+               No data available
+            </td>
+            </tr>
+        )}
+       
            
         </tbody>
     </table>
@@ -56,4 +59,4 @@ const MaterialityTable2=({col,value})=>{
         </>
     )
 }
-export default MaterialityTable2
+export default RatioTable2

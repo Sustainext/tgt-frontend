@@ -6,29 +6,25 @@ import NominationTable from "../tables/nominationTable";
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-const Section3 = ({ section9_2Ref, section9_2_1Ref, data }) => {
-  const rowLabels = [
-    "Views of stakeholders (including shareholders)",
-    "Diversity",
-    "Independence",
-    "Competencies relevant to the impacts of the Organization",
-  ];
-  const tableData = data["2_10_b"]
-    ? data["2_10_b"].governance_body_nomination_criteria
-      ? data["2_10_b"].governance_body_nomination_criteria.map(
-          (item, index) => {
-            return {
-              ...item,
-              Label: rowLabels[index],
-            };
-          }
-        )
-      : []
-    : [];
+const Section3=({section9_2Ref,section9_2_1Ref,data})=>{
 
-  return (
-    <>
-      <div id="section9_2" ref={section9_2Ref}>
+    const rowLabels=[
+        "Views of stakeholders (including shareholders)",
+        "Diversity",
+        "Independence",
+        "Competencies relevant to the impacts of the Organization"
+    ]
+    const tableData = data["2_10_b"] ? data["2_10_b"].governance_body_nomination_criteria?
+    data["2_10_b"].governance_body_nomination_criteria.map((item, index) => {
+        return {
+            ...item,
+            Label: rowLabels[index]
+        };
+    }):[]: []
+    
+    return (
+        <>
+        <div id="section9_2" ref={section9_2Ref} >
         <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
           9.2 General Governance
         </h3>

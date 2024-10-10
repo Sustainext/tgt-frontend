@@ -58,11 +58,11 @@ const Section13=({section9_3_7Ref,data})=>{
             Clawbacks: 
             </p>
             <p className="text-sm mb-4">{data["2_19_a"]?data["2_19_a"].remuneration_policy_clawbacks.text:"No data available"}</p>
-            <p className="text-[15px] text-[#344054] mb-4 font-semibold">
+            <p className="text-[15px] text-[#344054] mb-2 font-semibold">
             Retirement benefits: 
             </p>
             <p className="text-sm mb-4">{data["2_19_a"]?data["2_19_a"].remuneration_policy_retirement_benefits.text:"No data available"}</p>
-            <p className="text-[15px] text-[#344054] mb-4 font-semibold">
+            <p className="text-[15px] text-[#344054] mb-2 font-semibold">
             Process to determine remuneration:
             </p>
             <p className="text-[15px] text-[#344054] mb-2 font-semibold">
