@@ -52,7 +52,7 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
   const introduction_to_economic_value_creation = useSelector(
     (state) => state.screen11Slice.introduction_to_economic_value_creation
   );
-  const [data,setData] =useState("");
+
   const [activeSection, setActiveSection] = useState("section11_1");
   const section11_1Ref = useRef(null);
   const section11_2Ref = useRef(null);
@@ -82,9 +82,9 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
   const [loopen, setLoOpen] = useState(false);
   const dispatch = useDispatch();
 
-  useImperativeHandle(ref, () => ({
-    submitForm,
-  }));
+  // useImperativeHandle(ref, () => ({
+  //   submitForm,
+  // }));
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -92,68 +92,68 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
-  const submitForm = async (type) => {
-    LoaderOpen();
-    const data = {
-      company_economic_performance_statement:
-        company_economic_performance_statement,
-      financial_assistance_from_government:
-        financial_assistance_from_government,
-      introduction_to_economic_value_creation:
-        introduction_to_economic_value_creation,
-    };
+  // const submitForm = async (type) => {
+  //   LoaderOpen();
+  //   const data = {
+  //     company_economic_performance_statement:
+  //       company_economic_performance_statement,
+  //     financial_assistance_from_government:
+  //       financial_assistance_from_government,
+  //     introduction_to_economic_value_creation:
+  //       introduction_to_economic_value_creation,
+  //   };
 
-    const url = `${process.env.BACKEND_API_URL}/esg_report/screen_eleven/${reportid}/`;
-    try {
-      const response = await axiosInstance.put(url, data);
+  //   const url = `${process.env.BACKEND_API_URL}/esg_report/screen_eleven/${reportid}/`;
+  //   try {
+  //     const response = await axiosInstance.put(url, data);
 
-      if (response.status === 200) {
-        if (type == "next") {
-          toast.success("Data added successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-        }
-        if (onSubmitSuccess) {
-          onSubmitSuccess(true); // Notify the parent of successful submission
-        }
-        LoaderClose();
-        return true;
-      } else {
-        toast.error("Oops, something went wrong", {
-          position: "top-right",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-        LoaderClose();
-        return false;
-      }
-    } catch (error) {
-      LoaderClose();
-      toast.error("Oops, something went wrong", {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-      return false; // Indicate failure
-    }
-  };
+  //     if (response.status === 200) {
+  //       if (type == "next") {
+  //         toast.success("Data added successfully", {
+  //           position: "top-right",
+  //           autoClose: 3000,
+  //           hideProgressBar: false,
+  //           closeOnClick: true,
+  //           pauseOnHover: true,
+  //           draggable: true,
+  //           progress: undefined,
+  //           theme: "light",
+  //         });
+  //       }
+  //       if (onSubmitSuccess) {
+  //         onSubmitSuccess(true); // Notify the parent of successful submission
+  //       }
+  //       LoaderClose();
+  //       return true;
+  //     } else {
+  //       toast.error("Oops, something went wrong", {
+  //         position: "top-right",
+  //         autoClose: 1000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "colored",
+  //       });
+  //       LoaderClose();
+  //       return false;
+  //     }
+  //   } catch (error) {
+  //     LoaderClose();
+  //     toast.error("Oops, something went wrong", {
+  //       position: "top-right",
+  //       autoClose: 1000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "colored",
+  //     });
+  //     return false; // Indicate failure
+  //   }
+  // };
 
   // const loadFormData = async () => {
   //   LoaderOpen();
@@ -214,7 +214,7 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
 
               section11_1Ref={section11_1Ref}
               section11_1_1Ref={section11_1_1Ref}
-              data={data}
+            
             />
             <Section3 section11_1_2Ref={section11_1_2Ref}  orgName={orgName} />
             <Section4 section11_1_3Ref={section11_1_3Ref} orgName={orgName}/>
