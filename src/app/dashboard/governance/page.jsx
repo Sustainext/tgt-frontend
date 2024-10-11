@@ -1164,7 +1164,7 @@ const Governance = () => {
                             width="12"
                             height="12"
                             className={`${
-                              activeStep === 13
+                              activeStep === 18
                                 ? "bi bi-circle-fill fill-sky-800  font-bold "
                                 : " bi bi-circle-fill fill-gray-400"
                             } `}

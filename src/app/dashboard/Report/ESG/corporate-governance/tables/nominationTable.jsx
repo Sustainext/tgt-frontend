@@ -2,19 +2,14 @@
 import { useState, useRef, useEffect } from "react";
 
 
-const NominationTable=()=>{
+const NominationTable=({tableData})=>{
 
     const col=[
         "Criteria",
         "Whether taken into consideration?",
         "How?",
     ]
-    const rowLabels=[
-        "Views of stakeholders (including shareholders)",
-        "Diversity",
-        "Independence",
-        "Competencies relevant to the impacts of the Organization "
-    ]
+   
     return (
         <>
        <div style={{ maxHeight: "400px", overflowY: "auto" }} className="mb-2">
@@ -41,21 +36,36 @@ const NominationTable=()=>{
             </tr>
         </thead>
         <tbody>
-        {rowLabels.map((label, rowIndex) => (
+        {tableData.length>0?
+        tableData.map((val, rowIndex) => (
                         <tr key={rowIndex} className="text-[13px]">
                             <td className="border-t border-r border-gray-200 p-4 text-left">
-                                {label}
+                                {val.Label}
 
                             </td>
                             <td className="border-t border-r border-gray-200 p-4 text-left">
-                                Data
+                               {val.Whethertakenintoconsideration}
                             </td>
                             <td className="border-t border-r border-gray-200 p-4 text-left">
-                                Data
+                               {val.How}
 
                             </td>
                         </tr>
-                    ))}
+                    )):(
+                        <tr className="text-[13px]">
+                            <td className="border-t border-r border-gray-200 p-4 text-left">
+                                No data available
+
+                            </td>
+                            <td className="border-t border-r border-gray-200 p-4 text-left">
+                            No data available
+                            </td>
+                            <td className="border-t border-r border-gray-200 p-4 text-left">
+                            No data available
+
+                            </td>
+                        </tr>
+                    )}
            
         </tbody>
     </table>

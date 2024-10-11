@@ -20,7 +20,7 @@ const General = () => {
   };
   useEffect(() => {
    
-    dispatch(setHeadertext1("Analysis"));
+    dispatch(setHeadertext1("Analyse"));
     dispatch(setHeaderdisplay("none"));
     dispatch(setHeadertext2('General'));
 }, [activeTab, dispatch]);

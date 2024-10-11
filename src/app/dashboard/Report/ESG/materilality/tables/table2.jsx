@@ -2,14 +2,9 @@
 import { useState, useRef, useEffect } from "react";
 
 
-const MaterialityTable=()=>{
+const MaterialityTable2=({col,value})=>{
 
-    const col=[
-        "ESG Pillar",
-        "Material Topic",
-        "GRI disclosure number",
-        "Linked UN SDG",
-    ]
+   
     return (
         <>
        <div style={{ maxHeight: "400px", overflowY: "auto" }} className="mb-2">
@@ -36,13 +31,23 @@ const MaterialityTable=()=>{
             </tr>
         </thead>
         <tbody>
-            <tr className="text-[13px]">
-                <td className="border-t border-r border-gray-200 p-4 text-left">Data</td>
-                <td className="border border-gray-200 p-4 rounded-bl-md text-left">Data</td>
-                <td className="border border-gray-200 p-4 rounded-br-md text-left">Data</td>
-                <td className="border border-gray-200 p-4 rounded-bl-md text-left">Data</td>
-                {/* Ensure all cells have border applied */}
-            </tr>
+            {value.length>0?
+            value.map((val)=>(
+                <tr className="text-[13px]">
+                     <td className="border-t border-r border-gray-200 p-4 text-left">{val.material_topic_name}</td>
+                     <td className="border-t border-r border-gray-200 p-4 text-left">{val.impact_type}</td>
+                     <td className="border-t border-r border-gray-200 p-4 text-left">{val.impact_overview}</td>
+                </tr>
+            )):(
+                <tr className="text-[13px]">
+                     <td className="border-t border-r border-gray-200 p-4 text-left">No data available</td>
+                     <td className="border-t border-r border-gray-200 p-4 text-left">No data available</td>
+                     <td className="border-t border-r border-gray-200 p-4 text-left">No data available</td>
+                </tr>
+            )
+        
+        }
+            
            
         </tbody>
     </table>
@@ -51,4 +56,4 @@ const MaterialityTable=()=>{
         </>
     )
 }
-export default MaterialityTable
+export default MaterialityTable2

@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 
+
 const Section2 = ({ section14_1_1Ref }) => {
   return (
     <>

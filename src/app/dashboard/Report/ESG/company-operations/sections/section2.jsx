@@ -110,7 +110,7 @@ const Section2 = ({
           2.1.1 Activities, Value Chain, and Other Business Relationships
         </p>
         <div className="flex justify-between">
-          <p className="text-[15px] text-[#344054] mb-2 mt-3">Edit Statement</p>
+          <p className="text-[15px] text-[#344054] mb-2 mt-3">Add Introduction about company’s domain</p>
           <button
             className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
             onClick={loadContent2}
@@ -211,7 +211,7 @@ const Section2 = ({
         ))}
 
         <div className="flex justify-between">
-          <p className="text-[15px] text-[#344054] mb-2 mt-3">Edit Statement</p>
+          <p className="text-[15px] text-[#344054] mb-2 mt-3">Add statement about sustainability performance data  for all entities.</p>
           <button
             className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
             onClick={loadContent}

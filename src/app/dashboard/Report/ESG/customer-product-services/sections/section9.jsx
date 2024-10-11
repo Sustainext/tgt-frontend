@@ -1,6 +1,7 @@
 'use client'
 import { useState, useRef, useEffect } from "react";
-
+import STARSVG from "../../../../../../../public/star.svg";
+import Image from "next/image";
 
 const Section9=({section15_3_1Ref})=>{
     const [content,setContent] = useState(
@@ -25,13 +26,21 @@ Sustainability is embedded in our corporate strategy, and we are dedicated to co
             Process used to track the effectiveness of the actions and mention goals, targets, and indicators used to evaluate the process along with specific lessons learned and how these have been incoporated to organisation's operational policies and procedures.
             </p>
             <p className="text-sm mb-4">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem aliquid numquam laudantium itaque nihil animi obcaecati ab aliquam incidunt tempora, sapiente ratione. Eos voluptatibus sunt doloremque similique! Adipisci, quisquam qui!</p>
-            <p className="text-[15px] text-[#344054] mb-2">
-        Edit Statement
-            </p>
+            <div className="flex justify-between">
+          <p className="text-[15px] text-[#344054] mb-2 mt-3">Add a conclusion to the report</p>
+          <button
+            className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
+            // onClick={loadContent}
+          >
+            {/* <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/> */}
+            <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
+            Auto Fill
+          </button>
+        </div>
             <textarea
           value={content}
-          className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  mt-2 w-full mb-4 `}
-          rows={6}
+          className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
+          rows={4}
         />
         </div>
         </>

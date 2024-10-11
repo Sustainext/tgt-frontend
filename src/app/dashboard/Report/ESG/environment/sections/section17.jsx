@@ -188,14 +188,7 @@ const Section17=({section12_3_3Ref})=>{
 12.3.3 Water Discharge & Management of Associated Impacts
 </h3>
 
-<p className="text-[15px] text-[#344054] mb-2">
-            Edit Statement
-            </p>
-            <textarea
-          value={content}
-          className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  mt-2 w-full mb-4 `}
-          rows={4}
-        />
+<p className="text-sm mb-4">{content}</p>
         
 <p className="text-[15px]  mb-2 font-semibold">
 Total Water Discharge by Location
