@@ -56,9 +56,10 @@ const AssignEmissionModal = ({ isOpen, onClose, taskData }) => {
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex justify-center items-center">
       <div className="bg-white p-5 rounded-lg shadow-xl w-96">
-        <h2 className="text-xl font-bold mb-4">Assign user</h2>
+        <h2 className="text-xl font-semibold">Assign user</h2>
         <p className="text-sm text-gray-600 mb-4">Assign a user and select a due date.</p>
         
+        <div className='mx-2'>
         <div className='flex justify-between items-center'>
         <div className="mb-4">
           <p className="text-sm font-semibold">Location</p>
@@ -92,9 +93,10 @@ const AssignEmissionModal = ({ isOpen, onClose, taskData }) => {
           <p className="text-sm font-semibold">Activity</p>
           <p className="text-sm text-gray-600">{taskData.activity || 'N/A'}</p>
         </div>
+        </div>
         
         <div className="mb-4">
-          <label className="block text-sm font-semibold mb-2">Assign User</label>
+          <label className="block text-sm font-normal mb-2">Assign User</label>
           <select 
             className="w-full p-2 border rounded"
             value={selectedUser}
@@ -107,8 +109,8 @@ const AssignEmissionModal = ({ isOpen, onClose, taskData }) => {
           </select>
         </div>
         
-        <div className="mb-4">
-          <label className="block text-sm font-semibold mb-2">Due date</label>
+        <div className="mb-8">
+          <label className="block text-sm font-normal mb-2">Due date</label>
           <input 
             type="date" 
             className="w-full p-2 border rounded"
@@ -117,15 +119,15 @@ const AssignEmissionModal = ({ isOpen, onClose, taskData }) => {
           />
         </div>
         
-        <div className="flex justify-end">
+        <div className="flex justify-between">
           <button 
-            className="px-4 py-2 bg-gray-200 text-gray-800 rounded mr-2"
+            className="px-4 py-1.5 bg-white text-gray-800 rounded-lg mr-2 w-full border border-gray-200"
             onClick={onClose}
           >
             Cancel
           </button>
           <button 
-            className="px-4 py-2 bg-blue-500 text-white rounded"
+            className="px-4 py-1.5 bg-blue-500 text-white rounded-lg w-full"
             onClick={handleAssign}
           >
             Assign

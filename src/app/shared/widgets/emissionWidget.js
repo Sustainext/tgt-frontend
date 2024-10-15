@@ -840,7 +840,7 @@ const EmissionWidget = React.memo(
                         toggleDropdown();
                         setActivitySearch("");
                       }}
-                      className={`text-[12px] focus:border-blue-500 focus:outline-none w-full absolute left-0 top-8 z-[1000]`}
+                      className={`text-[12px] focus:border-blue-500 focus:outline-none w-full absolute left-0 top-8 z-[1000] min-w-[650px]`}
                     >
                       <option value="" className="px-1">
                         {isFetching.current
@@ -972,7 +972,7 @@ const EmissionWidget = React.memo(
                 <button
                   type="button"
                   className="bg-blue-500 text-white text-[12px] w-[112px] py-1 rounded-md shadow hover:bg-blue-600 disabled:opacity-50"
-                  onClick={handleAssignClick}
+                  // onClick={handleAssignClick}
                   disabled={rowType === "calculated" || rowType === "approved"}
                 >
                   Assign to
