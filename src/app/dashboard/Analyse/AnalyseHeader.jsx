@@ -1,22 +1,41 @@
+// location year and month//
 'use client';
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
-import { yearInfo } from "@/app/shared/data/yearInfo"; 
+import { yearInfo, months } from "@/app/shared/data/yearInfo";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 
-const Socialheader3 = ({ location, setLocation, year, setYear }) => {
+const monthMapping = {
+  "Jan": 1,
+  "Feb": 2,
+  "Mar": 3,
+  "Apr": 4,
+  "May": 5,
+  "Jun": 6,
+  "Jul": 7,
+  "Aug": 8,
+  "Sep": 9,
+  "Oct": 10,
+  "Nov": 11,
+  "Dec": 12
+};
+
+const getMonthString = (monthNumber) => {
+  return Object.keys(monthMapping).find(key => monthMapping[key] === monthNumber);
+};
+
+const AnalyseHeader = ({ activeMonth, setActiveMonth, location, setLocation, year, setYear }) => {
   const [formState, setFormState] = useState({
     location: location,
     year: year,
+    month: activeMonth,
   });
 
   const [locations, setLocations] = useState([]);
   const [errors, setErrors] = useState({
     location: location ? "" : "Please select location",
-    year: year ? "" : "Please select year",
+    year: year ? "" : "Please select year"
   });
-
-  const isMounted = useRef(false); // This will track if the component is mounted
 
   useEffect(() => {
     const fetchLocations = async () => {
@@ -28,11 +47,8 @@ const Socialheader3 = ({ location, setLocation, year, setYear }) => {
       }
     };
 
-    if (!isMounted.current) { // If it's the first render
-      fetchLocations(); // Call the API only once on mount
-      isMounted.current = true; // Set the flag to true after the first call
-    }
-  }, []); // Empty dependency array ensures it runs only on mount
+    fetchLocations();
+  }, []);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -42,7 +58,9 @@ const Socialheader3 = ({ location, setLocation, year, setYear }) => {
       [name]: value,
     }));
 
-    if (name === "location") {
+    if (name === "month") {
+      setActiveMonth(monthMapping[value]);
+    } else if (name === "location") {
       setLocation(Number(value));
       setErrors((prevErrors) => ({
         ...prevErrors,
@@ -61,8 +79,9 @@ const Socialheader3 = ({ location, setLocation, year, setYear }) => {
     setFormState({
       location: location,
       year: year,
+      month: activeMonth,
     });
-  }, [location, year]);
+  }, [location, year, activeMonth]);
 
   return (
     <>
@@ -91,11 +110,7 @@ const Socialheader3 = ({ location, setLocation, year, setYear }) => {
                 style={{ fontSize: "16px" }}
               />
             </div>
-            {errors.location && (
-              <p className="text-[#007EEF] text-[12px] absolute top-10 left-0 pl-2">
-                {errors.location}
-              </p>
-            )}
+            {errors.location && <p className="text-[#007EEF]  text-[12px] absolute top-10 left-0 pl-2">{errors.location}</p>}
           </div>
           <div className="ml-3 relative mb-2">
             <select
@@ -120,11 +135,32 @@ const Socialheader3 = ({ location, setLocation, year, setYear }) => {
                 style={{ fontSize: "16px" }}
               />
             </div>
-            {errors.year && (
-              <p className="text-[#007EEF] text-[12px] absolute top-10 left-0 pl-2">
-                {errors.year}
-              </p>
-            )}
+            {errors.year && <p className="text-[#007EEF]  text-[12px] absolute top-10 left-0 pl-2">{errors.year}</p>}
+          </div>
+        </div>
+        <div className="flex justify-between mb-4">
+          <div className="flex bg-[#f7f7f7] py-1 rounded-lg">
+            {months.map((month, index) => (
+              <button
+                key={index}
+                className={`text-[12px] border-r mx-1 ${
+                  formState.month === monthMapping[month] ? "bg-white shadow-md rounded-lg" : ""
+                }`}
+                onClick={() => handleChange({ target: { name: "month", value: month } })}
+              >
+                <p
+                  className={`text-center ${
+                    formState.month === monthMapping[month]
+                      ? "custom-gradient-text"
+                      : "text-[#A1A1A1]"
+                  } hover:bg-[#f7f7f7] py-1 w-[55px] ${
+                    index === 0 ? "rounded-l" : ""
+                  } ${index === months.length - 1 ? "rounded-r" : ""}`}
+                >
+                  {month}
+                </p>
+              </button>
+            ))}
           </div>
         </div>
       </div>
@@ -132,4 +168,4 @@ const Socialheader3 = ({ location, setLocation, year, setYear }) => {
   );
 };
 
-export default Socialheader3;
+export default AnalyseHeader;

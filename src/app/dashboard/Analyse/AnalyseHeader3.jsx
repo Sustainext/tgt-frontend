@@ -1,22 +1,20 @@
 'use client';
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
-import { yearInfo } from "@/app/shared/data/yearInfo"; 
+import { yearInfo } from "@/app/shared/data/yearInfo";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 
-const Socialheader3 = ({ location, setLocation, year, setYear }) => {
+const AnalyseHeader3 = ({ selectedLocation, setSelectedLocation, year, setYear }) => {
   const [formState, setFormState] = useState({
-    location: location,
+    location: selectedLocation,
     year: year,
   });
 
   const [locations, setLocations] = useState([]);
   const [errors, setErrors] = useState({
-    location: location ? "" : "Please select location",
-    year: year ? "" : "Please select year",
+    location: selectedLocation ? "" : "Please select location",
+    year: year ? "" : "Please select year"
   });
-
-  const isMounted = useRef(false); // This will track if the component is mounted
 
   useEffect(() => {
     const fetchLocations = async () => {
@@ -28,11 +26,8 @@ const Socialheader3 = ({ location, setLocation, year, setYear }) => {
       }
     };
 
-    if (!isMounted.current) { // If it's the first render
-      fetchLocations(); // Call the API only once on mount
-      isMounted.current = true; // Set the flag to true after the first call
-    }
-  }, []); // Empty dependency array ensures it runs only on mount
+    fetchLocations();
+  }, []);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -43,7 +38,7 @@ const Socialheader3 = ({ location, setLocation, year, setYear }) => {
     }));
 
     if (name === "location") {
-      setLocation(Number(value));
+      setSelectedLocation(Number(value));
       setErrors((prevErrors) => ({
         ...prevErrors,
         location: value ? "" : "Please select location",
@@ -59,10 +54,10 @@ const Socialheader3 = ({ location, setLocation, year, setYear }) => {
 
   useEffect(() => {
     setFormState({
-      location: location,
+      location: selectedLocation,
       year: year,
     });
-  }, [location, year]);
+  }, [selectedLocation, year]);
 
   return (
     <>
@@ -71,7 +66,7 @@ const Socialheader3 = ({ location, setLocation, year, setYear }) => {
           <div className="relative mb-2">
             <select
               name="location"
-              className="border m-0.5 text-[12px] text-neutral-500 appearance-none pr-24 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+               className="border m-0.5 text-[12px] text-neutral-500 appearance-none pr-24 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               value={formState.location}
               onChange={handleChange}
             >
@@ -91,16 +86,12 @@ const Socialheader3 = ({ location, setLocation, year, setYear }) => {
                 style={{ fontSize: "16px" }}
               />
             </div>
-            {errors.location && (
-              <p className="text-[#007EEF] text-[12px] absolute top-10 left-0 pl-2">
-                {errors.location}
-              </p>
-            )}
+            {errors.location && <p className="text-[#007EEF]  text-[12px] absolute top-10 left-0 pl-2">{errors.location}</p>}
           </div>
           <div className="ml-3 relative mb-2">
             <select
               name="year"
-              className="border m-0.5 text-[12px] text-neutral-500 appearance-none pr-32 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+               className="border m-0.5 text-[12px] text-neutral-500 appearance-none pr-32 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               value={formState.year}
               onChange={handleChange}
             >
@@ -120,11 +111,7 @@ const Socialheader3 = ({ location, setLocation, year, setYear }) => {
                 style={{ fontSize: "16px" }}
               />
             </div>
-            {errors.year && (
-              <p className="text-[#007EEF] text-[12px] absolute top-10 left-0 pl-2">
-                {errors.year}
-              </p>
-            )}
+            {errors.year && <p className="text-[#007EEF]  text-[12px] absolute top-10 left-0 pl-2">{errors.year}</p>}
           </div>
         </div>
       </div>
@@ -132,4 +119,4 @@ const Socialheader3 = ({ location, setLocation, year, setYear }) => {
   );
 };
 
-export default Socialheader3;
+export default AnalyseHeader3;

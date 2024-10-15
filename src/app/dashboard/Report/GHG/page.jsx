@@ -106,7 +106,7 @@ const Report = () => {
     localStorage.removeItem("organizationcountry");
     localStorage.removeItem("reportname");
     localStorage.removeItem("selectedImage");
-
+    localStorage.removeItem("reportby");
   }, []);
   const handleChangecrop = async (event) => {
     // Update the state with the new selection
@@ -244,10 +244,11 @@ const Report = () => {
 
 
           window.localStorage.setItem("reportid", response.data.id);
-          window.localStorage.setItem(
+             window.localStorage.setItem(
             "reportorgname",
             response.data.organization_name
           );
+  
           window.localStorage.setItem(
             "reportstartdate",
             response.data.start_date
@@ -257,7 +258,12 @@ const Report = () => {
             "organizationcountry",
             response.data.organization_country
           );
+          window.localStorage.setItem(
+            "reportby",
+            response.data.report_by
 
+          );
+       
           router.push("/dashboard/Report/Ghgtemplates");
           //   navigate(`/report/GHGtemplate`, { state: { data: response.data } });
         }
