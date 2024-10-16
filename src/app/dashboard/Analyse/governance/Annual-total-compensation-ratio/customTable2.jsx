@@ -12,7 +12,7 @@ const DynamicTable2 = ({ data, columns }) => {
             {columns.map((column, index) => (
               <th
                 key={column}
-                className={`px-2 py-3  text-[#727272]  block md:table-cell text-center text-[12px] capitalize  border-gray-300 w-[50%] ${ index===0 ? "":"border-l"} `}
+                className={`px-2 py-3  text-[#727272]  block md:table-cell text-center text-[12px]   border-gray-300 w-[50%] ${ index===0 ? "":"border-l"} `}
               >
                 {column}
               </th>
@@ -36,7 +36,7 @@ const DynamicTable2 = ({ data, columns }) => {
                   <td
                     key={colIndex}
                     className={`p-2 block md:table-cell ${
-                      colIndex === 0 ? 'text-center font-normal text-slate-500' : 'text-center font-normal text-slate-500'
+                      colIndex === 0 ? 'text-center font-normal text-slate-500 border-r' : 'text-center font-normal text-slate-500'
                     } text-[12px] border-t border-gray-300`}
                   >
                         {row[column] !== undefined && row[column] !== null ? `${row[column]}%` : 'N/A'}
