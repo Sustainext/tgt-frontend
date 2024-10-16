@@ -155,37 +155,37 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
   //   }
   // };
 
-  // const loadFormData = async () => {
-  //   LoaderOpen();
-  //   dispatch(setCompanyeconomic(""));
-  //   dispatch(setFinancialassistanc(""));
-  //   dispatch(setIntroductionto(""));
+  const loadFormData = async () => {
+    LoaderOpen();
+    dispatch(setCompanyeconomic(""));
+    dispatch(setFinancialassistanc(""));
+    dispatch(setIntroductionto(""));
 
-  //   const url = `${process.env.BACKEND_API_URL}/esg_report/screen_eleven/${reportid}/`;
-  //   try {
-  //     const response = await axiosInstance.get(url);
-  //     if (response.data) {
-  //       console.error("API response data11", response.data);
-  //       dispatch(setgetdata(response.data));
-  //     dispatch(setCompanyeconomic(response.data.company_economic_performance_statement));
-  //     dispatch(setIntroductionto(response.data.introduction_to_economic_value_creation));
-  //     dispatch(setFinancialassistanc(response.data.financial_assistance_from_government));
-  //     }
+    const url = `${process.env.BACKEND_API_URL}/esg_report/screen_eleven/${reportid}/`;
+    try {
+      const response = await axiosInstance.get(url);
+      if (response.data) {
+        console.error("API response data11", response.data);
+        dispatch(setgetdata(response.data));
+      dispatch(setCompanyeconomic(response.data.company_economic_performance_statement));
+      dispatch(setIntroductionto(response.data.introduction_to_economic_value_creation));
+      dispatch(setFinancialassistanc(response.data.financial_assistance_from_government));
+      }
 
-  //     LoaderClose();
-  //   } catch (error) {
-  //     console.error("API call failed:", error);
-  //     LoaderClose();
-  //   }
-  // };
+      LoaderClose();
+    } catch (error) {
+      console.error("API call failed:", error);
+      LoaderClose();
+    }
+  };
 
-  // useEffect(() => {
+  useEffect(() => {
  
-  //   if (!apiCalledRef.current && reportid) {
-  //     apiCalledRef.current = true; 
-  //     loadFormData(); 
-  //   }
-  // }, [reportid]);
+    if (!apiCalledRef.current && reportid) {
+      apiCalledRef.current = true; 
+      loadFormData(); 
+    }
+  }, [reportid]);
   
 
   const scrollToSection = (sectionRef, sectionId) => {
@@ -209,7 +209,7 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
         </h3>
         <div className="flex gap-4">
           <div className="w-[80%]">
-            <Section1 />
+            <Section1 orgName={orgName}/>
             <Section2
 
               section11_1Ref={section11_1Ref}

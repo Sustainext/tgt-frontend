@@ -25,7 +25,8 @@ import Climaterelatedrisks from "./risks-opportunities/climate-related-risks/pag
 import {
   setHeadertext1,
   setHeadertext2,
-  setHeaderdisplay
+  setHeaderdisplay,
+  setMiddlename
 } from "../../../lib/redux/features/topheaderSlice";
 import { useDispatch} from "react-redux";
 const AccordionItem = ({ title, children }) => {
@@ -80,12 +81,40 @@ const Economic = () => {
   const isStepCompleted = (stepNumber) => {
     return completedSteps.includes(stepNumber);
   };
+  const stepTitles = {
+    1: "Economic Performance",
+    2: "Economic Performance",
+    3: "Economic Performance",
+    4: "Risks & Opportunities",
+    5: "Risks & Opportunities",
+    6: "Risks & Opportunities",
+    7: "Market Presence",
+    8: "Market Presence",
+    9: "Indirect Economic Impacts",
+    10: "Indirect Economic Impacts",
+    11: "Procurement Practices",
+    12: "Anti Corruption",
+    13: "Anti Corruption",
+    14: "Anti Corruption",
+    15: "Legal Actions",
+    16: "Legal Actions",
+    17: "Tax",
+    18: "Tax",
+    19: "Tax",
+    20: "Tax",
+
+    
+  };
   useEffect(() => {
-   
+    // Update header with step-related information
     dispatch(setHeadertext1("Collect"));
-    dispatch(setHeaderdisplay("none"));
-    dispatch(setHeadertext2('Economic'));
-}, [activeStep, dispatch]);
+    dispatch(setHeaderdisplay("block"));
+    dispatch(setMiddlename("Economic"));
+
+    // Dynamically set the title for the current step
+    const title = stepTitles[activeStep] || "Economic Performance"; // Default title
+    dispatch(setHeadertext2(title));
+  }, [activeStep, dispatch]);
   return (
     <>
       <div>

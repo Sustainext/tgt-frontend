@@ -6,12 +6,12 @@ import Image from "next/image";
 import { useDispatch, useSelector } from 'react-redux';
 import { setCompanyeconomic } from "../../../../../../lib/redux/features/ESGSlice/screen11Slice";
 
-const Section1 = () => {
+const Section1 = ({orgName}) => {
   const content = useSelector(state => state.screen11Slice.company_economic_performance_statement);
   const dispatch = useDispatch();
   const loadContent = () => {
     dispatch(setCompanyeconomic(
-      `Our economic performance is a testament to [Company Name]'s resilience, innovation, and commitment to creating value for our stakeholders. Through strategic investments, prudent financial management, and robust risk mitigation, we aim to sustain long-term economic growth while addressing social and environmental challenges.`
+      `Our economic performance is a testament to ${orgName}'s resilience, innovation, and commitment to creating value for our stakeholders. Through strategic investments, prudent financial management, and robust risk mitigation, we aim to sustain long-term economic growth while addressing social and environmental challenges.`
     ))
   }
   const handleChange=(e)=>{

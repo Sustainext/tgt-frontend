@@ -26,6 +26,7 @@ const DashboardHeader = () => {
   const text1 = useSelector((state) => state.header.headertext1);
   const text2 = useSelector((state) => state.header.headertext2);
   const headerdisplay = useSelector((state) => state.header.headerdisplay);
+  const middlename = useSelector((state) => state.header.middlename);
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
@@ -160,7 +161,7 @@ const DashboardHeader = () => {
           {headerdisplay === "block" && (
             <>
               <span className="text-[#222222] hover:text-[#222222]">
-                Environment
+                 {middlename}
               </span>
               <span className="text-[#222222] mx-1">&gt;</span>
             </>

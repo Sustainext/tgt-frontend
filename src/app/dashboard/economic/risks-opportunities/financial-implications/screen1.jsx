@@ -32,12 +32,30 @@ const schema = {
           enum:["Yes","No"],
       },
     },
+    dependencies: {
+      Q1: {
+        oneOf: [
+          {
+            properties: {
+              Q1: {
+                enum: ["No"],
+              },
+              Q2: {
+                type: "string",
+                title: "If yes, Provide the total number of significant instances of non-compliance with laws and regulations during the reporting period",
+              },
+
+            },
+          },
+        ],
+      },
+    },
   },
 };
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1"],
+    "ui:order": ["Q1","Q2"],
     Q1: {
       "ui:title":
         "Is there a system to calculate the financial implications or costs, or to make revenue projections?",
@@ -46,6 +64,21 @@ const uiSchema = {
       "ui:tooltipdisplay": "none",
       "ui:titledisplay": "none",
       "ui:widgetType": "radio",
+      "ui:inputfildtype": "text",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
+    },
+    Q2: {
+      "ui:title":
+        " If currently no system is in place to calculate the financial implications or costs, or to make revenue projections, Provide plans and timelines to develop the necessary systems.",
+      "ui:tooltip":
+        " If currently no system is in place to calculate the financial implications or costs, or to make revenue projections, Provide plans and timelines to develop the necessary systems.",
+      "ui:tooltipdisplay": "none",
+      "ui:titledisplay": "block",
+      "ui:widgetType": "textarea",
       "ui:inputfildtype": "text",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -80,7 +113,12 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   };
 
   const handleChange = (e) => {
-    setFormData(e.formData);
+    let newFormData = { ...e.formData[0] };
+    if (newFormData.Q1 === "Yes") {
+      newFormData.Q2 = "";
+
+    }
+    setFormData([newFormData]);
   };
 
   const updateFormData = async () => {

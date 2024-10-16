@@ -18,7 +18,7 @@ import AnalyseCustomerprivacy from "./Customer-Privacy/page"
 import {
   setHeadertext1,
   setHeadertext2,
-  setHeaderdisplay
+  setHeaderdisplay,setMiddlename
 } from "../../../../lib/redux/features/topheaderSlice";
 import { useDispatch } from "react-redux";
 const social = () => {
@@ -29,10 +29,25 @@ const social = () => {
     setActiveTab(tab);
   };
   useEffect(() => {
-   
+    const headerTextMapping = {
+      Tab1: 'Employment',
+      Tab2: 'Occupational health and safety',
+      Tab3: 'Child Labour',
+      Tab4: 'Forced or Compulsory Labour',
+      Tab5: 'Diversity & Inclusion',
+      Tab6: 'Supplier Social assessment',
+      Tab7: 'Training',
+      Tab8: 'Non-Discrimination',
+      Tab9: 'Collective Bargaining',
+      Tab10: 'Community Development',
+      Tab12: 'Customer Health and Safety',
+      Tab13: 'Marketing and Labeling',
+      Tab14: 'Customer Privacy'
+    };
     dispatch(setHeadertext1("Analyse"));
-    dispatch(setHeaderdisplay("none"));
-    dispatch(setHeadertext2('Social'));
+    dispatch(setHeaderdisplay("block"));
+    dispatch(setHeadertext2(headerTextMapping[activeTab] || 'Social'));
+    dispatch(setMiddlename("Social"));
 }, [activeTab, dispatch]);
   return (
     <div className="relative flex justify-start">

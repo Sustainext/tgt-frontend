@@ -180,7 +180,7 @@ function Aboutthereport({
               <h4 className="text-left mb-2">
                 <b>ABOUT THE ORGANIZATION</b>
               </h4>
-              <NewTooltip tooltiptext=" This section will be dependent based on the company-specific data which shall be provided by the organizational admin." display="inline" />
+              <NewTooltip tooltiptext=" This section will be dependent based on the company-specific data which shall be provided by the organizational admin." display="inline" className="ml-1" />
             </div>
             <div className="ml-2">
               <JoditEditor

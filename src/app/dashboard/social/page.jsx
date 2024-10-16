@@ -45,7 +45,8 @@ import Annualreport from './BillS-211/annual-report/page'
 import {
   setHeadertext1,
   setHeadertext2,
-  setHeaderdisplay
+  setHeaderdisplay,
+  setMiddlename
 } from "../../../lib/redux/features/topheaderSlice";
 import { useDispatch} from "react-redux";
 const AccordionItem = ({ title, children }) => {
@@ -98,13 +99,58 @@ const Social = () => {
   const isStepCompleted = (stepNumber) => {
     return completedSteps.includes(stepNumber);
   };
-
+  const stepTitles = {
+    1: "Employment",
+    2: "Employment",
+    3: "Employment",
+    4: "Labor Relations",
+    5: "Occupational health and safety",
+    6: "Occupational health and safety",
+    7: "Occupational health and safety",
+    8: "Occupational health and safety",
+    9: "Occupational health and safety",
+    10: "Occupational health and safety",
+    11: "Occupational health and safety",
+    12: "Occupational health and safety",
+    13: "Occupational health and safety",
+    14: "Occupational health and safety",
+    15:"Training",
+    16:"Training",
+    17:"Training",
+    18:"Diversity & Inclusion",
+    19:"Diversity & Inclusion",
+    20:"Non - Discrimination",
+    21:"Collective Bargaining",
+    22:"Human Rights",
+    23:"Human Rights",
+    24:"Human Rights",
+    25:"Indigenous People",
+    26:"Community Development",
+    27:"Community Development",
+    28:"Supplier Social Assessment",
+    29:"Supplier Social Assessment",
+    30:"Political Involvement",
+    31:"Customer Health and Safety",
+    32:"Customer Health and Safety",
+    33:"Marketing and Labeling",
+    34:"Marketing and Labeling",
+    35:"Marketing and Labeling",
+    36:"Marketing and Labeling",
+    37:"Marketing and Labeling",
+    38:"Customer Privacy",
+    39:"Bill S-211",
+    40:"Bill S-211",
+  };
   useEffect(() => {
-   
+    // Update header with step-related information
     dispatch(setHeadertext1("Collect"));
-    dispatch(setHeaderdisplay("none"));
-    dispatch(setHeadertext2('Social'));
-}, [activeStep, dispatch]);
+    dispatch(setHeaderdisplay("block"));
+    dispatch(setMiddlename("Social"));
+
+    // Dynamically set the title for the current step
+    const title = stepTitles[activeStep] || "Employment"; // Default title
+    dispatch(setHeadertext2(title));
+  }, [activeStep, dispatch]);
 
   return (
     <>

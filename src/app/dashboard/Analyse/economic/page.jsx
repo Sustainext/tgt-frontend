@@ -8,7 +8,8 @@ import Anticorruptions from "./anti-corruption/page"
 import {
   setHeadertext1,
   setHeadertext2,
-  setHeaderdisplay
+  setHeaderdisplay,
+  setMiddlename
 } from "../../../../lib/redux/features/topheaderSlice";
 import { useDispatch } from "react-redux";
 const AnalyseEconomic = () => {
@@ -19,10 +20,16 @@ const AnalyseEconomic = () => {
     setActiveTab(tab);
   };
   useEffect(() => {
-   
+    const headerTextMapping = {
+      Tab1: 'Ratio of the entry-level wage to the minimum wage by gender at significant locations of operation',
+      Tab2: 'Operations assessed for risks related to corruption',
+      Tab3: 'Communication and training about anti-corruption policies and procedures',
+  
+    };
     dispatch(setHeadertext1("Analyse"));
-    dispatch(setHeaderdisplay("none"));
-    dispatch(setHeadertext2('Economic'));
+    dispatch(setHeaderdisplay("block"));
+    dispatch(setHeadertext2(headerTextMapping[activeTab] || 'Ratio of the entry-level wage to the minimum wage by gender at significant locations of operation'));
+    dispatch(setMiddlename("Economic"));
 }, [activeTab, dispatch]);
   return (
     <div className="relative flex justify-start">

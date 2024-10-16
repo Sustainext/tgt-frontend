@@ -61,7 +61,7 @@ const uiSchema = {
   },
 };
 
-const Screen1 = ({ location, year, month }) => {
+const Screen1 = ({ location, year }) => {
   const initialFormData = [
     { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 },
     { yearsold30: "", yearsold30to50: "", yearsold50: "", total: 0 },
@@ -107,7 +107,6 @@ const Screen1 = ({ location, year, month }) => {
       form_data: formData,
       location,
       year,
-      month,
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -157,7 +156,7 @@ const Screen1 = ({ location, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData(initialFormData);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
       const response = await axios.get(url, axiosConfig);
       console.log("API called successfully:", response.data);
@@ -183,7 +182,7 @@ const Screen1 = ({ location, year, month }) => {
 
   // fetch backend and replace initialized forms
   useEffect(() => {
-    if (location && year && month) {
+    if (location && year) {
       loadFormData();
       toastShown.current = false; // Reset the flag when valid data is present
     } else {
@@ -192,7 +191,7 @@ const Screen1 = ({ location, year, month }) => {
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [location, year, month]);
+  }, [location, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -211,7 +210,7 @@ const Screen1 = ({ location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Number of employees/workers who are not employees
               <MdInfoOutline
                 data-tooltip-id={`tooltip-employees`}
@@ -243,7 +242,6 @@ const Screen1 = ({ location, year, month }) => {
               </div>
             </div>
           </div>
-      
         </div>
         <Form
           schema={r_schema}

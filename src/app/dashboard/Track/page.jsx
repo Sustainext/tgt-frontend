@@ -9,7 +9,8 @@ import axiosInstance from '../../utils/axiosMiddleware'
 import {
   setHeadertext1,
   setHeadertext2,
-  setHeaderdisplay
+  setHeaderdisplay,
+  setMiddlename
 } from "../../../lib/redux/features/topheaderSlice";
 import { useDispatch } from "react-redux";
 const Index = () => {
@@ -23,11 +24,12 @@ const Index = () => {
     setActiveModule(module);
   };
   useEffect(() => {
-   
-    dispatch(setHeadertext1(""));
-    dispatch(setHeaderdisplay("none"));
-    dispatch(setHeadertext2('Track'));
-}, [dispatch]);
+
+    dispatch(setHeadertext1("Analyse"));
+    dispatch(setHeaderdisplay("block"));
+    dispatch(setHeadertext2(activeModule));
+    dispatch(setMiddlename("Track"));
+}, [activeModule, dispatch]);
   useLayoutEffect(() => {
     const updateSizes = () => {
       const mainSidebarWidth = open ? 230 : 80;

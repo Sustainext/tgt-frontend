@@ -10,7 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
-import axiosInstance from '@/app/utils/axiosMiddleware'
+import axiosInstance from "@/app/utils/axiosMiddleware";
 
 const widgets = {
   inputWidget: CommoninputWidget,
@@ -27,7 +27,8 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Explain the current or expected impacts on communities and local economies, including positive and negative impacts where relevant.",
+        title:
+          "Explain the current or expected impacts on communities and local economies, including positive and negative impacts where relevant.",
       },
     },
   },
@@ -37,7 +38,8 @@ const uiSchema = {
   items: {
     "ui:order": ["Q1"],
     Q1: {
-      "ui:title": "Explain the current or expected impacts on communities and local economies, including positive and negative impacts where relevant.",
+      "ui:title":
+        "Explain the current or expected impacts on communities and local economies, including positive and negative impacts where relevant.",
       "ui:tooltip":
         "The answer should include the extent to which different communities or local economies are impacted by the organization’s infrastructure investments and services supported.",
       "ui:tooltipdisplay": "none",
@@ -60,7 +62,7 @@ const uiSchema = {
   },
 };
 
-const Screen2 = ({ location, year}) => {
+const Screen2 = ({ selectedOrg, selectedCorp, year }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -87,7 +89,8 @@ const Screen2 = ({ location, year}) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      location,
+      corporate: selectedCorp,
+      organisation: selectedOrg,
       year,
     };
 
@@ -138,7 +141,7 @@ const Screen2 = ({ location, year}) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -153,7 +156,7 @@ const Screen2 = ({ location, year}) => {
   };
 
   useEffect(() => {
-    if (location && year) {
+    if (selectedOrg && year) {
       loadFormData();
       toastShown.current = false;
     } else {
@@ -161,7 +164,7 @@ const Screen2 = ({ location, year}) => {
         toastShown.current = true;
       }
     }
-  }, [location,year]);
+  }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -171,22 +174,37 @@ const Screen2 = ({ location, year}) => {
 
   return (
     <>
-      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-         <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-          Explain the current or expected impacts on communities and local economies, including positive and negative impacts where relevant.
-              <MdInfoOutline data-tooltip-id={`es26`}
-                data-tooltip-html="The answer should include the extent to which different communities or local economies areimpacted by the organization’s infrastructure investments and services supported." className="mt-1.5 ml-2 text-[15px]" />
-              <ReactTooltip id={`es26`} place="top" effect="solid" style={{
-                width: "290px", backgroundColor: "#000",
-                color: "white",
-                fontSize: "12px",
-                boxShadow: 3,
-                borderRadius: "8px",
-                textAlign: 'left',
-              }}>
-              </ReactTooltip>
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+              Explain the current or expected impacts on communities and local
+              economies, including positive and negative impacts where relevant.
+              <MdInfoOutline
+                data-tooltip-id={`es26`}
+                data-tooltip-html="The answer should include the extent to which different communities or local economies areimpacted by the organization’s infrastructure investments and services supported."
+                className="mt-1.5 ml-2 text-[15px]"
+              />
+              <ReactTooltip
+                id={`es26`}
+                place="top"
+                effect="solid"
+                style={{
+                  width: "290px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  textAlign: "left",
+                }}
+              ></ReactTooltip>
             </h2>
           </div>
           <div className="w-[20%]">
@@ -210,11 +228,14 @@ const Screen2 = ({ location, year}) => {
           />
         </div>
         <div className="mt-4">
-          <button type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year  ? 'cursor-not-allowed' : ''}`}
+          <button
+            type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              !selectedOrg || !year ? "cursor-not-allowed" : ""
+            }`}
             onClick={handleSubmit}
-            disabled={!location || !year }
-            >
+            disabled={!selectedOrg || !year}
+          >
             Submit
           </button>
         </div>

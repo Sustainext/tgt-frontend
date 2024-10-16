@@ -129,7 +129,7 @@ const ESGSidebar = ({ activeStep, setActiveStep }) => {
                     ? "bg-[#007eef0d] p-2 px-5"
                     : "bg-transparent p-2 px-5"
                 }`}
-                // onClick={()=>{setActiveStep(11)}}
+                onClick={()=>{setActiveStep(11)}}
               >
                 Economic Performance
               </p>

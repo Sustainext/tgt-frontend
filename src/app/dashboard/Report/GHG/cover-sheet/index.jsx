@@ -17,7 +17,7 @@ function CoverSheet({
   const [selectedFile, setSelectedFile] = useState(null);
   const reportreportorgname = typeof window !== 'undefined' ? localStorage.getItem("reportorgname") : '';
   const reportname = typeof window !== 'undefined' ? localStorage.getItem("reportname") : '';
-
+  const reportby = typeof window !== 'undefined' ? localStorage.getItem("reportby") : '';
   useEffect(() => {
     const storedImage = localStorage.getItem("selectedImage");
     if (storedImage) {
@@ -62,7 +62,7 @@ function CoverSheet({
         <div className="flex items-center justify-between">
           <div className="flex mt-5">
             <h1 className="text-lg">
-              <p className="text-gray-500">Organisation name</p>
+              <p className="text-gray-500">{reportby} name</p>
             </h1>
             <h1 className="ml-2">-</h1>
             <h1 className="text-lg text-gray-500 ml-2">{reportreportorgname}</h1>

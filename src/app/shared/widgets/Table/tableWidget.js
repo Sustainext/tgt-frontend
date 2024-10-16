@@ -27,29 +27,38 @@ const CustomTableWidget = ({
     newData[index][key] = newValue;
     handleInputChange(newData);
   };
+
+  // Remove a specific row
+  const removeRow = (index) => {
+    const newData = [...value];
+    newData.splice(index, 1); // Remove the row at the given index
+    handleInputChange(newData); // Update the table data
+  };
+
   useEffect(() => {
     console.log("CustomTableWidget value:", value);
   }, [value]);
 
   return (
     <div style={{ overflowY: "auto", maxHeight: "400px" }}>
-      <table id={id} className="rounded-md border border-gray-300  w-full" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
+      <table
+        id={id}
+        className="rounded-md border border-gray-300 w-full"
+        style={{ borderCollapse: "separate", borderSpacing: 0 }}
+      >
         <thead className="gradient-background h-[54px]">
           <tr>
             {options.titles.map((item, idx) => (
               <th
                 key={idx}
                 style={{ minWidth: "120px", textAlign: "left" }}
-                className={` ${idx === 0 ? "" :"border-l" } text-[12px] px-2 py-2  border-gray-300`}
+                className={` ${idx === 0 ? "" : "border-l"} text-[12px] px-2 py-2 border-gray-300`}
               >
                 <div className="relative">
-                  <p className="flex">{item.title}
-               
+                  <p className="flex">
+                    {item.title}
                     <MdInfoOutline
-                      data-tooltip-id={`tooltip-${item.title.replace(
-                        /\s+/g,
-                        "-"
-                      )}`}
+                      data-tooltip-id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
                       data-tooltip-content={item.tooltip}
                       style={{ display: `${item.display}` }}
                       className="cursor-pointer w-[10%] mt-1 ml-0.5"
@@ -59,42 +68,41 @@ const CustomTableWidget = ({
                       place="top"
                       effect="solid"
                       style={{
-                        width:"400px",
+                        width: "400px",
                         backgroundColor: "#000",
                         color: "white",
                         fontSize: "12px",
                         boxShadow: 3,
                         borderRadius: "8px",
-                        zIndex:"1000",
+                        zIndex: "1000",
                       }}
                     />
-                </p>
+                  </p>
                 </div>
               </th>
             ))}
-                   {formContext.view !== "0" && (
-            <th className=""></th>
-          )}
+            {formContext.view !== "0" && <th className=""></th>}
           </tr>
         </thead>
         <tbody>
           {value?.map((item, rowIndex) => (
             <tr key={rowIndex}>
               {Object.keys(item).map((key, cellIndex) => (
-                <td key={cellIndex} className={` ${cellIndex == 0 ? "" :"border-l" } border-t  border-gray-300 p-3`}>
+                <td
+                  key={cellIndex}
+                  className={` ${cellIndex == 0 ? "" : "border-l"} border-t border-gray-300 p-3`}
+                >
                   <InputField
                     type={options.titles[cellIndex].type || "text"}
                     required={required}
                     value={item[key]}
-                    onChange={(newValue) =>
-                      updateField(rowIndex, key, newValue)
-                    }
+                    onChange={(newValue) => updateField(rowIndex, key, newValue)}
                   />
                 </td>
               ))}
-               {formContext.view !== "0" && (
+              {formContext.view !== "0" && (
                 <td className="border-t border-gray-300 p-3">
-                  <button onClick={() => formContext.onRemove(rowIndex)}>
+                  <button onClick={() => removeRow(rowIndex)}>
                     <MdOutlineDeleteOutline className="text-[23px] text-red-600" />
                   </button>
                 </td>
@@ -113,6 +121,7 @@ const InputField = ({ type, required, value, onChange }) => {
   useEffect(() => {
     setInputValue(value);
   }, [value]);
+
   const handleInputChange = (e) => {
     const newValue = e.target.value;
     setInputValue(newValue);
@@ -127,7 +136,7 @@ const InputField = ({ type, required, value, onChange }) => {
       onChange={handleInputChange}
       style={{ width: "100%" }}
       placeholder="Enter data"
-      className="text-[12px] pl-2 py-2" // Ensures input field uses the full width of its container
+      className="text-[12px] pl-2 py-2"
     />
   );
 };
