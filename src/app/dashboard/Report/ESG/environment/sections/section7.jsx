@@ -3,11 +3,21 @@ import { useState, useRef, useEffect } from "react";
 import EmissionTable from '../tables/emissionTable'
 import STARSVG from "../../../../../../../public/star.svg";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import {setGHGEmissionIntensityTracking} from "../../../../../../lib/redux/features/ESGSlice/screen12Slice"
 
 const Section7=({section12_1_5Ref})=>{
-    const [content,setContent] = useState(
-        `We track GHG emission intensity to understand our emissions in relation to our business growth and efficiency improvements`
-    )
+  
+    const content = useSelector(state => state.screen12Slice.ghg_emission_intensity_tracking);
+    const dispatch = useDispatch();
+    const loadContent = () => {
+      dispatch(setGHGEmissionIntensityTracking(
+        `We track GHG emission intensity to understand our emissions in relation to our business growth and efficiency improvements`))
+    }
+  
+    const handleEditorChange=(e)=>{
+      dispatch(setGHGEmissionIntensityTracking(e.target.value))
+    }
 
     const columns = [
         { header: "Organisation Metric" },
@@ -22,37 +32,37 @@ const Section7=({section12_1_5Ref})=>{
       const data = [
         {
           "Organisation Metric": "Production volume (metric tons)",
-          "Quantity": "Metric tons",
-          "Unit": "tCO2e/organisation metric unit",
-          "Direct (Scope 1)": "data",
-          "Energy indirect (Scope 2)": "data",
-          "Other indirect (Scope 3)": "data",
-          "GHG Emission Intensity": "tCO2e",
-          "Units": "tCO2e",
-          "CO2": "data",
-          "N2O": "data",
-          "CH4": "data",
-          "HFCs": "data",
-          "PFCs": "data",
-          "SF6": "data",
-          "NF3":"data"
+          "Quantity": "No data available",
+          "Unit": "No data available",
+          "Direct (Scope 1)": "No data available",
+          "Energy indirect (Scope 2)": "No data available",
+          "Other indirect (Scope 3)": "No data available",
+          "GHG Emission Intensity": "No data available",
+          "Units": "No data available",
+          "CO2": "No data available",
+          "N2O": "No data available",
+          "CH4": "No data available",
+          "HFCs": "No data available",
+          "PFCs": "No data available",
+          "SF6": "No data available",
+          "NF3":"No data available"
         },
         {
           "Organisation Metric": "Number of full-time employees",
-          "Quantity": "data",
-          "Unit": "tCO2e",
-          "Direct (Scope 1)": "data",
-          "Energy indirect (Scope 2)": "data",
-          "Other indirect (Scope 3)": "data",
-          "GHG Emission Intensity": "tCO2e",
-          "Units": "tCO2e",
-          "CO2": "data",
-          "N2O": "data",
-          "CH4": "data",
-          "HFCs": "data",
-          "PFCs": "data",
-          "SF6": "data",
-          "NF3":"data"
+          "Quantity": "No data available",
+          "Unit": "No data available",
+          "Direct (Scope 1)": "No data available",
+          "Energy indirect (Scope 2)": "No data available",
+          "Other indirect (Scope 3)": "No data available",
+          "GHG Emission Intensity": "No data available",
+          "Units": "No data available",
+          "CO2": "No data available",
+          "N2O": "No data available",
+          "CH4": "No data available",
+          "HFCs": "No data available",
+          "PFCs": "No data available",
+          "SF6": "No data available",
+          "NF3":"No data available"
         }
       ];
     
@@ -70,7 +80,7 @@ const Section7=({section12_1_5Ref})=>{
           <p className="text-[15px] text-[#344054] mb-2 mt-3">Add statement about tracking of GHG emission intensity</p>
           <button
             className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
-            // onClick={loadContent}
+            onClick={loadContent}
           >
             {/* <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/> */}
             <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
@@ -78,6 +88,7 @@ const Section7=({section12_1_5Ref})=>{
           </button>
         </div>
             <textarea
+            onChange={handleEditorChange}
           value={content}
           className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
           rows={4}

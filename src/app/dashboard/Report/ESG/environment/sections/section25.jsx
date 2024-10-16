@@ -3,26 +3,62 @@ import { useState, useRef, useEffect } from "react";
 import WasteTable from "../tables/waterTable";
 
 
-const Section25=({section12_5_2Ref})=>{
+const Section25=({section12_5_2Ref,data})=>{
     const [content,setContent] = useState(
         `We set targets for reducing energy consumption and implement various initiatives, such as upgrading equipment, improving insulation, and optimizing processes to achieve these goals.`
     )
 
+    let wasteGeneratedByMaterial={
+      total:"",
+      unit:""
+    }
 
+    let wasteGeneratedByLocation={
+      total:"",
+      unit:""
+    }
+
+    let hazardousAndNonHazardousWasteComposition={
+      total:"",
+      unit:""
+    }
       const column1 = [
         'Material Type', 
         'Contribution %', 
         "Total in Qty",
         'Unit'
       ];
-      const data1 = [
-        {
-            "Material Type": 'data',
-          'Contribution %': 'data',
-          "Total in Qty":"data",
-        'Unit':"data"
-        },
-      ];
+
+      const Tabledata =
+    data["waste_analyse"] &&
+    data["waste_analyse"]["waste_generated_by_material"].length > 1
+      ? data["waste_analyse"]["waste_generated_by_material"].reduce(
+          (acc, val) => {
+            if (val.total_waste_generated !== undefined) {
+              wasteGeneratedByMaterial = {
+                total: val.total_waste_generated,
+                unit: val.units,
+              };
+            } else {
+              acc.push({
+               'Material Type':val.material_type, 
+        'Contribution %':val.contribution, 
+        "Total in Qty":val.total_waste,
+        'Unit':val.units
+              });
+            }
+            return acc;
+          },
+          []
+        )
+      : [
+          {
+            'Material Type':"No data available", 
+        'Contribution %':"No data available", 
+        "Total in Qty":"No data available",
+        'Unit':"No data available"
+          },
+        ];
 
 
       const column2 = [
@@ -32,15 +68,38 @@ const Section25=({section12_5_2Ref})=>{
         'Qty of total waste', 
         'Unit'
       ];
-      const data2 = [
-        {
-            "Location": 'data',
-          'Material Type': 'data',
-        'Contribution %':"data",
-         'Qty of total waste': 'data',
-        'Unit':"data"
-        },
-      ];
+      const Tabledata2 =
+      data["waste_analyse"] &&
+      data["waste_analyse"]["waste_generated_by_location"].length > 1
+        ? data["waste_analyse"]["waste_generated_by_location"].reduce(
+            (acc, val) => {
+              if (val.total_waste_generated !== undefined) {
+                wasteGeneratedByLocation = {
+                  total: val.total_waste_generated,
+                  unit: val.units,
+                };
+              } else {
+                acc.push({
+                'Location':val.location, 
+        'Material Type':val.material_type, 
+        'Contribution %':val.contribution,
+        'Qty of total waste':val.total_waste, 
+        'Unit':val.units
+                });
+              }
+              return acc;
+            },
+            []
+          )
+        : [
+            {
+             'Location':"No data available", 
+        'Material Type':"No data available", 
+        'Contribution %':"No data available",
+        'Qty of total waste':"No data available", 
+        'Unit':"No data available"
+            },
+          ];
 
 
       const column3 = [
@@ -49,14 +108,36 @@ const Section25=({section12_5_2Ref})=>{
         'Total in Qty', 
         'Unit'
       ];
-      const data3 = [
-        {
-            "Total Waste by Category": 'data',
-        'Contribution %':"data",
-         'Total in Qty': 'data',
-        'Unit':"data"
-        },
-      ];
+      const Tabledata3 =
+      data["waste_analyse"] &&
+      data["waste_analyse"]["hazardous_and_non_hazardous_waste_composition"].length > 1
+        ? data["waste_analyse"]["hazardous_and_non_hazardous_waste_composition"].reduce(
+            (acc, val) => {
+              if (val.total_waste_generated !== undefined) {
+                hazardousAndNonHazardousWasteComposition = {
+                  total: val.total_waste_generated,
+                  unit: val.units,
+                };
+              } else {
+                acc.push({
+                  'Total Waste by Category':val.material_type, 
+                  'Contribution %':val.contribution,
+                  'Total in Qty':val.total_waste ,
+                  'Unit':val.units
+                });
+              }
+              return acc;
+            },
+            []
+          )
+        : [
+            {
+              'Total Waste by Category':"No data available", 
+              'Contribution %':"No data available",
+              'Total in Qty':"No data available" ,
+              'Unit':"No data available"
+            },
+          ];
 
 
      
@@ -72,7 +153,7 @@ const Section25=({section12_5_2Ref})=>{
 </h3>
 
         
-<p className="text-[15px]  mb-2 font-semibold">
+<p className="text-[15px]  mb-2">
 We track and report the amount and type of waste generated by our operations. Our goal is to reduce waste generation through process improvements and waste reduction initiatives. 
 
         </p>
@@ -81,33 +162,33 @@ We track and report the amount and type of waste generated by our operations. Ou
 
 
         </p>
-        <p className="text-sm mb-4">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores quisquam, culpa modi dicta tenetur, ducimus vero labore, commodi voluptates dolorum perferendis atque? Ipsum saepe obcaecati temporibus similique maxime modi corporis?</p>
+        <p className="text-sm mb-4">{data["306_1ab"]?data["306_1ab"].data?data["306_1ab"].data[0].Q1?data["306_1ab"].data[0].Q1:"No data available":"No data available":"No data available"}</p>
         <p className="text-[15px]  mb-2 font-semibold">
         Impacts relate to waste generated in the organization’s own activities or to waste generated upstream or downstream in its value chain.:
 
         </p>
-        <p className="text-sm mb-4">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores quisquam, culpa modi dicta tenetur, ducimus vero labore, commodi voluptates dolorum perferendis atque? Ipsum saepe obcaecati temporibus similique maxime modi corporis?</p>
-
+        <p className="text-sm mb-4">{data["306_1ab"]?data["306_1ab"].data?data["306_1ab"].data[0].Q2?data["306_1ab"].data[0].Q2:"No data available":"No data available":"No data available"}</p>
+       
         <p className="text-[15px]  mb-2 font-semibold">
         Waste generated by material
 
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WasteTable columns={column1} data={data1} consumption="Total" unit={"Metric tons (t)"} total={'212123545'}/>
+<WasteTable columns={column1} data={Tabledata} consumption="Total" unit={wasteGeneratedByMaterial.unit} total={wasteGeneratedByMaterial.total}/>
 </div>
 
 <p className="text-[15px]  mb-2 font-semibold">
 Waste Generated by Location
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WasteTable columns={column2} data={data2} consumption="Total" unit={"Metric tons (t)"} total={'212123545'}/>
+<WasteTable columns={column2} data={Tabledata2} consumption="Total" unit={wasteGeneratedByLocation.unit} total={wasteGeneratedByLocation.total}/>
 </div>
 
 <p className="text-[15px]  mb-2 font-semibold">
 Hazardous and Non-Hazardous waste composition
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WasteTable columns={column3} data={data3} consumption="Total" unit={"Metric tons (t)"} total={'212123545'}/>
+<WasteTable columns={column3} data={Tabledata3} consumption="Total" unit={hazardousAndNonHazardousWasteComposition.unit} total={hazardousAndNonHazardousWasteComposition.total}/>
 </div>
 
 

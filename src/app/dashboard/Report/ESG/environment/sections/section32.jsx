@@ -3,14 +3,21 @@ import { useState, useRef, useEffect } from "react";
 import dynamic from 'next/dynamic';
 import STARSVG from "../../../../../../../public/star.svg";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import {setHabitatProtectionRestorationCommitment} from "../../../../../../lib/redux/features/ESGSlice/screen12Slice"
 
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 
 
 const Section32=({section12_6_2Ref})=>{
-    const [content,setContent] = useState(
-    `<p>We work to protect and restore habitats affected by our operations. This includes creating conservation areas, rehabilitating disturbed lands, and supporting biodiversity projects.</p> `
-    )
+    
+    const content = useSelector(state => state.screen12Slice.habitat_protection_restoration_commitment);
+    const dispatch = useDispatch();
+    const loadContent = () => {
+      dispatch(setHabitatProtectionRestorationCommitment(
+        `<p>We work to protect and restore habitats affected by our operations. This includes creating conservation areas, rehabilitating disturbed lands, and supporting biodiversity projects.</p>`))
+    }
+  
     const config = {
       style: {
         fontSize: "14px",
@@ -45,7 +52,7 @@ const Section32=({section12_6_2Ref})=>{
     
     
     const handleEditorChange=(value)=>{
-      setContent(value)
+      dispatch(setHabitatProtectionRestorationCommitment(value))
     }
 
     return (
@@ -62,7 +69,7 @@ const Section32=({section12_6_2Ref})=>{
           <p className="text-[15px] text-[#344054] mb-2 mt-3">Add statement about company’s commitment to protect and restore habitats</p>
           <button
             className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
-            // onClick={loadContent}
+            onClick={loadContent}
           >
             {/* <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/> */}
             <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />

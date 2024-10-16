@@ -16,15 +16,17 @@ const Section2 = ({ section14_1_1Ref }) => {
             mitigate potential negative impacts and mention the actions taken by
             the organisation to manage actual and potential positive impacts.
           </p>
+          <p className="text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis illo, tempora molestiae alias soluta eaque quibusdam reiciendis impedit ut facere voluptatum tempore natus asperiores! Hic voluptatibus perferendis quibusdam inventore suscipit.</p>
         </div>
 
-        <div>
+        <div className="mb-6">
           <p className="text-[15px] text-[#344054] mb-2 font-semibold">
             Process used to track the effectiveness of the actions and mention
             goals, targets, and indicators used to evaluate the process along
             with specific lessons learned and how these have been incoporated to
             organisation's operational policies and procedures.
           </p>
+          <p className="text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis illo, tempora molestiae alias soluta eaque quibusdam reiciendis impedit ut facere voluptatum tempore natus asperiores! Hic voluptatibus perferendis quibusdam inventore suscipit.</p>
         </div>
       </div>
     </>

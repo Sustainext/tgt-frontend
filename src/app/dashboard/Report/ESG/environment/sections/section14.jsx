@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 
-const Section14 = ({ section12_3Ref }) => {
+const Section14 = ({ section12_3Ref,data }) => {
   const [content, setContent] = useState(
     `Our materials management strategy focuses on responsible sourcing, reducing material consumption, and increasing the use of recycled materials. We aim to minimize our environmental footprint by adopting sustainable practices throughout our supply chain. `
   );
@@ -16,28 +16,23 @@ const Section14 = ({ section12_3Ref }) => {
           Interaction with water as shared resource:
         </p>
         <p className="text-sm mb-4">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero nam
-          debitis eaque fugiat laboriosam laborum beatae suscipit obcaecati
-          error voluptas id autem, nesciunt consequatur aut necessitatibus
-          explicabo pariatur commodi quae.
+          {data["303-1b-1c-1d"]?data["303-1b-1c-1d"].data?data["303-1b-1c-1d"].data[0].Q1?data["303-1b-1c-1d"].data[0].Q1:"No data available":"No data available":"No data available"}
         </p>
 
         <p className="text-[15px]  mb-2 font-semibold">Water related impacts</p>
-        <p className="text-sm mb-4">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero nam
-          debitis eaque fugiat laboriosam laborum beatae suscipit obcaecati
-          error voluptas id autem, nesciunt consequatur aut necessitatibus
-          explicabo pariatur commodi quae.
+        <p className="text-sm mb-2">
+        {data["303-1b-1c-1d"]?data["303-1b-1c-1d"].data?data["303-1b-1c-1d"].data[0].Q2?data["303-1b-1c-1d"].data[0].Q2:"No data available":"No data available":"No data available"}
         </p>
+        <p className="text-sm mb-4">
+        {data["303-1b-1c-1d"]?data["303-1b-1c-1d"].data?data["303-1b-1c-1d"].data[0].Q3?data["303-1b-1c-1d"].data[0].Q3:"No data available":"No data available":"No data available"}
+        </p>
+
 
         <p className="text-[15px]  mb-2 font-semibold">
           Water related goals and targets
         </p>
         <p className="text-sm mb-4">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero nam
-          debitis eaque fugiat laboriosam laborum beatae suscipit obcaecati
-          error voluptas id autem, nesciunt consequatur aut necessitatibus
-          explicabo pariatur commodi quae.
+        {data["303-1b-1c-1d"]?data["303-1b-1c-1d"].data?data["303-1b-1c-1d"].data[0].Q4?data["303-1b-1c-1d"].data[0].Q4:"No data available":"No data available":"No data available"}
         </p>
       </div>
     </>

@@ -1,11 +1,19 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import {forwardRef, useImperativeHandle, useState, useRef, useEffect } from "react";
 import Section1 from "./sections/section1";
 import Section2 from "./sections/section2";
 import Section3 from "./sections/section3";
+import axiosInstance,{patch} from "../../../../utils/axiosMiddleware";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from "react-redux";
+import { Oval } from "react-loader-spinner";
+import { setCommunityEngagementStatement,
+  setImpactAssessment,
+  setCSRStatement} from "../../../../../lib/redux/features/ESGSlice/screen14Slice"
 
 
-const Community = () => {
+const Community = forwardRef(({ onSubmitSuccess }, ref) => {
   const [activeSection, setActiveSection] = useState("section14_1");
   const section14_1Ref = useRef(null);
   const section14_1_1Ref = useRef(null);
@@ -24,6 +32,122 @@ const Community = () => {
       behavior: "smooth",
     });
   };
+
+  const orgName = typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
+  const reportid = typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+  const apiCalledRef = useRef(false);
+  const [data,setData]=useState("")
+  const [loopen, setLoOpen] = useState(false);
+  const community_engagement_statement = useSelector((state) => state.screen14Slice.community_engagement_statement);
+  const impact_assessment = useSelector((state) => state.screen14Slice.impact_assessment);
+  const csr_statement = useSelector((state) => state.screen14Slice.csr_statement);
+
+  const dispatch = useDispatch()
+
+  useImperativeHandle(ref, () => ({
+      submitForm,
+    }));
+
+  const LoaderOpen = () => {
+      setLoOpen(true);
+    };
+  
+    const LoaderClose = () => {
+      setLoOpen(false);
+    };
+  const submitForm = async (type) => {
+      LoaderOpen();
+      const data={
+       "community_engagement_statement": community_engagement_statement ,
+    "impact_assessment": impact_assessment,
+    "csr_statement": csr_statement,
+      }
+  
+      const url = `${process.env.BACKEND_API_URL}/esg_report/screen_fourteen/${reportid}/`;
+      try {
+          const response = await axiosInstance.put(url, data);
+  
+          if (response.status === 200) {
+              if(type=='next'){
+                  toast.success("Data added successfully", {
+                      position: "top-right",
+                      autoClose: 3000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "light",
+                  });
+              }
+             
+              if (onSubmitSuccess) {
+                  onSubmitSuccess(true); // Notify the parent of successful submission
+              }
+              LoaderClose();
+              return true; 
+          
+          } else {
+              toast.error("Oops, something went wrong", {
+                  position: "top-right",
+                  autoClose: 1000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "colored",
+              });
+              LoaderClose();
+              return false; 
+             
+          }
+      } catch (error) {
+        LoaderClose();
+          toast.error("Oops, something went wrong", {
+              position: "top-right",
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+          });
+          return false; // Indicate failure
+      }
+  };
+  
+  const loadFormData = async () => {
+      LoaderOpen();
+      dispatch(setCommunityEngagementStatement(''));
+      dispatch(setImpactAssessment(''));
+      dispatch(setCSRStatement(''));
+      const url = `${process.env.BACKEND_API_URL}/esg_report/screen_fourteen/${reportid}/`;
+      try {
+          const response = await axiosInstance.get(url);
+          if(response.data){
+            setData(response.data)
+            dispatch(setCommunityEngagementStatement(response.data.company_sustainability_statement));
+          dispatch(setImpactAssessment(response.data.approach_for_sustainability));
+          dispatch(setCSRStatement(response.data.sustainability_goals));
+          }
+          
+          LoaderClose();
+      
+      } catch (error) {
+          console.error('API call failed:', error);
+          LoaderClose();
+      }
+  };
+  
+  useEffect(() => {
+    // Ensure API is only called once
+    if (!apiCalledRef.current && reportid) {
+        apiCalledRef.current = true;  // Set the flag to true to prevent future calls
+        // loadFormData();  // Call the API only once
+    }
+  }, [reportid]);
 
   return (
     <>
@@ -72,8 +196,20 @@ const Community = () => {
           </div>
         </div>
       </div>
+      {loopen && (
+          <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+            <Oval
+              height={50}
+              width={50}
+              color="#00BFFF"
+              secondaryColor="#f3f3f3"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
+          </div>
+        )}
     </>
   );
-};
+});
 
 export default Community;
