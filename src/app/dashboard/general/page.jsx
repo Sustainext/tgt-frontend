@@ -17,7 +17,7 @@ import StakeholderEngagement from "./Stakeholder-Engagement/page"
 import {
   setHeadertext1,
   setHeadertext2,
-  setHeaderdisplay
+  setHeaderdisplay,setMiddlename
 } from "../../../lib/redux/features/topheaderSlice";
 import { useDispatch} from "react-redux";
 const AccordionItem = ({ title, children }) => {
@@ -73,12 +73,32 @@ const General = () => {
     return completedSteps.includes(stepNumber);
   };
 
+  const stepTitles = {
+    1: "GRI Reporting info",
+    2: "GRI Reporting info",
+    3: "GRI Reporting info",
+    4: "GRI Reporting info",
+    5: "GRI Reporting info",
+    6: "Organization Details",
+    7: "Organization Details",
+    8: "Organization Details",
+    9: "Compliance",
+    10: "Membership & Association",
+    11: "Stakeholder Engagement",
+    12: "Collective Bargaining Agreements",
+
+    
+  };
   useEffect(() => {
-   
+    // Update header with step-related information
     dispatch(setHeadertext1("Collect"));
-    dispatch(setHeaderdisplay("none"));
-    dispatch(setHeadertext2('General'));
-}, [activeStep, dispatch]);
+    dispatch(setHeaderdisplay("block"));
+    dispatch(setMiddlename("General"));
+
+    // Dynamically set the title for the current step
+    const title = stepTitles[activeStep] || "GRI Reporting info"; // Default title
+    dispatch(setHeadertext2(title));
+  }, [activeStep, dispatch]);
   return (
     <>
       <div>

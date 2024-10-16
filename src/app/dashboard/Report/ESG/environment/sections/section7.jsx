@@ -27,6 +27,7 @@ const Section7=({section12_1_5Ref})=>{
         { header: "GHG Emission Intensity" },
         { header: "Units" },
         { header: "Gases included in the calculation", subHeaders: ["CO2", "N2O", "CH4", "HFCs", "PFCs", "SF6","NF3"] },
+        { header: "Gases included in the calculation", subHeaders: ["CO2", "N2O", "CH4", "HFCs", "PFCs", "SF6","NF3"] },
       ];
       
       const data = [

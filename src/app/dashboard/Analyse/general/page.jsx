@@ -8,7 +8,8 @@ import StrategyPolicyPractices
  import {
   setHeadertext1,
   setHeadertext2,
-  setHeaderdisplay
+  setHeaderdisplay,
+  setMiddlename
 } from "../../../../lib/redux/features/topheaderSlice";
 import { useDispatch } from "react-redux";
 const General = () => {
@@ -19,10 +20,15 @@ const General = () => {
     setActiveTab(tab);
   };
   useEffect(() => {
-   
-    dispatch(setHeadertext1("Analysis"));
-    dispatch(setHeaderdisplay("none"));
-    dispatch(setHeadertext2('General'));
+    const headerTextMapping = {
+      Tab1: 'Employees',
+      Tab2: 'Strategy, policies and practices',
+  
+    };
+    dispatch(setHeadertext1("Analyse"));
+    dispatch(setHeaderdisplay("block"));
+    dispatch(setHeadertext2(headerTextMapping[activeTab] || 'Employees'));
+    dispatch(setMiddlename("General"));
 }, [activeTab, dispatch]);
   return (
     <div className="relative flex justify-start">

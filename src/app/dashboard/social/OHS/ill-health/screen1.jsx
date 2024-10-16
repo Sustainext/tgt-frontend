@@ -200,14 +200,14 @@ const Screen1 = ({ location, year, month }) => {
     setFormData([...formData, newCommittee]);
   };
 
-  const handleRemoveCommittee = (index) => {
-    const newFormData = formData.filter((_, i) => i !== index);
-    setFormData(newFormData);
-  };
+  // const handleRemoveCommittee = (index) => {
+  //   const newFormData = formData.filter((_, i) => i !== index);
+  //   setFormData(newFormData);
+  // };
 
   return (
     <>
-    <div
+      <div
         className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
         style={{
           boxShadow:
@@ -216,7 +216,7 @@ const Screen1 = ({ location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Ill health
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
@@ -246,7 +246,7 @@ const Screen1 = ({ location, year, month }) => {
                 }}
               ></ReactTooltip>
             </h2>
-            <h2 className="flex mx-2 text-[13px] text-gray-500 font-semibold mb-2">
+            <h2 className="flex mx-2 text-[13px] text-gray-500 font-semibold">
               For all employees, please report the following
             </h2>
           </div>
@@ -268,23 +268,22 @@ const Screen1 = ({ location, year, month }) => {
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
-            formContext={{
-              onRemove: handleRemoveCommittee,
-            }}
+            // formContext={{
+            //   onRemove: handleRemoveCommittee,
+            // }}
           />
         </div>
-        <div className="flex right-1 mx-2">
-          {location && year && (
-        <button
+        {location && year && (
+          <div className="flex right-1 mx-2">
+            <button
               type="button"
               className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
               onClick={handleAddCommittee}
             >
               Add category <MdAdd className="text-[14px] mt-1 text-[#007EEF]" />
             </button>
-          )}
-        </div>
-
+          </div>
+        )}
         <div className="mt-4">
           <button
             type="button"

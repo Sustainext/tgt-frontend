@@ -85,7 +85,6 @@ const Screen2 = ({ location, year, month }) => {
     setFormData(e.formData);
   };
 
-
   const updateFormData = async () => {
     LoaderOpen();
     const data = {
@@ -201,14 +200,14 @@ const Screen2 = ({ location, year, month }) => {
     setFormData([...formData, newCommittee]);
   };
 
-  const handleRemoveCommittee = (index) => {
-    const newFormData = formData.filter((_, i) => i !== index);
-    setFormData(newFormData);
-  };
+  // const handleRemoveCommittee = (index) => {
+  //   const newFormData = formData.filter((_, i) => i !== index);
+  //   setFormData(newFormData);
+  // };
 
   return (
     <>
-    <div
+      <div
         className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
         style={{
           boxShadow:
@@ -217,7 +216,7 @@ const Screen2 = ({ location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Ill health
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
@@ -247,7 +246,7 @@ const Screen2 = ({ location, year, month }) => {
                 }}
               ></ReactTooltip>
             </h2>
-            <h2 className="flex mx-2 text-[13px] text-gray-500 font-semibold mb-2">
+            <h2 className="flex mx-2 text-[13px] text-gray-500 font-semibold">
               for workers who are not employees but whose work and workplace is
               controlled by the organization
             </h2>
@@ -261,7 +260,6 @@ const Screen2 = ({ location, year, month }) => {
               </div>
             </div>
           </div>
-     
         </div>
         <div className="mx-2">
           <Form
@@ -271,34 +269,33 @@ const Screen2 = ({ location, year, month }) => {
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
-            formContext={{
-              onRemove: handleRemoveCommittee,
-            }}
+            // formContext={{
+            //   onRemove: handleRemoveCommittee,
+            // }}
           />
         </div>
-        <div className="flex right-1 mx-2">
-          {location && year && (
-        <button
+        {location && year && (
+          <div className="flex right-1 mx-2">
+            <button
               type="button"
               className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
               onClick={handleAddCommittee}
             >
               Add category <MdAdd className="text-[14px] mt-1 text-[#007EEF]" />
             </button>
-          )}
-        </div>
-
-    <div className='mt-4'>
+          </div>
+        )}
+        <div className="mt-4">
           <button
             type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? "cursor-not-allowed" : ""
-              }`}
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              !location || !year ? "cursor-not-allowed" : ""
+            }`}
             onClick={handleSubmit}
             disabled={!location || !year}
           >
             Submit
           </button>
-
         </div>
       </div>
       {loopen && (

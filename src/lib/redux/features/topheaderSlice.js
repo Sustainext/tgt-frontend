@@ -4,6 +4,7 @@ const initialState = {
   headertext1:'',
   headertext2:'',
   headerdisplay:'',
+  middlename:'',
 }
 
 export const TophaderSlice = createSlice({
@@ -19,11 +20,13 @@ export const TophaderSlice = createSlice({
       setHeaderdisplay: (state, action) => {
         state.headerdisplay = action.payload;
       },
-   
+      setMiddlename: (state, action) => {
+        state.middlename = action.payload;
+      },
    
    
   },
 })
 
-export const { setHeadertext1, setHeadertext2,setHeaderdisplay} = TophaderSlice.actions
+export const { setHeadertext1, setHeadertext2,setHeaderdisplay,setMiddlename} = TophaderSlice.actions
 export default TophaderSlice.reducer

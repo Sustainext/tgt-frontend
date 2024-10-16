@@ -26,7 +26,7 @@ import { GlobalState } from "@/Context/page";
 import {
     setHeadertext1,
     setHeadertext2,
-    setHeaderdisplay
+    setHeaderdisplay,setMiddlename
 } from "../../../lib/redux/features/topheaderSlice";
 import { useDispatch} from "react-redux";
 
@@ -89,14 +89,15 @@ const environment = () => {
         } else if (materialTabs.includes(activeTab)) {
             dispatch(setHeadertext2('Materials'));
         } else if (waterTabs.includes(activeTab)) {
-            dispatch(setHeadertext2('Water'));
+            dispatch(setHeadertext2('Water and effluents'));
         } else if (supplierTabs.includes(activeTab)) {
-            dispatch(setHeadertext2('Supplier'));
+            dispatch(setHeadertext2('Supplier Environmental Assessment'));
         } else {
             dispatch(setHeadertext2(`${activeTab}`));
         }
         dispatch(setHeadertext1("Collect"));
         dispatch(setHeaderdisplay("block"));
+        dispatch(setMiddlename("Environment"));
     }, [activeTab, dispatch]);
     
 

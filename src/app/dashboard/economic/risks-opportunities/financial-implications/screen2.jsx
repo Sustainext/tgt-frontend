@@ -28,7 +28,7 @@ const schema = {
       Q1: {
         type: "string",
         title:
-          " If currently no system is in place to calculate the financial implications or costs, or to make revenue projections, Provide plans and timelines to develop the necessary systems.",
+          "If currently no system is in place to calculate the financial implications or costs, or to make revenue projections, Provide plans and timelines to develop the necessary systems.",
       },
     },
   },

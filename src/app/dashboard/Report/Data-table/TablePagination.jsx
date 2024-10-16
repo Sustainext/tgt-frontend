@@ -49,7 +49,8 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts }) => {
     startdate,
     enddate,
     organization_country,
-    name
+    name,
+    report_by,corporate_name
   ) => {
     const newdata = {
       id: id,
@@ -58,12 +59,25 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts }) => {
       end_date: enddate,
       country_name: organization_country,
       reportname: name,
+      report_by:report_by,
     };
     window.localStorage.setItem("reportid", id);
-    window.localStorage.setItem("reportorgname", organization_name);
+ 
     window.localStorage.setItem("reportstartdate", startdate);
     window.localStorage.setItem("reportenddate", enddate);
     window.localStorage.setItem("organizationcountry", organization_country);
+    window.localStorage.setItem("reportby", report_by);
+    if(report_by =="Corporate")
+      {
+        if (corporate_name == undefined){
+          window.localStorage.setItem("reportorgname", organization_name);
+        }else{
+          window.localStorage.setItem("reportorgname", corporate_name);
+    
+        }
+      }else{
+        window.localStorage.setItem("reportorgname", organization_name);
+      }
     // sessionStorage.setItem('reportData',newdata);
     router.push('/dashboard/Report/GHG/Ghgtemplates');
 
@@ -451,7 +465,9 @@ let axiosConfig = {
                             item.start_date,
                             item.end_date,
                             item.organization_country,
-                            item.name
+                            item.name,
+                            item.report_by,
+                            item.corporate_name,
                           )
                         }
                       }

@@ -6,7 +6,8 @@ import AnalyseAnnualtotalcompensationratio from "./Annual-total-compensation-rat
 import {
   setHeadertext1,
   setHeadertext2,
-  setHeaderdisplay
+  setHeaderdisplay,
+  setMiddlename
 } from "../../../../lib/redux/features/topheaderSlice";
 import { useDispatch } from "react-redux";
 const Governance = () => {
@@ -18,10 +19,14 @@ const Governance = () => {
     setActiveTab(tab);
   };
   useEffect(() => {
-   
-    dispatch(setHeadertext1("Analysis"));
-    dispatch(setHeaderdisplay("none"));
-    dispatch(setHeadertext2('Governance'));
+    const headerTextMapping = {
+      Tab1: 'Annual total compensation ratio',
+  
+    };
+    dispatch(setHeadertext1("Analyse"));
+    dispatch(setHeaderdisplay("block"));
+    dispatch(setHeadertext2(headerTextMapping[activeTab] || 'Annual total compensation ratio'));
+    dispatch(setMiddlename("Governance"));
 }, [activeTab, dispatch]);
   return (
     <div className="relative flex justify-start">

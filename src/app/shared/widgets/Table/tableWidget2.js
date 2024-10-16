@@ -70,7 +70,7 @@ const CustomTableWidget2 = ({ id, options, value, required, onChange }) => {
                             {options.titles.map((column, columnIndex) => (
                                 <td key={columnIndex} className="border-t border-l border-gray-300 p-3">
                                     <input
-                                        type="text"
+                                        type="number"
                                         required={required}
                                         value={localValue[rowIndex] && localValue[rowIndex][column.key] || ""}
                                         onChange={(e) => handleFieldChange(rowIndex, column.key, e.target.value)}

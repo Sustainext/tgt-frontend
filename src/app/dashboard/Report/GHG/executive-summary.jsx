@@ -39,7 +39,7 @@ function Executivesummary({
   const orgname = localStorage.getItem("reportorgname");
   const reportstartdateStr = localStorage.getItem("reportstartdate");
   const reportenddateStr = localStorage.getItem("reportenddate");
-
+  const reportby = typeof window !== 'undefined' ? localStorage.getItem("reportby") : '';
   return (
     <>
       <div className="px-3">
@@ -51,7 +51,7 @@ function Executivesummary({
         <div className="box rounded-lg p-4">
           <p className="text-left mb-4 wordsping">
             This report details the Greenhouse Gas Emissions (GHG) accounting
-            for the organization <span>{orgname}</span>. The total GHG
+            for the {reportby} <span>{orgname}</span>. The total GHG
             emissions for the reporting period{" "}
             <Moment format="DD-MMM-YYYY">{reportstartdateStr}</Moment> to{" "}
             <Moment format="DD-MMM-YYYY">{reportenddateStr}</Moment> were found

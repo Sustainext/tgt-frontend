@@ -185,10 +185,10 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
     setFormData([...formData, newCommittee]);
   };
 
-  const handleRemoveCommittee = (index) => {
-    const newFormData = formData.filter((_, i) => i !== index);
-    setFormData(newFormData);
-  };
+  // const handleRemoveCommittee = (index) => {
+  //   const newFormData = formData.filter((_, i) => i !== index);
+  //   setFormData(newFormData);
+  // };
 
   return (
     <>
@@ -245,13 +245,14 @@ or collective bargaining may be violated or at significant risk."
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
-            formContext={{
-              onRemove: handleRemoveCommittee,
-            }}
+            // formContext={{
+            //   onRemove: handleRemoveCommittee,
+            // }}
           />
         </div>
+        {selectedOrg && year && (
         <div className="flex right-1 mx-2">
-          {selectedOrg && year && (
+        
             <button
               type="button"
               className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
@@ -259,9 +260,9 @@ or collective bargaining may be violated or at significant risk."
             >
               Add category <MdAdd className="text-lg" />
             </button>
-          )}
+   
         </div>
-
+       )}
         <div className="mt-4">
           <button
             type="button"

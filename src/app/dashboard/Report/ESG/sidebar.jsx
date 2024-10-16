@@ -1,11 +1,16 @@
-'use client'
+"use client";
 import { useState, useRef, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Oval } from 'react-loader-spinner';
-import { MdDownload, MdDelete, MdKeyboardArrowDown, MdFileDownload } from "react-icons/md";
-import axiosInstance,{patch} from "../../../utils/axiosMiddleware";
-import Link from 'next/link'
+import { Oval } from "react-loader-spinner";
+import {
+  MdDownload,
+  MdDelete,
+  MdKeyboardArrowDown,
+  MdFileDownload,
+} from "react-icons/md";
+import axiosInstance, { patch } from "../../../utils/axiosMiddleware";
+import Link from "next/link";
 import { GlobalState } from "@/Context/page";
 
 const ESGSidebar=({activeStep,setActiveStep})=>{
@@ -101,4 +106,4 @@ const ESGSidebar=({activeStep,setActiveStep})=>{
     )
 }
 
-export default ESGSidebar
+export default ESGSidebar;

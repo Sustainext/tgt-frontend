@@ -3146,7 +3146,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             GRI 414-1: New suppliers that were screened using social criteria
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[638px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
               Guidance for Disclosure 414-1
             </p>
@@ -3194,7 +3194,7 @@ export const Socialdata = [
             GRI 414-2 Negative social impacts in the supply chain and actions
             taken
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[636px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
               Guidance for Disclosure 414-2
             </p>
@@ -3671,7 +3671,7 @@ export const Socialdata = [
             GRI 407-1: Operations and suppliers in which the right to freedom of
             association and collective bargaining may be at risk
           </p>
-          <div className="h-[608px] overflow-y-auto custom-scrollbar">
+          <div className="h-[620px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
               Compilation Requirements:
             </p>
@@ -3815,7 +3815,7 @@ export const Socialdata = [
             GRI 413-1: Operations with local community engagement, impact
             assessments, and development programs
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[647px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
               Guidance for Disclosure 413-1
             </p>
@@ -3898,7 +3898,7 @@ export const Socialdata = [
             GRI 413-2: Operations with significant actual and potential negative
             impacts on local communities
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[642px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
               Guidance for Disclosure 413-2
             </p>
@@ -3959,7 +3959,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             End poverty in all its forms everywhere
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div className="h-[672px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 1.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, ensure that all men and women, in particular the poor and
@@ -4071,7 +4071,7 @@ export const Socialdata = [
             development, provide access to justice for all and build effective,
             accountable and inclusive institutions at all levels
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div className="h-[594px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 16.5</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Substantially reduce corruption and bribery in all their forms
@@ -4154,7 +4154,7 @@ export const Socialdata = [
             GRI 416-1 Assessment of the health and safety impacts of product and
             service categories
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[617px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
               Compilation Requirements
             </p>
@@ -4216,7 +4216,7 @@ export const Socialdata = [
             GRI 416-2 Incidents of non-compliance concerning the health and
             safety impacts of products and services
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[617px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
               Compilation Requirements
             </p>
@@ -4285,7 +4285,7 @@ export const Socialdata = [
             development, provide access to justice for all and build effective,
             accountable and inclusive institutions at all levels
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div className="h-[594px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 16.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Promote the rule of law at the national and international levels
@@ -4338,7 +4338,7 @@ export const Socialdata = [
             GRI 418-1: Substantiated complaints concerning breaches of customer
             privacy and losses of customer data
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[642px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
               Compilation Requirements
             </p>
@@ -4395,7 +4395,7 @@ export const Socialdata = [
             development, provide access to justice for all and build effective,
             accountable and inclusive institutions at all levels
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div className="h-[594px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 16.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Promote the rule of law at the national and international levels
@@ -4468,7 +4468,7 @@ export const Socialdata = [
             GRI 417-1: Requirements for product and service information and
             labeling
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[643px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">Background:</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Customers and end users need accessible and adequate information
@@ -4511,7 +4511,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Ensure sustainable consumption and production patterns
           </p>
-          <div className="h-[632px] overflow-y-auto custom-scrollbar">
+          <div className="h-[656px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 12.8</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, ensure that people everywhere have the relevant
@@ -4559,7 +4559,7 @@ export const Socialdata = [
             GRI 417-2: Incidents of non-compliance concerning product and
             service information and labeling
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[620px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
               Compilation Requirements
             </p>
@@ -4606,7 +4606,7 @@ export const Socialdata = [
             GRI 417-3: Incidents of non-compliance concerning marketing
             communications
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[644px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
               Compilation Requirements
             </p>
@@ -4649,7 +4649,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[677px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">Guidance to 2-12-b-i</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Requirement 2-12-b-i covers the role of the highest governance
@@ -4687,7 +4687,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[672px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-[#727272] mb-4">
               The organization can report whether the highest governance body
               has established a sustainability reporting committee to support
@@ -4725,7 +4725,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[720px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
               Guidance to 2-15-b-iii
             </p>
@@ -4769,7 +4769,7 @@ export const Socialdata = [
             development, provide access to justice for all and build effective,
             accountable and inclusive institutions at all levels
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div className="h-[587px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 16.6</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Develop effective, accountable and transparent institutions at all
@@ -4811,7 +4811,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[702px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">Guidance</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Critical concerns include concerns about the organization’s
@@ -4846,7 +4846,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[580px] overflow-y-auto custom-scrollbar">
+          <div className="h-[725px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">Guidance to 2-19-a-i</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Fixed pay and variable pay can include performance-based pay,
@@ -4923,7 +4923,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[580px] overflow-y-auto custom-scrollbar">
+          <div className="h-[731px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">Guidance</p>
             <p className="text-[11px] text-[#727272] mb-4">
               This disclosure covers the organization’s policy commitments for
@@ -5139,6 +5139,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
+        <div className="h-[702px] overflow-y-auto custom-scrollbar"> 
           <div className="text-[11px] text-[#727272] mb-4">
             <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
               Guidance to 2-9-c
@@ -5176,6 +5177,7 @@ export const Socialdata = [
             competencies relevant to impacts commonly associated with the
             organization’s sectors, products, and geographic locations
           </div>
+          </div>
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
@@ -5199,6 +5201,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
+        <div className="h-[676px] overflow-y-auto custom-scrollbar"> 
           <div className="text-[11px] text-[#727272] mb-4">
             <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
               Guidance to 2-10-b-iii
@@ -5216,6 +5219,7 @@ export const Socialdata = [
             Competencies relevant to the impacts of the organization include
             competencies relevant to impacts commonly associated with the
             organization’s sectors, products, and geographic locations.
+          </div>
           </div>
           <div>
             <a
@@ -5285,11 +5289,15 @@ export const Socialdata = [
           <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">
             Guidance
           </div>
+          <div className="h-[667px] overflow-y-auto custom-scrollbar">
+          <p className="text-[11px] text-[#727272] mb-4">
           Remuneration policies are established to ensure that the remuneration
           arrangements help recruit, motivate, and retain the highest governance
           body members, senior executives, and other employees. Remuneration
           policies further support the organization’s strategy and contribution
           to sustainable development and align with stakeholders' interests.
+          </p>
+        </div>
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
@@ -5316,7 +5324,7 @@ export const Socialdata = [
           <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">
             Guidance to 2-21-a and 2-21-b
           </div>
-          <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+          <div className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px] h-[664px]">
             This disclosure covers all employees as reported under Disclosure
             2-7 in this Standard.
             <br />
@@ -5382,7 +5390,7 @@ export const Socialdata = [
           <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">
             Guidance
           </div>
-          <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+          <div className="text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px] h-[645px]">
             The organization should describe:
             <br />• its short, medium, and long-term vision and strategy to
             manage its impacts on the economy, environment, and people,
@@ -5433,7 +5441,8 @@ export const Socialdata = [
           <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">
             Guidance
           </div>
-          <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+          <div className="h-[644px] overflow-y-auto custom-scrollbar">
+          <div className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
             This disclosure gives insight into how the organization embeds its
             policy commitments for responsible business conduct, including the
             commitment to respect human rights, throughout its activities and
@@ -5443,7 +5452,7 @@ export const Socialdata = [
           <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">
             Guidance to 2-24-a-i
           </div>
-          <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+          <div className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
             Examples of different levels within an organization include the
             highest governance body, senior executives, and operational levels.
             <br />
@@ -5467,6 +5476,7 @@ export const Socialdata = [
             discussions about responsible business conduct between different
             levels or functions in the organization (e.g., a crossfunctional
             working group).
+          </div>
           </div>
           <div>
             <a
@@ -5494,8 +5504,8 @@ export const Socialdata = [
           <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">
             Guidance
           </div>
-
-          <div className="w-[232px] text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
+          <div className="h-[644px] overflow-y-auto custom-scrollbar">
+          <div className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
             This disclosure covers the organization’s mechanisms for individuals
             to seek advice and raise concerns about responsible business conduct
             in the organization's operations and business relationships.
@@ -5553,6 +5563,7 @@ export const Socialdata = [
             period, and the percentage of concerns that were addressed and
             resolved or found to be unsubstantiated.
           </div>
+          </div>
           <div>
             <a
               className="text-[14px] text-[#2196F3]  flex"
@@ -5576,7 +5587,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[580px] overflow-y-auto custom-scrollbar">
+          <div className="h-[702px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">Guidance</p>
             <p className="text-[11px] text-[#727272] mb-4">
               This disclosure covers grievance mechanisms that the organization
@@ -5821,7 +5832,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[726px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
               Guidance for Disclosure 2-1-a
             </p>
@@ -5885,7 +5896,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[677px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
               Guidance for Disclosure 2-2-a
             </p>
@@ -5948,7 +5959,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div className="h-[702px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-black mb-2">
               Guidance for Disclosure 2-3-a
             </p>
@@ -5992,7 +6003,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[580px] overflow-y-auto custom-scrollbar">
+          <div className="h-[709px] overflow-y-auto custom-scrollbar">
             <p className="text-[11px] text-[#727272] mb-4">
               The organization should provide a restatement of information when
               it has learned that the previously reported information needs to
@@ -6081,7 +6092,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[420px] overflow-y-auto custom-scrollbar">
+          <div className="h-[728px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-black mb-2">Guidance to 2-5-b-ii</p>
             <p className="text-[11px] text-[#727272] mb-2">
               If this information is covered in the external assurance reports
@@ -6144,7 +6155,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[580px] overflow-y-auto custom-scrollbar">
+          <div className="h-[704px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-black mb-2">Guidance to 2-6-a</p>
             <p className="text-[11px] text-[#727272] mb-2">
               Sectors can be identified according to categories, such as the
@@ -6327,7 +6338,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[580px] overflow-y-auto custom-scrollbar">
+          <div className="h-[732px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-black mb-2">Guidance to 2-7-a</p>
             <p className="text-[11px] text-[#727272] mb-2">
               An employee is an individual who is in an employment relationship
@@ -6464,7 +6475,7 @@ export const Socialdata = [
             sustainable economic growth, full and productive employment and
             decent work for all
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div className="h-[619px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Improve progressively, through 2030, global resource efficiency in
@@ -6510,7 +6521,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[580px] overflow-y-auto custom-scrollbar">
+          <div className="h-[708px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-black mb-2">
               Guidance to 2-8-a-i and 2-8-a-ii
             </p>
@@ -6582,7 +6593,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[580px] overflow-y-auto custom-scrollbar">
+          <div className="h-[707px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-black mb-2">Guidance</p>
             <p className="text-[11px] text-[#727272] mb-2">
               This disclosure addresses non-compliance, or failure to comply
@@ -6693,7 +6704,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[220px] overflow-y-auto custom-scrollbar">
+          <div className="h-[704px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-black mb-2">Guidance</p>
             <p className="text-[11px] text-[#727272] mb-4">
               The organization may have a significant role in an association or
@@ -6728,7 +6739,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[580px] overflow-y-auto custom-scrollbar">
+          <div className="h-[702px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-black mb-2">Guidance</p>
             <p className="text-[11px] text-[#727272] mb-2">
               Stakeholders are individuals or groups that have interests that
@@ -6868,7 +6879,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[580px] overflow-y-auto custom-scrollbar">
+          <div className="h-[705px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-black mb-2">Guidance</p>
             <p className="text-[11px] text-[#727272] mb-2">
               This disclosure provides insights into how the organization
@@ -6970,7 +6981,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[480px] overflow-y-auto custom-scrollbar">
+          <div className="h-[705px] overflow-y-auto custom-scrollbar">
             <p className="text-[15px] text-[#0057A5] mb-4">
               Disclosure 203-1 Infrastructure investments and services supported
             </p>
@@ -7024,7 +7035,7 @@ export const Socialdata = [
             promote inclusive and sustainable industrialization and foster
             innovation
           </p>
-          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+          <div className="h-[621px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 9.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Develop quality, reliable, sustainable and resilient
@@ -7090,7 +7101,7 @@ export const Socialdata = [
             Sustainable Development Goal 11:Make cities and human settlements
             inclusive, safe, resilient and sustainable
           </p>
-          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+          <div className="h-[632px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 11.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, provide access to safe, affordable, accessible and
@@ -7132,7 +7143,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 203-2 Significant indirect economic impacts
           </p>
-          <div className="h-[685px] overflow-y-auto custom-scrollbar">
+          <div className="h-[646px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-4">Guidance:</p>
             <p className="text-[11px] text-[#727272]">
               This disclosure concerns the spectrum of indirect economic impacts
@@ -7316,7 +7327,7 @@ export const Socialdata = [
             Sustainable Development Goal 1: End poverty in all its forms
             everywhere
           </p>
-          <div className="h-[632px] overflow-y-auto custom-scrollbar">
+          <div className="h-[658px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 3.7</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, ensure universal access to sexual and reproductive
@@ -7371,7 +7382,7 @@ export const Socialdata = [
             sustainable economic growth, full and productive employment and
             decent work for all
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div className="h-[617px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Achieve higher levels of economic productivity through
@@ -7450,7 +7461,7 @@ export const Socialdata = [
             sustainable economic growth, full and productive employment and
             decent work for all
           </p>
-          <div className="h-[250px] overflow-y-auto custom-scrollbar">
+          <div className="h-[612px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Promote development-oriented policies that support productive
@@ -7492,7 +7503,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 204-1 Proportion of spending on local suppliers
           </p>
-          <div className="h-[250px] overflow-y-auto custom-scrollbar">
+          <div className="h-[643px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-4">Guidance:</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Local purchases can be made either from a budget managed at the
@@ -7533,7 +7544,7 @@ export const Socialdata = [
             Disclosure 202-2 Proportion of senior management hired from the
             local community
           </p>
-          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+          <div className="h-[664px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-4">
               Compilation Requirements:
             </p>
@@ -7588,7 +7599,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 201-1 Direct economic value generated and distributed
           </p>
-          <div className="h-[685px] overflow-y-auto custom-scrollbar">
+          <div className="h-[648px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-4">
               Compilation requirements:
             </p>
@@ -7821,7 +7832,7 @@ export const Socialdata = [
             sustainable economic growth, full and productive employment and
             decent work for all
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div className="h-[621px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Sustain per capita economic growth in accordance with national
@@ -7879,7 +7890,7 @@ export const Socialdata = [
             promote inclusive and sustainable industrialization and foster
             innovation
           </p>
-          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+          <div className="h-[621px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 9.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Develop quality, reliable, sustainable and resilient
@@ -7957,7 +7968,7 @@ export const Socialdata = [
             Disclosure 201-2 Financial implications and other risks and
             opportunities due to climate change
           </p>
-          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+          <div className="h-[623px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-4">
               Compilation Requirements:
             </p>
@@ -8050,7 +8061,7 @@ export const Socialdata = [
             src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-13.png"
             className="w-[32px] h-[32px]"
           />
-          <h5 className="text-red-900 text-[17px] font-bold ml-2">SDG 13</h5>
+          <h5 className="text-lime-900  text-[17px] font-bold ml-2">SDG 13</h5>
         </div>
       </>,
     ],
@@ -8061,7 +8072,7 @@ export const Socialdata = [
             Sustainable Development Goal 13: Take urgent action to combat
             climate change and its impacts
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div className="h-[642px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 13.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Strengthen resilience and adaptive capacity to climate-related
@@ -8113,7 +8124,7 @@ export const Socialdata = [
             Disclosure 201-3 Defined benefit plan obligations and other
             retirement plans
           </p>
-          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+          <div className="h-[642px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-4">Guidance:</p>
             <p className="text-[11px] text-[#727272] mb-4">
               The structure of retirement plans offered to employees can be
@@ -8187,7 +8198,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 201-4 Financial assistance received from government
           </p>
-          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+          <div className="h-[638px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-4">
               Compilation Requirement:
             </p>
@@ -8233,7 +8244,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 205-1 Operations assessed for risks related to corruption
           </p>
-          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+          <div className="h-[665px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-4">Guidance :</p>
             <p className="text-[11px] text-[#727272] mb-4">
               This disclosure can include a risk assessment focused on
@@ -8282,7 +8293,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 205-3 Confirmed incidents of corruption and actions taken
           </p>
-          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+          <div className="h-[663px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-4">Guidance :</p>
             <p className="text-[11px] text-[#727272] mb-4">
               For stakeholders, there is an interest in both the occurrence of
@@ -8327,7 +8338,7 @@ export const Socialdata = [
             Disclosure 206-1 Legal actions for anti-competitive behavior,
             anti-trust, and monopoly practices
           </p>
-          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+          <div className="h-[618px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-4">Background:</p>
             <p className="text-[11px] text-[#727272] mb-4">
               This disclosure pertains to legal actions initiated under national
@@ -8370,7 +8381,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 207-1 Approach to tax
           </p>
-          <div className="h-[520px] overflow-y-auto custom-scrollbar">
+          <div className="h-[689px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Guidance:</p>
             <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
               Guidance for Disclosure 207-1-a :
@@ -8483,7 +8494,7 @@ export const Socialdata = [
             Sustainable Development Goal 1: End poverty in all its forms
             everywhere
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div className="h-[663px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 1.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, eradicate extreme poverty for all people everywhere,
@@ -8545,7 +8556,7 @@ export const Socialdata = [
             Sustainable Development Goal 10: Reduce inequality within and among
             countries
           </p>
-          <div className="h-[632px] overflow-y-auto custom-scrollbar">
+          <div className="h-[656px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 10.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Adopt policies, especially fiscal, wage and social protection
@@ -8594,7 +8605,7 @@ export const Socialdata = [
             Sustainable Development Goal 17: End poverty in all its forms
             everywhere
           </p>
-          <div className="h-[632px] overflow-y-auto custom-scrollbar">
+          <div className="h-[659px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 17.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Strengthen domestic resource mobilization, including through
@@ -8651,7 +8662,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 207-2 Tax governance, control, and risk management
           </p>
-          <div className="h-[520px] overflow-y-auto custom-scrollbar">
+          <div className="h-[667px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Guidance:</p>
             <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
               Guidance for Disclosure 207-2-a :
@@ -8811,7 +8822,7 @@ export const Socialdata = [
             Disclosure 207-3 Stakeholder engagement and management of concerns
             related to tax
           </p>
-          <div className="h-[520px] overflow-y-auto custom-scrollbar">
+          <div className="h-[670px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Guidance:</p>
             <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
               Guidance for Disclosure 207-3-a-i :
@@ -9139,7 +9150,7 @@ export const Socialdata = [
           by gender compared to local minimum wage
 
           </p>
-          <div className="h-[520px] overflow-y-auto custom-scrollbar">
+          <div className="h-[649px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">
             Background:
             </p>
@@ -9284,7 +9295,7 @@ export const Socialdata = [
             sustainable economic growth, full and productive employment and
             decent work for all
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div className="h-[620px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 8.5</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, achieve full and productive employment and decent work
@@ -9332,7 +9343,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
           Disclosure 205-2 Communication and training about anti-corruption policies and procedures
           </p>
-          <div className="h-[400px] overflow-y-auto custom-scrollbar">
+          <div className="h-[645px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-4">Guidance :</p>
             <p className="text-[11px] text-[#727272] mb-4">
             In the context of this GRI Standard, the term ‘business partners’ includes, among others, suppliers, agents, lobbyists and other intermediaries, joint venture and consortia partners, governments, customers, and clients.

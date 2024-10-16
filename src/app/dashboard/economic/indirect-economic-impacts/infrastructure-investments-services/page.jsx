@@ -6,7 +6,7 @@ import "react-tooltip/dist/react-tooltip.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Socialdata } from "../../../social/data/socialgriinfo";
-import EconomicHeader3 from "../../EconomicHeader3";
+import EconomicHeader2 from "../../EconomicHeader2";
 import Screen1 from "./screen1";
 import Screen2 from "./screen2";
 import Screen3 from "./screen3";
@@ -46,7 +46,7 @@ const Infrastructureinvestmentsservices = () => {
       <div className="flex flex-col justify-start overflow-x-hidden ">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
-           <div className="text-left mb-2 ml-3 pt-5">
+            <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-sm">Economic performance</p>
               <div className="flex">
                 <div className="h-[29px]">
@@ -136,15 +136,29 @@ const Infrastructureinvestmentsservices = () => {
             ))}
         </div>
       </div>
-      <EconomicHeader3
+      <EconomicHeader2
+        selectedOrg={selectedOrg}
+        setSelectedOrg={setSelectedOrg}
+        selectedCorp={selectedCorp}
+        setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
-        setSelectedLocation={setSelectedLocation}
-        selectedLocation={selectedLocation}
       />
-      <Screen1 location={selectedLocation} year={year} />
-      <Screen2 location={selectedLocation} year={year} />
-      <Screen3 location={selectedLocation} year={year} />
+      <Screen1
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        year={year}
+      />
+      <Screen2
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        year={year}
+      />
+      <Screen3
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        year={year}
+      />
     </>
   );
 };
