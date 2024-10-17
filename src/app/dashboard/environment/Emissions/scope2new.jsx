@@ -35,6 +35,8 @@ const Scope2 = forwardRef(
     const climatiqData = useSelector((state) => state.emissions.climatiqData);
     const previousMonthData = useSelector((state) => state.emissions.previousMonthData);
     const autoFill = useSelector((state) => state.emissions.autoFill);
+    const assigned_data = useSelector(state=>state.emissions.assignedTasks)
+
 
     const [r_schema, setRemoteSchema] = useState({});
     const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -144,29 +146,62 @@ const Scope2 = forwardRef(
     }, [scope2State]);
 
     useEffect(() => {
-      if (autoFill && previousMonthData.status === 'succeeded') {
-        const prevMonthFormData = previousMonthData.scope2Data?.data || [];
+      // if (autoFill && previousMonthData.status === 'succeeded') {
+      //   const prevMonthFormData = previousMonthData.scope2Data?.data || [];
         
-        const formattedPrevMonthData = prevMonthFormData.map(item => {
-          const updatedEmission = { ...item.Emission };
+      //   const formattedPrevMonthData = prevMonthFormData.map(item => {
+      //     const updatedEmission = { ...item.Emission };
           
-          updatedEmission.Unit = '';
-          updatedEmission.Quantity = '';
+      //     updatedEmission.Unit = '';
+      //     updatedEmission.Quantity = '';
           
-          if (updatedEmission.unit_type && updatedEmission.unit_type.includes('Over')) {
-            updatedEmission.Unit2 = '';
-            updatedEmission.Quantity2 = '';
-          }
+      //     if (updatedEmission.unit_type && updatedEmission.unit_type.includes('Over')) {
+      //       updatedEmission.Unit2 = '';
+      //       updatedEmission.Quantity2 = '';
+      //     }
           
-          return {
-            ...item,
-            Emission: updatedEmission
-          };
-        });
+      //     return {
+      //       ...item,
+      //       Emission: updatedEmission
+      //     };
+      //   });
         
-        const currentFormData = formData.length > 0 ? formData : formattedPrevMonthData;
-        dispatch(updateScopeDataLocal({ scope: 2, data: { data: currentFormData } }));
-      }
+      //   const currentFormData = formData.length > 0 ? formData : formattedPrevMonthData;
+      //   dispatch(updateScopeDataLocal({ scope: 2, data: { data: currentFormData } }));
+      // }
+      // if (assigned_data.status === 'succeeded') {
+      //   const assigned_data_scope = assigned_data.scope2;
+        
+      //   // Format the assigned data
+      //   const formattedAssignedData = assigned_data_scope.map(task => ({
+      //     id: task.id,
+      //     Emission: {
+      //       ...task,
+      //       Category: task.Category,
+      //       Subcategory: task.Subcategory,
+      //       Activity: task.Activity,
+      //       Quantity: task.Quantity,
+      //       Unit: task.Unit,
+      //       Quantity2: task.Quantity2,
+      //       Unit2: task.Unit2,
+      //       rowType: 'assigned',
+      //       assignTo: task.assign_to,
+      //       deadline: task.deadline
+      //     }
+      //   }));
+      //   console.log('formatted assigned task',assigned_data_scope,formattedAssignedData);
+        
+      
+      //   // Combine existing formData with formatted assigned data
+      //   const updated_formData = [
+      //     ...formData.filter(item => !formattedAssignedData.some(assignedItem => assignedItem.id === item.id)),
+      //     ...formattedAssignedData
+      //   ];
+      
+      //   dispatch(
+      //     updateScopeDataLocal({ scope: 2, data: { data: updated_formData } })
+      //   );
+      // }
     }, [climatiqData.totalScore, previousMonthData]);
 
     if (scope2State.status === 'loading') {

@@ -63,6 +63,7 @@ const Scope1 = forwardRef(
       (state) => state.emissions.previousMonthData
     );
     const autoFill = useSelector((state) => state.emissions.autoFill);
+    const assigned_data = useSelector(state=>state.emissions.assignedTasks)
 
     const [r_schema, setRemoteSchema] = useState({});
     const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -248,39 +249,48 @@ const Scope1 = forwardRef(
     }, [scope1State.status, scope1State.schema, scope1State.uiSchema]);
 
     useEffect(() => {
-      if (autoFill && previousMonthData.status === "succeeded") {
-        console.log('autofill triggered');
+      // if (autoFill && previousMonthData.status === "succeeded") {
+      //   console.log('autofill triggered');
         
-        const prevMonthFormData = previousMonthData.scope1Data?.data || [];
+      //   const prevMonthFormData = previousMonthData.scope1Data?.data || [];
 
-        const formattedPrevMonthData = prevMonthFormData.map((item) => {
-          const updatedEmission = { ...item.Emission };
+      //   const formattedPrevMonthData = prevMonthFormData.map((item) => {
+      //     const updatedEmission = { ...item.Emission };
 
-          updatedEmission.Unit = "";
-          updatedEmission.Quantity = "";
+      //     updatedEmission.Unit = "";
+      //     updatedEmission.Quantity = "";
 
-          if (
-            updatedEmission.unit_type &&
-            updatedEmission.unit_type.includes("Over")
-          ) {
-            updatedEmission.Unit2 = "";
-            updatedEmission.Quantity2 = "";
-          }
+      //     if (
+      //       updatedEmission.unit_type &&
+      //       updatedEmission.unit_type.includes("Over")
+      //     ) {
+      //       updatedEmission.Unit2 = "";
+      //       updatedEmission.Quantity2 = "";
+      //     }
 
-          console.log('formatted previous month data', updatedEmission,formData);
+      //     console.log('formatted previous month data', updatedEmission,formData);
 
-          return {
-            ...item,
-            Emission: updatedEmission,
-          };
-        });
+      //     return {
+      //       ...item,
+      //       Emission: updatedEmission,
+      //     };
+      //   });
 
-        const currentFormData =
-          formData.length > 0 ? formData : formattedPrevMonthData;
-        dispatch(
-          updateScopeDataLocal({ scope: 1, data: { data: currentFormData } })
-        );
-      }
+      //   const currentFormData =
+      //     formData.length > 0 ? formData : formattedPrevMonthData;
+      //   dispatch(
+      //     updateScopeDataLocal({ scope: 1, data: { data: currentFormData } })
+      //   );
+      // } 
+      // if(assigned_data.status==='succeeded'){
+      //   const assigned_data_scope = assigned_data.scope1;
+      //   console.log('assigned data for scope1',assigned_data_scope);
+        
+      //   const updated_formData = [...formData,...assigned_data_scope]
+      //   dispatch(
+      //     updateScopeDataLocal({ scope: 1, data: { data: updated_formData } })
+      //   );
+      // }
     }, [climatiqData.totalScore, previousMonthData]);
 
     if (scope1State.status === "loading") {
