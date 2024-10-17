@@ -17,9 +17,9 @@ const EconomicTable3 = ({ operationsAssessed = [] }) => {
         Percentage: `${operation.percentage.toFixed(2)}%`,
       }))
     : [{
-        Operation: "No data",
-        TotalOperation: "No data",
-        Percentage: "No data",
+        Operation: "No data available",
+        TotalOperation: "No data available",
+        Percentage: "No data available",
       }];
 
   return (

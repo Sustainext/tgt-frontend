@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 
 
-const Section2 = ({ section14_1_1Ref }) => {
+const Section2 = ({ section14_1_1Ref,data }) => {
   return (
     <>
       <div ref={section14_1_1Ref} id="section14_1_1">
@@ -16,7 +16,7 @@ const Section2 = ({ section14_1_1Ref }) => {
             mitigate potential negative impacts and mention the actions taken by
             the organisation to manage actual and potential positive impacts.
           </p>
-          <p className="text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis illo, tempora molestiae alias soluta eaque quibusdam reiciendis impedit ut facere voluptatum tempore natus asperiores! Hic voluptatibus perferendis quibusdam inventore suscipit.</p>
+          <p className="text-sm">{data["3_3cde"]?data["3_3cde"]:"No data available"}</p>
         </div>
 
         <div className="mb-6">
@@ -26,7 +26,7 @@ const Section2 = ({ section14_1_1Ref }) => {
             with specific lessons learned and how these have been incoporated to
             organisation's operational policies and procedures.
           </p>
-          <p className="text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis illo, tempora molestiae alias soluta eaque quibusdam reiciendis impedit ut facere voluptatum tempore natus asperiores! Hic voluptatibus perferendis quibusdam inventore suscipit.</p>
+          <p className="text-sm">{data["3_3cde"]?data["3_3cde"]:"No data available"}</p>
         </div>
       </div>
     </>

@@ -8,7 +8,7 @@ import {setScopeOneEmission} from "../../../../../../lib/redux/features/ESGSlice
 import ScopeTable from '../tables/scopeTable'
 
 const Section4=({section12_1_2Ref,data})=>{
-   
+    const [biogenicStatement,setBiogenicStatement]=useState("")
     const content = useSelector(state => state.screen12Slice.scope_one_emissions);
     const dispatch = useDispatch();
     const loadContent = () => {
@@ -40,7 +40,42 @@ const Section4=({section12_1_2Ref,data})=>{
             "Unit":"No data available"
         }
     ]
-    
+    const config = {
+        style: {
+          fontSize: "14px",
+          color:"#667085"
+        },
+        allowResizeY: false,
+        defaultActionOnPaste: 'insert_clear_html',
+        toolbarSticky: false,
+        toolbar: true,
+        buttons: [
+            'bold',
+            'italic',
+            'underline',
+            'strikeThrough',
+            'align',
+            'outdent',
+            'indent',
+            'ul',
+            'ol',
+            'paragraph',
+            'link',
+            'table',
+            'undo',
+            'redo',
+            'hr',
+            'fontsize',
+            'selectall'
+        ],
+        // Remove buttons from the extra buttons list
+        removeButtons: ['fullsize', 'preview', 'source', 'print', 'about', 'find', 'changeMode','paintFormat','image','brush','font'],
+      };
+      
+      
+      const handleRichEditorChange=(value)=>{
+        setBiogenicStatement(value)
+      }
     return (
         <>
        
@@ -79,6 +114,16 @@ const Section4=({section12_1_2Ref,data})=>{
 <div className="shadow-md rounded-md mb-4">
 <LeaveTable columns={col} data={Tabledata}/>
 </div>
+
+{/* <div className="mb-4">
+              <JoditEditor
+              // ref={editor}
+              value={biogenicStatement}
+              config={config}
+              tabIndex={1}
+              onBlur={handleRichEditorChange}
+              />
+            </div> */}
 </div>
         </>
     )

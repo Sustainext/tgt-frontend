@@ -58,9 +58,9 @@ const Community = forwardRef(({ onSubmitSuccess }, ref) => {
   const submitForm = async (type) => {
       LoaderOpen();
       const data={
-       "community_engagement_statement": community_engagement_statement ,
+       "community_engagement": community_engagement_statement ,
     "impact_assessment": impact_assessment,
-    "csr_statement": csr_statement,
+    "csr_policies": csr_statement,
       }
   
       const url = `${process.env.BACKEND_API_URL}/esg_report/screen_fourteen/${reportid}/`;
@@ -128,9 +128,9 @@ const Community = forwardRef(({ onSubmitSuccess }, ref) => {
           const response = await axiosInstance.get(url);
           if(response.data){
             setData(response.data)
-            dispatch(setCommunityEngagementStatement(response.data.company_sustainability_statement));
-          dispatch(setImpactAssessment(response.data.approach_for_sustainability));
-          dispatch(setCSRStatement(response.data.sustainability_goals));
+            dispatch(setCommunityEngagementStatement(response.data.community_engagement));
+          dispatch(setImpactAssessment(response.data.impact_assessment));
+          dispatch(setCSRStatement(response.data.csr_policies));
           }
           
           LoaderClose();
@@ -145,7 +145,7 @@ const Community = forwardRef(({ onSubmitSuccess }, ref) => {
     // Ensure API is only called once
     if (!apiCalledRef.current && reportid) {
         apiCalledRef.current = true;  // Set the flag to true to prevent future calls
-        // loadFormData();  // Call the API only once
+        loadFormData();  // Call the API only once
     }
   }, [reportid]);
 
@@ -157,9 +157,9 @@ const Community = forwardRef(({ onSubmitSuccess }, ref) => {
         </h3>
         <div className="flex gap-4">
           <div className="w-[80%]">
-            <Section1 section14_1Ref={section14_1Ref}/>
-            <Section2  section14_1_1Ref={section14_1_1Ref} />
-            <Section3 section14_2Ref={section14_2Ref}/>
+            <Section1 section14_1Ref={section14_1Ref} data={data}/>
+            <Section2  section14_1_1Ref={section14_1_1Ref} data={data} />
+            <Section3 section14_2Ref={section14_2Ref} data={data} />
         
       
           </div>

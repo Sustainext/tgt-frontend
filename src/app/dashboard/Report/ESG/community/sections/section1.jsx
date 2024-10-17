@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCommunityEngagementStatement,
   setImpactAssessment} from "../../../../../../lib/redux/features/ESGSlice/screen14Slice"
 
-const Section1 = ({ section14_1Ref }) => {
+const Section1 = ({ section14_1Ref,data }) => {
  
   
 
@@ -32,6 +32,7 @@ const Section1 = ({ section14_1Ref }) => {
   const handleEditorChangeImpact=(e)=>{
     dispatch(setImpactAssessment(e.target.value))
   }
+  const TableData=data["413_1a_analyse"]?data["413_1a_analyse"]:[]
   return (
     <>
       <div ref={section14_1Ref} id="section14_1">
@@ -59,7 +60,7 @@ const Section1 = ({ section14_1Ref }) => {
         </div>
     
         <div className="shadow-md rounded-md mb-4">
-            <CommunityTable/>
+            <CommunityTable  data={TableData}/>
         </div>
         <div>
         <div className="flex justify-between">
@@ -81,7 +82,7 @@ const Section1 = ({ section14_1Ref }) => {
         />
         </div>
         <div className="shadow-md rounded-md mb-4">
-          <CommunityTable2/>
+          <CommunityTable2 data={data["413_2a"]?data["413_2a"].data?data["413_2a"].data:[]:[]} />
         </div>
       </div>
     </>

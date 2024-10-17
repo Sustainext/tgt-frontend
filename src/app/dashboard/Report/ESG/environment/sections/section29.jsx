@@ -27,9 +27,9 @@ const Section29=({section12_5_6Ref,orgName})=>{
     ]
     const data1=[
         {
-            "Material of the spill":"data",
-            "Volume of the spill":"data",
-            "Unit":"data",
+            "Material of the spill":"No data available",
+            "Volume of the spill":"No data available",
+            "Unit":"No data available",
         }
     ]
 
@@ -41,9 +41,9 @@ const Section29=({section12_5_6Ref,orgName})=>{
     ]
     const data2=[
         {
-            "Location of spill":"data",
-            "Volume of the spill":"data",
-            "Unit":"data",
+            "Location of spill":"No data available",
+            "Volume of the spill":"No data available",
+            "Unit":"No data available",
         }
     ]
 
@@ -55,9 +55,9 @@ const Section29=({section12_5_6Ref,orgName})=>{
     ]
     const data3=[
         {
-            "Total number of Significant spill":"data",
-            "Total volume of Significant spill":"data",
-            "Unit":"data",
+            "Total number of Significant spill":"No data available",
+            "Total volume of Significant spill":"No data available",
+            "Unit":"No data available",
         }
     ]
     
