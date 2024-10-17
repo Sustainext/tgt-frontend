@@ -169,39 +169,38 @@ const Scope2 = forwardRef(
       //   const currentFormData = formData.length > 0 ? formData : formattedPrevMonthData;
       //   dispatch(updateScopeDataLocal({ scope: 2, data: { data: currentFormData } }));
       // }
-      // if (assigned_data.status === 'succeeded') {
-      //   const assigned_data_scope = assigned_data.scope2;
+      if (assigned_data.status === 'succeeded') {
+        const assigned_data_scope = assigned_data.scope2;
         
-      //   // Format the assigned data
-      //   const formattedAssignedData = assigned_data_scope.map(task => ({
-      //     id: task.id,
-      //     Emission: {
-      //       ...task,
-      //       Category: task.Category,
-      //       Subcategory: task.Subcategory,
-      //       Activity: task.Activity,
-      //       Quantity: task.Quantity,
-      //       Unit: task.Unit,
-      //       Quantity2: task.Quantity2,
-      //       Unit2: task.Unit2,
-      //       rowType: 'assigned',
-      //       assignTo: task.assign_to,
-      //       deadline: task.deadline
-      //     }
-      //   }));
-      //   console.log('formatted assigned task',assigned_data_scope,formattedAssignedData);
+        // Format the assigned data
+        const formattedAssignedData = assigned_data_scope.map(task => ({
+          id: task.id,
+          Emission: {
+            ...task,
+            Category: task.Category,
+            Subcategory: task.Subcategory,
+            Activity: task.Activity,
+            Quantity: task.Quantity,
+            Unit: task.Unit,
+            Quantity2: task.Quantity2,
+            Unit2: task.Unit2,
+            rowType: 'assigned',
+            assignTo: task.assign_to,
+            deadline: task.deadline
+          }
+        }));
+        console.log('formatted assigned task',assigned_data_scope,formattedAssignedData);
         
+        // Combine existing formData with formatted assigned data
+        const updated_formData = [
+          ...formData.filter(item => !formattedAssignedData.some(assignedItem => assignedItem.id === item.id)),
+          ...formattedAssignedData
+        ];
       
-      //   // Combine existing formData with formatted assigned data
-      //   const updated_formData = [
-      //     ...formData.filter(item => !formattedAssignedData.some(assignedItem => assignedItem.id === item.id)),
-      //     ...formattedAssignedData
-      //   ];
-      
-      //   dispatch(
-      //     updateScopeDataLocal({ scope: 2, data: { data: updated_formData } })
-      //   );
-      // }
+        dispatch(
+          updateScopeDataLocal({ scope: 2, data: { data: updated_formData } })
+        );
+      }
     }, [climatiqData.totalScore, previousMonthData]);
 
     if (scope2State.status === 'loading') {
