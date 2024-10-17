@@ -16,6 +16,7 @@ import {
   updateScopeData,
   updateScopeDataLocal,
 } from "@/lib/redux/features/emissionSlice";
+import {toast} from 'react-toastify'
 
 const local_schema = {
   type: "array",
@@ -137,28 +138,76 @@ const Scope1 = forwardRef(
       );
     }, [formData, dispatch]);
 
+    // const handleRemoveRow = useCallback(
+    //   async (index) => {
+    //     const parsedIndex = parseInt(index, 10);
+    //     const updatedData = formData.filter((_, i) => i !== parsedIndex);
+    //     console.log("updated data", updatedData, " for index ", parsedIndex);
+
+    //     dispatch(
+    //       updateScopeDataLocal({ scope: 1, data: { data: updatedData } })
+    //     );
+
+    //     try {
+    //       await updateFormData(updatedData);
+
+    //       if (parsedIndex === 0 && updatedData.length === 0) {
+    //         setAccordionOpen(false);
+    //       }
+    //     } catch (error) {
+    //       console.error("Failed to update form data:", error);
+    //     }
+    //   },
+    //   [formData, dispatch, successCallback, setAccordionOpen]
+    // );
+
     const handleRemoveRow = useCallback(
       async (index) => {
         const parsedIndex = parseInt(index, 10);
+        const rowToRemove = formData[parsedIndex];
+    
+        if (!rowToRemove) {
+          console.error("Row not found");
+          return;
+        }
+    
+        const rowType = rowToRemove.Emission?.rowType;
+    
+        if (rowType === 'assigned' || rowType === 'approved') {
+          // Prevent deletion for assigned or approved rows
+          toast.error("Cannot delete assigned or approved rows");
+          return;
+        }
+    
         const updatedData = formData.filter((_, i) => i !== parsedIndex);
         console.log("updated data", updatedData, " for index ", parsedIndex);
-
+    
+        // Update local state
         dispatch(
           updateScopeDataLocal({ scope: 1, data: { data: updatedData } })
         );
-
-        try {
-          await updateFormData(updatedData);
-          // successCallback();
-
-          if (parsedIndex === 0 && updatedData.length === 0) {
-            setAccordionOpen(false);
+    
+        if (rowType === 'calculated') {
+          try {
+            // Only call API for calculated rows
+            await updateFormData(updatedData);
+          } catch (error) {
+            console.error("Failed to update form data:", error);
+            toast.error("Failed to update data on the server");
+            // Optionally, revert the local state change here
+            return;
           }
-        } catch (error) {
-          console.error("Failed to update form data:", error);
         }
+    
+        // Check if we need to close the accordion
+        if (parsedIndex === 0 && updatedData.length === 0) {
+          setAccordionOpen(false);
+        }
+    
+        // Notify success
+        toast.success("Row removed successfully");
       },
-      [formData, dispatch, successCallback, setAccordionOpen]
+      [formData, dispatch, setAccordionOpen]
     );
 
     const updateFormData = useCallback(
@@ -200,6 +249,8 @@ const Scope1 = forwardRef(
 
     useEffect(() => {
       if (autoFill && previousMonthData.status === "succeeded") {
+        console.log('autofill triggered');
+        
         const prevMonthFormData = previousMonthData.scope1Data?.data || [];
 
         const formattedPrevMonthData = prevMonthFormData.map((item) => {
@@ -215,6 +266,8 @@ const Scope1 = forwardRef(
             updatedEmission.Unit2 = "";
             updatedEmission.Quantity2 = "";
           }
+
+          console.log('formatted previous month data', updatedEmission,formData);
 
           return {
             ...item,

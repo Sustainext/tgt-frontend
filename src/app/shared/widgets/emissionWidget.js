@@ -20,6 +20,7 @@ import {
 } from "@/lib/redux/features/emissionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import AssignEmissionModal from "./assignEmissionModal";
+import MultipleAssignEmissionModal from './MultipleAssignEmissionModal';
 import { getMonthName } from '@/app/utils/dateUtils';
 
 const EmissionWidget = React.memo(
@@ -60,15 +61,32 @@ const EmissionWidget = React.memo(
 
     // Assign To
     const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
-    const month = useSelector(state=>state.emissions.month);
-    const location = useSelector(state=>state.emissions.location);
+    const [isMultipleAssignModalOpen, setIsMultipleAssignModalOpen] = useState(false);
+    const users = useSelector(state => state.emissions.users.data);
+    const [assignedUser, setAssignedUser] = useState("");
+  const { location, month } = useSelector(state => state.emissions);
+
+    useEffect(()=>{
+      const filteredUser = users?.filter(user => user.id === parseInt(value.assignTo))
+      setAssignedUser(filteredUser[0]?.username);
+    },[users, value.assignTo])
 
     const handleAssignClick = () => {
       setIsAssignModalOpen(true);
     };
-
+  
+    const handleMultipleAssignClick = () => {
+      setIsMultipleAssignModalOpen(true);
+      // setShowAllTasks(true)
+    };
+  
     const handleCloseAssignModal = () => {
       setIsAssignModalOpen(false);
+    };
+  
+    const handleCloseMultipleAssignModal = () => {
+      setIsMultipleAssignModalOpen(false);
+      // setShowAllTasks(false)
     };
 
     // Unit validation
@@ -270,6 +288,7 @@ const EmissionWidget = React.memo(
         fetchActivities();
       }
     }, [category]);
+
     useEffect(() => {
       if (category) {
         fetchSubcategories();
@@ -722,10 +741,11 @@ const EmissionWidget = React.memo(
           <div className="mb-2">
             <button
               type="button"
-              className=" border text-[12px] w-[100px] py-1 rounded-md text-gray-700 border-gray-700 disabled:text-slate-300 disabled:border-slate-300 cursor-pointer"
+              className=" border text-[12px] py-1.5 px-3 rounded-md text-[#007eef] font-semibold leading-tight border-[#007eef] disabled:text-slate-300 disabled:border-slate-300 cursor-pointer"
               disabled={!selectAll}
-            >
-              Assign user
+              // onClick={handleMultipleAssignClick}
+              >
+              Assign Tasks ({selectedRows.length})
             </button>
           </div>
         )}
@@ -840,7 +860,7 @@ const EmissionWidget = React.memo(
                         toggleDropdown();
                         setActivitySearch("");
                       }}
-                      className={`text-[12px] focus:border-blue-500 focus:outline-none w-full absolute left-0 top-8 z-[1000] min-w-[650px]`}
+                      className={`text-[12px] focus:border-blue-500 focus:outline-none w-full absolute left-0 top-8 z-[100] min-w-[650px]`}
                     >
                       <option value="" className="px-1">
                         {isFetching.current
@@ -971,11 +991,11 @@ const EmissionWidget = React.memo(
               <td className="py-2 text-center w-[5vw]">
                 <button
                   type="button"
-                  className="bg-blue-500 text-white text-[12px] w-[112px] py-1 rounded-md shadow hover:bg-blue-600 disabled:opacity-50"
-                  // onClick={handleAssignClick}
+                  className={`${assignedUser ? 'bg-white text-blue-500 pl-1 truncate overflow-hidden shadow-md border border-gray-300 hover:shadow-lg': 'bg-blue-500 text-white hover:bg-blue-600 '}  text-[12px] w-[112px] py-1 rounded-md shadow disabled:opacity-50`}
+                  onClick={handleAssignClick}
                   disabled={rowType === "calculated" || rowType === "approved"}
                 >
-                  Assign to
+                  {assignedUser ? `${assignedUser}` : "Assign to"}
                 </button>
               </td>
 
@@ -1156,6 +1176,7 @@ const EmissionWidget = React.memo(
         <AssignEmissionModal
           isOpen={isAssignModalOpen}
           onClose={handleCloseAssignModal}
+          onChange={onChange}
           taskData={{
             location,
             year,
@@ -1165,9 +1186,14 @@ const EmissionWidget = React.memo(
             subcategory: value.Subcategory,
             activity: value.Activity,
             countryCode,
-            // Include any other necessary data
           }}
         />
+        <MultipleAssignEmissionModal
+        isOpen={isMultipleAssignModalOpen}
+        onClose={handleCloseMultipleAssignModal}
+        onChange={onChange}
+        scope={scope}
+      />
       </div>
     );
   }

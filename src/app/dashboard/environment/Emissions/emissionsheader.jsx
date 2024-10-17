@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { yearInfo, months } from "@/app/shared/data/yearInfo";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import { fetchPreviousMonthData, fetchEmissionsData, setLocation, setYear, setMonth, setCountryCode } from '@/lib/redux/features/emissionSlice';
+import { fetchPreviousMonthData, fetchEmissionsData, fetchAssignedTasks, fetchApprovedTasks, setLocation, setYear, setMonth, setCountryCode } from '@/lib/redux/features/emissionSlice';
 
 const monthMapping = {
   Jan: 1, Feb: 2, Mar: 3, Apr: 4, May: 5, Jun: 6,
@@ -44,6 +44,8 @@ const EmissionsHeader = ({
     if (location && year) {
       dispatch(fetchEmissionsData({ location, year, month }));
       dispatch(fetchPreviousMonthData({ location, year, month }));
+      dispatch(fetchAssignedTasks({ location, year, month }));
+      dispatch(fetchApprovedTasks({ location, year, month }));
     }
   }, [location, year, month, dispatch]);
 

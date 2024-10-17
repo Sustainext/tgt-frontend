@@ -3,7 +3,11 @@ import axiosInstance from "@/app/utils/axiosMiddleware";
 
 export const fetchEmissionsData = createAsyncThunk(
   'emissions/fetchEmissionsData',
-  async ({ location, year, month }) => {
+  async ({ location, year, month }, thunkAPI) => {
+    if (!location || !year || !month) {
+      return thunkAPI.rejectWithValue('Missing required parameters');
+    }
+
     const base_url = `${process.env.BACKEND_API_URL}/datametric/get-climatiq-score?`;
     const climatiqUrl = `${base_url}location=${location}&&year=${year}&&month=${month}`;
     
@@ -20,8 +24,10 @@ export const fetchEmissionsData = createAsyncThunk(
         axiosInstance.get(scope3Url)
       ]);      
 
-       // Function to add rowType to Emission objects
-       const addRowType = (responseData) => {
+      const addRowType = (responseData) => {
+        if (!responseData || !responseData.data) {
+          return { data: [] };
+        }
         return {
           ...responseData,
           data: responseData.data.map(item => ({
@@ -34,21 +40,32 @@ export const fetchEmissionsData = createAsyncThunk(
         };
       };
 
+      const processScope = (response, scopeName) => {
+        if (!response || !response.data || !response.data.form || !response.data.form[0]) {
+          console.error(`Invalid ${scopeName} response structure`);
+          return {
+            [`${scopeName}Data`]: { data: [] },
+            [`${scopeName}Schema`]: {},
+            [`${scopeName}UiSchema`]: {}
+          };
+        }
+        return {
+          [`${scopeName}Data`]: addRowType(response.data.form_data[0]),
+          [`${scopeName}Schema`]: response.data.form[0].schema || {},
+          [`${scopeName}UiSchema`]: response.data.form[0].ui_schema || {}
+        };
+      };
+
       return {
-        climatiqData: climatiqResponse.data,
-        scope1Data: addRowType(scope1Response.data.form_data[0]),
-        scope1Schema: scope1Response.data.form[0].schema,
-        scope1UiSchema: scope1Response.data.form[0].ui_schema,
-        scope2Data: addRowType(scope2Response.data.form_data[0]),
-        scope2Schema: scope2Response.data.form[0].schema,
-        scope2UiSchema: scope2Response.data.form[0].ui_schema,
-        scope3Data: addRowType(scope3Response.data.form_data[0]),
-        scope3Schema: scope3Response.data.form[0].schema,
-        scope3UiSchema: scope3Response.data.form[0].ui_schema,
+        climatiqData: climatiqResponse.data || {},
+        ...processScope(scope1Response, 'scope1'),
+        ...processScope(scope2Response, 'scope2'),
+        ...processScope(scope3Response, 'scope3'),
         params: { location, year, month }
       };
     } catch (error) {
-      throw error;
+      console.error('Error fetching emissions data:', error);
+      return thunkAPI.rejectWithValue(error.response?.data || 'An error occurred while fetching data');
     }
   }
 );
@@ -56,11 +73,15 @@ export const fetchEmissionsData = createAsyncThunk(
 export const fetchPreviousMonthData = createAsyncThunk(
   'emissions/fetchPreviousMonthData',
   async ({ location, year, month }, thunkAPI) => {
-    let prevMonth = month - 1;
-    let prevYear = year;
+    if (!location || !year || !month) {
+      return thunkAPI.rejectWithValue('Missing required parameters');
+    }
+
+    let prevMonth = parseInt(month) - 1;
+    let prevYear = parseInt(year);
     if (prevMonth === 0) {
       prevMonth = 12;
-      prevYear = year - 1;
+      prevYear -= 1;
     }
 
     const scopeBaseUrl = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?`;
@@ -76,6 +97,9 @@ export const fetchPreviousMonthData = createAsyncThunk(
       ]);
 
       const addRowType = (responseData) => {
+        if (!responseData || !responseData.data) {
+          return { data: [] };
+        }
         return {
           ...responseData,
           data: responseData.data.map(item => ({
@@ -88,14 +112,23 @@ export const fetchPreviousMonthData = createAsyncThunk(
         };
       };
 
+      const processScope = (response, scopeName) => {
+        if (!response || !response.data || !response.data.form_data) {
+          console.error(`Invalid ${scopeName} response structure for previous month data`);
+          return { [`${scopeName}Data`]: { data: [] } };
+        }
+        return { [`${scopeName}Data`]: addRowType(response.data.form_data[0]) };
+      };
+
       return {
-        scope1Data: addRowType(scope1Response.data.form_data[0]),
-        scope2Data: addRowType(scope2Response.data.form_data[0]),
-        scope3Data: addRowType(scope3Response.data.form_data[0]),
+        ...processScope(scope1Response, 'scope1'),
+        ...processScope(scope2Response, 'scope2'),
+        ...processScope(scope3Response, 'scope3'),
         params: { location, year: prevYear, month: prevMonth }
       };
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data);
+      console.error('Error fetching previous month data:', error);
+      return thunkAPI.rejectWithValue(error.response?.data || 'An error occurred while fetching previous month data');
     }
   }
 );
@@ -135,9 +168,9 @@ const calculateTotalClimatiqScore = (data) => {
 const formatTaskData = (task, commonData) => ({
   location: commonData.location,
   year: commonData.year,
-  subcategory: commonData.Subcategory,
+  subcategory: commonData.subcategory,
   activity: commonData.activity || "",
-  task_name: `${commonData.location}-${commonData.month}-${commonData.Activity || commonData.Subcategory}`,
+  task_name: `${commonData.location}-${commonData.month}-${commonData.activity || commonData.subcategory}`,
   scope: commonData.scope,
   month: commonData.month,
   roles: 1, // Assuming this is always 1 for self-assigned tasks
@@ -145,10 +178,11 @@ const formatTaskData = (task, commonData) => ({
   assigned_by: parseInt(localStorage.getItem("user_id")),
   assigned_to: commonData.assignedTo,
   user_client: 1, // Assuming this is always 1
-  category: commonData.Category,
+  category: commonData.category,
   region: commonData.countryCode,
 });
 
+//Assign Tasks
 export const assignEmissionTasks = createAsyncThunk(
   'emissions/assignEmissionTasks',
   async (payload, { getState, dispatch }) => {
@@ -183,6 +217,48 @@ export const assignEmissionTasks = createAsyncThunk(
       return results;
     } catch (error) {
       throw error;
+    }
+  }
+);
+
+export const fetchAssignedTasks = createAsyncThunk(
+  'emissions/fetchAssignedTasks',
+  async ({ location, year, month }) => {
+    const userId = localStorage.getItem('user_id');
+    const url = `${process.env.BACKEND_API_URL}/sustainapp/get_assigned_by_task/?location=${location}&year=${year}&month=${month}&user_id=${userId}`;
+    
+    try {
+      const response = await axiosInstance.get(url);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+export const fetchApprovedTasks = createAsyncThunk(
+  'emissions/fetchApprovedTasks',
+  async ({ location, year, month }) => {
+    const userId = localStorage.getItem('user_id');
+    const url = `${process.env.BACKEND_API_URL}/sustainapp/get_approved_task/?location=${location}&year=${year}&month=${month}&user_id=${userId}`;
+    
+    try {
+      const response = await axiosInstance.get(url);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+export const fetchUsers = createAsyncThunk(
+  'emissions/fetchUsers',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get('/sustainapp/user_client/');
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
     }
   }
 );
@@ -248,7 +324,26 @@ const emissionsSlice = createSlice({
       scope3: false
     },
     assignTaskStatus: 'idle',
-    assignTaskError: null
+    assignTaskError: null,
+    assignedTasks: {
+      scope1: [],
+      scope2: [],
+      scope3: [],
+      status: 'idle',
+      error: null,
+    },
+    approvedTasks: {
+      scope1: [],
+      scope2: [],
+      scope3: [],
+      status: 'idle',
+      error: null,
+    },
+    users: {
+      data: [],
+      status: 'idle',
+      error: null
+    },
   },
   reducers: {
     setLocation: (state, action) => {
@@ -405,6 +500,44 @@ const emissionsSlice = createSlice({
       .addCase(assignEmissionTasks.rejected, (state, action) => {
         state.assignTaskStatus = 'failed';
         state.assignTaskError = action.error.message;
+      })
+      .addCase(fetchAssignedTasks.pending, (state) => {
+        state.assignedTasks.status = 'loading';
+      })
+      .addCase(fetchAssignedTasks.fulfilled, (state, action) => {
+        state.assignedTasks.status = 'succeeded';
+        state.assignedTasks.scope1 = action.payload['1'] || [];
+        state.assignedTasks.scope2 = action.payload['2'] || [];
+        state.assignedTasks.scope3 = action.payload['3'] || [];
+      })
+      .addCase(fetchAssignedTasks.rejected, (state, action) => {
+        state.assignedTasks.status = 'failed';
+        state.assignedTasks.error = action.error.message;
+      })
+      .addCase(fetchApprovedTasks.pending, (state) => {
+        state.approvedTasks.status = 'loading';
+      })
+      .addCase(fetchApprovedTasks.fulfilled, (state, action) => {
+        state.approvedTasks.status = 'succeeded';
+        state.approvedTasks.scope1 = action.payload['1'] || [];
+        state.approvedTasks.scope2 = action.payload['2'] || [];
+        state.approvedTasks.scope3 = action.payload['3'] || [];
+      })
+      .addCase(fetchApprovedTasks.rejected, (state, action) => {
+        state.approvedTasks.status = 'failed';
+        state.approvedTasks.error = action.error.message;
+      })
+      .addCase(fetchUsers.pending, (state) => {
+        state.users.status = 'loading';
+      })
+      .addCase(fetchUsers.fulfilled, (state, action) => {
+        state.users.status = 'succeeded';
+        state.users.data = action.payload;
+        state.users.error = null;
+      })
+      .addCase(fetchUsers.rejected, (state, action) => {
+        state.users.status = 'failed';
+        state.users.error = action.payload;
       });
   }
 });

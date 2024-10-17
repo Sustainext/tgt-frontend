@@ -1,26 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { assignEmissionTasks } from '@/lib/redux/features/emissionSlice';
-import axiosInstance from "@/app/utils/axiosMiddleware";
+import { assignEmissionTasks, fetchUsers } from '@/lib/redux/features/emissionSlice';
 
-const AssignEmissionModal = ({ isOpen, onClose, taskData }) => {
-  const [users, setUsers] = useState([]);
+const AssignEmissionModal = ({ isOpen, onClose, taskData, onChange }) => {
+  const { data: users, status: usersStatus, error: usersError } = useSelector(state => state.emissions.users);
   const [selectedUser, setSelectedUser] = useState('');
   const [dueDate, setDueDate] = useState('');
   const dispatch = useDispatch();
   const assignTaskStatus = useSelector(state => state.emissions.assignTaskStatus);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axiosInstance.get('/sustainapp/user_client/');
-        setUsers(response.data);
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      }
-    };
-    fetchUsers();
-  }, []);
+    if (usersStatus === 'idle') {
+      dispatch(fetchUsers());
+    }
+  }, [usersStatus, dispatch]);
 
   const handleAssign = () => {
     if (!selectedUser || !dueDate) {
@@ -43,6 +36,10 @@ const AssignEmissionModal = ({ isOpen, onClose, taskData }) => {
         countryCode: taskData.countryCode
       }
     }));
+        onChange({
+          type: "assignTo",
+          value: selectedUser,
+        });
   };
 
   useEffect(() => {
