@@ -1,7 +1,7 @@
 'use client';
 import { useState, useRef, useEffect } from "react";
 
-const CommunityTable2 = () => {
+const CommunityTable2 = ({data}) => {
   // Table headers
   const col = [
     "Operations with significant actual and potential negative impacts on local communities",
@@ -11,20 +11,7 @@ const CommunityTable2 = () => {
   ];
 
   // Table data
-  const data = [
-    {
-      operation: "Operation 1",
-      location: "data",
-      potentialImpact: "data",
-      actualImpact: "data",
-    },
-    {
-      operation: "Operation 2",
-      location: "data",
-      potentialImpact: "data",
-      actualImpact: "data",
-    },
-  ];
+  
 
   return (
     <div style={{ maxHeight: "450px", overflowY: "auto" }} className="mb-2">
@@ -52,22 +39,39 @@ const CommunityTable2 = () => {
           </tr>
         </thead>
         <tbody className="border border-gray-300">
-          {data.map((row, rowIndex) => (
+          {data.length>0?data.map((row, rowIndex) => (
             <tr key={rowIndex} className="text-[13px]">
               <td className="border-t border-r border-gray-200 p-4 text-start">
-                {row.operation}
+                {row.localcommunities}
               </td>
               <td className="border-t border-r border-gray-200 p-4 text-start">
-                {row.location}
+                {row.locationofoperations}
               </td>
               <td className="border-t border-r border-gray-200 p-4 text-start">
-                {row.potentialImpact}
+                {row.potentialnegative}
               </td>
               <td className="border-t border-gray-200 p-4 text-start">
-                {row.actualImpact}
+                {row.impactsoftheOperation}
               </td>
             </tr>
-          ))}
+          )):(
+            <tr className="text-[13px]">
+            <td className="border-t border-r border-gray-200 p-4 text-start">
+              No data available
+            </td>
+            <td className="border-t border-r border-gray-200 p-4 text-start">
+            No data available
+            </td>
+            <td className="border-t border-r border-gray-200 p-4 text-start">
+            No data available
+            </td>
+            <td className="border-t border-gray-200 p-4 text-start">
+            No data available
+            </td>
+          </tr>
+          )
+        
+        }
         </tbody>
       </table>
     </div>

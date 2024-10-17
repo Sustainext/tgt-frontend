@@ -1,5 +1,5 @@
 'use client'
-import { useState, useRef, useEffect } from "react";
+import { forwardRef, useImperativeHandle,useState, useRef, useEffect } from "react";
 import Section1 from "./sections/section1";
 import Section2 from "./sections/section2";
 import Section3 from "./sections/section3";
@@ -34,8 +34,33 @@ import Section31 from './sections/section31'
 import Section32 from './sections/section32'
 import Section33 from './sections/section33'
 import Section34 from './sections/section34'
+import axiosInstance,{patch} from "../../../../utils/axiosMiddleware";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from "react-redux";
+import { Oval } from "react-loader-spinner";
+import {setEnvironmentStatement,
+  setEmission,
+  setScopeOneEmission,
+  setScopeTwoEmission,
+  setScopeThreeEmission,
+  setGHGEmissionIntensityTracking,
+  setGHGEmissionReductionEfforts,
+  setOzoneDepletingSubstanceElimination,
+  setMaterialManagementStrategy,
+  setRecyclingProcess,
+  setReclamationRecyclingProcess,
+  setWaterWithdrawalTracking,
+  setWaterConsumptionGoals,
+  setEnergyConsumptionWithinOrganization,
+  setEnergyConsumptionOutsideOrganization,
+  setEnergyIntensityTracking,
+  setEnergyConsumptionReductionCommitment,
+  setSignificantSpills,
+  setHabitatProtectionRestorationCommitment,
+  setAirQualityProtectionCommitment} from "../../../../../lib/redux/features/ESGSlice/screen12Slice"
 
-const Environment=()=>{
+const Environment=forwardRef(({ onSubmitSuccess }, ref) => {
     
     const [activeSection, setActiveSection] = useState('section12_1');
 
@@ -90,6 +115,191 @@ const scrollToSection = (sectionRef, sectionId) => {
   };
   
 
+  const orgName = typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
+  const reportid = typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+  const apiCalledRef = useRef(false);
+  const [data,setData]=useState("")
+  const [loopen, setLoOpen] = useState(false);
+  const environmental_responsibility_statement = useSelector((state) => state.screen12Slice.environmental_responsibility_statement);
+  const emissions = useSelector((state) => state.screen12Slice.emissions);
+  const scope_one_emissions = useSelector((state) => state.screen12Slice.scope_one_emissions);
+  const scope_two_emissions = useSelector((state) => state.screen12Slice.scope_two_emissions);
+  const scope_three_emissions = useSelector((state) => state.screen12Slice.scope_three_emissions);
+  const ghg_emission_intensity_tracking = useSelector((state) => state.screen12Slice.ghg_emission_intensity_tracking);
+  const ghg_emission_reduction_efforts = useSelector((state) => state.screen12Slice.ghg_emission_reduction_efforts);
+  const ozone_depleting_substance_elimination = useSelector((state) => state.screen12Slice.ozone_depleting_substance_elimination);
+  const material_management_strategy = useSelector((state) => state.screen12Slice.material_management_strategy);
+  const recycling_process = useSelector((state) => state.screen12Slice.recycling_process);
+  const reclamation_recycling_process = useSelector((state) => state.screen12Slice.reclamation_recycling_process);
+  const water_withdrawal_tracking = useSelector((state) => state.screen12Slice.water_withdrawal_tracking);
+  const water_consumption_goals = useSelector((state) => state.screen12Slice.water_consumption_goals);
+  const energy_consumption_within_organization = useSelector((state) => state.screen12Slice.energy_consumption_within_organization);
+  const energy_consumption_outside_organization = useSelector((state) => state.screen12Slice.energy_consumption_outside_organization);
+  const energy_intensity_tracking = useSelector((state) => state.screen12Slice.energy_intensity_tracking);
+  const energy_consumption_reduction_commitment = useSelector((state) => state.screen12Slice.energy_consumption_reduction_commitment);
+  const significant_spills = useSelector((state) => state.screen12Slice.significant_spills);
+  const habitat_protection_restoration_commitment = useSelector((state) => state.screen12Slice.habitat_protection_restoration_commitment);
+  const air_quality_protection_commitment = useSelector((state) => state.screen12Slice.air_quality_protection_commitment);
+  
+  const dispatch = useDispatch()
+
+  useImperativeHandle(ref, () => ({
+      submitForm,
+    }));
+
+  const LoaderOpen = () => {
+      setLoOpen(true);
+    };
+  
+    const LoaderClose = () => {
+      setLoOpen(false);
+    };
+  const submitForm = async (type) => {
+      LoaderOpen();
+      const data={
+      "environmental_responsibility_statement":environmental_responsibility_statement,
+  "emissions":emissions ,
+  "scope_one_emissions":scope_one_emissions ,
+  "scope_two_emissions":scope_two_emissions ,
+  "scope_three_emissions":scope_three_emissions ,
+  "ghg_emission_intensity_tracking":ghg_emission_intensity_tracking ,
+  "ghg_emission_reduction_efforts":ghg_emission_reduction_efforts ,
+  "ozone_depleting_substance_elimination":ozone_depleting_substance_elimination ,
+  "material_management_strategy":material_management_strategy ,
+  "recycling_process":recycling_process ,
+  "reclamation_recycling_process": reclamation_recycling_process,
+  "water_withdrawal_tracking":water_withdrawal_tracking ,
+  "water_consumption_goals":water_consumption_goals ,
+  "energy_consumption_within_organization":energy_consumption_within_organization ,
+  "energy_consumption_outside_organization":energy_consumption_outside_organization ,
+  "energy_intensity_tracking":energy_intensity_tracking ,
+  "energy_consumption_reduction_commitment": energy_consumption_reduction_commitment ,
+  "significant_spills": significant_spills ,
+  "habitat_protection_restoration_commitment": habitat_protection_restoration_commitment ,
+  "air_quality_protection_commitment": air_quality_protection_commitment,
+      }
+  
+      const url = `${process.env.BACKEND_API_URL}/esg_report/screen_twelve/${reportid}/`;
+      try {
+          const response = await axiosInstance.put(url, data);
+  
+          if (response.status === 200) {
+              if(type=='next'){
+                  toast.success("Data added successfully", {
+                      position: "top-right",
+                      autoClose: 3000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "light",
+                  });
+              }
+             
+              if (onSubmitSuccess) {
+                  onSubmitSuccess(true); // Notify the parent of successful submission
+              }
+              LoaderClose();
+              return true; 
+          
+          } else {
+              toast.error("Oops, something went wrong", {
+                  position: "top-right",
+                  autoClose: 1000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "colored",
+              });
+              LoaderClose();
+              return false; 
+             
+          }
+      } catch (error) {
+        LoaderClose();
+          toast.error("Oops, something went wrong", {
+              position: "top-right",
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+          });
+          return false; // Indicate failure
+      }
+  };
+  
+  const loadFormData = async () => {
+      LoaderOpen();
+      dispatch(setEnvironmentStatement(''));
+      dispatch(setEmission(''));
+      dispatch(setScopeOneEmission(''));
+      dispatch(setScopeTwoEmission(''));
+      dispatch(setScopeThreeEmission(''));
+      dispatch(setGHGEmissionIntensityTracking(''));
+      dispatch(setGHGEmissionReductionEfforts(''));
+      dispatch(setOzoneDepletingSubstanceElimination(''));
+      dispatch(setMaterialManagementStrategy(''));
+      dispatch(setRecyclingProcess(''));
+      dispatch(setReclamationRecyclingProcess(''));
+      dispatch(setWaterWithdrawalTracking(''));
+      dispatch(setWaterConsumptionGoals(''));
+      dispatch(setEnergyConsumptionWithinOrganization(''));
+      dispatch(setEnergyConsumptionOutsideOrganization(''));
+      dispatch(setEnergyIntensityTracking(''));
+      dispatch(setEnergyConsumptionReductionCommitment(''));
+      dispatch(setSignificantSpills(''));
+      dispatch(setHabitatProtectionRestorationCommitment(''));
+      dispatch(setAirQualityProtectionCommitment(''))
+
+      const url = `${process.env.BACKEND_API_URL}/esg_report/screen_twelve/${reportid}/`;
+      try {
+          const response = await axiosInstance.get(url);
+          if(response.data){
+            setData(response.data)
+            dispatch(setEnvironmentStatement(response.data.environmental_responsibility_statement));
+          dispatch(setEmission(response.data.emissions));
+          dispatch(setScopeOneEmission(response.data.scope_one_emissions));
+          dispatch(setScopeTwoEmission(response.data.scope_two_emissions));
+          dispatch(setScopeThreeEmission(response.data.scope_three_emissions));
+      dispatch(setGHGEmissionIntensityTracking(response.data.ghg_emission_intensity_tracking));
+      dispatch(setGHGEmissionReductionEfforts(response.data.ghg_emission_reduction_efforts));
+      dispatch(setOzoneDepletingSubstanceElimination(response.data.ozone_depleting_substance_elimination));
+      dispatch(setMaterialManagementStrategy(response.data.material_management_strategy));
+      dispatch(setRecyclingProcess(response.data.recycling_process));
+      dispatch(setReclamationRecyclingProcess(response.data.reclamation_recycling_process));
+      dispatch(setWaterWithdrawalTracking(response.data.water_withdrawal_tracking));
+      dispatch(setWaterConsumptionGoals(response.data.water_consumption_goals));
+      dispatch(setEnergyConsumptionWithinOrganization(response.data.energy_consumption_within_organization));
+      dispatch(setEnergyConsumptionOutsideOrganization(response.data.energy_consumption_outside_organization));
+      dispatch(setEnergyIntensityTracking(response.data.energy_intensity_tracking));
+      dispatch(setEnergyConsumptionReductionCommitment(response.data.energy_consumption_reduction_commitment));
+      dispatch(setSignificantSpills(response.data.significant_spills));
+      dispatch(setHabitatProtectionRestorationCommitment(response.data.habitat_protection_restoration_commitment));
+      dispatch(setAirQualityProtectionCommitment(response.data.air_quality_protection_commitment))
+          }
+          
+          LoaderClose();
+      
+      } catch (error) {
+          console.error('API call failed:', error);
+          LoaderClose();
+      }
+  };
+  
+  useEffect(() => {
+    // Ensure API is only called once
+    if (!apiCalledRef.current && reportid) {
+        apiCalledRef.current = true;  // Set the flag to true to prevent future calls
+        loadFormData();  // Call the API only once
+    }
+  }, [reportid]);
+
     return (
         <>
         <div className="mx-2 p-2">
@@ -98,40 +308,40 @@ const scrollToSection = (sectionRef, sectionId) => {
             </h3>
             <div className="flex gap-4">
             <div className="w-[80%]">
-            <Section1/>
-            <Section2 section12_1Ref={{section12_1Ref}} />
-            <Section3 section12_1_1Ref={section12_1_1Ref}/>
-            <Section4 section12_1_2Ref={section12_1_2Ref}/>
-            <Section5 section12_1_3Ref={section12_1_3Ref}/>
-            <Section6 section12_1_4Ref={section12_1_4Ref}/>
-            <Section7 section12_1_5Ref={section12_1_5Ref}/>
-            <Section8 section12_1_6Ref={section12_1_6Ref}/>
-            <Section9 section12_1_7Ref={section12_1_7Ref}/>
-            <Section10 section12_2Ref={section12_2Ref}/>
-            <Section11 section12_2_1Ref={section12_2_1Ref}/>
-            <Section12 section12_2_2Ref={section12_2_2Ref}/>
-            <Section13 section12_2_3Ref={section12_2_3Ref}/>
-            <Section14 section12_3Ref={section12_3Ref}/>
-            <Section15 section12_3_1Ref={section12_3_1Ref}/>
-            <Section16 section12_3_2Ref={section12_3_2Ref}/>
-            <Section17 section12_3_3Ref={section12_3_3Ref}/>
-            <Section18 section12_3_4Ref={section12_3_4Ref}/>
-            <Section19 section12_4_1Ref={section12_4_1Ref} section12_4Ref={section12_4Ref}/>
-            <Section20 section12_4_2Ref={section12_4_2Ref}/>
-            <Section21 section12_4_3Ref={section12_4_3Ref}/>
-            <Section22 section12_4_4Ref={section12_4_4Ref}/>
-            <Section23 section12_4_5Ref={section12_4_5Ref}/>
-            <Section24 section12_5_1Ref={section12_5_1Ref} section12_5Ref={section12_5Ref}/>
-            <Section25 section12_5_2Ref={section12_5_2Ref}/>
-            <Section26 section12_5_3Ref={section12_5_3Ref}/>
-            <Section27 section12_5_4Ref={section12_5_4Ref}/>
-            <Section28 section12_5_5Ref={section12_5_5Ref}/>
-            <Section29 section12_5_6Ref={section12_5_6Ref}/>
-            <Section30 section12_6Ref={section12_6Ref}/>
-            <Section31 section12_6_1Ref={section12_6_1Ref}/>
-            <Section32 section12_6_2Ref={section12_6_2Ref}/>
-            <Section33 section12_7Ref={section12_7Ref}/>
-            <Section34 section12_7_1Ref={section12_7_1Ref}/>
+            <Section1 orgName={orgName}/>
+            <Section2 section12_1Ref={{section12_1Ref}} data={data} />
+            <Section3 section12_1_1Ref={section12_1_1Ref} data={data}/>
+            <Section4 section12_1_2Ref={section12_1_2Ref} data={data}/>
+            <Section5 section12_1_3Ref={section12_1_3Ref} data={data}/>
+            <Section6 section12_1_4Ref={section12_1_4Ref} data={data}/>
+            <Section7 section12_1_5Ref={section12_1_5Ref} data={data}/>
+            <Section8 section12_1_6Ref={section12_1_6Ref} data={data}/>
+            <Section9 section12_1_7Ref={section12_1_7Ref} data={data}/>
+            <Section10 section12_2Ref={section12_2Ref} data={data}/>
+            <Section11 section12_2_1Ref={section12_2_1Ref} data={data}/>
+            <Section12 section12_2_2Ref={section12_2_2Ref} data={data}/>
+            <Section13 section12_2_3Ref={section12_2_3Ref} data={data}/>
+            <Section14 section12_3Ref={section12_3Ref} data={data}/>
+            <Section15 section12_3_1Ref={section12_3_1Ref} data={data}/>
+            <Section16 section12_3_2Ref={section12_3_2Ref} data={data}/>
+            <Section17 section12_3_3Ref={section12_3_3Ref} data={data}/>
+            <Section18 section12_3_4Ref={section12_3_4Ref} data={data}/>
+            <Section19 section12_4_1Ref={section12_4_1Ref} section12_4Ref={section12_4Ref} data={data}/>
+            <Section20 section12_4_2Ref={section12_4_2Ref} data={data}/>
+            <Section21 section12_4_3Ref={section12_4_3Ref} data={data}/>
+            <Section22 section12_4_4Ref={section12_4_4Ref} data={data}/>
+            <Section23 section12_4_5Ref={section12_4_5Ref} data={data}/>
+            <Section24 section12_5_1Ref={section12_5_1Ref} section12_5Ref={section12_5Ref} data={data}/>
+            <Section25 section12_5_2Ref={section12_5_2Ref} data={data}/>
+            <Section26 section12_5_3Ref={section12_5_3Ref} data={data}/>
+            <Section27 section12_5_4Ref={section12_5_4Ref} data={data}/>
+            <Section28 section12_5_5Ref={section12_5_5Ref} data={data}/>
+            <Section29 section12_5_6Ref={section12_5_6Ref}  orgName={orgName} data={data} />
+            <Section30 section12_6Ref={section12_6Ref} data={data}/>
+            <Section31 section12_6_1Ref={section12_6_1Ref} data={data}/>
+            <Section32 section12_6_2Ref={section12_6_2Ref} data={data}/>
+            <Section33 section12_7Ref={section12_7Ref} data={data}/>
+            <Section34 section12_7_1Ref={section12_7_1Ref} data={data}/>
             </div>
             {/* page sidebar */}
            
@@ -259,8 +469,21 @@ const scrollToSection = (sectionRef, sectionId) => {
            
            
         </div>
+
+        {loopen && (
+          <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+            <Oval
+              height={50}
+              width={50}
+              color="#00BFFF"
+              secondaryColor="#f3f3f3"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
+          </div>
+        )}
         </>
     )
-}
+})
 
 export default Environment

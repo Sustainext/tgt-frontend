@@ -54,13 +54,16 @@ const Section11 = ({ section11_3_4Ref }) => {
           11.3.4. Climate-related Opportunities
         </h3>
 
-        <div className="rounded-md shadow-md mb-4">
+        
           {rows3.length > 0 ? (
+            <div className="rounded-md shadow-md mb-4">
             <Risktable col={col} rows={rows3} />
+            </div>
           ) : (
-            <p>No data available</p>
+            <p className="mb-4 text-sm">No data available</p>
+            
           )}
-        </div>
+        
       </div>
     </>
   );

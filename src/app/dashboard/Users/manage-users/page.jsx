@@ -260,9 +260,9 @@ const ManageUsers = () => {
                       {user.personalDetails.roleType}
                     </td>
 
-                    <td className="px-5 bg-white text-[14px] py-0 my-0 ">
+                    <td className="px-5 bg-white text-[14px] text-center align-middle block justify-center">
                       <div
-                        className={`w-[90px] flex py-1 px-1 font-semibold justify-center ${
+                        className={`w-[90px] flex py-1 px-1 font-semibold justify-center items-center ${
                           user.personalDetails.status === "Active"
                             ? "text-green-700 bg-green-100 "
                             : "text-gray-700 bg-gray-200"

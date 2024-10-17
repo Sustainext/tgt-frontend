@@ -4,19 +4,23 @@ import LeaveTable from "../../people/tables/leaveTable";
 import dynamic from 'next/dynamic';
 import STARSVG from "../../../../../../../public/star.svg";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import {setAirQualityProtectionCommitment} from "../../../../../../lib/redux/features/ESGSlice/screen12Slice"
 
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 
 
 
 const Section33=({section12_7Ref})=>{
-    const [content,setContent] = useState(
-        `
-        <p>
+    
+    const content = useSelector(state => state.screen12Slice.air_quality_protection_commitment);
+    const dispatch = useDispatch();
+    const loadContent = () => {
+      dispatch(setAirQualityProtectionCommitment(
+        `<p>
         We recognize the importance of maintaining air quality and work to minimize air emissions from our operations. This includes implementing measures to reduce pollutants, monitoring air quality, and complying with regulatory standards. 
-        </p>
-        `
-    )
+        </p>`))
+    }
 
     const col1=[
         "Sr. No. ",
@@ -28,11 +32,18 @@ const Section33=({section12_7Ref})=>{
     const data1=[
         {
             "Sr. No. ":"1",
-        "Air Pollutants":"data",
-        "Total Emissions":"data",
-        "Contribution %":"data",
-        "Source of emission factor":"data",
-        }
+        "Air Pollutants":"No data availale",
+        "Total Emissions":"No data availale",
+        "Contribution %":"No data availale",
+        "Source of emission factor":"No data availale",
+        },
+        {
+          "Sr. No. ":"2",
+      "Air Pollutants":"No data availale",
+      "Total Emissions":"No data availale",
+      "Contribution %":"No data availale",
+      "Source of emission factor":"No data availale",
+      }
     ]
     
     const config = {
@@ -69,7 +80,7 @@ const Section33=({section12_7Ref})=>{
     
     
     const handleEditorChange=(value)=>{
-      setContent(value)
+      dispatch(setAirQualityProtectionCommitment(value))
     }
     return (
         <>
@@ -84,7 +95,7 @@ const Section33=({section12_7Ref})=>{
           <p className="text-[15px] text-[#344054] mb-2 mt-3">Add statement about company’s commitment to protect and maintain air quality</p>
           <button
             className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
-            // onClick={loadContent}
+            onClick={loadContent}
           >
             {/* <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/> */}
             <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />

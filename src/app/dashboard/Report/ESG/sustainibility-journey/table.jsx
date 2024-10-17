@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 
 
-const SustainabilityJourneyTable=()=>{
+const SustainabilityJourneyTable=({tableData})=>{
 
     const col=[
         "Suppliers",
@@ -35,14 +35,22 @@ const SustainabilityJourneyTable=()=>{
             </tr>
         </thead>
         <tbody>
-            <tr className="text-[13px]">
-                <td className="border-t border-r border-gray-200 p-4 text-left">Data</td>
-                <td className="border border-gray-200 p-4 rounded-bl-md text-left">Data</td>
-                <td className="border border-gray-200 p-4 rounded-br-md text-left">Data</td>
-                {/* Ensure all cells have border applied */}
-            </tr>
-           
-        </tbody>
+  {tableData.length>0?tableData.map((item, index) => (
+    <tr className="text-[13px]" key={index}>
+      <td className="border-t border-r border-gray-200 p-4 text-left">{item.Suppliers}</td>
+      <td className="border border-gray-200 p-4 text-left">{item.Locationofsupplier}</td>
+      <td className="border border-gray-200 p-4 text-left">{item.Significantsocialimpacts}</td>
+    </tr>
+  )):(
+    <tr className="text-[13px]">
+      <td className="border-t border-r border-gray-200 p-4 text-left">No data available</td>
+      <td className="border border-gray-200 p-4 text-left">No data available</td>
+      <td className="border border-gray-200 p-4 text-left">No data available</td>
+    </tr>
+  )
+}
+</tbody>
+
     </table>
 </div>
 

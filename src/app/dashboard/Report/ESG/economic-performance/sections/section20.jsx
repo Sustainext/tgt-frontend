@@ -1,10 +1,8 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const Section20 = ({ section11_6Ref, section11_6_1Ref }) => {
-  const [content, setContent] = useState(
-    `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum ipsam minus, voluptates obcaecati velit fuga tempore laudantium consequuntur illo`
-  );
+  const data = useSelector((state) => state.screen11Slice.getdata);
 
   return (
     <>
@@ -12,7 +10,20 @@ const Section20 = ({ section11_6Ref, section11_6_1Ref }) => {
         <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
           11.6. Political Contributions
         </h3>
+
+        {data["415_1a"]?.map((entry, index) => (
+          entry.Q1 === "Yes" && (
+            <div key={index} className="mb-4">
+              <p className="text-[12px] mb-2">{entry.Q1}</p>
+              <p className="text-[12px] mb-2">
+                {entry.Q2 || "No data available"}
+              </p>
+          
+            </div>
+          )
+        ))}
       </div>
+
       <div id="section11_6_1" ref={section11_6_1Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
           11.6.1 Management of Material Topic

@@ -1,30 +1,26 @@
 'use client';
-import { useState, useRef, useEffect } from "react";
+import React from 'react';
 
-const EconomicTable3 = () => {
+const EconomicTable3 = ({ operationsAssessed = [] }) => {
   // Table headers
   const col = [
-    "Total number of operations assessed for risks related to corruption ",
+    "Total number of operations assessed for risks related to corruption",
     "Total number of operations",
-    "Percentage of operations asssessed for risks related to corruption",
-   
+    "Percentage of operations assessed for risks related to corruption",
   ];
 
-  // Table data
-  const data = [
-    {
-    //   operation: "Operation 1",
-      Operation: "Data",
-      TotalOperation: "Data",
-      Percentage: "Data",
-    },
-    // {
-    //   operation: "Operation 2",
-    //   location: "data",
-    //   potentialImpact: "data",
-    //   actualImpact: "data",
-    // },
-  ];
+  // Check if operationsAssessed has data, and map it if available
+  const data = operationsAssessed.length > 0
+    ? operationsAssessed.map((operation) => ({
+        Operation: operation.total_number_of_operations_assesed,
+        TotalOperation: operation.number_of_operations,
+        Percentage: `${operation.percentage.toFixed(2)}%`,
+      }))
+    : [{
+        Operation: "No data available",
+        TotalOperation: "No data available",
+        Percentage: "No data available",
+      }];
 
   return (
     <div style={{ maxHeight: "450px", overflowY: "auto" }} className="mb-2">
@@ -32,7 +28,7 @@ const EconomicTable3 = () => {
         <thead className="gradient-background border border-gray-600">
           <tr className="text-[12px] border border-gray-200">
             <th colSpan={4} className="p-4 text-start text-gray-500">
-            Operations assessed for risks related to corruption 
+              Operations assessed for risks related to corruption 
             </th>
           </tr>
           <tr>
@@ -54,14 +50,13 @@ const EconomicTable3 = () => {
         <tbody className="border border-gray-300">
           {data.map((row, rowIndex) => (
             <tr key={rowIndex} className="text-[13px]">
-             
-              <td className="border-t border-r border-gray-200 p-4 text-start">
+              <td className="border-t border-r border-gray-200 p-4 text-center">
                 {row.Operation}
               </td>
-              <td className="border-t border-r border-gray-200 p-4 text-start">
+              <td className="border-t border-r border-gray-200 p-4 text-center">
                 {row.TotalOperation}
               </td>
-              <td className="border-t border-gray-200 p-4 text-start">
+              <td className="border-t border-gray-200 p-4 text-center">
                 {row.Percentage}
               </td>
             </tr>

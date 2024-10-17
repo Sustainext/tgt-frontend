@@ -4,11 +4,21 @@ import WaterTable from "../tables/waterTable";
 import LeaveTable from "../../people/tables/leaveTable";
 import STARSVG from "../../../../../../../public/star.svg";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import {setWaterConsumptionGoals} from "../../../../../../lib/redux/features/ESGSlice/screen12Slice"
 
 const Section18=({section12_3_4Ref})=>{
-    const [content,setContent] = useState(
-        `Our goal is to reduce water consumption through efficient water use and recycling practices. We implement water-saving measures and invest in technologies that support sustainable water management`
-    )
+    
+    const content = useSelector(state => state.screen12Slice.water_consumption_goals);
+    const dispatch = useDispatch();
+    const loadContent = () => {
+      dispatch(setWaterConsumptionGoals(
+        `Our goal is to reduce water consumption through efficient water use and recycling practices. We implement water-saving measures and invest in technologies that support sustainable water management`))
+    }
+  
+    const handleEditorChange=(e)=>{
+      dispatch(setWaterConsumptionGoals(e.target.value))
+    }
 
     const column2 = [
         'Business Operation', 
@@ -184,7 +194,7 @@ const Section18=({section12_3_4Ref})=>{
           <p className="text-[15px] text-[#344054] mb-2 mt-3">Add statement about company’s water consumption goals</p>
           <button
             className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
-            // onClick={loadContent}
+            onClick={loadContent}
           >
             {/* <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/> */}
             <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
@@ -192,6 +202,7 @@ const Section18=({section12_3_4Ref})=>{
           </button>
         </div>
             <textarea
+            onChange={handleEditorChange}
           value={content}
           className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
           rows={4}

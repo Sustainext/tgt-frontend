@@ -14,7 +14,7 @@ const Section1 = ({ orgName, data }) => {
 
   const loadContent = () => {
     dispatch(setAboutTheCompany(
-      `<p>Effective stakeholder engagement is vital to ${orgName ? orgName : "[Company Name]"}'s sustainability strategy and overall business success. We recognize that our actions impact a wide range of stakeholders, including employees, customers, suppliers, investors, local communities, and regulatory bodies.</p>`
+      `<p>This ESG report, prepared in accordance with the Global Reporting Initiative (GRI) standards, provides a comprehensive overview of ${orgName ? orgName : "[legal Name of the Company]'s"} environmental, social, and governance (ESG) performance for the reporting period [Year]. It reflects our commitment to transparency, accountability, and continuous improvement in our sustainability practices.</p>`
     ))
   }
 
