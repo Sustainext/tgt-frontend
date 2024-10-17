@@ -4,7 +4,7 @@ import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
 import { Socialdata } from "../../data/socialgriinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import Socialheader from "../../socialheader";
+import Socialheader2 from "../../socialheader2";
 import Parentaleavescreen from "./Parenta-leave";
 
 const Parentalleave = () => {
@@ -14,6 +14,8 @@ const Parentalleave = () => {
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedOrg, setSelectedOrg] = useState("");
+  const [selectedCorp, setSelectedCorp] = useState("");
 
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
@@ -120,15 +122,17 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
             ))}
         </div>
       </div>
-      <Socialheader
+      <Socialheader2
         activeMonth={activeMonth}
         setActiveMonth={setActiveMonth}
-        location={location}
-        setLocation={setLocation}
+        selectedOrg={selectedOrg}
+        setSelectedOrg={setSelectedOrg}
+        selectedCorp={selectedCorp}
+        setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
       />
-      <Parentaleavescreen location={location} year={year} month={activeMonth} />
+      <Parentaleavescreen  selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year} />
     </>
   );
 };

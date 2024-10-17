@@ -55,9 +55,9 @@ const tabs = [
   },
 ];
 
-const NewEmployeeHire = ({ location, year, month, activeMonth }) => {
+const NewEmployeeHire = ({ selectedOrg, selectedCorp, year, month }) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
-  const fullName = convertShortNameToFullName(activeMonth);
+  const fullName = convertShortNameToFullName(month);
   console.log("Full month name:", fullName);
   return (
     <>
@@ -135,9 +135,10 @@ const NewEmployeeHire = ({ location, year, month, activeMonth }) => {
               <div>
                 <Tab1
                   fullName={fullName}
-                  location={location}
                   year={year}
                   month={month}
+                  selectedCorp={selectedCorp}
+                  selectedOrg={selectedOrg}
                 />
               </div>
             )}
@@ -145,9 +146,10 @@ const NewEmployeeHire = ({ location, year, month, activeMonth }) => {
               <div>
                 <Tab2
                   fullName={fullName}
-                  location={location}
                   year={year}
                   month={month}
+                  selectedCorp={selectedCorp}
+                  selectedOrg={selectedOrg}
                 />{" "}
               </div>
             )}
@@ -156,9 +158,10 @@ const NewEmployeeHire = ({ location, year, month, activeMonth }) => {
                 {" "}
                 <Tab3
                   fullName={fullName}
-                  location={location}
                   year={year}
                   month={month}
+                  selectedCorp={selectedCorp}
+                  selectedOrg={selectedOrg}
                 />{" "}
               </div>
             )}
@@ -167,9 +170,10 @@ const NewEmployeeHire = ({ location, year, month, activeMonth }) => {
                 {" "}
                 <Tab4
                   fullName={fullName}
-                  location={location}
                   year={year}
                   month={month}
+                  selectedCorp={selectedCorp}
+                  selectedOrg={selectedOrg}
                 />{" "}
               </div>
             )}
@@ -178,9 +182,10 @@ const NewEmployeeHire = ({ location, year, month, activeMonth }) => {
                 {" "}
                 <Tab5
                   fullName={fullName}
-                  location={location}
                   year={year}
                   month={month}
+                  selectedCorp={selectedCorp}
+                  selectedOrg={selectedOrg}
                 />{" "}
               </div>
             )}
