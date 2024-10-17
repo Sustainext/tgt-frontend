@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import CustomTableWidget from "../../../../shared/widgets/Table/tableWidget";
+import CustomTableWidget from "../../../../../shared/widgets/Table/tableWidget";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -11,12 +11,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "@/app/utils/axiosMiddleware";
+
 // Simple Custom Table Widget
 const widgets = {
   TableWidget: CustomTableWidget,
 };
 
-const view_path = "gri-social-ohs-403-10b-ill_health_workers";
+const view_path = "gri-social-ohs-403-10a-ill_health_emp";
 const client_id = 1;
 const user_id = 1;
 
@@ -27,8 +28,8 @@ const schema = {
     properties: {
       employeeCategory: { type: "string", title: "employeeCategory" },
       fatalities: { type: "string", title: "fatalities" },
-      highconsequence: { type: "string", title: "highconsequence" },
       recordable: { type: "string", title: "recordable" },
+      highconsequence: { type: "string", title: "highconsequence" },
     },
   },
 };
@@ -38,8 +39,7 @@ const uiSchema = {
   "ui:options": {
     titles: [
       {
-        title:
-          "Workers who are not employees but whose work and/or workplace is controlled by the organization",
+        title: "Employee Category",
         tooltip: "Please specify the employee category here.",
       },
       {
@@ -50,7 +50,7 @@ const uiSchema = {
       {
         title: "Number of cases of recordable work-related ill health",
         tooltip:
-          "Please specify the number of recordable work-related ill health. Recordable work-related ill health: work-related injury or ill health that results in any of the following: death, days away from work, restricted work or transfer to another job, medical treatment beyond first aid, or loss of consciousness",
+          "Please specify the number of recordable work-related ill health. Recordable work-related ill health: work-related injury or ill health that results in any of the following: death, days away from work,restricted work or transfer to another job, medical treatment beyond first aid, or loss of consciousness",
       },
       {
         title: "Main types of work-related ill health.",
@@ -59,7 +59,7 @@ const uiSchema = {
     ],
   },
 };
-const Screen2 = ({ location, year, month }) => {
+const Screen1 = ({ location, year, month }) => {
   const initialFormData = [
     {
       employeeCategory: "",
@@ -96,7 +96,7 @@ const Screen2 = ({ location, year, month }) => {
       year,
       month,
     };
-
+    console.log("CustomTableWidget value test", data);
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
       const response = await axiosInstance.post(url, data);
@@ -228,7 +228,7 @@ const Screen2 = ({ location, year, month }) => {
                                 recordable work-related
                                 ill health and type of
                                 work-related ill health
-                                for all employees."
+                                for all employees. "
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
@@ -247,15 +247,14 @@ const Screen2 = ({ location, year, month }) => {
               ></ReactTooltip>
             </h2>
             <h2 className="flex mx-2 text-[13px] text-gray-500 font-semibold">
-              for workers who are not employees but whose work and workplace is
-              controlled by the organization
+              For all employees, please report the following
             </h2>
           </div>
           <div className="w-[20%]">
             <div className="float-end">
               <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 403-10b
+                  GRI 403-10a
                 </div>
               </div>
             </div>
@@ -298,6 +297,7 @@ const Screen2 = ({ location, year, month }) => {
           </button>
         </div>
       </div>
+
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <Oval
@@ -314,4 +314,4 @@ const Screen2 = ({ location, year, month }) => {
   );
 };
 
-export default Screen2;
+export default Screen1;

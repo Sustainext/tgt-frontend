@@ -2,22 +2,22 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
+import inputWidget2 from "../../../../../shared/widgets/Input/inputWidget2";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import RadioWidget2 from "../../../../shared/widgets/Input/radioWidget2";
+import RadioWidget2 from "../../../../../shared/widgets/Input/radioWidget2";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
-import axiosInstance from "@/app/utils/axiosMiddleware";
+
 const widgets = {
   inputWidget: inputWidget2,
   RadioWidget2: RadioWidget2,
 };
 
-const view_path = "gri-social-ohs-403-10d-workers_excluded";
+const view_path = "gri-social-ohs-403-9e-number_of_hours";
 const client_id = 1;
 const user_id = 1;
 
@@ -28,16 +28,9 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Are there any workers have been excluded from this disclosure?",
-        enum: ["Yes", "No"],
-      },
-      Q2: {
-        type: "string",
-        title: "Please specify the reason of exclusion. ",
-      },
-      Q3: {
-        type: "string",
-        title: "The types of workers excluded",
+        title:
+          "Whether the rates have been calculated based on 200,000 or 1,000,000 hours worked.",
+        enum: ["200,000 hours worked", "1,000,000 hours worked"],
       },
     },
   },
@@ -45,34 +38,14 @@ const schema = {
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1", "Q2", "Q3"],
+    "ui:order": ["Q1"],
     Q1: {
       "ui:title":
-        "Are there any workers have been excluded from this disclosure?",
+        "Are there work-related hazards that pose a risk of high-consequence injury?",
       "ui:tooltip":
-        "select 'Yes' if any workers have been excluded from this disclosure and select 'No' if not. ",
+        "Please specify whether the rates have been calculated based on 200,000 or 1,000,000 hours worked.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "RadioWidget2",
-      "ui:horizontal": true,
-      "ui:options": {
-        label: false,
-      },
-    },
-    Q2: {
-      "ui:title": "Why the workers are excluded",
-      "ui:tooltip": "Please specify the reason of exclusion. ",
-      "ui:tooltipdisplay": "block",
-      "ui:widget": "inputWidget",
-      "ui:horizontal": true,
-      "ui:options": {
-        label: false,
-      },
-    },
-    Q3: {
-      "ui:title": "The types of workers excluded",
-      "ui:tooltip": "Please specify the type of workers excluded. ",
-      "ui:tooltipdisplay": "block",
-      "ui:widget": "inputWidget",
       "ui:horizontal": true,
       "ui:options": {
         label: false,
@@ -94,6 +67,13 @@ const Screen4 = ({ location, year, month }) => {
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
+  const getAuthToken = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token")?.replace(/"/g, "");
+    }
+    return "";
+  };
+  const token = getAuthToken();
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -106,6 +86,12 @@ const Screen4 = ({ location, year, month }) => {
     setFormData(e.formData);
   };
 
+  // The below code on updateFormData
+  let axiosConfig = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
   const updateFormData = async () => {
     LoaderOpen();
     const data = {
@@ -115,12 +101,11 @@ const Screen4 = ({ location, year, month }) => {
       form_data: formData,
       location,
       year,
-      month,
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
-      const response = await axiosInstance.post(url, data);
+      const response = await axios.post(url, data, axiosConfig);
       if (response.status === 200) {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -169,9 +154,9 @@ const Screen4 = ({ location, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
-      const response = await axiosInstance.get(url);
+      const response = await axios.get(url, axiosConfig);
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
@@ -194,7 +179,7 @@ const Screen4 = ({ location, year, month }) => {
 
   // fetch backend and replace initialized forms
   useEffect(() => {
-    if (location && year && month) {
+    if (location && year) {
       loadFormData();
       toastShown.current = false; // Reset the flag when valid data is present
     } else {
@@ -203,10 +188,10 @@ const Screen4 = ({ location, year, month }) => {
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [location, year, month]);
+  }, [location, year]);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent the default form submission
     console.log("Form data:", formData);
     updateFormData();
   };
@@ -223,15 +208,16 @@ const Screen4 = ({ location, year, month }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-              Workers excluded from the disclosure
+              Number of Hours Worked
               <MdInfoOutline
-                data-tooltip-id={`tooltip-$e234`}
-                data-tooltip-content="This section documents the data corresponding
-                            to the workers excluded from this disclosure. "
+                data-tooltip-id={`tooltip-$e1`}
+                data-tooltip-content="This section documents the data corresponding to
+                            whether the rates have been calculated based on
+                            200,000 or 1,000,000 hours worked."
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
-                id={`tooltip-$e234`}
+                id={`tooltip-$e1`}
                 place="top"
                 effect="solid"
                 style={{
@@ -248,9 +234,9 @@ const Screen4 = ({ location, year, month }) => {
           </div>
           <div className="w-[20%]">
             <div className="float-end">
-              <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 403-10d
+                  GRI 403-9e
                 </div>
               </div>
             </div>

@@ -2,22 +2,20 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
+import CustomTableWidget from "../../../../../shared/widgets/Table/tableWidget";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import RadioWidget2 from "../../../../shared/widgets/Input/radioWidget2";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
-
+// Simple Custom Table Widget
 const widgets = {
-  inputWidget: inputWidget2,
-  RadioWidget2: RadioWidget2,
+  TableWidget: CustomTableWidget,
 };
 
-const view_path = "gri-social-ohs-403-6b-workers_access";
+const view_path = "gri-social-ohs-403-9a-number_of_injuries_emp";
 const client_id = 1;
 const user_id = 1;
 
@@ -26,43 +24,63 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      Q1: {
-        type: "string",
-        title:
-          "Specify how the organization facilitates workers’ access to these services and programs.",
-      },
+      employeeCategory: { type: "string", title: "employeeCategory" },
+      fatalities: { type: "string", title: "fatalities" },
+      highconsequence: { type: "string", title: "highconsequence" },
+      recordable: { type: "string", title: "recordable" },
+      maintypes: { type: "string", title: "maintypes" },
+      numberofhoursworked: { type: "string", title: "numberofhoursworked" },
     },
   },
 };
 
 const uiSchema = {
-  items: {
-    "ui:order": ["Q1"],
-
-    Q1: {
-      "ui:title":
-        "Specify how the organization facilitates workers’ access to these services and programs.",
-      "ui:tooltip":
-        "Describe the worker's access to these services and programs. Include: Whether the organization allows workers to make use of these services during paid working hours and whether these services and programs are available for family members of workers",
-      "ui:tooltipdisplay": "block",
-      "ui:widget": "inputWidget",
-      "ui:horizontal": true,
-      "ui:options": {
-        label: false,
+  "ui:widget": "TableWidget",
+  "ui:options": {
+    titles: [
+      {
+        title: "Employee Category",
+        tooltip: "Please specify the employee category here.",
       },
-    },
-
-    "ui:options": {
-      orderable: false,
-      addable: false,
-      removable: false,
-      layout: "horizontal",
-    },
+      {
+        title: "Number of fatalities as a result of work-related injury",
+        tooltip:
+          "Please specify the number of fatalities as a result of work-related injury. Work-related injury: negative impacts on health arising from exposure to hazards at work.",
+      },
+      {
+        title:
+          "Number of high-consequence work-related injuries (excluding fatalities)",
+        tooltip:
+          "Please specify the number of high-consequence work-related injuries (excluding fatalities).High-consequence work-related injury: work-related injury that results in a fatality or in an injury from  which the worker cannot, does not, or is not expected to  recover fully to pre-injury health status within six months.",
+      },
+      {
+        title: "Number of recordable work-related injuries",
+        tooltip:
+          "Please specify the number of recordable work-related injuries. Recordable work-related injury: work-related injury or ill health thatresults in any of the following: death, days away from work,restricted work or transfer to another job, medical treatment beyond first aid,or loss of consciousness",
+      },
+      {
+        title: "Main types of work-related injury",
+        tooltip: "Please specify the main types of work-related injury.",
+      },
+      {
+        title: "Number of hours worked",
+        tooltip: "Please specify employee's number of hours worked.",
+      },
+    ],
   },
 };
-
-const Screen5 = ({ location, year, month }) => {
-  const [formData, setFormData] = useState([{}]);
+const Screen1 = ({ location, year, month }) => {
+  const initialFormData = [
+    {
+      employeeCategory: "",
+      fatalities: "",
+      highconsequence: "",
+      recordable: "",
+      maintypes: "",
+      numberofhoursworked: "",
+    },
+  ];
+  const [formData, setFormData] = useState(initialFormData);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
@@ -154,7 +172,7 @@ const Screen5 = ({ location, year, month }) => {
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([{}]);
+    setFormData(initialFormData);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
     try {
       const response = await axios.get(url, axiosConfig);
@@ -163,7 +181,7 @@ const Screen5 = ({ location, year, month }) => {
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData([{}]);
+      setFormData(initialFormData);
     } finally {
       LoaderClose();
     }
@@ -192,10 +210,27 @@ const Screen5 = ({ location, year, month }) => {
   }, [location, year, month]);
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission
+    e.preventDefault();
     console.log("Form data:", formData);
     updateFormData();
   };
+
+  const handleAddCommittee = () => {
+    const newCommittee = {
+      employeeCategory: "",
+      fatalities: "",
+      highconsequence: "",
+      recordable: "",
+      maintypes: "",
+      numberofhoursworked: "",
+    };
+    setFormData([...formData, newCommittee]);
+  };
+
+  // const handleRemoveCommittee = (index) => {
+  //   const newFormData = formData.filter((_, i) => i !== index);
+  //   setFormData(newFormData);
+  // };
 
   return (
     <>
@@ -208,18 +243,18 @@ const Screen5 = ({ location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-              Workers' access to the services and programs
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+              The Number of Injuries
               <MdInfoOutline
-                data-tooltip-id={`tooltip-$e1`}
-                data-tooltip-content="This section documents data corresponding to
-                            any major non-work-related health risks addressed
-                            by any voluntary health promotion services and programs offered to
-                            workers."
+                data-tooltip-id={`tooltip-$e156`}
+                data-tooltip-content="This section documents data corresponding to the number of
+                                fatalities as a result of a work-related injury, high-consequence
+                                work-related injuries, recordable work-related injuries, type of
+                                work-related injury and number of hours worked for all employees. "
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
-                id={`tooltip-$e1`}
+                id={`tooltip-$e156`}
                 place="top"
                 effect="solid"
                 style={{
@@ -233,17 +268,19 @@ const Screen5 = ({ location, year, month }) => {
                 }}
               ></ReactTooltip>
             </h2>
+            <h2 className="flex mx-2 text-[13px] text-gray-500 font-semibold">
+              For all employees, please report the following
+            </h2>
           </div>
           <div className="w-[20%]">
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 403-6b
+                  GRI 403-9a
                 </div>
               </div>
             </div>
           </div>
-       
         </div>
         <div className="mx-2">
           <Form
@@ -255,6 +292,19 @@ const Screen5 = ({ location, year, month }) => {
             widgets={widgets}
           />
         </div>
+        {location && year && (
+        <div className="flex right-1 mx-2">
+      
+            <button
+              type="button"
+              className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
+              onClick={handleAddCommittee}
+            >
+              Add category <MdAdd className="text-[14px] mt-1 text-[#007EEF]" />
+            </button>
+     
+        </div>
+     )}
         <div className="mt-4">
           <button
             type="button"
@@ -284,4 +334,4 @@ const Screen5 = ({ location, year, month }) => {
   );
 };
 
-export default Screen5;
+export default Screen1;

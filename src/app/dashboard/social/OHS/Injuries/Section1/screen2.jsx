@@ -2,22 +2,21 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
+import CustomTableWidget from "../../../../../shared/widgets/Table/tableWidget";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import RadioWidget2 from "../../../../shared/widgets/Input/radioWidget2";
 import axios from "axios";
+import { update } from "lodash";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
-import axiosInstance from "@/app/utils/axiosMiddleware";
+// Simple Custom Table Widget
 const widgets = {
-  inputWidget: inputWidget2,
-  RadioWidget2: RadioWidget2,
+  TableWidget: CustomTableWidget,
 };
 
-const view_path = "gri-social-ohs-403-10c-work_related_hazards";
+const view_path = "gri-social-ohs-403-9b-number_of_injuries_workers";
 const client_id = 1;
 const user_id = 1;
 
@@ -26,76 +25,75 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      Q1: {
-        type: "string",
-        title: "Are there work-related hazards that pose a risk of ill health?",
-        enum: ["Yes", "No"],
-      },
-      Q2: {
-        type: "string",
-        title: "How these hazards have been determined?",
-      },
-      Q3: {
-        type: "string",
-        title: "Which of these hazards have caused high-consequence injuries?",
-      },
+      employeeCategory: { type: "string", title: "employeeCategory" },
+      fatalities: { type: "string", title: "fatalities" },
+      highconsequence: { type: "string", title: "highconsequence" },
+      recordable: { type: "string", title: "recordable" },
+      maintypes: { type: "string", title: "maintypes" },
+      numberofhoursworked: { type: "string", title: "numberofhoursworked" },
     },
   },
 };
 
 const uiSchema = {
-  items: {
-    "ui:order": ["Q1", "Q2", "Q3"],
-    Q1: {
-      "ui:title":
-        "Are there work-related hazards that pose a risk of ill health?",
-      "ui:tooltip":
-        "Indicate whether any workers have been excluded by the occupational health and safety management system",
-      "ui:tooltipdisplay": "none",
-      "ui:widget": "RadioWidget2",
-      "ui:horizontal": true,
-      "ui:options": {
-        label: false,
+  "ui:widget": "TableWidget",
+  "ui:options": {
+    titles: [
+      {
+        title: "Employee Category",
+        tooltip:
+          "Please specify the category of workers who are not employees but whose work and/or workplace is controlled by the organization.",
       },
-    },
-    Q2: {
-      "ui:title": "How these hazards have been determined?",
-      "ui:tooltip": "Please describe how the hazards have been determined.",
-      "ui:tooltipdisplay": "block",
-      "ui:widget": "inputWidget",
-      "ui:horizontal": true,
-      "ui:options": {
-        label: false,
+      {
+        title: "Number of fatalities as a result of work-related injury",
+        tooltip:
+          "Please specify the number of fatalities as a result of work-related injury.Work-related injury: negative impacts on health arising from exposure to hazards at work.",
       },
-    },
-    Q3: {
-      "ui:title":
-        "Which of these hazards have caused high-consequence injuries?",
-      "ui:tooltip":
-        "Please specify the hazards that have caused high-consequence injuries.",
-      "ui:tooltipdisplay": "block",
-      "ui:widget": "inputWidget",
-      "ui:horizontal": true,
-      "ui:options": {
-        label: false,
+      {
+        title:
+          "Number of high-consequence work-related injuries (excluding fatalities)",
+        tooltip:
+          "Please specify the number of high-consequence work-related injuries (excluding fatalities).High-consequence work-related injury: work-related injury that results in a fatality or in an injury from  which the worker cannot, does not, or is not expected to  recover fully to pre-injury health status within six months.",
       },
-    },
-
-    "ui:options": {
-      orderable: false,
-      addable: false,
-      removable: false,
-      layout: "horizontal",
-    },
+      {
+        title: "Number of recordable work-related injuries",
+        tooltip:
+          "Please specify the number of recordable work-related injuries. Recordable work-related injury: work-related injury or ill health that results in any of the following: death, days away from work,restricted work or transfer to another job, medical treatment beyond first aid,or loss of consciousness",
+      },
+      {
+        title: "Main types of work-related injury",
+        tooltip: "Please specify the main types of work-related injury.",
+      },
+      {
+        title: "Number of hours worked",
+        tooltip: "Please specify employee's numberof hours worked.",
+      },
+    ],
   },
 };
-
-const Screen3 = ({ location, year, month }) => {
-  const [formData, setFormData] = useState([{}]);
+const Screen2 = ({ location, year, month }) => {
+  const initialFormData = [
+    {
+      employeeCategory: "",
+      fatalities: "",
+      highconsequence: "",
+      recordable: "",
+      maintypes: "",
+      numberofhoursworked: "",
+    },
+  ];
+  const [formData, setFormData] = useState(initialFormData);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
+  const getAuthToken = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token")?.replace(/"/g, "");
+    }
+    return "";
+  };
+  const token = getAuthToken();
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -108,6 +106,12 @@ const Screen3 = ({ location, year, month }) => {
     setFormData(e.formData);
   };
 
+  // The below code on updateFormData
+  let axiosConfig = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
   const updateFormData = async () => {
     LoaderOpen();
     const data = {
@@ -122,7 +126,7 @@ const Screen3 = ({ location, year, month }) => {
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
-      const response = await axiosInstance.post(url, data);
+      const response = await axios.post(url, data, axiosConfig);
       if (response.status === 200) {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -170,16 +174,16 @@ const Screen3 = ({ location, year, month }) => {
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([{}]);
+    setFormData(initialFormData);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
     try {
-      const response = await axiosInstance.get(url);
+      const response = await axios.get(url, axiosConfig);
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData([{}]);
+      setFormData(initialFormData);
     } finally {
       LoaderClose();
     }
@@ -213,9 +217,26 @@ const Screen3 = ({ location, year, month }) => {
     updateFormData();
   };
 
+  const handleAddCommittee = () => {
+    const newCommittee = {
+      employeeCategory: "",
+      fatalities: "",
+      highconsequence: "",
+      recordable: "",
+      maintypes: "",
+      numberofhoursworked: "",
+    };
+    setFormData([...formData, newCommittee]);
+  };
+
+  // const handleRemoveCommittee = (index) => {
+  //   const newFormData = formData.filter((_, i) => i !== index);
+  //   setFormData(newFormData);
+  // };
+
   return (
     <>
-    <div
+      <div
         className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
         style={{
           boxShadow:
@@ -224,12 +245,17 @@ const Screen3 = ({ location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-              Work-related hazards that pose a risk of ill health
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+              The Number of Injuries
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
-                data-tooltip-content="This section documents the data corresponding
-                            to the work-related hazards that pose a risk of ill health. "
+                data-tooltip-content="This section documents data corresponding to the
+                                number of fatalities as a result of a work-related
+                                injury, high-consequence work-related injuries,
+                                recordable work-related injuries, type of work-related
+                                injury and number of hours worked
+                                for all workers who are not employees but whose work and/or
+                                workplace is controlled by the organization."
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
@@ -247,12 +273,16 @@ const Screen3 = ({ location, year, month }) => {
                 }}
               ></ReactTooltip>
             </h2>
+            <h2 className="flex mx-2 text-[13px] text-gray-500 font-semibold">
+              for workers who are not employees but whose work and workplace is
+              controlled by the organization
+            </h2>
           </div>
           <div className="w-[20%]">
             <div className="float-end">
-              <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 403-10c
+                  GRI 403-9b
                 </div>
               </div>
             </div>
@@ -266,8 +296,22 @@ const Screen3 = ({ location, year, month }) => {
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
+            // formContext={{
+            //   onRemove: handleRemoveCommittee,
+            // }}
           />
         </div>
+        {location && year && (
+          <div className="flex right-1 mx-2">
+            <button
+              type="button"
+              className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
+              onClick={handleAddCommittee}
+            >
+              Add category <MdAdd className="text-[14px] mt-1 text-[#007EEF]" />
+            </button>
+          </div>
+        )}
         <div className="mt-4">
           <button
             type="button"
@@ -297,4 +341,4 @@ const Screen3 = ({ location, year, month }) => {
   );
 };
 
-export default Screen3;
+export default Screen2;

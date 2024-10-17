@@ -2,10 +2,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
+import inputWidget2 from "../../../../../shared/widgets/Input/inputWidget2";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import RadioWidget2 from "../../../../../shared/widgets/Input/radioWidget2";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,9 +14,10 @@ import { Oval } from "react-loader-spinner";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 const widgets = {
   inputWidget: inputWidget2,
+  RadioWidget2: RadioWidget2,
 };
 
-const view_path = "gri-social-ohs-403-10e-sma";
+const view_path = "gri-social-ohs-403-10c-work_related_hazards";
 const client_id = 1;
 const user_id = 1;
 
@@ -26,15 +28,16 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Standards",
+        title: "Are there work-related hazards that pose a risk of ill health?",
+        enum: ["Yes", "No"],
       },
       Q2: {
         type: "string",
-        title: "Methodologies used",
+        title: "How these hazards have been determined?",
       },
       Q3: {
         type: "string",
-        title: "Assumptions",
+        title: "Which of these hazards have caused high-consequence injuries?",
       },
     },
   },
@@ -43,22 +46,21 @@ const schema = {
 const uiSchema = {
   items: {
     "ui:order": ["Q1", "Q2", "Q3"],
-
     Q1: {
-      "ui:title": "Standards",
+      "ui:title":
+        "Are there work-related hazards that pose a risk of ill health?",
       "ui:tooltip":
-        " Include any contextual information necessary to understand how the data have been compiled,such as, please mention if any standards used. ",
-      "ui:tooltipdisplay": "block",
-      "ui:widget": "inputWidget",
+        "Indicate whether any workers have been excluded by the occupational health and safety management system",
+      "ui:tooltipdisplay": "none",
+      "ui:widget": "RadioWidget2",
       "ui:horizontal": true,
       "ui:options": {
         label: false,
       },
     },
     Q2: {
-      "ui:title": "Methodologies used",
-      "ui:tooltip":
-        "Include the description of methodologies used to compile data. ",
+      "ui:title": "How these hazards have been determined?",
+      "ui:tooltip": "Please describe how the hazards have been determined.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -67,9 +69,10 @@ const uiSchema = {
       },
     },
     Q3: {
-      "ui:title": "Assumptions",
+      "ui:title":
+        "Which of these hazards have caused high-consequence injuries?",
       "ui:tooltip":
-        "Include the description of assumptions  considered to compile data",
+        "Please specify the hazards that have caused high-consequence injuries.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -87,7 +90,7 @@ const uiSchema = {
   },
 };
 
-const Screen5 = ({ location, year, month }) => {
+const Screen3 = ({ location, year, month }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -114,7 +117,6 @@ const Screen5 = ({ location, year, month }) => {
       form_data: formData,
       location,
       year,
-      month,
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -168,7 +170,7 @@ const Screen5 = ({ location, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -193,7 +195,7 @@ const Screen5 = ({ location, year, month }) => {
 
   // fetch backend and replace initialized forms
   useEffect(() => {
-    if (location && year && month) {
+    if (location && year) {
       loadFormData();
       toastShown.current = false; // Reset the flag when valid data is present
     } else {
@@ -202,7 +204,7 @@ const Screen5 = ({ location, year, month }) => {
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [location, year, month]);
+  }, [location, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -212,16 +214,21 @@ const Screen5 = ({ location, year, month }) => {
 
   return (
     <>
-      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-              Standards, methodologies, and assumptions used
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+              Work-related hazards that pose a risk of ill health
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
-                data-tooltip-content="This section documents data corresponding to any contextual
-                            information necessary to understand how the data have been compiled,
-                           such as any standards, methodologies, and assumptions used."
+                data-tooltip-content="This section documents the data corresponding
+                            to the work-related hazards that pose a risk of ill health. "
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
@@ -240,12 +247,11 @@ const Screen5 = ({ location, year, month }) => {
               ></ReactTooltip>
             </h2>
           </div>
-
           <div className="w-[20%]">
             <div className="float-end">
               <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 403-10e
+                  GRI 403-10c
                 </div>
               </div>
             </div>
@@ -261,17 +267,17 @@ const Screen5 = ({ location, year, month }) => {
             widgets={widgets}
           />
         </div>
-    <div className='mt-4'>
+        <div className="mt-4">
           <button
             type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? "cursor-not-allowed" : ""
-              }`}
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              !location || !year ? "cursor-not-allowed" : ""
+            }`}
             onClick={handleSubmit}
             disabled={!location || !year}
           >
             Submit
           </button>
-
         </div>
       </div>
       {loopen && (
@@ -290,4 +296,4 @@ const Screen5 = ({ location, year, month }) => {
   );
 };
 
-export default Screen5;
+export default Screen3;

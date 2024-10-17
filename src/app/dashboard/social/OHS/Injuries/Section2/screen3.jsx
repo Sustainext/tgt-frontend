@@ -2,22 +2,22 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
+import inputWidget2 from "../../../../../shared/widgets/Input/inputWidget2";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import RadioWidget2 from "../../../../shared/widgets/Input/radioWidget2";
+import RadioWidget2 from "../../../../../shared/widgets/Input/radioWidget2";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
-
+import { GlobalState } from "@/Context/page";
 const widgets = {
   inputWidget: inputWidget2,
   RadioWidget2: RadioWidget2,
 };
 
-const view_path = "gri-social-ohs-403-9e-number_of_hours";
+const view_path = "gri-social-ohs-403-9c-9d-work_related_hazards";
 const client_id = 1;
 const user_id = 1;
 
@@ -29,8 +29,17 @@ const schema = {
       Q1: {
         type: "string",
         title:
-          "Whether the rates have been calculated based on 200,000 or 1,000,000 hours worked.",
-        enum: ["200,000 hours worked", "1,000,000 hours worked"],
+          "Are there work-related hazards that pose a risk of high-consequence injury?",
+        enum: ["Yes", "No"],
+      },
+      Q2: {
+        type: "string",
+        title: "How these hazards have been determined?",
+      },
+      Q3: {
+        type: "string",
+        title:
+          "Actions taken or underway to eliminate these hazards and minimize risk",
       },
     },
   },
@@ -38,14 +47,37 @@ const schema = {
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1"],
+    "ui:order": ["Q1", "Q2", "Q3"],
     Q1: {
       "ui:title":
         "Are there work-related hazards that pose a risk of high-consequence injury?",
       "ui:tooltip":
-        "Please specify whether the rates have been calculated based on 200,000 or 1,000,000 hours worked.",
+        "Indicate whether any workers have been excluded by the occupational health and safety management system",
       "ui:tooltipdisplay": "block",
       "ui:widget": "RadioWidget2",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
+    },
+    Q2: {
+      "ui:title": "How these hazards have been determined?",
+      "ui:tooltip":
+        "Please specify the hazards that have caused high-consequence injuries. ",
+      "ui:tooltipdisplay": "block",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
+      },
+    },
+    Q3: {
+      "ui:title":
+        "Actions taken or underway to eliminate these hazards and minimize risk",
+      "ui:tooltip":
+        "Please provide description of actions taken or underway to eliminate these hazards and minimize risks using the hierarchy of controls. Hierarchy of controls systematic approach to enhance occupational health and safety, eliminate hazards, and minimize risks. ",
+      "ui:tooltipdisplay": "block",
+      "ui:widget": "inputWidget",
       "ui:horizontal": true,
       "ui:options": {
         label: false,
@@ -61,11 +93,12 @@ const uiSchema = {
   },
 };
 
-const Screen4 = ({ location, year, month }) => {
+const Screen3 = ({ location, year, month }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
+  const { open } = GlobalState();
   const toastShown = useRef(false);
   const getAuthToken = () => {
     if (typeof window !== "undefined") {
@@ -101,7 +134,7 @@ const Screen4 = ({ location, year, month }) => {
       form_data: formData,
       location,
       year,
-      month,
+   
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -155,7 +188,7 @@ const Screen4 = ({ location, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
       const response = await axios.get(url, axiosConfig);
       console.log("API called successfully:", response.data);
@@ -180,7 +213,7 @@ const Screen4 = ({ location, year, month }) => {
 
   // fetch backend and replace initialized forms
   useEffect(() => {
-    if (location && year && month) {
+    if (location && year) {
       loadFormData();
       toastShown.current = false; // Reset the flag when valid data is present
     } else {
@@ -189,7 +222,7 @@ const Screen4 = ({ location, year, month }) => {
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [location, year, month]);
+  }, [location, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -209,12 +242,11 @@ const Screen4 = ({ location, year, month }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-              Number of Hours Worked
+              Work-related hazards that pose a risk of high-consequence injury
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
-                data-tooltip-content="This section documents the data corresponding to
-                            whether the rates have been calculated based on
-                            200,000 or 1,000,000 hours worked."
+                data-tooltip-content="This section documents the data corresponding
+                            to the work-related hazards that pose a risk of high-consequence injury.  "
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
@@ -235,9 +267,14 @@ const Screen4 = ({ location, year, month }) => {
           </div>
           <div className="w-[20%]">
             <div className="float-end">
-              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+              <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex mx-2">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight ">
+                  GRI 403-9c
+                </div>
+              </div>
+              <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 403-9e
+                  GRI 403-9d
                 </div>
               </div>
             </div>
@@ -282,4 +319,4 @@ const Screen4 = ({ location, year, month }) => {
   );
 };
 
-export default Screen4;
+export default Screen3;

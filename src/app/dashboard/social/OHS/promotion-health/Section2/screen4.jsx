@@ -2,11 +2,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
+import inputWidget2 from "../../../../../shared/widgets/Input/inputWidget2";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import RadioWidget2 from "../../../../shared/widgets/Input/radioWidget2";
+import RadioWidget2 from "../../../../../shared/widgets/Input/radioWidget2";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -17,7 +17,7 @@ const widgets = {
   RadioWidget2: RadioWidget2,
 };
 
-const view_path = "gri-social-ohs-403-6a-scope_of_access";
+const view_path = "gri-social-ohs-403-6a-health_risk";
 const client_id = 1;
 const user_id = 1;
 
@@ -28,8 +28,7 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title:
-          "How the organization ensure the quality of these services and facilitate workers access",
+        title: "Specify health risks addressed",
       },
     },
   },
@@ -40,9 +39,9 @@ const uiSchema = {
     "ui:order": ["Q1"],
 
     Q1: {
-      "ui:title": "Please specify scope of access provided",
+      "ui:title": "Specify health risks addressed",
       "ui:tooltip":
-        "Describe the scope of access provided. e.g. The types of service to which access is facilitated and the types of worker that have access to them.",
+        "Describe the health risks addressed. Examples of these risks include smoking, drug and alcohol abuse, physical inactivity,unhealthy diets, HIV, and psychosocial factors.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -60,7 +59,7 @@ const uiSchema = {
   },
 };
 
-const Screen2 = ({ location, year, month }) => {
+const Screen4 = ({ location, year, month }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -84,6 +83,7 @@ const Screen2 = ({ location, year, month }) => {
   const handleChange = (e) => {
     setFormData(e.formData);
   };
+
   // The below code on updateFormData
   let axiosConfig = {
     headers: {
@@ -144,9 +144,9 @@ const Screen2 = ({ location, year, month }) => {
       });
       LoaderClose();
     }
-    //   console.log('Response:', response.data);
+    // console.log('Response:', response.data);
     // } catch (error) {
-    //   console.error('Error:', error);
+    // console.error('Error:', error);
     // }
   };
 
@@ -201,10 +201,13 @@ const Screen2 = ({ location, year, month }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-              Scope of access
+              Health risk addressed
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
-                data-tooltip-content="This section documents data corresponding to the scope of access provided to workers."
+                data-tooltip-content="This section documents data corresponding to
+                            any major non-work-related health risks addressed
+                            by any voluntary health promotion services and programs offered to
+                            workers."
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
@@ -273,4 +276,4 @@ const Screen2 = ({ location, year, month }) => {
   );
 };
 
-export default Screen2;
+export default Screen4;

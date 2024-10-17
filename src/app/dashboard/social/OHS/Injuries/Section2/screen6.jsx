@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import CustomTableWidget from "../../../../shared/widgets/Table/tableWidget";
+import inputWidget2 from "../../../../../shared/widgets/Input/inputWidget2";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -10,12 +10,12 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
-// Simple Custom Table Widget
+
 const widgets = {
-  TableWidget: CustomTableWidget,
+  inputWidget: inputWidget2,
 };
 
-const view_path = "gri-social-ohs-403-9a-number_of_injuries_emp";
+const view_path = "gri-social-ohs-403-9g-sma";
 const client_id = 1;
 const user_id = 1;
 
@@ -24,63 +24,71 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      employeeCategory: { type: "string", title: "employeeCategory" },
-      fatalities: { type: "string", title: "fatalities" },
-      highconsequence: { type: "string", title: "highconsequence" },
-      recordable: { type: "string", title: "recordable" },
-      maintypes: { type: "string", title: "maintypes" },
-      numberofhoursworked: { type: "string", title: "numberofhoursworked" },
+      Q1: {
+        type: "string",
+        title: "Standards",
+      },
+      Q2: {
+        type: "string",
+        title: "Methodologies used",
+      },
+      Q3: {
+        type: "string",
+        title: "Assumptions",
+      },
     },
   },
 };
 
 const uiSchema = {
-  "ui:widget": "TableWidget",
-  "ui:options": {
-    titles: [
-      {
-        title: "Employee Category",
-        tooltip: "Please specify the employee category here.",
+  items: {
+    "ui:order": ["Q1", "Q2", "Q3"],
+
+    Q1: {
+      "ui:title": "Standards",
+      "ui:tooltip":
+        "Include any contextual information necessary to understand how the data have been compiled,such as, please mention if any standards used. ",
+      "ui:tooltipdisplay": "block",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
-      {
-        title: "Number of fatalities as a result of work-related injury",
-        tooltip:
-          "Please specify the number of fatalities as a result of work-related injury. Work-related injury: negative impacts on health arising from exposure to hazards at work.",
+    },
+    Q2: {
+      "ui:title": "Methodologies used",
+      "ui:tooltip":
+        "Include the description of methodologies used to compile data",
+      "ui:tooltipdisplay": "block",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
-      {
-        title:
-          "Number of high-consequence work-related injuries (excluding fatalities)",
-        tooltip:
-          "Please specify the number of high-consequence work-related injuries (excluding fatalities).High-consequence work-related injury: work-related injury that results in a fatality or in an injury from  which the worker cannot, does not, or is not expected to  recover fully to pre-injury health status within six months.",
+    },
+    Q3: {
+      "ui:title": "Assumptions",
+      "ui:tooltip":
+        "Include the description of assumptions  considered to compile data ",
+      "ui:tooltipdisplay": "block",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
-      {
-        title: "Number of recordable work-related injuries",
-        tooltip:
-          "Please specify the number of recordable work-related injuries. Recordable work-related injury: work-related injury or ill health thatresults in any of the following: death, days away from work,restricted work or transfer to another job, medical treatment beyond first aid,or loss of consciousness",
-      },
-      {
-        title: "Main types of work-related injury",
-        tooltip: "Please specify the main types of work-related injury.",
-      },
-      {
-        title: "Number of hours worked",
-        tooltip: "Please specify employee's number of hours worked.",
-      },
-    ],
+    },
+
+    "ui:options": {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: "horizontal",
+    },
   },
 };
-const Screen1 = ({ location, year, month }) => {
-  const initialFormData = [
-    {
-      employeeCategory: "",
-      fatalities: "",
-      highconsequence: "",
-      recordable: "",
-      maintypes: "",
-      numberofhoursworked: "",
-    },
-  ];
-  const [formData, setFormData] = useState(initialFormData);
+
+const Screen6 = ({ location, year, month }) => {
+  const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
@@ -119,7 +127,6 @@ const Screen1 = ({ location, year, month }) => {
       form_data: formData,
       location,
       year,
-      month,
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -164,6 +171,7 @@ const Screen1 = ({ location, year, month }) => {
       });
       LoaderClose();
     }
+
     // console.log('Response:', response.data);
     // } catch (error) {
     // console.error('Error:', error);
@@ -172,8 +180,8 @@ const Screen1 = ({ location, year, month }) => {
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData(initialFormData);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    setFormData([{}]);
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
       const response = await axios.get(url, axiosConfig);
       console.log("API called successfully:", response.data);
@@ -181,7 +189,7 @@ const Screen1 = ({ location, year, month }) => {
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData(initialFormData);
+      setFormData([{}]);
     } finally {
       LoaderClose();
     }
@@ -198,7 +206,7 @@ const Screen1 = ({ location, year, month }) => {
 
   // fetch backend and replace initialized forms
   useEffect(() => {
-    if (location && year && month) {
+    if (location && year) {
       loadFormData();
       toastShown.current = false; // Reset the flag when valid data is present
     } else {
@@ -207,54 +215,30 @@ const Screen1 = ({ location, year, month }) => {
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [location, year, month]);
+  }, [location, year]);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent the default form submission
     console.log("Form data:", formData);
     updateFormData();
   };
 
-  const handleAddCommittee = () => {
-    const newCommittee = {
-      employeeCategory: "",
-      fatalities: "",
-      highconsequence: "",
-      recordable: "",
-      maintypes: "",
-      numberofhoursworked: "",
-    };
-    setFormData([...formData, newCommittee]);
-  };
-
-  // const handleRemoveCommittee = (index) => {
-  //   const newFormData = formData.filter((_, i) => i !== index);
-  //   setFormData(newFormData);
-  // };
-
   return (
     <>
-      <div
-        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
-        style={{
-          boxShadow:
-            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
-        }}
-      >
+      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-              The Number of Injuries
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+              Standards, methodologies, and assumptions used
               <MdInfoOutline
-                data-tooltip-id={`tooltip-$e156`}
-                data-tooltip-content="This section documents data corresponding to the number of
-                                fatalities as a result of a work-related injury, high-consequence
-                                work-related injuries, recordable work-related injuries, type of
-                                work-related injury and number of hours worked for all employees. "
+                data-tooltip-id={`tooltip-$e1`}
+                data-tooltip-content="This section documents data corresponding to any contextual
+                            information necessary to understand how the data have been compiled,
+                           such as any standards, methodologies, and assumptions used."
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
-                id={`tooltip-$e156`}
+                id={`tooltip-$e1`}
                 place="top"
                 effect="solid"
                 style={{
@@ -268,15 +252,13 @@ const Screen1 = ({ location, year, month }) => {
                 }}
               ></ReactTooltip>
             </h2>
-            <h2 className="flex mx-2 text-[13px] text-gray-500 font-semibold">
-              For all employees, please report the following
-            </h2>
           </div>
+
           <div className="w-[20%]">
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 403-9a
+                  GRI 403-9g
                 </div>
               </div>
             </div>
@@ -292,30 +274,17 @@ const Screen1 = ({ location, year, month }) => {
             widgets={widgets}
           />
         </div>
-        {location && year && (
-        <div className="flex right-1 mx-2">
-      
-            <button
-              type="button"
-              className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
-              onClick={handleAddCommittee}
-            >
-              Add category <MdAdd className="text-[14px] mt-1 text-[#007EEF]" />
-            </button>
-     
-        </div>
-     )}
-        <div className="mt-4">
+    <div className='mt-4'>
           <button
             type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !location || !year ? "cursor-not-allowed" : ""
-            }`}
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? "cursor-not-allowed" : ""
+              }`}
             onClick={handleSubmit}
             disabled={!location || !year}
           >
             Submit
           </button>
+
         </div>
       </div>
       {loopen && (
@@ -334,4 +303,4 @@ const Screen1 = ({ location, year, month }) => {
   );
 };
 
-export default Screen1;
+export default Screen6;

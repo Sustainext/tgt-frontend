@@ -2,22 +2,23 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import CustomTableWidget from "../../../../shared/widgets/Table/tableWidget";
+import inputWidget2 from "../../../../../shared/widgets/Input/inputWidget2";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import RadioWidget2 from "../../../../../shared/widgets/Input/radioWidget2";
 import axios from "axios";
+import { update } from "lodash";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
-import axiosInstance from "@/app/utils/axiosMiddleware";
 
-// Simple Custom Table Widget
 const widgets = {
-  TableWidget: CustomTableWidget,
+  inputWidget: inputWidget2,
+  RadioWidget2: RadioWidget2,
 };
 
-const view_path = "gri-social-ohs-403-10a-ill_health_emp";
+const view_path = "gri-social-ohs-403-6a-voluntary_health";
 const client_id = 1;
 const user_id = 1;
 
@@ -26,53 +27,54 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      employeeCategory: { type: "string", title: "employeeCategory" },
-      fatalities: { type: "string", title: "fatalities" },
-      recordable: { type: "string", title: "recordable" },
-      highconsequence: { type: "string", title: "highconsequence" },
+      Q1: {
+        type: "string",
+        title:
+          "Do workers’ have access to non-occupational medical and healthcare services?",
+        enum: ["Yes", "No"],
+      },
     },
   },
 };
 
 const uiSchema = {
-  "ui:widget": "TableWidget",
-  "ui:options": {
-    titles: [
-      {
-        title: "Employee Category",
-        tooltip: "Please specify the employee category here.",
+  items: {
+    "ui:order": ["Q1"],
+    Q1: {
+      "ui:title":
+        "Do workers’ have access to non-occupational medical and healthcare services?s",
+      "ui:tooltip":
+        "Indicate whether any voluntary health promotion services and programs offered to workers to address major non-work-related health risks by the organization (including the specific health risks addressed). ",
+      "ui:tooltipdisplay": "block",
+      "ui:widget": "RadioWidget2",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
-      {
-        title: "Number of fatalities as a result of work-Ill health",
-        tooltip:
-          "Please specify the number of fatalities as a result of work-related ill health. Work-related ill health: negative impacts on health arising from exposure to hazards at work.",
-      },
-      {
-        title: "Number of cases of recordable work-related ill health",
-        tooltip:
-          "Please specify the number of recordable work-related ill health. Recordable work-related ill health: work-related injury or ill health that results in any of the following: death, days away from work,restricted work or transfer to another job, medical treatment beyond first aid, or loss of consciousness",
-      },
-      {
-        title: "Main types of work-related ill health.",
-        tooltip: "Please specify the main types of work-related ill health.",
-      },
-    ],
+    },
+
+    "ui:options": {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: "horizontal",
+    },
   },
 };
-const Screen1 = ({ location, year, month }) => {
-  const initialFormData = [
-    {
-      employeeCategory: "",
-      fatalities: "",
-      recordable: "",
-      highconsequence: "",
-    },
-  ];
-  const [formData, setFormData] = useState(initialFormData);
+
+const Screen3 = ({ location, year, month }) => {
+  const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
+  const getAuthToken = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token")?.replace(/"/g, "");
+    }
+    return "";
+  };
+  const token = getAuthToken();
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -84,7 +86,12 @@ const Screen1 = ({ location, year, month }) => {
   const handleChange = (e) => {
     setFormData(e.formData);
   };
-
+  // The below code on updateFormData
+  let axiosConfig = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
   const updateFormData = async () => {
     LoaderOpen();
     const data = {
@@ -94,12 +101,11 @@ const Screen1 = ({ location, year, month }) => {
       form_data: formData,
       location,
       year,
-      month,
     };
-    console.log("CustomTableWidget value test", data);
+
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
-      const response = await axiosInstance.post(url, data);
+      const response = await axios.post(url, data, axiosConfig);
       if (response.status === 200) {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -139,24 +145,24 @@ const Screen1 = ({ location, year, month }) => {
       });
       LoaderClose();
     }
-    // console.log('Response:', response.data);
+    //   console.log('Response:', response.data);
     // } catch (error) {
-    // console.error('Error:', error);
+    //   console.error('Error:', error);
     // }
   };
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData(initialFormData);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    setFormData([{}]);
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
-      const response = await axiosInstance.get(url);
+      const response = await axios.get(url, axiosConfig);
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData(initialFormData);
+      setFormData([{}]);
     } finally {
       LoaderClose();
     }
@@ -173,7 +179,7 @@ const Screen1 = ({ location, year, month }) => {
 
   // fetch backend and replace initialized forms
   useEffect(() => {
-    if (location && year && month) {
+    if (location && year) {
       loadFormData();
       toastShown.current = false; // Reset the flag when valid data is present
     } else {
@@ -182,53 +188,25 @@ const Screen1 = ({ location, year, month }) => {
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [location, year, month]);
+  }, [location, year]);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent the default form submission
     console.log("Form data:", formData);
     updateFormData();
   };
 
-  const handleAddCommittee = () => {
-    const newCommittee = {
-      employeeCategory: "",
-      fatalities: "",
-      recordable: "",
-      highconsequence: "",
-    };
-    setFormData([...formData, newCommittee]);
-  };
-
-  // const handleRemoveCommittee = (index) => {
-  //   const newFormData = formData.filter((_, i) => i !== index);
-  //   setFormData(newFormData);
-  // };
-
   return (
     <>
-      <div
-        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
-        style={{
-          boxShadow:
-            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
-        }}
-      >
+      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-              Ill health
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+              Voluntary health promotion and programs offered
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
-                data-tooltip-content="This section documents
-                                data corresponding to
-                                the number of fatalities
-                                as a result of a
-                                work-related ill health,
-                                recordable work-related
-                                ill health and type of
-                                work-related ill health
-                                for all employees. "
+                data-tooltip-content="Are there any voluntary health promotion services and programs offered to workers to address major
+                            non-work-related health risks?"
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
@@ -246,15 +224,13 @@ const Screen1 = ({ location, year, month }) => {
                 }}
               ></ReactTooltip>
             </h2>
-            <h2 className="flex mx-2 text-[13px] text-gray-500 font-semibold">
-              For all employees, please report the following
-            </h2>
           </div>
+
           <div className="w-[20%]">
             <div className="float-end">
-              <div className="w-[80px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 403-10a
+                  GRI 403-6a
                 </div>
               </div>
             </div>
@@ -268,36 +244,21 @@ const Screen1 = ({ location, year, month }) => {
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
-            // formContext={{
-            //   onRemove: handleRemoveCommittee,
-            // }}
           />
         </div>
-        {location && year && (
-          <div className="flex right-1 mx-2">
-            <button
-              type="button"
-              className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
-              onClick={handleAddCommittee}
-            >
-              Add category <MdAdd className="text-[14px] mt-1 text-[#007EEF]" />
-            </button>
-          </div>
-        )}
-        <div className="mt-4">
+    <div className='mt-4'>
           <button
             type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !location || !year ? "cursor-not-allowed" : ""
-            }`}
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? "cursor-not-allowed" : ""
+              }`}
             onClick={handleSubmit}
             disabled={!location || !year}
           >
             Submit
           </button>
+
         </div>
       </div>
-
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <Oval
@@ -314,4 +275,4 @@ const Screen1 = ({ location, year, month }) => {
   );
 };
 
-export default Screen1;
+export default Screen3;

@@ -2,11 +2,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
+import inputWidget2 from "../../../../../shared/widgets/Input/inputWidget2";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import RadioWidget2 from "../../../../shared/widgets/Input/radioWidget2";
+import RadioWidget2 from "../../../../../shared/widgets/Input/radioWidget2";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -17,7 +17,7 @@ const widgets = {
   RadioWidget2: RadioWidget2,
 };
 
-const view_path = "gri-social-ohs-403-6a-health_risk";
+const view_path = "gri-social-ohs-403-6a-access_non_occupational";
 const client_id = 1;
 const user_id = 1;
 
@@ -28,7 +28,9 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Specify health risks addressed",
+        title:
+          "Do workers’ have access to non-occupational medical and healthcare services?",
+        enum: ["Yes", "No"],
       },
     },
   },
@@ -37,13 +39,13 @@ const schema = {
 const uiSchema = {
   items: {
     "ui:order": ["Q1"],
-
     Q1: {
-      "ui:title": "Specify health risks addressed",
+      "ui:title":
+        "Do workers’ have access to non-occupational medical and healthcare services?s",
       "ui:tooltip":
-        "Describe the health risks addressed. Examples of these risks include smoking, drug and alcohol abuse, physical inactivity,unhealthy diets, HIV, and psychosocial factors.",
+        "Indicate whether the worker's have access to non-occupational medical and healthcare services",
       "ui:tooltipdisplay": "block",
-      "ui:widget": "inputWidget",
+      "ui:widget": "RadioWidget2",
       "ui:horizontal": true,
       "ui:options": {
         label: false,
@@ -59,7 +61,7 @@ const uiSchema = {
   },
 };
 
-const Screen4 = ({ location, year, month }) => {
+const Screen1 = ({ location, year, month }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -99,7 +101,7 @@ const Screen4 = ({ location, year, month }) => {
       form_data: formData,
       location,
       year,
-      month,
+   
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -149,11 +151,10 @@ const Screen4 = ({ location, year, month }) => {
     // console.error('Error:', error);
     // }
   };
-
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
       const response = await axios.get(url, axiosConfig);
       console.log("API called successfully:", response.data);
@@ -178,7 +179,7 @@ const Screen4 = ({ location, year, month }) => {
 
   // fetch backend and replace initialized forms
   useEffect(() => {
-    if (location && year && month) {
+    if (location && year) {
       loadFormData();
       toastShown.current = false; // Reset the flag when valid data is present
     } else {
@@ -187,7 +188,7 @@ const Screen4 = ({ location, year, month }) => {
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [location, year, month]);
+  }, [location, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -201,13 +202,12 @@ const Screen4 = ({ location, year, month }) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-              Health risk addressed
+              Access to non-occupational medical and healthcare services
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
                 data-tooltip-content="This section documents data corresponding to
-                            any major non-work-related health risks addressed
-                            by any voluntary health promotion services and programs offered to
-                            workers."
+                            the workers’ access to non occupational
+                            medical and healthcare services."
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
@@ -276,4 +276,4 @@ const Screen4 = ({ location, year, month }) => {
   );
 };
 
-export default Screen4;
+export default Screen1;
