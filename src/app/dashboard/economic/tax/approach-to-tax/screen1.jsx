@@ -33,30 +33,45 @@ const schema = {
         title: "Does your organisation have a tax strategy?",
         enum: ["Yes", "No"],
       },
-      Q2: {
-        type: "string",
-        title: "Explain the outcome of public legal cases regarding corruption brought against the organization or its employees during the reporting period.",
+ 
+    },
+    dependencies: {
+      Q1: {
+        oneOf: [
+          {
+            properties: {
+              Q1: {
+                enum: ["Yes"],
+              },
+              Q2: {
+                type: "string",
+                title: "Explain the outcome of public legal cases regarding corruption brought against the organization or its employees during the reporting period.",
+        
+              },
+              Q3: {
+                type: "string",
+                title: "Mention the governance body or executive-level position within the organization that formally reviews and approves the tax strategy.",
+        
+              },
+              Q4: {
+                type: "string",
+                title: "Mention the frequency the tax strategy review.",
+        
+              },
+              Q5: {
+                type: "string",
+                title: "Please provide a description of the approach your organisation takes for tax related  regulatory compliance",
+        
+              },
+              Q6: {
+                type: "string",
+                title: "Please provide a description of the approach your organisation takes for tax related  regulatory compliance",
+        
+              },
 
-      },
-      Q3: {
-        type: "string",
-        title: "Mention the governance body or executive-level position within the organization that formally reviews and approves the tax strategy.",
-
-      },
-      Q4: {
-        type: "string",
-        title: "Mention the frequency the tax strategy review.",
-
-      },
-      Q5: {
-        type: "string",
-        title: "Please provide a description of the approach your organisation takes for tax related  regulatory compliance",
-
-      },
-      Q6: {
-        type: "string",
-        title: "Please provide a description of the approach your organisation takes for tax related  regulatory compliance",
-
+            },
+          },
+        ],
       },
     },
 
@@ -178,7 +193,16 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   };
 
   const handleChange = (e) => {
-    setFormData(e.formData);
+    let newFormData = { ...e.formData[0] };
+    if (newFormData.Q1 === "No") {
+      newFormData.Q2 = "";
+      newFormData.Q3 = "";
+      newFormData.Q4 = "";
+      newFormData.Q5 = "";
+      newFormData.Q6 = "";
+
+    }
+    setFormData([newFormData]);
   };
 
   const updateFormData = async () => {

@@ -1,22 +1,59 @@
-'use client'
-import { useState, useRef, useEffect } from "react";
-import Table2 from "../tables/table2";
+import { useSelector } from "react-redux";
 
-const Section14=({section11_4_3Ref})=>{
-   
-    return (
-        <>
-        <div id="section11_4_3" ref={section11_4_3Ref} >
+// Utility function to strip HTML tags
+const stripHTML = (htmlString) => {
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = htmlString;
+  return tempDiv.textContent || tempDiv.innerText || "";
+};
+
+const Section14 = ({ section11_4_3Ref }) => {
+  const data = useSelector((state) => state.screen11Slice.getdata);
+
+  return (
+    <>
+      <div id="section11_4_3" ref={section11_4_3Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-        11.4.3. Tax Governance and Risk Management
-</h3>
-<p className="text-[15px] text-[#344054] mb-2 font-semibold">
-We have established robust tax governance and risk management frameworks to oversee our tax practices. This includes regular audits, risk assessments, and the implementation of controls to ensure compliance and mitigate risks.             </p>
-            <p className="text-sm mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima id vero, necessitatibus perspiciatis earum dolores distinctio voluptatem eligendi perferendis at, laboriosam, illum animi. Blanditiis beatae eum corrupti placeat molestias adipisci.</p>
-       
-        </div>
-        </>
-    )
-}
+          11.4.3. Tax Governance and Risk Management
+        </h3>
+        {data["207_2a"]?.length>0?data["207_2a"].map((item, index) => (
+          <div key={`207_2a_${index}`} className="mb-4">
+            <p className="text-sm mb-2">{item.Q1 || "No data available"}</p>
+            <p className="text-sm mb-2">{item.Q2 || "No data available"}</p>
+            <p className="text-sm mb-2">{item.Q4 || "No data available"}</p>
+            <p className="text-sm mb-2">
+              {stripHTML(item.Q3) || "No data available"}
+            </p>
+          </div>
+        ))
+      :(
+        <p className="text-sm mb-2">No data available</p>
+      )
+      }
 
-export default Section14
+        {data["207_2b"]?.length>0?data["207_2b"].map((item, index) => (
+          <div key={`207_2b_${index}`} className="mb-4">
+            <p className="text-sm mb-2">{item.Q1 || "No data available"}</p>
+          </div>
+        )):(
+          <p className="text-sm mb-2">No data available</p>
+        )
+      }
+
+        {data["207_2c"] && data["207_2c"].Q1 === "Yes" && (
+          <div className="mb-4">
+            <p className="text-sm mb-2">{data["207_2c"].Q1}</p>
+            <p className="text-sm mb-2">
+              {data["207_2c"].Q2 || "No data available"}
+            </p>
+            <p className="text-sm mb-2">
+              {data["207_2c"].Q3?.text || "No data available"}
+            </p>
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
+
+export default Section14;

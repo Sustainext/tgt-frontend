@@ -23,7 +23,7 @@ import ImplementingCommitments from "./Policy/Implementing-commitments/page";
 import {
   setHeadertext1,
   setHeadertext2,
-  setHeaderdisplay
+  setHeaderdisplay,setMiddlename
 } from "../../../lib/redux/features/topheaderSlice";
 import { useDispatch} from "react-redux";
 const AccordionItem = ({ title, children }) => {
@@ -78,12 +78,37 @@ const Governance = () => {
   const isStepCompleted = (stepNumber) => {
     return completedSteps.includes(stepNumber);
   };
+  const stepTitles = {
+    1: "Board Info",
+    2: "Board Info",
+    3: "Board Info",
+    4: "Board Involvement in Sustainability",
+    5: "Board Involvement in Sustainability",
+    6: "Board Involvement in Sustainability",
+    7: "Governance",
+    8: "Governance",
+    9: "Performance and Renumerations",
+    10: "Performance and Renumerations",
+    11: "Performance and Renumerations",
+    12: "Performance and Renumerations",
+    13: "Performance and Renumerations",
+    14: "Sustainability Strategy",
+    15:"Policy",
+    16:"Policy",
+    17:"Remediation",
+    18:"Managing Concerns",
+    
+  };
   useEffect(() => {
-   
+    // Update header with step-related information
     dispatch(setHeadertext1("Collect"));
-    dispatch(setHeaderdisplay("none"));
-    dispatch(setHeadertext2('Governance'));
-}, [activeStep, dispatch]);
+    dispatch(setHeaderdisplay("block"));
+    dispatch(setMiddlename("Governance"));
+
+    // Dynamically set the title for the current step
+    const title = stepTitles[activeStep] || "Board Info"; // Default title
+    dispatch(setHeadertext2(title));
+  }, [activeStep, dispatch]);
   return (
     <>
       <div>

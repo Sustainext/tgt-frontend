@@ -4,7 +4,7 @@ import WasteTable from "../tables/waterTable";
 import WasteTable2 from '../tables/wasteTable'
 
 
-const Section28=({section12_5_5Ref})=>{
+const Section28=({section12_5_5Ref,data})=>{
     const [content,setContent] = useState(
         `We set targets for reducing energy consumption and implement various initiatives, such as upgrading equipment, improving insulation, and optimizing processes to achieve these goals.`
     )
@@ -13,19 +13,56 @@ const Section28=({section12_5_5Ref})=>{
       const column1 = [
         'Recovery operation', 
         'Material Type', 
-        "Qty of total waste",
         '% of total waste',
+        "Qty of total waste",
         'Unit'
       ];
-      const data1 = [
-        {
-            "Recovery operation": 'data',
-          'Material Type': 'data',
-          "Qty of total waste":"data",
-          "% of total waste":"data",
-        'Unit':"data"
-        },
-      ];
+
+      let wasteDivertedDisposalMaterialType={
+        total:"",
+        unit:""
+      }
+      let nonHazardeousWasteDivertedFromDisposal={
+         total:"",
+        unit:""
+      }
+      let hazardeousWasteDivertedFromDisposal={
+        total:"",
+       unit:""
+     }
+      const Tabledata =
+      data["waste_analyse"] &&
+      data["waste_analyse"]["waste_diverted_from_disposal_by_material_type"].length > 1
+        ? data["waste_analyse"]["waste_diverted_from_disposal_by_material_type"].reduce(
+            (acc, val) => {
+              if (val.total_waste_generated !== undefined) {
+                wasteDivertedDisposalMaterialType = {
+                  total: val.total_waste_generated.toFixed(2),
+                };
+              } else {
+                acc.push({
+                 'Recovery operation':val.recovery_operation, 
+              'Material Type':val.material_type, 
+              "Qty of total waste":val.total_waste.toFixed(2),
+              '% of total waste':val.contribution+"%",
+              'Unit':val.units
+                });
+              }
+              return acc;
+            },
+            []
+          )
+        : [
+            {
+              'Recovery operation':"No data available", 
+              'Material Type':"No data available", 
+              '% of total waste':"No data available",
+              "Qty of total waste":"No data available",
+              'Unit':"No data available"
+            },
+          ];
+  
+          
 
 
       const column2 = [
@@ -37,33 +74,80 @@ const Section28=({section12_5_5Ref})=>{
         "Other recovery options  %",
         "Site"
       ];
-      const data2 = [
-        {
-            "Waste Type": 'data',
-          'Quantity': 'data',
-        'Unit':"data",
-         'Recycled %': 'data',
-        'Preparation of reuse %':"data",
-        "Other recovery options  %":"data",
-        "Site":"data"
-        },
-      ];
+      const Tabledata2 =
+      data["waste_analyse"] &&
+      data["waste_analyse"]["non_hazardeous_waste_diverted_from_disposal"].length > 1
+        ? data["waste_analyse"]["non_hazardeous_waste_diverted_from_disposal"].reduce(
+            (acc, val) => {
+              if (val.total_waste_generated !== undefined) {
+                nonHazardeousWasteDivertedFromDisposal = {
+                  total: val.total_waste_generated.toFixed(2),
+                  unit: val.units,
+                };
+              } else {
+                acc.push({
+                'Waste Type':val.material_type, 
+        'Quantity':val.total_waste.toFixed(2), 
+        'Unit':val.units,
+        'Recycled %':val.recycled_percentage+"%", 
+        'Preparation of reuse %':val.preparation_of_reuse_percentage+"%",
+        "Other recovery options  %":val.other_percentage+"%",
+        "Site":val.site
+                });
+              }
+              return acc;
+            },
+            []
+          )
+        : [
+            {
+              'Waste Type':"No data available", 
+        'Quantity':"No data available", 
+        'Unit':"No data available",
+        'Recycled %':"No data available", 
+        'Preparation of reuse %':"No data available",
+        "Other recovery options  %":"No data available",
+        "Site":"No data available"
+            },
+          ];
 
 
-      const column3 = [
-        'Total Waste by Category', 
-        'Contribution %',
-        'Total in Qty', 
-        'Unit'
-      ];
-      const data3 = [
-        {
-            "Total Waste by Category": 'data',
-        'Contribution %':"data",
-         'Total in Qty': 'data',
-        'Unit':"data"
-        },
-      ];
+      const Tabledata3 =
+      data["waste_analyse"] &&
+      data["waste_analyse"]["hazardous_waste_diverted_form_disposal"].length > 1
+        ? data["waste_analyse"]["hazardous_waste_diverted_form_disposal"].reduce(
+            (acc, val) => {
+              if (val.total_waste_generated !== undefined) {
+                hazardeousWasteDivertedFromDisposal = {
+                  total: val.total_waste_generated.toFixed(2),
+                  unit: val.units,
+                };
+              } else {
+                acc.push({
+                'Waste Type':val.material_type, 
+        'Quantity':val.total_waste.toFixed(2), 
+        'Unit':val.units,
+        'Recycled %':val.recycled_percentage+"%", 
+        'Preparation of reuse %':val.preparation_of_reuse_percentage+"%",
+        "Other recovery options  %":val.other_percentage+"%",
+        "Site":val.site
+                });
+              }
+              return acc;
+            },
+            []
+          )
+        : [
+            {
+              'Waste Type':"No data available", 
+        'Quantity':"No data available", 
+        'Unit':"No data available",
+        'Recycled %':"No data available", 
+        'Preparation of reuse %':"No data available",
+        "Other recovery options  %":"No data available",
+        "Site":"No data available"
+            },
+          ];
 
 
      
@@ -86,21 +170,21 @@ const Section28=({section12_5_5Ref})=>{
 
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WasteTable columns={column1} data={data1} consumption="Total" unit={"Metric tons (t)"} total={'212123545'}/>
+<WasteTable columns={column1} data={Tabledata} consumption="Total" unit={Tabledata[0].Unit} total={wasteDivertedDisposalMaterialType.total}/>
 </div>
 
 <p className="text-[15px]  mb-2 font-semibold">
 Hazardous waste diverted form disposal
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WasteTable2 columns={column2} data={data2} consumption="Total" unit={"Metric tons (t)"} total={'212123545'}/>
+<WasteTable2 columns={column2} data={Tabledata3} consumption="Total" unit={Tabledata3[0].Unit} total={hazardeousWasteDivertedFromDisposal.total}/>
 </div>
 
 <p className="text-[15px]  mb-2 font-semibold">
 Non-hazardous waste diverted form disposal
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WasteTable2 columns={column2} data={data2} consumption="Total" total={'212123545'} unit={"Metric tons (t)"}/>
+<WasteTable2 columns={column2} data={Tabledata2} consumption="Total" unit={Tabledata2[0].Unit} total={nonHazardeousWasteDivertedFromDisposal.total}/>
 </div>
 
 

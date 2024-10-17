@@ -29,18 +29,18 @@ const schema = {
     type: 'object',
     properties: {
       category: { type: "string", title: "Employee Category" },
-      male: { type: "integer", title: "Male" },
-      female: { type: "integer", title: "Female" },
-      nonBinary: { type: "integer", title: "Non-Binary" },
-      totalGender: { type: "integer", title: "Total number of individuals within the organisation's governance bodies" },
-      lessThan30: { type: "integer", title: "< 30 years" },
-      between30and50: { type: "integer", title: "30-50 years" },
-      moreThan50: { type: "integer", title: "> 50 years" },
-      totalAge: { type: "integer", title: "Total number of individuals within the organisation's governance bodies" },
-      minorityGroup: { type: "integer", title: "Minority group" },
-      vulnerableCommunities: { type: "integer", title: "Vulnerable Communities" },
+      male: { type: "string", title: "Male" },
+      female: { type: "string", title: "Female" },
+      nonBinary: { type: "string", title: "Non-Binary" },
+      totalGender: { type: "string", title: "Total number of individuals within the organisation's governance bodies" },
+      lessThan30: { type: "string", title: "< 30 years" },
+      between30and50: { type: "string", title: "30-50 years" },
+      moreThan50: { type: "string", title: "> 50 years" },
+      totalAge: { type: "string", title: "Total number of individuals within the organisation's governance bodies" },
+      minorityGroup: { type: "string", title: "Minority group" },
+      vulnerableCommunities: { type: "string", title: "Vulnerable Communities" },
     },
-    required: ["category", "male", "female", "nonBinary", "totalGender", "lessThan30", "between30and50", "moreThan50", "totalAge", "minorityGroup", "vulnerableCommunities"]
+    
   }
 };
 
@@ -64,7 +64,7 @@ const uiSchema = {
       { title: "> 50 years", title2: "MoreThan50", tooltip: "Please specify the number of individuals over 50 years old.", colSpan: 1, type: "number",  tooltipdispaly:"none", },
       { title: "Total number of employee", title2: "totalAge", tooltip: "Please specify the total number of individuals.", colSpan: 1, type: "number",  tooltipdispaly:"none", },
       { title: "Minority group", title2: "Minoritygroup",tooltip: "Please specify the number of minority group individuals.", colSpan: 1, type: "number",  tooltipdispaly:"none", },
-      { title: "Vulnerable Groups", title2: "vulnerableCommunities", tooltip: "Please specify the number of vulnerable community individuals.", colSpan: 1, type: "number",  tooltipdispaly:"none", },
+      { title: "Vulnerable Groups", title2: "vulnerableCommunities", tooltip: "Please specify the type of vulnerable group and the number of individuals from the vulnerable groups present in the organisation's governance body.", colSpan: 1, type: "number",  tooltipdispaly:"block", },
 
     ]
   }
@@ -236,8 +236,8 @@ within the organization’s governance bodies by gender, age group and diversity
         </div>
         <div className='mx-2'>
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

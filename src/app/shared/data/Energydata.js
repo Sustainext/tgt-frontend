@@ -4080,7 +4080,7 @@ the supply chain and actions taken
             Sustainable Development Goal 12: Ensure sustainable consumption and
             production patterns
           </p>
-          <div className="h-[280px] overflow-y-auto custom-scrollbar">
+          <div className="h-[617px] overflow-y-auto custom-scrollbar">
             <p className="text-[13px] text-[#222222] mb-2">Target 12.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, achieve the sustainable management and efficient use of

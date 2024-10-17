@@ -67,7 +67,7 @@ const uiSchema = {
     ],
   },
 };
-const Ohstrainingscreen = ({ location, year, month }) => {
+const Ohstrainingscreen = ({ location, year }) => {
   const initialFormData = [
     {
       occupational: "",
@@ -116,7 +116,7 @@ const Ohstrainingscreen = ({ location, year, month }) => {
       form_data: formData,
       location,
       year,
-      month,
+     
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -170,7 +170,7 @@ const Ohstrainingscreen = ({ location, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData(initialFormData);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
       const response = await axios.get(url, axiosConfig);
       console.log("API called successfully:", response.data);
@@ -195,7 +195,7 @@ const Ohstrainingscreen = ({ location, year, month }) => {
 
   // fetch backend and replace initialized forms
   useEffect(() => {
-    if (location && year && month) {
+    if (location && year) {
       loadFormData();
       toastShown.current = false; // Reset the flag when valid data is present
     } else {
@@ -204,7 +204,7 @@ const Ohstrainingscreen = ({ location, year, month }) => {
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [location, year, month]);
+  }, [location, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -223,10 +223,7 @@ const Ohstrainingscreen = ({ location, year, month }) => {
     setFormData([...formData, newCommittee]);
   };
 
-  const handleRemoveCommittee = (index) => {
-    const newFormData = formData.filter((_, i) => i !== index);
-    setFormData(newFormData);
-  };
+
 
   return (
     <>
@@ -239,7 +236,7 @@ const Ohstrainingscreen = ({ location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Occupational health and safety training
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
@@ -269,7 +266,7 @@ const Ohstrainingscreen = ({ location, year, month }) => {
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 403-5a
+                  GRI 403-5a
                 </div>
               </div>
             </div>
@@ -283,23 +280,19 @@ const Ohstrainingscreen = ({ location, year, month }) => {
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
-            formContext={{
-              onRemove: handleRemoveCommittee,
-            }}
           />
         </div>
-        <div className="flex right-1 mx-2">
-          {location && year && (
-        <button
+        {location && year && (
+          <div className="flex right-1 mx-2">
+            <button
               type="button"
               className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
               onClick={handleAddCommittee}
             >
               Add category <MdAdd className="text-[14px] mt-1 text-[#007EEF]" />
             </button>
-          )}
-        </div>
-
+          </div>
+        )}
         <div className="mt-4">
           <button
             type="button"

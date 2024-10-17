@@ -1,50 +1,13 @@
 'use client';
 import { useState, useRef, useEffect } from "react";
 
-const CommunityTable = () => {
+const CommunityTable = ({data}) => {
   const col = [
     "",
     "Percentage of operations implemented by engaging local communities",
   ];
 
-  const data = [
-    {
-      0: [
-        {
-          "": "Social impact assessments",
-          "Percentage of operations implemented by engaging local communities": "data",
-        },
-        {
-          "": "Environmental impact assessments",
-          "Percentage of operations implemented by engaging local communities": "data",
-        },
-        {
-          "": "Public disclosure",
-          "Percentage of operations implemented by engaging local communities": "data",
-        },
-        {
-          "": "Community development programs",
-          "Percentage of operations implemented by engaging local communities": "data",
-        },
-        {
-          "": "Stakeholder engagement plans",
-          "Percentage of operations implemented by engaging local communities": "data",
-        },
-        {
-          "": "Local community consultation committes",
-          "Percentage of operations implemented by engaging local communities": "data",
-        },
-        {
-          "": "works councils, occupational health and safety committees",
-          "Percentage of operations implemented by engaging local communities": "data",
-        },
-        {
-          "": "Community grievance processes",
-          "Percentage of operations implemented by engaging local communities": "data",
-        },
-      ],
-    },
-  ];
+  
 
   return (
     <>
@@ -75,16 +38,27 @@ const CommunityTable = () => {
             </tr>
           </thead>
           <tbody>
-            {data[0][0].map((row, rowIndex) => (
+            {data.length>0?data.map((row, rowIndex) => (
               <tr key={rowIndex} className="text-[13px]">
                 <td className="border-t border-r border-gray-200 p-4 text-left">
                   {row[""]}
                 </td>
                 <td className="border border-gray-200 p-4 text-center">
-                  {row["Percentage of operations implemented by engaging local communities"]}
+                  {row["Percentage of operations implemented by engaging local communities"]>0?row["Percentage of operations implemented by engaging local communities"]:"N/A"}
                 </td>
               </tr>
-            ))}
+            )):(
+              <tr className="text-[13px]">
+                <td className="border-t border-r border-gray-200 p-4 text-left">
+                  No data available
+                </td>
+                <td className="border border-gray-200 p-4 text-center">
+                No data available
+                </td>
+              </tr>
+            )
+            
+            }
           </tbody>
         </table>
       </div>
