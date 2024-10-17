@@ -15,6 +15,8 @@ const Section2=({section7_1_1Ref,data})=>{
 We are committed to providing regular updates on our ESG performance to ensure transparency and keep our 
 stakeholders informed of our progress.`
     )
+
+    
     return (
         <>
         <div>
@@ -23,7 +25,8 @@ stakeholders informed of our progress.`
                 7.1.1 Restatement of Information
         </h3>
         <p className="mb-4 text-sm">
-        {data && data["2-4-a"] ? (
+        {data && data["2-4-a"] 
+        ? (
     typeof data["2-4-a"] === 'object' ? (
       <>
         {data["2-4-a"].Q1? data["2-4-a"].Q1:"No Data available"}

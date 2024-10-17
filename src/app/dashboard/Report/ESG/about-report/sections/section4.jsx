@@ -20,6 +20,7 @@ const Section4=({section7_3Ref,data})=>{
     const handleEditorChange=(e)=>{
       dispatch(setExternalAssurance(e.target.value))
     }
+
     return (
         <>
         <div>
@@ -50,36 +51,36 @@ const Section4=({section7_3Ref,data})=>{
             <p className="text-[15px] text-[#344054] mb-4 font-semibold">
             Policy and practice for seeking external assurance:
             </p>
-            <p className="text-sm mb-4">{data["2-5-a"]?data["2-5-a"]["assurance-policy"].Q1? data["2-5-a"]["assurance-policy"].Q1:"No data available":"No data available"}</p>
+            <p className="text-sm mb-4">{data["2-5-a"]?data["2-5-a"]["assurance-policy"]?data["2-5-a"]["assurance-policy"].Q1?data["2-5-a"]["assurance-policy"].Q1:"No data available":"No data available":"No data available"}</p>
             <p className="text-[15px] text-[#344054] mb-4 font-semibold">
             Involvement of  highest governance body and senior executives in the process.
             </p>
-            <p className="text-sm mb-4">{data["2-5-a"]?data["2-5-a"]["assurance-highest"].Q1? data["2-5-a"]["assurance-highest"].Q1:"No data available":"No data available"}</p>
+            <p className="text-sm mb-4">{data["2-5-a"]?data["2-5-a"]["assurance-highest"]?data["2-5-a"]["assurance-highest"].Q1?data["2-5-a"]["assurance-highest"].Q1:"No data available":"No data available":"No data available"}</p>
             <p className="text-[15px] text-[#344054] mb-4 font-semibold">
             Link or reference to the external assurance reports or assurance statements:
             </p>
-            <p className="text-sm mb-2">{data["2-5-b"]?data["2-5-b"].Q1:"No data available"}</p>
-            <p className="text-sm mb-4">{data["2-5-b"]?data["2-5-b"].Q2.text:""}</p>
+            <p className="text-sm mb-2">{data["2-5-b"]?data["2-5-b"].Q1?data["2-5-b"].Q1:"No data avaailable":"No data available"}</p>
+            <p className="text-sm mb-4">{data["2-5-b"]?data["2-5-b"].Q2?data["2-5-b"].Q2.text?data["2-5-b"].Q2.text:"":"":""}</p>
             <p className="text-[15px] text-[#344054] mb-4 font-semibold">
             Data that was assured and the basis of assurance:
             </p>
-            <p className="text-sm mb-2">{data["2-5-b"]?data["2-5-b"].Q3:"No data available"}</p>
+            <p className="text-sm mb-2">{data["2-5-b"]?data["2-5-b"].Q3?data["2-5-b"].Q3:"No data available":"No data available"}</p>
             <p className="text-[15px] text-[#344054] mb-4 font-semibold">
             Assurance Standard used:
             </p>
-            <p className="text-sm mb-2">{data["2-5-b"]?data["2-5-b"].Q4:"No data available"}</p>
+            <p className="text-sm mb-2">{data["2-5-b"]?data["2-5-b"].Q4?data["2-5-b"].Q4:"No data available":"No data available"}</p>
             <p className="text-[15px] text-[#344054] mb-4 font-semibold">
             Level of Assurance obtained:
             </p>
-            <p className="text-sm mb-2">{data["2-5-b"]?data["2-5-b"].Q5:"No data available"}</p>
+            <p className="text-sm mb-2">{data["2-5-b"]?data["2-5-b"].Q5?data["2-5-b"].Q5:"No data available":"No data available"}</p>
             <p className="text-[15px] text-[#344054] mb-4 font-semibold">
             Limitations of the assurance process:
             </p>
-            <p className="text-sm mb-2">{data["2-5-b"]?data["2-5-b"].Q6:"No data available"}</p>
+            <p className="text-sm mb-2">{data["2-5-b"]?data["2-5-b"].Q6?data["2-5-b"].Q6:"No data available":"No data available"}</p>
             <p className="text-[15px] text-[#344054] mb-4 font-semibold">
             Relationship between the organization and the assurance provider:
             </p>
-            <p className="text-sm mb-2">{data["2-5-b"]?data["2-5-b"].Q7:"No data available"}</p>
+            <p className="text-sm mb-2">{data["2-5-b"]?data["2-5-b"].Q7?data["2-5-b"].Q7:"No data available":"No data available"}</p>
            
   
         </div>
