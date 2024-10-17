@@ -9,7 +9,7 @@ import { useEmissions } from "./EmissionsContext";
 // import Scope3 from "./scope3";
 import CalculateSuccess from "./calculateSuccess";
 import { fetchEmissionsData, setClimatiqData } from '@/lib/redux/features/emissionSlice';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
 import Scope1 from "./scope1new";
 import Scope2 from "./scope2new";
 import Scope3 from "./scope3new";
