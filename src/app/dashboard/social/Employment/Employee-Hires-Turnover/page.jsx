@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import Socialheader from "../../socialheader";
+import Socialheader4 from "../../socialheader4";
 import NewEmployeeHire from "./New-Employee-Hire/page";
 import Employeeturnover from "./Employee-turnover/page";
 // import {Socialdata} from "../../data/socialgriinfo"
@@ -17,6 +17,8 @@ const EmployeeHiresTurnover = () => {
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedOrg, setSelectedOrg] = useState("");
+  const [selectedCorp, setSelectedCorp] = useState("");
 
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
@@ -47,15 +49,15 @@ const EmployeeHiresTurnover = () => {
             <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-[11px]">Social</p>
               <div className="flex">
-                         <div className="h-[29px]">
+                <div className="h-[29px]">
                   <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
-                  Employment 2016
+                    Employment 2016
                   </p>
                 </div>
               </div>
             </div>
           </div>
-         <div className="w-full float-end pt-5 me-1">
+          <div className="w-full float-end pt-5 me-1">
             <div className="flex float-end border-l">
               <button
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
@@ -85,7 +87,7 @@ const EmployeeHiresTurnover = () => {
           </div>
         </div>
 
-      <div className="ml-3 flex relative">
+        <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
             New employee hires and employee turnover
             {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
@@ -130,11 +132,13 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
             ))}
         </div>
       </div>
-      <Socialheader
+      <Socialheader4
         activeMonth={activeMonth}
         setActiveMonth={setActiveMonth}
-        location={location}
-        setLocation={setLocation}
+        selectedOrg={selectedOrg}
+        setSelectedOrg={setSelectedOrg}
+        selectedCorp={selectedCorp}
+        setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
       />
@@ -144,16 +148,18 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         location selected above
       </p>
       <NewEmployeeHire
-        location={location}
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
         year={year}
         month={activeMonth}
-        activeMonth={activeMonth}
+
       />
       <Employeeturnover
-        location={location}
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
         year={year}
         month={activeMonth}
-        activeMonth={activeMonth}
+    
       />
     </>
   );

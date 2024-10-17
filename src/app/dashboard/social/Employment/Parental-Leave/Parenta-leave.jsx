@@ -62,7 +62,7 @@ const uiSchema = {
   },
 };
 
-const Parentaleavescreen = ({ location, year, month }) => {
+const Parentaleavescreen = ({ selectedOrg, selectedCorp, year }) => {
   const { open } = GlobalState();
   const initialFormData = [
     { male: "", female: "", total: 0 },
@@ -105,9 +105,9 @@ const Parentaleavescreen = ({ location, year, month }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      location,
+      corporate: selectedCorp,
+      organisation: selectedOrg,
       year,
-      month,
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -157,7 +157,7 @@ const Parentaleavescreen = ({ location, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData(initialFormData);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axios.get(url, axiosConfig);
       console.log("API called successfully:", response.data);
@@ -176,7 +176,7 @@ const Parentaleavescreen = ({ location, year, month }) => {
   }, [formData]);
 
   useEffect(() => {
-    if (location && year && month) {
+    if (selectedOrg && year) {
       loadFormData();
       toastShown.current = false; // Reset the flag when valid data is present
     } else {
@@ -185,7 +185,7 @@ const Parentaleavescreen = ({ location, year, month }) => {
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [location, year, month]); // Dependencies // React only triggers this effect if these dependencies change
+  }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -262,14 +262,10 @@ const Parentaleavescreen = ({ location, year, month }) => {
           widgets={widgets}
         />
         <div className="mt-4 me-1">
-          <button
-            type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !location || !year ? "cursor-not-allowed" : ""
-            }`}
+        <button type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year ? 'cursor-not-allowed' : ''}`}
             onClick={handleSubmit}
-            disabled={!location || !year}
-          >
+            disabled={!selectedOrg || !year}>
             Submit
           </button>
         </div>
