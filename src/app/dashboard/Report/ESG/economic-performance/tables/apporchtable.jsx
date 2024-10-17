@@ -75,10 +75,17 @@ const Apporchtable = ({ col, values, currency,headerKeyMap  }) => {
   const currencySymbol = currencySymbols[currency] || currency;
 
   return (
-    <div style={{ maxHeight: "400px", overflowY: "auto" }} className="mb-2 table-scrollbar">
+    <div    style={{
+      display: "block",
+      overflowX: "auto",
+      maxWidth: "100%",
+      minWidth: "100%",
+      width: "40vw",
+    }}
+    className="mb-2 table-scrollbar">
     <table className="w-full border border-gray-200 rounded-md overflow-hidden">
       <thead className="gradient-background">
-        <tr className="text-[13px] font-semibold">
+        <tr className="text-[12px] font-semibold">
           {col.map((header, index) => (
             <th key={index} className="border-t border-r border-gray-200 p-4 text-left">
               {header}
@@ -88,7 +95,7 @@ const Apporchtable = ({ col, values, currency,headerKeyMap  }) => {
       </thead>
       <tbody>
         {values.map((row, rowIndex) => (
-          <tr key={rowIndex} className="text-[13px]">
+          <tr key={rowIndex} className="text-[12px]">
             {col.map((header, headerIndex) => {
               const key = headerKeyMap[header]; // Match the header with object keys
               return (

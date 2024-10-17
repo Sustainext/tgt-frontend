@@ -5,7 +5,14 @@ const DynamicTable2 = ({ data, columns,title }) => {
   const isEmptyData = data && Object.keys(data).length === 0;
 
   return (
-    <div className="">
+    <div    style={{
+      display: "block",
+      overflowX: "auto",
+      maxWidth: "100%",
+      minWidth: "100%",
+      width: "40vw",
+    }}
+    className="mb-2 table-scrollbar" >
     <table className="min-w-full w-full rounded-lg border border-gray-300 "style={{ borderCollapse: "separate", borderSpacing: 0 }}>
         <thead className="block md:table-header-group gradient-background">
         <tr className="text-[12px] border-b border-gray-200">
