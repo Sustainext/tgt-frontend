@@ -41,6 +41,7 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
     { id: "powerbiEnergy", label: "Energy (PowerBI)" },
     { id: "powerbiWaste", label: "Waste (PowerBI)" },
     { id: "superSetWaste", label: "Waste (Superset)" },
+    { id: "powerbiMaterials", label: "Materials (PowerBI)" },
   ];
 
   useEffect(() => {
@@ -99,6 +100,9 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
         break;
       case "powerbiWaste":
         reportConfig = dashboardData.find(item => item.waste)?.waste;
+        break;
+      case "powerbiMaterials":
+        reportConfig = dashboardData.find(item => item.materials)?.materials;
         break;
       default:
         return null;
