@@ -43,7 +43,7 @@ const AnalyseTable = ({ columns, data }) => {
     ))
   ) : (
     <tr className="text-[13px]">
-      <td className="border-t border-r border-gray-200 p-4 text-left" colSpan={Object.keys(data[0] || {}).length || 4}>
+      <td className="border-t border-r border-gray-200 p-4 text-left" colSpan={4}>
         No data available
       </td>
     </tr>

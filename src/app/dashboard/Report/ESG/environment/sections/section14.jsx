@@ -16,15 +16,15 @@ const Section14 = ({ section12_3Ref,data }) => {
           Interaction with water as shared resource:
         </p>
         <p className="text-sm mb-4">
-          {data["303-1b-1c-1d"]?data["303-1b-1c-1d"].data?data["303-1b-1c-1d"].data[0].Q1?data["303-1b-1c-1d"].data[0].Q1:"No data available":"No data available":"No data available"}
+          {data["303-1b-1c-1d"]?data["303-1b-1c-1d"].data?data["303-1b-1c-1d"].data[0]?data["303-1b-1c-1d"].data[0].Q1:"No data available":"No data available":"No data available"}
         </p>
 
         <p className="text-[15px]  mb-2 font-semibold">Water related impacts</p>
         <p className="text-sm mb-2">
-        {data["303-1b-1c-1d"]?data["303-1b-1c-1d"].data?data["303-1b-1c-1d"].data[0].Q2?data["303-1b-1c-1d"].data[0].Q2:"No data available":"No data available":"No data available"}
+        {data["303-1b-1c-1d"]?data["303-1b-1c-1d"].data?data["303-1b-1c-1d"].data[0]?data["303-1b-1c-1d"].data[0].Q2:"No data available":"No data available":"No data available"}
         </p>
         <p className="text-sm mb-4">
-        {data["303-1b-1c-1d"]?data["303-1b-1c-1d"].data?data["303-1b-1c-1d"].data[0].Q3?data["303-1b-1c-1d"].data[0].Q3:"No data available":"No data available":"No data available"}
+        {data["303-1b-1c-1d"]?data["303-1b-1c-1d"].data?data["303-1b-1c-1d"].data[0]?data["303-1b-1c-1d"].data[0].Q3:"No data available":"No data available":"No data available"}
         </p>
 
 
@@ -32,7 +32,7 @@ const Section14 = ({ section12_3Ref,data }) => {
           Water related goals and targets
         </p>
         <p className="text-sm mb-4">
-        {data["303-1b-1c-1d"]?data["303-1b-1c-1d"].data?data["303-1b-1c-1d"].data[0].Q4?data["303-1b-1c-1d"].data[0].Q4:"No data available":"No data available":"No data available"}
+        {data["303-1b-1c-1d"]?data["303-1b-1c-1d"].data?data["303-1b-1c-1d"].data[0]?data["303-1b-1c-1d"].data[0].Q4:"No data available":"No data available":"No data available"}
         </p>
       </div>
     </>

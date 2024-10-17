@@ -35,15 +35,15 @@ const Section27=({section12_5_4Ref,data})=>{
           (acc, val) => {
             if (val.total_waste_generated !== undefined) {
               wasteDirectedMaterialType = {
-                total: val.total_waste_generated,
+                total: val.total_waste_generated.toFixed(2),
                 unit: val.units,
               };
             } else {
               acc.push({
                 'Disposal Method':val.disposal_method, 
                 'Material Type':val.material_type, 
-                "Qty of total waste":val.total_waste,
-                '% of total waste':val.contribution,
+                "Qty of total waste":val.total_waste.toFixed(2),
+                '% of total waste':val.contribution+"%",
                 'Unit':val.units
               });
             }
@@ -80,13 +80,13 @@ const Section27=({section12_5_4Ref,data})=>{
             (acc, val) => {
               if (val.total_waste_generated !== undefined) {
                 hazardeousWasteDirectedToDisposal = {
-                  total: val.total_waste_generated,
+                  total: val.total_waste_generated.toFixed(2),
                   unit: val.units,
                 };
               } else {
                 acc.push({
                   'Waste Type':val.material_type, 
-                  'Quantity':val.total_waste, 
+                  'Quantity':val.total_waste.toFixed(2), 
                   'Unit':val.units,
                   'Incineration (with energy) %':val.inceneration_with_energy_percentage+"%", 
                   'Incineration (without energy) %':val.inceneration_without_energy_percentage+"%",
@@ -124,13 +124,13 @@ const Section27=({section12_5_4Ref,data})=>{
                 (acc, val) => {
                   if (val.total_waste_generated !== undefined) {
                     NonhazardeousWasteDirectedToDisposal = {
-                      total: val.total_waste_generated,
+                      total: val.total_waste_generated.toFixed(2),
                       unit: val.units,
                     };
                   } else {
                     acc.push({
                       'Waste Type':val.material_type, 
-                      'Quantity':val.total_waste, 
+                      'Quantity':val.total_waste.toFixed(2), 
                       'Unit':val.units,
                       'Incineration (with energy) %':val.inceneration_with_energy_percentage+"%", 
                       'Incineration (without energy) %':val.inceneration_without_energy_percentage+"%",
@@ -179,21 +179,21 @@ const Section27=({section12_5_4Ref,data})=>{
 
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WasteTable columns={column1} data={Tabledata} consumption="Total" unit={wasteDirectedMaterialType.unit} total={wasteDirectedMaterialType.total}/>
+<WasteTable columns={column1} data={Tabledata} consumption="Total" unit={Tabledata[0].Unit} total={wasteDirectedMaterialType.total}/>
 </div>
 
 <p className="text-[15px]  mb-2 font-semibold">
 Hazardous waste directed to disposal
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WasteTable2 columns={column2} data={Tabledata2} consumption="Total" unit={hazardeousWasteDirectedToDisposal.unit} total={hazardeousWasteDirectedToDisposal.total}/>
+<WasteTable2 columns={column2} data={Tabledata2} consumption="Total" unit={Tabledata2[0].Unit} total={hazardeousWasteDirectedToDisposal.total}/>
 </div>
 
 <p className="text-[15px]  mb-2 font-semibold">
 Non-hazardous waste directed to disposal
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WasteTable2 columns={column2} data={Tabledata3} consumption="Total" unit={NonhazardeousWasteDirectedToDisposal.unit} total={NonhazardeousWasteDirectedToDisposal.total}/>
+<WasteTable2 columns={column2} data={Tabledata3} consumption="Total" unit={Tabledata3[0].Unit} total={NonhazardeousWasteDirectedToDisposal.total}/>
 </div>
 
 

@@ -13,12 +13,12 @@ const Section28=({section12_5_5Ref,data})=>{
       const column1 = [
         'Recovery operation', 
         'Material Type', 
-        "Qty of total waste",
         '% of total waste',
+        "Qty of total waste",
         'Unit'
       ];
 
-      let wasteDirectedDisposalMaterialType={
+      let wasteDivertedDisposalMaterialType={
         total:"",
         unit:""
       }
@@ -32,19 +32,18 @@ const Section28=({section12_5_5Ref,data})=>{
      }
       const Tabledata =
       data["waste_analyse"] &&
-      data["waste_analyse"]["waste_directed_to_disposal_by_material_type"].length > 1
-        ? data["waste_analyse"]["waste_directed_to_disposal_by_material_type"].reduce(
+      data["waste_analyse"]["waste_diverted_from_disposal_by_material_type"].length > 1
+        ? data["waste_analyse"]["waste_diverted_from_disposal_by_material_type"].reduce(
             (acc, val) => {
               if (val.total_waste_generated !== undefined) {
-                wasteDirectedDisposalMaterialType = {
-                  total: val.total_waste_generated,
-                  unit: val.units,
+                wasteDivertedDisposalMaterialType = {
+                  total: val.total_waste_generated.toFixed(2),
                 };
               } else {
                 acc.push({
-                 'Recovery operation':val.disposal_method, 
+                 'Recovery operation':val.recovery_operation, 
               'Material Type':val.material_type, 
-              "Qty of total waste":val.total_waste,
+              "Qty of total waste":val.total_waste.toFixed(2),
               '% of total waste':val.contribution+"%",
               'Unit':val.units
                 });
@@ -57,12 +56,13 @@ const Section28=({section12_5_5Ref,data})=>{
             {
               'Recovery operation':"No data available", 
               'Material Type':"No data available", 
-              "Qty of total waste":"No data available",
               '% of total waste':"No data available",
+              "Qty of total waste":"No data available",
               'Unit':"No data available"
             },
           ];
   
+          
 
 
       const column2 = [
@@ -81,13 +81,13 @@ const Section28=({section12_5_5Ref,data})=>{
             (acc, val) => {
               if (val.total_waste_generated !== undefined) {
                 nonHazardeousWasteDivertedFromDisposal = {
-                  total: val.total_waste_generated,
+                  total: val.total_waste_generated.toFixed(2),
                   unit: val.units,
                 };
               } else {
                 acc.push({
                 'Waste Type':val.material_type, 
-        'Quantity':val.total_waste, 
+        'Quantity':val.total_waste.toFixed(2), 
         'Unit':val.units,
         'Recycled %':val.recycled_percentage+"%", 
         'Preparation of reuse %':val.preparation_of_reuse_percentage+"%",
@@ -119,13 +119,13 @@ const Section28=({section12_5_5Ref,data})=>{
             (acc, val) => {
               if (val.total_waste_generated !== undefined) {
                 hazardeousWasteDivertedFromDisposal = {
-                  total: val.total_waste_generated,
+                  total: val.total_waste_generated.toFixed(2),
                   unit: val.units,
                 };
               } else {
                 acc.push({
                 'Waste Type':val.material_type, 
-        'Quantity':val.total_waste, 
+        'Quantity':val.total_waste.toFixed(2), 
         'Unit':val.units,
         'Recycled %':val.recycled_percentage+"%", 
         'Preparation of reuse %':val.preparation_of_reuse_percentage+"%",
@@ -170,21 +170,21 @@ const Section28=({section12_5_5Ref,data})=>{
 
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WasteTable columns={column1} data={Tabledata} consumption="Total" unit={wasteDirectedDisposalMaterialType.unit} total={wasteDirectedDisposalMaterialType.total}/>
+<WasteTable columns={column1} data={Tabledata} consumption="Total" unit={Tabledata[0].Unit} total={wasteDivertedDisposalMaterialType.total}/>
 </div>
 
 <p className="text-[15px]  mb-2 font-semibold">
 Hazardous waste diverted form disposal
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WasteTable2 columns={column2} data={Tabledata3} consumption="Total" unit={hazardeousWasteDivertedFromDisposal.unit} total={hazardeousWasteDivertedFromDisposal.total}/>
+<WasteTable2 columns={column2} data={Tabledata3} consumption="Total" unit={Tabledata3[0].Unit} total={hazardeousWasteDivertedFromDisposal.total}/>
 </div>
 
 <p className="text-[15px]  mb-2 font-semibold">
 Non-hazardous waste diverted form disposal
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WasteTable2 columns={column2} data={Tabledata2} consumption="Total" unit={nonHazardeousWasteDivertedFromDisposal.unit} total={nonHazardeousWasteDivertedFromDisposal.total}/>
+<WasteTable2 columns={column2} data={Tabledata2} consumption="Total" unit={Tabledata2[0].Unit} total={nonHazardeousWasteDivertedFromDisposal.total}/>
 </div>
 
 

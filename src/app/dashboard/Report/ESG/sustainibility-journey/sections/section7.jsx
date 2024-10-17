@@ -24,11 +24,11 @@ const Section7=({section10_3_3Ref,data})=>{
             <p className="text-[15px] text-[#344054] mb-2 font-semibold">
             Percentage of suppliers identified as having significant actual and potential negative environmental impacts with which improvements were agreed upon as a result of assessment: 
             </p>
-            <p className="text-sm mb-4">{data["gri_308_2d"]?data["gri_308_2d"][0].percentage?data["gri_308_2d"][0].percentage+" %":"No data available":"No data available"}</p>
+            <p className="text-sm mb-4">{data["gri_308_2d"]?data["gri_308_2d"][0]?data["gri_308_2d"][0].percentage+" %":"No data available":"No data available"}</p>
             <p className="text-[15px] text-[#344054] mb-2 font-semibold">
             Percentage of Suppliers identified as having significant actual and potential negative environmental impacts with terminated Relationship:
             </p>
-            <p className="text-sm mb-4">{data["gri_308_2e"]?data["gri_308_2e"][0].percentage?data["gri_308_2e"][0].percentage+" %":"No data available":"No data available"}</p>
+            <p className="text-sm mb-4">{data["gri_308_2e"]?data["gri_308_2e"][0]?data["gri_308_2e"][0].percentage+" %":"No data available":"No data available"}</p>
             <p className="text-[15px] text-[#344054] mb-2 font-semibold">
             Number of suppliers screened using social criteria:
             </p>
