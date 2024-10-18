@@ -189,7 +189,7 @@ const Step1 = ({ handleNext, esgSeleted }) => {
       <div className="mx-5">
         <div className="flex justify-between items-start">
           <div className="shadow-lg rounded-lg  w-[32.5%]">
-            <div className="relative gradient-background p-2 rounded-t-lg flex justify-between green-checkbox">
+            <div className="relative gradient-background p-2 rounded-t-lg flex justify-between">
               <p className="text-[#2E0B34] text-[17px] mx-2 pt-2 flex">
                 Environmental
                 <MdInfoOutline
@@ -224,7 +224,7 @@ pollution, climate change mitigation,
                 type="checkbox"
                 name="env"
                 checked={envChecked}
-                className="h-3.5 w-3.5 mt-3 mx-2"
+                className="h-3.5 w-3.5 mt-3 mx-2 accent-[#008000]"
                 onChange={handleChecked}
               />
             </div>
@@ -235,7 +235,7 @@ pollution, climate change mitigation,
             />
           </div>
           <div className="shadow-lg rounded-lg  w-[32.5%]">
-            <div className="relative gradient-background p-2 rounded-t-lg flex justify-between green-checkbox">
+            <div className="relative gradient-background p-2 rounded-t-lg flex justify-between">
               <p className="text-[#2E0B34] text-[17px] mx-2 pt-2 flex">
                 Social
                 <MdInfoOutline
@@ -267,7 +267,7 @@ customer relations, and community engagement. </p>`}
                 type="checkbox"
                 name="soc"
                 checked={socChecked}
-                className="h-3.5 w-3.5 mt-3 mx-2" //green-checkbox appearance-none checked:bg-green-500 checked:border-green-500 border border-gray-500 rounded-[3px] relative bg-white
+                className="h-3.5 w-3.5 mt-3 mx-2 accent-[#008000]" //green-checkbox appearance-none checked:bg-green-500 checked:border-green-500 border border-gray-500 rounded-[3px] relative bg-white
                 onChange={handleChecked}
               />
             </div>
@@ -278,7 +278,7 @@ customer relations, and community engagement. </p>`}
             />
           </div>
           <div className="shadow-lg rounded-lg  w-[32.5%]">
-            <div className="relative gradient-background p-2 rounded-t-lg flex justify-between green-checkbox">
+            <div className="relative gradient-background p-2 rounded-t-lg flex justify-between">
               <p className="text-[#2E0B34] text-[17px] mx-2 pt-2 flex">
                 Governance
                 <MdInfoOutline
@@ -310,7 +310,7 @@ and transparency in reporting. </p>`}
                 type="checkbox"
                 name="gov"
                 checked={govChecked}
-                className="h-3.5 w-3.5 mt-3 mx-2"
+                className="h-3.5 w-3.5 mt-3 mx-2 accent-[#008000]"
                 onChange={handleChecked}
               />
             </div>

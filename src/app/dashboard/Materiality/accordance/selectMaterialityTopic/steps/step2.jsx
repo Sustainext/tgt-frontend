@@ -184,7 +184,7 @@ const Step2 = ({ data, setCurrentStep, handleNext, handlePrevious }) => {
   const renderDisclosureTopics = (sectionData, sectionTitle) => {
     return (
       <div className="shadow-lg rounded-lg mx-6 mt-4" key={sectionTitle}>
-        <div className="gradient-background p-2 rounded-t-lg flex justify-between green-checkbox">
+        <div className="gradient-background p-2 rounded-t-lg flex justify-between">
           <p className="text-[#2E0B34] text-[17px] mx-2 pt-2 text-bold">
             {sectionTitle}
           </p>
@@ -211,7 +211,7 @@ const Step2 = ({ data, setCurrentStep, handleNext, handlePrevious }) => {
                     {disclosures.map((disclosure) => (
                       <div
                         key={disclosure.disclosure_id}
-                        className="mx-2 pt-1 green-checkbox"
+                        className="mx-2 pt-1"
                       >
                         <label className="flex items-center gap-2 text-sm mb-4 cursor-pointer">
                           <input
@@ -229,28 +229,31 @@ const Step2 = ({ data, setCurrentStep, handleNext, handlePrevious }) => {
                                 disclosure.disclosure_id
                               )
                             }
-                            className={`form-checkbox h-3 w-3  ${disclosure.can_edit?"cursor-pointer":""}`}
+                            className={`form-checkbox h-3 w-3 accent-[#008000]  ${disclosure.can_edit?"cursor-pointer":""}`}
                             data-tooltip-html={
                               !disclosure.can_edit
                                 ? "<p>This is a Topic Management Disclosure and cannot be skipped.</p>"
                                 : ""
                             }
-                            data-tooltip-id={'checked'}
+                            data-tooltip-id={`tooltip-${disclosure.disclosure_id}`}
                           />
                           {disclosure.name}
                         </label>
                       </div>
                     ))}
-                    <ReactTooltip
-                    id="checked"
-                      place="top"
-                      effect="solid"
-                      backgroundColor="#000"
-                      textColor="white"
-                      fontSize="12px"
-                      borderRadius="8px"
-                      delayShow={200}
-                    />
+                   {disclosures.map((disclosure) => (
+    <ReactTooltip
+      key={disclosure.disclosure_id}
+      id={`tooltip-${disclosure.disclosure_id}`} // Unique ID for each tooltip
+      place="top"
+      effect="solid"
+      backgroundColor="#000"
+      textColor="white"
+      fontSize="12px"
+      borderRadius="8px"
+      delayShow={200}
+    />
+  ))}
                   </div>
                 </div>
               </div>
