@@ -282,37 +282,28 @@ const Scope1 = forwardRef(
       //     updateScopeDataLocal({ scope: 1, data: { data: currentFormData } })
       //   );
       // } 
-      if (assigned_data.status === 'succeeded') {
-        const assigned_data_scope = assigned_data.scope2;
-        
-        // Format the assigned data
-        const formattedAssignedData = assigned_data_scope.map(task => ({
-          id: task.id,
-          Emission: {
-            ...task,
-            Category: task.category,
-            Subcategory: task.subcategory,
-            Activity: task.activity,
-            Quantity: task.value1,
-            Unit: task.unit1,
-            Quantity2: task.value2,
-            Unit2: task.unit2,
-            rowType: 'assigned',
-            assignTo: task.assign_to,
-            deadline: task.deadline
-          }
-        }));
+      // if (assigned_data.status === 'succeeded') {
+      //   const assigned_data_scope = assigned_data.scope1;
       
-        // Combine existing formData with formatted assigned data
-        const updated_formData = [
-          ...formData.filter(item => !formattedAssignedData.some(assignedItem => assignedItem.id === item.id)),
-          ...formattedAssignedData
-        ];
+      //   // Format the assigned data
+      //   const formattedAssignedData = assigned_data_scope.map(task => ({
+      //     ...task,
+      //     Emission: {
+      //       ...task.Emission,
+      //       rowType: 'assigned'
+      //     }
+      //   }));
       
-        dispatch(
-          updateScopeDataLocal({ scope: 2, data: { data: updated_formData } })
-        );
-      }
+      //   // Combine existing formData with formatted assigned data
+      //   const updated_formData = [
+      //     ...formData.filter(item => !formattedAssignedData.some(assignedItem => assignedItem.id === item.id)),
+      //     ...formattedAssignedData
+      //   ];
+      
+      //   dispatch(
+      //     updateScopeDataLocal({ scope: 1, data: { data: updated_formData } })
+      //   );
+      // }
     }, [climatiqData.totalScore, previousMonthData]);
 
     if (scope1State.status === "loading") {
