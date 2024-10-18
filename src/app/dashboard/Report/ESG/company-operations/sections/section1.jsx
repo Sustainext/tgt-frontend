@@ -76,26 +76,22 @@ const Section1 = ({ orgName, data }) => {
       </div>
 
       <ul className="list-disc ml-6">
-        {data["2-1"] && (
-          <>
-            <li className="text-[15px] text-[#344054] mb-2 font-semibold">
+      <li className="text-[15px] text-[#344054] mb-2 font-semibold">
               Nature of Ownership and Legal Form:
-              <p className="mb-4 font-normal">{data["2-1"].nature_of_ownership_and_legal_form || 'N/A'}</p>
+              <p className="mb-4 font-normal text-sm">{data["2-1"]?data["2-1"].nature_of_ownership_and_legal_form?data["2-1"].nature_of_ownership_and_legal_form:"No data available":"No data available"}</p>
             </li>
             <li className="text-[15px] text-[#344054] mb-2 font-semibold">
               Headquarters:
-              <p className="mb-4 font-normal">{data["2-1"].location_of_headquarters || 'N/A'}</p>
+              <p className="mb-4 font-normal text-sm">{data["2-1"]?data["2-1"].location_of_headquarters?data["2-1"].location_of_headquarters:"No data available":"No data available"}</p>
             </li>
             <li className="text-[15px] text-[#344054] mb-2 font-semibold">
               Countries of Operation:
-              <p className="mb-4 font-normal">
-                {data["2-1"].countries_of_operation && data["2-1"].countries_of_operation.length > 0
+              <p className="mb-4 font-normal  text-sm">
+                {data["2-1"]?data["2-1"].countries_of_operation?data["2-1"].countries_of_operation.length > 0
                   ? data["2-1"].countries_of_operation.join(', ')
-                  : 'N/A'}
+                  :"No data available":"No data available":"No data available"}
               </p>
             </li>
-          </>
-        )}
       </ul>
     </>
   )

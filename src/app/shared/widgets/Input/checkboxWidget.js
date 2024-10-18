@@ -72,7 +72,7 @@ useEffect(() => {
 
   return (
     <div className='mb-1'>
-      <div className={`p-2 mx-1 mt-2 green-checkbox ${options.envChecked || options.socChecked || options.govChecked ? "" : "opacity-25"}`}>
+      <div className={`p-2 mx-1 mt-2 ${options.envChecked || options.socChecked || options.govChecked ? "" : "opacity-25"}`}>
         {options.enumOptions.map((option, index) => (
           <label key={index} className='flex items-center gap-2 text-sm mb-4 cursor-pointer'>
             <input
@@ -82,7 +82,7 @@ useEffect(() => {
               checked={selectedValues.includes(option.value.label)} // Check if the value is in the array
               autoFocus={autofocus && index === 0}
               onChange={handleChange}
-              className='form-checkbox h-3 w-3' // Changed from 'form-radio' to 'form-checkbox'
+              className='form-checkbox h-3 w-3 accent-[#008000]' // Changed from 'form-radio' to 'form-checkbox'
               disabled={!(options.envChecked || options.socChecked || options.govChecked)}
             />
             {option.value.value}
