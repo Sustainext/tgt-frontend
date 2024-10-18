@@ -3,11 +3,21 @@ import { useState, useRef, useEffect } from "react";
 import EmployeeCategoryTable from "../tables/employeeCategoryTable";
 import STARSVG from "../../../../../../../public/star.svg";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import {setRemunerationPractices} from "../../../../../../lib/redux/features/ESGSlice/screen13Slice"
 
 const Section15=({section13_4_3Ref})=>{
-    const [content,setContent] = useState(
-        `We ensure equitable remuneration practices across our organization. Our compensation policies are designed to eliminate pay disparities and promote fairness. `
-    )
+    
+    const content = useSelector(state => state.screen13Slice.remuneration_practices);
+    const dispatch = useDispatch();
+    const loadContent = () => {
+      dispatch(setRemunerationPractices(
+       `We ensure equitable remuneration practices across our organization. Our compensation policies are designed to eliminate pay disparities and promote fairness.`))
+    }
+  
+    const handleEditorChange=(e)=>{
+      dispatch(setRemunerationPractices(e.target.value))
+    }
     const columns = [
         { header: "Basic Salary per Employee Category", subHeaders: [] }, // No sub-headers for this column
         { header: "Gender", subHeaders: ["Male", "Female", "Non-Binary"] },
@@ -64,7 +74,7 @@ const Section15=({section13_4_3Ref})=>{
           <p className="text-[15px] text-[#344054] mb-2 mt-3">Add statement about company’s remuneration practices & policies.</p>
           <button
             className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
-            // onClick={loadContent}
+            onClick={loadContent}
           >
             {/* <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/> */}
             <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
@@ -72,6 +82,7 @@ const Section15=({section13_4_3Ref})=>{
           </button>
         </div>
             <textarea
+            onChange={handleEditorChange}
           value={content}
           className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
           rows={4}

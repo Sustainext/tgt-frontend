@@ -1,10 +1,13 @@
 'use client'
 import { useState, useRef, useEffect } from "react";
 import LeaveTable from "../../people/tables/leaveTable";
+import dynamic from 'next/dynamic';
 import STARSVG from "../../../../../../../public/star.svg";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import {setSignificantSpills} from "../../../../../../lib/redux/features/ESGSlice/screen12Slice"
+
+const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 
 const Section29=({section12_5_6Ref,orgName})=>{
     
@@ -15,10 +18,40 @@ const Section29=({section12_5_6Ref,orgName})=>{
         `${orgName ? orgName : "[Company Name]"} organization is committed to preventing and managing significant spills that can negatively impact the environment, biodiversity, and local communities.As part of our sustainability strategy, we have implemented a`))
     }
   
-    const handleEditorChange=(e)=>{
-      dispatch(setSignificantSpills(e.target.value))
+    const handleEditorChange=(value)=>{
+      dispatch(setSignificantSpills(value))
     }
-
+    const config = {
+        style: {
+          fontSize: "14px",
+          color:"#667085"
+        },
+        allowResizeY: false,
+        defaultActionOnPaste: 'insert_clear_html',
+        toolbarSticky: false,
+        toolbar: true,
+        buttons: [
+            'bold',
+            'italic',
+            'underline',
+            'strikeThrough',
+            'align',
+            'outdent',
+            'indent',
+            'ul',
+            'ol',
+            'paragraph',
+            'link',
+            'table',
+            'undo',
+            'redo',
+            'hr',
+            'fontsize',
+            'selectall'
+        ],
+        // Remove buttons from the extra buttons list
+        removeButtons: ['fullsize', 'preview', 'source', 'print', 'about', 'find', 'changeMode','paintFormat','image','brush','font'],
+      };
     const col1=[
         "Material of the spill",
         "Volume of the spill",
@@ -81,14 +114,22 @@ const Section29=({section12_5_6Ref,orgName})=>{
             Auto Fill
           </button>
         </div>
-            <textarea
+            {/* <textarea
             onChange={handleEditorChange}
           value={content}
           className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
           rows={4}
-        />
-        
-<p className="text-[15px]  mb-2 font-semibold">
+        /> */}
+         <div className="mb-4">
+              <JoditEditor
+              // ref={editor}
+              value={content}
+              config={config}
+              tabIndex={1}
+              onBlur={handleEditorChange}
+              />
+            </div>
+{/* <p className="text-[15px]  mb-2 font-semibold">
 Total number & volume of spills by material 
         </p>
 <div className="shadow-md rounded-md mb-4">
@@ -107,7 +148,7 @@ Total number & volume of significant spills
         </p>
 <div className="shadow-md rounded-md mb-4">
 <LeaveTable columns={col3} data={data3}/>
-</div>
+</div> */}
 </div>
         </>
     )

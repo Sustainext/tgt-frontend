@@ -4,11 +4,21 @@ import DiversityTable from "../tables/diversityTable";
 import EmployeeCategoryTable from "../tables/employeeCategoryTable";
 import STARSVG from "../../../../../../../public/star.svg";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import {setEmployeeDiversityPosition} from "../../../../../../lib/redux/features/ESGSlice/screen13Slice"
 
 const Section14=({section13_4_2Ref})=>{
-    const [content,setContent] = useState(
-        `We believe in the power of diversity and strive to create an inclusive workplace. Our commitment to diversity is reflected in the composition of our governance bodies and workforce. `
-    )
+  
+    const content = useSelector(state => state.screen13Slice.employee_diversity_position);
+    const dispatch = useDispatch();
+    const loadContent = () => {
+      dispatch(setEmployeeDiversityPosition(
+       `We believe in the power of diversity and strive to create an inclusive workplace. Our commitment to diversity is reflected in the composition of our governance bodies and workforce.`))
+    }
+  
+    const handleEditorChange=(e)=>{
+      dispatch(setEmployeeDiversityPosition(e.target.value))
+    }
     const [columns] = useState([
         { header: "Gender", subHeaders: ["Male", "Female", "Non-Binary"] },
         { header: "Age Group", subHeaders: ["< 30 years", "30-50 years", ">50 years"] },
@@ -71,7 +81,7 @@ const Section14=({section13_4_2Ref})=>{
           <p className="text-[15px] text-[#344054] mb-2 mt-3">Add statement about company’s position on diversity of employees</p>
           <button
             className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
-            // onClick={loadContent}
+            onClick={loadContent}
           >
             {/* <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/> */}
             <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
@@ -79,6 +89,7 @@ const Section14=({section13_4_2Ref})=>{
           </button>
         </div>
             <textarea
+            onChange={handleEditorChange}
           value={content}
           className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
           rows={4}

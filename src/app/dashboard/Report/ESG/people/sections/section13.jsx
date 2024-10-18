@@ -22,13 +22,13 @@ const Section13=({section13_4Ref,section13_4_1Ref})=>{
 13.4.1 Management of material topic
 </h3>
 
-<p className="text-[15px] text-[#344054] mb-2 font-semibold">
+{/* <p className="text-[15px] text-[#344054] mb-2 font-semibold">
 Description of organisation's policies or commitments for the material topic, along with actions taken to address, prevent or mitigate potential negative impacts and mention the actions taken by the organisation to manage actual and potential positive impacts.
-</p>
+</p> */}
 <p className="text-sm mb-4">{content}</p>
-<p className="text-[15px] text-[#344054] mb-2 font-semibold">
+{/* <p className="text-[15px] text-[#344054] mb-2 font-semibold">
 Process used to track the effectiveness of the actions and mention goals, targets, and indicators used to evaluate the process along with specific lessons learned and how these have been incoporated to organisation's operational policies and procedures.
-</p>
+</p> */}
 <p className="text-sm mb-4">{content}</p>
 
 </div>

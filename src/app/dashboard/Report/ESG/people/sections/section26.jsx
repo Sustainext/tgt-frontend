@@ -3,11 +3,21 @@ import { useState, useRef, useEffect } from "react";
 import LeaveTable from "../tables/leaveTable";
 import STARSVG from "../../../../../../../public/star.svg";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import {setSafetyTraining} from "../../../../../../lib/redux/features/ESGSlice/screen13Slice"
 
 const Section26=({section13_6_9Ref})=>{
-    const [content,setContent] = useState(
-        `Safety training is a cornerstone of our OHS program. We provide regular training sessions to ensure that all employees are aware of safety protocols and procedures.`
-    )
+    
+    const content = useSelector(state => state.screen13Slice.safety_training);
+    const dispatch = useDispatch();
+    const loadContent = () => {
+      dispatch(setSafetyTraining(
+       `Safety training is a cornerstone of our OHS program. We provide regular training sessions to ensure that all employees are aware of safety protocols and procedures.`))
+    }
+  
+    const handleEditorChange=(e)=>{
+      dispatch(setSafetyTraining(e.target.value))
+    }
     const col1=[
         "Occupational health and safety training provided to workers",
         "Generic Training",
@@ -39,7 +49,7 @@ const Section26=({section13_6_9Ref})=>{
           <p className="text-[15px] text-[#344054] mb-2 mt-3">Add statement about company’s safety training</p>
           <button
             className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
-            // onClick={loadContent}
+            onClick={loadContent}
           >
             {/* <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/> */}
             <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
@@ -47,6 +57,7 @@ const Section26=({section13_6_9Ref})=>{
           </button>
         </div>
             <textarea
+            onChange={handleEditorChange}
           value={content}
           className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
           rows={4}

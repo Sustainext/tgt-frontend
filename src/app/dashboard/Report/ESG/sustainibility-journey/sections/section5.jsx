@@ -13,13 +13,13 @@ const Section5=({section10_3_1Ref,data})=>{
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
         10.3.1  Management of Material Topics
         </h3>   
-        <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+        {/* <p className="text-[15px] text-[#344054] mb-2 font-semibold">
         Description of organisation's policies or commitments for the material topic, along with actions taken to address, prevent or mitigate potential negative impacts and mention the actions taken by the organisation to manage actual and potential positive impacts.
-            </p>
+            </p> */}
             <p className="text-sm mb-4">{data["3-3cde"]?data["3-3cde"].negative_impact_involvement_description?data["3-3cde"].negative_impact_involvement_description:"No data available":"No data available"}</p>
-            <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+            {/* <p className="text-[15px] text-[#344054] mb-2 font-semibold">
             Process used to track the effectiveness of the actions and mention goals, targets, and indicators used to evaluate the process along with specific lessons learned and how these have been incoporated to organisation's operational policies and procedures.
-            </p>
+            </p> */}
             <p className="text-sm mb-4">{data["3-3cde"]?data["3-3cde"].stakeholder_engagement_effectiveness_description?data["3-3cde"].stakeholder_engagement_effectiveness_description:"No data available":"No data available"}</p>
         </div>
         </>

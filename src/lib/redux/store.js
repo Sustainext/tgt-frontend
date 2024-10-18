@@ -19,6 +19,8 @@ import screen10SliceReducer from './features/ESGSlice/screen10Slice'
 import screen12SliceReducer from './features/ESGSlice/screen12Slice'
 import screen14SliceReducer from './features/ESGSlice/screen14Slice'
 import screen11SliceReducr from './features/ESGSlice/screen11Slice'
+import screen13SliceReducer from './features/ESGSlice/screen13Slice'
+
 const rootReducer = combineReducers({
   counter: counterReducer,
   emissions: emissionReducer,
@@ -36,7 +38,8 @@ const rootReducer = combineReducers({
   screen11Slice:screen11SliceReducr,
   screen10Slice:screen10SliceReducer,
   screen12Slice:screen12SliceReducer,
-  screen14Slice:screen14SliceReducer
+  screen14Slice:screen14SliceReducer,
+  screen13Slice:screen13SliceReducer
 })
 
 export const makeStore = () => {

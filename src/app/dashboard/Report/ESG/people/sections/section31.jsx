@@ -3,11 +3,21 @@ import { useState, useRef, useEffect } from "react";
 import LeaveTable from "../tables/leaveTable";
 import STARSVG from "../../../../../../../public/star.svg";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import {setViolationDiscriminationPolicy} from "../../../../../../lib/redux/features/ESGSlice/screen13Slice"
 
 const Section31=({section13_8Ref})=>{
-    const [content,setContent] = useState(
-        `We are committed to respecting the rights of indigenous people and addressing any incidents of violations promptly and effectively. Our policies and practices aim to foster a respectful and inclusive environment for all.`
-    )
+    
+    const content = useSelector(state => state.screen13Slice.violation_discrimination_policy);
+    const dispatch = useDispatch();
+    const loadContent = () => {
+      dispatch(setViolationDiscriminationPolicy(
+      `We are committed to respecting the rights of indigenous people and addressing any incidents of violations promptly and effectively. Our policies and practices aim to foster a respectful and inclusive environment for all.`))
+    }
+  
+    const handleEditorChange=(e)=>{
+      dispatch(setViolationDiscriminationPolicy(e.target.value))
+    }
    
     const col1=[
         "Type of Incident  ",
@@ -43,7 +53,7 @@ const Section31=({section13_8Ref})=>{
           <p className="text-[15px] text-[#344054] mb-2 mt-3">Add statement about company’s policy for addressing violation/ discrimination</p>
           <button
             className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
-            // onClick={loadContent}
+            onClick={loadContent}
           >
             {/* <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/> */}
             <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
@@ -51,6 +61,7 @@ const Section31=({section13_8Ref})=>{
           </button>
         </div>
             <textarea
+            onChange={handleEditorChange}
           value={content}
           className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
           rows={4}

@@ -25,6 +25,8 @@ const Screen12Slice = createSlice({
     significant_spills:'',
     habitat_protection_restoration_commitment:'',
     air_quality_protection_commitment:'',
+    biogenic_c02_emissions:'',
+    biogenic_c02_emissions_305_3c:'',
     error: null
   },
   reducers: {
@@ -89,6 +91,12 @@ const Screen12Slice = createSlice({
     setAirQualityProtectionCommitment: (state, action) => {
         state.air_quality_protection_commitment = action.payload;
     },
+    setBiogenicCO2Emission: (state, action) => {
+        state.biogenic_c02_emissions = action.payload;
+    },
+    setBiogenicCO2305: (state, action) => {
+        state.biogenic_c02_emissions_305_3c = action.payload;
+    },
   },
 });
 
@@ -113,6 +121,8 @@ export const {
     setSignificantSpills,
     setHabitatProtectionRestorationCommitment,
     setAirQualityProtectionCommitment,
+    setBiogenicCO2Emission,
+    setBiogenicCO2305
 } = Screen12Slice.actions;
 
 export default Screen12Slice.reducer;

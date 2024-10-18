@@ -3,11 +3,21 @@ import { useState, useRef, useEffect } from "react";
 import EmployeeInfoTable from "../tables/employeeTable";
 import STARSVG from "../../../../../../../public/star.svg";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import {setWorkforceHireRetentionStatement} from "../../../../../../lib/redux/features/ESGSlice/screen13Slice"
 
 const Section3=({section13_1_2Ref})=>{
-    const [content,setContent] = useState(
-        `We strive to maintain a dynamic and engaged workforce by attracting and retaining talented individuals. Our hiring practices emphasize diversity and equal opportunity, while our retention strategies focus on employee satisfaction and career development. `
-    )
+  
+    const content = useSelector(state => state.screen13Slice.workforce_hire_retention_statement);
+    const dispatch = useDispatch();
+    const loadContent = () => {
+      dispatch(setWorkforceHireRetentionStatement(
+        `We strive to maintain a dynamic and engaged workforce by attracting and retaining talented individuals. Our hiring practices emphasize diversity and equal opportunity, while our retention strategies focus on employee satisfaction and career development.`))
+    }
+  
+    const handleEditorChange=(e)=>{
+      dispatch(setWorkforceHireRetentionStatement(e.target.value))
+    }
     
     return (
         <>
@@ -20,7 +30,7 @@ const Section3=({section13_1_2Ref})=>{
           <p className="text-[15px] text-[#344054] mb-2 mt-3">Add statement about company’s workforce hire and retention</p>
           <button
             className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
-            // onClick={loadContent}
+            onClick={loadContent}
           >
             {/* <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/> */}
             <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
@@ -28,6 +38,7 @@ const Section3=({section13_1_2Ref})=>{
           </button>
         </div>
             <textarea
+            onChange={handleEditorChange}
           value={content}
           className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
           rows={4}

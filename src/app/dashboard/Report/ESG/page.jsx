@@ -44,6 +44,7 @@ const ESGReport = () => {
   const environment=useRef();
   const community=useRef();
   const economicperformance  =useRef();
+  const people=useRef();
   const dispatch = useDispatch();
   useEffect(() => {
    
@@ -65,6 +66,7 @@ const ESGReport = () => {
     12:environment,
     14:community,
     11:economicperformance,
+    13:people
   };
   
   const handleNextStep = async (type) => {
@@ -304,7 +306,7 @@ const ESGReport = () => {
               {activeStep === 13 && (
                 <div>
                   <div className="mb-4">
-                    <People />
+                    <People ref={people} />
                   </div>
                 </div>
               )}

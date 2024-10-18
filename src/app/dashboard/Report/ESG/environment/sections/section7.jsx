@@ -5,9 +5,14 @@ import STARSVG from "../../../../../../../public/star.svg";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import {setGHGEmissionIntensityTracking} from "../../../../../../lib/redux/features/ESGSlice/screen12Slice"
+import dynamic from 'next/dynamic';
+
+
+const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 
 const Section7=({section12_1_5Ref})=>{
   
+    
     const content = useSelector(state => state.screen12Slice.ghg_emission_intensity_tracking);
     const dispatch = useDispatch();
     const loadContent = () => {
@@ -15,10 +20,41 @@ const Section7=({section12_1_5Ref})=>{
         `We track GHG emission intensity to understand our emissions in relation to our business growth and efficiency improvements`))
     }
   
-    const handleEditorChange=(e)=>{
-      dispatch(setGHGEmissionIntensityTracking(e.target.value))
+    const handleEditorChange=(value)=>{
+      dispatch(setGHGEmissionIntensityTracking(value))
     }
 
+    const config = {
+      style: {
+        fontSize: "14px",
+        color:"#667085"
+      },
+      allowResizeY: false,
+      defaultActionOnPaste: 'insert_clear_html',
+      toolbarSticky: false,
+      toolbar: true,
+      buttons: [
+          'bold',
+          'italic',
+          'underline',
+          'strikeThrough',
+          'align',
+          'outdent',
+          'indent',
+          'ul',
+          'ol',
+          'paragraph',
+          'link',
+          'table',
+          'undo',
+          'redo',
+          'hr',
+          'fontsize',
+          'selectall'
+      ],
+      // Remove buttons from the extra buttons list
+      removeButtons: ['fullsize', 'preview', 'source', 'print', 'about', 'find', 'changeMode','paintFormat','image','brush','font'],
+    };
     const columns = [
         { header: "Organisation Metric" },
         { header: "Quantity" },
@@ -88,18 +124,27 @@ const Section7=({section12_1_5Ref})=>{
             Auto Fill
           </button>
         </div>
-            <textarea
+            {/* <textarea
             onChange={handleEditorChange}
           value={content}
           className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
           rows={4}
-        />
-        <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+        /> */}
+        <div className="mb-4">
+              <JoditEditor
+              // ref={editor}
+              value={content}
+              config={config}
+              tabIndex={1}
+              onBlur={handleEditorChange}
+              />
+            </div>
+        {/* <p className="text-[15px] text-[#344054] mb-2 font-semibold">
         GHG Emission Intensity
-            </p>
-<div className="shadow-md rounded-md mb-4">
+            </p> */}
+{/* <div className="shadow-md rounded-md mb-4">
 <EmissionTable columns={columns} data={data}/>
-</div>
+</div> */}
 
 </div>
         </>
