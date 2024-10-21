@@ -83,14 +83,14 @@ const Aside = ({ activeTab, handleTabClick }) => {
             <div className="w-[20%]">
               <MdOutlineFactory className="w-5 h-5 mr-2" />
             </div>
-            <div className="w-[47%] text-left">
-              <span className="sm:w-[92px] md:w-[92px] lg:w-[92px] xl:w-[92px] 2xl:w-[92px] 3xl:w-[198px] ml-2">
+            <div className="w-[47%] text-left ml-2">
+              <span className="indent-0">
                 Emissions
               </span>
             </div>
 
             <div className="inset-y-0  flex items-center pointer-events-none w-[45%] justify-end">
-              <span className="text-[#0057A5] text-[10px] bg-gray-200 py-[6px] px-[7px] rounded-md">M</span>
+              <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">M</span>
               <MdKeyboardArrowDown className="text-lg text-neutral-500" />
             </div>
           </button>
@@ -120,9 +120,8 @@ const Aside = ({ activeTab, handleTabClick }) => {
               </div>
 
               <div className="inset-y-0  flex items-center pointer-events-none w-[45%] justify-end">
-                <span className="text-[#0057A5] text-[10px] bg-gray-200 py-[6px] px-[7px] rounded-md">
-                  M
-                </span>
+              <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">M</span>
+               
                 <MdKeyboardArrowDown
                   className={`text-lg text-neutral-500 ${
                     isEnergySectionVisible && "rotate-180"
@@ -134,7 +133,29 @@ const Aside = ({ activeTab, handleTabClick }) => {
             {/* Energy section content */}
             {isEnergySectionVisible && (
               <>
+
                 <div className="bg-white px-2 ml-5 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                {/* <div>
+                    <p className="text-[12px]  ml-3  text-[#727272]">
+                    Mandatory Management Disclosure
+                    </p>
+                  </div> */}
+                  {/* <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Management of Material topic"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() =>
+                        handleTabClick(
+                          "Management of Material topic"
+                        )
+                      }
+                    >
+                      Management of Material topic
+                    </p>
+                  </div> */}
                   <div>
                     <p className="text-[12px]  ml-3  text-[#727272]">
                       Topic disclosure
@@ -245,7 +266,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
               </div>
 
               <div className="inset-y-0  flex items-center pointer-events-none w-[45%] justify-end">
-                <span className="text-[#0057A5] text-[10px] bg-gray-200 py-[6px] px-[7px] rounded-md">
+              <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                   M
                 </span>
                 <MdKeyboardArrowDown
@@ -371,7 +392,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
               </div>
 
               <div className="inset-y-0  flex items-center pointer-events-none w-[45%] justify-end">
-                <span className="text-[#0057A5] text-[10px] bg-gray-200 py-[6px] px-[7px] rounded-md">
+              <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                   M
                 </span>
                 <MdKeyboardArrowDown
@@ -464,7 +485,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
               </div>
 
               <div className="inset-y-0  flex items-center pointer-events-none w-[45%] justify-end">
-                <span className="text-[#0057A5] text-[10px] bg-gray-200 py-[6px] px-[7px] rounded-md">
+              <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                   M
                 </span>
                 <MdKeyboardArrowDown
@@ -595,7 +616,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
               </div>
 
               <div className="inset-y-0  flex items-center pointer-events-none w-[45%] justify-end">
-                <span className="text-[#0057A5] text-[10px] bg-gray-200 py-[6px] px-[7px] rounded-md">
+              <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                   M
                 </span>
                 <MdKeyboardArrowDown

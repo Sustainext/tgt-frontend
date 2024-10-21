@@ -1,22 +1,22 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import EnvironmentHeader from "../../environmentheader";
 import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
-import { Socialdata } from "../../data/socialgriinfo";
+import { Energydata } from "../../data/griinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import Socialheader2 from "../../socialheader2";
-import Childlabourscreen from "./childlabour";
+import Reductionenergyconsumptionbody from "./reduction-energy-consumption-body";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const Childlabour = () => {
+const Reductionenergyconsumption = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOrg, setSelectedOrg] = useState("");
-  const [selectedCorp, setSelectedCorp] = useState("");
+  const [locationMessage, setLocationMessage] = useState("");
+  const [yearMessage, setYearMessage] = useState("");
 
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
@@ -27,7 +27,7 @@ const Childlabour = () => {
   };
   useEffect(() => {
     var newData = [];
-    Socialdata.map((program) => {
+    Energydata.map((program) => {
       program.category.map((tag) => {
         if (tag === category) {
           newData.push(program);
@@ -44,13 +44,17 @@ const Childlabour = () => {
       <div className="flex flex-col justify-start overflow-x-hidden ">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
-            <div className="text-left mb-2 ml-3 pt-5">
-              <p className="text-[11px]">Social</p>
-              <div className="flex">
-                <div>
-                  <p className="gradient-text text-[22px] font-bold py-2">
-                    Operations and suppliers at significant risk for incidents
-                    of child labor
+           <div className="text-left mb-2 ml-3 pt-5">
+            <p className="text-[11px]">Environment</p>
+              <div className="flex h-[28px]">
+                <div className="h-[28px]">
+                  <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
+                    Energy
+                  </p>
+                </div>
+                <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md">
+                  <p className="text-gray-500 text-[12px] pt-0.5 px-2">
+                    Material Topic
                   </p>
                 </div>
               </div>
@@ -60,27 +64,33 @@ const Childlabour = () => {
             <div className="flex float-end border-l">
               <button
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("12")}
+                onClick={() => toggleDrawer("17")}
               >
-                GRI 408 - 1
+                GRI 302-4
               </button>
               <button
-                className="text-[#fff] bg-orange-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("13")}
+                className="text-[#fff] bg-amber-400 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 "
+                onClick={() => toggleDrawer("2")}
               >
-                SDG 5
+                SDG 7
               </button>
               <button
                 className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("14")}
+                onClick={() => toggleDrawer("3")}
               >
                 SDG 8
               </button>
               <button
-                className="text-[#fff] bg-blue-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("15")}
+                className="text-[#fff] bg-yellow-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 "
+                onClick={() => toggleDrawer("4")}
               >
-                SDG 16
+                SDG 12
+              </button>
+              <button
+                className="text-[#fff] bg-lime-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                onClick={() => toggleDrawer("5")}
+              >
+                SDG 13
               </button>
             </div>
           </div>
@@ -88,21 +98,28 @@ const Childlabour = () => {
 
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-            Operations and suppliers at significant risk for incidents of child
-            labor
-            {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
-                            data-tooltip-content="This section documents data corresponding to total water
-                            withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />
-                        <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
-                            width: "290px", backgroundColor: "#000",
-                            color: "white",
-                            fontSize: "12px",
-                            boxShadow: 3,
-                            borderRadius: "8px",
-                            textAlign: 'left',
-                        }}>
-
-                        </ReactTooltip> */}
+            Reduction of energy consumption
+            <MdInfoOutline
+              data-tooltip-id={`tooltip-$e1`}
+              data-tooltip-content="This section is dedicated to reporting the reduction in energy consumption within an organization. While calculating
+                            Reduction in Energy Consumption exclude reductions resulting from reduced production capacity or outsourcing"
+              className="mt-1.5 ml-2 text-[15px]"
+            />
+            <ReactTooltip
+              id={`tooltip-$e1`}
+              place="bottom"
+              effect="solid"
+              style={{
+                width: "290px",
+                backgroundColor: "#000",
+                color: "white",
+                fontSize: "12px",
+                boxShadow: 3,
+                borderRadius: "8px",
+                textAlign: "left",
+                zIndex: 100,
+              }}
+            ></ReactTooltip>
           </h6>
         </div>
         <div
@@ -132,22 +149,25 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
             ))}
         </div>
       </div>
-      <Socialheader2
+      {/* <EnvironmentHeader
         activeMonth={activeMonth}
         setActiveMonth={setActiveMonth}
-        selectedOrg={selectedOrg}
-        setSelectedOrg={setSelectedOrg}
-        selectedCorp={selectedCorp}
-        setSelectedCorp={setSelectedCorp}
+        setLocation={setLocation}
         year={year}
         setYear={setYear}
-      />
-      <Childlabourscreen
-        selectedOrg={selectedOrg}
-        selectedCorp={selectedCorp}
+        locationMessage={locationMessage}
+        setLocationMessage={setLocationMessage}
+        yearMessage={yearMessage}
+        setYearMessage={setYearMessage}
+      /> */}
+      {/* <Reductionenergyconsumptionbody
+        location={location}
         year={year}
-      />
+        month={activeMonth}
+        setLocationMessage={setLocationMessage}
+        setYearMessage={setYearMessage}
+      /> */}
     </>
   );
 };
-export default Childlabour;
+export default Reductionenergyconsumption;

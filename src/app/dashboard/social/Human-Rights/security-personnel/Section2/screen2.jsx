@@ -2,20 +2,19 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import CustomTableWidget from "../../../../shared/widgets/Table/tableWidget";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import selectWidget2 from "../../../../../shared/widgets/Select/selectWidget2";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
-// Simple Custom Table Widget
 const widgets = {
-  TableWidget: CustomTableWidget,
+  selectWidget: selectWidget2,
 };
 
-const view_path = "gri-social-human_rights-410-1a-security_personnel";
+const view_path = "gri-social-human_rights-410-1b-training_requirements";
 const client_id = 1;
 const user_id = 1;
 
@@ -24,55 +23,38 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      category: { type: "string", title: "category" },
-      securitypersonnel: { type: "string", title: "securitypersonnel" },
-      organization: { type: "string", title: "organization" },
-      thirdpartyorganizations: {
+      Q1: {
         type: "string",
-        title: "thirdpartyorganizations",
+        title:
+          "Specify if training requirements apply to third-party organizations providing security personnel.",
+        enum: ["Yes", "No"],
       },
     },
   },
 };
 
 const uiSchema = {
-  "ui:widget": "TableWidget",
-  "ui:options": {
-    titles: [
-      {
-        title: "",
-        tooltip:
-          "Please specify the name and type of operations considered to have significant risk for incidents of forced or compulsory labor.",
-        display: "none",
+  items: {
+    "ui:order": ["Q1"],
+
+    Q1: {
+      "ui:widget": "selectWidget",
+      "ui:options": {
+        label: false,
       },
-      {
-        title: "Number of Security Personnel",
-        tooltip:
-          "Please specify the total number of security personnel whether they have received training or not.",
-      },
-      {
-        title: "Employees of the Organization",
-        tooltip:
-          "Indicate the number of security personnel which are employees of the organization and who have received formal training.",
-      },
-      {
-        title: "Employees of third-party organizations",
-        tooltip:
-          "Indicate the number of security personnel  which are employees of third-party organizations and who have received formal training.",
-      },
-    ],
+    },
+
+    "ui:options": {
+      orderable: false,
+      addable: false,
+      removable: false,
+      layout: "horizontal",
+    },
   },
 };
-const Screen1 = ({ location, year, month }) => {
-  const initialFormData = [
-    {
-      category: "",
-      securitypersonnel: "",
-      organization: "",
-      thirdpartyorganizations: "",
-    },
-  ];
-  const [formData, setFormData] = useState(initialFormData);
+
+const Screen3 = ({ location, year, month }) => {
+  const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
@@ -111,7 +93,6 @@ const Screen1 = ({ location, year, month }) => {
       form_data: formData,
       location,
       year,
-      month,
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -164,8 +145,8 @@ const Screen1 = ({ location, year, month }) => {
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData(initialFormData);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    setFormData([{}]);
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
 
     try {
       const response = await axios.get(url, axiosConfig);
@@ -175,7 +156,7 @@ const Screen1 = ({ location, year, month }) => {
       setFormData(response.data.form_data[0].data);
     } catch (error) {
       console.error("API call failed:", error);
-      setFormData(initialFormData);
+      setFormData([{}]);
     } finally {
       LoaderClose();
     }
@@ -192,7 +173,7 @@ const Screen1 = ({ location, year, month }) => {
 
   // fetch backend and replace initialized forms
   useEffect(() => {
-    if (location && year && month) {
+    if (location && year) {
       loadFormData();
       toastShown.current = false; // Reset the flag when valid data is present
     } else {
@@ -201,27 +182,12 @@ const Screen1 = ({ location, year, month }) => {
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [location, year, month]);
+  }, [location, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form data:", formData);
     updateFormData();
-  };
-
-  const handleAddCommittee = () => {
-    const newCommittee = {
-      category: "",
-      securitypersonnel: "",
-      organization: "",
-      thirdpartyorganizations: "",
-    };
-    setFormData([...formData, newCommittee]);
-  };
-
-  const handleRemoveCommittee = (index) => {
-    const newFormData = formData.filter((_, i) => i !== index);
-    setFormData(newFormData);
   };
 
   return (
@@ -235,13 +201,13 @@ const Screen1 = ({ location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-              Security personnel who have received formal training
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+              Training requirements apply to third party organisations. 
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
-                data-tooltip-content="This section documents the data corresponding to the operations
-                                considered to have significant risk for incidents of forced or
-                                compulsory labor."
+                data-tooltip-content="This section documents the data corresponding to whether
+                            training requirements also apply to third-party organizations
+                            providing security personnel."
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
@@ -259,16 +225,38 @@ const Screen1 = ({ location, year, month }) => {
                 }}
               ></ReactTooltip>
             </h2>
-            {/* <h2 className='flex mx-2 text-[11px] text-gray-500 font-semibold mb-2'>
-                        For all employees, please report the following
-
-                        </h2> */}
+            <p className="text-[13px] mx-2 flex">
+              Specify if training requirements apply to third-party
+              organizations providing security personnel.
+              <MdInfoOutline
+                data-tooltip-id={`tooltip-$e2`}
+                data-tooltip-content="Please select 'Yes' if  the training requirements
+                                apply to third-party organizations providing security
+                                personnel and select 'No' if not."
+                className="mt-1 ml-2 text-[14px]"
+              />
+              <ReactTooltip
+                id={`tooltip-$e2`}
+                place="top"
+                effect="solid"
+                style={{
+                  width: "290px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  textAlign: "left",
+                }}
+              ></ReactTooltip>
+            </p>
           </div>
+
           <div className="w-[20%]">
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 410-1a
+                  GRI 410-1b
                 </div>
               </div>
             </div>
@@ -282,23 +270,8 @@ const Screen1 = ({ location, year, month }) => {
             onChange={handleChange}
             validator={validator}
             widgets={widgets}
-            formContext={{
-              onRemove: handleRemoveCommittee,
-            }}
           />
         </div>
-        <div className="flex right-1 mx-2">
-          {location && year && (
-            <button
-              type="button"
-              className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
-              onClick={handleAddCommittee}
-            >
-              Add category <MdAdd className="text-lg" />
-            </button>
-          )}
-        </div>
-
         <div className="mt-4">
           <button
             type="button"
@@ -328,4 +301,4 @@ const Screen1 = ({ location, year, month }) => {
   );
 };
 
-export default Screen1;
+export default Screen3;

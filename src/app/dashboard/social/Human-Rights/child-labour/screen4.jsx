@@ -56,7 +56,7 @@ const uiSchema = {
     ],
   },
 };
-const Screen4 = ({ location, year, month }) => {
+const Screen4 = ({ selectedCorp, year, selectedOrg }) => {
   const initialFormData = [
     {
       hazardouswork: "",
@@ -102,9 +102,9 @@ const Screen4 = ({ location, year, month }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      location,
+      corporate: selectedCorp,
+      organisation: selectedOrg,
       year,
-      month,
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -158,7 +158,7 @@ const Screen4 = ({ location, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData(initialFormData);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
 
     try {
       const response = await axios.get(url, axiosConfig);
@@ -183,9 +183,8 @@ const Screen4 = ({ location, year, month }) => {
     console.log("Form data is changed -", formData);
   }, [formData]);
 
-  // fetch backend and replace initialized forms
   useEffect(() => {
-    if (location && year && month) {
+    if (selectedOrg && year) {
       loadFormData();
       toastShown.current = false; // Reset the flag when valid data is present
     } else {
@@ -194,7 +193,7 @@ const Screen4 = ({ location, year, month }) => {
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [location, year, month]);
+  }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -284,8 +283,8 @@ const Screen4 = ({ location, year, month }) => {
             }}
           />
         </div>
-        <div className="flex right-1 mx-2">
-          {location && year && (
+        {selectedOrg && year && (
+          <div className="flex right-1 mx-2">
             <button
               type="button"
               className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
@@ -293,17 +292,17 @@ const Screen4 = ({ location, year, month }) => {
             >
               Add category <MdAdd className="text-lg" />
             </button>
-          )}
-        </div>
+          </div>
+        )}
 
         <div className="mb-6">
-          <button
+        <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !location || !year ? "cursor-not-allowed" : ""
+              !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            disabled={!location || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

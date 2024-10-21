@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   MdOutlineAddCircleOutline,
   MdOutlineDeleteOutline,
@@ -15,7 +15,6 @@ import {
   MdChevronRight,
 } from "react-icons/md";
 import UserProfile from "../common/UserProfile";
-import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import {
   deleteUser,
@@ -30,6 +29,7 @@ import {
   setHeadertext2,
   setHeaderdisplay,
 } from "../../../../lib/redux/features/topheaderSlice";
+
 const ManageUsers = () => {
   const allUsers = useSelector((state) => state.users.users);
   const [searchFocus, setSearchFocus] = useState(false);
@@ -40,15 +40,17 @@ const ManageUsers = () => {
   const [showEntriesDropdown, setShowEntriesDropdown] = useState(false);
   const [isDeactivateModalOpen, setIsDeactivateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [userToModify, setUserToModify] = useState(null); // For tracking the user to deactivate/delete
+  const [userToModify, setUserToModify] = useState(null);
   const currentUser = useSelector((state) => state.users.currentUser);
   const router = useRouter();
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(setHeadertext1("Users"));
     dispatch(setHeaderdisplay("none"));
     dispatch(setHeadertext2("Manage Users"));
   }, [dispatch]);
+
   const filteredUsers = allUsers.filter(
     (user) =>
       user.personalDetails.firstName
@@ -65,7 +67,6 @@ const ManageUsers = () => {
   const indexOfLastEntry = currentPage * entriesPerPage;
   const indexOfFirstEntry = indexOfLastEntry - entriesPerPage;
   const currentUsers = filteredUsers.slice(indexOfFirstEntry, indexOfLastEntry);
-
   const totalPages = Math.ceil(filteredUsers.length / entriesPerPage);
 
   const handleViewProfile = (user) => {
@@ -122,10 +123,9 @@ const ManageUsers = () => {
 
   const handleToggleUserStatus = (user) => {
     if (user.personalDetails?.status === "Active") {
-      setUserToModify(user); // Set the user to deactivate
-      setIsDeactivateModalOpen(true); // Open the modal
+      setUserToModify(user);
+      setIsDeactivateModalOpen(true);
     } else {
-      // Directly activate the user without modal
       const newStatus = "Active";
       dispatch(
         updateUserStatus({
@@ -147,25 +147,25 @@ const ManageUsers = () => {
         status: newStatus,
       })
     );
-    setIsDeactivateModalOpen(false); // Close the modal
+    setIsDeactivateModalOpen(false);
     toast.warn(
       `User details for ${userToModify.personalDetails.firstName} ${userToModify.personalDetails.lastName} have been deactivated`
     );
-    setUserToModify(null); // Clear the user
+    setUserToModify(null);
   };
 
   const handleDeleteUser = (user) => {
-    setUserToModify(user); // Set the user to delete
-    setIsDeleteModalOpen(true); // Open the delete confirmation modal
+    setUserToModify(user);
+    setIsDeleteModalOpen(true);
   };
 
   const confirmDeleteUser = () => {
-    dispatch(deleteUser(userToModify.personalDetails.id)); // Dispatch delete action
-    setIsDeleteModalOpen(false); // Close the modal
+    dispatch(deleteUser(userToModify.personalDetails.id));
+    setIsDeleteModalOpen(false);
     toast.error(
       `User account "${userToModify.personalDetails.firstName} ${userToModify.personalDetails.lastName}" has been deleted`
     );
-    setUserToModify(null); // Clear the user
+    setUserToModify(null);
   };
 
   return (
@@ -176,207 +176,219 @@ const ManageUsers = () => {
       </div>
       <div className="flex justify-between items-start mt-8 mb-4">
         <div
-          className={` rounded-lg mx-8 transition-all ${
+          className={`rounded-lg mx-8 transition-all ${
             selectedUser ? "w-full" : "w-full"
-          }  h-full`}
+          } h-full`}
         >
-          <div className="py-4 mx-10  border-x border-t  border-[#edeae9]">
-            <div className="flex justify-between">
-              <div className="flex">
-                <div className="px-4">
-                  <h3 className="text-[18px] font-medium font-['Manrope']">
-                    Users
-                  </h3>
-                  <p className="text-[14px] font-normal font-['Manrope'] text-[#667084]">
-                    List of users in the organization
-                  </p>
+          <div className="container  p-4">
+            <div className="overflow-x-auto border-x border-y border-[#edeae9] rounded-lg px-20 py-10">
+              <div className="py-4">
+                <div className="flex justify-between ">
+                  <div className="flex">
+                    <div className="px-4">
+                      <h3 className="text-[18px] font-medium font-['Manrope']">
+                        Users
+                      </h3>
+                      <p className="text-[14px] font-normal font-['Manrope'] text-[#667084]">
+                        List of users in the organization
+                      </p>
+                    </div>
+                  </div>
+                  <div className="relative w-[320px] pr-4">
+                    <input
+                      type="text"
+                      placeholder="Search"
+                      className="pr-3 pl-6 py-2 border rounded-md w-full focus:outline-none placeholder:pl-8 text-[12px]"
+                      onFocus={() => setSearchFocus(true)}
+                      onBlur={() => setSearchFocus(false)}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      value={searchTerm}
+                      style={{
+                        transition: "padding-left 300ms",
+                        paddingLeft: searchFocus ? "1rem" : "0.625rem",
+                      }}
+                    />
+                    <MdSearch
+                      className="absolute left-0 top-1/2 -translate-y-1/2"
+                      style={{
+                        transition: "left 300ms",
+                        left: searchFocus || searchTerm ? "17rem" : "0.625rem",
+                        top: "1.3rem",
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
-              <div className="relative w-[320px] pr-4">
-                <input
-                  type="text"
-                  placeholder="Search"
-                  className="pr-3 pl-6 py-2 border rounded-md w-full focus:outline-none placeholder:pl-8"
-                  onFocus={() => setSearchFocus(true)}
-                  onBlur={() => setSearchFocus(false)}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  value={searchTerm}
-                  style={{
-                    transition: "padding-left 300ms",
-                    paddingLeft: searchFocus ? "1rem" : "0.625rem",
-                  }}
-                />
-                <MdSearch
-                  className="absolute left-0 top-1/2 -translate-y-1/2"
-                  style={{
-                    transition: "left 300ms",
-                    left: searchFocus || searchTerm ? "17rem" : "0.625rem",
-                    top: "1.3rem",
-                  }}
-                />
+              <div className="max-h-[80vh] overflow-y-auto ">
+                <table className="min-w-full table-auto relative">
+                  {/* Table Head */}
+                  <thead className="bg-white sticky  top-0">
+                    {" "}
+                    {/* z-index higher value */}
+                    <tr className="gradient-background">
+                      <th className="px-5 py-3 text-left text-[14px] font-semibold tracking-wider w-[40%] ">
+                        User List
+                      </th>
+                      <th className="px-5 py-3 text-[14px] font-semibold tracking-wider text-center w-[15%]">
+                        Role
+                      </th>
+                      <th className="px-5 py-3 text-center text-[14px] font-semibold tracking-wider w-[15%]">
+                        Status
+                      </th>
+                      <th className="px-5 py-3 text-center text-[14px] font-semibold tracking-wider w-[20%]">
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+
+                  {/* Table Body */}
+                  <tbody  >
+                    {currentUsers.map((user, index) => (
+                      <tr key={index} className="border-b h-[80px]">
+                        <td className="px-5 bg-white text-[14px] w-[40%]">
+                          <div className="flex items-center">
+                            <MdPerson className="text-gray-500 text-[18px]" />
+                            <div className="ml-3">
+                              <p className="text-gray-900 whitespace-no-wrap font-[500]">
+                                {user.personalDetails.firstName}{" "}
+                                {user.personalDetails.lastName}
+                              </p>
+                              <p className="text-gray-600 whitespace-no-wrap">
+                                {user.personalDetails.email}
+                              </p>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-5 bg-white text-[14px] text-center text-gray-500">
+                          {user.personalDetails.roleType}
+                        </td>
+                        <td className="px-5 bg-white text-[14px]  ">
+                          <div className="flex justify-center items-center">
+                          <div
+                            className={`w-[90px] flex py-1 px-1 font-semibold justify-center items-center ${
+                              user.personalDetails.status === "Active"
+                                ? "text-green-700 bg-green-100"
+                                : "text-gray-700 bg-gray-200"
+                            } rounded-full`}
+                          >
+                            <MdFiberManualRecord
+                              className={`text-[10px] mt-1 ${
+                                user.personalDetails.status === "Active"
+                                  ? "me-3"
+                                  : "me-2"
+                              }`}
+                            />
+                            {user.personalDetails.status}
+                          </div>
+                          </div>
+                        
+                        </td>
+                        <td className="px-5 bg-white text-[14px] ">
+                          <div className="flex justify-center ">
+                          <div className="flex justify-center w-[60%]">
+                            <button
+                              className="text-gray-600 hover:text-gray-800 w-[25%] flex justify-center"
+                              onClick={() => handleViewProfile(user)}
+                            >
+                              <MdOutlineVisibility className="text-[18px]" />
+                            </button>
+                            <button
+                              className="text-gray-600 hover:text-gray-800 w-[25%] flex justify-center"
+                              onClick={() => handleEditUser(user)}
+                            >
+                              <MdOutlineModeEdit className="text-[18px]" />
+                            </button>
+                            <button
+                              className="text-gray-600 hover:text-gray-800 w-[25%] flex justify-center"
+                              onClick={() => handleToggleUserStatus(user)}
+                            >
+                              {user.personalDetails.status === "Active" ? (
+                                <MdRemoveCircleOutline className="text-[18px]" />
+                              ) : (
+                                <MdOutlineAddCircleOutline className="text-[18px]" />
+                              )}
+                            </button>
+                            <button
+                              className="text-gray-600 hover:text-gray-800 w-[25%] flex justify-center"
+                              onClick={() => handleDeleteUser(user)}
+                            >
+                              <MdOutlineDeleteOutline className="text-[18px]" />
+                            </button>
+                          </div>
+                          </div>
+                        
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+
+                  {/* Table Footer */}
+                  <tfoot className="bg-white sticky bottom-0 z-50">
+                    {" "}
+                    {/* Higher z-index for footer */}
+                    <tr>
+                      <td colSpan="4" className="text-center">
+                        <div className="px-4 text-[14px] flex justify-center w-full py-3">
+                          <div>
+                            <button
+                              onClick={() => handlePageChange(currentPage - 1)}
+                              disabled={currentPage === 1}
+                              className="p-1 rounded-full text-gray-600 hover:bg-gray-200 disabled:text-gray-300 disabled:hover:bg-white"
+                            >
+                              <MdChevronLeft fontSize="small" />
+                            </button>
+                            {renderPageNumbers()}
+                            <button
+                              onClick={() => handlePageChange(currentPage + 1)}
+                              disabled={currentPage === totalPages}
+                              className="p-1 rounded-full text-gray-600 hover:bg-gray-200 disabled:text-gray-300 disabled:hover:bg-white"
+                            >
+                              <MdChevronRight fontSize="small" />
+                            </button>
+                          </div>
+                          <div className="relative">
+                            <button
+                              className="border rounded-md px-3 py-1 flex items-center justify-between min-w-[120px] text-[12px]"
+                              onClick={() =>
+                                setShowEntriesDropdown(!showEntriesDropdown)
+                              }
+                            >
+                              <span>{entriesPerPage} per page</span>
+                              <MdKeyboardArrowDown fontSize="small" />
+                            </button>
+                            {showEntriesDropdown && (
+                              <div className="absolute bottom-[100%] right-0 bg-white border rounded mb-1 shadow-sm w-full text-[12px] z-[100]">
+                                {[5, 10, 15, 20].map((value) => (
+                                  <button
+                                    key={value}
+                                    className="block w-full text-left px-3 py-1.5 hover:bg-gray-100"
+                                    onClick={() =>
+                                      handleEntriesPerPageChange(value)
+                                    }
+                                  >
+                                    {value} per page
+                                  </button>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
               </div>
             </div>
           </div>
-          <div className="mx-10 border-x border-[#edeae9]">
-            <table className="min-w-full shadow rounded-lg  overflow-y-auto h-full ">
-              <thead className="sticky top-0 bg-white">
-                <tr className="gradient-background py-4 rounded-md">
-                  <th className="px-5 py-3 border-b-2 text-left text-[14px] font-semibold tracking-wider w-[55%]">
-                    User List
-                  </th>
-                  <th className="px-5 py-3 border-b-2 text-[14px] font-semibold tracking-wider text-center w-[10%]">
-                    Role
-                  </th>
-                  <th className="px-5 py-3 border-b-2 text-center text-[14px] font-semibold tracking-wider w-[10%]">
-                    Status
-                  </th>
-                  <th className="px-5 py-3 border-b-2 text-center text-[14px] font-semibold tracking-wider w-[10%]">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentUsers.map((user, index) => (
-                  <tr key={index} className="border-b h-[80px]">
-                    {/* Apply height to the <td> elements */}
-                    <td className="px-5 bg-white text-[14px]  py-0 my-0">
-                      <div className="flex items-center">
-                        <MdPerson className="text-gray-500 text-[18px]" />
-                        <div className="flex">
-                          <div className="ml-3">
-                            <p className="text-gray-900 whitespace-no-wrap font-[500]">
-                              {user.personalDetails.firstName}{" "}
-                              {user.personalDetails.lastName}
-                            </p>
-                            <p className="text-gray-600 whitespace-no-wrap">
-                              {user.personalDetails.email}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-
-                    <td className="px-5 bg-white text-[14px] text-center text-gray-500  py-0 my-0 ">
-                      {user.personalDetails.roleType}
-                    </td>
-
-                    <td className="px-5 bg-white text-[14px] text-center align-middle block justify-center">
-                      <div
-                        className={`w-[90px] flex py-1 px-1 font-semibold justify-center items-center ${
-                          user.personalDetails.status === "Active"
-                            ? "text-green-700 bg-green-100 "
-                            : "text-gray-700 bg-gray-200"
-                        } rounded-full`}
-                      >
-                        <MdFiberManualRecord
-                          className={`text-[10px] mt-1 ${
-                            user.personalDetails.status === "Active"
-                              ? "me-3"
-                              : "me-2"
-                          }`}
-                        />
-                        {user.personalDetails.status}
-                      </div>
-                    </td>
-
-                    <td className="px-5 bg-white text-[14px] py-0 my-0">
-                      <div className="flex justify-around items-center">
-                        <button
-                          className="text-gray-600 hover:text-gray-800 w-[25%] flex justify-center"
-                          onClick={() => handleViewProfile(user)}
-                        >
-                          <MdOutlineVisibility className="text-[18px]" />
-                        </button>
-                        <button
-                          className="text-gray-600 hover:text-gray-800 w-[25%] flex justify-center"
-                          onClick={() => handleEditUser(user)}
-                        >
-                          <MdOutlineModeEdit className="text-[18px]" />
-                        </button>
-                        <button
-                          className="text-gray-600 hover:text-gray-800 w-[25%] flex justify-center"
-                          onClick={() => handleToggleUserStatus(user)}
-                        >
-                          {user.personalDetails.status === "Active" ? (
-                            <MdRemoveCircleOutline className="text-[18px]" />
-                          ) : (
-                            <MdOutlineAddCircleOutline className="text-[18px]" />
-                          )}
-                        </button>
-                        <button
-                          className="text-gray-600 hover:text-gray-800 w-[25%] flex justify-center"
-                          onClick={() => handleDeleteUser(user)}
-                        >
-                          <MdOutlineDeleteOutline className="text-[18px]" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-
-              <tfoot className="sticky bottom-0 bg-white shadow-md">
-                <tr>
-                  <td colSpan="4" className="text-center">
-                    <div className="px-4 text-[14px] flex justify-center w-full py-3">
-                      <div>
-                        <button
-                          onClick={() => handlePageChange(currentPage - 1)}
-                          disabled={currentPage === 1}
-                          className="p-1 rounded-full text-gray-600 hover:bg-gray-200 disabled:text-gray-300 disabled:hover:bg-white"
-                        >
-                          <MdChevronLeft fontSize="small" />
-                        </button>
-                        {renderPageNumbers()}
-                        <button
-                          onClick={() => handlePageChange(currentPage + 1)}
-                          disabled={currentPage === totalPages}
-                          className="p-1 rounded-full text-gray-600 hover:bg-gray-200 disabled:text-gray-300 disabled:hover:bg-white"
-                        >
-                          <MdChevronRight fontSize="small" />
-                        </button>
-                      </div>
-                      <div className="relative">
-                        <button
-                          className="border rounded-md px-3 py-1 flex items-center justify-between min-w-[120px] text-[12px]"
-                          onClick={() =>
-                            setShowEntriesDropdown(!showEntriesDropdown)
-                          }
-                        >
-                          <span>{entriesPerPage} per page</span>
-                          <MdKeyboardArrowDown fontSize="small" />
-                        </button>
-                        {showEntriesDropdown && (
-                          <div className="absolute bottom-[100%] right-0 bg-white border rounded mb-1 shadow-sm w-full text-[12px] z-[100]">
-                            {[5, 10, 15, 20].map((value) => (
-                              <button
-                                key={value}
-                                className="block w-full text-left px-3 py-1.5 hover:bg-gray-100"
-                                onClick={() =>
-                                  handleEntriesPerPageChange(value)
-                                }
-                              >
-                                {value} per page
-                              </button>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
         </div>
+
         {selectedUser && (
-          <div className=" w-[35%] max-h-[95vh] min-h-[95vh] rounded-lg shadow-lg max-w-md">
+          <div className="w-[35%] max-h-[95vh] min-h-[95vh] rounded-lg shadow-lg max-w-md">
             <UserProfile user={selectedUser} onClose={handleCloseProfile} />
           </div>
         )}
       </div>
 
-      {/* Deactivate User Modal */}
       <ConfirmationModal
         isOpen={isDeactivateModalOpen}
         onClose={() => setIsDeactivateModalOpen(false)}
@@ -393,7 +405,6 @@ const ManageUsers = () => {
         buttoncolor="bg-yellow-500"
       />
 
-      {/* Delete User Modal */}
       <ConfirmationModal
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}

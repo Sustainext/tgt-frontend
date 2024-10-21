@@ -295,7 +295,7 @@ const AnalyseCustomerprivacy = ({ isBoxOpen }) => {
 
                   <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                     <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                      GRI 418-1b
+                      GRI 418-1a
                     </div>
                   </div>
                 </div>
