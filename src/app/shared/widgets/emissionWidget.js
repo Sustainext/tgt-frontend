@@ -20,8 +20,8 @@ import {
 } from "@/lib/redux/features/emissionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import AssignEmissionModal from "./assignEmissionModal";
-import MultipleAssignEmissionModal from './MultipleAssignEmissionModal';
-import { getMonthName } from '@/app/utils/dateUtils';
+import MultipleAssignEmissionModal from "./MultipleAssignEmissionModal";
+import { getMonthName } from "@/app/utils/dateUtils";
 
 const EmissionWidget = React.memo(
   ({
@@ -61,29 +61,32 @@ const EmissionWidget = React.memo(
 
     // Assign To
     const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
-    const [isMultipleAssignModalOpen, setIsMultipleAssignModalOpen] = useState(false);
-    const users = useSelector(state => state.emissions.users.data);
-    const [assignedUser, setAssignedUser] = useState("");
-  const { location, month } = useSelector(state => state.emissions);
+    const [isMultipleAssignModalOpen, setIsMultipleAssignModalOpen] =
+      useState(false);
+    const users = useSelector((state) => state.emissions.users.data);
+    const [assignedUser, setAssignedUser] = useState(value.assigned_to || "");
+    const { location, month } = useSelector((state) => state.emissions);
 
-    useEffect(()=>{
-      const filteredUser = users?.filter(user => user.id === parseInt(value.assignTo))
+    useEffect(() => {
+      const filteredUser = users?.filter(
+        (user) => user.id === parseInt(value.assigned_to)
+      );
       setAssignedUser(filteredUser[0]?.username);
-    },[users, value.assignTo])
+    }, [users, value.assigned_to]);
 
     const handleAssignClick = () => {
       setIsAssignModalOpen(true);
     };
-  
+
     const handleMultipleAssignClick = () => {
       setIsMultipleAssignModalOpen(true);
       // setShowAllTasks(true)
     };
-  
+
     const handleCloseAssignModal = () => {
       setIsAssignModalOpen(false);
     };
-  
+
     const handleCloseMultipleAssignModal = () => {
       setIsMultipleAssignModalOpen(false);
       // setShowAllTasks(false)
@@ -736,7 +739,7 @@ const EmissionWidget = React.memo(
     };
 
     return (
-      <div className="w-full">
+      <div className={`w-full ${!id.startsWith("root_0") && "ml-1"}`}>
         {id.startsWith("root_0") && (
           <div className="mb-2">
             <button
@@ -744,7 +747,7 @@ const EmissionWidget = React.memo(
               className=" border text-[12px] py-1.5 px-3 rounded-md text-[#007eef] font-semibold leading-tight border-[#007eef] disabled:text-slate-300 disabled:border-slate-300 cursor-pointer"
               disabled={!selectAll}
               // onClick={handleMultipleAssignClick}
-              >
+            >
               Assign Tasks ({selectedRows.length})
             </button>
           </div>
@@ -793,8 +796,12 @@ const EmissionWidget = React.memo(
                   value={category}
                   onChange={(e) => handleCategoryChange(e.target.value)}
                   className={`text-[12px] focus:border-blue-500 focus:outline-none w-full py-1 ${
-                    category ? "border-b border-zinc-800" : ""
-                  }`}
+                    category && rowType === "default"
+                      ? "border-b border-zinc-800"
+                      : ""
+                  }
+`}
+                  disabled={rowType === "assigned"}
                 >
                   <option className="emissionscopc">Select Category</option>
                   {baseCategories.map((categoryName, index) => (
@@ -811,8 +818,11 @@ const EmissionWidget = React.memo(
                   value={subcategory}
                   onChange={(e) => handleSubcategoryChange(e.target.value)}
                   className={`text-[12px] focus:border-blue-500 focus:outline-none w-full py-1 ${
-                    subcategory ? "border-b border-zinc-800" : ""
+                    subcategory && rowType === "default"
+                      ? "border-b border-zinc-800"
+                      : ""
                   }`}
+                  disabled={rowType === "assigned"}
                 >
                   <option className="emissionscopc">Select Sub-Category</option>
                   {subcategories.map((sub, index) => (
@@ -827,9 +837,11 @@ const EmissionWidget = React.memo(
               <td className="py-2  w-[15vw]">
                 <div
                   className={`relative ${
-                    activity == !"No relevant activities found"
-                      ? ""
-                      : "border-b border-zinc-800"
+                    activity &&
+                    activity !== "No relevant activities found" &&
+                    rowType === "default"
+                      ? "border-b border-zinc-800"
+                      : ""
                   }`}
                 >
                   <input
@@ -848,6 +860,7 @@ const EmissionWidget = React.memo(
                     onChange={(e) => setActivitySearch(e.target.value)}
                     onFocus={toggleDropdown}
                     className={`text-[12px] focus:border-blue-500 focus:outline-none w-full py-1 `}
+                    disabled={rowType === "assigned"}
                   />
 
                   {isDropdownActive && (
@@ -861,6 +874,7 @@ const EmissionWidget = React.memo(
                         setActivitySearch("");
                       }}
                       className={`text-[12px] focus:border-blue-500 focus:outline-none w-full absolute left-0 top-8 z-[100] min-w-[650px]`}
+                      disabled={rowType === "assigned"}
                     >
                       <option value="" className="px-1">
                         {isFetching.current
@@ -907,6 +921,7 @@ const EmissionWidget = React.memo(
                           className="focus:border-blue-500 focus:outline-none text-[12px] w-[6vw] text-right pe-1"
                           step="1"
                           min="0"
+                          disabled={rowType === "assigned"}
                         />
                         <select
                           value={unit}
@@ -916,6 +931,7 @@ const EmissionWidget = React.memo(
                               ? "bg-white text-blue-500 "
                               : "bg-blue-500 text-white hover:bg-blue-600"
                           }`}
+                          disabled={rowType === "assigned"}
                         >
                           <option value="">Unit</option>
                           {units.map((unit, index) => (
@@ -935,6 +951,7 @@ const EmissionWidget = React.memo(
                           className="focus:border-blue-500 focus:outline-none text-[12px] w-[6vw] text-right pe-1"
                           step="1"
                           min="0"
+                          disabled={rowType === "assigned"}
                         />
                         <select
                           value={unit2}
@@ -944,6 +961,7 @@ const EmissionWidget = React.memo(
                               ? "bg-white text-blue-500 "
                               : "bg-blue-500 text-white hover:bg-blue-600"
                           }`}
+                          disabled={rowType === "assigned"}
                         >
                           <option value="">Unit</option>
                           {units2.map((unit, index) => (
@@ -965,6 +983,7 @@ const EmissionWidget = React.memo(
                         className="focus:border-blue-500 focus:outline-none text-[12px] w-[10vw] text-right pe-1"
                         step="1"
                         min="0"
+                        disabled={rowType === "assigned"}
                       />
                       <select
                         value={unit}
@@ -974,6 +993,7 @@ const EmissionWidget = React.memo(
                             ? "bg-white text-blue-500 "
                             : "bg-blue-500 text-white hover:bg-blue-600"
                         }`}
+                        disabled={rowType === "assigned"}
                       >
                         <option value="">Unit</option>
                         {units.map((unit, index) => (
@@ -991,9 +1011,17 @@ const EmissionWidget = React.memo(
               <td className="py-2 text-center w-[5vw]">
                 <button
                   type="button"
-                  className={`${assignedUser ? 'bg-white text-blue-500 pl-1 truncate overflow-hidden shadow-md border border-gray-300 hover:shadow-lg': 'bg-blue-500 text-white hover:bg-blue-600 '}  text-[12px] w-[112px] py-1 rounded-md shadow disabled:opacity-50`}
+                  className={`${
+                    assignedUser
+                      ? "bg-white text-blue-500 pl-1 truncate overflow-hidden shadow-md border border-gray-300 hover:shadow-lg"
+                      : "bg-blue-500 text-white hover:bg-blue-600 "
+                  }  text-[12px] w-[112px] py-1 rounded-md shadow disabled:opacity-80`}
                   onClick={handleAssignClick}
-                  disabled={rowType === "calculated" || rowType === "approved"}
+                  disabled={
+                    rowType === "calculated" ||
+                    rowType === "approved" ||
+                    rowType === "assigned"
+                  }
                 >
                   {assignedUser ? `${assignedUser}` : "Assign to"}
                 </button>
@@ -1189,11 +1217,11 @@ const EmissionWidget = React.memo(
           }}
         />
         <MultipleAssignEmissionModal
-        isOpen={isMultipleAssignModalOpen}
-        onClose={handleCloseMultipleAssignModal}
-        onChange={onChange}
-        scope={scope}
-      />
+          isOpen={isMultipleAssignModalOpen}
+          onClose={handleCloseMultipleAssignModal}
+          onChange={onChange}
+          scope={scope}
+        />
       </div>
     );
   }

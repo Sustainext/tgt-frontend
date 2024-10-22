@@ -146,62 +146,94 @@ const Scope2 = forwardRef(
     }, [scope2State]);
 
     useEffect(() => {
-      // if (autoFill && previousMonthData.status === 'succeeded') {
-      //   const prevMonthFormData = previousMonthData.scope2Data?.data || [];
-        
-      //   const formattedPrevMonthData = prevMonthFormData.map(item => {
-      //     const updatedEmission = { ...item.Emission };
-          
-      //     updatedEmission.Unit = '';
-      //     updatedEmission.Quantity = '';
-          
-      //     if (updatedEmission.unit_type && updatedEmission.unit_type.includes('Over')) {
-      //       updatedEmission.Unit2 = '';
-      //       updatedEmission.Quantity2 = '';
-      //     }
-          
-      //     return {
-      //       ...item,
-      //       Emission: updatedEmission
-      //     };
-      //   });
-        
-      //   const currentFormData = formData.length > 0 ? formData : formattedPrevMonthData;
-      //   dispatch(updateScopeDataLocal({ scope: 2, data: { data: currentFormData } }));
-      // }
-      if (assigned_data.status === 'succeeded') {
-        const assigned_data_scope = assigned_data.scope2;
-        
-        // Format the assigned data
-        const formattedAssignedData = assigned_data_scope.map(task => ({
-          id: task.id,
-          Emission: {
+      if (
+        autoFill && previousMonthData.status === "succeeded" ||
+        assigned_data.status === "succeeded" ||
+        approved_data.status === "succeeded"
+      ) {
+        console.log('Data merge triggered');
+        let updatedFormData = [...formData];
+    
+        // Handle Assigned Data
+        if (assigned_data.status === 'succeeded') {
+          console.log('Assigned data triggered');
+          const assignedDataScope = assigned_data.scope1;
+    
+          const formattedAssignedData = assignedDataScope.map(task => ({
             ...task,
-            Category: task.Category,
-            Subcategory: task.Subcategory,
-            Activity: task.Activity,
-            Quantity: task.Quantity,
-            Unit: task.Unit,
-            Quantity2: task.Quantity2,
-            Unit2: task.Unit2,
-            rowType: 'assigned',
-            assignTo: task.assign_to,
-            deadline: task.deadline
-          }
-        }));
-        console.log('formatted assigned task',assigned_data_scope,formattedAssignedData);
-        
-        // Combine existing formData with formatted assigned data
-        const updated_formData = [
-          ...formData.filter(item => !formattedAssignedData.some(assignedItem => assignedItem.id === item.id)),
-          ...formattedAssignedData
-        ];
-      
-        dispatch(
-          updateScopeDataLocal({ scope: 2, data: { data: updated_formData } })
-        );
+            Emission: {
+              ...task.Emission,
+              rowType: 'assigned'
+            }
+          }));
+    
+          updatedFormData = [
+            ...updatedFormData.filter(
+              (item) => !formattedAssignedData.some((assignedItem) => assignedItem.id === item.id)
+            ),
+            ...formattedAssignedData
+          ];
+        }
+    
+        // Handle Approved Data
+        if (approved_data.status === 'succeeded') {
+          console.log('Approved data triggered');
+          const approvedDataScope = approved_data.scope1;
+    
+          const formattedApprovedData = approvedDataScope.map(task => ({
+            ...task,
+            Emission: {
+              ...task.Emission,
+              rowType: 'approved'
+            }
+          }));
+    
+          updatedFormData = [
+            ...updatedFormData.filter(
+              (item) => !formattedApprovedData.some((approvedItem) => approvedItem.id === item.id)
+            ),
+            ...formattedApprovedData
+          ];
+        }
+
+        // Handle Previous Month Data (Auto-Fill)
+        if (autoFill && previousMonthData.status === "succeeded") {
+          console.log('Autofill triggered');
+          const prevMonthFormData = previousMonthData.scope1Data?.data || [];
+          
+          const formattedPrevMonthData = prevMonthFormData.map((item) => {
+            const updatedEmission = { ...item.Emission };
+    
+            // Resetting unit and quantity fields
+            updatedEmission.Unit = "";
+            updatedEmission.Quantity = "";
+    
+            if (
+              updatedEmission.unit_type &&
+              updatedEmission.unit_type.includes("Over")
+            ) {
+              updatedEmission.Unit2 = "";
+              updatedEmission.Quantity2 = "";
+            }
+    
+            return {
+              ...item,
+              Emission: updatedEmission,
+            };
+          });
+    
+          updatedFormData = [
+            ...updatedFormData,
+            ...formattedPrevMonthData.filter(
+              (item) => !updatedFormData.some((existingItem) => existingItem.id === item.id)
+            )
+          ];
+        }
+    
+        // Dispatch state update only once
+        dispatch(updateScopeDataLocal({ scope: 1, data: { data: updatedFormData } }));
       }
-    }, [climatiqData.totalScore, previousMonthData]);
+    }, [autoFill, previousMonthData, assigned_data, approved_data,]);
 
     if (scope2State.status === 'loading') {
       return (

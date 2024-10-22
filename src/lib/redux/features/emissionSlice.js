@@ -227,7 +227,6 @@ export const assignEmissionTasks = createAsyncThunk(
 export const fetchAssignedTasks = createAsyncThunk(
   'emissions/fetchAssignedTasks',
   async ({ location, year, month }) => {
-    const userId = localStorage.getItem('user_id');
     const url = `${process.env.BACKEND_API_URL}/sustainapp/get_assigned_by_task/?location=${location}&year=${year}&month=${getMonthName(month)}`;
     
     try {
@@ -242,8 +241,7 @@ export const fetchAssignedTasks = createAsyncThunk(
 export const fetchApprovedTasks = createAsyncThunk(
   'emissions/fetchApprovedTasks',
   async ({ location, year, month }) => {
-    const userId = localStorage.getItem('user_id');
-    const url = `${process.env.BACKEND_API_URL}/sustainapp/get_approved_task/?location=${location}&year=${year}&month=${month}&user_id=${userId}`;
+    const url = `${process.env.BACKEND_API_URL}/sustainapp/get_approved_task/?location=${location}&year=${year}&month=${getMonthName(month)}`;
     
     try {
       const response = await axiosInstance.get(url);
@@ -499,6 +497,9 @@ const emissionsSlice = createSlice({
       .addCase(assignEmissionTasks.fulfilled, (state, action) => {
         state.assignTaskStatus = 'succeeded';
         // The state update is handled in the thunk itself
+        // Dispatch `fetchAssignedTasks` to update assigned tasks state.
+        const { location, year, month } = action.meta.arg.commonData;
+        state.dispatch(fetchAssignedTasks({ location, year, month }));
       })
       .addCase(assignEmissionTasks.rejected, (state, action) => {
         state.assignTaskStatus = 'failed';

@@ -64,7 +64,7 @@ const Scope1 = forwardRef(
     );
     const autoFill = useSelector((state) => state.emissions.autoFill);
     const assigned_data = useSelector(state=>state.emissions.assignedTasks)
-
+    const approved_data = useSelector(state=>state.emissions.approvedTasks)
     const [r_schema, setRemoteSchema] = useState({});
     const [r_ui_schema, setRemoteUiSchema] = useState({});
     const [loopen, setLoOpen] = useState(false);
@@ -130,6 +130,7 @@ const Scope1 = forwardRef(
       },
       [formData, dispatch]
     );
+
 
     const handleAddNew = useCallback(() => {
       const newRow = { Emission: {} };
@@ -248,64 +249,177 @@ const Scope1 = forwardRef(
       }
     }, [scope1State.status, scope1State.schema, scope1State.uiSchema]);
 
-    useEffect(() => {
-      // if (autoFill && previousMonthData.status === "succeeded") {
-      //   console.log('autofill triggered');
+    // useEffect(() => {
+    //   if (autoFill && previousMonthData.status === "succeeded") {
+    //     console.log('autofill triggered');
         
-      //   const prevMonthFormData = previousMonthData.scope1Data?.data || [];
+    //     const prevMonthFormData = previousMonthData.scope1Data?.data || [];
 
-      //   const formattedPrevMonthData = prevMonthFormData.map((item) => {
-      //     const updatedEmission = { ...item.Emission };
+    //     const formattedPrevMonthData = prevMonthFormData.map((item) => {
+    //       const updatedEmission = { ...item.Emission };
 
-      //     updatedEmission.Unit = "";
-      //     updatedEmission.Quantity = "";
+    //       updatedEmission.Unit = "";
+    //       updatedEmission.Quantity = "";
 
-      //     if (
-      //       updatedEmission.unit_type &&
-      //       updatedEmission.unit_type.includes("Over")
-      //     ) {
-      //       updatedEmission.Unit2 = "";
-      //       updatedEmission.Quantity2 = "";
-      //     }
+    //       if (
+    //         updatedEmission.unit_type &&
+    //         updatedEmission.unit_type.includes("Over")
+    //       ) {
+    //         updatedEmission.Unit2 = "";
+    //         updatedEmission.Quantity2 = "";
+    //       }
 
-      //     console.log('formatted previous month data', updatedEmission,formData);
+    //       console.log('formatted previous month data', updatedEmission,formData);
 
-      //     return {
-      //       ...item,
-      //       Emission: updatedEmission,
-      //     };
-      //   });
+    //       return {
+    //         ...item,
+    //         Emission: updatedEmission,
+    //       };
+    //     });
 
-      //   const currentFormData =
-      //     formData.length > 0 ? formData : formattedPrevMonthData;
-      //   dispatch(
-      //     updateScopeDataLocal({ scope: 1, data: { data: currentFormData } })
-      //   );
-      // } 
-      // if (assigned_data.status === 'succeeded') {
-      //   const assigned_data_scope = assigned_data.scope1;
+    //     const currentFormData =
+    //       formData.length > 0 ? formData : formattedPrevMonthData;
+    //     dispatch(
+    //       updateScopeDataLocal({ scope: 1, data: { data: currentFormData } })
+    //     );
+    //   } 
+    //   if (assigned_data.status === 'succeeded') {
+    //     const assigned_data_scope = assigned_data.scope1;
       
-      //   // Format the assigned data
-      //   const formattedAssignedData = assigned_data_scope.map(task => ({
-      //     ...task,
-      //     Emission: {
-      //       ...task.Emission,
-      //       rowType: 'assigned'
-      //     }
-      //   }));
+    //     // Format the assigned data
+    //     const formattedAssignedData = assigned_data_scope.map(task => ({
+    //       ...task,
+    //       Emission: {
+    //         ...task.Emission,
+    //         rowType: 'assigned'
+    //       }
+    //     }));
       
-      //   // Combine existing formData with formatted assigned data
-      //   const updated_formData = [
-      //     ...formData.filter(item => !formattedAssignedData.some(assignedItem => assignedItem.id === item.id)),
-      //     ...formattedAssignedData
-      //   ];
+    //     // Combine existing formData with formatted assigned data
+    //     const updated_formData = [
+    //       ...formData.filter(item => !formattedAssignedData.some(assignedItem => assignedItem.id === item.id)),
+    //       ...formattedAssignedData
+    //     ];
       
-      //   dispatch(
-      //     updateScopeDataLocal({ scope: 1, data: { data: updated_formData } })
-      //   );
-      // }
-    }, [climatiqData.totalScore, previousMonthData]);
+    //     dispatch(
+    //       updateScopeDataLocal({ scope: 1, data: { data: updated_formData } })
+    //     );
+    //   }
+    //   if (approved_data.status === 'succeeded') {
+    //     const approved_data_scope = approved_data.scope1;
+      
+    //     // Format the assigned data
+    //     const formattedApprovedData = approved_data_scope.map(task => ({
+    //       ...task,
+    //       Emission: {
+    //         ...task.Emission,
+    //         rowType: 'approved'
+    //       }
+    //     }));
+      
+    //     // Combine existing formData with formatted assigned data
+    //     const updated_formData = [
+    //       ...formData.filter(item => !formattedApprovedData.some(approvedItem => approvedItem.id === item.id)),
+    //       ...formattedApprovedData
+    //     ];
+      
+    //     dispatch(
+    //       updateScopeDataLocal({ scope: 1, data: { data: updated_formData } })
+    //     );
+    //   }
+    // }, [climatiqData.totalScore, previousMonthData, assigned_data]);
 
+    useEffect(() => {
+      if (
+        autoFill && previousMonthData.status === "succeeded" ||
+        assigned_data.status === "succeeded" ||
+        approved_data.status === "succeeded"
+      ) {
+        console.log('Data merge triggered');
+        let updatedFormData = [...formData];
+    
+        // Handle Assigned Data
+        if (assigned_data.status === 'succeeded') {
+          console.log('Assigned data triggered');
+          const assignedDataScope = assigned_data.scope1;
+    
+          const formattedAssignedData = assignedDataScope.map(task => ({
+            ...task,
+            Emission: {
+              ...task.Emission,
+              rowType: 'assigned'
+            }
+          }));
+    
+          updatedFormData = [
+            ...updatedFormData.filter(
+              (item) => !formattedAssignedData.some((assignedItem) => assignedItem.id === item.id)
+            ),
+            ...formattedAssignedData
+          ];
+        }
+    
+        // Handle Approved Data
+        if (approved_data.status === 'succeeded') {
+          console.log('Approved data triggered');
+          const approvedDataScope = approved_data.scope1;
+    
+          const formattedApprovedData = approvedDataScope.map(task => ({
+            ...task,
+            Emission: {
+              ...task.Emission,
+              rowType: 'approved'
+            }
+          }));
+    
+          updatedFormData = [
+            ...updatedFormData.filter(
+              (item) => !formattedApprovedData.some((approvedItem) => approvedItem.id === item.id)
+            ),
+            ...formattedApprovedData
+          ];
+        }
+
+        // Handle Previous Month Data (Auto-Fill)
+        if (autoFill && previousMonthData.status === "succeeded") {
+          console.log('Autofill triggered');
+          const prevMonthFormData = previousMonthData.scope1Data?.data || [];
+          
+          const formattedPrevMonthData = prevMonthFormData.map((item) => {
+            const updatedEmission = { ...item.Emission };
+    
+            // Resetting unit and quantity fields
+            updatedEmission.Unit = "";
+            updatedEmission.Quantity = "";
+    
+            if (
+              updatedEmission.unit_type &&
+              updatedEmission.unit_type.includes("Over")
+            ) {
+              updatedEmission.Unit2 = "";
+              updatedEmission.Quantity2 = "";
+            }
+    
+            return {
+              ...item,
+              Emission: updatedEmission,
+            };
+          });
+    
+          updatedFormData = [
+            ...updatedFormData,
+            ...formattedPrevMonthData.filter(
+              (item) => !updatedFormData.some((existingItem) => existingItem.id === item.id)
+            )
+          ];
+        }
+    
+        // Dispatch state update only once
+        dispatch(updateScopeDataLocal({ scope: 1, data: { data: updatedFormData } }));
+      }
+    }, [autoFill, previousMonthData, assigned_data, approved_data,]);
+
+  
     if (scope1State.status === "loading") {
       return (
         <div className="flex items-center justify-center">
