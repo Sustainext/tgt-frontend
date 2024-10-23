@@ -7,14 +7,22 @@ import axios from "axios"; // Import icons from React Icons
 import { LuTrash2 } from "react-icons/lu";
 import { TbUpload } from "react-icons/tb";
 import debounce from "lodash/debounce";
-import { GlobalState } from "@/Context/page";
 import { toast } from "react-toastify";
 import { BlobServiceClient } from "@azure/storage-blob";
-import { MdFilePresent, MdClose } from "react-icons/md";
+import { MdClose } from "react-icons/md";
 import { RiFileExcel2Line } from "react-icons/ri";
 import { BsFiletypePdf, BsFileEarmarkImage } from "react-icons/bs";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import {
+  setSelectedRows,
+  toggleSelectAll,
+} from "@/lib/redux/features/emissionSlice";
+import { useDispatch, useSelector } from "react-redux";
+import AssignEmissionModal from "./assignEmissionModal";
+import MultipleAssignEmissionModal from './MultipleAssignEmissionModal';
+import { getMonthName } from '@/app/utils/dateUtils';
+
 const EmissionWidget = React.memo(
   ({
     value = {},
@@ -28,6 +36,8 @@ const EmissionWidget = React.memo(
     index,
     id,
   }) => {
+    const rowId = scope + "_" + index;
+    const [rowType, setRowType] = useState(value.rowType || "default");
     const [category, setCategory] = useState(value.Category || "");
     const [subcategory, setSubcategory] = useState(value.Subcategory || "");
     const [activity, setActivity] = useState(value.Activity || "");
@@ -48,6 +58,36 @@ const EmissionWidget = React.memo(
     const dropdownRef = useRef(null);
     const inputRef = useRef(null);
     const quantityRef = useRef(null);
+
+    // Assign To
+    const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
+    const [isMultipleAssignModalOpen, setIsMultipleAssignModalOpen] = useState(false);
+    const users = useSelector(state => state.emissions.users.data);
+    const [assignedUser, setAssignedUser] = useState("");
+  const { location, month } = useSelector(state => state.emissions);
+
+    useEffect(()=>{
+      const filteredUser = users?.filter(user => user.id === parseInt(value.assignTo))
+      setAssignedUser(filteredUser[0]?.username);
+    },[users, value.assignTo])
+
+    const handleAssignClick = () => {
+      setIsAssignModalOpen(true);
+    };
+  
+    const handleMultipleAssignClick = () => {
+      setIsMultipleAssignModalOpen(true);
+      // setShowAllTasks(true)
+    };
+  
+    const handleCloseAssignModal = () => {
+      setIsAssignModalOpen(false);
+    };
+  
+    const handleCloseMultipleAssignModal = () => {
+      setIsMultipleAssignModalOpen(false);
+      // setShowAllTasks(false)
+    };
 
     // Unit validation
 
@@ -248,6 +288,7 @@ const EmissionWidget = React.memo(
         fetchActivities();
       }
     }, [category]);
+
     useEffect(() => {
       if (category) {
         fetchSubcategories();
@@ -594,9 +635,6 @@ const EmissionWidget = React.memo(
       }
     };
 
-
-
-
     const handlePreview = () => {
       setShowModal(true);
     };
@@ -613,32 +651,104 @@ const EmissionWidget = React.memo(
         url: "",
         filetype: "",
         size: "",
-        uploadDateTime:"",
+        uploadDateTime: "",
       };
 
-      setFileName(""); 
-      setPreviewData(null); 
-      onChange(resetValue); 
-      setShowModal(false); 
+      setFileName("");
+      setPreviewData(null);
+      onChange(resetValue);
+      setShowModal(false);
     };
     const handleClickonRemove = () => {
-    
-        onRemove(index);
-     
-      
+      onRemove(index);
     };
+
+    //row selection
+    const dispatch = useDispatch();
+    const selectedRows = useSelector(
+      (state) => state.emissions.selectedRows[scope]
+    );
+    const scopeDataFull = useSelector(
+      (state) => state.emissions[`${scope}Data`]
+    );
+    const [isSelected, setIsSelected] = useState(false);
+    const selectAll = useSelector(
+      (state) => state.emissions.selectAllChecked[scope]
+    );
+
+    useEffect(() => {
+      // Check if this row is in the selectedRows array for this scope
+      setIsSelected(selectedRows.some((row) => row.rowId === rowId));
+    }, [selectedRows, rowId]);
+
+    const handleRowSelection = (event) => {
+      const checked = event.target.checked;
+      setIsSelected(checked);
+      dispatch(
+        setSelectedRows({
+          scope,
+          rowId,
+          isSelected: checked,
+          rowData: value,
+        })
+      );
+    };
+
+    const handleSelectAll = (event) => {
+      const isChecked = event.target.checked;
+      console.log("Select all isChecked:", isChecked, scope);
+
+      dispatch(toggleSelectAll({ scope, isChecked }));
+    };
+
+    const renderFirstColumn = () => {
+      switch (rowType) {
+        case "calculated":
+          return (
+            <td className="py-2 text-center w-[1vw]">
+              <div className="w-1.5 h-1.5 rounded-full bg-green-500 mx-auto"></div>
+            </td>
+          );
+        case "assigned":
+          return (
+            <td className="py-2 text-center w-[1vw]">
+              <div className="w-1.5 h-1.5 rounded-full bg-gray-500 mx-auto"></div>
+            </td>
+          );
+        case "approved":
+          return (
+            <td className="py-2 text-center w-[1vw]">
+              <div className="w-1.5 h-1.5 rounded-full bg-[#FFA701] mx-auto"></div>
+            </td>
+          );
+        default:
+          return (
+            <td className="py-2 text-center w-[1vw]">
+              <input
+                type="checkbox"
+                checked={isSelected}
+                onChange={handleRowSelection}
+                className="w-4 h-4 mt-2 border-gray-600 green-checkbox"
+              />
+            </td>
+          );
+      }
+    };
+
     return (
       <div className="w-full">
-         {id.startsWith("root_0") && (
-        <div className="mb-2">
-        <button
-                  type="button"
-                  className=" text-slate-300  border border-slate-300 text-[12px] w-[100px]   py-1 rounded-md"
-                >
-                  Assign user
-                </button>
-        </div>
-            )}
+        {id.startsWith("root_0") && (
+          <div className="mb-2">
+            <button
+              type="button"
+              className=" border text-[12px] py-1.5 px-3 rounded-md text-[#007eef] font-semibold leading-tight border-[#007eef] disabled:text-slate-300 disabled:border-slate-300 cursor-pointer"
+              disabled={!selectAll}
+              // onClick={handleMultipleAssignClick}
+              >
+              Assign Tasks ({selectedRows.length})
+            </button>
+          </div>
+        )}
         <table className="min-w-full w-full">
           {id.startsWith("root_0") && (
             <thead className="bg-gray-50">
@@ -646,10 +756,12 @@ const EmissionWidget = React.memo(
                 <th className="h-[44px] border-b border-gray-300">
                   <input
                     type="checkbox"
-                    className="accent-blue-500 w-4 h-4 mt-2"
+                    className="w-4 h-4 mt-2 green-checkbox-minus"
+                    checked={selectAll}
+                    onChange={handleSelectAll}
                   />
                 </th>
-                <th className=" h-[44px] border-b border-gray-300 text-[12px] text-left text-[#667085]">
+                <th className=" h-[44px] pl-2 border-b border-gray-300 text-[12px] text-left text-[#667085]">
                   Category
                 </th>
                 <th className=" h-[44px]  border-b border-gray-300 text-[12px] text-left text-[#667085]">
@@ -673,24 +785,16 @@ const EmissionWidget = React.memo(
           <tbody className="bg-white">
             <tr className="border-b border-gray-200">
               {/* Checkbox */}
-              <td className="py-2 text-center w-[1vw] ">
-                <input
-                  type="checkbox"
-                  className="accent-blue-500  w-4 h-4 mt-2"
-                />
-              </td>
+              {renderFirstColumn()}
 
               {/* Category Dropdown */}
-              <td className="py-2 px-1 w-[15vw]">
+              <td className="py-2 px-1 pl-2 w-[15vw]">
                 <select
                   value={category}
                   onChange={(e) => handleCategoryChange(e.target.value)}
                   className={`text-[12px] focus:border-blue-500 focus:outline-none w-full py-1 ${
-                    category
-                      ? "border-b border-zinc-800"
-                      : ""
+                    category ? "border-b border-zinc-800" : ""
                   }`}
-                  
                 >
                   <option className="emissionscopc">Select Category</option>
                   {baseCategories.map((categoryName, index) => (
@@ -707,11 +811,8 @@ const EmissionWidget = React.memo(
                   value={subcategory}
                   onChange={(e) => handleSubcategoryChange(e.target.value)}
                   className={`text-[12px] focus:border-blue-500 focus:outline-none w-full py-1 ${
-                    subcategory
-                      ? "border-b border-zinc-800"
-                      : ""
+                    subcategory ? "border-b border-zinc-800" : ""
                   }`}
-             
                 >
                   <option className="emissionscopc">Select Sub-Category</option>
                   {subcategories.map((sub, index) => (
@@ -724,9 +825,13 @@ const EmissionWidget = React.memo(
 
               {/* Activity Dropdown */}
               <td className="py-2  w-[15vw]">
-                <div    className={`relative ${
-                        activity ==! "No relevant activities found" ? "": "border-b border-zinc-800"
-                      }`}>
+                <div
+                  className={`relative ${
+                    activity == !"No relevant activities found"
+                      ? ""
+                      : "border-b border-zinc-800"
+                  }`}
+                >
                   <input
                     ref={inputRef}
                     type="text"
@@ -743,7 +848,6 @@ const EmissionWidget = React.memo(
                     onChange={(e) => setActivitySearch(e.target.value)}
                     onFocus={toggleDropdown}
                     className={`text-[12px] focus:border-blue-500 focus:outline-none w-full py-1 `}
-           
                   />
 
                   {isDropdownActive && (
@@ -756,7 +860,7 @@ const EmissionWidget = React.memo(
                         toggleDropdown();
                         setActivitySearch("");
                       }}
-                      className={`text-[12px] focus:border-blue-500 focus:outline-none w-full absolute left-0 top-8 z-[1000]`}
+                      className={`text-[12px] focus:border-blue-500 focus:outline-none w-full absolute left-0 top-8 z-[100] min-w-[650px]`}
                     >
                       <option value="" className="px-1">
                         {isFetching.current
@@ -887,9 +991,11 @@ const EmissionWidget = React.memo(
               <td className="py-2 text-center w-[5vw]">
                 <button
                   type="button"
-                  className="bg-blue-500 text-white text-[12px] w-[112px]   py-1 rounded-md shadow hover:bg-blue-600"
+                  className={`${assignedUser ? 'bg-white text-blue-500 pl-1 truncate overflow-hidden shadow-md border border-gray-300 hover:shadow-lg': 'bg-blue-500 text-white hover:bg-blue-600 '}  text-[12px] w-[112px] py-1 rounded-md shadow disabled:opacity-50`}
+                  onClick={handleAssignClick}
+                  disabled={rowType === "calculated" || rowType === "approved"}
                 >
-                  Assign to
+                  {assignedUser ? `${assignedUser}` : "Assign to"}
                 </button>
               </td>
 
@@ -923,8 +1029,6 @@ const EmissionWidget = React.memo(
                             onClick={handlePreview}
                             data-tooltip-id={fileName}
                             data-tooltip-content={fileName}
-                       
-                       
                           />
                         ) : fileType.includes("application/pdf") ? (
                           <BsFiletypePdf
@@ -948,19 +1052,18 @@ const EmissionWidget = React.memo(
                             data-tooltip-content={fileName}
                           />
                         )}
-                           <ReactTooltip
-                            id={fileName}
-                            place="top"
-                            effect="solid"
-                            style={{
-                             
-                              backgroundColor: "#000",
-                              color: "white",
-                              fontSize: "10px",
-                              boxShadow: 3,
-                              borderRadius: "8px",
-                            }}
-                          />
+                        <ReactTooltip
+                          id={fileName}
+                          place="top"
+                          effect="solid"
+                          style={{
+                            backgroundColor: "#000",
+                            color: "white",
+                            fontSize: "10px",
+                            boxShadow: 3,
+                            borderRadius: "8px",
+                          }}
+                        />
                       </label>
                     ) : (
                       <label htmlFor={id + scope} className="cursor-pointer">
@@ -979,11 +1082,13 @@ const EmissionWidget = React.memo(
                               </h5>
                             </div>
                             <div className="flex">
-                              <div className="mb-4" onClick={() => handleDelete(id, scope)}>
+                              <div
+                                className="mb-4"
+                                onClick={() => handleDelete(id, scope)}
+                              >
                                 <button
-                                type="button"
+                                  type="button"
                                   className="px-2 py-1 mr-2 w-[120px] mt-1 flex items-center justify-center border border-red-500 text-red-600 text-[13px] rounded hover:bg-red-600 hover:text-white"
-                                  
                                 >
                                   <LuTrash2 className="me-2" /> Delete File
                                 </button>
@@ -1068,6 +1173,27 @@ const EmissionWidget = React.memo(
             </tr>
           </tbody>
         </table>
+        <AssignEmissionModal
+          isOpen={isAssignModalOpen}
+          onClose={handleCloseAssignModal}
+          onChange={onChange}
+          taskData={{
+            location,
+            year,
+            month: getMonthName(month),
+            scope,
+            category: value.Category,
+            subcategory: value.Subcategory,
+            activity: value.Activity,
+            countryCode,
+          }}
+        />
+        <MultipleAssignEmissionModal
+        isOpen={isMultipleAssignModalOpen}
+        onClose={handleCloseMultipleAssignModal}
+        onChange={onChange}
+        scope={scope}
+      />
       </div>
     );
   }

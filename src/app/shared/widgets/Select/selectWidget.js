@@ -2,17 +2,14 @@ import React, { useState, useEffect } from 'react';
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { MdInfoOutline } from "react-icons/md";
-
 const SelectWidget = ({ onChange, value = "", placeholder, label, title, uiSchema = {}, schema = {}, id, options }) => {
-  const [otherValue, setOtherValue] = useState(""); // State to store the value of the other input
+  const [otherValue, setOtherValue] = useState(value || ""); // Initialize with value or empty
   const [showOtherInput, setShowOtherInput] = useState(false); // State to control showing the input box
 
-  // Check if the value from API exists in the provided options
   useEffect(() => {
+    // Check if the current value is not in options, then treat it as 'Other'
     const isOptionAvailable = options?.enumOptions?.some(option => option.value === value);
-
     if (!isOptionAvailable && value) {
-      // If the value from the API is not in the options, show the input box and set the value
       setShowOtherInput(true);
       setOtherValue(value);
     } else {
@@ -23,19 +20,19 @@ const SelectWidget = ({ onChange, value = "", placeholder, label, title, uiSchem
   const handleChange = (e) => {
     const selectedValue = e.target.value;
 
-    // If the selected value is "Other (please specify)", show input box
     if (selectedValue === "Other (please specify)") {
       setShowOtherInput(true);
-      onChange(""); // Reset the selected value (since input will be used)
+      setOtherValue(""); // Clear any existing other value
+      onChange(""); // Reset the main value to empty since we are using the custom input
     } else {
-      setShowOtherInput(false); // Hide the input field if a valid option is selected
-      onChange(selectedValue); // Pass the selected value up
+      setShowOtherInput(false);
+      onChange(selectedValue); // Set the selected value from dropdown
     }
   };
 
   const handleOtherInputChange = (e) => {
     setOtherValue(e.target.value);
-    onChange(e.target.value); // Pass the custom input value up
+    onChange(e.target.value); // Pass the custom "Other" value up
   };
 
   const randomId = Math.floor(Math.random() * 10000); // Generate a random number between 0 and 9999
@@ -75,19 +72,15 @@ const SelectWidget = ({ onChange, value = "", placeholder, label, title, uiSchem
         )}
       </div>
 
-      <div className='relative'>
-        {/* Conditionally render either the select box or the input box based on showOtherInput state */}
+      <div className="relative">
+        {/* Render select or input based on state */}
         {!showOtherInput ? (
           <select
             className={`block w-[20vw] py-2 text-[12px] p-0 custom-select focus:outline-none focus:border-blue-300 border-b-2 border-gray-300 capitalize`}
             value={value}
             onChange={handleChange}
           >
-            <option
-              value=""
-              disabled={!value}
-              className="text-gray-500" // Add Tailwind CSS class for gray text
-            >
+            <option value="" disabled={!value} className="text-gray-500">
               {`Select ${label}` || "Select..."}
             </option>
             {(options?.enumOptions || []).map((option) => (
@@ -99,7 +92,9 @@ const SelectWidget = ({ onChange, value = "", placeholder, label, title, uiSchem
         ) : (
           <input
             type="text"
-            className={`block w-[20vw] py-2 text-[12px] border-b-2 border-gray-300 ${id.startsWith("root_0") ? "mt-[0.38rem]" :"mt-0.5"}`}
+            className={`block w-[20vw] py-2 text-[12px] border-b-2 border-gray-300 ${
+              id.startsWith("root_0") ? "mt-[0.38rem]" : "mt-0.5"
+            }`}
             placeholder={`Specify other ${label}`}
             value={otherValue}
             onChange={handleOtherInputChange}

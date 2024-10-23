@@ -3,87 +3,197 @@ import { MdPerson, MdChevronRight } from "react-icons/md";
 import PermissionToggle from "../../common/PermissionToggle";
 import { useSelector, useDispatch } from "react-redux";
 import { useSearchParams } from "next/navigation"; // Correct import for Next.js 13 App Router
-import { addUser, setCurrentUser, updateUser } from "../../../../../lib/redux/features/userSlice";
+import {
+  setCollect,
+  setAnalyse,
+  setReport,
+  setOptimise,
+  setTrack,
+  setPermissionscheckbox,
+  setOrgList,
+  setCorpList,
+  setLocList,
+  setfirstname,
+  setlastname,
+  setjobtitle,
+  setdepartment,
+  setworkemail,
+  setroletype,
+  setphonenumber,
+} from "../../../../../lib/redux/features/roles-permissionsSlice";
 import UserAddedModal from "../../common/UserModal";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axiosInstance from "../../../../utils/axiosMiddleware";
 
 const PermissionsForm = ({ onPrev, onNext, reset }) => {
   const dispatch = useDispatch();
   const searchParams = useSearchParams(); // Access search params using Next.js's useSearchParams
-  const [permissions, setPermissions] = useState({
-    collect: true,
-    analyse: true,
-    report: false,
-    optimise: false,
-    track: false,
-  });
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [overrideEnabled, setOverrideEnabled] = useState(false);
-  const currentUser = useSelector((state) => state.users.currentUser);
-  const edit = searchParams.get("edit") === "true"; // Check if "edit" query param is present
+  const first_name = useSelector((state) => state.roleprmission.first_name);
+  const last_name = useSelector((state) => state.roleprmission.last_name);
+  const phone_number = useSelector((state) => state.roleprmission.phone_number);
+  const job_title = useSelector((state) => state.roleprmission.job_title);
+  const department = useSelector((state) => state.roleprmission.department);
+  const role_type = useSelector((state) => state.roleprmission.role_type);
+  const org_list = useSelector((state) => state.roleprmission.org_list);
+  const corp_list = useSelector((state) => state.roleprmission.corp_list);
+  const loc_list = useSelector((state) => state.roleprmission.loc_list);
+  const work_email = useSelector((state) => state.roleprmission.work_email);
 
-  // Toggle individual permissions only if override is enabled
+  // Get the state from Redux
+  const { collect, analyse, report, optimise, track, permissions_checkbox } =
+    useSelector((state) => state.roleprmission);
+
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const edit = searchParams.get("edit") === "true"; // Check if "edit" query param is present
+  const currentUser = useSelector((state) => state.roleprmission.userlist);
+
+  // Toggle individual permissions based on `permissions_checkbox`
   const handleChange = (name) => {
-    if (overrideEnabled) {
-      setPermissions((prev) => ({
-        ...prev,
-        [name]: !prev[name],
-      }));
+    if (permissions_checkbox) {
+      switch (name) {
+        case "collect":
+          dispatch(setCollect(!collect));
+          break;
+        case "analyse":
+          dispatch(setAnalyse(!analyse));
+          break;
+        case "report":
+          dispatch(setReport(!report));
+          break;
+        case "optimise":
+          dispatch(setOptimise(!optimise));
+          break;
+        case "track":
+          dispatch(setTrack(!track));
+          break;
+        default:
+          break;
+      }
     }
   };
 
   const handleOverrideChange = () => {
-    const newState = !overrideEnabled;
-    setOverrideEnabled(newState);
+    dispatch(setPermissionscheckbox(!permissions_checkbox));
   };
 
-  // Pre-fill the permissions based on the currentUser when in edit mode
-  useEffect(() => {
-    if (edit && currentUser?.permissions) {
-      setPermissions({
-        collect: currentUser.permissions.collect || false,
-        analyse: currentUser.permissions.analyse || false,
-        report: currentUser.permissions.report || false,
-        optimise: currentUser.permissions.optimise || false,
-        track: currentUser.permissions.track || false,
-      });
-    }
-  }, [edit, currentUser]); // Dependencies on edit mode and currentUser changes
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const userData = {
-      personalDetails: currentUser.personalDetails,
-      organizationDetails: currentUser.organizationDetails,
-      permissions: permissions,
+
+    // Construct the simplified data object
+    const data = {
+      username: work_email || "",
+      email: work_email || "",
+      first_name: first_name || "",
+      last_name: last_name || "",
+      phone_number: phone_number || "",
+      job_title: job_title || "",
+      department: department || "",
+      work_email: work_email || "",
+      roles: role_type || "",
+
+      // Permissions
+      collect: collect || false,
+      analyse: analyse || false,
+      report: report || false,
+      optimise: optimise || false,
+      track: track || false,
+      permissions_checkbox: permissions_checkbox || false,
+
+     
+      orgs: org_list.length ? org_list : [],
+      corps: corp_list.length ? corp_list : [],
+      locs: loc_list.length ? loc_list : [],
     };
 
-    if (edit) {
-      // If editing, update the existing user
-      dispatch(
-        updateUser({ id: currentUser.personalDetails.id, updates: userData })
-      );
-      onNext({ ...permissions });
-    } else {
-      // If creating new user
-      onNext({ ...permissions });
-      dispatch(addUser());
-    }
+    const url = edit
+      ? `${process.env.BACKEND_API_URL}/api/auth/manage_user/${currentUser.id}/`
+      : `${process.env.BACKEND_API_URL}/api/auth/create-customuser/`;
 
-    setIsSubmitted(true);
+    try {
+      const response = edit
+        ? await axiosInstance.patch(url, data) // Use PATCH for editing
+        : await axiosInstance.post(url, data); // Use POST for creating
+
+      if (response.status === 201 || response.status === 200) {
+        toast.success(
+          edit ? "User updated successfully" : "User created successfully",
+          {
+            position: "top-right",
+            autoClose: 3000,
+          }
+        );
+        setIsSubmitted(true);
+        onNext();
+      } else {
+        toast.error("Oops, something went wrong", {
+          position: "top-right",
+          autoClose: 1000,
+        });
+      }
+    } catch (error) {
+      if (error.response) {
+        const errorData = error.response.data;
+
+        // Check if both username and email errors exist
+        if (errorData.username && errorData.email) {
+          toast.error("Username and email already exist.", {
+            position: "top-right",
+            autoClose: 3000,
+          });
+        } else {
+          toast.error("Something went wrong", {
+            position: "top-right",
+            autoClose: 1000,
+          });
+        }
+      } else if (error.request) {
+        console.error("Request error:", error.request);
+      } else {
+        console.error("Error message:", error.message);
+      }
+    }
   };
 
   const addNewUser = () => {
-    dispatch(setCurrentUser({}));
+    dispatch(setCollect(true));
+    dispatch(setAnalyse(true));
+    dispatch(setReport(false));
+    dispatch(setOptimise(false));
+    dispatch(setTrack(false));
+    dispatch(setPermissionscheckbox(false));
+    dispatch(setOrgList([]));
+    dispatch(setCorpList([]));
+    dispatch(setLocList([]));
+    dispatch(setfirstname(""));
+    dispatch(setlastname(""));
+    dispatch(setjobtitle(""));
+    dispatch(setdepartment(""));
+    dispatch(setworkemail(""));
+    dispatch(setroletype(""));
+    dispatch(setphonenumber(""));
     reset();
   };
 
+  useEffect(() => {
+    if (edit && currentUser) {
+      dispatch(setCollect(currentUser.collect || false));
+      dispatch(setAnalyse(currentUser.analyse || false));
+      dispatch(setReport(currentUser.report || false));
+      dispatch(setOptimise(currentUser.optimise || false));
+      dispatch(setTrack(currentUser.track || false));
+      dispatch(setPermissionscheckbox(currentUser.permissions_checkbox || false));
+    }
+  }, [edit, currentUser]); // Dependencies on edit mode and currentUser changes
+
   const descriptions = {
     collect:
-      "Enabling this module allows the user to enter and amend data in the Environment, Social, Governance, General, and Economic areas.",
+      "This module gives user permission to enter or modify data in the Environment, Social, Governance, General and Economic sections.",
     analyse:
-      "Enabling this module allows the user to view and analyse data under the Environment, Social, Governance, General, and Economic areas.",
+      "This module gives user permission to view and analyse the data under Environment, Social, Governance, General and Economic sections.",
     report:
-      "Enabling this module allows the user to access, generate and edit reports for the organization for a given time period.",
+      "This module gives user permission to access, generate and edit reports for the organization for a given time period.",
     optimise:
       "This module gives user to optimize the sustainability practices through data analysis, scenario planning, benchmarking, and setting science-based targets.",
     track:
@@ -101,56 +211,84 @@ const PermissionsForm = ({ onPrev, onNext, reset }) => {
       <div className="text-[#667084] text-sm font-normal font-['Manrope'] leading-tight mb-6">
         Select the modules from below for which the user can have access to.
       </div>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="bg-white">
-          <div className="p-4 rounded-lg border-2 border-[#e6e6e6]">
-            <div className="mb-4 flex justify-between items-center gradient-background p-4">
-              <label className="flex items-center gap-2 text-[#405261]">
-                Override default permission
-              </label>
-              <input
-                type="checkbox"
-                className=""
-                checked={overrideEnabled}
-                onChange={handleOverrideChange}
-              />
-            </div>
-            <div className={`px-4 ${!overrideEnabled ? "opacity-50" : ""}`}>
-              {Object.keys(permissions).map((key) => (
-                <PermissionToggle
-                  key={key}
-                  label={key.charAt(0).toUpperCase() + key.slice(1)}
-                  description={descriptions[key]}
-                  enabled={permissions[key]}
-                  onChange={() => handleChange(key)}
-                  disabled={!overrideEnabled}
-                />
-              ))}
-            </div>
+
+      <div className="bg-white">
+        <div className="p-4 rounded-lg border-2 border-[#e6e6e6]">
+          <div className="mb-4 flex justify-between items-center gradient-background p-4">
+            <label className="flex items-center gap-2 text-[#405261]">
+              Override default permission
+            </label>
+            <input
+              type="checkbox"
+              className=""
+              value={permissions_checkbox}
+              checked={permissions_checkbox}
+              onChange={handleOverrideChange}
+            />
+          </div>
+          <div className={`px-4 ${!permissions_checkbox ? "opacity-50" : ""}`}>
+            <PermissionToggle
+              label="Collect"
+              description={descriptions.collect}
+              enabled={collect}
+              onChange={() => handleChange("collect")}
+              disabled={!permissions_checkbox}
+            />
+            <PermissionToggle
+              label="Analyse"
+              description={descriptions.analyse}
+              enabled={analyse}
+              onChange={() => handleChange("analyse")}
+              disabled={!permissions_checkbox}
+            />
+            <PermissionToggle
+              label="Report"
+              description={descriptions.report}
+              enabled={report}
+              onChange={() => handleChange("report")}
+              disabled={!permissions_checkbox}
+            />
+            <PermissionToggle
+              label="Optimise"
+              description={descriptions.optimise}
+              enabled={optimise}
+              onChange={() => handleChange("optimise")}
+              disabled={!permissions_checkbox}
+            />
+            <PermissionToggle
+              label="Track"
+              description={descriptions.track}
+              enabled={track}
+              onChange={() => handleChange("track")}
+              disabled={!permissions_checkbox}
+            />
           </div>
         </div>
-        <div className="flex justify-end items-center mt-[4rem]">
-          <button
-            className="mt-4 bg-transparent text-black/40 font-bold py-2 px-4 rounded flex justify-center items-center gap-2"
-            onClick={onPrev}
-          >
-           <MdChevronRight className="w-4 h-4 rotate-180" />
-            <div className="text-black/40 text-[12px] font-bold font-['Manrope'] leading-[15px]">
-              Previous
-            </div>
-          </button>
-          <button
-            type="submit"
-            className="mt-4 bg-[#007eef] hover:shadow-lg text-[12px] text-white font-bold py-2 px-4 rounded flex justify-center items-center gap-2 shadow whitespace-nowrap"
-          >
-            <span className="text-[12px] font-['Manrope']">
-              {edit
-                ? "Save Permissions & Update User"
-                : "Save Permissions & Create User"}
-            </span>
-          </button>
-        </div>
-      </form>
+      </div>
+
+      <div className="flex justify-end items-center mt-[4rem]">
+        <button
+          className="mt-4 bg-transparent text-black/40 font-bold py-2 px-4 rounded flex justify-center items-center gap-2"
+          onClick={onPrev}
+        >
+          <MdChevronRight className="w-4 h-4 rotate-180" />
+          <div className="text-black/40 text-[12px] font-bold font-['Manrope'] leading-[15px]">
+            Previous
+          </div>
+        </button>
+        <button
+          type="button"
+          className="mt-4 bg-[#007eef] hover:shadow-lg text-[12px] text-white font-bold py-2 px-4 rounded flex justify-center items-center gap-2 shadow whitespace-nowrap"
+          onClick={handleSubmit} // Add the onClick handler here
+        >
+          <span className="text-[12px] font-['Manrope']">
+            {edit
+              ? "Save Changes"
+              : "Save Permissions & Create User"}
+          </span>
+        </button>
+      </div>
+
       {isSubmitted && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
           <div className="bg-white rounded-lg shadow-lg w-full max-w-sm">
@@ -158,6 +296,9 @@ const PermissionsForm = ({ onPrev, onNext, reset }) => {
           </div>
         </div>
       )}
+
+      {/* ToastContainer for showing toast notifications */}
+      <ToastContainer />
     </>
   );
 };

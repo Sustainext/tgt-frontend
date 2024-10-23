@@ -24,7 +24,7 @@ const DynamicTable2 = ({ data, columns,title }) => {
             {columns.map((column, index) => (
               <th
                 key={index}
-                className={`px-2 py-3  text-[#727272]  block md:table-cell text-center text-[12px]   border-gray-300 ${ index===0 ? "":"border-l"} `}
+                className={`px-4 py-4  text-[#727272]  block md:table-cell text-center text-[12px]   border-gray-300 ${ index===0 ? "":"border-l"} `}
                 style={index === 0 || index === 1 ? { width: '11rem', textAlign: 'center' } : { textAlign: 'center' }}
               >
                 {column}
@@ -37,7 +37,7 @@ const DynamicTable2 = ({ data, columns,title }) => {
             <tr className="border-t border-gray-300">
               <td
                 colSpan={columns.length}
-                  className="text-center p-2 block md:table-cell text-[12px] font-normal text-slate-500 border-t border-gray-300"
+                  className="text-center p-4 block md:table-cell text-[12px] font-normal text-slate-500 border-t border-gray-300"
               >
                 No data available
               </td>
@@ -55,7 +55,7 @@ const DynamicTable2 = ({ data, columns,title }) => {
                         {employeeIndex === 0 && (
                           <td
                             rowSpan={employees.length} // Span across all rows for this location
-                            className="p-2 block md:table-cell text-center text-[12px] border-r border-t  border-gray-300"
+                            className="p-4 block md:table-cell text-center text-[12px] border-r border-t  border-gray-300"
                           >
                             {location}
                           </td>
@@ -63,7 +63,7 @@ const DynamicTable2 = ({ data, columns,title }) => {
                         {columns.slice(1).map((columnKey, colIndex) => (
                           <td
                             key={colIndex}
-                            className={`p-2 block md:table-cell text-center text-[12px] font-normal text-slate-500  border-t  border-gray-300 ${
+                            className={`p-4 block md:table-cell text-center text-[12px] font-normal text-slate-500  border-t  border-gray-300 ${
                               colIndex === 0 ? '' : 'border-l'
                             }`}
                           >
@@ -80,7 +80,7 @@ const DynamicTable2 = ({ data, columns,title }) => {
                     <tr key={locationIndex} className="md:table-row">
                       <td
                         colSpan={columns.length}
-                        className="text-center p-2 block md:table-cell text-[12px] font-normal text-slate-500"
+                        className="text-center p-4 block md:table-cell text-[12px] font-normal text-slate-500"
                       >
                         No data available for {location}
                       </td>
@@ -91,19 +91,19 @@ const DynamicTable2 = ({ data, columns,title }) => {
                   {employees.length > 0 && (
                     <tr className="md:table-row border-r border-l border-gray-300">
                       <td className='border-r border-gray-300'></td>
-                      <td className="p-2 block total md:table-cell text-center text-[12px] font-bold border-r border-t border-gray-300">
+                      <td className="p-4 block total md:table-cell text-center text-[12px] font-bold border-r border-t border-gray-300">
                         Total
                       </td>
                       {/* Column 3 */}
-                      <td className="p-2 block md:table-cell text-center text-[12px] border-t border-gray-300">
+                      <td className="p-4 block md:table-cell text-center text-[12px] border-t border-gray-300">
                         {employees.reduce((acc, employee) => acc + parseFloat(employee[columns[2]] || 0), 0)}
                       </td>
                       {/* Column 4 */}
-                      <td className="p-2 block md:table-cell text-center text-[12px] border-l border-t border-gray-300">
+                      <td className="p-4 block md:table-cell text-center text-[12px] border-l border-t border-gray-300">
                         {employees.reduce((acc, employee) => acc + parseFloat(employee[columns[3]] || 0), 0)}
                       </td>
                       {/* Column 5 (calculated as (column 3 / column 4) * 100 with % symbol) */}
-                      <td className="p-2 block md:table-cell text-center text-[12px] border-l border-t border-gray-300">
+                      <td className="p-4 block md:table-cell text-center text-[12px] border-l border-t border-gray-300">
                         {(() => {
                           const totalColumn3 = employees.reduce((acc, employee) => acc + parseFloat(employee[columns[2]] || 0), 0);
                           const totalColumn4 = employees.reduce((acc, employee) => acc + parseFloat(employee[columns[3]] || 0), 0);

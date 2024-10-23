@@ -39,6 +39,8 @@ import {
 } from "../../../../../lib/redux/features/ESGSlice/screen11Slice";
 
 const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
+
+  const [data,setData]=useState("")
   const reportid =
     typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
   const orgName =
@@ -52,7 +54,7 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
   const introduction_to_economic_value_creation = useSelector(
     (state) => state.screen11Slice.introduction_to_economic_value_creation
   );
-  const [data,setData] =useState("");
+
   const [activeSection, setActiveSection] = useState("section11_1");
   const section11_1Ref = useRef(null);
   const section11_2Ref = useRef(null);
@@ -166,6 +168,7 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
       const response = await axiosInstance.get(url);
       if (response.data) {
         console.error("API response data11", response.data);
+        setData(response.data)
         dispatch(setgetdata(response.data));
       dispatch(setCompanyeconomic(response.data.company_economic_performance_statement));
       dispatch(setIntroductionto(response.data.introduction_to_economic_value_creation));
@@ -209,42 +212,46 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
         </h3>
         <div className="flex gap-4">
           <div className="w-[80%]">
-            <Section1 orgName={orgName}/>
+            <Section1 orgName={orgName} data={data}/>
             <Section2
-
+              data={data}
               section11_1Ref={section11_1Ref}
               section11_1_1Ref={section11_1_1Ref}
-              data={data}
+            
             />
-        <Section3 section11_1_2Ref={section11_1_2Ref}  orgName={orgName} />
-              <Section4 section11_1_3Ref={section11_1_3Ref} orgName={orgName}/>
-            <Section5 section11_2Ref={section11_2Ref} />
-              <Section6 section11_2_1Ref={section11_2_1Ref} />
-            <Section7 section11_2_2Ref={section11_2_2Ref} />
+        <Section3 section11_1_2Ref={section11_1_2Ref}  orgName={orgName} data={data} />
+              <Section4 section11_1_3Ref={section11_1_3Ref} orgName={orgName} data={data} />
+            <Section5 section11_2Ref={section11_2Ref} data={data} />
+              <Section6 section11_2_1Ref={section11_2_1Ref} data={data} />
+            <Section7 section11_2_2Ref={section11_2_2Ref} data={data} />
            <Section8
               section11_3Ref={section11_3Ref}
               section11_3_1Ref={section11_3_1Ref}
+              data={data}
             /> 
-          <Section9 section11_3_2Ref={section11_3_2Ref} />
-            <Section10 section11_3_3Ref={section11_3_3Ref} />
-            <Section11 section11_3_4Ref={section11_3_4Ref} />
+          <Section9 section11_3_2Ref={section11_3_2Ref} data={data} />
+            <Section10 section11_3_3Ref={section11_3_3Ref} data={data} />
+            <Section11 section11_3_4Ref={section11_3_4Ref} data={data} />
             <Section12
               section11_4Ref={section11_4Ref}
               section11_4_1Ref={section11_4_1Ref}
+              data={data}
             /> 
-          <Section13 section11_4_2Ref={section11_4_2Ref} />
-          <Section14 section11_4_3Ref={section11_4_3Ref} /> 
-          <Section15 section11_4_4Ref={section11_4_4Ref} /> 
+          <Section13 section11_4_2Ref={section11_4_2Ref} data={data} />
+          <Section14 section11_4_3Ref={section11_4_3Ref} data={data} /> 
+          <Section15 section11_4_4Ref={section11_4_4Ref} data={data} /> 
            <Section16
               section11_5Ref={section11_5Ref}
               section11_5_1Ref={section11_5_1Ref}
+              data={data}
             />  
-        <Section17 section11_5_2Ref={section11_5_2Ref} />
-            <Section18 section11_5_3Ref={section11_5_3Ref} />
-            <Section19 section11_5_4Ref={section11_5_4Ref} />
+        <Section17 section11_5_2Ref={section11_5_2Ref} data={data} />
+            <Section18 section11_5_3Ref={section11_5_3Ref} data={data} />
+            <Section19 section11_5_4Ref={section11_5_4Ref} data={data} />
             <Section20
               section11_6Ref={section11_6Ref}
               section11_6_1Ref={section11_6_1Ref}
+              data={data}
             /> 
           </div>
           {/* page sidebar */}

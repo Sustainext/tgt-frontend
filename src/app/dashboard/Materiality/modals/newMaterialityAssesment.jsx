@@ -551,7 +551,7 @@ const handleDateChange = (newRange) => {
             <div>
               <form className="space-y-2 px-6 pt-4">
                 <div
-                  className="flex items-center green-radio"
+                  className="flex items-center"
                   onClick={() => {
                     handleChangeRadio("accordance");
                     setDateRange(
@@ -568,7 +568,7 @@ const handleDateChange = (newRange) => {
                     type="radio"
                     value="accordance"
                     checked={assessmentApproach === "accordance"}
-                    className="form-radio h-4 w-4"
+                    className="form-radio h-4 w-4 accent-[#008000]"
                   />
                   <label
                     htmlFor="accordance"
@@ -579,7 +579,7 @@ const handleDateChange = (newRange) => {
                 </div>
                
                 <div
-                  className="flex items-center green-radio"
+                  className="flex items-center"
                   onClick={() => {
                     handleChangeRadio("reference");
                     setDateRange(
@@ -596,7 +596,7 @@ const handleDateChange = (newRange) => {
                     type="radio"
                     value="reference"
                     checked={assessmentApproach === "reference"}
-                    className="form-radio h-4 w-4"
+                    className="form-radio h-4 w-4 accent-[#008000]"
                   />
                   <label
                     htmlFor="reference"

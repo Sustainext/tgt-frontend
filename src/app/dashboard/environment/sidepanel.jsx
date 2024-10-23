@@ -90,7 +90,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
             </div>
 
             <div className="inset-y-0  flex items-center pointer-events-none w-[45%] justify-end">
-              <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">M</span>
+              {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">M</span> */}
               <MdKeyboardArrowDown className="text-lg text-neutral-500" />
             </div>
           </button>
@@ -120,7 +120,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
               </div>
 
               <div className="inset-y-0  flex items-center pointer-events-none w-[45%] justify-end">
-              <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">M</span>
+              {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">M</span> */}
                
                 <MdKeyboardArrowDown
                   className={`text-lg text-neutral-500 ${
@@ -266,9 +266,9 @@ const Aside = ({ activeTab, handleTabClick }) => {
               </div>
 
               <div className="inset-y-0  flex items-center pointer-events-none w-[45%] justify-end">
-              <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+              {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                   M
-                </span>
+                </span> */}
                 <MdKeyboardArrowDown
                   className={`text-lg text-neutral-500 ${
                     isWasteVisible && "rotate-180"
@@ -392,9 +392,9 @@ const Aside = ({ activeTab, handleTabClick }) => {
               </div>
 
               <div className="inset-y-0  flex items-center pointer-events-none w-[45%] justify-end">
-              <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+              {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                   M
-                </span>
+                </span> */}
                 <MdKeyboardArrowDown
                   className={`text-lg text-neutral-500 ${
                     isMaterialsVisible && "rotate-180"
@@ -485,9 +485,9 @@ const Aside = ({ activeTab, handleTabClick }) => {
               </div>
 
               <div className="inset-y-0  flex items-center pointer-events-none w-[45%] justify-end">
-              <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+              {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                   M
-                </span>
+                </span> */}
                 <MdKeyboardArrowDown
                   className={`text-lg text-neutral-500 ${
                     isWaterVisible && "rotate-180"
@@ -616,9 +616,9 @@ const Aside = ({ activeTab, handleTabClick }) => {
               </div>
 
               <div className="inset-y-0  flex items-center pointer-events-none w-[45%] justify-end">
-              <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+              {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                   M
-                </span>
+                </span> */}
                 <MdKeyboardArrowDown
                   className={`text-lg text-neutral-500 ${
                     isSupplierVisible && "rotate-180"

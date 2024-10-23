@@ -44,37 +44,37 @@ const Section13 = ({ section11_4_2Ref }) => {
         {/* Mapping through 207_1a */}
         {data?.["207_1a"]?.map((item, index) => (
           <div key={`tax_strategy_${index}`} className="mb-4">
-            <p className="text-[12px] mb-1">{item.Q1 || "No data available"}</p>
-            {item.Q2 && <p className="text-[12px] mb-1">{item.Q2}</p>}
-            {item.Q3 && <p className="text-[12px] mb-1">{stripHTML(item.Q3)}</p>}
-            {item.Q4 && <p className="text-[12px] mb-1">{item.Q4}</p>}
-            {item.Q5 && <p className="text-[12px] mb-1">{item.Q5}</p>}
-            {item.Q6 && <p className="text-[12px] mb-1">{stripHTML(item.Q6)}</p>}
+            <p className="text-sm mb-1">{item.Q1 || "No data available"}</p>
+            {item.Q2 && <p className="text-sm mb-1">{item.Q2}</p>}
+            {item.Q3 && <p className="text-sm mb-1">{stripHTML(item.Q3)}</p>}
+            {item.Q4 && <p className="text-sm mb-1">{item.Q4}</p>}
+            {item.Q5 && <p className="text-sm mb-1">{item.Q5}</p>}
+            {item.Q6 && <p className="text-sm mb-1">{stripHTML(item.Q6)}</p>}
           </div>
         ))}
 
         {/* Fallback if no data is available */}
         {(!data?.["207_1a"] || data["207_1a"].length === 0) && (
-          <p className="text-[12px] mb-4">No data available</p>
+          <p className="text-sm mb-4">No data available</p>
         )}
       </div>
 
       {/* New div to display tax jurisdictions from 207_4a */}
       <div className="shadow-md rounded-md mb-4 p-6">
-        <p className="text-[12px] text-[#344054] mb-2">
+        <p className="text-sm text-[#344054] mb-2">
           All tax jurisdictions where the entities included in the organization’s audited consolidated financial statements, or in the financial information filed on public record, are resident for tax purposes:
         </p>
 
         {/* Mapping through 207_4a */}
         {data?.["207_4a"]?.map((jurisdiction, index) => (
-          <p key={`jurisdiction_${index}`} className="text-[12px] py-4  border-t">
+          <p key={`jurisdiction_${index}`} className="text-sm py-4  border-t">
             {jurisdiction}
           </p>
         ))}
 
         {/* Fallback if no tax jurisdictions are available */}
         {(!data?.["207_4a"] || data["207_4a"].length === 0) && (
-          <p className="text-[12px] mb-1">No tax jurisdictions available.</p>
+          <p className="text-sm mb-1">No tax jurisdictions available.</p>
         )}
       </div>
 

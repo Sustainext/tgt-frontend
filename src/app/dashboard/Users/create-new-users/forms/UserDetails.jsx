@@ -1,30 +1,67 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux"; // Import useDispatch and useSelector
 import { useSearchParams } from "next/navigation"; // Import from Next.js
 import { MdPerson, MdChevronRight } from "react-icons/md";
+import {
+  setfirstname,
+  setlastname,
+  setjobtitle,
+  setdepartment,
+  setworkemail,
+  setroletype,
+  setphonenumber
+} from "../../../../../lib/redux/features/roles-permissionsSlice"; // Import your actions
 
 const PersonalDetailsForm = ({ onNext }) => {
-  const [details, setDetails] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phoneNumber: "",
-    roleType: "",
-    jobTitle: "",
-    department: "",
-    status: "Active",
-  });
-
+  const dispatch = useDispatch(); // Initialize useDispatch
   const [errors, setErrors] = useState({});
 
+  // Use useSelector to get the current values from the Redux state
+  const {
+    first_name,
+    last_name,
+    work_email,
+    phone_number,
+    role_type,
+    job_title,
+    department,
+  } = useSelector((state) => state.roleprmission); // Access your slice
+
   const handleChange = (e) => {
-    setDetails({ ...details, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    // Dispatch based on the name of the input field
+    switch (name) {
+      case "firstName":
+        dispatch(setfirstname(value));
+        break;
+      case "lastName":
+        dispatch(setlastname(value));
+        break;
+      case "jobTitle":
+        dispatch(setjobtitle(value));
+        break;
+      case "department":
+        dispatch(setdepartment(value));
+        break;
+      case "email":
+        dispatch(setworkemail(value));
+        break;
+      case "roleType":
+        dispatch(setroletype(value));
+        break;
+        case "phoneNumber":
+          dispatch(setphonenumber(value));
+          break;
+      default:
+        break;
+    }
   };
 
   // Updated to reject public domains like Gmail, Yahoo, and Outlook
   const validateEmail = (email) => {
-    const publicDomains = ["gmail.com", "yahoo.com", "outlook.com"];
+    const publicDomains = ["gmail.com", "yahoo.com"];
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const domain = email.split("@")[1];
     return emailRegex.test(email) && !publicDomains.includes(domain);
@@ -33,24 +70,24 @@ const PersonalDetailsForm = ({ onNext }) => {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!details.firstName) {
+    if (!first_name) {
       newErrors.firstName = "First Name is required";
     }
-    if (!details.lastName) {
+    if (!last_name) {
       newErrors.lastName = "Last Name is required";
     }
-    if (!details.email) {
+    if (!work_email) {
       newErrors.email = "Email is required";
-    } else if (!validateEmail(details.email)) {
-      newErrors.email = "Public domain emails (Gmail, Yahoo, Outlook) are not allowed";
+    } else if (!validateEmail(work_email)) {
+      newErrors.email = "Public domain emails (Gmail, Yahoo) are not allowed";
     }
-    if (!details.roleType) {
+    if (!role_type) {
       newErrors.roleType = "Role Type is required";
     }
-    if (!details.jobTitle) {
+    if (!job_title) {
       newErrors.jobTitle = "Job Title is required";
     }
-    if (!details.department) {
+    if (!department) {
       newErrors.department = "Department is required";
     }
 
@@ -64,30 +101,34 @@ const PersonalDetailsForm = ({ onNext }) => {
       setErrors(formErrors);
     } else {
       setErrors({});
-      onNext({ ...details });
-      console.log("test data",details);
+      onNext({
+        first_name,
+        last_name,
+        work_email,
+        phone_number,
+        role_type,
+        job_title,
+        department,
+      });
     }
   };
 
-  // Edit user
   const searchParams = useSearchParams(); // Get search params using Next.js API
   const edit = searchParams.get("edit") === "true"; // Read search param
-  const currentUser = useSelector((state) => state.users.currentUser);
+  const currentUser = useSelector((state) => state.roleprmission.userlist);
 
   useEffect(() => {
-    if (edit && currentUser?.personalDetails) {
-      setDetails({
-        firstName: currentUser.personalDetails.firstName || "",
-        lastName: currentUser.personalDetails.lastName || "",
-        email: currentUser.personalDetails.email || "",
-        phoneNumber: currentUser.personalDetails.phoneNumber || "",
-        roleType: currentUser.personalDetails.roleType || "",
-        jobTitle: currentUser.personalDetails.jobTitle || "",
-        department: currentUser.personalDetails.department || "",
-        status: currentUser.personalDetails.status || "Active",
-      });
+    if (edit && currentUser) {
+      // Prefill form fields with current user's details if editing
+      dispatch(setfirstname(currentUser.first_name || ""));
+      dispatch(setlastname(currentUser.last_name || ""));
+      dispatch(setworkemail(currentUser.work_email || ""));
+      dispatch(setroletype(currentUser.roles || ""));
+      dispatch(setjobtitle(currentUser.job_title || ""));
+      dispatch(setdepartment(currentUser.department || ""));
+      dispatch(setphonenumber(currentUser.phone_number || ""));
     }
-  }, [edit, currentUser]);
+  }, [edit, currentUser, dispatch]);
 
   return (
     <>
@@ -114,7 +155,7 @@ const PersonalDetailsForm = ({ onNext }) => {
               id="firstName"
               name="firstName"
               placeholder="First Name"
-              value={details.firstName}
+              value={first_name}
               onChange={handleChange}
               className={`form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-[12px] ${edit ? 'bg-gray-200' : ''}`}
               readOnly={edit} // Make this field read-only when editing
@@ -135,7 +176,7 @@ const PersonalDetailsForm = ({ onNext }) => {
               id="lastName"
               name="lastName"
               placeholder="Last Name"
-              value={details.lastName}
+              value={last_name}
               onChange={handleChange}
               className={`form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-[12px] ${edit ? 'bg-gray-200' : ''}`}
               readOnly={edit} // Make this field read-only when editing
@@ -156,7 +197,7 @@ const PersonalDetailsForm = ({ onNext }) => {
               id="email"
               name="email"
               placeholder="Work Email"
-              value={details.email}
+              value={work_email}
               onChange={handleChange}
               className={`form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-[12px] ${edit ? 'bg-gray-200' : ''}`}
               readOnly={edit} // Make this field read-only when editing
@@ -177,7 +218,7 @@ const PersonalDetailsForm = ({ onNext }) => {
               id="phoneNumber"
               name="phoneNumber"
               placeholder="Phone Number"
-              value={details.phoneNumber}
+              value={phone_number}
               onChange={handleChange}
               className="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-[12px] "
             />
@@ -192,18 +233,42 @@ const PersonalDetailsForm = ({ onNext }) => {
             <select
               id="roleType"
               name="roleType"
-              value={details.roleType}
+              value={role_type}
               onChange={handleChange}
               className="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-[12px] text-gray-400"
             >
               <option value="" disabled>
                 Select Role Type
               </option>
-              <option value="Manager">Manager</option>
-              <option value="Employee">Employee</option>
+              <option value="manager">Manager</option>
+              <option value="employee">Employee</option>
             </select>
             {errors.roleType && (
               <p className="text-red-500 text-xs mt-1">{errors.roleType}</p>
+            )}
+          </div>
+          <div>
+            <label
+              htmlFor="department"
+              className="block text-[14px] font-medium text-gray-600"
+            >
+              Department*
+            </label>
+            <select
+              id="department"
+              name="department"
+              value={department}
+              onChange={handleChange}
+              className="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-[12px] text-gray-400"
+            >
+              <option value="" disabled>
+                Select Department
+              </option>
+              <option value="Operations">Operations</option>
+              <option value="Human Resources">Human Resources</option>
+            </select>
+            {errors.department && (
+              <p className="text-red-500 text-xs mt-1">{errors.department}</p>
             )}
           </div>
           <div>
@@ -218,7 +283,7 @@ const PersonalDetailsForm = ({ onNext }) => {
               id="jobTitle"
               name="jobTitle"
               placeholder="Job Title"
-              value={details.jobTitle}
+              value={job_title}
               onChange={handleChange}
               className="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-[12px] "
             />
@@ -226,32 +291,9 @@ const PersonalDetailsForm = ({ onNext }) => {
               <p className="text-red-500 text-xs mt-1">{errors.jobTitle}</p>
             )}
           </div>
-          <div>
-            <label
-              htmlFor="department"
-              className="block text-[14px] font-medium text-gray-600"
-            >
-              Department*
-            </label>
-            <select
-              id="department"
-              name="department"
-              value={details.department}
-              onChange={handleChange}
-              className="form-input mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-[12px] text-gray-400"
-            >
-              <option value="" disabled>
-                Select Department
-              </option>
-              <option value="operations">Operations</option>
-              <option value="hr">Human Resources</option>
-            </select>
-            {errors.department && (
-              <p className="text-red-500 text-xs mt-1">{errors.department}</p>
-            )}
-          </div>
+       
         </div>
-        <div className=" float-end">
+        <div className="float-end">
           <button
             type="submit"
             className="mt-4 w-[120px] bg-[#007eef] hover:shadow-lg text-white font-bold py-2 px-4 rounded flex justify-center items-center gap-2 shadow"

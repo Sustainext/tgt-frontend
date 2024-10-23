@@ -1,15 +1,10 @@
 "use client";
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoHomeOutline } from "react-icons/io5";
-import axiosInstance, { post } from "@/app/utils/axiosMiddleware";
-import { useEmissions } from "./EmissionsContext";
-// import Scope1 from "./scope1";
-// import Scope2 from "./scope2";
-// import Scope3 from "./scope3";
 import CalculateSuccess from "./calculateSuccess";
-import { fetchEmissionsData, setClimatiqData } from '@/lib/redux/features/emissionSlice';
-// import { useDispatch, useSelector } from 'react-redux';
+import { fetchEmissionsData } from '@/lib/redux/features/emissionSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import Scope1 from "./scope1new";
 import Scope2 from "./scope2new";
 import Scope3 from "./scope3new";
@@ -66,48 +61,26 @@ const AccordionItem = ({
 };
 
 const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setLocationError, locationname }) => {
-  const { climatiqData, setClimatiqData } = useEmissions();
+  const dispatch = useDispatch();
   const scope1Ref = useRef();
   const scope2Ref = useRef();
   const scope3Ref = useRef();
   const [modalData, setModalData] = useState(null);
-
-  const getLatestComputedData = () => {
-    const base_url = `${process.env.BACKEND_API_URL}/datametric/get-climatiq-score?`;
-    const url = `${base_url}location=${location}&&year=${year}&&month=${month}`;
-console.log(url,"test datas new");
-    axiosInstance
-      .get(url)
-      .then((response) => {
-        if (response.status == 200) {
-          setClimatiqData(response.data);
-        } else {
-          setClimatiqData(0);
-        }
-      })
-      .catch((error) => {
-        setClimatiqData({});
-        console.log(error, ' -got error');
-      });
-  };
+  const climatiqData = useSelector((state) => state.emissions.climatiqData);
 
   const handleAccordionClick = () => {
     if (!location) {
-      setLocationError("Please select location");
+      setLocationError("Please select a location");
       return false;
     }
     if (!year) {
-      setYearError("Please select year");
+      setYearError("Please select a year");
       return false;
     }
     setLocationError("");
     setYearError("");
     return true;
   };
-
-  useEffect(() => {
-    getLatestComputedData();
-  }, [year, location, month]);
 
   const handleCalculate = async () => {
     const updatePromises = [
@@ -118,9 +91,9 @@ console.log(url,"test datas new");
 
     await Promise.all(updatePromises);
 
-    await getLatestComputedData();
+    await dispatch(fetchEmissionsData({ location, year, month }));
 
-    if (climatiqData !== 0) {
+    if (climatiqData.status==='succeeded') {
       setModalData({
         ...modalData,
         locationname,
@@ -138,24 +111,6 @@ console.log(url,"test datas new");
   return (
     <>
       <div className="mx-3">
-        {/* <AccordionItem
-          title="Direct emission from operations"
-          scops="Scope 1"
-          icons={<IoHomeOutline />}
-          onAccordionClick={handleAccordionClick}
-        >
-          {({ setAccordionOpen }) => (
-            <Scope1
-              ref={scope1Ref}
-              location={location}
-              year={year}
-              month={month}
-              countryCode={countryCode}
-              successCallback={getLatestComputedData}
-              setAccordionOpen={setAccordionOpen}  // Passing setAccordionOpen to Scope1
-            />
-          )}
-        </AccordionItem> */}
         <AccordionItem
           title="Direct emission from operations"
           scops="Scope 1"

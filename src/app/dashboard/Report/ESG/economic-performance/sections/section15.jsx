@@ -13,12 +13,12 @@ const Section15 = ({ section11_4_4Ref }) => {
       </h3>
       {sectionData ? (
         <div className="mb-4">
-          <p className="text-[12px] mb-2">{sectionData.Q1 || "No data available"}</p>
-          <p className="text-[12px] mb-2">{sectionData.Q2 || "No data available"}</p>
-          <p className="text-[12px] mb-2">{sectionData.Q3 || "No data available"}</p>
+          <p className="text-sm mb-2">{sectionData.Q1 || "No data available"}</p>
+          <p className="text-sm mb-2">{sectionData.Q2 || "No data available"}</p>
+          <p className="text-sm mb-2">{sectionData.Q3 || "No data available"}</p>
         </div>
       ) : (
-        <p className="text-[12px] mb-2">No data available</p>
+        <p className="text-sm mb-2">No data available</p>
       )}
     </div>
   );

@@ -29,8 +29,8 @@ import "react-tooltip/dist/react-tooltip.css";
 const Sidenav = () => {
   const { open, setOpen } = GlobalState();
   const [activeIndex, setActiveIndex] = useState(null);
-  const [activeSubmenuIndex, setActiveSubmenuIndex] = useState(null);
-
+  const role = typeof window !== 'undefined' ? localStorage.getItem("role") : '';
+  const permissions = typeof window !== 'undefined' ? localStorage.getItem("permissions") : '';
   const Menus = [
     { id: 0, title: "Sustainext HQ", icon: <LiaHomeSolid />, link: "/dashboard" },
     {

@@ -1,12 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import CheckboxTable from "../../common/CheckboxTable";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux"; // Import useDispatch and useSelector
 import { useSearchParams } from "next/navigation"; 
 import { MdPerson, MdChevronRight } from "react-icons/md";
 import axiosInstance from "@/app/utils/axiosMiddleware";
+import { setOrgList, setCorpList, setLocList } from "../../../../../lib/redux/features/roles-permissionsSlice"; // Import Redux actions
 
 const OrganizationDetailsForm = ({ onNext, onPrev }) => {
+  const dispatch = useDispatch(); // Initialize useDispatch
   const [organizations, setOrganizations] = useState([]);
   const [corporates, setCorporates] = useState([]);
   const [locations, setLocations] = useState([]);
@@ -14,49 +16,52 @@ const OrganizationDetailsForm = ({ onNext, onPrev }) => {
   const [selectedOrg, setSelectedOrg] = useState(null); // For storing selected org ID
   const [selectedCorp, setSelectedCorp] = useState(null); // For storing selected corporate ID
 
-const [loadingOrganizations, setLoadingOrganizations] = useState(true);
-const [loadingCorporates, setLoadingCorporates] = useState(false);
-const [loadingLocations, setLoadingLocations] = useState(false);
-  const [selections, setSelections] = useState({
-    organization: [],
-    corporate: [],
-    location: [],
-  });
+  const [loadingOrganizations, setLoadingOrganizations] = useState(true);
+  const [loadingCorporates, setLoadingCorporates] = useState(false);
+  const [loadingLocations, setLoadingLocations] = useState(false);
+  
+  const selections = useSelector((state) => ({
+    organization: state.roleprmission.org_list,
+    corporate: state.roleprmission.corp_list,
+    location: state.roleprmission.loc_list,
+  }));
 
   // Handle toggle for selections
-  const handleToggle = (category, value) => {
-    setSelections((prev) => {
-      const newSelections = {
-        ...prev,
-        [category]: prev[category].includes(value)
-          ? prev[category].filter((item) => item !== value)
-          : [...prev[category], value],
-      };
-
-      if (category === "organization") {
-        // Reset corporates and locations when organization changes
-        setSelectedOrg(value); // Set the selected organization
-        setCorporates([]); // Clear corporates when organization changes
-        setLocations([]); // Clear locations when organization changes
-        newSelections.corporate = [];
-        newSelections.location = [];
-      }
-
-      if (category === "corporate") {
-        // Reset locations when corporate changes
-        setSelectedCorp(value); // Set the selected corporate
-        setLocations([]); // Clear locations when corporate changes
-        newSelections.location = [];
-      }
-
-      return newSelections;
-    });
-  };
+ const handleToggle = (category, value) => {
+  switch (category) {
+    case "organization":
+      const newOrgList = selections.organization.includes(value)
+        ? selections.organization.filter((item) => item !== value)
+        : [...selections.organization, value];
+      dispatch(setOrgList(newOrgList)); // Dispatch updated org list to Redux
+      setCorporates([]); // Clear corporates when organization changes
+      setLocations([]); // Clear locations when organization changes
+      dispatch(setCorpList([])); // Clear corporate list in Redux
+      dispatch(setLocList([])); // Clear location list in Redux
+      break;
+    case "corporate":
+      const newCorpList = selections.corporate.includes(value)
+        ? selections.corporate.filter((item) => item !== value)
+        : [...selections.corporate, value];
+      dispatch(setCorpList(newCorpList)); // Dispatch updated corporate list to Redux
+      setLocations([]); // Clear locations when corporate changes
+      dispatch(setLocList([])); // Clear location list in Redux
+      break;
+    case "location":
+      const newLocList = selections.location.includes(value)
+        ? selections.location.filter((item) => item !== value)
+        : [...selections.location, value];
+      dispatch(setLocList(newLocList)); // Dispatch updated location list to Redux
+      break;
+    default:
+      break;
+  }
+};
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onNext({ ...selections });
-    console.log("test org",selections);
+    console.log("test org", selections);
   };
 
   useEffect(() => {
@@ -71,9 +76,10 @@ const [loadingLocations, setLoadingLocations] = useState(false);
         setLoadingOrganizations(false); // Stop loading organizations
       }
     };
+
     fetchOrganizations();
   }, []);
-  
+
   // Fetch corporates based on selected organizations
   useEffect(() => {
     const fetchCorporates = async () => {
@@ -93,7 +99,7 @@ const [loadingLocations, setLoadingLocations] = useState(false);
     };
     fetchCorporates();
   }, [selections.organization]);
-  
+
   // Fetch locations based on selected corporates
   useEffect(() => {
     const fetchLocations = async () => {
@@ -115,31 +121,32 @@ const [loadingLocations, setLoadingLocations] = useState(false);
     fetchLocations();
   }, [selections.corporate]);
 
-  const searchParams = useSearchParams(); 
+  const searchParams = useSearchParams();
   const edit = searchParams.get("edit") === "true"; // Check if in edit mode
-  const currentUser = useSelector((state) => state.users.currentUser);
+  const currentUser = useSelector((state) => state.roleprmission.userlist);
 
   // Pre-fill selections when in edit mode
   useEffect(() => {
-    if (edit && currentUser.organizationDetails) {
-      const { organization, corporate, location } =
-        currentUser.organizationDetails;
-
-      setSelections({
-        organization: organization || [],
-        corporate: corporate || [],
-        location: location || [],
-      });
-
-      if (organization && organization.length > 0) {
-        setSelectedOrg(organization[0]);
-
-        if (corporate && corporate.length > 0) {
-          setSelectedCorp(corporate[0]);
-        }
+    if (edit && currentUser) {
+      // Extract IDs from orgs, corps, locs arrays
+      const orgIds = currentUser.orgs ? currentUser.orgs.map(org => org.id) : [];
+      const corpIds = currentUser.corps ? currentUser.corps.map(corp => corp.id) : [];
+      const locIds = currentUser.locs ? currentUser.locs.map(loc => loc.id) : [];
+  
+      // Dispatch the extracted IDs to Redux
+      dispatch(setOrgList(orgIds));
+      dispatch(setCorpList(corpIds));
+      dispatch(setLocList(locIds));
+  
+      // Set the selected organization and corporate (optional)
+      if (orgIds.length > 0) {
+        setSelectedOrg(orgIds[0]); // Selecting the first organization by default
+      }
+      if (corpIds.length > 0) {
+        setSelectedCorp(corpIds[0]); // Selecting the first corporate by default
       }
     }
-  }, [edit, currentUser]);
+  }, [edit, currentUser, dispatch]);
 
   return (
     <div className="py-6">
@@ -164,7 +171,7 @@ const [loadingLocations, setLoadingLocations] = useState(false);
             onToggle={(item) => handleToggle("organization", item)} // Select an org
             selections={selections.organization}
             isParent={false}
-            tooltipContent={`Select one or more organizations.`}
+            tooltipContent={`This list is generated from the Organisation Structure section. You can elect one or more organizations to map new users. This selection determines which organizations the users can interact with.`}
             loading={loadingOrganizations}
           />
 
@@ -176,7 +183,7 @@ const [loadingLocations, setLoadingLocations] = useState(false);
             onToggle={(item) => handleToggle("corporate", item)} // Select a corporate
             selections={selections.corporate}
             isParent={true}
-            tooltipContent={`Select one or more corporates based on the selected organization.`}
+            tooltipContent={`This list is generated based on the organization selected in the previous column. You may select one or more corporates. This selection determines which corporates the users can interact with.`}
             loading={loadingCorporates}
           />
 
@@ -188,7 +195,7 @@ const [loadingLocations, setLoadingLocations] = useState(false);
             onToggle={(item) => handleToggle("location", item)} // Select a location
             selections={selections.location}
             isParent={true}
-            tooltipContent={`Select one or more locations based on the selected corporate.`}
+            tooltipContent={`This list is generated based on the Corporate selected in the previous column. You may select one or more Locations. This selection determines which Locations the users can interact with.`}
             loading={loadingLocations}
           />
         </div>
@@ -202,7 +209,7 @@ const [loadingLocations, setLoadingLocations] = useState(false);
           </button>
           <button
             type="submit"
-            className="bg-[#007eef]   hover:shadow-lg text-white font-bold py-2 px-4 rounded flex justify-center items-center gap-2 shadow"
+            className="bg-[#007eef] hover:shadow-lg text-white font-bold py-2 px-4 rounded flex justify-center items-center gap-2 shadow"
           >
             <span className="text-[12px] font-['Manrope']">Next</span>
             <MdChevronRight />

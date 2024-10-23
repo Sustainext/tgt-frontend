@@ -14,7 +14,7 @@ const Section1 = ({ orgName, data }) => {
 
   const loadContent = () => {
     dispatch(setAboutTheCompany(
-      `<p>Effective stakeholder engagement is vital to ${orgName ? orgName : "[Company Name]"}'s sustainability strategy and overall business success. We recognize that our actions impact a wide range of stakeholders, including employees, customers, suppliers, investors, local communities, and regulatory bodies.</p>`
+      `<p>This ESG report, prepared in accordance with the Global Reporting Initiative (GRI) standards, provides a comprehensive overview of ${orgName ? orgName : "[legal Name of the Company]'s"} environmental, social, and governance (ESG) performance for the reporting period [Year]. It reflects our commitment to transparency, accountability, and continuous improvement in our sustainability practices.</p>`
     ))
   }
 
@@ -76,26 +76,22 @@ const Section1 = ({ orgName, data }) => {
       </div>
 
       <ul className="list-disc ml-6">
-        {data["2-1"] && (
-          <>
-            <li className="text-[15px] text-[#344054] mb-2 font-semibold">
+      <li className="text-[15px] text-[#344054] mb-2 font-semibold">
               Nature of Ownership and Legal Form:
-              <p className="mb-4 font-normal">{data["2-1"].nature_of_ownership_and_legal_form || 'N/A'}</p>
+              <p className="mb-4 font-normal text-sm">{data["2-1"]?data["2-1"].nature_of_ownership_and_legal_form?data["2-1"].nature_of_ownership_and_legal_form:"No data available":"No data available"}</p>
             </li>
             <li className="text-[15px] text-[#344054] mb-2 font-semibold">
               Headquarters:
-              <p className="mb-4 font-normal">{data["2-1"].location_of_headquarters || 'N/A'}</p>
+              <p className="mb-4 font-normal text-sm">{data["2-1"]?data["2-1"].location_of_headquarters?data["2-1"].location_of_headquarters:"No data available":"No data available"}</p>
             </li>
             <li className="text-[15px] text-[#344054] mb-2 font-semibold">
               Countries of Operation:
-              <p className="mb-4 font-normal">
-                {data["2-1"].countries_of_operation && data["2-1"].countries_of_operation.length > 0
+              <p className="mb-4 font-normal  text-sm">
+                {data["2-1"]?data["2-1"].countries_of_operation?data["2-1"].countries_of_operation.length > 0
                   ? data["2-1"].countries_of_operation.join(', ')
-                  : 'N/A'}
+                  :"No data available":"No data available":"No data available"}
               </p>
             </li>
-          </>
-        )}
       </ul>
     </>
   )

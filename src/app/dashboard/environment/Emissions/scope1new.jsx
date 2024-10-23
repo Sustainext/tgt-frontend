@@ -4,48 +4,48 @@ import React, {
   useEffect,
   forwardRef,
   useImperativeHandle,
+  useCallback,
 } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
-import axiosInstance from "../../../utils/axiosMiddleware";
 import EmissionWidget from "../../../shared/widgets/emissionWidget";
 import { Oval } from "react-loader-spinner";
-import { useEmissions } from "./EmissionsContext";
 import CalculateSuccess from "./calculateSuccess";
+import {
+  updateScopeData,
+  updateScopeDataLocal,
+} from "@/lib/redux/features/emissionSlice";
+import {toast} from 'react-toastify'
 
-const view_path = "gri-environment-emissions-301-a-scope-1";
-const client_id = 1;
-const user_id = 1;
-
-const schema = {
+const local_schema = {
   type: "array",
   items: {
     type: "object",
     properties: {
       Emission: {
         type: "string",
-        title: "Emissionsscop1",
+        title: "Emissionsscop2",
       },
     },
   },
 };
 
-const uiSchema = {
+const local_ui_schema = {
   items: {
-    "ui:order": ["Emission"],
     Emission: {
       "ui:widget": "EmissionWidget",
-      "ui:horizontal": true,
       "ui:options": {
         label: false,
       },
+      "ui:horizontal": true,
     },
+    "ui:order": ["Emission"],
     "ui:options": {
-      orderable: false,
-      addable: false,
-      removable: false,
       layout: "horizontal",
+      addable: false,
+      orderable: false,
+      removable: false,
     },
   },
 };
@@ -55,56 +55,58 @@ const Scope1 = forwardRef(
     { location, year, month, successCallback, countryCode, setAccordionOpen },
     ref
   ) => {
-    const [formData, setFormData] = useState([{}]);
+    const dispatch = useDispatch();
+
+    const scope1State = useSelector((state) => state.emissions.scope1Data);
+    const climatiqData = useSelector((state) => state.emissions.climatiqData);
+    const previousMonthData = useSelector(
+      (state) => state.emissions.previousMonthData
+    );
+    const autoFill = useSelector((state) => state.emissions.autoFill);
+    const assigned_data = useSelector(state=>state.emissions.assignedTasks)
+
     const [r_schema, setRemoteSchema] = useState({});
     const [r_ui_schema, setRemoteUiSchema] = useState({});
     const [loopen, setLoOpen] = useState(false);
     const [modalData, setModalData] = useState(null);
-    const { climatiqData, setScope1Data } = useEmissions();
-    const [localClimatiq, setLocalClimatiq] = useState(0);
     const [activityCache, setActivityCache] = useState({});
 
+    const formData = Array.isArray(scope1State.data?.data)
+      ? scope1State.data.data
+      : [];
+
     useImperativeHandle(ref, () => ({
-      updateFormData() {
-        return updateFormData(formData);
-      },
+      updateFormData: () => updateFormData(formData),
     }));
 
-    useEffect(() => {
-      setScope1Data(formData);
-    }, [formData]);
+    const LoaderOpen = () => setLoOpen(true);
+    const LoaderClose = () => setLoOpen(false);
 
-    const LoaderOpen = () => {
-      setLoOpen(true);
-    };
+    const handleChange = useCallback(
+      (e) => {
+        dispatch(
+          updateScopeDataLocal({ scope: 1, data: { data: e.formData } })
+        );
+      },
+      [dispatch]
+    );
 
-    const LoaderClose = () => {
-      setLoOpen(false);
-    };
-
-    const handleChange = (e) => {
-      console.log("handleChange triggered");
-      setFormData(e.formData);
-      console.log("Updated form data in handleChange:", e.formData);
-    };
-
-    const handleCombinedWidgetChange = (
-      index,
-      field,
-      value,
-      activityId,
-      unitType,
-      name,
-      url,
-      filetype,
-      size,
-      uploadDateTime
-    ) => {
-      setFormData((prevFormData) => {
-        const updatedFormData = [...prevFormData];
+    const handleCombinedWidgetChange = useCallback(
+      (
+        index,
+        field,
+        value,
+        activityId,
+        unitType,
+        name,
+        url,
+        filetype,
+        size,
+        uploadDateTime
+      ) => {
+        const updatedFormData = [...formData];
         const currentEmission = updatedFormData[index]?.Emission || {};
 
-        // Update the form data with the new file details
         updatedFormData[index] = {
           ...updatedFormData[index],
           Emission: {
@@ -117,123 +119,205 @@ const Scope1 = forwardRef(
               filetype &&
               size &&
               uploadDateTime && {
-                file: {
-                  name,
-                  url,
-                  type: filetype,
-                  size,
-                  uploadDateTime,
-                },
+                file: { name, url, type: filetype, size, uploadDateTime },
               }),
           },
         };
 
-        return updatedFormData;
-      });
+        dispatch(
+          updateScopeDataLocal({ scope: 1, data: { data: updatedFormData } })
+        );
+      },
+      [formData, dispatch]
+    );
 
-      // Log to ensure the formData is updated correctly
-      console.log("Updated form data:", formData);
-    };
+    const handleAddNew = useCallback(() => {
+      const newRow = { Emission: {} };
+      const updatedFormData = [...formData, newRow];
+      dispatch(
+        updateScopeDataLocal({ scope: 1, data: { data: updatedFormData } })
+      );
+    }, [formData, dispatch]);
 
-    const handleAddNew = () => {
-      setFormData((prevFormData) => [...prevFormData, { Emission: {} }]);
-      console.log(formData, "test data");
-    };
+    // const handleRemoveRow = useCallback(
+    //   async (index) => {
+    //     const parsedIndex = parseInt(index, 10);
+    //     const updatedData = formData.filter((_, i) => i !== parsedIndex);
+    //     console.log("updated data", updatedData, " for index ", parsedIndex);
 
-    const handleRemoveRow = async (index) => {
-      console.log(`Removing row at index: ${index}`); // Log for debugging
+    //     dispatch(
+    //       updateScopeDataLocal({ scope: 1, data: { data: updatedData } })
+    //     );
+
+    //     try {
+    //       await updateFormData(updatedData);
+
+    //       if (parsedIndex === 0 && updatedData.length === 0) {
+    //         setAccordionOpen(false);
+    //       }
+    //     } catch (error) {
+    //       console.error("Failed to update form data:", error);
+    //     }
+    //   },
+    //   [formData, dispatch, successCallback, setAccordionOpen]
+    // );
+
+    const handleRemoveRow = useCallback(
+      async (index) => {
+        const parsedIndex = parseInt(index, 10);
+        const rowToRemove = formData[parsedIndex];
     
-      const parsedIndex = parseInt(index, 10); // Parse the index just to be sure
+        if (!rowToRemove) {
+          console.error("Row not found");
+          return;
+        }
     
-      // First update the formData
-      const updatedData = formData.filter((_, i) => i !== parsedIndex);
+        const rowType = rowToRemove.Emission?.rowType;
     
-      setFormData(updatedData); // This updates the state immediately
+        if (rowType === 'assigned' || rowType === 'approved') {
+          // Prevent deletion for assigned or approved rows
+          toast.error("Cannot delete assigned or approved rows");
+          return;
+        }
     
-      try {
-        // Always call updateFormData, even if the form data is empty
-        await updateFormData(updatedData); // Wait for updateFormData to complete
-        successCallback(); // Trigger success callback after data is updated
+        const updatedData = formData.filter((_, i) => i !== parsedIndex);
+        console.log("updated data", updatedData, " for index ", parsedIndex);
     
-        // Close the accordion or modal if the first row is deleted
-        if (index === 0) {
+        // Update local state
+        dispatch(
+          updateScopeDataLocal({ scope: 1, data: { data: updatedData } })
+        );
+    
+        if (rowType === 'calculated') {
+          try {
+            // Only call API for calculated rows
+            await updateFormData(updatedData);
+          } catch (error) {
+            console.error("Failed to update form data:", error);
+            toast.error("Failed to update data on the server");
+            // Optionally, revert the local state change here
+            return;
+          }
+        }
+    
+        // Check if we need to close the accordion
+        if (parsedIndex === 0 && updatedData.length === 0) {
           setAccordionOpen(false);
         }
-      } catch (error) {
-        console.error("Failed to update form data:", error);
-      }
-    };
     
-    useEffect(() => {
-      console.log("formData has been updated:", formData);
-    }, [formData]);
-    const updateFormData = async (formData) => {
-      LoaderOpen();
-      const data = {
-        client_id: client_id,
-        user_id: user_id,
-        path: view_path,
-        form_data: formData,
-        location,
-        year,
-        month,
-      };
+        // Notify success
+        toast.success("Row removed successfully");
+      },
+      [formData, dispatch, setAccordionOpen]
+    );
 
-      const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
-      try {
-        const response = await axiosInstance.post(url, { ...data });
-      } catch (error) {
-        setModalData({
-          message: "Oops, something went wrong",
-        });
-      } finally {
-        LoaderClose();
-      }
-    };
+    const updateFormData = useCallback(
+      async (data) => {
+        LoaderOpen();
+        try {
+          await dispatch(
+            updateScopeData({ scope: 1, data: { data }, location, year, month })
+          ).unwrap();
+          successCallback();
+        } catch (error) {
+          setModalData({
+            message: "Oops, something went wrong",
+          });
+        } finally {
+          LoaderClose();
+        }
+      },
+      [dispatch, location, year, month, successCallback]
+    );
 
-    const updateFormDatanew = (updatedData) => {
-      setFormData(updatedData);
-    };
-
-    const updateCache = (subcategory, activities) => {
+    const updateCache = useCallback((subcategory, activities) => {
       setActivityCache((prevCache) => ({
         ...prevCache,
         [subcategory]: activities,
       }));
-    };
-    const loadFormData = async () => {
-      LoaderOpen();
-      setFormData([{}]);
-      const base_url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=`;
-      const url = `${base_url}${view_path}&&client_id=${client_id}&&user_id=${user_id}&&location=${location}&&year=${year}&&month=${month}`;
-
-      axiosInstance
-        .get(url)
-        .then((response) => {
-          setRemoteSchema(response.data.form[0].schema);
-          setRemoteUiSchema(response.data.form[0].ui_schema);
-          const form_parent = response.data.form_data;
-          const f_data = form_parent[0].data;
-          setFormData(f_data);
-
-          LoaderClose();
-        })
-        .catch((error) => {
-          console.log(error);
-          LoaderClose();
-        });
-    };
+    }, []);
 
     useEffect(() => {
-      loadFormData();
-    }, [year, month, location]);
+      if (
+        scope1State.status === "succeeded" &&
+        scope1State.schema &&
+        scope1State.uiSchema
+      ) {
+        setRemoteSchema(scope1State.schema);
+        setRemoteUiSchema(scope1State.uiSchema);
+      }
+    }, [scope1State.status, scope1State.schema, scope1State.uiSchema]);
+
+    useEffect(() => {
+      // if (autoFill && previousMonthData.status === "succeeded") {
+      //   console.log('autofill triggered');
+        
+      //   const prevMonthFormData = previousMonthData.scope1Data?.data || [];
+
+      //   const formattedPrevMonthData = prevMonthFormData.map((item) => {
+      //     const updatedEmission = { ...item.Emission };
+
+      //     updatedEmission.Unit = "";
+      //     updatedEmission.Quantity = "";
+
+      //     if (
+      //       updatedEmission.unit_type &&
+      //       updatedEmission.unit_type.includes("Over")
+      //     ) {
+      //       updatedEmission.Unit2 = "";
+      //       updatedEmission.Quantity2 = "";
+      //     }
+
+      //     console.log('formatted previous month data', updatedEmission,formData);
+
+      //     return {
+      //       ...item,
+      //       Emission: updatedEmission,
+      //     };
+      //   });
+
+      //   const currentFormData =
+      //     formData.length > 0 ? formData : formattedPrevMonthData;
+      //   dispatch(
+      //     updateScopeDataLocal({ scope: 1, data: { data: currentFormData } })
+      //   );
+      // } 
+      // if(assigned_data.status==='succeeded'){
+      //   const assigned_data_scope = assigned_data.scope1;
+      //   console.log('assigned data for scope1',assigned_data_scope);
+        
+      //   const updated_formData = [...formData,...assigned_data_scope]
+      //   dispatch(
+      //     updateScopeDataLocal({ scope: 1, data: { data: updated_formData } })
+      //   );
+      // }
+    }, [climatiqData.totalScore, previousMonthData]);
+
+    if (scope1State.status === "loading") {
+      return (
+        <div className="flex items-center justify-center">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      );
+    }
+
+    if (scope1State.status === "failed") {
+      return <div>Error loading data: {scope1State.error}</div>;
+    }
 
     return (
       <>
         <div>
           <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+            schema={local_schema}
+            uiSchema={local_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -275,11 +359,11 @@ const Scope1 = forwardRef(
                 />
               ),
             }}
-          ></Form>
+          />
         </div>
         <div>
           <button
-            className="mt-4  text-[#007EEF] px-4 py-2 rounded-md text-[14px]"
+            className="mt-4 text-[#007EEF] px-4 py-2 rounded-md text-[14px]"
             onClick={handleAddNew}
           >
             + Add new
@@ -297,7 +381,6 @@ const Scope1 = forwardRef(
             />
           </div>
         )}
-
         {modalData && (
           <CalculateSuccess
             data={modalData}

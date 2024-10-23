@@ -85,9 +85,9 @@ const Apporchtable = ({ col, values, currency,headerKeyMap  }) => {
     className="mb-2 table-scrollbar">
     <table className="w-full border border-gray-200 rounded-md overflow-hidden">
       <thead className="gradient-background">
-        <tr className="text-[12px] font-semibold">
+        <tr className="text-[12px]">
           {col.map((header, index) => (
-            <th key={index} className="border-t border-r border-gray-200 p-4 text-left">
+            <th key={index} className="border-t border-r border-gray-200 p-4 text-left text-gray-500">
               {header}
             </th>
           ))}

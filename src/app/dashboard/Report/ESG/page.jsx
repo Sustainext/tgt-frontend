@@ -40,6 +40,9 @@ const ESGReport = () => {
   const aboutReport =useRef();
   const materiality =useRef();
   const corporateGovernance =useRef();
+  const sustainabilityJourney=useRef();
+  const environment=useRef();
+  const community=useRef();
   const economicperformance  =useRef();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -58,6 +61,9 @@ const ESGReport = () => {
     7: aboutReport,
     8: materiality,
     9: corporateGovernance,
+    10: sustainabilityJourney,
+    12:environment,
+    14:community,
     11:economicperformance,
   };
   
@@ -277,7 +283,7 @@ const ESGReport = () => {
               {activeStep === 10 && (
                 <div>
                   <div className="mb-4">
-                    <SustainibilityJourney />
+                    <SustainibilityJourney ref={sustainabilityJourney} />
                   </div>
                 </div>
               )}
@@ -291,7 +297,7 @@ const ESGReport = () => {
               {activeStep === 12 && (
                 <div>
                   <div className="mb-4">
-                    <Environment />
+                    <Environment ref={environment} />
                   </div>
                 </div>
               )}
@@ -305,7 +311,7 @@ const ESGReport = () => {
               {activeStep === 14 && (
                 <div>
                   <div className="mb-4">
-                    <Community />
+                    <Community ref={community} />
                   </div>
                 </div>
               )}

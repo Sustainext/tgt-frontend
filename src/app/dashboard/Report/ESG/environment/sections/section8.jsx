@@ -4,19 +4,24 @@ import LeaveTable from "../../people/tables/leaveTable";
 import dynamic from 'next/dynamic';
 import STARSVG from "../../../../../../../public/star.svg";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import {setGHGEmissionReductionEfforts} from "../../../../../../lib/redux/features/ESGSlice/screen12Slice"
 
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 
 
 
 const Section8=({section12_1_6Ref})=>{
-    const [content,setContent] = useState(
-        `
-        <p>
+    
+    const content = useSelector(state => state.screen12Slice.ghg_emission_reduction_efforts);
+    const dispatch = useDispatch();
+    const loadContent = () => {
+      dispatch(setGHGEmissionReductionEfforts(
+      `<p>
         Our efforts to reduce GHG emissions include investing in energy-efficient equipment, optimizing production processes, and sourcing renewable energy. We set ambitious reduction targets and report our progress annually. (Initiatives taken by an organisation to reduce emissions can be represented with graphics) 
-        </p>
-        `
-    )
+        </p>`  
+      ))
+    }
 
     const col1=[
         "Initiatve taken to reduce GHG emissions ",
@@ -31,15 +36,15 @@ const Section8=({section12_1_6Ref})=>{
     ]
     const data1=[
         {
-            "Initiatve taken to reduce GHG emissions ":"data",
-        "Method to account for reductions ":"data",
-        "Base Year or Baseline ":"data",
-        "Year":"data",
-        "Rationale for choosing base year or baseline":"data",
-        "GHG Emission reduced (tCO2e)":"data",
-        "Scopes in which reduction took place":"data",
-        "Gases included in the calculations":"data",
-        "Standard, Methodology, Assumptions and/or Calculation tools used":"data"
+            "Initiatve taken to reduce GHG emissions ":"No data available",
+        "Method to account for reductions ":"No data available",
+        "Base Year or Baseline ":"No data available",
+        "Year":"No data available",
+        "Rationale for choosing base year or baseline":"No data available",
+        "GHG Emission reduced (tCO2e)":"No data available",
+        "Scopes in which reduction took place":"No data available",
+        "Gases included in the calculations":"No data available",
+        "Standard, Methodology, Assumptions and/or Calculation tools used":"No data available"
         }
     ]
     
@@ -77,7 +82,7 @@ const Section8=({section12_1_6Ref})=>{
       
       
       const handleEditorChange=(value)=>{
-        setContent(value)
+        dispatch(setGHGEmissionReductionEfforts(value))
       }
     
     return (
@@ -93,7 +98,7 @@ const Section8=({section12_1_6Ref})=>{
           <p className="text-[15px] text-[#344054] mb-2 mt-3">Add statement about efforts  to reduce GHG emission</p>
           <button
             className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
-            // onClick={loadContent}
+            onClick={loadContent}
           >
             {/* <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/> */}
             <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
