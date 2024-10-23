@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import {setParentalLeaves} from "../../../../../../lib/redux/features/ESGSlice/screen13Slice"
 
-const Section5=({section13_1_4Ref})=>{
+const Section5=({section13_1_4Ref,data})=>{
     
     const content = useSelector(state => state.screen13Slice.parental_leaves);
     const dispatch = useDispatch();
@@ -46,6 +46,45 @@ const Section5=({section13_1_4Ref})=>{
     }
   ];
 
+  const Tabledata=data["401_social_analyse"]?data["401_social_analyse"]["data"]?data["401_social_analyse"]["data"]["parental_leave"].length>0?
+
+  data["401_social_analyse"]["data"]["parental_leave"].map((val,index)=>{
+        return (
+            
+          {
+            "Employee category": val.employee_category,
+            Male: val.male,
+            Female: val.female,
+            Total: val.total
+        
+        }
+            
+        )
+    })
+:[
+  {
+    "Employee category": "No data available",
+    Male: "No data available",
+    Female: "No data available",
+    Total: "No data available"
+},
+]:[
+  {
+    "Employee category": "No data available",
+    Male: "No data available",
+    Female: "No data available",
+    Total: "No data available"
+},
+]:
+[
+  {
+    "Employee category": "No data available",
+    Male: "No data available",
+    Female: "No data available",
+    Total: "No data available"
+},
+]
+
   const columns2 = ["Employee category", "Male", "Female"];
   const data2 = [
     {
@@ -59,6 +98,41 @@ const Section5=({section13_1_4Ref})=>{
       Female: "data"
     }
   ];
+
+  const Tabledata2=data["401_social_analyse"]?data["401_social_analyse"]["data"]?data["401_social_analyse"]["data"]["return_to_work_rate_and_retention_rate_of_employee"].length>0?
+
+  data["401_social_analyse"]["data"]["return_to_work_rate_and_retention_rate_of_employee"].map((val,index)=>{
+        return (
+            
+          {
+            "Employee category": val.employee_category,
+            Male: val.male,
+            Female: val.female
+        
+        }
+            
+        )
+    })
+:[
+  {
+    "Employee category": "No data available",
+    Male: "No data available",
+    Female: "No data available"
+},
+]:[
+  {
+    "Employee category": "No data available",
+    Male: "No data available",
+    Female: "No data available"
+},
+]:
+[
+  {
+    "Employee category": "No data available",
+    Male: "No data available",
+    Female: "No data available"
+},
+]
     
     return (
         <>
@@ -86,13 +160,13 @@ const Section5=({section13_1_4Ref})=>{
           rows={4}
         />
             <div className="shadow-md rounded-md mb-4">
-                <LeaveTable columns={columns1} data={data1} />
+                <LeaveTable columns={columns1} data={Tabledata} />
             </div>
             <p className="text-[15px]  mb-2 font-semibold">
             Return to work & retention rate of employees. 
             </p>
             <div className="shadow-md rounded-md mb-4">
-                <LeaveTable columns={columns2} data={data2} />
+                <LeaveTable columns={columns2} data={Tabledata2} />
             </div>
             
 

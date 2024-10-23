@@ -101,7 +101,7 @@ const uiSchema = {
   },
 };
 
-const Screen3 = ({ location, year }) => {
+const Screen3 = ({ location, year,month }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});

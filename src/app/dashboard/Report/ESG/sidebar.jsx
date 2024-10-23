@@ -22,7 +22,7 @@ const ESGSidebar=({activeStep,setActiveStep})=>{
           <div className="flex items-center px-2 py-2 -mt-4  rounded-none focus:outline-none text-[#727272] font-bold">
             <span className="text-[16px] font-[600] p-2">Report Module</span>
           </div>
-          <div>
+          <div className="mb-3">
           <p className={`text-[13px] text-[#727272] cursor-pointer   my-1 ${activeStep==1?"bg-[#007eef0d] p-2 px-5":"bg-transparent p-2 px-5"}`}
           onClick={()=>{setActiveStep(1)}}
           >
@@ -99,6 +99,9 @@ const ESGSidebar=({activeStep,setActiveStep})=>{
         Customers, products & services
           </p>
         </div>
+        <div className="flex items-center px-2 py-2 -mt-4  rounded-none focus:outline-none text-[#727272] font-bold">
+            <span className="text-[16px] font-[600] p-2">Content Index</span>
+          </div>
         </div>
       </div>
     </div>

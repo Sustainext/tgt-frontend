@@ -1,46 +1,8 @@
 'use client';
 import { useState, useRef, useEffect } from "react";
 
-const BenefitsTable = () => {
-  const columns = [
-    "Significant location of operation",
-    "Life Insurance",
-    "Health Care",
-    "Disability & Invalidity Coverage",
-    "Parental Leave",
-    "Retirement Provision",
-    "Stock Ownership"
-  ];
-
-  const data = [
-    {
-      "Significant location of operation": "Location A",
-      "Life Insurance": "",
-      "Health Care": "",
-      "Disability & Invalidity Coverage": "",
-      "Parental Leave": "",
-      "Retirement Provision": "",
-      "Stock Ownership": ""
-    },
-    {
-      "Significant location of operation": "Location B",
-      "Life Insurance": "",
-      "Health Care": "",
-      "Disability & Invalidity Coverage": "",
-      "Parental Leave": "",
-      "Retirement Provision": "",
-      "Stock Ownership": ""
-    },
-    {
-      "Significant location of operation": "Location C",
-      "Life Insurance": "",
-      "Health Care": "",
-      "Disability & Invalidity Coverage": "",
-      "Parental Leave": "",
-      "Retirement Provision": "",
-      "Stock Ownership": ""
-    }
-  ];
+const BenefitsTable = ({columns,data}) => {
+ 
 
   return (
     <>

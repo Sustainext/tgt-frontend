@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import {setWorkforceHireRetentionStatement} from "../../../../../../lib/redux/features/ESGSlice/screen13Slice"
 
-const Section3=({section13_1_2Ref})=>{
+const Section3=({section13_1_2Ref,data})=>{
   
     const content = useSelector(state => state.screen13Slice.workforce_hire_retention_statement);
     const dispatch = useDispatch();
@@ -26,6 +26,7 @@ const Section3=({section13_1_2Ref})=>{
 <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
 13.1.2 Employee Hire, Turnover
 </h3>
+
 <div className="flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">Add statement about company’s workforce hire and retention</p>
           <button
@@ -43,6 +44,22 @@ const Section3=({section13_1_2Ref})=>{
           className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
           rows={4}
         />
+        <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+Methodologies and Assumptions used
+            </p>
+            <p className="text-sm mb-4">{data["2_7_c_methodologies"]?data["2_7_c_methodologies"].length>0?data["2_7_c_methodologies"][0].Q1?data["2_7_c_methodologies"][0].Q1:"No data available":"No data available":"No data available"}</p>
+            <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+            Data Compilation Timeframe
+            </p>
+            <p className="text-sm mb-4">{data["2_7_c_data"]?data["2_7_c_data"].length>0?data["2_7_c_data"][0].Q1?data["2_7_c_data"][0].Q1:"No data available":"No data available":"No data available"}</p>
+            <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+            Contextual information
+            </p>
+             <p className="text-sm mb-4">{data["2_7_d_contextual"]?data["2_7_d_contextual"].length>0?data["2_7_d_contextual"][0].Q1?data["2_7_d_contextual"][0].Q1:"No data available":"No data available":"No data available"}</p>
+            <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+            Employee Fluctuations
+            </p>
+             <p className="text-sm mb-4">{data["2_7_e_fluctuations"]?data["2_7_e_fluctuations"].length>0?data["2_7_e_fluctuations"][0].Q1?data["2_7_e_fluctuations"][0].Q1:"No data available":"No data available":"No data available"}</p>
         <p className="text-[15px] text-[#344054] mb-2 font-semibold">
         New Employee Hires
             </p>

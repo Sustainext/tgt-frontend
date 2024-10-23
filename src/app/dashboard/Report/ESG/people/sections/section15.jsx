@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import {setRemunerationPractices} from "../../../../../../lib/redux/features/ESGSlice/screen13Slice"
 
-const Section15=({section13_4_3Ref})=>{
+const Section15=({section13_4_3Ref,data})=>{
     
     const content = useSelector(state => state.screen13Slice.remuneration_practices);
     const dispatch = useDispatch();
@@ -24,43 +24,85 @@ const Section15=({section13_4_3Ref})=>{
         { header: "Significant Location of Operations", subHeaders: [] } // No sub-headers
       ];
       const columns2 = [
-        { header: "Remuneration per Employee Category ", subHeaders: [] }, // No sub-headers for this column
+        { header: "Remuneration per Employee Category", subHeaders: [] }, // No sub-headers for this column
         { header: "Gender", subHeaders: ["Male", "Female", "Non-Binary"] },
         { header: "Significant Location of Operations", subHeaders: [] } // No sub-headers
       ];
-      const basicSalaryData = [
+
+      const basicSalaryData = data["405-2a_analyse"]
+  ? data["405-2a_analyse"]["ratio_of_basic_salary_of_women_to_men"] &&
+    data["405-2a_analyse"]["ratio_of_basic_salary_of_women_to_men"].length > 0
+    ? data["405-2a_analyse"]["ratio_of_basic_salary_of_women_to_men"].flatMap((entry) => {
+        return entry["Q2"].map((val) => {
+          return {
+            "Basic Salary per Employee Category": val.category,
+            Male: val.male,
+            Female: val.female,
+            "Non-Binary": val.nonBinary,
+            "Significant Location of Operations": val.locationandoperation,
+            "Currency": entry["Q1"] // This will use the associated currency for each Q2 entry
+          };
+        });
+      })
+    : [
         {
-          "Basic Salary per Employee Category": "A",
-          Male: "data",
-          Female: "data",
-          "Non-Binary": "data",
-          "Significant Location of Operations": "data",
+          "Basic Salary per Employee Category": "No data available",
+          Male: "No data available",
+          Female: "No data available",
+          "Non-Binary": "No data available",
+          "Significant Location of Operations": "No data available",
+          "Currency": "No data available"
         },
-        {
-          "Basic Salary per Employee Category": "B",
-          Male: "data",
-          Female: "data",
-          "Non-Binary": "data",
-          "Significant Location of Operations": "data",
-        }
-      ];
-      
-      const remunerationData = [
-        {
-          "Remuneration per Employee Category": "A",
-          Male: "data",
-          Female: "data",
-          "Non-Binary": "data",
-          "Significant Location of Operations": "data",
-        },
-        {
-          "Remuneration per Employee Category": "B",
-          Male: "data",
-          Female: "data",
-          "Non-Binary": "data",
-          "Significant Location of Operations": "data",
-        }
-      ];
+      ]
+  : [
+      {
+        "Basic Salary per Employee Category": "No data available",
+        Male: "No data available",
+        Female: "No data available",
+        "Non-Binary": "No data available",
+        "Significant Location of Operations": "No data available",
+        "Currency": "No data available"
+      },
+    ];
+
+
+
+      const remunerationData = data["405-2a_analyse"]
+      ? data["405-2a_analyse"]["ratio_of_remuneration_of_women_to_men"] &&
+        data["405-2a_analyse"]["ratio_of_remuneration_of_women_to_men"].length > 0
+        ? data["405-2a_analyse"]["ratio_of_remuneration_of_women_to_men"].flatMap((entry) => {
+            return entry["Q2"].map((val) => {
+              return {
+                "Remuneration per Employee Category": val.category,
+                Male: val.male,
+                Female: val.female,
+                "Non-Binary": val.nonBinary,
+                "Significant Location of Operations": val.locationandoperation,
+                "Currency": entry["Q1"] // This will use the associated currency for each Q2 entry
+              };
+            });
+          })
+        : [
+            {
+              "Remuneration per Employee Category": "No data available",
+              Male: "No data available",
+              Female: "No data available",
+              "Non-Binary": "No data available",
+              "Significant Location of Operations": "No data available",
+              "Currency": "No data available"
+            },
+          ]
+      : [
+          {
+            "Remuneration per Employee Category": "No data available",
+            Male: "No data available",
+            Female: "No data available",
+            "Non-Binary": "No data available",
+            "Significant Location of Operations": "No data available",
+            "Currency": "No data available"
+          },
+        ];
+    
       
     
     return (

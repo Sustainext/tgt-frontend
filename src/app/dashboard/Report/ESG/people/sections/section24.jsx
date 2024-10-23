@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import {setHazardRiskAssessment} from "../../../../../../lib/redux/features/ESGSlice/screen13Slice"
 
-const Section24=({section13_6_7Ref})=>{
+const Section24=({section13_6_7Ref,data})=>{
   
     const content = useSelector(state => state.screen13Slice.hazard_risk_assessment);
     const dispatch = useDispatch();
@@ -115,43 +115,62 @@ const Section24=({section13_6_7Ref})=>{
             <p className="text-[15px]  mb-2 font-semibold">
             Process for hazard identification:
             </p>
-            
+            <p className="text-sm mb-4">{data["403-2a-process_for_hazard"]?data["403-2a-process_for_hazard"].Q3?data["403-2a-process_for_hazard"].Q3.selected?data["403-2a-process_for_hazard"].Q3.selected:data["403-2a-process_for_hazard"].Q3.otherValue:"No data available":"No data available"}</p>
             <p className="text-[15px]  mb-2 font-semibold">
             Routine hazard identification and risk assessment:
             </p>
+            <p className="text-sm mb-4">{data["403-2a-process_for_hazard"]?data["403-2a-process_for_hazard"].Q1?data["403-2a-process_for_hazard"].Q1.selected?data["403-2a-process_for_hazard"].Q1.selected:data["403-2a-process_for_hazard"].Q1.otherValue:"No data available":"No data available"}</p>
             <p className="text-[15px]  mb-2 font-semibold">
             Non-routine hazard identification and risk assessment: 
             </p>
+            <p className="text-sm mb-4">{data["403-2a-process_for_hazard"]?data["403-2a-process_for_hazard"].Q2?data["403-2a-process_for_hazard"].Q2.selected?data["403-2a-process_for_hazard"].Q2.selected:data["403-2a-process_for_hazard"].Q2.otherValue:"No data available":"No data available"}</p>
+            
             <p className="text-[15px]  mb-2 font-semibold">
             Hierarchy of controls: 
             </p>
+            <p className="text-sm mb-4">{data["403-2a-process_for_hazard"]?data["403-2a-process_for_hazard"].Q4?data["403-2a-process_for_hazard"].Q4.selected?data["403-2a-process_for_hazard"].Q4.selected:data["403-2a-process_for_hazard"].Q4.otherValue:"No data available":"No data available"}</p>
+            
             <p className="text-[15px]  mb-2 font-semibold">
             List of Legal basis:  
             </p>
+            <p className="text-sm mb-4">{data["403-2a-process_for_hazard"]?data["403-2a-process_for_hazard"].Q5?data["403-2a-process_for_hazard"].Q5.selected?data["403-2a-process_for_hazard"].Q5.selected:data["403-2a-process_for_hazard"].Q5:"No data available":"No data available"}</p>
+            
             <p className="text-[15px]  mb-2 font-semibold">
             List of standards/guidelines: 
             </p>
+            <p className="text-sm mb-4">No data available</p>
             <p className="text-[15px]  mb-2 font-semibold">
             List if Legal requirements: 
             </p>
+            <p className="text-sm mb-4">{data["403-2a-process_for_hazard"]?data["403-2a-process_for_hazard"].Q6?data["403-2a-process_for_hazard"].Q6.selected?data["403-2a-process_for_hazard"].Q6.selected:data["403-2a-process_for_hazard"].Q6:"No data available":"No data available"}</p>
+            
             <p className="text-[15px]  mb-2 font-semibold">
             Vulnerable Workers:   
             </p>
+            <p className="text-sm mb-4">{data["403-2a-process_for_hazard"]?data["403-2a-process_for_hazard"].Q7?data["403-2a-process_for_hazard"].Q7.selected?data["403-2a-process_for_hazard"].Q7.selected:data["403-2a-process_for_hazard"].Q7.otherValue:"No data available":"No data available"}</p>
+            
             <p className="text-[15px]  mb-2 font-semibold">
             Process Quality Assurance:   
             </p>
+            <p className="text-sm mb-4">{data["403-2b-quality_assurance"]?data["403-2b-quality_assurance"].data?data["403-2b-quality_assurance"].data.length>0?data["403-2b-quality_assurance"].data[0].Q1?data["403-2b-quality_assurance"].data[0].Q1:"No data available":"No data available":"No data available":"No data available"}</p>
             <p className="text-[15px]  mb-2 font-semibold">
             Personal competency assurance: 
             </p>
+            <p className="text-sm mb-4">{data["403-2b-quality_assurance"]?data["403-2b-quality_assurance"].data?data["403-2b-quality_assurance"].data.length>0?data["403-2b-quality_assurance"].data[0].Q2?data["403-2b-quality_assurance"].data[0].Q2:"No data available":"No data available":"No data available":"No data available"}</p>
+           
             <p className="text-[15px]  mb-4 font-semibold">
             Results Utilization and Improvement:
             </p>
+            <p className="text-sm mb-4">{data["403-2b-quality_assurance"]?data["403-2b-quality_assurance"].data?data["403-2b-quality_assurance"].data.length>0?data["403-2b-quality_assurance"].data[0].Q3?data["403-2b-quality_assurance"].data[0].Q3:"No data available":"No data available":"No data available":"No data available"}</p>
+           
            
 
             <p className="text-[15px]  mb-2 font-semibold">
             Work related incident investigation:  
             </p>
-            <div className="rounded-md mb-4 shadow-md">
+            <p className="text-sm mb-4">{data["403-2d"]?data["403-2d"].data?data["403-2d"].data.length>0?data["403-2d"].data[0].Q1?data["403-2d"].data[0].Q1:"No data available":"No data available":"No data available":"No data available"}</p>
+           
+            {/* <div className="rounded-md mb-4 shadow-md">
                 <LeaveTable columns={col1} data={data1}/>
             </div>
 
@@ -176,7 +195,7 @@ const Section24=({section13_6_7Ref})=>{
 
             <div className="rounded-md mb-4 shadow-md">
                 <LeaveTable columns={col4} data={data4}/>
-            </div>
+            </div> */}
 
 </div>
         </>

@@ -1,11 +1,52 @@
 'use client'
 import { useState, useRef, useEffect } from "react";
+import LeaveTable from "../tables/leaveTable";
 
 
-const Section16=({section13_5Ref,section13_5_1Ref})=>{
-    const [content,setContent] = useState(
-        `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum ipsam minus, voluptates obcaecati velit fuga tempore laudantium consequuntur illo`
-    )
+const Section16=({section13_5Ref,section13_5_1Ref,data})=>{
+    
+    const col=[
+        "Categories",
+        "Average training hours per employee category",
+        "Average training hours of male employee in category",
+        "Average training hours of female employee in category",
+        "Average training hours of non-binary employee in category"
+    ]
+
+    const Tabledata=data["404_social_analyse"]?data["404_social_analyse"]["average_training_hours_per_employee_category"].length>0?
+
+    data["404_social_analyse"]["average_training_hours_per_employee_category"].map((val,index)=>{
+        return (
+            
+          {
+            "Categories":val.category,
+        "Average training hours per employee category":val.average_training_hours_per_employee,
+        "Average training hours of male employee in category":val.average_training_hours_per_male_employee,
+        "Average training hours of female employee in category":val.average_training_hours_per_male_employee,
+        "Average training hours of non-binary employee in category":val.average_training_hours_per_non_binary_employee
+        
+        }
+            
+        )
+    })
+:[
+  {
+    "Categories":"No data available",
+    "Average training hours per employee category":"No data available",
+    "Average training hours of male employee in category":"No data available",
+    "Average training hours of female employee in category":"No data available",
+    "Average training hours of non-binary employee in category":"No data available"
+},
+]:[
+  {
+    "Categories":"No data available",
+    "Average training hours per employee category":"No data available",
+    "Average training hours of male employee in category":"No data available",
+    "Average training hours of female employee in category":"No data available",
+    "Average training hours of non-binary employee in category":"No data available"
+},
+]
+    
     
     return (
         <>
@@ -14,7 +55,38 @@ const Section16=({section13_5Ref,section13_5_1Ref})=>{
         13.5 Training & Education
             </h3>
            
-           
+            <p className="text-[15px]  mb-2 font-semibold">
+            Average training hours per employee:
+            </p>
+            <p className="text-sm mb-4">{data["404_1a_analyse"]?data["404_1a_analyse"]["average_hours_of_training_provided_to_employees"]?data["404_1a_analyse"]["average_hours_of_training_provided_to_employees"].length>0?data["404_1a_analyse"]["average_hours_of_training_provided_to_employees"].map((val)=>(
+              val.average_training_hours_per_employee
+            )):"No data available":"No data available":"No data available"}</p>
+            <p className="text-[15px]  mb-2 font-semibold">
+            Average training hours per female employee: 
+            </p>
+            <p className="text-sm mb-4">{data["404_1a_analyse"]?data["404_1a_analyse"]["average_hours_of_training_provided_to_employees"]?data["404_1a_analyse"]["average_hours_of_training_provided_to_employees"].length>0?data["404_1a_analyse"]["average_hours_of_training_provided_to_employees"].map((val)=>(
+              val.average_training_hours_per_female_employee
+            )):"No data available":"No data available":"No data available"}</p>
+            <p className="text-[15px]  mb-2 font-semibold">
+            Average training hours per male employee:
+            </p>
+            <p className="text-sm mb-4">{data["404_1a_analyse"]?data["404_1a_analyse"]["average_hours_of_training_provided_to_employees"]?data["404_1a_analyse"]["average_hours_of_training_provided_to_employees"].length>0?data["404_1a_analyse"]["average_hours_of_training_provided_to_employees"].map((val)=>(
+              val.average_training_hours_per_male_employee
+            )):"No data available":"No data available":"No data available"}</p>
+             <p className="text-[15px]  mb-2 font-semibold">
+            Percentage of security personnel who have received formal training in the organisation: 
+            </p>
+            <p className="text-sm mb-4">No data available</p>
+            <p className="text-[15px]  mb-2 font-semibold">
+            Percentage of security personnel who have received formal training from third-party organisation: 
+            </p>
+            <p className="text-sm mb-4">No data available</p>
+            <p className="text-[15px]  mb-2 font-semibold">
+            Average hours of training provided to employees
+            </p>
+            <div className="shadow-md mb-4 rounded-md">
+                <LeaveTable columns={col} data={Tabledata}/>
+            </div>
         </div>
         <div id="section13_5_1" ref={section13_5_1Ref}>
 
@@ -25,11 +97,11 @@ const Section16=({section13_5Ref,section13_5_1Ref})=>{
 {/* <p className="text-[15px] text-[#344054] mb-2 font-semibold">
 Description of organisation's policies or commitments for the material topic, along with actions taken to address, prevent or mitigate potential negative impacts and mention the actions taken by the organisation to manage actual and potential positive impacts.
 </p> */}
-<p className="text-sm mb-4">{content}</p>
+<p className="text-sm mb-2">No data available</p>
 {/* <p className="text-[15px] text-[#344054] mb-2 font-semibold">
 Process used to track the effectiveness of the actions and mention goals, targets, and indicators used to evaluate the process along with specific lessons learned and how these have been incoporated to organisation's operational policies and procedures.
 </p> */}
-<p className="text-sm mb-4">{content}</p>
+<p className="text-sm mb-4">No data available</p>
 
 </div>
         </>

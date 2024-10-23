@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import {setForcedLaborPosition} from "../../../../../../lib/redux/features/ESGSlice/screen13Slice"
 
-const Section10=({section13_2_3Ref})=>{
+const Section10=({section13_2_3Ref,data})=>{
     
     const content = useSelector(state => state.screen13Slice.forced_labor_position);
     const dispatch = useDispatch();
@@ -24,18 +24,34 @@ const Section10=({section13_2_3Ref})=>{
         "Countries or Geographic Areas"
       ]);
     
-      const [operationTableData] = useState([
-        { 
-          "Operations considered to have significant risk for incidents of forced or compulsory labor": "Operation 1", 
-          "Type of Operation": "", 
-          "Countries or Geographic Areas": "" 
-        },
-        { 
-          "Operations considered to have significant risk for incidents of forced or compulsory labor": "Operation 2", 
-          "Type of Operation": "", 
-          "Countries or Geographic Areas": "" 
-        },
-      ]);
+      
+
+      const operationTableData=data["409_1a_analyse"]?data["409_1a_analyse"]["operations_considered_to_have_significant_risk_for_incidents_of_forced_or_compulsary_labor"].length>0?
+
+    data["409_1a_analyse"]["operations_considered_to_have_significant_risk_for_incidents_of_forced_or_compulsary_labor"].map((val,index)=>{
+        return (
+            
+          {
+            "Operations considered to have significant risk for incidents of forced or compulsory labor": val.childlabor, 
+          "Type of Operation": val.TypeofOperation, 
+          "Countries or Geographic Areas": val.geographicareas 
+        }
+            
+        )
+    })
+:[
+  {
+    "Operations considered to have significant risk for incidents of forced or compulsory labor": "No data available", 
+          "Type of Operation": "No data available", 
+          "Countries or Geographic Areas": "No data available" 
+},
+]:[
+  {
+  "Operations considered to have significant risk for incidents of forced or compulsory labor": "No data available", 
+          "Type of Operation": "No data available", 
+          "Countries or Geographic Areas": "No data available" 
+},
+]
     
       const [supplierTableColumns] = useState([
         "Suppliers considered to have significant risk for incidents of forced or compulsory labor", 
@@ -43,18 +59,34 @@ const Section10=({section13_2_3Ref})=>{
         "Countries or Geographic Areas"
       ]);
     
-      const [supplierTableData] = useState([
-        { 
-          "Suppliers considered to have significant risk for incidents of forced or compulsory labor": "Supplier 1", 
-          "Type of Supplier": "", 
-          "Countries or Geographic Areas": "" 
-        },
-        { 
-          "Suppliers considered to have significant risk for incidents of forced or compulsory labor": "Supplier 2", 
-          "Type of Supplier": "", 
-          "Countries or Geographic Areas": "" 
-        },
-      ]);
+     
+
+      const supplierTableData=data["409_1a_analyse"]?data["409_1a_analyse"]["suppliers_at_significant_risk_for_incidents_of_forced_or_compulsory_labor"].length>0?
+
+    data["409_1a_analyse"]["suppliers_at_significant_risk_for_incidents_of_forced_or_compulsory_labor"].map((val,index)=>{
+        return (
+            
+          {
+            "Suppliers considered to have significant risk for incidents of forced or compulsory labor": val.compulsorylabor, 
+          "Type of Supplier": val.TypeofOperation, 
+          "Countries or Geographic Areas": val.geographicareas 
+        }
+            
+        )
+    })
+:[
+  {
+    "Suppliers considered to have significant risk for incidents of forced or compulsory labor": "No data available", 
+          "Type of Supplier": "No data available", 
+          "Countries or Geographic Areas": "No data available" 
+},
+]:[
+  {
+  "Suppliers considered to have significant risk for incidents of forced or compulsory labor": "No data available", 
+          "Type of Supplier": "No data available", 
+          "Countries or Geographic Areas": "No data available" 
+},
+]
     
       
     
@@ -83,6 +115,9 @@ const Section10=({section13_2_3Ref})=>{
           className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
           rows={4}
         />
+
+<p className="text-[15px]  mb-2 font-semibold">Measures taken by the organization</p>
+<p className="text-sm mb-4">{data["409-1b"]?data["409-1b"].data?data["409-1b"].data.length>0?data["409-1b"].data[0].Q1?data["409-1b"].data[0].Q1:"No data available":"No data available":"No data available":"No data available"}</p>
 
         <p className="text-[15px]  mb-2 font-semibold">
         Operations considered to have significant risk for incidents of forced or compulsary labor  

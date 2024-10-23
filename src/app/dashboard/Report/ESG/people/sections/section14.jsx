@@ -1,13 +1,14 @@
 'use client'
 import { useState, useRef, useEffect } from "react";
 import DiversityTable from "../tables/diversityTable";
+import LeaveTable from "../tables/leaveTable";
 import EmployeeCategoryTable from "../tables/employeeCategoryTable";
 import STARSVG from "../../../../../../../public/star.svg";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import {setEmployeeDiversityPosition} from "../../../../../../lib/redux/features/ESGSlice/screen13Slice"
 
-const Section14=({section13_4_2Ref})=>{
+const Section14=({section13_4_2Ref,data})=>{
   
     const content = useSelector(state => state.screen13Slice.employee_diversity_position);
     const dispatch = useDispatch();
@@ -19,56 +20,110 @@ const Section14=({section13_4_2Ref})=>{
     const handleEditorChange=(e)=>{
       dispatch(setEmployeeDiversityPosition(e.target.value))
     }
-    const [columns] = useState([
-        { header: "Gender", subHeaders: ["Male", "Female", "Non-Binary"] },
-        { header: "Age Group", subHeaders: ["< 30 years", "30-50 years", ">50 years"] },
-        { header: "Diversity groups", subHeaders: ["Minority group","Vulnerable Groups"] },
-        // { header: "Vulnerable Groups", subHeaders: ["Type of vulnerable group - (Number of individuals)"] }
-      ]);
-    
-      const [data] = useState([
-        {
-          Male: "Data",
-          Female: "Data",
-          "Non-Binary": "Data",
-          "< 30 years": "Data",
-          "30-50 years": "Data",
-          ">50 years": "Data",
-          "Minority group": "Data",
-          "Vulnerable Groups":"Data"
-        //   "Type of vulnerable group - (Number of individuals)": ""
+
+    const col=[
+      "Percentage of female within organisation's governance bodies",
+      "Percentage of male within organisation's governance bodies",
+      "Percentage of Non-binary within organisation's governance bodies",
+      "Percentage of employee within age group of (under 30 years old) organisation's governance bodies",
+      "Percentage of employee within age group of (30-50 years old) organisation's governance bodies",
+      "Percentage of employee within age group of (over 50 years old) organisation's governance bodies",
+      "Percentage of employee in minority group"
+    ] 
+
+    const TableData=data["405-2a_analyse"]?data["405-2a_analyse"]["percentage_of_employees_within_government_bodies"].length>0?
+
+    data["405-2a_analyse"]["percentage_of_employees_within_government_bodies"].map((val,index)=>{
+        return (
+            
+          {
+            "Percentage of female within organisation's governance bodies":val.percentage_of_female_with_org_governance,
+            "Percentage of male within organisation's governance bodies":val.percentage_of_male_with_org_governance,
+            "Percentage of Non-binary within organisation's governance bodies":val.percentage_of_non_binary_with_org_governance,
+            "Percentage of employee within age group of (under 30 years old) organisation's governance bodies":val.percentage_of_employees_within_30_age_group,
+            "Percentage of employee within age group of (30-50 years old) organisation's governance bodies":val.percentage_of_employees_within_30_to_50_age_group,
+            "Percentage of employee within age group of (over 50 years old) organisation's governance bodies":val.percentage_of_employees_more_than_50_age_group,
+            "Percentage of employee in minority group":val.percentage_of_employees_in_minority_group
+        
         }
-      ]);
+            
+        )
+    })
+:[
+  {
+      "Percentage of female within organisation's governance bodies":"No data available",
+      "Percentage of male within organisation's governance bodies":"No data available",
+      "Percentage of Non-binary within organisation's governance bodies":"No data available",
+      "Percentage of employee within age group of (under 30 years old) organisation's governance bodies":"No data available",
+      "Percentage of employee within age group of (30-50 years old) organisation's governance bodies":"No data available",
+      "Percentage of employee within age group of (over 50 years old) organisation's governance bodies":"No data available",
+      "Percentage of employee in minority group":"No data available"
+},
+]:[
+  {
+    "Percentage of female within organisation's governance bodies":"No data available",
+    "Percentage of male within organisation's governance bodies":"No data available",
+    "Percentage of Non-binary within organisation's governance bodies":"No data available",
+    "Percentage of employee within age group of (under 30 years old) organisation's governance bodies":"No data available",
+    "Percentage of employee within age group of (30-50 years old) organisation's governance bodies":"No data available",
+    "Percentage of employee within age group of (over 50 years old) organisation's governance bodies":"No data available",
+    "Percentage of employee in minority group":"No data available"
+},
+]
+    
 
       const [Categorycolumns] = useState([
         { header: "Type of Employees", subHeaders: [] }, // No sub-headers for this column
         { header: "Gender", subHeaders: ["Male", "Female", "Non-Binary"] },
         { header: "Age Group", subHeaders: ["<30 years", "30-50 years", ">50 years"] },
-        { header: "Age Group", subHeaders: ["Minority group"] }
+        { header: "Diversity groups", subHeaders: ["Minority group"] }
       ]);
     
-      const [Categorydata] = useState([
-        {
-          "Type of Employees": "Category A",
-          Male: "data",
-          Female: "data",
-          "Non-Binary": "data",
-          "<30 years": "data",
-          "30-50 years": "data",
-          ">50 years": "data",
-          "Minority group": "data",
-        },
-        {
-          "Type of Employees": "Category B",
-          Male: "data",
-          Female: "data",
-          "Non-Binary": "data",
-          "<30 years": "data",
-          "30-50 years": "data",
-          ">50 years": "data",
-          "Minority group": "data",
+     
+
+      const Categorydata=data["405-2a_analyse"]?data["405-2a_analyse"]["number_of_employee_per_employee_category"].length>0?
+
+    data["405-2a_analyse"]["number_of_employee_per_employee_category"].map((val,index)=>{
+        return (
+            
+          {
+            "Type of Employees": val.Category,
+          Male: val.percentage_of_male_with_org_governance,
+          Female: val.percentage_of_female_with_org_governance,
+          "Non-Binary": val.percentage_of_non_binary_with_org_governance,
+          "<30 years": val.percentage_of_employees_within_30_age_group,
+          "30-50 years": val.percentage_of_employees_within_30_to_50_age_group,
+          ">50 years": val.percentage_of_employees_more_than_50_age_group,
+          "Minority group": val.percentage_of_employees_in_minority_group,
+        
         }
-      ]);
+            
+        )
+    })
+:[
+  {
+      "Type of Employees": "No data available",
+          Male: "No data available",
+          Female: "No data available",
+          "Non-Binary": "No data available",
+          "<30 years": "No data available",
+          "30-50 years": "No data available",
+          ">50 years": "No data available",
+          "Minority group": "No data available",
+},
+]:[
+  {
+    "Type of Employees": "No data available",
+          Male: "No data available",
+          Female: "No data available",
+          "Non-Binary": "No data available",
+          "<30 years": "No data available",
+          "30-50 years": "No data available",
+          ">50 years": "No data available",
+          "Minority group": "No data available",
+},
+]
+
     
     return (
         <>
@@ -100,7 +155,7 @@ const Section14=({section13_4_2Ref})=>{
         Percentage of individuals within the organization’s governance bodies by diversity categories. 
             </p>
             <div className="shadow-md rounded-md mb-4">
-                <DiversityTable columns={columns} data={data} />
+                <LeaveTable columns={col} data={TableData} />
             </div>
             <p className="text-[15px]  mb-2 font-semibold">
             Percentage of Employees per employee category 

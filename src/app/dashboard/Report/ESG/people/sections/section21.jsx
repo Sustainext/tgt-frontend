@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import {setOHSPolicies} from "../../../../../../lib/redux/features/ESGSlice/screen13Slice"
 
-const Section21=({section13_6_4Ref})=>{
+const Section21=({section13_6_4Ref,data})=>{
     
     const content = useSelector(state => state.screen13Slice.ohs_policies);
     const dispatch = useDispatch();
@@ -26,7 +26,7 @@ const Section21=({section13_6_4Ref})=>{
         "Exclusions (if any) & Reason for Exclusions"
     ]
 
-    const data=[
+    const data1=[
         {
             "Formal joint management-worker health and safety committees":"Committee 1",
             "Responsibilities":"",
@@ -61,11 +61,14 @@ const Section21=({section13_6_4Ref})=>{
           rows={4}
         />
 
+<p className="text-sm mb-2">{data["403-4a-ohs_system_1"]?data["403-4a-ohs_system_1"].data?data["403-4a-ohs_system_1"].data.length>0?data["403-4a-ohs_system_1"].data[0].Q1?data["403-4a-ohs_system_1"].data[0].Q1:"No data available":"No data available":"No data available":"No data available"}</p>
+<p className="text-sm mb-2">{data["403-4a-ohs_system_2"]?data["403-4a-ohs_system_2"].data?data["403-4a-ohs_system_2"].data.length>0?data["403-4a-ohs_system_2"].data[0].Q1?data["403-4a-ohs_system_2"].data[0].Q1:"No data available":"No data available":"No data available":"No data available"}</p>
+<p className="text-sm mb-4">{data["403-4a-ohs_system_2"]?data["403-4a-ohs_system_2"].data?data["403-4a-ohs_system_2"].data.length>0?data["403-4a-ohs_system_2"].data[0].Q2?data["403-4a-ohs_system_2"].data[0].Q2:"No data available":"No data available":"No data available":"No data available"}</p>
         <p className="text-[15px]  mb-2 font-semibold">
         Formal joint management-worker health and safety committees   
             </p>
             <div className="shadow-md rounded-md mb-4">
-                <LeaveTable columns={col} data={data} />
+                <LeaveTable columns={col} data={data1} />
             </div>
            
             

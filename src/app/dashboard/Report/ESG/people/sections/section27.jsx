@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import {setOHSManagementSystem} from "../../../../../../lib/redux/features/ESGSlice/screen13Slice"
 
-const Section27=({section13_6_10Ref})=>{
+const Section27=({section13_6_10Ref,data})=>{
     
     const content = useSelector(state => state.screen13Slice.ohs_management_system);
     const dispatch = useDispatch();
@@ -70,6 +70,81 @@ const Section27=({section13_6_10Ref})=>{
           rows={4}
         />
 
+<p className="text-[15px]  mb-2 font-semibold">
+Workers excluded & type of workers excluded
+        </p>
+        <p className="text-sm mb-2">
+          {data["403-8b"]
+            ? data["403-8b"].data
+              ? data["403-8b"].data.length > 0
+                ? data["403-8b"].data[0].Q1
+                  ? data["403-8b"].data[0].Q1
+                  : "No data available"
+                : "No data available"
+              : "No data available"
+            : "No data available"}
+        </p>
+        <p className="text-sm mb-2">
+          {data["403-8b"]
+            ? data["403-8b"].data
+              ? data["403-8b"].data.length > 0
+                ? data["403-8b"].data[0].Q2
+                  ? data["403-8b"].data[0].Q2
+                  : "No data available"
+                : "No data available"
+              : "No data available"
+            : "No data available"}
+        </p>
+        <p className="text-sm mb-4">
+          {data["403-8b"]
+            ? data["403-8b"].data
+              ? data["403-8b"].data.length > 0
+                ? data["403-8b"].data[0].Q3
+                  ? data["403-8b"].data[0].Q3
+                  : "No data available"
+                : "No data available"
+              : "No data available"
+            : "No data available"}
+        </p>
+
+
+
+        <p className="text-[15px]  mb-2 font-semibold">
+        Standards, methodologies, and assumptions used
+        </p>
+        <p className="text-sm mb-2">
+          {data["403-8c"]
+            ? data["403-8c"].data
+              ? data["403-8c"].data.length > 0
+                ? data["403-8c"].data[0].Q1
+                  ? data["403-8c"].data[0].Q1
+                  : "No data available"
+                : "No data available"
+              : "No data available"
+            : "No data available"}
+        </p>
+        <p className="text-sm mb-2">
+          {data["403-8c"]
+            ? data["403-8c"].data
+              ? data["403-8c"].data.length > 0
+                ? data["403-8c"].data[0].Q2
+                  ? data["403-8c"].data[0].Q2
+                  : "No data available"
+                : "No data available"
+              : "No data available"
+            : "No data available"}
+        </p>
+        <p className="text-sm mb-4">
+          {data["403-8c"]
+            ? data["403-8c"].data
+              ? data["403-8c"].data.length > 0
+                ? data["403-8c"].data[0].Q3
+                  ? data["403-8c"].data[0].Q3
+                  : "No data available"
+                : "No data available"
+              : "No data available"
+            : "No data available"}
+        </p>
       
             <p className="text-[15px]  mb-2 font-semibold">
             Percentage of emplyoees/workers who are not employees 

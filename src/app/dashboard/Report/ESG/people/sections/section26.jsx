@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import {setSafetyTraining} from "../../../../../../lib/redux/features/ESGSlice/screen13Slice"
 
-const Section26=({section13_6_9Ref})=>{
+const Section26=({section13_6_9Ref,data})=>{
     
     const content = useSelector(state => state.screen13Slice.safety_training);
     const dispatch = useDispatch();
@@ -27,15 +27,39 @@ const Section26=({section13_6_9Ref})=>{
        
     ]
 
-    const data1=[
+    
+    const Tabledata = data["403-5a"]
+    ? data["403-5a"]["data"].length >
+      0
+      ? data["403-5a"]["data"].map(
+          (val, index) => {
+            return {
+             "Occupational health and safety training provided to workers":val.occupational,
+            "Generic Training":val.generictraining,
+            "Specific work-related hazards":val.specificworkre,
+            "Hazardous Activities":val.hazardousactivities,
+            "Hazardous Situations":val.hazardoussituations
+            };
+          }
+        )
+      : [
+          {
+           "Occupational health and safety training provided to workers":"No data available",
+            "Generic Training":"No data available",
+            "Specific work-related hazards":"No data available",
+            "Hazardous Activities":"No data available",
+            "Hazardous Situations":"No data available"
+          },
+        ]
+    : [
         {
-            "Occupational health and safety training provided to workers":"Training 1",
-            "Generic Training":"",
-            "Specific work-related hazards":"Data",
-            "Hazardous Activities":"Data",
-            "Hazardous Situations":"Data"
-        }
-    ]
+         "Occupational health and safety training provided to workers":"No data available",
+            "Generic Training":"No data available",
+            "Specific work-related hazards":"No data available",
+            "Hazardous Activities":"No data available",
+            "Hazardous Situations":"No data available"
+        },
+      ];
 
     
     return (
@@ -68,7 +92,7 @@ const Section26=({section13_6_9Ref})=>{
             Occupational health and safety training
             </p>
             <div className="rounded-md mb-4 shadow-md">
-                <LeaveTable columns={col1} data={data1}/>
+                <LeaveTable columns={col1} data={Tabledata}/>
             </div>
 
             

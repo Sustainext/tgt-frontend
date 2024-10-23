@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import {setViolationDiscriminationPolicy} from "../../../../../../lib/redux/features/ESGSlice/screen13Slice"
 
-const Section31=({section13_8Ref})=>{
+const Section31=({section13_8Ref,data})=>{
     
     const content = useSelector(state => state.screen13Slice.violation_discrimination_policy);
     const dispatch = useDispatch();
@@ -26,21 +26,36 @@ const Section31=({section13_8Ref})=>{
      
     ]
 
-    const data1=[
-        {
-            "Type of Incident  ":"Race",
-            "Total number of Incidents of discrimination ":"",
-            "Describe the incident ":"",
-        
-        },
-        {
-            "Type of Incident  ":"Gender",
-            "Total number of Incidents of discrimination ":"",
-            "Describe the incident ":"",
-        
-        },
+    
+    const Tabledata=data["406_1a"]?data["406_1a"]["data"].length>0?
 
-    ]
+    data["406_1a"]["data"].map((val,index)=>{
+        return (
+            
+          {
+            "Type of Incident  ":val.typeofincident,
+            "Total number of Incidents of discrimination ":val.totalnumberofincidentsofdiscrimination,
+            "Describe the incident ":val.describetheincident,
+        
+        }
+            
+        )
+    })
+:[
+  {
+    "Type of Incident  ":"No data available",
+    "Total number of Incidents of discrimination ":"No data available",
+    "Describe the incident ":"No data available",
+
+},
+]:[
+  {
+    "Type of Incident  ":"No data available",
+    "Total number of Incidents of discrimination ":"No data available",
+    "Describe the incident ":"No data available",
+
+},
+]
     
     return (
         <>
@@ -67,11 +82,19 @@ const Section31=({section13_8Ref})=>{
           rows={4}
         />
 
+<p className="text-[15px] text-[#344054] mb-2 font-semibold">
+Status of the incidents and actions taken
+</p>
+<p className="text-sm mb-2">{data["406_1b"]?data["406_1b"].data?data["406_1b"].data.length>0?data["406_1b"].data[0].Q1?data["406_1b"].data[0].Q1:"No data available":"No data available":"No data available":"No data available"}</p>
+<p className="text-sm mb-2">{data["406_1b"]?data["406_1b"].data?data["406_1b"].data.length>0?data["406_1b"].data[0].Q2?data["406_1b"].data[0].Q2:"No data available":"No data available":"No data available":"No data available"}</p>
+<p className="text-sm mb-2">{data["406_1b"]?data["406_1b"].data?data["406_1b"].data.length>0?data["406_1b"].data[0].Q3?data["406_1b"].data[0].Q3:"No data available":"No data available":"No data available":"No data available"}</p>
+<p className="text-sm mb-4">{data["406_1b"]?data["406_1b"].data?data["406_1b"].data.length>0?data["406_1b"].data[0].Q4?data["406_1b"].data[0].Q4:"No data available":"No data available":"No data available":"No data available"}</p>
+
         <p className="text-[15px]  mb-2 font-semibold">
         Incidents of discrimination 
             </p>
             <div className="shadow-md rounded-md mb-4">
-               <LeaveTable columns={col1} data={data1}/>
+               <LeaveTable columns={col1} data={Tabledata}/>
             </div>
            
             

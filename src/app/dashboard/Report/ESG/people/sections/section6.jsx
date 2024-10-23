@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import {setStandardWage} from "../../../../../../lib/redux/features/ESGSlice/screen13Slice"
 
-const Section6=({section13_1_5Ref})=>{
+const Section6=({section13_1_5Ref,data})=>{
     
     const content = useSelector(state => state.screen13Slice.standard_wage);
     const dispatch = useDispatch();
@@ -65,18 +65,21 @@ const Section6=({section13_1_5Ref})=>{
           rows={4}
         />
 
+<p className="text-sm mb-2">{data["202_1b"]?data["202_1b"].length>0?data["202_1b"][0].Q3?data["202_1b"][0].Q3:"No data available":"No data available":"No data available"}</p>
+<p className="text-sm mb-2">{data["202_1c"]?data["202_1c"].length>0?data["202_1c"][0].Q1?data["202_1c"][0].Q1:"No data available":"No data available":"No data available"}</p>
+<p className="text-sm mb-4">{data["202_1d"]?data["202_1d"].length>0?data["202_1d"][0].Q1?data["202_1d"][0].Q1:"No data available":"No data available":"No data available"}</p>
         <p className="text-[15px]  mb-2 font-semibold">
         Ratio of the entry-level wage to the minimum wage by gender at significant locations of operation
             </p>
             <div className="shadow-md rounded-md mb-4">
                 <LeaveTable columns={table1Columns} data={table1Data} />
             </div>
-            <p className="text-[15px]  mb-2 font-semibold">
+            {/* <p className="text-[15px]  mb-2 font-semibold">
             Local minimum wage is absent or variable at significant locations of operation, by gender: 
             </p>
             <div className="shadow-md rounded-md mb-4">
                 <LeaveTable columns={table2Columns} data={table2Data} />
-            </div>
+            </div> */}
             
 
 </div>

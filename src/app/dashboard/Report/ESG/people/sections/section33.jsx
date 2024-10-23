@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import {setIndigenousRightsPolicy} from "../../../../../../lib/redux/features/ESGSlice/screen13Slice"
 
-const Section33=({section13_8_2Ref,orgName})=>{
+const Section33=({section13_8_2Ref,orgName,data})=>{
     
     const content = useSelector(state => state.screen13Slice.indigenous_rights_policy);
     const dispatch = useDispatch();
@@ -44,10 +44,23 @@ const Section33=({section13_8_2Ref,orgName})=>{
           className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
           rows={4}
         />
+<p className="text-[15px] text-[#344054] mb-2 font-semibold">
+Status of the incidents and actions taken
+</p>
+<p className="text-sm mb-2">{data["411_1b"]?data["411_1b"].data?data["411_1b"].data.length>0?data["411_1b"].data[0].Q1?data["411_1b"].data[0].Q1:"No data available":"No data available":"No data available":"No data available"}</p>
+<p className="text-sm mb-2">{data["411_1b"]?data["411_1b"].data?data["411_1b"].data.length>0?data["411_1b"].data[0].Q2?data["411_1b"].data[0].Q2:"No data available":"No data available":"No data available":"No data available"}</p>
+<p className="text-sm mb-2">{data["411_1b"]?data["411_1b"].data?data["411_1b"].data.length>0?data["411_1b"].data[0].Q3?data["411_1b"].data[0].Q3:"No data available":"No data available":"No data available":"No data available"}</p>
+<p className="text-sm mb-4">{data["411_1b"]?data["411_1b"].data?data["411_1b"].data.length>0?data["411_1b"].data[0].Q4?data["411_1b"].data[0].Q4:"No data available":"No data available":"No data available":"No data available"}</p>
 
-       
-            
 
+{data["411_1a"]?data["411_1a"].data?data["411_1a"].data.length>0?data["411_1a"].data[0].Q1?data["411_1a"].data[0].Q1=="Yes"?(
+<div>
+<p className="text-[15px] text-[#344054] mb-2 font-semibold">Total number of incident violations involving the rights of indigenous peoples</p>  
+<p className="text-sm mb-4">{data["411_1a"].data[0].Q2?data["411_1a"].data[0].Q2:"No data available"}</p>
+</div>
+):(
+<div></div>
+):"No data available":"No data available":"No data available":"No data available"}
 </div>
         </>
     )

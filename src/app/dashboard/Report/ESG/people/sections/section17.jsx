@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {setEmployeeSkillUpgradePrograms} from "../../../../../../lib/redux/features/ESGSlice/screen13Slice"
 
 
-const Section17=({section13_5_2Ref})=>{
+const Section17=({section13_5_2Ref,data})=>{
    
     const content = useSelector(state => state.screen13Slice.employee_skill_upgrade_programs);
     const dispatch = useDispatch();
@@ -45,46 +45,33 @@ const Section17=({section13_5_2Ref})=>{
         />
 
         <p className="text-[15px]  mb-2 font-semibold">
-        Programs for upgrading employee skills : type of program and its scope 
+        Programs for upgrading employee skills:
             </p>
-            <p className="text-sm mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed exercitationem nemo ea eaque, in nesciunt aspernatur nam adipisci sunt magni facilis debitis vel provident iusto blanditiis unde est beatae esse.</p>
+        {
+          data["404_2a_2b_collect"]?data["404_2a_2b_collect"].length>0?data["404_2a_2b_collect"][0].Q1?data["404_2a_2b_collect"][0].Q1=="Yes"?(
+            <div>
             <p className="text-[15px]  mb-2 font-semibold">
-            Describe the programs provided to facilitate continued employability
-            </p>
-            <p className="text-sm mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed exercitationem nemo ea eaque, in nesciunt aspernatur nam adipisci sunt magni facilis debitis vel provident iusto blanditiis unde est beatae esse.</p>
-            
-            <p className="text-[15px]  mb-2 font-semibold">
-            Describe assistance programs to manage career endings resulting from retirement or termination
-            </p>
-            <p className="text-sm mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed exercitationem nemo ea eaque, in nesciunt aspernatur nam adipisci sunt magni facilis debitis vel provident iusto blanditiis unde est beatae esse.</p>
-            
-            <p className="text-[15px]  mb-2 font-semibold">
-            Average training hours per employee: 
-            </p>
-            <p className="text-[15px]  mb-2 font-semibold">
-            Average training hours per female employee: 
-            </p>
-            <p className="text-[15px]  mb-2 font-semibold">
-            Average training hours per male employee:
-            </p>
-            <p className="text-[15px]  mb-2 font-semibold">
-            Average training hours per employee category: 
-            </p>
-            <p className="text-[15px]  mb-2 font-semibold">
-            Average training hours   of male employee in category:
-            </p>
-            <p className="text-[15px]  mb-2 font-semibold">
-            Average training hours   of female employee in category:
-            </p>
-            <p className="text-[15px]  mb-2 font-semibold">
-            Average training hours   of non-binary employee in category: 
-            </p>
-            <p className="text-[15px]  mb-2 font-semibold">
-            Percentage of security personnel who have received formal training in the organisation: 
-            </p>
-            <p className="text-[15px]  mb-2 font-semibold">
-            Percentage of security personnel who have received formal training from third-party organisation: 
-            </p>
+             Type of program and its scope
+             </p>
+             <p className="text-sm mb-4">{data["404_2a_2b_collect"][0].Q2?data["404_2a_2b_collect"][0].Q2:"No data available"}</p>
+             <p className="text-[15px]  mb-2 font-semibold">
+             Describe the programs provided to facilitate continued employability
+             </p>
+             <p className="text-sm mb-4">{data["404_2a_2b_collect"][0].Q3?data["404_2a_2b_collect"][0].Q3:"No data available"}</p>
+             
+             <p className="text-[15px]  mb-2 font-semibold">
+             Describe assistance programs to manage career endings resulting from retirement or termination
+             </p>
+             <p className="text-sm mb-4">{data["404_2a_2b_collect"][0].Q4?data["404_2a_2b_collect"][0].Q4:"No data available"}</p>
+             
+            </div>
+          ):(
+            <p className="text-sm mb-4">No</p>
+          ):<p className="text-sm mb-4">No data available</p>:<p className="text-sm mb-4">No data available</p>:<p className="text-sm mb-4">No data available</p>
+        }
+          
+           
+           
 
 </div>
         </>
