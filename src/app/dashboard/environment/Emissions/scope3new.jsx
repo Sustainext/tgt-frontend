@@ -304,30 +304,6 @@ const Scope3 = forwardRef(
                   scope="scope3"
                   year={year}
                   countryCode={countryCode}
-                  onChange={({
-                    type,
-                    value,
-                    activityId,
-                    unitType,
-                    name,
-                    url,
-                    filetype,
-                    size,
-                    uploadDateTime,
-                  }) =>
-                    handleCombinedWidgetChange(
-                      props.id.split("_")[1],
-                      type,
-                      value,
-                      activityId,
-                      unitType,
-                      name,
-                      url,
-                      filetype,
-                      size,
-                      uploadDateTime
-                    )
-                  }
                   onRemove={handleRemoveRow}
                   index={props.id.split("_")[1]}
                   activityCache={activityCache}

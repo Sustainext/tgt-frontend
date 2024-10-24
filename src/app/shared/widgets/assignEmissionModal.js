@@ -6,24 +6,35 @@ import {
   fetchUsers,
   fetchAssignedTasks,
   updateScopeDataLocal,
-  clearSelectedRows
+  clearSelectedRows,
 } from "@/lib/redux/features/emissionSlice";
 import { toast } from "react-toastify";
 
-const AssignEmissionModal = ({ isOpen, onClose, index,onRemove, taskData }) => {
-  const {
-    data: users,
-    status: usersStatus,
-  } = useSelector((state) => state.emissions.users);
-  
+const AssignEmissionModal = ({
+  isOpen,
+  onClose,
+  index,
+  onRemove,
+  taskData,
+}) => {
+  const { data: users, status: usersStatus } = useSelector(
+    (state) => state.emissions.users
+  );
+
   const [selectedUser, setSelectedUser] = useState("");
   const [dueDate, setDueDate] = useState("");
   const dispatch = useDispatch();
-  const assignTaskStatus = useSelector((state) => state.emissions.assignTaskStatus);
+  const assignTaskStatus = useSelector(
+    (state) => state.emissions.assignTaskStatus
+  );
 
   // Get current scope data
-  const scopeData = useSelector((state) => state.emissions[`${taskData.scope}Data`]);
-  const selectedRows = useSelector((state) => state.emissions.selectedRows[`scope${taskData.scope}`]);
+  const scopeData = useSelector(
+    (state) => state.emissions[`${taskData.scope}Data`]
+  );
+  const selectedRows = useSelector(
+    (state) => state.emissions.selectedRows[`scope${taskData.scope}`]
+  );
 
   useEffect(() => {
     if (usersStatus === "idle" && users.length === 0) {
@@ -45,37 +56,41 @@ const AssignEmissionModal = ({ isOpen, onClose, index,onRemove, taskData }) => {
         Subcategory: taskData.subcategory,
         Activity: taskData.activity,
         assigned_to: parseInt(selectedUser),
-        rowType: 'assigned'
-      }
+        rowType: "assigned",
+      },
     };
 
-    dispatch(assignEmissionTasks({
-      tasks: [formattedTask],
-      commonData: {
-        location: taskData.location,
-        year: taskData.year,
-        month: taskData.month,
-        scope: taskData.scope,
-        deadline: dueDate,
-        assignedTo: parseInt(selectedUser),
-        countryCode: taskData.countryCode,
-      },
-    }))
-    .then(() => {
-      onRemove(index);
-      toast.success("Task assigned successfully");
-      onClose();
-      dispatch(fetchAssignedTasks({
-        location: taskData.location,
-        year: taskData.year,
-        month: taskData.month
-      }));
-    })
-    .catch((error) => {
-      console.error('Error assigning task:', error);
-      toast.error("Failed to assign task");
-      onClose();
-    });
+    dispatch(
+      assignEmissionTasks({
+        tasks: [formattedTask],
+        commonData: {
+          location: taskData.location,
+          year: taskData.year,
+          month: taskData.month,
+          scope: taskData.scope,
+          deadline: dueDate,
+          assignedTo: parseInt(selectedUser),
+          countryCode: taskData.countryCode,
+        },
+      })
+    )
+      .then(() => {
+        onRemove(index);
+        toast.success("Task assigned successfully");
+        onClose();
+        dispatch(
+          fetchAssignedTasks({
+            location: taskData.location,
+            year: taskData.year,
+            month: taskData.month,
+          })
+        );
+      })
+      .catch((error) => {
+        console.error("Error assigning task:", error);
+        toast.error("Failed to assign task");
+        onClose();
+      });
   };
 
   useEffect(() => {
@@ -161,12 +176,14 @@ const AssignEmissionModal = ({ isOpen, onClose, index,onRemove, taskData }) => {
 
         <div className="flex justify-between">
           <button
+            type="button"
             className="px-4 py-1.5 bg-white text-gray-800 rounded-lg mr-2 w-full border border-gray-200"
             onClick={onClose}
           >
             Cancel
           </button>
           <button
+            type="button"
             className="px-4 py-1.5 bg-blue-500 text-white rounded-lg w-full"
             onClick={handleAssign}
           >
