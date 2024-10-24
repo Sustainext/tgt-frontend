@@ -37,7 +37,7 @@ const Scope2 = forwardRef(
     const previousMonthData = useSelector((state) => state.emissions.previousMonthData);
     const autoFill = useSelector((state) => state.emissions.autoFill);
     const assigned_data = useSelector(state=>state.emissions.assignedTasks)
-
+    const approved_data = useSelector(state=>state.emissions.approvedTasks)
 
     const [r_schema, setRemoteSchema] = useState({});
     const [r_ui_schema, setRemoteUiSchema] = useState({});
