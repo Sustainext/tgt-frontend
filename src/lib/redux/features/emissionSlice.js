@@ -5,6 +5,12 @@ import { getMonthName } from '../../../app/utils/dateUtils';
 export const fetchEmissionsData = createAsyncThunk(
   'emissions/fetchEmissionsData',
   async ({ location, year, month }, thunkAPI) => {
+    // Reset status before starting the async operation
+    // thunkAPI.dispatch(resetClimatiqDataStatus());
+    // thunkAPI.dispatch(resetScope1DataStatus());
+    // thunkAPI.dispatch(resetScope2DataStatus());
+    // thunkAPI.dispatch(resetScope3DataStatus());
+
     if (!location || !year || !month) {
       return thunkAPI.rejectWithValue('Missing required parameters');
     }
@@ -74,6 +80,9 @@ export const fetchEmissionsData = createAsyncThunk(
 export const fetchPreviousMonthData = createAsyncThunk(
   'emissions/fetchPreviousMonthData',
   async ({ location, year, month }, thunkAPI) => {
+    // Reset previous month data status
+    // thunkAPI.dispatch(resetPreviousMonthDataStatus());
+
     if (!location || !year || !month) {
       return thunkAPI.rejectWithValue('Missing required parameters');
     }
@@ -166,58 +175,103 @@ const calculateTotalClimatiqScore = (data) => {
 };
 
 // Assign Task 
-const formatTaskData = (task, commonData) => ({
-  location: commonData.location,
-  year: commonData.year,
-  month: commonData.month,
-  scope: commonData.scope.slice(-1),
-  category: commonData.category,
-  subcategory: commonData.subcategory,
-  activity: commonData.activity || "",
-  task_name: `${commonData.location}-${commonData.month}-${commonData.activity || commonData.subcategory}`,
-  roles: parseInt(localStorage.getItem("user_id")) === commonData.assignedTo ? 1 : 2, // Assuming this is always 1 for self-assigned tasks // 1- self-assigned, 2-assign-someone else, 3-task from mytask, 4-calculated.
-  deadline: commonData.deadline,
-  assigned_by: parseInt(localStorage.getItem("user_id")),
-  assigned_to: commonData.assignedTo,
+// const formatTaskData = (task, commonData) => ({
+//   location: commonData.location,
+//   year: commonData.year,
+//   month: commonData.month,
+//   scope: commonData.scope.slice(-1),
+//   category: commonData.category,
+//   subcategory: commonData.subcategory,
+//   activity: commonData.activity || "",
+//   task_name: `${commonData.location}-${commonData.month}-${commonData.activity || commonData.subcategory}`,
+//   roles: parseInt(localStorage.getItem("user_id")) === commonData.assignedTo ? 1 : 2, // Assuming this is always 1 for self-assigned tasks // 1- self-assigned, 2-assign-someone else, 3-task from mytask, 4-calculated.
+//   deadline: commonData.deadline,
+//   assigned_by: parseInt(localStorage.getItem("user_id")),
+//   assigned_to: commonData.assignedTo,
+//   region: commonData.countryCode,
+//   //patch
+//   //activity_id : need for calculation
+//   //value1, value2, unit1, unit2, unit_type, file_uploaded_by, region, filedata: {name,url, type, size, uploadDateTime}
+// });
+
+// //Assign Tasks
+// export const assignEmissionTasks = createAsyncThunk(
+//   'emissions/assignEmissionTasks',
+//   async (payload, { getState, dispatch }) => {
+//     const { tasks, commonData } = payload;
+//     const state = getState().emissions;
+
+//     const assignTask = async (task) => {
+//       const formattedTask = formatTaskData(task, commonData);
+//       try {
+//         const response = await axiosInstance.post('/organization_task_dashboard/', formattedTask);
+//         return { ...response, originalTask: task };
+//       } catch (error) {
+//         console.error('Error assigning task:', error);
+//         throw error;
+//       }
+//     };
+
+//     try {
+//       const results = await Promise.all(tasks.map(assignTask));
+      
+//       // Update the state to reflect the newly assigned tasks
+//       results.forEach(result => {
+//         const { scope } = commonData;
+//         const updatedData = state[`scope${scope}Data`].data.data.map(item => 
+//           item.id === result.originalTask.id 
+//             ? { ...item, Emission: { ...item.Emission, rowType: 'assigned' } }
+//             : item
+//         );
+//         dispatch(updateScopeDataLocal({ scope, data: { data: updatedData } }));
+//       });
+
+//       return results;
+//     } catch (error) {
+//       throw error;
+//     }
+//   }
+// );
+
+const formatTaskData = (task, commonData) => ({ 
+  location: commonData.location, 
+  year: commonData.year, 
+  month: commonData.month, 
+  scope: commonData.scope.slice(-1), 
+  category: task.Emission.Category, 
+  subcategory: task.Emission.Subcategory, 
+  activity: task.Emission.Activity || "", 
+  task_name: `${commonData.location}-${commonData.month}-${task.Emission.Activity || task.Emission.Subcategory}`, 
+  roles: parseInt(localStorage.getItem("user_id")) === commonData.assignedTo ? 1 : 2,
+  deadline: commonData.deadline, 
+  assigned_by: parseInt(localStorage.getItem("user_id")), 
+  assigned_to: commonData.assignedTo, 
   region: commonData.countryCode,
-  //patch
-  //activity_id : need for calculation
-  //value1, value2, unit1, unit2, unit_type, file_uploaded_by, region, filedata: {name,url, type, size, uploadDateTime}
 });
 
-//Assign Tasks
 export const assignEmissionTasks = createAsyncThunk(
   'emissions/assignEmissionTasks',
   async (payload, { getState, dispatch }) => {
     const { tasks, commonData } = payload;
-    const state = getState().emissions;
-
-    const assignTask = async (task) => {
-      const formattedTask = formatTaskData(task, commonData);
-      try {
-        const response = await axiosInstance.post('/organization_task_dashboard/', formattedTask);
-        return { ...response, originalTask: task };
-      } catch (error) {
-        console.error('Error assigning task:', error);
-        throw error;
-      }
-    };
 
     try {
-      const results = await Promise.all(tasks.map(assignTask));
+      // Format each task and send as array of objects directly
+      const formattedPayload = tasks.map(task => formatTaskData(task, commonData));
       
-      // Update the state to reflect the newly assigned tasks
-      results.forEach(result => {
-        const { scope } = commonData;
-        const updatedData = state[`scope${scope}Data`].data.data.map(item => 
-          item.id === result.originalTask.id 
-            ? { ...item, Emission: { ...item.Emission, rowType: 'assigned' } }
-            : item
-        );
-        dispatch(updateScopeDataLocal({ scope, data: { data: updatedData } }));
-      });
+      // Send array of formatted tasks directly
+      const response = await axiosInstance.post('/organization_task_dashboard/', formattedPayload);
 
-      return results;
+      return {
+        response: response.data,
+        assignmentDetails: {
+          assignedTo: commonData.assignedTo,
+          scope: commonData.scope.slice(-1),
+          tasks: tasks.map(task => ({
+            ...task,
+            rowId: task.rowId
+          }))
+        }
+      };
     } catch (error) {
       throw error;
     }
@@ -227,7 +281,8 @@ export const assignEmissionTasks = createAsyncThunk(
 export const fetchAssignedTasks = createAsyncThunk(
   'emissions/fetchAssignedTasks',
   async ({ location, year, month }) => {
-    const url = `${process.env.BACKEND_API_URL}/sustainapp/get_assigned_by_task/?location=${location}&year=${year}&month=${getMonthName(month)}`;
+    // thunkAPI.dispatch(resetAssignedTasksStatus());
+    const url = `${process.env.BACKEND_API_URL}/sustainapp/get_assigned_by_task/?location=${location}&year=${year}&month=${getMonthName(month) || month}`;
     
     try {
       const response = await axiosInstance.get(url);
@@ -241,6 +296,7 @@ export const fetchAssignedTasks = createAsyncThunk(
 export const fetchApprovedTasks = createAsyncThunk(
   'emissions/fetchApprovedTasks',
   async ({ location, year, month }) => {
+    // thunkAPI.dispatch(resetApprovedTasksStatus());
     const url = `${process.env.BACKEND_API_URL}/sustainapp/get_approved_task/?location=${location}&year=${year}&month=${getMonthName(month)}`;
     
     try {
@@ -345,6 +401,7 @@ const emissionsSlice = createSlice({
       status: 'idle',
       error: null
     },
+    scopeReRender:false
   },
   reducers: {
     setLocation: (state, action) => {
@@ -362,6 +419,9 @@ const emissionsSlice = createSlice({
     updateScopeDataLocal: (state, action) => {
       const { scope, data } = action.payload;
       state[`scope${scope}Data`].data = data;
+    },
+    toggleScopeReRender: (state) => {
+      state.scopeReRender = !state.scopeReRender;
     },
     resetPreviousMonthData: (state) => {
       state.previousMonthData = {
@@ -418,6 +478,57 @@ const emissionsSlice = createSlice({
         state.selectedRows[scope] = [];
       }
     },
+    // Reset individual statuses to 'idle'
+    resetClimatiqDataStatus: (state) => {
+      state.climatiqData.status = 'idle';
+      state.climatiqData.error = null;
+    },
+    resetScope1DataStatus: (state) => {
+      state.scope1Data.status = 'idle';
+      state.scope1Data.error = null;
+    },
+    resetScope2DataStatus: (state) => {
+      state.scope2Data.status = 'idle';
+      state.scope2Data.error = null;
+    },
+    resetScope3DataStatus: (state) => {
+      state.scope3Data.status = 'idle';
+      state.scope3Data.error = null;
+    },
+    resetPreviousMonthDataStatus: (state) => {
+      state.previousMonthData.status = 'idle';
+      state.previousMonthData.error = null;
+    },
+    resetAssignedTasksStatus: (state) => {
+      state.assignedTasks.status = 'idle';
+      state.assignedTasks.error = null;
+    },
+    resetApprovedTasksStatus: (state) => {
+      state.approvedTasks.status = 'idle';
+      state.approvedTasks.error = null;
+    },
+    resetUsersStatus: (state) => {
+      state.users.status = 'idle';
+      state.users.error = null;
+    },
+    clearSelectedRows: (state, action) => {
+      const { scope } = action.payload;
+      const selectedRowIndices = state.selectedRows[scope].map(row => 
+        parseInt(row.rowId.split('_')[1])
+      );
+    
+      // Filter out the selected rows from formData
+      const scopeKey = `${scope}Data`;
+      if (state[scopeKey].data && state[scopeKey].data.data) {
+        state[scopeKey].data.data = state[scopeKey].data.data.filter((_, index) => 
+          !selectedRowIndices.includes(index)
+        );
+      }
+    
+      // Clear selected rows array and reset selectAll checkbox
+      state.selectedRows[scope] = [];
+      state.selectAllChecked[scope] = false;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -496,10 +607,7 @@ const emissionsSlice = createSlice({
       })
       .addCase(assignEmissionTasks.fulfilled, (state, action) => {
         state.assignTaskStatus = 'succeeded';
-        // The state update is handled in the thunk itself
-        // Dispatch `fetchAssignedTasks` to update assigned tasks state.
-        const { location, year, month } = action.meta.arg.commonData;
-        state.dispatch(fetchAssignedTasks({ location, year, month }));
+        state.scopeReRender = !state.scopeReRender;
       })
       .addCase(assignEmissionTasks.rejected, (state, action) => {
         state.assignTaskStatus = 'failed';
@@ -554,7 +662,17 @@ export const {
   updateScopeDataLocal,
   resetPreviousMonthData,
   setSelectedRows,
-  toggleSelectAll
+  toggleSelectAll,
+  resetApprovedTasksStatus,
+  resetAssignedTasksStatus,
+  resetClimatiqDataStatus,
+  resetPreviousMonthDataStatus,
+  resetScope1DataStatus,
+  resetScope2DataStatus,
+  resetScope3DataStatus,
+  resetUsersStatus,
+  clearSelectedRows,
+  toggleScopeReRender
 } = emissionsSlice.actions;
 
 export default emissionsSlice.reducer;

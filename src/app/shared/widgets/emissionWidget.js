@@ -35,6 +35,7 @@ const EmissionWidget = React.memo(
     onRemove,
     index,
     id,
+    formRef
   }) => {
     const rowId = scope + "_" + index;
     const [rowType, setRowType] = useState(value.rowType || "default");
@@ -75,16 +76,24 @@ const EmissionWidget = React.memo(
     }, [users, value.assigned_to]);
 
     const handleAssignClick = () => {
+      // Disable form validation before opening modal
+      if (formRef?.current) {
+        formRef.current.noValidate = true;
+      }
       setIsAssignModalOpen(true);
+    };
+  
+    const handleCloseAssignModal = () => {
+      // Re-enable form validation after modal closes
+      if (formRef?.current) {
+        formRef.current.noValidate = false;
+      }
+      setIsAssignModalOpen(false);
     };
 
     const handleMultipleAssignClick = () => {
       setIsMultipleAssignModalOpen(true);
       // setShowAllTasks(true)
-    };
-
-    const handleCloseAssignModal = () => {
-      setIsAssignModalOpen(false);
     };
 
     const handleCloseMultipleAssignModal = () => {
@@ -96,7 +105,6 @@ const EmissionWidget = React.memo(
 
     const [quantityError, setQuantityError] = useState("");
     const [quantity2Error, setQuantity2Error] = useState("");
-    console.log(activities, "test activity");
     const requiresNumericValidation = (unit) =>
       [
         "Number of items",
@@ -662,6 +670,7 @@ const EmissionWidget = React.memo(
       onChange(resetValue);
       setShowModal(false);
     };
+
     const handleClickonRemove = () => {
       onRemove(index);
     };
@@ -703,6 +712,16 @@ const EmissionWidget = React.memo(
 
       dispatch(toggleSelectAll({ scope, isChecked }));
     };
+
+    useEffect(() => {
+      if (
+        value.assigned_to &&
+        value.assigned_to !== "" &&
+        rowType === "default"
+      ) {
+        setRowType("assigned");
+      }
+    }, [value.assigned_to]);
 
     const renderFirstColumn = () => {
       switch (rowType) {
@@ -1205,6 +1224,8 @@ const EmissionWidget = React.memo(
           isOpen={isAssignModalOpen}
           onClose={handleCloseAssignModal}
           onChange={onChange}
+          index={index}
+          onRemove={onRemove}
           taskData={{
             location,
             year,
@@ -1214,6 +1235,7 @@ const EmissionWidget = React.memo(
             subcategory: value.Subcategory,
             activity: value.Activity,
             countryCode,
+            rowId: rowId,
           }}
         />
         <MultipleAssignEmissionModal
@@ -1221,6 +1243,14 @@ const EmissionWidget = React.memo(
           onClose={handleCloseMultipleAssignModal}
           onChange={onChange}
           scope={scope}
+          onRemove={onRemove}
+          taskData={{
+            location,
+            year,
+            month: getMonthName(month),
+            scope,
+            countryCode,
+          }}
         />
       </div>
     );

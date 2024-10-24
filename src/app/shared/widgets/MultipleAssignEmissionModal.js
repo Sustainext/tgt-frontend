@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   assignEmissionTasks,
   fetchUsers,
+  fetchAssignedTasks
 } from "@/lib/redux/features/emissionSlice";
 import { CiCircleMinus } from "react-icons/ci";
+import {toast} from "react-toastify";
 
-const MultipleAssignEmissionModal = ({ isOpen, onClose, onChange, scope }) => {
+const MultipleAssignEmissionModal = ({ isOpen, onClose, onRemove, taskData,scope }) => {
   const { data: users, status: usersStatus } = useSelector(
     (state) => state.emissions.users
   );
@@ -19,40 +21,60 @@ const MultipleAssignEmissionModal = ({ isOpen, onClose, onChange, scope }) => {
   const [showAllTasks, setShowAllTasks] = useState(false)
   const [dueDate, setDueDate] = useState("");
   const dispatch = useDispatch();
-  const assignTaskStatus = useSelector(
-    (state) => state.emissions.assignTaskStatus
-  );
 
   useEffect(() => {
     if (usersStatus === "idle") {
       dispatch(fetchUsers());
     }
-  }, [usersStatus, dispatch]);
+  }, []);
 
   const handleAssign = () => {
     if (!selectedUser || !dueDate) {
-      alert("Please select a user and due date");
+      toast.error("Please select a user and due date");
       return;
     }
-
-    const commonData = {
-      location,
-      year,
-      month,
-      scope,
-      deadline: dueDate,
-      assignedTo: parseInt(selectedUser),
-      countryCode: selectedRows[0]?.countryCode, // Assuming all rows have the same country code
-    };
-
-    dispatch(assignEmissionTasks({ tasks: selectedRows, commonData }));
-  };
-
-  useEffect(() => {
-    if (assignTaskStatus === "succeeded") {
+  
+    dispatch(assignEmissionTasks({
+      tasks: selectedRows,
+      commonData: {
+        location: taskData.location,
+        year: taskData.year,
+        month: taskData.month,
+        scope: taskData.scope,
+        deadline: dueDate,
+        assignedTo: parseInt(selectedUser),
+        countryCode: taskData.countryCode,
+      },
+    }))
+    .then(() => {
+      // Get indices of all selected rows
+      const selectedRowIndices = selectedRows.map(row => 
+        parseInt(row.rowId.split('_')[1]-1)
+      );
+      console.log('Selected row indices:', selectedRowIndices);
+      
+  
+      // Remove each selected row
+      selectedRowIndices.forEach(index => {
+        onRemove(index);
+      });
+  
+      // Fetch updated assigned tasks
+      dispatch(fetchAssignedTasks({
+        location: taskData.location,
+        year: taskData.year,
+        month: taskData.month
+      }));
+  
+      toast.success("Tasks assigned successfully");
       onClose();
-    }
-  }, [assignTaskStatus, onClose]);
+    })
+    .catch((error) => {
+      console.error('Error assigning tasks:', error);
+      toast.error("Failed to assign tasks");
+      onClose();
+    });
+  };
 
   const toggleShowAllTasks = (e) => {
     e.preventDefault();
@@ -149,7 +171,7 @@ const MultipleAssignEmissionModal = ({ isOpen, onClose, onChange, scope }) => {
           </button>
           <button
             className="px-4 py-1.5 bg-blue-500 text-white rounded-lg w-full"
-            onClick={handleAssign}
+            // onClick={handleAssign}
           >
             Assign
           </button>
