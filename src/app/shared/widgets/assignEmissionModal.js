@@ -5,10 +5,9 @@ import {
   assignEmissionTasks,
   fetchUsers,
   fetchAssignedTasks,
-  updateScopeDataLocal,
-  clearSelectedRows,
 } from "@/lib/redux/features/emissionSlice";
 import { toast } from "react-toastify";
+import { Oval } from "react-loader-spinner";
 
 const AssignEmissionModal = ({
   isOpen,
@@ -28,13 +27,10 @@ const AssignEmissionModal = ({
     (state) => state.emissions.assignTaskStatus
   );
 
-  // Get current scope data
-  const scopeData = useSelector(
-    (state) => state.emissions[`${taskData.scope}Data`]
-  );
-  const selectedRows = useSelector(
-    (state) => state.emissions.selectedRows[`scope${taskData.scope}`]
-  );
+  const [loaderStatus, setLoaderStatus] = useState({
+    show: false,
+    message: "",
+  });
 
   useEffect(() => {
     if (usersStatus === "idle" && users.length === 0) {
@@ -42,55 +38,72 @@ const AssignEmissionModal = ({
     }
   }, []);
 
-  const handleAssign = () => {
+  const handleAssign = async () => {
     if (!selectedUser || !dueDate) {
       toast.error("Please select a user and due date");
       return;
     }
 
-    // Prepare the task data
-    const formattedTask = {
-      Emission: {
-        ...taskData,
-        Category: taskData.category,
-        Subcategory: taskData.subcategory,
-        Activity: taskData.activity,
-        assigned_to: parseInt(selectedUser),
-        rowType: "assigned",
-      },
-    };
+    try {
+      setLoaderStatus({
+        show: true,
+        message: "Assigning task...",
+      });
 
-    dispatch(
-      assignEmissionTasks({
-        tasks: [formattedTask],
-        commonData: {
-          location: taskData.location,
-          year: taskData.year,
-          month: taskData.month,
-          scope: taskData.scope,
-          deadline: dueDate,
-          assignedTo: parseInt(selectedUser),
-          countryCode: taskData.countryCode,
+      // Prepare the task data
+      const formattedTask = {
+        Emission: {
+          ...taskData,
+          Category: taskData.category,
+          Subcategory: taskData.subcategory,
+          Activity: taskData.activity,
+          assigned_to: parseInt(selectedUser),
+          rowType: "assigned",
         },
-      })
-    )
-      .then(() => {
-        onRemove(index);
-        toast.success("Task assigned successfully");
-        onClose();
-        dispatch(
-          fetchAssignedTasks({
+      };
+
+      await dispatch(
+        assignEmissionTasks({
+          tasks: [formattedTask],
+          commonData: {
             location: taskData.location,
             year: taskData.year,
             month: taskData.month,
-          })
-        );
-      })
-      .catch((error) => {
-        console.error("Error assigning task:", error);
-        toast.error("Failed to assign task");
-        onClose();
+            scope: taskData.scope,
+            deadline: dueDate,
+            assignedTo: parseInt(selectedUser),
+            countryCode: taskData.countryCode,
+          },
+        })
+      ).unwrap();
+
+      setLoaderStatus({
+        show: true,
+        message: "Updating assigned tasks...",
       });
+
+      // Remove the assigned row
+      await onRemove(index);
+
+      // Fetch updated assigned tasks
+      await dispatch(
+        fetchAssignedTasks({
+          location: taskData.location,
+          year: taskData.year,
+          month: taskData.month,
+        })
+      );
+
+      setLoaderStatus({ show: false, message: "" });
+      toast.success("Task assigned successfully");
+      onClose();
+
+    } catch (error) {
+      console.error("Error assigning task:", error);
+      setLoaderStatus({ show: false, message: "" });
+      toast.error("Failed to assign task");
+      onClose();
+    }
   };
 
   useEffect(() => {
@@ -103,6 +116,26 @@ const AssignEmissionModal = ({
   if (!isOpen) return null;
 
   return (
+    <>
+      {loaderStatus.show && (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[1001]">
+        <div className="bg-transparent p-8 rounded-lg flex flex-col items-center">
+          <div className="mb-4">
+            <Oval
+              height={50}
+              width={50}
+              color="#00BFFF"
+              secondaryColor="#f3f3f3"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
+          </div>
+          <p className="text-white text-lg font-medium">
+            {loaderStatus.message}
+          </p>
+        </div>
+      </div>
+    )}
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex justify-center items-center">
       <div className="bg-white p-5 rounded-lg shadow-xl w-96">
         <h2 className="text-xl font-semibold">Assign user</h2>
@@ -192,6 +225,7 @@ const AssignEmissionModal = ({
         </div>
       </div>
     </div>
+    </>
   );
 };
 
