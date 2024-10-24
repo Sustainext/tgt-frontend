@@ -19,15 +19,44 @@ const Section6=({section13_1_5Ref,data})=>{
       dispatch(setStandardWage(e.target.value))
     }
     const [table1Columns] = useState([
-        "Employee category", 
-        "Location 1"
+        "Location",
+        "Male",
+        "Female",
+        "Non-binary"
       ]);
     
-      const [table1Data] = useState([
-        { "Employee category": "Male", "Location 1": "data" },
-        { "Employee category": "Female", "Location 1": "data" },
-        { "Employee category": "Non-Binary", "Location 1": "data" },
-      ]);
+     
+
+      const table1Data=data["202_1a_analyse"]?data["202_1a_analyse"]["marketing_presence"].length>0?
+
+      data["202_1a_analyse"]["marketing_presence"].map((val,index)=>{
+          return (
+              
+            {
+              "Location":val.Location,
+              "Male":val.Male,
+              "Female":val.Female,
+              "Non-binary":val["Non-binary"]
+          
+          }
+              
+          )
+      })
+  :[
+    {
+       "Location":"No data available",
+        "Male":"No data available",
+        "Female":"No data available",
+        "Non-binary":"No data available"
+  },
+  ]:[
+    {
+   "Location":"No data available",
+        "Male":"No data available",
+        "Female":"No data available",
+        "Non-binary":"No data available"
+  },
+  ]
     
       const [table2Columns] = useState([
         "Significant location of operations", 
