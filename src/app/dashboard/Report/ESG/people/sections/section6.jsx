@@ -27,7 +27,7 @@ const Section6=({section13_1_5Ref,data})=>{
     
      
 
-      const table1Data=data["202_1a_analyse"]?data["202_1a_analyse"]["marketing_presence"].length>0?
+      const table1Data=data["202_1a_analyse"]?data["202_1a_analyse"]["marketing_presence"]?data["202_1a_analyse"]["marketing_presence"].length>0?
 
       data["202_1a_analyse"]["marketing_presence"].map((val,index)=>{
           return (
@@ -45,6 +45,13 @@ const Section6=({section13_1_5Ref,data})=>{
   :[
     {
        "Location":"No data available",
+        "Male":"No data available",
+        "Female":"No data available",
+        "Non-binary":"No data available"
+  },
+  ]:[
+    {
+   "Location":"No data available",
         "Male":"No data available",
         "Female":"No data available",
         "Non-binary":"No data available"
