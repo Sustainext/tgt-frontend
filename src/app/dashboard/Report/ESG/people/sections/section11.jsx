@@ -31,6 +31,8 @@ const Section11 = ({ section13_3Ref, data }) => {
   const operationTableDataHazardous = data["408_1a_408_1b_analyse"]
     ? data["408_1a_408_1b_analyse"][
         "operation_significant_risk_of_young_workers"
+      ]?data["408_1a_408_1b_analyse"][
+        "operation_significant_risk_of_young_workers"
       ].length > 0
       ? data["408_1a_408_1b_analyse"][
           "operation_significant_risk_of_young_workers"
@@ -57,6 +59,13 @@ const Section11 = ({ section13_3Ref, data }) => {
           "Type of Operation": "No data available",
           "Countries or Geographic Areas": "No data available",
         },
+      ]:[
+        {
+          "Operations considered to have significant risk of young workers exposed to hazardous work ":
+            "No data available",
+          "Type of Operation": "No data available",
+          "Countries or Geographic Areas": "No data available",
+        },
       ];
 
   const [childLaborTableColumns] = useState([
@@ -66,8 +75,8 @@ const Section11 = ({ section13_3Ref, data }) => {
   ]);
 
   const childLaborTableData = data["408_1a_408_1b_analyse"]
-    ? data["408_1a_408_1b_analyse"]["operation_significant_risk_of_child_labor"]
-        .length > 0
+    ? data["408_1a_408_1b_analyse"]["operation_significant_risk_of_child_labor"]?
+    data["408_1a_408_1b_analyse"]["operation_significant_risk_of_child_labor"].length > 0
       ? data["408_1a_408_1b_analyse"][
           "operation_significant_risk_of_child_labor"
         ].map((val, index) => {
@@ -93,6 +102,13 @@ const Section11 = ({ section13_3Ref, data }) => {
           "Type of Operation": "No data available",
           "Countries or Geographic Areas": "No data available",
         },
+      ]:[
+        {
+          "Operations considered to have significant risk of child labor ":
+            "No data available",
+          "Type of Operation": "No data available",
+          "Countries or Geographic Areas": "No data available",
+        },
       ];
 
   const [supplierchildLaborTableColumns] = useState([
@@ -102,8 +118,8 @@ const Section11 = ({ section13_3Ref, data }) => {
   ]);
 
   const supplierchildLaborTableData = data["408_1a_408_1b_analyse"]
-    ? data["408_1a_408_1b_analyse"]["suppliers_significant_risk_of_child_labor"]
-        .length > 0
+    ? data["408_1a_408_1b_analyse"]["suppliers_significant_risk_of_child_labor"]?
+    data["408_1a_408_1b_analyse"]["suppliers_significant_risk_of_child_labor"].length > 0
       ? data["408_1a_408_1b_analyse"][
           "suppliers_significant_risk_of_child_labor"
         ].map((val, index) => {
@@ -129,6 +145,13 @@ const Section11 = ({ section13_3Ref, data }) => {
           "Type of Operation": "No data available",
           "Countries or Geographic Areas": "No data available",
         },
+      ]:[
+        {
+          "Suppliers considered to have significant risk of child labor":
+            "No data available",
+          "Type of Operation": "No data available",
+          "Countries or Geographic Areas": "No data available",
+        },
       ];
 
   const [supplierHazardousTableColumns] = useState([
@@ -139,6 +162,8 @@ const Section11 = ({ section13_3Ref, data }) => {
 
   const supplierHazardousTableData = data["408_1a_408_1b_analyse"]
     ? data["408_1a_408_1b_analyse"][
+        "operation_significant_risk_of_young_workers"
+      ]?data["408_1a_408_1b_analyse"][
         "operation_significant_risk_of_young_workers"
       ].length > 0
       ? data["408_1a_408_1b_analyse"][
@@ -160,6 +185,13 @@ const Section11 = ({ section13_3Ref, data }) => {
           },
         ]
     : [
+        {
+          "Suppliers considered to have significant risk of young workers exposed to hazardous work ":
+            "No data available",
+          "Type of Operation": "No data available",
+          "Countries or Geographic Areas": "No data available",
+        },
+      ]:[
         {
           "Suppliers considered to have significant risk of young workers exposed to hazardous work ":
             "No data available",
