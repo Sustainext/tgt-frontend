@@ -56,14 +56,14 @@ export function AuthProvider({ children }) {
       const receivedToken = userData.key.access;
       const refreshToken = userData.key.refresh;
       const client_key = userData.client_key;
-      const role = userData.role;
+      const newrole = userData.admin;
       const permissions = userData.permissions;
       setToken(receivedToken);
       saveToLocalStorage("token", receivedToken);
       saveToLocalStorage("refresh", refreshToken);
       saveToLocalStorage("client_key", client_key);
-      saveToLocalStorage("role", role);
       saveToLocalStorage("permissions", permissions);
+      saveToLocalStorage("custom_role", newrole);
       const isFirstLogin = userData.needs_password_reset;
       // const isFirstLogin = 1;
       if (isFirstLogin) {

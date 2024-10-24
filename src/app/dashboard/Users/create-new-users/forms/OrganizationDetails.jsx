@@ -146,6 +146,12 @@ const OrganizationDetailsForm = ({ onNext, onPrev }) => {
         setSelectedCorp(corpIds[0]); // Selecting the first corporate by default
       }
     }
+    else {
+      // Clear form fields if not editing
+      dispatch(setOrgList([]));
+      dispatch(setCorpList([]));
+      dispatch(setLocList([]));
+    }
   }, [edit, currentUser, dispatch]);
 
   return (

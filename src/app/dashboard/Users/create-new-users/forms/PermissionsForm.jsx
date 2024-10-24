@@ -25,8 +25,9 @@ import UserAddedModal from "../../common/UserModal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axiosInstance from "../../../../utils/axiosMiddleware";
-
+import { Oval } from "react-loader-spinner";
 const PermissionsForm = ({ onPrev, onNext, reset }) => {
+  const [loopen, setLoOpen] = useState(false);
   const dispatch = useDispatch();
   const searchParams = useSearchParams(); // Access search params using Next.js's useSearchParams
   const first_name = useSelector((state) => state.roleprmission.first_name);
@@ -73,14 +74,20 @@ const PermissionsForm = ({ onPrev, onNext, reset }) => {
       }
     }
   };
+  const LoaderOpen = () => {
+    setLoOpen(true);
+  };
 
+  const LoaderClose = () => {
+    setLoOpen(false);
+  };
   const handleOverrideChange = () => {
     dispatch(setPermissionscheckbox(!permissions_checkbox));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    LoaderOpen();
     // Construct the simplified data object
     const data = {
       username: work_email || "",
@@ -91,8 +98,7 @@ const PermissionsForm = ({ onPrev, onNext, reset }) => {
       job_title: job_title || "",
       department: department || "",
       work_email: work_email || "",
-      roles: role_type || "",
-
+      custom_role: role_type || "",
       // Permissions
       collect: collect || false,
       analyse: analyse || false,
@@ -126,11 +132,13 @@ const PermissionsForm = ({ onPrev, onNext, reset }) => {
         );
         setIsSubmitted(true);
         onNext();
+        LoaderClose();
       } else {
         toast.error("Oops, something went wrong", {
           position: "top-right",
           autoClose: 1000,
         });
+        LoaderClose();
       }
     } catch (error) {
       if (error.response) {
@@ -142,16 +150,20 @@ const PermissionsForm = ({ onPrev, onNext, reset }) => {
             position: "top-right",
             autoClose: 3000,
           });
+          LoaderClose();
         } else {
           toast.error("Something went wrong", {
             position: "top-right",
             autoClose: 1000,
           });
+          LoaderClose();
         }
       } else if (error.request) {
         console.error("Request error:", error.request);
+        LoaderClose();
       } else {
         console.error("Error message:", error.message);
+        LoaderClose();
       }
     }
   };
@@ -184,6 +196,13 @@ const PermissionsForm = ({ onPrev, onNext, reset }) => {
       dispatch(setOptimise(currentUser.optimise || false));
       dispatch(setTrack(currentUser.track || false));
       dispatch(setPermissionscheckbox(currentUser.permissions_checkbox || false));
+    } else {
+      dispatch(setCollect(true));
+      dispatch(setAnalyse(true));
+      dispatch(setReport(false));
+      dispatch(setOptimise(false));
+      dispatch(setTrack(false));
+      dispatch(setPermissionscheckbox(false));
     }
   }, [edit, currentUser]); // Dependencies on edit mode and currentUser changes
 
@@ -296,7 +315,18 @@ const PermissionsForm = ({ onPrev, onNext, reset }) => {
           </div>
         </div>
       )}
-
+    {loopen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
       {/* ToastContainer for showing toast notifications */}
       <ToastContainer />
     </>

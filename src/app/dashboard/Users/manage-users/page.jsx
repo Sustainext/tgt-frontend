@@ -311,7 +311,7 @@ const ManageUsers = () => {
                       style={{
                         transition: "left 300ms",
                         left: searchFocus || searchTerm ? "17rem" : "0.625rem",
-                        top: "1.3rem",
+                        top: "1.1rem",
                       }}
                     />
                   </div>
@@ -368,7 +368,7 @@ const ManageUsers = () => {
                           </div>
                         </td>
                         <td className="px-5 bg-white text-[14px] text-center text-gray-500 capitalize">
-                          {user.roles}
+                          {user.custom_role}
                         </td>
                         <td className="px-5 bg-white text-[14px]">
                           <div className="flex justify-center items-center">
@@ -489,7 +489,7 @@ const ManageUsers = () => {
         </div>
 
         {selectedUser && (
-          <div className="w-[35%] max-h-[95vh] min-h-[95vh] rounded-lg shadow-lg max-w-md">
+          <div className="w-[35%] max-h-[82vh] min-h-[80vh] rounded-lg shadow-lg max-w-md">
             <UserProfile user={selectedUser} onClose={handleCloseProfile} />
           </div>
         )}

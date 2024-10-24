@@ -8,7 +8,6 @@ import "react-toastify/dist/ReactToastify.css";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import { useDispatch, useSelector } from 'react-redux';
 import { setLocation, setYear, setMonth } from '@/lib/redux/features/emissionSlice';
-
 const Emissions = ({ open }) => {
   const dispatch = useDispatch();
   const { location, year, month } = useSelector(state => state.emissions);

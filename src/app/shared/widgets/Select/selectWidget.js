@@ -1,38 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { MdInfoOutline } from "react-icons/md";
+
 const SelectWidget = ({ onChange, value = "", placeholder, label, title, uiSchema = {}, schema = {}, id, options }) => {
   const [otherValue, setOtherValue] = useState(value || ""); // Initialize with value or empty
-  const [showOtherInput, setShowOtherInput] = useState(false); // State to control showing the input box
-
-  useEffect(() => {
-    // Check if the current value is not in options, then treat it as 'Other'
-    const isOptionAvailable = options?.enumOptions?.some(option => option.value === value);
-    if (!isOptionAvailable && value) {
-      setShowOtherInput(true);
-      setOtherValue(value);
-    } else {
-      setShowOtherInput(false);
-    }
-  }, [value, options]);
+  const [showOtherInput, setShowOtherInput] = useState(value && !options?.enumOptions?.some(option => option.value === value)); // Initial state depends on if the value is an "Other" value.
 
   const handleChange = (e) => {
     const selectedValue = e.target.value;
 
     if (selectedValue === "Other (please specify)") {
-      setShowOtherInput(true);
-      setOtherValue(""); // Clear any existing other value
-      onChange(""); // Reset the main value to empty since we are using the custom input
+      setShowOtherInput(true);  // Show the input field for "Other"
+      setOtherValue("");  // Reset any other input value
+      onChange("");  // Reset the main value in the parent state to empty
     } else {
-      setShowOtherInput(false);
-      onChange(selectedValue); // Set the selected value from dropdown
+      setShowOtherInput(false);  // Hide the "Other" input field
+      onChange(selectedValue);  // Set the selected value in the parent state
     }
   };
 
   const handleOtherInputChange = (e) => {
-    setOtherValue(e.target.value);
-    onChange(e.target.value); // Pass the custom "Other" value up
+    const inputValue = e.target.value;
+    setOtherValue(inputValue);
+    onChange(inputValue);  // Send the "Other" input value to the parent
   };
 
   const randomId = Math.floor(Math.random() * 10000); // Generate a random number between 0 and 9999
@@ -88,6 +79,7 @@ const SelectWidget = ({ onChange, value = "", placeholder, label, title, uiSchem
                 {option.label}
               </option>
             ))}
+    
           </select>
         ) : (
           <input

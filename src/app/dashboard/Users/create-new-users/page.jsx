@@ -12,6 +12,7 @@ import {
   setPermissions,
 } from "../../../../lib/redux/features/userSlice";
 
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSearchParams } from "next/navigation"; // Import useSearchParams
@@ -29,11 +30,7 @@ const AddNewUser = () => {
   const edit = searchParams.get("edit"); // Extract the 'edit' parameter
 
   const handleNext = (newData) => {
-    if (currentStep === 1) {
-      dispatch(setPersonalDetails(newData));
-    } else if (currentStep === 2) {
-      dispatch(setOrganizationDetails(newData));
-    }
+ 
     setCurrentStep(currentStep + 1);
   };
 
@@ -49,9 +46,7 @@ const AddNewUser = () => {
     setCurrentStep(1);
   };
   useEffect(() => {
-    dispatch(setHeadertext1("Users"));
-    dispatch(setHeaderdisplay("none"));
-    // Conditionally set the header text based on the 'edit' parameter
+
     if (edit === "true") {
       dispatch(setHeadertext2("Manage Users"));
     } else {
@@ -97,7 +92,7 @@ const AddNewUser = () => {
         {currentStep === 3 && (
           <PermissionsForm
             onPrev={handlePrev}
-            onNext={handleFinalize}
+            // onNext={handleFinalize}
             reset={resetCurrentStep}
           />
         )}

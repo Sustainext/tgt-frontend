@@ -123,10 +123,19 @@ const PersonalDetailsForm = ({ onNext }) => {
       dispatch(setfirstname(currentUser.first_name || ""));
       dispatch(setlastname(currentUser.last_name || ""));
       dispatch(setworkemail(currentUser.work_email || ""));
-      dispatch(setroletype(currentUser.roles || ""));
+      dispatch(setroletype(currentUser.custom_role || ""));
       dispatch(setjobtitle(currentUser.job_title || ""));
       dispatch(setdepartment(currentUser.department || ""));
       dispatch(setphonenumber(currentUser.phone_number || ""));
+    } else {
+      // Clear form fields if not editing
+      dispatch(setfirstname(""));
+      dispatch(setlastname(""));
+      dispatch(setworkemail(""));
+      dispatch(setroletype(""));
+      dispatch(setjobtitle(""));
+      dispatch(setdepartment(""));
+      dispatch(setphonenumber(""));
     }
   }, [edit, currentUser, dispatch]);
 
@@ -240,8 +249,8 @@ const PersonalDetailsForm = ({ onNext }) => {
               <option value="" disabled>
                 Select Role Type
               </option>
-              <option value="manager">Manager</option>
-              <option value="employee">Employee</option>
+              <option value="Manager">Manager</option>
+              <option value="Employee">Employee</option>
             </select>
             {errors.roleType && (
               <p className="text-red-500 text-xs mt-1">{errors.roleType}</p>
