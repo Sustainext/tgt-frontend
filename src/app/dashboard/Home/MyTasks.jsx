@@ -8,7 +8,8 @@ import {
   FiChevronDown,
   FiCheckCircle,
   FiLoader,
-  FiX
+  FiX,
+  FiFile
 } from "react-icons/fi";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -17,6 +18,7 @@ import Moment from "react-moment";
 import ImageUpload from "../../shared/components/ImageUpload";
 import { unitTypes } from "../../shared/data/units";
 import axiosInstance,{ post, del, patch } from "../../utils/axiosMiddleware";
+import { BlobServiceClient } from "@azure/storage-blob";
 
 const MyTask = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -66,6 +68,7 @@ const MyTask = () => {
   const [selectedActivity, setSelectedActivity] = useState({});
   const [isPdfViewerOpen, setIsPdfViewerOpen] = useState(false);
   const [isActivityReceived, setIsActivityReceived] = useState(false);
+  const [isActivityFetched, setIsActivityFetched] = useState(false);
 
   const closePreviewModal = () => {
     setIsPdfViewerOpen(false);
@@ -86,26 +89,72 @@ const MyTask = () => {
     console.log('activity found',activity);
   }, [selectedActivityName, activitiesList]);
 
-  const handleFileUpload = (file) => {
-    if (!file) return;
+  // const handleFileUpload = (file) => {
+  //   if (!file) return;
 
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(file);
+  //   reader.onload = () => {
+  //     const newTaskData = {
+  //       ...taskassigndata,
+  //       file: file,
+  //       filename: file.name,
+  //       filesize: file.size,
+  //       modifiedAt: new Date().toLocaleString(),
+  //     };
+
+  //     setTaskAssigndata(newTaskData);
+  //   };
+  //   reader.onerror = (error) =>
+  //     console.error("File reading has failed: ", error);
+  // };
+
+  const handleFileUpload = async (file) => {
+    if (!file) return;
+   
+    try {
+      const arrayBuffer = await file.arrayBuffer();
+      const blob = new Blob([arrayBuffer]);
+   
+      const accountName = process.env.NEXT_PUBLIC_AZURE_STORAGE_ACCOUNT;
+      const containerName = process.env.NEXT_PUBLIC_AZURE_STORAGE_CONTAINER; 
+      const sasToken = process.env.NEXT_PUBLIC_AZURE_SAS_TOKEN;
+   
+      const blobServiceClient = new BlobServiceClient(
+        `https://${accountName}.blob.core.windows.net?${sasToken}`
+      );
+   
+      const containerClient = blobServiceClient.getContainerClient(containerName);
+      const blobName = file.name;
+      const blobClient = containerClient.getBlockBlobClient(blobName);
+   
+      const uploadOptions = {
+        blobHTTPHeaders: {
+          blobContentType: file.type,
+        },
+      };
+   
+      await blobClient.uploadData(blob, uploadOptions);
+      const url = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}`;
+   
       const newTaskData = {
         ...taskassigndata,
-        file: file,
-        filename: file.name,
-        filesize: file.size,
-        modifiedAt: new Date().toLocaleString(),
+        file_data: {
+          name: file.name,
+          url: url,
+          type: file.type,
+          size: file.size,
+          uploadDateTime: new Date().toLocaleString()
+        }
       };
-
+   
       setTaskAssigndata(newTaskData);
-    };
-    reader.onerror = (error) =>
-      console.error("File reading has failed: ", error);
-  };
-
+   
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      toast.error("Failed to upload file");
+    }
+   };
   const handleUsername = (e) => {
     setUsernameassin(e.target.value);
   };
@@ -301,6 +350,7 @@ const MyTask = () => {
         }
       }
 
+      setIsActivityFetched(true)
       if (!customFetchExecuted) {
         return {
           activitiesData: [...CombinedActivitiesData, ...customFetchData],
@@ -376,7 +426,8 @@ const MyTask = () => {
     file,
     filename,
     assign_to_email,
-    filesize
+    filesize,
+    file_data
   ) => {
     setReviewtask(true);
     setTaskAssigndata({
@@ -401,6 +452,7 @@ const MyTask = () => {
       filename,
       assign_to_email,
       filesize,
+      file_data
     });
     let unitTypeExtractedArray = activity?.split("-");
     let ExtractedUnitType = unitTypeExtractedArray?.pop();
@@ -438,13 +490,13 @@ const MyTask = () => {
     file,
     filename,
     status,
-    assign_to_email
-    
+    assign_to_email,
+    file_data    
   ) => {
-    if (activity !== "") {
-      setIsActivityReceived(true);
-    } else {
+    if (activity === null || activity === "") {
       setIsActivityReceived(false);
+    } else {
+      setIsActivityReceived(true);
     }
     setIsFillModalOpen(true);
     setIsOpen(false);
@@ -473,7 +525,8 @@ const MyTask = () => {
       file,
       filename,
       status,
-      assign_to_email
+      assign_to_email,
+      file_data
     });
 
     let page = 1;
@@ -769,7 +822,7 @@ const MyTask = () => {
   const submitApprove = async (id) => {
     LoaderOpen();
     const sandData = {
-      task_status: 1,
+      task_status: 'approved',
     };
     await patch(
         `${process.env.BACKEND_API_URL}/organization_task_dashboard/${id}/`,
@@ -811,12 +864,10 @@ const MyTask = () => {
   const submitReject = async (id) => {
     LoaderOpen();
     const sandData = {
-      task_status: 4,
+      task_status: 'reject',
       deadline: date,
       comments: comments,
-      file: null,
-      filename: "",
-      filesize: null,
+      file_data: {}
     };
     await patch(
         `${process.env.BACKEND_API_URL}/organization_task_dashboard/${id}/`,
@@ -891,12 +942,12 @@ const MyTask = () => {
   const submitReAssign = async (id) => {
     LoaderOpen();
     const sandData = {
-      task_status: 0,
+      task_status: 'in_progress',
       value1: "",
       value2: "",
       unit1: "",
       unit2: "",
-      file: null,
+      file_data: {},
       assigned_to: parseInt(usernameasssin),
       deadline: date,
       comments: comments,
@@ -1000,6 +1051,9 @@ const MyTask = () => {
 
     const sandData = {
       ...taskassigndata,
+      id: taskassigndata.id,
+      activity_id: taskassigndata.factor_id,
+      // unit_type
     };
     const { deadline, ...filteredSandData } = sandData;
     const { value1, unit1 } = sandData;
@@ -1039,7 +1093,7 @@ const MyTask = () => {
           handleCloseModal();
           fetchMytaskDetails();
           setaddgoles({});
-          handleForReview(taskassigndata.id, 2);
+          handleForReview(taskassigndata.id, 'under_review');
           setIsFillModalOpen(false);
         } else {
           toast.error("Error", {
@@ -1241,15 +1295,15 @@ const MyTask = () => {
                                 >
                                   {task.roles === 1 ? (
                                     <p className="px-2 py-1 text-center text-[12px]">
-                                      {task.task_status === 0
-                                        ? "InProgres"
-                                        : task.task_status === 1
+                                      {task.task_status === 'in_progress'
+                                        ? "InProgress"
+                                        : task.task_status === 'approved'
                                         ? "Approved"
-                                        : task.task_status === 2
+                                        : task.task_status === 'under_review'
                                         ? "Under review"
-                                        : task.task_status === 3
+                                        : task.task_status === 'completed'
                                         ? "Completed"
-                                        : task.task_status === 4
+                                        : task.task_status === 'reject'
                                         ? "Rejected"
                                         : ""}
                                     </p>
@@ -1341,7 +1395,8 @@ const MyTask = () => {
                                           task.unit2,
                                           task.file,
                                           task.filename,
-                                          task.assign_to_email
+                                          task.assign_to_email,
+                                          task.file_data
                                         );
                                       }}
                                     >
@@ -1362,11 +1417,11 @@ const MyTask = () => {
                                 >
                                   {task.roles === 1 ? (
                                     <p className="px-2 py-1 text-center text-[12px]">
-                                      {task.task_status === 0
-                                        ? "InProgres"
-                                        : task.task_status === 1
+                                      {task.task_status === 'in_progress'
+                                        ? "InProgress"
+                                        : task.task_status === 'approved'
                                         ? "Approved"
-                                        : task.task_status === 2
+                                        : task.task_status === 'under_review'
                                         ? "Under review"
                                         : ""}{" "}
                                     </p>
@@ -1461,13 +1516,13 @@ const MyTask = () => {
                                 >
                                   {task.roles === 1 ? (
                                     <p className="px-2 py-1 text-center text-[12px]">
-                                      {task.task_status === 0
-                                        ? "InProgres"
-                                        : task.task_status === 1
+                                      {task.task_status === 'in_progress'
+                                        ? "InProgress"
+                                        : task.task_status === 'approved'
                                         ? "Approved"
-                                        : task.task_status === 2
+                                        : task.task_status === 'under_review'
                                         ? "Under review"
-                                        : task.task_status === 3
+                                        : task.task_status === 'completed'
                                         ? "Completed"
                                         : ""}{" "}
                                     </p>
@@ -1511,9 +1566,7 @@ const MyTask = () => {
                               </div>
 
                               <div
-                                className={`${
-                                  collapsed ? "w-[20rem]" : "w-[20rem]"
-                                } truncate whitespace-nowrap text-neutral-800 text-[13px] font-normal leading-none ml-3`}
+                                className={`w-[20rem] truncate whitespace-nowrap text-neutral-800 text-[13px] font-normal leading-none ml-3`}
                               >
                                 {task.roles === 1 ? (
                                   <p
@@ -1539,7 +1592,8 @@ const MyTask = () => {
                                         task.file,
                                         task.filename,
                                         task.assign_to_email,
-                                        task.filesize
+                                        task.filesize,
+                                        task.file_data
                                       );
                                     }}
                                   >
@@ -1560,11 +1614,11 @@ const MyTask = () => {
                                 >
                                   {task.roles === 1 ? (
                                     <p className="px-2 py-1 text-center text-[12px] ">
-                                      {task.task_status === 0
-                                        ? "InProgres"
-                                        : task.task_status === 1
+                                      {task.task_status === 'in_progress'
+                                        ? "InProgress"
+                                        : task.task_status === 'approved'
                                         ? "Approved"
-                                        : task.task_status === 2
+                                        : task.task_status === 'under_review'
                                         ? "Under review"
                                         : ""}{" "}
                                     </p>
@@ -1593,6 +1647,7 @@ const MyTask = () => {
         </div>
       </div>
 
+      {/* Not emission task */}
       {isModalOpen && (
         <div className="modal-overlay z-50">
           <div className="modal-center">
@@ -1933,15 +1988,15 @@ const MyTask = () => {
                               onClick={() => setIsPdfViewerOpen(true)}
                               className="text-blue-600 hover:text-blue-800 transition duration-300"
                             >
-                              {taskassigndata.filename
-                                ? taskassigndata.filename
+                              {taskassigndata.file_data.name
+                                ? taskassigndata.file_data.name
                                 : "No file available"}
                             </button>
                           </p>
                           <p className="text-[12px] text-gray-400">
-                            {taskassigndata.file
+                            {taskassigndata.file_data.url
                               ? (
-                                  taskassigndata.filesize /
+                                  taskassigndata.file_data.size /
                                   (1024 * 1024)
                                 ).toFixed(2)
                               : "0"}
@@ -2027,8 +2082,8 @@ const MyTask = () => {
                           <option value="">Select new user</option>
                           {clintlist &&
                             clintlist.map((item, index) => (
-                              <option key={index} value={item.user}>
-                                {item.user_name}
+                              <option key={index} value={item.id}>
+                                {item.username}
                               </option>
                             ))}
                         </select>
@@ -2113,11 +2168,11 @@ const MyTask = () => {
 
           {isPdfViewerOpen && (
             <div className="relative w-[780px] ms-4 bg-white rounded-lg shadow-lg h-[550px] overflow-y-auto">
-              {taskassigndata.file ? (
+              {taskassigndata.file_data.url ? (
                 <>
                   <iframe
                     title="PDF Viewer"
-                    src={taskassigndata.file}
+                    src={taskassigndata.file_data.url}
                     width="100%"
                     height="100%"
                     style={{ border: "none", backgroundColor: "white" }}
@@ -2130,7 +2185,7 @@ const MyTask = () => {
                       right: "10px",
                       background: "transparent",
                       border: "none",
-                      color: taskassigndata.file ? "white" : "gray",
+                      color: taskassigndata.file_data.url ? "white" : "gray",
                       fontSize: "36px",
                       cursor: "pointer",
                       zIndex: "100",
@@ -2167,6 +2222,7 @@ const MyTask = () => {
         </div>
       )}
 
+      {/* Filling Data for assigned task */}
       {isFillModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-5 rounded-lg shadow-lg w-[395px] h-[550px] overflow-y-auto scrollable-content">
@@ -2296,7 +2352,7 @@ const MyTask = () => {
                       value={selectedActivityName}
                       onChange={handleActivityChange}
                     >
-                      <option value="">Select Activity</option>
+                      <option value="">{isActivityFetched ? 'No relevant activities found' :'Select Activity'}</option>
                       {activitiesList.map((activity) => (
                         <option
                           key={activity.id}

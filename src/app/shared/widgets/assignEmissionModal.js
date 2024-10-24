@@ -1,66 +1,89 @@
+// In assignEmissionModal.js, update the component like this:
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   assignEmissionTasks,
   fetchUsers,
+  fetchAssignedTasks,
+  updateScopeDataLocal,
+  clearSelectedRows
 } from "@/lib/redux/features/emissionSlice";
 import { toast } from "react-toastify";
-import { getMonthName } from "../../utils/dateUtils";
 
-const AssignEmissionModal = ({ isOpen, onClose, taskData, onChange }) => {
+const AssignEmissionModal = ({ isOpen, onClose, index,onRemove, taskData }) => {
   const {
     data: users,
     status: usersStatus,
-    error: usersError,
   } = useSelector((state) => state.emissions.users);
+  
   const [selectedUser, setSelectedUser] = useState("");
   const [dueDate, setDueDate] = useState("");
   const dispatch = useDispatch();
-  const assignTaskStatus = useSelector(
-    (state) => state.emissions.assignTaskStatus
-  );
+  const assignTaskStatus = useSelector((state) => state.emissions.assignTaskStatus);
+
+  // Get current scope data
+  const scopeData = useSelector((state) => state.emissions[`${taskData.scope}Data`]);
+  const selectedRows = useSelector((state) => state.emissions.selectedRows[`scope${taskData.scope}`]);
 
   useEffect(() => {
-    if (usersStatus === "idle") {
+    if (usersStatus === "idle" && users.length === 0) {
       dispatch(fetchUsers());
     }
-  }, [usersStatus, dispatch]);
+  }, []);
 
   const handleAssign = () => {
     if (!selectedUser || !dueDate) {
-      alert("Please select a user and due date");
+      toast.error("Please select a user and due date");
       return;
     }
 
-    dispatch(
-      assignEmissionTasks({
-        tasks: [taskData],
-        commonData: {
-          location: taskData.location,
-          year: taskData.year,
-          month: taskData.month,
-          scope: taskData.scope,
-          category: taskData.category,
-          subcategory: taskData.subcategory,
-          activity: taskData.activity,
-          deadline: dueDate,
-          assignedTo: parseInt(selectedUser),
-          countryCode: taskData.countryCode,
-        },
-      })
-    );
-    onChange({
-      type: "assignTo",
-      value: selectedUser,
+    // Prepare the task data
+    const formattedTask = {
+      Emission: {
+        ...taskData,
+        Category: taskData.category,
+        Subcategory: taskData.subcategory,
+        Activity: taskData.activity,
+        assigned_to: parseInt(selectedUser),
+        rowType: 'assigned'
+      }
+    };
+
+    dispatch(assignEmissionTasks({
+      tasks: [formattedTask],
+      commonData: {
+        location: taskData.location,
+        year: taskData.year,
+        month: taskData.month,
+        scope: taskData.scope,
+        deadline: dueDate,
+        assignedTo: parseInt(selectedUser),
+        countryCode: taskData.countryCode,
+      },
+    }))
+    .then(() => {
+      onRemove(index);
+      toast.success("Task assigned successfully");
+      onClose();
+      dispatch(fetchAssignedTasks({
+        location: taskData.location,
+        year: taskData.year,
+        month: taskData.month
+      }));
+    })
+    .catch((error) => {
+      console.error('Error assigning task:', error);
+      toast.error("Failed to assign task");
+      onClose();
     });
-    
   };
 
   useEffect(() => {
     if (assignTaskStatus === "succeeded") {
-      onClose();
+      setSelectedUser("");
+      setDueDate("");
     }
-  }, [assignTaskStatus, onClose]);
+  }, []);
 
   if (!isOpen) return null;
 
