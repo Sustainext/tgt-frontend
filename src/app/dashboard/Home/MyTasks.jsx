@@ -1988,13 +1988,13 @@ const MyTask = () => {
                               onClick={() => setIsPdfViewerOpen(true)}
                               className="text-blue-600 hover:text-blue-800 transition duration-300"
                             >
-                              {taskassigndata.file_data.name
+                              {taskassigndata.file_data?.name
                                 ? taskassigndata.file_data.name
                                 : "No file available"}
                             </button>
                           </p>
                           <p className="text-[12px] text-gray-400">
-                            {taskassigndata.file_data.url
+                            {taskassigndata.file_data?.url
                               ? (
                                   taskassigndata.file_data.size /
                                   (1024 * 1024)
