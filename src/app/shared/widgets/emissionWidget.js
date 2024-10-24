@@ -860,7 +860,7 @@ const EmissionWidget = React.memo(
                         toggleDropdown();
                         setActivitySearch("");
                       }}
-                      className={`text-[12px] focus:border-blue-500 focus:outline-none w-full absolute left-0 top-8 z-[100] min-w-[650px]`}
+                      className={`text-[12px] focus:border-blue-500 focus:outline-none w-full absolute left-0 top-8 z-[100] min-w-[810px]`}
                     >
                       <option value="" className="px-1">
                         {isFetching.current
