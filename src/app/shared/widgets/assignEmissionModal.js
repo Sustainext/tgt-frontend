@@ -161,12 +161,14 @@ const AssignEmissionModal = ({ isOpen, onClose, index,onRemove, taskData }) => {
 
         <div className="flex justify-between">
           <button
+          type="button"
             className="px-4 py-1.5 bg-white text-gray-800 rounded-lg mr-2 w-full border border-gray-200"
             onClick={onClose}
           >
             Cancel
           </button>
           <button
+          type="button"
             className="px-4 py-1.5 bg-blue-500 text-white rounded-lg w-full"
             onClick={handleAssign}
           >
