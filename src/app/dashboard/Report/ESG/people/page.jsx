@@ -55,7 +55,8 @@ import { setEmployeePoliciesStatement,
   setFreedomOfAssociationViews,
   setViolationDiscriminationPolicy,
   setIndigenousRightsPolicy,
-  setParentalLeaves,} from "../../../../../lib/redux/features/ESGSlice/screen13Slice"
+  setParentalLeaves,setSecurityPersonnelInternalTraining,
+  setSecurityPersonnelExternalTraining} from "../../../../../lib/redux/features/ESGSlice/screen13Slice"
 
 
 const People=forwardRef(({ onSubmitSuccess }, ref) => {
@@ -123,6 +124,8 @@ const People=forwardRef(({ onSubmitSuccess }, ref) => {
   const violation_discrimination_policy = useSelector((state) => state.screen13Slice.violation_discrimination_policy);
   const indigenous_rights_policy = useSelector((state) => state.screen13Slice.indigenous_rights_policy);
   const parental_leaves = useSelector((state) => state.screen13Slice.parental_leaves);
+  const security_personnel_internal_training = useSelector((state) => state.screen13Slice.security_personnel_internal_training);
+  const security_personnel_external_training = useSelector((state) => state.screen13Slice.security_personnel_external_training);
   
   const dispatch = useDispatch()
 
@@ -158,6 +161,9 @@ const People=forwardRef(({ onSubmitSuccess }, ref) => {
   "violation_discrimination_policy":violation_discrimination_policy ,
   "indigenous_rights_policy": indigenous_rights_policy ,
   "parental_leaves": parental_leaves ,
+  "security_personnel_external_training":security_personnel_external_training,
+  "security_personnel_internal_training":security_personnel_internal_training
+
       }
   
       const url = `${process.env.BACKEND_API_URL}/esg_report/screen_thirteen/${reportid}/`;
@@ -237,6 +243,8 @@ const People=forwardRef(({ onSubmitSuccess }, ref) => {
       dispatch(setViolationDiscriminationPolicy(''));
       dispatch(setIndigenousRightsPolicy(''));
       dispatch(setParentalLeaves(''));
+      dispatch(setSecurityPersonnelInternalTraining(''));
+      dispatch(setSecurityPersonnelExternalTraining(''));
 
       const url = `${process.env.BACKEND_API_URL}/esg_report/screen_thirteen/${reportid}/`;
       try {
@@ -261,6 +269,8 @@ const People=forwardRef(({ onSubmitSuccess }, ref) => {
             dispatch(setViolationDiscriminationPolicy(response.data.violation_discrimination_policy));
             dispatch(setIndigenousRightsPolicy(response.data.indigenous_rights_policy));
             dispatch(setParentalLeaves(response.data.parental_leaves));
+            dispatch(setSecurityPersonnelInternalTraining(response.data.security_personnel_internal_training));
+      dispatch(setSecurityPersonnelExternalTraining(response.data.security_personnel_external_training));
           }
           
           LoaderClose();

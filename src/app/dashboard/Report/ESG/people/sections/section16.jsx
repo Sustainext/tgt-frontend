@@ -1,17 +1,19 @@
 'use client'
 import { useState, useRef, useEffect } from "react";
 import LeaveTable from "../tables/leaveTable";
-
+import { useDispatch, useSelector } from "react-redux";
+import {setSecurityPersonnelInternalTraining,
+  setSecurityPersonnelExternalTraining} from "../../../../../../lib/redux/features/ESGSlice/screen13Slice"
 
 const Section16=({section13_5Ref,section13_5_1Ref,data})=>{
-    
-    const [trainingIntheOrg,settrainingIntheOrg]=useState("")
-    const [trainingOutsidetheOrg,settrainingOutsidetheOrg]=useState("")
+    const dispatch=useDispatch()
+    const trainingIntheOrg=useSelector(state => state.screen13Slice.security_personnel_internal_training);
+    const trainingOutsidetheOrg=useSelector(state => state.screen13Slice.security_personnel_external_training);
     const handleChangetrainingIntheOrg=(e)=>{
-        settrainingIntheOrg(e.target.value)
+        dispatch(setSecurityPersonnelInternalTraining(e.target.value))
     }
     const handleChangetrainingOutsidetheOrg=(e)=>{
-        settrainingOutsidetheOrg(e.target.value)
+      dispatch(setSecurityPersonnelExternalTraining(e.target.value))
     }
     const col=[
         "Categories",

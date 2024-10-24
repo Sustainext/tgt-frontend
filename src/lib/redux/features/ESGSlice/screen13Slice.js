@@ -23,6 +23,8 @@ const Screen13Slice = createSlice({
     violation_discrimination_policy:'',
     indigenous_rights_policy:'',
     parental_leaves:'',
+    security_personnel_internal_training:'',
+    security_personnel_external_training:'',
     error: null
   },
   reducers: {
@@ -80,6 +82,12 @@ const Screen13Slice = createSlice({
     setParentalLeaves: (state, action) => {
       state.parental_leaves = action.payload;
     },
+    setSecurityPersonnelInternalTraining: (state, action) => {
+      state.security_personnel_internal_training = action.payload;
+    },
+    setSecurityPersonnelExternalTraining: (state, action) => {
+      state.security_personnel_external_training = action.payload;
+    },
   },
 });
 
@@ -102,6 +110,9 @@ export const {
     setViolationDiscriminationPolicy,
     setIndigenousRightsPolicy,
     setParentalLeaves,
+    setSecurityPersonnelInternalTraining,
+    setSecurityPersonnelExternalTraining
+
 } = Screen13Slice.actions;
 
 
