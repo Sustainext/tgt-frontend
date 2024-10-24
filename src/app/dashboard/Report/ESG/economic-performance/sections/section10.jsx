@@ -68,23 +68,23 @@ const Section10 = ({ section11_3_3Ref }) => {
           11.3.3. Climate-related Risks
         </h3>
 
-       
-          {rows.length > 0 ? (
-            <div className="rounded-md shadow-md mb-4">
+        <div className="rounded-md shadow-md mb-4">
             <Risktable col={col} rows={rows} />
             </div>
+          {/* {rows.length > 0 ? (
+            
           ) : (
             <p className="mb-2 text-sm">No data available</p>
-          )}
-
-{rows2.length > 0 ? (
-  <div className="rounded-md shadow-md mb-4">
+          )} */}
+ <div className="rounded-md shadow-md mb-4">
           <Risktable col={col} rows={rows2} />
   </div>
+{/* {rows2.length > 0 ? (
+ 
             
           ) : (
             <p className="mb-4 text-sm">No data available</p>
-          )}
+          )} */}
         
       </div>
     </>

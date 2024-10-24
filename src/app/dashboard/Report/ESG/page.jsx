@@ -44,6 +44,8 @@ const ESGReport = () => {
   const environment=useRef();
   const community=useRef();
   const economicperformance  =useRef();
+  const people=useRef();
+  const customers=useRef();
   const dispatch = useDispatch();
   useEffect(() => {
    
@@ -65,6 +67,8 @@ const ESGReport = () => {
     12:environment,
     14:community,
     11:economicperformance,
+    13:people,
+    15:customers
   };
   
   const handleNextStep = async (type) => {
@@ -129,7 +133,14 @@ const ESGReport = () => {
       if (isSubmitted) {
         setActiveStep((prev) => prev + 1);
       }
-    } else {
+    }
+    else if (type === "last") {
+      const isSubmitted = await submitAndProceed();
+      if (isSubmitted) {
+        // setActiveStep((prev) => prev + 1);
+      }
+    }
+    else {
       const isSubmitted = await submitAndProceed();
       if (isSubmitted) {
         showDraftSavedToast();
@@ -210,9 +221,12 @@ const ESGReport = () => {
                     </button>
                   ) : (
                     <button
-                      className="flex w-[120px] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                    onClick={()=>{
+                      handleNextStep('last')
+                    }}
+                      className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
                     >
-                      Submit
+                      Save & Fill Content Index
                     </button>
                   )}
                 </div>
@@ -304,7 +318,7 @@ const ESGReport = () => {
               {activeStep === 13 && (
                 <div>
                   <div className="mb-4">
-                    <People />
+                    <People ref={people} />
                   </div>
                 </div>
               )}
@@ -318,7 +332,7 @@ const ESGReport = () => {
               {activeStep === 15 && (
                 <div>
                   <div className="mb-4">
-                    <CustomerProductService />
+                    <CustomerProductService ref={customers} />
                   </div>
                 </div>
               )}

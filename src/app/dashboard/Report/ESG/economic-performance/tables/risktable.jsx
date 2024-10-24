@@ -35,7 +35,8 @@ const Risktable = ({ col, rows }) => {
             </tr>
           </thead>
           <tbody>
-            {rows.map((row, rowIndex) => (
+            {rows.length>0?
+            rows.map((row, rowIndex) => (
               <tr className="text-[13px]" key={rowIndex}>
                 {row.map((val, colIndex) => (
                   <td
@@ -50,7 +51,16 @@ const Risktable = ({ col, rows }) => {
                   </td>
                 ))}
               </tr>
-            ))}
+            )):(
+              <tr className="text-[13px]">
+               <td
+               colSpan={12}
+                    className={`border border-gray-200 p-4 text-center`}
+                  >
+                   No data available
+                  </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

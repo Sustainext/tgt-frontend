@@ -4,11 +4,16 @@ import LeaveTable from "../../people/tables/leaveTable";
 import STARSVG from "../../../../../../../public/star.svg";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import {setScopeOneEmission} from "../../../../../../lib/redux/features/ESGSlice/screen12Slice"
+import {setScopeOneEmission, setBiogenicCO2Emission,
+  setBiogenicCO2305} from "../../../../../../lib/redux/features/ESGSlice/screen12Slice"
 import ScopeTable from '../tables/scopeTable'
+import dynamic from 'next/dynamic';
+
+
+const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 
 const Section4=({section12_1_2Ref,data})=>{
-    const [biogenicStatement,setBiogenicStatement]=useState("")
+   const biogenicStatement=useSelector(state=>state.screen12Slice.biogenic_c02_emissions)
     const content = useSelector(state => state.screen12Slice.scope_one_emissions);
     const dispatch = useDispatch();
     const loadContent = () => {
@@ -74,7 +79,7 @@ const Section4=({section12_1_2Ref,data})=>{
       
       
       const handleRichEditorChange=(value)=>{
-        setBiogenicStatement(value)
+        dispatch(setBiogenicCO2Emission(value))
       }
     return (
         <>
@@ -111,11 +116,11 @@ const Section4=({section12_1_2Ref,data})=>{
             <p className="text-[15px]  mb-2 font-semibold">
             Biogenic CO2 emissions
         </p>
-<div className="shadow-md rounded-md mb-4">
+{/* <div className="shadow-md rounded-md mb-4">
 <LeaveTable columns={col} data={Tabledata}/>
-</div>
+</div> */}
 
-{/* <div className="mb-4">
+<div className="mb-4">
               <JoditEditor
               // ref={editor}
               value={biogenicStatement}
@@ -123,7 +128,7 @@ const Section4=({section12_1_2Ref,data})=>{
               tabIndex={1}
               onBlur={handleRichEditorChange}
               />
-            </div> */}
+            </div>
 </div>
         </>
     )

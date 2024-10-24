@@ -58,7 +58,8 @@ import {setEnvironmentStatement,
   setEnergyConsumptionReductionCommitment,
   setSignificantSpills,
   setHabitatProtectionRestorationCommitment,
-  setAirQualityProtectionCommitment} from "../../../../../lib/redux/features/ESGSlice/screen12Slice"
+  setAirQualityProtectionCommitment,setBiogenicCO2Emission,
+  setBiogenicCO2305} from "../../../../../lib/redux/features/ESGSlice/screen12Slice"
 
 const Environment=forwardRef(({ onSubmitSuccess }, ref) => {
     
@@ -140,7 +141,8 @@ const scrollToSection = (sectionRef, sectionId) => {
   const significant_spills = useSelector((state) => state.screen12Slice.significant_spills);
   const habitat_protection_restoration_commitment = useSelector((state) => state.screen12Slice.habitat_protection_restoration_commitment);
   const air_quality_protection_commitment = useSelector((state) => state.screen12Slice.air_quality_protection_commitment);
-  
+  const biogenic_c02_emissions = useSelector((state) => state.screen12Slice.biogenic_c02_emissions);
+  const biogenic_c02_emissions_305_3c = useSelector((state) => state.screen12Slice.biogenic_c02_emissions_305_3c);
   const dispatch = useDispatch()
 
   useImperativeHandle(ref, () => ({
@@ -177,6 +179,8 @@ const scrollToSection = (sectionRef, sectionId) => {
   "significant_spills": significant_spills ,
   "habitat_protection_restoration_commitment": habitat_protection_restoration_commitment ,
   "air_quality_protection_commitment": air_quality_protection_commitment,
+  "biogenic_c02_emissions_305_3c":biogenic_c02_emissions_305_3c,
+  "biogenic_c02_emissions":biogenic_c02_emissions
       }
   
       const url = `${process.env.BACKEND_API_URL}/esg_report/screen_twelve/${reportid}/`;
@@ -256,6 +260,8 @@ const scrollToSection = (sectionRef, sectionId) => {
       dispatch(setSignificantSpills(''));
       dispatch(setHabitatProtectionRestorationCommitment(''));
       dispatch(setAirQualityProtectionCommitment(''))
+      dispatch(setBiogenicCO2Emission(''))
+      dispatch(setBiogenicCO2305(''))
 
       const url = `${process.env.BACKEND_API_URL}/esg_report/screen_twelve/${reportid}/`;
       try {
@@ -282,6 +288,8 @@ const scrollToSection = (sectionRef, sectionId) => {
       dispatch(setSignificantSpills(response.data.significant_spills));
       dispatch(setHabitatProtectionRestorationCommitment(response.data.habitat_protection_restoration_commitment));
       dispatch(setAirQualityProtectionCommitment(response.data.air_quality_protection_commitment))
+      dispatch(setBiogenicCO2Emission(response.data.biogenic_c02_emissions))
+      dispatch(setBiogenicCO2305(response.data.biogenic_c02_emissions_305_3c))
           }
           
           LoaderClose();

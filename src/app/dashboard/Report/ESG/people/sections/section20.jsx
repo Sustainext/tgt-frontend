@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 
 
-const Section20=({section13_6_3Ref})=>{
+const Section20=({section13_6_3Ref,data})=>{
     const [content,setContent] = useState(
         `We provide access to occupational health services that support the physical and mental well-being of our employees. This includes medical check-ups, health screenings, and counseling services.`
     )
@@ -16,7 +16,7 @@ const Section20=({section13_6_3Ref})=>{
 13.6.3 Occupational Health Services
 </h3>
 
-<p className="text-sm mb-4">{content}</p>
+<p className="text-sm mb-4">{data["403-3a-ohs_functions"]?data["403-3a-ohs_functions"].data?data["403-3a-ohs_functions"].data.length>0?data["403-3a-ohs_functions"].data[0].Q1?data["403-1b-scope_of_workers"].data[0].Q1:"No data available":"No data available":"No data available":"No data available"}</p>
 
 
 </div>

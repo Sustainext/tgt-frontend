@@ -115,9 +115,9 @@ const Section8=({section12_1_6Ref})=>{
               />
             </div>
            
-<div className="shadow-md rounded-md mb-4">
+{/* <div className="shadow-md rounded-md mb-4">
 <LeaveTable columns={col1} data={data1}/>
-</div>
+</div> */}
 
 </div>
         </>

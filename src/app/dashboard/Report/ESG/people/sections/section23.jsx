@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 
 
-const Section23=({section13_6_6Ref})=>{
+const Section23=({section13_6_6Ref,data})=>{
     const [content,setContent] = useState(
         ``
     )
@@ -16,7 +16,16 @@ const Section23=({section13_6_6Ref})=>{
 13.6.6 Prevention and Mitigation of OHS Impacts
 </h3>
 
-<p className="text-sm mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam architecto earum sit corporis temporibus deserunt repudiandae alias, soluta corrupti. Accusantium molestiae eveniet quo eius ipsa repudiandae doloremque consequatur a facere!</p>
+<p className="text-[15px]  mb-2 font-semibold">
+Negative occupational health and safety impacts
+            </p>
+            <p className="text-sm mb-4">{data["403-7a-negative_occupational"]?data["403-7a-negative_occupational"].data?data["403-7a-negative_occupational"].data.length>0?data["403-7a-negative_occupational"].data[0].Q1?data["403-7a-negative_occupational"].data[0].Q1:"No data available":"No data available":"No data available":"No data available"}</p>
+
+    <p className="text-[15px]  mb-2 font-semibold">
+    Hazards and risks
+            </p>
+            <p className="text-sm mb-4">{data["403-7a-hazards_risks"]?data["403-7a-hazards_risks"].data?data["403-7a-hazards_risks"].data.length>0?data["403-7a-hazards_risks"].data[0].Q1?data["403-7a-hazards_risks"].data[0].Q1:"No data available":"No data available":"No data available":"No data available"}</p>
+            
 
 
 </div>
