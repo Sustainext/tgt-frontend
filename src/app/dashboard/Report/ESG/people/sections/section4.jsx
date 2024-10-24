@@ -9,13 +9,14 @@ const Section4=({section13_1_3Ref,data})=>{
         "Full-Time Employees",
         "Part-Time Employees",
         "Temporary Employees",
+        "Significant Location"
         
       ];
     
     
-      const Tabledata=data["401_social_analyse"]?data["401_social_analyse"]["data"]?data["401_social_analyse"]["data"]["benefits"].length>0?
+      const Tabledata=data["401-2a-benefits_provided"]?data["401-2a-benefits_provided"]["data"]?data["401-2a-benefits_provided"]["data"].length>0?
 
-      data["401_social_analyse"]["data"]["benefits"].map((val,index)=>{
+      data["401-2a-benefits_provided"]["data"].map((val,index)=>{
           return (
               
             {
@@ -23,6 +24,7 @@ const Section4=({section13_1_3Ref,data})=>{
           "Full-Time Employees": val.full_time?"Yes":"No",
           "Part-Time Employees": val.part_time?"Yes":"No",
           "Temporary Employees": val.temporary?"Yes":"No",
+          "Significant Location":val.significantlocation
         
           
           }
@@ -35,6 +37,7 @@ const Section4=({section13_1_3Ref,data})=>{
           "Full-Time Employees": "No data available",
           "Part-Time Employees": "No data available",
           "Temporary Employees": "No data available",
+          "Significant Location":"No data available"
        
   },
   ]:[
@@ -43,6 +46,7 @@ const Section4=({section13_1_3Ref,data})=>{
           "Full-Time Employees": "No data available",
           "Part-Time Employees": "No data available",
           "Temporary Employees": "No data available",
+          "Significant Location":"No data available"
          
   },
   ]:[
@@ -51,6 +55,7 @@ const Section4=({section13_1_3Ref,data})=>{
           "Full-Time Employees": "No data available",
           "Part-Time Employees": "No data available",
           "Temporary Employees": "No data available",
+          "Significant Location":"No data available"
          
   },
   ]
@@ -72,7 +77,7 @@ Significant locations of operation
 Minimum number of weeks’ notice
             </p>
 
-<p className="text-sm mb-4">{data["402-1a"]?data["402-1a"].data?data["402-1a"].data.length>0?data["402-1a"].data[0].Q1?data["402-1a"].data[0].Q1:"No data available":"No data available":"No data available":"No data available"}</p>
+<p className="text-sm mb-4">{data["402_1a_minimum_number_of_weeks"]?data["402_1a_minimum_number_of_weeks"].data?data["402_1a_minimum_number_of_weeks"].data.length>0?data["402_1a_minimum_number_of_weeks"].data[0].Q1?data["402_1a_minimum_number_of_weeks"].data[0].Q1:"No data available":"No data available":"No data available":"No data available"}</p>
 
         <p className="text-[15px]  mb-2 font-semibold">
         Benefits provided to employees

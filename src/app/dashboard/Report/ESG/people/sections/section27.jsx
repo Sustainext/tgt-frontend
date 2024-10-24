@@ -27,23 +27,38 @@ const Section27=({section13_6_10Ref,data})=>{
        
     ]
 
-    const data1=[
-        {
-            "Rate of fatalities as a result of work-related injury ":"Covered by the system",
-            "Percentage of all Employees ":"",
-            "Percentage of workers who are not employees but whose work and/or workplace is controlled by the organization ":"",
-        },
-        {
-            "Rate of fatalities as a result of work-related injury ":"Internally audited ",
-            "Percentage of all Employees ":"",
-            "Percentage of workers who are not employees but whose work and/or workplace is controlled by the organization ":"",
-        },
-        {
-            "Rate of fatalities as a result of work-related injury ":"Audited or certified by an external party. ",
-            "Percentage of all Employees ":"",
-            "Percentage of workers who are not employees but whose work and/or workplace is controlled by the organization ":"",
+   
+
+    const Tabledata=data["get_403_analyse"]?data["get_403_analyse"]["workers_covered_by_an_occupational_health_and_safety_management_system"].length>0?
+
+    data["get_403_analyse"]["workers_covered_by_an_occupational_health_and_safety_management_system"].map((val,index)=>{
+        return (
+            
+          {
+           
+            "Rate of fatalities as a result of work-related injury ":val[""],
+            "Percentage of all Employees ":val["Percentage of all Employees"],
+            "Percentage of workers who are not employees but whose work and/or workplace is controlled by the organization ":val["Percentage of workers who are not employees but whose work and/or workplace is controlled by the organization"],
+        
         }
-    ]
+            
+        )
+    })
+:[
+  {
+     
+   "Rate of fatalities as a result of work-related injury ":"No data available",
+            "Percentage of all Employees ":"No data available",
+            "Percentage of workers who are not employees but whose work and/or workplace is controlled by the organization ":"No data available",
+},
+]:[
+  {
+   
+   "Rate of fatalities as a result of work-related injury ":"No data available",
+            "Percentage of all Employees ":"No data available",
+            "Percentage of workers who are not employees but whose work and/or workplace is controlled by the organization ":"No data available",
+},
+]
     
     return (
         <>
@@ -151,7 +166,7 @@ Workers excluded & type of workers excluded
             </p>
 
             <div className="rounded-md mb-4 shadow-md">
-                <LeaveTable columns={col1} data={data1}/>
+                <LeaveTable columns={col1} data={Tabledata}/>
             </div>
             
 

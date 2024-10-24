@@ -5,6 +5,14 @@ import LeaveTable from "../tables/leaveTable";
 
 const Section16=({section13_5Ref,section13_5_1Ref,data})=>{
     
+    const [trainingIntheOrg,settrainingIntheOrg]=useState("")
+    const [trainingOutsidetheOrg,settrainingOutsidetheOrg]=useState("")
+    const handleChangetrainingIntheOrg=(e)=>{
+        settrainingIntheOrg(e.target.value)
+    }
+    const handleChangetrainingOutsidetheOrg=(e)=>{
+        settrainingOutsidetheOrg(e.target.value)
+    }
     const col=[
         "Categories",
         "Average training hours per employee category",
@@ -76,11 +84,25 @@ const Section16=({section13_5Ref,section13_5_1Ref,data})=>{
              <p className="text-[15px]  mb-2 font-semibold">
             Percentage of security personnel who have received formal training in the organisation: 
             </p>
-            <p className="text-sm mb-4">No data available</p>
+            {/* <p className="text-sm mb-4">No data available</p> */}
+            <textarea
+            placeholder="Enter the data"
+            onChange={handleChangetrainingIntheOrg}
+          value={trainingIntheOrg}
+          className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
+          rows={4}
+        />
             <p className="text-[15px]  mb-2 font-semibold">
             Percentage of security personnel who have received formal training from third-party organisation: 
             </p>
-            <p className="text-sm mb-4">No data available</p>
+            {/* <p className="text-sm mb-4">No data available</p> */}
+            <textarea
+            placeholder="Enter the data"
+            onChange={handleChangetrainingOutsidetheOrg}
+          value={trainingOutsidetheOrg}
+          className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
+          rows={4}
+        />
             <p className="text-[15px]  mb-2 font-semibold">
             Average hours of training provided to employees
             </p>

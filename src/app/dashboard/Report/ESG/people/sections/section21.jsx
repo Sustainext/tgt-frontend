@@ -26,15 +26,43 @@ const Section21=({section13_6_4Ref,data})=>{
         "Exclusions (if any) & Reason for Exclusions"
     ]
 
-    const data1=[
-        {
-            "Formal joint management-worker health and safety committees":"Committee 1",
-            "Responsibilities":"",
-            "Meeting Frequency":"Data",
-            "Decision-making authority":"Data",
-            "Exclusions (if any) & Reason for Exclusions":"Data"
+    
+    const Tabledata=data["get_403_analyse"]?data["get_403_analyse"]["formal_joint_management"].length>0?
+
+    data["get_403_analyse"]["formal_joint_management"].map((val,index)=>{
+        return (
+            
+          {
+           
+            "Formal joint management-worker health and safety committees":val.committeeName,
+            "Responsibilities":val.responsibilities,
+            "Meeting Frequency":val.meetingFrequency,
+            "Decision-making authority":val.decisionMaking,
+            "Exclusions (if any) & Reason for Exclusions":val.exclusions
+        
         }
-    ]
+            
+        )
+    })
+:[
+  {
+     
+    "Formal joint management-worker health and safety committees":"No data available",
+    "Responsibilities":"No data available",
+    "Meeting Frequency":"No data available",
+    "Decision-making authority":"No data available",
+    "Exclusions (if any) & Reason for Exclusions":"No data available"
+},
+]:[
+  {
+   
+    "Formal joint management-worker health and safety committees":"No data available",
+    "Responsibilities":"No data available",
+    "Meeting Frequency":"No data available",
+    "Decision-making authority":"No data available",
+    "Exclusions (if any) & Reason for Exclusions":"No data available"
+},
+]
     
     return (
         <>
@@ -68,7 +96,7 @@ const Section21=({section13_6_4Ref,data})=>{
         Formal joint management-worker health and safety committees   
             </p>
             <div className="shadow-md rounded-md mb-4">
-                <LeaveTable columns={col} data={data1} />
+                <LeaveTable columns={col} data={Tabledata} />
             </div>
            
             

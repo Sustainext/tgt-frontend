@@ -99,9 +99,9 @@ const ESGSidebar=({activeStep,setActiveStep})=>{
         Customers, products & services
           </p>
         </div>
-        <div className="flex items-center px-2 py-2 -mt-4  rounded-none focus:outline-none text-[#727272] font-bold">
+        {/* <div className="flex items-center px-2 py-2 -mt-4  rounded-none focus:outline-none text-[#727272] font-bold">
             <span className="text-[16px] font-[600] p-2">Content Index</span>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

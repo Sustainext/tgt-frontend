@@ -131,7 +131,7 @@ const Section24=({section13_6_7Ref,data})=>{
             <p className="text-sm mb-4">{data["403-2a-process_for_hazard"]?data["403-2a-process_for_hazard"].Q4?data["403-2a-process_for_hazard"].Q4.selected?data["403-2a-process_for_hazard"].Q4.selected:data["403-2a-process_for_hazard"].Q4.otherValue:"No data available":"No data available"}</p>
             
             <p className="text-[15px]  mb-2 font-semibold">
-            List of Legal basis:  
+            Legal basis:  
             </p>
             <p className="text-sm mb-4">{data["403-2a-process_for_hazard"]?data["403-2a-process_for_hazard"].Q5?data["403-2a-process_for_hazard"].Q5.selected?data["403-2a-process_for_hazard"].Q5.selected:data["403-2a-process_for_hazard"].Q5:"No data available":"No data available"}</p>
             

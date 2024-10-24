@@ -53,14 +53,15 @@ Status of the incidents and actions taken
 <p className="text-sm mb-4">{data["411_1b"]?data["411_1b"].data?data["411_1b"].data.length>0?data["411_1b"].data[0].Q4?data["411_1b"].data[0].Q4:"No data available":"No data available":"No data available":"No data available"}</p>
 
 
+<p className="text-[15px] text-[#344054] mb-2 font-semibold">Total number of incident violations involving the rights of indigenous peoples</p> 
 {data["411_1a"]?data["411_1a"].data?data["411_1a"].data.length>0?data["411_1a"].data[0].Q1?data["411_1a"].data[0].Q1=="Yes"?(
 <div>
-<p className="text-[15px] text-[#344054] mb-2 font-semibold">Total number of incident violations involving the rights of indigenous peoples</p>  
+ 
 <p className="text-sm mb-4">{data["411_1a"].data[0].Q2?data["411_1a"].data[0].Q2:"No data available"}</p>
 </div>
 ):(
 <div></div>
-):"No data available":"No data available":"No data available":"No data available"}
+):<p className="text-sm">No data available</p>:<p className="text-sm">No data available</p>:<p className="text-sm">No data available</p>:<p className="text-sm">No data available</p>}
 </div>
         </>
     )

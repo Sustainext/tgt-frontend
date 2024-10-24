@@ -94,7 +94,8 @@ const Apporchtable = ({ col, values, currency,headerKeyMap  }) => {
         </tr>
       </thead>
       <tbody>
-        {values.map((row, rowIndex) => (
+        {values.length>0?
+        values.map((row, rowIndex) => (
           <tr key={rowIndex} className="text-[12px]">
             {col.map((header, headerIndex) => {
               const key = headerKeyMap[header]; // Match the header with object keys
@@ -111,7 +112,16 @@ const Apporchtable = ({ col, values, currency,headerKeyMap  }) => {
               );
             })}
           </tr>
-        ))}
+        )):(
+          <tr className="text-[13px]">
+          <td
+          colSpan={11}
+                className="border-t border-r border-gray-200 p-4 text-center"
+              >
+                No data available
+              </td>
+        </tr>
+        )}
       </tbody>
     </table>
   </div>
