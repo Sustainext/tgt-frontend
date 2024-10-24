@@ -5,11 +5,17 @@ import AnalyseTable from "../tables/analyseTable"
 import STARSVG from "../../../../../../../public/star.svg";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import {setScopeThreeEmission} from "../../../../../../lib/redux/features/ESGSlice/screen12Slice"
+import {setScopeThreeEmission,setBiogenicCO2Emission,
+  setBiogenicCO2305} from "../../../../../../lib/redux/features/ESGSlice/screen12Slice"
 import ScopeTable from "../tables/scopeTable"
+import dynamic from 'next/dynamic';
+
+
+const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 
 const Section6=({section12_1_4Ref,data})=>{
-    
+
+  const biogenicStatement=useSelector(state=>state.screen12Slice.biogenic_c02_emissions_305_3c)
     const content = useSelector(state => state.screen12Slice.scope_three_emissions);
     const dispatch = useDispatch();
     const loadContent = () => {
@@ -20,6 +26,40 @@ const Section6=({section12_1_4Ref,data})=>{
     const handleEditorChange=(e)=>{
       dispatch(setScopeThreeEmission(e.target.value))
     }
+    const handleRichEditorChange=(value)=>{
+      dispatch(setBiogenicCO2305(value))
+    }
+    const config = {
+      style: {
+        fontSize: "14px",
+        color:"#667085"
+      },
+      allowResizeY: false,
+      defaultActionOnPaste: 'insert_clear_html',
+      toolbarSticky: false,
+      toolbar: true,
+      buttons: [
+          'bold',
+          'italic',
+          'underline',
+          'strikeThrough',
+          'align',
+          'outdent',
+          'indent',
+          'ul',
+          'ol',
+          'paragraph',
+          'link',
+          'table',
+          'undo',
+          'redo',
+          'hr',
+          'fontsize',
+          'selectall'
+      ],
+      // Remove buttons from the extra buttons list
+      removeButtons: ['fullsize', 'preview', 'source', 'print', 'about', 'find', 'changeMode','paintFormat','image','brush','font'],
+    };
     const scope3col=[
         "Category",
         "Sub Category",
@@ -127,9 +167,18 @@ Emissions by Scope
 <p className="text-[15px]  mb-2 font-semibold">
 305-3-c. Biogenic CO2 emissions
         </p>
-<div className="shadow-md rounded-md mb-4">
+{/* <div className="shadow-md rounded-md mb-4">
 <LeaveTable columns={col3} data={data3}/>
-</div>
+</div> */}
+ <div className="mb-4">
+              <JoditEditor
+              // ref={editor}
+              value={biogenicStatement}
+              config={config}
+              tabIndex={1}
+              onBlur={handleRichEditorChange}
+              />
+            </div>
 </div>
         </>
     )
