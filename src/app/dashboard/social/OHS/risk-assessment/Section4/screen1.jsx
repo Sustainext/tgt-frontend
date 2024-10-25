@@ -16,7 +16,7 @@ const widgets = {
   TableWidget: GeneralWorkersEmployees,
 };
 
-const view_path = "gri-general-workforce_other_workers-workers-2-8-a";
+const view_path = "gri-social-ohs-403-2d-work_related_incident-new";
 const client_id = 1;
 const user_id = 1;
 
@@ -248,16 +248,16 @@ const Screen1 = ({location, year,month}) => {
     }
   };
 
-//   useEffect(() => {
-//     if (location && year) {
-//       loadFormData();
-//       toastShown.current = false; 
-//     } else {
-//       if (!toastShown.current) {
-//         toastShown.current = true; 
-//       }
-//     }
-//   }, [location, year]);
+  useEffect(() => {
+    if (location && year) {
+      loadFormData();
+      toastShown.current = false; 
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true; 
+      }
+    }
+  }, [location, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -306,8 +306,8 @@ const Screen1 = ({location, year,month}) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
