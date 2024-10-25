@@ -23,9 +23,9 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     if (token) {
-      fetchUserDetails(token).then((data) => {
-        setUserDetails(data);
-        saveToLocalStorage("userData", data);
+      fetchUserDetails(token).then(data => {
+        setUserDetails(data)
+        saveToLocalStorage(data)
       });
     }
   }, [token]);

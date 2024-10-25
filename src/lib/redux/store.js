@@ -21,6 +21,9 @@ import screen14SliceReducer from './features/ESGSlice/screen14Slice'
 import screen11SliceReducr from './features/ESGSlice/screen11Slice'
 import RolespermissionsReducer from './features/roles-permissionsSlice'
 import AuthReducer from "./features/authSlice"
+import screen13SliceReducer from './features/ESGSlice/screen13Slice'
+import screen15SliceReducer from './features/ESGSlice/screen15Slice'
+
 const rootReducer = combineReducers({
   counter: counterReducer,
   emissions: emissionReducer,
@@ -41,6 +44,8 @@ const rootReducer = combineReducers({
   screen14Slice:screen14SliceReducer,
   roleprmission:RolespermissionsReducer,
   auth:AuthReducer,
+  screen13Slice:screen13SliceReducer,
+  screen15Slice:screen15SliceReducer
 })
 
 export const makeStore = () => {

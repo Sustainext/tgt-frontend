@@ -2,11 +2,12 @@
 import { useState, useRef, useEffect } from "react";
 
 
-const CustomerTable=({data})=>{
+const ComplaintTable=({data})=>{
 
     const col=[
-        "Organization/Corporation",
-        "Percentage of significant product or service categories covered by and assessed for compliance with such procedures."
+        "Number of substantiated complaints received concerning breaches of customer privacy",
+        "Complaints received from outside parties and substantiated by the organization",
+        "Complaints from regulatory bodies"
     ]
     return (
         <>
@@ -36,11 +37,13 @@ const CustomerTable=({data})=>{
         <tbody>
             {data?.length>0?data.map((val)=>(
                 <tr className="text-[13px]">
-                <td className="border border-gray-200 p-4 rounded-bl-md text-left">{val.org_or_corp?val.org_or_corp:"No data available"}</td>
-                <td className="border border-gray-200 p-4 rounded-bl-md text-left">{val.percentage?val.percentage+"%":"No data available"}</td>
+                <td className="border border-gray-200 p-4 rounded-bl-md text-left">{val.customerprivacy?val.customerprivacy:"No data available"}</td>
+                <td className="border border-gray-200 p-4 rounded-bl-md text-left">{val.substantiatedorganization?val.substantiatedorganization:"No data available"}</td>
+                <td className="border border-gray-200 p-4 rounded-bl-md text-left">{val.regulatorybodies?val.regulatorybodies:"No data available"}</td>
                 </tr>
             )):(
                 <tr className="text-[13px]">
+                <td className="border border-gray-200 p-4 rounded-bl-md text-left">No data available</td>
                 <td className="border border-gray-200 p-4 rounded-bl-md text-left">No data available</td>
                 <td className="border border-gray-200 p-4 rounded-bl-md text-left">No data available</td>
                 </tr>
@@ -54,4 +57,4 @@ const CustomerTable=({data})=>{
         </>
     )
 }
-export default CustomerTable
+export default ComplaintTable

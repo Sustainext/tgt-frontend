@@ -111,12 +111,12 @@ const Section33=({section12_7Ref})=>{
               onBlur={handleEditorChange}
               />
             </div>
-            <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+            {/* <p className="text-[15px] text-[#344054] mb-2 font-semibold">
             Air Emissions by Pollutants
 </p>
 <div className="shadow-md rounded-md mb-4">
 <LeaveTable columns={col1} data={data1}/>
-</div>
+</div> */}
 
 </div>
         </>

@@ -1,16 +1,10 @@
 'use client'
 import { useState, useRef, useEffect } from "react";
+import ComplaintTable from "../table2"
 
-
-const Section8=({section15_3Ref})=>{
-    const [content,setContent] = useState(
-        `Our commitment to providing high-quality products and services is central to our business strategy. We adhere to the Global Reporting Initiative (GRI) standards to ensure that our offerings meet the highest levels of safety, sustainability, and customer satisfaction. This section outlines our approach to managing the health and safety impacts of our products, addressing incidents of non-compliance, and ensuring accurate product information and labelling. `
-    )
-    const [content2,setContent2]=useState(
-        `This report covers the period from [Start Date] to [End Date] and is part of our annual sustainability reporting cycle. 
-We are committed to providing regular updates on our ESG performance to ensure transparency and keep our 
-stakeholders informed of our progress.`
-    )
+const Section8=({section15_3Ref,data})=>{
+   
+    const tableData=data["418_1a_analyse"]?data['418_1a_analyse'].customer_privacy_data?data["418_1a_analyse"].customer_privacy_data:[]:[]
     return (
         <>
         <div id="setion15_3" ref={section15_3Ref}>
@@ -18,22 +12,19 @@ stakeholders informed of our progress.`
         15.3 Customers
         </h3>
         <p className="text-[15px] mb-2 font-semibold">
-        Number of substantiated complaints received concerning breaches of customer privacy
+        Number of identified leaks, thefts, or losses of customer data: 
        </p>
-            <p className="text-sm mb-4">100</p>
+            <p className="text-sm mb-4">{data["418_1b"]?data["418_1b"].length>0?data["418_1b"][0].Q1?data["418_1b"][0].Q1:"No data available":"No data available":"No data available"}</p>
             <p className="text-[15px] mb-2 font-semibold">
-            Complaints received from outside parties and substantiated by the organization
+            Statement of fact
             </p>
-            <p className="text-sm mb-4">100</p>
+            <p className="text-sm mb-4">{data["418_1c"]?data["418_1c"].length>0?data["418_1c"][0].Q1?data["418_1c"][0].Q1:"No data available":"No data available":"No data available"}</p>
 
-            <p className="text-[15px] mb-2 font-semibold">
-            Complaints from regulatory bodies
-       </p>
-            <p className="text-sm mb-4">100</p>
-            <p className="text-[15px] mb-2 font-semibold">
-            Number of identified leaks, thefts, or losses of customer data: 
-            </p>
-            <p className="text-sm mb-4">100</p>
+<p className="text-[15px] mb-2 font-semibold">Total number of substantiated complaints received concerning breaches of customer privacy</p>
+        <div className="rounded-md mb-4 shadow-md">
+            <ComplaintTable data={tableData}/>
+        </div>
+           
            
         </div>
         </>
