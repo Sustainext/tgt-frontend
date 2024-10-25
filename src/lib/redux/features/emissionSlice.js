@@ -325,6 +325,7 @@ export const fetchUsers = createAsyncThunk(
 const emissionsSlice = createSlice({
   name: 'emissions',
   initialState: {
+    locations:[],
     location: '',
     year: '',
     month: 1,
@@ -406,6 +407,9 @@ const emissionsSlice = createSlice({
     scopeReRender:false
   },
   reducers: {
+    setLocationsRedux: (state, action) => {
+      state.locations = action.payload;
+    },
     setLocation: (state, action) => {
       state.location = action.payload;
     },
@@ -657,6 +661,7 @@ const emissionsSlice = createSlice({
 });
 
 export const {
+  setLocationsRedux,
   setLocation,
   setYear,
   setMonth,

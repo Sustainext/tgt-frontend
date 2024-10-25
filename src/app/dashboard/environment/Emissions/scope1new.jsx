@@ -279,9 +279,9 @@ const Scope1 = forwardRef(
         }
     
         // Notify success
-        if(rowType !== 'default') {
-          toast.success("Row removed successfully");
-        }
+        // if(rowType !== 'default') {
+        //   toast.success("Row removed successfully");
+        // }
       },
       [formData, dispatch, setAccordionOpen]
     );

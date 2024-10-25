@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { yearInfo, months } from "@/app/shared/data/yearInfo";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import { fetchPreviousMonthData, fetchEmissionsData, fetchAssignedTasks, fetchApprovedTasks, setLocation, setYear, setMonth, setCountryCode } from '@/lib/redux/features/emissionSlice';
+import { fetchPreviousMonthData, fetchEmissionsData, fetchAssignedTasks, fetchApprovedTasks, setLocation, setYear, setMonth, setCountryCode, setLocationsRedux } from '@/lib/redux/features/emissionSlice';
 
 const monthMapping = {
   Jan: 1, Feb: 2, Mar: 3, Apr: 4, May: 5, Jun: 6,
@@ -32,6 +32,7 @@ const EmissionsHeader = ({
       try {
         const response = await axiosInstance.get("/sustainapp/get_location");
         setLocations(response.data);
+        setLocationsRedux(response.data);
       } catch (error) {
         console.error("Error fetching locations:", error);
       }

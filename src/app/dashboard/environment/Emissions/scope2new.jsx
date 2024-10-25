@@ -124,22 +124,56 @@ const Scope2 = forwardRef(
       );
     }, [formData, dispatch]);
 
-    const handleRemoveRow = useCallback(async (index) => {
-      const parsedIndex = parseInt(index, 10);
-      const updatedData = formData.filter((_, i) => i !== parsedIndex);
-
-      dispatch(updateScopeDataLocal({ scope: 2, data: { data: updatedData } }));
-
-      try {
-        await updateFormData(updatedData);
-
+    const handleRemoveRow = useCallback(
+      async (index) => {
+        const parsedIndex = parseInt(index, 10);
+        const rowToRemove = formData[parsedIndex];
+    
+        if (!rowToRemove) {
+          console.error("Row not found");
+          return;
+        }
+    
+        const rowType = rowToRemove.Emission?.rowType;
+    
+        if (rowType === 'assigned' || rowType === 'approved') {
+          // Prevent deletion for assigned or approved rows
+          toast.error("Cannot delete assigned or approved rows");
+          return;
+        }
+    
+        const updatedData = formData.filter((_, i) => i !== parsedIndex);
+        console.log("updated data", updatedData, " for index ", parsedIndex);
+    
+        // Update local state
+        dispatch(
+          updateScopeDataLocal({ scope: 2, data: { data: updatedData } })
+        );
+    
+        if (rowType === 'calculated') {
+          try {
+            // Only call API for calculated rows
+            await updateFormData(updatedData);
+          } catch (error) {
+            console.error("Failed to update form data:", error);
+            toast.error("Failed to update data on the server");
+            // Optionally, revert the local state change here
+            return;
+          }
+        }
+    
+        // Check if we need to close the accordion
         if (parsedIndex === 0 && updatedData.length === 0) {
           setAccordionOpen(false);
         }
-      } catch (error) {
-        console.error("Failed to update form data:", error);
-      }
-    }, [formData, dispatch, setAccordionOpen]);
+    
+        // Notify success
+        // if(rowType !== 'default') {
+        //   toast.success("Row removed successfully");
+        // }
+      },
+      [formData, dispatch, setAccordionOpen]
+    );
 
     const updateFormData = useCallback(async (data) => {
       LoaderOpen();

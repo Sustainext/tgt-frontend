@@ -8,6 +8,7 @@ import {
 } from "@/lib/redux/features/emissionSlice";
 import { toast } from "react-toastify";
 import { Oval } from "react-loader-spinner";
+import axiosInstance from "@/app/utils/axiosMiddleware";
 
 const AssignEmissionModal = ({
   isOpen,
@@ -31,6 +32,26 @@ const AssignEmissionModal = ({
     show: false,
     message: "",
   });
+
+  const [locations, setLocations] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState("");
+
+  useEffect(() => {
+    const fetchLocations = async () => {
+      try {
+        const response = await axiosInstance.get("/sustainapp/get_location");
+        setLocations(response.data);
+        const selectLoc = response.data.filter(loc=>loc.id===taskData.location)
+        console.log('selected loc',selectLoc);
+        
+        setSelectedLocation(selectLoc[0].name)
+      } catch (error) {
+        console.error("Error fetching locations:", error);
+      }
+    };
+
+    fetchLocations();
+  }, []);
 
   useEffect(() => {
     if (usersStatus === "idle" && users.length === 0) {
@@ -149,7 +170,7 @@ const AssignEmissionModal = ({
           <div className="flex justify-between items-center">
             <div className="mb-4">
               <p className="text-sm font-semibold">Location</p>
-              <p className="text-sm text-gray-600">{taskData.location}</p>
+              <p className="text-sm text-gray-600">{selectedLocation}</p>
             </div>
 
             <div className="mb-4">
@@ -178,7 +199,7 @@ const AssignEmissionModal = ({
           <div className="mb-4">
             <p className="text-sm font-semibold">Activity</p>
             <p className="text-sm text-gray-600">
-              {taskData.activity || "N/A"}
+              {taskData.activity || "Not Selected"}
             </p>
           </div>
         </div>

@@ -77,10 +77,10 @@ const EmissionWidget = React.memo(
 
     const handleAssignClick = () => {
       // Disable form validation before opening modal
-      if (formRef?.current) {
-        formRef.current.noValidate = true;
-      }
+      if(category && subcategory)
       setIsAssignModalOpen(true);
+    else
+    toast.error("Please select category and subcategory");
     };
 
     const handleCloseAssignModal = () => {
@@ -465,11 +465,11 @@ const EmissionWidget = React.memo(
     }, [unit2, quantity2]);
 
     const handleUnitChange = useCallback(
-      (value) => {
-        setUnit(value);
+      (newValue) => {
+        setUnit(newValue);
         onChange({
           ...value,
-          Unit: value,
+          Unit: newValue,
         });
       },
       [
@@ -484,11 +484,11 @@ const EmissionWidget = React.memo(
     );
 
     const handleUnit2Change = useCallback(
-      (value) => {
-        setUnit2(value);
+      (newValue) => {
+        setUnit2(newValue);
         onChange({
           ...value,
-          Unit2: value,
+          Unit2: newValue,
         });
       },
       [
