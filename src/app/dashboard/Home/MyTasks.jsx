@@ -69,6 +69,7 @@ const MyTask = () => {
   const [isPdfViewerOpen, setIsPdfViewerOpen] = useState(false);
   const [isActivityReceived, setIsActivityReceived] = useState(false);
   const [isActivityFetched, setIsActivityFetched] = useState(false);
+  // const [activityId, setActivityId] = useState('');
 
   const closePreviewModal = () => {
     setIsPdfViewerOpen(false);
@@ -76,7 +77,7 @@ const MyTask = () => {
 
   const handleActivityChange = (e) => {
     setSelectedActivityName(e.target.value);
-    setTaskAssigndata({ ...taskassigndata, activity: e.target.value });
+    setTaskAssigndata({ ...taskassigndata, activity: e.target.value, activity_id: selectedActivity?.activity_id, unit_type: selectedActivity?.unit_type });
   };
 
   useEffect(() => {
@@ -86,6 +87,7 @@ const MyTask = () => {
         selectedActivityName
     );
     setSelectedActivity(activity || {});
+    setTaskAssigndata({...taskassigndata, activity_id: activity?.activity_id, unit_type: activity?.unit_type });
     console.log('activity found',activity);
   }, [selectedActivityName, activitiesList]);
 
@@ -1052,9 +1054,11 @@ const MyTask = () => {
     const sandData = {
       ...taskassigndata,
       id: taskassigndata.id,
-      activity_id: taskassigndata.factor_id,
+      // activity_id: taskassigndata.factor_id,
       // unit_type
     };
+    console.log('task data',taskassigndata);
+    
     const { deadline, ...filteredSandData } = sandData;
     const { value1, unit1 } = sandData;
 
@@ -1988,15 +1992,15 @@ const MyTask = () => {
                               onClick={() => setIsPdfViewerOpen(true)}
                               className="text-blue-600 hover:text-blue-800 transition duration-300"
                             >
-                              {taskassigndata.file_data.name
-                                ? taskassigndata.file_data.name
+                              {taskassigndata.file_data?.name
+                                ? taskassigndata.file_data?.name
                                 : "No file available"}
                             </button>
                           </p>
                           <p className="text-[12px] text-gray-400">
-                            {taskassigndata.file_data.url
+                            {taskassigndata.file_data?.url
                               ? (
-                                  taskassigndata.file_data.size /
+                                  taskassigndata.file_data?.size /
                                   (1024 * 1024)
                                 ).toFixed(2)
                               : "0"}
