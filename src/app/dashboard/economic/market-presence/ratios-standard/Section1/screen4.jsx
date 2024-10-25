@@ -2,22 +2,21 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
+import CommoninputWidget from "../../../../../shared/widgets/Input/commoninputWidget";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
+import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import GRI2021combinWidhet from "../../../../../shared/widgets/Economic/gri2021combinWidhet"
-import CurrencyWidget from "../../../../../shared/widgets/Economic/currencyWidget";
+
 const widgets = {
-  GRI2021combinWidhet: GRI2021combinWidhet,
-  CurrencyWidget: CurrencyWidget,
+  inputWidget: CommoninputWidget,
 };
 
-const view_path = "gri-economic-ratios_of_standard_entry-202-1c-location";
+const view_path = "gri-economic-ratios_of_standard_entry-202-1d-definition";
 const client_id = 1;
 const user_id = 1;
 
@@ -26,15 +25,12 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      Locationofoperation:{
+
+ 
+      Q1: {
         type: "string",
         title:
-          "Select your significant Location of operation",
-
-      },
-      Currency: {
-        type: "string",
-        title: "If minimum wages vary across locations,  specify which minimum wage is being used as a reference.",
+          "The definition used for significant locations of operation",
       },
     },
   },
@@ -42,29 +38,23 @@ const schema = {
 
 const uiSchema = {
   items: {
-    "ui:order": ["Locationofoperation","Currency"],
-    Locationofoperation: {
-  
-      "ui:widget": "GRI2021combinWidhet",
-      "ui:horizontal": true,
-      "ui:options": {
-        label: false,
-      },
-    },
-    Currency: {
-      "ui:title": "If minimum wages vary across locations,  specify which minimum wage is being used as a reference.)",
+    "ui:order": ["Q1"],
+   
+    Q1: {
+      "ui:title":
+        "The definition used for significant locations of operation.",
       "ui:tooltip":
-        "Mention the estimated value of the liabilities, if the plan liabilities are met by the organisation's general resources.",
+        "Explain the definition used for ‘significant locations of operation’. Significant locations of operation refer to the geographical areas where the organization has a substantial impact through its operations.",
       "ui:tooltipdisplay": "none",
-      "ui:titledisplay": "block",
-      "ui:inputfildtype": "number",
-      "ui:widget": "CurrencyWidget",
+      "ui:titledisplay": "none",
+      "ui:widgetType": "textarea",
+      "ui:inputfildtype": "text",
+      "ui:widget": "inputWidget",
       "ui:horizontal": true,
       "ui:options": {
         label: false,
       },
     },
-
     "ui:options": {
       orderable: false,
       addable: false,
@@ -73,17 +63,19 @@ const uiSchema = {
     },
   },
 };
-const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
-  const [locationdata, setLocationdata] = useState(); 
+
+const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
+  const { open } = GlobalState();
 
   const LoaderOpen = () => {
     setLoOpen(true);
   };
+
   const LoaderClose = () => {
     setLoOpen(false);
   };
@@ -144,28 +136,9 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
       });
       LoaderClose();
     }
-    // console.log('Response:', response.data);
-    // } catch (error) {
-    // console.error('Error:', error);
-    // }
   };
-  const facthloctiondata = async () => {
- 
-    const url = `${process.env.BACKEND_API_URL}/sustainapp/get_location_as_per_org_or_corp/?corporate=${selectedCorp}&organization=${selectedOrg}`;
-    try {
-      const response = await axiosInstance.get(url);
-      console.log("Location data:", response.data);
-      setLocationdata(response.data);
-  
-    } catch (error) {
-      setLocationdata();
-    
-    } finally {
-      LoaderClose();
-    }
-  };
+
   const loadFormData = async () => {
-    console.log("loadFormData screen 2");
     LoaderOpen();
     setFormData([{}]);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
@@ -181,11 +154,9 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
       LoaderClose();
     }
   };
-
   useEffect(() => {
     if (selectedOrg && year) {
       loadFormData();
-      facthloctiondata();
       toastShown.current = false;
     } else {
       if (!toastShown.current) {
@@ -195,26 +166,25 @@ const Screen1 = ({ selectedOrg, selectedCorp, year }) => {
   }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission
-    console.log("Form data:", formData);
+    e.preventDefault();
     updateFormData();
+    console.log("test form data", formData);
   };
 
   return (
     <>
- <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
-        <div className="mb-4 flex">
+      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+        <div className="flex">
           <div className="w-[80%] relative">
            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-            Select your significant Location of operation
-              {/* <MdInfoOutline
-                data-tooltip-id={`tooltip-$e86`}
-                data-tooltip-content="Mention risks posed by climate change that have the potential to generate
-substantive changes in operations, revenue, or expenditure of the organisation. "
-               className="mt-1.5 ml-2 text-[15px]"
+            The definition used for significant locations of operation.		
+              <MdInfoOutline
+                data-tooltip-id={`es67`}
+                data-tooltip-html="Explain the definition used for ‘significant locations of operation’. Significant locations of operation refer to the geographical areas where the organization has a substantial impact through its operations."
+                className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
-                id={`tooltip-$e86`}
+                id={`es67`}
                 place="top"
                 effect="solid"
                 style={{
@@ -226,43 +196,29 @@ substantive changes in operations, revenue, or expenditure of the organisation. 
                   borderRadius: "8px",
                   textAlign: "left",
                 }}
-              ></ReactTooltip> */}
+              ></ReactTooltip>
             </h2>
           </div>
-
           <div className="w-[20%]">
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 202-1c
+                  GRI 202-1d
                 </div>
               </div>
             </div>
           </div>
         </div>
-        {Array.isArray(locationdata) && locationdata.length > 0 ? (
-          <div className="mx-2">
-            <Form
-              schema={r_schema}
-              uiSchema={r_ui_schema}
-              formData={formData}
-              onChange={handleChange}
-              validator={validator}
-              widgets={{
-                ...widgets,
-                GRI2021combinWidhet: (props) => (
-                  <GRI2021combinWidhet
-                    {...props}
-                    locationdata={locationdata}
-                  />
-                ),
-              }}
-            />
-          </div>
-        ) : (
-          <div className="mx-2"></div>
-        )}
-      
+        <div className="mx-2">
+          <Form
+            schema={r_schema}
+            uiSchema={r_ui_schema}
+            formData={formData}
+            onChange={handleChange}
+            validator={validator}
+            widgets={widgets}
+          />
+        </div>
         <div className="mt-4">
           <button
             type="button"
@@ -292,4 +248,4 @@ substantive changes in operations, revenue, or expenditure of the organisation. 
   );
 };
 
-export default Screen1;
+export default Screen4;
