@@ -35,7 +35,7 @@ const EmissionWidget = React.memo(
     onRemove,
     index,
     id,
-    formRef,
+    formRef
   }) => {
     const rowId = scope + "_" + index;
     const [rowType, setRowType] = useState(value.rowType || "default");
@@ -82,7 +82,7 @@ const EmissionWidget = React.memo(
       }
       setIsAssignModalOpen(true);
     };
-
+  
     const handleCloseAssignModal = () => {
       // Re-enable form validation after modal closes
       if (formRef?.current) {
@@ -340,144 +340,90 @@ const EmissionWidget = React.memo(
       }
     }, [unit_type]);
 
-    // const handleCategoryChange = useCallback(
-    //   (value) => {
-    //     setCategory(value);
-    //     const selectedCategory = scope1Info.find((info) =>
-    //       info.Category.some((c) => c.name === value)
-    //     );
-    //     const subCategories = selectedCategory
-    //       ? selectedCategory.Category.find((c) => c.name === value).SubCategory
-    //       : [];
-
-    //     setSubcategories(subCategories);
-    //     onChange({
-    //       type: "Category",
-    //       value,
-    //     });
-    //   },
-    //   [onChange]
-    // );
-
-    // const handleSubcategoryChange = useCallback(
-    //   (value) => {
-    //     setSubcategory(value);
-    //     onChange({
-    //       type: "Subcategory",
-    //       value,
-    //     });
-    //   },
-    //   [onChange]
-    // );
-
-    // const handleActivityChange = useCallback(
-    //   (value) => {
-    //     setActivity(value);
-    //     setQuantity("");
-    //     setUnit("");
-
-    //     const foundActivity = activities.find(
-    //       (act) => `${act.name} - (${act.source}) - ${act.unit_type}` === value
-    //     );
-
-    //     console.log("activity found", foundActivity);
-
-    //     if (foundActivity) {
-    //       const activityId = foundActivity.activity_id;
-    //       setActivityId(activityId);
-    //       setUnitType(foundActivity.unit_type);
-    //       const unitConfig = unitTypes.find(
-    //         (u) => u.unit_type === foundActivity.unit_type
-    //       );
-    //     } else {
-    //       setActivityId("");
-    //       setUnitType("");
-    //       setUnits([]);
-    //     }
-
-    //     onChange({
-    //       type: "Activity",
-    //       value,
-    //       activityId: foundActivity ? foundActivity.activity_id : "",
-    //       unitType: foundActivity ? foundActivity.unit_type : "",
-    //     });
-    //   },
-    //   [category, subcategory, activities, onChange]
-    // );
-
     const handleCategoryChange = useCallback(
-      (newCategory) => {
-        setCategory(newCategory);
-        onChange({
-          ...value,
-          Category: newCategory,
-          Subcategory: "",
-          Activity: "",
-          Quantity: "",
-          Unit: "",
-        });
-      },
-      [onChange, value]
-    );
-    const handleSubcategoryChange = useCallback(
-      (newSubcategory) => {
-        setSubcategory(newSubcategory);
-        onChange({
-          ...value,
-          Subcategory: newSubcategory,
-          Activity: "",
-          Quantity: "",
-          Unit: "",
-        });
-      },
-      [onChange, value]
-    );
-    const handleActivityChange = useCallback(
-      (newActivity) => {
-        setActivity(newActivity);
-        const foundActivity = activities.find(
-          (act) =>
-            `${act.name} - (${act.source}) - ${act.unit_type}` === newActivity
+      (value) => {
+        setCategory(value);
+        const selectedCategory = scope1Info.find((info) =>
+          info.Category.some((c) => c.name === value)
         );
+        const subCategories = selectedCategory
+          ? selectedCategory.Category.find((c) => c.name === value).SubCategory
+          : [];
+
+        setSubcategories(subCategories);
         onChange({
-          ...value,
-          Activity: newActivity,
-          activity_id: foundActivity ? foundActivity.activity_id : "",
-          unit_type: foundActivity ? foundActivity.unit_type : "",
-          Quantity: "",
-          Unit: "",
+          type: "Category",
+          value,
         });
       },
-      [activities, onChange, value]
+      [onChange]
+    );
+
+    const handleSubcategoryChange = useCallback(
+      (value) => {
+        setSubcategory(value);
+        onChange({
+          type: "Subcategory",
+          value,
+        });
+      },
+      [onChange]
+    );
+
+    const handleActivityChange = useCallback(
+      (value) => {
+        setActivity(value);
+        setQuantity("");
+        setUnit("");
+
+        const foundActivity = activities.find(
+          (act) => `${act.name} - (${act.source}) - ${act.unit_type}` === value
+        );
+
+        console.log("activity found", foundActivity);
+
+        if (foundActivity) {
+          const activityId = foundActivity.activity_id;
+          setActivityId(activityId);
+          setUnitType(foundActivity.unit_type);
+          const unitConfig = unitTypes.find(
+            (u) => u.unit_type === foundActivity.unit_type
+          );
+        } else {
+          setActivityId("");
+          setUnitType("");
+          setUnits([]);
+        }
+
+        onChange({
+          type: "Activity",
+          value,
+          activityId: foundActivity ? foundActivity.activity_id : "",
+          unitType: foundActivity ? foundActivity.unit_type : "",
+        });
+      },
+      [category, subcategory, activities, onChange]
     );
 
     const debouncedHandleQuantityChange = useCallback(
       debounce((nextValue) => {
         setQuantity(nextValue);
-        // onChange({
-        //   type: "Quantity",
-        //   value: nextValue,
-        // });
         onChange({
-          ...value,
-          Quantity: nextValue,
+          type: "Quantity",
+          value: nextValue,
         });
-      }, 500),
+      }, 1500),
       [onChange]
     );
 
     const debouncedHandleQuantity2Change = useCallback(
       debounce((nextValue) => {
         setQuantity2(nextValue);
-        // onChange({
-        //   type: "Quantity2",
-        //   value: nextValue,
-        // });
         onChange({
-          ...value,
-          Quantity2: nextValue,
+          type: "Quantity2",
+          value: nextValue,
         });
-      }, 500),
+      }, 2000),
       [onChange]
     );
 
@@ -536,15 +482,11 @@ const EmissionWidget = React.memo(
     }, [unit2, quantity2]);
 
     const handleUnitChange = useCallback(
-      (newValue) => {
-        setUnit(newValue);
-        // onChange({
-        //   type: "Unit",
-        //   value,
-        // });
+      (value) => {
+        setUnit(value);
         onChange({
-          ...value,
-          Unit: newValue,
+          type: "Unit",
+          value,
         });
       },
       [
@@ -559,15 +501,11 @@ const EmissionWidget = React.memo(
     );
 
     const handleUnit2Change = useCallback(
-      (newValue) => {
-        setUnit2(newValue);
-        // onChange({
-        //   type: "Unit",
-        //   value,
-        // });
+      (value) => {
+        setUnit2(value);
         onChange({
-          ...value,
-          Unit2: newValue,
+          type: "Unit2",
+          value,
         });
       },
       [
@@ -827,7 +765,7 @@ const EmissionWidget = React.memo(
               type="button"
               className=" border text-[12px] py-1.5 px-3 rounded-md text-[#007eef] font-semibold leading-tight border-[#007eef] disabled:text-slate-300 disabled:border-slate-300 cursor-pointer"
               disabled={!selectAll}
-              onClick={handleMultipleAssignClick}
+              // onClick={handleMultipleAssignClick}
             >
               Assign Tasks ({selectedRows.length})
             </button>
@@ -999,7 +937,7 @@ const EmissionWidget = React.memo(
                           value={quantity}
                           onChange={handleQuantityChange}
                           placeholder="Enter Value"
-                          className="focus:border-blue-500 focus:outline-none text-[12px] w-[6vw] text-right pe-1"
+                          className="focus:border-blue-500 focus:outline-none text-[12px] w-[7vw] text-right pe-1"
                           step="1"
                           min="0"
                           disabled={rowType === "assigned"}
@@ -1061,7 +999,7 @@ const EmissionWidget = React.memo(
                         value={quantity}
                         onChange={handleQuantityChange}
                         placeholder="Enter Value"
-                        className="focus:border-blue-500 focus:outline-none text-[12px] w-[10vw] text-right pe-1"
+                        className="focus:border-blue-500 focus:outline-none text-[12px] w-[19.7vw] text-right pe-1"
                         step="1"
                         min="0"
                         disabled={rowType === "assigned"}
@@ -1296,6 +1234,8 @@ const EmissionWidget = React.memo(
             category: value.Category,
             subcategory: value.Subcategory,
             activity: value.Activity,
+            activity_id: value.Activity_id,
+            unit_type:value.unit_type,
             countryCode,
             rowId: rowId,
           }}
