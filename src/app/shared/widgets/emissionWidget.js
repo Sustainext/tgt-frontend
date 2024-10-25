@@ -1047,6 +1047,7 @@ const EmissionWidget = React.memo(
                       id={id + scope}
                       onChange={handleChange}
                       style={{ display: "none" }}
+                      disabled={rowType === "assigned" || rowType === "approved"}
                     />
 
                     {fileName ? (

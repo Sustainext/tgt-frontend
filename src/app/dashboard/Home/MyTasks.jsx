@@ -19,6 +19,7 @@ import ImageUpload from "../../shared/components/ImageUpload";
 import { unitTypes } from "../../shared/data/units";
 import axiosInstance, { post, del, patch } from "../../utils/axiosMiddleware";
 import { BlobServiceClient } from "@azure/storage-blob";
+import { getLocationName } from "../../utils/locationName";
 
 const MyTask = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -1107,24 +1108,11 @@ const MyTask = () => {
       });
   };
 
-  const [locations, setLocations] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState();
+  useEffect(()=>{
+    setSelectedLocation(getLocationName(taskassigndata.location))
+  },[taskassigndata])
 
-  useEffect(() => {
-    const fetchLocations = async () => {
-      try {
-        const response = await axiosInstance.get("/sustainapp/get_location");
-        setLocations(response.data);
-        const selectLoc = response.data.filter(loc=>loc.id===parseInt(taskassigndata.location))
-        console.log('selected loc',selectLoc);
-        
-        setSelectedLocation(selectLoc[0].name)
-      } catch (error) {
-        console.error("Error fetching locations:", error);
-      }
-    };
-    fetchLocations();
-  }, [taskassigndata]);
 
   return (
     <>

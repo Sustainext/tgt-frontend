@@ -8,7 +8,7 @@ import {
 } from "@/lib/redux/features/emissionSlice";
 import { toast } from "react-toastify";
 import { Oval } from "react-loader-spinner";
-import axiosInstance from "@/app/utils/axiosMiddleware";
+import {getLocationName} from "@/app/utils/locationName";
 
 const AssignEmissionModal = ({
   isOpen,
@@ -33,25 +33,18 @@ const AssignEmissionModal = ({
     message: "",
   });
 
-  const [locations, setLocations] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState("");
 
   useEffect(() => {
-    const fetchLocations = async () => {
-      try {
-        const response = await axiosInstance.get("/sustainapp/get_location");
-        setLocations(response.data);
-        const selectLoc = response.data.filter(loc=>loc.id===taskData.location)
-        console.log('selected loc',selectLoc);
-        
-        setSelectedLocation(selectLoc[0].name)
-      } catch (error) {
-        console.error("Error fetching locations:", error);
+    const fetchLocationName = async () => {
+      if (taskData.location) {
+        const name = await getLocationName(taskData.location);
+        setSelectedLocation(name);
       }
     };
 
-    fetchLocations();
-  }, []);
+    fetchLocationName();
+  }, [taskData.location]);
 
   useEffect(() => {
     if (usersStatus === "idle" && users.length === 0) {
@@ -90,6 +83,7 @@ const AssignEmissionModal = ({
           tasks: [formattedTask],
           commonData: {
             location: taskData.location,
+            locationName: selectedLocation,
             year: taskData.year,
             month: taskData.month,
             scope: taskData.scope,

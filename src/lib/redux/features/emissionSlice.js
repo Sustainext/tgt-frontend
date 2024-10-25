@@ -243,7 +243,7 @@ const formatTaskData = (task, commonData) => ({
   activity: task.Emission.Activity || "", 
   activity_id: task.Emission.activity_id || "",
   unit_type: task.Emission.unit_type || "",
-  task_name: `${commonData.location}-${commonData.month}-${task.Emission.Activity || task.Emission.Subcategory}`, 
+  task_name: `${commonData.locationName}-${commonData.month}-${task.Emission.Activity || task.Emission.Subcategory}`, 
   roles: parseInt(localStorage.getItem("user_id")) === commonData.assignedTo ? 1 : 2,
   deadline: commonData.deadline, 
   assigned_by: parseInt(localStorage.getItem("user_id")), 

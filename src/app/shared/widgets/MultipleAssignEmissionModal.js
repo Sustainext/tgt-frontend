@@ -8,6 +8,7 @@ import {
 import { CiCircleMinus } from "react-icons/ci";
 import { toast } from "react-toastify";
 import { Oval } from "react-loader-spinner";
+import { getLocationName } from "../../utils/locationName";
 
 const MultipleAssignEmissionModal = ({
   isOpen,
@@ -40,6 +41,19 @@ const MultipleAssignEmissionModal = ({
     message: "",
   });
 
+  const [selectedLocation, setSelectedLocation] = useState("");
+
+  useEffect(() => {
+    const fetchLocationName = async () => {
+      if (taskData.location) {
+        const name = await getLocationName(taskData.location);
+        setSelectedLocation(name);
+      }
+    };
+
+    fetchLocationName();
+  }, [taskData.location]);
+
   // Modify handleAssign to show loader states
   const handleAssign = async () => {
     if (!selectedUser || !dueDate) {
@@ -58,6 +72,7 @@ const MultipleAssignEmissionModal = ({
           tasks: selectedRows,
           commonData: {
             location: taskData.location,
+            locationName: selectedLocation,
             year: taskData.year,
             month: taskData.month,
             scope: taskData.scope,
