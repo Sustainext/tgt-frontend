@@ -57,6 +57,8 @@ const AssignEmissionModal = ({
           Category: taskData.category,
           Subcategory: taskData.subcategory,
           Activity: taskData.activity,
+          activity_id: taskData.activity_id,
+          unit_type: taskData.unit_type,
           assigned_to: parseInt(selectedUser),
           rowType: "assigned",
         },

@@ -35,7 +35,7 @@ const EmissionWidget = React.memo(
     onRemove,
     index,
     id,
-    formRef
+    formRef,
   }) => {
     const rowId = scope + "_" + index;
     const [rowType, setRowType] = useState(value.rowType || "default");
@@ -82,7 +82,7 @@ const EmissionWidget = React.memo(
       }
       setIsAssignModalOpen(true);
     };
-  
+
     const handleCloseAssignModal = () => {
       // Re-enable form validation after modal closes
       if (formRef?.current) {
@@ -341,78 +341,61 @@ const EmissionWidget = React.memo(
     }, [unit_type]);
 
     const handleCategoryChange = useCallback(
-      (value) => {
-        setCategory(value);
-        const selectedCategory = scope1Info.find((info) =>
-          info.Category.some((c) => c.name === value)
-        );
-        const subCategories = selectedCategory
-          ? selectedCategory.Category.find((c) => c.name === value).SubCategory
-          : [];
-
-        setSubcategories(subCategories);
+      (newCategory) => {
+        setCategory(newCategory);
         onChange({
-          type: "Category",
-          value,
+          ...value,
+          Category: newCategory,
+          Subcategory: "",
+          Activity: "",
+          Quantity: "",
+          Unit: "",
         });
       },
-      [onChange]
+      [onChange, value]
     );
-
     const handleSubcategoryChange = useCallback(
-      (value) => {
-        setSubcategory(value);
+      (newSubcategory) => {
+        setSubcategory(newSubcategory);
         onChange({
-          type: "Subcategory",
-          value,
+          ...value,
+          Subcategory: newSubcategory,
+          Activity: "",
+          Quantity: "",
+          Unit: "",
         });
       },
-      [onChange]
+      [onChange, value]
     );
-
     const handleActivityChange = useCallback(
-      (value) => {
-        setActivity(value);
-        setQuantity("");
-        setUnit("");
-
+      (newActivity) => {
+        setActivity(newActivity);
         const foundActivity = activities.find(
-          (act) => `${act.name} - (${act.source}) - ${act.unit_type}` === value
+          (act) =>
+            `${act.name} - (${act.source}) - ${act.unit_type}` === newActivity
         );
-
-        console.log("activity found", foundActivity);
-
-        if (foundActivity) {
-          const activityId = foundActivity.activity_id;
-          setActivityId(activityId);
-          setUnitType(foundActivity.unit_type);
-          const unitConfig = unitTypes.find(
-            (u) => u.unit_type === foundActivity.unit_type
-          );
-        } else {
-          setActivityId("");
-          setUnitType("");
-          setUnits([]);
-        }
-
         onChange({
-          type: "Activity",
-          value,
-          activityId: foundActivity ? foundActivity.activity_id : "",
-          unitType: foundActivity ? foundActivity.unit_type : "",
+          ...value,
+          Activity: newActivity,
+          activity_id: foundActivity ? foundActivity.activity_id : "",
+          unit_type: foundActivity ? foundActivity.unit_type : "",
+          Quantity: "",
+          Quantity2: "",
+          Unit: "",
+          Unit2: "",
         });
       },
-      [category, subcategory, activities, onChange]
+      [activities, onChange, value]
     );
 
     const debouncedHandleQuantityChange = useCallback(
       debounce((nextValue) => {
         setQuantity(nextValue);
         onChange({
-          type: "Quantity",
-          value: nextValue,
+          ...value,
+          Quantity: nextValue,
         });
-      }, 1500),
+      }, 500),
       [onChange]
     );
 
@@ -420,10 +403,10 @@ const EmissionWidget = React.memo(
       debounce((nextValue) => {
         setQuantity2(nextValue);
         onChange({
-          type: "Quantity2",
-          value: nextValue,
+          ...value,
+          Quantity2: nextValue,
         });
-      }, 2000),
+      }, 500),
       [onChange]
     );
 
@@ -485,8 +468,8 @@ const EmissionWidget = React.memo(
       (value) => {
         setUnit(value);
         onChange({
-          type: "Unit",
-          value,
+          ...value,
+          Unit: value,
         });
       },
       [
@@ -504,8 +487,8 @@ const EmissionWidget = React.memo(
       (value) => {
         setUnit2(value);
         onChange({
-          type: "Unit2",
-          value,
+          ...value,
+          Unit2: value,
         });
       },
       [
@@ -1234,8 +1217,8 @@ const EmissionWidget = React.memo(
             category: value.Category,
             subcategory: value.Subcategory,
             activity: value.Activity,
-            activity_id: value.Activity_id,
-            unit_type:value.unit_type,
+            activity_id: value.activity_id,
+            unit_type: value.unit_type,
             countryCode,
             rowId: rowId,
           }}
