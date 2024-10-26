@@ -17,18 +17,25 @@ import EconomicPerformance from "./economic-performance/page";
 import CustomerProductService from "./customer-product-services/page";
 import People from "./people/page";
 import MessageFromCEO from "./message-from-ceo/page";
+import ContentIndex from "./content-index/page";
 import Environment from "./environment/page";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useRouter } from 'next/navigation';
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
+import OmissionPopup from "./content-index/modals/omissionPopup";
+import ReportCreatedPopup from "./content-index/modals/reportCreatedPopup";
 import {
   setHeadertext1,
   setHeadertext2,
   setHeaderdisplay
 } from "../../../../lib/redux/features/topheaderSlice";
 import { useDispatch} from "react-redux";
+
 const ESGReport = () => {
   const router = useRouter()
+  const [isModalOpen,setIsModalOpen]=useState(false)
+  const [isCreateReportModalOpen,setIsCreateReportModalOpen]=useState(false)
+  const [isOmissionSubmitted,setIsOmissionSubmitted]=useState(false)
   const [activeStep, setActiveStep] = useState(1);
   const [reportName,setReportName]=useState("Report")
   const messageFromCeoRef = useRef(); // Use useRef to store a reference to submitForm
@@ -137,7 +144,7 @@ const ESGReport = () => {
     else if (type === "last") {
       const isSubmitted = await submitAndProceed();
       if (isSubmitted) {
-        // setActiveStep((prev) => prev + 1);
+        setActiveStep((prev) => prev + 1);
       }
     }
     else {
@@ -167,7 +174,12 @@ const ESGReport = () => {
   return (
     <>
       <div className="flex">
-        <Sidebar activeStep={activeStep} setActiveStep={setActiveStep} />
+        {activeStep==16?(
+          <></>
+        ):(
+          <Sidebar activeStep={activeStep} setActiveStep={setActiveStep} />
+        )}
+        
         <div className="w-full mb-5">
           <div className="flex flex-col justify-start overflow-x-hidden">
             <div className="flex justify-between items-center border-b border-gray-200 mb-3 w-full">
@@ -192,7 +204,11 @@ const ESGReport = () => {
               </div>
               <div className="float-right mr-2 flex items-center justify-center">
                 <div className="flex items-center justify-center">
-                  <button
+                  {
+                    activeStep==16?(
+                      <></>
+                    ):(
+                      <button
                     style={{
                       display: activeStep === 1 ? "none" : "inline-block",
                     }}
@@ -204,30 +220,62 @@ const ESGReport = () => {
                   >
                     &lt; Previous
                   </button>
+                    )
+                  }
+                  
 
-                  {activeStep < 15 ? (
-                    <button
-                      className={`${
-                        activeStep === 15
-                          ? "bg-gray-300"
-                          : "bg-blue-500 text-white"
-                      } px-3 py-1.5 rounded ml-2 font-semibold w-[100px]`}
-                      onClick={()=>{
-                        handleNextStep('next')
-                      }}// Call the form submit and next step handler
-                      disabled={activeStep === 15}
-                    >
-                      Next &gt;
-                    </button>
-                  ) : (
-                    <button
+                  {activeStep ==16 ? (
+                    <div>
+                      {isOmissionSubmitted?(
+                        <button
+                        onClick={()=>{
+                          setIsCreateReportModalOpen(true)
+                        }}
+                          className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                        >
+                          Save and Create Report {">"}
+                        </button>
+                      ):(
+                        <button
                     onClick={()=>{
-                      handleNextStep('last')
+                      setIsModalOpen(true)
                     }}
                       className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
                     >
-                      Save & Fill Content Index
+                      Add Reasons for Omission {">"}
                     </button>
+                      )}
+                    </div>
+                    
+                    
+                  ) : (
+                    <div>
+                      {activeStep<15?(
+                        <button
+                        className={`${
+                          activeStep === 15
+                            ? "bg-gray-300"
+                            : "bg-blue-500 text-white"
+                        } px-3 py-1.5 rounded ml-2 font-semibold w-[100px]`}
+                        onClick={()=>{
+                          handleNextStep('next')
+                        }}// Call the form submit and next step handler
+                        disabled={activeStep === 15}
+                      >
+                        Next &gt;
+                      </button>
+                      ):(
+                        <button
+                        onClick={()=>{
+                          handleNextStep('last')
+                        }}
+                          className="flex w-[auto] justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2"
+                        >
+                          Save & Fill Content Index
+                        </button>
+                      )}
+                    </div>
+                   
                   )}
                 </div>
               </div>
@@ -336,10 +384,23 @@ const ESGReport = () => {
                   </div>
                 </div>
               )}
+               {activeStep === 16 && (
+                <div>
+                  <div className="mb-4">
+                    <ContentIndex reportName={reportName} setActiveStep={setActiveStep} isOmissionSubmitted={isOmissionSubmitted}  isOmissionModalOpen={isModalOpen} setIsOmissionModalOpen={setIsModalOpen}
+                    isCreateReportModalOpen={isCreateReportModalOpen}
+                    setIsCreateReportModalOpen={setIsCreateReportModalOpen}
+                    setIsOmissionSubmitted={setIsOmissionSubmitted}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
+
+      
       <ToastContainer/>
     </>
   );
