@@ -49,11 +49,10 @@ export const Energydata = [
               sold.
             </p>
           </div>
-       
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12467&page=1",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12467&page=1",
   },
   {
     category: ["2"],
@@ -126,11 +125,10 @@ export const Energydata = [
               sells, and the end-of-life treatment of products.
             </p>
           </div>
-       
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12467&page=1",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12467&page=1",
   },
   {
     category: ["3"],
@@ -212,11 +210,10 @@ export const Energydata = [
               to other organizations.
             </p>
           </div>
-        
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12467&page=1",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12467&page=1",
   },
   {
     category: ["4"],
@@ -293,11 +290,10 @@ export const Energydata = [
               travelled or per time unit (hour, average working day)
             </p>
           </div>
-       
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12467&page=1",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12467&page=1",
   },
   {
     category: ["5"],
@@ -364,11 +360,10 @@ export const Energydata = [
               travelled or per time unit (hour, average working day).
             </p>
           </div>
-          
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12467&page=1",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12467&page=1",
   },
   {
     category: ["6"],
@@ -466,11 +461,10 @@ export const Energydata = [
               </li>
             </ul>
           </div>
-         
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12521",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12521",
   },
   {
     category: ["7"],
@@ -592,11 +586,10 @@ export const Energydata = [
               its value chain.
             </p>
           </div>
-         
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12521",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12521",
   },
   {
     category: ["8"],
@@ -676,11 +669,10 @@ export const Energydata = [
               assurance, or audits of waste-related data.
             </p>
           </div>
-        
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12521",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12521",
   },
   {
     category: ["9"],
@@ -777,11 +769,10 @@ export const Energydata = [
               assurance, or audits of waste-related data.
             </p>
           </div>
-        
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12521",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12521",
   },
   {
     category: ["10"],
@@ -874,11 +865,10 @@ export const Energydata = [
               collectors, external assurance, or audits of waste-related data.
             </p>
           </div>
-    
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12521",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12521",
   },
   {
     category: ["11"],
@@ -944,11 +934,10 @@ export const Energydata = [
               manipulation, such as reporting it as ‘dry weight’.
             </p>
           </div>
-      
         </div>
       </>,
     ],
-    link:"https://globalreporting.org/pdf.ashx?id=12456&page=1",
+    link: "https://globalreporting.org/pdf.ashx?id=12456&page=1",
   },
   {
     category: ["12"],
@@ -1015,11 +1004,10 @@ export const Energydata = [
               units.
             </p>
           </div>
-         
         </div>
       </>,
     ],
-    link:"https://globalreporting.org/pdf.ashx?id=12456&page=1",
+    link: "https://globalreporting.org/pdf.ashx?id=12456&page=1",
   },
   {
     category: ["13"],
@@ -1078,11 +1066,10 @@ export const Energydata = [
               packaging separately.
             </p>
           </div>
-       
         </div>
       </>,
     ],
-    link:"https://globalreporting.org/pdf.ashx?id=12456&page=1",
+    link: "https://globalreporting.org/pdf.ashx?id=12456&page=1",
   },
   {
     category: ["14"],
@@ -1243,11 +1230,10 @@ export const Energydata = [
               </li>
             </ul>
           </div>
-        
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12488",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12488",
   },
   {
     category: ["15"],
@@ -1277,11 +1263,10 @@ export const Energydata = [
               receiving waterbody.
             </p>
           </div>
-    
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12488",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12488",
   },
   {
     category: ["16"],
@@ -1358,11 +1343,10 @@ export const Energydata = [
               organization’s water stewardship efforts and practices.
             </p>
           </div>
-       
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12488",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12488",
   },
   {
     category: ["17"],
@@ -1442,11 +1426,10 @@ export const Energydata = [
               facility in areas with water stress.
             </p>
           </div>
-       
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12488",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12488",
   },
   {
     category: ["18"],
@@ -1495,11 +1478,10 @@ export const Energydata = [
               availability.
             </p>
           </div>
-         
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12488",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12488",
   },
   {
     category: ["19"],
@@ -1528,11 +1510,10 @@ export const Energydata = [
               <li className="text-[11px] text-[#727272]">Over 50 years old.</li>
             </ul>
           </div>
-       
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12543&page=1",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12543&page=1",
   },
   {
     category: ["20"],
@@ -1568,11 +1549,10 @@ export const Energydata = [
               programs.
             </p>
           </div>
-     
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12543&page=1",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12543&page=1",
   },
   {
     category: ["21"],
@@ -1597,11 +1577,10 @@ export const Energydata = [
               the prior reporting periods.
             </p>
           </div>
-       
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12543&page=1",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12543&page=1",
   },
 
   {
@@ -1688,11 +1667,10 @@ export const Energydata = [
               such committees.
             </p>
           </div>
-       
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12565&page=21",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12565&page=21",
   },
   {
     category: ["23"],
@@ -1762,11 +1740,10 @@ export const Energydata = [
               sole or shared control), and location, among others.
             </p>
           </div>
-       
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12565&page=21",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12565&page=21",
   },
   {
     category: ["24"],
@@ -2030,11 +2007,10 @@ export const Energydata = [
               if needed.
             </p>
           </div>
-        
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12565&page=21",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12565&page=21",
   },
   {
     category: ["25"],
@@ -2174,11 +2150,10 @@ export const Energydata = [
               information.
             </p>
           </div>
-        
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12565&page=21",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12565&page=21",
   },
   {
     category: ["26"],
@@ -2219,11 +2194,10 @@ export const Energydata = [
               work.
             </p>
           </div>
-      
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12622&page=7",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12622&page=7",
   },
   {
     category: ["27"],
@@ -2257,11 +2231,10 @@ export const Energydata = [
               for further guidance
             </p>
           </div>
-        
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12633&page=7",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12633&page=7",
   },
   {
     category: ["28"],
@@ -2299,11 +2272,10 @@ export const Energydata = [
             assessing which issues can be of particular relevance to certain
             segments of the governance bodies or employees.
           </div>
-        
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12565&page=21",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12565&page=21",
   },
   {
     category: ["29"],
@@ -2339,11 +2311,10 @@ export const Energydata = [
               agreements, as well as via ongoing collaboration with suppliers.
             </p>
           </div>
-      
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12677&page=9",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12677&page=9",
   },
   {
     category: ["30"],
@@ -2384,11 +2355,10 @@ export const Energydata = [
               impacts in the supply chain
             </p>
           </div>
-     
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12677&page=9",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12677&page=9",
   },
   {
     category: ["32"],
@@ -2439,11 +2409,10 @@ export const Energydata = [
               services.
             </p>
           </div>
-     
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12699&page=8",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12699&page=8",
   },
   {
     category: ["33"],
@@ -2470,11 +2439,10 @@ export const Energydata = [
               customers to make informed purchasing choices.
             </p>
           </div>
-     
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12710&page=1",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12710&page=1",
   },
   {
     category: ["34"],
@@ -2513,11 +2481,10 @@ export const Energydata = [
               to collect data by lawful means, and to be transparent.
             </p>
           </div>
-   
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12721",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12721",
   },
   {
     category: ["35"],
@@ -2566,11 +2533,10 @@ export const Energydata = [
             is required can include cases that were withdrawn or where the
             underlying circumstances that led to the incident no longer exist.
           </div>
-       
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12677&page=9",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12677&page=9",
   },
   {
     category: ["36"],
@@ -2600,11 +2566,10 @@ export const Energydata = [
             Organization for Economic Co-operation and Development (OECD) OECD
             Guidelines for Multinational Enterprises for further guidance
           </div>
-    
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12677&page=9",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12677&page=9",
   },
   {
     category: ["37"],
@@ -2669,11 +2634,10 @@ export const Energydata = [
             on vulnerable or disadvantaged groups are avoided, minimized,
             mitigated or compensated
           </div>
-       
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12677&page=9",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12677&page=9",
   },
   {
     category: ["38"],
@@ -2740,11 +2704,10 @@ export const Energydata = [
               number of employees in category
             </p>
           </div>
-    
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12576&page=7",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12576&page=7",
   },
   {
     category: ["39"],
@@ -2781,11 +2744,10 @@ export const Energydata = [
               approaches skills enhancement.
             </p>
           </div>
-    
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12576&page=7",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12576&page=7",
   },
   {
     category: ["40"],
@@ -2888,11 +2850,10 @@ export const Energydata = [
               </li>
             </ul>
           </div>
-      
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12576&page=7",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12576&page=7",
   },
   {
     category: ["41"],
@@ -3011,11 +2972,10 @@ export const Energydata = [
               fact is sufficient to comply with the requirement.
             </p>
           </div>
-       
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12358",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["42"],
@@ -3113,11 +3073,10 @@ export const Energydata = [
               of this fact is sufficient to comply with this requirement.
             </p>
           </div>
-      
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12358",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["43"],
@@ -3211,11 +3170,10 @@ export const Energydata = [
               indirect/Scope 3 GHG emissions) to disclose total GHG emissions.
             </div>
           </div>
-   
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12358",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["44"],
@@ -3307,11 +3265,10 @@ export const Energydata = [
               <br />
             </div>
           </div>
-      
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12358",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["45"],
@@ -3401,42 +3358,43 @@ export const Energydata = [
               by the organization or by organizations in its sector.
             </div>
           </div>
-     
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12358",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["46"],
     header: [
       <h5 className="text-sky-600 text-[17px] font-bold">
-      GRI 205: Anti-corruption 2016
+        GRI 205: Anti-corruption 2016
       </h5>,
     ],
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Disclosure 205-2 Communication and training about anti-corruption policies and procedures
+            Disclosure 205-2 Communication and training about anti-corruption
+            policies and procedures
           </p>
           <div className="">
             <p className="text-[13px] text-[#222222] mb-4">Guidance :</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            In the context of this GRI Standard, the term ‘business partners’ includes, among others, suppliers, agents, lobbyists and other intermediaries, joint venture and consortia partners, governments, customers, and clients.
+              In the context of this GRI Standard, the term ‘business partners’
+              includes, among others, suppliers, agents, lobbyists and other
+              intermediaries, joint venture and consortia partners, governments,
+              customers, and clients.
             </p>
-            <p className="text-[13px] text-[#222222] mb-4">
-            Background:
-            </p>
+            <p className="text-[13px] text-[#222222] mb-4">Background:</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Communication and training build the internal and external awareness and the necessary capacity to combat corruption.
+              Communication and training build the internal and external
+              awareness and the necessary capacity to combat corruption.
             </p>
           </div>
-      
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12412",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12412",
   },
   {
     category: ["47"],
@@ -3474,173 +3432,409 @@ export const Energydata = [
               policies and procedures to combat corruption.
             </p>
           </div>
-      
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12412",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12412",
   },
   {
     category: ["48"],
     header: [
-      <h5 className="text-sky-600 text-[17px] font-bold">GRI 202: Market Presence 2016</h5>,
-    ],
-    data: [
-      <>
-        <div className="p-2 pt-5 pb-4 ">
-          <p className="text-[15px] text-[#0057A5] mb-4">
-          Disclosure 202-1 Ratios of standard entry level wage
-          by gender compared to local minimum wage
-
-          </p>
-          <div className="">
-            <p className="text-[13px] text-[#222222] mb-2">
-            Background:
-            </p>
-            <p className="text-[11px] text-[#727272] mb-2">
-            This disclosure applies to those organizations in which a substantial portion of their employees, and workers (excluding employees) performing the organization’s activities, are compensated in a manner or scale that is closely linked to laws or regulations on minimum wage. Providing wages above the minimum wage can help contribute to the economic well-being of workers performing the organization’s activities. The impacts of wage levels are immediate, and they directly affect individuals, organizations, countries and economies. The distribution of wages is crucial for eliminating inequalities, such as wage gap differences between women and men, or nationals and migrants. Also, entry level wages paid compared to local minimum wages show the competitiveness of an organization’s wages and provide information relevant for assessing the effect of wages on the local labor market. Comparing this information by gender can also be a measure of an organization’s approach to equal opportunity in the workplace.
-            </p>
-
-           
-          </div>
-       
-        </div>
-      </>,
-    ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12379",
-  },
-  {
-    category: ["49"],
-    header: [
       <h5 className="text-sky-600 text-[17px] font-bold">
-        GRI 308: Supplier Environmental
-        Assessment 2016
+        GRI 202: Market Presence 2016
       </h5>,
     ],
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Disclosure 308-1 New suppliers that were screened
-          using environmental criteria
+            Disclosure 202-1 Ratios of standard entry level wage by gender
+            compared to local minimum wage
+          </p>
+          <div className="">
+            <p className="text-[13px] text-[#222222] mb-2">Background:</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              This disclosure applies to those organizations in which a
+              substantial portion of their employees, and workers (excluding
+              employees) performing the organization’s activities, are
+              compensated in a manner or scale that is closely linked to laws or
+              regulations on minimum wage. Providing wages above the minimum
+              wage can help contribute to the economic well-being of workers
+              performing the organization’s activities. The impacts of wage
+              levels are immediate, and they directly affect individuals,
+              organizations, countries and economies. The distribution of wages
+              is crucial for eliminating inequalities, such as wage gap
+              differences between women and men, or nationals and migrants.
+              Also, entry level wages paid compared to local minimum wages show
+              the competitiveness of an organization’s wages and provide
+              information relevant for assessing the effect of wages on the
+              local labor market. Comparing this information by gender can also
+              be a measure of an organization’s approach to equal opportunity in
+              the workplace.
+            </p>
+          </div>
+        </div>
+      </>,
+    ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12379",
+  },
+  {
+    category: ["49"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 308: Supplier Environmental Assessment 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Disclosure 308-1 New suppliers that were screened using
+            environmental criteria
           </p>
           <div className="">
             {/* <p className="text-[11px] text-black mb-2">
               Compilation Requirements
             </p> */}
             <p className="text-[11px] text-[#727272] mb-2">
-            Environmental criteria can include the topics covered in other GRI Topic Standards (e.g., GRI
-
+              Environmental criteria can include the topics covered in other GRI
+              Topic Standards (e.g., GRI
             </p>
             <p className="text-[11px] text-[#727272] mb-4">
-            302: Energy 2016, GRI 303: Water and Effluents 2018, GRI 305: Emissions 2016)
+              302: Energy 2016, GRI 303: Water and Effluents 2018, GRI 305:
+              Emissions 2016)
             </p>
             <p className="text-[11px] text-black mb-2">Background</p>
             <p className="text-[11px] text-[#727272] mb-2">
-            This disclosure informs stakeholders about the percentage of suppliers selected or contracted subject to due diligence processes for environmental impacts.
-
+              This disclosure informs stakeholders about the percentage of
+              suppliers selected or contracted subject to due diligence
+              processes for environmental impacts.
             </p>
             <p className="text-[11px] text-[#727272] mb-2">
-            An organization is expected to initiate due diligence as early as possible in the development of a new relationship with a supplier.
-
+              An organization is expected to initiate due diligence as early as
+              possible in the development of a new relationship with a supplier.
             </p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Impacts may be prevented or mitigated at the stage of structuring contracts or other agreements,
-as well as via ongoing collaboration with suppliers.
+              Impacts may be prevented or mitigated at the stage of structuring
+              contracts or other agreements, as well as via ongoing
+              collaboration with suppliers.
             </p>
           </div>
-        
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12532",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12532",
   },
   {
     category: ["50"],
     header: [
       <h5 className="text-sky-600 text-[17px] font-bold">
-      GRI 308: Supplier Environmental
-      Assessment 2016
+        GRI 308: Supplier Environmental Assessment 2016
       </h5>,
     ],
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Disclosure 308-2 Negative environmental impacts in
-the supply chain and actions taken
+            Disclosure 308-2 Negative environmental impacts in the supply chain
+            and actions taken
           </p>
           <div className="">
-            <p className="text-[11px] text-black mb-2">
-            Guidance :
+            <p className="text-[11px] text-black mb-2">Guidance :</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Negative impacts include those that are either caused or
+              contributed to by an organization, or that are directly linked to
+              its operations, products, or services by its relationship with a
+              supplier. Assessments for environmental impacts can include the
+              topics covered in other GRI Topic Standards (e.g., GRI 302: Energy
+              2016, GRI 303: Water and Effluents 2018, GRI 305: Emissions 2016).
             </p>
             <p className="text-[11px] text-[#727272] mb-2">
-            Negative impacts include those that are either caused or contributed to by an organization, or that are directly linked to its operations, products, or services by its relationship with a supplier. Assessments for environmental impacts can include the topics covered in other GRI Topic Standards (e.g., GRI 302: Energy 2016, GRI 303: Water and Effluents 2018, GRI 305: Emissions
-2016).
-
-            </p>
-            <p className="text-[11px] text-[#727272] mb-2">
-            Assessments can be made against agreed performance expectations that are set and communicated to the suppliers prior to the assessment. Assessments can be informed by audits, contractual reviews, two-way engagement, and complaint and grievance mechanisms.
-
+              Assessments can be made against agreed performance expectations
+              that are set and communicated to the suppliers prior to the
+              assessment. Assessments can be informed by audits, contractual
+              reviews, two-way engagement, and complaint and grievance
+              mechanisms.
             </p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Improvements can include changing an organization’s procurement practices, the adjustment of performance expectations, capacity building, training, and changes to processes
+              Improvements can include changing an organization’s procurement
+              practices, the adjustment of performance expectations, capacity
+              building, training, and changes to processes
             </p>
             <p className="text-[11px] text-black mb-2">Background</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            This disclosure informs stakeholders about an organization’s awareness of significant actual
-            and potential negative environmental impacts in the supply chain.
+              This disclosure informs stakeholders about an organization’s
+              awareness of significant actual and potential negative
+              environmental impacts in the supply chain.
             </p>
-            
           </div>
-     
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12532",
+    link: "https://www.globalreporting.org/pdf.ashx?id=12532",
   },
   {
     category: ["51"],
     header: [
       <h5 className="text-sky-600 text-[17px] font-bold">
-    Disclosure 3-3 Management of material topics
+        Disclosure 3-3 Management of material topics
       </h5>,
     ],
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <p className="text-[15px] text-[#0057A5] mb-4">
-          Disclosure 308-2 Negative environmental impacts in
-the supply chain and actions taken
-          </p>
           <div className="">
             <p className="text-[11px] text-black mb-2">
-            Guidance :
+              Guidance for Disclosure 3-3-c
             </p>
             <p className="text-[11px] text-[#727272] mb-2">
-            Negative impacts include those that are either caused or contributed to by an organization, or that are directly linked to its operations, products, or services by its relationship with a supplier. Assessments for environmental impacts can include the topics covered in other GRI Topic Standards (e.g., GRI 302: Energy 2016, GRI 303: Water and Effluents 2018, GRI 305: Emissions
-2016).
-
+              Requirement 3-3-c entails describing the policies or commitments
+              the organization has developed specifically for the topic, in
+              addition to the policy commitments reported under Disclosure 2-23
+              in GRI 2: General Disclosures 2021. If the organization has
+              described its policies for a material topic under Disclosure 2-23,
+              it can provide a reference to this information under 3-3-c and
+              does not need to repeat the information. See Disclosure 2-23 in
+              GRI 2 for guidance on how to report information about policies.
+              When reporting its commitments regarding the material topic, the
+              organization should provide a statement of intent to manage the
+              topic or explain:
+            </p>
+            <ul className="list-disc ml-4  text-[11px] text-[#727272] mb-2">
+              <li className="mb-2">the organization’s stance on the topic</li>
+              <li className="mb-2">
+                whether the commitment to manage the topic is based on
+                regulatory compliance or extends beyond it
+              </li>
+              <li className="mb-2">
+                compliance with authoritative intergovernmental instruments
+                related to the topic.
+              </li>
+            </ul>
+            <p className="text-[11px] text-black mb-2">Guidance to 3-3-d</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Requirement 3-3-d enables the organization to explain how it
+              responds to its impacts. It does not require a detailed
+              description of actions taken in relation to each impact. Instead,
+              the organization can provide a high-level overview of how it
+              manages its impacts.
             </p>
             <p className="text-[11px] text-[#727272] mb-2">
-            Assessments can be made against agreed performance expectations that are set and communicated to the suppliers prior to the assessment. Assessments can be informed by audits, contractual reviews, two-way engagement, and complaint and grievance mechanisms.
+              The organization should report how it integrates the findings from
+              its identification and assessment of impacts across relevant
+              internal functions and processes, including:
+            </p>
+            <ul className="list-disc ml-4  text-[11px] text-[#727272] mb-2">
+              <li className="mb-2">
+                the level and function within the organization that has been
+                assigned responsibility for managing the impacts;
+              </li>
+              <li className="mb-2">
+                the internal decision-making, budget allocation, and oversight
+                processes (e.g., internal audit) to enable effective actions to
+                manage the impacts.
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Disclosure 2-12 and Disclosure 2-13 in GRI 2 require information
+              on the role of the highest governance body in overseeing the
+              management of the organization’s impacts and on how it delegates
+              responsibility for this. The organization should also report how
+              it manages actual impacts identified in previous reporting periods
+              and which it continues to manage during the current reporting
+              period.
+            </p>
+            <p className="text-[11px] text-black mb-2">Guidance to 3-3-d-i</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization should report:
+            </p>
 
+            <ul className="list-disc ml-4  text-[11px] text-[#727272] mb-2">
+              <li className="mb-2">
+                examples of actions taken to prevent or mitigate potential
+                negative impacts (e.g., adaptation/modification measures,
+                facility upgrading, training, red-flag systems);
+              </li>
+              <li className="mb-2">
+                approaches taken to prevent or mitigate systemic negative
+                impacts; how the organization applies the precautionary
+                principle, including:
+              </li>
+              <li className="mb-2">
+                -how the organization proactively informs the public about
+                potential negative impacts of its activities, products, and
+                services, and how it deals with related questions and
+                complaints;
+              </li>
+              <li className="mb-2">
+                -the organization’s support or contribution to scientific
+                research related to evaluating potential negative impacts of its
+                activities, products, and services;
+              </li>
+              <li className="mb-2">
+                the organization’s participation in collaborative efforts to
+                share knowledge and to prevent negative impacts of its
+                activities, products, and services;
+              </li>
+              <li className="mb-2">
+                how the organization uses or increases its leverage to motivate
+                its business relationships to prevent or mitigate potential
+                negative impacts. For example, whether the organization usesor
+                increases its leverage by enforcing contractual requirements,
+                implements incentives such as future orders, provides training
+                and support, or actively collaborates with other actors to
+                motivate its business relationships to prevent or mitigate
+                potential negative impacts; •whether the organization has
+                terminated a business relationship because it lacks the leverage
+                to prevent or mitigate potential negative impacts and, if so,
+                whether it has assessed if terminating the relationship could
+                itself result in negative impacts.
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-2">
+              See Guidance to 2-23-a-iii in GRI 2 for more information on
+              ‘precautionary principle’.
             </p>
-            <p className="text-[11px] text-[#727272] mb-4">
-            Improvements can include changing an organization’s procurement practices, the adjustment of performance expectations, capacity building, training, and changes to processes
+            <p className="text-[11px] text-black mb-2">Guidance to 3-3-d-ii</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization should report:
             </p>
-            <p className="text-[11px] text-black mb-2">Background</p>
-            <p className="text-[11px] text-[#727272] mb-4">
-            This disclosure informs stakeholders about an organization’s awareness of significant actual
-            and potential negative environmental impacts in the supply chain.
+
+            <ul className="list-disc ml-4  text-[11px] text-[#727272] mb-2">
+              <li className="mb-2">
+                examples of actions taken to remediate actual negative impacts,
+                including examples of specific remedies or types of remedy
+                provided;
+              </li>
+              <li className="mb-2">
+                how grievance mechanisms or other remediation processes
+                (reported under Disclosure 2- 25 in GRI 2) have made it possible
+                for actual negative impacts to be remediated.
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-2">
+              See Disclosure 2-25 in GRI 2 for more information on processes to
+              remediate negative impacts.
             </p>
-            
+            <p className="text-[11px] text-black mb-2">Guidance to 3-3-e</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Requirement 3-3-e enables the organization to report information
+              about the effectiveness of its actions to manage its impacts.
+              Tracking the effectiveness of its actions is necessary for an
+              organization to learn if its policies and processes are being
+              implemented optimally. It is also necessary for knowing if it has
+              responded effectively to its impacts and to drive continuous
+              improvement.
+            </p>
+
+            <p className="text-[11px] text-[#727272] mb-2">
+              The organization should also report information about the
+              effectiveness of its actions to manage actual impacts from
+              previous reporting periods. This applies in cases where the
+              organization has assessed the effectiveness of these actions or
+              derived lessons during the current reporting period
+            </p>
+            <p className="text-[11px] text-black mb-2">Guidance to 3-3-e-i</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Processes used to track the effectiveness of actions can include
+              internal or external auditing or verification, impact assessments,
+              measurement systems, stakeholder feedback, grievance mechanisms,
+              external performance ratings, and benchmarking.
+            </p>
+
+            <p className="text-[11px] text-black mb-2">Guidance to 3-3-e-ii</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              When reporting on goals and targets, the organization should
+              report:
+            </p>
+            <ul className="list-disc ml-4  text-[11px] text-[#727272] mb-2">
+              <li className="mb-2">how the goals and targets are set;</li>
+              <li className="mb-2">
+                whether and how the goals and targets take into account the
+                sustainability context in which the impacts take place (e.g.,
+                sustainable development goals and conditions, the limits and
+                demands placed on environmental resources). See the
+                Sustainability context principle in GRI 1 for more information;
+              </li>
+              <li className="mb-2">
+                whether the goals and targets are informed by expectations in
+                authoritative intergovernmental instruments and, where relevant,
+                by scientific consensus;
+              </li>
+              <li className="mb-2">
+                whether goals and targets are mandatory (based on legislation)
+                or voluntary. If they are mandatory, the organization can list
+                the relevant legislation;
+              </li>
+              <li className="mb-2">
+                the organization’s activities or business relationships to which
+                the goals and targets apply;
+              </li>
+              <li className="mb-2">the baseline for the goals and targets;</li>
+              <li className="mb-2">
+                the timeline for achieving the goals and targets
+              </li>
+            </ul>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Targets can be qualitative (e.g., implementing a management system
+              by a certain date) or quantitative (e.g., reducing greenhouse gas
+              [GHG] emissions by a certain percentage by a certain date).
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              The indicators used to evaluate progress can also be qualitative
+              or quantitative. Quantitative indicators can bring precision and
+              enable comparisons. Qualitative information is often needed to put
+              quantitative information into context, enable its interpretation,
+              and determine which comparisons and conclusions are likely to be
+              most valid. The Topic Standards and Sector Standards include
+              qualitative and quantitative indicators.
+            </p>
+            <p className="text-[11px] text-black mb-2">Guidance to 3-3-e-iii</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Requirement 3-3-e-iii enables the organization to show the extent
+              to which the actions taken have been effective. Information on the
+              effectiveness of the actions can be obtained, for example,from the
+              outcomes of internal or external auditing or verification, data
+              collected through measurement systems, and stakeholder feedback.
+              The organization should show that there is a credible link between
+              the specific action taken by the organization and the effective
+              management of impacts. For example, to show the effectiveness of
+              its actions to support its suppliers with improving their working
+              conditions, the organization can report survey feedback from the
+              suppliers’ workers showing that working conditions have improved.
+              Additional information the organization can provide includes data
+              showing a decrease in the number of incidents identified through
+              independent audits. Similarly, to demonstrate the effectiveness of
+              its actions to improve the quality of its water discharge, the
+              organization can report data showing a decrease in the
+              concentration of total dissolved solids (mg/L) in the water
+              discharge. When reporting progress toward its goals and targets,
+              the organization should report whether progress is satisfactory or
+              not. If a goal or target has not been achieved, the organization
+              should explain why.
+            </p>
+            <p className="text-[11px] text-black mb-2">Guidance to 3-3-e-iv</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+              Managing impacts is typically an ongoing process requiring
+              continuous improvement based on learning from practice. The
+              organization is not required to provide a detailed description of
+              lessons learned in relation to each material topic. Instead, the
+              organization can provide examples to show how it incorporates
+              lessons learned to manage impacts more successfully in the future.
+              For example, the organization can briefly describe lessons learned
+              that have led to changes in its policies or practices (e.g.,
+              training for workers, giving additional attention to the
+              performance of suppliers), or that have led to plans for changes
+              that will manage impacts more successfully in the future. Lessons
+              learned may be derived from the organization’s own processes
+              (e.g., root cause analysis), from its business relationships, or
+              from stakeholder or expert feedback.
+            </p>
           </div>
-     
         </div>
       </>,
     ],
-    link:"https://www.globalreporting.org/pdf.ashx?id=12532",
+    link: "https://www.globalreporting.org/publications/documents/english/gri-3-material-topics-2021/",
   },
   //  sdg contet start//
   {
@@ -3685,11 +3879,10 @@ the supply chain and actions taken
               Energy intensity measured in terms of primary energy and GDP
             </p>
           </div>
-       
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal7",
+    link: "https://sdgs.un.org/goals/goal7",
   },
   {
     category: ["sd2"],
@@ -3740,11 +3933,10 @@ the supply chain and actions taken
               capita, and domestic material consumption per GDP
             </p>
           </div>
-        
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal8",
+    link: "https://sdgs.un.org/goals/goal8",
   },
   {
     category: ["sd3"],
@@ -3784,11 +3976,10 @@ the supply chain and actions taken
               capita, and domestic material consumption per GDP
             </p>
           </div>
-         
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal12",
+    link: "https://sdgs.un.org/goals/goal12",
   },
   {
     category: ["sd4"],
@@ -3835,11 +4026,10 @@ the supply chain and actions taken
               risk reduction strategies
             </p>
           </div>
-      
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal13",
+    link: "https://sdgs.un.org/goals/goal13",
   },
   {
     category: ["sd5"],
@@ -3936,11 +4126,10 @@ the supply chain and actions taken
               national and global health risks
             </p>
           </div>
-      
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal3",
+    link: "https://sdgs.un.org/goals/goal3",
   },
   {
     category: ["sd6"],
@@ -4017,11 +4206,10 @@ the supply chain and actions taken
               communities in water and sanitation management
             </p>
           </div>
-    
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal6",
+    link: "https://sdgs.un.org/goals/goal6",
   },
   {
     category: ["sd7"],
@@ -4063,11 +4251,10 @@ the supply chain and actions taken
               PM10) in cities (population weighted)
             </p>
           </div>
-  
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal11",
+    link: "https://sdgs.un.org/goals/goal11",
   },
   {
     category: ["sd8"],
@@ -4111,11 +4298,10 @@ the supply chain and actions taken
               type
             </p>
           </div>
-     
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal15",
+    link: "https://sdgs.un.org/goals/goal15",
   },
   {
     category: ["sd9"],
@@ -4178,11 +4364,10 @@ the supply chain and actions taken
               (b) proportion of hazardous waste treated, by type of treatment
             </p>
           </div>
-      
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal12",
+    link: "https://sdgs.un.org/goals/goal12",
   },
   {
     category: ["sd10"],
@@ -4223,11 +4408,10 @@ the supply chain and actions taken
               Neonatal mortality rate.
             </p>
           </div>
-    
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal3",
+    link: "https://sdgs.un.org/goals/goal3",
   },
   {
     category: ["sd11"],
@@ -4272,11 +4456,10 @@ the supply chain and actions taken
               previous 12 months, by age and place of occurrence.
             </p>
           </div>
-       
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal5",
+    link: "https://sdgs.un.org/goals/goal5",
   },
   {
     category: ["sd12"],
@@ -4330,11 +4513,10 @@ the supply chain and actions taken
               employment or training.
             </p>
           </div>
-    
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal8",
+    link: "https://sdgs.un.org/goals/goal8",
   },
   {
     category: ["sd13"],
@@ -4373,11 +4555,10 @@ the supply chain and actions taken
               international human rights law.
             </p>
           </div>
-      
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal10",
+    link: "https://sdgs.un.org/goals/goal10",
   },
   {
     category: ["sd14"],
@@ -4477,11 +4658,10 @@ the supply chain and actions taken
               Mortality rate attributed to unintentional poisoning.
             </p>
           </div>
-       
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal3",
+    link: "https://sdgs.un.org/goals/goal3",
   },
   {
     category: ["sd15"],
@@ -4524,11 +4704,10 @@ the supply chain and actions taken
               legislation, by sex and migrant status.
             </p>
           </div>
-       
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal8",
+    link: "https://sdgs.un.org/goals/goal8",
   },
   {
     category: ["sd16"],
@@ -4602,11 +4781,10 @@ the supply chain and actions taken
               and responsive, by sex, age, disability and population group.
             </p>
           </div>
-      
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal16",
+    link: "https://sdgs.un.org/goals/goal16",
   },
   {
     category: ["sd17"],
@@ -4661,11 +4839,10 @@ the supply chain and actions taken
               area they live after dark.
             </p>
           </div>
-       
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal16",
+    link: "https://sdgs.un.org/goals/goal16",
   },
   {
     category: ["sd18"],
@@ -4702,11 +4879,10 @@ the supply chain and actions taken
               labour, by sex and age.
             </p>
           </div>
-         
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal8",
+    link: "https://sdgs.un.org/goals/goal8",
   },
   {
     category: ["sd19"],
@@ -4748,11 +4924,10 @@ the supply chain and actions taken
               education; and (d) student assessment.
             </p>
           </div>
-   
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal12",
+    link: "https://sdgs.un.org/goals/goal12",
   },
   {
     category: ["sd20"],
@@ -4801,11 +4976,10 @@ the supply chain and actions taken
               resolution mechanism, by type of mechanism.
             </p>
           </div>
-       
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal16",
+    link: "https://sdgs.un.org/goals/goal16",
   },
   {
     category: ["sd21"],
@@ -4868,11 +5042,10 @@ the supply chain and actions taken
               indicators on this list that can be disaggregated.
             </p>
           </div>
-      
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal4",
+    link: "https://sdgs.un.org/goals/goal4",
   },
   {
     category: ["sd22"],
@@ -4907,11 +5080,10 @@ the supply chain and actions taken
               and monitor equality and non‑discrimination on the basis of sex
             </p>
           </div>
-       
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal5",
+    link: "https://sdgs.un.org/goals/goal5",
   },
   {
     category: ["sd23"],
@@ -4961,11 +5133,10 @@ the supply chain and actions taken
               Unemployment rate, by sex, age and persons with disabilities
             </p>
           </div>
-      
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal8",
+    link: "https://sdgs.un.org/goals/goal8",
   },
   {
     category: ["sd24"],
@@ -4984,16 +5155,17 @@ the supply chain and actions taken
       <>
         <div className="p-2 pt-5">
           <p className="text-[15px] text-[#0057A5] mb-4">
-          Conserve and sustainably use the oceans, seas and marine resources for sustainable development
+            Conserve and sustainably use the oceans, seas and marine resources
+            for sustainable development
           </p>
           <div className="">
             <p className="text-[13px] text-[#222222] mb-2">Target 14.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
-            Minimize and address the impacts of ocean acidification, including through enhanced scientific cooperation at all levels
+              Minimize and address the impacts of ocean acidification, including
+              through enhanced scientific cooperation at all levels
             </p>
-         
+
             <div class="">
-           
               <span class="text-[#727272] text-[10px] font-bold leading-[13px]">
                 Indicators
                 <br />
@@ -5009,11 +5181,10 @@ the supply chain and actions taken
               </span>
             </div>
           </div>
-       
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal14",
+    link: "https://sdgs.un.org/goals/goal14",
   },
   {
     category: ["sd25"],
@@ -5058,11 +5229,10 @@ the supply chain and actions taken
               previous 12 months
             </p>
           </div>
-      
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal16",
+    link: "https://sdgs.un.org/goals/goal16",
   },
   {
     category: ["sd26"],
@@ -5101,13 +5271,11 @@ the supply chain and actions taken
               Proportion of men, women and children of all ages living in
               poverty in all its dimensions according to national definitions
             </p>
-           
           </div>
-       
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal1",
+    link: "https://sdgs.un.org/goals/goal1",
   },
   {
     category: ["sd27"],
@@ -5129,8 +5297,6 @@ the supply chain and actions taken
             Sustainable Development Goal 5: Gender equality
           </p>
           <div className="">
-        
-          
             <p className="text-[13px] text-[#222222] mb-2">Target 5.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Recognize and value unpaid care and domestic work through the
@@ -5145,11 +5311,10 @@ the supply chain and actions taken
               age and location.
             </p>
           </div>
-     
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal5",
+    link: "https://sdgs.un.org/goals/goal5",
   },
   {
     category: ["sd28"],
@@ -5191,13 +5356,10 @@ the supply chain and actions taken
             <p className="text-[11px] text-[#727272] mb-2">
               Unemployment rate, by sex, age and persons with disabilities.
             </p>
-           
-         
           </div>
-        
         </div>
       </>,
     ],
-    link:"https://sdgs.un.org/goals/goal8",
+    link: "https://sdgs.un.org/goals/goal8",
   },
 ];

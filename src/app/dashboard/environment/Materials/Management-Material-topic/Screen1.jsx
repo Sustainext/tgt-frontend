@@ -19,7 +19,7 @@ const widgets = {
 
 
 
-const view_path = "gri-general-laws_and_regulation-organization-2-27-d";
+const view_path = "gri_collect_materials_management_material_topic";
 const client_id = 1;
 const user_id = 1;
 
@@ -177,16 +177,16 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
       LoaderClose();
     }
   };
-//   useEffect(() => {
-//     if (selectedOrg && year) {
-//       loadFormData();
-//       toastShown.current = false;
-//     } else {
-//       if (!toastShown.current) {
-//         toastShown.current = true;
-//       }
-//     }
-//   }, [selectedOrg, year, selectedCorp]);
+  useEffect(() => {
+    if (selectedOrg && year) {
+      loadFormData();
+      toastShown.current = false;
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
+    }
+  }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -239,8 +239,8 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

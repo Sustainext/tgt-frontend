@@ -64,59 +64,61 @@ const Economic = () => {
       "Financial assistance received from government",
     ];
     const energyTabs = [
-      "Energy consumed inside the organization",
-      "Energy consumption outside of the organization",
-      "Energy Intensity",
-      "Reduction of energy consumption",
-      "Reductions in energy requirements of products and services",
+      "Financial Implications due to climate change",
+      "Climate related Risks",
+      "Climate Related Opportunities",
     ];
 
     // List of tabs related to Waste
     const wasteTabs = [
-      "Significant waste related impact",
-      "Management of significant waste related impacts",
-      "Waste generated",
-      "Waste Diverted from disposal",
-      "Waste diverted to disposal",
+      "Ratios of Standard Entry level wage by gender compared to local minimum wage",
+      "Proportion of senior management hired from the local community",
     ];
 
     // List of tabs related to Materials
     const materialTabs = [
-      "Materials used by weight or volume",
-      "Recycled input materials used",
-      "Reclaimed products and their packaging materials",
+      "Infrastructure investments and services supported",
+      "Significant indirect economic impacts",
     ];
 
     // List of tabs related to Water
-    const waterTabs = [
-      "Interaction with water as shared resource",
-      "Water Withdrawal and Water Discharge from All Areas",
-      "Water withdrawal/Discharge from areas with water stress",
-      "Substances of concern",
-      "Change in water storage",
-    ];
+    const waterTabs = ["Proportion of spending on local suppliers"];
 
     // List of tabs related to Supplier
     const supplierTabs = [
-      "New suppliers that were screened using environmental criteria",
-      "Negative environmental impacts in the supply chain and actions taken",
+      "Operations assessed for risks related to corruption",
+      "Communication and training about anti-corruption policies and procedures",
+      "Confirmed incidents of corruption and actions taken",
     ];
-
+    const LegalTabs = [
+      "Public legal cases regarding corruption",
+      "Anti Competitive Behavior",
+    ];
+    const TaxTabs = [
+      "Approach to tax",
+      "Tax governance, control, and risk management",
+      "Stakeholder engagement and management of concerns related to tax",
+      "Country-by-country reporting",
+    ];
     // Set the header based on the active tab category
     if (emissionTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Economic Performance"));
     } else if (energyTabs.includes(activeTab)) {
-      dispatch(setHeadertext2("Energy"));
+      dispatch(setHeadertext2("Risks & Opportunities"));
     } else if (wasteTabs.includes(activeTab)) {
-      dispatch(setHeadertext2("Waste"));
+      dispatch(setHeadertext2("Market Presence"));
     } else if (materialTabs.includes(activeTab)) {
-      dispatch(setHeadertext2("Materials"));
+      dispatch(setHeadertext2("Indirect Economic Impacts"));
     } else if (waterTabs.includes(activeTab)) {
-      dispatch(setHeadertext2("Water and effluents"));
+      dispatch(setHeadertext2("Procurement Practices"));
     } else if (supplierTabs.includes(activeTab)) {
-      dispatch(setHeadertext2("Supplier Environmental Assessment"));
+      dispatch(setHeadertext2("Anti Corruption"));
     } else if (materialnewTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Materials"));
+    } else if (LegalTabs.includes(activeTab)) {
+      dispatch(setHeadertext2("Legal Actions"));
+    } else if (TaxTabs.includes(activeTab)) {
+      dispatch(setHeadertext2("Tax"));
     } else {
       dispatch(setHeadertext2(`${activeTab}`));
     }
