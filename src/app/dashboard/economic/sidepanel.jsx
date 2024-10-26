@@ -20,7 +20,8 @@ const Aside = ({ activeTab, handleTabClick }) => {
   const [isWaterVisible, setWaterVisible] = useState(false);
   const [isMaterialsVisible, setMaterialsVisible] = useState(false);
   const [isSupplierVisible, setIsSupplierVisible] = useState(false);
-
+  const [isLegal, setIsLegal] = useState(false);
+  const [isTax, setTax] = useState(false);
   const toggleEmission = () => {
     setEmisssion(!isEmission);
     setWasteVisible(false);
@@ -28,6 +29,8 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setWaterVisible(false);
     setEnergySectionVisible(false);
     setIsSupplierVisible(false);
+    setIsLegal(false);
+    setTax(false);
   };
   const toggleSupplierSectionVisibility = () => {
     setIsSupplierVisible(!isSupplierVisible);
@@ -36,6 +39,8 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setWaterVisible(false);
     setEnergySectionVisible(false);
     setEmisssion(false);
+    setIsLegal(false);
+    setTax(false);
   };
   const toggleEnergySectionVisibility = () => {
     setEnergySectionVisible(!isEnergySectionVisible);
@@ -44,6 +49,8 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setWaterVisible(false);
     setIsSupplierVisible(false);
     setEmisssion(false);
+    setIsLegal(false);
+    setTax(false);
   };
   const toggleWasteVisible = () => {
     setWasteVisible(!isWasteVisible);
@@ -52,6 +59,8 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setWaterVisible(false);
     setIsSupplierVisible(false);
     setEmisssion(false);
+    setIsLegal(false);
+    setTax(false);
   };
   const toggleWaterVisible = () => {
     setWaterVisible(!isWaterVisible);
@@ -60,6 +69,8 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setMaterialsVisible(false);
     setIsSupplierVisible(false);
     setEmisssion(false);
+    setIsLegal(false);
+    setTax(false);
   };
 
   const toggleMaterialsVisible = () => {
@@ -69,6 +80,28 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setWaterVisible(false);
     setIsSupplierVisible(false);
     setEmisssion(false);
+    setIsLegal(false);
+    setTax(false);
+  };
+  const toggleLegal = () => {
+    setIsLegal(!isLegal);
+    setWasteVisible(false);
+    setMaterialsVisible(false);
+    setWaterVisible(false);
+    setEnergySectionVisible(false);
+    setIsSupplierVisible(false);
+    setEmisssion(false);
+    setTax(false);
+  };
+  const toggleTax = () => {
+    setTax(!isTax);
+    setWasteVisible(false);
+    setMaterialsVisible(false);
+    setWaterVisible(false);
+    setEnergySectionVisible(false);
+    setIsSupplierVisible(false);
+    setEmisssion(false);
+    setIsLegal(false);
   };
   const handleemssionClick = (option) => {
     // Handle clicking on an option in the Energy dropdown list
@@ -80,7 +113,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setIsSupplierVisible(false);
   };
   useEffect(() => {
-    if (activeTab === "Management of Material topic emission") {
+    if (activeTab === "Management of Material topic Economic Performance") {
       setEmisssion(true);
       setWasteVisible(false);
       setMaterialsVisible(false);
@@ -98,9 +131,13 @@ const Aside = ({ activeTab, handleTabClick }) => {
           </button>
           <div>
             <button
-              className={`flex items-center  px-2 py-2 mb-2 focus:outline-none w-full ${
-                activeTab === "Management of Material topic" ||
-                activeTab === "GHG Emissions"
+              className={`flex items-center  py-2 mb-2 focus:outline-none w-full ${
+                activeTab ===
+                  "Management of Material topic Economic Performance" ||
+                activeTab === "Direct economic value generated & distributed" ||
+                activeTab ===
+                  "Defined benefit plan obligations and other retirement plans" ||
+                activeTab === "Financial assistance received from government"
                   ? "text-[#007EEF]"
                   : "bg-white text-[#727272] "
               }`}
@@ -109,11 +146,13 @@ const Aside = ({ activeTab, handleTabClick }) => {
               {/* <div className="w-[20%]">
                 <MdOutlineFactory className="w-5 h-5 mr-2" />
               </div> */}
-              <div className="w-[47%] text-left ml-2">
-                <span className="indent-0">Economic Performance</span>
+              <div className="w-[100%] text-left ml-2">
+                <span className="indent-0 text-[13px]">
+                  Economic Performance
+                </span>
               </div>
 
-              <div className="inset-y-0  flex items-center pointer-events-none w-[45%] justify-end">
+              <div className="inset-y-0  flex items-center pointer-events-none w-[25%] justify-end">
                 {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">M</span> */}
 
                 <MdKeyboardArrowDown
@@ -127,7 +166,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
             {/* Energy section content */}
             {isEmission && (
               <>
-                <div className="bg-white px-2 ml-5 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
                   <div>
                     <p className="text-[12px]  ml-3  text-gray-400">
                       Mandatory Management Disclosure
@@ -136,12 +175,15 @@ const Aside = ({ activeTab, handleTabClick }) => {
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Management of Material topic Economic Performance"
+                        activeTab ===
+                        "Management of Material topic Economic Performance"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
                       onClick={() =>
-                        handleTabClick("Management of Material topic Economic Performance")
+                        handleTabClick(
+                          "Management of Material topic Economic Performance"
+                        )
                       }
                     >
                       Management of Material topic
@@ -155,13 +197,53 @@ const Aside = ({ activeTab, handleTabClick }) => {
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Direct economic value generated & distributed"
+                        activeTab ===
+                        "Direct economic value generated & distributed"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
-                      onClick={() => handleTabClick("Direct economic value generated & distributed")}
+                      onClick={() =>
+                        handleTabClick(
+                          "Direct economic value generated & distributed"
+                        )
+                      }
                     >
-                     Direct economic value generated & distributed
+                      Direct economic value generated & distributed
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab ===
+                        "Defined benefit plan obligations and other retirement plans"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() =>
+                        handleTabClick(
+                          "Defined benefit plan obligations and other retirement plans"
+                        )
+                      }
+                    >
+                      Defined benefit plan obligations and other retirement
+                      plans
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab ===
+                        "Financial assistance received from government"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() =>
+                        handleTabClick(
+                          "Financial assistance received from government"
+                        )
+                      }
+                    >
+                      Financial assistance received from government
                     </p>
                   </div>
                 </div>
@@ -172,28 +254,26 @@ const Aside = ({ activeTab, handleTabClick }) => {
           {/* Energy start  */}
           <div>
             <button
-              className={`flex items-center  px-2 py-2 mb-2 focus:outline-none w-full ${
-                activeTab === "Energy consumed inside the organization" ||
-                activeTab ===
-                  "Energy consumption outside of the organization" ||
-                activeTab === "Energy Intensity" ||
-                activeTab === "Reduction of energy consumption" ||
-                activeTab === "Management of Material topic energy" ||
-                activeTab ===
-                  "Reductions in energy requirements of products and services"
+              className={`flex items-center  py-2 mb-2 focus:outline-none w-full ${
+                activeTab === "Financial Implications due to climate change" ||
+                activeTab === "Climate related Risks" ||
+                activeTab === "Climate Related Opportunities" ||
+                activeTab === "Management of Material topic risks"
                   ? "text-[#007EEF]"
                   : "bg-white text-[#727272] "
               }`}
               onClick={toggleEnergySectionVisibility}
             >
-              <div className="w-[20%]">
+              {/* <div className="w-[20%]">
                 <MdOutlineTungsten className="w-5 h-5 mr-2" />
-              </div>
-              <div className="w-[47%] text-left ml-2">
-                <span className="indent-0">Energy</span>
+              </div> */}
+              <div className="w-[100%] text-left ml-2">
+                <span className="indent-0 text-[13px]">
+                  Risks & Opportunities
+                </span>
               </div>
 
-              <div className="inset-y-0  flex items-center pointer-events-none w-[45%] justify-end">
+              <div className="inset-y-0  flex items-center pointer-events-none w-[25%] justify-end">
                 {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">M</span> */}
 
                 <MdKeyboardArrowDown
@@ -207,7 +287,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
             {/* Energy section content */}
             {isEnergySectionVisible && (
               <>
-                <div className="bg-white px-2 ml-5 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
                   <div>
                     <p className="text-[12px]  ml-3  text-gray-400">
                       Mandatory Management Disclosure
@@ -216,12 +296,12 @@ const Aside = ({ activeTab, handleTabClick }) => {
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Management of Material topic energy"
+                        activeTab === "Management of Material topic risks"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
                       onClick={() =>
-                        handleTabClick("Management of Material topic energy")
+                        handleTabClick("Management of Material topic risks")
                       }
                     >
                       Management of Material topic
@@ -235,77 +315,44 @@ const Aside = ({ activeTab, handleTabClick }) => {
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Energy consumed inside the organization"
+                        activeTab ===
+                        "Financial Implications due to climate change"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
                       onClick={() =>
                         handleTabClick(
-                          "Energy consumed inside the organization"
+                          "Financial Implications due to climate change"
                         )
                       }
                     >
-                      Energy consumed inside the organization
+                      Financial Implications due to climate change
                     </p>
                   </div>
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab ===
-                        "Energy consumption outside of the organization"
+                        activeTab === "Climate related Risks"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() => handleTabClick("Climate related Risks")}
+                    >
+                      Climate related Risks
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Climate Related Opportunities"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
                       onClick={() =>
-                        handleTabClick(
-                          "Energy consumption outside of the organization"
-                        )
+                        handleTabClick("Climate Related Opportunities")
                       }
                     >
-                      Energy consumption outside of the organization
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Energy Intensity"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272] "
-                      }`}
-                      onClick={() => handleTabClick("Energy Intensity")}
-                    >
-                      Energy Intensity
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Reduction of energy consumption"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272] "
-                      }`}
-                      onClick={() =>
-                        handleTabClick("Reduction of energy consumption")
-                      }
-                    >
-                      Reduction of energy consumption
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab ===
-                        "Reductions in energy requirements of products and services"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272] "
-                      }`}
-                      onClick={() =>
-                        handleTabClick(
-                          "Reductions in energy requirements of products and services"
-                        )
-                      }
-                    >
-                      Reductions in energy requirements of products and services
+                      Climate Related Opportunities
                     </p>
                   </div>
                 </div>
@@ -315,26 +362,25 @@ const Aside = ({ activeTab, handleTabClick }) => {
           {/* waste start  */}
           <div>
             <button
-              className={`flex items-center justify-between px-2 py-2 mb-2 focus:outline-none w-full ${
-                activeTab === "Significant waste related impact" ||
+              className={`flex items-center justify-between  py-2 mb-2 focus:outline-none w-full ${
                 activeTab ===
-                  "Management of significant waste related impacts" || activeTab === "Management of Material topic waste" ||
-                activeTab === "Waste generated" ||
-                activeTab === "Waste Diverted from disposal" ||
-                activeTab === "Waste diverted to disposal"
+                  "Ratios of Standard Entry level wage by gender compared to local minimum wage" ||
+                activeTab ===
+                  "Proportion of senior management hired from the local community" ||
+                activeTab === "Management of Material topic Market"
                   ? "text-blue-400"
                   : "bg-transparent text-[#727272]"
               }`}
               onClick={toggleWasteVisible}
             >
-              <div className="w-[20%]">
+              {/* <div className="w-[20%]">
                 <MdOutlineDeleteOutline className="w-5 h-5 mr-2" />
-              </div>
-              <div className="w-[47%] text-left ml-2">
-                <span className="indent-0">Waste</span>
+              </div> */}
+              <div className="w-[100%] text-left ml-2">
+                <span className="indent-0 text-[13px]">Market Presence</span>
               </div>
 
-              <div className="inset-y-0  flex items-center pointer-events-none w-[45%] justify-end">
+              <div className="inset-y-0  flex items-center pointer-events-none w-[25%] justify-end">
                 {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                   M
                 </span> */}
@@ -346,11 +392,10 @@ const Aside = ({ activeTab, handleTabClick }) => {
               </div>
             </button>
 
-          
             {isWasteVisible && (
               <>
-                <div className="bg-white px-2 ml-5 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                <div>
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  <div>
                     <p className="text-[12px]  ml-3  text-gray-400">
                       Mandatory Management Disclosure
                     </p>
@@ -358,12 +403,12 @@ const Aside = ({ activeTab, handleTabClick }) => {
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Management of Material topic waste"
+                        activeTab === "Management of Material topic Market"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
                       onClick={() =>
-                        handleTabClick("Management of Material topic waste")
+                        handleTabClick("Management of Material topic Market")
                       }
                     >
                       Management of Material topic
@@ -371,85 +416,43 @@ const Aside = ({ activeTab, handleTabClick }) => {
                   </div>
                   <div>
                     <p className="text-[12px]  ml-3  text-gray-400">
-                      Topic Management Disclosure
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Significant waste related impact"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272] "
-                      }`}
-                      onClick={() =>
-                        handleTabClick("Significant waste related impact")
-                      }
-                    >
-                      Significant waste related impact
+                      Topic disclosure
                     </p>
                   </div>
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab ===
-                        "Management of significant waste related impacts"
+                        "Ratios of Standard Entry level wage by gender compared to local minimum wage"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
                       onClick={() =>
                         handleTabClick(
-                          "Management of significant waste related impacts"
+                          "Ratios of Standard Entry level wage by gender compared to local minimum wage"
                         )
                       }
                     >
-                      Management of significant waste related impacts
+                      Ratios of Standard Entry level wage by gender compared to
+                      local minimum wage
                     </p>
                   </div>
-                  <div>
-                    <p className="text-[12px]  ml-3  text-gray-400">
-                      Topic Disclosure
-                    </p>
-                  </div>
-
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Waste generated"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() => handleTabClick("Waste generated")}
-                    >
-                      Waste generated
-                    </p>
-                  </div>
-
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Waste Diverted from disposal"
+                        activeTab ===
+                        "Proportion of senior management hired from the local community"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
                       onClick={() =>
-                        handleTabClick("Waste Diverted from disposal")
+                        handleTabClick(
+                          "Proportion of senior management hired from the local community"
+                        )
                       }
                     >
-                      Waste Diverted from disposal
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Waste diverted to disposal"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272] "
-                      }`}
-                      onClick={() =>
-                        handleTabClick("Waste diverted to disposal")
-                      }
-                    >
-                      Waste Directed to disposal
+                      Proportion of senior management hired from the local
+                      community
                     </p>
                   </div>
                 </div>
@@ -460,24 +463,28 @@ const Aside = ({ activeTab, handleTabClick }) => {
 
           <div>
             <button
-              className={`flex items-center justify-between px-2 py-2 mb-2 focus:outline-none w-full
+              className={`flex items-center justify-between  py-2 mb-2 focus:outline-none w-full
               ${
-                activeTab === "Materials used by weight or volume" ||
-                activeTab === "Recycled input materials used" || activeTab === "Management of Material topic Materials" ||
-                activeTab === "Reclaimed products and their packaging materials"
+                activeTab ===
+                  "Management of Material topic Indirect Economic" ||
+                activeTab ===
+                  "Infrastructure investments and services supported" ||
+                activeTab === "Significant indirect economic impacts"
                   ? "text-[#007EEF]"
                   : "bg-transparent text-[#727272] "
               }`}
               onClick={toggleMaterialsVisible}
             >
-              <div className="w-[20%]">
+              {/* <div className="w-[20%]">
                 <GiWoodPile className="w-5 h-5 mr-2" />
-              </div>
-              <div className="w-[47%] text-left ml-2">
-                <span className="indent-0">Materials</span>
+              </div> */}
+              <div className="w-[100%] text-left ml-2">
+                <span className="indent-0 text-[13px]">
+                  Indirect Economic Impacts
+                </span>
               </div>
 
-              <div className="inset-y-0  flex items-center pointer-events-none w-[45%] justify-end">
+              <div className="inset-y-0  flex items-center pointer-events-none w-[25%] justify-end">
                 {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                   M
                 </span> */}
@@ -489,11 +496,10 @@ const Aside = ({ activeTab, handleTabClick }) => {
               </div>
             </button>
 
-    
             {isMaterialsVisible && (
               <>
-                <div className="bg-white px-2 ml-5 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                <div>
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  <div>
                     <p className="text-[12px]  ml-3  text-gray-400">
                       Mandatory Management Disclosure
                     </p>
@@ -501,61 +507,55 @@ const Aside = ({ activeTab, handleTabClick }) => {
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Management of Material topic Materials"
+                        activeTab ===
+                        "Management of Material topic Indirect Economic"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
                       onClick={() =>
-                        handleTabClick("Management of Material topic Materials")
+                        handleTabClick(
+                          "Management of Material topic Indirect Economic"
+                        )
                       }
                     >
                       Management of Material topic
                     </p>
                   </div>
                   <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Materials used by weight or volume"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick("Materials used by weight or volume")
-                      }
-                    >
-                      {" "}
-                      Materials used by weight or volume
+                    <p className="text-[12px]  ml-3  text-gray-400">
+                      Topic disclosure
                     </p>
                   </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Recycled input materials used"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272] "
-                      }`}
-                      onClick={() =>
-                        handleTabClick("Recycled input materials used")
-                      }
-                    >
-                      Recycled input materials used
-                    </p>
-                  </div>
+
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab ===
-                        "Reclaimed products and their packaging materials"
+                        "Infrastructure investments and services supported"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
                       onClick={() =>
                         handleTabClick(
-                          "Reclaimed products and their packaging materials"
+                          "Infrastructure investments and services supported"
                         )
                       }
                     >
-                      Reclaimed products and their packaging materials
+                      Infrastructure investments and services supported
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Significant indirect economic impacts"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() =>
+                        handleTabClick("Significant indirect economic impacts")
+                      }
+                    >
+                      Significant indirect economic impacts
                     </p>
                   </div>
                 </div>
@@ -566,28 +566,24 @@ const Aside = ({ activeTab, handleTabClick }) => {
           {/* Water and effluents */}
           <div className={`relative `}>
             <button
-              className={`flex items-center justify-between px-2 py-2 mb-2 focus:outline-none w-full
+              className={`flex items-center justify-between  py-2 mb-2 focus:outline-none w-full
               ${
-                activeTab === "Interaction with water as shared resource" ||
-                activeTab ===
-                  "Water Withdrawal and Water Discharge from All Areas" ||
-                activeTab ===
-                  "Water withdrawal/Discharge from areas with water stress" || activeTab === "Management of Material topic Water" ||
-                activeTab === "Substances of concern" ||
-                activeTab === "Change in water storage"
+                activeTab === "Proportion of spending on local suppliers"
                   ? "text-blue-400"
                   : "bg-transparent text-[#727272] "
               }`}
               onClick={toggleWaterVisible}
             >
-              <div className="w-[20%]">
+              {/* <div className="w-[20%]">
                 <MdOutlineWater className="w-5 h-5 mr-2" />
-              </div>
-              <div className="w-[47%] text-left ml-2">
-                <span className="indent-0">Water and effluents</span>
+              </div> */}
+              <div className="w-[100%] text-left ml-2">
+                <span className="indent-0 text-[13px]">
+                  Procurement Practices
+                </span>
               </div>
 
-              <div className="inset-y-0  flex items-center pointer-events-none w-[45%] justify-end">
+              <div className="inset-y-0  flex items-center pointer-events-none w-[25%] justify-end">
                 {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                   M
                 </span> */}
@@ -602,112 +598,27 @@ const Aside = ({ activeTab, handleTabClick }) => {
             {/* Water and effluents section content */}
             {isWaterVisible && (
               <>
-                <div className="bg-white px-2 ml-5 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                <div>
-                    <p className="text-[12px]  ml-3  text-gray-400">
-                      Mandatory Management Disclosure
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Management of Material topic Water"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick("Management of Material topic Water")
-                      }
-                    >
-                      Management of Material topic
-                    </p>
-                  </div>
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
                   <div>
                     <p className="text-[12px]  ml-3  text-gray-400">
-                      Topic management disclosure
+                      Topic disclosure
                     </p>
                   </div>
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab ===
-                        "Interaction with water as shared resource"
+                        "Proportion of spending on local suppliers"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
                       onClick={() =>
                         handleTabClick(
-                          "Interaction with water as shared resource"
+                          "Proportion of spending on local suppliers"
                         )
                       }
                     >
-                      Interaction with water as shared resource
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-[12px]  ml-3  text-gray-400">
-                      Topic Disclosure
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab ===
-                        "Water Withdrawal and Water Discharge from All Areas"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272] "
-                      }`}
-                      onClick={() =>
-                        handleTabClick(
-                          "Water Withdrawal and Water Discharge from All Areas"
-                        )
-                      }
-                    >
-                      {" "}
-                      Water Withdrawal and Water Discharge from All Areas
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab ===
-                        "Water withdrawal/Discharge from areas with water stress"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272]"
-                      }`}
-                      onClick={() =>
-                        handleTabClick(
-                          "Water withdrawal/Discharge from areas with water stress"
-                        )
-                      }
-                    >
-                      Water withdrawal and Water Discharge from areas with water
-                      stress
-                    </p>
-                  </div>
-
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Substances of concern"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272] "
-                      }`}
-                      onClick={() => handleTabClick("Substances of concern")}
-                    >
-                      Substances of concern
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Change in water storage"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272] "
-                      }`}
-                      onClick={() => handleTabClick("Change in water storage")}
-                    >
-                      Change in water storage
+                      Proportion of spending on local suppliers
                     </p>
                   </div>
                 </div>
@@ -718,26 +629,25 @@ const Aside = ({ activeTab, handleTabClick }) => {
           {/* supplier environmental assessment */}
           <div>
             <button
-              className={`flex justify-between px-2  mb-2 focus:outline-none w-full ${
+              className={`flex justify-between  py-2  mb-2 focus:outline-none w-full ${
                 activeTab ===
-                  "New suppliers that were screened using environmental criteria" ||  activeTab === "Management of Material topic Supplier"||
+                  "Operations assessed for risks related to corruption" ||
+                activeTab === "Management of Material topic Anti" ||
                 activeTab ===
-                  "Negative environmental impacts in the supply chain and actions taken"
+                  "Confirmed incidents of corruption and actions taken"
                   ? "text-[#007EEF]"
                   : "bg-white text-[#727272] "
               }`}
               onClick={toggleSupplierSectionVisibility}
             >
-              <div className="w-[20%]">
+              {/* <div className="w-[20%]">
                 <MdOutlineWarehouse className="w-5 h-5 mr-2" />
-              </div>
-              <div className="w-[47%] text-left ml-2">
-                <span className="indent-0">
-                  Supplier Environmental Assessment
-                </span>
+              </div> */}
+              <div className="w-[100%] text-left ml-2">
+                <span className="indent-0 text-[13px]">Anti Corruption</span>
               </div>
 
-              <div className="inset-y-0  flex items-center pointer-events-none w-[45%] justify-end">
+              <div className="inset-y-0  flex items-center pointer-events-none w-[25%] justify-end">
                 {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
                   M
                 </span> */}
@@ -752,8 +662,8 @@ const Aside = ({ activeTab, handleTabClick }) => {
             {/* Energy section content */}
             {isSupplierVisible && (
               <>
-                <div className="bg-white px-2 ml-5 3xl:ml-8 mt-2 border-l-2 border-gray-300">
-                <div>
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  <div>
                     <p className="text-[12px]  ml-3  text-gray-400">
                       Mandatory Management Disclosure
                     </p>
@@ -761,12 +671,12 @@ const Aside = ({ activeTab, handleTabClick }) => {
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Management of Material topic Supplier"
+                        activeTab === "Management of Material topic Anti"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
                       onClick={() =>
-                        handleTabClick("Management of Material topic Supplier")
+                        handleTabClick("Management of Material topic Anti")
                       }
                     >
                       Management of Material topic
@@ -781,57 +691,239 @@ const Aside = ({ activeTab, handleTabClick }) => {
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab ===
-                        "New suppliers that were screened using environmental criteria"
+                        "Operations assessed for risks related to corruption"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
                       onClick={() =>
                         handleTabClick(
-                          "New suppliers that were screened using environmental criteria"
+                          "Operations assessed for risks related to corruption"
                         )
                       }
                     >
-                      New suppliers that were screened using environmental
-                      criteria
+                      Operations assessed for risks related to corruption
                     </p>
                   </div>
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab ===
-                        "Negative environmental impacts in the supply chain and actions taken"
+                        "Confirmed incidents of corruption and actions taken"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
                       }`}
                       onClick={() =>
                         handleTabClick(
-                          "Negative environmental impacts in the supply chain and actions taken"
+                          "Confirmed incidents of corruption and actions taken"
                         )
                       }
                     >
-                      Negative environmental impacts in the supply chain and
-                      actions taken
+                      Confirmed incidents of corruption and actions taken
                     </p>
                   </div>
                 </div>
               </>
             )}
           </div>
-          {/* <button
-            className={`flex items-center justify-between  px-2 py-2 mb-2 focus:outline-none ${activeTab === "Bio diversity"
-              ? "text-[#007EEF] border-l-4 border-[#007EEF]"
-              : "bg-transparent text-[#727272] "
+
+          <div className={`relative `}>
+            <button
+              className={`flex items-center justify-between py-2 mb-2 focus:outline-none w-full
+              ${
+                activeTab === "Public legal cases regarding corruption" ||
+                activeTab === "Anti Competitive Behavior"
+                  ? "text-blue-400"
+                  : "bg-transparent text-[#727272] "
               }`}
-            onClick={() => handleTabClick("Bio diversity")}
-          >
-            <MdOutlineEmojiNature  className="w-5 h-5 mr-2" />
-            <span className="text-left sm:w-[92px] md:w-[92px] lg:w-[92px] xl:w-[92px] 2xl:w-[92px] 3xl:w-[198px]">Bio diversity</span>
-            <div className=" inset-y-0 -right-2 flex items-center pointer-events-none">
-              <MdKeyboardArrowDown
-                className="text-lg text-neutral-500"
-              />
-            </div>
-          </button> */}
+              onClick={toggleLegal}
+            >
+              {/* <div className="w-[20%]">
+                <MdOutlineWater className="w-5 h-5 mr-2" />
+              </div> */}
+              <div className="w-[100%] text-left ml-2">
+                <span className="indent-0 text-[13px]">Legal Actions</span>
+              </div>
+
+              <div className="inset-y-0  flex items-center pointer-events-none w-[25%] justify-end">
+                {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                  M
+                </span> */}
+                <MdKeyboardArrowDown
+                  className={`text-lg text-neutral-500 ${
+                    isLegal && "rotate-180"
+                  }`}
+                />
+              </div>
+            </button>
+
+            {/* Water and effluents section content */}
+            {isLegal && (
+              <>
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  <div>
+                    <p className="text-[12px]  ml-3  text-gray-400">
+                      Topic disclosure
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Public legal cases regarding corruption"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() =>
+                        handleTabClick(
+                          "Public legal cases regarding corruption"
+                        )
+                      }
+                    >
+                      Public legal cases regarding corruption
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Anti Competitive Behavior"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() =>
+                        handleTabClick("Anti Competitive Behavior")
+                      }
+                    >
+                      Anti Competitive Behavior
+                    </p>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+
+          <div>
+            <button
+              className={`flex justify-between  py-2  mb-2 focus:outline-none w-full ${
+                activeTab === "Approach to tax" ||
+                activeTab === "Management of Material topic Anti" ||
+                activeTab ===
+                  "Confirmed incidents of corruption and actions taken"
+                  ? "text-[#007EEF]"
+                  : "bg-white text-[#727272] "
+              }`}
+              onClick={toggleTax}
+            >
+              {/* <div className="w-[20%]">
+                <MdOutlineWarehouse className="w-5 h-5 mr-2" />
+              </div> */}
+              <div className="w-[100%] text-left ml-2">
+                <span className="indent-0 text-[13px]">Tax</span>
+              </div>
+
+              <div className="inset-y-0  flex items-center pointer-events-none w-[25%] justify-end">
+                {/* <span className="text-[#0057A5] text-[10px] bg-[#0057a51a] py-[4px] px-[6px] rounded-md">
+                  M
+                </span> */}
+                <MdKeyboardArrowDown
+                  className={`text-lg text-neutral-500 ${
+                    isTax && "rotate-180"
+                  }`}
+                />
+              </div>
+            </button>
+
+            {/* Energy section content */}
+            {isTax && (
+              <>
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  <div>
+                    <p className="text-[12px]  ml-3  text-gray-400">
+                      Mandatory Management Disclosure
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Management of Material topic Tax"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() =>
+                        handleTabClick("Management of Material topic Tax")
+                      }
+                    >
+                      Management of Material topic
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-[12px]  ml-3  text-[#727272]">
+                      Topic disclosure
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Approach to tax"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() => handleTabClick("Approach to tax")}
+                    >
+                      Approach to tax
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab ===
+                        "Tax governance, control, and risk management"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() =>
+                        handleTabClick(
+                          "Tax governance, control, and risk management"
+                        )
+                      }
+                    >
+                      Tax governance, control, and risk management
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab ===
+                        "Stakeholder engagement and management of concerns related to tax"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() =>
+                        handleTabClick(
+                          "Stakeholder engagement and management of concerns related to tax"
+                        )
+                      }
+                    >
+                      Stakeholder engagement and management of concerns related
+                      to tax
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Country-by-country reporting"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() =>
+                        handleTabClick("Country-by-country reporting")
+                      }
+                    >
+                      Country-by-country reporting
+                    </p>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>
