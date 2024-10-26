@@ -2,22 +2,19 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
-import TextareaWidget3 from "../../../../shared/widgets/Textarea/TextareaWidget3";
-import Textboxwithfileupload from "../../../../shared/widgets/Input/Textboxwithfileupload";
+
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import RadioWidget2 from "../../../../shared/widgets/Input/radioWidget2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import CommoninputWidget from "../../../../shared/widgets/Input/commoninputWidget";
+import MaterialtopicWidget from "../../../../shared/widgets/Textarea/MaterialtopicWidget";
 
 const widgets = {
-  inputWidget: CommoninputWidget,
+    MaterialtopicWidgets: MaterialtopicWidget,
 };
 
 
@@ -31,33 +28,52 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      Q1: {
+        GRI33cd: {
         type: "string",
         title:
-          "Describe how the organisation has determined significant instances of non-compliance",
+          "Describe organisation's policies or commitments for the material topic, along with actions taken to address, prevent or mitigate potential negative impacts and mention the actions taken by the organisation to manage actual and potential positive impacts.",
+      },
+      GRI33e: {
+        type: "string",
+        title:
+          "Mention the process used to track the effectiveness of the actions and mention goals, targets, and indicators used to evaluate the process. Also, specify lessons learned and how these have been incoporated to organisation's operational policies and procedures.",
       },
     },
   },
 };
 const uiSchema = {
   items: {
-    "ui:order": ["Q1"],
-    Q1: {
+    "ui:order": ["GRI33cd","GRI33e"],
+    GRI33cd: {
     "ui:title":
-        "Describe how the organisation has determined significant instances of non-compliance",
+        "Describe organisation's policies or commitments for the material topic, along with actions taken to address, prevent or mitigate potential negative impacts and mention the actions taken by the organisation to manage actual and potential positive impacts.",
       "ui:tooltip":
-        "Explain the process of determining significant instances of non-compliance.",
-        "ui:tooltipdisplay": "none",
-        "ui:titledisplay": "none",
-        "ui:widgetType": "textarea",
-        "ui:inputfildtype": "text",
-        "ui:widget": "inputWidget",
+        "<p>1) Mention the policies or commitments the organization has developed specifically for the selected material topics.</p> <br> <p> 2)Examples of actions taken to prevent or mitigate potential negative impacts (e.g., adaptation/modification measures, facility upgrading, training, red-flag systems).</p> <br> <p>Mitigation: Action(s) taken to reduce the extent of a negative impact.</p><br><p>3)Mention actions to address actual negative impacts, including actions to provide for or cooperate in their remediation. Remediation: Means to counteract or make good a negative impact or provision of remedy.</p>",
+        "ui:widget": "MaterialtopicWidgets",
+        "ui:titiledisplay":"none",
+        "ui:toltipdisplay":"none",
+        "ui:gridisplay":"none",
+        "ui:gri":["GRI 3-3-c","GRI 3-3-d"],
         "ui:horizontal": true,
         "ui:options": {
           label: false,
         },
       },
-  
+      GRI33e: {
+        "ui:title":
+            "Mention the process used to track the effectiveness of the actions and mention goals, targets, and indicators used to evaluate the process. Also, specify lessons learned and how these have been incoporated to organisation's operational policies and procedures.",
+          "ui:tooltip":
+            "<p>1) Process used to track the effectiveness of the actions can include internal or external auditing or verification, impact assessments, measurement systems, stakeholder feedback, grievance mechanisms, external performance ratings, and benchmarking.</p> <br> <p>  2)Specify the goals, targets and indicators used to evaluate the progress. Also, describe the effectiveness of the actions taken, including progress toward the goals and targets.</p> <br> <p> 3)The organization can briefly describe lessons learned that have led to changes in its policies or practices (e.g., training for workers, giving additional attention to the performance of suppliers), or that have led to plans for changes that will manage impacts more successfully in the future.</p>",
+            "ui:widget": "MaterialtopicWidgets",
+            "ui:titiledisplay":"block",
+            "ui:toltipdisplay":"block",
+            "ui:gridisplay":"block",
+            "ui:gri":["GRI 3-3-e"],
+            "ui:horizontal": true,
+            "ui:options": {
+              label: false,
+            },
+          },
 
     "ui:options": {
       orderable: false,
@@ -70,7 +86,7 @@ const uiSchema = {
 
 
 
-const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -161,16 +177,16 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
       LoaderClose();
     }
   };
-  useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-      toastShown.current = false;
-    } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
-      }
-    }
-  }, [selectedOrg, year, selectedCorp]);
+//   useEffect(() => {
+//     if (selectedOrg && year) {
+//       loadFormData();
+//       toastShown.current = false;
+//     } else {
+//       if (!toastShown.current) {
+//         toastShown.current = true;
+//       }
+//     }
+//   }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -183,12 +199,12 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
       <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
       <div className="flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-            Describe how the organisation has determined significant instances of non-compliance
+           <h2 className="flex mx-2 px-1 text-[15px] text-gray-700 font-[400]">
+           Describe organisation's policies or commitments for the material topic, along with actions taken to address, prevent or mitigate potential negative impacts and mention the actions taken by the organisation to manage actual and potential positive impacts.
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e14556`}
-                data-tooltip-content="Explain the process of determining significant instances of non-compliance."
-                className="mt-1.5 ml-2 text-[15px]"
+                data-tooltip-html="<p>1) Mention the policies or commitments the organization has developed specifically for the selected material topics.</p> <br> <p> 2)Examples of actions taken to prevent or mitigate potential negative impacts (e.g., adaptation/modification measures, facility upgrading, training, red-flag systems).</p> <br> <p>Mitigation: Action(s) taken to reduce the extent of a negative impact.</p><br><p>3)Mention actions to address actual negative impacts, including actions to provide for or cooperate in their remediation. Remediation: Means to counteract or make good a negative impact or provision of remedy.</p>"
+                className="mt-0.5 ml-1 text-[22px]"
               />
               <ReactTooltip
                 id={`tooltip-$e14556`}
@@ -208,9 +224,14 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
           </div>
           <div className="w-[20%]">
             <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex mx-2">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 3-3-c
+                </div>
+              </div>
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 2-27-d
+                GRI 3-3-d
                 </div>
               </div>
             </div>
@@ -218,8 +239,8 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+            schema={schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -255,4 +276,4 @@ const Screen4 = ({ selectedOrg, year, selectedCorp }) => {
   );
 };
 
-export default Screen4;
+export default Screen1;

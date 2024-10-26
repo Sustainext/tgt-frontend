@@ -22,6 +22,12 @@ import Substancesconcern from "./Water-effluents/substances-concern/substances-c
 import Waterstorage from "./Water-effluents/water-storage/water-storage"
 import NewSupplier from "./supplier-environmental-assessment/new-supplier/page"
 import NegativeEnvironmentImpact from "./supplier-environmental-assessment/negative-environmental-impact/page"
+import Materialtopic from "./Emissions/Management-Material-topic/page"
+import EnergyMaterialtopic from "./energy/Management-Material-topic/page"
+import WasteMaterialtopic from "./Waste/Management-Material-topic/page"
+import MaterialsMaterialtopic from "./Materials/Management-Material-topic/page"
+import WaterMaterialtopic from "./Water-effluents/Management-Material-topic/page"
+import SupplierMaterialtopic from "./supplier-environmental-assessment/Management-Material-topic/page"
 import { GlobalState } from "@/Context/page";
 import {
     setHeadertext1,
@@ -32,7 +38,7 @@ import { useDispatch} from "react-redux";
 
 const environment = () => {
     const { open } = GlobalState();
-    const [activeTab, setActiveTab] = useState('Emissions');
+    const [activeTab, setActiveTab] = useState('Management of Material topic emission');
     const dispatch = useDispatch();
 
     // Handle tab click and update the active tab
@@ -41,7 +47,19 @@ const environment = () => {
     };
 
     useEffect(() => {
-        // List of tabs related to Energy
+        // List of tabs related to Energy\
+        const materialnewTabs = [
+            'Management of Material topic emission',
+            'Management of Material topic Supplier',
+            'Management of Material topic Water',
+            'Management of Material topic Materials',
+            'Management of Material topic waste',
+            'Management of Material topic energy',
+             
+        ];
+        const emissionTabs = [
+             'GHG Emissions',
+        ];
         const energyTabs = [
             'Energy consumed inside the organization',
             'Energy consumption outside of the organization',
@@ -82,7 +100,10 @@ const environment = () => {
         ];
     
         // Set the header based on the active tab category
-        if (energyTabs.includes(activeTab)) {
+        if(emissionTabs.includes(activeTab)){
+            dispatch(setHeadertext2('Emission'));
+        }
+        else if (energyTabs.includes(activeTab)) {
             dispatch(setHeadertext2('Energy'));
         } else if (wasteTabs.includes(activeTab)) {
             dispatch(setHeadertext2('Waste'));
@@ -92,7 +113,10 @@ const environment = () => {
             dispatch(setHeadertext2('Water and effluents'));
         } else if (supplierTabs.includes(activeTab)) {
             dispatch(setHeadertext2('Supplier Environmental Assessment'));
-        } else {
+        } else if(materialnewTabs.includes(activeTab)) {
+            dispatch(setHeadertext2('Materials'));
+        }
+         else {
             dispatch(setHeadertext2(`${activeTab}`));
         }
         dispatch(setHeadertext1("Collect"));
@@ -110,30 +134,36 @@ const environment = () => {
                     </div>
                     <div className={`${open ? "sm:w-[87vw] md:w-[87vw] lg:w-[87vw] xl:w-[87vw]  2xl:w-[93vw] 3xl:w-[102vw]" :" sm:w-[87vw] md:w-[100vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[104vw] 3xl:w-[108vw]" }`}>
                         {/* Emissions start */}
-                        {activeTab === 'Emissions' && <Emission />}
+                        {activeTab === 'Management of Material topic emission' && <Materialtopic />}
+                        {activeTab === 'GHG Emissions' && <Emission />}
                         {/* Energy start */}
+                        {activeTab === 'Management of Material topic energy' && <EnergyMaterialtopic />}
                         {activeTab === 'Energy consumed inside the organization' && <Energyconsumed />}
                         {activeTab === 'Energy consumption outside of the organization' && <Energyconsumption />}
                         {activeTab === 'Energy Intensity' && <Energyintensity />}
                         {activeTab === 'Reduction of energy consumption' && <Reductionenergyconsumption />}
                         {activeTab === 'Reductions in energy requirements of products and services' && <Energyproductsservices />}
                        {/* waste start */}
-                        {activeTab === 'Significant waste related impact' && <Significantwaste />}
+                       {activeTab === 'Management of Material topic waste' && <WasteMaterialtopic />}
+                        {activeTab === 'Significant waste related impact' && <Significantwaste />} 
                         {activeTab === 'Management of significant waste related impacts' && <Managementwaste />}
                         {activeTab === 'Waste generated' && <Wastegenerated />}
                         {activeTab === 'Waste Diverted from disposal' && <Wastediverted />}
                         {activeTab === 'Waste diverted to disposal' && <Wastedirected />}
                      {/* Materials  start */}
-                        {activeTab === 'Materials used by weight or volume' && <Weightvolume />}
+                     {activeTab === 'Management of Material topic Materials' && <MaterialsMaterialtopic />} 
+                        {activeTab === 'Materials used by weight or volume' && <Weightvolume />} 
                         {activeTab === 'Recycled input materials used' && <Recycled />}
                         {activeTab === 'Reclaimed products and their packaging materials' && <Reclaimedproducts />}
                      {/* Water start */}
-                        {activeTab === 'Interaction with water as shared resource' && <Watersharedresource />}
+                     {activeTab === 'Management of Material topic Water' && <WaterMaterialtopic />} 
+                        {activeTab === 'Interaction with water as shared resource' && <Watersharedresource />}  
                         {activeTab === 'Water Withdrawal and Water Discharge from All Areas' && <Dischargefromareas />}
                         {activeTab === 'Water withdrawal/Discharge from areas with water stress' && <Waterstres />}
                         {activeTab === 'Substances of concern' && <Substancesconcern />}
                         {activeTab === 'Change in water storage' && <Waterstorage />}
                      {/* Supplier start */}
+                     {activeTab === 'Management of Material topic Supplier' && <SupplierMaterialtopic />} 
                         {activeTab === 'New suppliers that were screened using environmental criteria' && <NewSupplier />}
                         {activeTab === 'Negative environmental impacts in the supply chain and actions taken' && <NegativeEnvironmentImpact />}
                     </div>

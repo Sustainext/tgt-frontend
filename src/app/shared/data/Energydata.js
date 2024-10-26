@@ -3432,15 +3432,7 @@ export const Energydata = [
             Communication and training build the internal and external awareness and the necessary capacity to combat corruption.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12412"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
@@ -3569,6 +3561,49 @@ as well as via ongoing collaboration with suppliers.
       <h5 className="text-sky-600 text-[17px] font-bold">
       GRI 308: Supplier Environmental
       Assessment 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+          Disclosure 308-2 Negative environmental impacts in
+the supply chain and actions taken
+          </p>
+          <div className="">
+            <p className="text-[11px] text-black mb-2">
+            Guidance :
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            Negative impacts include those that are either caused or contributed to by an organization, or that are directly linked to its operations, products, or services by its relationship with a supplier. Assessments for environmental impacts can include the topics covered in other GRI Topic Standards (e.g., GRI 302: Energy 2016, GRI 303: Water and Effluents 2018, GRI 305: Emissions
+2016).
+
+            </p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            Assessments can be made against agreed performance expectations that are set and communicated to the suppliers prior to the assessment. Assessments can be informed by audits, contractual reviews, two-way engagement, and complaint and grievance mechanisms.
+
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            Improvements can include changing an organization’s procurement practices, the adjustment of performance expectations, capacity building, training, and changes to processes
+            </p>
+            <p className="text-[11px] text-black mb-2">Background</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+            This disclosure informs stakeholders about an organization’s awareness of significant actual
+            and potential negative environmental impacts in the supply chain.
+            </p>
+            
+          </div>
+     
+        </div>
+      </>,
+    ],
+    link:"https://www.globalreporting.org/pdf.ashx?id=12532",
+  },
+  {
+    category: ["51"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+    Disclosure 3-3 Management of material topics
       </h5>,
     ],
     data: [

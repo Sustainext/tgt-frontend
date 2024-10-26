@@ -94,7 +94,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
       <div className="flex items-start py-4 min-h-[84vh] rounded-lg text-[0.875rem] overflow-x-hidden sm:w-[200px] md:w-[200px] lg:w-[200px] xl:w-[200px] 2xl:w-[200px] 3xl:w-[351px] scrollable-content">
         <div className="flex flex-col w-full font-medium">
           <button className="flex items-center px-4 py-2 -mt-4 mb-8 rounded-none focus:outline-none text-[#727272] font-bold">
-            <span className="text-[16px] font-extrabold">Environment</span>
+            <span className="text-[16px] font-extrabold">Economic </span>
           </button>
           <div>
             <button
@@ -106,11 +106,11 @@ const Aside = ({ activeTab, handleTabClick }) => {
               }`}
               onClick={toggleEmission}
             >
-              <div className="w-[20%]">
+              {/* <div className="w-[20%]">
                 <MdOutlineFactory className="w-5 h-5 mr-2" />
-              </div>
+              </div> */}
               <div className="w-[47%] text-left ml-2">
-                <span className="indent-0">Emissions</span>
+                <span className="indent-0">Economic Performance</span>
               </div>
 
               <div className="inset-y-0  flex items-center pointer-events-none w-[45%] justify-end">
@@ -136,12 +136,12 @@ const Aside = ({ activeTab, handleTabClick }) => {
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Management of Material topic emission"
+                        activeTab === "Management of Material topic Economic Performance"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
                       onClick={() =>
-                        handleTabClick("Management of Material topic emission")
+                        handleTabClick("Management of Material topic Economic Performance")
                       }
                     >
                       Management of Material topic
@@ -155,13 +155,13 @@ const Aside = ({ activeTab, handleTabClick }) => {
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "GHG Emissions"
+                        activeTab === "Direct economic value generated & distributed"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272]"
                       }`}
-                      onClick={() => handleTabClick("GHG Emissions")}
+                      onClick={() => handleTabClick("Direct economic value generated & distributed")}
                     >
-                      GHG Emissions
+                     Direct economic value generated & distributed
                     </p>
                   </div>
                 </div>
