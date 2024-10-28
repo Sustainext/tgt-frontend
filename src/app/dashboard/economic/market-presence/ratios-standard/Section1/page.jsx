@@ -9,6 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 import EconomicHeader2 from "../../../EconomicHeader2";
 import Screen1 from "./screen1";
 import Screen2 from "./screen2";
+import Screen3 from "./screen3";
+import Screen4 from "./screen4";
 const Section1 = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
@@ -150,6 +152,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
       />
       <Screen2
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        year={year}
+      />
+         <Screen3
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        year={year}
+      />
+         <Screen4
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}

@@ -23,7 +23,14 @@ const UserAddedModal = ({addNewUser, edit=false}) => {
         </div>
         <div className="flex space-x-2 text-md">
           <Link href='/dashboard/Users/manage-users' className="bg-white hover:bg-white text-gray-700 px-4 py-1 rounded-lg border border-gray-10 text-[12px]">View all Users</Link>
-          <button onClick={addNewUser} className="bg-[#007EEF] hover:bg-[#007EEF] text-white px-4 py-1 rounded-md text-[12px]">Add User +</button>
+       
+            <button
+              onClick={addNewUser}
+              className="bg-[#007EEF] hover:bg-[#007EEF] text-white px-4 py-1 rounded-md text-[12px]"
+            >
+              Add User +
+            </button>
+        
         </div>
       </div>
     </div>

@@ -6,7 +6,7 @@ import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Socialheader from '../../../socialheader';
+import Socialheader3 from '../../../socialheader3';
 import Screen1 from "./screen1"
 const Section1 = () => {
     const [activeMonth, setActiveMonth] = useState(1);
@@ -107,7 +107,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
 
                 </div>
             </div>
-            <Socialheader
+            <Socialheader3
                 activeMonth={activeMonth}
                 setActiveMonth={setActiveMonth}
                 location={location}
