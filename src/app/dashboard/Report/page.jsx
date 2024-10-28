@@ -500,20 +500,28 @@ const Report = () => {
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
-      <div className="my-4 pb-5 mx-8 text-left">
-        <h1 className="gradient-text mb-8 text-[1.375rem] font-bold ml-3">
+      <div className="my-4 pb-5 mx-8 text-left border border-gray-300 rounded-md">
+        <div className="px-3 flex py-4  justify-between">
+          <div>
+          <h1 className="text-[#101828] mb-1 text-[1.375rem] font-bold">
           Report
         </h1>
-        <div className="">
+        <p className="text-[14px] text-[#667085]">All the reports generated made for the organization can be accessed here</p>
+          </div>
           <div
-            className="flex items-center space-x-2 text-sky-500 text-xs font-bold leading-[15px] cursor-pointer ml-2"
+            className="flex items-center space-x-2 text-[#007EEF] text-xs font-bold leading-[15px] cursor-pointer ml-2 float-end"
             onClick={handleOpenModal}
           >
-            <MdAdd className="text-[15px]" />
-            <div className="text-sky-500 text-[15px] font-bold leading-[15px]">
+            
+            <div className="text-[#007EEF] text-[14px] font-bold leading-[15px]">
               Add Report
             </div>
+            <MdAdd className="text-[14px]" />
           </div>
+        </div>
+   
+        <div className="">
+      
           {/* <div className="mt-3">
           <DataTable data={data}/>
           </div> */}
