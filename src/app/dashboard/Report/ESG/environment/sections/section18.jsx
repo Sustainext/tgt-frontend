@@ -7,7 +7,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import {setWaterConsumptionGoals} from "../../../../../../lib/redux/features/ESGSlice/screen12Slice"
 
-const Section18=({section12_3_4Ref})=>{
+const Section18=({section12_3_4Ref,data})=>{
     
     const content = useSelector(state => state.screen12Slice.water_consumption_goals);
     const dispatch = useDispatch();
@@ -20,85 +20,134 @@ const Section18=({section12_3_4Ref})=>{
       dispatch(setWaterConsumptionGoals(e.target.value))
     }
 
+    let waterConsumedByStressArea={
+      total:'',
+      unit:''
+    }
+    let waterConsumedByBusinessOperation={
+      total:'',
+      unit:''
+    }
+    let waterConsumedByLocation={
+      total:'',
+      unit:''
+    }
+    let waterConsumedBySource={
+      total:'',
+      unit:''
+    }
+
     const column2 = [
         'Business Operation', 
         'Contribution %', 
         'Total water Consumption', 
         'Unit', 
       ];
-      const data2 = [
-        {
-            "Business Operation": 'data',
-          'Contribution %': 'x%',
-          'Total water Consumption': 'data',
-          "Unit": 'data'
-        },
-        {
-            "Business Operation": 'data',
-          'Contribution %': 'x%',
-          'Total water Consumption': 'data',
-          "Unit": 'data'
-        },
-        {
-            "Business Operation": 'data',
-          'Contribution %': 'x%',
-          'Total water Consumption': 'data',
-          "Unit": 'data'
-        },
-      ];
+      
+      const data2 =
+      data["water_analyse"] &&
+      data["water_analyse"]["total_water_consumption_by_business_operation"].length > 0
+        ? data["water_analyse"]["total_water_consumption_by_business_operation"].reduce(
+            (acc, val) => {
+              if (val.Total !== undefined) {
+                waterConsumedByBusinessOperation = {
+                  total: val.Total.toFixed(2),
+                  unit: val.Units,
+                };
+              } else {
+                acc.push({
+                  "Business Operation": val.Businessoperations,
+          'Contribution %': val.consumption_percentage+"%",
+          'Total water Consumption': val.total_consumed,
+          "Unit": val.Units
+                });
+              }
+              return acc;
+            },
+            []
+          )
+        : [
+            {
+              "Business Operation": 'No data available',
+          'Contribution %': 'No data available',
+          'Total water Consumption': 'No data available',
+          "Unit": 'No data available'
+            },
+          ]
+
 
       const column1 = [
         'Total water Consumption', 
-        'Contribution %', 
+        'Water consumption from areas with water stress', 
         'Unit', 
       ];
-      const data1 = [
-        {
-            "Total water Consumption": 'data',
-          'Water consumption from areas with water stress ': 'data',
+    
+
+      const data1 =
+      data["water_analyse"] &&
+      data["water_analyse"]["total_water_consumption"].length > 0
+        ? data["water_analyse"]["total_water_consumption"].reduce(
+            (acc, val) => {
+              if (val.Total !== undefined) {
+              } else {
+                acc.push({
+                 "Total water Consumption": val.total_water_consumption.toFixed(2),
+          'Water consumption from areas with water stress': val.water_consumption_from_areas_with_water_stress,
           
-          "Unit": 'data'
-        },
-        {
-            "Total water Consumption": 'data',
-          'Water consumption from areas with water stress ': 'data',
+          "Unit": val.Unit
+                });
+              }
+              return acc;
+            },
+            []
+          )
+        : [
+            {
+              "Total water Consumption": 'No data available',
+          'Water consumption from areas with water stress': 'No data available',
           
-          "Unit": 'data'
-        },
-        {
-            "Total water Consumption": 'data',
-          'Water consumption from areas with water stress ': 'data',
-          
-          "Unit": 'data'
-        },
-      ];
+          "Unit": 'No data available'
+            },
+          ]
 
       const column3 = [
         'Location/country', 
         'Contribution %', 
-        'Total water withdrawal', 
+        'Total water consumption', 
         'Unit', 
       ];
-      const data3 = [
-        {
-            "Location/country": 'Location 1',
-          'Contribution %': 'x%',
-          'Total water withdrawal': 'data',
-          "Unit": 'data'
-        },
-        {
-            "Location/country": 'Location 2',
-          'Contribution %': 'x%',
-          'Total water withdrawal': 'data',
-          "Unit": 'data'
-        },
-        {
-            "Location/country": 'Location 3',
-          'Contribution %': 'x%',
-          'Total water withdrawal': 'data',
-          "Unit": 'data'
-        },
-      ];
+      
+
+      const data3 =
+      data["water_analyse"] &&
+      data["water_analyse"]["total_water_consumption_by_location"].length > 0
+        ? data["water_analyse"]["total_water_consumption_by_location"].reduce(
+            (acc, val) => {
+              if (val.Total !== undefined) {
+                waterConsumedByLocation = {
+                  total: val.Total.toFixed(2),
+                  unit: val.Unit,
+                };
+              } else {
+                acc.push({
+                  "Location/country": val.location,
+                  'Contribution %': val.consumption_contribution+"%",
+                  'Total water consumption': val.total_consumption,
+                  "Unit": val.unit
+                });
+              }
+              return acc;
+            },
+            []
+          )
+        : [
+            {
+              "Location/country": 'No data available',
+              'Contribution %': 'No data available',
+              'Total water consumption': 'No data available',
+              "Unit": 'No data available'
+            },
+          ]
 
       const column4 = [
         'Source', 
@@ -108,43 +157,41 @@ const Section18=({section12_3_4Ref})=>{
         'Unit'
       ];
       
-      const data4 = [
-        {
-          Source: 'Surface Water',
-          'Water Type': 'Freshwater (≤1000 mg/L Total Dissolved Solids)',
-          'Contribution %': 'x%',
-          'Total Water Consumption': '212123545',
-          Unit: 'Megalitre'
-        },
-        {
-          Source: 'Ground Water',
-          'Water Type': 'Other water (>1000 mg/L Total Dissolved Solids)',
-          'Contribution %': 'x%',
-          'Total Water Consumption': '212123545',
-          Unit: 'Megalitre'
-        },
-        {
-          Source: 'Sea Water',
-          'Water Type': 'Other water (>1000 mg/L Total Dissolved Solids)',
-          'Contribution %': 'x%',
-          'Total Water Consumption': '212123545',
-          Unit: 'Megalitre'
-        },
-        {
-          Source: 'Municipal Water',
-          'Water Type': 'Other water (>1000 mg/L Total Dissolved Solids)',
-          'Contribution %': 'x%',
-          'Total Water Consumption': '212123545',
-          Unit: 'Megalitre'
-        },
-        {
-          Source: 'Other (Please specify)',
-          'Water Type': 'Other water (>1000 mg/L Total Dissolved Solids)',
-          'Contribution %': 'x%',
-          'Total Water Consumption': '212123545',
-          Unit: 'Megalitre'
-        },
-      ];
+      
+
+      const data4 =
+      data["water_analyse"] &&
+      data["water_analyse"]["total_water_consumption_by_source"].length > 0
+        ? data["water_analyse"]["total_water_consumption_by_source"].reduce(
+            (acc, val) => {
+              if (val.Total !== undefined) {
+                waterConsumedBySource = {
+                  total: val.Total.toFixed(2),
+                  unit: val.Units,
+                };
+              } else {
+                acc.push({
+                  Source: val.Source,
+                  'Water Type': val.WaterType,
+                  'Contribution %': val.consumption_percentage+"%",
+                  'Total Water Consumption': val.total_consumed,
+                  Unit: val.Units
+                });
+              }
+              return acc;
+            },
+            []
+          )
+        : [
+            {
+              Source: 'No data available',
+          'Water Type': 'No data available',
+          'Contribution %': 'No data available',
+          'Total Water Consumption': 'No data available',
+          Unit: 'No data available'
+            },
+          ]
+
 
       const column5 = [
         'Name of Water Stress Area', 
@@ -152,32 +199,67 @@ const Section18=({section12_3_4Ref})=>{
         'Water Consumption', 
         'Unit', 
       ];
-      const data5 = [
-        {
-            "Name of Water Stress Area": 'Area 1',
-          "Contribution %":"Surface water",
-          'Water Consumption': 'data',
-          "Unit": 'data'
-        },
-        {
-            "Name of Water Stress Area": 'Area 1',
-          "Contribution %":"Surface water",
-          'Water Consumption': 'data',
-          "Unit": 'data'
-        },
-      ];
+      
+
+      const data5 =
+      data["water_analyse"] &&
+      data["water_analyse"]["total_water_consumption_in_water_stress_areas"].length > 0
+        ? data["water_analyse"]["total_water_consumption_in_water_stress_areas"].reduce(
+            (acc, val) => {
+              if (val.Total !== undefined) {
+                waterConsumedByStressArea = {
+                  total: val.Total.toFixed(2),
+                  unit: val.Units,
+                };
+              } else {
+                acc.push({
+                  "Name of Water Stress Area": val.WaterStress,
+                  "Contribution %": val.consumption_percentage+"%",
+                  'Water Consumption': val.total_consumed,
+                  "Unit": val.Units
+                });
+              }
+              return acc;
+            },
+            []
+          )
+        : [
+            {
+              "Name of Water Stress Area": 'No data available',
+          "Contribution %":"No data available",
+          'Water Consumption': 'No data available',
+          "Unit": 'No data available'
+            },
+          ]
+
 
       const column6 = [
         'Unit', 
         'Change in water storage', 
       ];
-      const data6 = [
-        {
-            "Unit": 'Megalitre',
-          "Change in water storage":"",
-        },
-      ];
-
+    
+      const data6 =
+      data["water_analyse"] &&
+      data["water_analyse"]["change_in_water_storage"].length > 0
+        ? data["water_analyse"]["change_in_water_storage"].reduce(
+            (acc, val) => {
+              if (val.Total !== undefined) {
+              } else {
+                acc.push({
+                  "Unit": val.Unit,
+          "Change in water storage":val.WaterStorage,
+                });
+              }
+              return acc;
+            },
+            []
+          )
+        : [
+            {
+            "Unit": 'No data available',
+          "Change in water storage":"No data available",
+            },
+          ]
      
       
     
@@ -219,17 +301,16 @@ Total Water Consumption
 Total Water Consumption in water stress areas
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WaterTable columns={column5} data={data5} consumption="Total Water Consumption" unit={"Megalitre"} total={'212123545'}/>
+<WaterTable columns={column5} data={data5} consumption="Total Water Consumption" unit={waterConsumedByStressArea.unit}
+total={waterConsumedByStressArea.total}/>
 </div>
-<p className="text-[15px]  mb-2 font-semibold">
-Water consumption by business operations 
 
-        </p>
 <p className="text-[15px]  mb-2 font-semibold">
 Total Water Consumption by business operation
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WaterTable columns={column2} data={data2} consumption="Total Water Consumption" unit={"Megalitre"} total={'212123545'}/>
+<WaterTable columns={column2} data={data2} consumption="Total Water Consumption" unit={waterConsumedByBusinessOperation.unit}
+total={waterConsumedByBusinessOperation.total}/>
 </div>
 
 
@@ -237,7 +318,8 @@ Total Water Consumption by business operation
 Total Water Consumption by Location
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WaterTable columns={column3} data={data3} consumption="Total Water Consumption" unit={"Megalitre"} total={'212123545'}/>
+<WaterTable columns={column3} data={data3} consumption="Total Water Consumption" unit={waterConsumedByLocation.unit}
+total={waterConsumedByLocation.total}/>
 </div>
 
 
@@ -246,14 +328,15 @@ Total Water Consumption by Location
 Total Water Consumption by source
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WaterTable columns={column4} data={data4} consumption="Total Water Consumption" unit={"Megalitre"} total={'212123545'}/>
+<WaterTable columns={column4} data={data4} consumption="Total Water Consumption" unit={waterConsumedBySource.unit}
+total={waterConsumedBySource.total}/>
 </div>
 
 <p className="text-[15px]  mb-2 font-semibold">
 Change in water storage
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WaterTable columns={column6} data={data6}/>
+<LeaveTable columns={column6} data={data6}/>
 </div>
 </div>
         </>
