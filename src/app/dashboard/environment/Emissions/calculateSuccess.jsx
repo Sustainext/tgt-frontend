@@ -5,10 +5,28 @@ import { useSelector } from 'react-redux';
 import Tick from '@/app/shared/assets/tick.svg';
 import Error from '@/app/shared/assets/error.svg';
 import { Oval } from 'react-loader-spinner';
+import { getLocationName } from '@/app/utils/locationName';
 
 const CalculateSuccess = ({ onClose, data }) => {
   const [showErrorUi, setShowErrorUi] = useState(false);
+  const [locationName, setLocationName] = useState('');
   const climatiqData = useSelector(state => state.emissions.climatiqData);
+
+  useEffect(() => {
+    const fetchLocationName = async () => {
+      if (data?.locationname) {
+        try {
+          const name = await getLocationName(data.location);
+          setLocationName(name);
+        } catch (error) {
+          console.error('Error fetching location name:', error);
+          setLocationName(data.location);
+        }
+      }
+    };
+
+    fetchLocationName();
+  }, [data?.locationname]);
 
   const getMonthName = (monthNumber) => {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -93,7 +111,7 @@ const CalculateSuccess = ({ onClose, data }) => {
                   Location={' '}
                 </span>
                 <span className="text-sky-500 text-[15px] font-bold font-['Manrope'] leading-normal">
-                  {data.locationname}
+                  {locationName}
                 </span>
               </div>
               <div className='w-[359px]'>

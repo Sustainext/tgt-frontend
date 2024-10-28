@@ -852,6 +852,10 @@ const MyTask = () => {
       deadline: date,
       comments: comments,
       file_data: {},
+      value1: "",
+      value2: "",
+      unit1: "",
+      unit2: "",
     };
     await patch(
       `${process.env.BACKEND_API_URL}/organization_task_dashboard/${id}/`,
@@ -1109,10 +1113,20 @@ const MyTask = () => {
   };
 
   const [selectedLocation, setSelectedLocation] = useState();
-  useEffect(()=>{
-    setSelectedLocation(getLocationName(taskassigndata.location))
-  },[taskassigndata])
+  useEffect(() => {
+    setSelectedLocation(getLocationName(taskassigndata.location));
+  }, [taskassigndata]);
 
+  const validateDecimalPlaces = (value) => {
+    if (!value) return value;
+    // Allow up to 2 decimal places and prevent more than 2 decimal places
+    const regex = /^\d*\.?\d{0,2}$/;
+    if (!regex.test(value)) {
+      // If more than 2 decimal places, truncate to 2
+      return Number(value).toFixed(2);
+    }
+    return value;
+  };
 
   return (
     <>
@@ -1271,7 +1285,7 @@ const MyTask = () => {
                                   className={
                                     task.roles === 1
                                       ? `w-24 text-neutral-800 text-[13px] font-normal leading-none ml-3 ${
-                                          task.task_status === 4
+                                          task.task_status === "reject"
                                             ? "bg-[#FE5F54] text-white"
                                             : "bg-[#ffd633]"
                                         } h-[20px] rounded-md`
@@ -2382,12 +2396,30 @@ const MyTask = () => {
                         className="border m-0.5 text-sm text-neutral-500 appearance-none pr-[180px] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         placeholder="Enter Value"
                         value={taskassigndata.value1}
-                        onChange={(e) =>
+                        onChange={(e) => {
+                          const validatedValue = validateDecimalPlaces(
+                            e.target.value
+                          );
                           setTaskAssigndata({
                             ...taskassigndata,
-                            value1: e.target.value,
-                          })
-                        }
+                            value1: validatedValue,
+                          });
+                          if (validatedValue !== e.target.value) {
+                            toast.info("Maximum 2 decimal places allowed");
+                          }
+                        }}
+                        onBlur={(e) => {
+                          // Format number on blur to ensure consistent display
+                          if (e.target.value) {
+                            const formattedValue = Number(
+                              e.target.value
+                            ).toFixed(2);
+                            setTaskAssigndata({
+                              ...taskassigndata,
+                              value1: formattedValue,
+                            });
+                          }
+                        }}
                       />
                       <div className="absolute right-1 top-0.5">
                         <select
@@ -2438,12 +2470,30 @@ const MyTask = () => {
                         className="border m-0.5 text-sm text-neutral-500 appearance-none pr-[180px] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         placeholder="Enter Value"
                         value={taskassigndata.value2}
-                        onChange={(e) =>
+                        onChange={(e) => {
+                          const validatedValue = validateDecimalPlaces(
+                            e.target.value
+                          );
                           setTaskAssigndata({
                             ...taskassigndata,
-                            value2: e.target.value,
-                          })
-                        }
+                            value2: validatedValue,
+                          });
+                          if (validatedValue !== e.target.value) {
+                            toast.info("Maximum 2 decimal places allowed");
+                          }
+                        }}
+                        onBlur={(e) => {
+                          // Format number on blur to ensure consistent display
+                          if (e.target.value) {
+                            const formattedValue = Number(
+                              e.target.value
+                            ).toFixed(2);
+                            setTaskAssigndata({
+                              ...taskassigndata,
+                              value2: formattedValue,
+                            });
+                          }
+                        }}
                       />
                       <div className="absolute right-1 top-0.5">
                         <select
@@ -2494,12 +2544,30 @@ const MyTask = () => {
                       className="border m-0.5 text-sm text-neutral-500 appearance-none pr-[180px] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                       placeholder="Enter Value"
                       value={taskassigndata.value1}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const validatedValue = validateDecimalPlaces(
+                          e.target.value
+                        );
                         setTaskAssigndata({
                           ...taskassigndata,
-                          value1: e.target.value,
-                        })
-                      }
+                          value1: validatedValue,
+                        });
+                        if (validatedValue !== e.target.value) {
+                          toast.info("Maximum 2 decimal places allowed");
+                        }
+                      }}
+                      onBlur={(e) => {
+                        // Format number on blur to ensure consistent display
+                        if (e.target.value) {
+                          const formattedValue = Number(e.target.value).toFixed(
+                            2
+                          );
+                          setTaskAssigndata({
+                            ...taskassigndata,
+                            value1: formattedValue,
+                          });
+                        }
+                      }}
                     />
                     <div className="absolute right-1 top-0.5">
                       <select

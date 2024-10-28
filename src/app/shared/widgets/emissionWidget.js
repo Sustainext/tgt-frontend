@@ -16,6 +16,7 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import {
   setSelectedRows,
+  updateSelectedRow,
   toggleSelectAll,
 } from "@/lib/redux/features/emissionSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -37,6 +38,7 @@ const EmissionWidget = React.memo(
     id,
     formRef,
   }) => {
+    const dispatch = useDispatch();
     const rowId = scope + "_" + index;
     const [rowType, setRowType] = useState(value.rowType || "default");
     const [category, setCategory] = useState(value.Category || "");
@@ -67,6 +69,38 @@ const EmissionWidget = React.memo(
     const users = useSelector((state) => state.emissions.users.data);
     const [assignedUser, setAssignedUser] = useState(value.assigned_to || "");
     const { location, month } = useSelector((state) => state.emissions);
+    //row selection
+    const selectedRows = useSelector(
+      (state) => state.emissions.selectedRows[scope]
+    );
+    const scopeDataFull = useSelector(
+      (state) => state.emissions[`${scope}Data`]
+    );
+    const [isSelected, setIsSelected] = useState(false);
+    const selectAll = useSelector(
+      (state) => state.emissions.selectAllChecked[scope]
+    );
+
+    // Function to check if current row is selected
+    const isRowSelected = useCallback(() => {
+      return selectedRows?.some((row) => row.rowId === rowId);
+    }, [selectedRows, rowId]);
+
+    const updateSelectedRowIfNeeded = useCallback(
+      (updatedValue) => {
+        if (isRowSelected()) {
+          dispatch(
+            updateSelectedRow({
+              scope,
+              rowId,
+              isSelected: true,
+              rowData: updatedValue,
+            })
+          );
+        }
+      },
+      [dispatch, scope, rowId, isRowSelected]
+    );
 
     useEffect(() => {
       const filteredUser = users?.filter(
@@ -77,10 +111,8 @@ const EmissionWidget = React.memo(
 
     const handleAssignClick = () => {
       // Disable form validation before opening modal
-      if(category && subcategory)
-      setIsAssignModalOpen(true);
-    else
-    toast.error("Please select category and subcategory");
+      if (category && subcategory) setIsAssignModalOpen(true);
+      else toast.error("Please select category and subcategory");
     };
 
     const handleCloseAssignModal = () => {
@@ -91,17 +123,17 @@ const EmissionWidget = React.memo(
       setIsAssignModalOpen(false);
     };
 
-    const handleMultipleAssignClick = () => {      
+    const handleMultipleAssignClick = () => {
       // Check if all selected rows have category and subcategory
       const invalidRows = selectedRows.filter(
-        row => !row.Emission?.Category || !row.Emission?.Subcategory
+        (row) => !row.Emission?.Category || !row.Emission?.Subcategory
       );
-    
+
       if (invalidRows.length > 0) {
         toast.error("All rows must have Category and Sub-Category selected");
         return;
       }
-    
+
       setIsMultipleAssignModalOpen(true);
     };
 
@@ -351,39 +383,42 @@ const EmissionWidget = React.memo(
 
     const handleCategoryChange = useCallback(
       (newCategory) => {
-        setCategory(newCategory);
-        onChange({
+        const updatedValue = {
           ...value,
           Category: newCategory,
           Subcategory: "",
           Activity: "",
           Quantity: "",
           Unit: "",
-        });
+        };
+        onChange(updatedValue);
+        updateSelectedRowIfNeeded(updatedValue);
       },
-      [onChange, value]
+      [onChange, value, updateSelectedRowIfNeeded]
     );
+
     const handleSubcategoryChange = useCallback(
       (newSubcategory) => {
-        setSubcategory(newSubcategory);
-        onChange({
+        const updatedValue = {
           ...value,
           Subcategory: newSubcategory,
           Activity: "",
           Quantity: "",
           Unit: "",
-        });
+        };
+        onChange(updatedValue);
+        updateSelectedRowIfNeeded(updatedValue);
       },
-      [onChange, value]
+      [onChange, value, updateSelectedRowIfNeeded]
     );
+
     const handleActivityChange = useCallback(
       (newActivity) => {
-        setActivity(newActivity);
         const foundActivity = activities.find(
           (act) =>
             `${act.name} - (${act.source}) - ${act.unit_type}` === newActivity
         );
-        onChange({
+        const updatedValue = {
           ...value,
           Activity: newActivity,
           activity_id: foundActivity ? foundActivity.activity_id : "",
@@ -392,9 +427,11 @@ const EmissionWidget = React.memo(
           Quantity2: "",
           Unit: "",
           Unit2: "",
-        });
+        };
+        onChange(updatedValue);
+        updateSelectedRowIfNeeded(updatedValue);
       },
-      [activities, onChange, value]
+      [activities, onChange, value, updateSelectedRowIfNeeded]
     );
 
     const debouncedHandleQuantityChange = useCallback(
@@ -447,32 +484,6 @@ const EmissionWidget = React.memo(
       [unit2]
     );
 
-    useEffect(() => {
-      if (unit && requiresNumericValidation(unit)) {
-        const newQuantity = Math.floor(Number(quantity));
-        if (newQuantity !== Number(quantity)) {
-          setQuantity(newQuantity);
-          const error = validateQuantity(newQuantity, unit);
-          setQuantityError(error);
-          debouncedHandleQuantityChange(newQuantity);
-          toast.error("This field cannot have decimal value");
-        }
-      }
-    }, [unit, quantity]);
-
-    useEffect(() => {
-      if (unit2 && requiresNumericValidation(unit2)) {
-        const newQuantity2 = Math.floor(Number(quantity2));
-        if (newQuantity2.toString() !== quantity2) {
-          setQuantity2(newQuantity2);
-          debouncedHandleQuantityChange(newQuantity);
-          const error = validateQuantity(newQuantity2, unit2);
-          setQuantity2Error(error);
-          toast.error("This field cannot have decimal value");
-        }
-      }
-    }, [unit2, quantity2]);
-
     const handleUnitChange = useCallback(
       (newValue) => {
         setUnit(newValue);
@@ -510,6 +521,32 @@ const EmissionWidget = React.memo(
         onChange,
       ]
     );
+
+    useEffect(() => {
+      if (unit && requiresNumericValidation(unit)) {
+        const newQuantity = Math.floor(Number(quantity));
+        if (newQuantity !== Number(quantity)) {
+          setQuantity(newQuantity);
+          const error = validateQuantity(newQuantity, unit);
+          setQuantityError(error);
+          debouncedHandleQuantityChange(newQuantity);
+          toast.error("This field cannot have decimal value");
+        }
+      }
+    }, [unit, quantity]);
+
+    useEffect(() => {
+      if (unit2 && requiresNumericValidation(unit2)) {
+        const newQuantity2 = Math.floor(Number(quantity2));
+        if (newQuantity2.toString() !== quantity2) {
+          setQuantity2(newQuantity2);
+          debouncedHandleQuantityChange(newQuantity);
+          const error = validateQuantity(newQuantity2, unit2);
+          setQuantity2Error(error);
+          toast.error("This field cannot have decimal value");
+        }
+      }
+    }, [unit2, quantity2]);
 
     const toggleDropdown = useCallback(() => {
       setIsDropdownActive(!isDropdownActive);
@@ -594,6 +631,50 @@ const EmissionWidget = React.memo(
       }
     }, [value]);
 
+    // const handleChange = async (event) => {
+    //   const selectedFile = event.target.files[0];
+
+    //   if (selectedFile) {
+    //     const newFileName = selectedFile.name;
+    //     const fileType = selectedFile.type;
+    //     const fileSize = selectedFile.size;
+    //     const uploadDateTime = new Date().toLocaleString();
+
+    //     console.log("Selected file details:", {
+    //       newFileName,
+    //       fileType,
+    //       fileSize,
+    //       uploadDateTime,
+    //     });
+
+    //     setFileName(newFileName); // Set the file name
+
+    //     const uploadUrl = await uploadFileToAzure(selectedFile, newFileName);
+
+    //     if (uploadUrl) {
+    //       const reader = new FileReader();
+    //       reader.onloadend = () => {
+    //         setPreviewData(reader.result); // For preview
+    //       };
+    //       reader.readAsDataURL(selectedFile);
+
+    //       onChange({
+    //         type: "file",
+    // value: uploadUrl,
+    // name: newFileName,
+    // url: uploadUrl,
+    // filetype: fileType,
+    // size: fileSize,
+    // uploadDateTime,
+    //       });
+
+    //       console.log("File uploaded successfully:", uploadUrl);
+    //     } else {
+    //       console.error("File upload failed");
+    //     }
+    //   }
+    // };
+
     const handleChange = async (event) => {
       const selectedFile = event.target.files[0];
 
@@ -621,15 +702,19 @@ const EmissionWidget = React.memo(
           };
           reader.readAsDataURL(selectedFile);
 
+          // Update only the file data, keeping the rest of the row state
           onChange({
-            type: "file",
-            value: uploadUrl,
-            name: newFileName,
-            url: uploadUrl,
-            filetype: fileType,
-            size: fileSize,
-            uploadDateTime,
+            ...value,
+            file: {
+              value: uploadUrl,
+              name: newFileName,
+              url: uploadUrl,
+              type: fileType,
+              size: fileSize,
+              uploadDateTime,
+            },
           });
+          setFileType(fileType);
 
           console.log("File uploaded successfully:", uploadUrl);
         } else {
@@ -652,7 +737,7 @@ const EmissionWidget = React.memo(
         value: "",
         name: "",
         url: "",
-        filetype: "",
+        type: "",
         size: "",
         uploadDateTime: "",
       };
@@ -666,19 +751,6 @@ const EmissionWidget = React.memo(
     const handleClickonRemove = () => {
       onRemove(index);
     };
-
-    //row selection
-    const dispatch = useDispatch();
-    const selectedRows = useSelector(
-      (state) => state.emissions.selectedRows[scope]
-    );
-    const scopeDataFull = useSelector(
-      (state) => state.emissions[`${scope}Data`]
-    );
-    const [isSelected, setIsSelected] = useState(false);
-    const selectAll = useSelector(
-      (state) => state.emissions.selectAllChecked[scope]
-    );
 
     useEffect(() => {
       // Check if this row is in the selectedRows array for this scope
@@ -1056,7 +1128,9 @@ const EmissionWidget = React.memo(
                       id={id + scope}
                       onChange={handleChange}
                       style={{ display: "none" }}
-                      disabled={rowType === "assigned" || rowType === "approved"}
+                      disabled={
+                        rowType === "assigned" || rowType === "approved"
+                      }
                     />
 
                     {fileName ? (
@@ -1158,7 +1232,7 @@ const EmissionWidget = React.memo(
                                   className="w-full h-full"
                                 />
                               ) : (
-                                <p>
+                                <p className="text-red-500 ml-5">
                                   File preview not available.Please download and
                                   verify
                                 </p>

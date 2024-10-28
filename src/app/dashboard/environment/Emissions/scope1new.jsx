@@ -60,7 +60,7 @@ const Scope1 = forwardRef(
     const dispatch = useDispatch();
 
     const scope1State = useSelector((state) => state.emissions.scope1Data);
-    const climatiqData = useSelector((state) => state.emissions.climatiqData);
+    const selectedRows = useSelector((state) => state.emissions.selectedRows["scope1"]);
     const previousMonthData = useSelector(
       (state) => state.emissions.previousMonthData
     );
@@ -77,8 +77,22 @@ const Scope1 = forwardRef(
       ? scope1State.data.data
       : [];
 
+    // useImperativeHandle(ref, () => ({
+    //   updateFormData: () => updateFormData(formData),
+    // }));
+
     useImperativeHandle(ref, () => ({
-      updateFormData: () => updateFormData(formData),
+      updateFormData: () => {
+        const filteredFormData = formData.filter(row => 
+          !["assigned"].includes(row.Emission?.rowType)
+        );
+        
+        if (filteredFormData.length > 0) {
+          return updateFormData(filteredFormData);
+        }
+        
+        return Promise.resolve();
+      }
     }));
 
     const LoaderOpen = () => setLoOpen(true);
@@ -93,127 +107,9 @@ const Scope1 = forwardRef(
       [dispatch]
     );
 
-    // const handleCombinedWidgetChange = useCallback(
-    //   (
-    //     index,
-    //     field,
-    //     value,
-    //     activityId,
-    //     unitType,
-    //     name,
-    //     url,
-    //     filetype,
-    //     size,
-    //     uploadDateTime
-    //   ) => {
-    //     const updatedFormData = [...formData];
-    //     const currentEmission = updatedFormData[index]?.Emission || {};
-
-    //     updatedFormData[index] = {
-    //       ...updatedFormData[index],
-    //       Emission: {
-    //         ...currentEmission,
-    //         [field]: value,
-    //         ...(activityId !== undefined && { activity_id: activityId }),
-    //         ...(unitType !== undefined && { unit_type: unitType }),
-    //         ...(name &&
-    //           url &&
-    //           filetype &&
-    //           size &&
-    //           uploadDateTime && {
-    //             file: { name, url, type: filetype, size, uploadDateTime },
-    //           }),
-    //       },
-    //     };
-
-    //     dispatch(
-    //       updateScopeDataLocal({ scope: 1, data: { data: updatedFormData } })
-    //     );
-    //   },
-    //   [formData, dispatch]
-    // );
-
-    const handleCombinedWidgetChange = useCallback(
-      (
-        index,
-        field,
-        value,
-        activityId,
-        unitType,
-        name,
-        url,
-        filetype,
-        size,
-        uploadDateTime,
-        rowId // Add rowId parameter
-      ) => {
-        const updatedFormData = [...formData];
-
-        // Only update the specific row if rowId is provided
-        if (rowId) {
-          const rowIndex = updatedFormData.findIndex(
-            (item, idx) => `scope${scope}_${idx}` === rowId
-          );
-          if (rowIndex !== -1) {
-            const currentEmission = updatedFormData[rowIndex]?.Emission || {};
-            updatedFormData[rowIndex] = {
-              ...updatedFormData[rowIndex],
-              Emission: {
-                ...currentEmission,
-                [field]: value,
-                ...(activityId !== undefined && { activity_id: activityId }),
-                ...(unitType !== undefined && { unit_type: unitType }),
-                ...(name &&
-                  url &&
-                  filetype &&
-                  size &&
-                  uploadDateTime && {
-                    file: { name, url, type: filetype, size, uploadDateTime },
-                  }),
-              },
-            };
-          }
-        } else {
-          // Original logic for non-assignment updates
-          const currentEmission = updatedFormData[index]?.Emission || {};
-          updatedFormData[index] = {
-            ...updatedFormData[index],
-            Emission: {
-              ...currentEmission,
-              [field]: value,
-              ...(activityId !== undefined && { activity_id: activityId }),
-              ...(unitType !== undefined && { unit_type: unitType }),
-              ...(name &&
-                url &&
-                filetype &&
-                size &&
-                uploadDateTime && {
-                  file: { name, url, type: filetype, size, uploadDateTime },
-                }),
-            },
-          };
-        }
-
-        dispatch(
-          updateScopeDataLocal({ scope: 1, data: { data: updatedFormData } })
-        );
-      },
-      [formData, dispatch]
-    );
-
-    // const handleAddNew = useCallback(() => {
-    //   const newRow = { Emission: {} };
-    //   const updatedFormData = [...formData, newRow];
-    //   dispatch(
-    //     updateScopeDataLocal({ scope: 1, data: { data: updatedFormData } })
-    //   );
-    // }, [formData, dispatch]);
-
     const handleAddNew = useCallback(() => {
-      // Create the new row
       const newRow = { Emission: {} };
 
-      // Get all assigned and approved rows
       const assignedRows = formData.filter(
         (row) => row.Emission?.rowType === "assigned"
       );
@@ -221,7 +117,6 @@ const Scope1 = forwardRef(
         (row) => row.Emission?.rowType === "approved"
       );
 
-      // Get all other rows
       const regularRows = formData.filter(
         (row) =>
           !row.Emission?.rowType ||
@@ -229,11 +124,8 @@ const Scope1 = forwardRef(
             row.Emission.rowType !== "approved")
       );
 
-      // Add the new row to regular rows
       const updatedRegularRows = [...regularRows, newRow];
 
-      // Combine all rows in the desired order:
-      // regular rows (including the new one) first, then assigned, then approved
       const updatedFormData = [
         ...assignedRows,
         ...approvedRows,
@@ -262,7 +154,6 @@ const Scope1 = forwardRef(
         const rowType = rowToRemove.Emission?.rowType;
 
         if (rowType === "assigned" || rowType === "approved") {
-          // Prevent deletion for assigned or approved rows
           toast.error("Cannot delete assigned or approved rows");
           return;
         }
@@ -270,32 +161,24 @@ const Scope1 = forwardRef(
         const updatedData = formData.filter((_, i) => i !== parsedIndex);
         console.log("updated data", updatedData, " for index ", parsedIndex);
 
-        // Update local state
         dispatch(
           updateScopeDataLocal({ scope: 1, data: { data: updatedData } })
         );
 
         if (rowType === "calculated") {
           try {
-            // Only call API for calculated rows
             await updateFormData(updatedData);
           } catch (error) {
             console.error("Failed to update form data:", error);
             toast.error("Failed to update data on the server");
-            // Optionally, revert the local state change here
             return;
           }
         }
 
-        // Check if we need to close the accordion
         if (parsedIndex === 0 && updatedData.length === 0) {
           setAccordionOpen(false);
         }
 
-        // Notify success
-        // if(rowType !== 'default') {
-        //   toast.success("Row removed successfully");
-        // }
       },
       [formData, dispatch, setAccordionOpen]
     );
@@ -338,7 +221,6 @@ const Scope1 = forwardRef(
     }, [scope1State.status, scope1State.schema, scope1State.uiSchema]);
 
     useEffect(() => {
-      // Only proceed if we have all the data
       const allDataReceived =
         formData &&
         assigned_data.status === "succeeded" &&
@@ -551,8 +433,8 @@ const Scope1 = forwardRef(
       <>
         <div>
           <Form
-            schema={local_schema}
-            uiSchema={local_ui_schema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
