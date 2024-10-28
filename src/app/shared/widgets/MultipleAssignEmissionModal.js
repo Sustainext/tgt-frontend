@@ -4,12 +4,15 @@ import {
   assignEmissionTasks,
   fetchUsers,
   fetchAssignedTasks,
-  updateScopeDataLocal
+  updateScopeDataLocal,
+  setSelectedRows
 } from "@/lib/redux/features/emissionSlice";
 import { CiCircleMinus } from "react-icons/ci";
 import { toast } from "react-toastify";
 import { Oval } from "react-loader-spinner";
 import { getLocationName } from "../../utils/locationName";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 const MultipleAssignEmissionModal = ({
   isOpen,
@@ -155,7 +158,33 @@ const getScopeNumber = (scopeString) => {
     setShowAllTasks((prev) => !prev);
   };
 
+  const handleRemoveRow = useCallback((rowData) => {
+    if (!rowData || !rowData.rowId) {
+      console.error("Invalid row data provided to handleRemoveRow");
+      return;
+    }
+
+    // Dispatch action to remove the row from selected rows
+    dispatch(
+      setSelectedRows({
+        scope: scope,
+        rowId: rowData.rowId,
+        isSelected: false,
+        rowData: rowData
+      })
+    );
+
+    // If no more rows are selected, close the modal
+    if (selectedRows.length === 1) {
+      setShowAllTasks(false);
+      onClose();
+    }
+
+    toast.success("Row removed from selection");
+  }, [dispatch, scope, selectedRows.length, onClose]);
+
   if (!isOpen) return null;
+  if (!selectedRows?.length) return null;
 
   return (
     <>
@@ -307,8 +336,32 @@ const getScopeNumber = (scopeString) => {
                     <td className="py-2">{row.Emission.Subcategory}</td>
                     <td className="py-2">{row.Emission.Activity || "N/A"}</td>
                     <td className="py-2">
-                      <CiCircleMinus className="hover:text-red-700 hover:text-semibold" />{" "}
-                    </td>
+                  <button
+                  type="button"
+                    onClick={() => handleRemoveRow(row)}
+                    className="p-1 hover:bg-gray-100 rounded-full transition-colors duration-200"
+                    data-tooltip-id={`remove-row-${row.rowId}`}
+                    data-tooltip-content="Remove row"
+                    data-tooltip-variant="light"
+                  >
+                    <CiCircleMinus 
+                      className="text-gray-500 hover:text-red-600 w-5 h-5" 
+                    />
+                  </button>
+                  <Tooltip
+                    id={`remove-row-${row.rowId}`}
+                    place="top"
+                    effect="solid"
+                    style={{
+                      backgroundColor: "#000",
+                      color: "white",
+                      fontSize: "10px",
+                      padding: "4px 8px",
+                      borderRadius: "4px",
+                      boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+                    }}
+                  />
+                </td>
                   </tr>
                 ))}
               </tbody>

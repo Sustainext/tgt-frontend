@@ -517,24 +517,6 @@ const emissionsSlice = createSlice({
       state.users.status = 'idle';
       state.users.error = null;
     },
-    clearSelectedRows: (state, action) => {
-      const { scope } = action.payload;
-      const selectedRowIndices = state.selectedRows[scope].map(row => 
-        parseInt(row.rowId.split('_')[1])
-      );
-    
-      // Filter out the selected rows from formData
-      const scopeKey = `${scope}Data`;
-      if (state[scopeKey].data && state[scopeKey].data.data) {
-        state[scopeKey].data.data = state[scopeKey].data.data.filter((_, index) => 
-          !selectedRowIndices.includes(index)
-        );
-      }
-    
-      // Clear selected rows array and reset selectAll checkbox
-      state.selectedRows[scope] = [];
-      state.selectAllChecked[scope] = false;
-    }
   },
   extraReducers: (builder) => {
     builder
@@ -678,7 +660,6 @@ export const {
   resetScope2DataStatus,
   resetScope3DataStatus,
   resetUsersStatus,
-  clearSelectedRows,
   toggleScopeReRender
 } = emissionsSlice.actions;
 

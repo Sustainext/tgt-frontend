@@ -756,7 +756,7 @@ const EmissionWidget = React.memo(
             <button
               type="button"
               className=" border text-[12px] py-1.5 px-3 rounded-md text-[#007eef] font-semibold leading-tight border-[#007eef] disabled:text-slate-300 disabled:border-slate-300 cursor-pointer"
-              disabled={!selectAll}
+              disabled={!selectedRows?.length}
               onClick={handleMultipleAssignClick}
             >
               Assign Tasks ({selectedRows.length})
