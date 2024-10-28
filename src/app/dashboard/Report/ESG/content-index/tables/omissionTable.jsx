@@ -1,48 +1,85 @@
 'use client';
 import { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axiosInstance from "../../../../../utils/axiosMiddleware";
 
-const OmissionTable = ({ setIsModalOpen, isOmissionSubmitted, setIsOmissionSubmitted, data, onSave }) => {
+const OmissionTable = ({ setIsModalOpen, reportid, isOmissionSubmitted, setIsOmissionSubmitted, data, onSave }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage] = useState(3);
-    const [tableData, setTableData] = useState(data);
+    const [tableData, setTableData] = useState(data?data.filter(item => !item.is_filled || (item.is_filled && item.omission[0].reason)):[]);
     const [isFormComplete, setIsFormComplete] = useState(false);
   
-    // Helper function to calculate the displayed rows
     const indexOfLastRow = currentPage * rowsPerPage;
     const indexOfFirstRow = indexOfLastRow - rowsPerPage;
     const currentRows = tableData.slice(indexOfFirstRow, indexOfLastRow);
     const totalPages = Math.ceil(tableData.length / rowsPerPage);
   
-    // Check if the form is fully completed
     const checkFormCompletion = () => {
-    //   const allRowsFilled = tableData.every(row => row.omission[0].reason && row.omission[0].explanation);
-    //   setIsFormComplete(allRowsFilled);
-    const updatedData = tableData.map(row => {
-        const isFilled = row.omission[0].reason && row.omission[0].explanation?true:false;
-        return {
-          ...row,
-          is_filled: isFilled // Update the is_filled property based on reason and explanation
-        };
-      });
-      setTableData(updatedData);
-  
-      // Check if all rows are filled to enable the Save button
-      const allRowsFilled = updatedData.every(row => row.is_filled);
-      setIsFormComplete(allRowsFilled);
+        const updatedData = tableData.map(row => ({
+            ...row,
+            is_filled: row.omission[0].reason && row.omission[0].explanation ? true : false
+        }));
+        setTableData(updatedData);
+        const allRowsFilled = updatedData.every(row => row.is_filled);
+        setIsFormComplete(allRowsFilled);
     };
   
     const handleInputChange = (index, field, value) => {
       const updatedData = [...tableData];
-      updatedData[index].omission[0][field] = value; // Update omission data
+      updatedData[index].omission[0][field] = value; 
       setTableData(updatedData);
       checkFormCompletion();
     };
   
-    const handleSubmit = () => {
-      console.log(tableData,"look")  
-      onSave(tableData); // Pass updated data to parent
-      setIsModalOpen(false);
-      setIsOmissionSubmitted(true);
+    const handleSubmit = async () => {
+      const updatedData = tableData;
+      const mergedData = data.map(item => updatedData.find(row => row.key === item.key) || item);
+      onSave(mergedData);
+  
+      const dataToSubmit = { "items": mergedData };
+      const url = `${process.env.BACKEND_API_URL}/esg_report/content_index/${reportid}/`;
+
+      try {
+        const response = await axiosInstance.put(url, dataToSubmit);
+        if(response.status === 200) {
+            toast.success("Data saved successfully", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            setIsModalOpen(false);
+            setIsOmissionSubmitted(true);
+        } else {
+            toast.error("Oops, something went wrong", {
+                position: "top-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+      } catch (error) {
+        console.error('API call failed:', error);
+        toast.error("Oops, something went wrong", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
+      }
     };
   
     const columns = [
@@ -112,7 +149,6 @@ const OmissionTable = ({ setIsModalOpen, isOmissionSubmitted, setIsOmissionSubmi
             </tbody>
           </table>
   
-          {/* Pagination */}
           {totalPages > 1 && (
             <div className="flex justify-center items-center mt-4">
               <button
@@ -143,7 +179,6 @@ const OmissionTable = ({ setIsModalOpen, isOmissionSubmitted, setIsOmissionSubmi
             </div>
           )}
   
-          {/* Save Button */}
           <div className="flex justify-end mt-4">
             <button
               onClick={handleSubmit}
@@ -156,8 +191,6 @@ const OmissionTable = ({ setIsModalOpen, isOmissionSubmitted, setIsOmissionSubmi
         </div>
       </>
     );
-  };
-  
-  
+};
 
 export default OmissionTable;

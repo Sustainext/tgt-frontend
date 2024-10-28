@@ -120,7 +120,7 @@ const DisclosureTable = ({data}) => {
 
   {/* Map through dataRows */}
   {data?.map((row) => (
-    <tr key={row.key} className={`text-[13px] ${row.is_filled ? "text-red-600" : "text-[#667085]"}`}>
+    <tr key={row.key} className={`text-[13px] ${!row.is_filled ? "text-red-600" : "text-[#667085]"}`}>
       <td className="px-4 py-4">{row.title}</td>
       <td className="px-4 py-4">{row.page}</td>
 
@@ -128,8 +128,8 @@ const DisclosureTable = ({data}) => {
       {row.omission.map((omissionItem, index) => (
         <>
           <td className="px-4 py-4">{omissionItem.req_omitted}</td>
-          <td className="px-4 py-4">{row.is_filled?omissionItem.reason?omissionItem.reason:"Add in next step":""}</td>
-          <td className="px-4 py-4">{row.is_filled?omissionItem.explanation?omissionItem.explanation:"Add in next step":""}</td>
+          <td className="px-4 py-4">{omissionItem.reason || row.is_filled?omissionItem.reason:"Add in next step"}</td>
+          <td className="px-4 py-4">{omissionItem.explanation || row.is_filled?omissionItem.explanation:"Add in next step"}</td>
         </>
       ))}
        <td className="px-4 py-4">{row.gri_sector_no}</td>

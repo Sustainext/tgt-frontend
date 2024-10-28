@@ -42,8 +42,8 @@ const ReportCreatedPopup = ({ isCreateReportModalOpen, setIsCreateReportModalOpe
                 </div>
               </div>
               <div className="mt-6 mb-2">
-  <button className="p-4 border w-full border-gray-200 text-[16px] text-[#343A40] mb-3 rounded-md flex gap-2 cursor-pointer hover:text-blue-500 hover:border-blue-500 group">
-    <span className="w-4.5 h-4.5 text-[#667085] mt-1 group-hover:text-blue-500">
+  <button disabled={true} className="opacity-30 p-4 border w-full border-gray-200 text-[16px] text-[#343A40] mb-3 rounded-md flex gap-2 cursor-not-allowed">
+    <span className="w-4.5 h-4.5 text-[#667085] mt-1">
       <GoDownload />
     </span>
     Download Content Index
@@ -81,7 +81,7 @@ const ReportCreatedPopup = ({ isCreateReportModalOpen, setIsCreateReportModalOpe
                     <MdExitToApp className="w-4.5 h-4.5 text-[#667085] mt-1" />
                     Exit to Report Module
                   </button>
-                  <button className="w-auto h-full   py-2 px-3 bg-[#007EEF] text-white rounded-[8px] shadow cursor-pointer flex gap-2"
+                  <button disabled={true} className="opacity-30 w-auto h-full cursor-not-allowed   py-2 px-3 bg-[#007EEF] text-white rounded-[8px] shadow  flex gap-2"
                 //   onClick={() => {
                 //     setIsModalOpen(false);
                 //   }}

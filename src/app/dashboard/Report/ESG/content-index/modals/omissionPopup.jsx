@@ -8,7 +8,7 @@ import "react-tooltip/dist/react-tooltip.css";
 import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
 import OmissionTable from "../tables/omissionTable";
 
-const OmissionPopup = ({ onSave, data,isModalOpen, setIsModalOpen,setActiveStep,orgName,fromDate,toDate,isOmissionSubmitted,setIsOmissionSubmitted }) => {
+const OmissionPopup = ({ onSave,reportid, data,isModalOpen, setIsModalOpen,setActiveStep,orgName,fromDate,toDate,isOmissionSubmitted,setIsOmissionSubmitted }) => {
     const { open } = GlobalState();
   return (
     <>
@@ -52,7 +52,7 @@ const OmissionPopup = ({ onSave, data,isModalOpen, setIsModalOpen,setActiveStep,
                 </button>
               </div>
               <div className="mt-5 w-full">
-                <OmissionTable onSave={onSave} data={data?data:[]} setIsModalOpen={setIsModalOpen} setIsOmissionSubmitted={setIsOmissionSubmitted} isOmissionSubmitted={isOmissionSubmitted} />
+                <OmissionTable reportid={reportid} onSave={onSave} data={data?data:[]} setIsModalOpen={setIsModalOpen} setIsOmissionSubmitted={setIsOmissionSubmitted} isOmissionSubmitted={isOmissionSubmitted} />
               </div>
             </div>
           </div>

@@ -51,8 +51,13 @@ const ContentIndex= ({reportName,setActiveStep,isOmissionSubmitted,setIsOmission
             const response = await axiosInstance.get(url);
             if(response.data){
              setData(response.data)
+             response.data.map((val)=>{
+                if(!val.is_filled){
+                    setIsOmissionSubmitted(false)
+                }
+             })
              const respons2 = await axiosInstance.get(statementUrl);
-             if(respons2.data){
+             if(respons2.data.statement_of_use){
                 setStatement(respons2.data.statement_of_use)
              }
             }
@@ -70,7 +75,7 @@ const ContentIndex= ({reportName,setActiveStep,isOmissionSubmitted,setIsOmission
           
           loadFormData(); 
       }
-    }, [reportid]);
+    }, [reportid,isOmissionSubmitted]);
 
     const updateOmissionData = (updatedData) => {
         setData((prevData) =>
@@ -169,7 +174,7 @@ const ContentIndex= ({reportName,setActiveStep,isOmissionSubmitted,setIsOmission
           </div>
         )}
         <StatementPopup reportid={reportid} statement={statement} setStatement={setStatement} handleChange={handleChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} setActiveStep={setActiveStep} orgName={orgName} fromDate={fromDate} toDate={toDate} />
-        <OmissionPopup  onSave={updateOmissionData} data={data?data:[]} isModalOpen={isOmissionModalOpen} setIsModalOpen={setIsOmissionModalOpen} isOmissionSubmitted={isOmissionSubmitted} setIsOmissionSubmitted={setIsOmissionSubmitted} />
+        <OmissionPopup reportid={reportid}  onSave={updateOmissionData} data={data?data:[]} isModalOpen={isOmissionModalOpen} setIsModalOpen={setIsOmissionModalOpen} isOmissionSubmitted={isOmissionSubmitted} setIsOmissionSubmitted={setIsOmissionSubmitted} />
       <ReportCreatedPopup reportName={reportName} isCreateReportModalOpen={isCreateReportModalOpen} setIsCreateReportModalOpen={setIsCreateReportModalOpen} />
     </>
   );
