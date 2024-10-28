@@ -91,9 +91,18 @@ const EmissionWidget = React.memo(
       setIsAssignModalOpen(false);
     };
 
-    const handleMultipleAssignClick = () => {
+    const handleMultipleAssignClick = () => {      
+      // Check if all selected rows have category and subcategory
+      const invalidRows = selectedRows.filter(
+        row => !row.Emission?.Category || !row.Emission?.Subcategory
+      );
+    
+      if (invalidRows.length > 0) {
+        toast.error("All rows must have Category and Sub-Category selected");
+        return;
+      }
+    
       setIsMultipleAssignModalOpen(true);
-      // setShowAllTasks(true)
     };
 
     const handleCloseMultipleAssignModal = () => {
@@ -575,11 +584,11 @@ const EmissionWidget = React.memo(
       console.log(value, " is the new value passed to the component"); // Log to check incoming data
 
       if (value?.url && value?.name) {
-        setFileName(value.file.name); // Ensure fileName is updated only when value contains the correct data
-        setPreviewData(value.file.url);
-        setFileType(value.file.type ?? "");
-        setFileSize(value.file.size ?? "");
-        setUploadDateTime(value.file.uploadDateTime ?? "");
+        setFileName(value.file?.name); // Ensure fileName is updated only when value contains the correct data
+        setPreviewData(value.file?.url);
+        setFileType(value.file?.type ?? "");
+        setFileSize(value.file?.size ?? "");
+        setUploadDateTime(value.file?.uploadDateTime ?? "");
       } else {
         console.log("value prop is missing some data, not updating state");
       }
@@ -748,7 +757,7 @@ const EmissionWidget = React.memo(
               type="button"
               className=" border text-[12px] py-1.5 px-3 rounded-md text-[#007eef] font-semibold leading-tight border-[#007eef] disabled:text-slate-300 disabled:border-slate-300 cursor-pointer"
               disabled={!selectAll}
-              // onClick={handleMultipleAssignClick}
+              onClick={handleMultipleAssignClick}
             >
               Assign Tasks ({selectedRows.length})
             </button>

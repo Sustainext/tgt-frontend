@@ -372,7 +372,7 @@ const emissionsSlice = createSlice({
     updateScopeStatus: 'idle',
     updateScopeError: null,
     updateScopeParams: null,
-    autoFill: false,
+    autoFill: true,
     selectedRows: {
       scope1: [],
       scope2: [],

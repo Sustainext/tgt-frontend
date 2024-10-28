@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   assignEmissionTasks,
   fetchUsers,
   fetchAssignedTasks,
+  updateScopeDataLocal
 } from "@/lib/redux/features/emissionSlice";
 import { CiCircleMinus } from "react-icons/ci";
 import { toast } from "react-toastify";
@@ -54,6 +55,36 @@ const MultipleAssignEmissionModal = ({
     fetchLocationName();
   }, [taskData.location]);
 
+  // Utility function to extract scope number
+const getScopeNumber = (scopeString) => {
+  return parseInt(scopeString.replace('scope', ''));
+};
+
+  const formData = useSelector(state => 
+    state.emissions[`${scope}Data`]?.data?.data && Array.isArray(state.emissions[`${scope}Data`].data.data)
+      ? state.emissions[`${scope}Data`].data.data 
+      : []
+  );
+
+  const handleRemoveMultipleRows = useCallback(
+    (indices, scope) => {
+      // Filter out rows whose indices are in the indices array
+      const updatedData = formData.filter((_, index) => !indices.includes(index));
+      console.log("Indices:", indices);
+      console.log("Updated Data:", updatedData);
+      
+      
+      // Update state with filtered data
+      dispatch(
+        updateScopeDataLocal({ 
+          scope: getScopeNumber(scope), 
+          data: { data: updatedData } 
+        })
+      );
+    },
+    [formData, dispatch]
+  );
+
   // Modify handleAssign to show loader states
   const handleAssign = async () => {
     if (!selectedUser || !dueDate) {
@@ -84,18 +115,16 @@ const MultipleAssignEmissionModal = ({
       ).unwrap();
 
       // Get indices of all selected rows
-      const selectedRowIndices = selectedRows.map((row) =>
-        parseInt(row.rowId.split("_")[1])
-      );
-
+      const selectedRowIndices = selectedRows
+      .map(row => parseInt(row.rowId.split("_")[1]))
+      console.log('selected indexes',selectedRowIndices);
+      
       setLoaderStatus({
         show: true,
         message: "Updating rows...",
       });
 
-      for (const index of selectedRowIndices) {
-        await onRemove(index);
-      }
+      handleRemoveMultipleRows(selectedRowIndices, scope);
 
       setLoaderStatus({
         show: true,

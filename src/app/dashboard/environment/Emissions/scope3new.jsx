@@ -205,93 +205,232 @@ const Scope3 = forwardRef(
       }
     }, [scope3State]);
 
-    useEffect(() => {
-      const debouncedDataMerge = debounce(() => {
-        if (
-          (autoFill && previousMonthData.status === "succeeded") ||
-          assigned_data.status === "succeeded" ||
-          approved_data.status === "succeeded"
-        ) {
-          let updatedFormData = [...formData];
+    // useEffect(() => {
+    //   const debouncedDataMerge = debounce(() => {
+    //     if (
+    //       (autoFill && previousMonthData.status === "succeeded") ||
+    //       assigned_data.status === "succeeded" ||
+    //       approved_data.status === "succeeded"
+    //     ) {
+    //       let updatedFormData = [...formData];
     
-          // Handle Assigned Data
-          if (assigned_data.status === 'succeeded') {
-            const assignedDataScope = assigned_data.scope3;
+    //       // Handle Assigned Data
+    //       if (assigned_data.status === 'succeeded') {
+    //         const assignedDataScope = assigned_data.scope3;
     
-            const formattedAssignedData = assignedDataScope.map(task => ({
-              ...task,
-              Emission: {
-                ...task.Emission,
-                rowType: 'assigned'
-              }
-            }));
+    //         const formattedAssignedData = assignedDataScope.map(task => ({
+    //           ...task,
+    //           Emission: {
+    //             ...task.Emission,
+    //             rowType: 'assigned'
+    //           }
+    //         }));
     
-            updatedFormData = [
-              ...formattedAssignedData,
-              ...updatedFormData.filter(
-                (item) => !formattedAssignedData.some((assignedItem) => assignedItem.id === item.id)
-              ),
+    //         updatedFormData = [
+    //           ...formattedAssignedData,
+    //           ...updatedFormData.filter(
+    //             (item) => !formattedAssignedData.some((assignedItem) => assignedItem.id === item.id)
+    //           ),
              
-            ];
-          }
+    //         ];
+    //       }
     
-          // Handle Approved Data
-          if (approved_data.status === 'succeeded') {
-            const approvedDataScope = approved_data.scope3;
+    //       // Handle Approved Data
+    //       if (approved_data.status === 'succeeded') {
+    //         const approvedDataScope = approved_data.scope3;
     
-            const formattedApprovedData = approvedDataScope.map(task => ({
-              ...task,
-              Emission: {
-                ...task.Emission,
-                rowType: 'approved'
-              }
-            }));
+    //         const formattedApprovedData = approvedDataScope.map(task => ({
+    //           ...task,
+    //           Emission: {
+    //             ...task.Emission,
+    //             rowType: 'approved'
+    //           }
+    //         }));
     
-            updatedFormData = [
-              ...formattedApprovedData,
-              ...updatedFormData.filter(
-                (item) => !formattedApprovedData.some((approvedItem) => approvedItem.id === item.id)
-              ),
+    //         updatedFormData = [
+    //           ...formattedApprovedData,
+    //           ...updatedFormData.filter(
+    //             (item) => !formattedApprovedData.some((approvedItem) => approvedItem.id === item.id)
+    //           ),
               
-            ];
-          }
+    //         ];
+    //       }
     
-          // Handle Previous Month Data (Auto-Fill)
-          if (autoFill && previousMonthData.status === "succeeded") {
-            console.log('Autofill triggered');
-            const prevMonthFormData = previousMonthData.scope3Data?.data || [];
+    //       // Handle Previous Month Data (Auto-Fill)
+    //       if (autoFill && previousMonthData.status === "succeeded") {
+    //         console.log('Autofill triggered');
+    //         const prevMonthFormData = previousMonthData.scope3Data?.data || [];
     
-            const formattedPrevMonthData = prevMonthFormData.map((item) => {
-              const updatedEmission = { ...item.Emission };
+    //         const formattedPrevMonthData = prevMonthFormData.map((item) => {
+    //           const updatedEmission = { ...item.Emission };
     
-              // Resetting unit and quantity fields
-              updatedEmission.Unit = "";
-              updatedEmission.Quantity = "";
+    //           // Resetting unit and quantity fields
+    //           updatedEmission.Unit = "";
+    //           updatedEmission.Quantity = "";
     
-              if (
-                updatedEmission.unit_type &&
-                updatedEmission.unit_type.includes("Over")
-              ) {
-                updatedEmission.Unit2 = "";
-                updatedEmission.Quantity2 = "";
-              }
+    //           if (
+    //             updatedEmission.unit_type &&
+    //             updatedEmission.unit_type.includes("Over")
+    //           ) {
+    //             updatedEmission.Unit2 = "";
+    //             updatedEmission.Quantity2 = "";
+    //           }
     
-              return {
-                ...item,
-                Emission: updatedEmission,
-              };
+    //           return {
+    //             ...item,
+    //             Emission: updatedEmission,
+    //           };
+    //         });
+    
+    //         updatedFormData = [
+    //           ...formattedPrevMonthData.filter(
+    //             (item) => !updatedFormData.some((existingItem) => existingItem.id === item.id),
+    //             ...updatedFormData,
+    //           )
+    //         ];
+    //       }
+    
+    //       // Dispatch state update only once
+    //       dispatch(updateScopeDataLocal({ scope: 3, data: { data: updatedFormData } }));
+    //     }
+    //   }, 300);
+    
+    //   debouncedDataMerge();
+    
+    //   return () => {
+    //     debouncedDataMerge.cancel();
+    //   };
+    // }, [autoFill, previousMonthData.status, assigned_data.status, approved_data.status, year, month, location, formData]);
+    
+    useEffect(() => {
+      // Only proceed if we have all the data
+      const allDataReceived = 
+        formData && 
+        assigned_data.status === 'succeeded' && 
+        approved_data.status === 'succeeded' && 
+        (!autoFill || (autoFill && previousMonthData.status === 'succeeded'));
+    
+      if (!allDataReceived) return;
+    
+      const debouncedDataMerge = debounce(() => {
+        try {
+          // Create a map for faster lookup using ID as key
+          const dataMap = new Map();
+          
+          // Track items without IDs separately
+          const itemsWithoutIds = [];
+    
+          // First, add all current formData to establish baseline
+          formData.forEach(item => {
+            if (item.id) {
+              dataMap.set(item.id, item);
+            } else {
+              itemsWithoutIds.push(item);
+            }
+          });
+    
+          // Add assigned data, overwriting any existing entries
+          if (assigned_data.scope3?.length) {
+            assigned_data.scope1.forEach(task => {
+              dataMap.set(task.id, {
+                ...task,
+                Emission: {
+                  ...task.Emission,
+                  rowType: 'assigned'
+                }
+              });
             });
-    
-            updatedFormData = [
-              ...formattedPrevMonthData.filter(
-                (item) => !updatedFormData.some((existingItem) => existingItem.id === item.id),
-                ...updatedFormData,
-              )
-            ];
           }
     
-          // Dispatch state update only once
-          dispatch(updateScopeDataLocal({ scope: 3, data: { data: updatedFormData } }));
+          // Add approved data, only if not already assigned
+          if (approved_data.scope3?.length) {
+            approved_data.scope1.forEach(task => {
+              if (!dataMap.has(task.id)) {
+                dataMap.set(task.id, {
+                  ...task,
+                  Emission: {
+                    ...task.Emission,
+                    rowType: 'approved'
+                  }
+                });
+              }
+            });
+          }
+    
+          // Handle autofill data only if autoFill is true and current formData is empty
+          // (excluding assigned and approved items)
+          const hasOnlySystemEntries = Array.from(dataMap.values()).every(
+            item => item.Emission?.rowType === 'assigned' || item.Emission?.rowType === 'approved'
+          );
+    
+          // Handle autofill data with enhanced filtering
+if (autoFill && 
+  previousMonthData.status === 'succeeded' && 
+  previousMonthData.scope1Data?.data && 
+  (dataMap.size === 0 || (hasOnlySystemEntries && itemsWithoutIds.length === 0))) {
+
+// Get all assigned rows for comparison
+const assignedRows = Array.from(dataMap.values())
+  .filter(item => item.Emission?.rowType === 'assigned');
+
+previousMonthData.scope3Data.data.forEach(item => {
+  // Skip if item already exists in dataMap
+  if (dataMap.has(item.id)) return;
+
+  // Check if this item should be filtered out based on assigned tasks
+  const shouldFilter = assignedRows.some(assignedRow => {
+    // If both have activities, compare them
+    if (assignedRow.Emission?.Activity && item.Emission?.Activity) {
+      return assignedRow.Emission.Activity === item.Emission.Activity;
+    }
+    
+    // If neither have activities, compare subcategories
+    if (!assignedRow.Emission?.Activity && !item.Emission?.Activity) {
+      return assignedRow.Emission?.Subcategory === item.Emission?.Subcategory;
+    }
+
+    // If conditions don't match, don't filter
+    return false;
+  });
+
+  // Only add the item if it shouldn't be filtered
+  if (!shouldFilter) {
+    const updatedEmission = { ...item.Emission };
+    updatedEmission.Unit = "";
+    updatedEmission.Quantity = "";
+    updatedEmission.assigned_to = "";
+    if (updatedEmission.unit_type?.includes("Over")) {
+      updatedEmission.Unit2 = "";
+      updatedEmission.Quantity2 = "";
+    }
+    
+    dataMap.set(item.id, {
+      ...item,
+      Emission: updatedEmission
+    });
+  }
+});
+}
+    
+          // Combine all data: Map values + items without IDs
+          const updatedFormData = [
+            ...Array.from(dataMap.values()),
+            ...itemsWithoutIds
+          ];
+    
+          // Only update if data has actually changed
+          const currentDataString = JSON.stringify(formData);
+          const newDataString = JSON.stringify(updatedFormData);
+          
+          if (currentDataString !== newDataString) {
+            dispatch(updateScopeDataLocal({ 
+              scope: 3, 
+              data: { data: updatedFormData } 
+            }));
+          }
+    
+        } catch (error) {
+          console.error('Error merging data:', error);
         }
       }, 300);
     
@@ -300,8 +439,16 @@ const Scope3 = forwardRef(
       return () => {
         debouncedDataMerge.cancel();
       };
-    }, [autoFill, previousMonthData.status, assigned_data.status, approved_data.status, year, month, location, formData]);
-    
+    }, [
+      formData,
+      assigned_data.status,
+      approved_data.status,
+      previousMonthData.status,
+      autoFill,
+      JSON.stringify(assigned_data.scope1),
+      JSON.stringify(approved_data.scope1),
+      JSON.stringify(previousMonthData.scope1Data?.data),
+    ]);
 
     if (scope3State.status === 'loading') {
       return (

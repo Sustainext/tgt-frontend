@@ -5,7 +5,7 @@ import React, {
   forwardRef,
   useImperativeHandle,
   useCallback,
-  useRef
+  useRef,
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Form from "@rjsf/core";
@@ -17,7 +17,7 @@ import {
   updateScopeData,
   updateScopeDataLocal,
 } from "@/lib/redux/features/emissionSlice";
-import {toast} from 'react-toastify';
+import { toast } from "react-toastify";
 import { debounce } from "lodash";
 
 const local_schema = {
@@ -65,8 +65,8 @@ const Scope1 = forwardRef(
       (state) => state.emissions.previousMonthData
     );
     const autoFill = useSelector((state) => state.emissions.autoFill);
-    const assigned_data = useSelector(state=>state.emissions.assignedTasks)
-    const approved_data = useSelector(state=>state.emissions.approvedTasks)
+    const assigned_data = useSelector((state) => state.emissions.assignedTasks);
+    const approved_data = useSelector((state) => state.emissions.approvedTasks);
     const [r_schema, setRemoteSchema] = useState({});
     const [r_ui_schema, setRemoteUiSchema] = useState({});
     const [loopen, setLoOpen] = useState(false);
@@ -133,30 +133,51 @@ const Scope1 = forwardRef(
     //   [formData, dispatch]
     // );
 
-    const handleCombinedWidgetChange = useCallback((
-      index,
-      field,
-      value,
-      activityId,
-      unitType,
-      name,
-      url,
-      filetype,
-      size,
-      uploadDateTime,
-      rowId  // Add rowId parameter
-    ) => {
-      const updatedFormData = [...formData];
-      
-      // Only update the specific row if rowId is provided
-      if (rowId) {
-        const rowIndex = updatedFormData.findIndex((item, idx) => 
-          `scope${scope}_${idx}` === rowId
-        );
-        if (rowIndex !== -1) {
-          const currentEmission = updatedFormData[rowIndex]?.Emission || {};
-          updatedFormData[rowIndex] = {
-            ...updatedFormData[rowIndex],
+    const handleCombinedWidgetChange = useCallback(
+      (
+        index,
+        field,
+        value,
+        activityId,
+        unitType,
+        name,
+        url,
+        filetype,
+        size,
+        uploadDateTime,
+        rowId // Add rowId parameter
+      ) => {
+        const updatedFormData = [...formData];
+
+        // Only update the specific row if rowId is provided
+        if (rowId) {
+          const rowIndex = updatedFormData.findIndex(
+            (item, idx) => `scope${scope}_${idx}` === rowId
+          );
+          if (rowIndex !== -1) {
+            const currentEmission = updatedFormData[rowIndex]?.Emission || {};
+            updatedFormData[rowIndex] = {
+              ...updatedFormData[rowIndex],
+              Emission: {
+                ...currentEmission,
+                [field]: value,
+                ...(activityId !== undefined && { activity_id: activityId }),
+                ...(unitType !== undefined && { unit_type: unitType }),
+                ...(name &&
+                  url &&
+                  filetype &&
+                  size &&
+                  uploadDateTime && {
+                    file: { name, url, type: filetype, size, uploadDateTime },
+                  }),
+              },
+            };
+          }
+        } else {
+          // Original logic for non-assignment updates
+          const currentEmission = updatedFormData[index]?.Emission || {};
+          updatedFormData[index] = {
+            ...updatedFormData[index],
             Emission: {
               ...currentEmission,
               [field]: value,
@@ -172,29 +193,13 @@ const Scope1 = forwardRef(
             },
           };
         }
-      } else {
-        // Original logic for non-assignment updates
-        const currentEmission = updatedFormData[index]?.Emission || {};
-        updatedFormData[index] = {
-          ...updatedFormData[index],
-          Emission: {
-            ...currentEmission,
-            [field]: value,
-            ...(activityId !== undefined && { activity_id: activityId }),
-            ...(unitType !== undefined && { unit_type: unitType }),
-            ...(name &&
-              url &&
-              filetype &&
-              size &&
-              uploadDateTime && {
-                file: { name, url, type: filetype, size, uploadDateTime },
-              }),
-          },
-        };
-      }
-    
-      dispatch(updateScopeDataLocal({ scope: 1, data: { data: updatedFormData } }));
-    }, [formData, dispatch]);
+
+        dispatch(
+          updateScopeDataLocal({ scope: 1, data: { data: updatedFormData } })
+        );
+      },
+      [formData, dispatch]
+    );
 
     // const handleAddNew = useCallback(() => {
     //   const newRow = { Emission: {} };
@@ -207,18 +212,26 @@ const Scope1 = forwardRef(
     const handleAddNew = useCallback(() => {
       // Create the new row
       const newRow = { Emission: {} };
-      
+
       // Get all assigned and approved rows
-      const assignedRows = formData.filter(row => row.Emission?.rowType === 'assigned');
-      const approvedRows = formData.filter(row => row.Emission?.rowType === 'approved');
-      
+      const assignedRows = formData.filter(
+        (row) => row.Emission?.rowType === "assigned"
+      );
+      const approvedRows = formData.filter(
+        (row) => row.Emission?.rowType === "approved"
+      );
+
       // Get all other rows
-      const regularRows = formData.filter(row => !row.Emission?.rowType || 
-        (row.Emission.rowType !== 'assigned' && row.Emission.rowType !== 'approved'));
-      
+      const regularRows = formData.filter(
+        (row) =>
+          !row.Emission?.rowType ||
+          (row.Emission.rowType !== "assigned" &&
+            row.Emission.rowType !== "approved")
+      );
+
       // Add the new row to regular rows
       const updatedRegularRows = [...regularRows, newRow];
-      
+
       // Combine all rows in the desired order:
       // regular rows (including the new one) first, then assigned, then approved
       const updatedFormData = [
@@ -226,11 +239,11 @@ const Scope1 = forwardRef(
         ...approvedRows,
         ...updatedRegularRows,
       ];
-      
+
       dispatch(
-        updateScopeDataLocal({ 
-          scope: 1, 
-          data: { data: updatedFormData } 
+        updateScopeDataLocal({
+          scope: 1,
+          data: { data: updatedFormData },
         })
       );
     }, [formData, dispatch]);
@@ -239,29 +252,30 @@ const Scope1 = forwardRef(
       async (index) => {
         const parsedIndex = parseInt(index, 10);
         const rowToRemove = formData[parsedIndex];
-    
+        console.log("Row to remove:", parsedIndex, rowToRemove);
+
         if (!rowToRemove) {
           console.error("Row not found");
           return;
         }
-    
+
         const rowType = rowToRemove.Emission?.rowType;
-    
-        if (rowType === 'assigned' || rowType === 'approved') {
+
+        if (rowType === "assigned" || rowType === "approved") {
           // Prevent deletion for assigned or approved rows
           toast.error("Cannot delete assigned or approved rows");
           return;
         }
-    
+
         const updatedData = formData.filter((_, i) => i !== parsedIndex);
         console.log("updated data", updatedData, " for index ", parsedIndex);
-    
+
         // Update local state
         dispatch(
           updateScopeDataLocal({ scope: 1, data: { data: updatedData } })
         );
-    
-        if (rowType === 'calculated') {
+
+        if (rowType === "calculated") {
           try {
             // Only call API for calculated rows
             await updateFormData(updatedData);
@@ -272,12 +286,12 @@ const Scope1 = forwardRef(
             return;
           }
         }
-    
+
         // Check if we need to close the accordion
         if (parsedIndex === 0 && updatedData.length === 0) {
           setAccordionOpen(false);
         }
-    
+
         // Notify success
         // if(rowType !== 'default') {
         //   toast.success("Row removed successfully");
@@ -323,119 +337,197 @@ const Scope1 = forwardRef(
       }
     }, [scope1State.status, scope1State.schema, scope1State.uiSchema]);
 
-useEffect(() => {
-  const debouncedDataMerge = debounce(() => {
-    if (
-      (autoFill && previousMonthData.status === "succeeded") ||
-      assigned_data.status === "succeeded" ||
-      approved_data.status === "succeeded"
-    ) {
-      let updatedFormData = [...formData];
+    useEffect(() => {
+      // Only proceed if we have all the data
+      const allDataReceived =
+        formData &&
+        assigned_data.status === "succeeded" &&
+        approved_data.status === "succeeded" &&
+        (!autoFill || (autoFill && previousMonthData.status === "succeeded"));
 
-      // Handle Assigned Data
-      if (assigned_data.status === 'succeeded') {
-        const assignedDataScope = assigned_data.scope1;
+      if (!allDataReceived) return;
 
-        const formattedAssignedData = assignedDataScope.map(task => ({
-          ...task,
-          Emission: {
-            ...task.Emission,
-            rowType: 'assigned'
+      const debouncedDataMerge = debounce(() => {
+        try {
+          // Create a map for faster lookup using ID as key
+          const dataMap = new Map();
+
+          // Track items without IDs separately
+          const itemsWithoutIds = [];
+
+          // First, add all current formData to establish baseline
+          formData.forEach((item) => {
+            if (item.id) {
+              dataMap.set(item.id, item);
+            } else {
+              itemsWithoutIds.push(item);
+            }
+          });
+
+          // Add assigned data, overwriting any existing entries
+          if (assigned_data.scope1?.length) {
+            assigned_data.scope1.forEach((task) => {
+              dataMap.set(task.id, {
+                ...task,
+                Emission: {
+                  ...task.Emission,
+                  rowType: "assigned",
+                },
+              });
+            });
           }
-        }));
 
-        updatedFormData = [
-          ...formattedAssignedData,
-          ...updatedFormData.filter(
-            (item) => !formattedAssignedData.some((assignedItem) => assignedItem.id === item.id)
-          ),
-         
-        ];
-      }
-
-      // Handle Approved Data
-      if (approved_data.status === 'succeeded') {
-        const approvedDataScope = approved_data.scope1;
-
-        const formattedApprovedData = approvedDataScope.map(task => ({
-          ...task,
-          Emission: {
-            ...task.Emission,
-            rowType: 'approved'
+          // Add approved data, only if not already assigned
+          if (approved_data.scope1?.length) {
+            approved_data.scope1.forEach((task) => {
+              if (!dataMap.has(task.id)) {
+                dataMap.set(task.id, {
+                  ...task,
+                  Emission: {
+                    ...task.Emission,
+                    rowType: "approved",
+                  },
+                });
+              }
+            });
           }
-        }));
 
-        updatedFormData = [
-          ...formattedApprovedData,
-          ...updatedFormData.filter(
-            (item) => !formattedApprovedData.some((approvedItem) => approvedItem.id === item.id)
-          ),
-          
-        ];
-      }
+          // Handle autofill data only if autoFill is true and current formData is empty
+          // (excluding assigned and approved items)
+          const hasOnlySystemEntries = Array.from(dataMap.values()).every(
+            (item) =>
+              item.Emission?.rowType === "assigned" ||
+              item.Emission?.rowType === "approved"
+          );
 
-      // Handle Previous Month Data (Auto-Fill)
-      if (autoFill && previousMonthData.status === "succeeded") {
-        console.log('Autofill triggered');
-        const prevMonthFormData = previousMonthData.scope1Data?.data || [];
+          // if (autoFill &&
+          //     previousMonthData.status === 'succeeded' &&
+          //     previousMonthData.scope1Data?.data &&
+          //     (dataMap.size === 0 || (hasOnlySystemEntries && itemsWithoutIds.length === 0))) {
+          //   previousMonthData.scope1Data.data.forEach(item => {
+          //     if (!dataMap.has(item.id)) {
+          //       const updatedEmission = { ...item.Emission };
+          //       updatedEmission.Unit = "";
+          //       updatedEmission.Quantity = "";
+          //       updatedEmission.assigned_to = "";
+          //       if (updatedEmission.unit_type?.includes("Over")) {
+          //         updatedEmission.Unit2 = "";
+          //         updatedEmission.Quantity2 = "";
+          //       }
 
-        const formattedPrevMonthData = prevMonthFormData.map((item) => {
-          const updatedEmission = { ...item.Emission };
+          //       dataMap.set(item.id, {
+          //         ...item,
+          //         Emission: updatedEmission
+          //       });
+          //     }
+          //   });
+          // }
 
-          // Resetting unit and quantity fields
-          updatedEmission.Unit = "";
-          updatedEmission.Quantity = "";
-
+          // Handle autofill data with enhanced filtering
           if (
-            updatedEmission.unit_type &&
-            updatedEmission.unit_type.includes("Over")
+            autoFill &&
+            previousMonthData.status === "succeeded" &&
+            previousMonthData.scope1Data?.data &&
+            (dataMap.size === 0 ||
+              (hasOnlySystemEntries && itemsWithoutIds.length === 0))
           ) {
-            updatedEmission.Unit2 = "";
-            updatedEmission.Quantity2 = "";
+            // Get all assigned rows for comparison
+            const assignedRows = Array.from(dataMap.values()).filter(
+              (item) => item.Emission?.rowType === "assigned"
+            );
+
+            previousMonthData.scope1Data.data.forEach((item) => {
+              // Skip if item already exists in dataMap
+              if (dataMap.has(item.id)) return;
+
+              // Check if this item should be filtered out based on assigned tasks
+              const shouldFilter = assignedRows.some((assignedRow) => {
+                // If both have activities, compare them
+                if (assignedRow.Emission?.Activity && item.Emission?.Activity) {
+                  return (
+                    assignedRow.Emission.Activity === item.Emission.Activity
+                  );
+                }
+
+                // If neither have activities, compare subcategories
+                if (
+                  !assignedRow.Emission?.Activity &&
+                  !item.Emission?.Activity
+                ) {
+                  return (
+                    assignedRow.Emission?.Subcategory ===
+                    item.Emission?.Subcategory
+                  );
+                }
+
+                // If conditions don't match, don't filter
+                return false;
+              });
+
+              // Only add the item if it shouldn't be filtered
+              if (!shouldFilter) {
+                const updatedEmission = { ...item.Emission };
+                updatedEmission.Unit = "";
+                updatedEmission.Quantity = "";
+                updatedEmission.assigned_to = "";
+                if (updatedEmission.unit_type?.includes("Over")) {
+                  updatedEmission.Unit2 = "";
+                  updatedEmission.Quantity2 = "";
+                }
+
+                dataMap.set(item.id, {
+                  ...item,
+                  Emission: updatedEmission,
+                });
+              }
+            });
           }
 
-          return {
-            ...item,
-            Emission: updatedEmission,
-          };
-        });
+          // Combine all data: Map values + items without IDs
+          const updatedFormData = [
+            ...Array.from(dataMap.values()),
+            ...itemsWithoutIds,
+          ];
 
-        updatedFormData = [
-          ...formattedPrevMonthData.filter(
-            (item) => !updatedFormData.some((existingItem) => existingItem.id === item.id),
-            ...updatedFormData,
-          )
-        ];
-      }
+          // Only update if data has actually changed
+          const currentDataString = JSON.stringify(formData);
+          const newDataString = JSON.stringify(updatedFormData);
 
-      // Dispatch state update only once
-      dispatch(updateScopeDataLocal({ scope: 1, data: { data: updatedFormData } }));
-    }
-  }, 300);
+          if (currentDataString !== newDataString) {
+            dispatch(
+              updateScopeDataLocal({
+                scope: 1,
+                data: { data: updatedFormData },
+              })
+            );
+          }
+        } catch (error) {
+          console.error("Error merging data:", error);
+        }
+      }, 300);
 
-  debouncedDataMerge();
+      debouncedDataMerge();
 
-  return () => {
-    debouncedDataMerge.cancel();
-  };
-}, [autoFill, previousMonthData.status, assigned_data.status, approved_data.status, year, month, location, formData]);
+      return () => {
+        debouncedDataMerge.cancel();
+      };
+    }, [
+      formData,
+      assigned_data.status,
+      approved_data.status,
+      previousMonthData.status,
+      autoFill,
+      JSON.stringify(assigned_data.scope1),
+      JSON.stringify(approved_data.scope1),
+      JSON.stringify(previousMonthData.scope1Data?.data),
+    ]);
 
+    const formRef = useRef();
 
-const formRef = useRef();
+    const scopeReRender = useSelector((state) => state.emissions.scopeReRender);
 
-  // Add this function to handle form validation
-  const handleFormValidation = useCallback((formData, errors) => {
-    // If the form has the noValidate flag, return empty errors
-    if (formRef.current?.noValidate) {
-      return {};
-    }
-    return errors;
-  }, []);
+    useEffect(() => {}, [scopeReRender]);
 
-  const scopeReRender = useSelector(state=>state.emissions.scopeReRender)
-
-  useEffect(()=>{},[scopeReRender])
-  
     if (scope1State.status === "loading") {
       return (
         <div className="flex items-center justify-center">
