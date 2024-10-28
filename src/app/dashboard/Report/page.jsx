@@ -41,6 +41,7 @@ const Report = () => {
   const [entities, setEntities] = useState([]);
   const [massgeshow, setMassgeshow]  = useState(false);
   const dispatch = useDispatch();
+  const [isMenuOpen, setIsMenuOpen] = useState(null);
   useEffect(() => {
     dispatch(setHeadertext1(""));
     dispatch(setHeaderdisplay("none"));
@@ -173,8 +174,7 @@ const Report = () => {
     LoaderOpen();
 
     // console.log("user id ", localStorage.getItem("user_id"));
-    const response = await axiosInstance
-      .get(`/sustainapp/report_details/`)
+    const response = await axiosInstance.get(`/sustainapp/report_details/`)
       .then((response) => {
         // Handle the response here.
         console.log(response.data, "reprotdetilles");
@@ -483,6 +483,7 @@ const Report = () => {
   const handleOpenModal = () => {
     setIsModalOpen(true);
     setMassgeshow(false);
+    setIsMenuOpen(false);
   };
 
   const handleCloseModal = () => {
@@ -530,6 +531,8 @@ const Report = () => {
               data={data}
               defaultItemsPerPage={10}
               fetchReoprts={fetchReoprts}
+              setIsMenuOpen={setIsMenuOpen}
+              isMenuOpen={isMenuOpen}
             />
           </div>
         </div>
