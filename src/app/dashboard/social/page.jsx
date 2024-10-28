@@ -138,8 +138,8 @@ const Social = () => {
     36:"Marketing and Labeling",
     37:"Marketing and Labeling",
     38:"Customer Privacy",
-    39:"Bill S-211",
-    40:"Bill S-211",
+    // 39:"Bill S-211",
+    // 40:"Bill S-211",
   };
   useEffect(() => {
     // Update header with step-related information
@@ -161,7 +161,7 @@ const Social = () => {
             <section className="flex  justify-center ">
               <div className="w-80">
                 <ul>
-                  <AccordionItem title="Bill S-211">
+                  {/* <AccordionItem title="Bill S-211">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(39)}
@@ -277,7 +277,7 @@ const Social = () => {
                         )}
                       </div>
                     </li>
-                  </AccordionItem>
+                  </AccordionItem> */}
                   <AccordionItem title="Employment">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
@@ -2804,7 +2804,8 @@ const Social = () => {
                   </div>
                 </>
               )}
-              {activeStep === 39 && (
+             
+ {/*   {activeStep === 39 && (
                 <>
                   <div>
                     <Identifyinginformation />
@@ -2818,8 +2819,7 @@ const Social = () => {
                     <Annualreport />
                   </div>
                 </>
-              )}
-
+              )}*/}
             </div>
             <div>
               <div className="w-full mb-5 mt-4 ">
