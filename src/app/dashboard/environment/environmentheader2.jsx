@@ -86,7 +86,13 @@ const EnvironmentHeade2 = ({
           });
           setCorporates(response.data);
         } catch (e) {
-          console.error("Failed fetching corporates:", e);
+          if(e.status === 404) {
+            setCorporates([]);
+          }
+          else{
+            console.error("Failed fetching corporates:", e);
+          }
+          
         }
       }
     };

@@ -804,9 +804,11 @@ const Aside = ({ activeTab, handleTabClick }) => {
             <button
               className={`flex justify-between  py-2  mb-2 focus:outline-none w-full ${
                 activeTab === "Approach to tax" ||
-                activeTab === "Management of Material topic Anti" ||
+                activeTab === "Management of Material topic Tax" ||
+                activeTab === "Country-by-country reporting" ||
+                activeTab === "Tax governance, control, and risk management" ||
                 activeTab ===
-                  "Confirmed incidents of corruption and actions taken"
+                  "Stakeholder engagement and management of concerns related to tax"
                   ? "text-[#007EEF]"
                   : "bg-white text-[#727272] "
               }`}

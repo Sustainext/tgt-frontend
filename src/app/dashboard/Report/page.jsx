@@ -305,7 +305,7 @@ const Report = () => {
             setSelectedCorp();
             setFirstSelection();
             setMassgeshow(true);
-            reset();
+         
           } else {
             const errorMessage =
             error.response && error.response.data && error.response.data.message
