@@ -6,7 +6,7 @@ import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Socialheader from '../../socialheader';
+import Socialheader4 from '../../socialheader4';
 import Screen1 from "./screen1"
 const NoncomplianceincidentsLabelling = () => {
     const [activeMonth, setActiveMonth] = useState(1);
@@ -107,14 +107,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
 
                 </div>
             </div>
-            <Socialheader
-                activeMonth={activeMonth}
-                setActiveMonth={setActiveMonth}
-                location={location}
-                setLocation={setLocation}
-                year={year}
-                setYear={setYear} />
-            <Screen1 location={location} year={year} month={activeMonth}  />
+            <Socialheader4
+            activeMonth={activeMonth}
+            setActiveMonth={setActiveMonth}
+            selectedOrg={selectedOrg}
+            setSelectedOrg={setSelectedOrg}
+            selectedCorp={selectedCorp}
+            setSelectedCorp={setSelectedCorp}
+            year={year}
+            setYear={setYear} />
+            <Screen1 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year} month={activeMonth} />
 
         </>
     );

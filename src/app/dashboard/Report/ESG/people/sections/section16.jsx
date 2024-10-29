@@ -64,7 +64,10 @@ const Section16=({section13_5Ref,section13_5_1Ref,data})=>{
         <h3 className="text-[17px] text-[#344054] mb-4 text-left font-semibold">
         13.5 Training & Education
             </h3>
-           
+            <p className="text-[15px]  mb-2 font-semibold">
+            Training requirements apply to third party organisations
+            </p>
+            <p className="text-sm mb-4">{data["410-1b-training_requirements"]?data["410-1b-training_requirements"].data?data["410-1b-training_requirements"].data.length>0?data["410-1b-training_requirements"].data[0].Q1?data["410-1b-training_requirements"].data[0].Q1:"No data available":"No data available":"No data available":"No data available"}</p>
             <p className="text-[15px]  mb-2 font-semibold">
             Average training hours per employee:
             </p>

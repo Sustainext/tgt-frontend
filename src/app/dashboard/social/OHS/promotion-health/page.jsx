@@ -5,12 +5,8 @@ import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
 import { Socialdata } from "../../data/socialgriinfo"
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
-import Socialheader from "../../socialheader";
 import Promotionhealthscreen from "./promotion-health";
 const Promotionhealth = () => {
-    const [activeMonth, setActiveMonth] = useState(1);
-    const [location, setLocation] = useState("");
-    const [year, setYear] = useState();
     const [data, setData] = useState();
     const [category, setCategory] = useState("");
     const [isOpen, setIsOpen] = useState(false);
@@ -107,14 +103,8 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
 
                 </div>
             </div>
-            <Socialheader
-            activeMonth={activeMonth}
-            setActiveMonth={setActiveMonth}
-            location={location}
-            setLocation={setLocation}
-            year={year}
-            setYear={setYear} />
-            <Promotionhealthscreen location={location} year={year} month={activeMonth}/>
+         
+            <Promotionhealthscreen/>
         </>
     );
 };

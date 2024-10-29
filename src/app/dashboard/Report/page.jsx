@@ -11,9 +11,14 @@ import axiosInstance, { post } from "../../utils/axiosMiddleware";
 import {
   setHeadertext1,
   setHeadertext2,
-  setHeaderdisplay
+  setHeaderdisplay,
 } from "../../../lib/redux/features/topheaderSlice";
 import { useDispatch } from "react-redux";
+import { FaExclamationTriangle } from "react-icons/fa";
+import { GoArrowRight } from "react-icons/go";
+import Link from "next/link";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 const Report = () => {
   const [isExpandedpage, setIsExpandedpage] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,13 +39,14 @@ const Report = () => {
   const [error, setError] = useState({});
   const router = useRouter();
   const [entities, setEntities] = useState([]);
+  const [massgeshow, setMassgeshow] = useState(false);
   const dispatch = useDispatch();
+  const [isMenuOpen, setIsMenuOpen] = useState(null);
   useEffect(() => {
-   
     dispatch(setHeadertext1(""));
     dispatch(setHeaderdisplay("none"));
-    dispatch(setHeadertext2('Report'));
-}, [dispatch]);
+    dispatch(setHeadertext2("Report"));
+  }, [dispatch]);
   const handleCheckboxChange = (index) => {
     const newEntities = [...entities];
     newEntities[index].checked = !newEntities[index].checked;
@@ -56,13 +62,15 @@ const Report = () => {
     }
   };
   const handleChangeallcrop = async (event) => {
-
     const selectedId = event.target.value;
     setSelectedOrg(selectedId);
     try {
-      const response = await axiosInstance.get(`/sustainapp/all_corporate_list/`, {
-        params: { organization_id: selectedId },
-      });
+      const response = await axiosInstance.get(
+        `/sustainapp/all_corporate_list/`,
+        {
+          params: { organization_id: selectedId },
+        }
+      );
       setEntities(response.data);
     } catch (e) {
       console.log(
@@ -78,7 +86,6 @@ const Report = () => {
       // console.log("orgs:", response.data[0].name);
       setOrganisations(response.data);
       // setSelectedOrg(response.data[0].name);
-
     } catch (e) {
       console.log(
         "failed fetching organization",
@@ -106,7 +113,6 @@ const Report = () => {
     localStorage.removeItem("organizationcountry");
     localStorage.removeItem("reportname");
     localStorage.removeItem("selectedImage");
-
   }, []);
   const handleChangecrop = async (event) => {
     // Update the state with the new selection
@@ -202,11 +208,11 @@ const Report = () => {
   const submitForm = async () => {
     LoaderOpen();
     const selectedEntities = entities
-    .filter((entity) => entity.checked)
-    .map((entity) => ({
-      corporate_id: entity.id,
-      ownership_ratio: entity.ownershipRatio,
-    }));
+      .filter((entity) => entity.checked)
+      .map((entity) => ({
+        corporate_id: entity.id,
+        ownership_ratio: entity.ownershipRatio,
+      }));
     const sandData = {
       name: reportname,
       report_type: reporttype,
@@ -215,7 +221,7 @@ const Report = () => {
       end_date: enddate,
       organization: selectedOrg,
       corporate: selectedCorp,
-      investment_corporates:selectedEntities,
+      investment_corporates: selectedEntities,
     };
 
     await post(`/sustainapp/report_create/`, sandData)
@@ -242,7 +248,6 @@ const Report = () => {
           setSelectedCorp();
           setFirstSelection();
 
-
           window.localStorage.setItem("reportid", response.data.id);
           window.localStorage.setItem(
             "reportorgname",
@@ -257,65 +262,76 @@ const Report = () => {
             "organizationcountry",
             response.data.organization_country
           );
-          if(reporttype=='GRI Report: In accordance With' || reporttype=='GRI Report: With Reference to'){
-            router.push("/dashboard/Report/ESG")
-          }
-          else{
+          if (
+            reporttype == "GRI Report: In accordance With" ||
+            reporttype == "GRI Report: With Reference to"
+          ) {
+            router.push("/dashboard/Report/ESG");
+          } else {
             router.push("/dashboard/Report/GHG/Ghgtemplates");
           }
-          
+
           //   navigate(`/report/GHGtemplate`, { state: { data: response.data } });
-        }
-        else if(response.status == "204"){
+        } else if (response.status == "204") {
           toast.error("No data available for the given corporate IDs", {
-         position: "top-right",
-         autoClose: 3000,
-         hideProgressBar: false,
-         closeOnClick: true,
-         pauseOnHover: true,
-         draggable: true,
-         progress: undefined,
-         theme: "light",
-       });
-       LoaderClose();
-       handleCloseModal();
-       setReportname();
-       setReporttype();
-       setStartdate();
-       setEnddate();
-       setSelectedOrg();
-       setSelectedCorp();
-       setFirstSelection();
-     }
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          LoaderClose();
+          handleCloseModal();
+          setReportname();
+          setReporttype();
+          setStartdate();
+          setEnddate();
+          setSelectedOrg();
+          setSelectedCorp();
+          setFirstSelection();
+        }
       })
       .catch((error) => {
-        const errorMessage =
-          error.response && error.response.data && error.response.data.message
-            ? error.response.data.message
-            : "An unexpected error occurred";
-        toast.error(errorMessage, {
-          // Corrected 'error.message'
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-        handleCloseModal();
-        setReportname();
-        setReporttype();
-        setStartdate();
-        setEnddate();
-        setSelectedOrg();
-        setSelectedCorp();
-        LoaderClose();
-        setFirstSelection();
-
+        if (error.status === 400) {
+          LoaderClose();
+          setReportname();
+          setReporttype();
+          setStartdate();
+          setEnddate();
+          setSelectedOrg();
+          setSelectedCorp();
+          setFirstSelection();
+          setMassgeshow(true);
+        } else {
+          const errorMessage =
+            error.response && error.response.data && error.response.data.message
+              ? error.response.data.message
+              : "An unexpected error occurred";
+          toast.error(errorMessage, {
+            // Corrected 'error.message'
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          handleCloseModal();
+          setReportname();
+          setReporttype();
+          setStartdate();
+          setEnddate();
+          setSelectedOrg();
+          setSelectedCorp();
+          LoaderClose();
+          setFirstSelection();
+        }
       });
-
   };
   const validateForm = () => {
     let newErrors = {};
@@ -357,13 +373,11 @@ const Report = () => {
     const formErrors = validateForm();
     if (Object.keys(formErrors).length === 0) {
       setError({}); // Clear any existing errors
-        await submitForm(); // Proceed with the form submission
-      
+      await submitForm(); // Proceed with the form submission
     } else {
       setError(formErrors); // Update the state with the validation errors
     }
   };
-
 
   const renderSecondSelect = () => {
     if (firstSelection === "Organization") {
@@ -466,6 +480,8 @@ const Report = () => {
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
+    setMassgeshow(false);
+    setIsMenuOpen(false);
   };
 
   const handleCloseModal = () => {
@@ -477,25 +493,35 @@ const Report = () => {
     setSelectedOrg();
     setSelectedCorp();
     setFirstSelection();
+    setMassgeshow(false);
   };
 
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
-      <div className="my-4 pb-5 mx-8 text-left">
-        <h1 className="gradient-text mb-8 text-[1.375rem] font-bold ml-3">
-          Report
-        </h1>
-        <div className="">
+      <div className="my-10 pb-5 mx-8 text-left border border-gray-300 rounded-md">
+        <div className="px-3 flex py-4  justify-between">
+          <div>
+            <h1 className="text-[#101828] mb-1 text-[1.375rem] font-bold">
+              Report
+            </h1>
+            <p className="text-[14px] text-[#667085]">
+              All the reports generated made for the organization can be
+              accessed here
+            </p>
+          </div>
           <div
-            className="flex items-center space-x-2 text-sky-500 text-xs font-bold leading-[15px] cursor-pointer ml-2"
+            className="flex items-center space-x-2 text-[#007EEF] text-xs font-bold leading-[15px] cursor-pointer ml-2 float-end"
             onClick={handleOpenModal}
           >
-            <MdAdd className="text-[15px]" />
-            <div className="text-sky-500 text-[15px] font-bold leading-[15px]">
+            <div className="text-[#007EEF] text-[14px] font-bold leading-[15px]">
               Add Report
             </div>
+            <MdAdd className="text-[14px]" />
           </div>
+        </div>
+
+        <div className="">
           {/* <div className="mt-3">
           <DataTable data={data}/>
           </div> */}
@@ -504,6 +530,8 @@ const Report = () => {
               data={data}
               defaultItemsPerPage={10}
               fetchReoprts={fetchReoprts}
+              setIsMenuOpen={setIsMenuOpen}
+              isMenuOpen={isMenuOpen}
             />
           </div>
         </div>
@@ -537,6 +565,67 @@ const Report = () => {
                   </svg>
                 </button>
               </div>
+              {/* validation code */}
+              {massgeshow && (
+                <div className="mt-5 px-7 ">
+                  <div className="flex items-start p-4  border-t-2 border-[#F98845] rounded shadow-md">
+                    <div className="flex-shrink-0">
+                      <FaExclamationTriangle className="text-[#F98845] w-6 h-6" />
+                    </div>
+                    <div className="ml-3">
+                      <p className="font-bold text-left text-[#0D024D] ">
+                        Mandatory GRI: General Disclosures missing
+                      </p>
+                      <p className="text-[12px] text-[#0D024D]  mt-1">
+                        Please fill the missing disclosures of GRI Reporting
+                        Info under
+                        <strong> Collect &gt; General</strong> section to
+                        proceed.
+                      </p>
+                      <div className="mt-2 text-left flex">
+                        <p className="text-[#0D024D] text-[12px]">
+                          {" "}
+                          Proceed to Collect &gt;
+                        </p>
+                        <Link
+                          href="/dashboard/general"
+                          className="text-blue-500  text-sm font-semibold flex"
+                        >
+                          General &gt; GRI Reporting Info{" "}
+                          <GoArrowRight className="font-bold mt-1 ml-2" />
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="ml-auto">
+                      <p
+                        className="text-sm text-blue-500  ml-4"
+                        data-tooltip-id={`tooltip-$e86`}
+                        data-tooltip-html="<p>Requirement 2 as per GRI: General Disclosures 2021 states that reasons for omission are not permitted for Disclosures 2-1, 2-2, 2-3, 2-4, and 2-5, as reporting on these disclosures is mandatory. Please fill the data here:</p> <br> <p>COLLECT>GENERAL>GRI Reporting Info before creating the report.</p>"
+                      >
+                        Learn more
+                      </p>
+                      <ReactTooltip
+                        id={`tooltip-$e86`}
+                        place="top"
+                        effect="solid"
+                        style={{
+                          width: "290px",
+                          backgroundColor: "#FFF",
+                          color: "#000",
+                          fontSize: "12px",
+                          boxShadow: 3,
+                          borderRadius: "8px",
+                          textAlign: "left",
+                          zIndex: 100,
+                          boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+                          opacity: 1,
+                        }}
+                      ></ReactTooltip>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {/* validation code end */}
               <div className="mt-2 px-7 py-3">
                 <form className="w-full text-left">
                   <div className="mr-2 mb-4 w-[101%]">
@@ -621,52 +710,60 @@ const Report = () => {
                     {showSecondSelect && renderSecondSelect()}
                   </div>
                   {reporttype === "GHG Report - Investments" && (
-                  <div className="mr-2 h-[250px] overflow-y-auto">
-                    <label
-                      htmlFor="sdate"
-                      className="block text-neutral-800 text-[13px] font-normal"
-                    >
-                      Select Investment Corporate
-                    </label>
-                    <div className="mt-2 mr-2">
-                      <div className="p-4">
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="text-gray-400 font-semibold text-[13px]">
-                            Investment Corporate
-                          </div>
-                          <div className="text-gray-400 font-semibold text-[13px]">
-                            Ownership Ratio %
-                          </div>
+                    <div className="mr-2 h-[250px] overflow-y-auto">
+                      <label
+                        htmlFor="sdate"
+                        className="block text-neutral-800 text-[13px] font-normal"
+                      >
+                        Select Investment Corporate
+                      </label>
+                      <div className="mt-2 mr-2">
+                        <div className="p-4">
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="text-gray-400 font-semibold text-[13px]">
+                              Investment Corporate
+                            </div>
+                            <div className="text-gray-400 font-semibold text-[13px]">
+                              Ownership Ratio %
+                            </div>
 
-                          {entities.map((entity, index) => (
-                            <React.Fragment key={index}>
-                              <div className="flex items-center space-x-2">
+                            {entities.map((entity, index) => (
+                              <React.Fragment key={index}>
+                                <div className="flex items-center space-x-2">
+                                  <input
+                                    id={entity.id}
+                                    type="checkbox"
+                                    checked={entity.checked}
+                                    onChange={() => handleCheckboxChange(index)}
+                                    className="form-checkbox h-5 w-5 text-green-600"
+                                    value={entity.id}
+                                  />
+                                  <label
+                                    htmlFor={entity.id}
+                                    className="text-gray-800 text-[13px]"
+                                  >
+                                    {entity.name}
+                                  </label>
+                                </div>
                                 <input
-                                id={entity.id}
-                                  type="checkbox"
-                                  checked={entity.checked}
-                                  onChange={() => handleCheckboxChange(index)}
-                                  className="form-checkbox h-5 w-5 text-green-600"
-                                  value={entity.id}
+                                  type="number"
+                                  placeholder="Enter Ownership Ratio %"
+                                  className="border p-2 rounded w-full text-[13px]"
+                                  disabled={!entity.checked}
+                                  value={entity.ownershipRatio}
+                                  onChange={(e) =>
+                                    handleOwnershipRatioChange(
+                                      index,
+                                      e.target.value
+                                    )
+                                  }
                                 />
-                                <label    htmlFor={entity.id}  className="text-gray-800 text-[13px]">
-                                  {entity.name}
-                                </label>
-                              </div>
-                              <input
-                                type="number"
-                                placeholder="Enter Ownership Ratio %"
-                                className="border p-2 rounded w-full text-[13px]"
-                                disabled={!entity.checked}
-                                value={entity.ownershipRatio}
-                                onChange={(e) => handleOwnershipRatioChange(index, e.target.value)}
-                              />
-                            </React.Fragment>
-                          ))}
+                              </React.Fragment>
+                            ))}
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
                   )}
                   <div className="grid grid-cols-1 md:grid-cols-2 mb-4">
                     <div>

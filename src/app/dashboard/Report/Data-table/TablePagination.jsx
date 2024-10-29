@@ -1,28 +1,162 @@
-'use client'
+"use client";
 import React, { useState, useEffect, useMemo } from "react";
-import { MdDownload, MdEdit, MdDelete, MdKeyboardArrowDown, MdKeyboardArrowUp, MdOutlineWarningAmber } from "react-icons/md";
-import { useRouter } from 'next/navigation';
+import {
+  MdDownload,
+  MdEdit,
+  MdDeleteOutline,
+  MdKeyboardArrowDown,
+  MdKeyboardArrowUp,
+  MdOutlineWarningAmber,
+  MdMoreVert,
+  MdOutlineEmail,
+} from "react-icons/md";
+import {
+  BsFileEarmarkPdf,
+  BsFileEarmarkWord,
+  BsDownload,
+} from "react-icons/bs";
+import { AiOutlineEdit } from "react-icons/ai";
+import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Oval } from 'react-loader-spinner';
+import { Oval } from "react-loader-spinner";
 
-import axiosInstance,{del} from "@/app/utils/axiosMiddleware";
-const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts }) => {
+import axiosInstance, { del } from "@/app/utils/axiosMiddleware";
+
+const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpen,setIsMenuOpen }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(defaultItemsPerPage);
   const [totalPages, setTotalPages] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [datadelete, setDelete] = useState();
+  const [dataDelete, setDelete] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const [sort, setSort] = useState({ column: null, direction: "asc" });
+  const [loadingByIdpdf, setLoadingByIdpdf] = useState({});
   const [loadingById, setLoadingById] = useState({});
   const [isOpen, setIsOpen] = useState(null);
   const [reportid, setReportid] = useState();
   const [reporttepname, setReportTepname] = useState();
   const router = useRouter();
 
+  const ActionMenu = ({ item }) => {
+    const isGRIReport = item.report_type === "GRI Report: In accordance With" || item.report_type === "GRI Report: With Reference to";
+  
+    return (
+      <div className="absolute bg-white shadow-lg rounded-lg py-2 mt-5 w-[211px] z-10 right-8">
+        <button
+          className={`flex items-center p-2 w-full text-left   ${isGRIReport ? 'text-[#d1d5db]' : 'text-[#344054] gradient-sky-blue'}`}
+          onClick={() => {
+            if (isGRIReport) {
+              // handleESGDownloaddocx()
+            } else {
+              handleDownloadpdf(item.id, item.name);
+            }
+          }}
+        >
+          {loadingByIdpdf[item.id] ? (
+            <Oval
+              height={20}
+              width={20}
+              color="#00BFFF"
+              secondaryColor="#f3f3f3"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
+          ) : (
+            <BsFileEarmarkPdf className="mr-2" />
+          )}
+          Download Report PDF
+        </button>
+  
+        <button
+          className={`flex items-center p-2 w-full text-left   ${isGRIReport ? 'text-[#d1d5db]' : 'text-[#344054] gradient-sky-blue'}`}
+          onClick={() => {
+            if (isGRIReport) {
+              // handleESGDownloaddocx()
+            } else {
+              handleDownloaddocx(item.id, item.name);
+            }
+          }}
+        >
+          {loadingById[item.id] ? (
+            <Oval
+              height={20}
+              width={20}
+              color="#00BFFF"
+              secondaryColor="#f3f3f3"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
+          ) : (
+            <BsFileEarmarkWord className="mr-2" />
+          )}
+          Download Report Word
+        </button>
+  
+        {/* Conditional Rendering for Additional GRI Options */}
+        {isGRIReport && (
+          <>
+            <button className="flex items-center p-2 w-full text-left h text-[#d1d5db]">
+              <BsDownload className="mr-2 text-[#d1d5db]" /> Download Content Index
+            </button>
+            <button
+              onClick={() => console.log("Notify GRI")}
+              className="flex items-center p-2 w-full text-left  text-[#d1d5db]"
+            >
+              <MdOutlineEmail className="mr-2 text-[#d1d5db]" /> Notify GRI
+            </button>
+          </>
+        )}
+  
+        <button
+          className={`flex items-center p-2 w-full text-left gradient-sky-blue  text-[#344054]`}
+          onClick={() => {
+            if (isGRIReport) {
+              handleSetESGdata(
+                item.id,
+                item.organization_name,
+                item.start_date,
+                item.end_date,
+                item.organization_country,
+                item.name
+              );
+            } else {
+              handleSetdata(
+                item.id,
+                item.organization_name,
+                item.start_date,
+                item.end_date,
+                item.organization_country,
+                item.name,
+                item.report_by,
+                item.corporate_name
+              );
+            }
+          }}
+        >
+          <AiOutlineEdit className="mr-2" /> Edit Report
+        </button>
+  
+        <button
+          className="flex items-center p-2 w-full text-left gradient-sky-blue  text-[#344054]"
+          onClick={() =>
+            openModal(item.id, item.name, item.report_type, item.start_date)
+          }
+        >
+          <MdDeleteOutline className="mr-2" /> Delete Report
+        </button>
+      </div>
+    );
+  };
+  
+  const toggleMenu = (itemId) => {
+    setIsMenuOpen(isMenuOpen === itemId ? null : itemId);
+  };
+
   const togglePopup = (itemId, itemName) => {
-    setIsOpen((currentOpenPopupId) => (currentOpenPopupId === itemId ? null : itemId));
+    setIsOpen((currentOpenPopupId) =>
+      currentOpenPopupId === itemId ? null : itemId
+    );
     setReportid(itemId);
     setReportTepname(itemName);
   };
@@ -32,16 +166,16 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts }) => {
   const LoaderClose = () => {
     setLoOpen(false);
   };
-  const openModal = (id) => {
+  const openModal = (id, name, report_type, start_date) => {
     setIsModalOpen(true);
-    setDelete(id);
+    setDelete({ id, name, report_type, start_date });
+    setIsMenuOpen(false);
   };
   const closeModal = () => {
     setIsModalOpen(false);
   };
 
   // Function to handle the download
-
 
   const handleSetdata = (
     id,
@@ -50,7 +184,8 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts }) => {
     enddate,
     organization_country,
     name,
-    report_by,corporate_name
+    report_by,
+    corporate_name
   ) => {
     const newdata = {
       id: id,
@@ -59,27 +194,25 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts }) => {
       end_date: enddate,
       country_name: organization_country,
       reportname: name,
-      report_by:report_by,
+      report_by: report_by,
     };
     window.localStorage.setItem("reportid", id);
- 
+
     window.localStorage.setItem("reportstartdate", startdate);
     window.localStorage.setItem("reportenddate", enddate);
     window.localStorage.setItem("organizationcountry", organization_country);
     window.localStorage.setItem("reportby", report_by);
-    if(report_by =="Corporate")
-      {
-        if (corporate_name == undefined){
-          window.localStorage.setItem("reportorgname", organization_name);
-        }else{
-          window.localStorage.setItem("reportorgname", corporate_name);
-    
-        }
-      }else{
+    if (report_by == "Corporate") {
+      if (corporate_name == undefined) {
         window.localStorage.setItem("reportorgname", organization_name);
+      } else {
+        window.localStorage.setItem("reportorgname", corporate_name);
       }
+    } else {
+      window.localStorage.setItem("reportorgname", organization_name);
+    }
     // sessionStorage.setItem('reportData',newdata);
-    router.push('/dashboard/Report/GHG/Ghgtemplates');
+    router.push("/dashboard/Report/GHG/Ghgtemplates");
 
     window.localStorage.setItem("reportname", name);
   };
@@ -106,7 +239,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts }) => {
     window.localStorage.setItem("reportenddate", enddate);
     window.localStorage.setItem("organizationcountry", organization_country);
     // sessionStorage.setItem('reportData',newdata);
-    router.push('/dashboard/Report/ESG');
+    router.push("/dashboard/Report/ESG");
 
     window.localStorage.setItem("reportname", name);
   };
@@ -127,26 +260,46 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts }) => {
   const lastItemIndex = Math.min(currentPage * itemsPerPage, data.length);
 
   const handleDelete = async () => {
-
-    const reoprtid = datadelete;
     LoaderOpen();
-    await del(
-        `/sustainapp/ghgreport/${reoprtid}`,
+    const reportId = dataDelete.id;
 
-      )
+    await axiosInstance
+      .delete(`/sustainapp/ghgreport/${reportId}`)
       .then((response) => {
         if (response.status === 204) {
-          console.log(response.status);
-          toast.success("Report has been delete successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+          const { name, report_type, start_date } = dataDelete;
+          const year = new Date(start_date).getFullYear();
+
+          toast.error(
+            <div>
+              <div className="mb-2 flex">
+                <div className="bg-[#fff1f2] rounded-full p-2">
+                  <MdDeleteOutline
+                    className="text-[#D64564]"
+                    fontSize="large"
+                  />
+                </div>
+                <div className="ml-2 flex items-center">
+                  <p className="text-[#344054] text-[14px]">Report Deleted</p>
+                </div>
+              </div>
+              <div>
+                <p className="text-[#344054] text-[12px] ml-2">{`${name} ${report_type} ${year} has been successfully deleted.`}</p>
+              </div>
+            </div>,
+            {
+              position: "top-right",
+              autoClose: false,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+              icon: false,
+            }
+          );
+
           LoaderClose();
           fetchReoprts();
           closeModal();
@@ -198,31 +351,32 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts }) => {
     currentPage * itemsPerPage
   );
   const getAuthToken = () => {
-    if (typeof window !== 'undefined') {
-        return localStorage.getItem('token')?.replace(/"/g, "");
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token")?.replace(/"/g, "");
     }
-    return '';
-};
-const token = getAuthToken();
-let axiosConfig = {
-  headers: {
-    Authorization: 'Bearer ' + token,
-  },
-};
-  const handleDownloadpdf = async () => {
+    return "";
+  };
+  const token = getAuthToken();
+  let axiosConfig = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+  const handleDownloadpdf = async (id, name) => {
     // Set loading to true for the specific item
-    setLoadingById(prevState => ({ ...prevState, [reportid]: true }));
+    setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: true }));
 
     try {
       const response = await fetch(
-        `${process.env.BACKEND_API_URL}/sustainapp/report_pdf/${reportid}/?download=true`,axiosConfig
+        `${process.env.BACKEND_API_URL}/sustainapp/report_pdf/${id}/?download=true`,
+        axiosConfig
       );
       const blob = await response.blob();
       const downloadUrl = window.URL.createObjectURL(blob);
 
       const link = document.createElement("a");
       link.href = downloadUrl;
-      link.setAttribute("download", `${reporttepname}.pdf`); // Setting the file name dynamically
+      link.setAttribute("download", `${name}.pdf`); // Setting the file name dynamically
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -230,18 +384,17 @@ let axiosConfig = {
       console.error("Error downloading the file:", error);
     } finally {
       // Set loading to false for the specific item
-      setLoadingById(prevState => ({ ...prevState, [reportid]: false }));
-      setIsOpen(null);
+      setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: false }));
+      setIsMenuOpen(false);
     }
   };
-  const handleDownloaddocx = async () => {
-
-    setLoadingById(prevState => ({ ...prevState, [reportid]: true }));
+  const handleDownloaddocx = async (id, name) => {
+    setLoadingById((prevState) => ({ ...prevState, [id]: true }));
 
     try {
       const response = await fetch(
-        `${process.env.BACKEND_API_URL}/sustainapp/report_word_download/${reportid}/`,axiosConfig
-
+        `${process.env.BACKEND_API_URL}/sustainapp/report_word_download/${id}/`,
+        axiosConfig
       );
 
       const blob = await response.blob();
@@ -249,7 +402,7 @@ let axiosConfig = {
 
       const link = document.createElement("a");
       link.href = downloadUrl;
-      link.setAttribute("download", `${reporttepname}.docx`); // Setting the file name dynamically
+      link.setAttribute("download", `${name}.docx`); // Setting the file name dynamically
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -257,20 +410,19 @@ let axiosConfig = {
       console.error("Error downloading the file:", error);
     } finally {
       // Set loading to false for the specific item
-      setLoadingById(prevState => ({ ...prevState, [reportid]: false }));
-      setIsOpen(null);
+      setLoadingById((prevState) => ({ ...prevState, [id]: false }));
+      setIsMenuOpen(false);
     }
-
-
   };
 
   const handleESGDownloadpdf = async () => {
     // Set loading to true for the specific item
-    setLoadingById(prevState => ({ ...prevState, [reportid]: true }));
+    setLoadingById((prevState) => ({ ...prevState, [reportid]: true }));
 
     try {
       const response = await fetch(
-        `${process.env.BACKEND_API_URL}/sustainapp/report_pdf/${reportid}/?download=true`,axiosConfig
+        `${process.env.BACKEND_API_URL}/sustainapp/report_pdf/${reportid}/?download=true`,
+        axiosConfig
       );
       const blob = await response.blob();
       const downloadUrl = window.URL.createObjectURL(blob);
@@ -285,18 +437,17 @@ let axiosConfig = {
       console.error("Error downloading the file:", error);
     } finally {
       // Set loading to false for the specific item
-      setLoadingById(prevState => ({ ...prevState, [reportid]: false }));
+      setLoadingById((prevState) => ({ ...prevState, [reportid]: false }));
       setIsOpen(null);
     }
   };
   const handleESGDownloaddocx = async () => {
-
-    setLoadingById(prevState => ({ ...prevState, [reportid]: true }));
+    setLoadingById((prevState) => ({ ...prevState, [reportid]: true }));
 
     try {
       const response = await fetch(
-        `${process.env.BACKEND_API_URL}/sustainapp/report_word_download/${reportid}/`,axiosConfig
-
+        `${process.env.BACKEND_API_URL}/sustainapp/report_word_download/${reportid}/`,
+        axiosConfig
       );
 
       const blob = await response.blob();
@@ -312,25 +463,23 @@ let axiosConfig = {
       console.error("Error downloading the file:", error);
     } finally {
       // Set loading to false for the specific item
-      setLoadingById(prevState => ({ ...prevState, [reportid]: false }));
+      setLoadingById((prevState) => ({ ...prevState, [reportid]: false }));
       setIsOpen(null);
     }
-
-
   };
 
   return (
     <>
       <div>
         <table className="min-w-max w-full table-auto ">
-          <thead className="py-3 px-6 text-left text-neutral-500 text-[13px] font-extrabold leading-none">
+          <thead className="py-3 px-6 text-center text-[#727272] text-[13px] font-extrabold leading-none gradient-background">
             <tr>
               <th
-                className="py-3 px-6 text-left whitespace-nowrap font-extrabold text-[16px]"
+                className="py-3 px-6 text-center  whitespace-nowrap font-[400] text-[12px]"
                 onClick={() => handleSort("name")}
               >
-                <div className="flex">
-                  Name
+                <div className="flex justify-center">
+                  Name of report
                   {sort.column === "name" ? (
                     sort.direction === "asc" ? (
                       <MdKeyboardArrowUp />
@@ -341,13 +490,12 @@ let axiosConfig = {
                     <MdKeyboardArrowDown />
                   )}
                 </div>
-
               </th>
               <th
-                className="py-3 px-6 text-left whitespace-nowrap font-extrabold text-[16px]"
+                className="py-3 px-6 text-center  whitespace-nowrap font-[400] text-[12px]"
                 onClick={() => handleSort("report_type")}
               >
-                <div className="flex">
+                <div className="flex justify-center">
                   Report type{" "}
                   {sort.column === "report_type" ? (
                     sort.direction === "asc" ? (
@@ -359,14 +507,13 @@ let axiosConfig = {
                     <MdKeyboardArrowDown />
                   )}
                 </div>
-
               </th>
               <th
-                className="py-3 px-6 text-left whitespace-nowrap font-extrabold text-[16px]"
+                className="py-3 px-6 text-center  whitespace-nowrap font-[400] text-[12px]"
                 onClick={() => handleSort("start_date")}
               >
-                <div className="flex">
-                  Start date{" "}
+                <div className="flex justify-center">
+                  Time Period{" "}
                   {sort.column === "start_date" ? (
                     sort.direction === "asc" ? (
                       <MdKeyboardArrowUp />
@@ -377,163 +524,58 @@ let axiosConfig = {
                     <MdKeyboardArrowDown />
                   )}
                 </div>
-
               </th>
-              <th
-                className="py-3 px-6 text-left whitespace-nowrap font-extrabold text-[16px]"
-                onClick={() => handleSort("end_date")}
-              >
-                <div className="flex">
-                  End date{" "}
-                  {sort.column === "end_date" ? (
-                    sort.direction === "asc" ? (
-                      <MdKeyboardArrowUp />
-                    ) : (
-                      <MdKeyboardArrowDown />
-                    )
-                  ) : (
-                    <MdKeyboardArrowDown />
-                  )}
-                </div>
-
+              <th className="py-3 px-6 text-center  whitespace-nowrap font-[400] text-[12px]">
+                <div className="flex justify-center">Created by</div>
               </th>
-              <th
-                className="py-3 px-6 text-left whitespace-nowrap font-extrabold text-[16px]"
-                onClick={() => handleSort("last_report_date")}
-              >
-                <div className="flex">
-                  Created On{" "}
-                  {sort.column === "last_report_date" ? (
-                    sort.direction === "asc" ? (
-                      <MdKeyboardArrowUp />
-                    ) : (
-                      <MdKeyboardArrowDown />
-                    )
-                  ) : (
-                    <MdKeyboardArrowDown />
-                  )}
-                </div>
-
+              <th className="py-3 px-6 text-center  whitespace-nowrap font-[400] text-[12px]">
+                <div className="flex justify-center">Last Edited on </div>
               </th>
-              <th className="py-3 px-6 text-left whitespace-nowrap font-extrabold flex text-[16px]">
+              <th className="py-3 px-6 text-center  whitespace-nowrap font-[400] text-[12px]">
+                <div className="flex justify-center">Last Edited by </div>
+              </th>
+              <th className="py-3 px-6 text-center whitespace-nowrap font-extrabold flex justify-center text-[12px]">
                 Action{" "}
               </th>
             </tr>
           </thead>
-
 
           <tbody className="text-gray-600 text-sm font-light">
             {data.length > 0 &&
               currentItems.map((item, index) => (
                 <tr
                   key={index}
-                  className="border-b border-gray-200 hover:bg-gray-100 text-left"
+                  className="border-b border-gray-200  text-center"
                 >
-                  <td className="py-3 px-6 text-left whitespace-nowrap text-[16px]">
+                  <td className="py-3 px-6 text-center whitespace-nowrap text-[12px] text-[#343A40]">
                     {item.name}
                   </td>
-                  <td className="py-3 px-6 text-left whitespace-nowrap text-[16px]">
+                  <td className="py-3 px-6 text-center whitespace-nowrap text-[12px] text-[#343A40]">
                     {item.report_type}
                   </td>
-                  <td className="py-3 px-6 text-left whitespace-nowrap text-[16px]">
-                    {item.start_date}
+                  <td className="py-3 px-6 text-center whitespace-nowrap text-[12px] text-[#343A40]">
+                    {item.start_date} to {item.end_date}
                   </td>
-                  <td className="py-3 px-6 text-left whitespace-nowrap text-[16px]">
-                    {item.end_date}
+                  <td className="py-3 px-6 text-center whitespace-nowrap text-[12px] text-[#343A40]">
+                    {item.created_by}
                   </td>
 
-                  <td className="py-3 px-6 text-left whitespace-nowrap text-[16px]">
+                  <td className="py-3 px-6 text-center whitespace-nowrap text-[12px] text-[#343A40]">
                     {item.last_report_date}
                   </td>
-                  <td className="py-3 px-6 text-left whitespace-nowrap flex">
-                    <MdEdit
-                      onClick={() =>{
-                        if(item.report_type=='GRI Report: In accordance With' || item.report_type=='GRI Report: With Reference to'){
-                          handleSetESGdata(
-                            item.id,
-                            item.organization_name,
-                            item.start_date,
-                            item.end_date,
-                            item.organization_country,
-                            item.name
-                          )
-                        }
-                        else{
-                          handleSetdata(
-                            item.id,
-                            item.organization_name,
-                            item.start_date,
-                            item.end_date,
-                            item.organization_country,
-                            item.name,
-                            item.report_by,
-                            item.corporate_name,
-                          )
-                        }
-                      }
-                       
-                      }
-                      className="cursor-pointer text-[25px]"
+                  <td className="py-3 px-6 text-center whitespace-nowrap text-[12px] text-[#343A40]">
+                    {item.created_by}
+                  </td>
+                  <td className="py-3 px-6 relative text-center flex justify-center">
+                    <MdMoreVert
+                      onClick={() => toggleMenu(item.id)}
+                      className="cursor-pointer"
                     />
-                    <MdDelete
-                      onClick={() => openModal(item.id)}
-                      className="cursor-pointer text-[25px]"
-                    />
-
-                    {loadingById[item.id] ? (
-                      <Oval
-                        height={20}
-                        width={20}
-                        color="#00BFFF"
-                        secondaryColor="#f3f3f3"
-                        strokeWidth={2}
-                        strokeWidthSecondary={2}
-                      />
-
-                    ) : (
-                      <>
-                        <MdDownload
-                          onClick={() => togglePopup(item.id, item.name)}
-                          // onClick={() => handleDownload(item.id, item.name)}
-
-                           className="cursor-pointer text-[25px]"
-                        />
-
-                        {isOpen === item.id && (
-                          <div className="absolute right-0 w-[11.3rem] bg-white shadow-xl z-10">
-
-                            <div className="px-3 mb-1 py-2">
-                              <div className="mb-2"> <h5 className="text-drak cursor-pointer" onClick={()=>{
-                                if(item.report_type=='GRI Report: In accordance With' || item.report_type=='GRI Report: With Reference to'){
-                                  // handleESGDownloaddocx()
-                                }
-                                else{
-                                    handleDownloaddocx()
-                                }
-                              }}>Download as Docx</h5></div>
-                              <div>  <h5 className="text-drak cursor-pointer" onClick={()=>{
-                                 if(item.report_type=='GRI Report: In accordance With' || item.report_type=='GRI Report: With Reference to'){
-                                  // handleESGDownloadpdf()
-                                }
-                                else{
-                                    handleDownloadpdf()
-                                }
-                              }}>Download as PDF</h5></div>
-
-                            </div>
-
-                          </div>
-
-                        )}
-                      </>
-                    )}
-
+                    {isMenuOpen === item.id && <ActionMenu item={item} />}
                   </td>
                 </tr>
               ))}
-
           </tbody>
-
         </table>
 
         <div className="justify-end items-center gap-2 flex w-[100%] mt-4">
@@ -554,7 +596,7 @@ let axiosConfig = {
             </select>
           </div>
 
-          <div className="ml-4 flex">
+          <div className="ml-4 flex mr-1">
             <div>
               <span className="text-black  text-xs font-normal leading-[15px] text-[15px]">{`${firstItemIndex}-${lastItemIndex} of ${data.length}`}</span>
             </div>
@@ -580,10 +622,10 @@ let axiosConfig = {
       </div>
       {/* <div className="mt-16">
       <table className="min-w-max w-full table-auto ">
-        <thead className="py-3 px-6 text-left text-neutral-500 text-[13px] font-extrabold leading-none">
+        <thead className="py-3 px-6 text-center text-neutral-500 text-[13px] font-extrabold leading-none">
           <tr>
             {columns.map((columns) => (
-              <th className="py-3 px-6 text-left whitespace-nowrap font-extrabold flex">
+              <th className="py-3 px-6 text-center whitespace-nowrap font-extrabold flex">
                 {columns.Header} <KeyboardArrowDownIcon/>
               </th>
             ))}
@@ -595,25 +637,25 @@ let axiosConfig = {
 
             <tr
 
-              className="border-b border-gray-200 hover:bg-gray-100 text-left"
+              className="border-b border-gray-200 hover:bg-[#e0f2fe] text-center"
             >
-              <td className="py-3 px-6 text-left whitespace-nowrap">
+              <td className="py-3 px-6 text-center whitespace-nowrap">
               sustinext new
               </td>
-              <td className="py-3 px-6 text-left whitespace-nowrap">
+              <td className="py-3 px-6 text-center whitespace-nowrap">
               GHG Accounting Report
               </td>
-              <td className="py-3 px-6 text-left whitespace-nowrap">
+              <td className="py-3 px-6 text-center whitespace-nowrap">
               2022-01-06
               </td>
-              <td className="py-3 px-6 text-left whitespace-nowrap">
+              <td className="py-3 px-6 text-center whitespace-nowrap">
               2022-12-06
               </td>
 
-              <td className="py-3 px-6 text-left whitespace-nowrap">
+              <td className="py-3 px-6 text-center whitespace-nowrap">
               2024-02-06
               </td>
-              <td className="py-3 px-6 text-left whitespace-nowrap">
+              <td className="py-3 px-6 text-center whitespace-nowrap">
 
               <a href="https://sustainextstorage1.blob.core.windows.net/sustainext/new-report-file.pdf" target="_blank" download="filename.pdf"> <DownloadIcon/></a>
               </td>
@@ -627,44 +669,43 @@ let axiosConfig = {
 
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-8 rounded-lg shadow-lg ml-40">
-            <div className="div">
-              <div className="mb-2 flex justify-center items-center">
-                <MdOutlineWarningAmber
-                  className="text-red-500"
-                  fontSize="large"
-                />
+          <div className="bg-white p-6  rounded-lg shadow-lg ml-40 w-[513px]">
+            <div>
+              <div className="mb-2 flex">
+                <div className="bg-[#fff1f2] rounded-full p-2">
+                  <MdDeleteOutline
+                    className="text-[#D64564] "
+                    fontSize="large"
+                  />
+                </div>
+                <div className="ml-2 flex items-center">
+                  <p className="text-[#344054] text-[18px]"> Delete Report</p>
+                </div>
               </div>
-              <div className="text-center mt-4 text-sm font-semibold mb-8">
-                Are you sure you want to delete this report ?
+              <div className="text-left mt-4 text-[14px] font-[400] mb-4  text-[#667085]">
+                This process will delete the report and the action is
+                irreversible. Are you sure you want to delete this report?
               </div>
             </div>
 
-            <div className="flex ml-4">
-              <div className="flex items-center px-4  mr-4 py-2 bg-red-500 text-white rounded-md shadow-md">
-                <div className=" w-[50%] ">
-                  <MdDelete />
-                </div>
+            <div className="flex gap-5">
+              <div className="w-[50%]">
                 <button
-                  className="px-2 font-bold bg-red-500 text-white "
-                  onClick={handleDelete}
-                // onClick={() =>
-                //     confirmDelete(
-                //      datadelete,
-
-                //     )
-                //   }
+                  className="px-4 py-2 border border-[#727272]  w-full text-[#727272] font-bold rounded text-[12px]"
+                  onClick={closeModal}
                 >
-                  Delete
+                  Cancel
                 </button>
               </div>
 
-              <button
-                className="px-4 py-2 border border-red-500 w-[40%] text-red-500 font-bold rounded"
-                onClick={closeModal}
-              >
-                Cancel
-              </button>
+              <div className="w-[50%]">
+                <button
+                  className="px-4 py-2 border border-[#EF5350] w-full text-white bg-[#EF5350] font-bold rounded text-[12px]"
+                  onClick={handleDelete}
+                >
+                  Yes, Delete
+                </button>
+              </div>
             </div>
           </div>
         </div>

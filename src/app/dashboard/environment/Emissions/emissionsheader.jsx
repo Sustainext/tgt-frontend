@@ -1,18 +1,41 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { yearInfo, months } from "@/app/shared/data/yearInfo";
 import axiosInstance from "@/app/utils/axiosMiddleware";
-import { fetchPreviousMonthData, fetchEmissionsData, fetchAssignedTasks, fetchApprovedTasks, setLocation, setYear, setMonth, setCountryCode } from '@/lib/redux/features/emissionSlice';
+import {
+  fetchPreviousMonthData,
+  fetchEmissionsData,
+  fetchAssignedTasks,
+  fetchApprovedTasks,
+  setLocation,
+  setYear,
+  setMonth,
+  setCountryCode,
+  setLocationsRedux,
+  clearSelectedRows,
+} from "@/lib/redux/features/emissionSlice";
 
 const monthMapping = {
-  Jan: 1, Feb: 2, Mar: 3, Apr: 4, May: 5, Jun: 6,
-  Jul: 7, Aug: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12,
+  Jan: 1,
+  Feb: 2,
+  Mar: 3,
+  Apr: 4,
+  May: 5,
+  Jun: 6,
+  Jul: 7,
+  Aug: 8,
+  Sep: 9,
+  Oct: 10,
+  Nov: 11,
+  Dec: 12,
 };
 
 const getMonthString = (monthNumber) => {
-  return Object.keys(monthMapping).find(key => monthMapping[key] === monthNumber);
+  return Object.keys(monthMapping).find(
+    (key) => monthMapping[key] === monthNumber
+  );
 };
 
 const EmissionsHeader = ({
@@ -23,7 +46,9 @@ const EmissionsHeader = ({
   setLocationname,
 }) => {
   const dispatch = useDispatch();
-  const { location, year, month, climatiqData } = useSelector(state => state.emissions);
+  const { location, year, month, climatiqData } = useSelector(
+    (state) => state.emissions
+  );
 
   const [locations, setLocations] = useState([]);
 
@@ -32,6 +57,7 @@ const EmissionsHeader = ({
       try {
         const response = await axiosInstance.get("/sustainapp/get_location");
         setLocations(response.data);
+        setLocationsRedux(response.data);
       } catch (error) {
         console.error("Error fetching locations:", error);
       }
@@ -46,6 +72,7 @@ const EmissionsHeader = ({
       dispatch(fetchPreviousMonthData({ location, year, month }));
       dispatch(fetchAssignedTasks({ location, year, month }));
       dispatch(fetchApprovedTasks({ location, year, month }));
+      dispatch(clearSelectedRows());
     }
   }, [location, year, month, dispatch]);
 
@@ -59,7 +86,9 @@ const EmissionsHeader = ({
       const monthNumber = monthMapping[value];
       dispatch(setMonth(monthNumber));
     } else if (name === "location") {
-      const selectedLocation = locations.find((loc) => loc.id === Number(value));
+      const selectedLocation = locations.find(
+        (loc) => loc.id === Number(value)
+      );
       if (selectedLocation) {
         dispatch(setCountryCode(selectedLocation.country));
         setLocationname(selectedLocation.name);

@@ -47,9 +47,9 @@ const Section28=({section13_7Ref,data})=>{
 ]
 
 
-    const Tabledata1=data["402-1b"]?data["402-1b"]["data"].length>0?
+    const Tabledata1=data["402-1a_collective_bargainging_agreements"]?data["402-1a_collective_bargainging_agreements"]["data"].length>0?
 
-    data["402-1b"]["data"].map((val,index)=>{
+    data["402-1a_collective_bargainging_agreements"]["data"].map((val,index)=>{
         return (
             
           {
