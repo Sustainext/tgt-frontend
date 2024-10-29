@@ -243,7 +243,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
   return (
     <>
    <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
-        <div className="mb-4 flex">
+        <div className=" flex">
           <div className="w-[80%] relative">
            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500] mb-2">
               Value Chain
@@ -309,7 +309,7 @@ markets served, supply chain and entities downstream from the organization & the
           </div>
         </div>
 
-        <div className="mx-2 mb-3">
+        <div className="mx-2">
           <Form
             schema={r_schema}
             uiSchema={r_ui_schema}

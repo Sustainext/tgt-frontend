@@ -225,7 +225,7 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
   }, []);
 
   useEffect(() => {
-    const fetchCorporates = async () => {
+     const fetchCorporates = async () => {
       if (selectedOrg) {
         try {
           const response = await axiosInstance.get(`/corporate/`, {
@@ -233,7 +233,13 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
           });
           setCorporates(response.data);
         } catch (e) {
-          console.error("Failed fetching corporates:", e);
+          if(e.status === 404) {
+            setCorporates([]);
+          }
+          else{
+            console.error("Failed fetching corporates:", e);
+          }
+          
         }
       }
     };

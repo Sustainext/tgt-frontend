@@ -43,7 +43,7 @@ const schema = {
         properties: {
             Totalweight: {
                 type: "string",
-                title: "Total weight/volume",
+                title: "Total weight or volume of materials used",
                 tooltiptext: "Use the total weight or volume of materials used as specified in Disclosure 301-1",
                 display: "block",
 

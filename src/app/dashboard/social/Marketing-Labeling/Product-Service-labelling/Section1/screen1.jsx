@@ -11,7 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
-import axiosInstance from '@/app/utils/axiosMiddleware'
+import axiosInstance from "@/app/utils/axiosMiddleware";
 
 const widgets = {
   inputWidget: inputWidget2,
@@ -29,7 +29,8 @@ const schema = {
     properties: {
       Q1: {
         type: "string",
-        title: "Does the organization have specific procedures for product and service information and labeling?",
+        title:
+          "Does the organization have specific procedures for product and service information and labeling?",
         enum: ["Yes", "No"],
       },
     },
@@ -47,7 +48,8 @@ const schema = {
               },
               Q3: {
                 type: "string",
-                title: "Substances that might produce an environmental or social impact",
+                title:
+                  "Substances that might produce an environmental or social impact",
               },
               Q4: {
                 type: "string",
@@ -73,7 +75,8 @@ const uiSchema = {
   items: {
     "ui:order": ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6"],
     Q1: {
-      "ui:title": "Does the organization have specific procedures for product and service information and labeling?",
+      "ui:title":
+        "Does the organization have specific procedures for product and service information and labeling?",
       "ui:tooltip":
         "Select 'Yes' if the organization have specific procedures for product and service information and labeling and select No if not. Definition of product and service information and labeling information and labeling are used synonymously, and describe communication delivered with the product or service, describing its characteristics",
       "ui:tooltipdisplay": "block",
@@ -84,8 +87,7 @@ const uiSchema = {
       },
     },
     Q2: {
-      "ui:title":
-        "Specify source of components",
+      "ui:title": "Specify source of components",
       "ui:tooltip":
         "Specify the sourcing of components of the product or service  ",
       "ui:tooltipdisplay": "block",
@@ -108,10 +110,8 @@ const uiSchema = {
       },
     },
     Q4: {
-      "ui:title":
-        "Safe use of the product or service",
-      "ui:tooltip":
-        "PDescribe about the safe use of the product or service.",
+      "ui:title": "Safe use of the product or service",
+      "ui:tooltip": "PDescribe about the safe use of the product or service.",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -120,10 +120,8 @@ const uiSchema = {
       },
     },
     Q5: {
-      "ui:title":
-        "Disposal of the product",
-      "ui:tooltip":
-        "Describe how the product can be disposed?",
+      "ui:title": "Disposal of the product",
+      "ui:tooltip": "Describe how the product can be disposed?",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -132,10 +130,8 @@ const uiSchema = {
       },
     },
     Q6: {
-      "ui:title":
-        "Other (explain)",
-      "ui:tooltip":
-        "Describe how the product can be disposed?",
+      "ui:title": "Other (explain)",
+      "ui:tooltip": "Describe how the product can be disposed?",
       "ui:tooltipdisplay": "none",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -188,7 +184,6 @@ const Screen1 = ({ location, year, month }) => {
       form_data: formData,
       location,
       year,
-      month,
     };
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
@@ -237,7 +232,7 @@ const Screen1 = ({ location, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -252,7 +247,7 @@ const Screen1 = ({ location, year, month }) => {
   };
 
   useEffect(() => {
-    if (location && year && month) {
+    if (location && year) {
       loadFormData();
       toastShown.current = false; // Reset the flag when valid data is present
     } else {
@@ -261,7 +256,7 @@ const Screen1 = ({ location, year, month }) => {
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [location, year, month]);
+  }, [location, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -271,12 +266,19 @@ const Screen1 = ({ location, year, month }) => {
 
   return (
     <>
-      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+      <div
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
+        style={{
+          boxShadow:
+            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        }}
+      >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Required information: product and service information and labeling
-              <MdInfoOutline data-tooltip-id={`tooltip-employees`}
+              <MdInfoOutline
+                data-tooltip-id={`tooltip-employees`}
                 data-tooltip-content="This section documents the data corresponding to the r product and
 service information and labeling.
 Include:
@@ -285,28 +287,34 @@ ii. Content, particularly with regard to substances that might produce an
 environmental or social impact;
 iii. Safe use of the product or service;
 iv. Disposal of the product and environmental or social impacts.
- " className="mt-1.5 ml-2 text-[15px]" />
-              <ReactTooltip id={`tooltip-employees`} place="top" effect="solid" style={{
-                width: "290px", backgroundColor: "#000",
-                color: "white",
-                fontSize: "12px",
-                boxShadow: 3,
-                borderRadius: "8px",
-                textAlign: 'left',
-              }}>
-              </ReactTooltip>
+ "
+                className="mt-1.5 ml-2 text-[15px]"
+              />
+              <ReactTooltip
+                id={`tooltip-employees`}
+                place="top"
+                effect="solid"
+                style={{
+                  width: "290px",
+                  backgroundColor: "#000",
+                  color: "white",
+                  fontSize: "12px",
+                  boxShadow: 3,
+                  borderRadius: "8px",
+                  textAlign: "left",
+                }}
+              ></ReactTooltip>
             </h2>
           </div>
           <div className="w-[20%]">
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 417-1a
+                  GRI 417-1a
                 </div>
               </div>
             </div>
           </div>
-     
         </div>
         <div className="mx-2">
           <Form
@@ -319,10 +327,14 @@ iv. Disposal of the product and environmental or social impacts.
           />
         </div>
         <div className="mt-4">
-          <button type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year || !month ? 'cursor-not-allowed' : ''}`}
+          <button
+            type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              !location || !year ? "cursor-not-allowed" : ""
+            }`}
             onClick={handleSubmit}
-            disabled={!location || !year || !month}>
+            disabled={!location || !year}
+          >
             Submit
           </button>
         </div>
