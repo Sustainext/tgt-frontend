@@ -30,7 +30,7 @@ const Supplierassessment = ({ selectedOrg, selectedCorp, year }) => {
     setNewSuppliers([]);
     try {
         const response = await axiosInstance.get(
-            `/sustainapp/get_analyze_supplier_assesment=${selectedCorp}&organisation=${selectedOrg}&start=${year}-01-01&end=${year}-12-31`
+            `/sustainapp/get_analyze_supplier_assesment?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${year}-01-01&end=${year}-12-31`
           );
    
 
