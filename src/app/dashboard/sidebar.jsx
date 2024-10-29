@@ -54,15 +54,7 @@ const Sidenav = () => {
     }
   }, []);
   const isNewRole = newrole === "true";
-  const lastAllowedPermission = [
-    "collect",
-    "analyse",
-    "report",
-    "optimise",
-    "track",
-  ]
-    .filter((permission) => permissions[permission])
-    .pop();
+
   const Menus = [
     {
       id: 0,
@@ -84,7 +76,7 @@ const Sidenav = () => {
       submenu: true,
       permission: "collect",
       role: true,
-      spacing: lastAllowedPermission === "collect",
+
       submenuItems: [
         {
           id: "2-1",
@@ -125,7 +117,7 @@ const Sidenav = () => {
       submenu: true,
       permission: "analyse",
       role: true,
-      spacing: lastAllowedPermission === "analyse",
+     
       submenuItems: [
         {
           id: "3-1",
@@ -166,7 +158,7 @@ const Sidenav = () => {
       link: "/dashboard/Report",
       permission: "report",
       role: true,
-      spacing: lastAllowedPermission === "report",
+   
     },
     {
       id: 5,
@@ -175,13 +167,14 @@ const Sidenav = () => {
       link: "#",
       permission: "optimise",
       role: true,
-      spacing: lastAllowedPermission === "optimise",
+   
     },
     {
       id: 6,
       title: "Track",
       icon: <MdOutlineSearch />,
-      spacing: lastAllowedPermission === "track",
+      spacing: true,
+    
       role: true,
       link: "/dashboard/Track",
       permission: "track",
@@ -215,6 +208,7 @@ const Sidenav = () => {
       icon: <MdOutlineAccountTree />,
       link: "/dashboard/OrgStructure",
       role: true,
+      lockicon: <MdOutlineAccountTree />,
     },
     {
       id: 9,
