@@ -1,6 +1,6 @@
 const nextConfig = {
   env: {
-      BACKEND_API_URL: 'https://udm-enerpac-be.sustainext.ai',
+      BACKEND_API_URL: 'https://udm-alfharon-be.sustainext.ai',
       // BACKEND_API_URL: 'http://127.0.0.1:8000',
       NEXT_APP_ZOHO_URL_EMISSIONS: 'https://analytics.zoho.in/open-view/283231000002209106',
       NEXT_APP_SUPERSET_URL_ENV_EMISSIONS: 'https://superset-dev.sustainext.ai/superset/dashboard/11/?standalone=3&refreshTime=120',
@@ -14,7 +14,7 @@ const nextConfig = {
   },
 
   images: {
-      domains: ['udm-enerpac-be.sustainext.ai'],
+      domains: ['udm-alfharon-be.sustainext.ai'],
   },
   eslint: {
     ignoreDuringBuilds: true,
