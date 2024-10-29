@@ -1,6 +1,10 @@
 import React from 'react';
 
 function DynamicTable({ columns, data }) {
+  // Separate the data rows from the totals row
+  const dataRows = data.filter(row => !row.Total); // Rows without a "Total" key
+  const totalsRow = data.find(row => row.Total); // Row with the "Total" key, if it exists
+
   const renderHeaders = () => {
     return columns.map((column, index) => (
       <th key={index} className={column.headerClass}>
@@ -10,25 +14,22 @@ function DynamicTable({ columns, data }) {
   };
 
   const renderRows = () => {
-    if (data.length === 0) {
-      // Return a row with a message that there is no data, spanning all columns
+    if (dataRows.length === 0) {
       return (
-        <tr className='border'>
+        <tr className="border">
           <td colSpan={columns.length} className="text-center py-4 text-[12px]">
             No data available
           </td>
         </tr>
       );
     }
-    return data.map((row, rowIndex) => (
+    return dataRows.map((row, rowIndex) => (
       <tr key={rowIndex}>
-        {
-          columns.map((column, columnIndex) => (
-            <td key={columnIndex} className={column.cellClass}>
-              {column.render ? column.render(row[column.dataIndex], row) : row[column.dataIndex]}
-            </td>
-          ))
-        }
+        {columns.map((column, columnIndex) => (
+          <td key={columnIndex} className={column.cellClass}>
+            {column.render ? column.render(row[column.dataIndex], row) : row[column.dataIndex]}
+          </td>
+        ))}
       </tr>
     ));
   };
@@ -36,10 +37,26 @@ function DynamicTable({ columns, data }) {
   return (
     <table className="w-full rounded-lg overflow-hidden">
       <thead className="border rounded-lg">
-        <tr className="border-t border-b gradient-background">{renderHeaders()}</tr>
+        <tr className="border-t border-b gradient-background">
+          {renderHeaders()}
+        </tr>
       </thead>
       <tbody className="border-l border-r rounded-lg">
         {renderRows()}
+
+        {/* Dynamic Total Row */}
+        {totalsRow && (
+          <>
+            <tr className="">
+              <td colSpan={columns.length - 2} className="h-14 gradient-text px-4 py-2 border-y text-right font-bold text-[12px]">
+              Total Water Consumption
+              </td>
+              <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-[12px]">{totalsRow.Total}</td>
+              <td className="px-4 py-2 border-y text-center text-slate-500 font-bold text-[12px]">{totalsRow.Units || totalsRow.Unit}</td>
+            </tr>
+          
+          </>
+        )}
       </tbody>
     </table>
   );

@@ -421,3 +421,10 @@ color:"#ACACAC";
   table tr:last-child td:last-child {
     border-bottom-right-radius: 6px !important;
   }
+  .gradient-sky-blue {
+    background: white;
+  }
+  .gradient-sky-blue:hover {
+    background: linear-gradient(90deg, rgba(0, 126, 239, 0.05) 7.92%, rgba(42, 228, 255, 0.05) 89.75%);
+  }
+  
