@@ -59,7 +59,7 @@ const uiSchema = {
   },
 };
 
-const Screen1 = ({ location, year, month }) => {
+const Screen1 = ({ location, year }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -99,7 +99,6 @@ const Screen1 = ({ location, year, month }) => {
       form_data: formData,
       location,
       year,
-      month,
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -153,7 +152,7 @@ const Screen1 = ({ location, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
     try {
       const response = await axios.get(url, axiosConfig);
       console.log("API called successfully:", response.data);
@@ -178,7 +177,7 @@ const Screen1 = ({ location, year, month }) => {
 
   // fetch backend and replace initialized forms
   useEffect(() => {
-    if (location && year && month) {
+    if (location && year) {
       loadFormData();
       toastShown.current = false; // Reset the flag when valid data is present
     } else {
@@ -187,7 +186,7 @@ const Screen1 = ({ location, year, month }) => {
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [location, year, month]);
+  }, [location, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -198,7 +197,7 @@ const Screen1 = ({ location, year, month }) => {
   return (
     <>
       <div
-        className="mx-2  p-3 mb-6 pb-6 rounded-md"
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
@@ -206,16 +205,16 @@ const Screen1 = ({ location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Occupational health and safety management system
               <MdInfoOutline
-                data-tooltip-id={`tooltip-$e1`}
+                data-tooltip-id={`tooltip-$e144`}
                 data-tooltip-content="This section documents data corresponding to the processes for worker participation and consultation
                             in the development, implementation, and evaluation of the occupational health and safety management system."
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
-                id={`tooltip-$e1`}
+                id={`tooltip-$e144`}
                 place="top"
                 effect="solid"
                 style={{
@@ -251,7 +250,7 @@ const Screen1 = ({ location, year, month }) => {
             widgets={widgets}
           />
         </div>
-        <div className="mb-6">
+        <div className="mt-4">
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${

@@ -241,16 +241,10 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
 
   return (
     <>
-      <div
-        className="mx-2  p-3 mb-6 pb-6 rounded-md"
-        style={{
-          boxShadow:
-            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
-        }}
-      >
+      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
             Instance of non-compliance
               <MdInfoOutline data-tooltip-id={`tooltip-employees`}
                 data-tooltip-content="This section documents the data corresponding to the  significant
@@ -288,7 +282,7 @@ regulations during the reporting period," className="mt-1.5 ml-2 text-[15px]" />
             widgets={widgets}
           />
         </div>
-        <div className="mb-6">
+        <div className="mt-4">
           <button type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year  ? 'cursor-not-allowed' : ''}`}
             onClick={handleSubmit}

@@ -6,7 +6,7 @@ import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Socialheader from '../../socialheader';
+import Socialheader4 from '../../socialheader4';
 import Screen1 from "./screen1"
 const NoncomplianceincidentsLabelling = () => {
     const [activeMonth, setActiveMonth] = useState(1);
@@ -43,11 +43,11 @@ const NoncomplianceincidentsLabelling = () => {
             <div className="flex flex-col justify-start overflow-x-hidden ">
                 <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
                     <div className='w-full'>
-                        <div className="text-left mb-4 ml-3 pt-5">
+                       <div className="text-left mb-2 ml-3 pt-5">
                             <p className="text-[11px]">Social</p>
                             <div className='flex'>
                                 <div>
-                                    <p className="gradient-text text-[22px] font-bold pt-1">
+                                   <p className="gradient-text text-[22px] font-bold py-2">
                                         Marketing and labeling
                                     </p>
                                 </div>
@@ -56,7 +56,7 @@ const NoncomplianceincidentsLabelling = () => {
 
                         </div>
                     </div>
-                    <div className='w-full float-end '>
+                 <div className="w-full float-end pt-5 me-1">
                         <div className="flex float-end border-l">
                             <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('74')}>GRI 417 - 2</button>
                             <button className="text-[#fff] bg-[#00558A] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('69')}>SDG 16</button>
@@ -86,7 +86,7 @@ const NoncomplianceincidentsLabelling = () => {
                     </h6>
                 </div>
                 <div className={`${isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"}
-fixed right-[51px]  w-[340px] h-full bg-white  rounded-md
+fixed right-[51px]  w-[340px] h-[93%] bg-white  rounded-md
 transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
 
                     {data && data.map((program) => (
@@ -107,14 +107,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
 
                 </div>
             </div>
-            <Socialheader
-                activeMonth={activeMonth}
-                setActiveMonth={setActiveMonth}
-                location={location}
-                setLocation={setLocation}
-                year={year}
-                setYear={setYear} />
-            <Screen1 location={location} year={year} month={activeMonth}  />
+            <Socialheader4
+            activeMonth={activeMonth}
+            setActiveMonth={setActiveMonth}
+            selectedOrg={selectedOrg}
+            setSelectedOrg={setSelectedOrg}
+            selectedCorp={selectedCorp}
+            setSelectedCorp={setSelectedCorp}
+            year={year}
+            setYear={setYear} />
+            <Screen1 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year} month={activeMonth} />
 
         </>
     );

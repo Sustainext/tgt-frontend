@@ -45,7 +45,7 @@ const Stakeholderengagement = () => {
       <div className="flex flex-col justify-start overflow-x-hidden ">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
-            <div className="text-left mb-4 ml-3 pt-5">
+           <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-sm">Economic</p>
               <div className="flex">
                 <div className="h-[29px]">
@@ -66,19 +66,19 @@ const Stakeholderengagement = () => {
               </button>
               <button
                 className="text-[#fff] bg-[#FC0014] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("125")}
+                onClick={() => toggleDrawer("126")}
               >
                 SDG 1
               </button>
               <button
                 className="text-[#fff] bg-[#E01A83] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("126")}
+                onClick={() => toggleDrawer("127")}
               >
                 SDG 10
               </button>
               <button
                 className="text-[#fff] bg-[#00558A] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("127")}
+                onClick={() => toggleDrawer("128")}
               >
                 SDG 17
               </button>
@@ -113,7 +113,7 @@ const Stakeholderengagement = () => {
         <div
           className={`${
             isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"
-          } fixed right-[51px]  w-[340px] h-full bg-white  rounded-md transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
+          } fixed right-[51px]  w-[340px] h-[93%] bg-white  rounded-md transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         >
           {data &&
             data.map((program) => (

@@ -109,7 +109,7 @@ const uiSchema = {
         }
     }
 };
-const Watersharedresourceimpact = ({location, year, month}) => {
+const Watersharedresourceimpact = ({ selectedOrg, year, selectedCorp }) => {
     const { open } = GlobalState();
     const [formData, setFormData] = useState([{}]);
     const [r_schema, setRemoteSchema] = useState({})
@@ -147,9 +147,9 @@ const Watersharedresourceimpact = ({location, year, month}) => {
       user_id : user_id,
       path: view_path,
       form_data: formData,
-      location,
+      corporate: selectedCorp,
+      organisation: selectedOrg,
       year,
-      month
     }
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`
@@ -201,7 +201,7 @@ const Watersharedresourceimpact = ({location, year, month}) => {
     const loadFormData = async () => {
       LoaderOpen();
       setFormData([{}])
-      const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+      const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
       try {
           const response = await axios.get(url, axiosConfig);
           console.log('API called successfully:', response.data);
@@ -225,19 +225,16 @@ const Watersharedresourceimpact = ({location, year, month}) => {
     console.log('Form data is changed -', formData)
   },[formData])
 
-  // fetch backend and replace initialized forms
-  useEffect (()=> {
-    if (location && year && month) {
-        loadFormData();
-        toastShown.current = false; // Reset the flag when valid data is present
+  useEffect(() => {
+    if (selectedOrg && year) {
+      loadFormData();
+      toastShown.current = false;
     } else {
-        // Only show the toast if it has not been shown already
-       if (!toastShown.current) {
-
-            toastShown.current = true; // Set the flag to true after showing the toast
-        }
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
     }
-  },[location, year, month])
+  }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

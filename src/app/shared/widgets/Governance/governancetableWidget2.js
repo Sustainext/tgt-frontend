@@ -34,7 +34,7 @@ const GovernancetableWidget2 = ({ id, options, value, required, onChange, schema
                     {options.rowLabels.map((label, rowIndex) => (
                         <tr key={rowIndex} className='border border-gray-300'>
                             <td className=" p-3 text-left w-2/5">
-                                <span>{label.title}</span>
+                                <span className='text-[12px]'>{label.title}</span>
                                 <MdInfoOutline
                                     data-tooltip-id={`tooltip-${label.title?.replace(/\s+/g, '-')}`}
                                     data-tooltip-content={label.tooltip}
@@ -45,7 +45,15 @@ const GovernancetableWidget2 = ({ id, options, value, required, onChange, schema
                                     id={`tooltip-${label.title.replace(/\s+/g, '-')}`}
                                     place="top"
                                     effect="solid"
-                                    className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
+                                    style={{
+                                        width:"400px",
+                                        backgroundColor: "#000",
+                                        color: "white",
+                                        fontSize: "12px",
+                                        boxShadow: 3,
+                                        borderRadius: "8px",
+                                        zIndex:"1000",
+                                      }}
                                 />
                             </td>
                             {Object.keys(localValue[rowIndex] || {}).map((key, cellIndex) => {
@@ -58,7 +66,7 @@ const GovernancetableWidget2 = ({ id, options, value, required, onChange, schema
                                             <select
                                                 value={localValue[rowIndex][key]}
                                                 onChange={(e) => handleFieldChange(rowIndex, key, e.target.value)}
-                                                className="text-sm pl-2 py-2 w-full border-b"
+                                                className="text-[12px] pl-2 py-2 w-full border-b"
                                                 required={required}
                                             >
                                                 <option value="">Select</option>
@@ -72,7 +80,7 @@ const GovernancetableWidget2 = ({ id, options, value, required, onChange, schema
                                                 required={required}
                                                 value={localValue[rowIndex][key] || ""}
                                                 onChange={(e) => handleFieldChange(rowIndex, key, e.target.value)}
-                                                className="text-sm pl-2 py-2 w-full"
+                                                className="text-[12px] pl-2 py-2 w-full"
                                                 placeholder="Enter"
                                             />
                                         )}

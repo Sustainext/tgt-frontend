@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 
 
-const CustomerTable=()=>{
+const CustomerTable=({data})=>{
 
     const col=[
         "Organization/Corporation",
@@ -34,10 +34,18 @@ const CustomerTable=()=>{
             </tr>
         </thead>
         <tbody>
-            <tr className="text-[13px]">
-            <td className="border border-gray-200 p-4 rounded-bl-md text-left">Data</td>
-            <td className="border border-gray-200 p-4 rounded-bl-md text-left">Data</td>
-            </tr>
+            {data?.length>0?data.map((val)=>(
+                <tr className="text-[13px]">
+                <td className="border border-gray-200 p-4 rounded-bl-md text-left">{val.org_or_corp?val.org_or_corp:"No data available"}</td>
+                <td className="border border-gray-200 p-4 rounded-bl-md text-left">{val.percentage?val.percentage.toFixed(2)+"%":"No data available"}</td>
+                </tr>
+            )):(
+                <tr className="text-[13px]">
+                <td className="border border-gray-200 p-4 rounded-bl-md text-left">No data available</td>
+                <td className="border border-gray-200 p-4 rounded-bl-md text-left">No data available</td>
+                </tr>
+            )}
+            
            
         </tbody>
     </table>

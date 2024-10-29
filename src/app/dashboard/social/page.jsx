@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { MdKeyboardArrowDown, MdInfoOutline } from "react-icons/md";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import Ohsmanagment from "./OHS/ohs-management/page"
@@ -42,7 +42,13 @@ import NoncomplianceincidentsMarketing from "./Marketing-Labeling/Non-compliance
 import StatementnoncomplianceMarketing from "./Marketing-Labeling/Statement-non-compliance-Marketing/page"
 import Identifyinginformation from "./BillS-211/Identifying-information/page"
 import Annualreport from './BillS-211/annual-report/page'
-
+import {
+  setHeadertext1,
+  setHeadertext2,
+  setHeaderdisplay,
+  setMiddlename
+} from "../../../lib/redux/features/topheaderSlice";
+import { useDispatch} from "react-redux";
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -70,6 +76,7 @@ const AccordionItem = ({ title, children }) => {
 const Social = () => {
   const [activeStep, setActiveStep] = useState(1);
   const [completedSteps, setCompletedSteps] = useState([]);
+  const dispatch = useDispatch();
   const activeSteps = (id) => {
     setActiveStep(id);
   };
@@ -92,8 +99,58 @@ const Social = () => {
   const isStepCompleted = (stepNumber) => {
     return completedSteps.includes(stepNumber);
   };
+  const stepTitles = {
+    1: "Employment",
+    2: "Employment",
+    3: "Employment",
+    4: "Labor Relations",
+    5: "Occupational health and safety",
+    6: "Occupational health and safety",
+    7: "Occupational health and safety",
+    8: "Occupational health and safety",
+    9: "Occupational health and safety",
+    10: "Occupational health and safety",
+    11: "Occupational health and safety",
+    12: "Occupational health and safety",
+    13: "Occupational health and safety",
+    14: "Occupational health and safety",
+    15:"Training",
+    16:"Training",
+    17:"Training",
+    18:"Diversity & Inclusion",
+    19:"Diversity & Inclusion",
+    20:"Non - Discrimination",
+    21:"Collective Bargaining",
+    22:"Human Rights",
+    23:"Human Rights",
+    24:"Human Rights",
+    25:"Indigenous People",
+    26:"Community Development",
+    27:"Community Development",
+    28:"Supplier Social Assessment",
+    29:"Supplier Social Assessment",
+    30:"Political Involvement",
+    31:"Customer Health and Safety",
+    32:"Customer Health and Safety",
+    33:"Marketing and Labeling",
+    34:"Marketing and Labeling",
+    35:"Marketing and Labeling",
+    36:"Marketing and Labeling",
+    37:"Marketing and Labeling",
+    38:"Customer Privacy",
+    39:"Bill S-211",
+    40:"Bill S-211",
+  };
+  useEffect(() => {
+    // Update header with step-related information
+    dispatch(setHeadertext1("Collect"));
+    dispatch(setHeaderdisplay("block"));
+    dispatch(setMiddlename("Social"));
 
-
+    // Dynamically set the title for the current step
+    const title = stepTitles[activeStep] || "Employment"; // Default title
+    dispatch(setHeadertext2(title));
+  }, [activeStep, dispatch]);
 
   return (
     <>
@@ -151,7 +208,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Identifying Information
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -206,7 +263,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Annual Report
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -268,7 +325,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Employee Hires & Turnover
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -328,7 +385,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Benefits
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -383,7 +440,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Parental Leave
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -441,7 +498,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Notice Period
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -505,7 +562,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               OHS Management
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -565,7 +622,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Risk Assessment
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -625,7 +682,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               OHS Sevices
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -685,7 +742,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Worker Involvement in OHS
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -745,7 +802,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               OHS Training
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -806,7 +863,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Promotion of Health
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -866,7 +923,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Prevention of OHS Impact
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -926,7 +983,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               OHS Management System Coverage
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -986,7 +1043,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Injuries
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1041,7 +1098,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Ill-health
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1104,7 +1161,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Training hours
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1164,7 +1221,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Skill Upgrade
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1220,7 +1277,7 @@ const Social = () => {
                               Performance & Career
                               Development
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1283,7 +1340,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Diversity of the Board
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1339,7 +1396,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Salary Ratio
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1397,7 +1454,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Incidents of Discrimination
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1455,7 +1512,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Collective Bargaining
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1517,7 +1574,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Child Labour
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1577,7 +1634,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Forced or Compulsory Labour
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1632,7 +1689,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Security Personnel
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1690,7 +1747,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Indigenous People
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1752,7 +1809,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Community Engagement
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1807,7 +1864,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Impact on Community
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1871,7 +1928,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Suppliers Screened
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1926,7 +1983,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Impacts & Actions Taken
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1986,7 +2043,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Political Involvement
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -2048,7 +2105,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Product/Service Safety
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -2103,7 +2160,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Compliance
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -2167,7 +2224,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Product/Service labelling
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -2227,7 +2284,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Non compliance incidents- Labelling
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -2287,7 +2344,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Statement of non compliance - Labeling
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -2347,7 +2404,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Non compliance incidents  - Marketing
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -2403,7 +2460,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Statement of non compliance - Marketing
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -2460,7 +2517,7 @@ const Social = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Customer Privacy
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -2765,9 +2822,9 @@ const Social = () => {
 
             </div>
             <div>
-              <div className="w-full mb-5">
-                <div className="absolute right-5">
-                  <div className="flex  me-2  mb-5">
+              <div className="w-full mb-5 mt-4 ">
+                <div className="">
+                  <div className="flex  me-2  mb-5 justify-end">
                     {(activeStep !== 39 && activeStep !== 40) && (
                       <button
                         className={`${activeStep === 1 ? "text-gray-500" : "text-blue-500"

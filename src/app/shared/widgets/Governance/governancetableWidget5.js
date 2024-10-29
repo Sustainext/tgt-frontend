@@ -29,14 +29,15 @@ const GovernancetableWidget5 = ({ id, options, value, required, onChange, schema
 
     return (
         <div style={{ maxHeight: "400px" }} className="mb-2">
-            <table id={id} className="rounded-md border border-gray-300 w-full">
+            <table id={id} className="rounded-md border border-gray-300  w-full" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
                 <thead className="gradient-background">
                     <tr>
                     {options.titles.map((item, idx) => (
                             <th
                                 key={idx}
                                 style={{ minWidth: "120px", textAlign: "left" }}
-                                className="text-[12px] border border-gray-300 px-2 py-2"
+                                className={` ${idx == 0 ? "" :"border-l" } border-gray-300 px-2 py-2 text-[12px]`} 
+                                
                             >
                                 <div className="flex items-center relative">
                                     <p>{item.title}</p>
@@ -54,7 +55,15 @@ const GovernancetableWidget5 = ({ id, options, value, required, onChange, schema
                                             id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
                                             place="top"
                                             effect="solid"
-                                            className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
+                                            style={{
+                                                width: "300px",
+                                                backgroundColor: "#000",
+                                                color: "white",
+                                                fontSize: "12px",
+                                                boxShadow: 3,
+                                                borderRadius: "8px",
+                                              }}
+                                     
                                         />
                                     </p>
                                 </div>
@@ -71,12 +80,14 @@ const GovernancetableWidget5 = ({ id, options, value, required, onChange, schema
                                 const isEnum = propertySchema && propertySchema.hasOwnProperty('enum');
 
                                 return (
-                                    <td key={cellIndex} className="border border-gray-300 p-3 text-center">
+                                    <td key={cellIndex}
+                                    className={` ${cellIndex == 0 ? "" :"border-l" } border-t  border-gray-300 p-3 text-center`} 
+                                    >
                                         {isEnum ? (
                                             <select
                                                 value={localValue[rowIndex][key]}
                                                 onChange={(e) => handleFieldChange(rowIndex, key, e.target.value)}
-                                                className="text-sm pl-2 py-2 w-full border-b"
+                                                className="text-[12px] pl-2 py-2 w-full border-b"
                                                 required={required}
                                             >
                                                 <option value="">Select</option>
@@ -90,7 +101,7 @@ const GovernancetableWidget5 = ({ id, options, value, required, onChange, schema
                                                 required={required}
                                                 value={localValue[rowIndex][key] || ""}
                                                 onChange={(e) => handleFieldChange(rowIndex, key, e.target.value)}
-                                                className="text-sm pl-2 py-2 w-full"
+                                                className="text-[12px] pl-2 py-2 w-full"
                                                 placeholder="Enter"
                                                 disabled={key === 'Specifylevel' && localValue[rowIndex]['Seniorlevel'] !== 'Yes'}
                                             />
@@ -98,7 +109,7 @@ const GovernancetableWidget5 = ({ id, options, value, required, onChange, schema
                                     </td>
                                 );
                             })}
-                            <td className="border border-gray-300 p-3">
+                            <td className=" border-t border-gray-300 p-3">
                                 <button onClick={() => formContext.onRemove(rowIndex)}>
                                     <MdOutlineDeleteOutline className="text-[23px] text-red-600" />
                                 </button>

@@ -59,7 +59,7 @@ const uiSchema = {
   },
 };
 
-const ResultsOfVotes = ({ selectedLocation, year }) => {
+const ResultsOfVotes = ({selectedOrg,selectedCorp, year }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -85,7 +85,8 @@ const ResultsOfVotes = ({ selectedLocation, year }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      location: selectedLocation,
+      organisation: selectedOrg,
+      corporate: selectedCorp,
       year,
     };
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -135,7 +136,7 @@ const ResultsOfVotes = ({ selectedLocation, year }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${selectedLocation}&year=${year}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&organisation=${selectedOrg}&corporate=${selectedCorp}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -149,7 +150,7 @@ const ResultsOfVotes = ({ selectedLocation, year }) => {
     }
   };
   useEffect(() => {
-    if (selectedLocation && year) {
+    if (selectedOrg && year) {
       loadFormData();
       toastShown.current = false;
     } else {
@@ -157,7 +158,7 @@ const ResultsOfVotes = ({ selectedLocation, year }) => {
         toastShown.current = true;
       }
     }
-  }, [selectedLocation, year]);
+  }, [selectedOrg, selectedCorp, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -167,16 +168,10 @@ const ResultsOfVotes = ({ selectedLocation, year }) => {
 
   return (
     <>
-      <div
-        className="mx-2 p-3 mb-6 pb-6 rounded-md"
-        style={{
-          boxShadow:
-            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
-        }}
-      >
+   <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Results of votes of stakeholders
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e25`}
@@ -221,14 +216,14 @@ const ResultsOfVotes = ({ selectedLocation, year }) => {
           />
         </div>
 
-        <div className="mb-6">
-          <button
+        <div className="mt-4">
+        <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedLocation || !year ? "cursor-not-allowed" : ""
+              !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedLocation || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

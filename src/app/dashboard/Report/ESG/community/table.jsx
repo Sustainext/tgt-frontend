@@ -1,85 +1,64 @@
 'use client';
 import { useState, useRef, useEffect } from "react";
 
-const CommunityTable = () => {
+const CommunityTable = ({data}) => {
   const col = [
     "",
     "Percentage of operations implemented by engaging local communities",
   ];
 
-  const data = [
-    {
-      0: [
-        {
-          "": "Social impact assessments",
-          "Percentage of operations implemented by engaging local communities": "data",
-        },
-        {
-          "": "Environmental impact assessments",
-          "Percentage of operations implemented by engaging local communities": "data",
-        },
-        {
-          "": "Public disclosure",
-          "Percentage of operations implemented by engaging local communities": "data",
-        },
-        {
-          "": "Community development programs",
-          "Percentage of operations implemented by engaging local communities": "data",
-        },
-        {
-          "": "Stakeholder engagement plans",
-          "Percentage of operations implemented by engaging local communities": "data",
-        },
-        {
-          "": "Local community consultation committes",
-          "Percentage of operations implemented by engaging local communities": "data",
-        },
-        {
-          "": "works councils, occupational health and safety committees",
-          "Percentage of operations implemented by engaging local communities": "data",
-        },
-        {
-          "": "Community grievance processes",
-          "Percentage of operations implemented by engaging local communities": "data",
-        },
-      ],
-    },
-  ];
+  
 
   return (
     <>
-      <div style={{ maxHeight: "450px", overflowY: "auto" }} className="mb-2">
+      <div style={{ maxHeight: "450px", overflowY: "auto" }} className="mb-2 table-scrollbar">
         <table className="w-full border border-gray-200 rounded-md overflow-hidden">
           <thead className="gradient-background">
+          <tr className="text-[12px] border border-gray-200">
+            <th colSpan={4} className="p-4 text-start text-gray-500">
+            Percentage of operations implemented by engaging local communities
+            </th>
+          </tr>
             <tr>
               {col.map((item, idx) => (
                 <th
                   key={idx}
-                  style={{ minWidth: "120px", textAlign: "center" }}
+                  style={{ minWidth: "120px", textAlign: "left" }}
                   className={`text-[12px] border-r px-4 py-4 ${
                     idx === 0 ? "rounded-tl-md" : "" // Top-left corner
                   } ${
                     idx === col.length - 1 ? "rounded-tr-md" : "" // Top-right corner
                   } text-gray-500`}
                 >
-                  <div className="flex justify-center items-center">
-                    <p className="flex items-center">{item}</p>
+                  <div className="flex">
+                    <p className="flex">{item}</p>
                   </div>
                 </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {data[0][0].map((row, rowIndex) => (
+            {data.length>0?data.map((row, rowIndex) => (
               <tr key={rowIndex} className="text-[13px]">
-                <td className="border-t border-r border-gray-200 p-4 text-center">
+                <td className="border-t border-r border-gray-200 p-4 text-left">
                   {row[""]}
                 </td>
                 <td className="border border-gray-200 p-4 text-center">
-                  {row["Percentage of operations implemented by engaging local communities"]}
+                  {row["Percentage of operations implemented by engaging local communities"]>0?row["Percentage of operations implemented by engaging local communities"]:"N/A"}
                 </td>
               </tr>
-            ))}
+            )):(
+              <tr className="text-[13px]">
+                <td className="border-t border-r border-gray-200 p-4 text-left">
+                  No data available
+                </td>
+                <td className="border border-gray-200 p-4 text-center">
+                No data available
+                </td>
+              </tr>
+            )
+            
+            }
           </tbody>
         </table>
       </div>

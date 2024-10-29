@@ -11,7 +11,7 @@ const HomeDashboard = () =>  {
           <div>
            <MyGoals/>
           </div>
-          <div className="col-start-1 row-start-2 rounded-lg shadow border border-gray-200 min-h-[46vh]">
+          <div className="col-start-1 row-start-2 rounded-lg  min-h-[46vh]">
             <MyTasks />
           </div>
         </div>

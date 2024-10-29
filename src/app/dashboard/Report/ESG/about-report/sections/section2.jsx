@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 
 
-const Section2=({section7_1_1Ref})=>{
+const Section2=({section7_1_1Ref,data})=>{
     const [content,setContent] = useState(
         `This ESG report, prepared in accordance with the Global Reporting Initiative (GRI) standards, provides a comprehensive overview of [Company Name]'s environmental, social, and governance (ESG) performance for the reporting period [Year]. It reflects our commitment to transparency, accountability, and continuous improvement in our sustainability practices. `
     )
@@ -15,6 +15,8 @@ const Section2=({section7_1_1Ref})=>{
 We are committed to providing regular updates on our ESG performance to ensure transparency and keep our 
 stakeholders informed of our progress.`
     )
+
+    
     return (
         <>
         <div>
@@ -22,7 +24,22 @@ stakeholders informed of our progress.`
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
                 7.1.1 Restatement of Information
         </h3>
-        <p className="mb-4 text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, alias amet? Aliquid sunt beatae quam eligendi nesciunt nam enim iure veniam, explicabo dicta! Vitae dolores dolorem assumenda magnam, quos iure?</p>
+        <p className="mb-4 text-sm">
+        {data && data["2-4-a"] 
+        ? (
+    typeof data["2-4-a"] === 'object' ? (
+      <>
+        {data["2-4-a"].Q1? data["2-4-a"].Q1:"No Data available"}
+        <br />
+        {data["2-4-a"].Q2? data["2-4-a"].Q2:""}
+      </>
+    ) : (
+      "No data available"
+    )
+  ) : (
+    "No data available"
+  )}
+  </p>
         </div>
         </div>
         </>

@@ -106,8 +106,8 @@ const AssignToWidget = ({ id, scope, location, year, month, data, countryCode,la
 
   return (
     <>
-    <div className={id.startsWith("root_0") ? "mb-8" : ""}>
-    <p className="text-[14px] text-neutral-950 font-[400] mb-1 hidden">
+    <div className={id.startsWith("root_0") ? "mb-[3rem]" : ""}>
+    <p className="text-[14px] h-[35px] text-neutral-950 font-[400] mb-1 hidden">
             {label}
       
           </p>

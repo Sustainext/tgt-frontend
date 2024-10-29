@@ -28,7 +28,7 @@ const CommoninputWidget = (props) => {
           <div className="relative flex">
             <div>
               <h2
-                className="flex text-[12px] text-gray-500 font-semibold"
+                className="flex text-[14px] text-neutral-950 font-[500]"
                 style={{ display: uiSchema["ui:titledisplay"] }}
               >
                 {uiSchema["ui:title"]}
@@ -42,7 +42,7 @@ const CommoninputWidget = (props) => {
                   "-"
                 )}`}
                 data-tooltip-html={uiSchema["ui:tooltip"]}
-                className="mt-1 ml-2 w-[20px] text-[12px] text-gray-500"
+                className="mt-1 ml-2 w-[20px] text-[14px] text-neutral-950"
                 style={{ display: uiSchema["ui:tooltipdisplay"] }}
               />
               <ReactTooltip

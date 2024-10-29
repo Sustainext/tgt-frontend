@@ -46,7 +46,7 @@ const BoardInfo = () => {
       <div className="flex flex-col justify-start overflow-x-hidden">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
-            <div className="text-left mb-4 ml-3 pt-5">
+           <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-sm">Governance</p>
               <div className="flex">
                          <div className="h-[29px]">
@@ -72,8 +72,8 @@ const BoardInfo = () => {
                 SDG 5
               </button>
               <button
-                className="text-[#fff] bg-pink-500 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("4")}
+                className="text-[#fff] bg-[#00558A] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                onClick={() => toggleDrawer("29")}
               >
                 SDG 16
               </button>
@@ -106,9 +106,11 @@ const BoardInfo = () => {
               ></ReactTooltip>
         </div>
         <div
-          className={`${
+           className={`${
             isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"
-          } fixed right-[51px] w-[340px] h-full bg-white rounded-md transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
+          }
+fixed right-[51px]  w-[340px] h-[93%] bg-white  rounded-md
+transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         >
           {data &&
             data.map((program, index) => (

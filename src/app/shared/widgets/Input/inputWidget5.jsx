@@ -58,7 +58,7 @@ const InputWidget5 = (props) => {
       <div className="mb-6">
         <div className="flex mb-2">
           <div className="relative">
-            <p className="text-[12px] text-gray-700 flex">
+            <p className="text-[14px] text-gray-700 font-[500] flex">
               {props.uiSchema["ui:title"]}
               <MdInfoOutline
                 data-tooltip-id={`tooltip-${props.uiSchema["ui:title"].replace(/\s+/g, "-")}`}
@@ -84,7 +84,7 @@ const InputWidget5 = (props) => {
         </div>
         <textarea
           placeholder="Enter data"
-          className="backdrop:before:w-[48rem] border appearance-none text-xs border-gray-400 text-neutral-600 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
+          className="backdrop:before:w-[48rem] border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full"
           value={value.Q1 || ""}
           onChange={handleChange}
           rows={4}
@@ -102,10 +102,11 @@ const InputWidget5 = (props) => {
                 <div
                   className="flex items-center text-center mt-2"
                 >
-                  <div className="truncate text-sky-600 text-[12px] flex text-center">
+                  <div className="truncate text-sky-600 text-[13px] flex text-center">
                     <MdFilePresent
                       className="w-6 h-6 mr-1 text-green-500"
-                    /> {value.fileName}
+                    /> 
+                    <p className='flex items-center'>{value.fileName}</p>
                   </div>
                 </div>
               </label>
@@ -115,7 +116,7 @@ const InputWidget5 = (props) => {
                   <MdOutlineFileUpload
                     className="w-6 h-6 mr-1 text-[#007EEF]"
                   />
-                  <div className="w-[150px] truncate text-[#007EEF] text-[12px] ml-1">
+                  <div className="w-[150px] truncate text-[#007EEF] text-[13px] ml-1">
                     Upload Documentation
                   </div>
                 </div>

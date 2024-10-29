@@ -139,7 +139,7 @@ const AnalyseCompulsorylabour = ({ isBoxOpen }) => {
   }, []);
 
   useEffect(() => {
-    const fetchCorporates = async () => {
+     const fetchCorporates = async () => {
       if (selectedOrg) {
         try {
           const response = await axiosInstance.get(`/corporate/`, {
@@ -147,7 +147,13 @@ const AnalyseCompulsorylabour = ({ isBoxOpen }) => {
           });
           setCorporates(response.data);
         } catch (e) {
-          console.error("Failed fetching corporates:", e);
+          if(e.status === 404) {
+            setCorporates([]);
+          }
+          else{
+            console.error("Failed fetching corporates:", e);
+          }
+          
         }
       }
     };
@@ -303,7 +309,7 @@ const AnalyseCompulsorylabour = ({ isBoxOpen }) => {
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[12px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal ml-1"
                   >
                     Select Corporate
                   </label>
@@ -328,7 +334,7 @@ const AnalyseCompulsorylabour = ({ isBoxOpen }) => {
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[12px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal ml-1"
                   >
                     Select Location
                   </label>

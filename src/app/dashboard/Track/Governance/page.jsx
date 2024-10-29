@@ -11,7 +11,7 @@ const PowerBIEmbed = dynamic(
 );
 
 const GovernanceTrack = ({ contentSize, dashboardData }) => {
-  const [activeTab, setActiveTab] = useState("zohoEmissions");
+  const [activeTab, setActiveTab] = useState("powerbiGovernance");
   const [powerBIToken, setPowerBIToken] = useState(null);
   const [models, setModels] = useState(null);
   const { width, height } = contentSize || { width: 800, height: 600 };
@@ -28,7 +28,7 @@ const GovernanceTrack = ({ contentSize, dashboardData }) => {
 };
 
   const tabs = [
-    { id: "governancePowerbi", label: "Governance (PowerBI)" },
+    { id: "powerbiGovernance", label: "Governance (PowerBI)" },
   ];
 
   useEffect(() => {
@@ -66,8 +66,10 @@ const GovernanceTrack = ({ contentSize, dashboardData }) => {
 
     let reportConfig;
     switch (tabId) {
-      case "governancePowerbi":
+      case "powerbiGovernance":
         reportConfig = dashboardData.find(item => item.governance)?.governance;
+        console.log('config for governance',reportConfig);
+        
         break;
       default:
         return null;

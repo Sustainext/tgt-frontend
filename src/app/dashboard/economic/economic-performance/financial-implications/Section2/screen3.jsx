@@ -160,7 +160,7 @@ const Screen3 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
             Report the opportunitites posed by climate change that have the potential to generate substantive changes in operations, revenue, or expenditure of the organisation including:
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e88`}

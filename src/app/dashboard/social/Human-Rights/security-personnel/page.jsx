@@ -5,12 +5,10 @@ import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
 import {Socialdata} from "../../data/socialgriinfo"
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
-import Socialheader from "../../socialheader"
+
 import Securitypersonnelscreen from "./security-personnel"
 const Securitypersonnel = () => {
-    const [activeMonth, setActiveMonth] = useState(1);
-    const [location, setLocation] = useState("");
-    const [year, setYear] = useState();
+
     const [data, setData] = useState();
     const [category, setCategory] = useState("");
     const [isOpen, setIsOpen] = useState(false);
@@ -40,11 +38,11 @@ const Securitypersonnel = () => {
             <div className="flex flex-col justify-start overflow-x-hidden ">
                 <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
                     <div className='w-full'>
-                        <div className="text-left mb-4 ml-3 pt-5">
+                       <div className="text-left mb-2 ml-3 pt-5">
                             <p className="text-[11px]">Social</p>
                             <div className='flex'>
                                 <div>
-                                    <p className="gradient-text text-[22px] font-bold pt-1">
+                                   <p className="gradient-text text-[22px] font-bold py-2">
                                     Security Practices 2016
                                     </p>
                                 </div>
@@ -53,7 +51,7 @@ const Securitypersonnel = () => {
 
                         </div>
                     </div>
-                    <div className='w-full float-end '>
+                 <div className="w-full float-end pt-5 me-1">
                         <div className="flex float-end border-l">
                             <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('19')}>GRI 410 - 1</button>
                             <button className="text-[#fff] bg-blue-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('20')}>SDG 16</button>
@@ -82,7 +80,7 @@ const Securitypersonnel = () => {
                     </h6>
                 </div>
                 <div className={`${isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"}
-fixed right-[51px]  w-[340px] h-full bg-white  rounded-md
+fixed right-[51px]  w-[340px] h-[93%] bg-white  rounded-md
 transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
 
                     {data && data.map((program) => (
@@ -103,14 +101,8 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
 
                 </div>
             </div>
-            <Socialheader
-            activeMonth={activeMonth}
-            setActiveMonth={setActiveMonth}
-            location={location}
-            setLocation={setLocation}
-            year={year}
-            setYear={setYear} />
-            <Securitypersonnelscreen location={location} year={year} month={activeMonth}/>
+       
+            <Securitypersonnelscreen/>
 
         </>
     );

@@ -242,16 +242,10 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
 
   return (
     <>
-      <div
-        className="mx-2 p-3 mb-6 pb-6 rounded-md"
-        style={{
-          boxShadow:
-            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
-        }}
-      >
-        <div className="mb-4 flex">
+   <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+        <div className=" flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500] mb-2">
               Value Chain
               <MdInfoOutline
                 data-tooltip-id={`tooltip-144`}
@@ -279,7 +273,7 @@ organization & their activities  "
                 }}
               ></ReactTooltip>
             </h2>
-            <p className="flex mx-2 text-[13px] text-gray-500 font-semibold mb-2">
+            <p className="flex mx-2 text-[13px] text-gray-700 font-[500] mb-2">
               Please describe the organization's value chain -
               <MdInfoOutline
                 data-tooltip-id={`tooltip-145`}
@@ -315,7 +309,7 @@ markets served, supply chain and entities downstream from the organization & the
           </div>
         </div>
 
-        <div className="mx-2 mb-3">
+        <div className="mx-2">
           <Form
             schema={r_schema}
             uiSchema={r_ui_schema}
@@ -326,7 +320,7 @@ markets served, supply chain and entities downstream from the organization & the
           />
         </div>
 
-        <div className="mb-6">
+        <div className="mt-4">
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${

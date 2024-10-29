@@ -112,7 +112,7 @@ const EnvironmentHeader = ({
             </div>
             <div>
               {locationMessage && (
-                <p className="text-red-500 ml-2 text-[12px]">{locationMessage}</p>
+                   <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-1">{locationMessage}</p>
               )}
             </div>
           </div>
@@ -140,7 +140,7 @@ const EnvironmentHeader = ({
             </div>
             <div>
               {yearMessage && (
-                <p className="text-red-500 ml-5 text-[12px]">{yearMessage}</p>
+                  <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-1 ml-3">{yearMessage}</p>
               )}
             </div>
           </div>

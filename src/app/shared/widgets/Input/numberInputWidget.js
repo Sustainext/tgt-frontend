@@ -15,7 +15,7 @@ const InputWidget2 = ({ onChange, value = "", uiSchema = {} }) => {
       <div className="mb-6">
         <div className="flex mb-2">
           <div className="relative">
-            <p className="text-[12px] text-gray-700 flex">
+            <p className="text-[14px] text-gray-700 flex">
               {uiSchema["ui:title"]}
               {uiSchema["ui:tooltip"] && (
                 <>
@@ -47,7 +47,7 @@ const InputWidget2 = ({ onChange, value = "", uiSchema = {} }) => {
         {inputType === 'text' ? (
           <textarea
             placeholder="Enter data"
-            className="border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 w-full"
+            className="border appearance-none text-[12px] py-4 border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 w-full"
             value={value}
             onChange={handleChange}
             rows={4}
@@ -56,7 +56,7 @@ const InputWidget2 = ({ onChange, value = "", uiSchema = {} }) => {
           <input
             type={inputType}
             placeholder="Enter data"
-            className="border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 w-full"
+            className="border appearance-none text-[12px] py-4 border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 w-full"
             value={value}
             onChange={handleChange}
           />

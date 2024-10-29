@@ -2,8 +2,9 @@
 import { useState, useRef, useEffect } from "react";
 
 
-const HighestGovernanceTable=()=>{
+const HighestGovernanceTable=({tableData})=>{
 
+    const data=tableData["2_9_c"]?[tableData["2_9_c"]]:[]
     const col=[
         "Name",
         "Executive power",
@@ -18,17 +19,17 @@ const HighestGovernanceTable=()=>{
         "Stakeholder representation "
     ]
     const values=[
-        "Name",
-        "Executive power",
-        "Independence",
-        "Tenure on the governance body",
-        "Number of significant positions",
-        "Commitments held by member",
-        "The nature of  commitments",
-        "Gender",
-        "Under-represented social groups",
-        "Competencies relevant to the impacts of the organization",
-        "Stakeholder representation "
+        "name",
+        "executivePower",
+        "independence",
+        "tenure",
+        "significantPositions",
+        "commitmentsHeld",
+        "natureOfCommitments",
+        "gender",
+        "underRepresentedGroups",
+        "competencies",
+        "stakeholderRepresentation"
     ]
     return (
         <>
@@ -40,7 +41,7 @@ const HighestGovernanceTable=()=>{
             minWidth: "100%",
             width: "40vw",
           }}
-          className="mb-2"
+          className="mb-2 table-scrollbar"
        >
     <table className="w-full border border-gray-200 rounded-md">
         <thead className="gradient-background">
@@ -65,13 +66,40 @@ const HighestGovernanceTable=()=>{
             </tr>
         </thead>
         <tbody>
-            <tr className="text-[13px]">
-                {values.map((val)=>(
-                     <td className="border border-gray-200 p-4 rounded-bl-md text-center">Data</td>
-                ))}
+            
+            {data.length>0?
+            data.map((row, rowIndex) => (
+              <tr key={rowIndex} className="text-[13px]">
+                <td className="border border-gray-200 p-4 text-center">{row.name}</td>
+                <td className="border border-gray-200 p-4 text-center">{row.executivePower}</td>
+                <td className="border border-gray-200 p-4 text-center">{row.independence}</td>
+                <td className="border border-gray-200 p-4 text-center">{row.tenure}</td>
+                <td className="border border-gray-200 p-4 text-center">{row.significantPositions}</td>
+                <td className="border border-gray-200 p-4 text-center">{row.commitmentsHeld}</td>
+                <td className="border border-gray-200 p-4 text-center">{row.natureOfCommitments}</td>
+                <td className="border border-gray-200 p-4 text-center">{row.gender}</td>
+                <td className="border border-gray-200 p-4 text-center">{row.underRepresentedGroups}</td>
+                <td className="border border-gray-200 p-4 text-center">{row.competencies}</td>
+                <td className="border border-gray-200 p-4 text-center">{row.stakeholderRepresentation}</td>
+              </tr>
+            )):(
+                <tr className="text-[13px]">
+                <td className="border border-gray-200 p-4 text-center">No data available</td>
+                <td className="border border-gray-200 p-4 text-center">No data available</td>
+                <td className="border border-gray-200 p-4 text-center">No data available</td>
+                <td className="border border-gray-200 p-4 text-center">No data available</td>
+                <td className="border border-gray-200 p-4 text-center">No data available</td>
+                <td className="border border-gray-200 p-4 text-center">No data available</td>
+                <td className="border border-gray-200 p-4 text-center">No data available</td>
+                <td className="border border-gray-200 p-4 text-center">No data available</td>
+                <td className="border border-gray-200 p-4 text-center">No data available</td>
+                <td className="border border-gray-200 p-4 text-center">No data available</td>
+                <td className="border border-gray-200 p-4 text-center">No data available</td>
+              </tr>
+            )}
                 
                 
-            </tr>
+           
            
         </tbody>
     </table>

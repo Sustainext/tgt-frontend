@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 
 
-const RatioTable=({col,values})=>{
+const RatioTable=({col,values,tableData})=>{
 
     
     return (
@@ -31,11 +31,21 @@ const RatioTable=({col,values})=>{
             </tr>
         </thead>
         <tbody>
-            <tr className="text-[13px]">
-                {values.map((val)=>(
-                    <td className="border border-gray-200 p-4 rounded-bl-md text-left">Data</td>
-                ))}
-            </tr>
+        <tr className="text-[13px]">
+        {/* Loop through the values from the data object */}
+        {tableData?.map((item, index) => (
+            <td key={index} className="border border-gray-200 p-4 text-left">
+                {item}
+            </td>
+        ))}
+
+        {/* Loop through the 'values' array to render its items */}
+        {values && values?.map((val, index) => (
+            <td key={index} className="border border-gray-200 p-4 rounded-bl-md text-left">
+                {val}
+            </td>
+        ))}
+    </tr>
            
         </tbody>
     </table>

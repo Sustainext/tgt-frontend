@@ -90,7 +90,7 @@ const CheckboxWidget2 = ({
           </button>
         )}
       </div>
-      <div className={`p-2 mx-1 mt-2 green-checkbox ${uiSchema['ui:section']} w-[55%]`}>
+      <div className={`p-2 mx-1 mt-2 ${uiSchema['ui:section']} w-[55%]`}>
         {options.enumOptions.map((option, index) => (
           <label key={index} className="flex items-center gap-2 text-sm mb-4 cursor-pointer">
             <input
@@ -100,7 +100,7 @@ const CheckboxWidget2 = ({
               checked={selectedValues.includes(option.value.label)} // Check if the value is in the array
               autoFocus={autofocus && index === 0}
               onChange={handleChange}
-              className="form-checkbox h-3 w-3"
+              className="form-checkbox h-3 w-3 accent-[#008000]"
             />
             {option.value.value}
           </label>

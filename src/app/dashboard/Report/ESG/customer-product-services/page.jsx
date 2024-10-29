@@ -1,5 +1,5 @@
 'use client'
-import { useState, useRef, useEffect } from "react";
+import {forwardRef, useImperativeHandle, useState, useRef, useEffect } from "react";
 import Section1 from "./sections/section1";
 import Section2 from "./sections/section2";
 import Section3 from "./sections/section3";
@@ -9,8 +9,17 @@ import Section6 from "./sections/section6";
 import Section7 from "./sections/section7";
 import Section8 from "./sections/section8";
 import Section9 from "./sections/section9";
+import axiosInstance,{patch} from "../../../../utils/axiosMiddleware";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from "react-redux";
+import { Oval } from "react-loader-spinner";
+import {setCommitmentStatement,
+  setProductInfo,
+  setMarketingPractices,
+  setConclusion,} from "../../../../../lib/redux/features/ESGSlice/screen15Slice"
 
-const CustomerProductService=()=>{
+const CustomerProductService=forwardRef(({ onSubmitSuccess }, ref) => {
     
     const [activeSection, setActiveSection] = useState('section15_1');
 
@@ -42,6 +51,127 @@ const scrollToSection = (sectionRef, sectionId) => {
     });
   };
   
+  const orgName = typeof window !== "undefined" ? localStorage.getItem("reportorgname") : "";
+  const reportid = typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+  const apiCalledRef = useRef(false);
+  const [data,setData]=useState("")
+  const [loopen, setLoOpen] = useState(false);
+  const commitment_statement = useSelector((state) => state.screen15Slice.commitment_statement);
+  const product_info_labelling = useSelector((state) => state.screen15Slice.product_info_labelling);
+  const marketing_practices = useSelector((state) => state.screen15Slice.marketing_practices);
+  const conclusion = useSelector((state) => state.screen15Slice.conclusion);
+
+  const dispatch = useDispatch()
+
+  useImperativeHandle(ref, () => ({
+      submitForm,
+    }));
+
+  const LoaderOpen = () => {
+      setLoOpen(true);
+    };
+  
+    const LoaderClose = () => {
+      setLoOpen(false);
+    };
+  const submitForm = async (type) => {
+      LoaderOpen();
+      const data={
+       "commitment_statement": commitment_statement ,
+    "product_info_labelling": product_info_labelling,
+    "marketing_practices": marketing_practices,
+    "conclusion": conclusion
+      }
+  
+      const url = `${process.env.BACKEND_API_URL}/esg_report/screen_fifteen/${reportid}/`;
+      try {
+          const response = await axiosInstance.put(url, data);
+  
+          if (response.status === 200) {
+              if(type=='last'){
+                  toast.success("Data added successfully", {
+                      position: "top-right",
+                      autoClose: 3000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "light",
+                  });
+              }
+             
+              if (onSubmitSuccess) {
+                  onSubmitSuccess(true); // Notify the parent of successful submission
+              }
+              LoaderClose();
+              return true; 
+          
+          } else {
+              toast.error("Oops, something went wrong", {
+                  position: "top-right",
+                  autoClose: 1000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "colored",
+              });
+              LoaderClose();
+              return false; 
+             
+          }
+      } catch (error) {
+        LoaderClose();
+          toast.error("Oops, something went wrong", {
+              position: "top-right",
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+          });
+          return false; // Indicate failure
+      }
+  };
+  
+  const loadFormData = async () => {
+      LoaderOpen();
+      dispatch(setCommitmentStatement(''));
+      dispatch(setProductInfo(''));
+      dispatch(setMarketingPractices(''));
+      dispatch(setConclusion(''));
+      const url = `${process.env.BACKEND_API_URL}/esg_report/screen_fifteen/${reportid}/`;
+      try {
+          const response = await axiosInstance.get(url);
+          if(response.data){
+            setData(response.data)
+            dispatch(setCommitmentStatement(response.data.commitment_statement));
+          dispatch(setProductInfo(response.data.product_info_labelling));
+          dispatch(setMarketingPractices(response.data.marketing_practices));
+          dispatch(setConclusion(response.data.conclusion));
+          }
+          
+          LoaderClose();
+      
+      } catch (error) {
+          console.error('API call failed:', error);
+          LoaderClose();
+      }
+  };
+  
+  useEffect(() => {
+    // Ensure API is only called once
+    if (!apiCalledRef.current && reportid) {
+        apiCalledRef.current = true;  // Set the flag to true to prevent future calls
+        loadFormData();  // Call the API only once
+    }
+  }, [reportid]);
+  
+ 
 
     return (
         <>
@@ -51,15 +181,15 @@ const scrollToSection = (sectionRef, sectionId) => {
             </h3>
             <div className="flex gap-4">
             <div className="w-[80%]">
-            <Section1 section15_1Ref={section15_1Ref} />
-            <Section2 section15_1_1Ref={section15_1_1Ref} />
-            <Section3 section15_1_2Ref={section15_1_2Ref} />
-            <Section4 section15_1_3Ref={section15_1_3Ref} />
-            <Section5 section15_2Ref={section15_2Ref} />
-            <Section6 section15_2_1Ref={section15_2_1Ref} />
-            <Section7 section15_2_2Ref={section15_2_2Ref} />
-            <Section8 section15_3Ref={section15_3Ref} />
-            <Section9 section15_3_1Ref={section15_3_1Ref} />
+            <Section1 section15_1Ref={section15_1Ref} data={data} />
+            <Section2 section15_1_1Ref={section15_1_1Ref} data={data} />
+            <Section3 section15_1_2Ref={section15_1_2Ref} data={data} />
+            <Section4 section15_1_3Ref={section15_1_3Ref} data={data} />
+            <Section5 section15_2Ref={section15_2Ref} data={data} />
+            <Section6 section15_2_1Ref={section15_2_1Ref} data={data} />
+            <Section7 section15_2_2Ref={section15_2_2Ref} data={data} />
+            <Section8 section15_3Ref={section15_3Ref} data={data} />
+            <Section9 section15_3_1Ref={section15_3_1Ref} orgName={orgName} />
         
         
 
@@ -69,7 +199,7 @@ const scrollToSection = (sectionRef, sectionId) => {
            
 
 <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[550px] top-36 sticky mt-2 w-[20%]">
-            <p className="text-[11px] text-[#727272] mb-2 uppercase">Customers, products & services </p>
+            <p className="text-[11px] text-[#727272] mb-2 uppercase">15. Customers, products & services </p>
             <p
               className={`text-[12px] mb-2 cursor-pointer ${
                 activeSection === 'section15_1' ? 'text-blue-400' : ''
@@ -111,7 +241,7 @@ const scrollToSection = (sectionRef, sectionId) => {
               15.2. Product and service information and labelling
             </p>
             <p
-              className={`text-[12px] mb-2 ml-2 cursor-pointer ${
+              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === 'section15_2_1' ? 'text-blue-400' : ''
               }`}
               onClick={() => scrollToSection(section15_2_1Ref, 'section15_2_1')}
@@ -119,7 +249,7 @@ const scrollToSection = (sectionRef, sectionId) => {
               15.2.1. Management of material topic
             </p>
             <p
-              className={`text-[12px] mb-2 ml-2 cursor-pointer ${
+              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === 'section15_2_2' ? 'text-blue-400' : ''
               }`}
               onClick={() => scrollToSection(section15_2_2Ref, 'section15_2_2')}
@@ -135,7 +265,7 @@ const scrollToSection = (sectionRef, sectionId) => {
               15.3. Customers 
             </p>
             <p
-              className={`text-[12px] mb-2 ml-2 cursor-pointer ${
+              className={`text-[11px] mb-2 ml-2 cursor-pointer ${
                 activeSection === 'section15_3_1' ? 'text-blue-400' : ''
               }`}
               onClick={() => scrollToSection(section15_3_1Ref, 'section15_3_1')}
@@ -148,8 +278,20 @@ const scrollToSection = (sectionRef, sectionId) => {
            
            
         </div>
+        {loopen && (
+          <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+            <Oval
+              height={50}
+              width={50}
+              color="#00BFFF"
+              secondaryColor="#f3f3f3"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
+          </div>
+        )}
         </>
     )
-}
+})
 
 export default CustomerProductService

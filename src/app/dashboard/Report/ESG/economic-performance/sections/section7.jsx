@@ -1,22 +1,45 @@
-'use client'
+"use client";
 import { useState, useRef, useEffect } from "react";
+import { useSelector } from "react-redux";
 
+const Section7 = ({ section11_2_2Ref}) => {
+  const data = useSelector((state) => state.screen11Slice.getdata);
 
-const Section7=({section11_2_2Ref})=>{
-    const [content,setContent] = useState(
-        ` Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, ipsum. In fugit cum, vitae sit amet veniam recusandae praesentium expedita dicta. Quidem, corporis atque nihil ipsa labore beatae accusamus deleniti?`
-    )
-  
-    return (
-        <>
-        <div id="section11_2_2" ref={section11_2_2Ref} >
+  return (
+    <>
+      <div id="section11_2_2" ref={section11_2_2Ref}>
         <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-        11.2.2 Indirect Economic impacts
-</h3>
-       <p className="text-sm mb-4">{content}</p>
-        </div>
-        </>
-    )
-}
+          11.2.2 Indirect Economic Impacts
+        </h3>
 
-export default Section7
+        {/* Mapping over 203_2a */}
+        {data["203_2a"]?.length>0?data["203_2a"].map((item, index) => (
+          <p key={`203_2a_${index}`} className="text-sm mb-4">
+            {item.Q1 || "No data available"}
+          </p>
+        )):(
+          <p className="text-sm mb-4">
+            No data available
+          </p>
+        )
+      }
+
+        {/* Mapping over 203_2b */}
+        {data["203_2b"]?.length>0?data["203_2b"].map((item, index) => (
+          <p key={`203_2b_${index}`} className="text-sm mb-4">
+            {item.Q1 || "No data available"}
+          </p>
+        ))
+        :(
+          <p className="text-sm mb-4">
+            No data available
+          </p>
+        )
+        
+        }
+      </div>
+    </>
+  );
+};
+
+export default Section7;

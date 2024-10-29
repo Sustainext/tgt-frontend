@@ -41,7 +41,7 @@ const MaterialityTableWidget = ({ id, options, value, required, onChange, schema
                                 style={{ minWidth: "120px", textAlign: "center" }}
                                 className="text-[12px] border-r px-4 py-4 rounded-md"
                             >
-                                <div className="flex justify-center items-center text-gray-500">
+                                <div className="relative flex justify-center items-center text-gray-500">
                                     <p className="flex items-center">
                                         {item.title}
                                         <MdInfoOutline

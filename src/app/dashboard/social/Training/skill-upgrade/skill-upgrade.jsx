@@ -12,7 +12,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
-import axiosInstance from '@/app/utils/axiosMiddleware'
+import axiosInstance from "@/app/utils/axiosMiddleware";
 
 const widgets = {
   inputWidget: inputWidget2,
@@ -225,7 +225,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year, month }) => {
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [selectedOrg, year, month,selectedCorp]);
+  }, [selectedOrg, year, month, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -236,7 +236,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year, month }) => {
   return (
     <>
       <div
-        className="mx-2  p-3 mb-6 pb-6 rounded-md"
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
@@ -244,7 +244,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Programs for upgrading employee skills
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
@@ -269,18 +269,17 @@ provided to upgrade employee skills."
               ></ReactTooltip>
             </h2>
           </div>
-
-          <div className={`${open ? "w-[20%]" : "w-[20%]"}`}>
-            <div className={`flex float-end`}>
-              <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 ">
-                <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                  GRI 403-9c
-                </p>
+          <div className="w-[20%]">
+            <div className="float-end ">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex mx-2">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 404-2a
+                </div>
               </div>
-              <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2">
-                <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
-                  GRI 403-9d
-                </p>
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                  GRI 404-2b
+                </div>
               </div>
             </div>
           </div>
@@ -295,9 +294,12 @@ provided to upgrade employee skills."
             widgets={widgets}
           />
         </div>
-        <div className="mb-6">
-        <button type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year || !month ? "cursor-not-allowed" : ""}`}
+        <div className="mt-4">
+          <button
+            type="button"
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              !selectedOrg || !year || !month ? "cursor-not-allowed" : ""
+            }`}
             onClick={handleSubmit}
             disabled={!selectedOrg || !year || !month}
           >

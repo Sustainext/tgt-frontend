@@ -1,16 +1,121 @@
 'use client'
-import { useState, useRef, useEffect } from "react";
+import {forwardRef, useImperativeHandle, useState, useRef, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Oval } from 'react-loader-spinner';
 import { MdDownload, MdDelete, MdKeyboardArrowDown, MdFileDownload } from "react-icons/md";
 import axiosInstance,{patch} from "../../../../utils/axiosMiddleware";
 import Link from 'next/link'
 import { GlobalState } from "@/Context/page";
+import { useDispatch, useSelector } from "react-redux";
+import { Oval } from "react-loader-spinner";
+import {setdescription} from "../../../../../lib/redux/features/ESGSlice/screen4Slice"
 
 import Screen1 from './sections/section1'
 
-const SustainibilityRoadmap=()=>{
+const SustainibilityRoadmap=forwardRef(({ onSubmitSuccess }, ref) =>{
+
+    const reportid = typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+    const apiCalledRef = useRef(false);
+    const [loopen, setLoOpen] = useState(false);
+    const description = useSelector((state) => state.screen4Slice.description);
+    const dispatch = useDispatch()
+    useImperativeHandle(ref, () => ({
+        submitForm,
+      }));
+
+    const LoaderOpen = () => {
+        setLoOpen(true);
+      };
+    
+      const LoaderClose = () => {
+        setLoOpen(false);
+      };
+    const submitForm = async (type) => {
+        LoaderOpen();
+        const data={
+          "description":description,
+        }
+    
+        const url = `${process.env.BACKEND_API_URL}/esg_report/screen_four/${reportid}/`;
+        try {
+            const response = await axiosInstance.put(url, data);
+    
+            if (response.status === 200) {
+                if(type=='next'){
+                    toast.success("Data added successfully", {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                }
+               
+                if (onSubmitSuccess) {
+                    onSubmitSuccess(true); // Notify the parent of successful submission
+                }
+                LoaderClose();
+                return true; 
+            
+            } else {
+                toast.error("Oops, something went wrong", {
+                    position: "top-right",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+                LoaderClose();
+                return false; 
+               
+            }
+        } catch (error) {
+          LoaderClose();
+            toast.error("Oops, something went wrong", {
+                position: "top-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+            return false; // Indicate failure
+        }
+    };
+    
+    const loadFormData = async () => {
+        LoaderOpen();
+        dispatch(setdescription(''));
+        const url = `${process.env.BACKEND_API_URL}/esg_report/screen_four/${reportid}/`;
+        try {
+            const response = await axiosInstance.get(url);
+            if(response.data){
+              dispatch(setdescription(response.data.description));
+            }
+            
+            LoaderClose();
+        
+        } catch (error) {
+            console.error('API call failed:', error);
+            LoaderClose();
+        }
+    };
+    
+    useEffect(() => {
+      // Ensure API is only called once
+      if (!apiCalledRef.current && reportid) {
+          apiCalledRef.current = true;  // Set the flag to true to prevent future calls
+          loadFormData();  // Call the API only once
+      }
+    }, [reportid]);
     return (
         <>
         <div className="mx-2 p-2">
@@ -24,7 +129,7 @@ const SustainibilityRoadmap=()=>{
             {/* page sidebar */}
             <div className="p-4 border border-r-2 border-b-2 shadow-lg rounded-lg h-[500px] top-36 sticky  w-[20%]">
                 <p className="text-[11px] text-[#727272] mb-2 uppercase">
-               Sustainability Roadmap  
+               4. Sustainability Roadmap  
                 </p>
                 <p className="text-[12px] text-blue-400 mb-2">
               1. Sustainability Roadmap  
@@ -34,8 +139,21 @@ const SustainibilityRoadmap=()=>{
            
            
         </div>
+       
+        {loopen && (
+          <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+            <Oval
+              height={50}
+              width={50}
+              color="#00BFFF"
+              secondaryColor="#f3f3f3"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
+          </div>
+        )}
         </>
     )
-}
+})
 
 export default SustainibilityRoadmap

@@ -33,11 +33,13 @@ const schema = {
       },
       Q2: {
         type: "string",
-        title: "Total number of Incidents of non-compliance with regulations resulting in a warning",
+        title:
+          "Total number of Incidents of non-compliance with regulations resulting in a warning",
       },
       Q3: {
         type: "string",
-        title: "Total number of Incidents of non-compliance with voluntary codes",
+        title:
+          "Total number of Incidents of non-compliance with voluntary codes",
       },
     },
   },
@@ -45,7 +47,7 @@ const schema = {
 
 const uiSchema = {
   items: {
-    "ui:order": ["Q1", "Q2","Q3"],
+    "ui:order": ["Q1", "Q2", "Q3"],
 
     Q1: {
       "ui:title":
@@ -60,8 +62,10 @@ const uiSchema = {
       },
     },
     Q2: {
-      "ui:title": "Total number of Incidents of non-compliance with regulations resulting in a warning",
-      "ui:tooltip": "Mention the total number of Incidents of non-compliance with regulations resulting in a warning",
+      "ui:title":
+        "Total number of Incidents of non-compliance with regulations resulting in a warning",
+      "ui:tooltip":
+        "Mention the total number of Incidents of non-compliance with regulations resulting in a warning",
       "ui:tooltipdisplay": "block",
       "ui:widget": "inputWidget",
       "ui:horizontal": true,
@@ -70,15 +74,17 @@ const uiSchema = {
       },
     },
     Q3: {
-        "ui:title": "Total number of Incidents of non-compliance with voluntary codes",
-        "ui:tooltip": "Specify the total number of Incidents of non-compliance with voluntary codes.	",
-        "ui:tooltipdisplay": "block",
-        "ui:widget": "inputWidget",
-        "ui:horizontal": true,
-        "ui:options": {
-          label: false,
-        },
+      "ui:title":
+        "Total number of Incidents of non-compliance with voluntary codes",
+      "ui:tooltip":
+        "Specify the total number of Incidents of non-compliance with voluntary codes.	",
+      "ui:tooltipdisplay": "block",
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
+    },
     "ui:options": {
       orderable: false, // Prevent reordering of items
       addable: false, // Prevent adding items from UI
@@ -113,7 +119,8 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      location,
+      corporate: selectedCorp,
+      organisation: selectedOrg,
       year,
       month,
     };
@@ -168,7 +175,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&month=${month}&year=${year}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}&month=${month}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -182,18 +189,16 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
     }
   };
 
-  // fetch backend and replace initialized forms
   useEffect(() => {
-    if (location && year && month) {
+    if (selectedOrg && year && month) {
       loadFormData();
-      toastShown.current = false; // Reset the flag when valid data is present
+      toastShown.current = false;
     } else {
-      // Only show the toast if it has not been shown already
       if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
+        toastShown.current = true;
       }
     }
-  }, [location, year,month]);
+  }, [selectedOrg, year, selectedCorp, month]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -204,7 +209,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
   return (
     <>
       <div
-        className="mx-2 mt-2  p-3 mb-6 pb-6 rounded-md"
+        className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md "
         style={{
           boxShadow:
             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
@@ -212,8 +217,9 @@ const Screen1 = ({ selectedOrg, selectedCorp, location, year, month }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
-            Incidents of non-compliance: product and service information and labeling
+            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+              Incidents of non-compliance: product and service information and
+              labeling
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
                 data-tooltip-content="This section documents the data corresponding to the
@@ -237,13 +243,12 @@ concerning product and service information and labeling."
               ></ReactTooltip>
             </h2>
           </div>
-
-          <div className={`${open ? "w-[20%]" : "w-[20%]"}`}>
-            <div className={`flex float-end`}>
-              <div className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2 ">
-                <p className="text-[#395f81] text-[10px] inline-block align-middle px-2 font-semibold">
+          <div className="w-[20%]">
+            <div className="float-end">
+              <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                   GRI 417-2a
-                </p>
+                </div>
               </div>
             </div>
           </div>
@@ -258,14 +263,14 @@ concerning product and service information and labeling."
             widgets={widgets}
           />
         </div>
-        <div className="mb-6">
+        <div className="mt-4">
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !location || !year ? "cursor-not-allowed" : ""
+              !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            disabled={!location || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

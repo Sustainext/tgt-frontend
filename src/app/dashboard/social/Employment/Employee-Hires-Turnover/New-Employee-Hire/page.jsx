@@ -55,16 +55,16 @@ const tabs = [
   },
 ];
 
-const NewEmployeeHire = ({ location, year, month, activeMonth }) => {
+const NewEmployeeHire = ({ selectedOrg, selectedCorp, year, month }) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
-  const fullName = convertShortNameToFullName(activeMonth);
+  const fullName = convertShortNameToFullName(month);
   console.log("Full month name:", fullName);
   return (
     <>
       <div className="mb-10">
         <div className="mb-4 flex mx-2 ">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] font-bold">
+            <h2 className="flex ml-1 text-[15px] font-bold">
               New Employee Hire
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
@@ -88,7 +88,7 @@ const NewEmployeeHire = ({ location, year, month, activeMonth }) => {
             </h2>
           </div>
         </div>
-        <div className="shadow-md rounded-md">
+        <div className="shadow-md rounded-md mx-2">
           {/* Tabs */}
           <ul className="flex justify-evenly cursor-pointer">
             {tabs.map((tab, index) => (
@@ -135,9 +135,10 @@ const NewEmployeeHire = ({ location, year, month, activeMonth }) => {
               <div>
                 <Tab1
                   fullName={fullName}
-                  location={location}
                   year={year}
                   month={month}
+                  selectedCorp={selectedCorp}
+                  selectedOrg={selectedOrg}
                 />
               </div>
             )}
@@ -145,9 +146,10 @@ const NewEmployeeHire = ({ location, year, month, activeMonth }) => {
               <div>
                 <Tab2
                   fullName={fullName}
-                  location={location}
                   year={year}
                   month={month}
+                  selectedCorp={selectedCorp}
+                  selectedOrg={selectedOrg}
                 />{" "}
               </div>
             )}
@@ -156,9 +158,10 @@ const NewEmployeeHire = ({ location, year, month, activeMonth }) => {
                 {" "}
                 <Tab3
                   fullName={fullName}
-                  location={location}
                   year={year}
                   month={month}
+                  selectedCorp={selectedCorp}
+                  selectedOrg={selectedOrg}
                 />{" "}
               </div>
             )}
@@ -167,9 +170,10 @@ const NewEmployeeHire = ({ location, year, month, activeMonth }) => {
                 {" "}
                 <Tab4
                   fullName={fullName}
-                  location={location}
                   year={year}
                   month={month}
+                  selectedCorp={selectedCorp}
+                  selectedOrg={selectedOrg}
                 />{" "}
               </div>
             )}
@@ -178,9 +182,10 @@ const NewEmployeeHire = ({ location, year, month, activeMonth }) => {
                 {" "}
                 <Tab5
                   fullName={fullName}
-                  location={location}
                   year={year}
                   month={month}
+                  selectedCorp={selectedCorp}
+                  selectedOrg={selectedOrg}
                 />{" "}
               </div>
             )}

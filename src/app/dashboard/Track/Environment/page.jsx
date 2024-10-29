@@ -1,8 +1,7 @@
-"use client";
-import React, { useState, useEffect } from "react";
+'use client'
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { GiPublicSpeaker } from "react-icons/gi";
-// import { PowerBIEmbed } from "powerbi-client-react";
-// import { models } from "powerbi-client";
+import { MdRefresh } from "react-icons/md";
 import axiosInstance from '../../../utils/axiosMiddleware';
 import dynamic from 'next/dynamic'
 import { loadFromLocalStorage } from "@/app/utils/storage";
@@ -17,17 +16,23 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
   const [powerBIToken, setPowerBIToken] = useState(null);
   const [models, setModels] = useState(null);
   const { width, height } = contentSize || { width: 800, height: 600 };
-  // const [filter, setFilter] = useState()
+  const iframeRef = useRef(null);
+  const [countdown, setCountdown] = useState(90);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [supersetUrl, setSupersetUrl] = useState("");
+
+  const POWERBI_REFRESH_INTERVAL = 15000;
+  const SUPERSET_REFRESH_INTERVAL = 90000;
+
   const filter = {
     $schema: "http://powerbi.com/product/schema#basic",
     target: {
-        table: "Client_Info",
-        column: "uuid"
+      table: "Client_Info",
+      column: "uuid"
     },
     operator: "In",
     values: [loadFromLocalStorage('client_key')]
-    // values: ["8d44f5f4-8e58-4032-aa0a-4ff022288f7c"]
-};
+  };
 
   const tabs = [
     { id: "zohoEmissions", label: "Emissions (Zoho)" },
@@ -35,8 +40,8 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
     { id: "superSetEmissions", label: "Emissions (Superset)" },
     { id: "powerbiEnergy", label: "Energy (PowerBI)" },
     { id: "powerbiWaste", label: "Waste (PowerBI)" },
-    // { id: "superSetWaste", label: "Waste (Superset)" },
-    { id: "powerbiWater", label: "Water & Effluents (PowerBI)" },
+    { id: "superSetWaste", label: "Waste (Superset)" },
+    { id: "powerbiMaterials", label: "Materials (PowerBI)" },
   ];
 
   useEffect(() => {
@@ -62,7 +67,7 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
     fetchPowerBIToken();
   }, []);
   
-  const getIframeUrl = (tabId) => {
+  const getIframeUrl = useCallback((tabId) => {
     switch (tabId) {
       case "zohoEmissions":
         return process.env.NEXT_APP_ZOHO_URL_EMISSIONS;
@@ -73,7 +78,14 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
       default:
         return null;
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (activeTab.startsWith("superSet")) {
+      const url = getIframeUrl(activeTab);
+      setSupersetUrl(url);
+    }
+  }, [activeTab, getIframeUrl]);
 
   const getPowerBIConfig = (tabId) => {
     if (!dashboardData) return null;
@@ -89,9 +101,9 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
       case "powerbiWaste":
         reportConfig = dashboardData.find(item => item.waste)?.waste;
         break;
-        case "powerbiWater":
-          reportConfig = dashboardData.find(item => item.water_and_effluents)?.water_and_effluents;
-          break;
+      case "powerbiMaterials":
+        reportConfig = dashboardData.find(item => item.materials)?.materials;
+        break;
       default:
         return null;
     }
@@ -117,23 +129,45 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
     };
   };
 
-  useEffect(() => {
-    const refreshReport = async () => {
-      if (window.report) {
-        try {
-          await window.report.refresh();
-          console.log("Report refreshed");
-        } catch (errors) {
-          console.log(errors);
-        }
+  const refreshDashboard = useCallback(async () => {
+    setIsRefreshing(true);
+    if (activeTab.startsWith("powerbi") && window.report) {
+      try {
+        await window.report.refresh();
+        console.log("PowerBI report refreshed");
+      } catch (errors) {
+        console.log(errors);
       }
-    };
-    const intervalId = setInterval(() => {
-      refreshReport();
-    }, 15000);
+    } else if (activeTab.startsWith("superSet") && iframeRef.current) {
+      const iframe = iframeRef.current;
+      iframe.src = '';
+      setTimeout(() => {
+        iframe.src = supersetUrl;
+      }, 100);
+      console.log("Superset dashboard refresh triggered");
+      setCountdown(90);
+    }
+    setIsRefreshing(false);
+  }, [activeTab, supersetUrl]);
+
+  useEffect(() => {
+    let intervalId;
+    if (activeTab.startsWith("powerbi")) {
+      intervalId = setInterval(refreshDashboard, POWERBI_REFRESH_INTERVAL);
+    } else if (activeTab.startsWith("superSet")) {
+      intervalId = setInterval(() => {
+        setCountdown((prevCount) => {
+          if (prevCount <= 1) {
+            refreshDashboard();
+            return 90;
+          }
+          return prevCount - 1;
+        });
+      }, 1000);
+    }
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [activeTab, refreshDashboard]);
 
   const embedContainerStyle = {
     width: `${width}px`,
@@ -143,11 +177,8 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
   if (!models || !PowerBIEmbed) return <p>Loading...</p>;
 
   return (
-    <div
-      className="flex flex-col justify-start items-center"
-      style={{ width, height }}
-    >
-      <div className="w-full mb-4 border-b border-gray-200">
+    <div className="flex flex-col justify-start items-center" style={{ width, height }}>
+      <div className="w-full mb-4 border-b border-gray-200 flex justify-between items-center">
         <ul className="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500">
           {tabs.map((tab) => (
             <li className="mr-2" key={tab.id}>
@@ -164,6 +195,18 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
             </li>
           ))}
         </ul>
+        {activeTab.startsWith("superSet") && (
+          <div className="flex items-center">
+            <span className="mr-2">Refresh in: {countdown}s</span>
+            <button
+              onClick={refreshDashboard}
+              disabled={isRefreshing}
+              className={`p-2 rounded ${isRefreshing ? 'bg-gray-300' : 'bg-blue-500 hover:bg-blue-600'} text-white`}
+            >
+              <MdRefresh className={`w-5 h-5 ${isRefreshing ? 'animate-spin' : ''}`} />
+            </button>
+          </div>
+        )}
       </div>
       <div className="w-full flex-grow flex justify-center items-center">
         {activeTab.startsWith("powerbi") && powerBIToken ? (
@@ -172,24 +215,9 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
               embedConfig={getPowerBIConfig(activeTab)}
               eventHandlers={
                 new Map([
-                  [
-                    "loaded",
-                    function () {
-                      console.log("Report loaded");
-                    },
-                  ],
-                  [
-                    "rendered",
-                    function () {
-                      console.log("Report rendered");
-                    },
-                  ],
-                  [
-                    "error",
-                    function (event) {
-                      console.log(event.detail);
-                    },
-                  ],
+                  ["loaded", () => console.log("Report loaded")],
+                  ["rendered", () => console.log("Report rendered")],
+                  ["error", (event) => console.log(event.detail)],
                   ["visualClicked", () => console.log("visual clicked")],
                   ["pageChanged", (event) => console.log(event)],
                 ])
@@ -200,6 +228,14 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
               }}
             />
           </div>
+        ) : activeTab.startsWith("superSet") ? (
+          <iframe
+            ref={iframeRef}
+            frameBorder="0"
+            width={width}
+            height={height - 50}
+            src={supersetUrl}
+          ></iframe>
         ) : getIframeUrl(activeTab) ? (
           <iframe
             frameBorder="0"
@@ -213,8 +249,8 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
               <GiPublicSpeaker style={{ fontSize: "100px" }} />
             </div>
             <div className="text-xl font-bold my-4">
-              <span className="">Coming </span>
-              <span className="">Soon !</span>
+              <span>Coming </span>
+              <span>Soon!</span>
             </div>
           </div>
         )}

@@ -1,35 +1,56 @@
 'use client'
 import { useState, useRef, useEffect } from "react";
 import PerformanceReviewTable from "../tables/performanceTable";
+import LeaveTable from "../tables/leaveTable";
+import STARSVG from "../../../../../../../public/star.svg";
+import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import {setPerformanceReviewProcess} from "../../../../../../lib/redux/features/ESGSlice/screen13Slice"
 
-const Section7=({section13_1_6Ref})=>{
-    const [content,setContent] = useState(
-        `Regular performance reviews and career development planning are integral to our employee management approach. We provide ongoing feedback, set clear goals, and offer opportunities for professional growth and advancement. `
-    )
-    const [columns] = useState([
-        "Type of Employees", 
-        { header: "Employee Category", subHeaders: ["A", "B"] },
-        { header: "Gender", subHeaders: ["Male", "Female", "Non-Binary"] }
-      ]);
-    
-      const [data] = useState([
-        {
-          "Type of Employees": "Percentage of employees who received regular performance review",
-          A: "data",
-          B: "data",
-          Male: "data",
-          Female: "data",
-          "Non-Binary": "data",
-        },
-        {
-          "Type of Employees": "Percentage of employees who received regular career development review",
-          A: "data",
-          B: "data",
-          Male: "data",
-          Female: "data",
-          "Non-Binary": "data",
-        }
-      ]);
+const Section7=({section13_1_6Ref,data})=>{
+  
+    const content = useSelector(state => state.screen13Slice.performance_review_process);
+    const dispatch = useDispatch();
+    const loadContent = () => {
+      dispatch(setPerformanceReviewProcess(
+        `Regular performance reviews and career development planning are integral to our employee management approach. We provide ongoing feedback, set clear goals, and offer opportunities for professional growth and advancement.`))
+    }
+  
+    const handleEditorChange=(e)=>{
+      dispatch(setPerformanceReviewProcess(e.target.value))
+    }
+   const col=[
+    "Employee Category",
+    "Percentage of employees who received regular performance review",
+    "Percentage of employees who received regular career development review"
+   ]
+   const Tabledata=data["404_social_analyse"]?data["404_social_analyse"]["percentage_of_employees_receiving_regular_performance_and_career_development_reviews"].length>0?
+
+   data["404_social_analyse"]["percentage_of_employees_receiving_regular_performance_and_career_development_reviews"].map((val,index)=>{
+       return (
+           
+         {
+          "Employee Category":val.Category,
+          "Percentage of employees who received regular performance review":val.percentage_of_employees_who_received_regular_performance_reviews+"%",
+          "Percentage of employees who received regular career development review":val.percentage_of_employees_who_received_regular_career_development_reviews+"%"
+       
+       }
+           
+       )
+   })
+:[
+ {
+  "Employee Category":"No data available",
+  "Percentage of employees who received regular performance review":"No data available",
+  "Percentage of employees who received regular career development review":"No data available"
+},
+]:[
+ {
+  "Employee Category":"No data available",
+  "Percentage of employees who received regular performance review":"No data available",
+  "Percentage of employees who received regular career development review":"No data available"
+},
+]
     
     return (
         <>
@@ -38,12 +59,21 @@ const Section7=({section13_1_6Ref})=>{
 <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
 13.1.6. Performance and Career Development Reviews of Employees
 </h3>
-<p className="text-[15px] text-[#344054] mb-2">
-            Edit Statement
-            </p>
+<div className="flex justify-between">
+          <p className="text-[15px] text-[#344054] mb-2 mt-3">Add statement about company’s process for performance review of employees</p>
+          <button
+            className="px-2 py-2 text-[#007EEF] border border-[#007EEF] text-[12px] rounded-md mb-2 flex"
+            onClick={loadContent}
+          >
+            {/* <MdOutlinePlaylistAdd className="mr-1 w-[20px] h-[20px]"/> */}
+            <Image src={STARSVG} className="w-5 h-5 mr-1.5" alt="star" />
+            Auto Fill
+          </button>
+        </div>
             <textarea
+            onChange={handleEditorChange}
           value={content}
-          className={`border appearance-none text-sm border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer  mt-2 w-full mb-4 `}
+          className={`border appearance-none text-sm border-gray-400 text-[#667085] pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-4 `}
           rows={4}
         />
 
@@ -51,7 +81,7 @@ const Section7=({section13_1_6Ref})=>{
         Percentage of employees receiving regular performance and career development reviews 
         </p>
         <div className="shadow-md rounded-md mb-4">
-                <PerformanceReviewTable columns={columns} data={data} />
+                <LeaveTable columns={col} data={Tabledata} />
         </div>
             
             

@@ -61,7 +61,7 @@ const uiSchema = {
   },
 };
 
-const Screen5 = ({ location, year, month }) => {
+const Screen5 = ({ selectedCorp, year, selectedOrg }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -99,9 +99,9 @@ const Screen5 = ({ location, year, month }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      location,
+      corporate: selectedCorp,
+      organisation: selectedOrg,
       year,
-      month,
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -155,7 +155,7 @@ const Screen5 = ({ location, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
 
     try {
       const response = await axios.get(url, axiosConfig);
@@ -180,9 +180,8 @@ const Screen5 = ({ location, year, month }) => {
     console.log("Form data is changed -", formData);
   }, [formData]);
 
-  // fetch backend and replace initialized forms
   useEffect(() => {
-    if (location && year && month) {
+    if (selectedOrg && year) {
       loadFormData();
       toastShown.current = false; // Reset the flag when valid data is present
     } else {
@@ -191,7 +190,7 @@ const Screen5 = ({ location, year, month }) => {
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [location, year, month]);
+  }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -201,16 +200,10 @@ const Screen5 = ({ location, year, month }) => {
 
   return (
     <>
-      <div
-        className="mx-2  p-3 mb-6 pb-6 rounded-md"
-        style={{
-          boxShadow:
-            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
-        }}
-      >
+      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Measures taken by the organization
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
@@ -257,17 +250,18 @@ const Screen5 = ({ location, year, month }) => {
             widgets={widgets}
           />
         </div>
-        <div className="mb-6">
-          <button
+    <div className='mt-4'>
+    <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !location || !year ? "cursor-not-allowed" : ""
+              !selectedOrg || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            disabled={!location || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>
+
         </div>
       </div>
       {loopen && (

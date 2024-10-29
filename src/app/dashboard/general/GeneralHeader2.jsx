@@ -26,9 +26,9 @@ const GeneralHeader2 = ({
   };
   const [locations, setLocations] = useState([]);
   const [errors, setErrors] = useState({
-    organization: "Please select an organization",
-    corporate: "Please select a location",
-    year: year ? "" : "Please select a year",
+    organization: "Please select Organisation",
+    corporate: "Please select Corporate",
+    year: year ? "" : "Please select year",
   });
 
   const [organisations, setOrganisations] = useState([]);
@@ -48,19 +48,19 @@ const GeneralHeader2 = ({
       setYear(value);
       setErrors((prevErrors) => ({
         ...prevErrors,
-        year: value ? "" : "Please select a year",
+        year: value ? "" : "Please select year",
       }));
     } else if (name === "selectedOrg") {
       setSelectedOrg(value);
       setErrors((prevErrors) => ({
         ...prevErrors,
-        organization: value ? "" : "Please select an organization",
+        organization: value ? "" : "Please select Organisation",
       }));
     } else if (name === "selectedCorp") {
       setSelectedCorp(value);
       setErrors((prevErrors) => ({
         ...prevErrors,
-        corporate: value ? "" : "Please select a corporate",
+        corporate: value ? "" : "Please select Corporate",
       }));
     }
   };
@@ -79,7 +79,7 @@ const GeneralHeader2 = ({
   }, []);
 
   useEffect(() => {
-    const fetchCorporates = async () => {
+     const fetchCorporates = async () => {
       if (selectedOrg) {
         try {
           const response = await axiosInstance.get(`/corporate/`, {
@@ -87,7 +87,13 @@ const GeneralHeader2 = ({
           });
           setCorporates(response.data);
         } catch (e) {
-          console.error("Failed fetching corporates:", e);
+          if(e.status === 404) {
+            setCorporates([]);
+          }
+          else{
+            console.error("Failed fetching corporates:", e);
+          }
+          
         }
       }
     };
@@ -110,7 +116,7 @@ const GeneralHeader2 = ({
     setSelectedCorp("");
     setErrors((prevErrors) => ({
       ...prevErrors,
-      organization: newOrg ? "" : "Please select an organization",
+      organization: newOrg ? "" : "Please select Organisation",
     }));
   };
 
@@ -119,7 +125,7 @@ const GeneralHeader2 = ({
     setSelectedCorp(newCorp);
     setErrors((prevErrors) => ({
       ...prevErrors,
-      corporate: newCorp ? "" : "Please select a corporate",
+      corporate: newCorp ? "" : "Please select Corporate",
     }));
   };
 
@@ -133,10 +139,10 @@ const GeneralHeader2 = ({
                 <div className="text-zinc-600 text-[12px] font-semibold font-['Manrope']">
                   Add By:
                 </div>
-                <div className="rounded-lg shadow border border-gray-300 justify-start items-start flex">
+                <div className="rounded-lg shadow  justify-start items-start flex">
                   <div
-                    className={`w-[111px] px-4 py-2.5 border-r rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
-                      reportType === "Organization" ? "bg-sky-100" : "bg-white"
+                    className={`w-[111px] px-4 py-2.5 border rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                      reportType === "Organization" ? "bg-[#d2dfeb]" : "bg-white"
                     }`}
                     onClick={() => handleReportTypeChange("Organization")}
                   >
@@ -145,8 +151,8 @@ const GeneralHeader2 = ({
                     </div>
                   </div>
                   <div
-                    className={`w-[111px] px-4 py-2.5 border-r border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
-                      reportType === "Corporate" ? "bg-sky-100" : "bg-white"
+                    className={`w-[111px] px-4 py-2.5 border-r border-y border-gray-300 rounded-r-lg justify-center items-center gap-2 flex cursor-pointer ${
+                      reportType === "Corporate" ? "bg-[#d2dfeb]" : "bg-white"
                     }`}
                     onClick={() => handleReportTypeChange("Corporate")}
                   >
@@ -164,7 +170,7 @@ const GeneralHeader2 = ({
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[12px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal ml-1"
                   >
                     Select Organization*
                   </label>
@@ -183,7 +189,7 @@ const GeneralHeader2 = ({
                         ))}
                     </select>
                     {errors.organization && (
-                      <p className="text-red-500 text-[12px] top=16  left-0 pl-2">
+                      <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
                         {errors.organization}
                       </p>
                     )}
@@ -193,7 +199,7 @@ const GeneralHeader2 = ({
                   <div className="mr-2">
                     <label
                       htmlFor="cname"
-                      className="text-neutral-800 text-[12px] font-normal"
+                      className="text-neutral-800 text-[12px] font-normal ml-1"
                     >
                       Select Corporate
                     </label>
@@ -212,7 +218,7 @@ const GeneralHeader2 = ({
                           ))}
                       </select>
                       {errors.corporate && (
-                        <p className="text-red-500 text-[12px] top=16  left-0 pl-2">
+                        <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
                           {errors.corporate}
                         </p>
                       )}
@@ -223,7 +229,7 @@ const GeneralHeader2 = ({
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[12px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal ml-1"
                   >
                     Select year
                   </label>
@@ -242,7 +248,7 @@ const GeneralHeader2 = ({
                       ))}
                     </select>
                     {errors.year && (
-                      <p className="text-red-500 text-[12px] top=16  left-0 pl-2">
+                      <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
                         {errors.year}
                       </p>
                     )}

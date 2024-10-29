@@ -17,6 +17,7 @@ export default function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap"
           rel="stylesheet"
         ></link>
+
         {/* <script src="https://widget.fluentc.io/fluentcWidget.min.js"></script> */}
         <script src="https://widget.fluentc.io/fluentcWidgetV2.min.js"></script>
       </head>

@@ -28,19 +28,19 @@ const schema = {
   items: {
     type: 'object',
     properties: {
-      category: { type: "string", title: "Category" },
-      male: { type: "integer", title: "Male" },
-      female: { type: "integer", title: "Female" },
-      nonBinary: { type: "integer", title: "Non-Binary" },
-      totalGender: { type: "integer", title: "Total number of individuals within the organisation's governance bodies" },
-      lessThan30: { type: "integer", title: "< 30 years" },
-      between30and50: { type: "integer", title: "30-50 years" },
-      moreThan50: { type: "integer", title: "> 50 years" },
-      totalAge: { type: "integer", title: "Total number of individuals within the organisation's governance bodies" },
-      minorityGroup: { type: "integer", title: "Minority group" },
-      vulnerableCommunities: { type: "integer", title: "Vulnerable Communities" },
+      category: { type: "string", title: "Employee Category" },
+      male: { type: "string", title: "Male" },
+      female: { type: "string", title: "Female" },
+      nonBinary: { type: "string", title: "Non-Binary" },
+      totalGender: { type: "string", title: "Total number of individuals within the organisation's governance bodies" },
+      lessThan30: { type: "string", title: "< 30 years" },
+      between30and50: { type: "string", title: "30-50 years" },
+      moreThan50: { type: "string", title: "> 50 years" },
+      totalAge: { type: "string", title: "Total number of individuals within the organisation's governance bodies" },
+      minorityGroup: { type: "string", title: "Minority group" },
+      vulnerableCommunities: { type: "string", title: "Vulnerable Communities" },
     },
-    required: ["category", "male", "female", "nonBinary", "totalGender", "lessThan30", "between30and50", "moreThan50", "totalAge", "minorityGroup", "vulnerableCommunities"]
+    
   }
 };
 
@@ -48,23 +48,23 @@ const uiSchema = {
   "ui:widget": "TableWidget",
   'ui:options': {
     titles: [
-      { title: "Number of employees per employee category", tooltip: "Please specify the category.", colSpan: 1 },
-      { title: "Gender", tooltip: "Please specify the gender of individuals.", colSpan: 4 },
-      { title: "Age Group", tooltip: "Please specify the age group of individuals.", colSpan: 4 },
-      { title: "Diversity groups", tooltip: "Please specify the diversity groups of individuals.", colSpan: 2 },
+      { title: "Employee Category", tooltip: "Please add the number of employees per employee category.", colSpan: 1,  tooltipdispaly:"block", },
+      { title: "Gender", tooltip: "Please specify the gender of individuals.", colSpan: 4,    tooltipdispaly:"none", },
+      { title: "Age Group", tooltip: "Please specify the age group of individuals.", colSpan: 4,  tooltipdispaly:"none", },
+      { title: "Diversity groups", tooltip: "Please specify the diversity group. Indicator of diversity: indicator of diversity for which the organization gathers data Examples: age, ancestry and ethnic origin, citizenship, creed, disability, gender", colSpan: 2,  tooltipdispaly:"block", },
     ],
     subTitles: [
-      { title: "", title2: "category",tooltip: "Please specify the category.", colSpan: 1, type: "text" },
-      { title: "Male", title2: "Male",tooltip: "Please specify the number of male individuals.", colSpan: 1, type: "number" },
-      { title: "Female", title2: "Female",tooltip: "Please specify the number of female individuals.", colSpan: 1, type: "number" },
-      { title: "Non-Binary",title2: "NonBinary", tooltip: "Please specify the number of non-binary individuals.", colSpan: 1, type: "number" },
-      { title: "Total number of employee",title2: "totalGender", tooltip: "Please specify the total number of individuals.", colSpan: 1, type: "number" },
-      { title: "< 30 years", title2: "LessThan30", tooltip: "Please specify the number of individuals under 30 years old.", colSpan: 1, type: "number" },
-      { title: "30-50 years", title2: "Between30and50", tooltip: "Please specify the number of individuals between 30 and 50 years old.", colSpan: 1, type: "number" },
-      { title: "> 50 years", title2: "MoreThan50", tooltip: "Please specify the number of individuals over 50 years old.", colSpan: 1, type: "number" },
-      { title: "Total number of employee", title2: "totalAge", tooltip: "Please specify the total number of individuals.", colSpan: 1, type: "number" },
-      { title: "Minority group", title2: "Minoritygroup",tooltip: "Please specify the number of minority group individuals.", colSpan: 1, type: "number" },
-      { title: "Vulnerable Communities", title2: "vulnerableCommunities", tooltip: "Please specify the number of vulnerable community individuals.", colSpan: 1, type: "number" },
+      { title: "", title2: "category",tooltip: "Please specify the category.", colSpan: 1, type: "text",  tooltipdispaly:"none", },
+      { title: "Male", title2: "Male",tooltip: "Please specify the number of male individuals.", colSpan: 1, type: "number",  tooltipdispaly:"none", },
+      { title: "Female", title2: "Female",tooltip: "Please specify the number of female individuals.", colSpan: 1, type: "number",  tooltipdispaly:"none", },
+      { title: "Non-Binary",title2: "NonBinary", tooltip: "Please specify the number of non-binary individuals.", colSpan: 1, type: "number",  tooltipdispaly:"none", },
+      { title: "Total number of employee",title2: "totalGender", tooltip: "Please specify the total number of individuals.", colSpan: 1, type: "number",  tooltipdispaly:"none", },
+      { title: "< 30 years", title2: "LessThan30", tooltip: "Please specify the number of individuals under 30 years old.", colSpan: 1, type: "number",  tooltipdispaly:"none", },
+      { title: "30-50 years", title2: "Between30and50", tooltip: "Please specify the number of individuals between 30 and 50 years old.", colSpan: 1, type: "number",  tooltipdispaly:"none", },
+      { title: "> 50 years", title2: "MoreThan50", tooltip: "Please specify the number of individuals over 50 years old.", colSpan: 1, type: "number",  tooltipdispaly:"none", },
+      { title: "Total number of employee", title2: "totalAge", tooltip: "Please specify the total number of individuals.", colSpan: 1, type: "number",  tooltipdispaly:"none", },
+      { title: "Minority group", title2: "Minoritygroup",tooltip: "Please specify the number of minority group individuals.", colSpan: 1, type: "number",  tooltipdispaly:"none", },
+      { title: "Vulnerable Groups", title2: "vulnerableCommunities", tooltip: "Please specify the type of vulnerable group and the number of individuals from the vulnerable groups present in the organisation's governance body.", colSpan: 1, type: "number",  tooltipdispaly:"block", },
 
     ]
   }
@@ -202,10 +202,10 @@ const Screen1 = ({ location, year }) => {
 
   return (
     <>
-      <div className="mx-2 p-3 mb-6 pb-6 rounded-md" style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
+     <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
         <div className='mb-4 flex'>
          <div className="w-[80%] relative">
-           <h2 className="flex mx-2 text-[15px] font-[500] mb-2">
+          <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               Number of employee per employee category
               <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                 data-tooltip-content="This section documents the data corresponding to the number of individuals
@@ -224,11 +224,14 @@ within the organization’s governance bodies by gender, age group and diversity
           </div>
 
           <div className='w-[20%]'>
+            <div className='float-end'>
             <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                   <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
                 GRI 405-1b
               </div>
             </div>
+            </div>
+         
           </div>
         </div>
         <div className='mx-2'>

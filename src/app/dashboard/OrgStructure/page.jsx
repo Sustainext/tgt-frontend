@@ -8,8 +8,14 @@ import Link from 'next/link';
 import Organization from './forms/Organization/page';
 import ConfirmationModal from '../../shared/components/ConfirmationModal'
 import EntityView from '../../shared/components/EntityView'
-
-const Table = ({ data, labels, currentIndex, rawData }) => {
+import {
+  setHeadertext1,
+  setHeadertext2,
+  setHeaderdisplay
+} from "../../../lib/redux/features/topheaderSlice";
+import { useDispatch } from "react-redux";
+const Table = ({ data, labels, currentIndex, rawData,isNewRole }) => {
+  const [newrole, setRole] = useState(""); 
   const router = useRouter();
   const values1 = Object.values(data);
   const values = values1.filter((item, index) => index !== values1.length - 1);
@@ -18,6 +24,18 @@ const Table = ({ data, labels, currentIndex, rawData }) => {
   const [childExpanded, setChildExpanded] = useState(false);
   const [orgStruct, setOrgStruct] = useState(rawData);
   const [filteredEntity, setFilteredEntity] = useState({});
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+
+      const storedRole = localStorage.getItem("custom_role"); // Fetch the role
+
+      
+      if (storedRole) {
+        setRole(storedRole); // Get role from localStorage
+        console.log("Stored role:", storedRole);
+      }
+    }
+  }, []);
 
   const minimumWidth = 70;
   const numberOfChildren = data.children.length;
@@ -312,9 +330,15 @@ const Table = ({ data, labels, currentIndex, rawData }) => {
           );
         })}
         <td className='py-2 px flex justify-left items-center space-x-3 text-neutral-500'>
-          <FaEye style={{ fontSize: '20px' }} onClick={() => handleEntityView(labels[currentIndex], data)} />
-          <FaEdit style={{ fontSize: '20px' }} onClick={() => handleEntityEdit(labels[currentIndex], data)} />
-          <FaTrashAlt style={{ fontSize: '20px' }} onClick={() => handleDelete(labels[currentIndex], data)} />
+        <FaEye style={{ fontSize: '20px' }} onClick={() => handleEntityView(labels[currentIndex], data)} />
+          {isNewRole && (
+            <>
+ 
+   <FaEdit style={{ fontSize: '20px' }} onClick={() => handleEntityEdit(labels[currentIndex], data)} />
+   <FaTrashAlt style={{ fontSize: '20px' }} onClick={() => handleDelete(labels[currentIndex], data)} />
+   </>
+          )}
+       
         </td>
       </tr>
       {data.children && expanded && (
@@ -342,7 +366,7 @@ const Table = ({ data, labels, currentIndex, rawData }) => {
 };
 
 
-const TableList = ({ data, labels, currentIndex, rawData }) => {
+const TableList = ({ data, labels, currentIndex, rawData,isNewRole }) => {
   if (!data || data.length === 0) {
     return (
       <p className='flex justify-center items-center text-red-600'>
@@ -360,7 +384,7 @@ const TableList = ({ data, labels, currentIndex, rawData }) => {
     <div className='my-4 ms-4'>
       <div
         className={`flex justify-between items-center w-2/3 ${
-          labels[currentIndex] === 'location' ? 'ms-[27px]' : 'ms-[27px]'
+          labels[currentIndex] === 'location' ? 'ms-[27px]' : 'ms-[10px]'
         }`}
       >
         <div
@@ -398,7 +422,7 @@ const TableList = ({ data, labels, currentIndex, rawData }) => {
         </thead>
         <tbody>
           {data.map((item) => (
-            <Table data={item} key={item.id} labels={labels} currentIndex={currentIndex + 1} rawData={rawData} />
+            <Table data={item} key={item.id} labels={labels} currentIndex={currentIndex + 1} rawData={rawData} isNewRole={isNewRole} />
           ))}
         </tbody>
       </table>
@@ -410,6 +434,8 @@ const Structure = () => {
   const levelLabels = ['Organisation', 'Corporate Entity', 'Location'];
   const [hData, setHData] = useState([]);
   const [rawData, setRawData] = useState([]);
+  const [newrole, setRole] = useState(""); 
+  const dispatch = useDispatch();
   // const [token,setToken]=useState(localStorage.getItem('token').replace(/"/g, ''));
   const getAuthToken = () => {
     if (typeof window !== 'undefined') {
@@ -476,10 +502,31 @@ const token = getAuthToken();
     }));
     return extractedData;
   };
+  useEffect(() => {
+   
+    dispatch(setHeadertext1(""));
+    dispatch(setHeaderdisplay("none"));
+    dispatch(setHeadertext2('Organizational Structure'));
+}, [dispatch]);
+useEffect(() => {
+  if (typeof window !== "undefined") {
 
+    const storedRole = localStorage.getItem("custom_role"); // Fetch the role
+
+    
+    if (storedRole) {
+      setRole(storedRole); // Get role from localStorage
+      console.log("Stored role:", storedRole);
+    }
+  }
+}, []);
+const isNewRole = newrole === "true";
   return (
     <div className='w-full my-4'>
       <div className='flex justify-end items-center space-x-2 me-8'>
+        {isNewRole && (
+<>
+       
         <Link
           href={'/dashboard/OrgStructure/forms/Organization'}
           className='text-sky-600 text-xs font-bold leading-[15px] flex items-center border border-sky-600 py-2 px-4 hover:text-white hover:bg-sky-600 transition-all'
@@ -498,9 +545,11 @@ const token = getAuthToken();
         >
           Add new Location
         </Link>
+        </>
+         )}
       </div>
 
-      <TableList data={hData} labels={levelLabels} currentIndex={0} rawData={rawData} />
+      <TableList data={hData} labels={levelLabels} currentIndex={0} rawData={rawData} isNewRole={isNewRole}/>
     </div>
   );
 };

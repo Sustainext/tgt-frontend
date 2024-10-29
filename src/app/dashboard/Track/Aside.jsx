@@ -11,7 +11,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
               Track
             </div>
           </div>
-          {["Environment", "Social"].map((tab) => (
+          {["Environment", "Social","Governance"].map((tab) => (
             <button
               key={tab}
               className={`flex items-center justify-start px-2 py-2 mb-2 focus:outline-none w-full transition-colors duration-200 ease-in-out ${

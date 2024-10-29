@@ -29,25 +29,33 @@ const GovernancetableWidget3 = ({ id, options, value, required, onChange, schema
 
     return (
         <div style={{ maxHeight: "400px" }} className="mb-2">
-            <table id={id} className="rounded-md border border-gray-300 w-full">
+            <table id={id} className="rounded-md border border-gray-300 w-full" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
                 <tbody>
                     {options.rowLabels.map((label, rowIndex) => (
                         <tr key={rowIndex}>
-                            <td className="border border-gray-300 p-3 text-left w-2/5">
-                                <div className="flex">
-                                <span className='inline'>{label.title}</span>
+                            <td className="border-r border-t border-gray-300 p-3 text-left w-2/5">
+                                <div className="flex relative">
+                                <span className='text-[12px]'>{label.title}</span>
                                 <>
                                 <MdInfoOutline
                                     data-tooltip-id={`tooltip-${label.title.replace(/\s+/g, '-')}`}
                                     data-tooltip-content={label.tooltip}
-                                    className="ml-2 cursor-pointer"
-                                    style={{ display: label.display,fontSize: '18px'  }}
+                                    className="ml-1 cursor-pointer w-[10%]"
+                                    style={{ display: label.display,fontSize: '14px'  }}
                                 />
                                 <ReactTooltip
                                     id={`tooltip-${label.title.replace(/\s+/g, '-')}`}
                                     place="top"
                                     effect="solid"
-                                    className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
+                                    style={{
+                                        width:"400px",
+                                        backgroundColor: "#000",
+                                        color: "white",
+                                        fontSize: "12px",
+                                        boxShadow: 3,
+                                        borderRadius: "8px",
+                                        zIndex:"1000",
+                                      }}
                                 />
                                 </>
                                 </div>
@@ -58,7 +66,7 @@ const GovernancetableWidget3 = ({ id, options, value, required, onChange, schema
                                 const isEnum = propertySchema && propertySchema.hasOwnProperty('enum');
 
                                 return (
-                                    <td key={cellIndex} className="border border-gray-300 p-3 text-center">
+                                    <td key={cellIndex} className="border-t border-gray-300 p-3 text-center">
                                         {isEnum ? (
                                             <select
                                                 value={localValue[rowIndex][key]}

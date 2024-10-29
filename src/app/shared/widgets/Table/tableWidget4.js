@@ -98,7 +98,15 @@ const CustomTableWidget4 = ({
                       id={`tooltip-${item.title.replace(/\s+/g, "-")}`}
                       place="top"
                       effect="solid"
-                      className="max-w-xs bg-black text-white text-xs rounded-lg shadow-md"
+                      style={{
+                        width:"400px",
+                        backgroundColor: "#000",
+                        color: "white",
+                        fontSize: "12px",
+                        boxShadow: 3,
+                        borderRadius: "8px",
+                        zIndex:"1000",
+                      }}
                     />
                   </p>
                 </div>

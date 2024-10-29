@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useCallback } from "react";
 import { useFluentC } from "../../../Context/fluentc";
-
+ 
 const LanguageSettings = () => {
   const { isFluentCOpen, setIsFluentCOpen } = useFluentC();
   const widgetContainerRef = useRef(null);
   const hasLoadedWidget = useRef(false);
-
+ 
   const loadWidget = useCallback(() => {
     if (
       !hasLoadedWidget.current &&
@@ -16,21 +16,21 @@ const LanguageSettings = () => {
         widgetId: "33d7c1ce-b762-41c9-8b89-1606844f8707",
       });
       console.log('widget', widget);
-      
+     
       widget.setupWidget('fluentc-widget',{defaultLanguage: 'en'});
-
+ 
       hasLoadedWidget.current = true;
     }
   }, []);
-
+ 
   useEffect(() => {
     loadWidget();
   }, [loadWidget]);
-
+ 
   useEffect(() => {
     setIsFluentCOpen(hasLoadedWidget.current);
   }, [hasLoadedWidget.current, setIsFluentCOpen]);
-
+ 
   return (
     <div className="flex justify-center items-center text-lg">
       {isFluentCOpen && (
@@ -47,5 +47,5 @@ const LanguageSettings = () => {
     </div>
   );
 };
-
+ 
 export default LanguageSettings;

@@ -8,14 +8,25 @@ import axiosInstance from "../../utils/axiosMiddleware";
 import { Oval } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import {
+  setHeadertext1,
+  setHeadertext2,
+  setHeaderdisplay
+} from "../../../lib/redux/features/topheaderSlice";
+import { useDispatch } from "react-redux";
 const Materiality = ({ open }) => {
   const [data, setData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const [loopen, setLoOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true); // New loading state
-
+  const dispatch = useDispatch();
+  useEffect(() => {
+   
+    dispatch(setHeadertext1(""));
+    dispatch(setHeaderdisplay("none"));
+    dispatch(setHeadertext2('Materiality Dashboard'));
+}, [dispatch]);
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -93,7 +104,7 @@ const Materiality = ({ open }) => {
       <div className="flex flex-col justify-start overflow-x-hidden ">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
-            <div className="text-left mb-4 ml-3 pt-5">
+           <div className="text-left mb-2 ml-3 pt-5">
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] font-bold pt-4 pb-4 ml-3">

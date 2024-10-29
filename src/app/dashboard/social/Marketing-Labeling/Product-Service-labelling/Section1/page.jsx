@@ -6,7 +6,7 @@ import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Socialheader from '../../../socialheader';
+import Socialheader3 from '../../../socialheader3';
 import Screen1 from "./screen1"
 const Section1 = () => {
     const [activeMonth, setActiveMonth] = useState(1);
@@ -43,11 +43,11 @@ const Section1 = () => {
             <div className="flex flex-col justify-start overflow-x-hidden ">
                 <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
                     <div className='w-full'>
-                        <div className="text-left mb-4 ml-3 pt-5">
+                       <div className="text-left mb-2 ml-3 pt-5">
                             <p className="text-[11px]">Social</p>
                             <div className='flex'>
                                 <div>
-                                    <p className="gradient-text text-[22px] font-bold pt-1">
+                                   <p className="gradient-text text-[22px] font-bold py-2">
                                         Marketing and labeling
                                     </p>
                                 </div>
@@ -56,7 +56,7 @@ const Section1 = () => {
 
                         </div>
                     </div>
-                    <div className='w-full float-end '>
+                 <div className="w-full float-end pt-5 me-1">
                         <div className="flex float-end border-l">
                             <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('72')}>GRI 417 - 1</button>
                             <button className="text-[#fff] bg-[#CD8B2A] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('73')}>SDG 12</button>
@@ -86,7 +86,7 @@ const Section1 = () => {
                     </h6>
                 </div>
                 <div className={`${isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"}
-fixed right-[51px]  w-[340px] h-full bg-white  rounded-md
+fixed right-[51px]  w-[340px] h-[93%] bg-white  rounded-md
 transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
 
                     {data && data.map((program) => (
@@ -107,7 +107,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
 
                 </div>
             </div>
-            <Socialheader
+            <Socialheader3
                 activeMonth={activeMonth}
                 setActiveMonth={setActiveMonth}
                 location={location}

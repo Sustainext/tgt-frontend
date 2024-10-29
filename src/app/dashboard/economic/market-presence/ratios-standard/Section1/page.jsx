@@ -9,6 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 import EconomicHeader2 from "../../../EconomicHeader2";
 import Screen1 from "./screen1";
 import Screen2 from "./screen2";
+import Screen3 from "./screen3";
+import Screen4 from "./screen4";
 const Section1 = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
@@ -44,11 +46,11 @@ const Section1 = () => {
       <div className="flex flex-col justify-start overflow-x-hidden ">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
-            <div className="text-left mb-4 ml-3 pt-5">
+           <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-sm">Economic </p>
               <div className="flex">
                 <div>
-                  <p className="gradient-text text-[22px] font-bold pt-1">
+                 <p className="gradient-text text-[22px] font-bold py-2">
                   Market Presence 
                   </p>
                 </div>
@@ -113,7 +115,7 @@ const Section1 = () => {
           className={`${
             isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"
           }
-fixed right-[51px]  w-[340px] h-full bg-white  rounded-md
+fixed right-[51px]  w-[340px] h-[93%] bg-white  rounded-md
 transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         >
           {data &&
@@ -150,6 +152,16 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
       />
       <Screen2
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        year={year}
+      />
+         <Screen3
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        year={year}
+      />
+         <Screen4
         selectedOrg={selectedOrg}
         selectedCorp={selectedCorp}
         year={year}

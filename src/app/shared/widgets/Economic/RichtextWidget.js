@@ -8,11 +8,37 @@ const RichtextWidget = (props) => {
   const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
   const editor = useRef(null);
   const config = {
-    askBeforePasteHTML: false,
-    askBeforePasteFromWord: false,
+    style: {
+      fontSize: "12px",
+      color: "#667085"
+    },
+    allowResizeY: false,
     defaultActionOnPaste: 'insert_clear_html',
-    height: 400, // sets the height to 400 pixels
+    toolbarSticky: false,
+    height: 400,
+    toolbar: true,
+    buttons: [
+      'bold',
+      'italic',
+      'underline',
+      'strikeThrough',
+      'align',
+      'outdent',
+      'indent',
+      'ul',
+      'ol',
+      'paragraph',
+      'link',
+      'table',
+      'undo',
+      'redo',
+      'hr',
+      'fontsize',
+      'selectall'
+    ],
+    removeButtons: ['fullsize', 'preview', 'source', 'print', 'about', 'find', 'changeMode', 'paintFormat', 'image', 'brush', 'font'],
   };
+
   const handleEditorChange = (newContent) => {
     onChange(newContent);
   };
@@ -23,7 +49,7 @@ const RichtextWidget = (props) => {
           <div className="relative flex">
             <div>
               <h2
-                className="flex text-[15px] text-gray-500 font-semibold"
+                className="flex text-[14px] text-gray-700 font-[500]"
                 style={{ display: uiSchema["ui:titledisplay"] }}
               >
                 {uiSchema["ui:title"]}

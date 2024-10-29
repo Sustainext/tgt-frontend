@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { MdInfoOutline, MdOutlineClear } from "react-icons/md";
 import "react-tooltip/dist/react-tooltip.css";
-import GovernanceHeader3 from "../../GovernanceHeader3";
+import GovernanceHeader2 from "../../GovernanceHeader2";
 import { Socialdata } from "../../../social/data/socialgriinfo";
 import { ToastContainer } from "react-toastify";
 import { Tooltip as ReactTooltip } from "react-tooltip";
@@ -10,11 +10,14 @@ import Process from "./Process/page";
 import ResultsOfVotes from './ResultsOfVotes/page'
 
 const DetermineRemuneration = () => {
+  const [activeMonth, setActiveMonth] = useState(1);
+  const [location, setLocation] = useState("");
   const [year, setYear] = useState();
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedLocation, setSelectedLocation] = useState("");
+  const [selectedOrg, setSelectedOrg] = useState("");
+  const [selectedCorp, setSelectedCorp] = useState("");
 
   const toggleDrawerclose = () => {
     setIsOpen(false);
@@ -43,7 +46,7 @@ const DetermineRemuneration = () => {
       <div className="flex flex-col justify-start overflow-x-hidden">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
-            <div className="text-left mb-4 ml-3 pt-5">
+           <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-sm">Governance</p>
               <div className="flex">
                          <div className="h-[29px]">
@@ -91,9 +94,11 @@ const DetermineRemuneration = () => {
           ></ReactTooltip>
         </div>
         <div
-          className={`${
+           className={`${
             isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"
-          } fixed right-[51px] w-[340px] h-full bg-white rounded-md transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
+          }
+fixed right-[51px]  w-[340px] h-[93%] bg-white  rounded-md
+transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         >
           {data &&
             data.map((program, index) => (
@@ -114,19 +119,29 @@ const DetermineRemuneration = () => {
             ))}
         </div>
       </div>
-      <GovernanceHeader3
-        selectedLocation={selectedLocation}
-        setSelectedLocation={setSelectedLocation}
+      <GovernanceHeader2
+        activeMonth={activeMonth}
+        setActiveMonth={setActiveMonth}
+        selectedOrg={selectedOrg}
+        setSelectedOrg={setSelectedOrg}
+        selectedCorp={selectedCorp}
+        setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
       />
       <Process
-        selectedLocation={selectedLocation}
-        year={year}
+       selectedOrg={selectedOrg}
+       selectedCorp={selectedCorp}
+       location={location}
+       year={year}
+
       />
       <ResultsOfVotes
-        selectedLocation={selectedLocation}
-        year={year}
+      selectedOrg={selectedOrg}
+      selectedCorp={selectedCorp}
+      location={location}
+      year={year}
+   
       />
     </>
   );

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import BoardInfo from "./Board-info/Structure/page";
@@ -20,6 +20,12 @@ import CompensationRatio from "./Performance-renumerations/compensation-ratio/pa
 import DetermineRemuneration from "./Performance-renumerations/Determine-remuneration/page";
 import PolicyCommitments from "./Policy/Policy-Commitments/page";
 import ImplementingCommitments from "./Policy/Implementing-commitments/page";
+import {
+  setHeadertext1,
+  setHeadertext2,
+  setHeaderdisplay,setMiddlename
+} from "../../../lib/redux/features/topheaderSlice";
+import { useDispatch} from "react-redux";
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -49,7 +55,7 @@ const AccordionItem = ({ title, children }) => {
 const Governance = () => {
   const [activeStep, setActiveStep] = useState(1);
   const [completedSteps, setCompletedSteps] = useState([]);
-
+  const dispatch = useDispatch();
   const activeSteps = (id) => {
     setActiveStep(id);
   };
@@ -72,7 +78,37 @@ const Governance = () => {
   const isStepCompleted = (stepNumber) => {
     return completedSteps.includes(stepNumber);
   };
+  const stepTitles = {
+    1: "Board Info",
+    2: "Board Info",
+    3: "Board Info",
+    4: "Board Involvement in Sustainability",
+    5: "Board Involvement in Sustainability",
+    6: "Board Involvement in Sustainability",
+    7: "Governance",
+    8: "Governance",
+    9: "Performance and Renumerations",
+    10: "Performance and Renumerations",
+    11: "Performance and Renumerations",
+    12: "Performance and Renumerations",
+    13: "Performance and Renumerations",
+    14: "Sustainability Strategy",
+    15:"Policy",
+    16:"Policy",
+    17:"Remediation",
+    18:"Managing Concerns",
+    
+  };
+  useEffect(() => {
+    // Update header with step-related information
+    dispatch(setHeadertext1("Collect"));
+    dispatch(setHeaderdisplay("block"));
+    dispatch(setMiddlename("Governance"));
 
+    // Dynamically set the title for the current step
+    const title = stepTitles[activeStep] || "Board Info"; // Default title
+    dispatch(setHeadertext2(title));
+  }, [activeStep, dispatch]);
   return (
     <>
       <div>
@@ -130,7 +166,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Structure
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -193,7 +229,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Nomination and Selection
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -250,7 +286,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Chair of Board
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -315,7 +351,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Management of Impact
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -378,7 +414,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Delegation of Responsibility
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -435,7 +471,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Sustainability Reporting
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -500,7 +536,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Conflict of Interest
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -557,7 +593,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Critical Concerns
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -622,12 +658,12 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                             Sustainability Knowledge
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
                             className={`${
-                              activeStep === 7
+                              activeStep === 9
                                 ? "text-[12px] text-sky-800  font-bold"
                                 : " text-[12px]  text-gray-600"
                             } `}
@@ -685,7 +721,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                             Performance Evaluations
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -748,7 +784,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                             Remuneration
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -811,7 +847,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                             Determine Remuneration
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -870,7 +906,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Compensation Ratio
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -912,7 +948,7 @@ const Governance = () => {
                             width="12"
                             height="12"
                             className={`${
-                              activeStep === 13
+                              activeStep === 14
                                 ? "bi bi-circle-fill fill-sky-800  font-bold "
                                 : " bi bi-circle-fill fill-gray-400"
                             } `}
@@ -929,7 +965,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Sustainability Strategy
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -995,7 +1031,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Policy Commitments
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1052,7 +1088,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Implementing Commitments
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1111,7 +1147,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Process
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -1153,7 +1189,7 @@ const Governance = () => {
                             width="12"
                             height="12"
                             className={`${
-                              activeStep === 13
+                              activeStep === 18
                                 ? "bi bi-circle-fill fill-sky-800  font-bold "
                                 : " bi bi-circle-fill fill-gray-400"
                             } `}
@@ -1170,7 +1206,7 @@ const Governance = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Advice & Concerns
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p

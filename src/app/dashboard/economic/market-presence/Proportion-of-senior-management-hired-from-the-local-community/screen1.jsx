@@ -171,16 +171,10 @@ const Scren1 = ({ location, year}) => {
 
   return (
     <>
-      <div
-        className="mx-2  p-3 mb-6 pb-6 rounded-md"
-        style={{
-          boxShadow:
-            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
-        }}
-      >
+      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-          <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
+         <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
           Percentage of senior management at significant locations of operation that are hired from the local community.
               <MdInfoOutline data-tooltip-id={`es25`}
                 data-tooltip-html="<p>What is the percentage of senior management at significant

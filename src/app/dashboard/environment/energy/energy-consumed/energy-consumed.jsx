@@ -44,7 +44,7 @@ const Energyconsumed = ({ open }) => {
       <div className="flex flex-col justify-start overflow-x-hidden ">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className='w-full'>
-            <div className="text-left mb-4 ml-3 pt-5">
+           <div className="text-left mb-2 ml-3 pt-5">
             <p className="text-[11px]">Environment</p>
               <div className='flex h-[28px]'>
                 <div className='h-[28px]'>
@@ -59,7 +59,7 @@ const Energyconsumed = ({ open }) => {
 
             </div>
           </div>
-          <div className='w-full float-end me-2'>
+         <div className="w-full float-end pt-5 me-1">
             <div className="flex float-end border-l">
               <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('1')}>GRI 302-1</button>
               <button className="text-[#fff] bg-amber-400 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 " onClick={() => toggleDrawer('2')}>SDG 7</button>
@@ -90,7 +90,7 @@ const Energyconsumed = ({ open }) => {
           </h6>
         </div>
         <div className={`${isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"}
-      fixed right-[51px]  w-[340px] h-full bg-white  rounded-md
+      fixed right-[51px]  w-[340px] h-[93%] bg-white  rounded-md
       transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
 
           {data && data.map((program) => (

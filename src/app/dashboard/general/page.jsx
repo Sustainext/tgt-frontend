@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import OrgDetails from "./GRI-Reporting/Org-Details/page";
@@ -14,7 +14,12 @@ import BusinessDetails from "./Organization-Details/Business-Details/page"
 import CollectiveBargainingAgreements from "./Collective-Barganing-Agreements/page"
 import MembershipAndAssociation from "./Membership-Association/page"
 import StakeholderEngagement from "./Stakeholder-Engagement/page"
-
+import {
+  setHeadertext1,
+  setHeadertext2,
+  setHeaderdisplay,setMiddlename
+} from "../../../lib/redux/features/topheaderSlice";
+import { useDispatch} from "react-redux";
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -44,7 +49,7 @@ const AccordionItem = ({ title, children }) => {
 const General = () => {
   const [activeStep, setActiveStep] = useState(1);
   const [completedSteps, setCompletedSteps] = useState([]);
-
+  const dispatch = useDispatch();
   const activeSteps = (id) => {
     setActiveStep(id);
   };
@@ -68,6 +73,32 @@ const General = () => {
     return completedSteps.includes(stepNumber);
   };
 
+  const stepTitles = {
+    1: "GRI Reporting info",
+    2: "GRI Reporting info",
+    3: "GRI Reporting info",
+    4: "GRI Reporting info",
+    5: "GRI Reporting info",
+    6: "Organization Details",
+    7: "Organization Details",
+    8: "Organization Details",
+    9: "Compliance",
+    10: "Membership & Association",
+    11: "Stakeholder Engagement",
+    12: "Collective Bargaining Agreements",
+
+    
+  };
+  useEffect(() => {
+    // Update header with step-related information
+    dispatch(setHeadertext1("Collect"));
+    dispatch(setHeaderdisplay("block"));
+    dispatch(setMiddlename("General"));
+
+    // Dynamically set the title for the current step
+    const title = stepTitles[activeStep] || "GRI Reporting info"; // Default title
+    dispatch(setHeadertext2(title));
+  }, [activeStep, dispatch]);
   return (
     <>
       <div>
@@ -125,7 +156,7 @@ const General = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Org Details
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -188,7 +219,7 @@ const General = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Entities
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -251,7 +282,7 @@ const General = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Report Details
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -314,7 +345,7 @@ const General = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Restatement
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -371,7 +402,7 @@ const General = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Assurance
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -436,7 +467,7 @@ const General = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Business Details
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -499,7 +530,7 @@ const General = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Workforce-Employees
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -556,7 +587,7 @@ const General = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Workforce-Other Workers
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -615,7 +646,7 @@ const General = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Laws and Regulation
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -675,7 +706,7 @@ const General = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Membership & Association
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -735,7 +766,7 @@ const General = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Stakeholder Engagement
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p
@@ -794,7 +825,7 @@ const General = () => {
                             <p className="text-[12px] text-sky-800  font-bold">
                               Collective Bargaining Agreements
                             </p>
-                            <IoCheckmarkDoneSharp className="ml-[0.15rem] h-[17px] text-green-600" />
+                           
                           </>
                         ) : (
                           <p

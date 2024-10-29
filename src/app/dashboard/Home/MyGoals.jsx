@@ -32,11 +32,11 @@ const MyGoals = () => {
     }
   }, [userDetails, token]);
 
-  const options = {
-    headers: {
-      Authorization: `Bearer ${accessToken}`
-    }
-  };
+  // const options = {
+  //   headers: {
+  //     Authorization: `Bearer ${accessToken}`
+  //   }
+  // };
 
   const getTodayDate = () => {
     const today = new Date();
@@ -181,7 +181,7 @@ const MyGoals = () => {
    try{
     LoaderOpen();
     const response = await axiosInstance.get(
-      `${process.env.BACKEND_API_URL}/mygoal/?assigned_to=${userId}`, options
+      `${process.env.BACKEND_API_URL}/mygoal/?assigned_to=${userId}`
     );
     setGoals(response.data);
     LoaderClose();

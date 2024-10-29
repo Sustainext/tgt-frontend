@@ -52,7 +52,7 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
   }, []);
 
   useEffect(() => {
-    const fetchCorporates = async () => {
+     const fetchCorporates = async () => {
       if (selectedOrg) {
         try {
           const response = await axiosInstance.get(`/corporate/`, {
@@ -60,7 +60,13 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
           });
           setCorporates(response.data);
         } catch (e) {
-          console.error("Failed fetching corporates:", e);
+          if(e.status === 404) {
+            setCorporates([]);
+          }
+          else{
+            console.error("Failed fetching corporates:", e);
+          }
+          
         }
       }
     };
@@ -143,7 +149,7 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
   //   setSelectedCorp("");
   //   setErrors((prevErrors) => ({
   //     ...prevErrors,
-  //     organization: newOrg ? "" : "Please select an organization",
+  //     organization: newOrg ? "" : "Please select Organisation",
   //   }));
   // };
 
@@ -164,7 +170,7 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
     setSelectedCorp("");
     setErrors((prevErrors) => ({
       ...prevErrors,
-      organization: newOrgId ? "" : "Please select an organization",
+      organization: newOrgId ? "" : "Please select Organisation",
     }));
   };
 
@@ -178,7 +184,7 @@ const NewMaterialityAssement = ({ isModalOpen, setIsModalOpen, existingData }) =
     setCorporateName(newCorpName)
     setErrors((prevErrors) => ({
       ...prevErrors,
-      corporate: newCorp ? "" : "Please select a corporate",
+      corporate: newCorp ? "" : "Please select Corporate",
     }));
   };
   
@@ -359,11 +365,11 @@ const handleDateChange = (newRange) => {
   //   const newErrors = {};
 
   //   if (!selectedOrg) {
-  //     newErrors.organization = "Please select an organization";
+  //     newErrors.organization = "Please select Organisation";
   //   }
 
   //   if (activeTab === 2 && !selectedCorp) {
-  //     newErrors.corporate = "Please select a corporate";
+  //     newErrors.corporate = "Please select Corporate";
   //   }
 
   //   if (!dateRange.start || !dateRange.end) {
@@ -387,12 +393,12 @@ const handleDateChange = (newRange) => {
 
     // Validate organization selection
     if (!selectedOrg) {
-      newErrors.organization = "Please select an organization";
+      newErrors.organization = "Please select Organisation";
     }
 
     // If active tab requires corporate selection, validate it
     if (activeTab === 2 && !selectedCorp) {
-      newErrors.corporate = "Please select a corporate";
+      newErrors.corporate = "Please select Corporate";
     }
 
     // Validate the date range, including whether a valid date range was chosen
@@ -551,7 +557,7 @@ const handleDateChange = (newRange) => {
             <div>
               <form className="space-y-2 px-6 pt-4">
                 <div
-                  className="flex items-center green-radio"
+                  className="flex items-center"
                   onClick={() => {
                     handleChangeRadio("accordance");
                     setDateRange(
@@ -568,7 +574,7 @@ const handleDateChange = (newRange) => {
                     type="radio"
                     value="accordance"
                     checked={assessmentApproach === "accordance"}
-                    className="form-radio h-4 w-4"
+                    className="form-radio h-4 w-4 accent-[#008000]"
                   />
                   <label
                     htmlFor="accordance"
@@ -579,7 +585,7 @@ const handleDateChange = (newRange) => {
                 </div>
                
                 <div
-                  className="flex items-center green-radio"
+                  className="flex items-center"
                   onClick={() => {
                     handleChangeRadio("reference");
                     setDateRange(
@@ -596,7 +602,7 @@ const handleDateChange = (newRange) => {
                     type="radio"
                     value="reference"
                     checked={assessmentApproach === "reference"}
-                    className="form-radio h-4 w-4"
+                    className="form-radio h-4 w-4 accent-[#008000]"
                   />
                   <label
                     htmlFor="reference"

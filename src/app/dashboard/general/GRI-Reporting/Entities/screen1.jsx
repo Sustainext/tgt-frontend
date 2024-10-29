@@ -169,16 +169,10 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
   };
   return (
     <>
-      <div
-        className="mx-2 p-3 mb-6 pb-6 rounded-md"
-        style={{
-          boxShadow:
-            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
-        }}
-      >
+   <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-[#344054] font-[500]">
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
               List of entities
             </h2>
           </div>
@@ -194,7 +188,7 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
           </div>
         </div>
         {selectedOrg && year && (
-          <p className="flex mx-2 text-sm text-gray-700">
+          <p className="flex mx-2 text-sm text-gray-700 relative">
             List all entities included in the sustainability report
             <MdInfoOutline
               data-tooltip-id={`tooltip-$e1`}
@@ -227,18 +221,20 @@ const Screen1 = ({ selectedOrg, year, selectedCorp }) => {
             widgets={widgets}
           />
         </div>
+        {selectedOrg && year && (
         <div className="flex justify-between right-1  mx-2">
-          {selectedOrg && year && (
+        
             <button
               type="button"
-              className="text-[#007EEF] text-[12px] flex cursor-pointer my-auto"
+              className="text-[#007EEF] text-[13px] flex cursor-pointer my-auto"
               onClick={handleAddNew}
             >
               Add text box <MdAdd className="text-lg" />
             </button>
-          )}
+         
         </div>
-        <div className="mb-6">
+         )}
+        <div className="mt-4">
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${

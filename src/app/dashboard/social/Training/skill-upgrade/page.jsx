@@ -39,14 +39,14 @@ const Skillupgrade = () => {
 
   return (
     <>
-   <ToastContainer style={{ fontSize: "12px" }} />
+      <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
-            <div className="text-left mb-4 ml-3 pt-5">
+            <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-[11px]">Social</p>
               <div className="flex">
-                         <div className="h-[29px]">
+                <div className="h-[29px]">
                   <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
                     Training and Education 2018
                   </p>
@@ -72,7 +72,7 @@ const Skillupgrade = () => {
           </div>
         </div>
 
-      <div className="ml-3 flex relative">
+        <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
             Programs for upgrading employee skills and transition assistance
             programs
@@ -95,7 +95,7 @@ const Skillupgrade = () => {
           className={`${
             isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"
           }
-fixed right-[51px]  w-[340px] h-full bg-white  rounded-md
+fixed right-[51px]  w-[340px] h-[93%] bg-white  rounded-md
 transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         >
           {data &&
@@ -128,7 +128,12 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         year={year}
         setYear={setYear}
       />
-      <Screen1 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year} month={activeMonth} />
+      <Screen1
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
+        year={year}
+        month={activeMonth}
+      />
     </>
   );
 };

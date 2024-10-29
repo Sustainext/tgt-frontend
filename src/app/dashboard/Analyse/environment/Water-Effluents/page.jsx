@@ -91,7 +91,11 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
     setThirdPartyWaterDischargeForOtherOrganizations,
   ] = useState([]);
   const [changeInWaterStorage, setChangeInWaterStorage] = useState([]);
-
+  const [errors, setErrors] = useState({
+    organization: 'Please select Organisation',
+    corporate: 'Please select Corporate',
+    location: 'Please select Location',
+  });
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -221,7 +225,7 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
   }, []);
 
   useEffect(() => {
-    const fetchCorporates = async () => {
+     const fetchCorporates = async () => {
       if (selectedOrg) {
         try {
           const response = await axiosInstance.get(`/corporate/`, {
@@ -229,7 +233,13 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
           });
           setCorporates(response.data);
         } catch (e) {
-          console.error("Failed fetching corporates:", e);
+          if(e.status === 404) {
+            setCorporates([]);
+          }
+          else{
+            console.error("Failed fetching corporates:", e);
+          }
+          
         }
       }
     };
@@ -275,6 +285,17 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
       corporate: "",
       location: "",
     }));
+    if (!newOrg) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        organization: "Please select Organisation",
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        organization: "",
+      }));
+    }
   };
 
   const handleOrgChange = (e) => {
@@ -287,6 +308,17 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
       corporate: newCorp,
       location: "",
     }));
+    if (!newCorp) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        corporate: "Please select Corporate",
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        corporate: "",
+      }));
+    }
   };
 
   const handleLocationChange = (e) => {
@@ -297,6 +329,17 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
       ...prevParams,
       location: newLocation,
     }));
+    if (!newLocation) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        location: "Please select Location",
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        location: "",
+      }));
+    }
   };
 
   const handleDateChange = (newRange) => {
@@ -319,10 +362,10 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
                 <div className="text-zinc-600 text-[12px]  font-semibold font-['Manrope']">
                   View By:
                 </div>
-                <div className="rounded-lg shadow border border-gray-300 justify-start items-start flex">
+                <div className="rounded-lg shadow  justify-start items-start flex">
                   <div
-                    className={`w-[111px] px-4 py-2.5 border-r rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
-                      reportType === "Organization" ? "bg-sky-100" : "bg-white"
+                    className={`w-[111px] px-4 py-2.5 border rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                      reportType === "Organization" ? "bg-[#d2dfeb]" : "bg-white"
                     }`}
                     onClick={() => handleReportTypeChange("Organization")}
                   >
@@ -331,8 +374,8 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
                     </div>
                   </div>
                   <div
-                    className={`w-[111px] px-4 py-2.5 border-r border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
-                      reportType === "Corporate" ? "bg-sky-100" : "bg-white"
+                    className={`w-[111px] px-4 py-2.5 border-y border-r border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                      reportType === "Corporate" ? "bg-[#d2dfeb]" : "bg-white"
                     }`}
                     onClick={() => handleReportTypeChange("Corporate")}
                   >
@@ -341,8 +384,8 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
                     </div>
                   </div>
                   <div
-                    className={`w-[111px] px-4 py-2.5 border-r rounded-r-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
-                      reportType === "Location" ? "bg-sky-100" : "bg-white"
+                    className={`w-[111px] px-4 py-2.5 border-y border-r rounded-r-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
+                      reportType === "Location" ? "bg-[#d2dfeb]" : "bg-white"
                     }`}
                     onClick={() => handleReportTypeChange("Location")}
                   >
@@ -360,7 +403,7 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[12px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal ml-1"
                   >
                     Select Organization*
                   </label>
@@ -378,13 +421,18 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
                           </option>
                         ))}
                     </select>
+                    {errors.organization && (
+                    <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
+                      {errors.organization}
+                    </p>
+                  )}
                   </div>
                 </div>
                 {(reportType === "Corporate" || reportType === "Location") && (
                   <div className="mr-2">
                     <label
                       htmlFor="cname"
-                      className="text-neutral-800 text-[12px] font-normal"
+                      className="text-neutral-800 text-[12px] font-normal ml-1"
                     >
                       Select Corporate
                     </label>
@@ -402,6 +450,11 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
                             </option>
                           ))}
                       </select>
+                      {errors.corporate && (
+                      <p className="text-[#007EEF] text-[12px] pl-2 mt-2">
+                        {errors.corporate}
+                      </p>
+                    )}
                     </div>
                   </div>
                 )}
@@ -409,7 +462,7 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
                   <div className="mr-2">
                     <label
                       htmlFor="cname"
-                      className="text-neutral-800 text-[12px] font-normal"
+                      className="text-neutral-800 text-[12px] font-normal ml-1"
                     >
                       Select Location
                     </label>
@@ -427,13 +480,16 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
                             </option>
                           ))}
                       </select>
+                      {errors.location && (
+                      <p className="text-[#007EEF] text-[12px] pl-2 mt-2">{errors.location}</p>
+                    )}
                     </div>
                   </div>
                 )}
                 <div className="mr-2">
                   <label
                     htmlFor="cname"
-                    className="text-neutral-800 text-[12px] font-normal"
+                    className="text-neutral-800 text-[12px] font-normal ml-1"
                   >
                     Select Date
                   </label>
@@ -443,11 +499,11 @@ const AnalyseWaterEffluents = ({ isBoxOpen }) => {
                       endDate={dateRange.end}
                       onDateChange={handleDateChange}
                     />
-                    {!isDateRangeValid && (
-                      <div className="text-red-600 text-xs mt-1 ml-1">
-                        Please select a valid date range.
-                      </div>
-                    )}
+                 {!isDateRangeValid && (
+                     <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
+                     Please select a date range
+                    </p>
+                  )}
                   </div>
                 </div>
               </div>
