@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import { getMonthName } from "../../../app/utils/dateUtils";
+import { v4 as uuidv4 } from "uuid";
 
 export const fetchEmissionsData = createAsyncThunk(
   "emissions/fetchEmissionsData",
@@ -113,10 +114,12 @@ export const fetchPreviousMonthData = createAsyncThunk(
         if (!responseData || !responseData.data) {
           return { data: [] };
         }
+
         return {
           ...responseData,
           data: responseData.data.map((item) => ({
             ...item,
+            autofillId: uuidv4(), // Add unique UUID
             Emission: {
               ...item.Emission,
               rowType: "default",
@@ -471,15 +474,23 @@ const emissionsSlice = createSlice({
         if (!state.selectedRows[scope].some((row) => row.rowId === rowId)) {
           state.selectedRows[scope].push({
             rowId,
-            ...rowData,
+            Emission: {
+              ...rowData, // Spread rowData inside Emission object
+            },
             isSelected: true,
           });
         } else {
-          // If it exists, update its selection state
+          // If it exists, update its selection state and data
           const rowIndex = state.selectedRows[scope].findIndex(
             (row) => row.rowId === rowId
           );
-          state.selectedRows[scope][rowIndex].isSelected = true;
+          state.selectedRows[scope][rowIndex] = {
+            ...state.selectedRows[scope][rowIndex],
+            Emission: {
+              ...rowData, // Update Emission data
+            },
+            isSelected: true,
+          };
         }
       } else {
         // Remove the row if it's being deselected
@@ -518,7 +529,20 @@ const emissionsSlice = createSlice({
         };
       }
     },
-
+    clearSelectedRows: (state) => {
+      // Clear all selections at once
+      state.selectedRows = {
+        scope1: [],
+        scope2: [],
+        scope3: [],
+      };
+      // Reset selectAllChecked state
+      state.selectAllChecked = {
+        scope1: false,
+        scope2: false,
+        scope3: false,
+      };
+    },
     toggleSelectAll: (state, action) => {
       const { scope, isChecked } = action.payload;
       state.selectAllChecked[scope] = isChecked;
@@ -659,6 +683,10 @@ const emissionsSlice = createSlice({
       .addCase(assignEmissionTasks.fulfilled, (state, action) => {
         state.assignTaskStatus = "succeeded";
         state.scopeReRender = !state.scopeReRender;
+        // Clear selections for the specific scope where tasks were assigned
+        const scopeNumber = action.payload.assignmentDetails.scope;
+        state.selectedRows[`scope${scopeNumber}`] = [];
+        state.selectAllChecked[`scope${scopeNumber}`] = false;
       })
       .addCase(assignEmissionTasks.rejected, (state, action) => {
         state.assignTaskStatus = "failed";
@@ -715,6 +743,7 @@ export const {
   resetPreviousMonthData,
   setSelectedRows,
   updateSelectedRow,
+  clearSelectedRows,
   toggleSelectAll,
   resetApprovedTasksStatus,
   resetAssignedTasksStatus,

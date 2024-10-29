@@ -5,7 +5,7 @@ import {
   fetchUsers,
   fetchAssignedTasks,
   updateScopeDataLocal,
-  setSelectedRows
+  setSelectedRows,
 } from "@/lib/redux/features/emissionSlice";
 import { CiCircleMinus } from "react-icons/ci";
 import { toast } from "react-toastify";
@@ -14,13 +14,7 @@ import { getLocationName } from "../../utils/locationName";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
-const MultipleAssignEmissionModal = ({
-  isOpen,
-  onClose,
-  onRemove,
-  taskData,
-  scope,
-}) => {
+const MultipleAssignEmissionModal = ({ isOpen, onClose, taskData, scope }) => {
   const { data: users, status: usersStatus } = useSelector(
     (state) => state.emissions.users
   );
@@ -59,29 +53,32 @@ const MultipleAssignEmissionModal = ({
   }, [taskData.location]);
 
   // Utility function to extract scope number
-const getScopeNumber = (scopeString) => {
-  return parseInt(scopeString.replace('scope', ''));
-};
+  const getScopeNumber = (scopeString) => {
+    return parseInt(scopeString.replace("scope", ""));
+  };
 
-  const formData = useSelector(state => 
-    state.emissions[`${scope}Data`]?.data?.data && Array.isArray(state.emissions[`${scope}Data`].data.data)
-      ? state.emissions[`${scope}Data`].data.data 
+  const formData = useSelector((state) =>
+    state.emissions[`${scope}Data`]?.data?.data &&
+    Array.isArray(state.emissions[`${scope}Data`].data.data)
+      ? state.emissions[`${scope}Data`].data.data
       : []
   );
 
   const handleRemoveMultipleRows = useCallback(
     (indices, scope) => {
       // Filter out rows whose indices are in the indices array
-      const updatedData = formData.filter((_, index) => !indices.includes(index));
+      let updatedData = formData.filter((_, index) => !indices.includes(index));
       console.log("Indices:", indices);
       console.log("Updated Data:", updatedData);
-      
-      
+      if (updatedData.length === 0) {
+        updatedData = [{ Emission: { rowType: "default" } }];
+      }
+
       // Update state with filtered data
       dispatch(
-        updateScopeDataLocal({ 
-          scope: getScopeNumber(scope), 
-          data: { data: updatedData } 
+        updateScopeDataLocal({
+          scope: getScopeNumber(scope),
+          data: { data: updatedData },
         })
       );
     },
@@ -118,10 +115,11 @@ const getScopeNumber = (scopeString) => {
       ).unwrap();
 
       // Get indices of all selected rows
-      const selectedRowIndices = selectedRows
-      .map(row => parseInt(row.rowId.split("_")[1]))
-      console.log('selected indexes',selectedRowIndices);
-      
+      const selectedRowIndices = selectedRows.map((row) =>
+        parseInt(row.rowId.split("_")[1])
+      );
+      console.log("selected indexes", selectedRowIndices);
+
       setLoaderStatus({
         show: true,
         message: "Updating rows...",
@@ -158,30 +156,33 @@ const getScopeNumber = (scopeString) => {
     setShowAllTasks((prev) => !prev);
   };
 
-  const handleRemoveRow = useCallback((rowData) => {
-    if (!rowData || !rowData.rowId) {
-      console.error("Invalid row data provided to handleRemoveRow");
-      return;
-    }
+  const handleRemoveRow = useCallback(
+    (rowData) => {
+      if (!rowData || !rowData.rowId) {
+        console.error("Invalid row data provided to handleRemoveRow");
+        return;
+      }
 
-    // Dispatch action to remove the row from selected rows
-    dispatch(
-      setSelectedRows({
-        scope: scope,
-        rowId: rowData.rowId,
-        isSelected: false,
-        rowData: rowData
-      })
-    );
+      // Dispatch action to remove the row from selected rows
+      dispatch(
+        setSelectedRows({
+          scope: scope,
+          rowId: rowData.rowId,
+          isSelected: false,
+          rowData: rowData,
+        })
+      );
 
-    // If no more rows are selected, close the modal
-    if (selectedRows.length === 1) {
-      setShowAllTasks(false);
-      onClose();
-    }
+      // If no more rows are selected, close the modal
+      if (selectedRows.length === 1) {
+        setShowAllTasks(false);
+        onClose();
+      }
 
-    toast.success("Row removed from selection");
-  }, [dispatch, scope, selectedRows.length, onClose]);
+      toast.success("Row removed from selection");
+    },
+    [dispatch, scope, selectedRows.length, onClose]
+  );
 
   if (!isOpen) return null;
   if (!selectedRows?.length) return null;
@@ -336,32 +337,30 @@ const getScopeNumber = (scopeString) => {
                     <td className="py-2">{row.Emission.Subcategory}</td>
                     <td className="py-2">{row.Emission.Activity || "N/A"}</td>
                     <td className="py-2">
-                  <button
-                  type="button"
-                    onClick={() => handleRemoveRow(row)}
-                    className="p-1 hover:bg-gray-100 rounded-full transition-colors duration-200"
-                    data-tooltip-id={`remove-row-${row.rowId}`}
-                    data-tooltip-content="Remove row"
-                    data-tooltip-variant="light"
-                  >
-                    <CiCircleMinus 
-                      className="text-gray-500 hover:text-red-600 w-5 h-5" 
-                    />
-                  </button>
-                  <Tooltip
-                    id={`remove-row-${row.rowId}`}
-                    place="top"
-                    effect="solid"
-                    style={{
-                      backgroundColor: "#000",
-                      color: "white",
-                      fontSize: "10px",
-                      padding: "4px 8px",
-                      borderRadius: "4px",
-                      boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
-                    }}
-                  />
-                </td>
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveRow(row)}
+                        className="p-1 hover:bg-gray-100 rounded-full transition-colors duration-200"
+                        data-tooltip-id={`remove-row-${row.rowId}`}
+                        data-tooltip-content="Remove row"
+                        data-tooltip-variant="light"
+                      >
+                        <CiCircleMinus className="text-gray-500 hover:text-red-600 w-5 h-5" />
+                      </button>
+                      <Tooltip
+                        id={`remove-row-${row.rowId}`}
+                        place="top"
+                        effect="solid"
+                        style={{
+                          backgroundColor: "#000",
+                          color: "white",
+                          fontSize: "10px",
+                          padding: "4px 8px",
+                          borderRadius: "4px",
+                          boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+                        }}
+                      />
+                    </td>
                   </tr>
                 ))}
               </tbody>

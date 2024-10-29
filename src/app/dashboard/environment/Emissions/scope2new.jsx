@@ -191,11 +191,7 @@ const Scope2 = forwardRef(
         approved_data.status === "succeeded" &&
         (!autoFill || (autoFill && previousMonthData.status === "succeeded"));
 
-      if (!allDataReceived || hasAutoFilled) {
-        return;
-      }
-
-      console.log("Starting autofill process", { autoFill, hasAutoFilled });
+      if (!allDataReceived) return;
 
       const debouncedDataMerge = debounce(() => {
         try {
@@ -205,6 +201,8 @@ const Scope2 = forwardRef(
           formData.forEach((item) => {
             if (item.id) {
               dataMap.set(item.id, item);
+            } else if (item.autofillId) {
+              dataMap.set(item.autofillId, item);
             } else {
               itemsWithoutIds.push(item);
             }
@@ -249,45 +247,19 @@ const Scope2 = forwardRef(
             (dataMap.size === 0 ||
               (hasOnlySystemEntries && itemsWithoutIds.length === 0))
           ) {
-            console.log("Performing autofill");
-            const assignedRows = Array.from(dataMap.values()).filter(
-              (item) => item.Emission?.rowType === "assigned"
-            );
-
             previousMonthData.scope2Data.data.forEach((item) => {
-              if (dataMap.has(item.id)) return;
-
-              const shouldFilter = assignedRows.some((assignedRow) => {
-                if (assignedRow.Emission?.Activity && item.Emission?.Activity) {
-                  return (
-                    assignedRow.Emission.Activity === item.Emission.Activity
-                  );
-                }
-
-                if (
-                  !assignedRow.Emission?.Activity &&
-                  !item.Emission?.Activity
-                ) {
-                  return (
-                    assignedRow.Emission?.Subcategory ===
-                    item.Emission?.Subcategory
-                  );
-                }
-
-                return false;
-              });
-
-              if (!shouldFilter) {
+              if (!dataMap.has(item.autofillId)) {
                 const updatedEmission = { ...item.Emission };
                 updatedEmission.Unit = "";
                 updatedEmission.Quantity = "";
                 updatedEmission.assigned_to = "";
+                updatedEmission.file = {};
                 if (updatedEmission.unit_type?.includes("Over")) {
                   updatedEmission.Unit2 = "";
                   updatedEmission.Quantity2 = "";
                 }
 
-                dataMap.set(item.id, {
+                dataMap.set(item.autofillId, {
                   ...item,
                   Emission: updatedEmission,
                 });
@@ -295,7 +267,6 @@ const Scope2 = forwardRef(
             });
 
             setHasAutoFilled(true);
-            console.log("Autofill completed");
           }
 
           const updatedFormData = [
@@ -330,11 +301,9 @@ const Scope2 = forwardRef(
       approved_data.status,
       previousMonthData.status,
       autoFill,
-      assigned_data.scope2,
-      approved_data.scope2,
-      previousMonthData.scope2Data?.data,
-      hasAutoFilled,
-      dispatch,
+      JSON.stringify(assigned_data.scope2),
+      JSON.stringify(approved_data.scope2),
+      JSON.stringify(previousMonthData.scope2Data?.data),
     ]);
 
     if (scope2State.status === "loading") {

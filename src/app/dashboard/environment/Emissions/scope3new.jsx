@@ -333,7 +333,6 @@ const Scope3 = forwardRef(
     // Add at the top of Scope3 component
     const [hasAutoFilled, setHasAutoFilled] = useState(false);
 
-    // Then use this effect for autofill
     useEffect(() => {
       const allDataReceived =
         formData &&
@@ -351,6 +350,8 @@ const Scope3 = forwardRef(
           formData.forEach((item) => {
             if (item.id) {
               dataMap.set(item.id, item);
+            } else if (item.autofillId) {
+              dataMap.set(item.autofillId, item);
             } else {
               itemsWithoutIds.push(item);
             }
@@ -388,60 +389,32 @@ const Scope3 = forwardRef(
               item.Emission?.rowType === "approved"
           );
 
-          // Add hasAutoFilled check here
           if (
             autoFill &&
-            !hasAutoFilled && // Added check
             previousMonthData.status === "succeeded" &&
             previousMonthData.scope3Data?.data &&
             (dataMap.size === 0 ||
               (hasOnlySystemEntries && itemsWithoutIds.length === 0))
           ) {
-            const assignedRows = Array.from(dataMap.values()).filter(
-              (item) => item.Emission?.rowType === "assigned"
-            );
-
             previousMonthData.scope3Data.data.forEach((item) => {
-              if (dataMap.has(item.id)) return;
-
-              const shouldFilter = assignedRows.some((assignedRow) => {
-                if (assignedRow.Emission?.Activity && item.Emission?.Activity) {
-                  return (
-                    assignedRow.Emission.Activity === item.Emission.Activity
-                  );
-                }
-
-                if (
-                  !assignedRow.Emission?.Activity &&
-                  !item.Emission?.Activity
-                ) {
-                  return (
-                    assignedRow.Emission?.Subcategory ===
-                    item.Emission?.Subcategory
-                  );
-                }
-
-                return false;
-              });
-
-              if (!shouldFilter) {
+              if (!dataMap.has(item.autofillId)) {
                 const updatedEmission = { ...item.Emission };
                 updatedEmission.Unit = "";
                 updatedEmission.Quantity = "";
                 updatedEmission.assigned_to = "";
+                updatedEmission.file = {};
                 if (updatedEmission.unit_type?.includes("Over")) {
                   updatedEmission.Unit2 = "";
                   updatedEmission.Quantity2 = "";
                 }
 
-                dataMap.set(item.id, {
+                dataMap.set(item.autofillId, {
                   ...item,
                   Emission: updatedEmission,
                 });
               }
             });
 
-            // Set flag after autofilling
             setHasAutoFilled(true);
           }
 
@@ -477,9 +450,9 @@ const Scope3 = forwardRef(
       approved_data.status,
       previousMonthData.status,
       autoFill,
-      assigned_data.scope3,
-      approved_data.scope3,
-      previousMonthData.scope3Data?.data,
+      JSON.stringify(assigned_data.scope3),
+      JSON.stringify(approved_data.scope3),
+      JSON.stringify(previousMonthData.scope3Data?.data),
     ]);
 
     if (scope3State.status === "loading") {

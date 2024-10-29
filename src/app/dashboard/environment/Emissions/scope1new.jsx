@@ -60,7 +60,9 @@ const Scope1 = forwardRef(
     const dispatch = useDispatch();
 
     const scope1State = useSelector((state) => state.emissions.scope1Data);
-    const selectedRows = useSelector((state) => state.emissions.selectedRows["scope1"]);
+    const selectedRows = useSelector(
+      (state) => state.emissions.selectedRows["scope1"]
+    );
     const previousMonthData = useSelector(
       (state) => state.emissions.previousMonthData
     );
@@ -72,6 +74,7 @@ const Scope1 = forwardRef(
     const [loopen, setLoOpen] = useState(false);
     const [modalData, setModalData] = useState(null);
     const [activityCache, setActivityCache] = useState({});
+    const [hasAutoFilled, setHasAutoFilled] = useState(false);
 
     const formData = Array.isArray(scope1State.data?.data)
       ? scope1State.data.data
@@ -83,16 +86,16 @@ const Scope1 = forwardRef(
 
     useImperativeHandle(ref, () => ({
       updateFormData: () => {
-        const filteredFormData = formData.filter(row => 
-          !["assigned"].includes(row.Emission?.rowType)
+        const filteredFormData = formData.filter(
+          (row) => !["assigned"].includes(row.Emission?.rowType)
         );
-        
+
         if (filteredFormData.length > 0) {
           return updateFormData(filteredFormData);
         }
-        
+
         return Promise.resolve();
-      }
+      },
     }));
 
     const LoaderOpen = () => setLoOpen(true);
@@ -144,7 +147,6 @@ const Scope1 = forwardRef(
       async (index) => {
         const parsedIndex = parseInt(index, 10);
         const rowToRemove = formData[parsedIndex];
-        console.log("Row to remove:", parsedIndex, rowToRemove);
 
         if (!rowToRemove) {
           console.error("Row not found");
@@ -159,7 +161,6 @@ const Scope1 = forwardRef(
         }
 
         const updatedData = formData.filter((_, i) => i !== parsedIndex);
-        console.log("updated data", updatedData, " for index ", parsedIndex);
 
         dispatch(
           updateScopeDataLocal({ scope: 1, data: { data: updatedData } })
@@ -178,7 +179,6 @@ const Scope1 = forwardRef(
         if (parsedIndex === 0 && updatedData.length === 0) {
           setAccordionOpen(false);
         }
-
       },
       [formData, dispatch, setAccordionOpen]
     );
@@ -221,6 +221,7 @@ const Scope1 = forwardRef(
     }, [scope1State.status, scope1State.schema, scope1State.uiSchema]);
 
     useEffect(() => {
+      // Only proceed if we have all the data
       const allDataReceived =
         formData &&
         assigned_data.status === "succeeded" &&
@@ -241,6 +242,8 @@ const Scope1 = forwardRef(
           formData.forEach((item) => {
             if (item.id) {
               dataMap.set(item.id, item);
+            } else if (item.autofillId) {
+              dataMap.set(item.autofillId, item);
             } else {
               itemsWithoutIds.push(item);
             }
@@ -282,29 +285,6 @@ const Scope1 = forwardRef(
               item.Emission?.rowType === "approved"
           );
 
-          // if (autoFill &&
-          //     previousMonthData.status === 'succeeded' &&
-          //     previousMonthData.scope1Data?.data &&
-          //     (dataMap.size === 0 || (hasOnlySystemEntries && itemsWithoutIds.length === 0))) {
-          //   previousMonthData.scope1Data.data.forEach(item => {
-          //     if (!dataMap.has(item.id)) {
-          //       const updatedEmission = { ...item.Emission };
-          //       updatedEmission.Unit = "";
-          //       updatedEmission.Quantity = "";
-          //       updatedEmission.assigned_to = "";
-          //       if (updatedEmission.unit_type?.includes("Over")) {
-          //         updatedEmission.Unit2 = "";
-          //         updatedEmission.Quantity2 = "";
-          //       }
-
-          //       dataMap.set(item.id, {
-          //         ...item,
-          //         Emission: updatedEmission
-          //       });
-          //     }
-          //   });
-          // }
-
           // Handle autofill data with enhanced filtering
           if (
             autoFill &&
@@ -313,59 +293,30 @@ const Scope1 = forwardRef(
             (dataMap.size === 0 ||
               (hasOnlySystemEntries && itemsWithoutIds.length === 0))
           ) {
-            // Get all assigned rows for comparison
-            const assignedRows = Array.from(dataMap.values()).filter(
-              (item) => item.Emission?.rowType === "assigned"
-            );
-
             previousMonthData.scope1Data.data.forEach((item) => {
-              // Skip if item already exists in dataMap
-              if (dataMap.has(item.id)) return;
-
-              // Check if this item should be filtered out based on assigned tasks
-              const shouldFilter = assignedRows.some((assignedRow) => {
-                // If both have activities, compare them
-                if (assignedRow.Emission?.Activity && item.Emission?.Activity) {
-                  return (
-                    assignedRow.Emission.Activity === item.Emission.Activity
-                  );
-                }
-
-                // If neither have activities, compare subcategories
-                if (
-                  !assignedRow.Emission?.Activity &&
-                  !item.Emission?.Activity
-                ) {
-                  return (
-                    assignedRow.Emission?.Subcategory ===
-                    item.Emission?.Subcategory
-                  );
-                }
-
-                // If conditions don't match, don't filter
-                return false;
-              });
-
-              // Only add the item if it shouldn't be filtered
-              if (!shouldFilter) {
+              if (!dataMap.has(item.autofillId)) {
                 const updatedEmission = { ...item.Emission };
+                // Reset values
                 updatedEmission.Unit = "";
                 updatedEmission.Quantity = "";
                 updatedEmission.assigned_to = "";
+                updatedEmission.file = {};
                 if (updatedEmission.unit_type?.includes("Over")) {
                   updatedEmission.Unit2 = "";
                   updatedEmission.Quantity2 = "";
                 }
 
-                dataMap.set(item.id, {
+                dataMap.set(item.autofillId, {
                   ...item,
                   Emission: updatedEmission,
                 });
               }
             });
+
+            setHasAutoFilled(true);
           }
 
-          // Combine all data: Map values + items without IDs
+          // Combine all data sources
           const updatedFormData = [
             ...Array.from(dataMap.values()),
             ...itemsWithoutIds,
@@ -404,6 +355,10 @@ const Scope1 = forwardRef(
       JSON.stringify(previousMonthData.scope1Data?.data),
     ]);
 
+    useEffect(() => {
+      setHasAutoFilled(false);
+    }, [location, year, month]);
+
     const formRef = useRef();
 
     const scopeReRender = useSelector((state) => state.emissions.scopeReRender);
@@ -433,8 +388,8 @@ const Scope1 = forwardRef(
       <>
         <div>
           <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+            schema={local_schema}
+            uiSchema={local_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
