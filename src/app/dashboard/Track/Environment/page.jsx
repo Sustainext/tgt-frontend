@@ -12,7 +12,7 @@ const PowerBIEmbed = dynamic(
 );
 
 const EnvironmentTrack = ({ contentSize, dashboardData }) => {
-  const [activeTab, setActiveTab] = useState("zohoEmissions");
+  const [activeTab, setActiveTab] = useState("powerbiEmissions");
   const [powerBIToken, setPowerBIToken] = useState(null);
   const [models, setModels] = useState(null);
   const { width, height } = contentSize || { width: 800, height: 600 };
@@ -174,7 +174,8 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
     height: `${height - 50}px`,
   };
 
-  if (!models || !PowerBIEmbed) return <p>Loading...</p>;
+  if (!models || !PowerBIEmbed || !dashboardData) return <p>Loading...</p>;
+  if (dashboardData.length === 0) return <p>Data not available</p>;
 
   return (
     <div

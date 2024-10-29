@@ -1,19 +1,19 @@
-'use client'
-import React, { useState, useEffect } from 'react';
+"use client";
+import React, { useState, useEffect } from "react";
 import { GiPublicSpeaker } from "react-icons/gi";
 // import { PowerBIEmbed } from "powerbi-client-react";
 // import { models } from "powerbi-client";
-import axiosInstance from '../../../utils/axiosMiddleware'
-import dynamic from 'next/dynamic'
-import { loadFromLocalStorage } from '@/app/utils/storage';
+import axiosInstance from "../../../utils/axiosMiddleware";
+import dynamic from "next/dynamic";
+import { loadFromLocalStorage } from "@/app/utils/storage";
 
 const PowerBIEmbed = dynamic(
-  () => import("powerbi-client-react").then(mod => mod.PowerBIEmbed),
+  () => import("powerbi-client-react").then((mod) => mod.PowerBIEmbed),
   { ssr: false }
 );
 
 const SocialTrack = ({ contentSize, dashboardData }) => {
-  const [activeTab, setActiveTab] = useState('powerbiSocialEmployment');
+  const [activeTab, setActiveTab] = useState("powerbiSocialEmployment");
   const [powerBIToken, setPowerBIToken] = useState(null);
   const [models, setModels] = useState(null);
   const { width, height } = contentSize || { width: 800, height: 600 }; // Fallback values
@@ -21,18 +21,24 @@ const SocialTrack = ({ contentSize, dashboardData }) => {
   const filter = {
     $schema: "http://powerbi.com/product/schema#basic",
     target: {
-        table: "Client_Info",
-        column: "uuid"
+      table: "Client_Info",
+      column: "uuid",
     },
     operator: "In",
-    values: [loadFromLocalStorage('client_key')]
-};
+    values: [loadFromLocalStorage("client_key")],
+  };
 
   const tabs = [
-    { id: 'powerbiSocialEmployment', label: 'Employment (PowerBI)' },
-    { id: 'powerbiSocialOHS', label: 'OHS (PowerBI)' },
-    { id: 'powerbiSocialDiversityInclusion', label: 'Diversity & Inclusion (PowerBI)' },
-    { id: 'powerbiSocialCommunityDevelopment', label: 'Community Development (PowerBI)' },
+    { id: "powerbiSocialEmployment", label: "Employment (PowerBI)" },
+    { id: "powerbiSocialOHS", label: "OHS (PowerBI)" },
+    {
+      id: "powerbiSocialDiversityInclusion",
+      label: "Diversity & Inclusion (PowerBI)",
+    },
+    {
+      id: "powerbiSocialCommunityDevelopment",
+      label: "Community Development (PowerBI)",
+    },
   ];
 
   useEffect(() => {
@@ -43,7 +49,7 @@ const SocialTrack = ({ contentSize, dashboardData }) => {
 
     loadModels();
   }, []);
-  
+
   const getIframeUrl = (tabId) => {
     switch (tabId) {
       // case 'powerbiSocialEmployment':
@@ -56,14 +62,14 @@ const SocialTrack = ({ contentSize, dashboardData }) => {
   useEffect(() => {
     const fetchPowerBIToken = async () => {
       try {
-        const response = await axiosInstance('api/auth/powerbi_token/');        
-        const data = response.data;          
+        const response = await axiosInstance("api/auth/powerbi_token/");
+        const data = response.data;
         setPowerBIToken(data.access_token);
       } catch (error) {
         console.error("Error fetching PowerBI token:", error);
       }
     };
-  
+
     fetchPowerBIToken();
   }, []);
 
@@ -72,17 +78,23 @@ const SocialTrack = ({ contentSize, dashboardData }) => {
 
     let reportConfig;
     switch (tabId) {
-      case 'powerbiSocialEmployment':
-        reportConfig = dashboardData.find(item => item.employment)?.employment;
+      case "powerbiSocialEmployment":
+        reportConfig = dashboardData.find(
+          (item) => item.employment
+        )?.employment;
         break;
-      case 'powerbiSocialOHS':
-        reportConfig = dashboardData.find(item => item.ohs)?.ohs;
+      case "powerbiSocialOHS":
+        reportConfig = dashboardData.find((item) => item.ohs)?.ohs;
         break;
-      case 'powerbiSocialDiversityInclusion':
-        reportConfig = dashboardData.find(item => item.diversity_inclusion)?.diversity_inclusion;
+      case "powerbiSocialDiversityInclusion":
+        reportConfig = dashboardData.find(
+          (item) => item.diversity_inclusion
+        )?.diversity_inclusion;
         break;
-      case 'powerbiSocialCommunityDevelopment':
-        reportConfig = dashboardData.find(item => item.community_development)?.community_development;
+      case "powerbiSocialCommunityDevelopment":
+        reportConfig = dashboardData.find(
+          (item) => item.community_development
+        )?.community_development;
         break;
       default:
         return null;
@@ -132,7 +144,8 @@ const SocialTrack = ({ contentSize, dashboardData }) => {
     height: `${height - 50}px`,
   };
 
-  if (!models || !PowerBIEmbed) return <p>Loading...</p>;
+  if (!models || !PowerBIEmbed || !dashboardData) return <p>Loading...</p>;
+  if (dashboardData.length === 0) return <p>Data not available</p>;
 
   return (
     <div
@@ -158,7 +171,7 @@ const SocialTrack = ({ contentSize, dashboardData }) => {
         </ul>
       </div>
       <div className="w-full flex-grow flex justify-center items-center">
-      {activeTab.startsWith("powerbi") && powerBIToken ? (
+        {activeTab.startsWith("powerbi") && powerBIToken ? (
           <div style={embedContainerStyle}>
             <PowerBIEmbed
               embedConfig={getPowerBIConfig(activeTab)}
