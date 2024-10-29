@@ -189,7 +189,13 @@ const ESGReport = () => {
                     <div>
                       <button 
                       onClick={()=>{
-                        handleNextStep('back')
+                        if(activeStep>15){
+                          router.push('/dashboard/Report')
+                        }
+                        else{
+                          handleNextStep('back')
+                        }
+                       
                       }}
                       className="text-[12px] text-[#667085] flex gap-2 ml-3">
                         <FaArrowLeftLong className="w-3 h-3 mt-1"/>
