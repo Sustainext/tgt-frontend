@@ -10,6 +10,8 @@ import {
   FiLoader,
   FiX,
   FiFile,
+  FaRegFileExcel,
+  FaRegFile,
 } from "react-icons/fi";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -733,46 +735,49 @@ const MyTask = () => {
   };
 
   const handleCompleted = async (id, roles) => {
-    LoaderOpen();
-    let task_status;
-    if (roles === 1) {
-      task_status = 2;
-    } else {
-      task_status = 3;
-    }
-    const sandData = {
-      task_status,
-    };
-    await patch(`/organization_task_dashboard/${id}/`, sandData).then(
-      (response) => {
-        if (response.status == "200") {
-          toast.success("Task has been completed successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          LoaderClose();
-          fetchMytaskDetails();
-        } else {
-          toast.error("Error", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          LoaderClose();
-        }
+    try {
+      LoaderOpen();
+
+      const task_status = roles === 1 ? "under_review" : "completed";
+      const sandData = { task_status };
+
+      const response = await patch(
+        `/organization_task_dashboard/${id}/`,
+        sandData
+      );
+
+      if (response.status === 200) {
+        toast.success("Task has been completed successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+
+        await fetchMytaskDetails();
+      } else {
+        throw new Error(`Server responded with status: ${response.status}`);
       }
-    );
+    } catch (error) {
+      console.error("Error completing task:", error);
+
+      toast.error(error.response?.data?.message || "Failed to complete task", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    } finally {
+      LoaderClose();
+    }
   };
 
   const handleForReview = async (id, status) => {
@@ -2164,7 +2169,7 @@ const MyTask = () => {
             </div>
           </div>
 
-          {isPdfViewerOpen && (
+          {/* {isPdfViewerOpen && (
             <div className="relative w-[780px] ms-4 bg-white rounded-lg shadow-lg h-[550px] overflow-y-auto">
               {taskassigndata.file_data.url ? (
                 <>
@@ -2210,6 +2215,67 @@ const MyTask = () => {
                       zIndex: "100",
                     }}
                     aria-label="Close PDF Viewer"
+                  >
+                    &times;
+                  </button>
+                </div>
+              )}
+            </div>
+          )} */}
+          {isPdfViewerOpen && (
+            <div className="relative w-[780px] ms-4 bg-white rounded-lg shadow-lg h-[550px] overflow-y-auto">
+              {taskassigndata.file_data.url ? (
+                <>
+                  {taskassigndata.file_data.type?.startsWith("image/") ||
+                  taskassigndata.file_data.type === "application/pdf" ? (
+                    <>
+                      <iframe
+                        title="File Viewer"
+                        src={taskassigndata.file_data.url}
+                        width="100%"
+                        height="100%"
+                        style={{ border: "none", backgroundColor: "white" }}
+                      />
+                      <button
+                        onClick={closePreviewModal}
+                        className="absolute -top-2.5 right-2.5 bg-transparent border-none text-gray-700 text-4xl cursor-pointer z-[100] hover:text-gray-900"
+                        aria-label="Close File Viewer"
+                      >
+                        &times;
+                      </button>
+                    </>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center h-full relative">
+                      <div className="flex flex-col items-center space-y-4">
+                        {/* Show appropriate icon based on file type */}
+                        <p className="text-gray-600">
+                          Preview not available for this file type
+                        </p>
+                        <a
+                          href={taskassigndata.file_data.url}
+                          download
+                          className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                        >
+                          Download File
+                        </a>
+                      </div>
+                      <button
+                        onClick={closePreviewModal}
+                        className="absolute -top-2.5 right-2.5 bg-transparent border-none text-gray-700 text-4xl cursor-pointer z-[100] hover:text-gray-900"
+                        aria-label="Close File Viewer"
+                      >
+                        &times;
+                      </button>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div className="flex items-center justify-center h-full relative">
+                  <p className="text-gray-600">File not available</p>
+                  <button
+                    onClick={closePreviewModal}
+                    className="absolute -top-2.5 right-2.5 bg-transparent border-none text-gray-700 text-4xl cursor-pointer z-[100] hover:text-gray-900"
+                    aria-label="Close File Viewer"
                   >
                     &times;
                   </button>
