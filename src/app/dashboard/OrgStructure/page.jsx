@@ -1,21 +1,28 @@
-'use client'
-import { useState, useEffect } from 'react';
-import { FaTrashAlt, FaEye, FaEdit, FaAngleRight, FaAngleDown } from 'react-icons/fa';
-import { useRouter } from 'next/navigation';
-import axiosInstance from '../../utils/axiosMiddleware';
-import axios from 'axios';
-import Link from 'next/link';
-import Organization from './forms/Organization/page';
-import ConfirmationModal from '../../shared/components/ConfirmationModal'
-import EntityView from '../../shared/components/EntityView'
+"use client";
+import { useState, useEffect } from "react";
+import {
+  FaTrashAlt,
+  FaEye,
+  FaEdit,
+  FaAngleRight,
+  FaAngleDown,
+} from "react-icons/fa";
+import { useRouter } from "next/navigation";
+import axiosInstance from "../../utils/axiosMiddleware";
+import axios from "axios";
+import Link from "next/link";
+import Organization from "./forms/Organization/page";
+import ConfirmationModal from "../../shared/components/ConfirmationModal";
+import EntityView from "../../shared/components/EntityView";
 import {
   setHeadertext1,
   setHeadertext2,
-  setHeaderdisplay
+  setHeaderdisplay,
 } from "../../../lib/redux/features/topheaderSlice";
 import { useDispatch } from "react-redux";
-const Table = ({ data, labels, currentIndex, rawData,isNewRole }) => {
-  const [newrole, setRole] = useState(""); 
+
+const Table = ({ data, labels, currentIndex, rawData }) => {
+  const [newrole, setRole] = useState("");
   const router = useRouter();
   const values1 = Object.values(data);
   const values = values1.filter((item, index) => index !== values1.length - 1);
@@ -26,10 +33,8 @@ const Table = ({ data, labels, currentIndex, rawData,isNewRole }) => {
   const [filteredEntity, setFilteredEntity] = useState({});
   useEffect(() => {
     if (typeof window !== "undefined") {
-
       const storedRole = localStorage.getItem("custom_role"); // Fetch the role
 
-      
       if (storedRole) {
         setRole(storedRole); // Get role from localStorage
         console.log("Stored role:", storedRole);
@@ -43,8 +48,8 @@ const Table = ({ data, labels, currentIndex, rawData,isNewRole }) => {
 
   const handleExpand = () => {
     setExpanded(!expanded);
-    if (labels[currentIndex] === 'Location') {
-      console.log(childExpanded, 'childExpanded');
+    if (labels[currentIndex] === "Location") {
+      console.log(childExpanded, "childExpanded");
     }
   };
 
@@ -53,7 +58,7 @@ const Table = ({ data, labels, currentIndex, rawData,isNewRole }) => {
     const formattedCorporateEntities = [];
     const formattedLocations = [];
 
-    console.log('inside separate data function, raw data ->', orgStruct);
+    console.log("inside separate data function, raw data ->", orgStruct);
 
     orgStruct?.forEach((org) => {
       formattedOrganizations.push({
@@ -126,7 +131,7 @@ const Table = ({ data, labels, currentIndex, rawData,isNewRole }) => {
           fax: entity.fax,
           zipcode: entity.zipcode,
           framework: entity.framework,
-          organization: entity.organization
+          organization: entity.organization,
         });
 
         entity.location.forEach((location) => {
@@ -170,30 +175,38 @@ const Table = ({ data, labels, currentIndex, rawData,isNewRole }) => {
 
   const filterOrgStruct = (orgStruct, viewType, dataItem) => {
     const separatedData = separateData(orgStruct);
-    console.log('filtering ->', viewType, dataItem);
-    console.log('separated data', separatedData);
+    console.log("filtering ->", viewType, dataItem);
+    console.log("separated data", separatedData);
 
-    if (viewType === 'Corporate Entity') {
+    if (viewType === "Corporate Entity") {
       const found = separatedData.formattedOrganizations.filter((item) => {
-        console.log('organisation comparison', item.name, dataItem['Organisation Name']);
-        return item.name === dataItem['Organisation Name'];
+        console.log(
+          "organisation comparison",
+          item.name,
+          dataItem["Organisation Name"]
+        );
+        return item.name === dataItem["Organisation Name"];
       });
 
-      console.log('found', found);
+      console.log("found", found);
       return found;
-    } else if (viewType === 'Location') {
+    } else if (viewType === "Location") {
       const found = separatedData.formattedCorporateEntities.filter((item) => {
-        console.log('entity comparison', item.name, dataItem['Entity Name']);
-        return item.name === dataItem['Entity Name'];
+        console.log("entity comparison", item.name, dataItem["Entity Name"]);
+        return item.name === dataItem["Entity Name"];
       });
-      console.log('found', found);
+      console.log("found", found);
       return found;
     } else if (viewType === undefined) {
       const found = separatedData.formattedLocations.filter((item) => {
-        console.log('location comparison', item.name, dataItem['Location Unit']);
-        return item.name === dataItem['Location Unit'];
+        console.log(
+          "location comparison",
+          item.name,
+          dataItem["Location Unit"]
+        );
+        return item.name === dataItem["Location Unit"];
       });
-      console.log('found', found);
+      console.log("found", found);
       return found;
     }
 
@@ -201,7 +214,7 @@ const Table = ({ data, labels, currentIndex, rawData,isNewRole }) => {
   };
 
   const [showEntityView, setShowEntityView] = useState(false);
-  const [viewType, setViewType] = useState('');
+  const [viewType, setViewType] = useState("");
 
   const handleEntityView = (type, item) => {
     setViewType(type);
@@ -222,30 +235,33 @@ const Table = ({ data, labels, currentIndex, rawData,isNewRole }) => {
       item: item,
       filteredData: filterOrgStruct(orgStruct, type, item),
     };
-    console.log('data to pass', dataToPass);
+    console.log("data to pass", dataToPass);
     setFilteredEntity(filteredOrgStruct);
     const encodedData = encodeURIComponent(JSON.stringify(dataToPass));
-    if (dataToPass.type === 'Corporate Entity')
-      router.push(`/dashboard/OrgStructure/forms/Organization?data=${encodedData}`);
-    else if (dataToPass.type === 'Location')
+    if (dataToPass.type === "Corporate Entity")
+      router.push(
+        `/dashboard/OrgStructure/forms/Organization?data=${encodedData}`
+      );
+    else if (dataToPass.type === "Location")
       router.push(`/dashboard/OrgStructure/forms/Entity?data=${encodedData}`);
-    else router.push(`/dashboard/OrgStructure/forms/Location?data=${encodedData}`);
+    else
+      router.push(`/dashboard/OrgStructure/forms/Location?data=${encodedData}`);
   };
 
   const handleEntityDelete = async (type, item) => {
     setIsDeleteConfirmationOpen(false);
     try {
       const filteredOrgStruct = await filterOrgStruct(orgStruct, type, item);
-      console.log('item', filteredOrgStruct);
+      console.log("item", filteredOrgStruct);
       if (!filteredOrgStruct || !filteredOrgStruct[0].id) {
-        throw new Error('Invalid or missing ID from filteredOrgStruct');
+        throw new Error("Invalid or missing ID from filteredOrgStruct");
       }
 
       let endpoint;
-      if (type === 'Corporate Entity') {
+      if (type === "Corporate Entity") {
         endpoint = `${process.env.BACKEND_API_URL}/organization_activity/${filteredOrgStruct[0].id}/`;
       }
-      if (type === 'Location') {
+      if (type === "Location") {
         endpoint = `${process.env.BACKEND_API_URL}/corporate/${filteredOrgStruct[0].id}/`;
       } else if (type === undefined) {
         endpoint = `${process.env.BACKEND_API_URL}/location/${filteredOrgStruct[0].id}/`;
@@ -262,16 +278,17 @@ const Table = ({ data, labels, currentIndex, rawData,isNewRole }) => {
         })
         .catch((error) => {
           console.error(
-            'Error deleting entity:',
+            "Error deleting entity:",
             error.response ? error.response.data : error.message
           );
         });
     } catch (error) {
-      console.error('Error in handleEntityDelete:', error.message);
+      console.error("Error in handleEntityDelete:", error.message);
     }
   };
 
-  const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState(false);
+  const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] =
+    useState(false);
 
   const closeDeleteConfirmation = () => {
     setIsDeleteConfirmationOpen(false);
@@ -281,37 +298,52 @@ const Table = ({ data, labels, currentIndex, rawData,isNewRole }) => {
     setIsDeleteConfirmationOpen(true);
   };
 
+  const [isNewRole, setIsNewRole] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedRole = localStorage.getItem("custom_role"); // Fetch the role
+
+      if (storedRole) {
+        setIsNewRole(storedRole === "true"); // Get role from localStorage
+        console.log("Stored role:", storedRole);
+      }
+    }
+  }, []);
+
   return (
     <>
-      <tr className='my-2 cursor-pointer'>
-        <td className='py-4 h-12 flex justify-center items-center'>
+      <tr className="my-2 cursor-pointer">
+        <td className="py-4 h-12 flex justify-center items-center">
           {data.children ? (
             expanded ? (
               <div>
                 <div onClick={handleExpand}>
                   <FaAngleDown />
                 </div>
-                {labels[currentIndex] !== '' && numberOfChildren ? (
+                {labels[currentIndex] !== "" && numberOfChildren ? (
                   <div
-                    className='h-[0px] absolute rotate-90 border border-sky-600'
+                    className="h-[0px] absolute rotate-90 border border-sky-600"
                     style={{
-                      width: `${minimumWidth + numberOfChildren * widthPerEntity}px`,
+                      width: `${
+                        minimumWidth + numberOfChildren * widthPerEntity
+                      }px`,
                       left: `calc(-1.7rem - ${numberOfChildren} * 1.5rem)`,
                       top: `calc(4.5rem + ${numberOfChildren} * 1.3rem)`,
                       background:
-                        'linear-gradient(90deg, #007EEF 0%, #2AE4FF 100%)',
+                        "linear-gradient(90deg, #007EEF 0%, #2AE4FF 100%)",
                     }}
                   ></div>
                 ) : (
-                  ''
+                  ""
                 )}
               </div>
             ) : (
-              <div className='flex items-center'>
-                {labels[currentIndex] !== 'Corporate Entity' ? (
-                  <div className='w-[25px] h-[0px] border border-sky-600 ms-4'></div>
+              <div className="flex items-center">
+                {labels[currentIndex] !== "Corporate Entity" ? (
+                  <div className="w-[25px] h-[0px] border border-sky-600 ms-4"></div>
                 ) : (
-                  ''
+                  ""
                 )}
                 <div onClick={handleExpand}>
                   <FaAngleRight />
@@ -319,57 +351,72 @@ const Table = ({ data, labels, currentIndex, rawData,isNewRole }) => {
               </div>
             )
           ) : (
-            ''
+            ""
           )}
         </td>
         {values.map((item, index) => {
           return (
-            <td className='py-2' key={index}>
+            <td className="py-2" key={index}>
               {item}
             </td>
           );
         })}
-        <td className='py-2 px flex justify-left items-center space-x-3 text-neutral-500'>
-        <FaEye style={{ fontSize: '20px' }} onClick={() => handleEntityView(labels[currentIndex], data)} />
+        <td className="py-2 px flex justify-left items-center space-x-3 text-neutral-500">
+          <FaEye
+            style={{ fontSize: "20px" }}
+            onClick={() => handleEntityView(labels[currentIndex], data)}
+          />
           {isNewRole && (
             <>
- 
-   <FaEdit style={{ fontSize: '20px' }} onClick={() => handleEntityEdit(labels[currentIndex], data)} />
-   <FaTrashAlt style={{ fontSize: '20px' }} onClick={() => handleDelete(labels[currentIndex], data)} />
-   </>
+              <FaEdit
+                style={{ fontSize: "20px" }}
+                onClick={() => handleEntityEdit(labels[currentIndex], data)}
+              />
+              <FaTrashAlt
+                style={{ fontSize: "20px" }}
+                onClick={() => handleDelete(labels[currentIndex], data)}
+              />
+            </>
           )}
-       
         </td>
       </tr>
       {data.children && expanded && (
         <tr>
           <td colSpan={values.length + 2}>
-            <div style={{ margin: '10px 0 10px 0px' }}>
-              <TableList data={data.children} labels={labels} currentIndex={currentIndex} rawData={rawData} />
+            <div style={{ margin: "10px 0 10px 0px" }}>
+              <TableList
+                data={data.children}
+                labels={labels}
+                currentIndex={currentIndex}
+                rawData={rawData}
+              />
             </div>
           </td>
         </tr>
       )}
       {showEntityView && (
-        <EntityView onClose={closeEntityView} data={filteredEntity} viewType={viewType} />
+        <EntityView
+          onClose={closeEntityView}
+          data={filteredEntity}
+          viewType={viewType}
+        />
       )}
       <div>
         <ConfirmationModal
           isOpen={isDeleteConfirmationOpen}
           onClose={closeDeleteConfirmation}
           onConfirm={() => handleEntityDelete(labels[currentIndex], data)}
-          message='Are you sure you want to delete this entity?'
+          message="Are you sure you want to delete this entity?"
         />
       </div>
     </>
   );
 };
 
-
-const TableList = ({ data, labels, currentIndex, rawData,isNewRole }) => {
+const TableList = ({ data, labels, currentIndex, rawData }) => {
   if (!data || data.length === 0) {
     return (
-      <p className='flex justify-center items-center text-red-600'>
+      <p className="flex justify-center items-center text-red-600">
         No Data available
       </p>
     );
@@ -377,41 +424,45 @@ const TableList = ({ data, labels, currentIndex, rawData,isNewRole }) => {
 
   const propertyNames1 = Object.keys(data[0]);
   const propertyNames = propertyNames1.filter(
-    (item) => item !== 'children' && item !== 'id'
+    (item) => item !== "children" && item !== "id"
   );
 
   return (
-    <div className='my-4 ms-4'>
+    <div className="my-4 ms-4">
       <div
         className={`flex justify-between items-center w-2/3 ${
-          labels[currentIndex] === 'location' ? 'ms-[27px]' : 'ms-[10px]'
+          labels[currentIndex] === "location" ? "ms-[27px]" : "ms-[10px]"
         }`}
       >
         <div
           className={`w-full h-[31px] text-neutral-500 text-[17px] font-bold leading-snug tracking-tight ${
-            labels[currentIndex] !== 'Location' ? '' : 'ms-12'
+            labels[currentIndex] !== "Location" ? "" : "ms-12"
           }`}
         >
           {labels[currentIndex]}
         </div>
       </div>
-      <table className='w-full py-4 text-sm'>
-        <thead className='font-sm font-semibold border-b border-black border-opacity-10 '>
+      <table className="w-full py-4 text-sm">
+        <thead className="font-sm font-semibold border-b border-black border-opacity-10 ">
           <tr>
-            <th className='py-2 text-left w-2'></th>
+            <th className="py-2 text-left w-2"></th>
             {propertyNames.map((item, index) => (
               <th
-                className='py-4 text-left text-neutral-500 text-xs font-bold leading-[15px]'
+                className="py-4 text-left text-neutral-500 text-xs font-bold leading-[15px]"
                 key={index}
                 style={{
-                  width: `${item === 'Sub Industry' ? '25%' : 100 / (propertyNames.length + 1)}%`,
+                  width: `${
+                    item === "Sub Industry"
+                      ? "25%"
+                      : 100 / (propertyNames.length + 1)
+                  }%`,
                 }}
               >
                 {item}
               </th>
             ))}
             <th
-              className='py-2 text-left text-neutral-500 text-xs font-bold leading-[15px]'
+              className="py-2 text-left text-neutral-500 text-xs font-bold leading-[15px]"
               style={{
                 width: `${100 / (propertyNames.length + 5)}%`,
               }}
@@ -422,7 +473,13 @@ const TableList = ({ data, labels, currentIndex, rawData,isNewRole }) => {
         </thead>
         <tbody>
           {data.map((item) => (
-            <Table data={item} key={item.id} labels={labels} currentIndex={currentIndex + 1} rawData={rawData} isNewRole={isNewRole} />
+            <Table
+              data={item}
+              key={item.id}
+              labels={labels}
+              currentIndex={currentIndex + 1}
+              rawData={rawData}
+            />
           ))}
         </tbody>
       </table>
@@ -431,35 +488,19 @@ const TableList = ({ data, labels, currentIndex, rawData,isNewRole }) => {
 };
 
 const Structure = () => {
-  const levelLabels = ['Organisation', 'Corporate Entity', 'Location'];
+  const levelLabels = ["Organisation", "Corporate Entity", "Location"];
   const [hData, setHData] = useState([]);
   const [rawData, setRawData] = useState([]);
-  const [newrole, setRole] = useState(""); 
+  const [newrole, setRole] = useState("");
   const dispatch = useDispatch();
-  // const [token,setToken]=useState(localStorage.getItem('token').replace(/"/g, ''));
+
   const getAuthToken = () => {
-    if (typeof window !== 'undefined') {
-        return localStorage.getItem('token')?.replace(/"/g, "");
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token")?.replace(/"/g, "");
     }
-    return '';
-};
-const token = getAuthToken();
-  // useEffect(() => {
-  //   const tokenFromLocalStorage = localStorage.getItem('token');
-  //   if (tokenFromLocalStorage) {
-  //     setToken(tokenFromLocalStorage.replace(/"/g, ''));
-  //   }
-  // }, []);
-  let axiosConfig = {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
+    return "";
   };
-  // const options = {
-  //   headers : {
-  //     Authorization:`Bearer ${token}`
-  //   }
-  // }
+  const token = getAuthToken();
 
   useEffect(() => {
     fetchHierarchy();
@@ -474,28 +515,28 @@ const token = getAuthToken();
         setHData(filtered);
       })
       .catch((error) => {
-        console.error('Error fetching data: ', error);
+        console.error("Error fetching data: ", error);
       });
   };
 
   const filterData = (data) => {
     const extractedData = data.map((org) => ({
-      'Organisation Name': org.name,
+      "Organisation Name": org.name,
       Country: org.countryoperation,
       Sector: org.sector,
-      'Sub Industry': org.subindustry,
+      "Sub Industry": org.subindustry,
       children: org.corporatenetityorg?.map((entity) => ({
-        'Entity Name': entity.name,
-        'Sub-industry': entity.subindustry,
+        "Entity Name": entity.name,
+        "Sub-industry": entity.subindustry,
         Country: entity.Country,
-        'No Of Employees': entity.employeecount,
-        Revenue: entity.currency + ' ' + entity.revenue,
+        "No Of Employees": entity.employeecount,
+        Revenue: entity.currency + " " + entity.revenue,
         children: entity.location?.map((location) => ({
-          'Location Unit': location.name,
-          'Location Type': location.typelocation,
+          "Location Unit": location.name,
+          "Location Type": location.typelocation,
           Address: location.streetaddress,
           City: location.city,
-          'No Of Employees': location.employeecount,
+          "No Of Employees": location.employeecount,
           children: [],
         })),
       })),
@@ -503,56 +544,57 @@ const token = getAuthToken();
     return extractedData;
   };
   useEffect(() => {
-   
     dispatch(setHeadertext1(""));
     dispatch(setHeaderdisplay("none"));
-    dispatch(setHeadertext2('Organizational Structure'));
-}, [dispatch]);
-useEffect(() => {
-  if (typeof window !== "undefined") {
+    dispatch(setHeadertext2("Organizational Structure"));
+  }, [dispatch]);
 
-    const storedRole = localStorage.getItem("custom_role"); // Fetch the role
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedRole = localStorage.getItem("custom_role"); // Fetch the role
 
-    
-    if (storedRole) {
-      setRole(storedRole); // Get role from localStorage
-      console.log("Stored role:", storedRole);
+      if (storedRole) {
+        setRole(storedRole); // Get role from localStorage
+        console.log("Stored role:", storedRole);
+      }
     }
-  }
-}, []);
-const isNewRole = newrole === "true";
+  }, []);
+  const isNewRole = newrole === "true";
   return (
-    <div className='w-full my-4'>
-      <div className='flex justify-end items-center space-x-2 me-8'>
+    <div className="w-full my-4">
+      <div className="flex justify-end items-center space-x-2 me-8">
         {isNewRole && (
-<>
-       
-        <Link
-          href={'/dashboard/OrgStructure/forms/Organization'}
-          className='text-sky-600 text-xs font-bold leading-[15px] flex items-center border border-sky-600 py-2 px-4 hover:text-white hover:bg-sky-600 transition-all'
-        >
-          Add new Organisation
-        </Link>
-        <Link
-          href={'/dashboard/OrgStructure/forms/Entity'}
-          className='text-sky-600 text-xs font-bold leading-[15px] flex items-center border border-sky-600 py-2 px-4 hover:text-white hover:bg-sky-600 transition-all'
-        >
-          Add new Corporate
-        </Link>
-        <Link
-          href={'/dashboard/OrgStructure/forms/Location'}
-          className='text-sky-600 text-xs font-bold leading-[15px] flex items-center border border-sky-600 py-2 px-4 hover:text-white hover:bg-sky-600 transition-all'
-        >
-          Add new Location
-        </Link>
-        </>
-         )}
+          <>
+            <Link
+              href={"/dashboard/OrgStructure/forms/Organization"}
+              className="text-sky-600 text-xs font-bold leading-[15px] flex items-center border border-sky-600 py-2 px-4 hover:text-white hover:bg-sky-600 transition-all"
+            >
+              Add new Organisation
+            </Link>
+            <Link
+              href={"/dashboard/OrgStructure/forms/Entity"}
+              className="text-sky-600 text-xs font-bold leading-[15px] flex items-center border border-sky-600 py-2 px-4 hover:text-white hover:bg-sky-600 transition-all"
+            >
+              Add new Corporate
+            </Link>
+            <Link
+              href={"/dashboard/OrgStructure/forms/Location"}
+              className="text-sky-600 text-xs font-bold leading-[15px] flex items-center border border-sky-600 py-2 px-4 hover:text-white hover:bg-sky-600 transition-all"
+            >
+              Add new Location
+            </Link>
+          </>
+        )}
       </div>
 
-      <TableList data={hData} labels={levelLabels} currentIndex={0} rawData={rawData} isNewRole={isNewRole}/>
+      <TableList
+        data={hData}
+        labels={levelLabels}
+        currentIndex={0}
+        rawData={rawData}
+      />
     </div>
   );
 };
-
 
 export default Structure;
