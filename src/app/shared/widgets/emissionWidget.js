@@ -384,15 +384,22 @@ const EmissionWidget = React.memo(
     const handleCategoryChange = useCallback(
       (newCategory) => {
         const updatedValue = {
-          ...value,
+          ...value, // Need to keep other existing fields
           Category: newCategory,
           Subcategory: "",
           Activity: "",
           Quantity: "",
           Unit: "",
         };
+        setCategory(newCategory);
         onChange(updatedValue);
         updateSelectedRowIfNeeded(updatedValue);
+
+        // Reset local state
+        setSubcategory("");
+        setActivity("");
+        setQuantity("");
+        setUnit("");
       },
       [onChange, value, updateSelectedRowIfNeeded]
     );
@@ -408,6 +415,10 @@ const EmissionWidget = React.memo(
         };
         onChange(updatedValue);
         updateSelectedRowIfNeeded(updatedValue);
+
+        setActivity("");
+        setQuantity("");
+        setUnit("");
       },
       [onChange, value, updateSelectedRowIfNeeded]
     );
@@ -430,6 +441,11 @@ const EmissionWidget = React.memo(
         };
         onChange(updatedValue);
         updateSelectedRowIfNeeded(updatedValue);
+
+        setQuantity("");
+        setQuantity2("");
+        setUnit("");
+        setUnit2("");
       },
       [activities, onChange, value, updateSelectedRowIfNeeded]
     );
