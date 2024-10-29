@@ -17,6 +17,7 @@ import {
   MdEditNote,
   MdOutlineManageAccounts,
   MdOutlinePersonAddAlt,
+  MdLockOutline,
 } from "react-icons/md";
 import { LiaHomeSolid } from "react-icons/lia";
 import Link from "next/link";
@@ -54,21 +55,15 @@ const Sidenav = () => {
     }
   }, []);
   const isNewRole = newrole === "true";
-  const lastAllowedPermission = [
-    "collect",
-    "analyse",
-    "report",
-    "optimise",
-    "track",
-  ]
-    .filter((permission) => permissions[permission])
-    .pop();
+
   const Menus = [
     {
       id: 0,
       title: "Sustainext HQ",
       icon: <LiaHomeSolid />,
       link: "/dashboard",
+      lockicon: <MdLockOutline />,
+      lockiconshow: false,
     },
     {
       id: 1,
@@ -76,6 +71,8 @@ const Sidenav = () => {
       icon: <MdOutlinePieChartOutline />,
       spacing: true,
       link: "/dashboard/Materiality",
+      lockicon: <MdLockOutline />,
+      lockiconshow: false,
     },
     {
       id: 2,
@@ -84,7 +81,9 @@ const Sidenav = () => {
       submenu: true,
       permission: "collect",
       role: true,
-      spacing: lastAllowedPermission === "collect",
+      lockicon: <MdLockOutline />,
+      lockiconshow: false,
+
       submenuItems: [
         {
           id: "2-1",
@@ -125,7 +124,9 @@ const Sidenav = () => {
       submenu: true,
       permission: "analyse",
       role: true,
-      spacing: lastAllowedPermission === "analyse",
+      lockicon: <MdLockOutline />,
+      lockiconshow: false,
+
       submenuItems: [
         {
           id: "3-1",
@@ -166,7 +167,8 @@ const Sidenav = () => {
       link: "/dashboard/Report",
       permission: "report",
       role: true,
-      spacing: lastAllowedPermission === "report",
+      lockicon: <MdLockOutline />,
+      lockiconshow: false,
     },
     {
       id: 5,
@@ -175,16 +177,19 @@ const Sidenav = () => {
       link: "#",
       permission: "optimise",
       role: true,
-      spacing: lastAllowedPermission === "optimise",
+      lockicon: <MdLockOutline />,
+      lockiconshow: true,
     },
     {
       id: 6,
       title: "Track",
       icon: <MdOutlineSearch />,
-      spacing: lastAllowedPermission === "track",
+      spacing: true,
       role: true,
       link: "/dashboard/Track",
       permission: "track",
+      lockicon: <MdLockOutline />,
+      lockiconshow: false,
     },
 
     isNewRole && {
@@ -215,6 +220,8 @@ const Sidenav = () => {
       icon: <MdOutlineAccountTree />,
       link: "/dashboard/OrgStructure",
       role: true,
+      lockicon: <MdLockOutline />,
+      lockiconshow: false,
     },
     {
       id: 9,
@@ -222,8 +229,18 @@ const Sidenav = () => {
       icon: <CiSettings />,
       link: "/dashboard/Settings",
       role: true,
+      lockicon: <MdLockOutline />,
+      lockiconshow: false,
     },
-    { id: 10, title: "About", icon: <MdInfoOutline />, link: "#", role: true },
+    {
+      id: 10,
+      title: "About",
+      icon: <MdInfoOutline />,
+      link: "#",
+      role: true,
+      lockicon: <MdLockOutline />,
+      lockiconshow: false,
+    },
   ].filter(Boolean); // Remove false values (if the "Users" menu is not rendered)
 
   const [submenuOpen, setSubmenuOpen] = useState(
@@ -371,6 +388,12 @@ const Sidenav = () => {
                       >
                         {menu.title}
                       </span>
+
+                      {menu.lockiconshow && (
+                        <span className="text-2xl flex items-center justify-center w-5 h-8 rounded-md">
+                          {menu.lockicon}
+                        </span>
+                      )}
                       {!open && (
                         <ReactTooltip
                           id={`tooltip-${index}`}
