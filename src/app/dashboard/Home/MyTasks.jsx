@@ -733,46 +733,49 @@ const MyTask = () => {
   };
 
   const handleCompleted = async (id, roles) => {
-    LoaderOpen();
-    let task_status;
-    if (roles === 1) {
-      task_status = 2;
-    } else {
-      task_status = 3;
-    }
-    const sandData = {
-      task_status,
-    };
-    await patch(`/organization_task_dashboard/${id}/`, sandData).then(
-      (response) => {
-        if (response.status == "200") {
-          toast.success("Task has been completed successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          LoaderClose();
-          fetchMytaskDetails();
-        } else {
-          toast.error("Error", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          LoaderClose();
-        }
+    try {
+      LoaderOpen();
+
+      const task_status = roles === 1 ? "under_review" : "completed";
+      const sandData = { task_status };
+
+      const response = await patch(
+        `/organization_task_dashboard/${id}/`,
+        sandData
+      );
+
+      if (response.status === 200) {
+        toast.success("Task has been completed successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+
+        await fetchMytaskDetails();
+      } else {
+        throw new Error(`Server responded with status: ${response.status}`);
       }
-    );
+    } catch (error) {
+      console.error("Error completing task:", error);
+
+      toast.error(error.response?.data?.message || "Failed to complete task", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    } finally {
+      LoaderClose();
+    }
   };
 
   const handleForReview = async (id, status) => {
