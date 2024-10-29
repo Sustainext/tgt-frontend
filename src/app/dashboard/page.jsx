@@ -1,12 +1,11 @@
-
-'use client'
+"use client";
 
 import HomeDashboard from "./Home/page";
-import { useState,useEffect} from "react";
+import { useState, useEffect } from "react";
 import {
   setHeadertext1,
   setHeadertext2,
-  setHeaderdisplay
+  setHeaderdisplay,
 } from "../../lib/redux/features/topheaderSlice";
 import { useDispatch } from "react-redux";
 const Dashboard = () => {
@@ -17,21 +16,19 @@ const Dashboard = () => {
     setActiveTab(tab);
   };
   useEffect(() => {
-   
     dispatch(setHeadertext1("Sustainext HQ"));
     dispatch(setHeaderdisplay("none"));
-    dispatch(setHeadertext2('Dashboard'));
-}, [activeTab, dispatch]);
+    dispatch(setHeadertext2("Dashboard"));
+  }, [activeTab, dispatch]);
 
   return (
     <>
-
       <div>
         <div className="ms-6">
           <div className="my-4 gradient-text text-opacity-20 text-[22px] font-semibold leading-relaxed ">
             Sustainext HQ
           </div>
-         
+
           <div className="flex flex-col h-screen">
             <div className={`flex my-6 border-b`}>
               <button
@@ -44,7 +41,7 @@ const Dashboard = () => {
               >
                 Dashboard
               </button>
-              <button
+              {/* <button
                 className={`px-4 py-1 rounded-b-none text-sm font-bold leading-[15px] ${
                   activeTab === "tab2"
                     ? "border-b-2 border-[#1aaef4] text-[#1aaef4]"
@@ -63,11 +60,13 @@ const Dashboard = () => {
                 onClick={() => handleTabChange("tab3")}
               >
                 Tasks
-              </button>
+              </button> */}
               <div className="ml-auto mb-2">
-              <div>
-            <button className="right-10 top-18 ms-2 bg-gradient-to-r from-[#364161] to-[#06081f] hover:bg-gray-600 text-white font-bold py-2 mr-4 px-2 rounded text-xs take-a-tour">Take a tour</button>
-            </div>
+                <div>
+                  <button className="right-10 top-18 ms-2 bg-gradient-to-r from-[#364161] to-[#06081f] hover:bg-gray-600 text-white font-bold py-2 mr-4 px-2 rounded text-xs take-a-tour">
+                    Take a tour
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -78,7 +77,6 @@ const Dashboard = () => {
                 {/* {activeTab === "tab2" && <DemoForm />} */}
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -87,4 +85,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
