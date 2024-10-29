@@ -132,9 +132,9 @@ const AssignEmissionModal = ({
   if (!isOpen) return null;
 
   return (
-    <>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[1000]">
       {loaderStatus.show && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[1001]">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[1000]">
           <div className="bg-transparent p-8 rounded-lg flex flex-col items-center">
             <div className="mb-4">
               <Oval
@@ -152,7 +152,7 @@ const AssignEmissionModal = ({
           </div>
         </div>
       )}
-      <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex justify-center items-center">
+      <div className="fixed inset-0 bg-gray-400 bg-opacity-50 overflow-y-auto h-full w-full flex justify-center items-center">
         <div className="bg-white p-5 rounded-lg shadow-xl w-96">
           <h2 className="text-xl font-semibold">Assign user</h2>
           <p className="text-sm text-gray-600 mb-4">
@@ -243,7 +243,7 @@ const AssignEmissionModal = ({
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
