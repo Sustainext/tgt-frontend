@@ -16,6 +16,7 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import {
   setSelectedRows,
+  updateSelectedRow,
   toggleSelectAll,
 } from "@/lib/redux/features/emissionSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,8 +36,9 @@ const EmissionWidget = React.memo(
     onRemove,
     index,
     id,
-    formRef
+    formRef,
   }) => {
+    const dispatch = useDispatch();
     const rowId = scope + "_" + index;
     const [rowType, setRowType] = useState(value.rowType || "default");
     const [category, setCategory] = useState(value.Category || "");
@@ -67,6 +69,38 @@ const EmissionWidget = React.memo(
     const users = useSelector((state) => state.emissions.users.data);
     const [assignedUser, setAssignedUser] = useState(value.assigned_to || "");
     const { location, month } = useSelector((state) => state.emissions);
+    //row selection
+    const selectedRows = useSelector(
+      (state) => state.emissions.selectedRows[scope]
+    );
+    const scopeDataFull = useSelector(
+      (state) => state.emissions[`${scope}Data`]
+    );
+    const [isSelected, setIsSelected] = useState(false);
+    const selectAll = useSelector(
+      (state) => state.emissions.selectAllChecked[scope]
+    );
+
+    // Function to check if current row is selected
+    const isRowSelected = useCallback(() => {
+      return selectedRows?.some((row) => row.rowId === rowId);
+    }, [selectedRows, rowId]);
+
+    const updateSelectedRowIfNeeded = useCallback(
+      (updatedValue) => {
+        if (isRowSelected()) {
+          dispatch(
+            updateSelectedRow({
+              scope,
+              rowId,
+              isSelected: true,
+              rowData: updatedValue,
+            })
+          );
+        }
+      },
+      [dispatch, scope, rowId, isRowSelected]
+    );
 
     useEffect(() => {
       const filteredUser = users?.filter(
@@ -77,12 +111,10 @@ const EmissionWidget = React.memo(
 
     const handleAssignClick = () => {
       // Disable form validation before opening modal
-      if (formRef?.current) {
-        formRef.current.noValidate = true;
-      }
-      setIsAssignModalOpen(true);
+      if (category && subcategory) setIsAssignModalOpen(true);
+      else toast.error("Please select category and subcategory");
     };
-  
+
     const handleCloseAssignModal = () => {
       // Re-enable form validation after modal closes
       if (formRef?.current) {
@@ -92,8 +124,17 @@ const EmissionWidget = React.memo(
     };
 
     const handleMultipleAssignClick = () => {
+      // Check if all selected rows have category and subcategory
+      const invalidRows = selectedRows.filter(
+        (row) => !row.Emission?.Category || !row.Emission?.Subcategory
+      );
+
+      if (invalidRows.length > 0) {
+        toast.error("All rows must have Category and Sub-Category selected");
+        return;
+      }
+
       setIsMultipleAssignModalOpen(true);
-      // setShowAllTasks(true)
     };
 
     const handleCloseMultipleAssignModal = () => {
@@ -341,78 +382,66 @@ const EmissionWidget = React.memo(
     }, [unit_type]);
 
     const handleCategoryChange = useCallback(
-      (value) => {
-        setCategory(value);
-        const selectedCategory = scope1Info.find((info) =>
-          info.Category.some((c) => c.name === value)
-        );
-        const subCategories = selectedCategory
-          ? selectedCategory.Category.find((c) => c.name === value).SubCategory
-          : [];
-
-        setSubcategories(subCategories);
-        onChange({
-          type: "Category",
-          value,
-        });
+      (newCategory) => {
+        const updatedValue = {
+          ...value,
+          Category: newCategory,
+          Subcategory: "",
+          Activity: "",
+          Quantity: "",
+          Unit: "",
+        };
+        onChange(updatedValue);
+        updateSelectedRowIfNeeded(updatedValue);
       },
-      [onChange]
+      [onChange, value, updateSelectedRowIfNeeded]
     );
 
     const handleSubcategoryChange = useCallback(
-      (value) => {
-        setSubcategory(value);
-        onChange({
-          type: "Subcategory",
-          value,
-        });
+      (newSubcategory) => {
+        const updatedValue = {
+          ...value,
+          Subcategory: newSubcategory,
+          Activity: "",
+          Quantity: "",
+          Unit: "",
+        };
+        onChange(updatedValue);
+        updateSelectedRowIfNeeded(updatedValue);
       },
-      [onChange]
+      [onChange, value, updateSelectedRowIfNeeded]
     );
 
     const handleActivityChange = useCallback(
-      (value) => {
-        setActivity(value);
-        setQuantity("");
-        setUnit("");
-
+      (newActivity) => {
         const foundActivity = activities.find(
-          (act) => `${act.name} - (${act.source}) - ${act.unit_type}` === value
+          (act) =>
+            `${act.name} - (${act.source}) - ${act.unit_type}` === newActivity
         );
-
-        console.log("activity found", foundActivity);
-
-        if (foundActivity) {
-          const activityId = foundActivity.activity_id;
-          setActivityId(activityId);
-          setUnitType(foundActivity.unit_type);
-          const unitConfig = unitTypes.find(
-            (u) => u.unit_type === foundActivity.unit_type
-          );
-        } else {
-          setActivityId("");
-          setUnitType("");
-          setUnits([]);
-        }
-
-        onChange({
-          type: "Activity",
-          value,
-          activityId: foundActivity ? foundActivity.activity_id : "",
-          unitType: foundActivity ? foundActivity.unit_type : "",
-        });
+        const updatedValue = {
+          ...value,
+          Activity: newActivity,
+          activity_id: foundActivity ? foundActivity.activity_id : "",
+          unit_type: foundActivity ? foundActivity.unit_type : "",
+          Quantity: "",
+          Quantity2: "",
+          Unit: "",
+          Unit2: "",
+        };
+        onChange(updatedValue);
+        updateSelectedRowIfNeeded(updatedValue);
       },
-      [category, subcategory, activities, onChange]
+      [activities, onChange, value, updateSelectedRowIfNeeded]
     );
 
     const debouncedHandleQuantityChange = useCallback(
       debounce((nextValue) => {
         setQuantity(nextValue);
         onChange({
-          type: "Quantity",
-          value: nextValue,
+          ...value,
+          Quantity: nextValue,
         });
-      }, 1500),
+      }, 500),
       [onChange]
     );
 
@@ -420,10 +449,10 @@ const EmissionWidget = React.memo(
       debounce((nextValue) => {
         setQuantity2(nextValue);
         onChange({
-          type: "Quantity2",
-          value: nextValue,
+          ...value,
+          Quantity2: nextValue,
         });
-      }, 2000),
+      }, 500),
       [onChange]
     );
 
@@ -455,6 +484,44 @@ const EmissionWidget = React.memo(
       [unit2]
     );
 
+    const handleUnitChange = useCallback(
+      (newValue) => {
+        setUnit(newValue);
+        onChange({
+          ...value,
+          Unit: newValue,
+        });
+      },
+      [
+        category,
+        subcategory,
+        activity,
+        quantity,
+        activity_id,
+        unit_type,
+        onChange,
+      ]
+    );
+
+    const handleUnit2Change = useCallback(
+      (newValue) => {
+        setUnit2(newValue);
+        onChange({
+          ...value,
+          Unit2: newValue,
+        });
+      },
+      [
+        category,
+        subcategory,
+        activity,
+        quantity,
+        activity_id,
+        unit_type,
+        onChange,
+      ]
+    );
+
     useEffect(() => {
       if (unit && requiresNumericValidation(unit)) {
         const newQuantity = Math.floor(Number(quantity));
@@ -480,44 +547,6 @@ const EmissionWidget = React.memo(
         }
       }
     }, [unit2, quantity2]);
-
-    const handleUnitChange = useCallback(
-      (value) => {
-        setUnit(value);
-        onChange({
-          type: "Unit",
-          value,
-        });
-      },
-      [
-        category,
-        subcategory,
-        activity,
-        quantity,
-        activity_id,
-        unit_type,
-        onChange,
-      ]
-    );
-
-    const handleUnit2Change = useCallback(
-      (value) => {
-        setUnit2(value);
-        onChange({
-          type: "Unit2",
-          value,
-        });
-      },
-      [
-        category,
-        subcategory,
-        activity,
-        quantity,
-        activity_id,
-        unit_type,
-        onChange,
-      ]
-    );
 
     const toggleDropdown = useCallback(() => {
       setIsDropdownActive(!isDropdownActive);
@@ -592,15 +621,59 @@ const EmissionWidget = React.memo(
       console.log(value, " is the new value passed to the component"); // Log to check incoming data
 
       if (value?.url && value?.name) {
-        setFileName(value.file.name); // Ensure fileName is updated only when value contains the correct data
-        setPreviewData(value.file.url);
-        setFileType(value.file.type ?? "");
-        setFileSize(value.file.size ?? "");
-        setUploadDateTime(value.file.uploadDateTime ?? "");
+        setFileName(value.file?.name); // Ensure fileName is updated only when value contains the correct data
+        setPreviewData(value.file?.url);
+        setFileType(value.file?.type ?? "");
+        setFileSize(value.file?.size ?? "");
+        setUploadDateTime(value.file?.uploadDateTime ?? "");
       } else {
         console.log("value prop is missing some data, not updating state");
       }
     }, [value]);
+
+    // const handleChange = async (event) => {
+    //   const selectedFile = event.target.files[0];
+
+    //   if (selectedFile) {
+    //     const newFileName = selectedFile.name;
+    //     const fileType = selectedFile.type;
+    //     const fileSize = selectedFile.size;
+    //     const uploadDateTime = new Date().toLocaleString();
+
+    //     console.log("Selected file details:", {
+    //       newFileName,
+    //       fileType,
+    //       fileSize,
+    //       uploadDateTime,
+    //     });
+
+    //     setFileName(newFileName); // Set the file name
+
+    //     const uploadUrl = await uploadFileToAzure(selectedFile, newFileName);
+
+    //     if (uploadUrl) {
+    //       const reader = new FileReader();
+    //       reader.onloadend = () => {
+    //         setPreviewData(reader.result); // For preview
+    //       };
+    //       reader.readAsDataURL(selectedFile);
+
+    //       onChange({
+    //         type: "file",
+    // value: uploadUrl,
+    // name: newFileName,
+    // url: uploadUrl,
+    // filetype: fileType,
+    // size: fileSize,
+    // uploadDateTime,
+    //       });
+
+    //       console.log("File uploaded successfully:", uploadUrl);
+    //     } else {
+    //       console.error("File upload failed");
+    //     }
+    //   }
+    // };
 
     const handleChange = async (event) => {
       const selectedFile = event.target.files[0];
@@ -629,15 +702,19 @@ const EmissionWidget = React.memo(
           };
           reader.readAsDataURL(selectedFile);
 
+          // Update only the file data, keeping the rest of the row state
           onChange({
-            type: "file",
-            value: uploadUrl,
-            name: newFileName,
-            url: uploadUrl,
-            filetype: fileType,
-            size: fileSize,
-            uploadDateTime,
+            ...value,
+            file: {
+              value: uploadUrl,
+              name: newFileName,
+              url: uploadUrl,
+              type: fileType,
+              size: fileSize,
+              uploadDateTime,
+            },
           });
+          setFileType(fileType);
 
           console.log("File uploaded successfully:", uploadUrl);
         } else {
@@ -660,7 +737,7 @@ const EmissionWidget = React.memo(
         value: "",
         name: "",
         url: "",
-        filetype: "",
+        type: "",
         size: "",
         uploadDateTime: "",
       };
@@ -674,19 +751,6 @@ const EmissionWidget = React.memo(
     const handleClickonRemove = () => {
       onRemove(index);
     };
-
-    //row selection
-    const dispatch = useDispatch();
-    const selectedRows = useSelector(
-      (state) => state.emissions.selectedRows[scope]
-    );
-    const scopeDataFull = useSelector(
-      (state) => state.emissions[`${scope}Data`]
-    );
-    const [isSelected, setIsSelected] = useState(false);
-    const selectAll = useSelector(
-      (state) => state.emissions.selectAllChecked[scope]
-    );
 
     useEffect(() => {
       // Check if this row is in the selectedRows array for this scope
@@ -764,8 +828,8 @@ const EmissionWidget = React.memo(
             <button
               type="button"
               className=" border text-[12px] py-1.5 px-3 rounded-md text-[#007eef] font-semibold leading-tight border-[#007eef] disabled:text-slate-300 disabled:border-slate-300 cursor-pointer"
-              disabled={!selectAll}
-              // onClick={handleMultipleAssignClick}
+              disabled={!selectedRows?.length}
+              onClick={handleMultipleAssignClick}
             >
               Assign Tasks ({selectedRows.length})
             </button>
@@ -1064,6 +1128,9 @@ const EmissionWidget = React.memo(
                       id={id + scope}
                       onChange={handleChange}
                       style={{ display: "none" }}
+                      disabled={
+                        rowType === "assigned" || rowType === "approved"
+                      }
                     />
 
                     {fileName ? (
@@ -1165,7 +1232,7 @@ const EmissionWidget = React.memo(
                                   className="w-full h-full"
                                 />
                               ) : (
-                                <p>
+                                <p className="text-red-500 ml-5">
                                   File preview not available.Please download and
                                   verify
                                 </p>
@@ -1234,6 +1301,8 @@ const EmissionWidget = React.memo(
             category: value.Category,
             subcategory: value.Subcategory,
             activity: value.Activity,
+            activity_id: value.activity_id,
+            unit_type: value.unit_type,
             countryCode,
             rowId: rowId,
           }}

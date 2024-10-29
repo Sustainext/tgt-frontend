@@ -39,7 +39,7 @@ const Report = () => {
   const [error, setError] = useState({});
   const router = useRouter();
   const [entities, setEntities] = useState([]);
-  const [massgeshow, setMassgeshow]  = useState(false);
+  const [massgeshow, setMassgeshow] = useState(false);
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(null);
   useEffect(() => {
@@ -174,7 +174,8 @@ const Report = () => {
     LoaderOpen();
 
     // console.log("user id ", localStorage.getItem("user_id"));
-    const response = await axiosInstance.get(`/sustainapp/report_details/`)
+    const response = await axiosInstance
+      .get(`/sustainapp/report_details/`)
       .then((response) => {
         // Handle the response here.
         console.log(response.data, "reprotdetilles");
@@ -291,23 +292,21 @@ const Report = () => {
           setSelectedOrg();
           setSelectedCorp();
           setFirstSelection();
-        } 
+        }
       })
       .catch((error) => {
-       if (error.status === 400)
-          {
-            LoaderClose();
-            setReportname();
-            setReporttype();
-            setStartdate();
-            setEnddate();
-            setSelectedOrg();
-            setSelectedCorp();
-            setFirstSelection();
-            setMassgeshow(true);
-         
-          } else {
-            const errorMessage =
+        if (error.status === 400) {
+          LoaderClose();
+          setReportname();
+          setReporttype();
+          setStartdate();
+          setEnddate();
+          setSelectedOrg();
+          setSelectedCorp();
+          setFirstSelection();
+          setMassgeshow(true);
+        } else {
+          const errorMessage =
             error.response && error.response.data && error.response.data.message
               ? error.response.data.message
               : "An unexpected error occurred";
@@ -331,8 +330,7 @@ const Report = () => {
           setSelectedCorp();
           LoaderClose();
           setFirstSelection();
-          }
-       
+        }
       });
   };
   const validateForm = () => {
@@ -501,28 +499,29 @@ const Report = () => {
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
-      <div className="my-4 pb-5 mx-8 text-left border border-gray-300 rounded-md">
+      <div className="my-10 pb-5 mx-8 text-left border border-gray-300 rounded-md">
         <div className="px-3 flex py-4  justify-between">
           <div>
-          <h1 className="text-[#101828] mb-1 text-[1.375rem] font-bold">
-          Report
-        </h1>
-        <p className="text-[14px] text-[#667085]">All the reports generated made for the organization can be accessed here</p>
+            <h1 className="text-[#101828] mb-1 text-[1.375rem] font-bold">
+              Report
+            </h1>
+            <p className="text-[14px] text-[#667085]">
+              All the reports generated made for the organization can be
+              accessed here
+            </p>
           </div>
           <div
             className="flex items-center space-x-2 text-[#007EEF] text-xs font-bold leading-[15px] cursor-pointer ml-2 float-end"
             onClick={handleOpenModal}
           >
-            
             <div className="text-[#007EEF] text-[14px] font-bold leading-[15px]">
               Add Report
             </div>
             <MdAdd className="text-[14px]" />
           </div>
         </div>
-   
+
         <div className="">
-      
           {/* <div className="mt-3">
           <DataTable data={data}/>
           </div> */}
@@ -567,63 +566,66 @@ const Report = () => {
                 </button>
               </div>
               {/* validation code */}
-              {massgeshow && 
-              <div className="mt-5 px-7 ">
-                <div className="flex items-start p-4  border-t-2 border-[#F98845] rounded shadow-md">
-                  <div className="flex-shrink-0">
-                    <FaExclamationTriangle className="text-[#F98845] w-6 h-6" />
-                  </div>
-                  <div className="ml-3">
-                    <p className="font-bold text-left text-[#0D024D] ">
-                      Mandatory GRI: General Disclosures missing
-                    </p>
-                    <p className="text-[12px] text-[#0D024D]  mt-1">
-                      Please fill the missing disclosures of GRI Reporting Info
-                      under
-                      <strong> Collect &gt; General</strong> section to proceed.
-                    </p>
-                    <div className="mt-2 text-left flex">
-                      <p className="text-[#0D024D] text-[12px]">
-                        {" "}
-                        Proceed to Collect &gt;
+              {massgeshow && (
+                <div className="mt-5 px-7 ">
+                  <div className="flex items-start p-4  border-t-2 border-[#F98845] rounded shadow-md">
+                    <div className="flex-shrink-0">
+                      <FaExclamationTriangle className="text-[#F98845] w-6 h-6" />
+                    </div>
+                    <div className="ml-3">
+                      <p className="font-bold text-left text-[#0D024D] ">
+                        Mandatory GRI: General Disclosures missing
                       </p>
-                      <Link
-                        href="/dashboard/general"
-                        className="text-blue-500  text-sm font-semibold flex"
+                      <p className="text-[12px] text-[#0D024D]  mt-1">
+                        Please fill the missing disclosures of GRI Reporting
+                        Info under
+                        <strong> Collect &gt; General</strong> section to
+                        proceed.
+                      </p>
+                      <div className="mt-2 text-left flex">
+                        <p className="text-[#0D024D] text-[12px]">
+                          {" "}
+                          Proceed to Collect &gt;
+                        </p>
+                        <Link
+                          href="/dashboard/general"
+                          className="text-blue-500  text-sm font-semibold flex"
+                        >
+                          General &gt; GRI Reporting Info{" "}
+                          <GoArrowRight className="font-bold mt-1 ml-2" />
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="ml-auto">
+                      <p
+                        className="text-sm text-blue-500  ml-4"
+                        data-tooltip-id={`tooltip-$e86`}
+                        data-tooltip-html="<p>Requirement 2 as per GRI: General Disclosures 2021 states that reasons for omission are not permitted for Disclosures 2-1, 2-2, 2-3, 2-4, and 2-5, as reporting on these disclosures is mandatory. Please fill the data here:</p> <br> <p>COLLECT>GENERAL>GRI Reporting Info before creating the report.</p>"
                       >
-                        General &gt; GRI Reporting Info{" "}
-                        <GoArrowRight className="font-bold mt-1 ml-2" />
-                      </Link>
+                        Learn more
+                      </p>
+                      <ReactTooltip
+                        id={`tooltip-$e86`}
+                        place="top"
+                        effect="solid"
+                        style={{
+                          width: "290px",
+                          backgroundColor: "#FFF",
+                          color: "#000",
+                          fontSize: "12px",
+                          boxShadow: 3,
+                          borderRadius: "8px",
+                          textAlign: "left",
+                          zIndex: 100,
+                          boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+                          opacity: 1,
+                        }}
+                      ></ReactTooltip>
                     </div>
                   </div>
-                  <div className="ml-auto">
-                    <p className="text-sm text-blue-500  ml-4"  
-                    data-tooltip-id={`tooltip-$e86`}
-                data-tooltip-html="<p>Requirement 2 as per GRI: General Disclosures 2021 states that reasons for omission are not permitted for Disclosures 2-1, 2-2, 2-3, 2-4, and 2-5, as reporting on these disclosures is mandatory. Please fill the data here:</p> <br> <p>COLLECT>GENERAL>GRI Reporting Info before creating the report.</p>">
-                      Learn more
-                    </p>
-                    <ReactTooltip
-                id={`tooltip-$e86`}
-                place="top"
-                effect="solid"
-                style={{
-                  width: "290px",
-                  backgroundColor: "#FFF",
-                  color: "#000",
-                  fontSize: "12px",
-                  boxShadow: 3,
-                  borderRadius: "8px",
-                  textAlign: "left",
-                  zIndex:100,
-                  boxShadow:"rgba(149, 157, 165, 0.2) 0px 8px 24px",
-                  opacity:1,
-                }}
-              ></ReactTooltip>
-                  </div>
                 </div>
-              </div>
-              }
-               {/* validation code end */}
+              )}
+              {/* validation code end */}
               <div className="mt-2 px-7 py-3">
                 <form className="w-full text-left">
                   <div className="mr-2 mb-4 w-[101%]">
