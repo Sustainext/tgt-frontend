@@ -1731,7 +1731,7 @@ const MyTask = () => {
                         <input
                           type="submit"
                           value="Save"
-                          className="w-[30%] h-[31px]  px-[22px] py-2 bg-blue-500 text-white rounded shadow flex-col justify-center items-center inline-flex cursor-pointer"
+                          className="w-[30%] h-auto  px-[22px] py-2 bg-blue-500 text-white rounded shadow flex-col justify-center items-center inline-flex cursor-pointer"
                         />
                       </div>
                     </form>
