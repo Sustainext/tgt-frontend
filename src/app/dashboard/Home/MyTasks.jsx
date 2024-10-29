@@ -655,17 +655,16 @@ const MyTask = () => {
   };
 
   const fetchMytaskDetails = async () => {
-    const stringWithQuotes = localStorage.getItem("token");
-    const stringWithoutQuotes = stringWithQuotes.replace(/"/g, "");
-    const options = {
-      headers: {
-        Authorization: `Bearer ${stringWithoutQuotes}`,
-      },
-    };
+    // const stringWithQuotes = localStorage.getItem("token");
+    // const stringWithoutQuotes = stringWithQuotes.replace(/"/g, "");
+    // const options = {
+    //   headers: {
+    //     Authorization: `Bearer ${stringWithoutQuotes}`,
+    //   },
+    // };
     try{
       const response = await axiosInstance.get(
-        `${process.env.BACKEND_API_URL}/organization_task_dashboard/`,
-        options
+        `${process.env.BACKEND_API_URL}/organization_task_dashboard/`
       );
       setTasks(response.data);
     }
