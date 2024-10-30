@@ -41,20 +41,24 @@ const uiSchema = {
       {
         title: "Employee Category",
         tooltip: "Please specify the employee category here.",
+        type:"text",
       },
       {
         title: "Number of fatalities as a result of work-Ill health",
         tooltip:
           "Please specify the number of fatalities as a result of work-related ill health. Work-related ill health: negative impacts on health arising from exposure to hazards at work.",
+          type:"number",
       },
       {
         title: "Number of cases of recordable work-related ill health",
         tooltip:
           "Please specify the number of recordable work-related ill health. Recordable work-related ill health: work-related injury or ill health that results in any of the following: death, days away from work,restricted work or transfer to another job, medical treatment beyond first aid, or loss of consciousness",
+          type:"number",
       },
       {
         title: "Main types of work-related ill health.",
         tooltip: "Please specify the main types of work-related ill health.",
+        type:"text",
       },
     ],
   },

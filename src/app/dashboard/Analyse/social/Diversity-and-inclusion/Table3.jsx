@@ -57,23 +57,25 @@ const Table3 = ({ data }) => {
             </tr>
           ) : (
             data?.map((row, rowIndex) => (
-              <tr key={rowIndex} className="border border-gray-300 md:table-row">
-                <td className="p-2 block md:table-cell h-20 text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
-                  {row.category}
-                </td>
-                <td className="p-2 block md:table-cell h-20 text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
-                  {row.male}
-                </td>
-                <td className="p-2 block md:table-cell h-20 text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
-                  {row.female}
-                </td>
-                <td className="p-2 block md:table-cell h-20 text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
-                  {row.nonBinary}
-                </td>
-                <td className="p-2 block md:table-cell h-20 text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
-                  {row.locationandoperation}
-                </td>
-              </tr>
+              row.Q2.map((entry, entryIndex) => (
+                <tr key={`${rowIndex}-${entryIndex}`} className="border border-gray-300 md:table-row">
+                  <td className="p-2 block md:table-cell h-20 text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
+                    {entry.category}
+                  </td>
+                  <td className="p-2 block md:table-cell h-20 text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
+                    {entry.male}
+                  </td>
+                  <td className="p-2 block md:table-cell h-20 text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
+                    {entry.female}
+                  </td>
+                  <td className="p-2 block md:table-cell h-20 text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
+                    {entry.nonBinary}
+                  </td>
+                  <td className="p-2 block md:table-cell h-20 text-center font-normal text-slate-500 text-[12px] border-r border-gray-300">
+                    {entry.locationandoperation}
+                  </td>
+                </tr>
+              ))
             ))
           )}
         </tbody>
