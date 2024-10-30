@@ -13,6 +13,7 @@ import { Oval } from "react-loader-spinner";
 import { getLocationName } from "../../utils/locationName";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import { getMonthName } from "@/app/utils/dateUtils";
 
 const MultipleAssignEmissionModal = ({ isOpen, onClose, taskData, scope }) => {
   const { data: users, status: usersStatus } = useSelector(
@@ -223,7 +224,7 @@ const MultipleAssignEmissionModal = ({ isOpen, onClose, taskData, scope }) => {
             <div className="flex justify-between items-center">
               <div className="mb-4">
                 <p className="text-sm font-semibold">Location</p>
-                <p className="text-sm text-gray-600">{location}</p>
+                <p className="text-sm text-gray-600">{selectedLocation}</p>
               </div>
 
               <div className="mb-4">
@@ -235,7 +236,7 @@ const MultipleAssignEmissionModal = ({ isOpen, onClose, taskData, scope }) => {
             <div className="flex justify-between items-center">
               <div className="mb-4">
                 <p className="text-sm font-semibold">Month</p>
-                <p className="text-sm text-gray-600">{month}</p>
+                <p className="text-sm text-gray-600">{getMonthName(month)}</p>
               </div>
 
               <div className="mb-4">
