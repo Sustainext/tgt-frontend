@@ -74,25 +74,28 @@ const Section6=({section13_1_5Ref,data})=>{
       const table2Data = data["202_1c"] && data["202_1c"].length > 0 ? 
 
     data["202_1c"].map(item => {
-        return item.locations.map(location => {
+        const locationData = item.Locationofoperation;
+        const currencyValue = locationData.currencyValue || "No currency data available";
+
+        return locationData.locations.map(location => {
             const locationName = location.value;
-            const wages = item.wages[locationName] || {};
+            const wages = locationData.wages[locationName] || {};
 
             return [
                 {
                     "Significant location of operations": locationName,
                     "Gender": "Male",
-                    "Minimum Wage": wages.Male + ` ${data["202_1c"][0].currencyValue}` || "No data available"
+                    "Minimum Wage": wages.Male ? wages.Male + ` ${currencyValue}` : "No data available"
                 },
                 {
                     "Significant location of operations": locationName,
                     "Gender": "Female",
-                    "Minimum Wage": wages.Female  +` ${data["202_1c"][0].currencyValue}` || "No data available"
+                    "Minimum Wage": wages.Female ? wages.Female + ` ${currencyValue}` : "No data available"
                 },
                 {
                     "Significant location of operations": locationName,
                     "Gender": "Non-binary",
-                    "Minimum Wage": wages["Non-binary"]  +` ${data["202_1c"][0].currencyValue}` || "No data available"
+                    "Minimum Wage": wages["Non-binary"] ? wages["Non-binary"] + ` ${currencyValue}` : "No data available"
                 }
             ];
         }).flat();
@@ -104,6 +107,7 @@ const Section6=({section13_1_5Ref,data})=>{
             "Minimum Wage": "No data available"
         }
     ];
+
 
     return (
         <>
@@ -131,7 +135,7 @@ const Section6=({section13_1_5Ref,data})=>{
         />
 
 <p className="text-sm mb-2">{data["202_1b"]?data["202_1b"].length>0?data["202_1b"][0].Q3?data["202_1b"][0].Q3:"No data available":"No data available":"No data available"}</p>
-<p className="text-sm mb-2">{data["202_1c"]?data["202_1c"].length>0?data["202_1c"][0].Q1?data["202_1c"][0].Q1:"No data available":"No data available":"No data available"}</p>
+<p className="text-sm mb-2">{data["202_1c"]?data["202_1c"].length>0?data["202_1c"][0].Currency?data["202_1c"][0].Currency:"No data available":"No data available":"No data available"}</p>
 <p className="text-sm mb-4">{data["202_1d"]?data["202_1d"].length>0?data["202_1d"][0].Q1?data["202_1d"][0].Q1:"No data available":"No data available":"No data available"}</p>
         <p className="text-[15px]  mb-2 font-semibold">
         Ratio of the entry-level wage to the minimum wage by gender at significant locations of operation
@@ -140,7 +144,7 @@ const Section6=({section13_1_5Ref,data})=>{
                 <LeaveTable columns={table1Columns} data={table1Data} />
             </div>
             {
-              data["202_1c"]?data["202_1c"].length>0?data["202_1c"][0].radioValue?data["202_1c"][0].radioValue=="Variable"?(
+              data["202_1c"]?data["202_1c"].length>0?data["202_1c"][0].Locationofoperation?data["202_1c"][0].Locationofoperation.radioValue?data["202_1c"][0].Locationofoperation.radioValue=="Variable"?(
                 <div> 
                    <p className="text-[15px]  mb-2 font-semibold">
             Local minimum wage is absent or variable at significant locations of operation, by gender: 
@@ -151,7 +155,7 @@ const Section6=({section13_1_5Ref,data})=>{
                 </div>
               ):(
                 <div></div>
-              ):"":"":""
+              ):"":"":"":""
             }
            
             
