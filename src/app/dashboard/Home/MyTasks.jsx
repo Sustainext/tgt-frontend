@@ -88,19 +88,38 @@ const MyTask = () => {
     });
   };
 
+  const [isSearching, setIsSearching] = useState(false);
+
   useEffect(() => {
-    const activity = activitiesList.find(
-      (activity) =>
-        `${activity.name} - (${activity.source}) - ${activity.unit_type}` ===
-        selectedActivityName
-    );
-    setSelectedActivity(activity || {});
-    setTaskAssigndata({
-      ...taskassigndata,
-      activity_id: activity?.activity_id,
-      unit_type: activity?.unit_type,
-    });
-    console.log("activity found", activity);
+    const findActivity = async () => {
+      if (!selectedActivityName || !activitiesList?.length) return;
+
+      setIsSearching(true);
+      try {
+        // Simulate a slight delay to prevent loader flash
+        await new Promise((resolve) => setTimeout(resolve, 300));
+
+        const activity = activitiesList.find(
+          (activity) =>
+            `${activity.name} - (${activity.source}) - ${activity.unit_type}` ===
+            selectedActivityName
+        );
+
+        setSelectedActivity(activity || {});
+        setTaskAssigndata({
+          ...taskassigndata,
+          activity_id: activity?.activity_id,
+          unit_type: activity?.unit_type,
+        });
+        console.log("activity found", activity);
+      } catch (error) {
+        console.error("Error finding activity:", error);
+      } finally {
+        setIsSearching(false);
+      }
+    };
+
+    findActivity();
   }, [selectedActivityName, activitiesList]);
 
   const handleFileUpload = async (file) => {
@@ -2224,7 +2243,7 @@ const MyTask = () => {
           )} */}
           {isPdfViewerOpen && (
             <div className="relative w-[780px] ms-4 bg-white rounded-lg shadow-lg h-[550px] overflow-y-auto">
-              {taskassigndata.file_data.url ? (
+              {taskassigndata.file_data?.url ? (
                 <>
                   {taskassigndata.file_data.type?.startsWith("image/") ||
                   taskassigndata.file_data.type === "application/pdf" ? (
@@ -2726,13 +2745,14 @@ const MyTask = () => {
           </div>
         </div>
       )}
-      {loopen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="flex items-center justify-center">
-            <FiLoader className="animate-spin text-gray-500" size={48} />
+      {loopen ||
+        (isSearching && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="flex items-center justify-center">
+              <FiLoader className="animate-spin text-gray-500" size={48} />
+            </div>
           </div>
-        </div>
-      )}
+        ))}
     </>
   );
 };

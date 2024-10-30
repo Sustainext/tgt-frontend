@@ -74,7 +74,7 @@ const AccordionItem = ({ title, children }) => {
   );
 };
 const Social = () => {
-  const [activeStep, setActiveStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(2);
   const [completedSteps, setCompletedSteps] = useState([]);
   const dispatch = useDispatch();
   const activeSteps = (id) => {
@@ -100,7 +100,6 @@ const Social = () => {
     return completedSteps.includes(stepNumber);
   };
   const stepTitles = {
-    1: "Employment",
     2: "Employment",
     3: "Employment",
     4: "Labor Relations",
@@ -138,8 +137,8 @@ const Social = () => {
     36:"Marketing and Labeling",
     37:"Marketing and Labeling",
     38:"Customer Privacy",
-    39:"Bill S-211",
-    40:"Bill S-211",
+    // 39:"Bill S-211",
+    // 40:"Bill S-211",
   };
   useEffect(() => {
     // Update header with step-related information
@@ -161,7 +160,7 @@ const Social = () => {
             <section className="flex  justify-center ">
               <div className="w-80">
                 <ul>
-                  <AccordionItem title="Bill S-211">
+                  {/* <AccordionItem title="Bill S-211">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(39)}
@@ -277,13 +276,13 @@ const Social = () => {
                         )}
                       </div>
                     </li>
-                  </AccordionItem>
+                  </AccordionItem> */}
                   <AccordionItem title="Employment">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(1)}
+                      onClick={() => activeSteps(2)}
                     >
-                      {isStepCompleted(1) ? (
+                      {isStepCompleted(2) ? (
                         <>
                           <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
                             <svg
@@ -299,7 +298,7 @@ const Social = () => {
                         </>
                       ) : (
                         <div
-                          className={`${activeStep === 1
+                          className={`${activeStep === 2
                             ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
                             : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
                             } `}
@@ -308,7 +307,7 @@ const Social = () => {
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${activeStep === 1
+                            className={`${activeStep === 2
                               ? "bi bi-circle-fill fill-sky-800  font-bold "
                               : " bi bi-circle-fill fill-gray-400"
                               } `}
@@ -320,7 +319,7 @@ const Social = () => {
                       )}
 
                       <div className="flex items-center">
-                        {isStepCompleted(1) ? (
+                        {isStepCompleted(2) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
                               Employee Hires & Turnover
@@ -329,7 +328,7 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${activeStep === 1
+                            className={`${activeStep === 2
                               ? "text-[12px] text-sky-800  font-bold"
                               : " text-[12px]  text-gray-600"
                               } `}
@@ -339,7 +338,7 @@ const Social = () => {
                         )}
                       </div>
                     </li>
-                    <li
+                    {/* <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(2)}
                     >
@@ -398,7 +397,7 @@ const Social = () => {
                           </p>
                         )}
                       </div>
-                    </li>
+                    </li> */}
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(3)}
@@ -2538,20 +2537,20 @@ const Social = () => {
           </div>
           <div className="w-full ms-3">
             <div>
-              {activeStep === 1 && (
+              {activeStep === 2 && (
                 <>
                   <div>
                     <EmployeeHiresTurnover />
                   </div>
                 </>
               )}
-              {activeStep === 2 && (
+              {/* {activeStep === 2 && (
                 <>
                   <div>
                     <Benefits />
                   </div>
                 </>
-              )}
+              )} */}
 
               {activeStep === 3 && (
                 <>
@@ -2804,7 +2803,8 @@ const Social = () => {
                   </div>
                 </>
               )}
-              {activeStep === 39 && (
+             
+ {/*   {activeStep === 39 && (
                 <>
                   <div>
                     <Identifyinginformation />
@@ -2818,8 +2818,7 @@ const Social = () => {
                     <Annualreport />
                   </div>
                 </>
-              )}
-
+              )}*/}
             </div>
             <div>
               <div className="w-full mb-5 mt-4 ">

@@ -207,9 +207,13 @@ const Economic = () => {
               "Operations assessed for risks related to corruption" && (
               <Operationsassessed />
             )}
+              {activeTab ===
+              "Communication and training about anti-corruption policies and procedures" && (
+              <Communicationtraining />
+            )}
             {activeTab ===
               "Confirmed incidents of corruption and actions taken" && (
-              <Communicationtraining />
+              <Confirmedincidents />
             )}
 
             {activeTab === "Public legal cases regarding corruption" && (

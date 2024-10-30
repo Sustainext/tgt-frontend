@@ -77,6 +77,8 @@ export function AuthProvider({ children }) {
       setUserDetails(userDetails);
       saveToLocalStorage("userData", userDetails);
       saveToLocalStorage("user_id", userDetails.user_detail[0].id);
+      saveToLocalStorage("userName", userDetails.user_detail[0].first_name + " "+ userDetails.user_detail[0].last_name);
+      saveToLocalStorage("userEmail", userDetails.user_detail[0].email);
 
     } catch (error) {
       console.error("Login error:", error);
