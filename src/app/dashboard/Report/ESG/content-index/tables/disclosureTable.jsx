@@ -1,5 +1,7 @@
 'use client';
 import { useState, useRef, useEffect } from "react";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 const DisclosureTable = ({data}) => {
  
@@ -119,9 +121,12 @@ const DisclosureTable = ({data}) => {
   </tr>
 
   {/* Map through dataRows */}
-  {data?.map((row) => (
-    <tr key={row.key} className={`text-[13px] ${!row.is_filled ? "text-red-600" : "text-[#667085]"}`}>
-      <td className="px-4 py-4">{row.title}</td>
+  {data?.map((row,rowIndex) => (
+    <tr key={row.key} className={`text-[13px] relative ${!row.is_filled ? "text-red-600" : "text-[#667085]"}`}
+    // title={!row.is_filled ? "Disclosure not filled. Provide reason for omission or fill in the data." : ""}
+    >
+      <td className="px-4 py-4" data-tooltip-id={row.is_filled ? undefined : `tooltip-${rowIndex}`}
+    data-tooltip-html={!row.is_filled ? "Disclosure not filled. Provide reason for omission or fill in the data" : ""} >{row.title}</td>
       <td className="px-4 py-4">{row.page}</td>
 
       {/* Omission details */}
@@ -133,6 +138,21 @@ const DisclosureTable = ({data}) => {
         </>
       ))}
        <td className="px-4 py-4">{row.gri_sector_no}</td>
+       {!row.is_filled && (
+                  <ReactTooltip
+                    id={`tooltip-${rowIndex}`}
+                    place="top"
+                    effect="solid"
+                    style={{
+                      width: "300px",
+                      backgroundColor: "#000",
+                      color: "white",
+                      fontSize: "12px",
+                      boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
+                      borderRadius: "8px",
+                    }}
+                  />
+                )}
     </tr>
   ))}
 </tbody>
