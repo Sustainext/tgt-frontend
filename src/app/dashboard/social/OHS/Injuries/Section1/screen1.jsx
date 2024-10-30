@@ -41,30 +41,36 @@ const uiSchema = {
       {
         title: "Employee Category",
         tooltip: "Please specify the employee category here.",
+        type:"text",
       },
       {
         title: "Number of fatalities as a result of work-related injury",
         tooltip:
           "Please specify the number of fatalities as a result of work-related injury. Work-related injury: negative impacts on health arising from exposure to hazards at work.",
+           type:"number",
       },
       {
         title:
           "Number of high-consequence work-related injuries (excluding fatalities)",
         tooltip:
           "Please specify the number of high-consequence work-related injuries (excluding fatalities).High-consequence work-related injury: work-related injury that results in a fatality or in an injury from  which the worker cannot, does not, or is not expected to  recover fully to pre-injury health status within six months.",
+          type:"number",
       },
       {
         title: "Number of recordable work-related injuries",
         tooltip:
           "Please specify the number of recordable work-related injuries. Recordable work-related injury: work-related injury or ill health thatresults in any of the following: death, days away from work,restricted work or transfer to another job, medical treatment beyond first aid,or loss of consciousness",
+          type:"number",
       },
       {
         title: "Main types of work-related injury",
         tooltip: "Please specify the main types of work-related injury.",
+        type:"text",
       },
       {
         title: "Number of hours worked",
         tooltip: "Please specify employee's number of hours worked.",
+        type:"number",
       },
     ],
   },

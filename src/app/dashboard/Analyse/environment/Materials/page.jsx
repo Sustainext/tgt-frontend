@@ -101,11 +101,11 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
           units: Noremat.units,
           datasource: Noremat.data_source,
         }));
-      Nonrenewablematerials.push({
-        type: "Total Weight",
-        total: non_renewable_materials.find((item) => item.total_weight)
-          ?.total_weight,
-      });
+      // Nonrenewablematerials.push({
+      //   type: "",
+      //   total: non_renewable_materials.find((item) => item.total_weight)
+      //     ?.total_weight,
+      // });
 
       const renewablematerials = renewable_materials
         .filter((item) => item.material_type)
@@ -117,11 +117,11 @@ const AnalyseMaterials = ({ isBoxOpen }) => {
           units: renemat.units,
           datasource: renemat.data_source,
         }));
-      renewablematerials.push({
-        type: "Total Weight",
-        total: renewable_materials.find((item) => item.total_weight)
-          ?.total_weight,
-      });
+      // renewablematerials.push({
+      //   type: "",
+      //   total: renewable_materials.find((item) => item.total_weight)
+      //     ?.total_weight,
+      // });
 
       const recycledmaterials = recycled_materials.map((recyled, index) => ({
         type: recyled.type_of_recycled_material_used,
