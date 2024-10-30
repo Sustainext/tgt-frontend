@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import GRISVG from "../../../../../../../public/gri.svg";
 import CorrectSVG from '../../../../../../../public/correct.svg'
 import Image from "next/image";
@@ -11,20 +11,21 @@ import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
 import { MdExitToApp,MdKeyboardArrowDown } from "react-icons/md";
 import { FaArrowLeftLong } from "react-icons/fa6";
 
-const NotifyGRI = ({ isNotifyModalOpen,showSuccessMessage,setShowSuccessMessage, setIsModalOpen,setActiveStep,orgName,fromDate,toDate ,reportName,setIsCreateReportModalOpen,setIsNotifyModalOpen}) => {
-  const [statement,setStatement]=useState(
+const NotifyGRI = ({ isNotifyModalOpen,showSuccessMessage,setShowSuccessMessage, setIsModalOpen,setActiveStep,orgName,statement,fromDate,toDate ,reportName,setIsCreateReportModalOpen,setIsNotifyModalOpen,userName,userEmail}) => {
+
+  const [mailStatement,setStatement]=useState(
 `Subject: Notification of GRI Standards Use in Sustainability Reporting
 
 Dear GRI Team,
 
 Sustainext is sending this email on behalf of our client to notify GRI of their use of the GRI Standards in their sustainability reporting. Please find the details of the organization and their report below:
 
-Legal Name of the Organization: Acme Corporation
+Legal Name of the Organization: ${orgName}
 Link to the GRI Content Index: Link 
 Link to the Report: Link
-Statement of Use: Acme Corporations has reported in accordance with the GRI Standards for the period January 1, 2022 to December 31, 2022.
-Contact Person: Mr Ken Adam
-Contact Details: Adam@acmecorp.org; +123 345 6754
+Statement of Use: ${statement}
+Contact Person: Mr ${userName}
+Contact Details: ${userEmail}
 
 Best regards,
 Team Sustainext`)
@@ -98,7 +99,7 @@ const [notified,setNotified]=useState(false)
               Preview
                 </p>
                 <textarea
-          value={statement}
+          value={mailStatement}
           className={` shadow-none border appearance-none text-sm border-gray-400 text-[#667085] px-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full mb-2 resize-none`}
           rows={17}
         />
