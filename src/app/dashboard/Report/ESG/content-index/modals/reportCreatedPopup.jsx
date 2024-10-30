@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import GRISVG from "../../../../../../../public/gri.svg";
 import CorrectSVG from '../../../../../../../public/correct.svg'
 import Image from "next/image";
@@ -10,13 +10,15 @@ import { IoMailOutline } from "react-icons/io5";
 import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
 import { MdExitToApp,MdKeyboardArrowDown } from "react-icons/md";
 import NotifyGRI from "./notifyGRIPopup";
+import { loadFromLocalStorage } from "../../../../../utils/storage";
 import { useRouter } from "next/navigation";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 
-const ReportCreatedPopup = ({ isCreateReportModalOpen, setIsCreateReportModalOpen,setActiveStep,orgName,fromDate,toDate ,reportName}) => {
+const ReportCreatedPopup = ({ isCreateReportModalOpen, setIsCreateReportModalOpen,setActiveStep,orgName,fromDate,toDate ,reportName,statement,userName,userEmail}) => {
     const [isNotifyModalOpen,setIsNotifyModalOpen]=useState(false)
     const [showSuccessMessage,setShowSuccessMessage]=useState(false)
     const router=useRouter()
+    
   return (
     <>
       {isCreateReportModalOpen && (
@@ -95,9 +97,9 @@ const ReportCreatedPopup = ({ isCreateReportModalOpen, setIsCreateReportModalOpe
           </div>
         </div>
       )}
-      <NotifyGRI showSuccessMessage={showSuccessMessage} setShowSuccessMessage={setShowSuccessMessage} isNotifyModalOpen={isNotifyModalOpen} setIsNotifyModalOpen={setIsNotifyModalOpen} setIsCreateReportModalOpen={setIsCreateReportModalOpen} />
+      <NotifyGRI userName={userName} userEmail={userEmail} orgName={orgName} statement={statement} showSuccessMessage={showSuccessMessage} setShowSuccessMessage={setShowSuccessMessage} isNotifyModalOpen={isNotifyModalOpen} setIsNotifyModalOpen={setIsNotifyModalOpen} setIsCreateReportModalOpen={setIsCreateReportModalOpen} />
     </>
   );
 };
-
+    
 export default ReportCreatedPopup;

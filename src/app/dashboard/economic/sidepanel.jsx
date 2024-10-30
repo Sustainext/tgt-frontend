@@ -708,6 +708,23 @@ const Aside = ({ activeTab, handleTabClick }) => {
                     <p
                       className={`flex  text-start px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab ===
+                        "Communication and training about anti-corruption policies and procedures"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() =>
+                        handleTabClick(
+                          "Communication and training about anti-corruption policies and procedures"
+                        )
+                      }
+                    >
+                      Communication and training about anti-corruption policies and procedures
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab ===
                         "Confirmed incidents of corruption and actions taken"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "

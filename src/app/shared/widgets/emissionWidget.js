@@ -1176,7 +1176,7 @@ const EmissionWidget = React.memo(
                           />
                         ) : (
                           <RiFileExcel2Line
-                            className="text-green-500 ml-2"
+                            className="text-blue-500 ml-2"
                             onClick={handlePreview}
                             data-tooltip-id={fileName}
                             data-tooltip-content={fileName}

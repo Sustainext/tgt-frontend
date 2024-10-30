@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 import axiosInstance from "../../../../../utils/axiosMiddleware";
 
 const OmissionTable = ({ setIsModalOpen, reportid, isOmissionSubmitted, setIsOmissionSubmitted, data, onSave }) => {
@@ -181,6 +183,8 @@ const OmissionTable = ({ setIsModalOpen, reportid, isOmissionSubmitted, setIsOmi
   
           <div className="flex justify-end mt-4">
             <button
+            data-tooltip-id={`tooltip-env`}
+            data-tooltip-html={isFormComplete?"":"Provide reason for omission for all the disclosures to proceed further"}
               onClick={handleSubmit}
               className={`bg-blue-500 text-white px-3 py-2 rounded-lg ${!isFormComplete ? 'opacity-50 cursor-not-allowed' : ''}`}
               disabled={!isFormComplete}
@@ -189,6 +193,19 @@ const OmissionTable = ({ setIsModalOpen, reportid, isOmissionSubmitted, setIsOmi
             </button>
           </div>
         </div>
+        <ReactTooltip
+                  id={`tooltip-env`}
+                  place="top"
+                  effect="solid"
+                  style={{
+                    width: "300px",
+                    backgroundColor: "#000",
+                    color: "white",
+                    fontSize: "12px",
+                    boxShadow: 3,
+                    borderRadius: "8px",
+                  }}
+                ></ReactTooltip>
       </>
     );
 };
