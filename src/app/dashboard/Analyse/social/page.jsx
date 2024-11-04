@@ -22,7 +22,7 @@ import {
 } from "../../../../lib/redux/features/topheaderSlice";
 import { useDispatch } from "react-redux";
 const social = () => {
-  const [activeTab, setActiveTab] = useState("Tab1");
+  const [activeTab, setActiveTab] = useState("Tab2");
   const [isBoxOpen, setIsBoxOpen] = useState(false);
   const dispatch = useDispatch();
   const handleTabClick = (tab) => {
@@ -58,10 +58,10 @@ const social = () => {
         <div className="sticky top-14 bg-white z-[100]">
           <Header activeTab={activeTab} setIsBoxOpen={setIsBoxOpen} />
         </div>
-        {activeTab === "Tab1" && <AnalyseEmployment />}
+        {/* {activeTab === "Tab1" && <AnalyseEmployment />} */}
         {activeTab === "Tab2" && <AnalyseOHS />}
-        {activeTab === "Tab3" && <AnalyseChildlabour />}
-        {activeTab === "Tab4" && <AnalyseCompulsorylabour />}
+        {/* {activeTab === "Tab3" && <AnalyseChildlabour />} */}
+        {/* {activeTab === "Tab4" && <AnalyseCompulsorylabour />} */}
         {activeTab === "Tab5" && <AnalyseDiversityInclusion /> }
         {activeTab === "Tab6" && <AnalyseSuppliersocialassessment/>}
         {activeTab === "Tab7" && <AnalyseTraining /> }

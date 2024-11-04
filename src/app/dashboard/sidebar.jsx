@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardArrowDown,
@@ -15,10 +15,10 @@ import {
   MdOutlineAccountTree,
   MdInfoOutline,
   MdEditNote,
-  MdOutlineManageAccounts ,
-  MdOutlinePersonAddAlt ,
+  MdOutlineManageAccounts,
+  MdOutlinePersonAddAlt,
+  MdLockOutline,
 } from "react-icons/md";
-
 import { LiaHomeSolid } from "react-icons/lia";
 import Link from "next/link";
 import { GlobalState } from "../../Context/page";
@@ -29,28 +29,92 @@ import "react-tooltip/dist/react-tooltip.css";
 const Sidenav = () => {
   const { open, setOpen } = GlobalState();
   const [activeIndex, setActiveIndex] = useState(null);
-  const [activeSubmenuIndex, setActiveSubmenuIndex] = useState(null);
+  const [permissions, setPermissions] = useState({});
+  const [newrole, setRole] = useState(""); // Ensure role is initialized
+
+  // Load permissions and role from localStorage or API
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedPermissions = localStorage.getItem("permissions");
+      const storedRole = localStorage.getItem("custom_role"); // Fetch the role
+      if (storedPermissions) {
+        try {
+          setPermissions(JSON.parse(storedPermissions));
+        } catch (error) {
+          console.error("Failed to parse stored permissions:", error);
+          setPermissions({}); // Fallback to an empty object if parsing fails
+        }
+      } else {
+        setPermissions({}); // Set permissions to empty object if not available
+      }
+
+      if (storedRole) {
+        setRole(storedRole); // Get role from localStorage
+        console.log("Stored role:", storedRole);
+      }
+    }
+  }, []);
+  const isNewRole = newrole === "true";
 
   const Menus = [
-    { id: 0, title: "Sustainext HQ", icon: <LiaHomeSolid />, link: "/dashboard" },
+    {
+      id: 0,
+      title: "Sustainext HQ",
+      icon: <LiaHomeSolid />,
+      link: "/dashboard",
+      lockicon: <MdLockOutline />,
+      lockiconshow: false,
+    },
     {
       id: 1,
       title: "Materiality Dashboard",
       icon: <MdOutlinePieChartOutline />,
       spacing: true,
       link: "/dashboard/Materiality",
+      lockicon: <MdLockOutline />,
+      lockiconshow: false,
     },
     {
       id: 2,
       title: "Collect",
       icon: <MdOutlineAddBox />,
       submenu: true,
+      permission: "collect",
+      role: true,
+      lockicon: <MdLockOutline />,
+      lockiconshow: false,
+
       submenuItems: [
-        { id: "2-1", title: "Environment", icon: <MdPublic />, link: "/dashboard/environment" },
-        { id: "2-2", title: "Social", icon: <MdOutlineGroup />, link: "/dashboard/social" },
-        { id: "2-3", title: "Governance", icon: <MdOutlineDiversity1 />, link: "/dashboard/governance" },
-        { id: "2-4", title: "General", icon: <MdOutlineDiversity2 />, link: "/dashboard/general" },
-        { id: "2-5", title: "Economic", icon: <MdOutlineDiversity3 />, link: "/dashboard/economic" },
+        {
+          id: "2-1",
+          title: "Environment",
+          icon: <MdPublic />,
+          link: "/dashboard/environment",
+        },
+        {
+          id: "2-2",
+          title: "Social",
+          icon: <MdOutlineGroup />,
+          link: "/dashboard/social",
+        },
+        {
+          id: "2-3",
+          title: "Governance",
+          icon: <MdOutlineDiversity1 />,
+          link: "/dashboard/governance",
+        },
+        {
+          id: "2-4",
+          title: "General",
+          icon: <MdOutlineDiversity2 />,
+          link: "/dashboard/general",
+        },
+        {
+          id: "2-5",
+          title: "Economic",
+          icon: <MdOutlineDiversity3 />,
+          link: "/dashboard/economic",
+        },
       ],
     },
     {
@@ -58,43 +122,126 @@ const Sidenav = () => {
       title: "Analyse",
       icon: <MdOutlineBarChart />,
       submenu: true,
+      permission: "analyse",
+      role: true,
+      lockicon: <MdLockOutline />,
+      lockiconshow: false,
+
       submenuItems: [
-        { id: "3-1", title: "Environment", icon: <MdPublic />, link: "/dashboard/Analyse/environment" },
-        { id: "3-2", title: "Social", icon: <MdOutlineGroup />, link: "/dashboard/Analyse/social" },
-        { id: "3-3", title: "Governance", icon: <MdOutlineDiversity1 />, link: "/dashboard/Analyse/governance" },
-        { id: "3-4", title: "General", icon: <MdOutlineDiversity2 />, link: "/dashboard/Analyse/general" },
-        { id: "3-5", title: "Economic", icon: <MdOutlineDiversity3 />, link: "/dashboard/Analyse/economic" },
+        {
+          id: "3-1",
+          title: "Environment",
+          icon: <MdPublic />,
+          link: "/dashboard/Analyse/environment",
+        },
+        {
+          id: "3-2",
+          title: "Social",
+          icon: <MdOutlineGroup />,
+          link: "/dashboard/Analyse/social",
+        },
+        {
+          id: "3-3",
+          title: "Governance",
+          icon: <MdOutlineDiversity1 />,
+          link: "/dashboard/Analyse/governance",
+        },
+        {
+          id: "3-4",
+          title: "General",
+          icon: <MdOutlineDiversity2 />,
+          link: "/dashboard/Analyse/general",
+        },
+        {
+          id: "3-5",
+          title: "Economic",
+          icon: <MdOutlineDiversity3 />,
+          link: "/dashboard/Analyse/economic",
+        },
       ],
     },
-    { id: 4, title: "Report", icon: <MdEditNote />, link: "/dashboard/Report" },
-    { id: 5, title: "Optimise", icon: <MdOutlineSettingsSuggest />, link: "#" },
+    {
+      id: 4,
+      title: "Report",
+      icon: <MdEditNote />,
+      link: "/dashboard/Report",
+      permission: "report",
+      role: true,
+      lockicon: <MdLockOutline />,
+      lockiconshow: false,
+    },
+    {
+      id: 5,
+      title: "Optimise",
+      icon: <MdOutlineSettingsSuggest />,
+      link: "#",
+      permission: "optimise",
+      role: true,
+      lockicon: <MdLockOutline />,
+      lockiconshow: true,
+    },
     {
       id: 6,
       title: "Track",
       icon: <MdOutlineSearch />,
       spacing: true,
+      role: true,
       link: "/dashboard/Track",
+      permission: "track",
+      lockicon: <MdLockOutline />,
+      lockiconshow: false,
     },
-    {
+
+    isNewRole && {
       id: 7,
       title: "Users",
       icon: <MdOutlineGroup />,
       submenu: true,
+      role: true,
       submenuItems: [
-        { id: "7-1", title: "Create new user", icon: <MdOutlinePersonAddAlt   />, link: "/dashboard/Users/create-new-users" },
-        { id: "7-2", title: "Manage Users", icon: <MdOutlineManageAccounts />, link: "/dashboard/Users/manage-users" },
-       
+        {
+          id: "7-1",
+          title: "Create new user",
+          icon: <MdOutlinePersonAddAlt />,
+          link: "/dashboard/Users/create-new-users",
+        },
+        {
+          id: "7-2",
+          title: "Manage Users",
+          icon: <MdOutlineManageAccounts />,
+          link: "/dashboard/Users/manage-users",
+        },
       ],
     },
+
     {
       id: 8,
       title: "Organizational Structure",
       icon: <MdOutlineAccountTree />,
       link: "/dashboard/OrgStructure",
+      role: true,
+      lockicon: <MdLockOutline />,
+      lockiconshow: false,
     },
-    { id: 9, title: "Settings", icon: <CiSettings />, link: "/dashboard/Settings" },
-    { id: 10, title: "About", icon: <MdInfoOutline />, link: "#" },
-  ];
+    // {
+    //   id: 9,
+    //   title: "Settings",
+    //   icon: <CiSettings />,
+    //   link: "/dashboard/Settings",
+    //   role: true,
+    //   lockicon: <MdLockOutline />,
+    //   lockiconshow: false,
+    // },
+    {
+      id: 10,
+      title: "About",
+      icon: <MdInfoOutline />,
+      link: "#",
+      role: true,
+      lockicon: <MdLockOutline />,
+      lockiconshow: false,
+    },
+  ].filter(Boolean); // Remove false values (if the "Users" menu is not rendered)
 
   const [submenuOpen, setSubmenuOpen] = useState(
     new Array(Menus.length).fill(false)
@@ -108,7 +255,14 @@ const Sidenav = () => {
   };
 
   const isSubmenuActive = (menu) => {
-    return menu.submenuItems?.some((submenuItem) => submenuItem.id === activeIndex);
+    return menu.submenuItems?.some(
+      (submenuItem) => submenuItem.id === activeIndex
+    );
+  };
+
+  const hasPermission = (menu) => {
+    if (!menu.permission) return true; // No permission needed
+    return permissions[menu.permission] === true; // Allow if permission is granted
   };
 
   return (
@@ -136,7 +290,7 @@ const Sidenav = () => {
             </div>
           </div>
           <ul className="pt-2 overflow-y-scroll h-[110vh] scrollable-content">
-            {Menus.map((menu, index) => (
+            {Menus.filter(hasPermission).map((menu, index) => (
               <React.Fragment key={menu.id}>
                 {menu.submenu ? (
                   <li
@@ -146,18 +300,21 @@ const Sidenav = () => {
                           ? "bg-[#081746]"
                           : ""
                       } 
-                      ${!open && activeIndex === menu.id ? "bg-[#081746]" : ""}`}
+                      ${
+                        !open && activeIndex === menu.id ? "bg-[#081746]" : ""
+                      }`}
                     onClick={() => {
                       toggleSubmenu(index);
                       setActiveIndex(menu.id);
-                      
                     }}
                   >
                     <span
-                      className={`text-2xl flex items-center justify-center w-12 h-8 rounded-md 
-                      ${!open ? "hover:bg-[#007EEF]" : ""}
+                      className={`text-2xl flex items-center justify-center w-12 h-8 rounded-md ${
+                        !open ? "hover:bg-[#007EEF]" : ""
+                      }
                       ${
-                        !open && (activeIndex === menu.id || isSubmenuActive(menu))
+                        !open &&
+                        (activeIndex === menu.id || isSubmenuActive(menu))
                           ? "bg-[#081746]"
                           : ""
                       }`}
@@ -200,17 +357,20 @@ const Sidenav = () => {
                   <Link href={menu.link} key={menu.id}>
                     <li
                       className={`text-white text-sm flex items-center gap-x-4 cursor-pointer rounded-md mt-2 w-full p-2
-                        ${open ? "hover:bg-[#007EEF]" : ""}
-                        ${open && activeIndex === menu.id ? "bg-[#081746]" : ""}
-                        ${!open && activeIndex === menu.id ? "bg-[#081746]" : ""}`}
+                        ${open ? "hover:bg-[#007EEF]" : ""} ${
+                        open && activeIndex === menu.id ? "bg-[#081746]" : ""
+                      } ${
+                        !open && activeIndex === menu.id ? "bg-[#081746]" : ""
+                      }`}
                       onClick={() => {
                         setActiveIndex(menu.id);
                         setOpen(!open);
                       }}
                     >
                       <span
-                        className={`text-2xl flex items-center justify-center w-12 h-8 rounded-md 
-                          ${!open ? "hover:bg-[#007EEF]" : ""}
+                        className={`text-2xl flex items-center justify-center w-12 h-8 rounded-md ${
+                          !open ? "hover:bg-[#007EEF]" : ""
+                        }
                           ${
                             !open && activeIndex === menu.id
                               ? "bg-[#081746]"
@@ -228,6 +388,12 @@ const Sidenav = () => {
                       >
                         {menu.title}
                       </span>
+
+                          {menu.lockiconshow && open && (
+                        <span className="text-2xl flex items-center justify-center w-5 h-8 rounded-md">
+                          {menu.lockicon}
+                        </span>
+                      )}
                       {!open && (
                         <ReactTooltip
                           id={`tooltip-${index}`}
@@ -254,9 +420,7 @@ const Sidenav = () => {
                       <Link href={submenuItem.link} key={submenuItem.id}>
                         <li
                           className={`text-white text-sm p-2 px-5 mx-5 flex items-center gap-x-4 cursor-pointer hover:bg-[#007EEF] rounded-md  mt-2 ${
-                            activeIndex === submenuItem.id
-                              ? "bg-[#081746]"
-                              : ""
+                            activeIndex === submenuItem.id ? "bg-[#081746]" : ""
                           }`}
                           onClick={() => {
                             setActiveIndex(submenuItem.id);
@@ -264,7 +428,11 @@ const Sidenav = () => {
                           }}
                         >
                           <span className="text-2xl block float-left">
-                            {submenuItem.icon ? submenuItem.icon : <LiaHomeSolid />}
+                            {submenuItem.icon ? (
+                              submenuItem.icon
+                            ) : (
+                              <LiaHomeSolid />
+                            )}
                           </span>
                           <span
                             className={`text-sm font-medium flex-1 ${

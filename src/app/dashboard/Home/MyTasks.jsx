@@ -9,7 +9,9 @@ import {
   FiCheckCircle,
   FiLoader,
   FiX,
-  FiFile
+  FiFile,
+  FaRegFileExcel,
+  FaRegFile,
 } from "react-icons/fi";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -17,8 +19,9 @@ import "react-toastify/dist/ReactToastify.css";
 import Moment from "react-moment";
 import ImageUpload from "../../shared/components/ImageUpload";
 import { unitTypes } from "../../shared/data/units";
-import axiosInstance,{ post, del, patch } from "../../utils/axiosMiddleware";
+import axiosInstance, { post, del, patch } from "../../utils/axiosMiddleware";
 import { BlobServiceClient } from "@azure/storage-blob";
+import { getLocationName } from "../../utils/locationName";
 
 const MyTask = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -69,6 +72,7 @@ const MyTask = () => {
   const [isPdfViewerOpen, setIsPdfViewerOpen] = useState(false);
   const [isActivityReceived, setIsActivityReceived] = useState(false);
   const [isActivityFetched, setIsActivityFetched] = useState(false);
+  // const [activityId, setActivityId] = useState('');
 
   const closePreviewModal = () => {
     setIsPdfViewerOpen(false);
@@ -76,67 +80,77 @@ const MyTask = () => {
 
   const handleActivityChange = (e) => {
     setSelectedActivityName(e.target.value);
-    setTaskAssigndata({ ...taskassigndata, activity: e.target.value });
+    setTaskAssigndata({
+      ...taskassigndata,
+      activity: e.target.value,
+      activity_id: selectedActivity?.activity_id,
+      unit_type: selectedActivity?.unit_type,
+    });
   };
 
+  const [isSearching, setIsSearching] = useState(false);
+
   useEffect(() => {
-    const activity = activitiesList.find(
-      (activity) =>
-        `${activity.name} - (${activity.source}) - ${activity.unit_type}` ===
-        selectedActivityName
-    );
-    setSelectedActivity(activity || {});
-    console.log('activity found',activity);
+    const findActivity = async () => {
+      if (!selectedActivityName || !activitiesList?.length) return;
+
+      setIsSearching(true);
+      try {
+        // Simulate a slight delay to prevent loader flash
+        await new Promise((resolve) => setTimeout(resolve, 300));
+
+        const activity = activitiesList.find(
+          (activity) =>
+            `${activity.name} - (${activity.source}) - ${activity.unit_type}` ===
+            selectedActivityName
+        );
+
+        setSelectedActivity(activity || {});
+        setTaskAssigndata({
+          ...taskassigndata,
+          activity_id: activity?.activity_id,
+          unit_type: activity?.unit_type,
+        });
+        console.log("activity found", activity);
+      } catch (error) {
+        console.error("Error finding activity:", error);
+      } finally {
+        setIsSearching(false);
+      }
+    };
+
+    findActivity();
   }, [selectedActivityName, activitiesList]);
-
-  // const handleFileUpload = (file) => {
-  //   if (!file) return;
-
-  //   const reader = new FileReader();
-  //   reader.readAsDataURL(file);
-  //   reader.onload = () => {
-  //     const newTaskData = {
-  //       ...taskassigndata,
-  //       file: file,
-  //       filename: file.name,
-  //       filesize: file.size,
-  //       modifiedAt: new Date().toLocaleString(),
-  //     };
-
-  //     setTaskAssigndata(newTaskData);
-  //   };
-  //   reader.onerror = (error) =>
-  //     console.error("File reading has failed: ", error);
-  // };
 
   const handleFileUpload = async (file) => {
     if (!file) return;
-   
+
     try {
       const arrayBuffer = await file.arrayBuffer();
       const blob = new Blob([arrayBuffer]);
-   
+
       const accountName = process.env.NEXT_PUBLIC_AZURE_STORAGE_ACCOUNT;
-      const containerName = process.env.NEXT_PUBLIC_AZURE_STORAGE_CONTAINER; 
+      const containerName = process.env.NEXT_PUBLIC_AZURE_STORAGE_CONTAINER;
       const sasToken = process.env.NEXT_PUBLIC_AZURE_SAS_TOKEN;
-   
+
       const blobServiceClient = new BlobServiceClient(
         `https://${accountName}.blob.core.windows.net?${sasToken}`
       );
-   
-      const containerClient = blobServiceClient.getContainerClient(containerName);
+
+      const containerClient =
+        blobServiceClient.getContainerClient(containerName);
       const blobName = file.name;
       const blobClient = containerClient.getBlockBlobClient(blobName);
-   
+
       const uploadOptions = {
         blobHTTPHeaders: {
           blobContentType: file.type,
         },
       };
-   
+
       await blobClient.uploadData(blob, uploadOptions);
       const url = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}`;
-   
+
       const newTaskData = {
         ...taskassigndata,
         file_data: {
@@ -144,17 +158,16 @@ const MyTask = () => {
           url: url,
           type: file.type,
           size: file.size,
-          uploadDateTime: new Date().toLocaleString()
-        }
+          uploadDateTime: new Date().toLocaleString(),
+        },
       };
-   
+
       setTaskAssigndata(newTaskData);
-   
     } catch (error) {
       console.error("Error uploading file:", error);
       toast.error("Failed to upload file");
     }
-   };
+  };
   const handleUsername = (e) => {
     setUsernameassin(e.target.value);
   };
@@ -350,7 +363,7 @@ const MyTask = () => {
         }
       }
 
-      setIsActivityFetched(true)
+      setIsActivityFetched(true);
       if (!customFetchExecuted) {
         return {
           activitiesData: [...CombinedActivitiesData, ...customFetchData],
@@ -378,10 +391,7 @@ const MyTask = () => {
     };
     LoaderOpen();
     const response = await axiosInstance
-      .get(
-        `${process.env.BACKEND_API_URL}/sustainapp/user_client/`,
-        options
-      )
+      .get(`${process.env.BACKEND_API_URL}/sustainapp/user_client/`, options)
       .then((response) => {
         setClintlist(response.data);
         LoaderClose();
@@ -452,7 +462,7 @@ const MyTask = () => {
       filename,
       assign_to_email,
       filesize,
-      file_data
+      file_data,
     });
     let unitTypeExtractedArray = activity?.split("-");
     let ExtractedUnitType = unitTypeExtractedArray?.pop();
@@ -491,7 +501,7 @@ const MyTask = () => {
     filename,
     status,
     assign_to_email,
-    file_data    
+    file_data
   ) => {
     if (activity === null || activity === "") {
       setIsActivityReceived(false);
@@ -526,13 +536,15 @@ const MyTask = () => {
       filename,
       status,
       assign_to_email,
-      file_data
+      file_data,
     });
 
     let page = 1;
     let customFetchExecuted = false;
 
-    console.log('task assign data on click',id,
+    console.log(
+      "task assign data on click",
+      id,
       task_name,
       assign_to_user_name,
       assign_by_user_name,
@@ -552,7 +564,8 @@ const MyTask = () => {
       unit2,
       file,
       filename,
-      status,);
+      status
+    );
     try {
       if (activity !== "") {
         let unitTypeExtractedArray = activity?.split("-");
@@ -655,21 +668,19 @@ const MyTask = () => {
   };
 
   const fetchMytaskDetails = async () => {
-    const stringWithQuotes = localStorage.getItem("token");
-    const stringWithoutQuotes = stringWithQuotes.replace(/"/g, "");
-    const options = {
-      headers: {
-        Authorization: `Bearer ${stringWithoutQuotes}`,
-      },
-    };
-    try{
+    // const stringWithQuotes = localStorage.getItem("token");
+    // const stringWithoutQuotes = stringWithQuotes.replace(/"/g, "");
+    // const options = {
+    //   headers: {
+    //     Authorization: `Bearer ${stringWithoutQuotes}`,
+    //   },
+    // };
+    try {
       const response = await axiosInstance.get(
-        `${process.env.BACKEND_API_URL}/organization_task_dashboard/`,
-        options
+        `${process.env.BACKEND_API_URL}/organization_task_dashboard/`
       );
       setTasks(response.data);
-    }
-    catch(error){
+    } catch (error) {
       console.log(error);
     }
   };
@@ -692,10 +703,7 @@ const MyTask = () => {
       user_client: 1,
       roles: 3,
     };
-    await post(
-        `/organization_task_dashboard/`,
-        sandData,
-      )
+    await post(`/organization_task_dashboard/`, sandData)
       .then((response) => {
         if (response.status == "201") {
           toast.success("Task has been added successfully", {
@@ -746,48 +754,49 @@ const MyTask = () => {
   };
 
   const handleCompleted = async (id, roles) => {
-    LoaderOpen();
-    let task_status;
-    if (roles === 1) {
-      task_status = 2;
-    } else {
-      task_status = 3;
-    }
-    const sandData = {
-      task_status,
-    };
-    await patch(
+    try {
+      LoaderOpen();
+
+      const task_status = roles === 1 ? "under_review" : "completed";
+      const sandData = { task_status };
+
+      const response = await patch(
         `/organization_task_dashboard/${id}/`,
-        sandData,
-      )
-      .then((response) => {
-        if (response.status == "200") {
-          toast.success("Task has been completed successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          LoaderClose();
-          fetchMytaskDetails();
-        } else {
-          toast.error("Error", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          LoaderClose();
-        }
+        sandData
+      );
+
+      if (response.status === 200) {
+        toast.success("Task has been completed successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+
+        await fetchMytaskDetails();
+      } else {
+        throw new Error(`Server responded with status: ${response.status}`);
+      }
+    } catch (error) {
+      console.error("Error completing task:", error);
+
+      toast.error(error.response?.data?.message || "Failed to complete task", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
       });
+    } finally {
+      LoaderClose();
+    }
   };
 
   const handleForReview = async (id, status) => {
@@ -795,11 +804,8 @@ const MyTask = () => {
     const sandData = {
       task_status: status,
     };
-    await patch(
-        `/organization_task_dashboard/${id}/`,
-        sandData,
-      )
-      .then((response) => {
+    await patch(`/organization_task_dashboard/${id}/`, sandData).then(
+      (response) => {
         if (response.status == "200") {
           LoaderClose();
           fetchMytaskDetails();
@@ -816,18 +822,19 @@ const MyTask = () => {
           });
           LoaderClose();
         }
-      });
+      }
+    );
   };
 
   const submitApprove = async (id) => {
     LoaderOpen();
     const sandData = {
-      task_status: 'approved',
+      task_status: "approved",
     };
     await patch(
-        `${process.env.BACKEND_API_URL}/organization_task_dashboard/${id}/`,
-        sandData,
-      )
+      `${process.env.BACKEND_API_URL}/organization_task_dashboard/${id}/`,
+      sandData
+    )
       .then((response) => {
         if (response.status == "200") {
           toast.success("Task has been approved", {
@@ -864,15 +871,19 @@ const MyTask = () => {
   const submitReject = async (id) => {
     LoaderOpen();
     const sandData = {
-      task_status: 'reject',
+      task_status: "reject",
       deadline: date,
       comments: comments,
-      file_data: {}
+      file_data: {},
+      value1: "",
+      value2: "",
+      unit1: "",
+      unit2: "",
     };
     await patch(
-        `${process.env.BACKEND_API_URL}/organization_task_dashboard/${id}/`,
-        sandData,
-      )
+      `${process.env.BACKEND_API_URL}/organization_task_dashboard/${id}/`,
+      sandData
+    )
       .then((response) => {
         if (response.status == "200") {
           toast.success("Task has been rejected and reassigned", {
@@ -942,7 +953,7 @@ const MyTask = () => {
   const submitReAssign = async (id) => {
     LoaderOpen();
     const sandData = {
-      task_status: 'in_progress',
+      task_status: "in_progress",
       value1: "",
       value2: "",
       unit1: "",
@@ -970,80 +981,74 @@ const MyTask = () => {
     }
 
     await patch(
-        `${process.env.BACKEND_API_URL}/organization_task_dashboard/${id}/`,
-        sandData,
-      )
-      .then((response) => {
-        if (response.status == "200") {
-          toast.success(
-            "Task has been reassigned to another user successfully",
-            {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            }
-          );
-          LoaderClose();
-          fetchMytaskDetails();
-          handleCloseModalReassign();
-          handleCloseModalReviewtask();
-        } else {
-          toast.error("Error", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          LoaderClose();
-        }
-      });
+      `${process.env.BACKEND_API_URL}/organization_task_dashboard/${id}/`,
+      sandData
+    ).then((response) => {
+      if (response.status == "200") {
+        toast.success("Task has been reassigned to another user successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        LoaderClose();
+        fetchMytaskDetails();
+        handleCloseModalReassign();
+        handleCloseModalReviewtask();
+      } else {
+        toast.error("Error", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        LoaderClose();
+      }
+    });
   };
   const handelDelete = async (id) => {
     LoaderOpen();
 
     await del(
-        `${process.env.BACKEND_API_URL}/organization_task_dashboard/${id}/`,
-      )
-      .then((response) => {
-        if (response.status == "204") {
-          toast.success("Task has been deleted successfully", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          LoaderClose();
-          fetchMytaskDetails();
-          handleCloseModalDelete();
-        } else {
-          toast.error("Error", {
-            position: "top-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          LoaderClose();
-        }
-      });
+      `${process.env.BACKEND_API_URL}/organization_task_dashboard/${id}/`
+    ).then((response) => {
+      if (response.status == "204") {
+        toast.success("Task has been deleted successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        LoaderClose();
+        fetchMytaskDetails();
+        handleCloseModalDelete();
+      } else {
+        toast.error("Error", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        LoaderClose();
+      }
+    });
   };
-  
 
   const SubmitFilledData = async (e, id) => {
     e.preventDefault();
@@ -1052,9 +1057,11 @@ const MyTask = () => {
     const sandData = {
       ...taskassigndata,
       id: taskassigndata.id,
-      activity_id: taskassigndata.factor_id,
+      // activity_id: taskassigndata.factor_id,
       // unit_type
     };
+    console.log("task data", taskassigndata);
+
     const { deadline, ...filteredSandData } = sandData;
     const { value1, unit1 } = sandData;
 
@@ -1074,9 +1081,9 @@ const MyTask = () => {
     }
 
     await patch(
-        `${process.env.BACKEND_API_URL}/organization_task_dashboard/${taskassigndata.id}/`,
-        filteredSandData,
-      )
+      `${process.env.BACKEND_API_URL}/organization_task_dashboard/${taskassigndata.id}/`,
+      filteredSandData
+    )
       .then((response) => {
         if (response.status == "200") {
           toast.success("Data has been added successfully", {
@@ -1093,7 +1100,7 @@ const MyTask = () => {
           handleCloseModal();
           fetchMytaskDetails();
           setaddgoles({});
-          handleForReview(taskassigndata.id, 'under_review');
+          handleForReview(taskassigndata.id, "under_review");
           setIsFillModalOpen(false);
         } else {
           toast.error("Error", {
@@ -1126,6 +1133,22 @@ const MyTask = () => {
         fetchMytaskDetails();
         setaddgoles({});
       });
+  };
+
+  const [selectedLocation, setSelectedLocation] = useState();
+  useEffect(() => {
+    setSelectedLocation(getLocationName(taskassigndata.location));
+  }, [taskassigndata]);
+
+  const validateDecimalPlaces = (value) => {
+    if (!value) return value;
+    // Allow up to 2 decimal places and prevent more than 2 decimal places
+    const regex = /^\d*\.?\d{0,2}$/;
+    if (!regex.test(value)) {
+      // If more than 2 decimal places, truncate to 2
+      return Number(value).toFixed(2);
+    }
+    return value;
   };
 
   return (
@@ -1195,7 +1218,7 @@ const MyTask = () => {
                   <div className="justify-center items-center ">
                     <div className="flex justify-center items-center pb-5">
                       <FiCheckCircle
-                       style={{ color: '#ACACAC', fontSize: '36px' }}
+                        style={{ color: "#ACACAC", fontSize: "36px" }}
                       />
                     </div>
                     <div>
@@ -1240,7 +1263,6 @@ const MyTask = () => {
                                       }}
                                     />
                                   )}
-
                                 </div>
                                 <div className="w-72 truncate text-wrap text-neutral-800 text-[13px] font-normal leading-none ml-3 ">
                                   {task.roles === 1 ? (
@@ -1286,7 +1308,7 @@ const MyTask = () => {
                                   className={
                                     task.roles === 1
                                       ? `w-24 text-neutral-800 text-[13px] font-normal leading-none ml-3 ${
-                                          task.task_status === 4
+                                          task.task_status === "reject"
                                             ? "bg-[#FE5F54] text-white"
                                             : "bg-[#ffd633]"
                                         } h-[20px] rounded-md`
@@ -1295,15 +1317,15 @@ const MyTask = () => {
                                 >
                                   {task.roles === 1 ? (
                                     <p className="px-2 py-1 text-center text-[12px]">
-                                      {task.task_status === 'in_progress'
+                                      {task.task_status === "in_progress"
                                         ? "InProgress"
-                                        : task.task_status === 'approved'
+                                        : task.task_status === "approved"
                                         ? "Approved"
-                                        : task.task_status === 'under_review'
+                                        : task.task_status === "under_review"
                                         ? "Under review"
-                                        : task.task_status === 'completed'
+                                        : task.task_status === "completed"
                                         ? "Completed"
-                                        : task.task_status === 'reject'
+                                        : task.task_status === "reject"
                                         ? "Rejected"
                                         : ""}
                                     </p>
@@ -1417,11 +1439,11 @@ const MyTask = () => {
                                 >
                                   {task.roles === 1 ? (
                                     <p className="px-2 py-1 text-center text-[12px]">
-                                      {task.task_status === 'in_progress'
+                                      {task.task_status === "in_progress"
                                         ? "InProgress"
-                                        : task.task_status === 'approved'
+                                        : task.task_status === "approved"
                                         ? "Approved"
-                                        : task.task_status === 'under_review'
+                                        : task.task_status === "under_review"
                                         ? "Under review"
                                         : ""}{" "}
                                     </p>
@@ -1516,13 +1538,13 @@ const MyTask = () => {
                                 >
                                   {task.roles === 1 ? (
                                     <p className="px-2 py-1 text-center text-[12px]">
-                                      {task.task_status === 'in_progress'
+                                      {task.task_status === "in_progress"
                                         ? "InProgress"
-                                        : task.task_status === 'approved'
+                                        : task.task_status === "approved"
                                         ? "Approved"
-                                        : task.task_status === 'under_review'
+                                        : task.task_status === "under_review"
                                         ? "Under review"
-                                        : task.task_status === 'completed'
+                                        : task.task_status === "completed"
                                         ? "Completed"
                                         : ""}{" "}
                                     </p>
@@ -1614,11 +1636,11 @@ const MyTask = () => {
                                 >
                                   {task.roles === 1 ? (
                                     <p className="px-2 py-1 text-center text-[12px] ">
-                                      {task.task_status === 'in_progress'
+                                      {task.task_status === "in_progress"
                                         ? "InProgress"
-                                        : task.task_status === 'approved'
+                                        : task.task_status === "approved"
                                         ? "Approved"
-                                        : task.task_status === 'under_review'
+                                        : task.task_status === "under_review"
                                         ? "Under review"
                                         : ""}{" "}
                                     </p>
@@ -1733,7 +1755,7 @@ const MyTask = () => {
                         <input
                           type="submit"
                           value="Save"
-                          className="w-[30%] h-[31px]  px-[22px] py-2 bg-blue-500 text-white rounded shadow flex-col justify-center items-center inline-flex cursor-pointer"
+                          className="w-[30%] h-auto  px-[22px] py-2 bg-blue-500 text-white rounded shadow flex-col justify-center items-center inline-flex cursor-pointer"
                         />
                       </div>
                     </form>
@@ -1812,7 +1834,7 @@ const MyTask = () => {
                       Location
                     </h5>
                     <p className="text-left text-sm text-gray-500 ">
-                      {taskassigndata.location}
+                      {selectedLocation}
                     </p>
                   </div>
                   <div className="w-[20%]">
@@ -1989,14 +2011,14 @@ const MyTask = () => {
                               className="text-blue-600 hover:text-blue-800 transition duration-300"
                             >
                               {taskassigndata.file_data?.name
-                                ? taskassigndata.file_data.name
+                                ? taskassigndata.file_data?.name
                                 : "No file available"}
                             </button>
                           </p>
                           <p className="text-[12px] text-gray-400">
                             {taskassigndata.file_data?.url
                               ? (
-                                  taskassigndata.file_data.size /
+                                  taskassigndata.file_data?.size /
                                   (1024 * 1024)
                                 ).toFixed(2)
                               : "0"}
@@ -2166,7 +2188,7 @@ const MyTask = () => {
             </div>
           </div>
 
-          {isPdfViewerOpen && (
+          {/* {isPdfViewerOpen && (
             <div className="relative w-[780px] ms-4 bg-white rounded-lg shadow-lg h-[550px] overflow-y-auto">
               {taskassigndata.file_data.url ? (
                 <>
@@ -2212,6 +2234,67 @@ const MyTask = () => {
                       zIndex: "100",
                     }}
                     aria-label="Close PDF Viewer"
+                  >
+                    &times;
+                  </button>
+                </div>
+              )}
+            </div>
+          )} */}
+          {isPdfViewerOpen && (
+            <div className="relative w-[780px] ms-4 bg-white rounded-lg shadow-lg h-[550px] overflow-y-auto">
+              {taskassigndata.file_data?.url ? (
+                <>
+                  {taskassigndata.file_data.type?.startsWith("image/") ||
+                  taskassigndata.file_data.type === "application/pdf" ? (
+                    <>
+                      <iframe
+                        title="File Viewer"
+                        src={taskassigndata.file_data.url}
+                        width="100%"
+                        height="100%"
+                        style={{ border: "none", backgroundColor: "white" }}
+                      />
+                      <button
+                        onClick={closePreviewModal}
+                        className="absolute -top-2.5 right-2.5 bg-transparent border-none text-gray-700 text-4xl cursor-pointer z-[100] hover:text-gray-900"
+                        aria-label="Close File Viewer"
+                      >
+                        &times;
+                      </button>
+                    </>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center h-full relative">
+                      <div className="flex flex-col items-center space-y-4">
+                        {/* Show appropriate icon based on file type */}
+                        <p className="text-gray-600">
+                          Preview not available for this file type
+                        </p>
+                        <a
+                          href={taskassigndata.file_data.url}
+                          download
+                          className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                        >
+                          Download File
+                        </a>
+                      </div>
+                      <button
+                        onClick={closePreviewModal}
+                        className="absolute -top-2.5 right-2.5 bg-transparent border-none text-gray-700 text-4xl cursor-pointer z-[100] hover:text-gray-900"
+                        aria-label="Close File Viewer"
+                      >
+                        &times;
+                      </button>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div className="flex items-center justify-center h-full relative">
+                  <p className="text-gray-600">File not available</p>
+                  <button
+                    onClick={closePreviewModal}
+                    className="absolute -top-2.5 right-2.5 bg-transparent border-none text-gray-700 text-4xl cursor-pointer z-[100] hover:text-gray-900"
+                    aria-label="Close File Viewer"
                   >
                     &times;
                   </button>
@@ -2280,7 +2363,7 @@ const MyTask = () => {
                     Location
                   </h5>
                   <p className="text-left text-sm text-gray-500 ">
-                    {taskassigndata.location}
+                    {selectedLocation}
                   </p>
                 </div>
                 <div className="w-[20%]">
@@ -2352,7 +2435,13 @@ const MyTask = () => {
                       value={selectedActivityName}
                       onChange={handleActivityChange}
                     >
-                      <option value="">{isActivityFetched ? 'No relevant activities found' :'Select Activity'}</option>
+                      <option value="">
+                        {isActivityFetched
+                          ? activitiesList.length === 0
+                            ? "No relevant activities found"
+                            : "Select Activity"
+                          : "Select Activity"}
+                      </option>
                       {activitiesList.map((activity) => (
                         <option
                           key={activity.id}
@@ -2391,12 +2480,30 @@ const MyTask = () => {
                         className="border m-0.5 text-sm text-neutral-500 appearance-none pr-[180px] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         placeholder="Enter Value"
                         value={taskassigndata.value1}
-                        onChange={(e) =>
+                        onChange={(e) => {
+                          const validatedValue = validateDecimalPlaces(
+                            e.target.value
+                          );
                           setTaskAssigndata({
                             ...taskassigndata,
-                            value1: e.target.value,
-                          })
-                        }
+                            value1: validatedValue,
+                          });
+                          if (validatedValue !== e.target.value) {
+                            toast.info("Maximum 2 decimal places allowed");
+                          }
+                        }}
+                        onBlur={(e) => {
+                          // Format number on blur to ensure consistent display
+                          if (e.target.value) {
+                            const formattedValue = Number(
+                              e.target.value
+                            ).toFixed(2);
+                            setTaskAssigndata({
+                              ...taskassigndata,
+                              value1: formattedValue,
+                            });
+                          }
+                        }}
                       />
                       <div className="absolute right-1 top-0.5">
                         <select
@@ -2447,12 +2554,30 @@ const MyTask = () => {
                         className="border m-0.5 text-sm text-neutral-500 appearance-none pr-[180px] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         placeholder="Enter Value"
                         value={taskassigndata.value2}
-                        onChange={(e) =>
+                        onChange={(e) => {
+                          const validatedValue = validateDecimalPlaces(
+                            e.target.value
+                          );
                           setTaskAssigndata({
                             ...taskassigndata,
-                            value2: e.target.value,
-                          })
-                        }
+                            value2: validatedValue,
+                          });
+                          if (validatedValue !== e.target.value) {
+                            toast.info("Maximum 2 decimal places allowed");
+                          }
+                        }}
+                        onBlur={(e) => {
+                          // Format number on blur to ensure consistent display
+                          if (e.target.value) {
+                            const formattedValue = Number(
+                              e.target.value
+                            ).toFixed(2);
+                            setTaskAssigndata({
+                              ...taskassigndata,
+                              value2: formattedValue,
+                            });
+                          }
+                        }}
                       />
                       <div className="absolute right-1 top-0.5">
                         <select
@@ -2503,12 +2628,30 @@ const MyTask = () => {
                       className="border m-0.5 text-sm text-neutral-500 appearance-none pr-[180px] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                       placeholder="Enter Value"
                       value={taskassigndata.value1}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const validatedValue = validateDecimalPlaces(
+                          e.target.value
+                        );
                         setTaskAssigndata({
                           ...taskassigndata,
-                          value1: e.target.value,
-                        })
-                      }
+                          value1: validatedValue,
+                        });
+                        if (validatedValue !== e.target.value) {
+                          toast.info("Maximum 2 decimal places allowed");
+                        }
+                      }}
+                      onBlur={(e) => {
+                        // Format number on blur to ensure consistent display
+                        if (e.target.value) {
+                          const formattedValue = Number(e.target.value).toFixed(
+                            2
+                          );
+                          setTaskAssigndata({
+                            ...taskassigndata,
+                            value1: formattedValue,
+                          });
+                        }
+                      }}
                     />
                     <div className="absolute right-1 top-0.5">
                       <select
@@ -2602,13 +2745,14 @@ const MyTask = () => {
           </div>
         </div>
       )}
-      {loopen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="flex items-center justify-center">
-            <FiLoader className="animate-spin text-gray-500" size={48} />
+      {loopen ||
+        (isSearching && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="flex items-center justify-center">
+              <FiLoader className="animate-spin text-gray-500" size={48} />
+            </div>
           </div>
-        </div>
-      )}
+        ))}
     </>
   );
 };

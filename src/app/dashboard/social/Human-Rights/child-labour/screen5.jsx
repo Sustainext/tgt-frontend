@@ -61,7 +61,7 @@ const uiSchema = {
   },
 };
 
-const Screen5 = ({ location, year, month }) => {
+const Screen5 = ({ selectedCorp, year, selectedOrg }) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -99,9 +99,9 @@ const Screen5 = ({ location, year, month }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      location,
+      corporate: selectedCorp,
+      organisation: selectedOrg,
       year,
-      month,
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -155,7 +155,7 @@ const Screen5 = ({ location, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
 
     try {
       const response = await axios.get(url, axiosConfig);
@@ -180,9 +180,8 @@ const Screen5 = ({ location, year, month }) => {
     console.log("Form data is changed -", formData);
   }, [formData]);
 
-  // fetch backend and replace initialized forms
   useEffect(() => {
-    if (location && year && month) {
+    if (selectedOrg && year) {
       loadFormData();
       toastShown.current = false; // Reset the flag when valid data is present
     } else {
@@ -191,7 +190,7 @@ const Screen5 = ({ location, year, month }) => {
         toastShown.current = true; // Set the flag to true after showing the toast
       }
     }
-  }, [location, year, month]);
+  }, [selectedOrg, year, selectedCorp]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -252,12 +251,13 @@ const Screen5 = ({ location, year, month }) => {
           />
         </div>
     <div className='mt-4'>
-          <button
+    <button
             type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year ? "cursor-not-allowed" : ""
-              }`}
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
+              !selectedOrg || !year ? "cursor-not-allowed" : ""
+            }`}
             onClick={handleSubmit}
-            disabled={!location || !year}
+            disabled={!selectedOrg || !year}
           >
             Submit
           </button>

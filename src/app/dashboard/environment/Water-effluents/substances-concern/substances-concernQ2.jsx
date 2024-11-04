@@ -1,22 +1,22 @@
-'use client'
-import React, { useState, useEffect, useRef } from 'react';
-import Form from '@rjsf/core';
-import validator from '@rjsf/validator-ajv8';
+"use client";
+import React, { useState, useEffect, useRef } from "react";
+import Form from "@rjsf/core";
+import validator from "@rjsf/validator-ajv8";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
-import { GlobalState } from '../../../../../Context/page';
-import dateWidget from '../../../../shared/widgets/Input/dateWidget';
-import selectWidget from '../../../../shared/widgets/Select/selectWidget';
-import inputWidget from '../../../../shared/widgets/Input/inputWidget';
-import CustomFileUploadWidget from '../../../../shared/widgets/CustomFileUploadWidget';
-import AssignToWidget from '../../../../shared/widgets/assignToWidget';
-import CustomSelectInputWidget from '../../../../shared/widgets/CustomSelectInputWidget';
-import RemoveWidget from '../../../../shared/widgets/RemoveWidget';
-import { Tooltip as ReactTooltip } from 'react-tooltip';
-import 'react-tooltip/dist/react-tooltip.css';
-import axios from 'axios';
+import { GlobalState } from "../../../../../Context/page";
+import dateWidget from "../../../../shared/widgets/Input/dateWidget";
+import selectWidget from "../../../../shared/widgets/Select/selectWidget";
+import inputWidget from "../../../../shared/widgets/Input/inputWidget";
+import CustomFileUploadWidget from "../../../../shared/widgets/CustomFileUploadWidget";
+import AssignToWidget from "../../../../shared/widgets/assignToWidget";
+import CustomSelectInputWidget from "../../../../shared/widgets/CustomSelectInputWidget";
+import RemoveWidget from "../../../../shared/widgets/RemoveWidget";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Oval } from 'react-loader-spinner';
+import { Oval } from "react-loader-spinner";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 const widgets = {
   inputWidget: inputWidget,
@@ -28,35 +28,36 @@ const widgets = {
   RemoveWidget: RemoveWidget,
 };
 
-const view_path = 'gri-environment-water-303-3d-4e-sma'
-const client_id = 1
-const user_id = 1
+const view_path = "gri-environment-water-303-3d-4e-sma";
+const client_id = 1;
+const user_id = 1;
 
 const schema = {
-  type: 'array',
+  type: "array",
   items: {
-    type: 'object',
+    type: "object",
     properties: {
-
-        StandardsUsed: {
+      StandardsUsed: {
         type: "string",
         title: "Standards Used",
-        tooltiptext: "The answer could include any contextual information necessary to understand how the data have been compiled,such as any standards used. methodologies, and assumptions used.",
-        display:"block",
+        tooltiptext:
+          "The answer could include any contextual information necessary to understand how the data have been compiled,such as any standards used. methodologies, and assumptions used.",
+        display: "block",
       },
       Methodologiesused: {
         type: "string",
         title: "Methodologies used",
-        tooltiptext: "The answer could include the description of methodologies used to compile data. ",
-        display:"block",
+        tooltiptext:
+          "The answer could include the description of methodologies used to compile data. ",
+        display: "block",
       },
       Assumptionsconsidered: {
         type: "string",
         title: "Assumptions considered",
-        tooltiptext: "The answer could include the description of assumptions  considered to compile data",
-        display:"block",
+        tooltiptext:
+          "The answer could include the description of assumptions  considered to compile data",
+        display: "block",
       },
-
 
       AssignTo: {
         type: "string",
@@ -72,73 +73,74 @@ const schema = {
         title: "Remove",
       },
       // Define other properties as needed
-    }
-  }
+    },
+  },
 };
 
 const uiSchema = {
-
   items: {
-    classNames: 'fieldset',
-    'ui:order': [
-      'StandardsUsed','Methodologiesused', 'Assumptionsconsidered', 'AssignTo', 'FileUpload', 'Remove'
+    classNames: "fieldset",
+    "ui:order": [
+      "StandardsUsed",
+      "Methodologiesused",
+      "Assumptionsconsidered",
+      "AssignTo",
+      "FileUpload",
+      "Remove",
     ],
 
     StandardsUsed: {
-        'ui:widget': 'inputWidget',
-        'ui:horizontal': true,
-        'ui:options': {
-          label: false,
-        },
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
-      Methodologiesused: {
-        'ui:widget': 'inputWidget',
-        'ui:horizontal': true,
-        'ui:options': {
-          label: false,
-        },
+    },
+    Methodologiesused: {
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
-      Assumptionsconsidered: {
-        'ui:widget': 'inputWidget',
-        'ui:horizontal': true,
-        'ui:options': {
-          label: false,
-        },
+    },
+    Assumptionsconsidered: {
+      "ui:widget": "inputWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
-
+    },
 
     AssignTo: {
       "ui:widget": "AssignTobutton",
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
     FileUpload: {
-      'ui:widget': 'FileUploadWidget',
-      'ui:horizontal': true,
-      'ui:options': {
-        label: false
+      "ui:widget": "FileUploadWidget",
+      "ui:horizontal": true,
+      "ui:options": {
+        label: false,
       },
     },
     Remove: {
       "ui:widget": "RemoveWidget",
-      'ui:options': {
-        label: false
+      "ui:options": {
+        label: false,
       },
     },
-      'ui:options': {
+    "ui:options": {
       orderable: false,
       addable: false,
       removable: false,
-      layout: 'horizontal',
-    }
-  }
+      layout: "horizontal",
+    },
+  },
 };
 
-
-
-const SubstancesconcernQ2 = ({location, year, month}) => {
+const SubstancesconcernQ2 = ({ selectedOrg, year, selectedCorp }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
@@ -152,7 +154,6 @@ const SubstancesconcernQ2 = ({location, year, month}) => {
     setLoOpen(false);
   };
 
-
   const updateFormData = async () => {
     LoaderOpen();
     const data = {
@@ -160,9 +161,9 @@ const SubstancesconcernQ2 = ({location, year, month}) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      location,
+      corporate: selectedCorp,
+      organisation: selectedOrg,
       year,
-      month,
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
@@ -212,7 +213,7 @@ const SubstancesconcernQ2 = ({location, year, month}) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -227,16 +228,15 @@ const SubstancesconcernQ2 = ({location, year, month}) => {
     }
   };
   useEffect(() => {
-    if (location && year && month) {
+    if (selectedOrg && year) {
       loadFormData();
-      toastShown.current = false; // Reset the flag when valid data is present
+      toastShown.current = false;
     } else {
-      // Only show the toast if it has not been shown already
       if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
+        toastShown.current = true;
       }
     }
-  }, [location, year, month]); // Dependencies // React only triggers this effect if these dependencies change
+  }, [selectedOrg, year, selectedCorp]);
   const handleChange = (e) => {
     const newData = e.formData.map((item, index) => ({
       ...item, // Ensure each item retains its structure
@@ -251,9 +251,7 @@ const SubstancesconcernQ2 = ({location, year, month}) => {
   const handleAddNew = () => {
     const newData = [...formData, {}];
     setFormData(newData);
-  
   };
- 
 
   const updateFormDatanew = (updatedData) => {
     setFormData(updatedData);
@@ -263,9 +261,7 @@ const SubstancesconcernQ2 = ({location, year, month}) => {
     const updatedData = [...formData];
     updatedData.splice(index, 1);
     setFormData(updatedData);
- 
   };
-
 
   return (
     <>
@@ -284,7 +280,7 @@ const SubstancesconcernQ2 = ({location, year, month}) => {
               RemoveWidget: (props) => {
                 const match = props.id.match(/^root_(\d+)/);
                 const index = match ? parseInt(match[1], 10) : null;
-    
+
                 return (
                   <RemoveWidget
                     {...props}

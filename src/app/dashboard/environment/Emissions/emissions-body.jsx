@@ -15,24 +15,8 @@ const AccordionItem = ({
   scops,
   icons,
   onAccordionClick,
-  scopeReRender
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  // Effect to handle scope re-render toggle
-  useEffect(() => {
-    if (isOpen) {
-      // Close the accordion
-      setIsOpen(false);
-      
-      // Reopen after a short delay to trigger re-render
-      const timer = setTimeout(() => {
-        setIsOpen(true);
-      }, 100);
-
-      return () => clearTimeout(timer);
-    }
-  }, [scopeReRender]);
 
   const handleAccordionClick = () => {
     const canExpand = onAccordionClick();
@@ -83,7 +67,6 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
   const scope3Ref = useRef();
   const [modalData, setModalData] = useState(null);
   const climatiqData = useSelector((state) => state.emissions.climatiqData);
-  const scopeReRender = useSelector((state) => state.emissions.scopeReRender);
 
   const handleAccordionClick = () => {
     if (!location) {
@@ -133,7 +116,6 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
           scops="Scope 1"
           icons={<IoHomeOutline />}
           onAccordionClick={handleAccordionClick}
-          scopeReRender={scopeReRender}
         >
           {({ setAccordionOpen }) => (
             <Scope1
@@ -152,7 +134,6 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
           scops="Scope 2"
           icons={<IoHomeOutline />}
           onAccordionClick={handleAccordionClick}
-          scopeReRender={scopeReRender}
         >
           {({ setAccordionOpen }) => (
             <Scope2
@@ -172,7 +153,6 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
           scops="Scope 3"
           icons={<IoHomeOutline />}
           onAccordionClick={handleAccordionClick}
-          scopeReRender={scopeReRender}
         >
           {({ setAccordionOpen }) => (
             <Scope3

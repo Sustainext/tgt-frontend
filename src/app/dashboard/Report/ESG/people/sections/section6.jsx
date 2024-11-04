@@ -34,9 +34,9 @@ const Section6=({section13_1_5Ref,data})=>{
               
             {
               "Location":val.Location,
-              "Male":val.Male,
-              "Female":val.Female,
-              "Non-binary":val["Non-binary"]
+              "Male":val.Male.toFixed(2),
+              "Female":val.Female.toFixed(2),
+              "Non-binary":val["Non-binary"].toFixed(2)
           
           }
               
@@ -71,11 +71,44 @@ const Section6=({section13_1_5Ref,data})=>{
         "Minimum Wage"
       ]);
     
-      const [table2Data] = useState([
-        { "Significant location of operations": "Location 1", "Gender": "Male", "Minimum Wage": "data" },
-        { "Significant location of operations": "Location 1", "Gender": "Female", "Minimum Wage": "data" },
-        { "Significant location of operations": "Location 1", "Gender": "Non Binary", "Minimum Wage": "data" },
-      ]);
+      const table2Data = data["202_1c"] && data["202_1c"].length > 0 ? 
+
+    data["202_1c"].map(item => {
+        const locationData = item.Locationofoperation;
+        const currencyValue = locationData.currencyValue || "No currency data available";
+
+        return locationData.locations.map(location => {
+            const locationName = location.value;
+            const wages = locationData.wages[locationName] || {};
+
+            return [
+                {
+                    "Significant location of operations": locationName,
+                    "Gender": "Male",
+                    "Minimum Wage": wages.Male ? wages.Male + ` ${currencyValue}` : "No data available"
+                },
+                {
+                    "Significant location of operations": locationName,
+                    "Gender": "Female",
+                    "Minimum Wage": wages.Female ? wages.Female + ` ${currencyValue}` : "No data available"
+                },
+                {
+                    "Significant location of operations": locationName,
+                    "Gender": "Non-binary",
+                    "Minimum Wage": wages["Non-binary"] ? wages["Non-binary"] + ` ${currencyValue}` : "No data available"
+                }
+            ];
+        }).flat();
+    }).flat()
+    : [
+        {
+            "Significant location of operations": "No data available",
+            "Gender": "No data available",
+            "Minimum Wage": "No data available"
+        }
+    ];
+
+
     return (
         <>
         <div id="section13_1_5" ref={section13_1_5Ref}>
@@ -102,7 +135,7 @@ const Section6=({section13_1_5Ref,data})=>{
         />
 
 <p className="text-sm mb-2">{data["202_1b"]?data["202_1b"].length>0?data["202_1b"][0].Q3?data["202_1b"][0].Q3:"No data available":"No data available":"No data available"}</p>
-<p className="text-sm mb-2">{data["202_1c"]?data["202_1c"].length>0?data["202_1c"][0].Q1?data["202_1c"][0].Q1:"No data available":"No data available":"No data available"}</p>
+<p className="text-sm mb-2">{data["202_1c"]?data["202_1c"].length>0?data["202_1c"][0].Currency?data["202_1c"][0].Currency:"No data available":"No data available":"No data available"}</p>
 <p className="text-sm mb-4">{data["202_1d"]?data["202_1d"].length>0?data["202_1d"][0].Q1?data["202_1d"][0].Q1:"No data available":"No data available":"No data available"}</p>
         <p className="text-[15px]  mb-2 font-semibold">
         Ratio of the entry-level wage to the minimum wage by gender at significant locations of operation
@@ -110,12 +143,21 @@ const Section6=({section13_1_5Ref,data})=>{
             <div className="shadow-md rounded-md mb-4">
                 <LeaveTable columns={table1Columns} data={table1Data} />
             </div>
-            {/* <p className="text-[15px]  mb-2 font-semibold">
+            {
+              data["202_1c"]?data["202_1c"].length>0?data["202_1c"][0].Locationofoperation?data["202_1c"][0].Locationofoperation.radioValue?data["202_1c"][0].Locationofoperation.radioValue=="Variable"?(
+                <div> 
+                   <p className="text-[15px]  mb-2 font-semibold">
             Local minimum wage is absent or variable at significant locations of operation, by gender: 
             </p>
             <div className="shadow-md rounded-md mb-4">
                 <LeaveTable columns={table2Columns} data={table2Data} />
-            </div> */}
+            </div>
+                </div>
+              ):(
+                <div></div>
+              ):"":"":"":""
+            }
+           
             
 
 </div>

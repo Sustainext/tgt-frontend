@@ -21,8 +21,8 @@ const Section4=({section13_1_3Ref,data})=>{
               
             {
              "Benefit": val.benefits,
-          "Full-Time Employees": val.full_time?"Yes":"No",
-          "Part-Time Employees": val.part_time?"Yes":"No",
+          "Full-Time Employees": val.fulltime?"Yes":"No",
+          "Part-Time Employees": val.parttime?"Yes":"No",
           "Temporary Employees": val.temporary?"Yes":"No",
           "Significant Location":val.significantlocation
         
