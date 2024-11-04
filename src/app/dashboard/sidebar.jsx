@@ -389,7 +389,8 @@ const Sidenav = () => {
                         {menu.title}
                       </span>
 
-                      {menu.lockiconshow && (
+                      {menu.lockiconshow && open && (
+
                         <span className="text-2xl flex items-center justify-center w-5 h-8 rounded-md">
                           {menu.lockicon}
                         </span>
