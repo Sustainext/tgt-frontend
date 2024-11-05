@@ -232,15 +232,15 @@ const Sidenav = () => {
     //   lockicon: <MdLockOutline />,
     //   lockiconshow: false,
     // },
-    {
-      id: 10,
-      title: "About",
-      icon: <MdInfoOutline />,
-      link: "#",
-      role: true,
-      lockicon: <MdLockOutline />,
-      lockiconshow: false,
-    },
+    // {
+    //   id: 10,
+    //   title: "About",
+    //   icon: <MdInfoOutline />,
+    //   link: "#",
+    //   role: true,
+    //   lockicon: <MdLockOutline />,
+    //   lockiconshow: false,
+    // },
   ].filter(Boolean); // Remove false values (if the "Users" menu is not rendered)
 
   const [submenuOpen, setSubmenuOpen] = useState(
