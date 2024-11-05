@@ -68,7 +68,7 @@ const Benefitstab = ({ selectedOrg, selectedCorp, year }) => {
                 activeTabIndex === index && tab.title
                   ? "border-blue-500 text-blue-600"
                   : " text-gray-400 cursor-pointer border-gray-300"
-              } ${tab.title ? "text-gray-600 hover:text-blue-600 " : ""}`}
+              } ${tab.title ? " hover:text-blue-600 " : ""}`}
               onClick={() => tab.title && setActiveTabIndex(index)}
               style={{ pointerEvents: tab.title ? "auto" : "none" }}
             >
