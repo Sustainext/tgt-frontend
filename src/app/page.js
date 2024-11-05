@@ -51,7 +51,7 @@ export default function Home() {
       <ToastContainer style={{ fontSize: "12px", zIndex: 1000 }} />
       <main>
         <div
-          className="min-h-[135vh] bg-cover bg-center"
+          className="min-h-[125vh] bg-cover bg-center"
           style={{
             backgroundImage:
               "url('https://sustainextstorage1.blob.core.windows.net/sustainext-frontend-assets/Home/authbg.webp')",
@@ -65,7 +65,7 @@ export default function Home() {
                 className="h-28 w-auto"
               />
             </div>
-            <div className="bg-white shadow-lg rounded-lg p-16 max-w-md w-full my-10 mx-auto h-[540px] ">
+            <div className="bg-white shadow-lg rounded-lg p-16 max-w-md w-full my-20 mx-auto h-[456px] ">
               <h2 className="text-left text-2xl font-extrabold text-gray-900">
                 Welcome back
               </h2>
@@ -142,7 +142,7 @@ export default function Home() {
                   </button>
                 </div>
               </form>
-              <div className="mt-6 text-center">
+              {/* <div className="mt-6 text-center">
                 <p className="text-sm">
                   Don't have an account?{" "}
                   <a
@@ -152,7 +152,7 @@ export default function Home() {
                     Sign up
                   </a>
                 </p>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
