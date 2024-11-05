@@ -50,7 +50,7 @@ const Section2 = () => {
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] h-[30px] font-bold pt-1">
-                  Customer Health and Safety 2016
+                  Product Safety & Quality
                   </p>
                 </div>
               </div>

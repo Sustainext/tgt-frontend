@@ -506,7 +506,7 @@ const Report = () => {
               Report
             </h1>
             <p className="text-[14px] text-[#667085]">
-              All the reports generated made for the organization can be
+              All the reports generated for the organization can be
               accessed here
             </p>
           </div>
@@ -669,9 +669,9 @@ const Report = () => {
                         >
                           <option>Select Report Type</option>
                           <option>GHG Accounting Report</option>
-                          <option>GHG Report - Investments</option>
+                          {/* <option>GHG Report - Investments</option> */}
                           <option>GRI Report: In accordance With</option>
-                          <option>GRI Report: With Reference to</option>
+                          {/* <option>GRI Report: With Reference to</option> */}
                         </select>
                         {error.reporttype && (
                           <p className="text-red-500 ml-1">

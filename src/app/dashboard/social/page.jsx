@@ -1,2856 +1,314 @@
-'use client'
-import React, { useState,useEffect } from "react";
-import { MdKeyboardArrowDown, MdInfoOutline } from "react-icons/md";
-import { IoCheckmarkDoneSharp } from "react-icons/io5";
-import Ohsmanagment from "./OHS/ohs-management/page"
+"use client";
+import React, { useState, useEffect } from "react";
+import Aside from "./sidepanel";
+import Parentalleave from "./Employment/Parental-Leave/page";
+import Benefits from "./Employment/Benefits/page";
+import EmployeeHiresTurnover from "./Employment/Employee-Hires-Turnover/page";
+import Definedbenefit from "./Employment/defined-benefit/page"
+import EmploymentMaterialtopic from "./Employment/Management-Material-topic/page";
+import LaborManagementMaterialtopic from "./Labor-Management/Management-Material-topic/page";
+import Noticeperiod from "./Labor-Management/Notice-Period/page";
+import CollectiveBargaining from "./Labor-Management/Collective-Bargaining/page";
+import OHSMaterialtopic from "./OHS/Management-Material-topic/page";
+import Ohsmanagment from "./OHS/ohs-management/page";
 import Riskassessment from "./OHS/risk-assessment/page";
 import Ohsservices from "./OHS/ohs-services/page";
 import Workinvolvement from "./OHS/work-involvement/page";
 import Ohstraining from "./OHS/ohs-training/page";
-import Promotionhealth from "./OHS/promotion-health/page"
-import Preventionohsimpact from "./OHS/prevention-ohs-Impact/page"
-import Ohsmanagementsystemcoverage from "./OHS/ohs-management-system-coverage/page"
-import Injuries from "./OHS/Injuries/page"
-import Illhealth from "./OHS/ill-health/page"
-import Childlabour from "./Human-Rights/child-labour/page";
-import Forcedorcompulsorylabour from "./Human-Rights/forced-or-compulsory-labour/page";
-import Securitypersonnel from "./Human-Rights/security-personnel/page";
-import Parentalleave from "./Employment/Parental-Leave/page";
-import Benefits from "./Employment/Benefits/page";
-import EmployeeHiresTurnover from "./Employment/Employee-Hires-Turnover/page"
-import Noticeperiod from "./Notice-Period/page";
+import Promotionhealth from "./OHS/promotion-health/page";
+import Preventionohsimpact from "./OHS/prevention-ohs-Impact/page";
+import Ohsmanagementsystemcoverage from "./OHS/ohs-management-system-coverage/page";
+import Injuries from "./OHS/Injuries/page";
+import Illhealth from "./OHS/ill-health/page";
+import TrainingMaterialtopic from "./Training/Management-Material-topic/page";
+import Traininghours from "./Training/Training-hours/page";
 import Skillupgrade from "./Training/skill-upgrade/page";
-import Suppliersscreened from "./Supplier-social-assessment/Suppliers-screened/page"
-import Impactsactionstaken from "./Supplier-social-assessment/Impacts-actions-taken/page"
-import DiversityBoard from "./Diversity-Inclusion/Diversity-Board/page"
-import Salaryratio from "./Diversity-Inclusion/Salary-ratio/page"
-import Traininghours from "./Training/Training-hours/page"
-import Performancedevelopment from "./Training/Performance-development/page"
-import IncidentsofDiscrimination from "./Non-Discrimination/Incidents-of-Discrimination/page"
-import CollectiveBargaining from "./Collective-Bargaining/page"
-import IndigenousPeople from "./Indigenous-People/page"
-import CommunityEngagement from "./Community-Development/Community-Engagement/page"
-import ImpactonCommunity from "./Community-Development/Impact-on-Community/page"
-import PoliticalInvolvement from "./Political-Involvement/page"
+import Performancedevelopment from "./Training/Performance-development/page";
+import DiversityInclusionMaterialtopic from "./Diversity-Inclusion/Management-Material-topic/page";
+import DiversityBoard from "./Diversity-Inclusion/Diversity-Board/page";
+import Salaryratio from "./Diversity-Inclusion/Salary-ratio/page";
+import NonDiscriminationMaterialtopic from "./Non-Discrimination/Management-Material-topic/page";
+import IncidentsofDiscrimination from "./Non-Discrimination/Incidents-of-Discrimination/page";
+import HumanRightsMaterialtopic from "./Human-Rights/Management-Material-topic/page";
+import CommunityEngagement from "./Human-Rights/Community-Engagement/page";
+import ImpactonCommunity from "./Human-Rights/Impact-on-Community/page"
+import IndigenousPeople from "./Human-Rights/Indigenous-People/page"
+import Securitypersonnel from "./Human-Rights/security-personnel/page"
+import ChildForcedLabourMaterialtopic from "./Child-Forced-Labour/Management-Material-topic/page"
+import Childlabour from "./Child-Forced-Labour/child-labour/page"
+import Forcedorcompulsorylabour from "./Child-Forced-Labour/forced-or-compulsory-labour/page"
+import SupplierMaterialtopic from "./Supplier-social-assessment/Management-Material-topic/page"
+import Suppliersscreened from "./Supplier-social-assessment/Impacts-actions-taken/page"
+import Impactsactionstaken from "./Supplier-social-assessment/Suppliers-screened/page"
+import SoicalProcurementPractices from "./Supplier-social-assessment/procurement-practices/page"
+import HealthSafetyMaterialtopic from "./Customer-Health-Safety/Management-Material-topic/page"
 import ProductServiceSafety from "./Customer-Health-Safety/Product-Service-Safety/page"
 import Compliance from "./Customer-Health-Safety/Compliance/page"
-import CustomerPrivacy from "./Customer-Privacy/page"
+import MarketingLabelingMaterialtopic from "./Marketing-Labeling/Management-Material-topic/page"
 import ProductServicelabelling from "./Marketing-Labeling/Product-Service-labelling/page"
 import NoncomplianceincidentsLabelling from "./Marketing-Labeling/Non-compliance-incidents-Labelling/page"
-import StatementnoncomplianceLabeling from "./Marketing-Labeling/Statement-non-compliance-Labeling/page"
+import StatementnoncomplianceLabeling  from "./Marketing-Labeling/Statement-non-compliance-Labeling/page"
 import NoncomplianceincidentsMarketing from "./Marketing-Labeling/Non-compliance-incidents-Marketing/page"
 import StatementnoncomplianceMarketing from "./Marketing-Labeling/Statement-non-compliance-Marketing/page"
-import Identifyinginformation from "./BillS-211/Identifying-information/page"
-import Annualreport from './BillS-211/annual-report/page'
+import CustomerPrivacyMaterialtopic from "./Customer-Privacy/Management-Material-topic/page"
+import CustomerPrivacy from "./Customer-Privacy/page"
+import Ratiosstandard from "./Diversity-Inclusion/ratios-standard/page"
+
 import {
   setHeadertext1,
   setHeadertext2,
   setHeaderdisplay,
-  setMiddlename
+  setMiddlename,
 } from "../../../lib/redux/features/topheaderSlice";
-import { useDispatch} from "react-redux";
-const AccordionItem = ({ title, children }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <div className="cursor-pointe w-full">
-      <button
-        className="w-full text-left flex mt-4 mb-4 justify-between"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        <div>
-          <h5 className="text-[13px] font-bold text-gray-500 pt-1">{title}</h5>
-        </div>
-
-        <div className="mt-1">
-          {" "}
-          <span>
-            <MdKeyboardArrowDown className={`text-2xl ${isOpen ? "rotate-180" : ""}`} />
-          </span>
-        </div>
-      </button>
-      {isOpen && <div className="">{children}</div>}
-    </div>
-  );
-};
+import { useDispatch } from "react-redux";
+import { GlobalState } from "@/Context/page";
 const Social = () => {
-  const [activeStep, setActiveStep] = useState(1);
-  const [completedSteps, setCompletedSteps] = useState([]);
+  const { open } = GlobalState();
+  const [activeTab, setActiveTab] = useState(
+    "Management of Material topic Employment"
+  );
   const dispatch = useDispatch();
-  const activeSteps = (id) => {
-    setActiveStep(id);
+
+  // Handle tab click and update the active tab
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
   };
 
-  const handleNext = () => {
-    setActiveStep((prevStep) => prevStep + 1);
-    setCompletedSteps([...completedSteps, activeStep]);
-  };
-
-  // Function to handle "Previous" button click
-  const handlePrevious = () => {
-    setActiveStep((prevStep) => prevStep - 1);
-    // Remove the previous step from completedSteps
-    setCompletedSteps((prevCompletedSteps) =>
-      prevCompletedSteps.filter((step) => step !== activeStep - 1)
-    );
-  };
-
-  // Function to check if a step is completed
-  const isStepCompleted = (stepNumber) => {
-    return completedSteps.includes(stepNumber);
-  };
-  const stepTitles = {
-    2: "Employment",
-    3: "Employment",
-    4: "Labor Relations",
-    5: "Occupational health and safety",
-    6: "Occupational health and safety",
-    7: "Occupational health and safety",
-    8: "Occupational health and safety",
-    9: "Occupational health and safety",
-    10: "Occupational health and safety",
-    11: "Occupational health and safety",
-    12: "Occupational health and safety",
-    13: "Occupational health and safety",
-    14: "Occupational health and safety",
-    15:"Training",
-    16:"Training",
-    17:"Training",
-    18:"Diversity & Inclusion",
-    19:"Diversity & Inclusion",
-    20:"Non - Discrimination",
-    21:"Collective Bargaining",
-    22:"Human Rights",
-    23:"Human Rights",
-    24:"Human Rights",
-    25:"Indigenous People",
-    26:"Community Development",
-    27:"Community Development",
-    28:"Supplier Social Assessment",
-    29:"Supplier Social Assessment",
-    30:"Political Involvement",
-    31:"Customer Health and Safety",
-    32:"Customer Health and Safety",
-    33:"Marketing and Labeling",
-    34:"Marketing and Labeling",
-    35:"Marketing and Labeling",
-    36:"Marketing and Labeling",
-    37:"Marketing and Labeling",
-    38:"Customer Privacy",
-    // 39:"Bill S-211",
-    // 40:"Bill S-211",
-  };
   useEffect(() => {
-    // Update header with step-related information
+    // List of tabs related to Energy\
+    const materialnewTabs = [
+      "Management of Material topic Employment",
+      "Management of Material topic Labor Management",
+      "Management of Material topic OHS",
+      "Management of Material topic Training and Development",
+      "Management of Material topic Diversity & Equal Oppportunity",
+      "Management of Material topic Non Discrimination",
+      "Management of Material topic Human Rights",
+      "Management of Material topic Labour",
+      "Management of Material topic Supply",
+      "Management of Material topic Safety",
+      "Management of Material topic Marketing",
+      "Management of Material topic Privacy",
+    ];
+    const emissionTabs = [
+      "Employee Hires & Turnover",
+      "Benefits",
+      "Parental Leave",
+      "Retirement Benefits",
+    ];
+    const energyTabs = ["Notice Period", "Collective Bargaining"];
+
+    // List of tabs related to Waste
+    const wasteTabs = [
+      "OHS Management",
+      "Risk Assessment",
+      "OHS Sevices",
+      "Worker Involvement in OHS",
+      "OHS Training",
+      "Promotion of Health",
+      "Prevention of OHS Impact",
+      "OHS Management System Coverage",
+      "Injuries",
+      "Ill-health",
+    ];
+
+    // List of tabs related to Materials
+    const materialTabs = [
+      "Training hours",
+      "Skill Upgrade",
+      "Performance & Career Development",
+    ];
+
+    // List of tabs related to Water
+    const waterTabs = ["Diversity of the Board", "Salary Ratio","Entry Level Wage"];
+
+    // List of tabs related to Supplier
+    const supplierTabs = ["Incidents of Discrimination"];
+    const LegalTabs = [
+      "Community Engagement",
+      "Impact on Community",
+      "Indigenous People",
+      "Security Personnel",
+    ];
+    const TaxTabs = [
+      "Child Labour",
+      "Forced or Compulsory Labour",
+  
+    ];
+    const SupplyTabs = [
+      "Suppliers Screened",
+      "Impacts & Actions Taken",
+      "Procurement Practices",
+  
+    ];
+    const SafetyTabs = [
+      "Product/Service Safety",
+      "Compliance",
+    ];
+    const MarketingTabs = [
+      "Product/Service labelling",
+      "Non compliance incidents- Labelling",
+      "Statement of non compliance - Labeling",
+      "Non compliance incidents - Marketing",
+      "Statement of non compliance - Marketing",
+
+    ];
+    const PrivacyTabs = [
+      "Customer Privacy",
+   
+
+    ];
+    // Set the header based on the active tab category
+    if (emissionTabs.includes(activeTab)) {
+      dispatch(setHeadertext2("Employment"));
+    } else if (energyTabs.includes(activeTab)) {
+      dispatch(setHeadertext2("Labor Management"));
+    } else if (wasteTabs.includes(activeTab)) {
+      dispatch(setHeadertext2("Occupational health and safety"));
+    } else if (materialTabs.includes(activeTab)) {
+      dispatch(setHeadertext2("Training and Development"));
+    } else if (waterTabs.includes(activeTab)) {
+      dispatch(setHeadertext2("Diversity & Equal Oppportunity"));
+    } else if (supplierTabs.includes(activeTab)) {
+      dispatch(setHeadertext2("Non - Discrimination"));
+    } else if (materialnewTabs.includes(activeTab)) {
+      dispatch(setHeadertext2("Materials"));
+    } else if (LegalTabs.includes(activeTab)) {
+      dispatch(setHeadertext2("Human Rights and Community Impact"));
+    } else if (TaxTabs.includes(activeTab)) {
+      dispatch(setHeadertext2("Child and Forced Labour"));
+    } else if (SupplyTabs.includes(activeTab)) {
+      dispatch(setHeadertext2("Supply Chain Labor Standards"));
+    } 
+    else if (SafetyTabs.includes(activeTab)) {
+      dispatch(setHeadertext2("Product Safety & Quality"));
+    }
+    else if (MarketingTabs.includes(activeTab)) {
+      dispatch(setHeadertext2("Marketing and Labeling"));
+    } 
+    else if (PrivacyTabs.includes(activeTab)) {
+      dispatch(setHeadertext2("Customer Privacy & Data Security"));
+    } else {
+      dispatch(setHeadertext2(`${activeTab}`));
+    }
     dispatch(setHeadertext1("Collect"));
     dispatch(setHeaderdisplay("block"));
     dispatch(setMiddlename("Social"));
-
-    // Dynamically set the title for the current step
-    const title = stepTitles[activeStep] || "Employment"; // Default title
-    dispatch(setHeadertext2(title));
-  }, [activeStep, dispatch]);
+  }, [activeTab, dispatch]);
 
   return (
     <>
-      <div>
-
+      <div className="w-full">
         <div className="flex">
-          <div className="bg-white my-div mt-2 items-start px-3  w-[200px] min-h-[85vh] ml-3 socialscreen-scroll shadow-md">
-            <section className="flex  justify-center ">
-              <div className="w-80">
-                <ul>
-                  {/* <AccordionItem title="Bill S-211">
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(39)}
-                    >
-                      {isStepCompleted(39) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${activeStep === 39
-                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                            } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 39
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(39) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Identifying Information
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 39
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Identifying Information
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(40)}
-                    >
-                      {isStepCompleted(40) ? (
-                        <>
-                          <div className=" before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 40
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(40) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Annual Report
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 40
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Annual Report
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                  </AccordionItem> */}
-                  <AccordionItem title="Employment">
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(1)}
-                    >
-                      {isStepCompleted(1) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${activeStep === 1
-                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                            } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 1
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(1) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Employee Hires & Turnover
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 1
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Employee Hires & Turnover
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(2)}
-                    >
-                      {isStepCompleted(2) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${activeStep === 2
-                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                            } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 2
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(2) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Benefits
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 2
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Benefits
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(3)}
-                    >
-                      {isStepCompleted(3) ? (
-                        <>
-                          <div className=" before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 3
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(3) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Parental Leave
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 3
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Parental Leave
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                  </AccordionItem>
-
-                  <AccordionItem title="Labor Relations">
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(4)}
-                    >
-                      {isStepCompleted(4) ? (
-                        <>
-                          <div className="before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 4
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(4) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Notice Period
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 4
-                              ? "text-[12px] text-sky-800  font-bold w-[166px]"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Notice Period
-                          </p>
-                        )}
-                      </div>
-                    </li>
-
-
-                  </AccordionItem>
-                  <AccordionItem title="Occupational health and safety">
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(5)}
-                    >
-                      {isStepCompleted(5) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${activeStep === 5
-                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                            } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 5
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(5) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              OHS Management
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 5
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            OHS Management
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(6)}
-                    >
-                      {isStepCompleted(6) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${activeStep === 6
-                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                            } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 6
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(6) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Risk Assessment
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 6
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Risk Assessment
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(7)}
-                    >
-                      {isStepCompleted(7) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${activeStep === 7
-                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                            } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 7
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(7) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              OHS Sevices
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 7
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            OHS Sevices
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(8)}
-                    >
-                      {isStepCompleted(8) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${activeStep === 8
-                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                            } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 8
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(8) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Worker Involvement in OHS
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 8
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Worker Involvement in OHS
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(9)}
-                    >
-                      {isStepCompleted(9) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${activeStep === 9
-                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                            } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 9
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(9) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              OHS Training
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 9
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            OHS Training
-                          </p>
-                        )}
-                      </div>
-                    </li>
-
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(10)}
-                    >
-                      {isStepCompleted(10) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${activeStep === 10
-                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                            } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 10
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(10) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Promotion of Health
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 10
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Promotion of Health
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(11)}
-                    >
-                      {isStepCompleted(11) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${activeStep === 11
-                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                            } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 11
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(11) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Prevention of OHS Impact
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 11
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Prevention of OHS Impact
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(12)}
-                    >
-                      {isStepCompleted(12) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${activeStep === 12
-                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                            } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 12
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(12) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              OHS Management System Coverage
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 12
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            OHS Management System Coverage
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(13)}
-                    >
-                      {isStepCompleted(13) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${activeStep === 13
-                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                            } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 13
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(13) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Injuries
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 13
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Injuries
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(14)}
-                    >
-                      {isStepCompleted(14) ? (
-                        <>
-                          <div className="before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 14
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(14) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Ill-health
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 14
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Ill-health
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                  </AccordionItem>
-                  <AccordionItem title="Training">
-
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(15)}
-                    >
-                      {isStepCompleted(15) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${activeStep === 15
-                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                            } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 15
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(15) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Training hours
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 15
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Training hours
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(16)}
-                    >
-                      {isStepCompleted(16) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${activeStep === 16
-                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                            } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 16
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(16) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Skill Upgrade
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 16
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Skill Upgrade
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(17)}
-                    >
-                      {isStepCompleted(17) ? (
-                        <>
-                          <div className="before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 17
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(17) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Performance & Career
-                              Development
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 17
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Performance & Career
-                            Development
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                  </AccordionItem>
-                  <AccordionItem title="Diversity & Inclusion ">
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(18)}
-                    >
-                      {isStepCompleted(18) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${activeStep === 18
-                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                            } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 18
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(18) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Diversity of the Board
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 18
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Diversity of the Board
-                          </p>
-                        )}
-                      </div>
-                    </li>
-
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(19)}
-                    >
-                      {isStepCompleted(19) ? (
-                        <>
-                          <div className="before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 19
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(19) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Salary Ratio
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 19
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Salary Ratio
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                  </AccordionItem>
-                  <AccordionItem title="Non - Discrimination">
-
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(20)}
-                    >
-                      {isStepCompleted(20) ? (
-                        <>
-                          <div className="before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 20
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(20) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Incidents of Discrimination
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 20
-                              ? "text-[12px] text-sky-800  font-bold w-[166px]"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Incidents of Discrimination
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                  </AccordionItem>
-                  <AccordionItem title="Collective Bargaining">
-
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(21)}
-                    >
-                      {isStepCompleted(21) ? (
-                        <>
-                          <div className="before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 21
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(21) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Collective Bargaining
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 21
-                              ? "text-[12px] text-sky-800  font-bold w-[166px]"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Collective Bargaining
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                  </AccordionItem>
-                  <AccordionItem title="Human Rights">
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(22)}
-                    >
-                      {isStepCompleted(22) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${activeStep === 22
-                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                            } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 22
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(22) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Child Labour
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 22
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Child Labour
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(23)}
-                    >
-                      {isStepCompleted(23) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${activeStep === 23
-                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                            } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 23
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(23) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Forced or Compulsory Labour
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 23
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Forced or Compulsory Labour
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(24)}
-                    >
-                      {isStepCompleted(24) ? (
-                        <>
-                          <div className="before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 24
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(24) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Security Personnel
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 24
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Security Personnel
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                  </AccordionItem>
-                  <AccordionItem title="Indigenous People">
-
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(25)}
-                    >
-                      {isStepCompleted(25) ? (
-                        <>
-                          <div className="before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 25
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(25) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Indigenous People
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 25
-                              ? "text-[12px] text-sky-800  font-bold w-[166px]"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Indigenous People
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                  </AccordionItem>
-                  <AccordionItem title="Community Development">
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(26)}
-                    >
-                      {isStepCompleted(26) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${activeStep === 26
-                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                            } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 26
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(26) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Community Engagement
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 26
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Community Engagement
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(27)}
-                    >
-                      {isStepCompleted(27) ? (
-                        <>
-                          <div className="before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 27
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(27) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Impact on Community
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 27
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Impact on Community
-                          </p>
-                        )}
-                      </div>
-                    </li>
-
-
-                  </AccordionItem>
-                  <AccordionItem title="Supplier Social Assessment">
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(28)}
-                    >
-                      {isStepCompleted(28) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${activeStep === 28
-                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                            } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 28
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(28) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Suppliers Screened
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 28
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Suppliers Screened
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(29)}
-                    >
-                      {isStepCompleted(29) ? (
-                        <>
-                          <div className="before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 29
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(29) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Impacts & Actions Taken
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 29
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Impacts & Actions Taken
-                          </p>
-                        )}
-                      </div>
-                    </li>
-
-
-                  </AccordionItem>
-                  <AccordionItem title="Political Involvement">
-
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(30)}
-                    >
-                      {isStepCompleted(30) ? (
-                        <>
-                          <div className="before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 30
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(30) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Political Involvement
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 30
-                              ? "text-[12px] text-sky-800  font-bold w-[166px]"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Political Involvement
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                  </AccordionItem>
-                  <AccordionItem title="Customer Health and Safety">
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(31)}
-                    >
-                      {isStepCompleted(31) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${activeStep === 31
-                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                            } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 31
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(31) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Product/Service Safety
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 31
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Product/Service Safety
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(32)}
-                    >
-                      {isStepCompleted(32) ? (
-                        <>
-                          <div className="before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 32
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(32) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Compliance
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 32
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Compliance
-                          </p>
-                        )}
-                      </div>
-                    </li>
-
-
-                  </AccordionItem>
-                  <AccordionItem title="Marketing and Labeling">
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(33)}
-                    >
-                      {isStepCompleted(33) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${activeStep === 33
-                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                            } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 33
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(33) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Product/Service labelling
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 33
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Product/Service labelling
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(34)}
-                    >
-                      {isStepCompleted(34) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${activeStep === 34
-                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                            } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 34
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(34) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Non compliance incidents- Labelling
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 34
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Non compliance incidents- Labelling
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(35)}
-                    >
-                      {isStepCompleted(35) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${activeStep === 35
-                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                            } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 35
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(35) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Statement of non compliance - Labeling
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 35
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Statement of non compliance - Labeling
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(36)}
-                    >
-                      {isStepCompleted(36) ? (
-                        <>
-                          <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className={`${activeStep === 36
-                            ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
-                            : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
-                            } `}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 36
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(36) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Non compliance incidents  - Marketing
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 36
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Non compliance incidents  - Marketing
-                          </p>
-                        )}
-                      </div>
-                    </li>
-
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(37)}
-                    >
-                      {isStepCompleted(37) ? (
-                        <>
-                          <div className=" before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 37
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(37) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Statement of non compliance - Marketing
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 37
-                              ? "text-[12px] text-sky-800  font-bold"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Statement of non compliance - Marketing
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                  </AccordionItem>
-                  <AccordionItem title="Customer Privacy">
-                    <li
-                      className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(38)}
-                    >
-                      {isStepCompleted(38) ? (
-                        <>
-                          <div className="before:bg-sky-800  font-bold">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              className="bi bi-circle-fill fill-sky-800  font-bold "
-                              viewBox="0 0 16 16"
-                            >
-                              <circle cx="8" cy="8" r="8" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <div>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            className={`${activeStep === 38
-                              ? "bi bi-circle-fill fill-sky-800  font-bold "
-                              : " bi bi-circle-fill fill-gray-400"
-                              } `}
-                            viewBox="0 0 16 16"
-                          >
-                            <circle cx="8" cy="8" r="8" />
-                          </svg>
-                        </div>
-                      )}
-
-                      <div className="flex items-center">
-                        {isStepCompleted(38) ? (
-                          <>
-                            <p className="text-[12px] text-sky-800  font-bold">
-                              Customer Privacy
-                            </p>
-                           
-                          </>
-                        ) : (
-                          <p
-                            className={`${activeStep === 38
-                              ? "text-[12px] text-sky-800  font-bold w-[166px]"
-                              : " text-[12px]  text-gray-600"
-                              } `}
-                          >
-                            Customer Privacy
-                          </p>
-                        )}
-                      </div>
-                    </li>
-                  </AccordionItem>
-                </ul>
-              </div>
-            </section>
+          <div className="">
+            <Aside activeTab={activeTab} handleTabClick={handleTabClick} />
           </div>
-          <div className="w-full ms-3">
-            <div>
-              {activeStep === 1 && (
-                <>
-                  <div>
-                    <EmployeeHiresTurnover />
-                  </div>
-                </>
-              )}
-              {activeStep === 2 && (
-                <>
-                  <div>
-                    <Benefits />
-                  </div>
-                </>
-              )}
+          <div
+            className={`${
+              open
+                ? "sm:w-[87vw] md:w-[87vw] lg:w-[87vw] xl:w-[87vw]  2xl:w-[93vw] 3xl:w-[102vw]"
+                : " sm:w-[87vw] md:w-[100vw] lg:w-[100vw] xl:w-[100vw]  2xl:w-[104vw] 3xl:w-[108vw]"
+            }`}
+          >
+            {/* Emissions start */}
+            {activeTab === "Management of Material topic Employment" && (
+              <EmploymentMaterialtopic />
+            )}
+            {activeTab === "Employee Hires & Turnover" && (
+              <EmployeeHiresTurnover />
+            )}
+            {activeTab === "Benefits" && <Benefits />}
+            {activeTab === "Parental Leave" && <Parentalleave />}
+            {activeTab === "Retirement Benefits" && <Definedbenefit />}
+            {activeTab === "Management of Material topic Labor Management" && (
+              <LaborManagementMaterialtopic />
+            )}
+            {activeTab === "Notice Period" && <Noticeperiod />}
+            {activeTab === "Collective Bargaining" && <CollectiveBargaining />}
 
-              {activeStep === 3 && (
-                <>
-                  <div>
-                    <Parentalleave />
-                  </div>
-                </>
-              )}
-              {activeStep === 4 && (
-                <>
-                  <div>
-                    <Noticeperiod />
-                  </div>
-                </>
-              )}
-              {activeStep === 5 && (
-                <>
-                  <div>
-                    <Ohsmanagment />
-                  </div>
-                </>
-              )}
-              {activeStep === 6 && (
-                <>
-                  <div>
-                    <Riskassessment />
-                  </div>
-                </>
-              )}
-              {activeStep === 7 && (
-                <>
-                  <div>
-                    <Ohsservices />
-                  </div>
-                </>
-              )}
-              {activeStep === 8 && (
-                <>
-                  <div>
-                    <Workinvolvement />
-                  </div>
-                </>
-              )}
-              {activeStep === 9 && (
-                <>
-                  <div>
-                    <Ohstraining />
-                  </div>
-                </>
-              )}
-              {activeStep === 10 && (
-                <>
-                  <div>
-                    <Promotionhealth />
-                  </div>
-                </>
-              )}
-              {activeStep === 11 && (
-                <>
-                  <div>
-                    <Preventionohsimpact />
-                  </div>
-                </>
-              )}
-              {activeStep === 12 && (
-                <>
-                  <div>
-                    <Ohsmanagementsystemcoverage />
-                  </div>
-                </>
-              )}
-              {activeStep === 13 && (
-                <>
-                  <div>
-                    <Injuries />
-                  </div>
-                </>
-              )}
-              {activeStep === 14 && (
-                <>
-                  <div>
-                    <Illhealth />
-                  </div>
-                </>
-              )}  {activeStep === 15 && (
-                <>
-                  <div>
-                    <Traininghours />
-                  </div>
-                </>
-              )}
-              {activeStep === 16 && (
-                <>
-                  <div>
-                    < Skillupgrade />
-                  </div>
-                </>
-              )}
-              {activeStep === 17 && (
-                <>
-                  <div>
-                    <Performancedevelopment />
-                  </div>
-                </>
-              )}
+            {activeTab === "Management of Material topic OHS" && (
+              <OHSMaterialtopic />
+            )}
+            {activeTab === "OHS Management" && <Ohsmanagment />}
+            {activeTab === "Risk Assessment" && <Riskassessment />}
+            {activeTab === "OHS Sevices" && <Ohsservices />}
+            {activeTab === "Worker Involvement in OHS" && <Workinvolvement />}
+            {activeTab === "OHS Training" && <Ohstraining />}
+            {activeTab === "Promotion of Health" && <Promotionhealth />}
+            {activeTab === "Prevention of OHS Impact" && (
+              <Preventionohsimpact />
+            )}
+            {activeTab === "OHS Management System Coverage" && (
+              <Ohsmanagementsystemcoverage />
+            )}
+            {activeTab === "Injuries" && <Injuries />}
+            {activeTab === "Ill-health" && <Illhealth />}
 
-              {activeStep === 18 && (
-                <>
-                  <div>
-                    <DiversityBoard />
-                  </div>
-                </>
-              )}   {activeStep === 19 && (
-                <>
-                  <div>
-                    <Salaryratio />
-                  </div>
-                </>
-              )}
-              {activeStep === 20 && (
-                <>
-                  <div>
-                    <IncidentsofDiscrimination />
-                  </div>
-                </>
-              )}
-              {activeStep === 21 && (
-                <>
-                  <div>
-                    <CollectiveBargaining />
-                  </div>
-                </>
-              )}
-              {activeStep === 22 && (
-                <>
-                  <div>
-                    <Childlabour />
-                  </div>
-                </>
-              )}
-              {activeStep === 23 && (
-                <>
-                  <div>
-                    <Forcedorcompulsorylabour />
-                  </div>
-                </>
-              )}
-              {activeStep === 24 && (
-                <>
-                  <div>
-                    <Securitypersonnel />
-                  </div>
-                </>
-              )}
-              {activeStep === 25 && (
-                <>
-                  <div>
-                    <IndigenousPeople />
-                  </div>
-                </>
-              )}
-              {activeStep === 26 && (
-                <>
-                  <div>
-                    <CommunityEngagement />
-                  </div>
-                </>
-              )}
-              {activeStep === 27 && (
-                <>
-                  <div>
-                    <ImpactonCommunity />
-                  </div>
-                </>
-              )}
-              {activeStep === 28 && (
-                <>
-                  <div>
-                    <Suppliersscreened />
-                  </div>
-                </>
-              )}
-              {activeStep === 29 && (
-                <>
-                  <div>
-                    <Impactsactionstaken />
-                  </div>
-                </>
-              )}
-              {activeStep === 30 && (
-                <>
-                  <div>
-                    <PoliticalInvolvement />
-                  </div>
-                </>
-              )}
-              {activeStep === 31 && (
-                <>
-                  <div>
-                    <ProductServiceSafety />
-                  </div>
-                </>
-              )}
-              {activeStep === 32 && (
-                <>
-                  <div>
-                    <Compliance />
-                  </div>
-                </>
-              )}
-              {activeStep === 33 && (
-                <>
-                  <div>
-                    <ProductServicelabelling />
-                  </div>
-                </>
-              )}
-              {activeStep === 34 && (
-                <>
-                  <div>
-                    <NoncomplianceincidentsLabelling />
-                  </div>
-                </>
-              )}
-              {activeStep === 35 && (
-                <>
-                  <div>
-                    <StatementnoncomplianceLabeling />
-                  </div>
-                </>
-              )}
-              {activeStep === 36 && (
-                <>
-                  <div>
-                    <NoncomplianceincidentsMarketing />
-                  </div>
-                </>
-              )}
-              {activeStep === 37 && (
-                <>
-                  <div>
-                    <StatementnoncomplianceMarketing />
-                  </div>
-                </>
-              )}
-              {activeStep === 38 && (
-                <>
-                  <div>
-                    <CustomerPrivacy />
-                  </div>
-                </>
-              )}
-             
- {/*   {activeStep === 39 && (
-                <>
-                  <div>
-                    <Identifyinginformation />
-                  </div>
-                </>
-              )}
+            {activeTab ===
+              "Management of Material topic Training and Development" && (
+              <TrainingMaterialtopic />
+            )}
+            {activeTab === "Training hours" && <Traininghours />}
+            {activeTab === "Skill Upgrade" && <Skillupgrade />}
+            {activeTab === "Performance & Career Development" && (
+              <Performancedevelopment />
+            )}
 
-              {activeStep === 40 && (
-                <>
-                  <div>
-                    <Annualreport />
-                  </div>
-                </>
-              )}*/}
-            </div>
-            <div>
-              <div className="w-full mb-5 mt-4 ">
-                <div className="">
-                  <div className="flex  me-2  mb-5 justify-end">
-                    {(activeStep !== 39 && activeStep !== 40) && (
-                      <button
-                        className={`${activeStep === 1 ? "text-gray-500" : "text-blue-500"
-                          } px-3 py-1.5 rounded font-bold `}
-                        onClick={handlePrevious}
-                        disabled={activeStep === 1}
-                      >
-                        &lt; Previous
-                      </button>
-                    )}
-                    {activeStep < 38 && (
-                      <button
-                        className={`${activeStep === 38
-                          ? "bg-gray-300"
-                          : "bg-blue-500 text-white"
-                          } px-3 py-1.5 rounded ml-2 font-bold w-[100px]`}
-                        onClick={handleNext}
-                        disabled={activeStep === 38}
-                      >
-                        Next &gt;
-                      </button>
-                    )}
+            {activeTab ===
+              "Management of Material topic Diversity & Equal Oppportunity" && (
+              <DiversityInclusionMaterialtopic />
+            )}
+            {activeTab === "Diversity of the Board" && <DiversityBoard />}
+            {activeTab === "Salary Ratio" && <Salaryratio />}
+            {activeTab === "Entry Level Wage" && <Ratiosstandard />}
 
-                  </div>
-                </div>
-              </div>
-            </div>
+            {activeTab ===
+              "Management of Material topic Non Discrimination" && (
+              <NonDiscriminationMaterialtopic />
+            )}
+            {activeTab === "Incidents of Discrimination" && (
+              <IncidentsofDiscrimination />
+            )}
+            {activeTab === "Management of Material topic Human Rights" && (
+              <HumanRightsMaterialtopic />
+            )}
+            {activeTab === "Community Engagement" && <CommunityEngagement />}
+            {activeTab === "Impact on Community" && <ImpactonCommunity />}
+            {activeTab === "Indigenous People" && <IndigenousPeople />}
+            {activeTab === "Security Personnel" && <Securitypersonnel />}
+
+            {activeTab === "Management of Material topic Labour" && (
+              <ChildForcedLabourMaterialtopic />
+            )}
+            {activeTab === "Child Labour" && <Childlabour />}
+            {activeTab === "Forced or Compulsory Labour" && <Forcedorcompulsorylabour />}
+
+            {activeTab === "Management of Material topic Supply" && (
+              <SupplierMaterialtopic />
+            )}
+            {activeTab === "Suppliers Screened" && <Impactsactionstaken />}
+            {activeTab === "Impacts & Actions Taken" && <Suppliersscreened />}
+            {activeTab === "Procurement Practices" && <SoicalProcurementPractices />}
+            {activeTab === "Management of Material topic Safety" && (
+              <HealthSafetyMaterialtopic />
+            )}
+            {activeTab === "Product/Service Safety" && <ProductServiceSafety />}
+            {activeTab === "Compliance" && <Compliance />}
+            {activeTab === "Management of Material topic Marketing" && (
+              <MarketingLabelingMaterialtopic />
+            )}
+            {activeTab === "Product/Service labelling" && <ProductServicelabelling />}
+            {activeTab === "Non compliance incidents- Labelling" && <NoncomplianceincidentsLabelling />}
+            {activeTab === "Statement of non compliance - Labeling" && <StatementnoncomplianceLabeling />}
+            {activeTab === "Non compliance incidents - Marketing" && <NoncomplianceincidentsMarketing />}
+            {activeTab === "Statement of non compliance - Marketing" && <StatementnoncomplianceMarketing />}
+            {activeTab === "Management of Material topic Privacy" && (
+              <CustomerPrivacyMaterialtopic />
+            )}
+            {activeTab === "Customer Privacy" && <CustomerPrivacy />}
+        
+        
+   
           </div>
         </div>
       </div>
