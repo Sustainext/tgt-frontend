@@ -74,7 +74,7 @@ const AccordionItem = ({ title, children }) => {
   );
 };
 const Social = () => {
-  const [activeStep, setActiveStep] = useState(2);
+  const [activeStep, setActiveStep] = useState(1);
   const [completedSteps, setCompletedSteps] = useState([]);
   const dispatch = useDispatch();
   const activeSteps = (id) => {
@@ -280,9 +280,9 @@ const Social = () => {
                   <AccordionItem title="Employment">
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
-                      onClick={() => activeSteps(2)}
+                      onClick={() => activeSteps(1)}
                     >
-                      {isStepCompleted(2) ? (
+                      {isStepCompleted(1) ? (
                         <>
                           <div className="before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold">
                             <svg
@@ -298,7 +298,7 @@ const Social = () => {
                         </>
                       ) : (
                         <div
-                          className={`${activeStep === 2
+                          className={`${activeStep === 1
                             ? "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-sky-800  font-bold"
                             : "before:absolute before:left-[5.5px] before:h-full before:w-[1px] before:bg-gray-400"
                             } `}
@@ -307,7 +307,7 @@ const Social = () => {
                             xmlns="http://www.w3.org/2000/svg"
                             width="12"
                             height="12"
-                            className={`${activeStep === 2
+                            className={`${activeStep === 1
                               ? "bi bi-circle-fill fill-sky-800  font-bold "
                               : " bi bi-circle-fill fill-gray-400"
                               } `}
@@ -319,7 +319,7 @@ const Social = () => {
                       )}
 
                       <div className="flex items-center">
-                        {isStepCompleted(2) ? (
+                        {isStepCompleted(1) ? (
                           <>
                             <p className="text-[12px] text-sky-800  font-bold">
                               Employee Hires & Turnover
@@ -328,7 +328,7 @@ const Social = () => {
                           </>
                         ) : (
                           <p
-                            className={`${activeStep === 2
+                            className={`${activeStep === 1
                               ? "text-[12px] text-sky-800  font-bold"
                               : " text-[12px]  text-gray-600"
                               } `}
@@ -338,7 +338,7 @@ const Social = () => {
                         )}
                       </div>
                     </li>
-                    {/* <li
+                    <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(2)}
                     >
@@ -397,7 +397,7 @@ const Social = () => {
                           </p>
                         )}
                       </div>
-                    </li> */}
+                    </li>
                     <li
                       className="relative flex items-baseline cursor-pointer gap-2 pb-5"
                       onClick={() => activeSteps(3)}
@@ -2537,20 +2537,20 @@ const Social = () => {
           </div>
           <div className="w-full ms-3">
             <div>
-              {activeStep === 2 && (
+              {activeStep === 1 && (
                 <>
                   <div>
                     <EmployeeHiresTurnover />
                   </div>
                 </>
               )}
-              {/* {activeStep === 2 && (
+              {activeStep === 2 && (
                 <>
                   <div>
                     <Benefits />
                   </div>
                 </>
-              )} */}
+              )}
 
               {activeStep === 3 && (
                 <>

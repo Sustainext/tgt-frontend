@@ -1,21 +1,20 @@
-"use client";
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import BenefitsWidget from "../../../../shared/widgets/benefitsWidget"
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 const widgets = {
-  inputWidget: inputWidget2,
+  BenefitsWidget: BenefitsWidget,
 };
 
-const view_path = "gri-social-benefits-401-2b-significant_loc";
+const view_path = "gri-social-benefits-401-2a-benefits_provided";
 const client_id = 1;
 const user_id = 1;
 
@@ -24,53 +23,26 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      Q1: {
-        type: "string",
-        title:
-          "How does the organization define Significant locations of operation for reporting purposes?",
-      },
+      benefits: { type: "string", title: "Benefits" },
+     
     },
   },
 };
 
 const uiSchema = {
-  items: {
-    "ui:order": ["Q1"],
-    Q1: {
-      "ui:title":
-        "How does the organization define Significant locations of operation for reporting purposes?",
-      "ui:tooltip":
-        "Please clarify how the organization defines and identifies its significant locations for reporting purposes.",
-      "ui:tooltipdisplay": "block",
-      "ui:widget": "inputWidget",
-      "ui:horizontal": true,
-      "ui:options": {
-        label: false,
-      },
-    },
+  
+  "ui:widget": "BenefitsWidget",
 
-    "ui:options": {
-      orderable: false,
-      addable: false,
-      removable: false,
-      layout: "horizontal",
-    },
-  },
 };
 
-const Significantlocations = ({ selectedOrg, selectedCorp, year }) => {
-  const [formData, setFormData] = useState([{}]);
+const Benefitsnew = ({ location, year, month }) => {
+  const [formData, setFormData] = useState([]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
+
+
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -82,12 +54,7 @@ const Significantlocations = ({ selectedOrg, selectedCorp, year }) => {
     setFormData(e.formData); // Ensure you are extracting formData from the event
   };
 
-  // The below code on updateFormData
-  let axiosConfig = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
+
   const updateFormData = async () => {
     LoaderOpen();
     const data = {
@@ -95,14 +62,14 @@ const Significantlocations = ({ selectedOrg, selectedCorp, year }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      corporate: selectedCorp,
-      organisation: selectedOrg,
+      location,
       year,
+      month,
     };
 
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
-      const response = await axiosInstance.post(url, data);
+      const response = await axiosInstance.post(url, data, axiosConfig);
       if (response.status === 200) {
         toast.success("Data added successfully", {
           position: "top-right",
@@ -146,8 +113,8 @@ const Significantlocations = ({ selectedOrg, selectedCorp, year }) => {
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData([{}]);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}`;
+    setFormData(initialBenefits);
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -155,37 +122,37 @@ const Significantlocations = ({ selectedOrg, selectedCorp, year }) => {
       setRemoteUiSchema(response.data.form[0].ui_schema);
       setFormData(response.data.form_data[0].data);
     } catch (error) {
-      setFormData([{}]);
+      setFormData(initialBenefits);
     } finally {
       LoaderClose();
     }
   };
 
-  //Reloading the forms -- White Beard
-  useEffect(() => {
-    //console.long(r_schema, '- is the remote schema from django), r_ui_schema, '- is the remote ui schema from django')
-  }, [r_schema, r_ui_schema]);
 
-  // console log the form data change
-  useEffect(() => {
-    console.log("Form data is changed -", formData);
-  }, [formData]);
+  // useEffect(() => {
+  //   console.log("Form data is changed -", formData);
+  // }, [formData]);
 
-  useEffect(() => {
-    if (selectedOrg && year) {
-      loadFormData();
-    
-      toastShown.current = false;
-    } else if (!toastShown.current) {
-      toastShown.current = true;
-    }
-  }, [selectedOrg, year, selectedCorp]);
+  // // fetch backend and replace initialized forms
+  // useEffect(() => {
+  //   if (location && year && month) {
+  //     loadFormData();
+  //     toastShown.current = false;
+  //   } else {
+  
+  //     if (!toastShown.current) {
+  //       toastShown.current = true; 
+  //     }
+  //   }
+  // }, [location, year, month]); 
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form data:", formData);
     updateFormData();
   };
+
+
 
   return (
     <>
@@ -198,57 +165,43 @@ const Significantlocations = ({ selectedOrg, selectedCorp, year }) => {
       >
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
-            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-              Significant locations of operation
-              <MdInfoOutline
-                data-tooltip-id={`tooltip-$e1`}
-                data-tooltip-content="This section documents data corresponding to the organization's definition of significant locations of operation"
-                className="mt-1.5 ml-2 text-[15px]"
-              />
-              <ReactTooltip
-                id={`tooltip-$e1`}
-                place="top"
-                effect="solid"
-                style={{
-                  width: "290px",
-                  backgroundColor: "#000",
-                  color: "white",
-                  fontSize: "12px",
-                  boxShadow: 3,
-                  borderRadius: "8px",
-                  textAlign: "left",
-                }}
-              ></ReactTooltip>
+           <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
+           Benefits
+           
             </h2>
+         
           </div>
           <div className="w-[20%]">
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                  GRI 401-2b
+                GRI 401-2a
                 </div>
               </div>
             </div>
           </div>
+       
         </div>
-        <div className="mx-2">
-          <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
-            formData={formData}
-            onChange={handleChange}
-            validator={validator}
-            widgets={widgets}
-          />
+        <div className='mx-2'>
+        <Form
+          schema={schema}
+          uiSchema={uiSchema}
+          formData={formData}
+          onChange={handleChange}
+          validator={validator}
+          widgets={widgets}
+    
+        />
         </div>
-        <div className="mt-4 me-1">
+
+        <div className='mt-4 me-1'>
           <button
             type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${
-              !selectedOrg || !year ? "cursor-not-allowed" : ""
+              !location || !year ? "cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year}
+            disabled={!location || !year}
           >
             Submit
           </button>
@@ -270,4 +223,4 @@ const Significantlocations = ({ selectedOrg, selectedCorp, year }) => {
   );
 };
 
-export default Significantlocations;
+export default Benefitsnew;
