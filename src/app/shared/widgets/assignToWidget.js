@@ -2,22 +2,41 @@ import axiosInstance, { post } from "@/app/utils/axiosMiddleware";
 import React, { useEffect, useState, useMemo } from "react";
 import { toast } from "react-toastify";
 import { useEmissions } from "@/app/dashboard/environment/Emissions/EmissionsContext";
-import { FiChevronDown } from 'react-icons/fi';
+import { FiChevronDown } from "react-icons/fi";
 const monthMapping = [
-  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
 ];
 
-const AssignToWidget = ({ id, scope, location, year, month, data, countryCode,label}) => {
+const AssignToWidget = ({
+  id,
+  scope,
+  location,
+  year,
+  month,
+  data,
+  countryCode,
+  label,
+}) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [rowId, setRowId] = useState(null);
   const [rowData, setRowData] = useState(null);
   const [usersList, setUsersList] = useState([]);
-  const [selectedUser, setSelectedUser] = useState('');
-  const [dueDate, setDueDate] = useState('');
+  const [selectedUser, setSelectedUser] = useState("");
+  const [dueDate, setDueDate] = useState("");
   const [monthStr, setMonthStr] = useState(monthMapping[month - 1]);
 
-  const openModal = () => setModalOpen(true);
+  // const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
   // const fetchUserList = async () => {
@@ -66,10 +85,7 @@ const AssignToWidget = ({ id, scope, location, year, month, data, countryCode,la
     };
 
     try {
-      const response = await post(
-        `/organization_task_dashboard/`,
-        sandData
-      );
+      const response = await post(`/organization_task_dashboard/`, sandData);
       if (response.status === 201) {
         toast.success("Task assigned successfully", {
           position: "top-right",
@@ -82,8 +98,8 @@ const AssignToWidget = ({ id, scope, location, year, month, data, countryCode,la
           theme: "light",
         });
         closeModal();
-        setSelectedUser('');
-        setDueDate('');
+        setSelectedUser("");
+        setDueDate("");
       } else {
         throw new Error("Unexpected response status");
       }
@@ -99,29 +115,27 @@ const AssignToWidget = ({ id, scope, location, year, month, data, countryCode,la
         theme: "colored",
       });
       closeModal();
-      setSelectedUser('');
-      setDueDate('');
+      setSelectedUser("");
+      setDueDate("");
     }
   };
 
   return (
     <>
-    <div className={id.startsWith("root_0") ? "mb-[3rem]" : ""}>
-    <p className="text-[14px] h-[35px] text-neutral-950 font-[400] mb-1 hidden">
-            {label}
-      
-          </p>
-    </div>
-  <div className="flex justify-center items-center mt-2 ">
-
-      <button
-        className="bg-blue-500 text-white text-[12px] w-[112px]   py-1 rounded-md shadow hover:bg-blue-600"
-        type="button"
-        onClick={openModal}
-      >
-        Assign To 
-      </button>
-    </div>
+      <div className={id.startsWith("root_0") ? "mb-[3rem]" : ""}>
+        <p className="text-[14px] h-[35px] text-neutral-950 font-[400] mb-1 hidden">
+          {label}
+        </p>
+      </div>
+      <div className="flex justify-center items-center mt-2 ">
+        <button
+          className="bg-blue-200 text-white text-[12px] w-[112px]   py-1 rounded-md shadow hover:bg-blue-200"
+          type="button"
+          // onClick={openModal}
+        >
+          Assign To
+        </button>
+      </div>
     </>
   );
 };
