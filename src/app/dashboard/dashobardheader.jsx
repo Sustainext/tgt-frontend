@@ -1,4 +1,4 @@
-"use client"; // Ensure this is a client-side component
+"use client";
 import React, { useEffect, useState, useRef } from "react";
 import { useAuth } from "../../Context/auth";
 import { useRouter } from "next/navigation";
@@ -6,27 +6,81 @@ import { loadFromLocalStorage } from "../utils/storage";
 import Link from "next/link";
 import Profile from "./Profile";
 import { Oval } from "react-loader-spinner";
-// import { useTranslation } from 'react-i18next';
 import { GlobalState } from "../../Context/page";
 import { FaUser } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const DashboardHeader = () => {
   const { open } = GlobalState();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [profileVisible, setProfileVisible] = useState(false);
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [initials, setInitials] = useState("");
-  const { logout } = useAuth();
+  const [userData, setUserData] = useState({
+    username: "",
+    email: "",
+    initials: "",
+  });
+  const { logout, userDetails } = useAuth(); // Get userDetails from Auth context
   const router = useRouter();
-  const userDetails = loadFromLocalStorage("userData");
   const profileRef = useRef(null);
+
+  // Redux selectors
   const text1 = useSelector((state) => state.header.headertext1);
   const text2 = useSelector((state) => state.header.headertext2);
   const headerdisplay = useSelector((state) => state.header.headerdisplay);
   const middlename = useSelector((state) => state.header.middlename);
+
+  const getInitials = (email) => {
+    if (!email) return "";
+    const username = email.split("@")[0];
+    const nameParts = username.split(".");
+    return nameParts.map((part) => part.charAt(0).toUpperCase()).join("");
+  };
+
+  const extractUsername = (input) => {
+    if (!input) return "";
+    return input.includes("@") ? input.split("@")[0] : input;
+  };
+
+  // Combined effect for initializing user data
+  useEffect(() => {
+    const initializeUserData = () => {
+      // First try to get data from Auth context
+      if (userDetails?.user_detail?.[0]) {
+        const email = userDetails.user_detail[0].username;
+        setUserData({
+          username: extractUsername(email),
+          email: email,
+          initials: getInitials(email),
+        });
+        return;
+      }
+
+      // Fallback to localStorage if context is empty
+      const localUserDetails = loadFromLocalStorage("userData");
+      if (localUserDetails?.user_detail?.[0]) {
+        const email = localUserDetails.user_detail[0].username;
+        setUserData({
+          username: extractUsername(email),
+          email: email,
+          initials: getInitials(email),
+        });
+      }
+    };
+
+    initializeUserData();
+
+    // Set up interval to check for user data
+    const interval = setInterval(() => {
+      if (!userData.username) {
+        initializeUserData();
+      }
+    }, 1000);
+
+    // Cleanup interval
+    return () => clearInterval(interval);
+  }, [userDetails]); // Depend on userDetails from context
+
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
@@ -40,31 +94,14 @@ const DashboardHeader = () => {
     }
   };
 
-  const getInitials = (email) => {
-    const username = email?.split("@")[0];
-    const nameParts = username?.split(".");
-    const initials = nameParts
-      ?.map((part) => part.charAt(0).toUpperCase())
-      .join("");
-    return initials;
+  const handleProfileClick = (e) => {
+    e.stopPropagation();
+    setProfileVisible(true);
+    setDropdownVisible(false);
   };
 
-  const extractUsername = (input) => {
-    if (input?.includes("@")) {
-      return input.split("@")[0];
-    }
-    return input;
-  };
-
+  // Click outside handler
   useEffect(() => {
-    const userDetails = loadFromLocalStorage("userData");
-    if (userDetails) {
-      const userEmail = userDetails.user_detail[0].username;
-      setUsername(extractUsername(userEmail));
-      setEmail(userEmail);
-      setInitials(getInitials(userEmail));
-    }
-
     const handleClickOutside = (event) => {
       if (profileRef.current && !profileRef.current.contains(event.target)) {
         setProfileVisible(false);
@@ -77,14 +114,8 @@ const DashboardHeader = () => {
     };
   }, []);
 
-  const handleProfileClick = (e) => {
-    e.stopPropagation();
-    setProfileVisible(true);
-    setDropdownVisible(false);
-  };
-
-  const [opens, setOpen] = useState(false); // State to control the Backdrop for the spinner
-
+  // FluentC widget observer
+  const [opens, setOpen] = useState(false);
   useEffect(() => {
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
@@ -116,9 +147,7 @@ const DashboardHeader = () => {
           }
 
           if (target.matches("._fluentc_widget-language-manager")) {
-            const isLoading = target.classList.contains("loading");
-            setOpen(isLoading);
-            console.log("loading", isLoading);
+            setOpen(target.classList.contains("loading"));
           }
         }
       });
@@ -157,11 +186,10 @@ const DashboardHeader = () => {
             </>
           )}
 
-          {/* Conditionally render the Environment breadcrumb based on headerdisplay */}
           {headerdisplay === "block" && (
             <>
               <span className="text-[#222222] hover:text-[#222222]">
-                 {middlename}
+                {middlename}
               </span>
               <span className="text-[#222222] mx-1">&gt;</span>
             </>
@@ -172,8 +200,8 @@ const DashboardHeader = () => {
         <div className="flex justify-end items-center w-[15%]">
           <div className="flex">
             <div className="text-[#007EEF] flex items-center">
-              <span className="text-[#007EEF]"> Hi,</span>
-              <span className="me-4 text-[#007EEF]">{username}</span>
+              <span className="text-[#007EEF]">Hi,</span>
+              <span className="me-4 text-[#007EEF]">{userData.username}</span>
             </div>
             <div className="relative cursor-pointer" onClick={toggleDropdown}>
               <div className="flex justify-center items-center">
@@ -192,7 +220,7 @@ const DashboardHeader = () => {
                     fontWeight: "bold",
                   }}
                 >
-                  {initials}
+                  {userData.initials}
                 </div>
                 <div>
                   <svg
@@ -207,16 +235,16 @@ const DashboardHeader = () => {
                 </div>
               </div>
               {dropdownVisible && (
-                <div className="w-[220px]  absolute -right-[2px] mt-3 bg-white border border-gray-300 rounded shadow-lg">
-                  <div className="self-stretch  bg-white rounded shadow flex-col justify-start items-start flex">
+                <div className="w-[220px] absolute -right-[2px] mt-3 bg-white border border-gray-300 rounded shadow-lg">
+                  <div className="self-stretch bg-white rounded shadow flex-col justify-start items-start flex">
                     <div className="self-stretch h-[45px] flex-col justify-start items-start flex">
                       <div className="self-stretch px-4 py-1 justify-start items-center inline-flex border-b-2 border-gray-300">
-                        <div className="grow shrink basis-0 py-1 flex-col justify-start items-start inline-flex ">
+                        <div className="grow shrink basis-0 py-1 flex-col justify-start items-start inline-flex">
                           <div className="self-stretch text-black/opacity-90 text-[13px] font-normal font-['Manrope'] leading-none">
-                            {username}
+                            {userData.username}
                           </div>
                           <div className="self-stretch text-black/opacity-60 text-xs font-normal font-['Manrope'] leading-[15px]">
-                            {email}
+                            {userData.email}
                           </div>
                         </div>
                       </div>
