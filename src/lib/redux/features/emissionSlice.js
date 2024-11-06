@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import { getMonthName } from "../../../app/utils/dateUtils";
 import { v4 as uuidv4 } from "uuid";
+import { set } from "lodash";
 
 export const fetchEmissionsData = createAsyncThunk(
   "emissions/fetchEmissionsData",
@@ -349,10 +350,30 @@ export const fetchUsers = createAsyncThunk(
   }
 );
 
+export const fetchLocations = createAsyncThunk(
+  "emissions/fetchLocations",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get("/sustainapp/get_location");
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching locations:", error);
+      return rejectWithValue(
+        error.response?.data || "Failed to fetch locations"
+      );
+    }
+  }
+);
+
 const emissionsSlice = createSlice({
   name: "emissions",
   initialState: {
-    locations: [],
+    userData: [],
+    locations: {
+      data: [],
+      status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
+      error: null,
+    },
     location: "",
     year: "",
     month: 1,
@@ -399,7 +420,7 @@ const emissionsSlice = createSlice({
     updateScopeStatus: "idle",
     updateScopeError: null,
     updateScopeParams: null,
-    autoFill: false,
+    autoFill: true,
     selectedRows: {
       scope1: [],
       scope2: [],
@@ -434,6 +455,9 @@ const emissionsSlice = createSlice({
     scopeReRender: false,
   },
   reducers: {
+    setUserData: (state, action) => {
+      state.userData = action.payload;
+    },
     setLocationsRedux: (state, action) => {
       state.locations = action.payload;
     },
@@ -729,11 +753,24 @@ const emissionsSlice = createSlice({
       .addCase(fetchUsers.rejected, (state, action) => {
         state.users.status = "failed";
         state.users.error = action.payload;
+      })
+      .addCase(fetchLocations.pending, (state) => {
+        state.locations.status = "loading";
+      })
+      .addCase(fetchLocations.fulfilled, (state, action) => {
+        state.locations.status = "succeeded";
+        state.locations.data = action.payload;
+        state.locations.error = null;
+      })
+      .addCase(fetchLocations.rejected, (state, action) => {
+        state.locations.status = "failed";
+        state.locations.error = action.payload;
       });
   },
 });
 
 export const {
+  setUserData,
   setLocationsRedux,
   setLocation,
   setYear,
