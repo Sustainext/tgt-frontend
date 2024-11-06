@@ -591,14 +591,23 @@ const EmissionWidget = React.memo(
     }, []);
 
     //file uplod code///
-    const [fileName, setFileName] = useState(value.file?.name ?? ""); // Fallback to empty string instead of null
+    const [fileName, setFileName] = useState(value.file?.name ?? "");
     const [showModal, setShowModal] = useState(false);
-    const [previewData, setPreviewData] = useState(value.file?.url ?? ""); // Fallback to empty string
-    const [fileType, setFileType] = useState(value.file?.type ?? ""); // Fallback to empty string
-    const [fileSize, setFileSize] = useState(value.file?.size ?? 0); // Fallback to 0
+    const [previewData, setPreviewData] = useState(value.file?.url ?? "");
+    const [fileType, setFileType] = useState(value.file?.type ?? "");
+    const [fileSize, setFileSize] = useState(value.file?.size ?? 0);
     const [uploadDateTime, setUploadDateTime] = useState(
       value.file?.uploadDateTime ?? ""
-    ); // Fallback to empty string
+    );
+    const [uploadedBy, setUploadedBy] = useState(value.file?.uploadedBy ?? "");
+    const [loggedInUserEmail, setLoggedInUserEmail] = useState("");
+
+    useEffect(() => {
+      const storedEmail = localStorage.getItem("userEmail");
+      if (storedEmail) {
+        setLoggedInUserEmail(storedEmail);
+      }
+    });
 
     const uploadFileToAzure = async (file, newFileName) => {
       const arrayBuffer = await file.arrayBuffer();
@@ -642,54 +651,11 @@ const EmissionWidget = React.memo(
         setFileType(value.file?.type ?? "");
         setFileSize(value.file?.size ?? "");
         setUploadDateTime(value.file?.uploadDateTime ?? "");
+        setUploadedBy(value.file?.uploadedBy ?? "");
       } else {
         console.log("value prop is missing some data, not updating state");
       }
     }, [value]);
-
-    // const handleChange = async (event) => {
-    //   const selectedFile = event.target.files[0];
-
-    //   if (selectedFile) {
-    //     const newFileName = selectedFile.name;
-    //     const fileType = selectedFile.type;
-    //     const fileSize = selectedFile.size;
-    //     const uploadDateTime = new Date().toLocaleString();
-
-    //     console.log("Selected file details:", {
-    //       newFileName,
-    //       fileType,
-    //       fileSize,
-    //       uploadDateTime,
-    //     });
-
-    //     setFileName(newFileName); // Set the file name
-
-    //     const uploadUrl = await uploadFileToAzure(selectedFile, newFileName);
-
-    //     if (uploadUrl) {
-    //       const reader = new FileReader();
-    //       reader.onloadend = () => {
-    //         setPreviewData(reader.result); // For preview
-    //       };
-    //       reader.readAsDataURL(selectedFile);
-
-    //       onChange({
-    //         type: "file",
-    // value: uploadUrl,
-    // name: newFileName,
-    // url: uploadUrl,
-    // filetype: fileType,
-    // size: fileSize,
-    // uploadDateTime,
-    //       });
-
-    //       console.log("File uploaded successfully:", uploadUrl);
-    //     } else {
-    //       console.error("File upload failed");
-    //     }
-    //   }
-    // };
 
     const handleChange = async (event) => {
       const selectedFile = event.target.files[0];
@@ -728,6 +694,7 @@ const EmissionWidget = React.memo(
               type: fileType,
               size: fileSize,
               uploadDateTime,
+              uploadedBy: loggedInUserEmail,
             },
           });
           setFileType(fileType);
@@ -1290,6 +1257,15 @@ const EmissionWidget = React.memo(
                                 </h2>
                                 <h2 className="text-[14px] leading-relaxed tracking-wide">
                                   {uploadDateTime}
+                                </h2>
+                              </div>
+                              <div className="mb-4">
+                                <h2 className="text-neutral-500 text-[12px] font-semibold leading-relaxed tracking-wide">
+                                  UPLOADED BY
+                                </h2>
+                                <h2 className="text-[14px] leading-relaxed tracking-wide">
+                                  {uploadedBy.replace(/^"|"$/g, "") ||
+                                    "Unknown"}
                                 </h2>
                               </div>
                             </div>

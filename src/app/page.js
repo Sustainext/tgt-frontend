@@ -1,17 +1,94 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "../Context/auth";
-import { useRouter } from "next/navigation";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { ToastContainer } from "react-toastify";
+
+const PasswordInput = ({ value, onChange, required = true }) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const inputRef = useRef(null);
+  const buttonRef = useRef(null);
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = (e) => {
+    // Check if the related target is not the toggle button
+    if (!buttonRef.current?.contains(e.relatedTarget)) {
+      setIsFocused(false);
+      setShowPassword(false);
+    }
+  };
+
+  const togglePassword = (e) => {
+    e.preventDefault();
+    setShowPassword(!showPassword);
+    // Keep focus on input
+    inputRef.current?.focus();
+  };
+
+  // Handle component unmount
+  useEffect(() => {
+    const handleTabChange = () => {
+      setShowPassword(false);
+      setIsFocused(false);
+    };
+
+    document.addEventListener("visibilitychange", handleTabChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleTabChange);
+      setShowPassword(false);
+      setIsFocused(false);
+    };
+  }, []);
+
+  return (
+    <div className="relative flex items-center">
+      <input
+        ref={inputRef}
+        type={showPassword ? "text" : "password"}
+        value={value}
+        onChange={onChange}
+        required={required}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500
+          text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500
+          focus:border-indigo-500 focus:z-10 sm:text-sm"
+        placeholder="Password"
+        autoComplete="current-password"
+      />
+      {isFocused && (
+        <button
+          ref={buttonRef}
+          type="button"
+          aria-label={showPassword ? "Hide password" : "Show password"}
+          className="absolute right-3 z-20 text-gray-600 cursor-pointer hover:text-gray-800"
+          onMouseDown={togglePassword}
+          tabIndex={-1}
+        >
+          {showPassword ? (
+            <AiOutlineEyeInvisible className="h-5 w-5" />
+          ) : (
+            <AiOutlineEye className="h-5 w-5" />
+          )}
+        </button>
+      )}
+    </div>
+  );
+};
 
 export default function Home() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const { login } = useAuth();
-  const router = useRouter();
   const [isMounted, setIsMounted] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -29,7 +106,10 @@ export default function Home() {
     try {
       await login(email, password, rememberMe);
       if (rememberMe) {
-        localStorage.setItem("rememberedUser", JSON.stringify({ email, password }));
+        localStorage.setItem(
+          "rememberedUser",
+          JSON.stringify({ email, password })
+        );
       } else {
         localStorage.removeItem("rememberedUser");
       }
@@ -89,20 +169,11 @@ export default function Home() {
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
-                <div className="mb-6">
+                <div className="mb-6 relative">
                   <label htmlFor="password" className="text-sm">
                     Password
                   </label>
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    autoComplete="current-password"
-                    required
-                    className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500
-                text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500
-                focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="Password"
+                  <PasswordInput
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
@@ -142,17 +213,6 @@ export default function Home() {
                   </button>
                 </div>
               </form>
-              {/* <div className="mt-6 text-center">
-                <p className="text-sm">
-                  Don't have an account?{" "}
-                  <a
-                    href="#"
-                    className="font-medium text-indigo-600 hover:text-indigo-500"
-                  >
-                    Sign up
-                  </a>
-                </p>
-              </div> */}
             </div>
           </div>
         </div>
