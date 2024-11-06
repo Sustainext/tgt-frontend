@@ -1,8 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { GiPublicSpeaker } from "react-icons/gi";
-// import { PowerBIEmbed } from "powerbi-client-react";
-// import { models } from "powerbi-client";
 import axiosInstance from "../../../utils/axiosMiddleware";
 import dynamic from "next/dynamic";
 import { loadFromLocalStorage } from "@/app/utils/storage";
@@ -12,12 +10,12 @@ const PowerBIEmbed = dynamic(
   { ssr: false }
 );
 
-const SocialTrack = ({ contentSize, dashboardData }) => {
-  const [activeTab, setActiveTab] = useState("powerbiSocialEmployment");
+const GeneralTrack = ({ contentSize, dashboardData }) => {
+  const [activeTab, setActiveTab] = useState("powerbiGeneral");
   const [powerBIToken, setPowerBIToken] = useState(null);
   const [models, setModels] = useState(null);
-  const { width, height } = contentSize || { width: 800, height: 600 }; // Fallback values
-
+  const { width, height } = contentSize || { width: 800, height: 600 };
+  // const [filter, setFilter] = useState()
   const filter = {
     $schema: "http://powerbi.com/product/schema#basic",
     target: {
@@ -26,20 +24,10 @@ const SocialTrack = ({ contentSize, dashboardData }) => {
     },
     operator: "In",
     values: [loadFromLocalStorage("client_key")],
+    // values: ["8d44f5f4-8e58-4032-aa0a-4ff022288f7c"]
   };
 
-  const tabs = [
-    { id: "powerbiSocialEmployment", label: "Employment (PowerBI)" },
-    { id: "powerbiSocialOHS", label: "OHS (PowerBI)" },
-    {
-      id: "powerbiSocialDiversityInclusion",
-      label: "Diversity & Inclusion (PowerBI)",
-    },
-    {
-      id: "powerbiSocialCommunityDevelopment",
-      label: "Community Development (PowerBI)",
-    },
-  ];
+  const tabs = [{ id: "powerbiGeneral", label: "General (PowerBI)" }];
 
   useEffect(() => {
     const loadModels = async () => {
@@ -49,15 +37,6 @@ const SocialTrack = ({ contentSize, dashboardData }) => {
 
     loadModels();
   }, []);
-
-  const getIframeUrl = (tabId) => {
-    switch (tabId) {
-      // case 'powerbiSocialEmployment':
-      //   return process.env.NEXT_APP_POWERBI_URL_SOCIAL_EMPLOYMENT;
-      default:
-        return null;
-    }
-  };
 
   useEffect(() => {
     const fetchPowerBIToken = async () => {
@@ -73,28 +52,22 @@ const SocialTrack = ({ contentSize, dashboardData }) => {
     fetchPowerBIToken();
   }, []);
 
+  const getIframeUrl = (tabId) => {
+    switch (tabId) {
+      default:
+        return null;
+    }
+  };
+
   const getPowerBIConfig = (tabId) => {
     if (!dashboardData) return null;
 
     let reportConfig;
     switch (tabId) {
-      case "powerbiSocialEmployment":
-        reportConfig = dashboardData.find(
-          (item) => item.employment
-        )?.employment;
-        break;
-      case "powerbiSocialOHS":
-        reportConfig = dashboardData.find((item) => item.ohs)?.ohs;
-        break;
-      case "powerbiSocialDiversityInclusion":
-        reportConfig = dashboardData.find(
-          (item) => item.diversity_inclusion
-        )?.diversity_inclusion;
-        break;
-      case "powerbiSocialCommunityDevelopment":
-        reportConfig = dashboardData.find(
-          (item) => item.community_development
-        )?.community_development;
+      case "powerbiGeneral":
+        reportConfig = dashboardData.find((item) => item.general)?.general;
+        console.log("config for general", reportConfig);
+
         break;
       default:
         return null;
@@ -215,7 +188,7 @@ const SocialTrack = ({ contentSize, dashboardData }) => {
         ) : (
           <div className="coming-soon-container">
             <div className="flex justify-center">
-              {/* <GiPublicSpeaker style={{ fontSize: "100px" }} /> */}
+              <GiPublicSpeaker style={{ fontSize: "100px" }} />
             </div>
             <div className="text-xl font-bold my-4">
               <span className="">Loading... </span>
@@ -227,4 +200,4 @@ const SocialTrack = ({ contentSize, dashboardData }) => {
   );
 };
 
-export default SocialTrack;
+export default GeneralTrack;

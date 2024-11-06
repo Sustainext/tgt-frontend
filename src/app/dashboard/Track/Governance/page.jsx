@@ -1,12 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { GiPublicSpeaker } from "react-icons/gi";
-import axiosInstance from '../../../utils/axiosMiddleware';
-import dynamic from 'next/dynamic'
+import axiosInstance from "../../../utils/axiosMiddleware";
+import dynamic from "next/dynamic";
 import { loadFromLocalStorage } from "@/app/utils/storage";
 
 const PowerBIEmbed = dynamic(
-  () => import("powerbi-client-react").then(mod => mod.PowerBIEmbed),
+  () => import("powerbi-client-react").then((mod) => mod.PowerBIEmbed),
   { ssr: false }
 );
 
@@ -19,17 +19,15 @@ const GovernanceTrack = ({ contentSize, dashboardData }) => {
   const filter = {
     $schema: "http://powerbi.com/product/schema#basic",
     target: {
-        table: "Client_Info",
-        column: "uuid"
+      table: "Client_Info",
+      column: "uuid",
     },
     operator: "In",
-    values: [loadFromLocalStorage('client_key')]
+    values: [loadFromLocalStorage("client_key")],
     // values: ["8d44f5f4-8e58-4032-aa0a-4ff022288f7c"]
-};
+  };
 
-  const tabs = [
-    { id: "powerbiGovernance", label: "Governance (PowerBI)" },
-  ];
+  const tabs = [{ id: "powerbiGovernance", label: "Governance (PowerBI)" }];
 
   useEffect(() => {
     const loadModels = async () => {
@@ -43,17 +41,17 @@ const GovernanceTrack = ({ contentSize, dashboardData }) => {
   useEffect(() => {
     const fetchPowerBIToken = async () => {
       try {
-        const response = await axiosInstance('api/auth/powerbi_token/');        
-        const data = response.data;          
+        const response = await axiosInstance("api/auth/powerbi_token/");
+        const data = response.data;
         setPowerBIToken(data.access_token);
       } catch (error) {
         console.error("Error fetching PowerBI token:", error);
       }
     };
-  
+
     fetchPowerBIToken();
   }, []);
-  
+
   const getIframeUrl = (tabId) => {
     switch (tabId) {
       default:
@@ -67,9 +65,11 @@ const GovernanceTrack = ({ contentSize, dashboardData }) => {
     let reportConfig;
     switch (tabId) {
       case "powerbiGovernance":
-        reportConfig = dashboardData.find(item => item.governance)?.governance;
-        console.log('config for governance',reportConfig);
-        
+        reportConfig = dashboardData.find(
+          (item) => item.governance
+        )?.governance;
+        console.log("config for governance", reportConfig);
+
         break;
       default:
         return null;
@@ -119,7 +119,8 @@ const GovernanceTrack = ({ contentSize, dashboardData }) => {
     height: `${height - 50}px`,
   };
 
-  if (!models || !PowerBIEmbed) return <p>Loading...</p>;
+  if (!models || !PowerBIEmbed || !dashboardData) return <p>Loading...</p>;
+  if (dashboardData.length === 0) return <p>Data not available</p>;
 
   return (
     <div
@@ -192,8 +193,7 @@ const GovernanceTrack = ({ contentSize, dashboardData }) => {
               <GiPublicSpeaker style={{ fontSize: "100px" }} />
             </div>
             <div className="text-xl font-bold my-4">
-              <span className="">Coming </span>
-              <span className="">Soon !</span>
+              <span className="">Loading... </span>
             </div>
           </div>
         )}
