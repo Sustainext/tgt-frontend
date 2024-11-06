@@ -1,67 +1,53 @@
-// organisations,corporates and year///
 "use client";
 import { useEffect, useState } from "react";
-import { yearInfo, months } from "@/app/shared/data/yearInfo";
-import axiosInstance from "@/app/utils/axiosMiddleware";
+import  DateRangePicker  from "../../utils/DatePickerComponent";
+import axiosInstance from "../../utils/axiosMiddleware";
 
-const AnalyseHeader2 = ({
-
+const AnalyseHeader5 = ({
   selectedOrg,
   setSelectedOrg,
   selectedCorp,
   setSelectedCorp,
-  year,
-  setYear,
+  dateRange,
+  setDateRange
 }) => {
   const [formState, setFormState] = useState({
     selectedCorp: selectedCorp,
     selectedOrg: selectedOrg,
-    year: year,
+    start: dateRange.start,
+    end: dateRange.end,
   });
   const [reportType, setReportType] = useState("Organization");
-  const handleReportTypeChange = (type) => {
-    setReportType(type);
-  };
-
+  const [locations, setLocations] = useState([]);
   const [errors, setErrors] = useState({
     organization: "Please select Organisation",
     corporate: "Please select Corporate",
-    year: year ? "" : "Please select year",
+    date:"Please select a date range"
   });
 
   const [organisations, setOrganisations] = useState([]);
   const [corporates, setCorporates] = useState([]);
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-  
-    setFormState((prevState) => ({
-      ...prevState,
-      [name]: value,
+  const [isDateRangeValid, setIsDateRangeValid] = useState(false);
+
+  const handleDateChange = (newRange) => {
+    setDateRange(newRange);
+
+    let dateError = "";
+
+ if (new Date(newRange.end) < new Date(newRange.start)) {
+      setIsDateRangeValid(false);
+      setDateRange("")
+      dateError = "Please select a valid date range";
+
+    } else {
+      setIsDateRangeValid(true);
+    }
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      date: dateError
     }));
-  
-    if (name === "year") {
-      setYear(value);
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        year: value ? "" : "Please select year",
-      }));
-    }
-  
-    // Only run these parts if their respective inputs are changing
-    if (name === "selectedOrg") {
-      setSelectedOrg(value);
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        organization: value ? "" : "Please select Organisation",
-      }));
-    } else if (name === "selectedCorp") {
-      setSelectedCorp(value);
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        corporate: value ? "" : "Please select Corporate",
-      }));
-    }
   };
 
   useEffect(() => {
@@ -78,7 +64,7 @@ const AnalyseHeader2 = ({
   }, []);
 
   useEffect(() => {
-     const fetchCorporates = async () => {
+    const fetchCorporates = async () => {
       if (selectedOrg) {
         try {
           const response = await axiosInstance.get(`/corporate/`, {
@@ -86,13 +72,11 @@ const AnalyseHeader2 = ({
           });
           setCorporates(response.data);
         } catch (e) {
-          if(e.status === 404) {
+          if (e.status === 404) {
             setCorporates([]);
-          }
-          else{
+          } else {
             console.error("Failed fetching corporates:", e);
           }
-          
         }
       }
     };
@@ -104,31 +88,33 @@ const AnalyseHeader2 = ({
     setFormState({
       selectedCorp: selectedCorp,
       selectedOrg: selectedOrg,
-      year: year,
-
+      start: dateRange.start,
+      end: dateRange.end,
     });
-  }, [selectedOrg, selectedCorp, year]);
+  }, [selectedOrg, selectedCorp,dateRange]);
 
   const handleOrgChange = (e) => {
     const newOrg = e.target.value;
     setSelectedOrg(newOrg);
     setSelectedCorp("");
-    setYear("");
+    setDateRange("")
+    setIsDateRangeValid(false)
     setErrors((prevErrors) => ({
       ...prevErrors,
       organization: newOrg ? "" : "Please select Organisation",
-      year: "Please select year",
+      date:"Please select a date range"
     }));
   };
 
   const handleCorpChange = (e) => {
     const newCorp = e.target.value;
     setSelectedCorp(newCorp);
-    setYear("");
+    setDateRange("")
+    setIsDateRangeValid(false)
     setErrors((prevErrors) => ({
       ...prevErrors,
       corporate: newCorp ? "" : "Please select Corporate",
-      year: "Please select year",
+      date:"Please select a date range"
     }));
   };
 
@@ -140,14 +126,14 @@ const AnalyseHeader2 = ({
             <div className="mb-2 flex-col items-center">
               <div className="justify-start items-center gap-4 inline-flex">
                 <div className="text-zinc-600 text-[12px] font-semibold font-['Manrope']">
-                View By:
+                  View By:
                 </div>
-                <div className="rounded-lg shadow  justify-start items-start flex">
+                <div className="rounded-lg shadow justify-start items-start flex">
                   <div
                     className={`w-[111px] px-4 py-2.5 border rounded-l-lg border-gray-300 justify-center items-center gap-2 flex cursor-pointer ${
                       reportType === "Organization" ? "bg-[#d2dfeb]" : "bg-white"
                     }`}
-                    onClick={() => handleReportTypeChange("Organization")}
+                    onClick={() => setReportType("Organization")}
                   >
                     <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
                       Organization
@@ -157,7 +143,7 @@ const AnalyseHeader2 = ({
                     className={`w-[111px] px-4 py-2.5 border-r border-y border-gray-300 rounded-r-lg justify-center items-center gap-2 flex cursor-pointer ${
                       reportType === "Corporate" ? "bg-[#d2dfeb]" : "bg-white"
                     }`}
-                    onClick={() => handleReportTypeChange("Corporate")}
+                    onClick={() => setReportType("Corporate")}
                   >
                     <div className="text-slate-800 text-[12px] font-medium font-['Manrope'] leading-tight">
                       Corporate
@@ -212,7 +198,7 @@ const AnalyseHeader2 = ({
                         value={selectedCorp}
                         onChange={handleCorpChange}
                       >
-                        <option value="">Select Corporate </option>
+                        <option value="">Select Corporate</option>
                         {corporates &&
                           corporates.map((corp) => (
                             <option key={corp.id} value={corp.id}>
@@ -234,26 +220,18 @@ const AnalyseHeader2 = ({
                     htmlFor="cname"
                     className="text-neutral-800 text-[12px] font-normal ml-1"
                   >
-                    Select year
+                    Select Date
                   </label>
                   <div className="mt-2">
-                    <select
-                      name="year"
-                      className="block w-full rounded-md border-0 py-1.5 pl-4 text-neutral-500 text-[12px] font-normal leading-tight ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-                      value={formState.year}
-                      onChange={handleChange}
-                    >
-                      <option value="">Select year</option>
-                      {yearInfo.map((item) => (
-                        <option value={item.slice(0, 4)} key={item}>
-                          {item.slice(0, 4)}
-                        </option>
-                      ))}
-                    </select>
-                    {errors.year && (
-                      <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
-                        {errors.year}
-                      </p>
+                    <DateRangePicker
+                      startDate={dateRange.start}
+                      endDate={dateRange.end}
+                      onDateChange={handleDateChange}
+                    />
+                    {!isDateRangeValid && (
+                      <div className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-2">
+                        {errors.date}
+                      </div>
                     )}
                   </div>
                 </div>
@@ -266,4 +244,4 @@ const AnalyseHeader2 = ({
   );
 };
 
-export default AnalyseHeader2;
+export default AnalyseHeader5;

@@ -12,7 +12,7 @@ import {
   setMonth,
 } from "@/lib/redux/features/emissionSlice";
 import { Energydata } from "../../../shared/data/Energydata";
-import { MdOutlineClear } from "react-icons/md";
+import { MdOutlineClear,MdChevronRight  } from "react-icons/md";
 
 const Emissions = ({ open }) => {
   const dispatch = useDispatch();
@@ -125,31 +125,48 @@ const Emissions = ({ open }) => {
               </div>
             </div>
             <div
-              className={`${
-                isOpen ? "translate-x-[15%] block" : "translate-x-[120%] hidden"
-              }
-      fixed right-[51px]  w-[340px] h-[93%] bg-white  rounded-md
-      transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
-            >
-              {data &&
-                data.map((program) => (
-                  <>
-                    <div className="flex justify-between p-2 pt-5 pb-4 border-b-2 ">
-                      <div className="ml-2">{program.header}</div>
+          className={`${
+            isOpen
+              ? "translate-x-[15%] block top-16"
+              : "translate-x-[120%] hidden top-16"
+          }
+fixed right-[51px]  w-[340px] h-[92%] bg-white  rounded-md
+transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
+        >
+          {data &&
+            data.map((program, index) => (
+              <div key={index}>
+                {/* Header */}
+                <div className="flex justify-between p-2 pt-5 pb-4 border-b-2 ">
+                  <div className="ml-2 h-[38px]">{program.header}</div>
+                  <div className="ml-2 float-right ">
+                    <h5
+                      className="text-[#727272] text-[17px] font-bold cursor-pointer"
+                      onClick={toggleDrawerclose}
+                    >
+                      <MdOutlineClear />
+                    </h5>
+                  </div>
+                </div>
 
-                      <div className="ml-2 float-right">
-                        <h5
-                          className="text-[#727272] text-[17px] font-bold cursor-pointer"
-                          onClick={toggleDrawerclose}
-                        >
-                          <MdOutlineClear />
-                        </h5>
-                      </div>
-                    </div>
-                    <div> {program.data}</div>
-                  </>
-                ))}
-            </div>
+                {/* Data Content */}
+                <div className="h-[calc(100vh-30px)] overflow-y-auto custom-scrollbar p-2">
+                  {program.data}
+                </div>
+
+                {/* Footer (Learn more link) */}
+                <div className="pt-2 pb-4 ml-4">
+                  <a
+                    className="text-[14px] text-[#2196F3] pt-1 inline-flex"
+                    href={program.link}
+                    target="_blank"
+                  >
+                    Learn more <MdChevronRight className="text-lg pt-1" />
+                  </a>
+                </div>
+              </div>
+            ))}
+        </div>
           </div>
           <EmissionsHeader
             activeMonth={month}

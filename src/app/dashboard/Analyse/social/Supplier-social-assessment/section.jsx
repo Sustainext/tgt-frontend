@@ -27,7 +27,7 @@ const Section = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
 
 
 
-  const fetchData = async (params) => {
+  const fetchData = async () => {
 
 
     LoaderOpen();
@@ -36,7 +36,7 @@ const Section = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
     try {
       const response = await axiosInstance.get(
         `/sustainapp/get_supplier_social_assessment_analysis?corporate=${selectedCorp}&organisation=${selectedOrg}&start=${year}-01-01&end=${year}-12-31`,
-        { params: params }
+     
       );
       const data = response.data;
 
@@ -80,6 +80,8 @@ const Section = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
 
       LoaderClose();
     } catch (error) {
+        setSuppliersocialassessment1([]);
+        setSuppliersocialassessment2([]);
       console.error("There was a problem with the fetch operation:", error);
       LoaderClose();
     }
@@ -92,6 +94,8 @@ const Section = ({ selectedOrg, selectedCorp, year, isBoxOpen }) => {
     } else {
       if (!toastShown.current) {
         toastShown.current = true;
+        setSuppliersocialassessment1([]);
+        setSuppliersocialassessment2([]);
       }
     }
   }, [selectedOrg, year, selectedCorp]);
