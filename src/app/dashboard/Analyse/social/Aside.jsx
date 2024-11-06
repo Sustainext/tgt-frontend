@@ -13,7 +13,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
               Social
             </div>
           </div>
-          {/* <button
+          <button
             className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
               activeTab === "Tab1"
                 ? "text-[#007EEF] "
@@ -23,7 +23,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
           >
         
             <span className="mr-7 text-left">Employment</span>
-          </button> */}
+          </button>
           <div>
             <button
               className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
@@ -38,50 +38,6 @@ const Aside = ({ activeTab, handleTabClick }) => {
               <div className="inset-y-0 -right-2 flex items-center pointer-events-none"></div>
             </button>
           </div>
-
-          {/* <button
-            className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
-              activeTab === "Tab3"
-                ? "text-[#007EEF] "
-                : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
-            }`}
-            onClick={() => handleTabClick("Tab3")}
-          >
-            
-            <span className="mr-12 text-left">Child Labour</span>
-          </button> */}
-          {/* <button
-            className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
-              activeTab === "Tab4"
-                ? "text-[#007EEF] "
-                : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
-            }`}
-            onClick={() => handleTabClick("Tab4")}
-          >
-
-            <span className="mr-8 text-left">Forced or Compulsory Labour</span>
-          </button> */}
-          <button
-            className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
-              activeTab === "Tab5"
-                ? "text-[#007EEF] "
-                : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
-            }`}
-            onClick={() => handleTabClick("Tab5")}
-          >
-
-            <span className="mr-8 text-left">Diversity & Inclusion</span>
-          </button>
-          <button
-            className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
-              activeTab === "Tab6"
-                ? "text-[#007EEF] "
-                : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
-            }`}
-            onClick={() => handleTabClick("Tab6")}
-          >
-            <span className="mr-8 text-left">Supplier Social assessment</span>
-          </button>
           <button
             className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
               activeTab === "Tab7"
@@ -95,6 +51,17 @@ const Aside = ({ activeTab, handleTabClick }) => {
           </button>
           <button
             className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
+              activeTab === "Tab5"
+                ? "text-[#007EEF] "
+                : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
+            }`}
+            onClick={() => handleTabClick("Tab5")}
+          >
+
+            <span className="mr-8 text-left">Diversity & Inclusion</span>
+          </button>
+          <button
+            className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
               activeTab === "Tab8"
                 ? "text-[#007EEF] "
                 : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
@@ -104,7 +71,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
 
             <span className="mr-8 text-left">Non-Discrimination</span>
           </button>
-
+          
           <button
             className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
               activeTab === "Tab9"
@@ -116,6 +83,29 @@ const Aside = ({ activeTab, handleTabClick }) => {
 
             <span className="mr-8 text-left">Collective Bargaining</span>
           </button>
+          <button
+            className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
+              activeTab === "Tab3"
+                ? "text-[#007EEF] "
+                : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
+            }`}
+            onClick={() => handleTabClick("Tab3")}
+          >
+            
+            <span className="mr-12 text-left">Child Labour</span>
+          </button> 
+        <button
+            className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
+              activeTab === "Tab4"
+                ? "text-[#007EEF] "
+                : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
+            }`}
+            onClick={() => handleTabClick("Tab4")}
+          >
+
+            <span className="mr-8 text-left">Forced or Compulsory Labour</span>
+          </button>
+     
 
           <button
             className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
@@ -127,6 +117,16 @@ const Aside = ({ activeTab, handleTabClick }) => {
           >
 
             <span className="mr-8 text-left">Community Development</span>
+          </button>
+          <button
+            className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
+              activeTab === "Tab6"
+                ? "text-[#007EEF] "
+                : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
+            }`}
+            onClick={() => handleTabClick("Tab6")}
+          >
+            <span className="mr-8 text-left">Supplier Social assessment</span>
           </button>
           <button
             className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
