@@ -38,7 +38,7 @@ const DynamicTable2 = ({ data, columns }) => {
                   <td
                     key={colIndex}
                     className={`p-2 block md:table-cell ${
-                      colIndex === 0 ? 'text-center font-normal text-slate-500' : 'text-center font-normal text-slate-500'
+                      colIndex === 0 ? 'text-left font-normal text-slate-500 border-b border-gray-300' : 'text-center font-normal text-slate-500 border-b border-gray-300'
                     } text-[12px]`}
                   >
                         {row[column] !== undefined && row[column] !== null ? `${row[column]}%` : 'N/A'}
