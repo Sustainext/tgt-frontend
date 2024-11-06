@@ -19,7 +19,7 @@ const widgets = {
 
 
 
-const view_path = "gri_collect_economic_performance_management_material_topic";
+const view_path = "gri_collect_lobbying_political_influence_management_material_topic";
 const client_id = 1;
 const user_id = 1;
 

@@ -19,7 +19,7 @@ const widgets = {
 
 
 
-const view_path = "gri_collect_market_presence_management_material_topic";
+const view_path = "gri_collect_economic_governance_management_material_topic";
 const client_id = 1;
 const user_id = 1;
 

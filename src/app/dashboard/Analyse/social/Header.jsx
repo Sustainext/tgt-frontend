@@ -228,7 +228,7 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
                   : activeTab === "Tab9"
                   ? "Collective Bargaining"
                   : activeTab === "Tab10"
-                  ? "Community Development"
+                  ? "Local Communities 2016"
                   : activeTab === "Tab12"
                   ? "Customer Health and Safety 2016"
                   : activeTab === "Tab13"

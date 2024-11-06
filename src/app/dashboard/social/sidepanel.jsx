@@ -1088,7 +1088,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                 activeTab === "Suppliers Screened" ||
                 activeTab === "Impacts & Actions Taken" ||
                 activeTab === "Procurement Practices" ||
-                activeTab === "Management of Material topic Labour"
+                activeTab === "Management of Material topic Supply"
                   ? "text-[#007EEF]"
                   : "bg-transparent text-[#727272] "
               }`}

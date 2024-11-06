@@ -19,7 +19,7 @@ const widgets = {
 
 
 
-const view_path = "gri_collect_anti_corruption_management_material_topic";
+const view_path = "gri_collect_product_safety_management_material_topic";
 const client_id = 1;
 const user_id = 1;
 

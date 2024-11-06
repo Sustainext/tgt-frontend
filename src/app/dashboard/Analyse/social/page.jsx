@@ -58,10 +58,10 @@ const social = () => {
         <div className="sticky top-14 bg-white z-[100]">
           <Header activeTab={activeTab} setIsBoxOpen={setIsBoxOpen} />
         </div>
-        {/* {activeTab === "Tab1" && <AnalyseEmployment />} */}
+        {activeTab === "Tab1" && <AnalyseEmployment />}
         {activeTab === "Tab2" && <AnalyseOHS />}
-        {/* {activeTab === "Tab3" && <AnalyseChildlabour />} */}
-        {/* {activeTab === "Tab4" && <AnalyseCompulsorylabour />} */}
+       {activeTab === "Tab3" && <AnalyseChildlabour />}
+       {activeTab === "Tab4" && <AnalyseCompulsorylabour />}
         {activeTab === "Tab5" && <AnalyseDiversityInclusion /> }
         {activeTab === "Tab6" && <AnalyseSuppliersocialassessment/>}
         {activeTab === "Tab7" && <AnalyseTraining /> }
