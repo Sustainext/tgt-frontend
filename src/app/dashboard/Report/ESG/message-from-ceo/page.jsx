@@ -50,9 +50,9 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
     LoaderOpen();
     localStorage.setItem('reportorgname',companyName)
     const formData = new FormData();
-    formData.append("message", content);
+    formData.append("message", JSON.stringify({page:"screen_one",label:"Message from CEO",subLabel:"Add message from CEO",type:"richTextarea",content:content}));
     formData.append("message_image", imageceo); // If imageceo is a file, this will work
-    formData.append("ceo_name", ceoname);
+    formData.append("ceo_name", JSON.stringify({page:"screen_one",label:"CEO’s Name",subLabel:"",type:"input",content:ceoname}));
     formData.append("company_name", companyName);
     formData.append("signature_image", imagesing);
     formData.append("signature_image_name", selectedSignfile?selectedSignfile.name:'');
@@ -127,10 +127,10 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
       const response = await axiosInstance.get(url);
       if(response.data)
         {
-            dispatch(setMessage(response.data.message));
+            dispatch(setMessage(response.data.message.content));
             dispatch(setMessageimage(response.data.message_image));
             dispatch(setCompanyname(response.data.company_name));
-            dispatch(setCeoname(response.data.ceo_name));
+            dispatch(setCeoname(response.data.ceo_name.content));
             dispatch(setSignatureimage(response.data.signature_image));
             setSelectedCEOFile({name:response.data.message_image_name})
             setSelectedSignFile({name:response.data.signature_image_name})

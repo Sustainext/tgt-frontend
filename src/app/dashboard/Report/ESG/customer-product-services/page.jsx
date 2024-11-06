@@ -77,10 +77,10 @@ const scrollToSection = (sectionRef, sectionId) => {
   const submitForm = async (type) => {
       LoaderOpen();
       const data={
-       "commitment_statement": commitment_statement ,
-    "product_info_labelling": product_info_labelling,
-    "marketing_practices": marketing_practices,
-    "conclusion": conclusion
+       "commitment_statement": {"page":"screen_fifteen","label":"Products and Services","subLabel":"Add statement about company’s commitment to products and services","type":"textarea","content":commitment_statement} ,
+    "product_info_labelling": {"page":"screen_fifteen","label":"Product and Service Information and Labelling","subLabel":"Add statement about company’s product and service information and labelling","type":"textarea","content":product_info_labelling},
+    "marketing_practices": {"page":"screen_fifteen","label":"Marketing","subLabel":"Add statement about company’s marketing practices","type":"textarea","content":marketing_practices},
+    "conclusion": {"page":"screen_fifteen","label":"Conclusion","subLabel":"Add a conclusion to the report","type":"richTextarea","content":conclusion}
       }
   
       const url = `${process.env.BACKEND_API_URL}/esg_report/screen_fifteen/${reportid}/`;
@@ -149,10 +149,10 @@ const scrollToSection = (sectionRef, sectionId) => {
           const response = await axiosInstance.get(url);
           if(response.data){
             setData(response.data)
-            dispatch(setCommitmentStatement(response.data.commitment_statement));
-          dispatch(setProductInfo(response.data.product_info_labelling));
-          dispatch(setMarketingPractices(response.data.marketing_practices));
-          dispatch(setConclusion(response.data.conclusion));
+            dispatch(setCommitmentStatement(response.data.commitment_statement.content));
+          dispatch(setProductInfo(response.data.product_info_labelling.content));
+          dispatch(setMarketingPractices(response.data.marketing_practices.content));
+          dispatch(setConclusion(response.data.conclusion.content));
           }
           
           LoaderClose();

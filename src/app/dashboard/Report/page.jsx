@@ -297,13 +297,13 @@ const Report = () => {
       .catch((error) => {
         if (error.status === 400) {
           LoaderClose();
-          setReportname();
-          setReporttype();
-          setStartdate();
-          setEnddate();
-          setSelectedOrg();
-          setSelectedCorp();
-          setFirstSelection();
+          // setReportname();
+          // setReporttype();
+          // setStartdate();
+          // setEnddate();
+          // setSelectedOrg();
+          // setSelectedCorp();
+          // setFirstSelection();
           setMassgeshow(true);
         } else {
           const errorMessage =
@@ -494,6 +494,7 @@ const Report = () => {
     setSelectedCorp();
     setFirstSelection();
     setMassgeshow(false);
+    setError({});
   };
 
   return (
@@ -506,7 +507,7 @@ const Report = () => {
               Report
             </h1>
             <p className="text-[14px] text-[#667085]">
-              All the reports generated made for the organization can be
+              All the reports generated for the organization can be
               accessed here
             </p>
           </div>
@@ -669,9 +670,9 @@ const Report = () => {
                         >
                           <option>Select Report Type</option>
                           <option>GHG Accounting Report</option>
-                          <option>GHG Report - Investments</option>
+                          {/* <option>GHG Report - Investments</option> */}
                           <option>GRI Report: In accordance With</option>
-                          <option>GRI Report: With Reference to</option>
+                          {/* <option>GRI Report: With Reference to</option> */}
                         </select>
                         {error.reporttype && (
                           <p className="text-red-500 ml-1">

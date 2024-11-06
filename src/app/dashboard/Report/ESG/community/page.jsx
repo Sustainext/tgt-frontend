@@ -58,9 +58,9 @@ const Community = forwardRef(({ onSubmitSuccess }, ref) => {
   const submitForm = async (type) => {
       LoaderOpen();
       const data={
-       "community_engagement": community_engagement_statement ,
-    "impact_assessment": impact_assessment,
-    "csr_policies": csr_statement,
+       "community_engagement": {"page":"screen_fourteen","label":"Community Engagement","subLabel":"Add statement about company’s community engagement","type":"textarea","content":community_engagement_statement} ,
+    "impact_assessment": {"page":"screen_fourteen","label":"Impact Assessment","subLabel":"","type":"textarea","content":impact_assessment},
+    "csr_policies": {"page":"screen_fourteen","label":"CSR","subLabel":"Add statement about company’s Corporate Social Responsibility policies","type":"richTextarea","content":csr_statement},
       }
   
       const url = `${process.env.BACKEND_API_URL}/esg_report/screen_fourteen/${reportid}/`;
@@ -128,9 +128,9 @@ const Community = forwardRef(({ onSubmitSuccess }, ref) => {
           const response = await axiosInstance.get(url);
           if(response.data){
             setData(response.data)
-            dispatch(setCommunityEngagementStatement(response.data.community_engagement));
-          dispatch(setImpactAssessment(response.data.impact_assessment));
-          dispatch(setCSRStatement(response.data.csr_policies));
+            dispatch(setCommunityEngagementStatement(response.data.community_engagement.content));
+          dispatch(setImpactAssessment(response.data.impact_assessment.content));
+          dispatch(setCSRStatement(response.data.csr_policies.content));
           }
           
           LoaderClose();

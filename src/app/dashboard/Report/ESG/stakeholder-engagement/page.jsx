@@ -37,7 +37,7 @@ const StakeholderEngagement=forwardRef(({ onSubmitSuccess }, ref) => {
     const submitForm = async (type) => {
         LoaderOpen();
         const data={
-          "description":{page:"screen_six",label:"Stakeholder Engagement",type:"textarea",content:description},
+          "description":{"page":"screen_six","label":"Stakeholder Engagement","subLabel":"Add statement about stakeholder engagement","type":"textarea","content":description},
         }
     
         const url = `${process.env.BACKEND_API_URL}/esg_report/screen_six/${reportid}/`;

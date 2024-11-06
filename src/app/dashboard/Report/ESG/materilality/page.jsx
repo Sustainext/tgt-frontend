@@ -36,7 +36,7 @@ const Materiality=forwardRef(({ onSubmitSuccess }, ref) => {
   const submitForm = async (type) => {
       LoaderOpen();
       const data={
-        "statement":description,
+        "statement":{"page":"screen_eight","label":"Materiality","subLabel":"Add statement about company’s materiality assessment","type":"textarea","content":description},
       }
   
       const url = `${process.env.BACKEND_API_URL}/esg_report/screen_eight/${reportid}/`;
@@ -102,7 +102,7 @@ const Materiality=forwardRef(({ onSubmitSuccess }, ref) => {
           const response = await axiosInstance.get(url);
           if(response.data){
               setData(response.data)
-            dispatch(setdescription(response.data.statement));
+            dispatch(setdescription(response.data.statement.content));
           }
           
           LoaderClose();

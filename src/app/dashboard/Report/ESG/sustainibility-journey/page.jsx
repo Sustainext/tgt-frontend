@@ -68,10 +68,10 @@ const scrollToSection = (sectionRef, sectionId) => {
   const submitForm = async (type) => {
       LoaderOpen();
       const data={
-       "company_sustainability_statement": company_sustainability_statement ,
-    "approach_for_sustainability": approach_for_sustainability,
-    "sustainability_goals": sustainability_goals,
-    "approach_to_supply_chain_sustainability": approach_to_supply_chain_sustainability
+       "company_sustainability_statement": {"page":"screen_ten","label":"Sustainability Journey","subLabel":"Add statement about company’s sustainability journey","type":"textarea","content":company_sustainability_statement} ,
+    "approach_for_sustainability": {"page":"screen_ten","label":"Management approach for sustainability/ESG topics","subLabel":"Add statement about company’s approach for sustainability","type":"textarea","content":approach_for_sustainability},
+    "sustainability_goals": {"page":"screen_ten","label":"Company’s Sustainability Goals","subLabel":"Add statement about company’s sustainability goals","type":"textarea","content":sustainability_goals},
+    "approach_to_supply_chain_sustainability": {"page":"screen_ten","label":"Supply Chain Sustainability","subLabel":"Add statement about company’s approach to supply chain sustainability","type":"textarea","content":approach_to_supply_chain_sustainability}
       }
   
       const url = `${process.env.BACKEND_API_URL}/esg_report/screen_ten/${reportid}/`;
@@ -140,10 +140,10 @@ const scrollToSection = (sectionRef, sectionId) => {
           const response = await axiosInstance.get(url);
           if(response.data){
             setData(response.data)
-            dispatch(setCompanyStatement(response.data.company_sustainability_statement));
-          dispatch(setApproachSustainability(response.data.approach_for_sustainability));
-          dispatch(setSustainabilityGoals(response.data.sustainability_goals));
-          dispatch(setSupplyChainSustainability(response.data.approach_to_supply_chain_sustainability));
+            dispatch(setCompanyStatement(response.data.company_sustainability_statement.content));
+          dispatch(setApproachSustainability(response.data.approach_for_sustainability.content));
+          dispatch(setSustainabilityGoals(response.data.sustainability_goals.content));
+          dispatch(setSupplyChainSustainability(response.data.approach_to_supply_chain_sustainability.content));
           }
           
           LoaderClose();

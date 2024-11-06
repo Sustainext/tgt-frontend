@@ -33,7 +33,7 @@ const AwardsRecognition=forwardRef(({ onSubmitSuccess }, ref) =>{
     const submitForm = async (type) => {
         LoaderOpen();
         const data={
-          "description":description,
+          "description":{"page":"screen_five","label":"Awards & Recognition","subLabel":"","type":"richTextarea","content":description},
         }
     
         const url = `${process.env.BACKEND_API_URL}/esg_report/screen_five/${reportid}/`;
@@ -98,7 +98,7 @@ const AwardsRecognition=forwardRef(({ onSubmitSuccess }, ref) =>{
         try {
             const response = await axiosInstance.get(url);
             if(response.data){
-              dispatch(setdescription(response.data.description));
+              dispatch(setdescription(response.data.description.content));
             }
             
             LoaderClose();
