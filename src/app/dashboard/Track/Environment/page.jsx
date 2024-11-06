@@ -42,6 +42,7 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
     { id: "powerbiWaste", label: "Waste (PowerBI)" },
     { id: "superSetWaste", label: "Waste (Superset)" },
     { id: "powerbiMaterials", label: "Materials (PowerBI)" },
+    { id: "powerbiWater", label: "Water & Effluents (PowerBI)" },
   ];
 
   useEffect(() => {
