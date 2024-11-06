@@ -61,8 +61,8 @@ const AnalyseHeader3 = ({ selectedLocation, setSelectedLocation, year, setYear }
 
   return (
     <>
-      <div className="ml-2 mb-5">
-        <div className="flex mb-5 gap-4">
+      <div className="mx-4 mb-5">
+        <div className="flex mb-5">
           <div className="relative mb-2">
             <select
               name="location"
