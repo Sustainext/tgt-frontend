@@ -10,7 +10,7 @@ const AnalyseDiversityInclusion = ({ isBoxOpen }) => {
   const [selectedCorp, setSelectedCorp] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
   const [activeMonth, setActiveMonth] = useState(1);
-  const [selectedLocation, setSelectedLocation] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState("");
  
   return (
     <div>
