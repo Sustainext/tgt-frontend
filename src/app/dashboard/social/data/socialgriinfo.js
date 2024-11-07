@@ -10,7 +10,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             New employee hires and employee turnover
           </p>
-          <div className="h-[685px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-4">GRI Guidance:</p>
             <p className="text-[11px] text-[#727272]">
               An organization can use the following age groups:
@@ -24,18 +24,11 @@ export const Socialdata = [
               <li className="text-[11px] text-[#727272]">Over 50 years old.</li>
             </ul>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12543&page=1",
   },
   {
     category: ["2"],
@@ -57,7 +50,7 @@ export const Socialdata = [
             Sustainable Development Goal 5: Achieve gender equality and empower
             all women and girls
           </p>
-          <div className="h-[633px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 5.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               End all forms of discrimination against all women and girls
@@ -70,18 +63,11 @@ export const Socialdata = [
               and monitor equality and non‑discrimination on the basis of sex.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal5"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+          
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal5",
   },
   {
     category: ["3"],
@@ -104,7 +90,7 @@ export const Socialdata = [
             sustainable economic growth, full and productive employment and
             decent work for all
           </p>
-          <div className="h-[613px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.5</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, achieve full and productive employment and decent work
@@ -135,18 +121,11 @@ export const Socialdata = [
               employment or training.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal8"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal8",
   },
   {
     category: ["4"],
@@ -157,7 +136,7 @@ export const Socialdata = [
             src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-10.png"
             className="w-[32px] h-[32px]"
           />
-          <h5 className="text-pink-500 text-[17px] font-bold ml-2">SDG 10</h5>
+          <h5 className="text-plink-500 text-[17px] font-bold ml-2">SDG 10</h5>
         </div>
       </>,
     ],
@@ -168,7 +147,7 @@ export const Socialdata = [
             Sustainable Development Goal 10: Reduce inequality within and among
             countries
           </p>
-          <div className="h-[654px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 10.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Ensure equal opportunity and reduce inequalities of outcome,
@@ -185,18 +164,11 @@ export const Socialdata = [
               international human rights law.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal10"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal10",
   },
   //Benefits//
   {
@@ -208,7 +180,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             New employee hires and employee turnover
           </p>
-          <div className="h-[685px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-4">Background</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Data reported under this disclosure provide a measure of an
@@ -228,18 +200,11 @@ export const Socialdata = [
               programs.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12543&page=1",
   },
   {
     category: ["6"],
@@ -261,7 +226,7 @@ export const Socialdata = [
             Sustainable Development Goal 3: Ensure healthy lives and promote
             well-being for all at all ages
           </p>
-          <div className="h-[632px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 3.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, end preventable deaths of newborns and children under 5
@@ -280,18 +245,11 @@ export const Socialdata = [
               Neonatal mortality rate.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal3"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal3",
   },
   {
     category: ["7"],
@@ -313,7 +271,7 @@ export const Socialdata = [
             Sustainable Development Goal 5: Achieve gender equality and empower
             all women and girls
           </p>
-          <div className="h-[632px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 5.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Eliminate all forms of violence against all women and girls in the
@@ -336,18 +294,11 @@ export const Socialdata = [
               previous 12 months, by age and place of occurrence.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal5"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+     
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal5",
   },
   {
     category: ["8"],
@@ -370,7 +321,7 @@ export const Socialdata = [
             sustainable economic growth, full and productive employment and
             decent work for all
           </p>
-          <div className="h-[608px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.5</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, achieve full and productive employment and decent work
@@ -390,18 +341,11 @@ export const Socialdata = [
               Unemployment rate, by sex, age and persons with disabilities.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal8"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal8",
   },
   //Parental Leave//
   {
@@ -411,7 +355,7 @@ export const Socialdata = [
       <>
         <div className="p-2 pt-5 pb-4 ">
           <p className="text-[15px] text-[#0057A5] mb-4">Parental leave</p>
-          <div className="h-[685px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-[#727272] mb-4">
               Employees entitled to parental leave means those employees that
               are covered by organizational policies, agreements or contracts
@@ -421,18 +365,11 @@ export const Socialdata = [
               the prior reporting periods.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12543&page=1"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12543&page=1",
   },
   {
     category: ["10"],
@@ -453,7 +390,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 5: Gender equality
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 5.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               End all forms of discrimination against all women and girls
@@ -479,18 +416,11 @@ export const Socialdata = [
               age and location.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal5"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal5",
   },
   {
     category: ["11"],
@@ -511,7 +441,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Gender equality
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.5</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, achieve full and productive employment and decent work
@@ -531,18 +461,11 @@ export const Socialdata = [
               Unemployment rate, by sex, age and persons with disabilities.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal8"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+     
         </div>
       </>,
     ],
+     link: "https://sdgs.un.org/goals/goal8",
   },
   //   Child Labour //
   {
@@ -559,7 +482,7 @@ export const Socialdata = [
             GRI 408-1 Operations and suppliers at significant risk for incidents
             of child labor
           </p>
-          <div className="h-[669px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">
               Guidance for Disclosure 408-1
             </p>
@@ -584,18 +507,11 @@ export const Socialdata = [
               work.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12622&page=7"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12622&page=7",
   },
   {
     category: ["13"],
@@ -617,7 +533,7 @@ export const Socialdata = [
             Sustainable Development Goal 5: Achieve gender equality and empower
             all women and girls
           </p>
-          <div className="h-[637px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 5.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Eliminate all forms of violence against all women and girls in the
@@ -640,18 +556,11 @@ export const Socialdata = [
               previous 12 months, by age and place of occurrence.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal5"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal5",
   },
   {
     category: ["14"],
@@ -672,7 +581,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.7</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Take immediate and effective measures to eradicate forced labour,
@@ -688,18 +597,11 @@ export const Socialdata = [
               labour, by sex and age.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal8"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+     
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal8",
   },
   {
     category: ["15"],
@@ -722,7 +624,7 @@ export const Socialdata = [
             development, provide access to justice for all and build effective,
             accountable and inclusive institutions at all levels
           </p>
-          <div className="h-[591px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 16.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Significantly reduce all forms of violence and related death rates
@@ -754,18 +656,11 @@ export const Socialdata = [
               area they live after dark.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal16"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal16",
   },
   //Forced or Compulsory Labour//
   {
@@ -782,7 +677,7 @@ export const Socialdata = [
             GRI 409-1: Operations and suppliers at significant risk for
             incidents of forced or compulsory labor
           </p>
-          <div className="h-[616px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">
               Guidance for Disclosure 409-1
             </p>
@@ -800,18 +695,11 @@ export const Socialdata = [
               for further guidance
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12633&page=7"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12633&page=7",
   },
   {
     category: ["17"],
@@ -833,7 +721,7 @@ export const Socialdata = [
             Sustainable Development Goal 5: Achieve gender equality and empower
             all women and girls
           </p>
-          <div className="h-[632px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 5.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Eliminate all forms of violence against all women and girls in the
@@ -856,18 +744,11 @@ export const Socialdata = [
               previous 12 months, by age and place of occurrence.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal5"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal5",
   },
   {
     category: ["18"],
@@ -888,7 +769,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.7</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Take immediate and effective measures to eradicate forced labour,
@@ -904,18 +785,10 @@ export const Socialdata = [
               labour, by sex and age.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal8"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal8",
   },
   //security-personnel//
   {
@@ -932,7 +805,7 @@ export const Socialdata = [
             GRI 410-1: Security personnel trained in human rights policies or
             procedures
           </p>
-          <div className="h-[667px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">
               Guidance for Disclosure 410-1
             </p>
@@ -944,18 +817,11 @@ export const Socialdata = [
               identification and registering.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12644&page=1"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12644&page=1",
   },
   {
     category: ["20"],
@@ -978,7 +844,7 @@ export const Socialdata = [
             development, provide access to justice for all and build effective,
             accountable and inclusive institutions at all levels
           </p>
-          <div className="h-[592px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 16.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Significantly reduce all forms of violence and related death rates
@@ -1010,18 +876,11 @@ export const Socialdata = [
               area they live after dark.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal16"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal16",
   },
   //OHS Management//
   {
@@ -1033,7 +892,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Occupational Health and Safety 2018
           </p>
-          <div className="h-[685px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">GRI Guidance 403-1:</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Disclosure 403-1 requires the reporting organization to list any
@@ -1060,18 +919,11 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12565&page=21",
   },
   {
     category: ["22"],
@@ -1092,7 +944,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.8</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Protect labour rights and promote safe and secure working
@@ -1114,18 +966,11 @@ export const Socialdata = [
               legislation, by sex and migrant status.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal8"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal8",
   },
   //Risk Assessment//
   {
@@ -1137,7 +982,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Occupational Health and Safety 2018
           </p>
-          <div className="h-[685px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">GRI Guidance 403-2a:</p>
             <p className="text-[11px] text-[#727272] mb-4">
               When describing the processes used to identify hazards and assess
@@ -1172,18 +1017,11 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12565&page=21",
   },
   {
     category: ["24"],
@@ -1204,7 +1042,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.8</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Protect labour rights and promote safe and secure working
@@ -1226,18 +1064,11 @@ export const Socialdata = [
               legislation, by sex and migrant status.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal8"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal8",
   },
   //OHS services//
   {
@@ -1253,7 +1084,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             GRI 403-3: Occupational health services
           </p>
-          <div className="h-[667px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">GRI Guidance 403-3:</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Occupational health services aim to protect the health of workers
@@ -1287,18 +1118,11 @@ export const Socialdata = [
               other favorable or unfavorable treatment
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12565&page=21",
   },
   {
     category: ["26"],
@@ -1319,7 +1143,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.8</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Protect labour rights and promote safe and secure working
@@ -1341,18 +1165,11 @@ export const Socialdata = [
               legislation, by sex and migrant status.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal8"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+    
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal8",
   },
   //Work involvement in OHS//
   {
@@ -1369,7 +1186,7 @@ export const Socialdata = [
             GRI 403-4: Worker participation, consultation and communication on
             occupational health and safety
           </p>
-          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">GRI Guidance 403-4a:</p>
             <p className="text-[11px] text-[#727272] mb-4">
               When describing the processes for worker participation in
@@ -1439,18 +1256,11 @@ export const Socialdata = [
               such committees.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12565&page=21",
   },
   {
     category: ["28"],
@@ -1471,7 +1281,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.8</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Protect labour rights and promote safe and secure working
@@ -1493,18 +1303,11 @@ export const Socialdata = [
               legislation, by sex and migrant statu
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal8"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal8",
   },
   {
     category: ["29"],
@@ -1527,7 +1330,7 @@ export const Socialdata = [
             development, provide access to justice for all and build effective,
             accountable and inclusive institutions at all levels
           </p>
-          <div className="h-[591px] overflow-y-auto custom-scrollbar">
+          <div >
             <p className="text-[13px] text-[#222222] mb-2">Target 16.7</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Ensure responsive, inclusive, participatory and representative
@@ -1548,18 +1351,11 @@ export const Socialdata = [
               and responsive, by sex, age, disability and population group.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal16"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal16",
   },
   //OHS Training//
   {
@@ -1575,7 +1371,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             GRI 403-5: Worker training on occupational health and safety
           </p>
-          <div className="h-[638px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">GRI Guidance 403-5:</p>
             <p className="text-[11px] text-[#727272] mb-4">
               When describing the occupational health and safety training
@@ -1607,18 +1403,11 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12565&page=21",
   },
   {
     category: ["31"],
@@ -1639,7 +1428,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.8</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Protect labour rights and promote safe and secure working
@@ -1661,18 +1450,11 @@ export const Socialdata = [
               legislation, by sex and migrant status.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal8"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal8",
   },
   //Promotion of Health//
   {
@@ -1688,7 +1470,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             GRI 403-6: Promotion of worker health
           </p>
-          <div className="h-[670px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">GRI Guidance 403-6a:</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Achieving universal health coverage, including financial risk
@@ -1780,18 +1562,11 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12565&page=21",
   },
   {
     category: ["33"],
@@ -1813,7 +1588,7 @@ export const Socialdata = [
             Sustainable Development Goal 3: Ensure healthy lives and promote
             well-being for all at all ages
           </p>
-          <div className="h-[632px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 3.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, end the epidemics of AIDS, tuberculosis, malaria and
@@ -1903,18 +1678,11 @@ export const Socialdata = [
               health as a share of total household expenditure or income.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal3"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal3",
   },
   //Prevention of OHS Impact//
   {
@@ -1931,7 +1699,7 @@ export const Socialdata = [
             GRI 403-7: Prevention and mitigation of occupational health and
             safety impacts directly linked by business relationships
           </p>
-          <div className="h-[618px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">GRI Guidance 403-7:</p>
             <p className="text-[11px] text-black mb-2">Background:</p>
             <p className="text-[11px] text-[#727272] mb-4">
@@ -1943,18 +1711,11 @@ export const Socialdata = [
               business relationships.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12565&page=21",
   },
   {
     category: ["35"],
@@ -1975,7 +1736,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.8</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Protect labour rights and promote safe and secure working
@@ -1997,18 +1758,11 @@ export const Socialdata = [
               legislation, by sex and migrant status.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal8"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal8",
   },
   //OHS Management System Coverage//
   {
@@ -2025,7 +1779,7 @@ export const Socialdata = [
             GRI 403-8: Workers covered by an occupational health and safety
             management system
           </p>
-          <div className="h-[619px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">GRI Guidance 403-8a:</p>
             <p className="text-[11px] text-[#727272] mb-4">
               This disclosure indicates what proportion of an organization’s
@@ -2079,18 +1833,11 @@ export const Socialdata = [
               sole or shared control), and location, among others.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+          
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12565&page=21",
   },
   {
     category: ["37"],
@@ -2111,7 +1858,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.8</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Protect labour rights and promote safe and secure working
@@ -2133,18 +1880,11 @@ export const Socialdata = [
               legislation, by sex and migrant status.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal8"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal8",
   },
   //Injuries//
   {
@@ -2160,7 +1900,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             GRI 403-9: Work-related injuries
           </p>
-          <div className="h-[663px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">
               Compilation requirements:
             </p>
@@ -2409,18 +2149,11 @@ export const Socialdata = [
               if needed.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12565&page=21",
   },
   {
     category: ["39"],
@@ -2442,7 +2175,7 @@ export const Socialdata = [
             Sustainable Development Goal 3: Ensure healthy lives and promote
             well-being for all at all ages
           </p>
-          <div className="h-[632px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 3.6</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2020, halve the number of global deaths and injuries from road
@@ -2477,18 +2210,11 @@ export const Socialdata = [
               Mortality rate attributed to unintentional poisoning.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal3"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+     
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal3",
   },
   {
     category: ["40"],
@@ -2509,7 +2235,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.8</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Protect labour rights and promote safe and secure working
@@ -2531,18 +2257,11 @@ export const Socialdata = [
               legislation, by sex and migrant status.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal8"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal8",
   },
   {
     category: ["41"],
@@ -2565,7 +2284,7 @@ export const Socialdata = [
             development, provide access to justice for all and build effective,
             accountable and inclusive institutions at all levels
           </p>
-          <div className="h-[592px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 16.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Significantly reduce all forms of violence and related death rates
@@ -2597,18 +2316,11 @@ export const Socialdata = [
               area they live after dark.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal16"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal16",
   },
   //Ill Health//
   {
@@ -2624,7 +2336,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             GRI 403-10: Work-related ill health
           </p>
-          <div className="h-[660px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">
               Compilation requirements:
             </p>
@@ -2749,18 +2461,11 @@ export const Socialdata = [
               information.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12565&page=21"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12565&page=21",
   },
   {
     category: ["43"],
@@ -2782,7 +2487,7 @@ export const Socialdata = [
             Sustainable Development Goal 3: Ensure healthy lives and promote
             well-being for all at all ages
           </p>
-          <div className="h-[632px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 3.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, end the epidemics of AIDS, tuberculosis, malaria and
@@ -2850,18 +2555,11 @@ export const Socialdata = [
               Mortality rate attributed to unintentional poisoning.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal3"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal3",
   },
   {
     category: ["44"],
@@ -2882,7 +2580,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.8</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Protect labour rights and promote safe and secure working
@@ -2904,18 +2602,11 @@ export const Socialdata = [
               legislation, by sex and migrant status.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal8"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal8",
   },
   {
     category: ["45"],
@@ -2938,7 +2629,7 @@ export const Socialdata = [
             development, provide access to justice for all and build effective,
             accountable and inclusive institutions at all levels
           </p>
-          <div className="h-[592px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 16.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Significantly reduce all forms of violence and related death rates
@@ -2970,18 +2661,11 @@ export const Socialdata = [
               area they live after dark.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal16"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal16",
   },
   {
     category: ["46"],
@@ -2997,7 +2681,7 @@ export const Socialdata = [
             GRI 404-2: Programs for upgrading employee skills and transition
             assistance programs
           </p>
-          <div className="h-[638px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">
               Guidance for Disclosure 404-2
             </p>
@@ -3057,18 +2741,11 @@ export const Socialdata = [
               supported in their transition from work to retirement.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12677&page=9"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12677&page=9",
   },
   {
     category: ["47"],
@@ -3089,7 +2766,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 8: Decent work and economic growth
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Achieve higher levels of economic productivity through
@@ -3120,18 +2797,11 @@ export const Socialdata = [
               Unemployment rate, by sex, age and persons with disabilities.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal8"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal8",
   },
   {
     category: ["48"],
@@ -3146,7 +2816,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             GRI 414-1: New suppliers that were screened using social criteria
           </p>
-          <div className="h-[638px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">
               Guidance for Disclosure 414-1
             </p>
@@ -3167,18 +2837,11 @@ export const Socialdata = [
               agreements, as well as via ongoing collaboration with suppliers.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12677&page=9"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12677&page=9",
   },
   {
     category: ["49"],
@@ -3194,7 +2857,7 @@ export const Socialdata = [
             GRI 414-2 Negative social impacts in the supply chain and actions
             taken
           </p>
-          <div className="h-[636px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">
               Guidance for Disclosure 414-2
             </p>
@@ -3219,18 +2882,11 @@ export const Socialdata = [
               impacts in the supply chain
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12677&page=9"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+          
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12677&page=9",
   },
   {
     category: ["50"],
@@ -3245,7 +2901,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             GRI 405-1: Diversity of governance bodies and employees
           </p>
-          <div className="h-[638px] overflow-y-auto custom-scrollbar">
+          <div>
             {/* <p className="text-[11px] text-black mb-2">
             Guidance for Disclosure 414-2
             </p> */}
@@ -3267,18 +2923,11 @@ export const Socialdata = [
               certain segments of the governance bodies or employees.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12587"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12587",
   },
   {
     category: ["51"],
@@ -3300,7 +2949,7 @@ export const Socialdata = [
             Sustainable Development Goal 5: Achieve gender equality and empower
             all women and girls
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 5.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               End all forms of discrimination against all women and girls
@@ -3330,18 +2979,11 @@ export const Socialdata = [
               (b) local governments.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal5"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal5",
   },
   {
     category: ["52"],
@@ -3356,25 +2998,18 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             GRI 405-2: Diversity and Equal Opportunity 2016
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-[#727272] mb-4">
               The reporting organization can draw from the information used for
               Disclosure 405-1 to identify the total number of employees in each
               employee category bygender.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12587"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12587",
   },
   {
     category: ["53"],
@@ -3396,7 +3031,7 @@ export const Socialdata = [
             Sustainable Development Goal 10: Reduce inequality within and among
             countries
           </p>
-          <div className="h-[660px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 10.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Ensure equal opportunity and reduce inequalities of outcome,
@@ -3413,18 +3048,11 @@ export const Socialdata = [
               international human rights law.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://sdgs.un.org/goals/goal10"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal10",
   },
   {
     category: ["54"],
@@ -3439,7 +3067,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             GRI 404-1: Average hours of training per year per employee
           </p>
-          <div className="h-[636px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">
               Guidance for Disclosure 404-1
             </p>
@@ -3471,18 +3099,11 @@ export const Socialdata = [
               number of employees in category
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12576&page=7"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12576&page=7",
   },
   {
     category: ["55"],
@@ -3504,7 +3125,7 @@ export const Socialdata = [
             Ensure inclusive and equitable quality education and promote
             lifelong learning opportunities for all
           </p>
-          <div className="h-[635px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 4.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, ensure equal access for all women and men to affordable
@@ -3545,18 +3166,11 @@ export const Socialdata = [
               indicators on this list that can be disaggregated.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://sdgs.un.org/goals/goal4"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal4",
   },
   {
     category: ["56"],
@@ -3572,7 +3186,7 @@ export const Socialdata = [
             GRI 404-3: Percentage of employees receiving regular performance and
             career development reviews
           </p>
-          <div className="h-[618px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">Background</p>
             <p className="text-[11px] text-[#727272] mb-4">
               This disclosure measures the extent to which an organization
@@ -3593,18 +3207,11 @@ export const Socialdata = [
               approaches skills enhancement.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12576&page=7"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12576&page=7",
   },
   {
     category: ["57"],
@@ -3619,7 +3226,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             GRI 406-1: Incidents of discrimination and corrective actions taken
           </p>
-          <div className="h-[636px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">
               Compilation Requirements:
             </p>
@@ -3644,18 +3251,11 @@ export const Socialdata = [
               circumstances that led to the incident no longer exist.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12598&page=1"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12598&page=1",
   },
   {
     category: ["58"],
@@ -3671,7 +3271,7 @@ export const Socialdata = [
             GRI 407-1: Operations and suppliers in which the right to freedom of
             association and collective bargaining may be at risk
           </p>
-          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">
               Compilation Requirements:
             </p>
@@ -3690,18 +3290,11 @@ export const Socialdata = [
               guidance.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12610"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12610",
   },
   {
     category: ["59"],
@@ -3717,7 +3310,7 @@ export const Socialdata = [
             GRI 411-1 Incidents of violations involving rights of indigenous
             peoples
           </p>
-          <div className="h-[639px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">
               Guidance for Disclosure 411-1
             </p>
@@ -3731,18 +3324,11 @@ export const Socialdata = [
               monitoring programs, or grievance mechanisms.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12655"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12655",
   },
   {
     category: ["60"],
@@ -3764,7 +3350,7 @@ export const Socialdata = [
             End hunger, achieve food security and improved nutrition and promote
             sustainable agriculture
           </p>
-          <div className="h-[637px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 2.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, double the agricultural productivity and incomes of
@@ -3788,18 +3374,11 @@ export const Socialdata = [
               indigenous status.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal2"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal2",
   },
   {
     category: ["61"],
@@ -3815,7 +3394,7 @@ export const Socialdata = [
             GRI 413-1: Operations with local community engagement, impact
             assessments, and development programs
           </p>
-          <div className="h-[647px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">
               Guidance for Disclosure 413-1
             </p>
@@ -3871,18 +3450,11 @@ export const Socialdata = [
               groups are avoided, minimized, mitigated or compensated
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12666"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12666",
   },
   {
     category: ["62"],
@@ -3898,7 +3470,7 @@ export const Socialdata = [
             GRI 413-2: Operations with significant actual and potential negative
             impacts on local communities
           </p>
-          <div className="h-[642px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">
               Guidance for Disclosure 413-2
             </p>
@@ -3927,18 +3499,11 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12666"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12666",
   },
   {
     category: ["63"],
@@ -3959,7 +3524,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             End poverty in all its forms everywhere
           </p>
-          <div className="h-[672px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 1.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, ensure that all men and women, in particular the poor and
@@ -3984,18 +3549,11 @@ export const Socialdata = [
               tenure.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal1"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal1",
   },
   {
     category: ["64"],
@@ -4010,7 +3568,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             GRI 415-1 Political contributions
           </p>
-          <div className="h-[320px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">
               Compilation Requirements
             </p>
@@ -4037,18 +3595,11 @@ export const Socialdata = [
               circumvent such legislation.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12688"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12688",
   },
   {
     category: ["65"],
@@ -4071,7 +3622,7 @@ export const Socialdata = [
             development, provide access to justice for all and build effective,
             accountable and inclusive institutions at all levels
           </p>
-          <div className="h-[594px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 16.5</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Substantially reduce corruption and bribery in all their forms
@@ -4093,18 +3644,11 @@ export const Socialdata = [
               previous 12 months
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal16"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal16",
   },
   {
     category: ["66"],
@@ -4119,7 +3663,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             402-1 Minimum notice periods regarding operational changes
           </p>
-          <div className="h-[640px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">GRI Guidance 402-1:</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Minimum notice periods can be found in corporate policies and
@@ -4127,18 +3671,11 @@ export const Socialdata = [
               exist at a regional level.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12554&page=7"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12554&page=7",
   },
   {
     category: ["67"],
@@ -4154,7 +3691,7 @@ export const Socialdata = [
             GRI 416-1 Assessment of the health and safety impacts of product and
             service categories
           </p>
-          <div className="h-[617px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">
               Compilation Requirements
             </p>
@@ -4189,18 +3726,11 @@ export const Socialdata = [
               services.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12699&page=8"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12699&page=8",
   },
   {
     category: ["68"],
@@ -4216,7 +3746,7 @@ export const Socialdata = [
             GRI 416-2 Incidents of non-compliance concerning the health and
             safety impacts of products and services
           </p>
-          <div className="h-[617px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">
               Compilation Requirements
             </p>
@@ -4251,18 +3781,11 @@ export const Socialdata = [
               services.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12699&page=8"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12699&page=8",
   },
   {
     category: ["69"],
@@ -4285,7 +3808,7 @@ export const Socialdata = [
             development, provide access to justice for all and build effective,
             accountable and inclusive institutions at all levels
           </p>
-          <div className="h-[594px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 16.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Promote the rule of law at the national and international levels
@@ -4311,18 +3834,11 @@ export const Socialdata = [
               resolution mechanism, by type of mechanism.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal16"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+          
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal16",
   },
   {
     category: ["70"],
@@ -4338,7 +3854,7 @@ export const Socialdata = [
             GRI 418-1: Substantiated complaints concerning breaches of customer
             privacy and losses of customer data
           </p>
-          <div className="h-[642px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">
               Compilation Requirements
             </p>
@@ -4361,18 +3877,11 @@ export const Socialdata = [
               to collect data by lawful means, and to be transparent.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12721"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+     
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12721",
   },
   {
     category: ["71"],
@@ -4395,7 +3904,7 @@ export const Socialdata = [
             development, provide access to justice for all and build effective,
             accountable and inclusive institutions at all levels
           </p>
-          <div className="h-[594px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 16.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Promote the rule of law at the national and international levels
@@ -4441,18 +3950,11 @@ export const Socialdata = [
               information.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal16"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal16",
   },
   {
     category: ["72"],
@@ -4468,7 +3970,7 @@ export const Socialdata = [
             GRI 417-1: Requirements for product and service information and
             labeling
           </p>
-          <div className="h-[643px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">Background:</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Customers and end users need accessible and adequate information
@@ -4479,18 +3981,11 @@ export const Socialdata = [
               customers to make informed purchasing choices.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12710&page=1"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12710&page=1",
   },
   {
     category: ["73"],
@@ -4511,7 +4006,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Ensure sustainable consumption and production patterns
           </p>
-          <div className="h-[656px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 12.8</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, ensure that people everywhere have the relevant
@@ -4532,18 +4027,11 @@ export const Socialdata = [
               education; and (d) student assessment.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal12"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal12",
   },
   {
     category: ["74"],
@@ -4559,7 +4047,7 @@ export const Socialdata = [
             GRI 417-2: Incidents of non-compliance concerning product and
             service information and labeling
           </p>
-          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">
               Compilation Requirements
             </p>
@@ -4579,18 +4067,11 @@ export const Socialdata = [
               reporting period or not.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12710&page=1"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12710&page=1",
   },
   {
     category: ["75"],
@@ -4606,7 +4087,7 @@ export const Socialdata = [
             GRI 417-3: Incidents of non-compliance concerning marketing
             communications
           </p>
-          <div className="h-[644px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">
               Compilation Requirements
             </p>
@@ -4626,18 +4107,11 @@ export const Socialdata = [
               reporting period or not.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12710&page=1"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12710&page=1",
   },
   {
     category: ["76"],
@@ -4649,7 +4123,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[677px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">Guidance to 2-12-b-i</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Requirement 2-12-b-i covers the role of the highest governance
@@ -4664,18 +4138,11 @@ export const Socialdata = [
               body.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["77"],
@@ -4687,7 +4154,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[672px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-[#727272] mb-4">
               The organization can report whether the highest governance body
               has established a sustainability reporting committee to support
@@ -4702,18 +4169,11 @@ export const Socialdata = [
               is reported under Disclosure 2-5 in this Standard.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["78"],
@@ -4725,7 +4185,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[720px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">
               Guidance to 2-15-b-iii
             </p>
@@ -4735,18 +4195,11 @@ export const Socialdata = [
               statements or equivalent documents.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["79"],
@@ -4769,7 +4222,7 @@ export const Socialdata = [
             development, provide access to justice for all and build effective,
             accountable and inclusive institutions at all levels
           </p>
-          <div className="h-[587px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 16.6</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Develop effective, accountable and transparent institutions at all
@@ -4788,18 +4241,11 @@ export const Socialdata = [
               public services
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal16"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal16",
   },
   {
     category: ["80"],
@@ -4811,7 +4257,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[702px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">Guidance</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Critical concerns include concerns about the organization’s
@@ -4823,18 +4269,11 @@ export const Socialdata = [
               in this Standard for more information.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["81"],
@@ -4846,7 +4285,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[725px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">Guidance to 2-19-a-i</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Fixed pay and variable pay can include performance-based pay,
@@ -4900,18 +4339,11 @@ export const Socialdata = [
               employees.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["82"],
@@ -4923,7 +4355,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[731px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">Guidance</p>
             <p className="text-[11px] text-[#727272] mb-4">
               This disclosure covers the organization’s policy commitments for
@@ -5116,18 +4548,11 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["83"],
@@ -5139,7 +4564,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-        <div className="h-[702px] overflow-y-auto custom-scrollbar"> 
+        <div> 
           <div className="text-[11px] text-[#727272] mb-4">
             <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
               Guidance to 2-9-c
@@ -5178,18 +4603,11 @@ export const Socialdata = [
             organization’s sectors, products, and geographic locations
           </div>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["84"],
@@ -5201,7 +4619,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-        <div className="h-[676px] overflow-y-auto custom-scrollbar"> 
+        <div> 
           <div className="text-[11px] text-[#727272] mb-4">
             <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-2">
               Guidance to 2-10-b-iii
@@ -5221,18 +4639,11 @@ export const Socialdata = [
             organization’s sectors, products, and geographic locations.
           </div>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     //to be changed
@@ -5263,18 +4674,11 @@ export const Socialdata = [
             competencies relevant to impacts commonly associated with the
             organization’s sectors, products, and geographic locations.
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["86"],
@@ -5289,7 +4693,7 @@ export const Socialdata = [
           <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">
             Guidance
           </div>
-          <div className="h-[667px] overflow-y-auto custom-scrollbar">
+          <div>
           <p className="text-[11px] text-[#727272] mb-4">
           Remuneration policies are established to ensure that the remuneration
           arrangements help recruit, motivate, and retain the highest governance
@@ -5298,18 +4702,11 @@ export const Socialdata = [
           to sustainable development and align with stakeholders' interests.
           </p>
         </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["87"],
@@ -5364,18 +4761,11 @@ export const Socialdata = [
             excluding the highest-paid individual)
             <br />
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["88"],
@@ -5415,18 +4805,11 @@ export const Socialdata = [
             regarding its contribution to sustainable development for the next
             year and the coming three to five years.
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["89"],
@@ -5441,7 +4824,7 @@ export const Socialdata = [
           <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">
             Guidance
           </div>
-          <div className="h-[644px] overflow-y-auto custom-scrollbar">
+          <div>
           <div className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
             This disclosure gives insight into how the organization embeds its
             policy commitments for responsible business conduct, including the
@@ -5478,18 +4861,11 @@ export const Socialdata = [
             working group).
           </div>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["90"],
@@ -5504,7 +4880,7 @@ export const Socialdata = [
           <div className="text-[#222222] text-[13px] font-normal font-['Manrope'] leading-none my-3">
             Guidance
           </div>
-          <div className="h-[644px] overflow-y-auto custom-scrollbar">
+          <div>
           <div className=" text-[#727272] text-[11px] font-normal font-['Manrope'] leading-[14px]">
             This disclosure covers the organization’s mechanisms for individuals
             to seek advice and raise concerns about responsible business conduct
@@ -5564,18 +4940,11 @@ export const Socialdata = [
             resolved or found to be unsubstantiated.
           </div>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["91"],
@@ -5587,7 +4956,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[702px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">Guidance</p>
             <p className="text-[11px] text-[#727272] mb-4">
               This disclosure covers grievance mechanisms that the organization
@@ -5809,18 +5178,11 @@ export const Socialdata = [
               </p>
             </ul>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["92"],
@@ -5832,7 +5194,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[726px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">
               Guidance for Disclosure 2-1-a
             </p>
@@ -5872,18 +5234,11 @@ export const Socialdata = [
               organization’s impacts.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["93"],
@@ -5896,7 +5251,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[677px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">
               Guidance for Disclosure 2-2-a
             </p>
@@ -5936,18 +5291,11 @@ export const Socialdata = [
               not controlled by the parent entity.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["94"],
@@ -5959,7 +5307,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[702px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">
               Guidance for Disclosure 2-3-a
             </p>
@@ -5980,18 +5328,11 @@ export const Socialdata = [
               as its financial reporting, where this is possible.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["95"],
@@ -6003,7 +5344,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[709px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-[#727272] mb-4">
               The organization should provide a restatement of information when
               it has learned that the previously reported information needs to
@@ -6069,18 +5410,11 @@ export const Socialdata = [
               requirement.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["96"],
@@ -6092,7 +5426,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[728px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-black mb-2">Guidance to 2-5-b-ii</p>
             <p className="text-[11px] text-[#727272] mb-2">
               If this information is covered in the external assurance reports
@@ -6132,18 +5466,11 @@ export const Socialdata = [
               organization’s sustainability reporting.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["97"],
@@ -6155,7 +5482,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[704px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-black mb-2">Guidance to 2-6-a</p>
             <p className="text-[11px] text-[#727272] mb-2">
               Sectors can be identified according to categories, such as the
@@ -6315,18 +5642,11 @@ export const Socialdata = [
               or changes in the location of its suppliers.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["98"],
@@ -6338,7 +5658,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[732px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-black mb-2">Guidance to 2-7-a</p>
             <p className="text-[11px] text-[#727272] mb-2">
               An employee is an individual who is in an employment relationship
@@ -6441,18 +5761,11 @@ export const Socialdata = [
               fact is sufficient to comply with the requirement.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["99"],
@@ -6475,7 +5788,7 @@ export const Socialdata = [
             sustainable economic growth, full and productive employment and
             decent work for all
           </p>
-          <div className="h-[619px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Improve progressively, through 2030, global resource efficiency in
@@ -6498,18 +5811,11 @@ export const Socialdata = [
               capita, and domestic material consumption per GDP
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal8"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal8",
   },
   {
     category: ["100"],
@@ -6521,7 +5827,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[708px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-black mb-2">
               Guidance to 2-8-a-i and 2-8-a-ii
             </p>
@@ -6570,18 +5876,11 @@ export const Socialdata = [
               with the requirement.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["101"],
@@ -6593,7 +5892,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[707px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-black mb-2">Guidance</p>
             <p className="text-[11px] text-[#727272] mb-2">
               This disclosure addresses non-compliance, or failure to comply
@@ -6681,18 +5980,11 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["102"],
@@ -6704,7 +5996,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[704px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-black mb-2">Guidance</p>
             <p className="text-[11px] text-[#727272] mb-4">
               The organization may have a significant role in an association or
@@ -6716,18 +6008,11 @@ export const Socialdata = [
               association that is critical to the organization’s own activities.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+     
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["103"],
@@ -6739,7 +6024,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[702px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-black mb-2">Guidance</p>
             <p className="text-[11px] text-[#727272] mb-2">
               Stakeholders are individuals or groups that have interests that
@@ -6856,18 +6141,11 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["104"],
@@ -6879,7 +6157,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[705px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-black mb-2">Guidance</p>
             <p className="text-[11px] text-[#727272] mb-2">
               This disclosure provides insights into how the organization
@@ -6958,18 +6236,11 @@ export const Socialdata = [
               of this fact is sufficient to comply with this requirement.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12358"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12358",
   },
   {
     category: ["106"],
@@ -6981,7 +6252,7 @@ export const Socialdata = [
     data: [
       <>
         <div className="p-2 pt-5 pb-4 ">
-          <div className="h-[705px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[15px] text-[#0057A5] mb-4">
               Disclosure 203-1 Infrastructure investments and services supported
             </p>
@@ -7001,18 +6272,11 @@ export const Socialdata = [
               contribution to the economy
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12390"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12390",
   },
   {
     category: ["107"],
@@ -7035,7 +6299,7 @@ export const Socialdata = [
             promote inclusive and sustainable industrialization and foster
             innovation
           </p>
-          <div className="h-[621px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 9.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Develop quality, reliable, sustainable and resilient
@@ -7068,18 +6332,11 @@ export const Socialdata = [
               CO2 emission per unit of value added
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal9"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+          
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal9",
   },
   {
     category: ["108"],
@@ -7101,7 +6358,7 @@ export const Socialdata = [
             Sustainable Development Goal 11:Make cities and human settlements
             inclusive, safe, resilient and sustainable
           </p>
-          <div className="h-[632px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 11.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, provide access to safe, affordable, accessible and
@@ -7117,18 +6374,11 @@ export const Socialdata = [
               transport, by sex, age and persons with disabilities
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal9"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal9",
   },
   {
     category: ["109"],
@@ -7143,7 +6393,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 203-2 Significant indirect economic impacts
           </p>
-          <div className="h-[646px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-4">Guidance:</p>
             <p className="text-[11px] text-[#727272]">
               This disclosure concerns the spectrum of indirect economic impacts
@@ -7220,18 +6470,11 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12390"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12390",
   },
   {
     category: ["110"],
@@ -7253,7 +6496,7 @@ export const Socialdata = [
             Sustainable Development Goal 1: End poverty in all its forms
             everywhere
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 1.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, eradicate extreme poverty for all people everywhere,
@@ -7294,18 +6537,11 @@ export const Socialdata = [
               tenure.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal1"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal1",
   },
   {
     category: ["111"],
@@ -7327,7 +6563,7 @@ export const Socialdata = [
             Sustainable Development Goal 1: End poverty in all its forms
             everywhere
           </p>
-          <div className="h-[658px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 3.7</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, ensure universal access to sexual and reproductive
@@ -7348,18 +6584,11 @@ export const Socialdata = [
               1,000 women in that age group
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal3"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+          
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal3",
   },
   {
     category: ["112"],
@@ -7382,7 +6611,7 @@ export const Socialdata = [
             sustainable economic growth, full and productive employment and
             decent work for all
           </p>
-          <div className="h-[617px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Achieve higher levels of economic productivity through
@@ -7427,18 +6656,11 @@ export const Socialdata = [
               Unemployment rate, by sex, age and persons with disabilities.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal8"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal8",
   },
   {
     category: ["105"],
@@ -7461,7 +6683,7 @@ export const Socialdata = [
             sustainable economic growth, full and productive employment and
             decent work for all
           </p>
-          <div className="h-[612px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.3</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Promote development-oriented policies that support productive
@@ -7477,18 +6699,11 @@ export const Socialdata = [
               and sex
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal8"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal8",
   },
   {
     category: ["113"],
@@ -7503,7 +6718,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 204-1 Proportion of spending on local suppliers
           </p>
-          <div className="h-[643px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-4">Guidance:</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Local purchases can be made either from a budget managed at the
@@ -7517,18 +6732,11 @@ export const Socialdata = [
               economy, and maintain community relations.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12401"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12401",
   },
   {
     category: ["114"],
@@ -7544,7 +6752,7 @@ export const Socialdata = [
             Disclosure 202-2 Proportion of senior management hired from the
             local community
           </p>
-          <div className="h-[664px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-4">
               Compilation Requirements:
             </p>
@@ -7573,18 +6781,11 @@ export const Socialdata = [
               ability to understand local needs.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12379"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12379",
   },
   {
     category: ["115"],
@@ -7599,7 +6800,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 201-1 Direct economic value generated and distributed
           </p>
-          <div className="h-[648px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-4">
               Compilation requirements:
             </p>
@@ -7798,18 +6999,11 @@ export const Socialdata = [
               local economies.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12368&page=1"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12368&page=1",
   },
   {
     category: ["116"],
@@ -7832,7 +7026,7 @@ export const Socialdata = [
             sustainable economic growth, full and productive employment and
             decent work for all
           </p>
-          <div className="h-[621px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Sustain per capita economic growth in accordance with national
@@ -7856,18 +7050,11 @@ export const Socialdata = [
               Annual growth rate of real GDP per employed person.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal8"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal8",
   },
   {
     category: ["117"],
@@ -7890,7 +7077,7 @@ export const Socialdata = [
             promote inclusive and sustainable industrialization and foster
             innovation
           </p>
-          <div className="h-[621px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 9.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Develop quality, reliable, sustainable and resilient
@@ -7941,18 +7128,11 @@ export const Socialdata = [
               Researchers (in full-time equivalent) per million inhabitants
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal9"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal9",
   },
   {
     category: ["118"],
@@ -7968,7 +7148,7 @@ export const Socialdata = [
             Disclosure 201-2 Financial implications and other risks and
             opportunities due to climate change
           </p>
-          <div className="h-[623px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-4">
               Compilation Requirements:
             </p>
@@ -8039,18 +7219,11 @@ export const Socialdata = [
               </li>
             </ul>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12368&page=1"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12368&page=1",
   },
   {
     category: ["119"],
@@ -8072,7 +7245,7 @@ export const Socialdata = [
             Sustainable Development Goal 13: Take urgent action to combat
             climate change and its impacts
           </p>
-          <div className="h-[642px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 13.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Strengthen resilience and adaptive capacity to climate-related
@@ -8097,18 +7270,11 @@ export const Socialdata = [
               risk reduction strategies
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal8"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal8",
   },
   {
     category: ["120"],
@@ -8124,7 +7290,7 @@ export const Socialdata = [
             Disclosure 201-3 Defined benefit plan obligations and other
             retirement plans
           </p>
-          <div className="h-[642px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-4">Guidance:</p>
             <p className="text-[11px] text-[#727272] mb-4">
               The structure of retirement plans offered to employees can be
@@ -8172,18 +7338,11 @@ export const Socialdata = [
               strategic planning on the part of the employer.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12368&page=1"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12368&page=1",
   },
   {
     category: ["121"],
@@ -8198,7 +7357,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 201-4 Financial assistance received from government
           </p>
-          <div className="h-[638px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-4">
               Compilation Requirement:
             </p>
@@ -8218,18 +7377,11 @@ export const Socialdata = [
               Bibliography.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12368&page=1"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12368&page=1",
   },
   {
     category: ["122"],
@@ -8244,7 +7396,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 205-1 Operations assessed for risks related to corruption
           </p>
-          <div className="h-[665px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-4">Guidance :</p>
             <p className="text-[11px] text-[#727272] mb-4">
               This disclosure can include a risk assessment focused on
@@ -8267,18 +7419,11 @@ export const Socialdata = [
               policies and procedures to combat corruption.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12412"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12412",
   },
   {
     category: ["123"],
@@ -8293,7 +7438,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 205-3 Confirmed incidents of corruption and actions taken
           </p>
-          <div className="h-[663px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-4">Guidance :</p>
             <p className="text-[11px] text-[#727272] mb-4">
               For stakeholders, there is an interest in both the occurrence of
@@ -8311,18 +7456,11 @@ export const Socialdata = [
               customers, and clients.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12412"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+     
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12412",
   },
   {
     category: ["124"],
@@ -8338,7 +7476,7 @@ export const Socialdata = [
             Disclosure 206-1 Legal actions for anti-competitive behavior,
             anti-trust, and monopoly practices
           </p>
-          <div className="h-[618px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-4">Background:</p>
             <p className="text-[11px] text-[#727272] mb-4">
               This disclosure pertains to legal actions initiated under national
@@ -8357,18 +7495,11 @@ export const Socialdata = [
               the organization as well as punitive measures.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12412"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12412",
   },
   {
     category: ["125"],
@@ -8381,7 +7512,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 207-1 Approach to tax
           </p>
-          <div className="h-[689px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Guidance:</p>
             <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
               Guidance for Disclosure 207-1-a :
@@ -8461,18 +7592,11 @@ export const Socialdata = [
               conduct.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/standards/standards-development/topic-standard-for-tax/"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/standards/standards-development/topic-standard-for-tax/",
   },
   {
     category: ["126"],
@@ -8494,7 +7618,7 @@ export const Socialdata = [
             Sustainable Development Goal 1: End poverty in all its forms
             everywhere
           </p>
-          <div className="h-[663px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 1.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, eradicate extreme poverty for all people everywhere,
@@ -8523,18 +7647,11 @@ export const Socialdata = [
               newborns, work-injury victims and the poor and the vulnerable
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal1"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal1",
   },
   {
     category: ["127"],
@@ -8545,7 +7662,7 @@ export const Socialdata = [
             src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-10.png"
             className="w-[32px] h-[32px]"
           />
-          <h5 className="text-pink-500 text-[17px] font-bold ml-2">SDG 10</h5>
+          <h5 className="text-plink-500 text-[17px] font-bold ml-2">SDG 10</h5>
         </div>
       </>,
     ],
@@ -8556,7 +7673,7 @@ export const Socialdata = [
             Sustainable Development Goal 10: Reduce inequality within and among
             countries
           </p>
-          <div className="h-[656px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 10.4</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Adopt policies, especially fiscal, wage and social protection
@@ -8572,18 +7689,11 @@ export const Socialdata = [
               Redistributive impact of fiscal policy
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal10"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal10",
   },
   {
     category: ["128"],
@@ -8605,7 +7715,7 @@ export const Socialdata = [
             Sustainable Development Goal 17: End poverty in all its forms
             everywhere
           </p>
-          <div className="h-[659px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 17.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
               Strengthen domestic resource mobilization, including through
@@ -8638,18 +7748,11 @@ export const Socialdata = [
               of total GDP
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal17"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+          
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal17",
   },
   {
     category: ["129"],
@@ -8662,7 +7765,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 207-2 Tax governance, control, and risk management
           </p>
-          <div className="h-[667px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Guidance:</p>
             <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
               Guidance for Disclosure 207-2-a :
@@ -8797,18 +7900,11 @@ export const Socialdata = [
               documents.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/standards/standards-development/topic-standard-for-tax/"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/standards/standards-development/topic-standard-for-tax/",
   },
   {
     category: ["130"],
@@ -8822,7 +7918,7 @@ export const Socialdata = [
             Disclosure 207-3 Stakeholder engagement and management of concerns
             related to tax
           </p>
-          <div className="h-[670px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Guidance:</p>
             <p className="text-[13px] text-[#727272] mb-2 font-semibold ">
               Guidance for Disclosure 207-3-a-i :
@@ -8902,18 +7998,11 @@ export const Socialdata = [
               its risks and impacts.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/standards/standards-development/topic-standard-for-tax/"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/standards/standards-development/topic-standard-for-tax/",
   },
   {
     category: ["131"],
@@ -8926,7 +8015,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Disclosure 207-4 Country-by-country reporting
           </p>
-          <div className="h-[520px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">
               Compilation requirements:
             </p>
@@ -9124,18 +8213,11 @@ export const Socialdata = [
               jurisdictions where the tax was paid.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/standards/standards-development/topic-standard-for-tax/"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+       
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/standards/standards-development/topic-standard-for-tax/",
   },
   {
     category: ["132"],
@@ -9150,7 +8232,7 @@ export const Socialdata = [
           by gender compared to local minimum wage
 
           </p>
-          <div className="h-[649px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">
             Background:
             </p>
@@ -9160,18 +8242,11 @@ export const Socialdata = [
 
            
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12379"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12379",
   },
   {
     category: ["133"],
@@ -9193,7 +8268,7 @@ export const Socialdata = [
             Sustainable Development Goal 1: End poverty in all its forms
             everywhere
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 1.2</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, eradicate extreme poverty for all people everywhere,
@@ -9212,18 +8287,11 @@ export const Socialdata = [
             </p>
            
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal1"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal1",
   },
   {
     category: ["134"],
@@ -9244,7 +8312,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
             Sustainable Development Goal 5: Gender equality
           </p>
-          <div className="h-[655px] overflow-y-auto custom-scrollbar">
+          <div>
         
           
             <p className="text-[13px] text-[#222222] mb-2">Target 5.4</p>
@@ -9261,18 +8329,11 @@ export const Socialdata = [
               age and location.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal5"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal5",
   },
   {
     category: ["135"],
@@ -9295,7 +8356,7 @@ export const Socialdata = [
             sustainable economic growth, full and productive employment and
             decent work for all
           </p>
-          <div className="h-[620px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-2">Target 8.5</p>
             <p className="text-[11px] text-[#727272] mb-4">
               By 2030, achieve full and productive employment and decent work
@@ -9317,18 +8378,11 @@ export const Socialdata = [
            
          
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3] inline-flex"
-              href="https://sdgs.un.org/goals/goal8"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+         
         </div>
       </>,
     ],
+    link: "https://sdgs.un.org/goals/goal8",
   },
   {
     category: ["136"],
@@ -9343,7 +8397,7 @@ export const Socialdata = [
           <p className="text-[15px] text-[#0057A5] mb-4">
           Disclosure 205-2 Communication and training about anti-corruption policies and procedures
           </p>
-          <div className="h-[645px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[13px] text-[#222222] mb-4">Guidance :</p>
             <p className="text-[11px] text-[#727272] mb-4">
             In the context of this GRI Standard, the term ‘business partners’ includes, among others, suppliers, agents, lobbyists and other intermediaries, joint venture and consortia partners, governments, customers, and clients.
@@ -9355,18 +8409,11 @@ export const Socialdata = [
             Communication and training build the internal and external awareness and the necessary capacity to combat corruption.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12412"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12412",
   },
   {
     category: ["137"],

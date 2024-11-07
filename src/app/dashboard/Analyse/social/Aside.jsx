@@ -106,6 +106,17 @@ const Aside = ({ activeTab, handleTabClick }) => {
             <span className="mr-8 text-left">Forced or Compulsory Labour</span>
           </button>
      
+          <button
+            className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${
+              activeTab === "Tab15"
+                ? "text-[#007EEF] "
+                : "bg-transparent text-[#727272] hover:bg-blue-400 hover:text-white"
+            }`}
+            onClick={() => handleTabClick("Tab15")}
+          >
+
+            <span className="mr-8 text-left">Security Personnel</span>
+          </button>
 
           <button
             className={`flex items-center justify-start px-2 py-2 mb-1 focus:outline-none w-full ${

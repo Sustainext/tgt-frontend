@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { Energydata } from "./../../../shared/data/Energydata";
-import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
 import { toast } from "react-toastify";
 import { patch } from "../../../utils/axiosMiddleware";
-import { MdChevronRight } from "react-icons/md";
 const Header = ({ activeTab, setIsBoxOpen }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [category, setCategory] = useState("");
@@ -99,12 +98,12 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
           </div>
         </div>
         <div
-          className={`${
+           className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
               : "translate-x-[120%] hidden top-16"
           }
-fixed right-[51px]  w-[340px] h-[92%] bg-white  rounded-md
+fixed right-[51px]  w-[360px] h-[92%] bg-white  rounded-md
 transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         >
           {data &&

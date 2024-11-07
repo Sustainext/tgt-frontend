@@ -5,7 +5,7 @@ import GRISVG from "../../../../../../../public/gri.svg";
 import Image from "next/image";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
 import OmissionTable from "../tables/omissionTable";
 
 const OmissionPopup = ({ onSave,reportid, data,isModalOpen, setIsModalOpen,setActiveStep,orgName,fromDate,toDate,isOmissionSubmitted,setIsOmissionSubmitted }) => {
