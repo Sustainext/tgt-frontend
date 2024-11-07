@@ -39,9 +39,11 @@ const AnalyseHeader3 = ({ selectedLocation, setSelectedLocation, year, setYear }
 
     if (name === "location") {
       setSelectedLocation(Number(value));
+      setYear("");
       setErrors((prevErrors) => ({
         ...prevErrors,
         location: value ? "" : "Please select location",
+        year: "Please select year",
       }));
     } else if (name === "year") {
       setYear(value);

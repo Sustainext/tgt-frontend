@@ -12,12 +12,10 @@ import { yearInfo } from "@/app/shared/data/yearInfo";
 import { Oval } from 'react-loader-spinner';
 import AnalyseHeader2 from "../../AnalyseHeader2";
 import AnalyseHeader3 from "../../AnalyseHeader3";
+import { setYear } from "date-fns";
 
-const Section = ({selectedOrg,selectedCorp,year,isBoxOpen,activeMonth,setSelectedOrg,setSelectedCorp,setSelectedYear,setActiveMonth,selectedLocation,setSelectedLocation}) => {
-    const [
-        percentageOfEmployeesWithinGovernmentBodies,
-        setPercentageOfEmployeesWithinGovernmentBodies,
-      ] = useState([]);
+const Section2 = ({selectedOrg,selectedCorp,year,isBoxOpen,setSelectedYear,selectedLocation,setSelectedLocation}) => {
+   
       const [
         numberOfEmployeesPerEmployeeCategory,
         setNumberOfEmployeesPerEmployeeCategory,
@@ -27,29 +25,8 @@ const Section = ({selectedOrg,selectedCorp,year,isBoxOpen,activeMonth,setSelecte
       const [ratioOfRemunerationOfWomenToMen, setRatioOfRemunerationOfWomenToMen] =
         useState([]);
   const toastShown = useRef(false);
-  const [activeScreen, setActiveScreen] = useState(1);
-  const [selectedSetLocation, setSelectedSetLocation] = useState("");
 
 
-
-  const handleNextScreen = () => {
-    if(selectedSetLocation === ""){
-      setNumberOfEmployeesPerEmployeeCategory([]);
-      setRatioOfBasicSalaryOfWomenToMen([]);
-      setRatioOfRemunerationOfWomenToMen([]);    }
-
-    setActiveScreen(2);
-  };
-
-  const handlePreviousScreen = () => {
-    // setDatasetparams({
-    //   ...datasetparams,
-    //   organisation: selectedOrg,
-    //   corporate: selectedCorp,
-    //   location: "",
-    // });
-    setActiveScreen(1);
-  };
   const [loopen, setLoOpen] = useState(false);
   
 
@@ -65,7 +42,6 @@ const Section = ({selectedOrg,selectedCorp,year,isBoxOpen,activeMonth,setSelecte
   const fetchData = async () => {
 
     LoaderOpen();
-    setPercentageOfEmployeesWithinGovernmentBodies([]);
     setNumberOfEmployeesPerEmployeeCategory([]);
     setRatioOfBasicSalaryOfWomenToMen([]);
     setRatioOfRemunerationOfWomenToMen([]);
@@ -81,30 +57,12 @@ const Section = ({selectedOrg,selectedCorp,year,isBoxOpen,activeMonth,setSelecte
       const data = response.data;
 
       const {
-        percentage_of_employees_within_government_bodies,
         number_of_employee_per_employee_category,
         ratio_of_basic_salary_of_women_to_men,
         ratio_of_remuneration_of_women_to_men,
       } = data;
 
-      const formatGovernanceBodiesData = (data) => {
-        return data.map((item) => ({
-          "Percentage of female within organisation's governance bodies":
-            item.percentage_of_female_with_org_governance,
-          "Percentage of male within organisation's governance bodies":
-            item.percentage_of_male_with_org_governance,
-          "Percentage of Non-binary within organisation's governance bodies":
-            item.percentage_of_non_binary_with_org_governance,
-          "Percentage of employee within age group of (under 30 years old) organisation's governance bodies":
-            item.percentage_of_employees_within_30_age_group,
-          "Percentage of employee within age group of (30-50 years old) organisation's governance bodies":
-            item.percentage_of_employees_within_30_to_50_age_group,
-          "Percentage of employee within age group of (over 50 years old) organisation's governance bodies":
-            item.percentage_of_employees_more_than_50_age_group,
-          "Percentage of minority group of organisation's governance bodies":
-            item.percentage_of_employees_in_minority_group,
-        }));
-      };
+      
 
       const formatEmployeeCategoryData = (data) => {
         return data.map((item) => ({
@@ -119,11 +77,7 @@ const Section = ({selectedOrg,selectedCorp,year,isBoxOpen,activeMonth,setSelecte
         }));
       };
 
-        setPercentageOfEmployeesWithinGovernmentBodies(
-          formatGovernanceBodiesData(
-            percentage_of_employees_within_government_bodies
-          )
-        );
+       
         setNumberOfEmployeesPerEmployeeCategory(
           formatEmployeeCategoryData(number_of_employee_per_employee_category)
         );
@@ -147,7 +101,7 @@ const Section = ({selectedOrg,selectedCorp,year,isBoxOpen,activeMonth,setSelecte
 
 
   useEffect(() => {
-    if (selectedOrg && year) {
+    if (selectedLocation && year) {
         fetchData();
         toastShown.current = false;
     } else {
@@ -155,71 +109,12 @@ const Section = ({selectedOrg,selectedCorp,year,isBoxOpen,activeMonth,setSelecte
             toastShown.current = true;
         }
     }
-}, [selectedOrg, year, selectedCorp]);
+}, [ year,selectedLocation]);
 
   return (
     <div>
       <div>
-      {activeScreen === 1 && (
-        <div>
-           <div className="mt-5 mb-2 mx-5 text-[15px] text-[#344054]">Diversity and Inclusion (1/2)</div>
-            <AnalyseHeader2
-          activeMonth={activeMonth}
-          setActiveMonth={setActiveMonth}
-          selectedOrg={selectedOrg}
-          setSelectedOrg={setSelectedOrg}
-          selectedCorp={selectedCorp}
-          setSelectedCorp={setSelectedCorp}
-          year={year}
-          setYear={setSelectedYear}
-        />
-          <div className="flex">
-          <div className={`ps-4 w-[100%] me-4`}>
-              <div className="mb-6">
-                <div
-                  id="ep1"
-                  className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
-                >
-                  <div className="flex justify-between items-center mb-2">
-                    <p>
-                      Percentage of individuals within the organization’s
-                      governance bodies{" "}
-                    </p>
-
-                    <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
-                      <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                        GRI 405-1a
-                      </div>
-                    </div>
-                  </div>
-                  <div className="mb-4">
-                    <Table1
-                      columns={column1}
-                      data={percentageOfEmployeesWithinGovernmentBodies}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-          style={{
-            position: `${isBoxOpen ? "unset" : "sticky"}`,
-            top: "10rem",
-            // zIndex: "0",
-            height: "fit-content",
-            backgroundColor: "white",
-            paddingBottom: "1rem",
-          }}
-          className=" mb-8 me-2"
-        >
-          <TableSidebar1 />
-        </div>
-          </div>
-        </div>
-      )}
-
-{activeScreen === 2 && (
-        <div>
+      <div>
            <div className="mt-5 mb-2 mx-4 text-[15px] text-[#344054]">Diversity and Inclusion (2/2)</div>
            <AnalyseHeader3
            setSelectedLocation={setSelectedLocation}
@@ -253,7 +148,7 @@ const Section = ({selectedOrg,selectedCorp,year,isBoxOpen,activeMonth,setSelecte
               </div>
               <div className="mb-6">
                 <div
-                  id="ep1"
+                  id="ep3"
                   className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
                 >
                   <div className="flex justify-between items-center mb-2">
@@ -272,7 +167,7 @@ const Section = ({selectedOrg,selectedCorp,year,isBoxOpen,activeMonth,setSelecte
               </div>
               <div className="mb-6">
                 <div
-                  id="ep2"
+                  id="ep4"
                   className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
                 >
                   <div className="flex justify-between items-center mb-2">
@@ -306,12 +201,6 @@ const Section = ({selectedOrg,selectedCorp,year,isBoxOpen,activeMonth,setSelecte
        
           </div>
         </div>
-      )}
-      <NavigationButtons
-        activeScreen={activeScreen}
-        handleNextScreen={handleNextScreen}
-        handlePreviousScreen={handlePreviousScreen}
-      />
       
         {loopen && (
           <div className=" fixed inset-0 flex items-center justify-center z-[100] bg-black bg-opacity-50">
@@ -330,4 +219,4 @@ const Section = ({selectedOrg,selectedCorp,year,isBoxOpen,activeMonth,setSelecte
   );
 };
 
-export default Section;
+export default Section2;
