@@ -9383,7 +9383,7 @@ export const Socialdata = [
           Disclosure 308-1 New suppliers that were screened
           using environmental criteria
           </p>
-          <div className="h-[640px] overflow-y-auto custom-scrollbar">
+          <div>
             {/* <p className="text-[11px] text-black mb-2">
               Compilation Requirements
             </p> */}
@@ -9408,18 +9408,11 @@ export const Socialdata = [
 as well as via ongoing collaboration with suppliers.
             </p>
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12532"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+      
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12532",
   },
   {
     category: ["138"],
@@ -9436,7 +9429,7 @@ as well as via ongoing collaboration with suppliers.
           Disclosure 308-2 Negative environmental impacts in
 the supply chain and actions taken
           </p>
-          <div className="h-[640px] overflow-y-auto custom-scrollbar">
+          <div>
             <p className="text-[11px] text-black mb-2">
             Guidance :
             </p>
@@ -9459,17 +9452,10 @@ the supply chain and actions taken
             </p>
             
           </div>
-          <div>
-            <a
-              className="text-[14px] text-[#2196F3]  flex"
-              href="https://www.globalreporting.org/pdf.ashx?id=12532"
-              target="_blank"
-            >
-              Learn more <MdChevronRight className="text-lg mt-0.5" />
-            </a>
-          </div>
+        
         </div>
       </>,
     ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12532",
   },
 ];

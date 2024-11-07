@@ -7,15 +7,16 @@ import DateRangePicker from "../../utils/DatePickerComponent";
 const AnalyseHeader6 = ({ location, setLocation, dateRange, setDateRange }) => {
   const [formState, setFormState] = useState({
     location: location,
-    dateRange: dateRange,
+    start: dateRange.start,
+    end: dateRange.end,
   });
 
   const [errors, setErrors] = useState({
     location: "Please select location",
-    dateRange: "Please select a valid date range",
+    date: "Please select a date range",
   });
   const [locations, setLocations] = useState([]);
-
+  const [isDateRangeValid, setIsDateRangeValid] = useState(false);
   useEffect(() => {
     const fetchLocations = async () => {
       try {
@@ -41,23 +42,27 @@ const AnalyseHeader6 = ({ location, setLocation, dateRange, setDateRange }) => {
       setErrors((prevErrors) => ({
         ...prevErrors,
         location: value ? "" : "Please select location",
+        date: "Please select a date range",
       }));
     }
   };
 
   const handleDateChange = (newRange) => {
     setDateRange(newRange);
-    if (newRange.start && newRange.end) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        dateRange: "", // Clear error if both start and end dates are selected
-      }));
+    let dateError = "";
+
+    if (new Date(newRange.end) < new Date(newRange.start)) {
+      setIsDateRangeValid(false);
+      setDateRange("");
+      dateError = "Please select a valid date range";
     } else {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        dateRange: "Please select a valid date range", // Show error if dates are missing
-      }));
+      setIsDateRangeValid(true);
     }
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      date: dateError,
+    }));
   };
 
   useEffect(() => {
@@ -102,7 +107,7 @@ const AnalyseHeader6 = ({ location, setLocation, dateRange, setDateRange }) => {
               />
             </div>
             {errors.location && (
-              <p className="text-[#007EEF] text-[12px] mt-1">
+              <p className="text-[#007EEF] text-[12px] mt-1 ml-1">
                 {errors.location}
               </p>
             )}
@@ -122,10 +127,10 @@ const AnalyseHeader6 = ({ location, setLocation, dateRange, setDateRange }) => {
                 endDate={dateRange.end}
                 onDateChange={handleDateChange}
               />
-              {errors.dateRange && (
-                <p className="text-[#007EEF] text-[12px] mt-1">
-                  {errors.dateRange}
-                </p>
+              {!isDateRangeValid && (
+                <div className="text-[#007EEF] text-[12px] top=16  left-0 pl-1 mt-2">
+                  {errors.date}
+                </div>
               )}
             </div>
           </div>

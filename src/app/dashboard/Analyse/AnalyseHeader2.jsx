@@ -5,8 +5,7 @@ import { yearInfo, months } from "@/app/shared/data/yearInfo";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 
 const AnalyseHeader2 = ({
-  activeMonth,
-  setActiveMonth,
+
   selectedOrg,
   setSelectedOrg,
   selectedCorp,
@@ -18,13 +17,12 @@ const AnalyseHeader2 = ({
     selectedCorp: selectedCorp,
     selectedOrg: selectedOrg,
     year: year,
-    month: activeMonth,
   });
   const [reportType, setReportType] = useState("Organization");
   const handleReportTypeChange = (type) => {
     setReportType(type);
   };
-  const [locations, setLocations] = useState([]);
+
   const [errors, setErrors] = useState({
     organization: "Please select Organisation",
     corporate: "Please select Corporate",
@@ -36,21 +34,22 @@ const AnalyseHeader2 = ({
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-
+  
     setFormState((prevState) => ({
       ...prevState,
       [name]: value,
     }));
-
-    if (name === "month") {
-      setActiveMonth(monthMapping[value]);
-    } else if (name === "year") {
+  
+    if (name === "year") {
       setYear(value);
       setErrors((prevErrors) => ({
         ...prevErrors,
         year: value ? "" : "Please select year",
       }));
-    } else if (name === "selectedOrg") {
+    }
+  
+    // Only run these parts if their respective inputs are changing
+    if (name === "selectedOrg") {
       setSelectedOrg(value);
       setErrors((prevErrors) => ({
         ...prevErrors,
@@ -106,7 +105,7 @@ const AnalyseHeader2 = ({
       selectedCorp: selectedCorp,
       selectedOrg: selectedOrg,
       year: year,
-      month: activeMonth,
+
     });
   }, [selectedOrg, selectedCorp, year]);
 
@@ -114,18 +113,22 @@ const AnalyseHeader2 = ({
     const newOrg = e.target.value;
     setSelectedOrg(newOrg);
     setSelectedCorp("");
+    setYear("");
     setErrors((prevErrors) => ({
       ...prevErrors,
       organization: newOrg ? "" : "Please select Organisation",
+      year: "Please select year",
     }));
   };
 
   const handleCorpChange = (e) => {
     const newCorp = e.target.value;
     setSelectedCorp(newCorp);
+    setYear("");
     setErrors((prevErrors) => ({
       ...prevErrors,
       corporate: newCorp ? "" : "Please select Corporate",
+      year: "Please select year",
     }));
   };
 
