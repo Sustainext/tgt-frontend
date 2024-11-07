@@ -200,7 +200,7 @@ const formatTaskData = (task, commonData) => ({
     task.Emission.Activity || task.Emission.Subcategory
   }`,
   roles:
-    parseInt(localStorage.getItem("user_id")) === commonData.assignedTo ? 1 : 2,
+    parseInt(localStorage.getItem("user_id")) === commonData.assignedTo ? 1 : 1,
   deadline: commonData.deadline,
   assigned_by: parseInt(localStorage.getItem("user_id")),
   assigned_to: commonData.assignedTo,
