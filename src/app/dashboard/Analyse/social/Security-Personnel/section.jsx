@@ -21,7 +21,14 @@ const Section = ({ location, dateRange, isBoxOpen }) => {
       const response = await axiosInstance.get(
         `/sustainapp/get_analysis_security_personnel?location=${location}&start=${dateRange.start}&end=${dateRange.end}`
       );
-      setOperationsWithLocalCommunity(response.data.community_engagement);
+      const { security_personnel } = response.data;
+      const formatGovernanceBodiesData = (dataArray) => {
+        return dataArray.map(data => ({
+          "Security Personnel (in organisation)": data.sp_in_org,
+          "Security Personnel (from third-party organisation)": data.sp_3rd_org,
+        }));
+      };
+      setOperationsWithLocalCommunity(formatGovernanceBodiesData(security_personnel));
       LoaderClose();
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
@@ -29,6 +36,7 @@ const Section = ({ location, dateRange, isBoxOpen }) => {
       LoaderClose();
     }
   };
+  
 
   useEffect(() => {
     // Only fetch data if both start and end dates are present

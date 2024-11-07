@@ -39,6 +39,7 @@ const AnalyseHeader6 = ({ location, setLocation, dateRange, setDateRange }) => {
 
     if (name === "location") {
       setLocation(Number(value));
+      setDateRange("");
       setErrors((prevErrors) => ({
         ...prevErrors,
         location: value ? "" : "Please select location",

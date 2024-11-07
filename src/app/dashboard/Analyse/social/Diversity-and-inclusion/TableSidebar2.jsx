@@ -18,8 +18,9 @@ const TableSidebar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const links = [
-        "ep1",
         "ep2",
+        "ep3",
+        "ep4",
 
       ];
 

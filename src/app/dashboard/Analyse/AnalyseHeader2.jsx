@@ -24,8 +24,8 @@ const AnalyseHeader2 = ({
   };
 
   const [errors, setErrors] = useState({
-    organization: "Please select Organisation",
-    corporate: "Please select Corporate",
+    organization: selectedOrg?"":"Please select Organisation",
+    corporate:selectedCorp?"": "Please select Corporate",
     year: year ? "" : "Please select year",
   });
 
