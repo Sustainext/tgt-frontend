@@ -124,7 +124,7 @@ const OmissionTable = ({ setIsModalOpen, reportid, isOmissionSubmitted, setIsOmi
               {currentRows.map((row, index) => (
                 <tr key={index} className="text-[13px] text-[#667085]">
                   <td className="px-4 py-4 w-[20%]">{row.title}</td>
-                  <td className="px-4 py-4 w-[10%]">{"GRI "+row.omission[0].req_omitted || ""}</td>
+                  <td className="px-4 py-4 w-[10%]">{"GRI "+row.key || ""}</td>
                   <td className="px-4 py-4 w-[10%]">{row.omission[0].req_omitted || ""}</td>
                   <td className="px-4 py-4 w-[25%]">
                     <select
@@ -165,7 +165,7 @@ const OmissionTable = ({ setIsModalOpen, reportid, isOmissionSubmitted, setIsOmi
                   <button
                     key={page}
                     onClick={() => setCurrentPage(page)}
-                    className={`px-3 py-1.5 ${currentPage === page ? 'bg-white border rounded-lg shadow-sm text-blue-400' : ''}`}
+                    className={`px-3 py-1.5 ${currentPage === page ? 'bg-white border rounded-lg shadow-sm text-blue-400' : 'text-gray-700 hover:bg-gray-200 rounded-lg'}`}
                   >
                     {page}
                   </button>
