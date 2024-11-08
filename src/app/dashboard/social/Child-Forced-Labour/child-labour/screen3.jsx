@@ -201,7 +201,7 @@ const Screen3 = ({ selectedCorp, year, selectedOrg }) => {
 
   const handleAddCommittee = () => {
     const newCommittee = {
-      hazardouswork: "",
+      childlabor: "",
       TypeofOperation: "",
       geographicareas: "",
     };
