@@ -329,7 +329,7 @@ const Waterwithdrawal = ({location, year, month}) => {
               FileUploadWidget: (props) => (
                 <CustomFileUploadWidget
                   {...props}
-                  scopes="ec2"
+                  scopes="wec3"
                   setFormData={updateFormDatanew}
                 />
               ),

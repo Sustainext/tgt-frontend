@@ -318,7 +318,7 @@ const SubstancesconcernQ1 = ({ selectedOrg, year, selectedCorp }) => {
               FileUploadWidget: (props) => (
                 <CustomFileUploadWidget
                   {...props}
-                  scopes="ec2"
+                  scopes="wec4"
                   setFormData={updateFormDatanew}
                 />
               ),

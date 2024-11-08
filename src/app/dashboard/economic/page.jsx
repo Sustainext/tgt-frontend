@@ -6,29 +6,31 @@ import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import Infrastructureinvestmentsservices from "./indirect-economic-impacts/infrastructure-investments-services/page";
 import ProcurementPractices from "./procurement-practices/page";
 import Significantindirecteconomic from "./indirect-economic-impacts/significant-indirect-economic/page";
-import PortionOfSeniorManagement from "./market-presence/Proportion-of-senior-management-hired-from-the-local-community/page";
+import PortionOfSeniorManagement from "./economic-governance/Proportion-of-senior-management-hired-from-the-local-community/page";
 import Directeconomic from "./economic-performance/direct-economic/page";
 import Financialimplications from "./risks-opportunities/financial-implications/page";
 import Definedbenefit from "./economic-performance/defined-benefit/page";
 import Financialassistance from "./economic-performance/financial-assistance/page";
-import Publiclegal from "./legal-actions/public-legal/page";
-import Anticompetitivebehavior from "./legal-actions/Anti-competitive-behavior/page";
+import Publiclegal from "./anti-corruption/public-legal/page";
+import Anticompetitivebehavior from "./anti-corruption/Anti-competitive-behavior/page";
 import Approachtotax from "./tax/approach-to-tax/page";
 import Taxgovernance from "./tax/tax-governance/page";
 import Stakeholderengagement from "./tax/stakeholder-engagement/page";
 import Countrybycountryreporting from "./tax/country-by-country-reporting/page";
 import Operationsassessed from "./anti-corruption/operations-assessed/page";
 import Confirmedincidents from "./anti-corruption/confirmed-incidents/page";
-import Ratiosstandard from "./market-presence/ratios-standard/page";
+// import Ratiosstandard from "./market-presence/ratios-standard/page";
 import Communicationtraining from "./anti-corruption/communication-training/page";
 import Climaterelated from "./risks-opportunities/climate-related/page";
 import Climaterelatedrisks from "./risks-opportunities/climate-related-risks/page";
 import EconomicperformanceMaterialtopic from "./economic-performance/Management-Material-topic/page";
 import RiskMaterialtopic from "./risks-opportunities/Management-Material-topic/page";
-import MarketpresenceMaterialtopic from "./market-presence/Management-Material-topic/page";
+import MarketpresenceMaterialtopic from "./economic-governance/Management-Material-topic/page";
 import IndirecteconomicimpactsMaterialtopic from "./indirect-economic-impacts/Management-Material-topic/page";
 import AnticorruptionMaterialtopic from "./anti-corruption/Management-Material-topic/page";
 import TaxMaterialtopic from "./tax/Management-Material-topic/page";
+import PoliticalInfluenceMaterialtopic from "./Lobbying-Political-Influence/Management-Material-topic/page";
+import PoliticalInvolvement from "./Lobbying-Political-Influence/Political-Involvement/page";
 import {
   setHeadertext1,
   setHeadertext2,
@@ -57,10 +59,11 @@ const Economic = () => {
       "Management of Material topic Market",
       "Management of Material topic Anti",
       "Management of Material topic Tax",
+      "Management of Material topic Political Influence",
     ];
     const emissionTabs = [
       "Direct economic value generated & distributed",
-      "Defined benefit plan obligations and other retirement plans",
+      // "Defined benefit plan obligations and other retirement plans",
       "Financial assistance received from government",
     ];
     const energyTabs = [
@@ -71,7 +74,6 @@ const Economic = () => {
 
     // List of tabs related to Waste
     const wasteTabs = [
-      "Ratios of Standard Entry level wage by gender compared to local minimum wage",
       "Proportion of senior management hired from the local community",
     ];
 
@@ -82,43 +84,41 @@ const Economic = () => {
     ];
 
     // List of tabs related to Water
-    const waterTabs = ["Proportion of spending on local suppliers"];
+    // const waterTabs = ["Proportion of spending on local suppliers"];
 
     // List of tabs related to Supplier
     const supplierTabs = [
       "Operations assessed for risks related to corruption",
       "Communication and training about anti-corruption policies and procedures",
       "Confirmed incidents of corruption and actions taken",
-    ];
-    const LegalTabs = [
       "Public legal cases regarding corruption",
       "Anti Competitive Behavior",
     ];
+
     const TaxTabs = [
       "Approach to tax",
       "Tax governance, control, and risk management",
       "Stakeholder engagement and management of concerns related to tax",
       "Country-by-country reporting",
     ];
+    const PoliticalTabs = ["Political Contribution"];
     // Set the header based on the active tab category
     if (emissionTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Economic Performance"));
     } else if (energyTabs.includes(activeTab)) {
-      dispatch(setHeadertext2("Risks & Opportunities"));
+      dispatch(setHeadertext2("Climate Risks and Opportunities"));
     } else if (wasteTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Market Presence"));
     } else if (materialTabs.includes(activeTab)) {
-      dispatch(setHeadertext2("Indirect Economic Impacts"));
-    } else if (waterTabs.includes(activeTab)) {
-      dispatch(setHeadertext2("Procurement Practices"));
+      dispatch(setHeadertext2("Economic Impacts"));
     } else if (supplierTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Anti Corruption"));
     } else if (materialnewTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Materials"));
-    } else if (LegalTabs.includes(activeTab)) {
-      dispatch(setHeadertext2("Legal Actions"));
-    } else if (TaxTabs.includes(activeTab)) {
+    }  else if (TaxTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Tax"));
+    } else if (PoliticalTabs.includes(activeTab)) {
+      dispatch(setHeadertext2("Lobbying and Political Influence"));
     } else {
       dispatch(setHeadertext2(`${activeTab}`));
     }
@@ -149,10 +149,10 @@ const Economic = () => {
             {activeTab === "Direct economic value generated & distributed" && (
               <Directeconomic />
             )}
-            {activeTab ===
+            {/* {activeTab ===
               "Defined benefit plan obligations and other retirement plans" && (
               <Definedbenefit />
-            )}
+            )} */}
             {activeTab === "Financial assistance received from government" && (
               <Financialassistance />
             )}
@@ -172,10 +172,10 @@ const Economic = () => {
             {activeTab === "Management of Material topic Market" && (
               <MarketpresenceMaterialtopic />
             )}
-            {activeTab ===
+            {/* {activeTab ===
               "Ratios of Standard Entry level wage by gender compared to local minimum wage" && (
               <Ratiosstandard />
-            )}
+            )} */}
             {activeTab ===
               "Proportion of senior management hired from the local community" && (
               <PortionOfSeniorManagement />
@@ -194,10 +194,10 @@ const Economic = () => {
             )}
 
             {/* Water start */}
-
+            {/* 
             {activeTab === "Proportion of spending on local suppliers" && (
               <ProcurementPractices />
-            )}
+            )} */}
 
             {/* Supplier start */}
             {activeTab === "Management of Material topic Anti" && (
@@ -207,7 +207,7 @@ const Economic = () => {
               "Operations assessed for risks related to corruption" && (
               <Operationsassessed />
             )}
-              {activeTab ===
+            {activeTab ===
               "Communication and training about anti-corruption policies and procedures" && (
               <Communicationtraining />
             )}
@@ -237,6 +237,12 @@ const Economic = () => {
             {activeTab === "Country-by-country reporting" && (
               <Countrybycountryreporting />
             )}
+
+            {activeTab ===
+              "Management of Material topic Political Influence" && (
+              <PoliticalInfluenceMaterialtopic />
+            )}
+            {activeTab === "Political Contribution" && <PoliticalInvolvement />}
           </div>
         </div>
       </div>

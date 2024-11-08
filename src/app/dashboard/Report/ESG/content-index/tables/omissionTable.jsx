@@ -124,7 +124,7 @@ const OmissionTable = ({ setIsModalOpen, reportid, isOmissionSubmitted, setIsOmi
               {currentRows.map((row, index) => (
                 <tr key={index} className="text-[13px] text-[#667085]">
                   <td className="px-4 py-4 w-[20%]">{row.title}</td>
-                  <td className="px-4 py-4 w-[10%]">{row.page_number || ""}</td>
+                  <td className="px-4 py-4 w-[10%]">{"GRI "+row.omission[0].req_omitted || ""}</td>
                   <td className="px-4 py-4 w-[10%]">{row.omission[0].req_omitted || ""}</td>
                   <td className="px-4 py-4 w-[25%]">
                     <select
