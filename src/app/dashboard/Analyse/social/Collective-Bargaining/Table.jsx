@@ -41,7 +41,7 @@ const Table1 = ({ data, columns }) => {
                     key={colIndex}
                     className={`p-2 block md:table-cell h-20 text-center text-[12px] font-normal text-slate-500 ${
                       colIndex !== 2 ? 'border-r' : ''
-                    } border-t border-gray-300`}
+                    }  border-b border-gray-300`}
                     style={{ width: columnWidth }}
                   >
                     {row[column] || "N/A"}
