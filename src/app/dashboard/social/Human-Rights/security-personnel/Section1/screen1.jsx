@@ -44,21 +44,25 @@ const uiSchema = {
         tooltip:
           "Please specify the name and type of operations considered to have significant risk for incidents of forced or compulsory labor.",
         display: "none",
+        type:"text",
       },
       {
         title: "Number of Security Personnel",
         tooltip:
           "Please specify the total number of security personnel whether they have received training or not.",
+          type:"number",
       },
       {
         title: "Employees of the Organization",
         tooltip:
           "Indicate the number of security personnel which are employees of the organization and who have received formal training.",
+          type:"number",
       },
       {
         title: "Employees of third-party organizations",
         tooltip:
           "Indicate the number of security personnel  which are employees of third-party organizations and who have received formal training.",
+          type:"number",
       },
     ],
   },
