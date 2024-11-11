@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { AiOutlineLink } from "react-icons/ai";
 
-const TableSidebar = () => {
-  const [activeId, setActiveId] = useState("ep1");
+const TableSidebar2 = () => {
+  const [activeId, setActiveId] = useState("ep3");
 
   const adjustScrollPosition = (anchor) => {
     const headerOffset = 250;
@@ -18,8 +18,9 @@ const TableSidebar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const links = [
-        "ep1",
-        "ep2",
+        "ep3",
+        "ep4",
+        "ep5",
       ];
 
       const threshold = 150;
@@ -49,15 +50,19 @@ const TableSidebar = () => {
         </div>
       </div>
       {[
+      
         {
-          id: "ep1",
-          name: "Formal joint management-worker health and safety committees",
+          id: "ep3",
+          name: "Workers covered by an occupational health and safety management system ",
         },
         {
-          id: "ep2",
-          name: "Workers covered by an occupational health and safety management system",
+          id: "ep4",
+          name: "Work related ill health  ",
         },
-    
+        {
+            id: "ep5",
+            name: "Ill Health",
+          },
       ].map((link) => (
         <div key={link.id} className="self-stretch justify-end items-center gap-2 inline-flex">
           <a
@@ -79,4 +84,4 @@ const TableSidebar = () => {
   );
 };
 
-export default TableSidebar;
+export default TableSidebar2;

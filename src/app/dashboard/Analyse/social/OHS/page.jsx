@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 import Section1 from "./Section1/page";

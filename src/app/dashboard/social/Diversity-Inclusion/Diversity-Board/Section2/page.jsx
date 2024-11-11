@@ -7,7 +7,7 @@ import "react-tooltip/dist/react-tooltip.css";
 import Socialheader3 from "../../../socialheader3";
 import Screen1 from "./Screen1";
 
-const Section2 = () => {
+const Diversityemploy = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -61,7 +61,7 @@ const Section2 = () => {
               </button>
               <button
                 className="text-[#fff] bg-orange-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("8")}
+                onClick={() => toggleDrawer("51")}
               >
                 SDG 5
               </button>
@@ -150,4 +150,4 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
     </>
   );
 };
-export default Section2;
+export default Diversityemploy;

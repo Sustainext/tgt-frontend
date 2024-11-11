@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import { getMonthName } from "../../../app/utils/dateUtils";
 import { v4 as uuidv4 } from "uuid";
+import { set } from "lodash";
 
 export const fetchEmissionsData = createAsyncThunk(
   "emissions/fetchEmissionsData",
@@ -185,65 +186,6 @@ const calculateTotalClimatiqScore = (data) => {
   return 0;
 };
 
-// Assign Task
-// const formatTaskData = (task, commonData) => ({
-//   location: commonData.location,
-//   year: commonData.year,
-//   month: commonData.month,
-//   scope: commonData.scope.slice(-1),
-//   category: commonData.category,
-//   subcategory: commonData.subcategory,
-//   activity: commonData.activity || "",
-//   task_name: `${commonData.location}-${commonData.month}-${commonData.activity || commonData.subcategory}`,
-//   roles: parseInt(localStorage.getItem("user_id")) === commonData.assignedTo ? 1 : 2, // Assuming this is always 1 for self-assigned tasks // 1- self-assigned, 2-assign-someone else, 3-task from mytask, 4-calculated.
-//   deadline: commonData.deadline,
-//   assigned_by: parseInt(localStorage.getItem("user_id")),
-//   assigned_to: commonData.assignedTo,
-//   region: commonData.countryCode,
-//   //patch
-//   //activity_id : need for calculation
-//   //value1, value2, unit1, unit2, unit_type, file_uploaded_by, region, filedata: {name,url, type, size, uploadDateTime}
-// });
-
-// //Assign Tasks
-// export const assignEmissionTasks = createAsyncThunk(
-//   'emissions/assignEmissionTasks',
-//   async (payload, { getState, dispatch }) => {
-//     const { tasks, commonData } = payload;
-//     const state = getState().emissions;
-
-//     const assignTask = async (task) => {
-//       const formattedTask = formatTaskData(task, commonData);
-//       try {
-//         const response = await axiosInstance.post('/organization_task_dashboard/', formattedTask);
-//         return { ...response, originalTask: task };
-//       } catch (error) {
-//         console.error('Error assigning task:', error);
-//         throw error;
-//       }
-//     };
-
-//     try {
-//       const results = await Promise.all(tasks.map(assignTask));
-
-//       // Update the state to reflect the newly assigned tasks
-//       results.forEach(result => {
-//         const { scope } = commonData;
-//         const updatedData = state[`scope${scope}Data`].data.data.map(item =>
-//           item.id === result.originalTask.id
-//             ? { ...item, Emission: { ...item.Emission, rowType: 'assigned' } }
-//             : item
-//         );
-//         dispatch(updateScopeDataLocal({ scope, data: { data: updatedData } }));
-//       });
-
-//       return results;
-//     } catch (error) {
-//       throw error;
-//     }
-//   }
-// );
-
 const formatTaskData = (task, commonData) => ({
   location: commonData.location,
   year: commonData.year,
@@ -258,7 +200,7 @@ const formatTaskData = (task, commonData) => ({
     task.Emission.Activity || task.Emission.Subcategory
   }`,
   roles:
-    parseInt(localStorage.getItem("user_id")) === commonData.assignedTo ? 1 : 2,
+    parseInt(localStorage.getItem("user_id")) === commonData.assignedTo ? 1 : 1,
   deadline: commonData.deadline,
   assigned_by: parseInt(localStorage.getItem("user_id")),
   assigned_to: commonData.assignedTo,
@@ -349,10 +291,30 @@ export const fetchUsers = createAsyncThunk(
   }
 );
 
+export const fetchLocations = createAsyncThunk(
+  "emissions/fetchLocations",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get("/sustainapp/get_location");
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching locations:", error);
+      return rejectWithValue(
+        error.response?.data || "Failed to fetch locations"
+      );
+    }
+  }
+);
+
 const emissionsSlice = createSlice({
   name: "emissions",
   initialState: {
-    locations: [],
+    userData: [],
+    locations: {
+      data: [],
+      status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
+      error: null,
+    },
     location: "",
     year: "",
     month: 1,
@@ -434,6 +396,9 @@ const emissionsSlice = createSlice({
     scopeReRender: false,
   },
   reducers: {
+    setUserData: (state, action) => {
+      state.userData = action.payload;
+    },
     setLocationsRedux: (state, action) => {
       state.locations = action.payload;
     },
@@ -729,11 +694,24 @@ const emissionsSlice = createSlice({
       .addCase(fetchUsers.rejected, (state, action) => {
         state.users.status = "failed";
         state.users.error = action.payload;
+      })
+      .addCase(fetchLocations.pending, (state) => {
+        state.locations.status = "loading";
+      })
+      .addCase(fetchLocations.fulfilled, (state, action) => {
+        state.locations.status = "succeeded";
+        state.locations.data = action.payload;
+        state.locations.error = null;
+      })
+      .addCase(fetchLocations.rejected, (state, action) => {
+        state.locations.status = "failed";
+        state.locations.error = action.payload;
       });
   },
 });
 
 export const {
+  setUserData,
   setLocationsRedux,
   setLocation,
   setYear,

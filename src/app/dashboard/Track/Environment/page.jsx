@@ -1,18 +1,18 @@
-'use client'
+"use client";
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { GiPublicSpeaker } from "react-icons/gi";
 import { MdRefresh } from "react-icons/md";
-import axiosInstance from '../../../utils/axiosMiddleware';
-import dynamic from 'next/dynamic'
+import axiosInstance from "../../../utils/axiosMiddleware";
+import dynamic from "next/dynamic";
 import { loadFromLocalStorage } from "@/app/utils/storage";
 
 const PowerBIEmbed = dynamic(
-  () => import("powerbi-client-react").then(mod => mod.PowerBIEmbed),
+  () => import("powerbi-client-react").then((mod) => mod.PowerBIEmbed),
   { ssr: false }
 );
 
 const EnvironmentTrack = ({ contentSize, dashboardData }) => {
-  const [activeTab, setActiveTab] = useState("zohoEmissions");
+  const [activeTab, setActiveTab] = useState("powerbiEmissions");
   const [powerBIToken, setPowerBIToken] = useState(null);
   const [models, setModels] = useState(null);
   const { width, height } = contentSize || { width: 800, height: 600 };
@@ -28,10 +28,10 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
     $schema: "http://powerbi.com/product/schema#basic",
     target: {
       table: "Client_Info",
-      column: "uuid"
+      column: "uuid",
     },
     operator: "In",
-    values: [loadFromLocalStorage('client_key')]
+    values: [loadFromLocalStorage("client_key")],
   };
 
   const tabs = [
@@ -42,6 +42,7 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
     { id: "powerbiWaste", label: "Waste (PowerBI)" },
     { id: "superSetWaste", label: "Waste (Superset)" },
     { id: "powerbiMaterials", label: "Materials (PowerBI)" },
+    { id: "powerbiWater", label: "Water & Effluents (PowerBI)" },
   ];
 
   useEffect(() => {
@@ -56,17 +57,17 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
   useEffect(() => {
     const fetchPowerBIToken = async () => {
       try {
-        const response = await axiosInstance('api/auth/powerbi_token/');        
-        const data = response.data;          
+        const response = await axiosInstance("api/auth/powerbi_token/");
+        const data = response.data;
         setPowerBIToken(data.access_token);
       } catch (error) {
         console.error("Error fetching PowerBI token:", error);
       }
     };
-  
+
     fetchPowerBIToken();
   }, []);
-  
+
   const getIframeUrl = useCallback((tabId) => {
     switch (tabId) {
       case "zohoEmissions":
@@ -93,16 +94,21 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
     let reportConfig;
     switch (tabId) {
       case "powerbiEmissions":
-        reportConfig = dashboardData.find(item => item.emission)?.emission;
+        reportConfig = dashboardData.find((item) => item.emission)?.emission;
         break;
       case "powerbiEnergy":
-        reportConfig = dashboardData.find(item => item.energy)?.energy;
+        reportConfig = dashboardData.find((item) => item.energy)?.energy;
         break;
       case "powerbiWaste":
-        reportConfig = dashboardData.find(item => item.waste)?.waste;
+        reportConfig = dashboardData.find((item) => item.waste)?.waste;
         break;
       case "powerbiMaterials":
-        reportConfig = dashboardData.find(item => item.materials)?.materials;
+        reportConfig = dashboardData.find((item) => item.material)?.material;
+        break;
+      case "powerbiWater":
+        reportConfig = dashboardData.find(
+          (item) => item.water_and_effluents
+        )?.water_and_effluents;
         break;
       default:
         return null;
@@ -140,7 +146,7 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
       }
     } else if (activeTab.startsWith("superSet") && iframeRef.current) {
       const iframe = iframeRef.current;
-      iframe.src = '';
+      iframe.src = "";
       setTimeout(() => {
         iframe.src = supersetUrl;
       }, 100);
@@ -174,10 +180,14 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
     height: `${height - 50}px`,
   };
 
-  if (!models || !PowerBIEmbed) return <p>Loading...</p>;
+  if (!models || !PowerBIEmbed || !dashboardData) return <p>Loading...</p>;
+  if (dashboardData.length === 0) return <p>Data not available</p>;
 
   return (
-    <div className="flex flex-col justify-start items-center" style={{ width, height }}>
+    <div
+      className="flex flex-col justify-start items-center"
+      style={{ width, height }}
+    >
       <div className="w-full mb-4 border-b border-gray-200 flex justify-between items-center">
         <ul className="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500">
           {tabs.map((tab) => (
@@ -201,9 +211,13 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
             <button
               onClick={refreshDashboard}
               disabled={isRefreshing}
-              className={`p-2 rounded ${isRefreshing ? 'bg-gray-300' : 'bg-blue-500 hover:bg-blue-600'} text-white`}
+              className={`p-2 rounded ${
+                isRefreshing ? "bg-gray-300" : "bg-blue-500 hover:bg-blue-600"
+              } text-white`}
             >
-              <MdRefresh className={`w-5 h-5 ${isRefreshing ? 'animate-spin' : ''}`} />
+              <MdRefresh
+                className={`w-5 h-5 ${isRefreshing ? "animate-spin" : ""}`}
+              />
             </button>
           </div>
         )}
@@ -249,8 +263,7 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
               <GiPublicSpeaker style={{ fontSize: "100px" }} />
             </div>
             <div className="text-xl font-bold my-4">
-              <span>Coming </span>
-              <span>Soon!</span>
+              <span>Loading... </span>
             </div>
           </div>
         )}
