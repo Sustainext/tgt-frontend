@@ -293,7 +293,7 @@ const Waterdischarge = ({location, year, month}) => {
               FileUploadWidget: (props) => (
                 <CustomFileUploadWidget
                   {...props}
-                  scopes="ec2"
+                  scopes="wec2"
                   setFormData={updateFormDatanew}
                 />
               ),

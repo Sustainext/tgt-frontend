@@ -350,7 +350,7 @@ const Purchased = ({ location, year, month }) => {
               FileUploadWidget: (props) => (
                 <CustomFileUploadWidget
                   {...props}
-                  scopes="ec2"
+                  scopes="ec1"
                   setFormData={updateFormDatanew}
                 />
               ),
