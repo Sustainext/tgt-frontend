@@ -40,14 +40,13 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
 
   const ActionMenu = ({ item }) => {
     const isGRIReport = item.report_type === "GRI Report: In accordance With" || item.report_type === "GRI Report: With Reference to";
-  
     return (
       <div className="absolute bg-white shadow-lg rounded-lg py-2 mt-5 w-[211px] z-10 right-8">
         <button
-          className={`flex items-center p-2 w-full text-left   ${isGRIReport ? 'text-[#d1d5db]' : 'text-[#344054] gradient-sky-blue'}`}
+          className={`flex items-center p-2 w-full text-left text-[#344054] gradient-sky-blue`}
           onClick={() => {
             if (isGRIReport) {
-              // handleESGDownloaddocx()
+              handleDownloadESGpdf(item.id,item.name)
             } else {
               handleDownloadpdf(item.id, item.name);
             }
@@ -362,6 +361,47 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
       Authorization: "Bearer " + token,
     },
   };
+
+  const handleDownloadESGpdf = async (id,name) => {
+    setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: true }));
+    try {
+      const response = await fetch(
+        `${process.env.BACKEND_API_URL}/esg_report/esg_report_pdf/${id}/?download=true`,
+        axiosConfig
+      );
+  
+      if (!response.ok) {
+        setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: false }));
+        throw new Error(`Error: ${response.status} - ${response.statusText}`);
+       
+      }
+  
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+  
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.setAttribute("download", `${name}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: false }));
+      setIsMenuOpen(false);
+    } catch (error) {
+      console.error("Error downloading the file:", error);
+      toast.error("Error downloading the file", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
+  
   const handleDownloadpdf = async (id, name) => {
     // Set loading to true for the specific item
     setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: true }));
@@ -415,32 +455,6 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
     }
   };
 
-  const handleESGDownloadpdf = async () => {
-    // Set loading to true for the specific item
-    setLoadingById((prevState) => ({ ...prevState, [reportid]: true }));
-
-    try {
-      const response = await fetch(
-        `${process.env.BACKEND_API_URL}/sustainapp/report_pdf/${reportid}/?download=true`,
-        axiosConfig
-      );
-      const blob = await response.blob();
-      const downloadUrl = window.URL.createObjectURL(blob);
-
-      const link = document.createElement("a");
-      link.href = downloadUrl;
-      link.setAttribute("download", `${reporttepname}.pdf`); // Setting the file name dynamically
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (error) {
-      console.error("Error downloading the file:", error);
-    } finally {
-      // Set loading to false for the specific item
-      setLoadingById((prevState) => ({ ...prevState, [reportid]: false }));
-      setIsOpen(null);
-    }
-  };
   const handleESGDownloaddocx = async () => {
     setLoadingById((prevState) => ({ ...prevState, [reportid]: true }));
 
