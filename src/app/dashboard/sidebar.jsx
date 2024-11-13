@@ -174,11 +174,11 @@ const Sidenav = () => {
       id: 5,
       title: "Optimise",
       icon: <MdOutlineSettingsSuggest />,
-      link: "#",
+      link: "/dashboard/Optimise",
       permission: "optimise",
       role: true,
       lockicon: <MdLockOutline />,
-      lockiconshow: true,
+      lockiconshow: false,
     },
     {
       id: 6,
@@ -389,7 +389,7 @@ const Sidenav = () => {
                         {menu.title}
                       </span>
 
-                          {menu.lockiconshow && open && (
+                      {menu.lockiconshow && open && (
                         <span className="text-2xl flex items-center justify-center w-5 h-8 rounded-md">
                           {menu.lockicon}
                         </span>

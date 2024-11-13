@@ -35,6 +35,7 @@ const EnvironmentTrack = ({ contentSize, dashboardData }) => {
   };
 
   const tabs = [
+    { id: "zohoEmissions", label: "Emissions (Zoho)" },
     { id: "powerbiEmissions", label: "Emissions (PowerBI)" },
     { id: "powerbiEnergy", label: "Energy (PowerBI)" },
     { id: "powerbiWaste", label: "Waste (PowerBI)" },
