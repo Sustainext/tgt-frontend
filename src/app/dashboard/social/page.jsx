@@ -99,6 +99,7 @@ const Social = () => {
       "Benefits",
       "Parental Leave",
       "Retirement Benefits",
+      ,"Diversity of Employees",
     ];
     const energyTabs = ["Notice Period", "Collective Bargaining"];
 
@@ -124,7 +125,7 @@ const Social = () => {
     ];
 
     // List of tabs related to Water
-    const waterTabs = ["Diversity of the Board", "Salary Ratio","Entry Level Wage","Diversity of Employees"];
+    const waterTabs = ["Diversity of the Board", "Salary Ratio","Entry Level Wage"];
 
     // List of tabs related to Supplier
     const supplierTabs = ["Incidents of Discrimination"];
@@ -227,6 +228,7 @@ const Social = () => {
             {activeTab === "Benefits" && <Benefits />}
             {activeTab === "Parental Leave" && <Parentalleave />}
             {activeTab === "Retirement Benefits" && <Definedbenefit />}
+            {activeTab === "Diversity of Employees" && <Diversityemploy />}
             {activeTab === "Management of Material topic Labor Management" && (
               <LaborManagementMaterialtopic />
             )}
@@ -266,7 +268,7 @@ const Social = () => {
               <DiversityInclusionMaterialtopic />
             )}
             {activeTab === "Diversity of the Board" && <DiversityBoard />}
-            {activeTab === "Diversity of Employees" && <Diversityemploy />}
+           
             {activeTab === "Salary Ratio" && <Salaryratio />}
             {activeTab === "Entry Level Wage" && <Ratiosstandard />}
 

@@ -173,6 +173,8 @@ const Aside = ({ activeTab, handleTabClick }) => {
                 activeTab === "Employee Hires & Turnover" ||
                 activeTab === "Benefits" ||
                 activeTab === "Parental Leave" ||
+                activeTab === "Diversity of Employees" ||
+                activeTab === "Retirement Benefits" ||
                 activeTab === "Management of Material topic Employment"
                   ? "text-[#007EEF]"
                   : "bg-white text-[#727272] "
@@ -275,6 +277,18 @@ const Aside = ({ activeTab, handleTabClick }) => {
                       onClick={() => handleTabClick("Retirement Benefits")}
                     >
                      Retirement Benefits
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Diversity of Employees"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() => handleTabClick("Diversity of Employees")}
+                    >
+                     Diversity of Employees
                     </p>
                   </div>
                 </div>
@@ -682,7 +696,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full
               ${
                 activeTab === "Diversity of the Board" ||
-                activeTab === "Diversity of Employees" ||
+               
                 activeTab === "Salary Ratio" ||
                 activeTab === "Entry Level Wage" ||
                 activeTab ===
@@ -756,18 +770,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                       Diversity of the Board
                     </p>
                   </div>
-                  <div>
-                    <p
-                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
-                        activeTab === "Diversity of Employees"
-                          ? "text-blue-400"
-                          : "bg-transparent text-[#727272] "
-                      }`}
-                      onClick={() => handleTabClick("Diversity of Employees")}
-                    >
-                     Diversity of Employees
-                    </p>
-                  </div>
+              
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${

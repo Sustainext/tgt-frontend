@@ -10,16 +10,16 @@ const BenefitTable = ({ locationdata, data }) => {
         overflowX: "auto",
         maxWidth: "100%",
         minWidth: "100%",
-        width: "80vw",
+        width: "50vw",
       }}
       className="table-scrollbar"
     >
       <table
-        className="w-full rounded-lg border-x border-t border-gray-300"
+        className="w-full rounded-lg border-x border-t border-gray-300 "
         style={{ borderCollapse: "separate", borderSpacing: 0 }}
       >
-        <thead className="block md:table-header-group border">
-          <tr className="gradient-background">
+        <thead className="block md:table-header-group border sticky top-0 z-100  bg-white ">
+          <tr className="gradient-background ">
             {/* Static header for "Significant location of operation" */}
             <th
               className="px-6 py-3 border-b border-gray-200 text-gray-700 font-[400] text-[12px] text-left"

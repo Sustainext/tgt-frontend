@@ -207,10 +207,14 @@ const BenefitsWidget = ({ locationdata = [], initialBenefits = [], onBenefitsCha
       setBenefits(updatedBenefits);
       onBenefitsChange(updatedBenefits);
     };
-  
+    const scrollRef = useRef(null);
+
+    useEffect(() => {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }, [benefits]);
     return (
 
-      <div className="overflow-y-auto max-h-[650px] table-scrollbar">
+      <div  ref={scrollRef} className="overflow-y-auto max-h-[650px] table-scrollbar">
         {benefits.map((benefit, index) => (
           <BenefitSection
             key={index}

@@ -16,7 +16,7 @@ const widgets = {
   TableWidget: GeneralWorkersEmployees,
 };
 
-const view_path = "gri-social-ohs-403-2a-process_for_hazard-new";
+const view_path = "gri-social-ohs-403-2b-hazard_reporting-new";
 const client_id = 1;
 const user_id = 1;
 
@@ -25,86 +25,60 @@ const schema = {
   items: {
     type: "object",
     properties: {
-        RoutineHazard: {
+      Reportingchannels: {
         type: "string",
-        title: "Routine Hazard Identification & Risk Assessment",
+        title: "Reporting channels",
         enum: [
-          "Daily",
-          "Weekly",
-          "Monthly",
-          "Annually",
+          "Supervisor",
+          "Safety committee",
+          "Safety representative",
+          "Anonymous reporting system",
+          "Online platform",
           "Others (please specify)",
         ],
       },
      
-      NonRoutineHazard: {
+      ReportingProcesses: {
         type: "string",
-        title: "Non-Routine Hazard Identification & Risk Assessment",
+        title: "How can workers report hazards? (Select all that apply)",
         enum: [
-          "Changes in procedures or equipment",
-          "Incident investigations",
-          "Worker complaints or referrals",
-          "Changes in workers or workflow",
-          "Results of environmental or health surveillance",
+          "Directly contact",
+          "Submit a form",
+          "Online reporting portal",
           "Others (please specify)",
         ],
       },
-      Processforhazard: {
+      Reportingencouragement: {
         type: "string",
-        title: "Process for hazard identification",
+        title: "How do you encourage workers to report hazards without fear of reprisal? (Select all that apply)",
         enum: [
-          "Workplace Inspections",
-          "Job Hazard Analyses",
-          "Near Miss/Incident Reports",
-          "Employee Feedback",
-          "Safety Data Sheets",
+          "Regular training",
+          "Safety incentives",
+          "Open communication culture",
+          "Positive feedback for reporting",
+          "Anonymous reporting options",
           "Others (please specify)",
         ],
       },
-      Hierarchycontrols: {
+   
+      ReprisalProtection: {
         type: "string",
-        title: "Hierarchy of controls",
-        enum: [
-          "Eliminate the hazard",
-          "Safer substitutes",
-          "Engineering & organizational controls",
-          "Safe work systems & procedures",
-          "PPE (provided & maintained)",
-          "Others (please specify)",
-        ],
-      },
-      Legalguideline: {
-        type: "string",
-        title: "Legal or guideline basis",
-        enum: [
-          "Yes",
-          "No",
-      
-        ],
-      },
-      Listlegal: {
-        type: "string",
-        title: "List of legal requirements (if applicable)",
+        title: "Reprisal Protection Measures",
         texttype: "text",
       },
-      ListStandards: {
+      FeedbackCommunication: {
         type: "string",
-        title: "List of Standards/Guidelines (if applicable)",
-        texttype: "text",
-      },
-      VulnerableWorkers: {
-        type: "string",
-        title: "Vulnerable Workers",
+        title: "Feedback and Communication",
         enum: [
-          "Accessible Emergency Procedures",
-          "Assistive Technology",
-          "Cultural Sensitivity",
-          "Individualized Training/Support",
-          "Mental Health Support",
-          "Translated Documents/Materials",
+          "Safety meetings",
+          "Internal communication channels",
+          "Direct feedback to reporter",
+          "Posted hazard updates",
+          "Anonymous feedback survey",
           "Others (please specify)",
         ],
       },
+  
    
     },
   },
@@ -115,67 +89,47 @@ const uiSchema = {
   "ui:options": {
     titles: [
       {
-        key: "RoutineHazard",
-        title: "Routine Hazard Identification & Risk Assessment",
+        key: "Reportingchannels",
+        title: "Reporting channels",
         tooltip:
-          "Specify the exact timeframe or schedule for routine hazard identification.",
+          "Who can workers report work-related hazards and hazardous situations to? (Select all that apply)",
       },
       {
-        key: "NonRoutineHazard",
-        title: "Non-Routine Hazard Identification & Risk Assessment",
+        key: "ReportingProcesses",
+        title: "Reporting Processes",
         tooltip:
-          "What events or circumstances prompt you to conduct hazard identification and risk assessment outside of routine schedules? (Select all that apply)",
+          "How can workers report hazards? (Select all that apply)",
       },
       {
-        key: "Processforhazard",
-        title: "Process for hazard identification",
+        key: "Reportingencouragement",
+        title: "Reporting encouragement",
         tooltip:
-          "Select the methods used to identify work-related hazards on both a routine and non-routine basis. (Select all that apply) ",
+          "How do you encourage workers to report hazards without fear of reprisal? (Select all that apply)",
       },
       {
-        key: "Hierarchycontrols",
-        title: "Hierarchy of controls",
+        key: "ReprisalProtection",
+        title: "Reprisal Protection Measures",
         tooltip:
-          "How do you prioritize and implement controls to address identified hazards? (Select all that apply) ",
+          "Please provide a brief description on how are workers protected from reprisals for reporting hazards.",
       },
       {
-        key: "Legalguideline",
-        title: "Legal or guideline basis",
+        key: "FeedbackCommunication",
+        title: "Feedback and Communication",
         tooltip:
-          "Are your hazard identification, risk assessment, and control processes based on any specific laws, regulations, or recognized standards/guidelines?",
+          "How are workers informed about reported hazards and implemented actions, and how can they provide feedback? (Select all that apply)",
       },
-      {
-        key: "Listlegal",
-        title: "List of legal requirements (if applicable)",
-        tooltip:
-          "List the specific laws or regulations your processes are based on, if applicable.",
-      },
-      {
-        key: "ListStandards",
-        title: "List of Standards/Guidelines (if applicable)",
-        tooltip:
-          "List the specific laws or regulations your processes are based on, if applicable.",
-      },
-      {
-        key: "VulnerableWorkers",
-        title: "Vulnerable Workers",
-        tooltip:
-          "List the specific regulations, or recognized standards/guidelines your processes are based on, if applicable.",
-      },
+
     ],
   },
 };
-const Screen1 = ({location, year}) => {
+const Screen3 = ({location, year}) => {
   const initialFormData = [
     {
-      RoutineHazard: "",
-      NonRoutineHazard: "",
-      Processforhazard: "",
-      Hierarchycontrols: "",
-      Legalguideline: "",
-      Listlegal: "",
-      ListStandards: "",
-      VulnerableWorkers: "",
+      Reportingchannels: "",
+      ReportingProcesses: "",
+      Reportingencouragement: "",
+      ReprisalProtection: "",
+      FeedbackCommunication: "",
     },
   ];
   const [formData, setFormData] = useState(initialFormData);
@@ -293,10 +247,10 @@ const Screen1 = ({location, year}) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-           Processes for Hazard Identification, Risk Assessment, and Control
+           Hazard Reporting and Worker Protection
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e86`}
-                data-tooltip-content="This section documents data corresponding to your organization's systematic approach to identifying work-related hazards, assessing their associated risks, and implementing effective control measures to minimize those risks, ensuring a safe and healthy work environment."
+                data-tooltip-content="This section documents data corresponding to the organization's processes for workers to report work-related hazards and hazardous situations, along with the measures in place to protect workers from reprisals for reporting."
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
@@ -320,7 +274,7 @@ const Screen1 = ({location, year}) => {
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 403-2a
+                GRI 403-2b
                 </div>
               </div>
             </div>
@@ -366,4 +320,4 @@ const Screen1 = ({location, year}) => {
   );
 };
 
-export default Screen1;
+export default Screen3;

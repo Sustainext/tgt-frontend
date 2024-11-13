@@ -117,7 +117,7 @@ const uiSchema = {
 
     },
     Purpose: {
-      'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
+      'ui:widget': 'inputWidget', 
       'ui:options': {
         label: false
       },

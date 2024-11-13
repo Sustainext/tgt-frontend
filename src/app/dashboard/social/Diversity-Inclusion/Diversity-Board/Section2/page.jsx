@@ -4,7 +4,7 @@ import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
 import { Socialdata } from "../../../data/socialgriinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import Socialheader3 from "../../../socialheader3";
+import Socialheader from "../../../socialheader";
 import Screen1 from "./Screen1";
 
 const Diversityemploy = () => {
@@ -138,15 +138,15 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
             ))}
         </div>
       </div>
-      <Socialheader3
-        activeMonth={activeMonth}
-        setActiveMonth={setActiveMonth}
-        location={location}
-        setLocation={setLocation}
-        year={year}
-        setYear={setYear}
-      />
-      <Screen1 location={location} year={year} />
+      <Socialheader
+                activeMonth={activeMonth}
+                setActiveMonth={setActiveMonth}
+                location={location}
+                setLocation={setLocation}
+                year={year}
+                setYear={setYear}
+            />
+      <Screen1 location={location} year={year} month={activeMonth} />
     </>
   );
 };

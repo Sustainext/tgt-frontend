@@ -17,12 +17,13 @@ const selectWidget3 =  ({onChange, value = "", placeholder, label, title, uiSche
       <div className="mb-3 px-1">
        {id.startsWith("root_0") && ( 
          <div className={`relative flex ${label!== "Metric Unit" ? 'justify-center' : 'pl-2'}`}>
-          <p className={`flex text-[13px] h-[35px] text-neutral-950 font-[400] mb-1 ${label!== "Metric Unit" ? 'pl-5' : ''}`}>
+          <p className={`flex text-[13px] h-[35px] text-neutral-950 font-[400] mb-1 ${label !== "Metric Unit" && schema.display !== "none" ? 'pl-5' : ''}`}>
             {label}
             <MdInfoOutline
               data-tooltip-id={tooltipId}
               data-tooltip-content={schema.tooltiptext}
               className={`mt-1   text-[14px] ${label!== "Metric Unit" ? 'ml-5 w-[30px]' : 'w-[20px] ml-1'}`}
+              style={{display:schema.display}}
             />
             <ReactTooltip
               id={tooltipId}
@@ -35,6 +36,7 @@ const selectWidget3 =  ({onChange, value = "", placeholder, label, title, uiSche
                 fontSize: "12px",
                 boxShadow: 3,
                 borderRadius: "8px",
+                zIndex: "1000",
               }}
             />
           </p>

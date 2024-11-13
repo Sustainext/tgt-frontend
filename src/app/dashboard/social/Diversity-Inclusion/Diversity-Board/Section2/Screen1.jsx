@@ -70,7 +70,7 @@ const uiSchema = {
   }
 };
 
-const Screen1 = ({ location, year }) => {
+const Screen1 = ({ location, year,month }) => {
   const initialFormData = [
     {
       category: "",
@@ -111,6 +111,7 @@ const Screen1 = ({ location, year }) => {
       form_data: formData,
       location: location,
       year,
+      month,
     };
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
@@ -163,7 +164,7 @@ const Screen1 = ({ location, year }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData(initialFormData);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -178,7 +179,7 @@ const Screen1 = ({ location, year }) => {
   };
 
   useEffect(() => {
-    if (location && year) {
+    if (location && year && month) {
       loadFormData();
       toastShown.current = false;
     } else {
@@ -186,7 +187,7 @@ const Screen1 = ({ location, year }) => {
         toastShown.current = true;
       }
     }
-  }, [location, year]);
+  }, [location, year,month]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

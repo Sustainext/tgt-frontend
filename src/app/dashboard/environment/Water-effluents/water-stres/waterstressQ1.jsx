@@ -49,7 +49,7 @@ const schema = {
           "Sea water",
           "Municipal water",
           "Third party water",
-          "Other",
+          "Other (please specify)",
         ],
         tooltiptext:
           "Indicate where the company withdraws water from or Where the company discharges water into.Include (where applicable)the breakdown of water withdrawal and discharge data by: Surface Water; Ground water; Seawater; Produced water Third-party water",
@@ -390,7 +390,7 @@ const WaterstressQ1 = ({ location, year, month }) => {
       <div className="w-full max-w-xs mb-2">
         <label className="text-sm leading-5 text-gray-700 flex">
           Do you withdraw/discharge water from water stress areas?
-          <div className="ml-2">
+          <div className="ml-2 relative">
             <MdInfoOutline
               data-tooltip-id={`tooltip-$e1`}
               data-tooltip-content="This section documents data corresponding to total water withdrawn and total water discharge from areas with water stress."

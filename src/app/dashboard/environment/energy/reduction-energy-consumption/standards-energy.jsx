@@ -50,7 +50,7 @@ const uiSchema = {
     textareaQ1: {
       "ui:title": "Please mention the standards used while compiling the information for 302-4 ?",
       "ui:Gri": "GRI 302-4d",
-      'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
+      'ui:widget': 'TextareaWidgetnew', 
       'ui:options': {
         label: false
       },
@@ -58,7 +58,7 @@ const uiSchema = {
     textareaQ2: {
         "ui:title": "Please mention the methodologies used while compiling the information for 302-4 ?",
         "ui:Gri": "GRI 302-4d",
-        'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
+        'ui:widget': 'TextareaWidgetnew', 
         'ui:options': {
           label: false
         },
@@ -66,7 +66,7 @@ const uiSchema = {
       textareaQ3: {
         "ui:title": "Please mention the assumptions used while compiling the information for 302-4 ?",
         "ui:Gri": "GRI 302-4d",
-        'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
+        'ui:widget': 'TextareaWidgetnew', 
         'ui:options': {
           label: false
         },
@@ -74,7 +74,7 @@ const uiSchema = {
       textareaQ4: {
         "ui:title": "Please mention the calculation tools used while compiling the information for 302-4 ?",
         "ui:Gri": "GRI 302-4d",
-        'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
+        'ui:widget': 'TextareaWidgetnew', 
         'ui:options': {
           label: false
         },

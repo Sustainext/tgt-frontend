@@ -62,7 +62,8 @@ const schema = {
       Wastegenerated: {
         type: "string",
         title: "Waste generated",
-        display:"none",
+        tooltiptext: "Enter the amount of waste generated in the reporting period.",
+        display:"block",
 
       },
 

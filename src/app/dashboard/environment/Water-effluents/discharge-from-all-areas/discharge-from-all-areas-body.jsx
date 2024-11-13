@@ -105,7 +105,7 @@ const Dischargefromareasbody = ({location, year, month,setLocationMessage, setYe
           tooltiptext={`This section documents data corresponding
           to total water withdrawal and total water discharge. `}
           sdg={['GRI 303-4a']}
-          display="none"
+          display="block"
           location={location}
           setLocationMessage={setLocationMessage}
           year={year}

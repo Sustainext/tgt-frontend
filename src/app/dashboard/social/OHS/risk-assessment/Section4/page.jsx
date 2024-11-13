@@ -11,7 +11,7 @@ const Section4 = () => {
       <div className="ml-3 flex">
         <h6 className="text-[17px] mb-4 font-semibold flex">
           Hazard identification, risk assessment, and incident investigation
-          (4/4)
+
         </h6>
       </div>
       <Socialheader

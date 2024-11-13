@@ -144,12 +144,76 @@ const data = [
     hadername: "Health Care",
     selected: [144, 149],
   },
+  {
+    hadername: "Life Insurance",
+    selected: [149, 148],
+  },
+  {
+    hadername: "Health Care",
+    selected: [144, 149],
+  },
+  {
+    hadername: "Life Insurance",
+    selected: [149, 148],
+  },
+  {
+    hadername: "Health Care",
+    selected: [144, 149],
+  },
+  {
+    hadername: "Life Insurance",
+    selected: [149, 148],
+  },
+  {
+    hadername: "Health Care",
+    selected: [144, 149],
+  },
+  {
+    hadername: "Life Insurance",
+    selected: [149, 148],
+  },
+  {
+    hadername: "Health Care",
+    selected: [144, 149],
+  },
+  {
+    hadername: "Life Insurance",
+    selected: [149, 148],
+  },
+  {
+    hadername: "Health Care",
+    selected: [144, 149],
+  },
+  {
+    hadername: "Life Insurance",
+    selected: [149, 148],
+  },
+  {
+    hadername: "Health Care",
+    selected: [144, 149],
+  },
+  {
+    hadername: "Life Insurance",
+    selected: [149, 148],
+  },
+  {
+    hadername: "Health Care",
+    selected: [144, 149],
+  },
+  {
+    hadername: "Life Insurance",
+    selected: [149, 148],
+  },
+  {
+    hadername: "Health Care",
+    selected: [144, 149],
+  },
 ];
   return (
     <div>
-     
+         <div>
       <div className="flex">
-        <div className={`ps-4 w-[100%] me-4`}>
+      <div className={`ps-4 w-[100%] me-4`}>
           <div className="mb-6">
             <p className="text-black text-[15px] font-bold ">
               Employee Hires & Turnover
@@ -305,7 +369,7 @@ const data = [
             backgroundColor: "white",
             paddingBottom: "1rem",
           }}
-          className=" mb-8 me-2"
+          className="mb-8 me-2"
         >
           <TableSidebar />
         </div>
@@ -323,6 +387,7 @@ const data = [
         </div>
       )}
     </div>
+   </div>
   );
 };
 
