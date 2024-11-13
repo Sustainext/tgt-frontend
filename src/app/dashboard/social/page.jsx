@@ -2537,7 +2537,7 @@ const Social = () => {
           </div>
           <div className="w-full ms-3">
             <div>
-              {activeStep === 2 && (
+              {activeStep === 1 && (
                 <>
                   <div>
                     <EmployeeHiresTurnover />

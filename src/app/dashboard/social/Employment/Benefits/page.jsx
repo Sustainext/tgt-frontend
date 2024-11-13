@@ -6,7 +6,7 @@ import {Socialdata} from "../../data/socialgriinfo"
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
 import Socialheader from "../../socialheader"
-// import Benefitsscreen from "./Benefits"
+import Benefitsscreen from "./Benefits"
 import Significantlocations from "./Significant-locations"
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -117,7 +117,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}>
             year={year}
             setYear={setYear}
             />
-            {/* <Benefitsscreen location={location} year={year} month={activeMonth}/> */}
+            <Benefitsscreen location={location} year={year} month={activeMonth}/>
             <Significantlocations location={location} year={year} month={activeMonth}/>
         </>
     );
