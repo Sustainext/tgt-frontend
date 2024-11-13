@@ -157,7 +157,9 @@ const uiSchema = {
 const Waterdischarge = ({ location, year, month }) => {
   const { open } = GlobalState();
   const [formData, setFormData] = useState([{}]);
-  const [enabledRows, setEnabledRows] = useState([]); // New state to track enabled state per row
+  const [enabledRows, setEnabledRows] = useState([]);
+  const [r_schema, setRemoteSchema] = useState({});
+  const [r_ui_schema, setRemoteUiSchema] = useState({}); // New state to track enabled state per row
   const [loopen, setLoOpen] = useState(false);
   const toastShown = useRef(false);
 
@@ -235,13 +237,25 @@ const Waterdischarge = ({ location, year, month }) => {
       setRemoteUiSchema(response.data.form[0].ui_schema);
       const form_parent = response.data.form_data;
       setFormData(form_parent[0].data);
+      const initialEnabledRows = form_parent[0].data.map((item) => item.Discharge === "Yes");
+      setEnabledRows(initialEnabledRows); // This will ensure the rows are enabled or disabled based on the Discharge value
     } catch (error) {
       console.error("API call failed:", error);
     } finally {
       LoaderClose();
     }
   };
-
+  useEffect(() => {
+    if (location && year && month) {
+      loadFormData();
+      toastShown.current = false; // Reset the flag when valid data is present
+    } else {
+      // Only show the toast if it has not been shown already
+      if (!toastShown.current) {
+        toastShown.current = true; // Set the flag to true after showing the toast
+      }
+    }
+  }, [location, year, month]); 
   const handleChange = (e) => {
     const newData = e.formData.map((item, index) => {
       const updatedItem = { ...item }; // Create a copy to avoid directly mutating state
@@ -287,15 +301,18 @@ const Waterdischarge = ({ location, year, month }) => {
     setFormData(updatedData);
     setEnabledRows((prev) => prev.filter((_, i) => i !== index)); // Remove the state of the deleted row
   };
-
+  useEffect(() => {
+    console.log("Enabled rows updated", enabledRows);
+    // Add logic to handle changes to enabledRows
+  }, [enabledRows]);
   return (
     <>
       <div className={`overflow-auto custom-scrollbar flex`}>
         <div>
           <Form
             className="flex"
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
