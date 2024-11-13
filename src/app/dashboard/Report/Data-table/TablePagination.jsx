@@ -20,9 +20,9 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
-
+ 
 import axiosInstance, { del } from "@/app/utils/axiosMiddleware";
-
+ 
 const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpen,setIsMenuOpen }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(defaultItemsPerPage);
@@ -37,17 +37,16 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
   const [reportid, setReportid] = useState();
   const [reporttepname, setReportTepname] = useState();
   const router = useRouter();
-
+ 
   const ActionMenu = ({ item }) => {
     const isGRIReport = item.report_type === "GRI Report: In accordance With" || item.report_type === "GRI Report: With Reference to";
-  
     return (
       <div className="absolute bg-white shadow-lg rounded-lg py-2 mt-5 w-[211px] z-10 right-8">
         <button
-          className={`flex items-center p-2 w-full text-left   ${isGRIReport ? 'text-[#d1d5db]' : 'text-[#344054] gradient-sky-blue'}`}
+          className={`flex items-center p-2 w-full text-left text-[#344054] gradient-sky-blue`}
           onClick={() => {
             if (isGRIReport) {
-              // handleESGDownloaddocx()
+              handleDownloadESGpdf(item.id,item.name)
             } else {
               handleDownloadpdf(item.id, item.name);
             }
@@ -67,7 +66,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
           )}
           Download Report PDF
         </button>
-  
+ 
         <button
           className={`flex items-center p-2 w-full text-left   ${isGRIReport ? 'text-[#d1d5db]' : 'text-[#344054] gradient-sky-blue'}`}
           onClick={() => {
@@ -92,7 +91,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
           )}
           Download Report Word
         </button>
-  
+ 
         {/* Conditional Rendering for Additional GRI Options */}
         {isGRIReport && (
           <>
@@ -107,7 +106,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
             </button>
           </>
         )}
-  
+ 
         <button
           className={`flex items-center p-2 w-full text-left gradient-sky-blue  text-[#344054]`}
           onClick={() => {
@@ -136,7 +135,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
         >
           <AiOutlineEdit className="mr-2" /> Edit Report
         </button>
-  
+ 
         <button
           className="flex items-center p-2 w-full text-left gradient-sky-blue  text-[#344054]"
           onClick={() =>
@@ -148,11 +147,11 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
       </div>
     );
   };
-  
+ 
   const toggleMenu = (itemId) => {
     setIsMenuOpen(isMenuOpen === itemId ? null : itemId);
   };
-
+ 
   const togglePopup = (itemId, itemName) => {
     setIsOpen((currentOpenPopupId) =>
       currentOpenPopupId === itemId ? null : itemId
@@ -174,9 +173,9 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
+ 
   // Function to handle the download
-
+ 
   const handleSetdata = (
     id,
     organization_name,
@@ -197,7 +196,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
       report_by: report_by,
     };
     window.localStorage.setItem("reportid", id);
-
+ 
     window.localStorage.setItem("reportstartdate", startdate);
     window.localStorage.setItem("reportenddate", enddate);
     window.localStorage.setItem("organizationcountry", organization_country);
@@ -213,10 +212,10 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
     }
     // sessionStorage.setItem('reportData',newdata);
     router.push("/dashboard/Report/GHG/Ghgtemplates");
-
+ 
     window.localStorage.setItem("reportname", name);
   };
-
+ 
   const handleSetESGdata = (
     id,
     organization_name,
@@ -240,36 +239,36 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
     window.localStorage.setItem("organizationcountry", organization_country);
     // sessionStorage.setItem('reportData',newdata);
     router.push("/dashboard/Report/ESG");
-
+ 
     window.localStorage.setItem("reportname", name);
   };
-
+ 
   useEffect(() => {
     setTotalPages(Math.ceil(data.length / itemsPerPage));
   }, [data.length, itemsPerPage]);
-
+ 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
+ 
   // Change items per page
   const onItemsPerPageChange = (event) => {
     setItemsPerPage(parseInt(event.target.value, 10));
     setCurrentPage(1); // Reset to first page
   };
-
+ 
   const firstItemIndex = (currentPage - 1) * itemsPerPage + 1;
   const lastItemIndex = Math.min(currentPage * itemsPerPage, data.length);
-
+ 
   const handleDelete = async () => {
     LoaderOpen();
     const reportId = dataDelete.id;
-
+ 
     await axiosInstance
       .delete(`/sustainapp/ghgreport/${reportId}`)
       .then((response) => {
         if (response.status === 204) {
           const { name, report_type, start_date } = dataDelete;
           const year = new Date(start_date).getFullYear();
-
+ 
           toast.error(
             <div>
               <div className="mb-2 flex">
@@ -299,7 +298,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
               icon: false,
             }
           );
-
+ 
           LoaderClose();
           fetchReoprts();
           closeModal();
@@ -324,7 +323,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
     const isAsc = sort.column === column && sort.direction === "asc";
     setSort({ column, direction: isAsc ? "desc" : "asc" });
   };
-
+ 
   // Sorting data
   // Sorting data
   const sortedData = useMemo(() => {
@@ -345,7 +344,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
       return data;
     }
   }, [data, sort]);
-
+ 
   const currentItems = sortedData.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
@@ -362,10 +361,51 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
       Authorization: "Bearer " + token,
     },
   };
+ 
+  const handleDownloadESGpdf = async (id,name) => {
+    setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: true }));
+    try {
+      const response = await fetch(
+        `${process.env.BACKEND_API_URL}/esg_report/esg_report_pdf/${id}/?download=true`,
+        axiosConfig
+      );
+ 
+      if (!response.ok) {
+        setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: false }));
+        throw new Error(`Error: ${response.status} - ${response.statusText}`);
+       
+      }
+ 
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+ 
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.setAttribute("download", `${name}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: false }));
+      setIsMenuOpen(false);
+    } catch (error) {
+      console.error("Error downloading the file:", error);
+      toast.error("Error downloading the file", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
+ 
   const handleDownloadpdf = async (id, name) => {
     // Set loading to true for the specific item
     setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: true }));
-
+ 
     try {
       const response = await fetch(
         `${process.env.BACKEND_API_URL}/sustainapp/report_pdf/${id}/?download=true`,
@@ -373,7 +413,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
       );
       const blob = await response.blob();
       const downloadUrl = window.URL.createObjectURL(blob);
-
+ 
       const link = document.createElement("a");
       link.href = downloadUrl;
       link.setAttribute("download", `${name}.pdf`); // Setting the file name dynamically
@@ -390,16 +430,16 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
   };
   const handleDownloaddocx = async (id, name) => {
     setLoadingById((prevState) => ({ ...prevState, [id]: true }));
-
+ 
     try {
       const response = await fetch(
         `${process.env.BACKEND_API_URL}/sustainapp/report_word_download/${id}/`,
         axiosConfig
       );
-
+ 
       const blob = await response.blob();
       const downloadUrl = window.URL.createObjectURL(blob);
-
+ 
       const link = document.createElement("a");
       link.href = downloadUrl;
       link.setAttribute("download", `${name}.docx`); // Setting the file name dynamically
@@ -414,45 +454,19 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
       setIsMenuOpen(false);
     }
   };
-
-  const handleESGDownloadpdf = async () => {
-    // Set loading to true for the specific item
-    setLoadingById((prevState) => ({ ...prevState, [reportid]: true }));
-
-    try {
-      const response = await fetch(
-        `${process.env.BACKEND_API_URL}/sustainapp/report_pdf/${reportid}/?download=true`,
-        axiosConfig
-      );
-      const blob = await response.blob();
-      const downloadUrl = window.URL.createObjectURL(blob);
-
-      const link = document.createElement("a");
-      link.href = downloadUrl;
-      link.setAttribute("download", `${reporttepname}.pdf`); // Setting the file name dynamically
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (error) {
-      console.error("Error downloading the file:", error);
-    } finally {
-      // Set loading to false for the specific item
-      setLoadingById((prevState) => ({ ...prevState, [reportid]: false }));
-      setIsOpen(null);
-    }
-  };
+ 
   const handleESGDownloaddocx = async () => {
     setLoadingById((prevState) => ({ ...prevState, [reportid]: true }));
-
+ 
     try {
       const response = await fetch(
         `${process.env.BACKEND_API_URL}/sustainapp/report_word_download/${reportid}/`,
         axiosConfig
       );
-
+ 
       const blob = await response.blob();
       const downloadUrl = window.URL.createObjectURL(blob);
-
+ 
       const link = document.createElement("a");
       link.href = downloadUrl;
       link.setAttribute("download", `${reporttepname}.docx`); // Setting the file name dynamically
@@ -467,7 +481,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
       setIsOpen(null);
     }
   };
-
+ 
   return (
     <>
       <div>
@@ -539,7 +553,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
               </th>
             </tr>
           </thead>
-
+ 
           <tbody className="text-gray-600 text-sm font-light">
             {data.length > 0 &&
               currentItems.map((item, index) => (
@@ -559,7 +573,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
                   <td className="py-3 px-6 text-center whitespace-nowrap text-[12px] text-[#343A40]">
                     {item.created_by}
                   </td>
-
+ 
                   <td className="py-3 px-6 text-center whitespace-nowrap text-[12px] text-[#343A40]">
                     {item.last_report_date}
                   </td>
@@ -577,7 +591,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
               ))}
           </tbody>
         </table>
-
+ 
         <div className="justify-end items-center gap-2 flex w-[100%] mt-4">
           <div>
             <label className="text-black text-opacity-60 text-xs font-normal leading-[15px] text-[15px]">
@@ -595,12 +609,12 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
               ))}
             </select>
           </div>
-
+ 
           <div className="ml-4 flex mr-1">
             <div>
               <span className="text-black  text-xs font-normal leading-[15px] text-[15px]">{`${firstItemIndex}-${lastItemIndex} of ${data.length}`}</span>
             </div>
-
+ 
             <div className="ml-4 mt-1">
               <button
                 onClick={() => paginate(Math.max(1, currentPage - 1))}
@@ -629,14 +643,14 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
                 {columns.Header} <KeyboardArrowDownIcon/>
               </th>
             ))}
-
-
+ 
+ 
           </tr>
         </thead>
         <tbody className="text-gray-600 text-sm font-light">
-
+ 
             <tr
-
+ 
               className="border-b border-gray-200 hover:bg-[#e0f2fe] text-center"
             >
               <td className="py-3 px-6 text-center whitespace-nowrap">
@@ -651,22 +665,22 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
               <td className="py-3 px-6 text-center whitespace-nowrap">
               2022-12-06
               </td>
-
+ 
               <td className="py-3 px-6 text-center whitespace-nowrap">
               2024-02-06
               </td>
               <td className="py-3 px-6 text-center whitespace-nowrap">
-
+ 
               <a href="https://sustainextstorage1.blob.core.windows.net/sustainext/new-report-file.pdf" target="_blank" download="filename.pdf"> <DownloadIcon/></a>
               </td>
             </tr>
-
+ 
         </tbody>
       </table>
-
-
+ 
+ 
     </div>  */}
-
+ 
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6  rounded-lg shadow-lg ml-40 w-[513px]">
@@ -687,7 +701,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
                 irreversible. Are you sure you want to delete this report?
               </div>
             </div>
-
+ 
             <div className="flex gap-5">
               <div className="w-[50%]">
                 <button
@@ -697,7 +711,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
                   Cancel
                 </button>
               </div>
-
+ 
               <div className="w-[50%]">
                 <button
                   className="px-4 py-2 border border-[#EF5350] w-full text-white bg-[#EF5350] font-bold rounded text-[12px]"
@@ -725,5 +739,6 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
     </>
   );
 };
-
+ 
 export default TableWithPagination;
+ 

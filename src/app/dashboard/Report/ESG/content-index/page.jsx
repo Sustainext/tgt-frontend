@@ -26,6 +26,7 @@ const ContentIndex= ({reportName,setActiveStep,isOmissionSubmitted,setIsOmission
     const fromDate= typeof window !== "undefined" ? localStorage.getItem("reportstartdate") : "";
     const toDate= typeof window !== "undefined" ? localStorage.getItem("reportenddate") : "";
     const reportid = typeof window !== "undefined" ? localStorage.getItem("reportid") : "";
+    const reportname = typeof window !== "undefined" ? localStorage.getItem("reportname") : "";
      const apiCalledRef = useRef(false);
      const [data,setData]=useState("")
      const [loopen, setLoOpen] = useState(false);
@@ -177,7 +178,7 @@ const ContentIndex= ({reportName,setActiveStep,isOmissionSubmitted,setIsOmission
         )}
         <StatementPopup reportid={reportid} statement={statement} setStatement={setStatement} handleChange={handleChange} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} setActiveStep={setActiveStep} orgName={orgName} fromDate={fromDate} toDate={toDate} />
         <OmissionPopup reportid={reportid}  onSave={updateOmissionData} data={data?data:[]} isModalOpen={isOmissionModalOpen} setIsModalOpen={setIsOmissionModalOpen} isOmissionSubmitted={isOmissionSubmitted} setIsOmissionSubmitted={setIsOmissionSubmitted} />
-      <ReportCreatedPopup userEmail={userEmail} userName={userName} orgName={orgName} statement={statement} reportName={reportName} isCreateReportModalOpen={isCreateReportModalOpen} setIsCreateReportModalOpen={setIsCreateReportModalOpen} />
+      <ReportCreatedPopup reportname={reportname} reportid={reportid} userEmail={userEmail} userName={userName} orgName={orgName} statement={statement} reportName={reportName} isCreateReportModalOpen={isCreateReportModalOpen} setIsCreateReportModalOpen={setIsCreateReportModalOpen} />
     </>
   );
 }

@@ -336,7 +336,7 @@ const Renewable = ({location, year, month}) => {
               FileUploadWidget: (props) => (
                 <CustomFileUploadWidget
                   {...props}
-                  scopes="ec2"
+                  scopes="ect2"
                   setFormData={updateFormDatanew}
                 />
               ),

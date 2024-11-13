@@ -7,17 +7,74 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { GoDownload } from "react-icons/go";
 import { IoMailOutline } from "react-icons/io5";
-import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
 import { MdExitToApp,MdKeyboardArrowDown } from "react-icons/md";
 import NotifyGRI from "./notifyGRIPopup";
 import { loadFromLocalStorage } from "../../../../../utils/storage";
 import { useRouter } from "next/navigation";
 import { IoIosCheckmarkCircle } from "react-icons/io";
+import { Oval } from "react-loader-spinner";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const ReportCreatedPopup = ({ isCreateReportModalOpen, setIsCreateReportModalOpen,setActiveStep,orgName,fromDate,toDate ,reportName,statement,userName,userEmail}) => {
+const ReportCreatedPopup = ({reportname, reportid, isCreateReportModalOpen, setIsCreateReportModalOpen,setActiveStep,orgName,fromDate,toDate ,reportName,statement,userName,userEmail}) => {
     const [isNotifyModalOpen,setIsNotifyModalOpen]=useState(false)
     const [showSuccessMessage,setShowSuccessMessage]=useState(false)
+    const [isDownloading,setIsDownloading]=useState(false)
     const router=useRouter()
+    const getAuthToken = () => {
+      if (typeof window !== "undefined") {
+        return localStorage.getItem("token")?.replace(/"/g, "");
+      }
+      return "";
+    };
+    const token = getAuthToken();
+    let axiosConfig = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const handleDownloadpdf = async (id,name) => {
+      setIsDownloading(true);
+      try {
+        const response = await fetch(
+          `${process.env.BACKEND_API_URL}/esg_report/esg_report_pdf/${id}/?download=true`,
+          axiosConfig
+        );
+    
+        if (!response.ok) {
+          setIsDownloading(false);
+          throw new Error(`Error: ${response.status} - ${response.statusText}`);
+         
+        }
+    
+        const blob = await response.blob();
+        const downloadUrl = window.URL.createObjectURL(blob);
+    
+        const link = document.createElement("a");
+        link.href = downloadUrl;
+        link.setAttribute("download", `${name}.pdf`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        setIsDownloading(false);
+        router.push('/dashboard/Report');
+      } catch (error) {
+        console.error("Error downloading the file:", error);
+        toast.error("Error downloading the file", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    };
+    
     
   return (
     <>
@@ -83,14 +140,28 @@ const ReportCreatedPopup = ({ isCreateReportModalOpen, setIsCreateReportModalOpe
                     <MdExitToApp className="w-4.5 h-4.5 text-[#667085] mt-1" />
                     Exit to Report Module
                   </button>
-                  <button disabled={true} className="opacity-30 w-auto h-full cursor-not-allowed   py-2 px-3 bg-[#007EEF] text-white rounded-[8px] shadow  flex gap-2"
-                //   onClick={() => {
-                //     setIsModalOpen(false);
-                //   }}
+                  <button className="w-auto h-full py-2 px-3 bg-[#007EEF] text-white rounded-[8px] shadow  flex gap-2"
+                  onClick={() => {
+                    handleDownloadpdf(reportid,reportname)
+                  }}
                   >
-                    <GoDownload className="w-4.5 h-4.5 text-[#fff] mt-1"/>
+                    {isDownloading?(
+                      <div  className="mt-0.5">
+                        <Oval
+                      height={20}
+                      width={20}
+                      color="#FFF"
+                      secondaryColor="#f3f3f3"
+                      strokeWidth={2}
+                      strokeWidthSecondary={2}
+                    />
+                      </div>
+                    ):(
+                      <GoDownload className="w-4.5 h-4.5 text-[#fff] mt-1"/>
+                    )}
+                    
                     Download Report
-                    <MdKeyboardArrowDown className="w-5 h-5 text-[#fff] mt-[3px]"/>
+                    {/* <MdKeyboardArrowDown className="w-5 h-5 text-[#fff] mt-[3px]"/> */}
                   </button>
                 </div>
             </div>
@@ -103,3 +174,4 @@ const ReportCreatedPopup = ({ isCreateReportModalOpen, setIsCreateReportModalOpe
 };
     
 export default ReportCreatedPopup;
+ 
