@@ -11,14 +11,14 @@ const OptimiseApp = () => {
         className="w-full relative"
         style={{ height: "890px", marginBottom: "-40px", overflow: "hidden" }}
       >
-        {isLoading && (
+        {/* {isLoading && (
           <div className="absolute inset-0 flex items-center justify-center bg-white z-10">
             <div className="flex flex-col items-center gap-2">
               <div className="w-8 h-8 border-4 border-[#007eef] border-t-transparent rounded-full animate-spin" />
               <p className="text-gray-600 text-sm">Loading Optimise App...</p>
             </div>
           </div>
-        )}
+        )} */}
 
         <iframe
           src="https://sustainext-optimise.streamlit.app/?embedded=true&embed_options=light_theme"
