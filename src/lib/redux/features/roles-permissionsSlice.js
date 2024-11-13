@@ -1,4 +1,27 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axiosInstance from "../../../app/utils/axiosMiddleware";
+
+// Async thunk for fetching departments
+export const fetchDepartments = createAsyncThunk(
+  "roles-permissions/fetchDepartments",
+  async (searchTerm) => {
+    const response = await axiosInstance.get(
+      `/sustainapp/department/?search=${searchTerm}`
+    );
+    return response.data;
+  }
+);
+
+// Async thunk for adding new department
+export const addNewDepartment = createAsyncThunk(
+  "roles-permissions/addNewDepartment",
+  async (departmentName) => {
+    const response = await axiosInstance.post("/sustainapp/department/", {
+      name: departmentName,
+    });
+    return response.data;
+  }
+);
 
 const initialState = {
   first_name: "",
@@ -17,7 +40,10 @@ const initialState = {
   org_list: [],
   corp_list: [],
   loc_list: [],
-  userlist:[],
+  userlist: [],
+  departmentsList: [],
+  departmentsLoading: false,
+  departmentsError: null,
 };
 
 export const Rolespermissionsslice = createSlice({
@@ -75,6 +101,27 @@ export const Rolespermissionsslice = createSlice({
     setUserlist: (state, action) => {
       state.userlist = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      // Handle fetchDepartments
+      .addCase(fetchDepartments.pending, (state) => {
+        state.departmentsLoading = true;
+        state.departmentsError = null;
+      })
+      .addCase(fetchDepartments.fulfilled, (state, action) => {
+        state.departmentsLoading = false;
+        state.departmentsList = action.payload;
+      })
+      .addCase(fetchDepartments.rejected, (state, action) => {
+        state.departmentsLoading = false;
+        state.departmentsError = action.error.message;
+      })
+      // Handle addNewDepartment
+      .addCase(addNewDepartment.fulfilled, (state, action) => {
+        state.department = action.payload.name;
+        state.departmentsList = [...state.departmentsList, action.payload];
+      });
   },
 });
 
