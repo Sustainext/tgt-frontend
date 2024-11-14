@@ -1,9 +1,10 @@
+"use client";
 import React, { useState } from "react";
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { MdInfoOutline } from "react-icons/md";
 
-const SelectWidget = ({
+const SelectWidgetWaternew = ({
   onChange,
   value = "",
   placeholder,
@@ -83,7 +84,7 @@ const SelectWidget = ({
         {/* Render select or input based on state */}
         {!showOtherInput ? (
           <select
-            className={`block w-[20vw] py-2 text-[12px] p-0 custom-select focus:outline-none focus:border-blue-300 border-b-2 border-gray-300 capitalize`}
+            className={`block w-[40vw] py-2 text-[12px] p-0 custom-select focus:outline-none focus:border-blue-300 border-b-2 border-gray-300 capitalize`}
             value={value}
             onChange={handleChange}
           >
@@ -99,7 +100,7 @@ const SelectWidget = ({
         ) : (
           <input
             type="text"
-            className={`block w-[20vw] py-2 text-[12px] border-b-2 border-gray-300 ${
+            className={`block w-[40vw] py-2 text-[12px] border-b-2 border-gray-300 ${
               id.startsWith("root_0") ? "mt-[0.38rem]" : "mt-0.5"
             }`}
             placeholder={`Specify other ${label}`}
@@ -112,4 +113,4 @@ const SelectWidget = ({
   );
 };
 
-export default SelectWidget;
+export default SelectWidgetWaternew;

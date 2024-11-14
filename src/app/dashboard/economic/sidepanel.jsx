@@ -210,7 +210,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                         )
                       }
                     >
-                      Direct economic value generated & distributed
+                      Direct Economic Value Generated
                     </p>
                   </div>
                   {/* <div>
@@ -245,7 +245,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                         )
                       }
                     >
-                      Financial assistance received from government
+                      Government Assistance
                     </p>
                   </div>
                 </div>
@@ -328,7 +328,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                         )
                       }
                     >
-                      Financial Implications due to climate change
+                      Financial Implications due to Climate Change
                     </p>
                   </div>
                   <div>
@@ -340,7 +340,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                       }`}
                       onClick={() => handleTabClick("Climate related Risks")}
                     >
-                      Climate related Risks
+                     Climate Related Risks
                     </p>
                   </div>
                   <div>
@@ -434,8 +434,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                         )
                       }
                     >
-                      Proportion of senior management hired from the local
-                      community
+                      Senior Management Hired from Local Community
                     </p>
                   </div>
                 </div>
@@ -524,7 +523,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                         )
                       }
                     >
-                      Infrastructure investments and services supported
+                      Infrastructure Investments and Services Supported
                     </p>
                   </div>
                   <div>
@@ -538,7 +537,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                         handleTabClick("Significant indirect economic impacts")
                       }
                     >
-                      Significant indirect economic impacts
+                    Indirect Economic Impacts
                     </p>
                   </div>
                 </div>
@@ -682,7 +681,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                         )
                       }
                     >
-                      Operations assessed for risks related to corruption
+                     Risks related to Corruption
                     </p>
                   </div>
                   <div>
@@ -699,7 +698,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                         )
                       }
                     >
-                      Communication and training about anti-corruption policies and procedures
+                      Anit-corruption Policies and Procedures
                     </p>
                   </div>
                   <div>
@@ -716,7 +715,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                         )
                       }
                     >
-                      Confirmed incidents of corruption and actions taken
+                     Incidents of Corruption
                     </p>
                   </div>
                   <div>
@@ -746,7 +745,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                         handleTabClick("Anti Competitive Behavior")
                       }
                     >
-                      Anti Competitive Behavior
+                     Legal Actions
                     </p>
                   </div>
                 </div>
@@ -829,7 +828,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                 <MdOutlineGroups2 className="w-5 h-5 mr-2" />
               </div>
               <div className="w-[67%] text-left ">
-                <span className="indent-0 text-[13px]">Tax</span>
+                <span className="indent-0 text-[13px]">Tax Transparency</span>
               </div>
 
               <div className="inset-y-0  flex items-center pointer-events-none w-[25%] justify-end">
@@ -898,7 +897,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                         )
                       }
                     >
-                      Tax governance, control, and risk management
+                      Tax Governance & Risk Management
                     </p>
                   </div>
                   <div>
@@ -915,8 +914,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                         )
                       }
                     >
-                      Stakeholder engagement and management of concerns related
-                      to tax
+                    Stakeholder Engagement
                     </p>
                   </div>
                   <div>
@@ -930,7 +928,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                         handleTabClick("Country-by-country reporting")
                       }
                     >
-                      Country-by-country reporting
+                      Country-by-Country Reporting
                     </p>
                   </div>
                 </div>

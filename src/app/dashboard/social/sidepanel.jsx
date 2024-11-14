@@ -173,6 +173,8 @@ const Aside = ({ activeTab, handleTabClick }) => {
                 activeTab === "Employee Hires & Turnover" ||
                 activeTab === "Benefits" ||
                 activeTab === "Parental Leave" ||
+                activeTab === "Diversity of Employees" ||
+                activeTab === "Retirement Benefits" ||
                 activeTab === "Management of Material topic Employment"
                   ? "text-[#007EEF]"
                   : "bg-white text-[#727272] "
@@ -275,6 +277,18 @@ const Aside = ({ activeTab, handleTabClick }) => {
                       onClick={() => handleTabClick("Retirement Benefits")}
                     >
                      Retirement Benefits
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Diversity of Employees"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() => handleTabClick("Diversity of Employees")}
+                    >
+                     Diversity of Employees
                     </p>
                   </div>
                 </div>
@@ -656,7 +670,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                       }`}
                       onClick={() => handleTabClick("Skill Upgrade")}
                     >
-                      Skill Upgrade
+                     Employee Skill Development
                     </p>
                   </div>
                   <div>
@@ -670,7 +684,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                         handleTabClick("Performance & Career Development")
                       }
                     >
-                      Performance & Career Development
+                    Employee Performance and Career Development 
                     </p>
                   </div>
                 </div>
@@ -682,6 +696,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full
               ${
                 activeTab === "Diversity of the Board" ||
+               
                 activeTab === "Salary Ratio" ||
                 activeTab === "Entry Level Wage" ||
                 activeTab ===
@@ -755,6 +770,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                       Diversity of the Board
                     </p>
                   </div>
+              
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
@@ -872,6 +888,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                 activeTab === "Impact on Community" ||
                 activeTab === "Indigenous People" ||
                 activeTab === "Security Personnel" ||
+                activeTab === "Security Personnel2" ||
                 activeTab === "Management of Material topic Human Rights"
                   ? "text-[#007EEF]"
                   : "bg-transparent text-[#727272] "
@@ -939,7 +956,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                       }`}
                       onClick={() => handleTabClick("Community Engagement")}
                     >
-                      Community Engagement
+                      Local Community Engagement
                     </p>
                   </div>
                   <div>
@@ -976,6 +993,18 @@ const Aside = ({ activeTab, handleTabClick }) => {
                       onClick={() => handleTabClick("Security Personnel")}
                     >
                       Security Personnel
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Security Personnel2"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() => handleTabClick("Security Personnel2")}
+                    >
+                      Training requirements apply to third party organisations
                     </p>
                   </div>
                 </div>
@@ -1252,6 +1281,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                    Product and  Service Safety
                     </p>
                   </div>
+                
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
@@ -1276,6 +1306,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full
               ${
                 activeTab === "Product/Service labelling" ||
+                activeTab === "Product/Service Categories Assessed for Compliance" || 
                 activeTab === "Non compliance incidents- Labelling" ||
                 activeTab === "Statement of non compliance - Labeling" ||
                 activeTab === "Non compliance incidents - Marketing" ||
@@ -1350,6 +1381,18 @@ const Aside = ({ activeTab, handleTabClick }) => {
                   <div>
                     <p
                       className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Product/Service Categories Assessed for Compliance"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() => handleTabClick("Product/Service Categories Assessed for Compliance")}
+                    >
+                  Product/Service Categories Assessed for Compliance
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
                         activeTab === "Non compliance incidents- Labelling"
                           ? "text-blue-400"
                           : "bg-transparent text-[#727272] "
@@ -1411,8 +1454,8 @@ const Aside = ({ activeTab, handleTabClick }) => {
             <button
               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full
               ${
-                activeTab === "Customer Privacy" ||
-          
+                activeTab === "Customer Privacy" || 
+                activeTab === "Statement of Fact" || 
                 activeTab === "Management of Material topic Privacy"
                   ? "text-[#007EEF]"
                   : "bg-transparent text-[#727272] "
@@ -1478,6 +1521,18 @@ const Aside = ({ activeTab, handleTabClick }) => {
                       onClick={() => handleTabClick("Customer Privacy")}
                     >
                   Customer Privacy
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Statement of Fact"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() => handleTabClick("Statement of Fact")}
+                    >
+                Statement of Fact
                     </p>
                   </div>
            

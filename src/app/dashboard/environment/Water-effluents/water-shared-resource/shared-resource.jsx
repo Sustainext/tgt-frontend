@@ -54,7 +54,7 @@ const uiSchema = {
             "ui:haddingtooltipdisplay": "none",
             "ui:titletooltipdisplay": "block",
             "ui:Gri": "GRI 303-2a",
-            'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
+            'ui:widget': 'TextareaWidgetnew', 
             'ui:options': {
                 label: false
             },
@@ -62,13 +62,13 @@ const uiSchema = {
         Q2: {
             "ui:hadding": "Discharge Standards",
             "ui:title": "Describe the process of determining discharge standards for facilities with no local discharge requirements",
-            "ui:tooltipstitle": "ndicate how the company determine discharge standards for facilities without local discharge requirements.(Please specify the identification method use to determine standards (if any)",
+            "ui:tooltipstitle": "Indicate how the company determine discharge standards for facilities without local discharge requirements.(Please specify the identification method use to determine standards (if any)",
             "ui:haddingdisplay": "block",
             "ui:titlediplay": "block",
             "ui:haddingtooltipdisplay": "none",
             "ui:titletooltipdisplay": "block",
             "ui:Gri": "GRI 303-2a",
-            'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
+            'ui:widget': 'TextareaWidgetnew', 
             'ui:options': {
                 label: false
             },
@@ -76,13 +76,13 @@ const uiSchema = {
         Q3: {
             "ui:hadding": "Internal Water Quality Standards",
             "ui:title": "Describe internally developed water quality standards or guidelines used (if any)",
-            "ui:tooltipstitle": "Include how the organization works with stakeholders to steward water as a shared resource, and how it engages with suppliers or customers with significant water-related impactsDescribe how the internally developed water quality standards or guidelines were determined.",
+            "ui:tooltipstitle": "Describe how the internally developed water quality standards or guidelines were determined.",
             "ui:haddingdisplay": "block",
             "ui:titlediplay": "block",
             "ui:haddingtooltipdisplay": "none",
             "ui:titletooltipdisplay": "block",
             "ui:Gri": "GRI 303-2a",
-            'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
+            'ui:widget': 'TextareaWidgetnew', 
             'ui:options': {
                 label: false
             },
@@ -96,16 +96,16 @@ const uiSchema = {
             "ui:haddingtooltipdisplay": "none",
             "ui:titletooltipdisplay": "block",
             "ui:Gri": "GRI 303-2a",
-            'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
+            'ui:widget': 'TextareaWidgetnew', 
             'ui:options': {
                 label: false
             },
         },
-        'ui:options': {
-            orderable: false, // Prevent reordering of items
-            addable: false, // Prevent adding items from UI
-            removable: false, // Prevent removing items from UI
-            layout: 'horizontal', // Set layout to horizontal
+          'ui:options': {
+            orderable: false, 
+            addable: false, 
+            removable: false, 
+            layout: 'horizontal', 
         }
     }
 };

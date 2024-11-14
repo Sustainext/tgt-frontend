@@ -47,7 +47,7 @@ const uiSchema = {
             "ui:haddingtooltipdisplay": "block",
             "ui:titletooltipdisplay": "none",
             "ui:Gri": "GRI 306-1a",
-            'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
+            'ui:widget': 'TextareaWidgetnew', 
             'ui:options': {
                 label: false
             },
@@ -60,17 +60,17 @@ const uiSchema = {
             "ui:titlediplay": "block",
             "ui:haddingtooltipdisplay": "block",
             "ui:titletooltipdisplay": "none",
-            "ui:Gri": "GRI 306-1b",
-            'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
+            "ui:Gri": "GRI 306-1a",
+            'ui:widget': 'TextareaWidgetnew', 
             'ui:options': {
                 label: false
             },
         },
-        'ui:options': {
-            orderable: false, // Prevent reordering of items
-            addable: false, // Prevent adding items from UI
-            removable: false, // Prevent removing items from UI
-            layout: 'horizontal', // Set layout to horizontal
+          'ui:options': {
+            orderable: false, 
+            addable: false, 
+            removable: false, 
+            layout: 'horizontal', 
         }
     }
 };

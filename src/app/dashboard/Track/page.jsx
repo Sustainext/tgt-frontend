@@ -26,10 +26,10 @@ const Index = () => {
     setActiveModule(module);
   };
   useEffect(() => {
-    dispatch(setHeadertext1("Analyse"));
-    dispatch(setHeaderdisplay("block"));
+    dispatch(setHeadertext1("Track"));
+    dispatch(setHeaderdisplay(null));
     dispatch(setHeadertext2(activeModule));
-    dispatch(setMiddlename("Track"));
+    dispatch(setMiddlename(null));
   }, [activeModule, dispatch]);
   useLayoutEffect(() => {
     const updateSizes = () => {

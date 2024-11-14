@@ -42,7 +42,7 @@ const schema = {
         Source: {
         type: "string",
         title: "Source",
-        enum: ['Surface Water', 'Ground water', 'Sea water', 'Municipal water', 'Third party water', 'Other '],
+        enum: ['Surface Water', 'Ground water', 'Sea water', 'Municipal water', 'Third party water', 'Other (please specify)'],
         tooltiptext: "Indicate where the company withdraws water from or Where the company discharges water into.Include (where applicable)the breakdown od water withdrawal and discharge data by: Surface Water; Ground water; Seawater; Produced water Third-party water",
       },
       Watertype: {
@@ -55,7 +55,8 @@ const schema = {
         type: "string",
         title: "Unit",
         enum: ['Litre', 'Megalitre', 'Cubic meter', 'Kilolitre', 'Million litres  per day'],
-        tooltiptext: "Select the correct unit corresponding to the quantity of water withdrawal/discharge"
+        tooltiptext: "Select the correct unit corresponding to the quantity of water withdrawal/discharge",
+        display:"none",
       },
       Businessoperations: {
         type: "string",

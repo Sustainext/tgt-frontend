@@ -24,7 +24,7 @@ import {
 } from "../../../../lib/redux/features/topheaderSlice";
 import { useDispatch } from "react-redux";
 const social = () => {
-  const [activeTab, setActiveTab] = useState("Tab2");
+  const [activeTab, setActiveTab] = useState("Tab1");
   const [isBoxOpen, setIsBoxOpen] = useState(false);
   const dispatch = useDispatch();
   const handleTabClick = (tab) => {

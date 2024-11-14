@@ -51,7 +51,7 @@ const schema = {
             Productclassification: {
                 type: "string",
                 title: "Product classification",
-                enum: ['ASIN', 'DOI', 'EAN', 'GPC', 'ISBN', 'ISMN', 'ISRC', 'MPN', 'UPC', 'UNSPSC', 'Others'],
+                enum: ['ASIN', 'DOI', 'EAN', 'GPC', 'ISBN', 'ISMN', 'ISRC', 'MPN', 'UPC', 'UNSPSC', 'Other (please specify)'],
                 tooltiptext: "Which type of global product classification code applies to this product?For example: ISSN, UNSPSC, GPC, etc.",
                 display: "block",
             },
@@ -83,21 +83,21 @@ const schema = {
             Recycledmaterialsused: {
                 type: "string",
                 title: "Recycled materials used ",
-                enum: ['Yes', 'No'],
+                enum: ['Yes', 'No','Not Sure'],
                 tooltiptext: "Does the company use recycled materials in its packaging?",
                 display: "block",
             },
             Typesofrecycledmaterials: {
                 type: "string",
                 title: "Types of recycled materials",
-                enum: ['Cardboard', 'Folding carton', 'Glass Bottles', 'Glass Jars', 'Metal cans', 'Paper', 'Plastic', 'Wooden crates', 'Wood', 'Bamboo', 'Cellulose', 'Corn starch', 'Mushroom packaging', 'Organic Fabric', 'Others'],
+                enum: ['Cardboard', 'Folding carton', 'Glass Bottles', 'Glass Jars', 'Metal cans', 'Paper', 'Plastic', 'Wooden crates', 'Wood', 'Bamboo', 'Cellulose', 'Corn starch', 'Mushroom packaging', 'Organic Fabric', 'Other (please specify)'],
                 tooltiptext: "Does the company use recycled materials in its packaging?",
-                display: "block",
+                display: "none",
             },
             Amountsproduct: {
                 type: "string",
                 title: "Amounts of product and packaging materials recycled",
-                tooltiptext: "Please specify the amount of material the company recycled during the reporting period.",
+                tooltiptext: "Please specify the total weight or volume of the product and packaging material recycled within the reporting period.",
                 display: "block",
             },
 
@@ -106,7 +106,7 @@ const schema = {
                 title: "Unit",
                 enum: ['Cubic centimeter cm3', 'Cubic decimeter dm3', 'Cubic meter m3', 'Gram', 'Kilogram Kg', 'Liter', 'Milligram', 'Milliliter', 'Fluid Ounce fl Oz', 'Gallon Gal', 'Pint Pt', 'Pound Lb', 'Quart Qt', 'Cubic foot ft3', 'Metric ton', 'US short ton (tn)'],
                 tooltiptext: "Please specify the total weight or volume of recycled packaging material that the company used in the reporting period.",
-                display: "block",
+                display: "none",
             },
             Datacollectionmethod: {
                 type: "string",

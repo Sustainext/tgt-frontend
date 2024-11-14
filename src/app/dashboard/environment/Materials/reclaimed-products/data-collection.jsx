@@ -45,18 +45,18 @@ const uiSchema = {
             "ui:haddingtooltipdisplay": "none",
             "ui:titletooltipdisplay": "block",
             "ui:Gri": "GRI 303-1b",
-             "ui:gridisplay" :"block",
-            'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
+             "ui:gridisplay" :"none",
+            'ui:widget': 'TextareaWidgetnew', 
             'ui:options': {
                 label: false
             },
         },
 
-        'ui:options': {
-            orderable: false, // Prevent reordering of items
-            addable: false, // Prevent adding items from UI
-            removable: false, // Prevent removing items from UI
-            layout: 'horizontal', // Set layout to horizontal
+          'ui:options': {
+            orderable: false, 
+            addable: false, 
+            removable: false, 
+            layout: 'horizontal', 
         }
     }
 };

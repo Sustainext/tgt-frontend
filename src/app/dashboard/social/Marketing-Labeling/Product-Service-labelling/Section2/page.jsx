@@ -8,7 +8,7 @@ import Socialheader2 from "../../../socialheader2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Screen1 from "./screen1";
-const Section2 = () => {
+const ProductServicelabelling2 = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -129,4 +129,4 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
     </>
   );
 };
-export default Section2;
+export default ProductServicelabelling2;

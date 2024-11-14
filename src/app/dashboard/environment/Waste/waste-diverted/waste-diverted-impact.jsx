@@ -62,13 +62,14 @@ const schema = {
       Wastediverted: {
         type: "string",
         title: "Waste diverted",
-        display:"none",
+        tooltiptext: "Enter the amount of waste diverted.",
+        display:"block",
 
       },
       RecoveryOperations: {
         type: "string",
         title: "Recovery Operations",
-        enum: ['Preparation for reuse', 'Recycling', 'other'],
+        enum: ['Preparation for reuse', 'Recycling', 'Other (please specify)'],
         tooltiptext: "Recovery: Operation wherein products, components of products,or materials that have become waste are prepared to fulfill a purpose in place of new products, components, or materials that would otherwise have been used for that purpose.Recovery Methods: Preparation for reuse: Checking, cleaning, or repairing operations, by which products or components of products that have become waste are prepared to be put to use for the same purpose for which they were conceived.Recycling: Reprocessing of products or components of products that have become waste, to make new materials",
         display:"block",
       },
@@ -111,7 +112,7 @@ const uiSchema = {
       },
     },
     WasteType: {
-      'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
+      'ui:widget': 'inputWidget', 
       'ui:options': {
         label: false
       },
