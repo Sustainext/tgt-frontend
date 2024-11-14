@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+
+import React from "react";
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { MdInfoOutline } from "react-icons/md";
