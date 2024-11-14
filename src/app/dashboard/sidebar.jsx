@@ -223,15 +223,15 @@ const Sidenav = () => {
       lockicon: <MdLockOutline />,
       lockiconshow: false,
     },
-    // {
-    //   id: 9,
-    //   title: "Settings",
-    //   icon: <CiSettings />,
-    //   link: "/dashboard/Settings",
-    //   role: true,
-    //   lockicon: <MdLockOutline />,
-    //   lockiconshow: false,
-    // },
+    {
+      id: 9,
+      title: "Settings",
+      icon: <CiSettings />,
+      link: "/dashboard/Settings",
+      role: true,
+      lockicon: <MdLockOutline />,
+      lockiconshow: false,
+    },
     // {
     //   id: 10,
     //   title: "About",
@@ -390,7 +390,6 @@ const Sidenav = () => {
                       </span>
 
                       {menu.lockiconshow && open && (
-
                         <span className="text-2xl flex items-center justify-center w-5 h-8 rounded-md">
                           {menu.lockicon}
                         </span>
