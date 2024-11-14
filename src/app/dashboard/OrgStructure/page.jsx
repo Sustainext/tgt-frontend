@@ -4,9 +4,6 @@ import {
   FaTrashAlt,
   FaEye,
   FaEdit,
-  FaTrashAlt,
-  FaEye,
-  FaEdit,
   FaAngleRight,
   FaAngleDown,
 } from "react-icons/fa";
