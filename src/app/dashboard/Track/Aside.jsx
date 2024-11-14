@@ -1,5 +1,11 @@
 import React from "react";
-import { MdOutlineDiversity1, MdOutlineGroup, MdPublic } from "react-icons/md";
+import {
+  MdOutlineDiversity1,
+  MdOutlineDiversity2,
+  MdOutlineDiversity3,
+  MdOutlineGroup,
+  MdPublic,
+} from "react-icons/md";
 
 const Aside = ({ activeTab, handleTabClick }) => {
   return (
@@ -30,10 +36,10 @@ const Aside = ({ activeTab, handleTabClick }) => {
                   <MdOutlineDiversity1 className="w-5 h-5 mr-5" />
                 )}
                 {tab === "General" && (
-                  <MdOutlineDiversity1 className="w-5 h-5 mr-5" />
+                  <MdOutlineDiversity2 className="w-5 h-5 mr-5" />
                 )}
                 {tab === "Economic" && (
-                  <MdOutlineDiversity1 className="w-5 h-5 mr-5" />
+                  <MdOutlineDiversity3 className="w-5 h-5 mr-5" />
                 )}
                 <span className="mr-7">{tab}</span>
               </button>
