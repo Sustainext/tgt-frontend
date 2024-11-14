@@ -4,9 +4,13 @@ import {
   FaTrashAlt,
   FaEye,
   FaEdit,
+  FaTrashAlt,
+  FaEye,
+  FaEdit,
   FaAngleRight,
   FaAngleDown,
 } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 import { useRouter } from "next/navigation";
 import axiosInstance from "../../utils/axiosMiddleware";
 import axios from "axios";
@@ -143,7 +147,7 @@ const Table = ({ data, labels, currentIndex, rawData }) => {
             website: location.website,
             fax: location.fax,
             sector: location.sector,
-            subindustry: location.subindustry,
+            subindustry: location.sub_industry,
             employeecount: location.employeecount,
             revenue: location.revenue,
             streetaddress: location.streetaddress,

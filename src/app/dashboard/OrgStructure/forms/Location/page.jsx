@@ -1,90 +1,91 @@
-'use client'
-import React, { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { Country, State, City } from 'country-state-city';
-import { FiArrowLeft } from 'react-icons/fi';
-import industryList from '../../../../shared/data/sectors';
-import { timeZones } from '../../../../shared/data/timezones';
-import axiosInstance, { post, put } from '../../../../utils/axiosMiddleware';
+"use client";
+import React, { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Country, State, City } from "country-state-city";
+import { FiArrowLeft } from "react-icons/fi";
+import industryList from "../../../../shared/data/sectors";
+import { timeZones } from "../../../../shared/data/timezones";
+import axiosInstance, { post, put } from "../../../../utils/axiosMiddleware";
 
 const dateFormatOptions = [
-  { label: 'MM/DD/YYYY', value: 'MM/DD/YYYY' },
-  { label: 'DD/MM/YYYY', value: 'DD/MM/YYYY' },
-  { label: 'YYYY/MM/DD', value: 'YYYY/MM/DD' },
+  { label: "MM/DD/YYYY", value: "MM/DD/YYYY" },
+  { label: "DD/MM/YYYY", value: "DD/MM/YYYY" },
+  { label: "YYYY/MM/DD", value: "YYYY/MM/DD" },
 ];
 
 const currencyOptions = [
-  { label: 'USD', value: 'USD' },
-  { label: 'EUR', value: 'EUR' },
-  { label: 'GBP', value: 'GBP' },
-  { label: 'CAD', value: 'CAD' },
-  { label: 'AUD', value: 'AUD' },
-  { label: 'INR', value: 'INR' },
-  { label: 'SGD', value: 'SGD' },
-  { label: 'KRW', value: 'KRW' },
-  { label: 'JPY', value: 'JPY' },
-  { label: 'TTD', value: 'TTD' },
+  { label: "USD", value: "USD" },
+  { label: "EUR", value: "EUR" },
+  { label: "GBP", value: "GBP" },
+  { label: "CAD", value: "CAD" },
+  { label: "AUD", value: "AUD" },
+  { label: "INR", value: "INR" },
+  { label: "SGD", value: "SGD" },
+  { label: "KRW", value: "KRW" },
+  { label: "JPY", value: "JPY" },
+  { label: "TTD", value: "TTD" },
 ];
 
-const reportFramework = ['GRI'];
+const reportFramework = ["GRI"];
 
 const initialState = {
   generalDetails: {
-    name: '',
-    email: '',
-    phone: '',
-    website: '',
-    typelocation: '',
-    location: '',
-    Empcount: '',
-    revenue: '',
-    mobile: '',
-    fax: '',
-    sector: '',
-    subIndustry: '',
-    corporateEntity: '',
-    timeZone: '',
-    language: '',
-    dateFormat: '',
+    name: "",
+    email: "",
+    phone: "",
+    website: "",
+    typelocation: "",
+    location: "",
+    Empcount: "",
+    revenue: "",
+    mobile: "",
+    fax: "",
+    sector: "",
+    subIndustry: "",
+    corporateEntity: "",
+    timeZone: "",
+    language: "",
+    dateFormat: "",
   },
   addressInformation: {
-    country: '',
-    state: '',
-    city: '',
-    street: '',
-    zipCode: '',
-    latitude: '',
-    longitude: '',
+    country: "",
+    state: "",
+    city: "",
+    street: "",
+    zipCode: "",
+    latitude: "",
+    longitude: "",
   },
   reportingPeriodInformation: {
-    fromDate: '',
-    toDate: '',
-    reportingFramework: '',
+    fromDate: "",
+    toDate: "",
+    reportingFramework: "",
   },
   errors: {
-    latitude: '',
-    longitude: '',
+    latitude: "",
+    longitude: "",
   },
 };
 
 const Location = ({ heading }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const queryData = searchParams.get('data');
+  const queryData = searchParams.get("data");
 
   const [formData, setFormData] = useState(initialState);
-  const [selectedIndustry, setSelectedIndustry] = useState('');
+  const [selectedIndustry, setSelectedIndustry] = useState("");
   const [subIndustries, setSubIndustries] = useState([]);
   const [corporates, setCorporates] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState('');
-  const [selectedState, setSelectedState] = useState('');
-  const [selectedCity, setSelectedCity] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
   const [selectedFrameworks, setSelectedFrameworks] = useState([]);
   const [isSameAsCorporate, setIsSameAsCorporate] = useState(false);
-  const [selectedCorporateEntityDetails, setSelectedCorporateEntityDetails] = useState(null);
+  const [selectedCorporateEntityDetails, setSelectedCorporateEntityDetails] =
+    useState(null);
   const [editData, setEditData] = useState(null);
 
   useEffect(() => {
@@ -95,7 +96,7 @@ const Location = ({ heading }) => {
         setEditData(parsedData);
         setFormData(parsedData);
       } catch (error) {
-        console.error('Failed to parse query data:', error);
+        console.error("Failed to parse query data:", error);
       }
     }
   }, [queryData]);
@@ -109,10 +110,13 @@ const Location = ({ heading }) => {
     const fetchData = async () => {
       try {
         const response = await axiosInstance.get(`/corporategetonly`);
-        console.log('Corporates:', response.data);
+        console.log("Corporates:", response.data);
         setCorporates(response.data);
       } catch (e) {
-        console.log('failed fetching organization', process.env.BACKEND_API_URL);
+        console.log(
+          "failed fetching organization",
+          process.env.BACKEND_API_URL
+        );
       }
     };
 
@@ -123,22 +127,31 @@ const Location = ({ heading }) => {
     const selectedSector = event.target.value;
     setSelectedIndustry(selectedSector);
 
+    // Find the selected industry object
     const selectedIndustryObj = industryList.find(
       (industry) => industry.industry === selectedSector
     );
 
+    // Get sub-industries and set them
     const subIndustriesForSector = selectedIndustryObj?.subIndustries || [];
-
     setSubIndustries(subIndustriesForSector);
-    handleGeneralDetailsChange(event);
 
-    console.log('Sub Industries Found:', subIndustriesForSector);
+    // Update form data
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      generalDetails: {
+        ...prevFormData.generalDetails,
+        sector: selectedSector,
+        // Reset subIndustry when sector changes
+        subIndustry: "",
+      },
+    }));
   };
 
   const handleGeneralDetailsChange = (event) => {
     const { name, value } = event.target;
-    if (name === 'name' && value.includes('&')) {
-      alert('The name field should not contain &');
+    if (name === "name" && value.includes("&")) {
+      alert("The name field should not contain &");
       return;
     }
     setFormData((prevFormData) => ({
@@ -156,7 +169,7 @@ const Location = ({ heading }) => {
     const latLongRegex = /^-?\d+\.\d{0,6}$/;
 
     if (
-      (name === 'latitude' || name === 'longitude') &&
+      (name === "latitude" || name === "longitude") &&
       !latLongRegex.test(value)
     ) {
       setFormData((prevState) => ({
@@ -176,7 +189,7 @@ const Location = ({ heading }) => {
         ...prevState,
         errors: {
           ...prevState.errors,
-          [name]: '',
+          [name]: "",
         },
         addressInformation: {
           ...prevState.addressInformation,
@@ -185,10 +198,10 @@ const Location = ({ heading }) => {
       }));
     }
 
-    if (name === 'country') {
+    if (name === "country") {
       handleCountryChange({ target: { value } });
     }
-    if (name === 'state') {
+    if (name === "state") {
       handleStateChange({ target: { value } });
     }
   };
@@ -256,46 +269,46 @@ const Location = ({ heading }) => {
 
     const payload = {
       corporateentity: data.generalDetails.corporateEntity || null,
-      name: data.generalDetails.name || 'Location 1',
-      typelocation: data.generalDetails.typelocation || 'Headquarter Location',
-      currency: data.generalDetails.currency || 'US Dollars',
-      dateformat: data.generalDetails.dateFormat || 'mm/dd/yy',
+      name: data.generalDetails.name || "Location 1",
+      typelocation: data.generalDetails.typelocation || "Headquarter Location",
+      currency: data.generalDetails.currency || "US Dollars",
+      dateformat: data.generalDetails.dateFormat || "mm/dd/yy",
       phone: data.generalDetails.phone || 9876543210,
       mobile: data.generalDetails.mobile || 9876543210,
-      website: data.generalDetails.website || 'https://www.sustainext.ai',
+      website: data.generalDetails.website || "https://www.sustainext.ai",
       fax: data.generalDetails.fax || 234567,
-      sector: data.generalDetails.sector || 'Default',
-      location_type: data.generalDetails.typelocation || 'Default',
-      sub_industry: data.generalDetails.subIndustry || 'Default',
-      timezone: data.generalDetails.timeZone || '+0:00',
+      sector: data.generalDetails.sector || "",
+      sub_industry: data.generalDetails.subIndustry || "",
+      location_type: data.generalDetails.typelocation || "Default",
+      timezone: data.generalDetails.timeZone || "+0:00",
       latitude: data.addressInformation.latitude || null,
       longitude: data.addressInformation.longitude || null,
       employeecount: data.generalDetails.Empcount || 100,
-      language: data.generalDetails.language || 'English',
+      language: data.generalDetails.language || "English",
       revenue: data.generalDetails.revenue || 100000,
-      currency: data.generalDetails.currency || 'US dollars',
-      streetaddress: data.addressInformation.street || '1st btm',
+      currency: data.generalDetails.currency || "US dollars",
+      streetaddress: data.addressInformation.street || "1st btm",
       area: 56775,
-      type_of_services: 'sfsdfsd',
-      type_of_product: 'adsf',
-      type_of_business_activities: 'jhghf',
+      type_of_services: "sfsdfsd",
+      type_of_product: "adsf",
+      type_of_business_activities: "jhghf",
       zipcode: data.addressInformation.zipCode || null,
-      state: data.addressInformation.state || 'Karnataka',
-      city: data.addressInformation.city || 'Bengaluru',
-      country: data.addressInformation.country || 'IN',
+      state: data.addressInformation.state || "Karnataka",
+      city: data.addressInformation.city || "Bengaluru",
+      country: data.addressInformation.country || "IN",
       from_date: data.reportingPeriodInformation.fromDate || null,
       to_date: data.reportingPeriodInformation.toDate || null,
     };
 
     try {
       const response = await post(url, payload);
-      router.push('/dashboard/OrgStructure');
-      console.log('POST request successful:', response.data);
+      router.push("/dashboard/OrgStructure");
+      console.log("POST request successful:", response.data);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
 
-    console.log(payload, 'payload');
+    console.log(payload, "payload");
   };
 
   const handleEditLocation = async (event, data, id) => {
@@ -304,47 +317,47 @@ const Location = ({ heading }) => {
     const url = `/location/${id}/`;
 
     const payload = {
-      name: data.generalDetails.name || '',
-      typelocation: data.generalDetails.typelocation || '',
-      currency: data.generalDetails.currency || '',
-      dateformat: data.generalDetails.dateFormat || '',
+      name: data.generalDetails.name || "",
+      typelocation: data.generalDetails.typelocation || "",
+      currency: data.generalDetails.currency || "",
+      dateformat: data.generalDetails.dateFormat || "",
       phone: data.generalDetails.phone || null,
       mobile: data.generalDetails.mobile || null,
-      website: data.generalDetails.website || '',
+      website: data.generalDetails.website || "",
       fax: data.generalDetails.fax || 234567,
-      sector: data.generalDetails.sector || '',
-      location_type: data.generalDetails.typelocation || '',
-      sub_industry: data.generalDetails.subIndustry || '',
-      timezone: data.generalDetails.timeZone || '',
+      sector: data.generalDetails.sector || "",
+      sub_industry: data.generalDetails.subIndustry || "",
+      location_type: data.generalDetails.typelocation || "",
+      timezone: data.generalDetails.timeZone || "",
       employeecount: data.generalDetails.Empcount || null,
-      language: data.generalDetails.language || '',
+      language: data.generalDetails.language || "",
       revenue: data.generalDetails.revenue || null,
-      currency: data.generalDetails.currency || '',
-      streetaddress: data.addressInformation.street || '',
+      currency: data.generalDetails.currency || "",
+      streetaddress: data.addressInformation.street || "",
       area: null,
-      type_of_services: 'sfsdfsd',
-      type_of_product: 'adsf',
-      type_of_business_activities: 'jhghf',
+      type_of_services: "sfsdfsd",
+      type_of_product: "adsf",
+      type_of_business_activities: "jhghf",
       zipcode: data.addressInformation.zipCode || null,
-      state: data.addressInformation.state || '',
-      city: data.addressInformation.city || '',
-      country: data.addressInformation.country || '',
+      state: data.addressInformation.state || "",
+      city: data.addressInformation.city || "",
+      country: data.addressInformation.country || "",
       latitude: data.addressInformation.latitude || null,
       longitude: data.addressInformation.longitude || null,
       from_date: data.reportingPeriodInformation.fromDate || null,
       to_date: data.reportingPeriodInformation.toDate || null,
-      framework: data.reportingPeriodInformation.reportingFramework || 'GRI',
+      framework: data.reportingPeriodInformation.reportingFramework || "GRI",
     };
 
     try {
       const response = await put(url, payload);
-      router.push('/dashboard/OrgStructure');
-      alert('Location updated successfully');
+      router.push("/dashboard/OrgStructure");
+      alert("Location updated successfully");
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
 
-    console.log(payload, 'payload');
+    console.log(payload, "payload");
   };
 
   const handleCorporateEntityChange = (event) => {
@@ -368,8 +381,12 @@ const Location = ({ heading }) => {
       const selectedCountryCode = selectedCorporateEntityDetails.Country;
       const selectedStateCode = selectedCorporateEntityDetails.state;
 
-      const statesOfSelectedCountry = State.getStatesOfCountry(selectedCountryCode);
-      const citiesOfSelectedState = City.getCitiesOfState(selectedCountryCode, selectedStateCode);
+      const statesOfSelectedCountry =
+        State.getStatesOfCountry(selectedCountryCode);
+      const citiesOfSelectedState = City.getCitiesOfState(
+        selectedCountryCode,
+        selectedStateCode
+      );
 
       setFormData((prevFormData) => ({
         ...prevFormData,
@@ -396,22 +413,22 @@ const Location = ({ heading }) => {
         ...prevFormData,
         addressInformation: {
           ...prevFormData.addressInformation,
-          street: '',
-          country: '',
-          state: '',
-          city: '',
-          zipCode: '',
-          latitude: '',
-          longitude: '',
+          street: "",
+          country: "",
+          state: "",
+          city: "",
+          zipCode: "",
+          latitude: "",
+          longitude: "",
         },
       }));
 
       setStates([]);
       setCities([]);
 
-      setSelectedCountry('');
-      setSelectedState('');
-      setSelectedCity('');
+      setSelectedCountry("");
+      setSelectedState("");
+      setSelectedCity("");
     }
   };
 
@@ -484,8 +501,8 @@ const Location = ({ heading }) => {
           reportingFramework: editData.filteredData[0].framework,
         },
         errors: {
-          latitude: '',
-          longitude: '',
+          latitude: "",
+          longitude: "",
         },
       });
 
@@ -502,19 +519,17 @@ const Location = ({ heading }) => {
     }
   }, [editData]);
 
-  
-
   return (
-    <div className='px-4 mt-4'>
-      <div className='flex justify-between items-center drop-shadow-lg border-b-2 py-6 w-full'>
-        <h2 className='self-stretch text-black text-opacity-90 text-[22px] font-normal leading-relaxed flex space-x-8 items-center'>
-          <button onClick={() => router.back()} className='flex items-center'>
+    <div className="px-4 mt-4">
+      <div className="flex justify-between items-center drop-shadow-lg border-b-2 py-6 w-full">
+        <h2 className="self-stretch text-black text-opacity-90 text-[22px] font-normal leading-relaxed flex space-x-8 items-center">
+          <button onClick={() => router.back()} className="flex items-center">
             <FiArrowLeft />
           </button>
-          <span>{editData ? 'Edit Location' : 'Location of Operation'}</span>
+          <span>{editData ? "Edit Location" : "Location of Operation"}</span>
         </h2>
         <button
-          className='w-[73px] h-[31px] px-[22px] py-2 bg-sky-600 rounded shadow flex-col justify-center items-center inline-flex me-8 cursor-pointer'
+          className="w-[73px] h-[31px] px-[22px] py-2 bg-sky-600 rounded shadow flex-col justify-center items-center inline-flex me-8 cursor-pointer"
           onClick={
             editData
               ? (e) =>
@@ -522,168 +537,168 @@ const Location = ({ heading }) => {
               : (e) => handleAddLocation(e, formData)
           }
         >
-          <div className='text-white text-xs font-bold leading-[15px]'>
+          <div className="text-white text-xs font-bold leading-[15px]">
             Save
           </div>
         </button>
       </div>
-      <div className='space-y-4 bg-white py-4'>
-        <div className='grid grid-cols-3 gap-5'>
+      <div className="space-y-4 bg-white py-4">
+        <div className="grid grid-cols-3 gap-5">
           <div></div>
           <div></div>
           {editData ? (
-            ''
+            ""
           ) : (
             <div>
               <label
-                htmlFor='name'
-                className='text-neutral-800 text-[13px] font-normal'
+                htmlFor="name"
+                className="text-neutral-800 text-[13px] font-normal"
               >
                 Corporate Entity
               </label>
               <select
-                name='corporateEntity'
+                name="corporateEntity"
                 value={formData.generalDetails.corporateEntity}
                 onChange={handleCorporateEntityChange}
-                className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
+                className="border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight"
               >
-                <option value=''>Select Corporate Entity</option>
+                <option value="">Select Corporate Entity</option>
                 {corporates?.map((corp) => (
                   <option key={corp.id} value={corp.name}>
                     {corp.name}
                   </option>
-                ))}{' '}
+                ))}{" "}
               </select>
             </div>
           )}
         </div>
         <div>
-          <h3 className='text-neutral-400 text-xs font-semibold uppercase leading-relaxed tracking-wide my-8 mb-4'>
+          <h3 className="text-neutral-400 text-xs font-semibold uppercase leading-relaxed tracking-wide my-8 mb-4">
             General Information
           </h3>
-          <div className='grid grid-cols-3 gap-5'>
-            <div className='space-y-3'>
+          <div className="grid grid-cols-3 gap-5">
+            <div className="space-y-3">
               <label
-                htmlFor='name'
-                className='block text-neutral-800 text-[13px] font-normal'
+                htmlFor="name"
+                className="block text-neutral-800 text-[13px] font-normal"
               >
                 Name
               </label>
               <input
-                type='text'
-                name='name'
+                type="text"
+                name="name"
                 value={formData.generalDetails?.name}
                 onChange={handleGeneralDetailsChange}
-                className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
+                className="border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight"
               />
             </div>
             <div></div>
             <div></div>
-            <div className='space-y-3'>
+            <div className="space-y-3">
               <label
-                htmlFor='phone'
-                className='block text-neutral-800 text-[13px] font-normal'
+                htmlFor="phone"
+                className="block text-neutral-800 text-[13px] font-normal"
               >
                 Phone
               </label>
               <input
-                type='text'
-                name='phone'
+                type="text"
+                name="phone"
                 value={formData.generalDetails?.phone}
                 onChange={handleGeneralDetailsChange}
-                className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
+                className="border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight"
               />
             </div>
 
-            <div className='space-y-3'>
+            <div className="space-y-3">
               <label
-                htmlFor='mobile'
-                className='block text-neutral-800 text-[13px] font-normal'
+                htmlFor="mobile"
+                className="block text-neutral-800 text-[13px] font-normal"
               >
                 Mobile
               </label>
               <input
-                type='text'
-                name='mobile'
+                type="text"
+                name="mobile"
                 value={formData.generalDetails?.mobile}
                 onChange={handleGeneralDetailsChange}
-                className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
+                className="border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight"
               />
             </div>
-            <div className='space-y-3'>
+            <div className="space-y-3">
               <label
-                htmlFor='website'
-                className='block text-neutral-800 text-[13px] font-normal'
+                htmlFor="website"
+                className="block text-neutral-800 text-[13px] font-normal"
               >
                 Website
               </label>
               <input
-                type='text'
-                name='website'
+                type="text"
+                name="website"
                 value={formData.generalDetails?.website}
                 onChange={handleGeneralDetailsChange}
-                className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
+                className="border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight"
               />
             </div>
-            <div className='space-y-3'>
+            <div className="space-y-3">
               <label
-                htmlFor='fax'
-                className='block text-neutral-800 text-[13px] font-normal'
+                htmlFor="fax"
+                className="block text-neutral-800 text-[13px] font-normal"
               >
                 Fax
               </label>
               <input
-                type='text'
-                name='fax'
+                type="text"
+                name="fax"
                 value={formData.generalDetails?.fax}
                 onChange={handleGeneralDetailsChange}
-                className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
+                className="border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight"
               />
             </div>
-            <div className='space-y-3'>
+            <div className="space-y-3">
               <label
-                htmlFor='Empcount'
-                className='block text-neutral-800 text-[13px] font-normal'
+                htmlFor="Empcount"
+                className="block text-neutral-800 text-[13px] font-normal"
               >
                 Employee Count
               </label>
               <input
-                type='text'
-                name='Empcount'
+                type="text"
+                name="Empcount"
                 value={formData.generalDetails?.Empcount}
                 onChange={handleGeneralDetailsChange}
-                className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
+                className="border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight"
               />
             </div>
-            <div className='space-y-3'>
+            <div className="space-y-3">
               <label
-                htmlFor='revenue'
-                className='block text-neutral-800 text-[13px] font-normal'
+                htmlFor="revenue"
+                className="block text-neutral-800 text-[13px] font-normal"
               >
                 Revenue
               </label>
               <input
-                type='text'
-                name='revenue'
+                type="text"
+                name="revenue"
                 value={formData.generalDetails?.revenue}
                 onChange={handleGeneralDetailsChange}
-                className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
+                className="border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight"
               />
             </div>
-            <div className='space-y-3'>
+            <div className="space-y-3">
               <label
-                htmlFor='sector'
-                className='block text-neutral-800 text-[13px] font-normal'
+                htmlFor="sector"
+                className="block text-neutral-800 text-[13px] font-normal"
               >
                 Sector
               </label>
               <select
-                name='sector'
+                name="sector"
                 value={formData.generalDetails?.sector}
                 onChange={handleSectorChange}
-                className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
+                className="border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight"
               >
-                <option value=''>Select Sector</option>
+                <option value="">Select Sector</option>
                 {industryList.map((industry) => (
                   <option key={industry.id} value={industry.value}>
                     {industry.industry}
@@ -691,20 +706,20 @@ const Location = ({ heading }) => {
                 ))}
               </select>
             </div>
-            <div className='space-y-3'>
+            <div className="space-y-3">
               <label
-                htmlFor='subIndustry'
-                className='block text-neutral-800 text-[13px] font-normal'
+                htmlFor="subIndustry"
+                className="block text-neutral-800 text-[13px] font-normal"
               >
                 Sub Industry
               </label>
               <select
-                name='subIndustry'
+                name="subIndustry"
                 value={formData.generalDetails?.subIndustry}
                 onChange={handleGeneralDetailsChange}
-                className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
+                className="border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight"
               >
-                <option value=''>Select Sub Industry</option>
+                <option value="">Select Sub Industry</option>
                 {subIndustries.map((subIndustry) => (
                   <option key={subIndustry.id} value={subIndustry.value}>
                     {subIndustry.subIndustry}
@@ -713,59 +728,59 @@ const Location = ({ heading }) => {
               </select>
             </div>
             <div></div>
-            <div className='space-y-3'>
+            <div className="space-y-3">
               <label
-                htmlFor='typeOfLocation'
-                className='block text-neutral-800 text-[13px] font-normal'
+                htmlFor="typeOfLocation"
+                className="block text-neutral-800 text-[13px] font-normal"
               >
                 Type of Location
               </label>
               <input
-                type='text'
-                name='typelocation'
+                type="text"
+                name="typelocation"
                 value={formData.generalDetails?.typelocation}
                 onChange={handleGeneralDetailsChange}
-                className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
+                className="border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight"
               />
             </div>
           </div>
-          <h3 className='text-lg font-semibold mb-6 mt-[4rem] text-gray-700'>
+          <h3 className="text-lg font-semibold mb-6 mt-[4rem] text-gray-700">
             ADDRESS INFORMATION
           </h3>
 
-          <div className='grid grid-cols-3 gap-5'>
-            <div className='space-y-3'>
+          <div className="grid grid-cols-3 gap-5">
+            <div className="space-y-3">
               <label
-                htmlFor='address'
-                className='block text-neutral-800 text-[13px] font-normal'
+                htmlFor="address"
+                className="block text-neutral-800 text-[13px] font-normal"
               >
                 Street Address
               </label>
               <input
-                type='text'
-                name='street'
+                type="text"
+                name="street"
                 value={formData.addressInformation?.street}
                 onChange={handleAddressInformationChange}
-                className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
+                className="border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight"
               />
             </div>
             <div></div>
             <div></div>
-            <div className='space-y-3'>
+            <div className="space-y-3">
               <label
-                htmlFor='country'
-                className='block text-neutral-800 text-[13px] font-normal'
+                htmlFor="country"
+                className="block text-neutral-800 text-[13px] font-normal"
               >
                 Country
               </label>
 
               <select
-                name='country'
+                name="country"
                 value={formData.addressInformation?.country}
                 onChange={handleAddressInformationChange}
-                className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
+                className="border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight"
               >
-                <option value=''>Select Country</option>
+                <option value="">Select Country</option>
                 {countries.map((country) => (
                   <option key={country.isoCode} value={country.isoCode}>
                     {country.name}
@@ -773,21 +788,21 @@ const Location = ({ heading }) => {
                 ))}
               </select>
             </div>
-            <div className='space-y-3'>
+            <div className="space-y-3">
               <label
-                htmlFor='state'
-                className='block text-neutral-800 text-[13px] font-normal'
+                htmlFor="state"
+                className="block text-neutral-800 text-[13px] font-normal"
               >
                 State
               </label>
 
               <select
-                name='state'
+                name="state"
                 value={formData.addressInformation?.state}
                 onChange={handleAddressInformationChange}
-                className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
+                className="border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight"
               >
-                <option value=''>Select State</option>
+                <option value="">Select State</option>
                 {states.map((state) => (
                   <option key={state.isoCode} value={state.isoCode}>
                     {state.name}
@@ -795,21 +810,21 @@ const Location = ({ heading }) => {
                 ))}
               </select>
             </div>
-            <div className='space-y-3'>
+            <div className="space-y-3">
               <label
-                htmlFor='city'
-                className='block text-neutral-800 text-[13px] font-normal'
+                htmlFor="city"
+                className="block text-neutral-800 text-[13px] font-normal"
               >
                 City
               </label>
 
               <select
-                name='city'
+                name="city"
                 value={formData.addressInformation?.city}
                 onChange={handleAddressInformationChange}
-                className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
+                className="border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight"
               >
-                <option value=''>Select City</option>
+                <option value="">Select City</option>
                 {cities.map((city) => (
                   <option key={city.id} value={city.id}>
                     {city.name}
@@ -818,101 +833,101 @@ const Location = ({ heading }) => {
               </select>
             </div>
 
-            <div className='space-y-3'>
+            <div className="space-y-3">
               <label
-                htmlFor='zipCode'
-                className='block text-neutral-800 text-[13px] font-normal'
+                htmlFor="zipCode"
+                className="block text-neutral-800 text-[13px] font-normal"
               >
                 Zip Code
               </label>
               <input
-                type='text'
-                name='zipCode'
+                type="text"
+                name="zipCode"
                 value={formData.addressInformation?.zipCode}
                 onChange={handleAddressInformationChange}
-                className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
+                className="border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight"
               />
             </div>
-            <div className='space-y-3'>
+            <div className="space-y-3">
               <label
-                htmlFor='latitude'
-                className='block text-neutral-800 text-[13px] font-normal'
+                htmlFor="latitude"
+                className="block text-neutral-800 text-[13px] font-normal"
               >
                 Latitude
               </label>
               <input
-                type='number'
-                name='latitude'
+                type="number"
+                name="latitude"
                 value={formData.addressInformation?.latitude}
                 onChange={handleAddressInformationChange}
                 className={`border rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight ${
                   formData.errors?.latitude
-                    ? 'border-red-500'
-                    : 'border-gray-300'
+                    ? "border-red-500"
+                    : "border-gray-300"
                 }`}
               />
               {formData.errors?.latitude && (
-                <p className='text-red-500 text-xs mt-1'>
+                <p className="text-red-500 text-xs mt-1">
                   {formData.errors?.latitude}
                 </p>
               )}
             </div>
-            <div className='space-y-3'>
+            <div className="space-y-3">
               <label
-                htmlFor='longitude'
-                className='block text-neutral-800 text-[13px] font-normal'
+                htmlFor="longitude"
+                className="block text-neutral-800 text-[13px] font-normal"
               >
                 Longitude
               </label>
               <input
-                type='number'
-                name='longitude'
+                type="number"
+                name="longitude"
                 value={formData.addressInformation?.longitude}
                 onChange={handleAddressInformationChange}
                 className={`border rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight ${
                   formData.errors?.longitude
-                    ? 'border-red-500'
-                    : 'border-gray-300'
+                    ? "border-red-500"
+                    : "border-gray-300"
                 }`}
               />
               {formData.errors?.longitude && (
-                <p className='text-red-500 text-xs mt-1'>
+                <p className="text-red-500 text-xs mt-1">
                   {formData.errors?.longitude}
                 </p>
               )}
             </div>
-            <div className='space-y-3 col-span-3'>
+            <div className="space-y-3 col-span-3">
               <label
-                htmlFor='sameAsCorporate'
-                className='block text-neutral-800 text-[13px] font-normal'
+                htmlFor="sameAsCorporate"
+                className="block text-neutral-800 text-[13px] font-normal"
               >
                 <input
-                  type='checkbox'
-                  name='sameAsCorporate'
+                  type="checkbox"
+                  name="sameAsCorporate"
                   checked={isSameAsCorporate}
                   onChange={handleSameAsCorporateChange}
-                  className='me-2'
+                  className="me-2"
                 />
                 Same as Corporate Entity
               </label>
             </div>
           </div>
-          <h3 className='text-lg font-semibold mb-6 mt-[4rem] text-gray-700'>
+          <h3 className="text-lg font-semibold mb-6 mt-[4rem] text-gray-700">
             LOCALE INFORMATION
           </h3>
-          <div className='grid grid-cols-3 gap-5'>
-            <div className='space-y-3'>
+          <div className="grid grid-cols-3 gap-5">
+            <div className="space-y-3">
               <label
-                htmlFor='dateFormat'
-                className='block text-neutral-800 text-[13px] font-normal'
+                htmlFor="dateFormat"
+                className="block text-neutral-800 text-[13px] font-normal"
               >
                 Date Format
               </label>
               <select
-                name='dateFormat'
+                name="dateFormat"
                 value={formData.generalDetails?.dateFormat}
                 onChange={handleGeneralDetailsChange}
-                className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
+                className="border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight"
               >
                 {dateFormatOptions.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -921,18 +936,18 @@ const Location = ({ heading }) => {
                 ))}
               </select>
             </div>
-            <div className='space-y-3'>
+            <div className="space-y-3">
               <label
-                htmlFor='currency'
-                className='block text-neutral-800 text-[13px] font-normal'
+                htmlFor="currency"
+                className="block text-neutral-800 text-[13px] font-normal"
               >
                 Currency
               </label>
               <select
-                name='currency'
+                name="currency"
                 value={formData.generalDetails?.currency}
                 onChange={handleGeneralDetailsChange}
-                className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
+                className="border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight"
               >
                 {currencyOptions.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -942,18 +957,18 @@ const Location = ({ heading }) => {
               </select>
             </div>
             <div></div>
-            <div className='space-y-3'>
+            <div className="space-y-3">
               <label
-                htmlFor='timeZone'
-                className='block text-neutral-800 text-[13px] font-normal'
+                htmlFor="timeZone"
+                className="block text-neutral-800 text-[13px] font-normal"
               >
                 Timezone
               </label>
               <select
-                name='timeZone'
+                name="timeZone"
                 value={formData.generalDetails?.timeZone}
                 onChange={handleGeneralDetailsChange}
-                className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
+                className="border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight"
               >
                 {timeZones.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -962,105 +977,105 @@ const Location = ({ heading }) => {
                 ))}
               </select>
             </div>
-            <div className='space-y-3'>
+            <div className="space-y-3">
               <label
-                htmlFor='language'
-                className='block text-neutral-800 text-[13px] font-normal'
+                htmlFor="language"
+                className="block text-neutral-800 text-[13px] font-normal"
               >
                 Language
               </label>
               <select
-                name='language'
+                name="language"
                 value={formData.generalDetails?.language}
                 onChange={handleGeneralDetailsChange}
-                className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
+                className="border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight"
               >
-                <option value=''>Select Language</option>
-                <option value='English'>English</option>
-                <option value='Arabic'>Arabic</option>
-                <option value='Mandarin Chinese'>Mandarin Chinese</option>
-                <option value='French'>French</option>
-                <option value='German'>German</option>
-                <option value='Korean'>Korean</option>
-                <option value='Turkish'>Turkish</option>
-                <option value='Japanese'>Japanese</option>
-                <option value='Spanish'>Spanish</option>
-                <option value='Russian'>Russian</option>
-                <option value='Italian'>Italian</option>
-                <option value='Portuguese'>Portuguese</option>
-                <option value='Vietnamese'>Vietnamese</option>
-                <option value='Persian'>Persian</option>
-                <option value='Hindi'>Hindi</option>
-                <option value='Indonesian'>Indonesian</option>
-                <option value='Thai'>Thai</option>
-                <option value='Farsi'>Farsi</option>
-                <option value='Polish'>Polish</option>
+                <option value="">Select Language</option>
+                <option value="English">English</option>
+                <option value="Arabic">Arabic</option>
+                <option value="Mandarin Chinese">Mandarin Chinese</option>
+                <option value="French">French</option>
+                <option value="German">German</option>
+                <option value="Korean">Korean</option>
+                <option value="Turkish">Turkish</option>
+                <option value="Japanese">Japanese</option>
+                <option value="Spanish">Spanish</option>
+                <option value="Russian">Russian</option>
+                <option value="Italian">Italian</option>
+                <option value="Portuguese">Portuguese</option>
+                <option value="Vietnamese">Vietnamese</option>
+                <option value="Persian">Persian</option>
+                <option value="Hindi">Hindi</option>
+                <option value="Indonesian">Indonesian</option>
+                <option value="Thai">Thai</option>
+                <option value="Farsi">Farsi</option>
+                <option value="Polish">Polish</option>
               </select>
             </div>
           </div>
-          <div className='h-[0px] border border-gray-200 my-8 w-full'></div>
-          <h3 className='text-neutral-400 text-xs font-semibold uppercase leading-relaxed tracking-wide my-8 mb-4'>
+          <div className="h-[0px] border border-gray-200 my-8 w-full"></div>
+          <h3 className="text-neutral-400 text-xs font-semibold uppercase leading-relaxed tracking-wide my-8 mb-4">
             REPORTING PERIOD
           </h3>
-          <div className='grid grid-cols-3 gap-5'>
-            <div className='space-y-3'>
+          <div className="grid grid-cols-3 gap-5">
+            <div className="space-y-3">
               <label
-                htmlFor='fromDate'
-                className='block text-neutral-800 text-[13px] font-normal'
+                htmlFor="fromDate"
+                className="block text-neutral-800 text-[13px] font-normal"
               >
                 From Date
               </label>
               <input
-                type='date'
-                name='fromDate'
-                id='fromDate'
+                type="date"
+                name="fromDate"
+                id="fromDate"
                 value={formData.reportingPeriodInformation?.fromDate}
                 onChange={handleReportingPeriodChange}
-                className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
+                className="border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight"
               />
             </div>
-            <div className='space-y-3'>
+            <div className="space-y-3">
               <label
-                htmlFor='toDate'
-                className='block text-neutral-800 text-[13px] font-normal'
+                htmlFor="toDate"
+                className="block text-neutral-800 text-[13px] font-normal"
               >
                 To Date
               </label>
               <input
-                type='date'
-                name='toDate'
-                id='toDate'
+                type="date"
+                name="toDate"
+                id="toDate"
                 value={formData.reportingPeriodInformation?.toDate}
                 onChange={handleReportingPeriodChange}
-                className='border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight'
+                className="border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight"
               />
             </div>
             <div></div>
           </div>
-          <div className='space-y-3 mt-4'>
+          <div className="space-y-3 mt-4">
             <label
-              htmlFor='reportingFramework'
-              className='block text-neutral-800 text-[13px] font-normal mb-3'
+              htmlFor="reportingFramework"
+              className="block text-neutral-800 text-[13px] font-normal mb-3"
             >
               Reporting Framework
             </label>
             {reportFramework.map((framework) => (
               <label
                 key={framework}
-                className='text-md font-semibold text-gray-700 me-4'
+                className="text-md font-semibold text-gray-700 me-4"
               >
                 <input
-                  type='checkbox'
+                  type="checkbox"
                   value={framework}
                   checked={selectedFrameworks.includes(framework)}
                   onChange={handleFrameworkChange}
-                  className='p-1 me-2 text-black text-opacity-90 text-xs font-normal leading-[18px] tracking-tight'
+                  className="p-1 me-2 text-black text-opacity-90 text-xs font-normal leading-[18px] tracking-tight"
                 />
                 {framework}
               </label>
             ))}
           </div>
-          <div className='w-full h-[0px] border border-gray-200 my-12'></div>
+          <div className="w-full h-[0px] border border-gray-200 my-12"></div>
         </div>
       </div>
     </div>
