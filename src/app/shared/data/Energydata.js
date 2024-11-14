@@ -3836,6 +3836,38 @@ export const Energydata = [
     ],
     link: "https://www.globalreporting.org/publications/documents/english/gri-3-material-topics-2021/",
   },
+  {
+    category: ["52"],
+    header: [
+      <h5 className="text-sky-600 text-[17px] font-bold">
+        GRI 410: Security Practices 2016
+      </h5>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5 pb-4 ">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            GRI 410-1: Security personnel trained in human rights policies or
+            procedures
+          </p>
+          <div>
+            <p className="text-[11px] text-black mb-2">
+              Guidance for Disclosure 410-1
+            </p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              The training can refer either to training dedicated to the subject
+              of human rights or to a humanrights module within a general
+              training program. Training can cover issues such as the use
+              offorce, inhuman or degrading treatment or discrimination, or
+              identification and registering.
+            </p>
+          </div>
+      
+        </div>
+      </>,
+    ],
+    link: "https://www.globalreporting.org/pdf.ashx?id=12644&page=1",
+  },
   //  sdg contet start//
   {
     category: ["sd1"],
@@ -5361,5 +5393,64 @@ export const Energydata = [
       </>,
     ],
     link: "https://sdgs.un.org/goals/goal8",
+  },
+  {
+    category: ["sd29"],
+    header: [
+      <>
+        <div className="flex">
+          <img
+            src="https://sustainextstorage1.blob.core.windows.net/media/images/sdg/E-WEB-Goal-16.png"
+            className="w-[32px] h-[32px]"
+          />
+          <h5 className="text-blue-900 text-[17px] font-bold ml-2">SDG 16</h5>
+        </div>
+      </>,
+    ],
+    data: [
+      <>
+        <div className="p-2 pt-5">
+          <p className="text-[15px] text-[#0057A5] mb-4">
+            Promote peaceful and inclusive societies for sustainable
+            development, provide access to justice for all and build effective,
+            accountable and inclusive institutions at all levels
+          </p>
+          <div>
+            <p className="text-[13px] text-[#222222] mb-2">Target 16.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Significantly reduce all forms of violence and related death rates
+              everywhere.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.1.1</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Number of victims of intentional homicide per 100,000 population,
+              by sex and age.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.1.2</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Conflict-related deaths per 100,000 population, by sex, age and
+              cause.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.1.3</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of population subjected to (a) physical violence, (b)
+              psychological violence and (c) sexual violence in the previous 12
+              months.
+            </p>
+            <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
+            <p className="text-[11px] text-[#222222] mb-2">16.1.4</p>
+            <p className="text-[11px] text-[#727272] mb-4">
+              Proportion of population that feel safe walking alone around the
+              area they live after dark.
+            </p>
+          </div>
+      
+        </div>
+      </>,
+    ],
+    link: "https://sdgs.un.org/goals/goal16",
   },
 ];

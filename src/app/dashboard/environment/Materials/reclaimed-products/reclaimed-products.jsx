@@ -82,7 +82,7 @@ const Reclaimedproducts = () => {
           </div>
         </div>
 
-        <div className="ml-3 flex">
+        <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
             Disclosure 301-3-a,b Reclaimed products and their packaging
             materials

@@ -65,7 +65,7 @@ const uiSchema = {
     ]
   }
 };
-const Screen1 = ({ selectedOrg, selectedCorp, year, month }) => {
+const Screen1 = ({  location, year,month }) => {
   const initialFormData = [
     {
       category: "",
@@ -102,7 +102,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year, month }) => {
   const loadFormData = async () => {
     LoaderOpen();
     setFormData(initialFormData);
-    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&corporate=${selectedCorp}&organisation=${selectedOrg}&year=${year}&month=${month}`;
+    const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
@@ -122,8 +122,7 @@ const Screen1 = ({ selectedOrg, selectedCorp, year, month }) => {
       user_id: user_id,
       path: view_path,
       form_data: formData,
-      corporate: selectedCorp,
-      organisation: selectedOrg,
+      location: location,
       year,
       month,
     };
@@ -176,17 +175,17 @@ const Screen1 = ({ selectedOrg, selectedCorp, year, month }) => {
     console.log('Form data:', formData);
     updateFormData();
   };
+
   useEffect(() => {
-    if (selectedOrg && year && month) {
+    if (location && year && month) {
       loadFormData();
-      toastShown.current = false; // Reset the flag when valid data is present
+      toastShown.current = false;
     } else {
-      // Only show the toast if it has not been shown already
       if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
+        toastShown.current = true;
       }
     }
-  }, [selectedOrg, year, month,selectedCorp]);
+  }, [location, year,month]);
   return (
     <>
      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
@@ -235,9 +234,9 @@ negative social impacts." className="mt-1.5 ml-2 text-[15px]" />
         </div>
         <div className='mt-4'>
           <button type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year || !month ? "cursor-not-allowed" : ""}`}
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year  ? "cursor-not-allowed" : ""}`}
             onClick={handleSubmit}
-            disabled={!selectedOrg || !year || !month}
+            disabled={!location || !year}
           >
             Submit
           </button>

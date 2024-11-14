@@ -52,7 +52,7 @@ const uiSchema = {
             "ui:haddingtooltipdisplay": "block",
             "ui:titletooltipdisplay": "none",
             "ui:Gri": "GRI 306-2a",
-            'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
+            'ui:widget': 'TextareaWidgetnew', 
             'ui:options': {
                 label: false
             },
@@ -67,13 +67,13 @@ const uiSchema = {
             "ui:haddingtooltipdisplay": "block",
             "ui:titletooltipdisplay": "block",
             "ui:Gri": "GRI 306-2b",
-            'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
+            'ui:widget': 'TextareaWidgetnew', 
             'ui:options': {
                 label: false
             },
         },
         Q3: {
-            "ui:hadding": "Waste Management by Third-party",
+            "ui:hadding": "Waste-related data management",
             "ui:title": "Describe the processes used to collect and monitor waste-related data",
             "ui:tooltipshadding": "This section documents the data corresponding to the processes used to collect and monitor waste-related data.",
             "ui:tooltipstitle": "Please specify the processes used to collect and monitor waste-related data. Include: Processes can include online data entry, maintaining a centralized database, real-time weighbridge measurement, and annual external data validation.",
@@ -82,16 +82,16 @@ const uiSchema = {
             "ui:haddingtooltipdisplay": "block",
             "ui:titletooltipdisplay": "block",
             "ui:Gri": "GRI 306-2c",
-            'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
+            'ui:widget': 'TextareaWidgetnew', 
             'ui:options': {
                 label: false
             },
         },
         'ui:options': {
-            orderable: false, // Prevent reordering of items
-            addable: false, // Prevent adding items from UI
-            removable: false, // Prevent removing items from UI
-            layout: 'horizontal', // Set layout to horizontal
+            orderable: false, 
+            addable: false, 
+            removable: false, 
+            layout: 'horizontal', 
         }
     }
 };

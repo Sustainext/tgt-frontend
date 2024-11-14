@@ -37,7 +37,7 @@ const DynamicTable2 = ({ data, columns }) => {
                 {columns.map((column, colIndex) => (
                   <td
                     key={colIndex}
-                    className={`p-2 block md:table-cell ${
+                    className={`p-2 block md:table-cell border-b  border-gray-300 ${
                       colIndex === 0 ? 'text-left font-bold' : 'text-center font-normal text-slate-500'
                     } text-[12px]`}
                   >

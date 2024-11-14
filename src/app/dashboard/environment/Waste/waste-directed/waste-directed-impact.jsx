@@ -61,8 +61,9 @@ const schema = {
       },
       Wastedisposed: {
         type: "string",
-        title: "Waste disposed (No.)",
-        display:"none",
+        title: "Waste disposed",
+        tooltiptext: "Enter the amount of waste disposed.",
+        display:"block",
 
       },
       Methodofdisposal: {

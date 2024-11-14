@@ -16,7 +16,7 @@ const widgets = {
   TableWidget: GeneralWorkersEmployees,
 };
 
-const view_path = "gri-social-ohs-403-2a-process_for_hazard-new";
+const view_path = "gri-social-ohs-403-2c-worker_right-new";
 const client_id = 1;
 const user_id = 1;
 
@@ -25,86 +25,35 @@ const schema = {
   items: {
     type: "object",
     properties: {
-        RoutineHazard: {
+      Rightrefuse: {
         type: "string",
-        title: "Routine Hazard Identification & Risk Assessment",
-        enum: [
-          "Daily",
-          "Weekly",
-          "Monthly",
-          "Annually",
-          "Others (please specify)",
-        ],
-      },
-     
-      NonRoutineHazard: {
-        type: "string",
-        title: "Non-Routine Hazard Identification & Risk Assessment",
-        enum: [
-          "Changes in procedures or equipment",
-          "Incident investigations",
-          "Worker complaints or referrals",
-          "Changes in workers or workflow",
-          "Results of environmental or health surveillance",
-          "Others (please specify)",
-        ],
-      },
-      Processforhazard: {
-        type: "string",
-        title: "Process for hazard identification",
-        enum: [
-          "Workplace Inspections",
-          "Job Hazard Analyses",
-          "Near Miss/Incident Reports",
-          "Employee Feedback",
-          "Safety Data Sheets",
-          "Others (please specify)",
-        ],
-      },
-      Hierarchycontrols: {
-        type: "string",
-        title: "Hierarchy of controls",
-        enum: [
-          "Eliminate the hazard",
-          "Safer substitutes",
-          "Engineering & organizational controls",
-          "Safe work systems & procedures",
-          "PPE (provided & maintained)",
-          "Others (please specify)",
-        ],
-      },
-      Legalguideline: {
-        type: "string",
-        title: "Legal or guideline basis",
+        title: "Right to refuse unsafe work",
         enum: [
           "Yes",
           "No",
-      
+       
         ],
       },
-      Listlegal: {
+     
+      PolicyProcess: {
         type: "string",
-        title: "List of legal requirements (if applicable)",
+        title: "Policy and Process",
         texttype: "text",
       },
-      ListStandards: {
+      Protectionreprisals: {
         type: "string",
-        title: "List of Standards/Guidelines (if applicable)",
-        texttype: "text",
-      },
-      VulnerableWorkers: {
-        type: "string",
-        title: "Vulnerable Workers",
+        title: "Protection from Reprisals",
         enum: [
-          "Accessible Emergency Procedures",
-          "Assistive Technology",
-          "Cultural Sensitivity",
-          "Individualized Training/Support",
-          "Mental Health Support",
-          "Translated Documents/Materials",
+          "Regular training",
+          "Safety incentives",
+          "Open communication culture",
+          "Positive feedback for reporting",
+          "Anonymous reporting options",
           "Others (please specify)",
         ],
       },
+   
+
    
     },
   },
@@ -115,67 +64,34 @@ const uiSchema = {
   "ui:options": {
     titles: [
       {
-        key: "RoutineHazard",
-        title: "Routine Hazard Identification & Risk Assessment",
+        key: "Rightrefuse",
+        title: "Right to refuse unsafe work",
         tooltip:
-          "Specify the exact timeframe or schedule for routine hazard identification.",
+          "Do workers have the right to refuse work they believe could cause injury or ill health?",
       },
       {
-        key: "NonRoutineHazard",
-        title: "Non-Routine Hazard Identification & Risk Assessment",
+        key: "PolicyProcess",
+        title: "Policy and Process",
         tooltip:
-          "What events or circumstances prompt you to conduct hazard identification and risk assessment outside of routine schedules? (Select all that apply)",
+          "Briefly describe the policy and process for workers to exercise their right to refuse unsafe work. For example: how workers notify supervisors, what triggers investigation, and how concerns are addressed.",
       },
       {
-        key: "Processforhazard",
-        title: "Process for hazard identification",
+        key: "Protectionreprisals",
+        title: "Protection from Reprisals",
         tooltip:
-          "Select the methods used to identify work-related hazards on both a routine and non-routine basis. (Select all that apply) ",
+          "How are workers protected from reprisals for refusing unsafe work?",
       },
-      {
-        key: "Hierarchycontrols",
-        title: "Hierarchy of controls",
-        tooltip:
-          "How do you prioritize and implement controls to address identified hazards? (Select all that apply) ",
-      },
-      {
-        key: "Legalguideline",
-        title: "Legal or guideline basis",
-        tooltip:
-          "Are your hazard identification, risk assessment, and control processes based on any specific laws, regulations, or recognized standards/guidelines?",
-      },
-      {
-        key: "Listlegal",
-        title: "List of legal requirements (if applicable)",
-        tooltip:
-          "List the specific laws or regulations your processes are based on, if applicable.",
-      },
-      {
-        key: "ListStandards",
-        title: "List of Standards/Guidelines (if applicable)",
-        tooltip:
-          "List the specific laws or regulations your processes are based on, if applicable.",
-      },
-      {
-        key: "VulnerableWorkers",
-        title: "Vulnerable Workers",
-        tooltip:
-          "List the specific regulations, or recognized standards/guidelines your processes are based on, if applicable.",
-      },
+
     ],
   },
 };
-const Screen1 = ({location, year}) => {
+const Screen4 = ({location, year}) => {
   const initialFormData = [
     {
-      RoutineHazard: "",
-      NonRoutineHazard: "",
-      Processforhazard: "",
-      Hierarchycontrols: "",
-      Legalguideline: "",
-      Listlegal: "",
-      ListStandards: "",
-      VulnerableWorkers: "",
+      Rightrefuse: "",
+      PolicyProcess: "",
+      Protectionreprisals: "",
+
     },
   ];
   const [formData, setFormData] = useState(initialFormData);
@@ -293,10 +209,10 @@ const Screen1 = ({location, year}) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-           Processes for Hazard Identification, Risk Assessment, and Control
+           Worker Right to Refuse Unsafe Work
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e86`}
-                data-tooltip-content="This section documents data corresponding to your organization's systematic approach to identifying work-related hazards, assessing their associated risks, and implementing effective control measures to minimize those risks, ensuring a safe and healthy work environment."
+                data-tooltip-content="This section documents data corresponding to the organization's processes for workers to report work-related hazards and hazardous situations, along with the measures in place to protect workers from reprisals for reporting."
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
@@ -320,7 +236,7 @@ const Screen1 = ({location, year}) => {
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 403-2a
+                GRI 403-2c
                 </div>
               </div>
             </div>
@@ -366,4 +282,4 @@ const Screen1 = ({location, year}) => {
   );
 };
 
-export default Screen1;
+export default Screen4;

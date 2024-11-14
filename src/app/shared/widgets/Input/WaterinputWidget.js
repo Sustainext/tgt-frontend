@@ -1,8 +1,10 @@
+
 import React from "react";
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { MdInfoOutline } from "react-icons/md";
-const inputnumberWidget = ({
+
+const WaterinputWidget = ({
   onChange,
   value = "",
   placeholder,
@@ -11,20 +13,25 @@ const inputnumberWidget = ({
   uiSchema = {},
   schema = {},
   id,
+
+  isEnabled = false, // Add isEnabled prop with default value
 }) => {
   const handleChange = (event) => {
     onChange(event.target.value);
   };
+
   const handleKeyDown = (event) => {
     // Prevent 'e', '+', '-', and '.' from being entered
     if (["e", "E", "+", "-"].includes(event.key)) {
       event.preventDefault();
     }
   };
+
   const randomId = Math.floor(Math.random() * 10000);
   const tooltipId = schema.title
-  ? `tooltip-${schema.title.replace(/\s+/g, "-")}-${randomId}`
-  : `tooltip-${id}-${randomId}`;
+    ? `tooltip-${schema.title.replace(/\s+/g, "-")}-${randomId}`
+    : `tooltip-${id}-${randomId}`;
+
   return (
     <div className="mb-3 px-1">
       {id.startsWith("root_0") && (
@@ -53,18 +60,18 @@ const inputnumberWidget = ({
         </div>
       )}
       <div>
-      <input
-        className="block w-[20vw] py-2 text-[12px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300  sm:leading-5 border-b-2 border-gray-300 mb-3 text-right placeholders pr-2 "
-        placeholder={placeholder || `Enter ${label}`}
-        type="number"
-        value={value}
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-      />
+        <input
+          className="block w-[20vw] py-2 text-[12px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300 mb-3 text-right placeholders pr-2"
+          placeholder={placeholder || `Enter ${label}`}
+          type="number"
+          value={value}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          disabled={!isEnabled} // Use isEnabled prop to enable/disable input
+        />
       </div>
-  
     </div>
   );
 };
 
-export default inputnumberWidget;
+export default WaterinputWidget;
