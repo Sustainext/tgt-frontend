@@ -11,6 +11,7 @@ import {
   setworkemail,
   setroletype,
   setphonenumber,
+  fetchInitialDepartments,
 } from "../../../../../lib/redux/features/roles-permissionsSlice";
 import SearchableDepartmentDropdown from "../SearchableDepartmentDropdown";
 
@@ -139,6 +140,10 @@ const PersonalDetailsForm = ({ onNext }) => {
       dispatch(setphonenumber(""));
     }
   }, [edit, currentUser, dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchInitialDepartments());
+  }, [dispatch]);
 
   return (
     <>

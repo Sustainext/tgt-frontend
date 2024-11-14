@@ -1,17 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../../app/utils/axiosMiddleware";
 
-// Async thunk for fetching departments
-export const fetchDepartments = createAsyncThunk(
-  "roles-permissions/fetchDepartments",
-  async (searchTerm) => {
-    const response = await axiosInstance.get(
-      `/sustainapp/department/?search=${searchTerm}`
-    );
-    return response.data;
-  }
-);
-
 // Async thunk for adding new department
 export const addNewDepartment = createAsyncThunk(
   "roles-permissions/addNewDepartment",
@@ -19,6 +8,15 @@ export const addNewDepartment = createAsyncThunk(
     const response = await axiosInstance.post("/sustainapp/department/", {
       name: departmentName,
     });
+    return response.data;
+  }
+);
+
+// Async thunk to fetch initial departments list
+export const fetchInitialDepartments = createAsyncThunk(
+  "roles-permissions/fetchInitialDepartments",
+  async () => {
+    const response = await axiosInstance.get("/sustainapp/department/");
     return response.data;
   }
 );
@@ -105,22 +103,21 @@ export const Rolespermissionsslice = createSlice({
   extraReducers: (builder) => {
     builder
       // Handle fetchDepartments
-      .addCase(fetchDepartments.pending, (state) => {
+      .addCase(fetchInitialDepartments.pending, (state) => {
         state.departmentsLoading = true;
-        state.departmentsError = null;
       })
-      .addCase(fetchDepartments.fulfilled, (state, action) => {
+      .addCase(fetchInitialDepartments.fulfilled, (state, action) => {
         state.departmentsLoading = false;
         state.departmentsList = action.payload;
       })
-      .addCase(fetchDepartments.rejected, (state, action) => {
+      .addCase(fetchInitialDepartments.rejected, (state, action) => {
         state.departmentsLoading = false;
         state.departmentsError = action.error.message;
       })
-      // Handle addNewDepartment
+      // Handle adding new department
       .addCase(addNewDepartment.fulfilled, (state, action) => {
+        state.departmentsList.push(action.payload);
         state.department = action.payload.name;
-        state.departmentsList = [...state.departmentsList, action.payload];
       });
   },
 });
