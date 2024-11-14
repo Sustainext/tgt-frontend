@@ -8,7 +8,6 @@ import {
   FaAngleDown,
 } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-import { useRouter } from "next/navigation";
 import axiosInstance from "../../utils/axiosMiddleware";
 import axios from "axios";
 import Link from "next/link";
