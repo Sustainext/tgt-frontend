@@ -8,11 +8,14 @@ const Table2 = ({ data }) => {
     "Category",
     "Male",
     "Female",
+    "Total number of employee",
     "Non-Binary",
     "<30 years",
     "30-50 years",
     ">50 years",
-    "Minority group"
+    "Total number of employee",
+    "Minority group",
+    "Vulnerable Communities"
   ];
 
   return (
@@ -21,15 +24,15 @@ const Table2 = ({ data }) => {
         <thead className="block md:table-header-group border">
           <tr className="border border-gray-300 md:table-row gradient-background">
             <th rowSpan="2" className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
-              Percentage of employees per employee category
+            Percentage of employee per employee category 
             </th>
-            <th colSpan="3" className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
+            <th colSpan="4" className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
               Gender
             </th>
-            <th colSpan="3" className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
+            <th colSpan="4" className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
               Age Group
             </th>
-            <th rowSpan="1" className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
+            <th colSpan="2" className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
               Diversity groups
             </th>
           </tr>
@@ -44,6 +47,9 @@ const Table2 = ({ data }) => {
               Non-Binary
             </th>
             <th className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
+              Total number of employee
+            </th>
+            <th className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
               {'<30 years'}
             </th>
             <th className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
@@ -53,7 +59,13 @@ const Table2 = ({ data }) => {
               {'>50 years'}
             </th>
             <th className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
+              Total number of employee
+            </th>
+            <th className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
               {'Minority group'}
+            </th>
+            <th className="px-2 py-3 text-[#727272] block md:table-cell text-[12px] text-center border border-gray-300">
+              {'Vulnerable Communities'}
             </th>
           </tr>
         </thead>

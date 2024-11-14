@@ -7,7 +7,7 @@ import 'react-tooltip/dist/react-tooltip.css'
 import Wastedirectedimpact from "./waste-directed-impact";
 import Wastedirectedcontextualinformation from "./waste-directed-contextual-information";
 
-const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year, setYearMessage  }) => {
+const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,setLocationMessage,year, setYearMessage,tooltipblock  }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { open } = GlobalState();
   const handleClick = () => {
@@ -37,7 +37,7 @@ const AccordionItem = ({ title, children, tooltiptext, sdg, display,location,set
 
         <div className="flex items-center justify-center relative">
           <MdInfoOutline
-            data-tooltip-id={`tooltip-${title.replace(/\s+/g, '-')}`} data-tooltip-content={tooltiptext} className="mt-1 text-[14px]" style={{display:display}} />
+            data-tooltip-id={`tooltip-${title.replace(/\s+/g, '-')}`} data-tooltip-content={tooltiptext} className="mt-1 text-[14px]" style={{display:tooltipblock}} />
           {/* Tooltip */}
           <ReactTooltip id={`tooltip-${title.replace(/\s+/g, '-')}`} place="top" effect="solid" style={{
             width: "300px", backgroundColor: "#000",
@@ -91,7 +91,7 @@ const Wastedirectedbody = ({location, year, month,setLocationMessage,setYearMess
           title="Waste Directed to Disposal"
           tooltiptext={`This section documents the data corresponding to the total weight of waste generated
           and any contextual information necessary to understand how the data has been complied. `}
-          sdg={['GRI 306-5a','GRI 306-5b','GRI 306-5c','GRI 306-5d','GRI 306-5e']}
+          sdg={['GRI 306-5a','GRI 306-5b','GRI 306-5c','GRI 306-5d']}
           display="block"
           tooltipblock="none"
           location={location}

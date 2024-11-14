@@ -2,25 +2,19 @@
 import React, { useState } from "react";
 import { MdChevronRight, MdChevronLeft } from "react-icons/md";
 import Section1 from "./Section1/page";
-import Section2 from "./Section2/page";
-import Section3 from "./Section3/page";
 import Section4 from "./Section4/page";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const Riskscreen = ({ location, year, month }) => {
   const [currentSection, setCurrentSection] = useState(1);
 
-  const totalSections =4;
+  const totalSections =2;
 
   const renderSection = () => {
     switch (currentSection) {
       case 1:
         return <Section1 />;
       case 2:
-        return <Section2 />;
-      case 3:
-        return <Section3 />;
-      case 4:
         return <Section4 />;
       default:
         return <Section1 />;

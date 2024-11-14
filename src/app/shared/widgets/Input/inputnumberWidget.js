@@ -46,6 +46,7 @@ const inputnumberWidget = ({
                 fontSize: "12px",
                 boxShadow: 3,
                 borderRadius: "8px",
+                zIndex: "1000",
               }}
             />
           </p>

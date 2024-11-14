@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import ReferencePopup from "../modals/referencePopup";
 import CompletePopup from "../modals/completePopup";
 import { GRIData } from "../data/GRIinfo";
-import { MdOutlineClear, MdInfoOutline } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
 import Environment from "./ESGcheckboxes/environment";
 import Social from "./ESGcheckboxes/social";
 import Governance from "./ESGcheckboxes/governance";

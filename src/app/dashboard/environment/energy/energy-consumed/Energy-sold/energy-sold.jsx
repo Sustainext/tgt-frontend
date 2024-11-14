@@ -133,7 +133,7 @@ const uiSchema = {
 
     },
     Nameofentity: {
-      'ui:widget': 'inputWidget', // Use your custom widget for QuantityUnit
+      'ui:widget': 'inputWidget', 
       'ui:options': {
         label: false
       },
@@ -349,7 +349,7 @@ const Energysold = ({location, year, month}) => {
               FileUploadWidget: (props) => (
                 <CustomFileUploadWidget
                   {...props}
-                  scopes="ec2"
+                  scopes="ec3"
                   setFormData={updateFormDatanew}
                 />
               ),

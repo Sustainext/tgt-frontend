@@ -136,7 +136,7 @@ const uiSchema = {
         key: "Hierarchycontrols",
         title: "Hierarchy of controls",
         tooltip:
-          "Select the methods used to identify. How do you prioritize and implement controls to address identified hazards? (Select all that apply)",
+          "How do you prioritize and implement controls to address identified hazards? (Select all that apply) ",
       },
       {
         key: "Legalguideline",

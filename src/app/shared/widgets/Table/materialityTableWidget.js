@@ -31,7 +31,7 @@ const MaterialityTableWidget = ({ id, options, value, required, onChange, schema
     }, [localValue, debouncedUpdate]);
 
     return (
-        <div style={{ maxHeight: "400px" }} className="mb-2">
+        <div style={{ maxHeight: "auto" }} className="mb-2">
             <table id={id} className="rounded-md  w-full">
                 <thead className="gradient-background">
                     <tr>

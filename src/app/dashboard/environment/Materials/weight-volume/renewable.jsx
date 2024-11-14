@@ -51,7 +51,7 @@ const schema = {
       Materialsused: {
         type: "string",
         title: "Materials used",
-        enum: ['Cardboard', 'Glass','Hemp','Kenaf','Natural Rubber','Paper','Timber','Wool','Others'],
+        enum: ['Cardboard', 'Glass','Hemp','Kenaf','Natural Rubber','Paper','Timber','Wool','Other (please specify)'],
         tooltiptext: "What materials does the company use to produce its goods or services?",
         display: "block",
       },
@@ -336,7 +336,7 @@ const Renewable = ({location, year, month}) => {
               FileUploadWidget: (props) => (
                 <CustomFileUploadWidget
                   {...props}
-                  scopes="ec2"
+                  scopes="ect2"
                   setFormData={updateFormDatanew}
                 />
               ),

@@ -297,13 +297,13 @@ const Report = () => {
       .catch((error) => {
         if (error.status === 400) {
           LoaderClose();
-          setReportname();
-          setReporttype();
-          setStartdate();
-          setEnddate();
-          setSelectedOrg();
-          setSelectedCorp();
-          setFirstSelection();
+          // setReportname();
+          // setReporttype();
+          // setStartdate();
+          // setEnddate();
+          // setSelectedOrg();
+          // setSelectedCorp();
+          // setFirstSelection();
           setMassgeshow(true);
         } else {
           const errorMessage =
@@ -494,6 +494,7 @@ const Report = () => {
     setSelectedCorp();
     setFirstSelection();
     setMassgeshow(false);
+    setError({});
   };
 
   return (

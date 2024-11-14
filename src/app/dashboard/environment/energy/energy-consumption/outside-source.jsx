@@ -35,7 +35,7 @@ const uiSchema = {
     textareaQ1: {
       "ui:title": "Please mention the source of conversion factors used while compiling the information for Energy Consumption outside the organization.",
       "ui:Gri": "GRI 302-2c",
-      'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
+      'ui:widget': 'TextareaWidgetnew', 
       'ui:options': {
         label: false
       },

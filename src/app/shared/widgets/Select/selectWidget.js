@@ -1,29 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { MdInfoOutline } from "react-icons/md";
 
-const SelectWidget = ({ onChange, value = "", placeholder, label, title, uiSchema = {}, schema = {}, id, options }) => {
+const SelectWidget = ({
+  onChange,
+  value = "",
+  placeholder,
+  label,
+  title,
+  uiSchema = {},
+  schema = {},
+  id,
+  options,
+}) => {
   const [otherValue, setOtherValue] = useState(value || ""); // Initialize with value or empty
-  const [showOtherInput, setShowOtherInput] = useState(value && !options?.enumOptions?.some(option => option.value === value)); // Initial state depends on if the value is an "Other" value.
+  const [showOtherInput, setShowOtherInput] = useState(
+    value && !options?.enumOptions?.some((option) => option.value === value)
+  ); // Initial state depends on if the value is an "Other" value.
 
   const handleChange = (e) => {
     const selectedValue = e.target.value;
 
     if (selectedValue === "Other (please specify)") {
-      setShowOtherInput(true);  // Show the input field for "Other"
-      setOtherValue("");  // Reset any other input value
-      onChange("");  // Reset the main value in the parent state to empty
+      setShowOtherInput(true); // Show the input field for "Other"
+      setOtherValue(""); // Reset any other input value
+      onChange(""); // Reset the main value in the parent state to empty
     } else {
-      setShowOtherInput(false);  // Hide the "Other" input field
-      onChange(selectedValue);  // Set the selected value in the parent state
+      setShowOtherInput(false); // Hide the "Other" input field
+      onChange(selectedValue); // Set the selected value in the parent state
     }
   };
 
   const handleOtherInputChange = (e) => {
     const inputValue = e.target.value;
     setOtherValue(inputValue);
-    onChange(inputValue);  // Send the "Other" input value to the parent
+    onChange(inputValue); // Send the "Other" input value to the parent
   };
 
   const randomId = Math.floor(Math.random() * 10000); // Generate a random number between 0 and 9999
@@ -41,14 +53,18 @@ const SelectWidget = ({ onChange, value = "", placeholder, label, title, uiSchem
               <MdInfoOutline
                 data-tooltip-id={tooltipId}
                 data-tooltip-content={schema.tooltiptext}
-                className="mt-1 ml-2 w-[30px] text-[14px]"
+                className="mt-0.5 ml-2 w-[30px] text-[14px]"
+                style={{display:schema.display}}
               />
               <ReactTooltip
                 id={tooltipId}
                 place="top"
+      
                 effect="solid"
                 style={{
-                  width: "400px",
+                  maxWidth: "800px", // Constrain the maximum width of the tooltip
+                  minWidth: "300px", // Set a minimum width if needed
+                  width: "400", // Auto width
                   backgroundColor: "#000",
                   color: "white",
                   fontSize: "12px",
@@ -79,7 +95,6 @@ const SelectWidget = ({ onChange, value = "", placeholder, label, title, uiSchem
                 {option.label}
               </option>
             ))}
-    
           </select>
         ) : (
           <input
