@@ -24,6 +24,7 @@ import { useRouter } from 'next/navigation';
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import OmissionPopup from "./content-index/modals/omissionPopup";
 import ReportCreatedPopup from "./content-index/modals/reportCreatedPopup";
+import MainValidationPopup from "./validation-modals/mainModal";
 import {
   setHeadertext1,
   setHeadertext2,
@@ -36,6 +37,7 @@ const ESGReport = () => {
   const [isModalOpen,setIsModalOpen]=useState(false)
   const [isCreateReportModalOpen,setIsCreateReportModalOpen]=useState(false)
   const [isOmissionSubmitted,setIsOmissionSubmitted]=useState(true)
+  const [IsValidationModalOpen,setIsValidationModalOpen]=useState(true)
   const [activeStep, setActiveStep] = useState(1);
   const [reportName,setReportName]=useState("Report")
   const messageFromCeoRef = useRef(); // Use useRef to store a reference to submitForm
@@ -405,6 +407,8 @@ const ESGReport = () => {
           </div>
         </div>
       </div>
+
+      <MainValidationPopup isModalOpen={IsValidationModalOpen} />
 
       
       <ToastContainer/>
