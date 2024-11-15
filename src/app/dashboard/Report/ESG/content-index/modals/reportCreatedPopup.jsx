@@ -21,6 +21,7 @@ const ReportCreatedPopup = ({reportname, reportid, isCreateReportModalOpen, setI
     const [isNotifyModalOpen,setIsNotifyModalOpen]=useState(false)
     const [showSuccessMessage,setShowSuccessMessage]=useState(false)
     const [isDownloading,setIsDownloading]=useState(false)
+    const [isCIDownloading,setIsCIDownloading]=useState(false)
     const router=useRouter()
     const getAuthToken = () => {
       if (typeof window !== "undefined") {
@@ -35,16 +36,28 @@ const ReportCreatedPopup = ({reportname, reportid, isCreateReportModalOpen, setI
       },
     };
 
-    const handleDownloadpdf = async (id,name) => {
-      setIsDownloading(true);
+    const handleDownloadpdf = async (id,name,contentIndex) => {
+      if(contentIndex){
+        setIsCIDownloading(true)
+      }
+      else{
+        setIsDownloading(true);
+      }
+      
+     
       try {
         const response = await fetch(
-          `${process.env.BACKEND_API_URL}/esg_report/esg_report_pdf/${id}/?download=true`,
+          `${process.env.BACKEND_API_URL}/esg_report/esg_report_pdf/${id}/?content_index=${contentIndex}&download=true`,
           axiosConfig
         );
     
         if (!response.ok) {
-          setIsDownloading(false);
+          if(contentIndex){
+            setIsCIDownloading(true)
+          }
+          else{
+            setIsDownloading(true);
+          }
           throw new Error(`Error: ${response.status} - ${response.statusText}`);
          
         }
@@ -54,12 +67,19 @@ const ReportCreatedPopup = ({reportname, reportid, isCreateReportModalOpen, setI
     
         const link = document.createElement("a");
         link.href = downloadUrl;
-        link.setAttribute("download", `${name}.pdf`);
+        link.setAttribute("download", `${name} ${contentIndex?" Content Index":""}.pdf`);
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        setIsDownloading(false);
-        router.push('/dashboard/Report');
+       
+        if(contentIndex){
+          setIsCIDownloading(false)
+        }
+        else{
+          setIsDownloading(false);
+          router.push('/dashboard/Report');
+        }
+       
       } catch (error) {
         console.error("Error downloading the file:", error);
         toast.error("Error downloading the file", {
@@ -101,9 +121,26 @@ const ReportCreatedPopup = ({reportname, reportid, isCreateReportModalOpen, setI
                 </div>
               </div>
               <div className="mt-6 mb-2">
-  <button disabled={true} className="opacity-30 p-4 border w-full border-gray-200 text-[16px] text-[#343A40] mb-3 rounded-md flex gap-2 cursor-not-allowed">
-    <span className="w-4.5 h-4.5 text-[#667085] mt-1">
-      <GoDownload />
+  <button className="p-4 border w-full border-gray-200 text-[16px] text-[#343A40] mb-3 rounded-md flex gap-2 hover:text-blue-500 hover:border-blue-500 group"
+   onClick={() => {
+    handleDownloadpdf(reportid,reportname,true)
+  }}
+  >
+    <span className="w-4.5 h-4.5 text-[#667085] mt-1 group-hover:text-blue-500">
+    {isCIDownloading?(
+                      <div  className="mt-0.5">
+                        <Oval
+                      height={20}
+                      width={20}
+                      color="#3b82f6d9"
+                      secondaryColor="#f3f3f3"
+                      strokeWidth={2}
+                      strokeWidthSecondary={2}
+                    />
+                      </div>
+                    ):(
+                      <GoDownload />
+                    )}
     </span>
     Download Content Index
   </button>
@@ -142,7 +179,7 @@ const ReportCreatedPopup = ({reportname, reportid, isCreateReportModalOpen, setI
                   </button>
                   <button className="w-auto h-full py-2 px-3 bg-[#007EEF] text-white rounded-[8px] shadow  flex gap-2"
                   onClick={() => {
-                    handleDownloadpdf(reportid,reportname)
+                    handleDownloadpdf(reportid,reportname,false)
                   }}
                   >
                     {isDownloading?(
