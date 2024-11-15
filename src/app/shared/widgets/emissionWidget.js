@@ -867,7 +867,7 @@ const EmissionWidget = React.memo(
                       : ""
                   }
 `}
-                  disabled={rowType === "assigned"}
+                  disabled={rowType === "assigned" || rowType === "calculated"}
                 >
                   <option className="emissionscopc">Select Category</option>
                   {baseCategories.map((categoryName, index) => (
@@ -888,7 +888,7 @@ const EmissionWidget = React.memo(
                       ? "border-b border-zinc-800"
                       : ""
                   }`}
-                  disabled={rowType === "assigned"}
+                  disabled={rowType === "assigned" || rowType === "calculated"}
                 >
                   <option className="emissionscopc">Select Sub-Category</option>
                   {subcategories.map((sub, index) => (
@@ -926,7 +926,9 @@ const EmissionWidget = React.memo(
                     onChange={(e) => setActivitySearch(e.target.value)}
                     onFocus={toggleDropdown}
                     className={`text-[12px] focus:border-blue-500 focus:outline-none w-full py-1 `}
-                    disabled={rowType === "assigned"}
+                    disabled={
+                      rowType === "assigned" || rowType === "calculated"
+                    }
                   />
 
                   {isDropdownActive && (
@@ -940,7 +942,9 @@ const EmissionWidget = React.memo(
                         setActivitySearch("");
                       }}
                       className={`text-[12px] focus:border-blue-500 focus:outline-none w-full absolute left-0 top-8 z-[100] min-w-[810px]`}
-                      disabled={rowType === "assigned"}
+                      disabled={
+                        rowType === "assigned" || rowType === "calculated"
+                      }
                     >
                       <option value="" className="px-1">
                         {isFetching.current
