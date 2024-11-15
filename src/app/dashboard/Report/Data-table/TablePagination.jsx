@@ -36,6 +36,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
   const [isOpen, setIsOpen] = useState(null);
   const [reportid, setReportid] = useState();
   const [reporttepname, setReportTepname] = useState();
+  const [isCIDownloading,setIsCIDownloading]=useState(false)
   const router = useRouter();
 
   const ActionMenu = ({ item }) => {
@@ -46,7 +47,7 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
           className={`flex items-center p-2 w-full text-left text-[#344054] gradient-sky-blue`}
           onClick={() => {
             if (isGRIReport) {
-              handleDownloadESGpdf(item.id,item.name)
+              handleDownloadESGpdf(item.id,item.name,false)
             } else {
               handleDownloadpdf(item.id, item.name);
             }
@@ -95,8 +96,22 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
         {/* Conditional Rendering for Additional GRI Options */}
         {isGRIReport && (
           <>
-            <button className="flex items-center p-2 w-full text-left h text-[#d1d5db]">
-              <BsDownload className="mr-2 text-[#d1d5db]" /> Download Content Index
+            <button className={"flex items-center p-2 w-full text-left h text-[#344054] gradient-sky-blue"}
+             onClick={() => handleDownloadESGpdf(item.id,item.name,true)}
+            >
+               {isCIDownloading? (
+            <Oval
+              height={20}
+              width={20}
+              color="#00BFFF"
+              secondaryColor="#f3f3f3"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
+          ) : (
+            <BsDownload className="mr-2 text-[#344054]" />
+          )}
+               Download Content Index
             </button>
             <button
               onClick={() => console.log("Notify GRI")}
@@ -362,16 +377,27 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
     },
   };
 
-  const handleDownloadESGpdf = async (id,name) => {
-    setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: true }));
+  const handleDownloadESGpdf = async (id,name,contentIndex) => {
+    if(contentIndex){
+      setIsCIDownloading(true)
+    }
+    else{
+      setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: true }));
+    }
+    
     try {
       const response = await fetch(
-        `${process.env.BACKEND_API_URL}/esg_report/esg_report_pdf/${id}/?download=true`,
+        `${process.env.BACKEND_API_URL}/esg_report/esg_report_pdf/${id}/?content_index=${contentIndex}&download=true`,
         axiosConfig
       );
   
       if (!response.ok) {
-        setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: false }));
+        if(contentIndex){
+          setIsCIDownloading(false)
+        }
+        else{
+          setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: false }));
+        }
         throw new Error(`Error: ${response.status} - ${response.statusText}`);
        
       }
@@ -381,11 +407,16 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
   
       const link = document.createElement("a");
       link.href = downloadUrl;
-      link.setAttribute("download", `${name}.pdf`);
+      link.setAttribute("download", `${name} ${contentIndex?" Content Index":""}.pdf`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: false }));
+      if(contentIndex){
+        setIsCIDownloading(false)
+      }
+      else{
+        setLoadingByIdpdf((prevState) => ({ ...prevState, [id]: false }));
+      }
       setIsMenuOpen(false);
     } catch (error) {
       console.error("Error downloading the file:", error);
