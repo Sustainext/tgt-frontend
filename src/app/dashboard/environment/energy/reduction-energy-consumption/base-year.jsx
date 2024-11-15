@@ -36,7 +36,7 @@ const uiSchema = {
     textareaQ1: {
       "ui:title": "What is the basis for calculating reductions in energy consumptions such as base year",
       "ui:Gri": "GRI 302-4c",
-      'ui:widget': 'TextareaWidgetnew', // Use your custom widget for QuantityUnit
+      'ui:widget': 'TextareaWidgetnew', 
       'ui:options': {
         label: false
       },

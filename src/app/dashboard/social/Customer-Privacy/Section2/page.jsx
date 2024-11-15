@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Screen1 from "./screen1";
 // import Screen2 from "./Screen2";
 // import Screen3 from "./Screen3";
-const Section2 = () => {
+const CustomerPrivacy2 = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -131,4 +131,4 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
     </>
   );
 };
-export default Section2;
+export default CustomerPrivacy2;

@@ -143,7 +143,7 @@ const Table = ({ data, labels, currentIndex, rawData }) => {
             website: location.website,
             fax: location.fax,
             sector: location.sector,
-            subindustry: location.subindustry,
+            subindustry: location.sub_industry,
             employeecount: location.employeecount,
             revenue: location.revenue,
             streetaddress: location.streetaddress,

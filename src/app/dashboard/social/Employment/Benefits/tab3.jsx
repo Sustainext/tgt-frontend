@@ -118,7 +118,7 @@ const Tab3 = ({ selectedOrg, selectedCorp, year }) => {
       <>
         <div>
           {locationdata.length > 0 ? (
-          <div className="mx-2 max-h-96 min-h-[65dvh] overflow-y-auto">
+          <div className="mx-2">
               <Form
                 schema={r_schema}
                 uiSchema={r_ui_schema}

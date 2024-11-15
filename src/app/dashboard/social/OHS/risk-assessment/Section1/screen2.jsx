@@ -199,10 +199,8 @@ const Screen2 = ({location, year}) => {
            Quality Assurance and System Improvement
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e867`}
-                data-tooltip-content="This section documents data corresponding to your organization's systematic approach 
-to identifying work-related hazards, assessing their associated risks, and implementing 
- effective control measures to minimize those risks, ensuring a safe and healthy 
-work environment."
+                data-tooltip-content="This section documents data corresponding to your organization's methods for ensuring 
+the quality and effectiveness of its occupational health and safety management system."
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip

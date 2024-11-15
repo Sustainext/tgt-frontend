@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Socialheader4 from '../../socialheader4';
 import Screen1 from "./screen1"
 import Screen2 from "./screen2"
-const Section1 = () => {
+const CustomerPrivacy = () => {
     const [activeMonth, setActiveMonth] = useState(1);
     const [location, setLocation] = useState("");
     const [year, setYear] = useState();
@@ -145,4 +145,4 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         </>
     );
 };
-export default Section1;
+export default CustomerPrivacy;

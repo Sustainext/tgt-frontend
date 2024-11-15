@@ -84,7 +84,7 @@ const Waterstres = () => {
           </div>
         </div>
 
-        <div className="ml-3 flex">
+        <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
             Water withdrawal and Water Discharge from areas with water stress
             <MdInfoOutline

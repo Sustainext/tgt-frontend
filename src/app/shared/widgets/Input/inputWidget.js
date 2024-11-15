@@ -31,6 +31,7 @@ const inputWidget = ({
       event.preventDefault();
     }
   };
+  console.log("schema.display:", schema.display);
   const randomId = Math.floor(Math.random() * 10000); // Generate a random number between 0 and 9999
   const tooltipId = schema.title
     ? `tooltip-${schema.title.replace(/\s+/g, "-")}-${randomId}`
@@ -48,7 +49,8 @@ const inputWidget = ({
             <MdInfoOutline
               data-tooltip-id={tooltipId}
               data-tooltip-content={schema.tooltiptext}
-              className="mt-1 ml-2 w-[30px] text-[14px]"
+              className="mt-0.5 ml-2 w-[30px] text-[14px]"
+              style={{display:schema.display}}
             />
             <ReactTooltip
               id={tooltipId}

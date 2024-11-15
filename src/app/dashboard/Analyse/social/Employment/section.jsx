@@ -1,0 +1,394 @@
+"use client";
+import { useState,useRef,useEffect } from "react";
+import TableSidebar from "./TableSidebar";
+import DynamicTable from "./customTable";
+import DynamicTable2 from "./customTable2";
+import BenefitTable from "./benefitsTable"
+import axiosInstance from "../../../../utils/axiosMiddleware";
+import { columns1, columns2, columns3, columns4, columns5 } from "./data";
+import { Oval } from "react-loader-spinner";
+const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
+  const [analyseData, setAnalyseData] = useState([]);
+
+  const [childdata1, setChilddata1] = useState([]);
+  const [childdata2, setChilddata2] = useState([]);
+  const [childdata3, setChilddata3] = useState([]);
+  const [childdata4, setChilddata4] = useState([]);
+  const [childdata5, setChilddata5] = useState([]);
+  const toastShown = useRef(false);
+  const [loopen, setLoOpen] = useState(false);
+  const [locationdata, setLocationdata] = useState([]);
+  const LoaderOpen = () => {
+    setLoOpen(true);
+  };
+  const LoaderClose = () => {
+    setLoOpen(false);
+  };
+  const fetchData = async () => {
+  
+    setChilddata1([]);
+    setChilddata2([]);
+    setChilddata3([]);
+    setChilddata4([]);
+    LoaderOpen();
+    try {
+      const response = await axiosInstance.get(
+        `/sustainapp/get_employment_analysis`,
+        {
+            params: {
+                organisation: selectedOrg,
+                corporate: selectedCorp,
+                start: dateRange.start,
+                end: dateRange.end,
+              },
+        }
+      );
+
+      const data = response.data.data;
+      console.log(data, "testing");
+
+      const {
+        new_employee_hires,
+        employee_turnover,
+        benefits,
+        parental_leave,
+        return_to_work_rate_and_retention_rate_of_employee,
+      } = data;
+      const formattedLocation = new_employee_hires.map((neh) => ({
+        type: neh.type_of_employee,
+        male: neh.percentage_of_male_employee,
+        female: neh.percentage_of_female_employee,
+        nonBinary: neh.percentage_of_non_binary_employee,
+        ageBelow30: neh.yearsold30,
+        age30To50: neh.yearsold30to50,
+        ageAbove50: neh.yearsold50,
+      }));
+      const formattedScope = employee_turnover.map((et) => ({
+        type: et.type_of_employee,
+        male: et.percentage_of_male_employee,
+        female: et.percentage_of_female_employee,
+        nonBinary: et.percentage_of_non_binary_employee,
+        ageBelow30: et.yearsold30,
+        age30To50: et.yearsold30to50,
+        ageAbove50: et.yearsold50,
+      }));
+      const formattedSource = benefits.map((bf) => ({
+        Benefit: bf.benefits,
+        "Full-Time Employees": bf.full_time,
+        "Part-Time Employees": bf.part_time,
+        "Temporary Employees": bf.temporary,
+      }));
+      const formattedSuppliers = parental_leave.map((pl) => ({
+        "Employee category": pl.employee_category,
+        Male: pl.male,
+        Female: pl.female,
+        Total: pl.total,
+      }));
+      const returnemployee =
+        return_to_work_rate_and_retention_rate_of_employee.map((rt) => ({
+          "Employee category": rt.employee_category,
+          Male: rt.male,
+          Female: rt.female,
+        }));
+      setChilddata1(formattedLocation);
+      setChilddata2(formattedScope);
+      setChilddata3(formattedSource);
+      setChilddata4(formattedSuppliers);
+      setChilddata5(returnemployee);
+      const resultArray = Object.keys(data).map((key) => ({
+        key: key,
+        value: data[key],
+      }));
+
+      setAnalyseData(resultArray);
+      LoaderClose();
+    } catch (error) {
+      console.error("There was a problem with the fetch operation:", error);
+      LoaderClose();
+    }
+  };
+
+  const fetchLocationData = async () => {
+    LoaderOpen();
+    try {
+      const response = await axiosInstance.get(
+        `${process.env.BACKEND_API_URL}/sustainapp/get_location_as_per_org_or_corp/?corporate=${selectedCorp}&organization=${selectedOrg}`
+      );
+      setLocationdata(response.data);
+    } catch (error) {
+      console.error("Failed to fetch location data", error);
+    } finally {
+      LoaderClose();
+    }
+  };
+
+  useEffect(() => {
+    if (selectedOrg && dateRange.start<dateRange.end) {
+        fetchData();
+        fetchLocationData();
+        toastShown.current = false;
+    } else {
+        if (!toastShown.current) {
+            toastShown.current = true;
+        }
+    }
+}, [selectedOrg, dateRange, selectedCorp]);
+
+const data = [
+ 
+  {
+    hadername: "Life Insurance",
+    selected: [149, 148],
+  },
+  {
+    hadername: "Health Care",
+    selected: [144, 149],
+  },
+  {
+    hadername: "Life Insurance",
+    selected: [149, 148],
+  },
+  {
+    hadername: "Health Care",
+    selected: [144, 149],
+  },
+  {
+    hadername: "Life Insurance",
+    selected: [149, 148],
+  },
+  {
+    hadername: "Health Care",
+    selected: [144, 149],
+  },
+  {
+    hadername: "Life Insurance",
+    selected: [149, 148],
+  },
+  {
+    hadername: "Health Care",
+    selected: [144, 149],
+  },
+  {
+    hadername: "Life Insurance",
+    selected: [149, 148],
+  },
+  {
+    hadername: "Health Care",
+    selected: [144, 149],
+  },
+  {
+    hadername: "Life Insurance",
+    selected: [149, 148],
+  },
+  {
+    hadername: "Health Care",
+    selected: [144, 149],
+  },
+  {
+    hadername: "Life Insurance",
+    selected: [149, 148],
+  },
+  {
+    hadername: "Health Care",
+    selected: [144, 149],
+  },
+  {
+    hadername: "Life Insurance",
+    selected: [149, 148],
+  },
+  {
+    hadername: "Health Care",
+    selected: [144, 149],
+  },
+  {
+    hadername: "Life Insurance",
+    selected: [149, 148],
+  },
+  {
+    hadername: "Health Care",
+    selected: [144, 149],
+  },
+];
+  return (
+    <div>
+         <div>
+      <div className="flex">
+      <div className={`ps-4 w-[100%] me-4`}>
+          <div className="mb-6">
+            <p className="text-black text-[15px] font-bold ">
+              Employee Hires & Turnover
+            </p>
+            <div
+              id="ep1"
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
+            >
+              <div className="flex justify-between items-center mb-2">
+                <p className="text-black text-[13px] font-[400]">
+                  New Employee Hires
+                </p>
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 401-1a
+                  </div>
+                </div>
+              </div>
+
+              <div className="mb-4">
+                <DynamicTable columns={columns1} data={childdata1} />
+              </div>
+              <div className="flex justify-between items-center mb-2">
+                <p className="text-black text-[13px] font-[400]">
+                  New Employee Turnover
+                </p>
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 401-1a
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <DynamicTable columns={columns2} data={childdata2} />
+              </div>
+            </div>
+          </div>
+
+          <div className="mb-6">
+            <p className="text-black text-[15px] font-bold ">Benefits</p>
+            <div
+              id="ep2"
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
+            >
+              <div className="flex justify-between items-center mb-2">
+                <p className="text-black text-[13px] font-[400]">
+                Benefits provided to full-time employees by location
+                </p>
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 401-2a
+                  </div>
+                </div>
+              </div>
+
+              <div className="mb-4">
+                <BenefitTable locationdata={locationdata}  data={data}/>
+              </div>
+
+              <div className="flex justify-between items-center mb-2">
+                <p className="text-black text-[13px] font-[400]">
+                Benefits provided to part-time employees by location
+                </p>
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 401-2a
+                  </div>
+                </div>
+              </div>
+
+              <div className="mb-4">
+                <BenefitTable locationdata={locationdata}  data={data}/>
+              </div>
+
+              <div className="flex justify-between items-center mb-2">
+                <p className="text-black text-[13px] font-[400]">
+                Benefits provided to temporary-time employees by location
+                </p>
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 401-2a
+                  </div>
+                </div>
+              </div>
+
+              <div className="mb-4">
+                <BenefitTable locationdata={locationdata}  data={data}/>
+              </div>
+            </div>
+          </div>
+
+          <div className="mb-6">
+            <p className="text-black text-[15px] font-bold ">Parental leave</p>
+            <div
+              id="ep3"
+              className="text-neutral-700 text-[15px] font-bold font-['Manrope'] leading-tight mb-3 "
+            >
+              <div className="flex justify-between items-center mb-2">
+                <p className="text-black text-[13px] font-[400]">
+                  Parental leave
+                </p>
+                <div className="flex gap-2">
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 401-3a
+                    </div>
+                  </div>
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 401-3b
+                    </div>
+                  </div>
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 401-3c
+                    </div>
+                  </div>
+                  <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                    <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                      GRI 401-3d
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mb-4">
+                <DynamicTable2 columns={columns4} data={childdata4} />
+              </div>
+              <div className="flex justify-between items-center mb-2">
+                <p className="text-black text-[15px] font-bold ">
+                  Return to work rate and retention rate of employee
+                </p>
+                <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
+                  <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
+                    GRI 401-3e
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <DynamicTable2 columns={columns5} data={childdata5} />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          style={{
+            position: `${isBoxOpen ? "unset" : "sticky"}`,
+            top: "10rem",
+            // zIndex: "0",
+            height: "fit-content",
+            backgroundColor: "white",
+            paddingBottom: "1rem",
+          }}
+          className="mb-8 me-2"
+        >
+          <TableSidebar />
+        </div>
+      </div>
+      {loopen && (
+        <div className=" fixed inset-0 flex items-center justify-center z-[100] bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
+    </div>
+   </div>
+  );
+};
+
+export default Section;

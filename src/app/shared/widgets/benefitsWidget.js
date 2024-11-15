@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef  } from 'react';
 import { AiOutlinePlus, AiOutlineDelete, AiOutlineCheck } from 'react-icons/ai';
 import {MdOutlineDeleteOutline } from "react-icons/md";
 const BenefitSection = ({
@@ -14,7 +14,8 @@ const BenefitSection = ({
   onToggleSelect,
 }) => {
   const [isOpen, setIsOpen] = useState(editable);
-
+  const [currentName, setCurrentName] = useState(name);
+  const inputRef = useRef(null);
   // Open location box when checkbox is checked
   useEffect(() => {
     setIsOpen(isSelected);
@@ -34,7 +35,16 @@ const BenefitSection = ({
       : [...selectedLocations, id];
     onLocationToggle(name, newSelectedLocations);
   };
-
+  const handleNameChange = (e) => {
+    const newName = e.target.value;
+    setCurrentName(newName);
+    onNameChange(newName); // Inform parent about the change
+  };
+  useEffect(() => {
+    if (editable && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [editable]);
   return (
     <div className="p-4 rounded-lg mb-4">
       <div className="flex items-center gap-2 mb-2">
@@ -47,9 +57,10 @@ const BenefitSection = ({
           />
           {isOpen && editable ? (
             <input
+            ref={inputRef}  
               type="text"
-              value={name}
-              onChange={(e) => onNameChange(e.target.value)}
+              value={currentName} // Use local state for input value
+              onChange={handleNameChange}
              className="border-b border-gray-300 focus:border-blue-500 focus:outline-none rounded-none p-1 font-[400] text-[15px] text-[#667085]"
               placeholder="Enter benefit name"
              
@@ -196,9 +207,14 @@ const BenefitsWidget = ({ locationdata = [], initialBenefits = [], onBenefitsCha
       setBenefits(updatedBenefits);
       onBenefitsChange(updatedBenefits);
     };
-  
+    const scrollRef = useRef(null);
+
+    useEffect(() => {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }, [benefits]);
     return (
-      <div>
+
+      <div  ref={scrollRef} className="overflow-y-auto max-h-[650px] table-scrollbar">
         {benefits.map((benefit, index) => (
           <BenefitSection
             key={index}
@@ -212,6 +228,7 @@ const BenefitsWidget = ({ locationdata = [], initialBenefits = [], onBenefitsCha
             onNameChange={(newName) => handleNameChange(index, newName)}
             isSelected={benefit.selected}
             onToggleSelect={() => toggleSelect(index)}
+          
           />
         ))}
         <button
@@ -220,7 +237,8 @@ const BenefitsWidget = ({ locationdata = [], initialBenefits = [], onBenefitsCha
         >
          Add More Benefits  <AiOutlinePlus /> 
         </button>
-      </div>
+        </div>
+    
     );
   };
   

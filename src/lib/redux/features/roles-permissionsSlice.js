@@ -1,4 +1,25 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axiosInstance from "../../../app/utils/axiosMiddleware";
+
+// Async thunk for adding new department
+export const addNewDepartment = createAsyncThunk(
+  "roles-permissions/addNewDepartment",
+  async (departmentName) => {
+    const response = await axiosInstance.post("/sustainapp/department/", {
+      name: departmentName,
+    });
+    return response.data;
+  }
+);
+
+// Async thunk to fetch initial departments list
+export const fetchInitialDepartments = createAsyncThunk(
+  "roles-permissions/fetchInitialDepartments",
+  async () => {
+    const response = await axiosInstance.get("/sustainapp/department/");
+    return response.data;
+  }
+);
 
 const initialState = {
   first_name: "",
@@ -17,7 +38,10 @@ const initialState = {
   org_list: [],
   corp_list: [],
   loc_list: [],
-  userlist:[],
+  userlist: [],
+  departmentsList: [],
+  departmentsLoading: false,
+  departmentsError: null,
 };
 
 export const Rolespermissionsslice = createSlice({
@@ -75,6 +99,26 @@ export const Rolespermissionsslice = createSlice({
     setUserlist: (state, action) => {
       state.userlist = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      // Handle fetchDepartments
+      .addCase(fetchInitialDepartments.pending, (state) => {
+        state.departmentsLoading = true;
+      })
+      .addCase(fetchInitialDepartments.fulfilled, (state, action) => {
+        state.departmentsLoading = false;
+        state.departmentsList = action.payload;
+      })
+      .addCase(fetchInitialDepartments.rejected, (state, action) => {
+        state.departmentsLoading = false;
+        state.departmentsError = action.error.message;
+      })
+      // Handle adding new department
+      .addCase(addNewDepartment.fulfilled, (state, action) => {
+        state.departmentsList.push(action.payload);
+        state.department = action.payload.name;
+      });
   },
 });
 

@@ -25,7 +25,8 @@ import Traininghours from "./Training/Training-hours/page";
 import Skillupgrade from "./Training/skill-upgrade/page";
 import Performancedevelopment from "./Training/Performance-development/page";
 import DiversityInclusionMaterialtopic from "./Diversity-Inclusion/Management-Material-topic/page";
-import DiversityBoard from "./Diversity-Inclusion/Diversity-Board/page";
+import DiversityBoard from "./Diversity-Inclusion/Diversity-Board/Section1/page";
+import Diversityemploy from "./Diversity-Inclusion/Diversity-Board/Section2/page";
 import Salaryratio from "./Diversity-Inclusion/Salary-ratio/page";
 import NonDiscriminationMaterialtopic from "./Non-Discrimination/Management-Material-topic/page";
 import IncidentsofDiscrimination from "./Non-Discrimination/Incidents-of-Discrimination/page";
@@ -33,7 +34,8 @@ import HumanRightsMaterialtopic from "./Human-Rights/Management-Material-topic/p
 import CommunityEngagement from "./Human-Rights/Community-Engagement/page";
 import ImpactonCommunity from "./Human-Rights/Impact-on-Community/page"
 import IndigenousPeople from "./Human-Rights/Indigenous-People/page"
-import Securitypersonnel from "./Human-Rights/security-personnel/page"
+import Securitypersonnel from "./Human-Rights/security-personnel/Section1/page"
+import Securitypersonnel2 from "./Human-Rights/security-personnel/Section2/page"
 import ChildForcedLabourMaterialtopic from "./Child-Forced-Labour/Management-Material-topic/page"
 import Childlabour from "./Child-Forced-Labour/child-labour/page"
 import Forcedorcompulsorylabour from "./Child-Forced-Labour/forced-or-compulsory-labour/page"
@@ -45,13 +47,15 @@ import HealthSafetyMaterialtopic from "./Customer-Health-Safety/Management-Mater
 import ProductServiceSafety from "./Customer-Health-Safety/Product-Service-Safety/page"
 import Compliance from "./Customer-Health-Safety/Compliance/page"
 import MarketingLabelingMaterialtopic from "./Marketing-Labeling/Management-Material-topic/page"
-import ProductServicelabelling from "./Marketing-Labeling/Product-Service-labelling/page"
+import ProductServicelabelling from "./Marketing-Labeling/Product-Service-labelling/Section1/page"
+import ProductServicelabelling2 from "./Marketing-Labeling/Product-Service-labelling/Section2/page"
 import NoncomplianceincidentsLabelling from "./Marketing-Labeling/Non-compliance-incidents-Labelling/page"
 import StatementnoncomplianceLabeling  from "./Marketing-Labeling/Statement-non-compliance-Labeling/page"
 import NoncomplianceincidentsMarketing from "./Marketing-Labeling/Non-compliance-incidents-Marketing/page"
 import StatementnoncomplianceMarketing from "./Marketing-Labeling/Statement-non-compliance-Marketing/page"
 import CustomerPrivacyMaterialtopic from "./Customer-Privacy/Management-Material-topic/page"
-import CustomerPrivacy from "./Customer-Privacy/page"
+import CustomerPrivacy from "./Customer-Privacy/Section1/page"
+import CustomerPrivacy2 from "./Customer-Privacy/Section2/page"
 import Ratiosstandard from "./Diversity-Inclusion/ratios-standard/page"
 
 import {
@@ -95,6 +99,7 @@ const Social = () => {
       "Benefits",
       "Parental Leave",
       "Retirement Benefits",
+      ,"Diversity of Employees",
     ];
     const energyTabs = ["Notice Period", "Collective Bargaining"];
 
@@ -129,6 +134,7 @@ const Social = () => {
       "Impact on Community",
       "Indigenous People",
       "Security Personnel",
+      "Security Personnel2",
     ];
     const TaxTabs = [
       "Child Labour",
@@ -147,6 +153,7 @@ const Social = () => {
     ];
     const MarketingTabs = [
       "Product/Service labelling",
+      "Product/Service Categories Assessed for Compliance",
       "Non compliance incidents- Labelling",
       "Statement of non compliance - Labeling",
       "Non compliance incidents - Marketing",
@@ -155,6 +162,7 @@ const Social = () => {
     ];
     const PrivacyTabs = [
       "Customer Privacy",
+      "Statement of Fact"
    
 
     ];
@@ -220,6 +228,7 @@ const Social = () => {
             {activeTab === "Benefits" && <Benefits />}
             {activeTab === "Parental Leave" && <Parentalleave />}
             {activeTab === "Retirement Benefits" && <Definedbenefit />}
+            {activeTab === "Diversity of Employees" && <Diversityemploy />}
             {activeTab === "Management of Material topic Labor Management" && (
               <LaborManagementMaterialtopic />
             )}
@@ -259,6 +268,7 @@ const Social = () => {
               <DiversityInclusionMaterialtopic />
             )}
             {activeTab === "Diversity of the Board" && <DiversityBoard />}
+           
             {activeTab === "Salary Ratio" && <Salaryratio />}
             {activeTab === "Entry Level Wage" && <Ratiosstandard />}
 
@@ -276,6 +286,7 @@ const Social = () => {
             {activeTab === "Impact on Community" && <ImpactonCommunity />}
             {activeTab === "Indigenous People" && <IndigenousPeople />}
             {activeTab === "Security Personnel" && <Securitypersonnel />}
+            {activeTab === "Security Personnel2" && <Securitypersonnel2 />} 
 
             {activeTab === "Management of Material topic Labour" && (
               <ChildForcedLabourMaterialtopic />
@@ -298,6 +309,7 @@ const Social = () => {
               <MarketingLabelingMaterialtopic />
             )}
             {activeTab === "Product/Service labelling" && <ProductServicelabelling />}
+            {activeTab === "Product/Service Categories Assessed for Compliance" && <ProductServicelabelling2 />}
             {activeTab === "Non compliance incidents- Labelling" && <NoncomplianceincidentsLabelling />}
             {activeTab === "Statement of non compliance - Labeling" && <StatementnoncomplianceLabeling />}
             {activeTab === "Non compliance incidents - Marketing" && <NoncomplianceincidentsMarketing />}
@@ -305,9 +317,9 @@ const Social = () => {
             {activeTab === "Management of Material topic Privacy" && (
               <CustomerPrivacyMaterialtopic />
             )}
-            {activeTab === "Customer Privacy" && <CustomerPrivacy />}
+            {activeTab === "Customer Privacy" && <CustomerPrivacy />}  
         
-        
+            {activeTab === "Statement of Fact" && <CustomerPrivacy2 />} 
    
           </div>
         </div>

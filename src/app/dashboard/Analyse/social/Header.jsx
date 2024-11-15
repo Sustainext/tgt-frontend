@@ -110,7 +110,7 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
     {
       category: "Tab15",
       tag: "GRI 410",
-      data: [{ tagid: "1", infoid: "3" }],
+      data: [{ tagid: "1", infoid: "52" }],
     },
   ];
   const sdg = [
@@ -205,7 +205,7 @@ const Header = ({ activeTab, setIsBoxOpen }) => {
     {
       category: "Tab15",
       data: [
-        { id: "sd20", label: "SDG 16", bgColor: "bg-blue-950" },
+        { id: "sd29", label: "SDG 16", bgColor: "bg-blue-950" },
       ],
     },
   ];

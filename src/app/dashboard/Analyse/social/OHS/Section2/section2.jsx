@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect,useRef } from "react";
-import TableSidebar from "../TableSidebar";
+import TableSidebar2 from "../TableSidebar2";
 import DynamicTable2 from "../customTable2";
 import axiosInstance from "../../../../../utils/axiosMiddleware";
 import {
@@ -268,7 +268,7 @@ const Screen2 = ({ isBoxOpen,location,dateRange }) => {
                 <DynamicTable2 columns={columns5} data={OHSdata5} />
               </div>
 
-              <div className="flex justify-between items-center mb-2">
+              <div className="flex justify-between items-center mb-2"     id="ep5">
                 <div>
                   <p className="text-black text-[15px] font-bold  ">
                     Ill health
@@ -303,7 +303,7 @@ const Screen2 = ({ isBoxOpen,location,dateRange }) => {
           }}
           className=" mb-8 me-2"
         >
-          <TableSidebar />
+          <TableSidebar2 />
         </div>
       </div>
       {loopen && (

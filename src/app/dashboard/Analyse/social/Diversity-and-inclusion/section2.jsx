@@ -51,7 +51,9 @@ const Section2 = ({selectedOrg,selectedCorp,year,isBoxOpen,setSelectedYear,selec
         { params: {
             organisation: selectedOrg,
             corporate: selectedCorp,
-           year:year
+            start: `${year}-01-01`,
+            end: `${year}-12-31`,
+        
           } }
       );
       const data = response.data;
