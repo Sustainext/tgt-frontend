@@ -134,7 +134,7 @@ const SDGCards = () => {
             <div key={item.id} onClick={() => toggleSelect(item.id)}>
               <div className={`relative`}>
                 <img
-                  src={`${process.env.BACKEND_API_URL}${item.Image}`}
+                  src={`${item.Image}`}
                   alt='cover'
                   className="h-36 w-36 transition-all"
                 />
