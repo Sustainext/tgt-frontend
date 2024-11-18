@@ -101,7 +101,7 @@ const EnergyConsumptionBody = ({location, year, month,setLocationMessage, setYea
 
           <Outsideorganization location={location} year={year} month={month} />
         </AccordionItem>
-        <AccordionItem
+        {/* <AccordionItem
           title="Standards, methodologies, assumptions and calculation tools used"
           tooltiptext="Standards, methodologies, assumptions and calculation tools used"
           sdg={['GRI 302-2b']}
@@ -112,8 +112,8 @@ const EnergyConsumptionBody = ({location, year, month,setLocationMessage, setYea
           setYearMessage={setYearMessage}
         >
           <OutsideStandards location={location} year={year} month={month} />
-        </AccordionItem>
-        <AccordionItem
+        </AccordionItem> */}
+        {/* <AccordionItem
           title="Source of conversion factor"
           tooltiptext="Source of conversion factor"
           sdg={['GRI 302-2c']}
@@ -124,7 +124,7 @@ const EnergyConsumptionBody = ({location, year, month,setLocationMessage, setYea
           setYearMessage={setYearMessage}
         >
           <OutsideSource location={location} year={year} month={month} />
-        </AccordionItem>
+        </AccordionItem> */}
         {/* Add more accordion items here */}
       </div>
     </>
