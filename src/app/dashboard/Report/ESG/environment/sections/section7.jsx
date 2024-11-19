@@ -25,6 +25,9 @@ const Section7=({section12_1_5Ref})=>{
     }
 
     const config = {
+      enablePasteHTMLFilter: false, 
+    askBeforePasteHTML: false, 
+    askBeforePasteFromWord: false,
       style: {
         fontSize: "14px",
         color:"#667085"

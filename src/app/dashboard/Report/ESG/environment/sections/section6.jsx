@@ -30,6 +30,9 @@ const Section6=({section12_1_4Ref,data})=>{
       dispatch(setBiogenicCO2305(value))
     }
     const config = {
+      enablePasteHTMLFilter: false, 
+    askBeforePasteHTML: false, 
+    askBeforePasteFromWord: false,
       style: {
         fontSize: "14px",
         color:"#667085"

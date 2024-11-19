@@ -19,6 +19,9 @@ At ${orgName ? orgName : "[Company Name]"}, our commitment to sustainability is 
 Sustainability is embedded in our corporate strategy, and we are dedicated to continuous improvement in all areas of our business. We have set ambitious targets and implemented robust systems to monitor our progress. Our commitment is reflected in the strides we have made in reducing our environmental footprint, enhancing our social contributions, and upholding strong governance practices</p>`))
     }
     const config = {
+      enablePasteHTMLFilter: false, 
+    askBeforePasteHTML: false, 
+    askBeforePasteFromWord: false,
       style: {
         fontSize: "14px",
         color:"#667085"

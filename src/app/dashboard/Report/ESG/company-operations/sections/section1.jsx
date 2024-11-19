@@ -19,6 +19,9 @@ const Section1 = ({ orgName, data }) => {
   }
 
   const config = {
+    enablePasteHTMLFilter: false, 
+    askBeforePasteHTML: false, 
+    askBeforePasteFromWord: false,
     style: {
       fontSize: "14px",
       color: "#667085"

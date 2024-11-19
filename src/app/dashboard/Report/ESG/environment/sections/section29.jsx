@@ -22,6 +22,9 @@ const Section29=({section12_5_6Ref,orgName})=>{
       dispatch(setSignificantSpills(value))
     }
     const config = {
+      enablePasteHTMLFilter: false, 
+    askBeforePasteHTML: false, 
+    askBeforePasteFromWord: false,
         style: {
           fontSize: "14px",
           color:"#667085"

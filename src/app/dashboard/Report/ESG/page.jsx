@@ -37,9 +37,17 @@ const ESGReport = () => {
   const [isModalOpen,setIsModalOpen]=useState(false)
   const [isCreateReportModalOpen,setIsCreateReportModalOpen]=useState(false)
   const [isOmissionSubmitted,setIsOmissionSubmitted]=useState(true)
-  const [IsValidationModalOpen,setIsValidationModalOpen]=useState(true)
+  const [IsValidationModalOpen,setIsValidationModalOpen]=useState(false)
   const [activeStep, setActiveStep] = useState(1);
   const [reportName,setReportName]=useState("Report")
+  const [userName,setUsername]=useState('') 
+const [userEmail,setuserEmail]=useState('')
+const [fromDate,setfromDate]=useState('')
+const [toDate,settoDate]=useState('')
+const [reportid,setReportid] =useState('')
+const [reportType,setReportType]=useState('')
+const [reportCreatedOn,setCreatedOn]=useState('')
+const [orgName,setOrgName]=useState('')
   const messageFromCeoRef = useRef(); // Use useRef to store a reference to submitForm
   const aboutTheCompany=useRef();
   const missionVision=useRef();
@@ -79,6 +87,47 @@ const ESGReport = () => {
     13:people,
     15:customers
   };
+
+  const  missing_fields=[
+    {
+      page: "screen_fourteen",
+      label: "14.1 Community Engagement",
+      subLabel: "Add statement about company’s community engagement",
+      type:'textarea'
+    },
+    {
+      page: "screen_fourteen",
+      label: "14.2 Impact Assessment",
+      subLabel: "",
+      type:'richTextarea'
+    },
+    {
+      page: "screen_fourteen",
+      label: "14.3 CSR",
+      subLabel:
+        "Add statement about company’s Corporate Social Responsibility policies",
+        type:'richTextarea'
+    },
+    {
+      page: "screen_fifteen",
+      label: "15.1 Environmental Impact",
+      subLabel:
+        "Add statement about company’s responsibility to minimize the environmental impact",
+         type:'textarea'
+    },
+    {
+      page: "screen_fifteen",
+      label: "15.2 Emissions Strategy",
+      subLabel: "Add statement about company’s strategy to reduce emission",
+       type:'textarea'
+    },
+    {
+      page: "screen_fifteen",
+      label: "15.3 Scope 1 GHG Emissions",
+      subLabel: "Add statement about company’s scope 1 emissions",
+       type:'richTextarea'
+    },
+  ]
   
   const handleNextStep = async (type) => {
     const currentRef = stepRefs[activeStep]?.current;
@@ -146,7 +195,13 @@ const ESGReport = () => {
     else if (type === "last") {
       const isSubmitted = await submitAndProceed();
       if (isSubmitted) {
-        setActiveStep((prev) => prev + 1);
+        if(missing_fields){
+          setIsValidationModalOpen(true)
+        }
+        else{
+          setActiveStep((prev) => prev + 1);
+        }
+        
       }
     }
     else {
@@ -168,6 +223,14 @@ const ESGReport = () => {
   };
 
   useEffect(()=>{
+    setCreatedOn(localStorage.getItem("reportCreatedOn"))
+    setOrgName(localStorage.getItem("reportorgname"));
+   setUsername(localStorage.getItem("userName"));
+   setuserEmail(localStorage.getItem("userEmail"))
+    setfromDate(localStorage.getItem("reportstartdate"))
+  settoDate(localStorage.getItem("reportenddate"))
+  setReportid(localStorage.getItem("reportid"))
+    setReportType(localStorage.getItem("reportType"))
     if(localStorage.getItem("reportname")){
       setReportName(localStorage.getItem("reportname"))
     }
@@ -408,7 +471,10 @@ const ESGReport = () => {
         </div>
       </div>
 
-      <MainValidationPopup isModalOpen={IsValidationModalOpen} />
+      <MainValidationPopup isModalOpen={IsValidationModalOpen} setActiveStep={setActiveStep} missing_fields={missing_fields} setIsModalOpen={setIsValidationModalOpen}
+      reportName={reportName} email={userEmail} createdBy={userName} reportid={reportid} fromDate={fromDate} toDate={toDate} orgName={orgName} reportType={reportType}
+      reportCreatedOn={reportCreatedOn}
+      />
 
       
       <ToastContainer/>

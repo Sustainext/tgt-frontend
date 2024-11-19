@@ -205,6 +205,26 @@ const Report = () => {
     setReporttype(event.target.value);
   };
 
+  function formatCurrentDate() {
+    const now = new Date();
+
+    const day = now.getDate();
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const month = monthNames[now.getMonth()];
+    const year = now.getFullYear();
+
+   
+    let hours = now.getHours();
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12 || 12; 
+
+
+    const formattedDate = `${day} ${month} ${year} ${hours}:${minutes}:${seconds} ${ampm}`;
+    return formattedDate;
+}
+
   const submitForm = async () => {
     LoaderOpen();
     const selectedEntities = entities
@@ -222,6 +242,7 @@ const Report = () => {
       organization: selectedOrg,
       corporate: selectedCorp,
       investment_corporates: selectedEntities,
+      createdOn:formatCurrentDate()
     };
 
     await post(`/sustainapp/report_create/`, sandData)
@@ -258,10 +279,12 @@ const Report = () => {
             response.data.start_date
           );
           window.localStorage.setItem("reportenddate", response.data.end_date);
+          window.localStorage.setItem("reportCreatedOn", response.data.createdOn);
           window.localStorage.setItem(
             "organizationcountry",
             response.data.organization_country
           );
+          window.localStorage.setItem("reportType", reporttype);
           if (
             reporttype == "GRI Report: In accordance With" ||
             reporttype == "GRI Report: With Reference to"

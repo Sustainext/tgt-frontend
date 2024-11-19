@@ -28,6 +28,9 @@ const Section3 = ({ section14_2Ref }) => {
 <br/></p>`))
     }
   const config = {
+    enablePasteHTMLFilter: false, 
+    askBeforePasteHTML: false, 
+    askBeforePasteFromWord: false,
     style: {
       fontSize: "14px",
       color:"#667085"
