@@ -36,6 +36,7 @@ import {
   setMiddlename,
 } from "../../../lib/redux/features/topheaderSlice";
 import { useDispatch } from "react-redux";
+import Standardsmethodology from "./energy/standards-methodology/standards-methodology"
 
 const environment = () => {
   const { open } = GlobalState();
@@ -67,6 +68,7 @@ const environment = () => {
       "Energy Intensity",
       "Reduction of energy consumption",
       "Reductions in energy requirements of products and services",
+      "Standards, methodologies, assumptions and calculation tools used",
     ];
 
     // List of tabs related to Waste
@@ -160,6 +162,11 @@ const environment = () => {
               "Reductions in energy requirements of products and services" && (
               <Energyproductsservices />
             )}
+               {activeTab ===
+              "Standards, methodologies, assumptions and calculation tools used" && (
+              <Standardsmethodology />
+            )}
+            
             {/* waste start */}
             {activeTab === "Management of Material topic waste" && (
               <WasteMaterialtopic />

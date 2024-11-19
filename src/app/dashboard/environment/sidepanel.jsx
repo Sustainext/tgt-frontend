@@ -178,7 +178,8 @@ const Aside = ({ activeTab, handleTabClick }) => {
                   "Energy consumption outside of the organization" ||
                 activeTab === "Energy Intensity" ||
                 activeTab === "Reduction of energy consumption" ||
-                activeTab === "Management of Material topic energy" ||
+                activeTab === "Management of Material topic energy" || 
+                activeTab === "Standards, methodologies, assumptions and calculation tools used" ||  
                 activeTab ===
                   "Reductions in energy requirements of products and services"
                   ? "text-[#007EEF]"
@@ -306,6 +307,23 @@ const Aside = ({ activeTab, handleTabClick }) => {
                       }
                     >
                       Reductions in energy requirements of products and services
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab ===
+                        "Standards, methodologies, assumptions and calculation tools used"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() =>
+                        handleTabClick(
+                          "Standards, methodologies, assumptions and calculation tools used"
+                        )
+                      }
+                    >
+                      Standards, methodologies, assumptions and calculation tools used
                     </p>
                   </div>
                 </div>
