@@ -101,7 +101,7 @@ const Wastedivertedbody = ({location, year, month,setLocationMessage, setYearMes
 
           <Wastedivertedimpact location={location} year={year} month={month}/>
         </AccordionItem>
-        <AccordionItem
+        {/* <AccordionItem
           title="Contextual Information to understand data compilation"
           tooltiptext={`This section documents the data corresponding to the contextual information necessary
           to understand the data and how the data has beencompiled.`}
@@ -115,7 +115,7 @@ const Wastedivertedbody = ({location, year, month,setLocationMessage, setYearMes
         >
 
           <Wastedivertedcontextualinformation location={location} year={year} month={month}/>
-        </AccordionItem>
+        </AccordionItem> */}
 
         {/* Add more accordion items here */}
       </div>

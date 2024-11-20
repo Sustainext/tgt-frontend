@@ -1,10 +1,10 @@
 "use client";
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { MdKeyboardArrowDown, MdInfoOutline } from "react-icons/md";
 import { GlobalState } from "../../../../../Context/page";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import Managementwasteimpact from "./management-waste-impact";
+import Datacollectionmethodologyimpact from "./Data-collection-methodology-impact";
 
 const AccordionItem = ({
   title,
@@ -52,7 +52,7 @@ const AccordionItem = ({
               <MdInfoOutline
                 data-tooltip-id={`tooltip-${title.replace(/\s+/g, "-")}`}
                 data-tooltip-content={tooltiptext}
-                className="mt-0.5 text-[14px]"
+                className="mt-1 text-[14px]"
                 style={{ display: display }}
               />
               {/* Tooltip */}
@@ -73,14 +73,14 @@ const AccordionItem = ({
           </div>
           <div className=" w-[25%] ">
             <div className={`flex float-end`}>
-              {isOpen ? (
+           
                 <>
                   {sdg &&
                     sdg.map((sdgItem, index) => (
                       <div
                         key={index}
                         className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2"
-                        style={{ display: "none" }}
+                       
                       >
                         <p className="text-[#0057A5] text-[10px] inline-block align-middle px-2 font-semibold">
                           {sdgItem}
@@ -88,21 +88,9 @@ const AccordionItem = ({
                       </div>
                     ))}
                 </>
-              ) : (
-                <>
-                  {sdg &&
-                    sdg.map((sdgItem, index) => (
-                      <div
-                        key={index}
-                        className="bg-sky-100 h-[25px] w-[70px] rounded-md mx-2"
-                      >
-                        <p className="text-[#0057A5] text-[10px] inline-block align-middle px-2 font-semibold">
-                          {sdgItem}
-                        </p>
-                      </div>
-                    ))}
-                </>
-              )}
+             
+               
+           
               <MdKeyboardArrowDown
                 className={`text-2xl ${isOpen ? "rotate-180" : ""}`}
               />
@@ -114,20 +102,26 @@ const AccordionItem = ({
     </div>
   );
 };
-const Managementwastebody = ({ selectedOrg, selectedCorp, year }) => {
+
+const Datacollectionmethodologyimpactbody = ({
+  selectedOrg,
+  selectedCorp,
+  year,
+}) => {
   return (
     <>
       <div className="mx-3">
         <AccordionItem
-          title="Management of significant waste related impacts"
-          tooltiptext={`This section contains disclosures for organizations to report information about how they manage waste related impacts`}
-          sdg={["GRI 306-2a"]}
+          title="Contextual Information to understand data compilation"
+          tooltiptext={`Please provide contextual information necessary to understand the data and how the data 
+has been compiled. e.g. any standards, methodologies etc. used for data compilation.`}
+          sdg={["GRI 306-3b","GRI 306-4e","GRI 306-5e"]}
           display="block"
           selectedOrg={selectedOrg}
           selectedCorp={selectedCorp}
           year={year}
         >
-          <Managementwasteimpact
+          <Datacollectionmethodologyimpact
             selectedOrg={selectedOrg}
             selectedCorp={selectedCorp}
             year={year}
@@ -140,4 +134,4 @@ const Managementwastebody = ({ selectedOrg, selectedCorp, year }) => {
   );
 };
 
-export default Managementwastebody;
+export default Datacollectionmethodologyimpactbody;

@@ -13,7 +13,7 @@ const widgets = {
   Textareawithoutgri: Textareawithoutgri,
 };
 
-const view_path = "gri-environment-energy-302-1g-conversion_factor";
+const view_path = "gri-environment-energy-302-1g-2c-conversion_factor";
 const client_id = 1;
 const user_id = 1;
 
@@ -194,8 +194,8 @@ const Source = ({ handleQ6Change, location, year, month }) => {
       <div>
         <div>
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

@@ -1,21 +1,29 @@
-import React from "react";
-import { GlobalState } from "../../../../Context/page";
-import { MdKeyboardArrowDown, MdInfoOutline } from "react-icons/md";
+import React, { useState, useEffect } from "react";
+import { MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
-const TextareaWidget2 = (props) => {
-  const { open } = GlobalState();
-  const { onChange, value = "", uiSchema = {} } = props;
+const RadioWidget3 = ({
+  options,
+  value = "", // Default value should be an empty string if not provided
+  autofocus,
+  onChange,
+  uiSchema = {},
+}) => {
+  const [inputState, setInputState] = useState(value); // Initialize state with the provided value
+  useEffect(() => {
+    setInputState(value);
+  }, [value]);
 
   const handleChange = (event) => {
-    onChange(event.target.value);
+    const newValue = event.target.value;
+    setInputState(newValue); // Update the state to the new value
+    onChange(newValue); // Call onChange prop with the new value
   };
 
   return (
-    <>
-      <div className="mb-6 px-1">
-        <div className="flex justify-between items-center mb-2 w-full">
+    <div className="mb-6 px-1">
+      <div className="flex justify-between items-center mb-2 w-full">
           <div className="flex relative">
             <div>
               <h6
@@ -62,7 +70,8 @@ const TextareaWidget2 = (props) => {
             </div>
           </div>
         </div>
-        <div className="flex mb-2">
+      <div>
+      <div className="flex mb-2">
           <div className="relative flex">
             <h6 className="text-[14px] text-[#727272]">
               {uiSchema["ui:title"]}
@@ -73,7 +82,7 @@ const TextareaWidget2 = (props) => {
                 "-"
               )}`}
               data-tooltip-html={uiSchema["ui:tooltipstitle"]}
-              className="mt-1 mr-3 text-[#344054] text-[14px]"
+              className="mt-1 mr-4 text-[#344054] text-[14px]"
               style={{ display: uiSchema["ui:titletooltipdisplay"] }}
             />
 
@@ -94,17 +103,28 @@ const TextareaWidget2 = (props) => {
             ></ReactTooltip>
           </div>
         </div>
-
-        <textarea
-          placeholder="Enter a description..."
-          className={`backdrop:before: w-full border appearance-none text-[12px] border-gray-400 text-neutral-600 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer`}
-          value={value}
-          onChange={handleChange}
-          rows={7}
-        />
       </div>
-    </>
+      <div className="flex gap-2">
+        {options.enumOptions.map((option, index) => (
+          <label
+            key={index}
+            className="flex items-center gap-2 text-[14px] mb-2"
+          >
+            <input
+              type="radio"
+              name={options.name}
+              value={option.value}
+              checked={inputState === option.value}
+              autoFocus={autofocus && index === 0}
+              onChange={handleChange}
+              className="form-radio h-3 w-3"
+            />
+            {option.label}
+          </label>
+        ))}
+      </div>
+    </div>
   );
 };
 
-export default TextareaWidget2;
+export default RadioWidget3;

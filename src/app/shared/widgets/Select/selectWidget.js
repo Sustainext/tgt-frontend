@@ -52,28 +52,24 @@ const SelectWidget = ({
               {label}
               <MdInfoOutline
                 data-tooltip-id={tooltipId}
-                data-tooltip-content={schema.tooltiptext}
+                data-tooltip-html={schema.tooltiptext}
                 className="mt-0.5 ml-2 w-[30px] text-[14px]"
-                style={{display:schema.display}}
+                style={{ display: schema.display }}
               />
               <ReactTooltip
                 id={tooltipId}
                 place="top"
-      
                 effect="solid"
                 style={{
-                  maxWidth: "800px", // Constrain the maximum width of the tooltip
-                  minWidth: "300px", // Set a minimum width if needed
-                  width: "400", // Auto width
+                  width: "300px",
                   backgroundColor: "#000",
                   color: "white",
                   fontSize: "12px",
                   boxShadow: 3,
                   borderRadius: "8px",
-                  padding: "10px",
-                  zIndex: "1000",
+                  zIndex:100,
                 }}
-              />
+              ></ReactTooltip>
             </p>
           </>
         )}

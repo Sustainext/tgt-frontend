@@ -1212,7 +1212,7 @@ const MyTask = () => {
             </button>
           </div>
 
-          <div className="p-1 h-[188px]">
+          <div className="p-1 h-[188px] table-scrollbar overflow-y-auto">
             {activeTab === "upcoming" && (
               <div>
                 {tasks.upcoming == "" ? (

@@ -5,13 +5,14 @@ import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
 import { Energydata } from "../../data/griinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import Wastedivertedbody from "./waste-diverted-body";
+import Datacollectionmethodologyimpactbody from "./Data-collection-methodology-body";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const Wastediverted = () => {
-  const [activeMonth, setActiveMonth] = useState(1);
-  const [location, setLocation] = useState("");
+import EnvironmentHeade2 from "../../environmentheader2";
+const Datacollectionmethodology = () => {
   const [year, setYear] = useState();
+  const [selectedOrg, setSelectedOrg] = useState("");
+  const [selectedCorp, setSelectedCorp] = useState("");
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -45,8 +46,8 @@ const Wastediverted = () => {
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
            <div className="text-left mb-2 ml-3 pt-5">
-            <p className="text-[11px]">Environment</p>
-            <div className="flex h-[28px]">
+              <p className="text-[11px]">Environment</p>
+              <div className="flex h-[28px]">
                 <div className="h-[28px]">
                   <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
                     Waste
@@ -64,35 +65,31 @@ const Wastediverted = () => {
             <div className="flex float-end border-l">
               <button
                 className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("27")}
+                onClick={() => toggleDrawer("24")}
+              >
+                GRI 306 - 3
+              </button>
+              <button
+                className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                onClick={() => toggleDrawer("24")}
               >
                 GRI 306 - 4
               </button>
               <button
-                className="text-[#fff] bg-[#4C9F38] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 "
-                onClick={() => toggleDrawer("46")}
+                className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                onClick={() => toggleDrawer("24")}
               >
-                SDG 3
+                GRI 306 - 5
               </button>
-              <button
-                className="text-[#fff] bg-[#FD9D24] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5 "
-                onClick={() => toggleDrawer("48")}
-              >
-                SDG 11
-              </button>
-              <button
-                className="text-[#fff] bg-yellow-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
-                onClick={() => toggleDrawer("45")}
-              >
-                SDG 12
-              </button>
+        
+          
             </div>
           </div>
         </div>
 
-        <div className="ml-3 flex">
+        <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Waste Diverted from disposal
+          Data Collection Methodology
             {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section is dedicated to the calculation of Energy Intensity Ratios based on organizational metrics. These ratios quantify the energy demand per unit of activity, output, or any other organization-specific metric" className="mt-1.5 ml-2 text-[15px]" />
                         <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
@@ -151,26 +148,20 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
             ))}
         </div>
       </div>
-      <EnvironmentHeader
-        activeMonth={activeMonth}
-        setActiveMonth={setActiveMonth}
-        location={location}
-        setLocation={setLocation}
+      <EnvironmentHeade2
+        selectedOrg={selectedOrg}
+        setSelectedOrg={setSelectedOrg}
+        selectedCorp={selectedCorp}
+        setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
-        locationMessage={locationMessage}
-        setLocationMessage={setLocationMessage}
-        yearMessage={yearMessage}
-        setYearMessage={setYearMessage}
       />
-      <Wastedivertedbody
-        location={location}
+      <Datacollectionmethodologyimpactbody
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
         year={year}
-        month={activeMonth}
-        setLocationMessage={setLocationMessage}
-        setYearMessage={setYearMessage}
       />
     </>
   );
 };
-export default Wastediverted;
+export default Datacollectionmethodology;

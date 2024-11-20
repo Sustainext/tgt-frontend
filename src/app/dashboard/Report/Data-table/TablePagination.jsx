@@ -164,7 +164,21 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
   };
   
   const toggleMenu = (itemId) => {
-    setIsMenuOpen(isMenuOpen === itemId ? null : itemId);
+    setIsMenuOpen(itemId === isMenuOpen ? null : itemId);
+  };
+  
+  let timeoutId;
+  
+  const handleMouseEnter = (itemId) => {
+    clearTimeout(timeoutId); // Clear any pending timeout
+    setIsMenuOpen(itemId);   // Open the menu immediately
+  };
+  
+  const handleMouseLeave = () => {
+    // Add a delay before hiding the menu
+    timeoutId = setTimeout(() => {
+      setIsMenuOpen(null);
+    }, 500); // Adjust delay as needed
   };
 
   const togglePopup = (itemId, itemName) => {
@@ -611,13 +625,21 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
                   <td className="py-3 px-6 text-center whitespace-nowrap text-[12px] text-[#343A40]">
                     {item.created_by}
                   </td>
-                  <td className="py-3 px-6 relative text-center flex justify-center">
-                    <MdMoreVert
-                      onClick={() => toggleMenu(item.id)}
-                      className="cursor-pointer"
-                    />
-                    {isMenuOpen === item.id && <ActionMenu item={item} />}
-                  </td>
+                  <td
+  className="py-3 px-6 relative text-center flex justify-center"
+  onMouseEnter={() => handleMouseEnter(item.id)}
+  onMouseLeave={handleMouseLeave}
+>
+  <MdMoreVert className="cursor-pointer" />
+  {isMenuOpen === item.id && (
+    <div
+      onMouseEnter={() => handleMouseEnter(item.id)} // Ensure menu stays open
+      onMouseLeave={handleMouseLeave}               // Allow menu to close
+    >
+      <ActionMenu item={item} />
+    </div>
+  )}
+</td>
                 </tr>
               ))}
           </tbody>

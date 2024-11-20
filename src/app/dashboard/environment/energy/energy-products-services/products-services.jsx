@@ -337,8 +337,8 @@ const Productsservices = ({location, year, month}) => {
 
           <Form
           className='flex'
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

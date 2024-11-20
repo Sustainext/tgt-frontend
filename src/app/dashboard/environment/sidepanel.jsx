@@ -339,6 +339,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
                   "Management of significant waste related impacts" || activeTab === "Management of Material topic waste" ||
                 activeTab === "Waste generated" ||
                 activeTab === "Waste Diverted from disposal" ||
+                activeTab === "Data Collection Methodology" ||  
                 activeTab === "Waste diverted to disposal"
                   ? "text-blue-400"
                   : "bg-transparent text-[#727272]"
@@ -468,6 +469,20 @@ const Aside = ({ activeTab, handleTabClick }) => {
                       }
                     >
                       Waste Directed to disposal
+                    </p>
+                  </div>
+                  <div>
+                    <p
+                      className={`flex  text-start ml-4 px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Data Collection Methodology"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272] "
+                      }`}
+                      onClick={() =>
+                        handleTabClick("Data Collection Methodology")
+                      }
+                    >
+                      Data Collection Methodology
                     </p>
                   </div>
                 </div>

@@ -14,7 +14,7 @@ const widgets = {
   Textareawithoutgri: Textareawithoutgri,
 };
 
-const view_path = "gri-environment-energy-302-1f-smac";
+const view_path = "gri-environment-energy-302-1f-2b-4d-5c-smac";
 const client_id = 1;
 const user_id = 1;
 
@@ -223,8 +223,8 @@ const Standards = ({ location, year, month }) => {
       <div>
         <div>
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

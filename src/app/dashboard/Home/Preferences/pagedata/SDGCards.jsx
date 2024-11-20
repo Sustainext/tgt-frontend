@@ -168,9 +168,10 @@ const SDGCards = () => {
                   <div className='pt-2 text-white'>
                     <p className='font-bold text-sm'>Target : {item.id}</p>
                   </div>
+            
                 </div>
                 <div
-                  className={`absolute right-3 bottom-2 rounded-full border border-gray-300 ${selectedItems.includes(item.id) ? 'bg-white border-[#53ff1a]' : 'bg-white'} transition-all w-5 h-5`}
+                  className={`absolute right-24  rounded-full border border-gray-300 ${selectedItems.includes(item.id) ? 'bg-white border-[#53ff1a]' : 'bg-white'} transition-all w-5 h-5 -mt-5 mr-1`}
                 >
                   <CiCircleCheck
                     style={{
