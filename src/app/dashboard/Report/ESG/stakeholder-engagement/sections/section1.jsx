@@ -20,6 +20,7 @@ const Section1 =({orgName,data})=>{
       dispatch(setdescription(e.target.value))
     }
 
+
     return (
 
         <>
