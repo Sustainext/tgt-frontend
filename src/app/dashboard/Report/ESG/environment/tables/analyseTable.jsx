@@ -31,12 +31,21 @@ const AnalyseTable = ({ columns, data }) => {
           </thead>
           <tbody>
   {data.length > 0 ? (
+    // data.map((val, rowIndex) => (
+    //   <tr key={rowIndex} className="text-[13px]">
+    //     {/* Dynamically render table data for each object value */}
+    //     {Object.values(val).map((item, colIndex) => (
+    //       <td key={colIndex} className="border-t border-r border-gray-200 p-4 text-left">
+    //         {item}
+    //       </td>
+    //     ))}
+    //   </tr>
+    // ))
     data.map((val, rowIndex) => (
       <tr key={rowIndex} className="text-[13px]">
-        {/* Dynamically render table data for each object value */}
-        {Object.values(val).map((item, colIndex) => (
+        {columns.map((col, colIndex) => (
           <td key={colIndex} className="border-t border-r border-gray-200 p-4 text-left">
-            {item}
+            {val[col] !== undefined ? val[col] : "No data available"}
           </td>
         ))}
       </tr>
