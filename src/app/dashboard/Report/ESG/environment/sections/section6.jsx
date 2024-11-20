@@ -73,15 +73,35 @@ const Section6=({section12_1_4Ref,data})=>{
         "Total Emission",
         "Unit"
     ]
-    const data1=[
+
+    const TabledataBySource =
+  data["305_123_analyse"] && data["305_123_analyse"]["all_emission_by_source"]
+    ? data["305_123_analyse"]["all_emission_by_source"].length>0?data["305_123_analyse"]["all_emission_by_source"].map((val) => {
+        return {
+          'Source': val.source || "No data available", 
+          'Percentage contribution': val.contribution !== undefined ? val.contribution.toFixed(2) + "%" : "No data available", 
+          'Total Emission': val.total !== undefined ? val.total.toFixed(2) : "No data available", 
+          'Unit': val.Units || "No data available" 
+        };
+      })
+    : [
         {
-           
-        "Source":"data",
-        "Percentage contribution":"data",
-        "Total Emission":"data",
-        "Unit":"data"
+          'Source': "No data available",
+          'Percentage contribution': "No data available",
+          'Total Emission': "No data available",
+          'Unit': "No data available"
         }
-    ]
+      ]:[
+        {
+          'Source': "No data available",
+          'Percentage contribution': "No data available",
+          'Total Emission': "No data available",
+          'Unit': "No data available"
+        }
+      ];
+
+
+   
     const col2=[
       
         "Location",
@@ -89,15 +109,66 @@ const Section6=({section12_1_4Ref,data})=>{
         "Total Emission",
         "Unit"
     ]
-    const data2=[
-        {
-           
-        "Location":"data",
-        "Percentage contribution":"data",
-        "Total Emission":"data",
-        "Unit":"data"
-        }
-    ]
+   
+    const TabledataByLocation =
+    data["305_123_analyse"] && data["305_123_analyse"]["all_emission_by_location"]
+      ? data["305_123_analyse"]["all_emission_by_location"].length>0?data["305_123_analyse"]["all_emission_by_location"].map((val) => {
+          return {
+            'Location': val.location || "No data available", 
+            'Percentage contribution': val.contribution !== undefined ? val.contribution.toFixed(2) + "%" : "No data available", 
+            'Total Emission': val.total !== undefined ? val.total.toFixed(2) : "No data available", 
+            'Unit': val.Units || "No data available" 
+          };
+        })
+      : [
+          {
+            'Location': "No data available",
+            'Percentage contribution': "No data available",
+            'Total Emission': "No data available",
+            'Unit': "No data available"
+          }
+        ]:[
+          {
+            'Location': "No data available",
+            'Percentage contribution': "No data available",
+            'Total Emission': "No data available",
+            'Unit': "No data available"
+          }
+        ];
+
+
+        const col4=[
+          "Scope",
+          "Percentage contribution",
+          "Total Emission",
+          "Unit"
+        ]
+
+        const TabledataByScope =
+        data["305_123_analyse"] && data["305_123_analyse"]["all_emission_by_scope"]
+          ? data["305_123_analyse"]["all_emission_by_scope"].length>0?data["305_123_analyse"]["all_emission_by_scope"].map((val) => {
+              return {
+                'Scope': val.scope || "No data available", 
+                'Percentage contribution': val.contribution !== undefined ? val.contribution.toFixed(2) + "%" : "No data available", 
+                'Total Emission': val.total !== undefined ? val.total.toFixed(2) : "No data available", 
+                'Unit': val.Units || "No data available" 
+              };
+            })
+          : [
+              {
+                'Scope': "No data available",
+                'Percentage contribution': "No data available",
+                'Total Emission': "No data available",
+                'Unit': "No data available"
+              }
+            ]:[
+              {
+                'Scope': "No data available",
+                'Percentage contribution': "No data available",
+                'Total Emission': "No data available",
+                'Unit': "No data available"
+              }
+            ];
 
     const col3=[
         "Method",
@@ -150,19 +221,19 @@ const Section6=({section12_1_4Ref,data})=>{
             Top Emissions by Source
         </p>
 <div className="shadow-md rounded-md mb-4">
-<AnalyseTable columns={col1} data={data["305_123_analyse"]?data["305_123_analyse"]["all_emission_by_source"]?data["305_123_analyse"]["all_emission_by_source"]:[]:[]}/>
+<AnalyseTable columns={col1} data={TabledataBySource}/>
 </div>
 <p className="text-[15px]  mb-2 font-semibold">
 Top Emissions by Location
         </p>
 <div className="shadow-md rounded-md mb-4">
-<AnalyseTable columns={col2} data={data["305_123_analyse"]?data["305_123_analyse"]["all_emission_by_location"]?data["305_123_analyse"]["all_emission_by_location"]:[]:[]}/>
+<AnalyseTable columns={col2} data={TabledataByLocation}/>
 </div>
 <p className="text-[15px]  mb-2 font-semibold">
 Emissions by Scope
         </p>
 <div className="shadow-md rounded-md mb-4">
-<AnalyseTable columns={col1} data={data["305_123_analyse"]?data["305_123_analyse"]["all_emission_by_scope"]?data["305_123_analyse"]["all_emission_by_scope"]:[]:[]}/>
+<AnalyseTable columns={col4} data={TabledataByScope}/>
 </div>
 <p className="text-[15px]  mb-2 font-semibold">
 305-3-c. Biogenic CO2 emissions
