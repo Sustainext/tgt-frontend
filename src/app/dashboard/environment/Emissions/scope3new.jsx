@@ -236,10 +236,10 @@ const Scope3 = forwardRef(
       [dispatch, location, year, month, successCallback]
     );
 
-    const updateCache = useCallback((subcategory, activities) => {
+    const updateCache = useCallback((cacheKey, activities) => {
       setActivityCache((prevCache) => ({
         ...prevCache,
-        [subcategory]: activities,
+        [cacheKey]: activities,
       }));
     }, []);
 
