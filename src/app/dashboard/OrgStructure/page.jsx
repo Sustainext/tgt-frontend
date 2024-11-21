@@ -468,7 +468,7 @@ const OrgTree = ({ data }) => {
                 key={`${node.name}-${node.type}`}
                 transform={`translate(${node.x},${node.y})`}
                 className={`transition-all duration-200 ${style.group}`}
-                onClick={() => handleNodeClick(node)}
+                // onClick={() => handleNodeClick(node)}
                 onMouseEnter={() => setHoveredNode(node.id)}
                 onMouseLeave={() => setHoveredNode(null)}
               >
