@@ -26,6 +26,7 @@ const currencyOptions = [
   { label: "KRW", value: "KRW" },
   { label: "JPY", value: "JPY" },
   { label: "TTD", value: "TTD" },
+  { label: "ZAR", value: "ZAR" },
 ];
 
 const reportFramework = ["GRI"];

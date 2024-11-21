@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 
 const StakeholderTable=({tableData})=>{
 
+    console.log(tableData,"look")
     const col=[
         "Stakeholder",
         "Representative Group",
@@ -14,7 +15,16 @@ const StakeholderTable=({tableData})=>{
     ]
     return (
         <>
-       <div style={{ maxHeight: "400px", overflowY: "auto" }} className="mb-2">
+       <div
+       style={{
+        display: "block",
+        overflowX: "auto",
+        maxWidth: "100%",
+        minWidth: "100%",
+        width: "40vw",
+        maxHeight:"450px"
+      }}
+      className="mb-2 rounded-md table-scrollbar">
     <table className="w-full border border-gray-200 rounded-md overflow-hidden">
         <thead className="gradient-background">
             <tr>
@@ -39,7 +49,7 @@ const StakeholderTable=({tableData})=>{
         </thead>
         <tbody>
         {tableData.length>0?
-        tableData.map((row, rowIndex) => (
+        tableData[0].map((row, rowIndex) => (
                             <tr key={rowIndex} className="text-[13px]">
                                 <td className="border-t border-r border-gray-200 p-4 text-left">{row.Stakeholder}</td>
                                 <td className="border border-gray-200 p-4 text-left">{row.RepresentativeGroup}</td>
