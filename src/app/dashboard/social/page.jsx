@@ -57,6 +57,8 @@ import CustomerPrivacyMaterialtopic from "./Customer-Privacy/Management-Material
 import CustomerPrivacy from "./Customer-Privacy/Section1/page"
 import CustomerPrivacy2 from "./Customer-Privacy/Section2/page"
 import Ratiosstandard from "./Diversity-Inclusion/ratios-standard/page"
+import IdentifingInformation from './BillS-211/Identifying-information/page'
+import AnnualReport from './BillS-211/annual-report/page'
 
 import {
   setHeadertext1,
@@ -100,6 +102,10 @@ const Social = () => {
       "Parental Leave",
       "Retirement Benefits",
       ,"Diversity of Employees",
+    ];
+    const BillS211Tabs = [
+      "Identifying Information",
+      "Annual report"
     ];
     const energyTabs = ["Notice Period", "Collective Bargaining"];
 
@@ -196,7 +202,10 @@ const Social = () => {
     } 
     else if (PrivacyTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Customer Privacy & Data Security"));
-    } else {
+    }else if (BillS211Tabs.includes(activeTab)) {
+      dispatch(setHeadertext2("Bill S-211"));
+    }
+     else {
       dispatch(setHeadertext2(`${activeTab}`));
     }
     dispatch(setHeadertext1("Collect"));
@@ -221,6 +230,12 @@ const Social = () => {
             {/* Emissions start */}
             {activeTab === "Management of Material topic Employment" && (
               <EmploymentMaterialtopic />
+            )}
+             {activeTab === "Identifying Information" && (
+              <IdentifingInformation />
+            )}
+            {activeTab === "Annual report" && (
+              <AnnualReport />
             )}
             {activeTab === "Employee Hires & Turnover" && (
               <EmployeeHiresTurnover />

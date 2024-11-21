@@ -81,17 +81,44 @@ const Scope1 = forwardRef(
       : [];
 
     // useImperativeHandle(ref, () => ({
-    //   updateFormData: () => updateFormData(formData),
+    //   updateFormData: () => {
+    //     const filteredFormData = formData.filter(
+    //       (row) => !["assigned"].includes(row.Emission?.rowType)
+    //     );
+
+    //     if (filteredFormData.length > 0) {
+    //       return updateFormData(filteredFormData);
+    //     }
+
+    //     return Promise.resolve();
+    //   },
     // }));
 
     useImperativeHandle(ref, () => ({
       updateFormData: () => {
-        const filteredFormData = formData.filter(
-          (row) => !["assigned"].includes(row.Emission?.rowType)
-        );
+        // Filter and format the data
+        const formattedData = formData
+          .filter((row) => {
+            // Only filter out assigned rows
+            return !["assigned"].includes(row.Emission?.rowType);
+          })
+          .map((row) => {
+            // Only reorder approved rows to put Emission first
+            if (row.Emission?.rowType === "approved") {
+              const { id, Emission, ...rest } = row;
+              return {
+                Emission,
+                id,
+                ...rest,
+              };
+            }
+            // Return other rows as is
+            return row;
+          });
 
-        if (filteredFormData.length > 0) {
-          return updateFormData(filteredFormData);
+        // Only proceed with update if we have data
+        if (formattedData.length > 0) {
+          return updateFormData(formattedData);
         }
 
         return Promise.resolve();
@@ -202,10 +229,10 @@ const Scope1 = forwardRef(
       [dispatch, location, year, month, successCallback]
     );
 
-    const updateCache = useCallback((subcategory, activities) => {
+    const updateCache = useCallback((cacheKey, activities) => {
       setActivityCache((prevCache) => ({
         ...prevCache,
-        [subcategory]: activities,
+        [cacheKey]: activities,
       }));
     }, []);
 

@@ -40,7 +40,7 @@ const Section14=({section9_3_8Ref,data})=>{
             <p className="text-[15px] text-[#344054] mb-2 font-semibold">
             Median percentage increase in annual total compensation for all of the organization's employees excluding the highest-paid individual:
             </p>
-            <p className="text-sm mb-4">{data["2_21_b"]?data["2_21_b"].Q1?data["2_21_b"].Q1:"No data available":"No data available"}</p>
+            <p className="text-sm mb-4">{data["2_21_b"]?data["2_21_b"].Q2?data["2_21_b"].Q2:"No data available":"No data available"}</p>
 
 
             <p className="text-[15px] text-[#344054] mb-2 font-semibold">
