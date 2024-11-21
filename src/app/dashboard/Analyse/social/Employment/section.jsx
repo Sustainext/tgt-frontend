@@ -12,9 +12,11 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
 
   const [childdata1, setChilddata1] = useState([]);
   const [childdata2, setChilddata2] = useState([]);
-  const [childdata3, setChilddata3] = useState([]);
   const [childdata4, setChilddata4] = useState([]);
   const [childdata5, setChilddata5] = useState([]);
+  const [fulltimebe, setFulltimebe] = useState([]);
+  const [parttimebe, setParttimbe] = useState([]);
+  const [tempebe, setTempebe] = useState([]);
   const toastShown = useRef(false);
   const [loopen, setLoOpen] = useState(false);
   const [locationdata, setLocationdata] = useState([]);
@@ -28,7 +30,7 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
   
     setChilddata1([]);
     setChilddata2([]);
-    setChilddata3([]);
+
     setChilddata4([]);
     LoaderOpen();
     try {
@@ -72,12 +74,7 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
         age30To50: et.yearsold30to50,
         ageAbove50: et.yearsold50,
       }));
-      const formattedSource = benefits.map((bf) => ({
-        Benefit: bf.benefits,
-        "Full-Time Employees": bf.full_time,
-        "Part-Time Employees": bf.part_time,
-        "Temporary Employees": bf.temporary,
-      }));
+
       const formattedSuppliers = parental_leave.map((pl) => ({
         "Employee category": pl.employee_category,
         Male: pl.male,
@@ -92,9 +89,31 @@ const Section = ({selectedOrg,selectedCorp,dateRange,isBoxOpen}) => {
         }));
       setChilddata1(formattedLocation);
       setChilddata2(formattedScope);
-      setChilddata3(formattedSource);
       setChilddata4(formattedSuppliers);
       setChilddata5(returnemployee);
+      const { benefits_full_time_employees, benefits_part_time_employees, benefits_temporary_employees } = benefits;
+
+      const formattedFullTimeBenefits = benefits_full_time_employees.map(bft => ({
+        hadername: bft.name,
+        selected: bft.selectedLocations,
+    
+      }));
+  
+      const formattedPartTimeBenefits = benefits_part_time_employees.map(bpt => ({
+        hadername: bpt.name,
+        selected: bpt.selectedLocations,
+      }));
+  
+      const formattedTemporaryBenefits = benefits_temporary_employees.map(bt => ({
+        hadername: bt.name,
+        selected: bt.selectedLocations,
+      }));
+  
+      // Update state with formatted benefits data
+      setFulltimebe(formattedFullTimeBenefits);
+      setParttimbe(formattedPartTimeBenefits);
+      setTempebe(formattedTemporaryBenefits);
+
       const resultArray = Object.keys(data).map((key) => ({
         key: key,
         value: data[key],
@@ -271,7 +290,7 @@ const data = [
               </div>
 
               <div className="mb-4">
-                <BenefitTable locationdata={locationdata}  data={data}/>
+                <BenefitTable locationdata={locationdata}  data={fulltimebe}/>
               </div>
 
               <div className="flex justify-between items-center mb-2">
@@ -286,7 +305,7 @@ const data = [
               </div>
 
               <div className="mb-4">
-                <BenefitTable locationdata={locationdata}  data={data}/>
+                <BenefitTable locationdata={locationdata}  data={parttimebe}/>
               </div>
 
               <div className="flex justify-between items-center mb-2">
@@ -301,7 +320,7 @@ const data = [
               </div>
 
               <div className="mb-4">
-                <BenefitTable locationdata={locationdata}  data={data}/>
+                <BenefitTable locationdata={locationdata}  data={tempebe}/>
               </div>
             </div>
           </div>

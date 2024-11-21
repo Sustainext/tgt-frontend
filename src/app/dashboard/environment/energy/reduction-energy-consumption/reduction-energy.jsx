@@ -362,14 +362,14 @@ const Reductionenergy = ({location, year, month}) => {
     <>
 
 
-        <div className={`overflow-auto custom-scrollbar flex`}>
+        <div className={`overflow-auto custom-scrollbar flex py-4`}>
         <div>
     
 
           <Form
           className='flex'
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+            schema={schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

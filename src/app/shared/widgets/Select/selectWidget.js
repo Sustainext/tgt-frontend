@@ -61,7 +61,8 @@ const SelectWidget = ({
                 place="top"
                 effect="solid"
                 style={{
-                  width: "300px",
+                  minWidth: "200px", // Minimum width
+                  maxWidth: "500px", // Maximum width
                   backgroundColor: "#000",
                   color: "white",
                   fontSize: "12px",
@@ -79,7 +80,7 @@ const SelectWidget = ({
         {/* Render select or input based on state */}
         {!showOtherInput ? (
           <select
-            className={`block w-[20vw] py-2 text-[12px] p-0 custom-select focus:outline-none focus:border-blue-300 border-b-2 border-gray-300 capitalize`}
+            className={`block w-[20vw] py-2 text-[12px] p-0 custom-select focus:outline-none focus:border-blue-300 border-b-2 border-gray-300 capitalize table-scrollbar`}
             value={value}
             onChange={handleChange}
           >

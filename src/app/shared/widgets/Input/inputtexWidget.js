@@ -2,19 +2,14 @@ import React from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { MdInfoOutline } from "react-icons/md";
-const inputWidget3 = (props) => {
+const InputtextWidget = (props) => {
   const { onChange, value = "", label, uiSchema = {} } = props;
   const handleChange = (e) => {
     const val = e.target.value;
-    const validValue = val.match(/^\d*\.?\d{0,2}$/) ? val : value;
-    onChange(validValue);
+
+    onChange(val);
   };
-  const handleKeyDown = (event) => {
-    // Prevent 'e', '+', '-', and '.' from being entered
-    if (["e", "E", "+", "-"].includes(event.key)) {
-      event.preventDefault();
-    }
-  };
+
   return (
     <div className="mb-3 relative">
       <p className="flex text-[14px] text-gray-700 font-[500] mb-3">
@@ -47,14 +42,14 @@ const inputWidget3 = (props) => {
       <input
         className={`backdrop:before:w-[48rem] border appearance-none text-[12px] border-gray-400 text-neutral-900 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer w-full`}
         placeholder={`Enter Value`}
-        type="number"
+        type="text"
         value={value}
         onChange={handleChange}
-        onKeyDown={handleKeyDown}
+ 
 
       />
     </div>
   );
 };
 
-export default inputWidget3;
+export default InputtextWidget;

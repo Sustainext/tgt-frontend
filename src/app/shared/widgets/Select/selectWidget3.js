@@ -22,7 +22,7 @@ const selectWidget3 =  ({onChange, value = "", placeholder, label, title, uiSche
             <MdInfoOutline
               data-tooltip-id={tooltipId}
               data-tooltip-content={schema.tooltiptext}
-              className={`mt-1   text-[14px] ${label!== "Metric Unit" ? 'ml-5 w-[30px]' : 'w-[20px] ml-1'}`}
+              className={`mt-0.5   text-[14px] ${label!== "Metric Unit" ? 'ml-5 w-[30px]' : 'w-[20px] ml-1'}`}
               style={{display:schema.display}}
             />
             <ReactTooltip

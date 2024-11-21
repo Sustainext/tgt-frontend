@@ -329,7 +329,7 @@ const Productsservices = ({location, year, month}) => {
     <>
 
 
-        <div className={`overflow-auto custom-scrollbar flex`}>
+        <div className={`overflow-auto custom-scrollbar flex py-4`}>
         <div>
           <div>
          
@@ -337,8 +337,8 @@ const Productsservices = ({location, year, month}) => {
 
           <Form
           className='flex'
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+          schema={schema}
+          uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
