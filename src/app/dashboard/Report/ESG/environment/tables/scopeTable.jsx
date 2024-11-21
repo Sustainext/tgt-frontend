@@ -2,7 +2,8 @@
 import { useState } from "react";
 
 // Dynamic Table Component
-const ScopeTable = ({ title, columns, data }) => {
+const ScopeTable = ({ title, columns,data }) => {
+
   return (
     <div>
       <div
@@ -35,27 +36,60 @@ const ScopeTable = ({ title, columns, data }) => {
             </tr>
           </thead>
           <tbody>
-  <tr className="text-[13px]">
+            {data && data.length>0?(
+              data.map((val)=>(
+                <tr className="text-[13px]">
     {/* Display Category */}
     <td className="border-t border-r border-gray-200 p-4 text-left">
-      {data?data.Category?data.Category:"No data available":"No data available"}
+      {val.Category?val.Category:"No data available"}
     </td>
 
     {/* Display Subcategory */}
     <td className="border-t border-r border-gray-200 p-4 text-left">
-    {data?data.Activity?data.Activity:"No data available":"No data available"}
+    {val.Subcategory?val.Subcategory:"No data available"}
     </td>
 
     {/* Display Activity */}
     <td className="border-t border-r border-gray-200 p-4 text-left">
-    {data?data.Category?data.Category:"No data available":"No data available"}
+    {val.Activity?val.Activity:"No data available"}
     </td>
 
     {/* Display Quantity */}
     <td className="border-t border-r border-gray-200 p-4 text-left">
-    {data?data.Quantity?data.Quantity+" "+data.Unit:"No data available":"No data available"}
+    {val.Quantity?val.Quantity+" "+val.Unit:"No data available"}
+    </td>
+    <td className="border-t border-r border-gray-200 p-4 text-left">
+    {val.Quantity2?val.Quantity2+" "+val.Unit2:""}
     </td>
   </tr>
+              ))
+            ):(
+              <tr className="text-[13px]">
+    {/* Display Category */}
+    <td className="border-t border-r border-gray-200 p-4 text-left">
+      {"No data available"}
+    </td>
+
+    {/* Display Subcategory */}
+    <td className="border-t border-r border-gray-200 p-4 text-left">
+    {"No data available"}
+    </td>
+
+    {/* Display Activity */}
+    <td className="border-t border-r border-gray-200 p-4 text-left">
+    {"No data available"}
+    </td>
+
+    {/* Display Quantity */}
+    <td className="border-t border-r border-gray-200 p-4 text-left">
+    {"No data available"}
+    </td>
+    <td className="border-t border-r border-gray-200 p-4 text-left">
+    {/* {"No data available"} */}
+    </td>
+  </tr>
+            )}
+  
 </tbody>
 
         </table>

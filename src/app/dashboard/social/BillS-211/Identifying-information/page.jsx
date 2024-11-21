@@ -28,7 +28,7 @@ const Identifyinginformation = ({ }) => {
       {/* Pagination */}
 
       {/* Step Content */}
-      <div className="h-[650px] overflow-y-auto scrollable-content">
+      <div className="h-[600px] overflow-y-auto scrollable-content">
         {currentStep === 1 && (
           <Screenone
             nextStep={nextStep}
@@ -58,10 +58,10 @@ const Identifyinginformation = ({ }) => {
         <div className="flex justify-center space-x-4 mt-[15px] w-full">
           {/* Previous Button */}
           <button
-            className="px-2  h-[27px] rounded-md text-dark hover:bg-gray-300"
+            className={`px-2  h-[27px] rounded-md text-dark ${currentStep===1?'text-gray-300':''}`}
             disabled={currentStep === 1}
             onClick={() => prevStep()}
-            style={{ display: currentStep === 1 ? "none" : "inline-block" }}
+            // style={{ display: currentStep === 1 ? "none" : "inline-block" }}
           >
             <MdOutlineNavigateBefore />
           </button>
@@ -83,10 +83,10 @@ const Identifyinginformation = ({ }) => {
 
           {/* Next Button */}
           <button
-            className="px-2  h-[27px] rounded-md text-dark hover:bg-gray-300"
+            className={`px-2  h-[27px] rounded-md text-dark ${currentStep===7?'text-gray-300':''}`}
             disabled={currentStep === totalSteps}
             onClick={() => nextStep()}
-            style={{ display: currentStep === 7 ? "none" : "inline-block" }}
+            // style={{ display: currentStep === 7 ? "none" : "inline-block" }}
           >
             <MdOutlineNavigateNext />
           </button>
