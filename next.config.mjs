@@ -14,7 +14,7 @@ const nextConfig = {
   },
  
   images: {
-      domains: ['udm-be.sustainext.ai'],
+      domains: ['udm-be.sustainext.ai','sustainextstorage1.blob.core.windows.net'],
   },
   eslint: {
     ignoreDuringBuilds: true,
