@@ -38,7 +38,7 @@ const Preferences = () => {
     const token = localStorage.getItem("token")?.replace(/"/g, "");
     try {
       const response = await axiosInstance.get(
-        `${process.env.BACKEND_API_URL}/organization_preference/`
+        `/organization_preference/`
       );
       const { org_data } = response.data;
       setData(org_data.sdg);
@@ -115,7 +115,7 @@ const Preferences = () => {
               >
                 <div className="flex justify-center h-10  mb-2">
                   <img
-                    src={`${process.env.BACKEND_API_URL}${item.Image}`}
+                    src={`${item.Image}`}
                     alt="cover"
                     className="transition-all w-[80%] aspect-[3/2] object-contain mt-2"
                   />
@@ -146,7 +146,7 @@ const Preferences = () => {
               >
                 <div className="flex justify-center h-10  mb-2">
                   <img
-                    src={`${process.env.BACKEND_API_URL}${item.Image}`}
+                    src={`${item.Image}`}
                     alt="cover"
                     className="transition-all w-[80%] aspect-[3/2] object-contain mt-2"
                   />
@@ -177,7 +177,7 @@ const Preferences = () => {
               >
                 <div className="flex justify-center h-10  mb-2">
                   <img
-                    src={`${process.env.BACKEND_API_URL}${item.Image}`}
+                    src={`${item.Image}`}
                     alt="cover"
                     className="transition-all w-[80%] aspect-[3/2] object-contain mt-2"
                   />
@@ -204,7 +204,7 @@ const Preferences = () => {
             data.map((item) => (
               <img
                 key={item.id}
-                src={`${process.env.BACKEND_API_URL}${item.Image}`}
+                src={`${item.Image}`}
                 alt="cover"
                 className="transition-all"
               />
@@ -230,7 +230,7 @@ const Preferences = () => {
               >
                 <div className="flex justify-center h-10  mb-2">
                   <img
-                    src={`${process.env.BACKEND_API_URL}${item.Image}`}
+                    src={`${item.Image}`}
                     alt="cover"
                     className="transition-all w-[80%] aspect-[3/2] object-contain mt-2"
                   />
@@ -261,7 +261,7 @@ const Preferences = () => {
               >
                 <div className="flex justify-center h-10  mb-2">
                   <img
-                    src={`${process.env.BACKEND_API_URL}${item.Image}`}
+                    src={`${item.Image}`}
                     alt="cover"
                     className="transition-all w-[80%] aspect-[3/2] object-contain mt-2"
                   />
