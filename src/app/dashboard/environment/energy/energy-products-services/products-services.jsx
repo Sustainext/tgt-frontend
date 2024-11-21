@@ -20,6 +20,7 @@ import { Oval } from 'react-loader-spinner';
 import selectWidget3 from '../../../../shared/widgets/Select/selectWidget3';
 import inputnumberWidget from "../../../../shared/widgets/Input/inputnumberWidget";
 import axiosInstance from "../../../../utils/axiosMiddleware";
+import TextareasectionWidgets from "../../../../shared/widgets/Textarea/TextareasectionWidgets"
 const widgets = {
   inputWidget: inputWidget,
   dateWidget: dateWidget,
@@ -30,6 +31,7 @@ const widgets = {
   RemoveWidget: RemoveWidget,
   selectWidget3: selectWidget3,
   inputnumberWidget: inputnumberWidget,
+  TextareasectionWidgets:TextareasectionWidgets,
 };
 
 const view_path = 'gri-environment-energy-302-5a-5b-reduction_in_energy_in_products_and_servies'
@@ -61,7 +63,7 @@ const schema = {
 
       Quantity: {
         type: "string",
-        title: "Quantity",
+        title: "Quantity of reduced energy requirement",
         tooltiptext: "Indicate the quantity of reduced energy requirement"
       },
       Unit: {
@@ -72,9 +74,14 @@ const schema = {
       },
       Baseyear: {
         type: "string",
-        title: "Base year",
+        title: "Base year/Baseline",
         enum: yearRange,
-        tooltiptext: "Indicate the base year used for comparing energy saved before the intervention"
+        tooltiptext: "Indicate the base year/baseline used for comparing energy saved before the intervention"
+      },
+      Rationalebaseyear: {
+        type: "string",
+        title: "Rationale for choosing base year",
+        tooltiptext: "Explain the rationale for choosing base year"
       },
 
       AssignTo: {
@@ -98,7 +105,7 @@ const uiSchema = {
   items: {
     classNames: 'fieldset',
     'ui:order': [
-      'ProductServices', 'Quantity', 'Unit', 'Baseyear','AssignTo', 'FileUpload', 'Remove'
+      'ProductServices', 'Quantity', 'Unit', 'Baseyear','Rationalebaseyear','AssignTo', 'FileUpload', 'Remove'
     ],
 
     ProductServices: {
@@ -127,7 +134,12 @@ const uiSchema = {
         label: false
       },
     },
-
+    Rationalebaseyear: {
+      'ui:widget': 'TextareasectionWidgets',
+      'ui:options': {
+        label: false
+      },
+    },
     AssignTo: {
       "ui:widget": "AssignTobutton",
       'ui:horizontal': true,
@@ -317,7 +329,7 @@ const Productsservices = ({location, year, month}) => {
     <>
 
 
-        <div className={`overflow-auto custom-scrollbar flex`}>
+        <div className={`overflow-auto custom-scrollbar flex py-4`}>
         <div>
           <div>
          
@@ -325,8 +337,8 @@ const Productsservices = ({location, year, month}) => {
 
           <Form
           className='flex'
-            schema={schema}
-            uiSchema={uiSchema}
+          schema={schema}
+          uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

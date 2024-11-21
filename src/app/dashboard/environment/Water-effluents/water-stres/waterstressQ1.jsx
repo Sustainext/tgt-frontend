@@ -424,7 +424,7 @@ const WaterstressQ1 = ({ location, year, month }) => {
       </div>
       {selectedOption === "yes" && (
         <>
-          <div className={`overflow-auto custom-scrollbar flex`}>
+          <div className={`overflow-auto custom-scrollbar flex py-4`}>
             <div>
               <Form
                 className="flex"

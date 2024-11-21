@@ -186,7 +186,7 @@ const Social = () => {
     } else if (supplierTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Non - Discrimination"));
     } else if (materialnewTabs.includes(activeTab)) {
-      dispatch(setHeadertext2("Materials"));
+      dispatch(setHeadertext2("Management of Material Topic"));
     } else if (LegalTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Human Rights and Community Impact"));
     } else if (TaxTabs.includes(activeTab)) {

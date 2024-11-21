@@ -300,7 +300,7 @@ const Outsideorganization = ({location, year, month}) => {
 
   return (
     <>
-      <div className={`overflow-auto custom-scrollbar flex`}>
+      <div className={`overflow-auto custom-scrollbar flex py-4`}>
         <div>
           <Form
             className="flex"

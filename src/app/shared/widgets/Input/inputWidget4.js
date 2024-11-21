@@ -74,7 +74,8 @@ const InputWidget4 = (props) => {
                    scrollHide={true}
                   globalEventOff="scroll"
                   style={{
-                    width: "300px",
+                    minWidth: "200px", // Minimum width
+                    maxWidth: "500px", // Maximum width
                     backgroundColor: "#000",
                     color: "white",
                     fontSize: "12px",

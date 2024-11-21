@@ -52,28 +52,25 @@ const SelectWidget = ({
               {label}
               <MdInfoOutline
                 data-tooltip-id={tooltipId}
-                data-tooltip-content={schema.tooltiptext}
+                data-tooltip-html={schema.tooltiptext}
                 className="mt-0.5 ml-2 w-[30px] text-[14px]"
-                style={{display:schema.display}}
+                style={{ display: schema.display }}
               />
               <ReactTooltip
                 id={tooltipId}
                 place="top"
-      
                 effect="solid"
                 style={{
-                  maxWidth: "800px", // Constrain the maximum width of the tooltip
-                  minWidth: "300px", // Set a minimum width if needed
-                  width: "400", // Auto width
+                  minWidth: "200px", // Minimum width
+                  maxWidth: "500px", // Maximum width
                   backgroundColor: "#000",
                   color: "white",
                   fontSize: "12px",
                   boxShadow: 3,
                   borderRadius: "8px",
-                  padding: "10px",
-                  zIndex: "1000",
+                  zIndex:100,
                 }}
-              />
+              ></ReactTooltip>
             </p>
           </>
         )}
@@ -83,7 +80,7 @@ const SelectWidget = ({
         {/* Render select or input based on state */}
         {!showOtherInput ? (
           <select
-            className={`block w-[20vw] py-2 text-[12px] p-0 custom-select focus:outline-none focus:border-blue-300 border-b-2 border-gray-300 capitalize`}
+            className={`block w-[20vw] py-2 text-[12px] p-0 custom-select focus:outline-none focus:border-blue-300 border-b-2 border-gray-300 capitalize table-scrollbar`}
             value={value}
             onChange={handleChange}
           >

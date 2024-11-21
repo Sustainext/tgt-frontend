@@ -70,7 +70,7 @@ const schema = {
         type: "string",
         title: "Recovery Operations",
         enum: ['Preparation for reuse', 'Recycling', 'Other (please specify)'],
-        tooltiptext: "Recovery: Operation wherein products, components of products,or materials that have become waste are prepared to fulfill a purpose in place of new products, components, or materials that would otherwise have been used for that purpose.Recovery Methods: Preparation for reuse: Checking, cleaning, or repairing operations, by which products or components of products that have become waste are prepared to be put to use for the same purpose for which they were conceived.Recycling: Reprocessing of products or components of products that have become waste, to make new materials",
+        tooltiptext: "<p>Recovery:Operation wherein products, components of products, or materials that have become waste are prepared to fulfill a purpose in place of new products, components, or materials that would otherwise have been used for that purpose. </p> <p> Recovery Methods:Preparation for reuse: Checking, cleaning, or repairing operations, by which products or components of products that have become waste are prepared to be put to use for the same purpose for which they were conceived.</p> <p>Recycling: Reprocessing of products or components of products that have become waste, to make new materials </p>",
         display:"block",
       },
       Site: {
@@ -263,17 +263,17 @@ const Wastedivertedimpact = ({location, year, month}) => {
       LoaderClose();
     }
   };
-  useEffect(() => {
-    if (location && year && month) {
-      loadFormData();
-      toastShown.current = false; // Reset the flag when valid data is present
-    } else {
-      // Only show the toast if it has not been shown already
-      if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
-      }
-    }
-  }, [location, year, month]); // Dependencies // React only triggers this effect if these dependencies change
+  // useEffect(() => {
+  //   if (location && year && month) {
+  //     loadFormData();
+  //     toastShown.current = false; // Reset the flag when valid data is present
+  //   } else {
+  //     // Only show the toast if it has not been shown already
+  //     if (!toastShown.current) {
+  //       toastShown.current = true; // Set the flag to true after showing the toast
+  //     }
+  //   }
+  // }, [location, year, month]); // Dependencies // React only triggers this effect if these dependencies change
   const handleChange = (e) => {
     const newData = e.formData.map((item, index) => ({
       ...item, // Ensure each item retains its structure
@@ -306,12 +306,12 @@ const Wastedivertedimpact = ({location, year, month}) => {
 
   return (
     <>
-      <div className={`overflow-auto custom-scrollbar flex`}>
+      <div className={`overflow-auto custom-scrollbar flex py-4`}>
         <div>
           <Form
             className="flex"
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+            schema={schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

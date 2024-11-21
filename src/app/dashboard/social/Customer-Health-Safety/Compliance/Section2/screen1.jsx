@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import inputWidget3 from "../../../../../shared/widgets/Input/inputWidget3";
+import InputtextWidget from "../../../../../shared/widgets/Input/inputtexWidget";
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -14,7 +14,7 @@ import { Oval } from "react-loader-spinner";
 import { GlobalState } from "@/Context/page";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 const widgets = {
-  inputWidget: inputWidget3,
+  inputWidget: InputtextWidget,
 };
 
 const view_path = "gri-social-compliance-416-2b-statement";
