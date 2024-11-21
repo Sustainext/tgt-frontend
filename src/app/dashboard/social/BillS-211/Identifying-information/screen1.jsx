@@ -19,7 +19,7 @@ const Screenone = ({ nextStep }) => {
   const [isClicked, setIsClicked] = useState(false);
   const isMounted = useRef(true);
   // const data = 1;
-  const [data, setData] = useState();
+  const [data, setData] = useState(null);
   // const fetchBillsone = async () => {
   //   LoaderOpen(); // Assume this is to show some loading UI
 
@@ -255,27 +255,26 @@ const Screenone = ({ nextStep }) => {
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
-      <div className="flex justify-between items-center shadow-sm border-gray-100">
-        <div
-          className={`${
-            open ? "w-[95%] " : "w-[95%]"
-          } flex justify-between items-center`}
-        >
-          <div className="text-left mb-5 ml-6 mt-4">
-            <p className="text-[11px]">Social</p>
-           <p className="gradient-text text-[22px] h-[24px]">
-              Bill S-211 - Fighting Bill Forced Labour and Child Labour in
-              Supply Chains Act
-            </p>
+      <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
+      <div className="w-full">
+            <div className="text-left mb-2 ml-3 pt-5">
+              <p className="text-[11px]">Social</p>
+              <div className="flex">
+                <div className="h-[29px]">
+                  <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
+                  Bill S-211 - Fighting Bill Forced Labour and Child Labour in Supply Chains Act
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
       </div>
       {isClicked ? (
         <>
           <div className="container mx-auto mt-5">
             <div className="flex">
               <div className="w-[72%]">
-                <p className="font-bold  text-md mx-4 ">
+                <p className="font-semibold text-[17px] mb-4 mx-4">
                   {" "}
                   Identifying information
                 </p>
@@ -297,7 +296,7 @@ const Screenone = ({ nextStep }) => {
               </div>
             </div>
           </div>
-          <div className="mx-4 mt-8">
+          <div className="mx-4 mt-5">
             <form className="w-full text-left">
               <div className="mb-5">
                 <label
@@ -308,15 +307,13 @@ const Screenone = ({ nextStep }) => {
                 </label>
                 <div className="relative mb-1">
                   <select
-                    className={`${
-                      open ? "w-[78%]" : "w-[78%]"
-                    } rounded-md border-0 py-4 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
+                    className={`w-[78%] px-2 rounded-md text-[12px] border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                     value={reportname}
                     onChange={handleReportname}
                   >
-                    <option value="default">Select Entity</option>
-                    <option value="Entity">Entity</option>
-                    <option value="GovernmentInsititution">
+                    <option className="text-sm" value="default">Select Entity</option>
+                    <option className="text-sm" value="Entity">Entity</option>
+                    <option className="text-sm" value="GovernmentInsititution">
                       Government Insititution
                     </option>
                     {/* Add more options here as needed */}
@@ -324,7 +321,7 @@ const Screenone = ({ nextStep }) => {
 
                 </div>
                 {error.reportname && (
-                  <p className="text-red-500 ml-1">
+                  <p className="text-red-500 ml-1 text-[12px]">
                     {error.reportname}
                   </p>
                 )}
@@ -342,13 +339,13 @@ const Screenone = ({ nextStep }) => {
                     placeholder="Entity Name"
                     className={`${
                       open ? "w-[78%]" : "w-[78%]"
-                    } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
+                    } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
                     value={reportingentity}
                     onChange={handleReportingentity}
                   ></input>
                 </div>
                 {error.reportingentity && (
-                  <p className="text-red-500 ml-1">
+                  <p className="text-red-500 ml-1 text-[12px]">
                     {error.reportingentity}
                   </p>
                 )}
@@ -367,11 +364,11 @@ const Screenone = ({ nextStep }) => {
                         type="date"
                         value={reportingdateform}
                         onChange={handleReportndate}
-                        className="w-[100%] border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer"
+                        className="w-full border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 px-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer"
                       />
                     </div>
                     {error.reportingdateform && (
-                      <p className="text-red-500 ml-1">
+                      <p className="text-red-500 ml-1 text-[12px]">
                         {error.reportingdateform}
                       </p>
                     )}
@@ -382,23 +379,23 @@ const Screenone = ({ nextStep }) => {
                         type="date"
                         value={reportingdateto}
                         onChange={handleReportndateto}
-                        className="w-[100%] border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer"
+                        className="w-full border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 px-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer"
                       />
                     </div>
                     {error.reportingdateto && (
-                      <p className="text-red-500 ml-1">
+                      <p className="text-red-500 ml-1 text-[12px]">
                         {error.reportingdateto}
                       </p>
                     )}
                   </div>
                 </div>
               </div>
-              <div className="w-[80%] mb-5">
+              <div className="w-[78%] mb-5">
                 <div className="float-right">
                   <button
                     type="button"
                     disabled
-                    className="px-3 py-1.5 font-semibold rounded  w-[80px] text-[12px] bg-blue-400 text-white"
+                    className="px-3 py-1.5 font-semibold rounded  w-[80px] text-[12px] bg-blue-400 text-white cursor-not-allowed"
                   >
                     {" "}
                     Next &gt;
@@ -413,7 +410,7 @@ const Screenone = ({ nextStep }) => {
           <div className="container mx-auto mt-5">
             <div className="flex">
               <div className="w-[75%]">
-                <p className="font-bold  text-md mx-4 ">
+              <p className="font-semibold text-[17px] mb-4 mx-4">
                   {" "}
                   Identifying information
                 </p>
@@ -434,7 +431,7 @@ const Screenone = ({ nextStep }) => {
               </div>
             </div>
           </div>
-          <div className="mx-4 mt-8">
+          <div className="mx-4 mt-5">
             {data !== null ? (
               <>
                 <div className="mb-5">
@@ -446,21 +443,18 @@ const Screenone = ({ nextStep }) => {
                   </label>
                   <div className="relative mb-1">
                     <select
+                    
                       className={`${
                         open ? "w-[78%]" : "w-[78%]"
-                      } rounded-md border-0 py-4 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
+                      } rounded-md border-0 text-[12px] py-3 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                       value={reportname}
 
                     >
-                      <option value="default" >
-                        Select Entity
-                      </option>
-                      <option value="Entity" >
-                        Entity
-                      </option>
-                      <option value="GovernmentInsititution">
-                        Government Insititution
-                      </option>
+                     <option className="text-sm" value="default">Select Entity</option>
+                    <option className="text-sm" value="Entity">Entity</option>
+                    <option className="text-sm" value="GovernmentInsititution">
+                      Government Insititution
+                    </option>
                       {/* Add more options here as needed */}
                     </select>
 
@@ -479,7 +473,7 @@ const Screenone = ({ nextStep }) => {
                       placeholder="Entity Name"
                       className={`${
                         open ? "w-[78%]" : "w-[78%]"
-                      } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
+                      } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
                       defaultValue={reportingentity}
 
                     ></input>
@@ -499,7 +493,7 @@ const Screenone = ({ nextStep }) => {
                           type="date"
                           defaultValue={reportingdateform}
 
-                          className="w-[100%] border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer"
+                          className="w-[100%] border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 px-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer"
                         />
                       </div>
                     </div>
@@ -509,13 +503,13 @@ const Screenone = ({ nextStep }) => {
                           type="date"
                           defaultValue={reportingdateto}
 
-                          className="w-[100%] border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer"
+                          className="w-[100%] border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 px-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer"
                         />
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="w-[80%] mb-5">
+                <div className="w-[78%] mb-5">
                   <div className="float-right">
                     <button
                       type="button"
@@ -539,23 +533,21 @@ const Screenone = ({ nextStep }) => {
                   </label>
                   <div className="relative mb-1">
                     <select
-                     className={`${
-                      open ? "w-[78%]" : "w-[78%]"
-                    } rounded-md border-0 py-4 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
+                     className={`w-[78%] rounded-md border-0 text-[12px] py-3 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                       value={reportname}
                       onChange={handleReportname}
                     >
-                      <option value="default">Select Entity</option>
-                      <option value="Entity">Entity</option>
-                      <option value="GovernmentInsititution">
-                        Government Insititution
-                      </option>
+                      <option className="text-sm" value="default">Select Entity</option>
+                    <option className="text-sm" value="Entity">Entity</option>
+                    <option className="text-sm" value="GovernmentInsititution">
+                      Government Insititution
+                    </option>
                       {/* Add more options here as needed */}
                     </select>
 
                   </div>
                   {error.reportname && (
-                    <p className="text-red-500 ml-1">
+                    <p className="text-red-500 ml-1 text-[12px]">
                       {error.reportname}
                     </p>
                   )}
@@ -571,15 +563,13 @@ const Screenone = ({ nextStep }) => {
                     <input
                       type="text"
                       placeholder="Entity Name"
-                      className={`${
-                        open ? "w-[78%]" : "w-[78%]"
-                      } border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
+                      className={`w-[78%] border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
                       value={reportingentity}
                       onChange={handleReportingentity}
                     ></input>
                   </div>
                   {error.reportingentity && (
-                    <p className="text-red-500 ml-1">
+                    <p className="text-red-500 ml-1 text-[12px]">
                       {error.reportingentity}
                     </p>
                   )}
@@ -598,11 +588,12 @@ const Screenone = ({ nextStep }) => {
                           type="date"
                           value={reportingdateform}
                           onChange={handleReportndate}
-                          className="w-[100%] border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer"
+                          className="w-full border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 px-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer"
                         />
+                       
                       </div>
                       {error.reportingdateform && (
-                        <p className="text-red-500 ml-1">
+                        <p className="text-red-500 ml-1 text-[12px]">
                           {error.reportingdateform}
                         </p>
                       )}
@@ -613,18 +604,18 @@ const Screenone = ({ nextStep }) => {
                           type="date"
                           value={reportingdateto}
                           onChange={handleReportndateto}
-                          className="w-[100%] border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer"
+                          className="w-full border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 px-2 rounded-md py-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer"
                         />
                       </div>
                       {error.reportingdateto && (
-                        <p className="text-red-500 ml-1">
+                        <p className="text-red-500 ml-1 text-[12px]">
                           {error.reportingdateto}
                         </p>
                       )}
                     </div>
                   </div>
                 </div>
-                <div className="w-[80%] mb-5">
+                <div className="w-[78%] mb-5">
                   <div className="float-right">
                     <button
                       type="button"

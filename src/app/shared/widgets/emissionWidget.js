@@ -18,6 +18,8 @@ import {
   setSelectedRows,
   updateSelectedRow,
   toggleSelectAll,
+  setFocusedField,
+  clearFocusedField,
 } from "@/lib/redux/features/emissionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import AssignEmissionModal from "./assignEmissionModal";
@@ -60,7 +62,41 @@ const EmissionWidget = React.memo(
     const isFetching = useRef(false);
     const dropdownRef = useRef(null);
     const inputRef = useRef(null);
-    const quantityRef = useRef(null);
+    const quantity1Ref = useRef(null);
+    const quantity2Ref = useRef(null);
+    const focusedField = useSelector((state) => state.emissions.focusedField);
+
+    // Effect to handle focus based on Redux state
+    useEffect(() => {
+      if (focusedField.rowId === rowId && focusedField.field) {
+        if (focusedField.field === "quantity1" && quantity1Ref.current) {
+          quantity1Ref.current.focus();
+        } else if (focusedField.field === "quantity2" && quantity2Ref.current) {
+          quantity2Ref.current.focus();
+        }
+      }
+    }, [focusedField, rowId]);
+
+    const handleFocus = (fieldName) => {
+      dispatch(
+        setFocusedField({
+          rowId,
+          field: fieldName,
+        })
+      );
+    };
+
+    const handleBlur = (e) => {
+      const relatedTarget = e.relatedTarget;
+      const isMovingWithinWidget =
+        relatedTarget &&
+        (relatedTarget === quantity1Ref.current ||
+          relatedTarget === quantity2Ref.current);
+
+      if (!isMovingWithinWidget) {
+        dispatch(clearFocusedField());
+      }
+    };
 
     // Assign To
     const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
@@ -184,7 +220,13 @@ const EmissionWidget = React.memo(
       fetchBaseCategories();
     }, []);
 
+    // Create cache key function
+    const getCacheKey = (subcategory, region, year) => {
+      return `${subcategory}_${region}_${year}`;
+    };
+
     let wildcard = false;
+
     const fetchActivities = useCallback(
       async (page = 1, customFetchExecuted = false) => {
         if (isFetching.current) return;
@@ -193,15 +235,22 @@ const EmissionWidget = React.memo(
         const updateCacheAndActivities = (data, type = "default") => {
           setActivities((prevData) => {
             const updatedData = [...prevData, ...data];
-            updateCache(subcategory, updatedData);
+            // Update cache with composite key
+            const cacheKey = getCacheKey(subcategory, countryCode, year);
+            updateCache(cacheKey, updatedData);
             return updatedData;
           });
         };
 
-        // Check cache first
-        if (activityCache[subcategory]) {
-          console.log("Using cached activities", activityCache[subcategory]);
-          setActivities(activityCache[subcategory]);
+        // Check cache with composite key
+        const cacheKey = getCacheKey(subcategory, countryCode, year);
+        if (activityCache[cacheKey]) {
+          console.log(
+            "Using cached activities for",
+            cacheKey,
+            activityCache[cacheKey]
+          );
+          setActivities(activityCache[cacheKey]);
           isFetching.current = false;
           return;
         }
@@ -867,7 +916,7 @@ const EmissionWidget = React.memo(
                       : ""
                   }
 `}
-                  disabled={rowType === "assigned"}
+                  disabled={rowType === "assigned" || rowType === "calculated"}
                 >
                   <option className="emissionscopc">Select Category</option>
                   {baseCategories.map((categoryName, index) => (
@@ -888,7 +937,7 @@ const EmissionWidget = React.memo(
                       ? "border-b border-zinc-800"
                       : ""
                   }`}
-                  disabled={rowType === "assigned"}
+                  disabled={rowType === "assigned" || rowType === "calculated"}
                 >
                   <option className="emissionscopc">Select Sub-Category</option>
                   {subcategories.map((sub, index) => (
@@ -926,7 +975,9 @@ const EmissionWidget = React.memo(
                     onChange={(e) => setActivitySearch(e.target.value)}
                     onFocus={toggleDropdown}
                     className={`text-[12px] focus:border-blue-500 focus:outline-none w-full py-1 `}
-                    disabled={rowType === "assigned"}
+                    disabled={
+                      rowType === "assigned" || rowType === "calculated"
+                    }
                   />
 
                   {isDropdownActive && (
@@ -940,7 +991,9 @@ const EmissionWidget = React.memo(
                         setActivitySearch("");
                       }}
                       className={`text-[12px] focus:border-blue-500 focus:outline-none w-full absolute left-0 top-8 z-[100] min-w-[810px]`}
-                      disabled={rowType === "assigned"}
+                      disabled={
+                        rowType === "assigned" || rowType === "calculated"
+                      }
                     >
                       <option value="" className="px-1">
                         {isFetching.current
@@ -979,10 +1032,12 @@ const EmissionWidget = React.memo(
                     <>
                       <div className="flex justify-end ">
                         <input
-                          ref={quantityRef}
+                          ref={quantity1Ref}
                           type="number"
                           value={quantity}
                           onChange={handleQuantityChange}
+                          onFocus={() => handleFocus("quantity1")}
+                          onBlur={handleBlur}
                           placeholder="Enter Value"
                           className="focus:border-blue-500 focus:outline-none text-[12px] w-[7vw] text-right pe-1"
                           step="1"
@@ -1009,10 +1064,12 @@ const EmissionWidget = React.memo(
                       </div>
                       <div className="flex justify-end">
                         <input
-                          ref={quantityRef}
+                          ref={quantity2Ref}
                           type="number"
                           value={quantity2}
                           onChange={handleQuantity2Change}
+                          onFocus={() => handleFocus("quantity2")}
+                          onBlur={handleBlur}
                           placeholder="Enter Value"
                           className="focus:border-blue-500 focus:outline-none text-[12px] w-[6vw] text-right pe-1"
                           step="1"
@@ -1041,10 +1098,12 @@ const EmissionWidget = React.memo(
                   ) : (
                     <div className="flex justify-end">
                       <input
-                        ref={quantityRef}
+                        ref={quantity1Ref}
                         type="number"
                         value={quantity}
                         onChange={handleQuantityChange}
+                        onFocus={() => handleFocus("quantity1")}
+                        onBlur={handleBlur}
                         placeholder="Enter Value"
                         className="focus:border-blue-500 focus:outline-none text-[12px] w-[19.7vw] text-right pe-1"
                         step="1"

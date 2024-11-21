@@ -17,6 +17,7 @@ import { Oval } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
 const ReportCreatedPopup = ({reportname, reportid, isCreateReportModalOpen, setIsCreateReportModalOpen,setActiveStep,orgName,fromDate,toDate ,reportName,statement,userName,userEmail}) => {
     const [isNotifyModalOpen,setIsNotifyModalOpen]=useState(false)
     const [showSuccessMessage,setShowSuccessMessage]=useState(false)
