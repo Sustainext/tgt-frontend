@@ -13,7 +13,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
   const [isClicked, setIsClicked] = useState(false);
   const isMounted = useRef(true);
   // const data = 1;
-  const [data, setData] = useState();
+  const [data, setData] = useState(null);
   const coNextStep = () => {
     nextStep();
   };
@@ -319,7 +319,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                 checked={checkboxStates[option.key]}
                 onChange={handleCheckboxChange(option.key)}
                 disabled={!isChecked}
-                className="mr-3 pt-1 scale-90 rounded-xl"
+                className={`mr-3 pt-1 scale-90 rounded-xl ${isChecked?'cursor-pointer':''}`}
               />
               {option.label}
             </label>
@@ -362,7 +362,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                 checked={checkboxStates[option.key]}
                 onChange={handleCheckboxChange(option.key)}
                 disabled={!isCheckedone}
-                className="mr-3 pt-1 scale-90 rounded-xl"
+                className={`mr-3 pt-1 scale-90 rounded-xl ${isCheckedone?'cursor-pointer':''}`}
               />
               {option.label}
             </label>
@@ -400,7 +400,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                 checked={checkboxStates[option.key]}
                 onChange={handleCheckboxChange(option.key)}
 
-                className="mr-3 pt-1 scale-90 rounded-xl"
+                className={`mr-3 pt-1 scale-90 rounded-xl ${isChecked?'cursor-pointer':''}`}
               />
               {option.label}
             </label>
@@ -443,7 +443,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                 checked={checkboxStates[option.key]}
                 onChange={handleCheckboxChange(option.key)}
 
-                className="mr-3 pt-1 scale-90 rounded-xl"
+                className={`mr-3 pt-1 scale-90 rounded-xl ${isCheckedone?'cursor-pointer':''}`}
               />
               {option.label}
             </label>
@@ -526,7 +526,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                     name="isChecked"
                     checked={isChecked}
                     onChange={handleCheckboxChange("isChecked")}
-                    className="mr-3 pt-1"
+                    className="mr-3 pt-1 cursor-pointer"
                   />
                   Canadian business presence (select all that apply)
                 </label>
@@ -539,7 +539,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                     name="isCheckedone"
                     checked={isCheckedone}
                     onChange={handleCheckboxChange("isCheckedone")}
-                    className="mr-3 pt-1"
+                    className="mr-3 pt-1 cursor-pointer"
                   />
                   Meets size-related thresholds (select all that apply):
                 </label>
@@ -638,7 +638,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                         name="isChecked"
                         checked={isChecked}
                         onChange={handleCheckboxChange("isChecked")}
-                        className="mr-3 pt-1"
+                        className="mr-3 pt-1 cursor-pointer"
 
                       />
                       Canadian business presence (select all that apply)
@@ -652,7 +652,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                         name="isCheckedone"
                         checked={isCheckedone}
                         onChange={handleCheckboxChange("isCheckedone")}
-                        className="mr-3 pt-1"
+                        className="mr-3 pt-1 cursor-pointer"
 
                       />
                       Meets size-related thresholds (select all that apply):
@@ -714,7 +714,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                         name="isChecked"
                         checked={isChecked}
                         onChange={handleCheckboxChange("isChecked")}
-                        className="mr-3 pt-1"
+                        className="mr-3 pt-1 cursor-pointer"
                       />
                       Canadian business presence (select all that apply)
                     </label>
@@ -727,7 +727,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                         name="isCheckedone"
                         checked={isCheckedone}
                         onChange={handleCheckboxChange("isCheckedone")}
-                        className="mr-3 pt-1"
+                        className="mr-3 pt-1 cursor-pointer"
                       />
                       Meets size-related thresholds (select all that apply):
                     </label>

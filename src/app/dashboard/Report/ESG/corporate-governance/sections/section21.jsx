@@ -75,7 +75,7 @@ const Section21=({section9_6_2Ref,orgName,data})=>{
         </p>
         {data["2_23_a"]?data["2_23_a"][3].column1_details && (
             <p className="text-sm mb-4">
-                {data["2_23_a"][2].column1_details}
+                {data["2_23_a"][3].column1_details}
             </p>
         ):""}
 
@@ -87,7 +87,7 @@ const Section21=({section9_6_2Ref,orgName,data})=>{
         </p>
         {data["2_23_a"]?data["2_23_a"][4].column1_details && (
             <p className="text-sm mb-4">
-                {data["2_23_a"][2].column1_details}
+                {data["2_23_a"][4].column1_details}
             </p>
         ):""}
     </div>

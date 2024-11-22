@@ -23,8 +23,8 @@ const Section5=({section12_1_3Ref,data})=>{
         "Category",
         "Sub Category",
         "Activity",
-        "Value 1",
-        "Value 2"
+        "Value",
+        // "Value 2"
     ]
     return (
         <>

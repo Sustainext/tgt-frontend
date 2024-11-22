@@ -64,8 +64,8 @@ const Section6=({section12_1_4Ref,data})=>{
         "Category",
         "Sub Category",
         "Activity",
-        "Value 1",
-        "Value 2"
+        "Value",
+        // "Value 2"
     ]
 
     const col1=[
