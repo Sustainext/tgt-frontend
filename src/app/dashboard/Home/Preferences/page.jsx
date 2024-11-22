@@ -1,13 +1,13 @@
-'use client'
+"use client";
 import React, { useEffect, useState, useRef } from "react";
 import { AiOutlinePlus, AiOutlineEdit } from "react-icons/ai";
 import { RiProgress8Fill } from "react-icons/ri";
-import axios from 'axios';
+import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import axiosInstance from "../../../utils/axiosMiddleware"
+import axiosInstance from "../../../utils/axiosMiddleware";
 
 const Preferences = () => {
   const [edit, setEdit] = useState(false);
@@ -35,10 +35,10 @@ const Preferences = () => {
 
   const fetchpreference = async () => {
     LoaderOpen();
-    const token = localStorage.getItem('token')?.replace(/"/g, "");
+    const token = localStorage.getItem("token")?.replace(/"/g, "");
     try {
       const response = await axiosInstance.get(
-        `${process.env.BACKEND_API_URL}/organization_preference/`
+        `/organization_preference/`
       );
       const { org_data } = response.data;
       setData(org_data.sdg);
@@ -67,7 +67,6 @@ const Preferences = () => {
     }
   };
 
-
   useEffect(() => {
     if (isMounted.current) {
       fetchpreference();
@@ -78,9 +77,9 @@ const Preferences = () => {
     };
   }, []);
 
-  const routeToPage=(id)=>{
-    router.push(`/dashboard/Home/Preferences/pagedata?currentPage=${id}`)
-  }
+  const routeToPage = (id) => {
+    router.push(`/dashboard/Home/Preferences/pagedata?currentPage=${id}`);
+  };
 
   return (
     <>
@@ -110,10 +109,13 @@ const Preferences = () => {
         <div className="grid grid-cols-4 gap-2 mb-3">
           {framework &&
             framework.map((item) => (
-              <div key={item.id} className="relative shadow-sm h-20  border border-gray-200">
+              <div
+                key={item.id}
+                className="relative shadow-sm h-20  border border-gray-200"
+              >
                 <div className="flex justify-center h-10  mb-2">
                   <img
-                    src={`${process.env.BACKEND_API_URL}${item.Image}`}
+                    src={`${item.Image}`}
                     alt="cover"
                     className="transition-all w-[80%] aspect-[3/2] object-contain mt-2"
                   />
@@ -124,7 +126,7 @@ const Preferences = () => {
               </div>
             ))}
           {edit && (
-            <div onClick={()=>routeToPage(2)}>
+            <div onClick={() => routeToPage(2)}>
               <div className="w-[70px] h-[70px]  rounded-lg border border-dashed border-neutral-400 flex justify-center items-center cursor-pointer">
                 <AiOutlinePlus />
               </div>
@@ -138,10 +140,13 @@ const Preferences = () => {
         <div className="grid grid-cols-4 gap-2 mb-3">
           {regulations &&
             regulations.map((item) => (
-              <div key={item.id} className="relative shadow-sm h-20  border border-gray-200">
+              <div
+                key={item.id}
+                className="relative shadow-sm h-20  border border-gray-200"
+              >
                 <div className="flex justify-center h-10  mb-2">
                   <img
-                    src={`${process.env.BACKEND_API_URL}${item.Image}`}
+                    src={`${item.Image}`}
                     alt="cover"
                     className="transition-all w-[80%] aspect-[3/2] object-contain mt-2"
                   />
@@ -152,7 +157,7 @@ const Preferences = () => {
               </div>
             ))}
           {edit && (
-            <div onClick={()=>routeToPage(6)}>
+            <div onClick={() => routeToPage(6)}>
               <div className="w-[70px] h-[70px] rounded-lg border border-dashed border-neutral-400 flex justify-center items-center cursor-pointer">
                 <AiOutlinePlus />
               </div>
@@ -166,10 +171,13 @@ const Preferences = () => {
         <div className="grid grid-cols-4 gap-2 mb-3">
           {targets &&
             targets.map((item) => (
-              <div key={item.id} className="relative shadow-sm h-20  border border-gray-200">
+              <div
+                key={item.id}
+                className="relative shadow-sm h-20  border border-gray-200"
+              >
                 <div className="flex justify-center h-10  mb-2">
                   <img
-                    src={`${process.env.BACKEND_API_URL}${item.Image}`}
+                    src={`${item.Image}`}
                     alt="cover"
                     className="transition-all w-[80%] aspect-[3/2] object-contain mt-2"
                   />
@@ -180,7 +188,7 @@ const Preferences = () => {
               </div>
             ))}
           {edit && (
-            <div onClick={()=>routeToPage(4)}>
+            <div onClick={() => routeToPage(4)}>
               <div className="w-[70px] h-[70px] rounded-lg border border-dashed border-neutral-400 flex justify-center items-center cursor-pointer">
                 <AiOutlinePlus />
               </div>
@@ -194,10 +202,15 @@ const Preferences = () => {
         <div className="grid grid-cols-8 gap-2 mb-3">
           {data &&
             data.map((item) => (
-              <img key={item.id} src={`${process.env.BACKEND_API_URL}${item.Image}`} alt="cover" className="transition-all" />
+              <img
+                key={item.id}
+                src={`${item.Image}`}
+                alt="cover"
+                className="transition-all"
+              />
             ))}
           {edit && (
-            <div onClick={()=>routeToPage(1)}>
+            <div onClick={() => routeToPage(1)}>
               <div className="w-[63px] h-[63px] rounded-lg border border-dashed border-neutral-400 flex justify-center items-center cursor-pointer">
                 <AiOutlinePlus />
               </div>
@@ -211,10 +224,13 @@ const Preferences = () => {
         <div className="grid grid-cols-4 gap-2 mb-3">
           {certifications &&
             certifications.map((item) => (
-              <div key={item.id} className="relative shadow-sm h-20  border border-gray-200">
+              <div
+                key={item.id}
+                className="relative shadow-sm h-20  border border-gray-200"
+              >
                 <div className="flex justify-center h-10  mb-2">
                   <img
-                    src={`${process.env.BACKEND_API_URL}${item.Image}`}
+                    src={`${item.Image}`}
                     alt="cover"
                     className="transition-all w-[80%] aspect-[3/2] object-contain mt-2"
                   />
@@ -225,7 +241,7 @@ const Preferences = () => {
               </div>
             ))}
           {edit && (
-            <div onClick={()=>routeToPage(3)}>
+            <div onClick={() => routeToPage(3)}>
               <div className="w-[70px] h-[70px] rounded-lg border border-dashed border-neutral-400 flex justify-center items-center cursor-pointer">
                 <AiOutlinePlus />
               </div>
@@ -239,10 +255,13 @@ const Preferences = () => {
         <div className="grid grid-cols-4 gap-2 mb-3">
           {ratings &&
             ratings.map((item) => (
-              <div key={item.id} className="relative shadow-sm h-20  border border-gray-200">
+              <div
+                key={item.id}
+                className="relative shadow-sm h-20  border border-gray-200"
+              >
                 <div className="flex justify-center h-10  mb-2">
                   <img
-                    src={`${process.env.BACKEND_API_URL}${item.Image}`}
+                    src={`${item.Image}`}
                     alt="cover"
                     className="transition-all w-[80%] aspect-[3/2] object-contain mt-2"
                   />
@@ -253,7 +272,7 @@ const Preferences = () => {
               </div>
             ))}
           {edit && (
-            <div onClick={()=>routeToPage(5)}>
+            <div onClick={() => routeToPage(5)}>
               <div className="w-[70px] h-[70px] rounded-lg border border-dashed border-neutral-400 flex justify-center items-center cursor-pointer">
                 <AiOutlinePlus />
               </div>
@@ -272,4 +291,3 @@ const Preferences = () => {
 };
 
 export default Preferences;
-

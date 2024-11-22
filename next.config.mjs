@@ -11,22 +11,16 @@ const nextConfig = {
     NEXT_PUBLIC_APP_CLIMATIQ_KEY: "98YJN6V0VC4M5KPQNSVHWCVEM8NT",
     NEXT_PUBLIC_APP_CLIMATIQ_DATAVERSION: "16",
   },
-  i18n: {
-    defaultLocale: "en",
-    locales: ["en", "fr"], // Add all the supported languages
-  },
+
 
   images: {
-    domains: ["udm-staging-be.sustainext.ai"],
+    domains: ["udm-staging-be.sustainext.ai","sustainextstorage1.blob.core.windows.net"],
   },
   eslint: {
     ignoreDuringBuilds: true,
   },
   typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
+
     ignoreBuildErrors: true,
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
@@ -36,12 +30,7 @@ const nextConfig = {
         "process.env.IGNORE_BUILD_ERRORS": JSON.stringify("true"),
       })
     );
-    // if (!dev) {
-    // In production, you may want to handle errors differently
-    // For example, ignore certain types of errors or warnings
-    // Modify webpack config as needed
-
-    // }
+ 
     return config;
   },
   distDir: "custom_build",

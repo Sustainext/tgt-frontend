@@ -5,14 +5,14 @@ import "react-toastify/dist/ReactToastify.css";
 import axiosInstance, { put } from '../../../../utils/axiosMiddleware';
 import { useRouter } from 'next/navigation';
 import { Oval } from 'react-loader-spinner';
-
+import { GlobalState } from '../../../../../Context/page';
 const SDGCards = () => {
   const router = useRouter();
   const [data, setData] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const isMounted = useRef(true);
   const [loopen, setLoOpen] = useState(false);
-
+  const { open } = GlobalState();
   const LoaderOpen = () => {
     setLoOpen(true);
   };
@@ -134,7 +134,7 @@ const SDGCards = () => {
             <div key={item.id} onClick={() => toggleSelect(item.id)}>
               <div className={`relative`}>
                 <img
-                  src={`${process.env.BACKEND_API_URL}${item.Image}`}
+                  src={`${item.Image}`}
                   alt='cover'
                   className="h-36 w-36 transition-all"
                 />
@@ -168,9 +168,10 @@ const SDGCards = () => {
                   <div className='pt-2 text-white'>
                     <p className='font-bold text-sm'>Target : {item.id}</p>
                   </div>
+            
                 </div>
                 <div
-                  className={`absolute right-3 bottom-2 rounded-full border border-gray-300 ${selectedItems.includes(item.id) ? 'bg-white border-[#53ff1a]' : 'bg-white'} transition-all w-5 h-5`}
+                  className={`absolute  ${open ? 'right-24' : 'right-[7.7rem]'} rounded-full border border-gray-500 ${selectedItems.includes(item.id) ? 'bg-white border-[#53ff1a]' : 'bg-white'} transition-all w-5 h-5 -mt-5 mr-1`}
                 >
                   <CiCircleCheck
                     style={{
