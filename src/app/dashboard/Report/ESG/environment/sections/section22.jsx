@@ -27,10 +27,10 @@ const Section22 = ({ section12_4_4Ref, data }) => {
   const column1 = [
     "Energy Quantity",
     "Organisation Metric",
-    "Energy Intensity",
-    "Unit",
-    "Energy Intensity",
-    "Unit",
+    "Energy Intensity 1",
+    "Unit 1",
+    "Energy Intensity 2",
+    "Unit 2",
   ];
   const Tabledata = data["energy_analyse"]
     ? data["energy_analyse"]["energy_intensity"].length > 0
@@ -38,30 +38,30 @@ const Section22 = ({ section12_4_4Ref, data }) => {
           return {
             "Energy Quantity": val.Energy_quantity,
             "Organisation Metric": val.Organization_metric,
-            "Energy Intensity": val.Energy_intensity1,
-            Unit: val.Unit1,
-            "Energy Intensity": val.Energy_intensity2,
-            Unit: val.Unit2,
+            "Energy Intensity 1": val.Energy_intensity1,
+            "Unit 1": val.Unit1,
+            "Energy Intensity 2": val.Energy_intensity2,
+            "Unit 2": val.Unit2,
           };
         })
       : [
           {
             "Energy Quantity": "No data available",
             "Organisation Metric": "No data available",
-            "Energy Intensity": "No data available",
-            Unit: "No data available",
-            "Energy Intensity": "No data available",
-            Unit: "No data available",
+            "Energy Intensity 1": "No data available",
+            "Unit 1": "No data available",
+            "Energy Intensity 2": "No data available",
+            "Unit 2": "No data available",
           },
         ]
     : [
         {
           "Energy Quantity": "No data available",
           "Organisation Metric": "No data available",
-          "Energy Intensity": "No data available",
-          Unit: "No data available",
-          "Energy Intensity": "No data available",
-          Unit: "No data available",
+          "Energy Intensity 1": "No data available",
+            "Unit 1": "No data available",
+            "Energy Intensity 2": "No data available",
+            "Unit 2": "No data available",
         },
       ];
 

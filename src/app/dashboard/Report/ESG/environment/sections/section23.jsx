@@ -40,10 +40,10 @@ const Section23=({section12_4_5Ref,data})=>{
         "Energy reduction",
         'Base year', 
         'Methodology',
-        'Quantity',
-        'Unit',
-         'Quantity',
-        'Unit'
+        'Quantity 1',
+        'Unit 1',
+        'Quantity 2',
+        'Unit 2'
       ];
       const Tabledata =
       data["energy_analyse"] &&
@@ -64,10 +64,10 @@ const Section23=({section12_4_5Ref,data})=>{
         "Energy reduction":val.Energy_reduction,
         'Base year':val.Base_year, 
         'Methodology':val.Methodology,
-        'Quantity':val.Quantity1,
-        'Unit':val.Unit1,
-         'Quantity':val.Quantity2,
-        'Unit':val.Unit2
+        'Quantity 1':val.Quantity1,
+        'Unit 1':val.Unit1,
+         'Quantity 2':val.Quantity2,
+        'Unit 2':val.Unit2
                 });
               }
               return acc;
@@ -81,20 +81,20 @@ const Section23=({section12_4_5Ref,data})=>{
         "Energy reduction":"No data available",
         'Base year':"No data available", 
         'Methodology':"No data available",
-        'Quantity':"No data available",
-        'Unit':"No data available",
-         'Quantity':"No data available",
-        'Unit':"No data available"
+        'Quantity 1':"No data available",
+        'Unit 1':"No data available",
+         'Quantity 2':"No data available",
+        'Unit 2':"No data available"
             },
           ];
 
 
       const column2 = [
         'Name of Product/ Service', 
-        'Reduction in Energy Consumption', 
-        'Unit',
-        'Reduction in Energy Consumption', 
-        'Unit'
+        'Reduction in Energy Consumption 1', 
+        'Unit 1',
+        'Reduction in Energy Consumption 2', 
+        'Unit 2'
       ];
       const Tabledata2 =
       data["energy_analyse"] &&
@@ -111,10 +111,10 @@ const Section23=({section12_4_5Ref,data})=>{
               } else {
                 acc.push({
                   'Name of Product/ Service':val.Product, 
-              'Reduction in Energy Consumption':val.Quantity1, 
-              'Unit':val.Unit1,
-              'Reduction in Energy Consumption':val.Quantity2, 
-              'Unit':val.Unit2
+              'Reduction in Energy Consumption 1':val.Quantity1, 
+              'Unit 1':val.Unit1,
+              'Reduction in Energy Consumption 2':val.Quantity2, 
+              'Unit 2':val.Unit2
                 });
               }
               return acc;
@@ -124,10 +124,10 @@ const Section23=({section12_4_5Ref,data})=>{
         : [
             {
               'Name of Product/ Service':"No data available", 
-              'Reduction in Energy Consumption':"No data available", 
-              'Unit':"No data available",
-              'Reduction in Energy Consumption':"No data available", 
-              'Unit':"No data available"
+              'Reduction in Energy Consumption 1':"No data available", 
+              'Unit 1':"No data available",
+              'Reduction in Energy Consumption 2':"No data available", 
+              'Unit 2':"No data available"
             },
           ];
 
