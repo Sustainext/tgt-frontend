@@ -42,6 +42,8 @@ const inputnumberWidget = ({
               effect="solid"
               style={{
                 backgroundColor: "#000",
+                minWidth: "300px", // Minimum width
+                maxWidth: "500px", // Maximum width
                 color: "white",
                 fontSize: "12px",
                 boxShadow: 3,

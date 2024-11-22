@@ -61,7 +61,7 @@ const schema = {
       },
       Wastediverted: {
         type: "string",
-        title: "Waste diverted",
+        title: "Waste Diverted",
         tooltiptext: "Enter the amount of waste diverted.",
         display:"block",
 
