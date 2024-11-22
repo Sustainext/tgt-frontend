@@ -95,7 +95,7 @@ const uiSchema = {
       "ui:titlediplay": "block",
       "ui:haddingtooltipdisplay": "block",
       "ui:titletooltipdisplay": "block",
-      "ui:Gri": "GRI 306-2b",
+      "ui:Gri": "GRI 306-2a",
       "ui:widget": "TextareaWidgetnew",
       "ui:options": {
         label: false,

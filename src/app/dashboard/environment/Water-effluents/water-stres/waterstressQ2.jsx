@@ -50,7 +50,7 @@ const schema = {
       Source: {
         type: "string",
         title: "Source",
-        enum: ['Surface Water', 'Ground water','Sea water','Municipal water','Third party water','Other'],
+        enum: ['Surface Water', 'Ground water','Sea water','Municipal water','Third party water','ther (please specify)'],
         tooltiptext: "Indicate where does the third-party withdraw water from? ",
       },
       Quantity: {

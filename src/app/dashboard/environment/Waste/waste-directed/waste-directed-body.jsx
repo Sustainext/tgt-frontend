@@ -91,7 +91,7 @@ const Wastedirectedbody = ({location, year, month,setLocationMessage,setYearMess
           title="Waste Directed to Disposal"
           tooltiptext={`This section documents the data corresponding to the total weight of waste generated
           and any contextual information necessary to understand how the data has been complied. `}
-          sdg={['GRI 306-5a','GRI 306-5b','GRI 306-5c','GRI 306-5d','GRI 306-5e']}
+          sdg={['GRI 306-5a','GRI 306-5b','GRI 306-5c','GRI 306-5d']}
           display="block"
           tooltipblock="none"
           location={location}
