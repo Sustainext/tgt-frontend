@@ -87,12 +87,12 @@ const EnvironmentHeader = ({
   return (
     <>
       <div className="ml-2 mb-5">
-        <div className="flex mb-5 gap-4">
+        <div className="flex mb-5 ">
           <div>
             <div className="relative">
               <select
                 name="location"
-                className="border m-0.5 text-[12px] text-neutral-500 appearance-none pr-24 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className="border m-0.5 text-[12px] text-neutral-500 appearance-none w-[240px] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 value={formState.location}
                 onChange={handleChange}
               >
@@ -112,7 +112,9 @@ const EnvironmentHeader = ({
             </div>
             <div>
               {locationMessage && (
-                   <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-1">{locationMessage}</p>
+                <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-1">
+                  {locationMessage}
+                </p>
               )}
             </div>
           </div>
@@ -120,7 +122,7 @@ const EnvironmentHeader = ({
             <div className="ml-3 relative">
               <select
                 name="year"
-                className="border m-0.5 text-[12px] text-neutral-500 appearance-none pr-32 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className="border m-0.5 text-[12px] text-neutral-500 appearance-none w-[240px] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 value={formState.year}
                 onChange={handleChange}
               >
@@ -140,7 +142,9 @@ const EnvironmentHeader = ({
             </div>
             <div>
               {yearMessage && (
-                  <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-1 ml-3">{yearMessage}</p>
+                <p className="text-[#007EEF] text-[12px] top=16  left-0 pl-2 mt-1 ml-3">
+                  {yearMessage}
+                </p>
               )}
             </div>
           </div>
