@@ -103,7 +103,7 @@ const Reclaimedproducts = () => {
               place="top"
               effect="solid"
               style={{
-                width: "290px",
+                width: "550px",
                 backgroundColor: "#000",
                 color: "white",
                 fontSize: "12px",

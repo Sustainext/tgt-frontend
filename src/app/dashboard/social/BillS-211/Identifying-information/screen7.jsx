@@ -16,7 +16,7 @@ const Screenseven = ({ prevStep, activeSteps }) => {
   const [isClicked, setIsClicked] = useState(false);
 //   const isMounted = useRef(true);
   // const data = 1;
-  const [data, setData] = useState();
+  const [data, setData] = useState(null);
 //   const goToSomeStep = () => {
 
 //     activeSteps(102);

@@ -41,25 +41,22 @@ const ScopeTable = ({ title, columns,data }) => {
                 <tr className="text-[13px]">
     {/* Display Category */}
     <td className="border-t border-r border-gray-200 p-4 text-left">
-      {val.Category?val.Category:"No data available"}
+      {val.category?val.category:"No data available"}
     </td>
 
     {/* Display Subcategory */}
     <td className="border-t border-r border-gray-200 p-4 text-left">
-    {val.Subcategory?val.Subcategory:"No data available"}
+    {val.subcategory?val.subcategory:"No data available"}
     </td>
 
     {/* Display Activity */}
     <td className="border-t border-r border-gray-200 p-4 text-left">
-    {val.Activity?val.Activity:"No data available"}
+    {val.activity?val.activity:"No data available"}
     </td>
 
     {/* Display Quantity */}
     <td className="border-t border-r border-gray-200 p-4 text-left">
-    {val.Quantity?val.Quantity+" "+val.Unit:"No data available"}
-    </td>
-    <td className="border-t border-r border-gray-200 p-4 text-left">
-    {val.Quantity2?val.Quantity2+" "+val.Unit2:""}
+    {val.activity_value?val.activity_value+" "+val.activity_unit:"No data available"}
     </td>
   </tr>
               ))
@@ -83,9 +80,6 @@ const ScopeTable = ({ title, columns,data }) => {
     {/* Display Quantity */}
     <td className="border-t border-r border-gray-200 p-4 text-left">
     {"No data available"}
-    </td>
-    <td className="border-t border-r border-gray-200 p-4 text-left">
-    {/* {"No data available"} */}
     </td>
   </tr>
             )}

@@ -114,7 +114,7 @@ const Economic = () => {
     } else if (supplierTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Anti Corruption"));
     } else if (materialnewTabs.includes(activeTab)) {
-      dispatch(setHeadertext2("Materials"));
+      dispatch(setHeadertext2("Management of Material Topic"));
     }  else if (TaxTabs.includes(activeTab)) {
       dispatch(setHeadertext2("Tax Transparency"));
     } else if (PoliticalTabs.includes(activeTab)) {

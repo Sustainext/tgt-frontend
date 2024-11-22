@@ -101,7 +101,7 @@ const Energyproductsservicesbody = ({location, year, month,setLocationMessage, s
           <Productsservices location={location} year={year} month={month}/>
         </AccordionItem>
 
-        <AccordionItem
+        {/* <AccordionItem
           title="Base year or baseline"
           tooltiptext={`This section is dedicated to reporting the reduction in energy consumption within an organization. While calculating
           Reduction in Energy Consumption exclude reductions resulting from reduced production capacity or outsourcing.`}
@@ -113,8 +113,8 @@ const Energyproductsservicesbody = ({location, year, month,setLocationMessage, s
           setYearMessage={setYearMessage}
         >
           <Baseyearenergybaseline location={location} year={year} month={month} />
-        </AccordionItem>
-        <AccordionItem
+        </AccordionItem> */}
+        {/* <AccordionItem
           title="Standards, methodologies, assumptions and calculation tools used"
           tooltiptext={`This section is dedicated to reporting the reduction in energy consumption within an organization. While calculating
           Reduction in Energy Consumption exclude reductions resulting from reduced production capacity or outsourcing.`}
@@ -126,7 +126,7 @@ const Energyproductsservicesbody = ({location, year, month,setLocationMessage, s
           setYearMessage={setYearMessage}
         >
           <ProductsStandardsenergy location={location} year={year} month={month}/>
-        </AccordionItem>
+        </AccordionItem> */}
         {/* Add more accordion items here */}
       </div>
     </>

@@ -212,8 +212,7 @@ const Receivingwaterbody = ({ selectedOrg, year, selectedCorp }) => {
               Have you considered the profile of the receiving waterbody?
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e1`}
-                data-tooltip-content="This section documents data corresponding to  requirements for controlling the quality
-of effluent discharge."
+                data-tooltip-content="Do you consider the profile of the receiving waterbody? if yes then please specify"
                 className="mt-1 ml-2 text-[14px]"
               />
               <ReactTooltip

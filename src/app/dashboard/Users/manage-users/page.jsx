@@ -489,7 +489,7 @@ const ManageUsers = () => {
         </div>
 
         {selectedUser && (
-          <div className="w-[35%] max-h-[82vh] min-h-[80vh] rounded-lg shadow-lg max-w-md">
+          <div className="w-[35%] max-h-[93vh] min-h-[93vh] rounded-lg shadow-lg max-w-md">
             <UserProfile user={selectedUser} onClose={handleCloseProfile} />
           </div>
         )}

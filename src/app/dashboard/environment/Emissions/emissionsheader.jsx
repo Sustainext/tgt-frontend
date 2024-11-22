@@ -116,7 +116,7 @@ const EmissionsHeader = ({
           <div className="relative">
             <select
               name="location"
-              className="border m-0.5 text-[12px] text-neutral-500 appearance-none pr-24 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+               className="border m-0.5 text-[12px] text-neutral-500 appearance-none w-[240px] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               value={location}
               onChange={handleChange}
             >
@@ -147,7 +147,7 @@ const EmissionsHeader = ({
           <div className="ml-3 relative">
             <select
               name="year"
-              className="border m-0.5 text-[12px] text-neutral-500 appearance-none pr-32 rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+               className="border m-0.5 text-[12px] text-neutral-500 appearance-none w-[240px] rounded-md py-2 pl-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               value={year}
               onChange={handleChange}
             >

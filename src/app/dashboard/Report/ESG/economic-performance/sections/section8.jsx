@@ -18,7 +18,7 @@ const Section8 = ({ section11_3Ref, section11_3_1Ref }) => {
           11.3.1 Management of Material Topics
         </h3>
 
-        <p className="text-[15px] text-[#344054] mb-2 font-semibold">
+        {/* <p className="text-[15px] text-[#344054] mb-2 font-semibold">
           Description of organisation's policies or commitments for the material
           topic, along with actions taken to address, prevent or mitigate
           potential negative impacts and mention the actions taken by the
@@ -30,7 +30,7 @@ const Section8 = ({ section11_3Ref, section11_3_1Ref }) => {
           goals, targets, and indicators used to evaluate the process along with
           specific lessons learned and how these have been incoporated to
           organisation's operational policies and procedures.
-        </p>
+        </p> */}
         <p className="text-sm mb-4">No data available</p>
       </div>
     </>
