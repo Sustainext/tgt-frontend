@@ -1,600 +1,737 @@
+//new code
 "use client";
-import { useState, useEffect } from "react";
-import {
-  FaTrashAlt,
-  FaEye,
-  FaEdit,
-  FaAngleRight,
-  FaAngleDown,
-} from "react-icons/fa";
-import { useRouter } from "next/navigation";
-import axiosInstance from "../../utils/axiosMiddleware";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
+import axiosInstance from "@/app/utils/axiosMiddleware";
+import { FaPlus } from "react-icons/fa";
+import NodeDetailModal from "./NodeDetailModal";
 import Link from "next/link";
-import Organization from "./forms/Organization/page";
-import ConfirmationModal from "../../shared/components/ConfirmationModal";
-import EntityView from "../../shared/components/EntityView";
-import {
-  setHeadertext1,
-  setHeadertext2,
-  setHeaderdisplay,
-} from "../../../lib/redux/features/topheaderSlice";
-import { useDispatch } from "react-redux";
 
-const Table = ({ data, labels, currentIndex, rawData }) => {
-  const [newrole, setRole] = useState("");
-  const router = useRouter();
-  const values1 = Object.values(data);
-  const values = values1.filter((item, index) => index !== values1.length - 1);
+const OrgTree = ({ data }) => {
+  const nodeWidth = 180;
+  const nodeHeight = 60;
+  const levelGap = 200;
+  const siblingGap = 80;
+  const [expandedLocations, setExpandedLocations] = useState(new Set());
+  // Add new state for modal
+  const [selectedNode, setSelectedNode] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [expanded, setExpanded] = useState(false);
-  const [childExpanded, setChildExpanded] = useState(false);
-  const [orgStruct, setOrgStruct] = useState(rawData);
-  const [filteredEntity, setFilteredEntity] = useState({});
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedRole = localStorage.getItem("custom_role"); // Fetch the role
-
-      if (storedRole) {
-        setRole(storedRole); // Get role from localStorage
-        console.log("Stored role:", storedRole);
-      }
-    }
-  }, []);
-
-  const minimumWidth = 70;
-  const numberOfChildren = data.children.length;
-  const widthPerEntity = 48;
-
-  const handleExpand = () => {
-    setExpanded(!expanded);
-    if (labels[currentIndex] === "Location") {
-      console.log(childExpanded, "childExpanded");
-    }
-  };
-
-  const separateData = (orgStruct) => {
-    const formattedOrganizations = [];
-    const formattedCorporateEntities = [];
-    const formattedLocations = [];
-
-    console.log("inside separate data function, raw data ->", orgStruct);
-
-    orgStruct?.forEach((org) => {
-      formattedOrganizations.push({
-        id: org.id,
-        name: org.name,
-        type_corporate_entity: org.type_corporate_entity,
-        owner: org.owner,
-        location_of_headquarters: org.location_of_headquarters,
-        phone: org.phone,
-        mobile: org.mobile,
-        fax: org.fax,
-        revenue: org.revenue,
-        sector: org.sector,
-        subindustry: org.subindustry,
-        website: org.website,
-        employeecount: org.employeecount,
-        street: org.address,
-        city: org.city,
-        state: org.state,
-        country: org.countryoperation,
-        zipCode: org.zipCode,
-        date_format: org.date_format,
-        currency: org.currency,
-        timezone: org.timezone,
-        language: org.language,
-        from_date: org.from_date,
-        to_date: org.to_date,
-        sdg: org.sdg,
-        rating: org.rating,
-        certification: org.certification,
-        target: org.target,
-        framework: org.framework,
-        no_of_employees: org.no_of_employees,
-        active: org.active,
-        amount: org.amount,
-        ownership_and_legal_form: org.ownership_and_legal_form,
-        group: org.group,
-        type_of_corporate_entity: org.type_of_corporate_entity,
-        type_of_business_activities: org.type_of_business_activities,
-        type_of_product: org.type_of_product,
-        type_of_services: org.type_of_services,
-      });
-
-      org.corporatenetityorg.forEach((entity) => {
-        formattedCorporateEntities.push({
-          id: entity.id,
-          name: entity.name,
-          corporatetype: entity.corporatetype,
-          ownershipnature: entity.ownershipnature,
-          legalform: entity.legalform,
-          ownership: entity.ownership,
-          revenue: entity.revenue,
-          sector: entity.sector,
-          subindustry: entity.subindustry,
-          website: entity.website,
-          employeecount: entity.employeecount,
-          address: entity.address,
-          city: entity.city,
-          state: entity.state,
-          country: entity.Country,
-          from_date: entity.from_date,
-          to_date: entity.to_date,
-          currency: entity.currency,
-          date_format: entity.date_format,
-          timezone: entity.timezone,
-          language: entity.language,
-          location_headquarters: entity.location_headquarters,
-          phone: entity.phone,
-          mobile: entity.mobile,
-          fax: entity.fax,
-          zipcode: entity.zipcode,
-          framework: entity.framework,
-          organization: entity.organization,
-        });
-
-        entity.location.forEach((location) => {
-          formattedLocations.push({
-            id: location.id,
-            name: location.name,
-            phone: location.phone,
-            mobile: location.mobile,
-            website: location.website,
-            fax: location.fax,
-            sector: location.sector,
-            subindustry: location.sub_industry,
-            employeecount: location.employeecount,
-            revenue: location.revenue,
-            streetaddress: location.streetaddress,
-            city: location.city,
-            state: location.state,
-            country: location.country,
-            zipCode: location.zipcode,
-            date_format: location.dateformat,
-            from_date: location.from_date,
-            to_date: location.to_date,
-            currency: location.currency,
-            timezone: location.timezone,
-            language: location.language,
-            location_type: location.location_type,
-            area: location.area,
-            latitude: location.latitude,
-            longitude: location.longitude,
-          });
-        });
-      });
-    });
-
-    return {
-      formattedOrganizations,
-      formattedCorporateEntities,
-      formattedLocations,
+  // Add handleNodeClick function
+  const handleNodeClick = (node) => {
+    const nodeData = {
+      ...node,
+      organization: findOrganization(node),
+      corporate: node.type === "location" ? findCorporate(node) : null,
     };
+    setSelectedNode(nodeData);
+    setIsModalOpen(true);
   };
 
-  const filterOrgStruct = (orgStruct, viewType, dataItem) => {
-    const separatedData = separateData(orgStruct);
-    console.log("filtering ->", viewType, dataItem);
-    console.log("separated data", separatedData);
-
-    if (viewType === "Corporate Entity") {
-      const found = separatedData.formattedOrganizations.filter((item) => {
-        console.log(
-          "organisation comparison",
-          item.name,
-          dataItem["Organisation Name"]
-        );
-        return item.name === dataItem["Organisation Name"];
-      });
-
-      console.log("found", found);
-      return found;
-    } else if (viewType === "Location") {
-      const found = separatedData.formattedCorporateEntities.filter((item) => {
-        console.log("entity comparison", item.name, dataItem["Entity Name"]);
-        return item.name === dataItem["Entity Name"];
-      });
-      console.log("found", found);
-      return found;
-    } else if (viewType === undefined) {
-      const found = separatedData.formattedLocations.filter((item) => {
-        console.log(
-          "location comparison",
-          item.name,
-          dataItem["Location Unit"]
-        );
-        return item.name === dataItem["Location Unit"];
-      });
-      console.log("found", found);
-      return found;
-    }
-
-    return orgStruct;
-  };
-
-  const [showEntityView, setShowEntityView] = useState(false);
-  const [viewType, setViewType] = useState("");
-
-  const handleEntityView = (type, item) => {
-    setViewType(type);
-    const filteredOrgStruct = filterOrgStruct(orgStruct, type, item);
-    setFilteredEntity(filteredOrgStruct);
-    setShowEntityView(true);
-  };
-
-  const closeEntityView = () => {
-    setShowEntityView(false);
-  };
-
-  const handleEntityEdit = (type, item) => {
-    setViewType(type);
-    const filteredOrgStruct = filterOrgStruct(orgStruct, type, item);
-    const dataToPass = {
-      type: type,
-      item: item,
-      filteredData: filterOrgStruct(orgStruct, type, item),
-    };
-    console.log("data to pass", dataToPass);
-    setFilteredEntity(filteredOrgStruct);
-    const encodedData = encodeURIComponent(JSON.stringify(dataToPass));
-    if (dataToPass.type === "Corporate Entity")
-      router.push(
-        `/dashboard/OrgStructure/forms/Organization?data=${encodedData}`
-      );
-    else if (dataToPass.type === "Location")
-      router.push(`/dashboard/OrgStructure/forms/Entity?data=${encodedData}`);
-    else
-      router.push(`/dashboard/OrgStructure/forms/Location?data=${encodedData}`);
-  };
-
-  const handleEntityDelete = async (type, item) => {
-    setIsDeleteConfirmationOpen(false);
-    try {
-      const filteredOrgStruct = await filterOrgStruct(orgStruct, type, item);
-      console.log("item", filteredOrgStruct);
-      if (!filteredOrgStruct || !filteredOrgStruct[0].id) {
-        throw new Error("Invalid or missing ID from filteredOrgStruct");
-      }
-
-      let endpoint;
-      if (type === "Corporate Entity") {
-        endpoint = `${process.env.BACKEND_API_URL}/organization_activity/${filteredOrgStruct[0].id}/`;
-      }
-      if (type === "Location") {
-        endpoint = `${process.env.BACKEND_API_URL}/corporate/${filteredOrgStruct[0].id}/`;
-      } else if (type === undefined) {
-        endpoint = `${process.env.BACKEND_API_URL}/location/${filteredOrgStruct[0].id}/`;
-      }
-      if (!endpoint) {
-        throw new Error(`Endpoint not set for type: ${type}`);
-      }
-
-      await axiosInstance
-        .delete(endpoint)
-        .then((response) => {
-          console.log(`Deleted ${type} with ID ${filteredOrgStruct[0].id}`);
-          window.location.reload();
-        })
-        .catch((error) => {
-          console.error(
-            "Error deleting entity:",
-            error.response ? error.response.data : error.message
-          );
-        });
-    } catch (error) {
-      console.error("Error in handleEntityDelete:", error.message);
-    }
-  };
-
-  const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] =
-    useState(false);
-
-  const closeDeleteConfirmation = () => {
-    setIsDeleteConfirmationOpen(false);
-  };
-
-  const handleDelete = (type, data) => {
-    setIsDeleteConfirmationOpen(true);
-  };
-
-  const [isNewRole, setIsNewRole] = useState(false);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedRole = localStorage.getItem("custom_role"); // Fetch the role
-
-      if (storedRole) {
-        setIsNewRole(storedRole === "true"); // Get role from localStorage
-        console.log("Stored role:", storedRole);
-      }
-    }
-  }, []);
-
-  return (
-    <>
-      <tr className="my-2 cursor-pointer">
-        <td className="py-4 h-12 flex justify-center items-center">
-          {data.children ? (
-            expanded ? (
-              <div>
-                <div onClick={handleExpand}>
-                  <FaAngleDown />
-                </div>
-                {labels[currentIndex] !== "" && numberOfChildren ? (
-                  <div
-                    className="h-[0px] absolute rotate-90 border border-sky-600"
-                    style={{
-                      width: `${
-                        minimumWidth + numberOfChildren * widthPerEntity
-                      }px`,
-                      left: `calc(-1.7rem - ${numberOfChildren} * 1.5rem)`,
-                      top: `calc(4.5rem + ${numberOfChildren} * 1.3rem)`,
-                      background:
-                        "linear-gradient(90deg, #007EEF 0%, #2AE4FF 100%)",
-                    }}
-                  ></div>
-                ) : (
-                  ""
-                )}
-              </div>
-            ) : (
-              <div className="flex items-center">
-                {labels[currentIndex] !== "Corporate Entity" ? (
-                  <div className="w-[25px] h-[0px] border border-sky-600 ms-4"></div>
-                ) : (
-                  ""
-                )}
-                <div onClick={handleExpand}>
-                  <FaAngleRight />
-                </div>
-              </div>
-            )
-          ) : (
-            ""
-          )}
-        </td>
-        {values.map((item, index) => {
-          return (
-            <td className="py-2" key={index}>
-              {item}
-            </td>
-          );
-        })}
-        <td className="py-2 px flex justify-left items-center space-x-3 text-neutral-500">
-          <FaEye
-            style={{ fontSize: "20px" }}
-            onClick={() => handleEntityView(labels[currentIndex], data)}
-          />
-          {isNewRole && (
-            <>
-              <FaEdit
-                style={{ fontSize: "20px" }}
-                onClick={() => handleEntityEdit(labels[currentIndex], data)}
-              />
-              <FaTrashAlt
-                style={{ fontSize: "20px" }}
-                onClick={() => handleDelete(labels[currentIndex], data)}
-              />
-            </>
-          )}
-        </td>
-      </tr>
-      {data.children && expanded && (
-        <tr>
-          <td colSpan={values.length + 2}>
-            <div style={{ margin: "10px 0 10px 0px" }}>
-              <TableList
-                data={data.children}
-                labels={labels}
-                currentIndex={currentIndex}
-                rawData={rawData}
-              />
-            </div>
-          </td>
-        </tr>
-      )}
-      {showEntityView && (
-        <EntityView
-          onClose={closeEntityView}
-          data={filteredEntity}
-          viewType={viewType}
-        />
-      )}
-      <div>
-        <ConfirmationModal
-          isOpen={isDeleteConfirmationOpen}
-          onClose={closeDeleteConfirmation}
-          onConfirm={() => handleEntityDelete(labels[currentIndex], data)}
-          message="Are you sure you want to delete this entity?"
-        />
-      </div>
-    </>
-  );
-};
-
-const TableList = ({ data, labels, currentIndex, rawData }) => {
-  if (!data || data.length === 0) {
-    return (
-      <p className="flex justify-center items-center text-red-600">
-        No Data available
-      </p>
+  // Helper functions to find parent nodes
+  const findOrganization = (node) => {
+    if (node.type === "organization") return node.name;
+    const org = transformedData.find((org) =>
+      org.children?.some(
+        (child) =>
+          child.name === node.name ||
+          child.children?.some((loc) => loc.name === node.name)
+      )
     );
-  }
-
-  const propertyNames1 = Object.keys(data[0]);
-  const propertyNames = propertyNames1.filter(
-    (item) => item !== "children" && item !== "id"
-  );
-
-  return (
-    <div className="my-4 ms-4">
-      <div
-        className={`flex justify-between items-center w-2/3 ${
-          labels[currentIndex] === "location" ? "ms-[27px]" : "ms-[10px]"
-        }`}
-      >
-        <div
-          className={`w-full h-[31px] text-neutral-500 text-[17px] font-bold leading-snug tracking-tight ${
-            labels[currentIndex] !== "Location" ? "" : "ms-12"
-          }`}
-        >
-          {labels[currentIndex]}
-        </div>
-      </div>
-      <table className="w-full py-4 text-sm">
-        <thead className="font-sm font-semibold border-b border-black border-opacity-10 ">
-          <tr>
-            <th className="py-2 text-left w-2"></th>
-            {propertyNames.map((item, index) => (
-              <th
-                className="py-4 text-left text-neutral-500 text-xs font-bold leading-[15px]"
-                key={index}
-                style={{
-                  width: `${
-                    item === "Sub Industry"
-                      ? "25%"
-                      : 100 / (propertyNames.length + 1)
-                  }%`,
-                }}
-              >
-                {item}
-              </th>
-            ))}
-            <th
-              className="py-2 text-left text-neutral-500 text-xs font-bold leading-[15px]"
-              style={{
-                width: `${100 / (propertyNames.length + 5)}%`,
-              }}
-            >
-              Action
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((item) => (
-            <Table
-              data={item}
-              key={item.id}
-              labels={labels}
-              currentIndex={currentIndex + 1}
-              rawData={rawData}
-            />
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-};
-
-const Structure = () => {
-  const levelLabels = ["Organisation", "Corporate Entity", "Location"];
-  const [hData, setHData] = useState([]);
-  const [rawData, setRawData] = useState([]);
-  const [newrole, setRole] = useState("");
-  const dispatch = useDispatch();
-
-  const getAuthToken = () => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token")?.replace(/"/g, "");
-    }
-    return "";
-  };
-  const token = getAuthToken();
-
-  useEffect(() => {
-    fetchHierarchy();
-  }, [token]);
-
-  const fetchHierarchy = () => {
-    axiosInstance
-      .get(`${process.env.BACKEND_API_URL}/structure`)
-      .then((response) => {
-        setRawData(response.data);
-        const filtered = filterData(response.data);
-        setHData(filtered);
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-      });
+    return org?.name;
   };
 
-  const filterData = (data) => {
-    const extractedData = data.map((org) => ({
-      "Organisation Name": org.name,
-      Country: org.countryoperation,
-      Sector: org.sector,
-      "Sub Industry": org.subindustry,
-      children: org.corporatenetityorg?.map((entity) => ({
-        "Entity Name": entity.name,
-        "Sub-industry": entity.subindustry,
-        Country: entity.Country,
-        "No Of Employees": entity.employeecount,
-        Revenue: entity.currency + " " + entity.revenue,
-        children: entity.location?.map((location) => ({
-          "Location Unit": location.name,
-          "Location Type": location.typelocation,
-          Address: location.streetaddress,
-          City: location.city,
-          "No Of Employees": location.employeecount,
-          children: [],
+  const findCorporate = (node) => {
+    if (node.type === "corporate") return node.name;
+    const org = transformedData.find((org) =>
+      org.children?.some((corp) =>
+        corp.children?.some((loc) => loc.name === node.name)
+      )
+    );
+    const corp = org?.children?.find((corp) =>
+      corp.children?.some((loc) => loc.name === node.name)
+    );
+    return corp?.name;
+  };
+
+  const transformData = (apiData) => {
+    if (!apiData || apiData.length === 0) return null;
+
+    const organizations = apiData.map((org) => ({
+      id: org.name,
+      name: org.name,
+      type: "organization",
+      info: `${org.sector || ""}, ${org.countryoperation || ""}`,
+      children: org.corporatenetityorg?.filter(Boolean).map((entity) => ({
+        id: entity.name,
+        name: entity.name,
+        type: "corporate",
+        info: `${entity.sector || ""}, ${entity.Country || ""}`,
+        locationCount: entity.location?.length || 0,
+        children: entity.location?.filter(Boolean).map((loc) => ({
+          id: loc.name,
+          name: loc.name,
+          type: "location",
+          info: `${loc.typelocation || "Head office"}`,
         })),
       })),
     }));
-    return extractedData;
+
+    return organizations;
   };
-  useEffect(() => {
-    dispatch(setHeadertext1(""));
-    dispatch(setHeaderdisplay("none"));
-    dispatch(setHeadertext2("Organizational Structure"));
-  }, [dispatch]);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedRole = localStorage.getItem("custom_role"); // Fetch the role
+  const calculateLayout = (nodes, level = 0, startY = 0) => {
+    if (!nodes || !Array.isArray(nodes) || nodes.length === 0) return [];
 
-      if (storedRole) {
-        setRole(storedRole); // Get role from localStorage
-        console.log("Stored role:", storedRole);
+    let results = [];
+    let currentY = startY;
+
+    nodes.forEach((node, index) => {
+      if (!node) return;
+
+      if (index > 0) {
+        currentY += siblingGap;
       }
-    }
-  }, []);
-  const isNewRole = newrole === "true";
-  return (
-    <div className="w-full my-4">
-      <div className="flex justify-end items-center space-x-2 me-8">
-        {isNewRole && (
-          <>
-            <Link
-              href={"/dashboard/OrgStructure/forms/Organization"}
-              className="text-sky-600 text-xs font-bold leading-[15px] flex items-center border border-sky-600 py-2 px-4 hover:text-white hover:bg-sky-600 transition-all"
-            >
-              Add new Organisation
-            </Link>
-            <Link
-              href={"/dashboard/OrgStructure/forms/Entity"}
-              className="text-sky-600 text-xs font-bold leading-[15px] flex items-center border border-sky-600 py-2 px-4 hover:text-white hover:bg-sky-600 transition-all"
-            >
-              Add new Corporate
-            </Link>
-            <Link
-              href={"/dashboard/OrgStructure/forms/Location"}
-              className="text-sky-600 text-xs font-bold leading-[15px] flex items-center border border-sky-600 py-2 px-4 hover:text-white hover:bg-sky-600 transition-all"
-            >
-              Add new Location
-            </Link>
-          </>
-        )}
-      </div>
 
-      <TableList
-        data={hData}
-        labels={levelLabels}
-        currentIndex={0}
-        rawData={rawData}
+      const x = level * (nodeWidth + levelGap);
+      const y = currentY;
+
+      results.push({
+        ...node,
+        x,
+        y,
+        width: nodeWidth,
+        height: nodeHeight,
+      });
+
+      if (node.type !== "location" && node.children?.length > 0) {
+        if (node.type === "corporate") {
+          results.push({
+            id: `${node.id}-locations`,
+            name: `${node.locationCount} Locations`,
+            type: "location-header",
+            parentId: node.id,
+            x: x + nodeWidth + levelGap,
+            y: y + nodeHeight / 2 - 15,
+            locationCount: node.locationCount,
+            children: node.children,
+          });
+
+          if (expandedLocations.has(node.id)) {
+            const childrenResult = calculateLayout(
+              node.children.filter(Boolean),
+              level + 1,
+              y
+            );
+            results = results.concat(childrenResult);
+
+            // Add location column headers after each location node
+            childrenResult.forEach((locationNode) => {
+              if (locationNode.type === "location") {
+                results.push({
+                  id: `${locationNode.id}-spacer`,
+                  name: "",
+                  type: "location-spacer",
+                  parentId: node.id,
+                  x: locationNode.x + nodeWidth + levelGap,
+                  y: locationNode.y + nodeHeight / 2 - 15,
+                });
+              }
+            });
+
+            if (childrenResult.length > 0) {
+              const lastChild = childrenResult[childrenResult.length - 1];
+              currentY = lastChild.y;
+            }
+          }
+        } else {
+          const childrenResult = calculateLayout(
+            node.children.filter(Boolean),
+            level + 1,
+            y
+          );
+          results = results.concat(childrenResult);
+
+          if (childrenResult.length > 0) {
+            const lastChild = childrenResult[childrenResult.length - 1];
+            currentY = lastChild.y;
+          }
+        }
+      }
+
+      currentY += nodeHeight;
+    });
+
+    return results;
+  };
+
+  const renderCurvedLine = (startX, startY, endX, endY) => {
+    const midX = (startX + endX) / 2;
+    return `M ${startX} ${startY} C ${midX} ${startY}, ${midX} ${endY}, ${endX} ${endY}`;
+  };
+
+  const renderStraightLine = (startX, startY, endX, endY) => {
+    return {
+      d: `M ${startX} ${startY} L ${endX} ${endY}`,
+      strokeDasharray: "4,4",
+    };
+  };
+
+  const getNodeStyle = (type) => {
+    switch (type) {
+      case "organization":
+        return {
+          rect: "fill-white stroke-transparent hover:stroke-blue-600/60 stroke-[1.5]",
+          text: "text-[#007eef]",
+          group: "cursor-pointer",
+        };
+      case "corporate":
+        return {
+          rect: "fill-white stroke-transparent hover:stroke-green-600/60 stroke-[1.5]",
+          text: "text-[#007eef]",
+          group: "cursor-pointer",
+        };
+      case "location":
+        return {
+          rect: "fill-white stroke-transparent hover:stroke-purple-600/60 stroke-[1.5]",
+          text: "text-[#007eef]",
+          group: "cursor-pointer",
+        };
+      case "location-header":
+        return {
+          // rect: "fill-white stroke-transparent hover:stroke-purple-600/60 stroke-[1.5]",
+          text: "text-[#007eef]",
+          group: "cursor-pointer",
+        };
+      case "location-spacer":
+        return {
+          rect: "fill-none stroke-none",
+          text: "text-purple-600",
+          group: "",
+        };
+      default:
+        return {
+          rect: "fill-white stroke-transparent hover:stroke-gray-600 stroke-[1.5] fill-gray-600/60",
+          text: "[color:#007eef]",
+          group: "cursor-pointer",
+        };
+    }
+  };
+
+  const toggleLocations = (corporateId, event) => {
+    event.stopPropagation();
+    setExpandedLocations((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(corporateId)) {
+        newSet.delete(corporateId);
+      } else {
+        newSet.add(corporateId);
+      }
+      return newSet;
+    });
+  };
+
+  const transformedData = transformData(data);
+  const layoutNodes = transformedData ? calculateLayout(transformedData) : [];
+
+  const maxWidth =
+    layoutNodes.length > 0
+      ? Math.max(...layoutNodes.map((node) => node.x)) + nodeWidth + 100
+      : 300;
+  const maxHeight =
+    layoutNodes.length > 0
+      ? Math.max(...layoutNodes.map((node) => node.y)) + nodeHeight + 100
+      : 200;
+
+  // Quick add
+  const [hoveredNode, setHoveredNode] = useState(null);
+  const [quickAddModal, setQuickAddModal] = useState({
+    isOpen: false,
+    type: null,
+    parentNode: null,
+    isSibling: false,
+  });
+
+  // Add this handler
+  const handleQuickAdd = (e, type, parentNode, isSibling = false) => {
+    e.stopPropagation();
+    setQuickAddModal({
+      isOpen: true,
+      type,
+      parentNode,
+      isSibling,
+    });
+  };
+
+  // Add buttons for navigation aligned with hierarchy
+  const AddButtons = () => (
+    <div className="flex mt-8 mb-4" style={{ marginLeft: "50px" }}>
+      <div style={{ width: nodeWidth, marginRight: levelGap }}>
+        <Link
+          href="/dashboard/OrgStructure/forms/Organization"
+          className="text-sky-600 text-xs font-bold leading-[15px] flex items-center justify-center border border-sky-600 py-2 px-4 hover:text-white hover:bg-sky-600 transition-all w-full rounded-md"
+        >
+          <FaPlus className="mr-2" size={12} />
+          Add Organization
+        </Link>
+      </div>
+      <div style={{ width: nodeWidth, marginRight: levelGap }}>
+        <Link
+          href="/dashboard/OrgStructure/forms/Entity"
+          className="text-sky-600 text-xs font-bold leading-[15px] flex items-center justify-center border border-sky-600 py-2 px-4 hover:text-white hover:bg-sky-600 transition-all w-full rounded-md"
+        >
+          <FaPlus className="mr-2" size={12} />
+          Add Corporate
+        </Link>
+      </div>
+      <div style={{ width: nodeWidth }}>
+        <Link
+          href="/dashboard/OrgStructure/forms/Location"
+          className="text-sky-600 text-xs font-bold leading-[15px] flex items-center justify-center border border-sky-600 py-2 px-4 hover:text-white hover:bg-sky-600 transition-all w-full rounded-md"
+        >
+          <FaPlus className="mr-2" size={12} />
+          Add Location
+        </Link>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="w-full overflow-auto">
+      <AddButtons />
+      <svg width={maxWidth} height={maxHeight} className="ml-0">
+        <g transform={`translate(50, 50)`}>
+          {/* Connection lines */}
+          {layoutNodes.map((node) => {
+            if (node.type === "location-header") {
+              const parentNode = layoutNodes.find(
+                (n) => n.id === node.parentId
+              );
+              if (parentNode) {
+                const linePath = renderStraightLine(
+                  parentNode.x + nodeWidth,
+                  parentNode.y + nodeHeight / 2,
+                  node.x,
+                  node.y + 15
+                );
+                return (
+                  <path
+                    key={`${parentNode.id}-${node.id}`}
+                    d={linePath.d}
+                    fill="none"
+                    stroke="#CBD5E1"
+                    strokeWidth="1.5"
+                    strokeDasharray={linePath.strokeDasharray}
+                  />
+                );
+              }
+            }
+
+            if (node.children) {
+              if (node.type === "corporate") {
+                if (expandedLocations.has(node.id)) {
+                  return node.children.map((child, index) => {
+                    const childNode = layoutNodes.find(
+                      (n) =>
+                        n.name === child.name && n.type !== "location-header"
+                    );
+                    if (childNode) {
+                      return (
+                        <path
+                          key={`${node.name}-${child.name}-${index}`}
+                          d={renderCurvedLine(
+                            node.x + nodeWidth,
+                            node.y + nodeHeight / 2,
+                            childNode.x,
+                            childNode.y + nodeHeight / 2
+                          )}
+                          fill="none"
+                          stroke="#CBD5E1"
+                          strokeWidth="1.5"
+                        />
+                      );
+                    }
+                    return null;
+                  });
+                }
+              } else if (node.type === "organization") {
+                return node.children.map((child, index) => {
+                  const childNode = layoutNodes.find(
+                    (n) => n.name === child.name && n.type !== "location-header"
+                  );
+                  if (childNode) {
+                    return (
+                      <path
+                        key={`${node.name}-${child.name}-${index}`}
+                        d={renderCurvedLine(
+                          node.x + nodeWidth,
+                          node.y + nodeHeight / 2,
+                          childNode.x,
+                          childNode.y + nodeHeight / 2
+                        )}
+                        fill="none"
+                        stroke="#CBD5E1"
+                        strokeWidth="1.5"
+                      />
+                    );
+                  }
+                  return null;
+                });
+              }
+            }
+            return null;
+          })}
+
+          {/* Nodes */}
+          {layoutNodes.map((node) => {
+            const style = getNodeStyle(node.type);
+            const isLocationHeader = node.type === "location-header";
+            const isLocationSpacer = node.type === "location-spacer";
+            const isExpanded = expandedLocations.has(node.parentId);
+
+            if (isLocationHeader || isLocationSpacer) {
+              if (isLocationHeader) {
+                const displayText = `${node.locationCount} Location${
+                  node.locationCount !== 1 ? "s" : " "
+                }`;
+
+                return (
+                  <g
+                    key={node.id}
+                    transform={`translate(${node.x + 60},${node.y + 12})`}
+                    className="cursor-pointer"
+                    onClick={(e) => toggleLocations(node.parentId, e)}
+                  >
+                    <g className="flex items-center ml-2">
+                      <text
+                        className={`text-sm font-medium ${style.text}`}
+                        dominantBaseline="middle"
+                        fill="#007eef"
+                      >
+                        {displayText}
+                      </text>
+                      <g
+                        transform={`translate(${
+                          displayText.length * 12 + 10
+                        }, 0)`}
+                      >
+                        {isExpanded ? (
+                          <g transform="translate(0, 0)">
+                            <circle r="8" fill="#F3F4F6" />
+                            {/* Use SVG path instead of FA icon for better control */}
+                            <path
+                              d="M4 8 L8 4 L12 8"
+                              stroke="#6B7280"
+                              strokeWidth="2"
+                              fill="none"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              transform="translate(-8, -8)"
+                            />
+                          </g>
+                        ) : (
+                          <g transform="translate(0, 0)">
+                            <circle r="8" fill="#F3F4F6" />
+                            {/* Use SVG path instead of FA icon for better control */}
+                            <path
+                              d="M4 4 L8 8 L12 4"
+                              stroke="#6B7280"
+                              strokeWidth="2"
+                              fill="none"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              transform="translate(-8, -8)"
+                            />
+                          </g>
+                        )}
+                      </g>
+                    </g>
+                  </g>
+                );
+              } else {
+                return (
+                  <g
+                    key={node.id}
+                    transform={`translate(${node.x},${node.y})`}
+                    className="cursor-pointer"
+                    onClick={(e) => toggleLocations(node.parentId, e)}
+                  >
+                    <g transform="translate(0, -2)">
+                      <circle r="8" fill="#F3F4F6" />
+                    </g>
+                  </g>
+                );
+              }
+            }
+
+            return (
+              <g
+                key={`${node.name}-${node.type}`}
+                transform={`translate(${node.x},${node.y})`}
+                className={`transition-all duration-200 ${style.group}`}
+                // onClick={() => handleNodeClick(node)}
+                onMouseEnter={() => setHoveredNode(node.id)}
+                onMouseLeave={() => setHoveredNode(null)}
+              >
+                <rect
+                  width={nodeWidth}
+                  height={nodeHeight}
+                  rx="4"
+                  className={`${style.rect} stroke-[1.5] shadow-sm`}
+                />
+                <text
+                  x={nodeWidth / 2}
+                  y={nodeHeight / 2 - 8}
+                  className={`text-sm font-medium ${style.text}`}
+                  textAnchor="middle"
+                  fill="#007eef"
+                  pointerEvents="none"
+                >
+                  {node.name}
+                </text>
+                <text
+                  x={nodeWidth / 2}
+                  y={nodeHeight / 2 + 12}
+                  className="text-xs text-gray-500"
+                  textAnchor="middle"
+                  pointerEvents="none"
+                >
+                  {node.info}
+                </text>
+                {/* Quick Add Buttons - Outside the node */}
+                {hoveredNode === node.id && (
+                  <>
+                    {/* Right Quick Add Button (for children) with tooltip on top */}
+                    {(node.type === "organization" ||
+                      node.type === "corporate") && (
+                      <g
+                        transform={`translate(${nodeWidth + 10}, ${
+                          nodeHeight / 2
+                        })`}
+                        className="cursor-pointer"
+                        onClick={(e) =>
+                          handleQuickAdd(
+                            e,
+                            node.type === "organization"
+                              ? "corporate"
+                              : "location",
+                            node,
+                            false
+                          )
+                        }
+                      >
+                        <g className="group">
+                          {/* Tooltip - Positioned above the right button */}
+                          <g className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <rect
+                              x="-65"
+                              y="-45"
+                              width="130"
+                              height="28"
+                              rx="4"
+                              className="fill-white"
+                              filter="drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.1))"
+                            />
+                            <text
+                              x="0"
+                              y="-31"
+                              fontSize="11"
+                              fill="#4B5563"
+                              textAnchor="middle"
+                              dominantBaseline="middle"
+                              className="font-medium"
+                            >
+                              Quick Add{" "}
+                              {node.type === "organization"
+                                ? "Corporate"
+                                : "Location"}
+                            </text>
+                          </g>
+
+                          {/* Button Circle with Hover Effect */}
+                          <circle
+                            r="10"
+                            className="transition-all duration-200 fill-white stroke-[#007eef] group-hover:fill-[#007eef]"
+                            strokeWidth="1"
+                            filter="drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.1))"
+                          />
+                          {/* Plus Icon with Hover Effect */}
+                          <line
+                            x1="-4"
+                            y1="0"
+                            x2="4"
+                            y2="0"
+                            className="transition-all duration-200 stroke-[#007eef] group-hover:stroke-white"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                          />
+                          <line
+                            x1="0"
+                            y1="-4"
+                            x2="0"
+                            y2="4"
+                            className="transition-all duration-200 stroke-[#007eef] group-hover:stroke-white"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                          />
+                        </g>
+                      </g>
+                    )}
+
+                    {/* Bottom Quick Add Button (for siblings) with tooltip on right */}
+                    <g
+                      transform={`translate(${nodeWidth / 2}, ${
+                        nodeHeight + 10
+                      })`}
+                      className="cursor-pointer"
+                      onClick={(e) => handleQuickAdd(e, node.type, node, true)}
+                    >
+                      <g className="group">
+                        {/* Tooltip - Positioned to the right of bottom button */}
+                        <g className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                          <rect
+                            x="0"
+                            y="-14"
+                            width="130"
+                            height="28"
+                            rx="4"
+                            className="fill-white"
+                            filter="drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.1))"
+                          />
+                          <text
+                            x="65"
+                            y="0"
+                            fontSize="11"
+                            fill="#4B5563"
+                            textAnchor="middle"
+                            dominantBaseline="middle"
+                            className="font-medium"
+                          >
+                            Quick Add{" "}
+                            {node.type.charAt(0).toUpperCase() +
+                              node.type.slice(1)}
+                          </text>
+                        </g>
+
+                        {/* Button Circle with Hover Effect */}
+                        <circle
+                          r="10"
+                          className="transition-all duration-200 fill-white stroke-[#007eef] group-hover:fill-[#007eef]"
+                          strokeWidth="1"
+                          filter="drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.1))"
+                        />
+                        {/* Plus Icon with Hover Effect */}
+                        <line
+                          x1="-4"
+                          y1="0"
+                          x2="4"
+                          y2="0"
+                          className="transition-all duration-200 stroke-[#007eef] group-hover:stroke-white"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                        />
+                        <line
+                          x1="0"
+                          y1="-4"
+                          x2="0"
+                          y2="4"
+                          className="transition-all duration-200 stroke-[#007eef] group-hover:stroke-white"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                        />
+                      </g>
+                    </g>
+                  </>
+                )}
+              </g>
+            );
+          })}
+        </g>
+      </svg>
+      <NodeDetailModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        nodeData={selectedNode}
+        nodeType={selectedNode?.type}
+        rawData={data} // Pass the original API data
       />
     </div>
   );
 };
 
-export default Structure;
+const OrganizationTreePage = () => {
+  const [orgData, setOrgData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.get(
+          `${process.env.BACKEND_API_URL}/structure`
+        );
+        setOrgData(response.data);
+      } catch (error) {
+        console.error("Error fetching organization data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Add buttons for navigation aligned with hierarchy
+  const AddButtons = () => (
+    <div className="flex mb-8" style={{ marginLeft: "50px" }}>
+      <div style={{ width: nodeWidth, marginRight: levelGap }}>
+        <Link
+          href="/dashboard/OrgStructure/forms/Organization"
+          className="text-sky-600 text-xs font-bold leading-[15px] flex items-center justify-center border border-sky-600 py-2 px-4 hover:text-white hover:bg-sky-600 transition-all w-full"
+        >
+          Add Organization
+        </Link>
+      </div>
+      <div style={{ width: nodeWidth, marginRight: levelGap }}>
+        <Link
+          href="/dashboard/OrgStructure/forms/Entity"
+          className="text-sky-600 text-xs font-bold leading-[15px] flex items-center justify-center border border-sky-600 py-2 px-4 hover:text-white hover:bg-sky-600 transition-all w-full"
+        >
+          Add Corporate
+        </Link>
+      </div>
+      <div style={{ width: nodeWidth }}>
+        <Link
+          href="/dashboard/OrgStructure/forms/Location"
+          className="text-sky-600 text-xs font-bold leading-[15px] flex items-center justify-center border border-sky-600 py-2 px-4 hover:text-white hover:bg-sky-600 transition-all w-full"
+        >
+          Add Location
+        </Link>
+      </div>
+    </div>
+  );
+
+  if (!orgData) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-gray-600">Loading organization structure...</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="w-full bg-gray-50 p-8 rounded-lg">
+      <div className="text-[22px] font-medium font-['Manrope'] leading-relaxed gradient-text pb-6">
+        Organization Structure
+      </div>
+      <hr className="mb-4" />
+      <div className="mb-8">
+        <div className="mb-2">
+          <h1 className="text-xl">Organization Hierarchy</h1>
+        </div>
+        <div className="text-gray-600">
+          Click on the any Organization, Corporate or Location to view the
+          details about them.
+        </div>
+      </div>
+      <OrgTree data={orgData} />
+    </div>
+  );
+};
+
+export default OrganizationTreePage;

@@ -8,10 +8,11 @@ import "react-tooltip/dist/react-tooltip.css";
 import Significantwastebody from "./significant-waste-body";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import EnvironmentHeade2 from "../../environmentheader2";
 const Significantwaste = () => {
-  const [activeMonth, setActiveMonth] = useState(1);
-  const [location, setLocation] = useState("");
   const [year, setYear] = useState();
+  const [selectedOrg, setSelectedOrg] = useState("");
+  const [selectedCorp, setSelectedCorp] = useState("");
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -98,7 +99,7 @@ const Significantwaste = () => {
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-            Topic management disclosure
+          Significant waste related impact
             {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section is dedicated to the calculation of Energy Intensity Ratios based on organizational metrics. These ratios quantify the energy demand per unit of activity, output, or any other organization-specific metric" className="mt-1.5 ml-2 text-[15px]" />
                         <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
@@ -157,25 +158,18 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
             ))}
         </div>
       </div>
-      <EnvironmentHeader
-        activeMonth={activeMonth}
-        setActiveMonth={setActiveMonth}
-        location={location}
-        setLocation={setLocation}
+      <EnvironmentHeade2
+        selectedOrg={selectedOrg}
+        setSelectedOrg={setSelectedOrg}
+        selectedCorp={selectedCorp}
+        setSelectedCorp={setSelectedCorp}
         year={year}
         setYear={setYear}
-        locationMessage={locationMessage}
-        setLocationMessage={setLocationMessage}
-        yearMessage={yearMessage}
-        setYearMessage={setYearMessage}
       />
       <Significantwastebody
-        location={location}
+        selectedOrg={selectedOrg}
+        selectedCorp={selectedCorp}
         year={year}
-        month={activeMonth}
-        setLocationMessage={setLocationMessage}
-        yearMessage={yearMessage}
-        setYearMessage={setYearMessage}
       />
     </>
   );

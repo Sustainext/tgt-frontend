@@ -50,7 +50,7 @@ const schema = {
       Source: {
         type: "string",
         title: "Source",
-        enum: ['Surface Water', 'Ground water','Sea water','Municipal water','Third party water','Other'],
+        enum: ['Surface Water', 'Ground water','Sea water','Municipal water','Third party water','ther (please specify)'],
         tooltiptext: "Indicate where does the third-party withdraw water from? ",
       },
       Quantity: {
@@ -280,7 +280,7 @@ const WaterstressQ2 = ({location, year, month}) => {
 
   return (
     <>
-      <div className={`overflow-auto custom-scrollbar flex`}>
+      <div className={`overflow-auto custom-scrollbar flex py-4`}>
         <div>
           <Form
             className="flex"

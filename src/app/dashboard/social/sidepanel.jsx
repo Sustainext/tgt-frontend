@@ -272,6 +272,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
 
           {/* Bill S-211 ends */}
           <div>
+            
             <button
               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full ${
                 activeTab === "Employee Hires & Turnover" ||

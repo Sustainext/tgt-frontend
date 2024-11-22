@@ -394,6 +394,10 @@ const emissionsSlice = createSlice({
       error: null,
     },
     scopeReRender: false,
+    focusedField: {
+      rowId: null, // 'scope1_0', 'scope2_1', etc.
+      field: null, // 'quantity1', 'quantity2'
+    },
   },
   reducers: {
     setUserData: (state, action) => {
@@ -567,6 +571,15 @@ const emissionsSlice = createSlice({
       state.users.status = "idle";
       state.users.error = null;
     },
+    setFocusedField: (state, action) => {
+      state.focusedField = action.payload;
+    },
+    clearFocusedField: (state) => {
+      state.focusedField = {
+        rowId: null,
+        field: null,
+      };
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -732,6 +745,8 @@ export const {
   resetScope3DataStatus,
   resetUsersStatus,
   toggleScopeReRender,
+  setFocusedField,
+  clearFocusedField,
 } = emissionsSlice.actions;
 
 export default emissionsSlice.reducer;

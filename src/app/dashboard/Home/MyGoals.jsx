@@ -250,7 +250,7 @@ const MyGoals = () => {
             </button>
           </div>
 
-          <div className="p-4 h-[188px]">
+          <div className="p-4 h-[188px] overflow-y-auto table-scrollbar">
             {activeTab === "upcoming" && (
               <div>
                 {goals.upcoming == "" ? (

@@ -44,7 +44,7 @@ const inputWidget = ({
          
           {id.startsWith("root_0") && (
             <>
-             <p className="flex text-[13px] w-[20vw]  h-[35px] text-neutral-950 font-[400] mb-1 leading-[15px]">
+             <p className="flex text-[13px] h-[35px] text-neutral-950 font-[400] mb-1 leading-[15px] ml-1">
             {label}
             <MdInfoOutline
               data-tooltip-id={tooltipId}
@@ -57,7 +57,8 @@ const inputWidget = ({
               place="top"
               effect="solid"
               style={{
-                width:"400px",
+                minWidth: "200px", // Minimum width
+                maxWidth: "500px", // Maximum width
                 backgroundColor: "#000",
                 color: "white",
                 fontSize: "12px",

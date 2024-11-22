@@ -336,7 +336,7 @@ const TaskManagement = () => {
       </div>
   
       {/* Task List Area */}
-      <div className="p-1 h-[188px]">
+      <div className="p-1 h-[188px] table-scrollbar ">
         {tasks[activeTab]?.length === 0 ? (
           <EmptyTasksView onAddTask={() => setIsCreateTaskModalOpen(true)} />
         ) : (
