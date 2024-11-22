@@ -40,10 +40,7 @@ const Energyconsumed = ({ open }) => {
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
-      <div
-        className="flex flex-col justify-start overflow-x-hidden "
-        onClick={toggleDrawerclose}
-      >
+      <div className="flex flex-col justify-start overflow-x-hidden ">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
             <div className="text-left mb-2 ml-3 pt-5">
@@ -98,7 +95,7 @@ const Energyconsumed = ({ open }) => {
           </div>
         </div>
 
-        <div className="ml-3 flex relative" onClick={toggleDrawerclose}>
+        <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
             Energy consumed inside the organization
             <MdInfoOutline
@@ -166,28 +163,27 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
             ))}
         </div>
       </div>
-      <div  onClick={toggleDrawerclose}>
-      <EnvironmentHeader
-        activeMonth={activeMonth}
-        setActiveMonth={setActiveMonth}
-        location={location}
-        setLocation={setLocation}
-        year={year}
-        setYear={setYear}
-        locationMessage={locationMessage}
-        setLocationMessage={setLocationMessage}
-        yearMessage={yearMessage}
-        setYearMessage={setYearMessage}
-      />
-      <EnergyConsumedBody
-        location={location}
-        year={year}
-        month={activeMonth}
-        setLocationMessage={setLocationMessage}
-        setYearMessage={setYearMessage}
-      />
-      </div>
 
+        <EnvironmentHeader
+          activeMonth={activeMonth}
+          setActiveMonth={setActiveMonth}
+          location={location}
+          setLocation={setLocation}
+          year={year}
+          setYear={setYear}
+          locationMessage={locationMessage}
+          setLocationMessage={setLocationMessage}
+          yearMessage={yearMessage}
+          setYearMessage={setYearMessage}
+        />
+        <EnergyConsumedBody
+          location={location}
+          year={year}
+          month={activeMonth}
+          setLocationMessage={setLocationMessage}
+          setYearMessage={setYearMessage}
+        />
+     
     </>
   );
 };
