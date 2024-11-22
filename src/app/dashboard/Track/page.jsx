@@ -15,6 +15,7 @@ import {
   setMiddlename,
 } from "../../../lib/redux/features/topheaderSlice";
 import { useDispatch } from "react-redux";
+
 const Index = () => {
   const [activeModule, setActiveModule] = useState("Environment");
   const [contentSize, setContentSize] = useState({ width: 0, height: 0 });
@@ -26,10 +27,10 @@ const Index = () => {
     setActiveModule(module);
   };
   useEffect(() => {
-    dispatch(setHeadertext1("Analyse"));
-    dispatch(setHeaderdisplay("block"));
+    dispatch(setHeadertext1("Track"));
+    dispatch(setHeaderdisplay(null));
     dispatch(setHeadertext2(activeModule));
-    dispatch(setMiddlename("Track"));
+    dispatch(setMiddlename(null));
   }, [activeModule, dispatch]);
   useLayoutEffect(() => {
     const updateSizes = () => {

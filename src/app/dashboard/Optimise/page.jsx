@@ -1,8 +1,22 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import {
+  setHeadertext1,
+  setHeadertext2,
+  setHeaderdisplay,
+  setMiddlename,
+} from "../../../lib/redux/features/topheaderSlice";
+import { useDispatch } from "react-redux";
 
 const OptimiseApp = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setHeadertext1(""));
+    dispatch(setHeaderdisplay("none"));
+    dispatch(setHeadertext2("Optimise"));
+  }, [dispatch]);
 
   return (
     <div className="relative w-full">
