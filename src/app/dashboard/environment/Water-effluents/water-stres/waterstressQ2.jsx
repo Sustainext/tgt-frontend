@@ -35,12 +35,10 @@ const widgets = {
   WaterinputWidget: WaterinputWidget,
   SelectdisableWidget: SelectdisableWidget,
 };
-
 const view_path =
   "gri-environment-water-303-3b-water_withdrawal_areas_water_stress";
 const client_id = 1;
 const user_id = 1;
-
 const schema = {
   type: "array",
   items: {
@@ -323,7 +321,7 @@ const WaterstressQ2 = ({ location, year, month }) => {
     setEnabledRows((prev) => prev.filter((_, i) => i !== index)); 
   };
   useEffect(() => {
-    console.log("Enabled rows updated", enabledRows);
+    console.log("Enabled rows updated test", enabledRows);
   }, [enabledRows]);
 
   return (
@@ -421,5 +419,4 @@ const WaterstressQ2 = ({ location, year, month }) => {
     </>
   );
 };
-
 export default WaterstressQ2;
