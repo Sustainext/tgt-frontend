@@ -1,5 +1,4 @@
-
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { MdInfoOutline } from "react-icons/md";
@@ -13,9 +12,17 @@ const WaterinputWidget = ({
   uiSchema = {},
   schema = {},
   id,
-
   isEnabled = false, // Add isEnabled prop with default value
 }) => {
+  const inputRef = useRef();
+
+  // Focus input if enabled
+  useEffect(() => {
+    if (isEnabled && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isEnabled]);
+
   const handleChange = (event) => {
     onChange(event.target.value);
   };
@@ -61,6 +68,7 @@ const WaterinputWidget = ({
       )}
       <div>
         <input
+          ref={inputRef} // Attach ref to input
           className="block w-[20vw] py-2 text-[12px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300 mb-3 text-right placeholders pr-2"
           placeholder={placeholder || `Enter ${label}`}
           type="number"
