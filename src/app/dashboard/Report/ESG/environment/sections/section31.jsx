@@ -23,7 +23,7 @@ Description of organisation's policies or commitments for the material topic, al
 {/* <p className="text-[15px] text-[#344054] mb-2 font-semibold">
 Process used to track the effectiveness of the actions and mention goals, targets, and indicators used to evaluate the process along with specific lessons learned and how these have been incoporated to organisation's operational policies and procedures.
 </p> */}
-<p className="text-sm mb-4">No data available</p>
+{/* <p className="text-sm mb-4">No data available</p> */}
 
 </div>
         </>
