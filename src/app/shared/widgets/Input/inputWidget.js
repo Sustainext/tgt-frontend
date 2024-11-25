@@ -40,7 +40,7 @@ const inputWidget = ({
     <div className="mb-3 px-1">
       {/* Conditionally show label and tooltip based on the id */}
      
-        <div className="relative w-[68%]">
+        <div className="relative w-[100%]">
          
           {id.startsWith("root_0") && (
             <>

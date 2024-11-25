@@ -1,5 +1,5 @@
 "use client";
-import { useState,useRef,useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import TableSidebar1 from "./TableSidebar1";
 import TableSidebar2 from "./TableSidebar2";
 import axiosInstance from "../../../../utils/axiosMiddleware";
@@ -8,22 +8,30 @@ import Table2 from "./Table2";
 import Table3 from "./Table3";
 import { column1 } from "./data";
 import { yearInfo } from "@/app/shared/data/yearInfo";
-import { Oval } from 'react-loader-spinner';
+import { Oval } from "react-loader-spinner";
 import AnalyseHeader2 from "../../AnalyseHeader2";
 import AnalyseHeader3 from "../../AnalyseHeader3";
 import { setYear } from "date-fns";
 
-const Section1 = ({selectedOrg,selectedCorp,year,isBoxOpen,activeMonth,setSelectedOrg,setSelectedCorp,setSelectedYear,setActiveMonth}) => {
-    const [
-        percentageOfEmployeesWithinGovernmentBodies,
-        setPercentageOfEmployeesWithinGovernmentBodies,
-      ] = useState([]);
-     
+const Section1 = ({
+  selectedOrg,
+  selectedCorp,
+  year,
+  isBoxOpen,
+  activeMonth,
+  setSelectedOrg,
+  setSelectedCorp,
+  setSelectedYear,
+  setActiveMonth,
+}) => {
+  const [
+    percentageOfEmployeesWithinGovernmentBodies,
+    setPercentageOfEmployeesWithinGovernmentBodies,
+  ] = useState([]);
+
   const toastShown = useRef(false);
- 
- 
+
   const [loopen, setLoOpen] = useState(false);
-  
 
   const LoaderOpen = () => {
     setLoOpen(true);
@@ -33,27 +41,25 @@ const Section1 = ({selectedOrg,selectedCorp,year,isBoxOpen,activeMonth,setSelect
     setLoOpen(false);
   };
 
- 
   const fetchData = async () => {
-
     LoaderOpen();
     setPercentageOfEmployeesWithinGovernmentBodies([]);
-   
+
     try {
       const response = await axiosInstance.get(
         `/sustainapp/get_diversity_inclusion_analysis/`,
-        { params: {
+        {
+          params: {
             organisation: selectedOrg,
             corporate: selectedCorp,
             start: `${year}-01-01`,
             end: `${year}-12-31`,
-          } }
+          },
+        }
       );
       const data = response.data;
 
-      const {
-        percentage_of_employees_within_government_bodies,
-      } = data;
+      const { percentage_of_employees_within_government_bodies } = data;
 
       const formatGovernanceBodiesData = (data) => {
         return data.map((item) => ({
@@ -74,14 +80,11 @@ const Section1 = ({selectedOrg,selectedCorp,year,isBoxOpen,activeMonth,setSelect
         }));
       };
 
-     
-        setPercentageOfEmployeesWithinGovernmentBodies(
-          formatGovernanceBodiesData(
-            percentage_of_employees_within_government_bodies
-          )
-        );
-       
-
+      setPercentageOfEmployeesWithinGovernmentBodies(
+        formatGovernanceBodiesData(
+          percentage_of_employees_within_government_bodies
+        )
+      );
 
       LoaderClose();
     } catch (error) {
@@ -90,38 +93,36 @@ const Section1 = ({selectedOrg,selectedCorp,year,isBoxOpen,activeMonth,setSelect
     }
   };
 
-
-
-
-
   useEffect(() => {
-    if ((selectedOrg && year)) {
-        fetchData();
-        toastShown.current = false;
+    if (selectedOrg && year) {
+      fetchData();
+      toastShown.current = false;
     } else {
-        if (!toastShown.current) {
-            toastShown.current = true;
-        }
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
     }
-}, [selectedOrg, year, selectedCorp]);
+  }, [selectedOrg, year, selectedCorp]);
 
   return (
     <div>
       <div>
-      <div>
-           <div className="mt-5 mb-2 mx-5 text-[15px] text-[#344054]">Diversity and Inclusion (1/2)</div>
-            <AnalyseHeader2
-          activeMonth={activeMonth}
-          setActiveMonth={setActiveMonth}
-          selectedOrg={selectedOrg}
-          setSelectedOrg={setSelectedOrg}
-          selectedCorp={selectedCorp}
-          setSelectedCorp={setSelectedCorp}
-          year={year}
-          setYear={setSelectedYear}
-        />
+        <div>
+          <div className="mt-5 mb-2 mx-5 text-[15px] text-[#344054]">
+            Diversity and Inclusion (1/2)
+          </div>
+          <AnalyseHeader2
+            activeMonth={activeMonth}
+            setActiveMonth={setActiveMonth}
+            selectedOrg={selectedOrg}
+            setSelectedOrg={setSelectedOrg}
+            selectedCorp={selectedCorp}
+            setSelectedCorp={setSelectedCorp}
+            year={year}
+            setYear={setSelectedYear}
+          />
           <div className="flex">
-          <div className={`ps-4 w-[100%] me-4`}>
+            <div className={`ps-4 w-[100%] me-4`}>
               <div className="mb-6">
                 <div
                   id="ep1"
@@ -149,21 +150,21 @@ const Section1 = ({selectedOrg,selectedCorp,year,isBoxOpen,activeMonth,setSelect
               </div>
             </div>
             <div
-          style={{
-            position: `${isBoxOpen ? "unset" : "sticky"}`,
-            top: "10rem",
-            // zIndex: "0",
-            height: "fit-content",
-            backgroundColor: "white",
-            paddingBottom: "1rem",
-          }}
-          className=" mb-8 me-2"
-        >
-          <TableSidebar1 />
-        </div>
+              style={{
+                position: `${isBoxOpen ? "unset" : "sticky"}`,
+                top: "10rem",
+                // zIndex: "0",
+                height: "fit-content",
+                backgroundColor: "white",
+                paddingBottom: "1rem",
+              }}
+              className=" mb-8 me-2"
+            >
+              <TableSidebar1 />
+            </div>
           </div>
         </div>
-      
+
         {loopen && (
           <div className=" fixed inset-0 flex items-center justify-center z-[100] bg-black bg-opacity-50">
             <Oval

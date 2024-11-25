@@ -45,7 +45,7 @@ const SelectWidget = ({
 
   return (
     <div className="mb-3 px-1">
-      <div className="relative w-[68%]">
+      <div className="relative w-[100%]">
         {id.startsWith("root_0") && (
           <>
             <p className="flex text-[13px] h-[35px] text-neutral-950 font-[400] mb-1 leading-[15px] ml-1">
