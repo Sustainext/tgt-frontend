@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import { FaPlus } from "react-icons/fa";
+import QuickAddModal from "./QuickAddModal";
 import NodeDetailModal from "./NodeDetailModal";
 import Link from "next/link";
 
@@ -15,6 +16,7 @@ const OrgTree = ({ data }) => {
   // Add new state for modal
   const [selectedNode, setSelectedNode] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeNode, setActiveNode] = useState(null);
 
   // Add handleNodeClick function
   const handleNodeClick = (node) => {
@@ -25,6 +27,7 @@ const OrgTree = ({ data }) => {
     };
     setSelectedNode(nodeData);
     setIsModalOpen(true);
+    setActiveNode(node.id); // Set active node when clicked
   };
 
   // Helper functions to find parent nodes
@@ -57,18 +60,18 @@ const OrgTree = ({ data }) => {
     if (!apiData || apiData.length === 0) return null;
 
     const organizations = apiData.map((org) => ({
-      id: org.name,
+      id: org.id,
       name: org.name,
       type: "organization",
       info: `${org.sector || ""}, ${org.countryoperation || ""}`,
       children: org.corporatenetityorg?.filter(Boolean).map((entity) => ({
-        id: entity.name,
+        id: entity.id,
         name: entity.name,
         type: "corporate",
         info: `${entity.sector || ""}, ${entity.Country || ""}`,
         locationCount: entity.location?.length || 0,
         children: entity.location?.filter(Boolean).map((loc) => ({
-          id: loc.name,
+          id: loc.id,
           name: loc.name,
           type: "location",
           info: `${loc.typelocation || "Head office"}`,
@@ -180,19 +183,19 @@ const OrgTree = ({ data }) => {
     switch (type) {
       case "organization":
         return {
-          rect: "fill-white stroke-transparent hover:stroke-blue-600/60 stroke-[1.5]",
+          rect: "fill-white stroke-transparent hover:fill-white hover:drop-shadow-lg",
           text: "text-[#007eef]",
           group: "cursor-pointer",
         };
       case "corporate":
         return {
-          rect: "fill-white stroke-transparent hover:stroke-green-600/60 stroke-[1.5]",
+          rect: "fill-white stroke-transparent hover:fill-white hover:drop-shadow-lg",
           text: "text-[#007eef]",
           group: "cursor-pointer",
         };
       case "location":
         return {
-          rect: "fill-white stroke-transparent hover:stroke-purple-600/60 stroke-[1.5]",
+          rect: "fill-white stroke-transparent hover:fill-white hover:drop-shadow-lg",
           text: "text-[#007eef]",
           group: "cursor-pointer",
         };
@@ -248,18 +251,48 @@ const OrgTree = ({ data }) => {
     isOpen: false,
     type: null,
     parentNode: null,
-    isSibling: false,
   });
 
-  // Add this handler
-  const handleQuickAdd = (e, type, parentNode, isSibling = false) => {
+  // Update handleQuickAdd function
+  const handleQuickAdd = (e, type, node, isSibling = false) => {
     e.stopPropagation();
-    setQuickAddModal({
-      isOpen: true,
-      type,
-      parentNode,
-      isSibling,
-    });
+
+    if (type === "corporate") {
+      // For adding corporate entities, find and set organization as parent
+      const organizationName = findOrganization(node);
+      setQuickAddModal({
+        isOpen: true,
+        type,
+        parentNode: {
+          // ...node,
+          name: organizationName,
+        },
+      });
+    } else if (type === "location") {
+      // For adding locations, use findCorporate to get the corporate entity parent
+      const corporateEntity = transformedData
+        .find((org) =>
+          org.children?.some((corp) => corp.name === findCorporate(node))
+        )
+        ?.children?.find((corp) => corp.name === findCorporate(node));
+
+      const organizationName = findOrganization(node);
+
+      setQuickAddModal({
+        isOpen: true,
+        type,
+        parentNode: {
+          ...corporateEntity, // Use corporate entity as parent
+          organization: organizationName,
+        },
+      });
+    } else {
+      setQuickAddModal({
+        isOpen: true,
+        type,
+        parentNode: node,
+      });
+    }
   };
 
   // Add buttons for navigation aligned with hierarchy
@@ -295,16 +328,104 @@ const OrgTree = ({ data }) => {
     </div>
   );
 
+  const MAX_NODE_TEXT_LENGTH = 20;
+  const MAX_INFO_TEXT_LENGTH = 25;
+
+  const TruncatedNodeContent = ({
+    name,
+    info,
+    nodeWidth,
+    nodeHeight,
+    activeNodeId,
+    nodeId,
+  }) => {
+    const isNameTruncated = name.length > MAX_NODE_TEXT_LENGTH;
+    const isInfoTruncated = info.length > MAX_INFO_TEXT_LENGTH;
+    const shouldShowTooltip = isNameTruncated || isInfoTruncated;
+
+    const truncatedName = isNameTruncated
+      ? `${name.substring(0, MAX_NODE_TEXT_LENGTH)}...`
+      : name;
+    const truncatedInfo = isInfoTruncated
+      ? `${info.substring(0, MAX_INFO_TEXT_LENGTH)}...`
+      : info;
+
+    return (
+      <g pointerEvents="none">
+        {/* Base text that's always visible - Left aligned */}
+        <text
+          x={10}
+          y={nodeHeight / 2 - 8}
+          className={`
+            text-sm 
+            font-medium 
+            fill-[#007eef]
+            ${activeNodeId === nodeId ? "fill-[#0056a3]" : ""}
+          `}
+          dominantBaseline="middle"
+        >
+          {truncatedName}
+        </text>
+        <text
+          x={10}
+          y={nodeHeight / 2 + 12}
+          className={`
+            text-xs 
+            fill-gray-500
+            ${activeNodeId === nodeId ? "fill-gray-700" : ""}
+          `}
+          dominantBaseline="middle"
+        >
+          {truncatedInfo}
+        </text>
+        {/* Tooltip - Positioned on top */}
+        {shouldShowTooltip && (
+          <g className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            {/* Background rectangle */}
+            <rect
+              x={nodeWidth / 2 - Math.max(name.length, info.length) * 4} // Center horizontally
+              y={-75} // Position above the node
+              width={Math.max(name.length, info.length) * 8}
+              height="50"
+              rx="4"
+              className="fill-white drop-shadow-lg border border-gray-300"
+            />
+            {/* Full name text */}
+            <text
+              x={nodeWidth / 2} // Center horizontally
+              y={-55} // Position in top part of tooltip
+              className="text-xs fill-gray-700 font-medium"
+              textAnchor="middle"
+              dominantBaseline="middle"
+            >
+              {name}
+            </text>
+            {/* Full info text */}
+            <text
+              x={nodeWidth / 2} // Center horizontally
+              y={-35} // Position below name in tooltip
+              className="text-xs fill-gray-500"
+              textAnchor="middle"
+              dominantBaseline="middle"
+            >
+              {info}
+            </text>
+          </g>
+        )}
+      </g>
+    );
+  };
+
   return (
     <div className="w-full overflow-auto">
       <AddButtons />
-      <svg width={maxWidth} height={maxHeight} className="ml-0">
+      <svg width={maxWidth} height={maxHeight} className="ml-0 pt-2">
         <g transform={`translate(50, 50)`}>
           {/* Connection lines */}
           {layoutNodes.map((node) => {
             if (node.type === "location-header") {
               const parentNode = layoutNodes.find(
-                (n) => n.id === node.parentId
+                (n) => n.id === node.parentId && n.type === "corporate"
               );
               if (parentNode) {
                 const linePath = renderStraightLine(
@@ -397,7 +518,7 @@ const OrgTree = ({ data }) => {
                 return (
                   <g
                     key={node.id}
-                    transform={`translate(${node.x + 60},${node.y + 12})`}
+                    transform={`translate(${node.x + 55},${node.y + 12})`}
                     className="cursor-pointer"
                     onClick={(e) => toggleLocations(node.parentId, e)}
                   >
@@ -448,18 +569,7 @@ const OrgTree = ({ data }) => {
                   </g>
                 );
               } else {
-                return (
-                  <g
-                    key={node.id}
-                    transform={`translate(${node.x},${node.y})`}
-                    className="cursor-pointer"
-                    onClick={(e) => toggleLocations(node.parentId, e)}
-                  >
-                    <g transform="translate(0, -2)">
-                      <circle r="8" fill="#F3F4F6" />
-                    </g>
-                  </g>
-                );
+                return "";
               }
             }
 
@@ -467,40 +577,61 @@ const OrgTree = ({ data }) => {
               <g
                 key={`${node.name}-${node.type}`}
                 transform={`translate(${node.x},${node.y})`}
-                className={`transition-all duration-200 ${style.group}`}
-                // onClick={() => handleNodeClick(node)}
+                className={`transition-all duration-200 ${style.group} group cursor-pointer`}
+                onClick={() => handleNodeClick(node)}
                 onMouseEnter={() => setHoveredNode(node.id)}
                 onMouseLeave={() => setHoveredNode(null)}
               >
+                {/* Shadow effect rect */}
                 <rect
                   width={nodeWidth}
                   height={nodeHeight}
                   rx="4"
-                  className={`${style.rect} stroke-[1.5] shadow-sm`}
+                  className={`
+                  fill-transparent 
+                  transition-opacity 
+                  duration-200
+                  ${
+                    activeNode === node.id
+                      ? "opacity-100"
+                      : "opacity-0 group-hover:opacity-100"
+                  }
+                `}
+                  filter="drop-shadow(0 10px 15px rgb(0 0 0 / 0.1)) drop-shadow(0 4px 6px rgb(0 0 0 / 0.1))"
                 />
-                <text
-                  x={nodeWidth / 2}
-                  y={nodeHeight / 2 - 8}
-                  className={`text-sm font-medium ${style.text}`}
-                  textAnchor="middle"
-                  fill="#007eef"
-                  pointerEvents="none"
-                >
-                  {node.name}
-                </text>
-                <text
-                  x={nodeWidth / 2}
-                  y={nodeHeight / 2 + 12}
-                  className="text-xs text-gray-500"
-                  textAnchor="middle"
-                  pointerEvents="none"
-                >
-                  {node.info}
-                </text>
+
+                {/* Background rect with active state */}
+                <rect
+                  width={nodeWidth}
+                  height={nodeHeight}
+                  rx="4"
+                  className={`
+                  ${style.rect} 
+                  stroke-[1.5] 
+                  transition-all
+                  duration-200
+                  ${
+                    activeNode === node.id
+                      ? "stroke-[#007eef] !stroke-2"
+                      : "stroke-transparent"
+                  }
+                  ${activeNode === node.id ? "drop-shadow-lg" : ""}
+                `}
+                />
+
+                {/* Node Content */}
+                <TruncatedNodeContent
+                  name={node.name}
+                  info={node.info}
+                  nodeWidth={nodeWidth}
+                  nodeHeight={nodeHeight}
+                  activeNodeId={activeNode}
+                  nodeId={node.id}
+                />
                 {/* Quick Add Buttons - Outside the node */}
                 {hoveredNode === node.id && (
                   <>
-                    {/* Right Quick Add Button (for children) with tooltip on top */}
+                    {/* Right Quick Add Button (for children) */}
                     {(node.type === "organization" ||
                       node.type === "corporate") && (
                       <g
@@ -519,9 +650,10 @@ const OrgTree = ({ data }) => {
                           )
                         }
                       >
-                        <g className="group">
-                          {/* Tooltip - Positioned above the right button */}
-                          <g className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        <g className="group/add-right">
+                          {" "}
+                          {/* Tooltip - Only shows when hovering over this specific button */}
+                          <g className="opacity-0 group-hover/add-right:opacity-100 transition-opacity duration-200">
                             <rect
                               x="-65"
                               y="-45"
@@ -546,11 +678,10 @@ const OrgTree = ({ data }) => {
                                 : "Location"}
                             </text>
                           </g>
-
                           {/* Button Circle with Hover Effect */}
                           <circle
                             r="10"
-                            className="transition-all duration-200 fill-white stroke-[#007eef] group-hover:fill-[#007eef]"
+                            className="transition-all duration-200 fill-white stroke-[#007eef] group-hover/add-right:fill-[#007eef]"
                             strokeWidth="1"
                             filter="drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.1))"
                           />
@@ -560,7 +691,7 @@ const OrgTree = ({ data }) => {
                             y1="0"
                             x2="4"
                             y2="0"
-                            className="transition-all duration-200 stroke-[#007eef] group-hover:stroke-white"
+                            className="transition-all duration-200 stroke-[#007eef] group-hover/add-right:stroke-white"
                             strokeWidth="1.5"
                             strokeLinecap="round"
                           />
@@ -569,7 +700,7 @@ const OrgTree = ({ data }) => {
                             y1="-4"
                             x2="0"
                             y2="4"
-                            className="transition-all duration-200 stroke-[#007eef] group-hover:stroke-white"
+                            className="transition-all duration-200 stroke-[#007eef] group-hover/add-right:stroke-white"
                             strokeWidth="1.5"
                             strokeLinecap="round"
                           />
@@ -577,7 +708,7 @@ const OrgTree = ({ data }) => {
                       </g>
                     )}
 
-                    {/* Bottom Quick Add Button (for siblings) with tooltip on right */}
+                    {/* Bottom Quick Add Button (for siblings) */}
                     <g
                       transform={`translate(${nodeWidth / 2}, ${
                         nodeHeight + 10
@@ -585,9 +716,10 @@ const OrgTree = ({ data }) => {
                       className="cursor-pointer"
                       onClick={(e) => handleQuickAdd(e, node.type, node, true)}
                     >
-                      <g className="group">
-                        {/* Tooltip - Positioned to the right of bottom button */}
-                        <g className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                      <g className="group/add-bottom">
+                        {" "}
+                        {/* Tooltip - Only shows when hovering over this specific button */}
+                        <g className="opacity-0 group-hover/add-bottom:opacity-100 transition-opacity duration-200">
                           <rect
                             x="0"
                             y="-14"
@@ -611,11 +743,10 @@ const OrgTree = ({ data }) => {
                               node.type.slice(1)}
                           </text>
                         </g>
-
                         {/* Button Circle with Hover Effect */}
                         <circle
                           r="10"
-                          className="transition-all duration-200 fill-white stroke-[#007eef] group-hover:fill-[#007eef]"
+                          className="transition-all duration-200 fill-white stroke-[#007eef] group-hover/add-bottom:fill-[#007eef]"
                           strokeWidth="1"
                           filter="drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.1))"
                         />
@@ -625,7 +756,7 @@ const OrgTree = ({ data }) => {
                           y1="0"
                           x2="4"
                           y2="0"
-                          className="transition-all duration-200 stroke-[#007eef] group-hover:stroke-white"
+                          className="transition-all duration-200 stroke-[#007eef] group-hover/add-bottom:stroke-white"
                           strokeWidth="1.5"
                           strokeLinecap="round"
                         />
@@ -634,7 +765,7 @@ const OrgTree = ({ data }) => {
                           y1="-4"
                           x2="0"
                           y2="4"
-                          className="transition-all duration-200 stroke-[#007eef] group-hover:stroke-white"
+                          className="transition-all duration-200 stroke-[#007eef] group-hover/add-bottom:stroke-white"
                           strokeWidth="1.5"
                           strokeLinecap="round"
                         />
@@ -652,7 +783,16 @@ const OrgTree = ({ data }) => {
         onClose={() => setIsModalOpen(false)}
         nodeData={selectedNode}
         nodeType={selectedNode?.type}
-        rawData={data} // Pass the original API data
+        rawData={data}
+        setActiveNode={setActiveNode}
+      />
+      <QuickAddModal
+        isOpen={quickAddModal.isOpen}
+        onClose={() =>
+          setQuickAddModal({ isOpen: false, type: null, parentNode: null })
+        }
+        type={quickAddModal.type}
+        parentNode={quickAddModal.parentNode}
       />
     </div>
   );
@@ -715,7 +855,7 @@ const OrganizationTreePage = () => {
   }
 
   return (
-    <div className="w-full bg-gray-50 p-8 rounded-lg">
+    <div className="w-full p-8 rounded-lg">
       <div className="text-[22px] font-medium font-['Manrope'] leading-relaxed gradient-text pb-6">
         Organization Structure
       </div>

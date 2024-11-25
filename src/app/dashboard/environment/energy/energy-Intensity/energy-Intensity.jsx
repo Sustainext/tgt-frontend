@@ -96,7 +96,7 @@ const Energyintensity = () => {
           </div>
         </div>
 
-        <div className="ml-3 flex mt-2">
+        <div className="ml-3 flex mt-2 relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
             Energy Intensity
             <MdInfoOutline

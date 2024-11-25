@@ -59,7 +59,7 @@ const schema = {
       },
       Noncompliance: {
         type: "string",
-        title: "No of noncompliance incident",
+        title: "No. of non-compliance incidents",
         tooltiptext: "Indicate the number of times the organization has engaged in unauthorized discharges (non-compliance incidents) exceeding compliance limits? (if any)",
         display:"block",
       },

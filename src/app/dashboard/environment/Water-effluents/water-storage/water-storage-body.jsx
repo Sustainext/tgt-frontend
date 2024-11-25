@@ -106,7 +106,7 @@ const Waterstoragebody = ({location, year, month,setLocationMessage, setYearMess
           tooltiptext={`This section documents data corresponding to change in water storage where
           water storage has been identified as having a significant water-related impact.`}
           sdg={['GRI 303-5d']}
-          display="block"
+          display="none"
           location={location}
           setLocationMessage={setLocationMessage}
           year={year}

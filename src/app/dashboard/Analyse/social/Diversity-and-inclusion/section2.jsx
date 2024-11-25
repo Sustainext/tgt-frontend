@@ -47,10 +47,9 @@ const Section2 = ({selectedOrg,selectedCorp,year,isBoxOpen,setSelectedYear,selec
     setRatioOfRemunerationOfWomenToMen([]);
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_diversity_inclusion_analysis/`,
+        `/sustainapp/get_diversity_inclusion_second_screen_analyse/`,
         { params: {
-            organisation: selectedOrg,
-            corporate: selectedCorp,
+          location:selectedLocation,
             start: `${year}-01-01`,
             end: `${year}-12-31`,
         
@@ -76,6 +75,7 @@ const Section2 = ({selectedOrg,selectedCorp,year,isBoxOpen,setSelectedYear,selec
           "30-50 years": item.percentage_of_employees_within_30_to_50_age_group,
           ">50 years": item.percentage_of_employees_more_than_50_age_group,
           "Minority group": item.percentage_of_employees_in_minority_group,
+          "Vulnerable Communities": item.percentage_of_employees_in_vulnerable_communities
         }));
       };
 

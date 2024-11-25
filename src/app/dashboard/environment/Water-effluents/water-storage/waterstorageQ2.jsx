@@ -60,7 +60,7 @@ const schema = {
       DataSource: {
         type: "string",
         title: "Data Source",
-        enum: ['Calculated', 'Estimated', 'Modelled', 'Sourced from direct measurements', 'others please specify'],
+        enum: ['Calculated', 'Estimated', 'Modelled', 'Sourced from direct measurements', 'Other (please specify)'],
         tooltiptext: "Please specify whether the information is calculated, estimated, modeled, or sourced from direct measurements."
       },
       Approachconsidered: {
