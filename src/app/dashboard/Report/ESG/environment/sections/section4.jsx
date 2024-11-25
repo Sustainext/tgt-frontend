@@ -35,8 +35,8 @@ const Section4=({section12_1_2Ref,data})=>{
         "Category",
         "Sub Category",
         "Activity",
-        "Value 1",
-        "Value 2"
+        "Value",
+        // "Value 2"
     ]
     const Tabledata=[
         {

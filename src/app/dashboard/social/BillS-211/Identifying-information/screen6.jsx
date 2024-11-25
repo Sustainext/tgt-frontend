@@ -17,7 +17,7 @@ const Screensix = ({ nextStep, prevStep }) => {
   const [loopen, setLoOpen] = useState(false);
   const isMounted = useRef(true);
   // const data = 1;
-  const [data, setData] = useState();
+  const [data, setData] = useState(null);
   const coNextStep = () => {
     nextStep();
   };
@@ -399,7 +399,7 @@ const Screensix = ({ nextStep, prevStep }) => {
               </label>
             </div>
             <div className="mb-2">
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-1">
                 {optionsTwo.map((option, index) => (
                   <div key={index} className="flex items-center">
                     <label className="ml-2 text-[13px] text-gray-600">
@@ -408,7 +408,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                         value={option.value}
                         checked={selectedOptions.includes(option.value)}
                         onChange={handleCheckboxChange}
-                        className="mr-3 pt-1"
+                        className="mr-3 pt-1 cursor-pointer"
                       />
                       {option.label}
                     </label>
@@ -440,7 +440,7 @@ const Screensix = ({ nextStep, prevStep }) => {
               )}
             </div>
           </div>
-          <div className="w-[80%] mb-5">
+          <div className="w-[83%] mb-5">
             <div className="float-right">
               <button
                 className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
@@ -498,7 +498,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                   </label>
                 </div>
                 <div className="mb-2">
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-2 gap-1">
                     {optionsTwo.map((option, index) => (
                       <div key={index} className="flex items-center">
                         <label className="ml-2 text-[13px] text-gray-600">
@@ -507,7 +507,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                             value={option.value}
                             checked={selectedOptions.includes(option.value)}
                             onChange={handleCheckboxChange}
-                            className="mr-3 pt-1"
+                            className="mr-3 pt-1 cursor-pointer"
 
                           />
                           {option.label}
@@ -532,7 +532,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                   )}
                 </div>
               </div>
-              <div className="w-[85%] mb-5">
+              <div className="w-[83%] mb-5">
                 <div className="float-right mr-3">
                   <button
                     className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
@@ -565,7 +565,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                   </label>
                 </div>
                 <div className="mb-2">
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-2 gap-1">
                     {optionsTwo.map((option, index) => (
                       <div key={index} className="flex items-center">
                         <label className="ml-2 text-[13px] text-gray-600">
@@ -574,7 +574,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                             value={option.value}
                             checked={selectedOptions.includes(option.value)}
                             onChange={handleCheckboxChange}
-                            className="mr-3 pt-1"
+                            className="mr-3 pt-1 cursor-pointer"
                           />
                           {option.label}
                         </label>
@@ -606,7 +606,7 @@ const Screensix = ({ nextStep, prevStep }) => {
                   )}
                 </div>
               </div>
-              <div className="w-[85%] mb-5">
+              <div className="w-[83%] mb-5">
                 <div className="float-right mr-3">
                   <button
                     className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
