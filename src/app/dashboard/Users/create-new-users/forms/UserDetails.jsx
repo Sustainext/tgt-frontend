@@ -261,6 +261,7 @@ const PersonalDetailsForm = ({ onNext }) => {
               <option value="" disabled>
                 Select Role Type
               </option>
+              <option value="Admin">Admin</option>
               <option value="Manager">Manager</option>
               <option value="Employee">Employee</option>
             </select>
