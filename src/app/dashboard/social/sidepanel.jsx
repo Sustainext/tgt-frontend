@@ -7,6 +7,7 @@ import { GiWoodPile } from "react-icons/gi";
 
 const Aside = ({ activeTab, handleTabClick }) => {
   const [isEmission, setEmisssion] = useState(false);
+  const [isBillS211, setBillS211] = useState(false);
   const [isEnergySectionVisible, setEnergySectionVisible] = useState(false);
   const [isWasteVisible, setWasteVisible] = useState(false);
   const [isWaterVisible, setWaterVisible] = useState(false);
@@ -27,6 +28,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setIsSupplierVisible(false);
     setIsLegal(false);
     setTax(false);
+    setBillS211(false)
   };
   const toggleSupplierSectionVisibility = () => {
     setIsSupplierVisible(!isSupplierVisible);
@@ -37,6 +39,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setEmisssion(false);
     setIsLegal(false);
     setTax(false);
+    setBillS211(false)
   };
   const toggleEnergySectionVisibility = () => {
     setEnergySectionVisible(!isEnergySectionVisible);
@@ -47,6 +50,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setEmisssion(false);
     setIsLegal(false);
     setTax(false);
+    setBillS211(false)
   };
   const toggleWasteVisible = () => {
     setWasteVisible(!isWasteVisible);
@@ -57,6 +61,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setEmisssion(false);
     setIsLegal(false);
     setTax(false);
+    setBillS211(false)
   };
   const toggleWaterVisible = () => {
     setWaterVisible(!isWaterVisible);
@@ -67,6 +72,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setEmisssion(false);
     setIsLegal(false);
     setTax(false);
+    setBillS211(false)
   };
 
   const toggleMaterialsVisible = () => {
@@ -78,6 +84,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setEmisssion(false);
     setIsLegal(false);
     setTax(false);
+    setBillS211(false)
   };
   const toggleLegal = () => {
     setIsLegal(!isLegal);
@@ -88,6 +95,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setIsSupplierVisible(false);
     setEmisssion(false);
     setTax(false);
+    setBillS211(false)
   };
   const toggleTax = () => {
     setTax(!isTax);
@@ -98,6 +106,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setIsSupplierVisible(false);
     setEmisssion(false);
     setIsLegal(false);
+    setBillS211(false)
   };
 
   const toggleSupplyChain = () => {
@@ -110,6 +119,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setIsSupplierVisible(false);
     setEmisssion(false);
     setIsLegal(false);
+    setBillS211(false)
   };
   const toggleSafety = () => {
     setSafety(!Safety);
@@ -122,6 +132,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setIsSupplierVisible(false);
     setEmisssion(false);
     setIsLegal(false);
+    setBillS211(false)
   };
   const toggleMarketing = () => {
     setMarketing(!Marketing)
@@ -135,6 +146,7 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setIsSupplierVisible(false);
     setEmisssion(false);
     setIsLegal(false);
+    setBillS211(false)
   };
   const togglePrivacy = () => {
     setPrivacy(!Privacy);
@@ -149,6 +161,24 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setIsSupplierVisible(false);
     setEmisssion(false);
     setIsLegal(false);
+    setBillS211(false)
+  };
+
+  const toggleBillS211 = () => {
+    setBillS211(!isBillS211)
+    setPrivacy(false);
+    setMarketing(false);
+    setSafety(false);
+    setSupplyChain(false);
+    setTax(false);
+    setWasteVisible(false);
+    setMaterialsVisible(false);
+    setWaterVisible(false);
+    setEnergySectionVisible(false);
+    setIsSupplierVisible(false);
+    setEmisssion(false);
+    setIsLegal(false);
+    
   };
   useEffect(() => {
     if (activeTab === "Management of Material topic Employment") {
@@ -167,7 +197,82 @@ const Aside = ({ activeTab, handleTabClick }) => {
           <button className="flex items-center px-4 py-2 -mt-4 mb-8 rounded-none focus:outline-none text-[#727272] font-bold">
             <span className="text-[16px] font-extrabold">Social</span>
           </button>
+
+          {/* Bill S-211 starts */}
+          {/* <div>
+            <button
+              className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full ${
+                activeTab === "Identifying Information" ||
+                activeTab === "Annual report"
+                  ? "text-[#007EEF]"
+                  : "bg-white text-[#727272] "
+              }`}
+              onClick={toggleBillS211}
+            >
+              <div className="w-[20%]">
+                <MdOutlineGroups2 className="w-5 h-5 mr-2" />
+              </div>
+              <div className="w-[67%] text-left ">
+                <span className="indent-0 text-[13px]">Bill S-211</span>
+              </div>
+
+              <div className="inset-y-0  flex items-center pointer-events-none w-[25%] justify-end">
+                
+
+                <MdKeyboardArrowDown
+                  className={`text-lg text-neutral-500 ${
+                    isBillS211 && "rotate-180"
+                  }`}
+                />
+              </div>
+            </button>
+
+           
+            {isBillS211 && (
+              <>
+                <div className="bg-white px-2 ml-4 3xl:ml-8 mt-2 border-l-2 border-gray-300">
+                  <div>
+                    <p
+                      className={`flex  text-start  px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Identifying Information"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() =>
+                        handleTabClick(
+                          "Identifying Information"
+                        )
+                      }
+                    >
+                      Identifying Information
+                    </p>
+                  </div>
+
+                  <div>
+                    <p
+                      className={`flex  text-start  px-2 py-2  focus:outline-none w-full text-[12px] cursor-pointer ${
+                        activeTab === "Annual report"
+                          ? "text-blue-400"
+                          : "bg-transparent text-[#727272]"
+                      }`}
+                      onClick={() =>
+                        handleTabClick(
+                          "Annual report"
+                        )
+                      }
+                    >
+                      Annual report
+                    </p>
+                  </div>
+                  
+                </div>
+              </>
+            )}
+          </div> */}
+
+          {/* Bill S-211 ends */}
           <div>
+            
             <button
               className={`flex  pl-2 py-2 mb-2 focus:outline-none w-full ${
                 activeTab === "Employee Hires & Turnover" ||

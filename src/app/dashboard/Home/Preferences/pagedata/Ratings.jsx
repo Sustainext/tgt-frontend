@@ -135,7 +135,7 @@ const Ratings = () => {
               <div className="relative shadow-sm h-40 border border-gray-200">
                 <div className="flex justify-center h-20 mb-2">
                   <img
-                    src={`${process.env.BACKEND_API_URL}${item.Image}`}
+                    src={`${item.Image}`}
                     alt='cover'
                     className="transition-all w-[70%] aspect-[3/2] object-contain mt-2"
                   />

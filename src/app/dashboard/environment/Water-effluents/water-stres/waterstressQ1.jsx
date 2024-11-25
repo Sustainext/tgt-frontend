@@ -390,7 +390,7 @@ const WaterstressQ1 = ({ location, year, month }) => {
       <div className="w-full max-w-xs mb-2">
         <label className="text-sm leading-5 text-gray-700 flex">
           Do you withdraw/discharge water from water stress areas?
-          <div className="ml-2 relative">
+          {/* <div className="ml-2 relative">
             <MdInfoOutline
               data-tooltip-id={`tooltip-$e1`}
               data-tooltip-content="This section documents data corresponding to total water withdrawn and total water discharge from areas with water stress."
@@ -410,7 +410,7 @@ const WaterstressQ1 = ({ location, year, month }) => {
                 textAlign: "left",
               }}
             ></ReactTooltip>
-          </div>
+          </div> */}
         </label>
         <select
           className="block w-[270px] py-2 text-sm leading-6  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 border-b-2 border-gray-300"
@@ -424,7 +424,7 @@ const WaterstressQ1 = ({ location, year, month }) => {
       </div>
       {selectedOption === "yes" && (
         <>
-          <div className={`overflow-auto custom-scrollbar flex`}>
+          <div className={`overflow-auto custom-scrollbar flex py-4`}>
             <div>
               <Form
                 className="flex"

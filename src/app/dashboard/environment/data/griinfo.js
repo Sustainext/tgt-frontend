@@ -1672,10 +1672,7 @@ export const Energydata = [
                 The materials that are present in the waste (e.g., biomass,
                 metals, non-metallic minerals, plastics, textiles)
               </li>
-              <li className="text-[11px] text-[#727272]">
-                The materials that are present in the waste (e.g., biomass,
-                metals, non-metallic minerals,plastics, textiles).
-              </li>
+           
             </ul>
             <p className="text-[13px] text-[#222222] mb-2">
               Guidance for Disclosures 306-4-b and 306-4-c
@@ -2762,7 +2759,7 @@ export const Energydata = [
               <b>Reclaimed products</b> are products that have been used and
               then collected, processed, and marketed for reuse. Reclaimed
               products can be reused in their original form or they can be used
-              to manufacture new products.
+              to manufacture new products.Examples include refurbished electronics, recycled clothing, reclaimed wood, and reclaimed building materials.
             </p>
 
             <p className="text-[11px] text-[#727272] mb-2">
@@ -2783,8 +2780,8 @@ export const Energydata = [
                 Exclude rejects and recalls of products
               </li>
               <li className="text-[11px] text-[#727272]">
-                Calculate the percentage of reclaimed products and their
-                packaging materials
+              · calculate the percentage of reclaimed products and their packaging materials
+              for each product category using the following formula:
               </li>
             </ul>
             <p className="text-[11px] text-[#727272] mb-2">
@@ -3121,14 +3118,15 @@ export const Energydata = [
             </p>
             <p className="text-[13px] text-[#222222] mb-2">Target 6.b</p>
             <p className="text-[11px] text-[#727272] mb-4">
-              Amount of water- and sanitation-related official development
-              assistance that is part of a government-coordinated spending plan
+              Support and strengthen the participation of local communities in
+              improving water and sanitation management
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">6.b.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-              Support and strengthen the participation of local communities in
-              improving water and sanitation management
+              Proportion of local administrative units with established and
+              operational policies and procedures for participation of local
+              communities in water and sanitation management
             </p>
           </div>
          
@@ -3230,14 +3228,15 @@ export const Energydata = [
             </p>
             <p className="text-[13px] text-[#222222] mb-2">Target 6.b</p>
             <p className="text-[11px] text-[#727272] mb-4">
-              Amount of water- and sanitation-related official development
-              assistance that is part of a government-coordinated spending plan
+              Support and strengthen the participation of local communities in
+              improving water and sanitation management
             </p>
             <p className="text-[11px] text-[#222222] mb-2">Indicators</p>
             <p className="text-[11px] text-[#222222] mb-2">6.b.1</p>
             <p className="text-[11px] text-[#727272] mb-4">
-              Support and strengthen the participation of local communities in
-              improving water and sanitation management
+              Proportion of local administrative units with established and
+              operational policies and procedures for participation of local
+              communities in water and sanitation management
             </p>
           </div>
          

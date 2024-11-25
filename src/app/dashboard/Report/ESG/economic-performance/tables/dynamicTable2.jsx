@@ -107,12 +107,12 @@ const DynamicTable2 = ({ data, columns,title }) => {
                         {(() => {
                           const totalColumn3 = employees.reduce((acc, employee) => acc + parseFloat(employee[columns[2]] || 0), 0);
                           const totalColumn4 = employees.reduce((acc, employee) => acc + parseFloat(employee[columns[3]] || 0), 0);
-                          const percentage = totalColumn4 > 0
-                            ? parseFloat(((totalColumn3 / totalColumn4) * 100).toFixed(2)) % 1 === 0
-                              ? ((totalColumn3 / totalColumn4) * 100).toFixed(0)
-                              : ((totalColumn3 / totalColumn4) * 100).toFixed(2)
-                            : 'N/A';
-                          return `${percentage}%`; // Add % sign even for N/A
+                          // const percentage = totalColumn4 > 0
+                          //   ? parseFloat(((totalColumn3 / totalColumn4) * 100).toFixed(2)) % 1 === 0
+                          //     ? ((totalColumn3 / totalColumn4) * 100).toFixed(0)
+                          //     : ((totalColumn3 / totalColumn4) * 100).toFixed(2)
+                          //   : 'N/A';
+                          // return `${percentage}%`; // Add % sign even for N/A
                         })()}
                       </td>
                     </tr>

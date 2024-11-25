@@ -64,7 +64,8 @@ const Section6=({section12_1_4Ref,data})=>{
         "Category",
         "Sub Category",
         "Activity",
-        "Value"
+        "Value",
+        // "Value 2"
     ]
 
     const col1=[
@@ -215,7 +216,7 @@ const Section6=({section12_1_4Ref,data})=>{
             Scope 3
             </p>
             <div className="shadow-md rounded-md mb-4">
-<ScopeTable columns={scope3col} data={data["305_123_collect"]?data["305_123_collect"]["gri-environment-emissions-301-a-scope-3"]?data["305_123_collect"]["gri-environment-emissions-301-a-scope-3"]:"":""}/>
+<ScopeTable columns={scope3col} data={data["305_123_collect"]?data["305_123_collect"]["gri-environment-emissions-301-a-scope-3"]?data["305_123_collect"]["gri-environment-emissions-301-a-scope-3"].length>0?data["305_123_collect"]["gri-environment-emissions-301-a-scope-3"]:[]:[]:[]}/>
 </div>
             <p className="text-[15px]  mb-2 font-semibold">
             Top Emissions by Source

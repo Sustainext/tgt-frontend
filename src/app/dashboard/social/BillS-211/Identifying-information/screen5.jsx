@@ -13,7 +13,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
   const [isClicked, setIsClicked] = useState(false);
   const isMounted = useRef(true);
   // const data = 1;
-  const [data, setData] = useState();
+  const [data, setData] = useState(null);
   const coNextStep = () => {
     nextStep();
   };
@@ -319,7 +319,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                 checked={checkboxStates[option.key]}
                 onChange={handleCheckboxChange(option.key)}
                 disabled={!isChecked}
-                className="mr-3 pt-1 scale-90 rounded-xl"
+                className={`mr-3 pt-1 scale-90 rounded-xl ${isChecked?'cursor-pointer':''}`}
               />
               {option.label}
             </label>
@@ -362,7 +362,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                 checked={checkboxStates[option.key]}
                 onChange={handleCheckboxChange(option.key)}
                 disabled={!isCheckedone}
-                className="mr-3 pt-1 scale-90 rounded-xl"
+                className={`mr-3 pt-1 scale-90 rounded-xl ${isCheckedone?'cursor-pointer':''}`}
               />
               {option.label}
             </label>
@@ -400,7 +400,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                 checked={checkboxStates[option.key]}
                 onChange={handleCheckboxChange(option.key)}
 
-                className="mr-3 pt-1 scale-90 rounded-xl"
+                className={`mr-3 pt-1 scale-90 rounded-xl ${isChecked?'cursor-pointer':''}`}
               />
               {option.label}
             </label>
@@ -443,7 +443,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                 checked={checkboxStates[option.key]}
                 onChange={handleCheckboxChange(option.key)}
 
-                className="mr-3 pt-1 scale-90 rounded-xl"
+                className={`mr-3 pt-1 scale-90 rounded-xl ${isCheckedone?'cursor-pointer':''}`}
               />
               {option.label}
             </label>
@@ -455,27 +455,26 @@ const Screenfive = ({ nextStep, prevStep }) => {
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
-      <div className="flex justify-between items-center shadow-sm border-gray-100">
-        <div
-          className={`${
-            open ? "w-[95%] " : "w-[95%]"
-          } flex justify-between items-center`}
-        >
-          <div className="text-left mb-5 ml-6 mt-4">
-            <p className="text-[11px]">Social</p>
-           <p className="gradient-text text-[22px] h-[24px]">
-              Bill S-211 - Fighting Bill Forced Labour and Child Labour in
-              Supply Chains Act
-            </p>
+      <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
+      <div className="w-full">
+            <div className="text-left mb-2 ml-3 pt-5">
+              <p className="text-[11px]">Social</p>
+              <div className="flex">
+                <div className="h-[29px]">
+                  <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
+                  Bill S-211 - Fighting Bill Forced Labour and Child Labour in Supply Chains Act
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
       </div>
       {isClicked ? (
         <>
           <div className="container mx-auto mt-5">
             <div className="flex">
               <div className="w-[70%]">
-                <p className="font-bold  text-md mx-4 ">
+              <p className="font-semibold text-[17px] mb-4 mx-4">
                   {" "}
                   Identifying information
                 </p>
@@ -514,7 +513,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                   name="isCheckednew"
                   checked={isCheckednew}
                   onChange={handleCheckboxChangenew("isCheckednew")}
-                  className="mr-3 pt-1"
+                  className="mr-3 pt-1 cursor-pointer"
                 />
                 Listed on a stock exchange in Canada
               </label>
@@ -527,7 +526,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                     name="isChecked"
                     checked={isChecked}
                     onChange={handleCheckboxChange("isChecked")}
-                    className="mr-3 pt-1"
+                    className="mr-3 pt-1 cursor-pointer"
                   />
                   Canadian business presence (select all that apply)
                 </label>
@@ -540,7 +539,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                     name="isCheckedone"
                     checked={isCheckedone}
                     onChange={handleCheckboxChange("isCheckedone")}
-                    className="mr-3 pt-1"
+                    className="mr-3 pt-1 cursor-pointer"
                   />
                   Meets size-related thresholds (select all that apply):
                 </label>
@@ -549,18 +548,18 @@ const Screenfive = ({ nextStep, prevStep }) => {
               {/* Display validation errors */}
               <div className="mt-5 ml-3 mb-5">
                 {error.businessPresence && (
-                  <div className="text-red-500">{error.businessPresence}</div>
+                  <div className="text-red-500 text-[12px]">{error.businessPresence}</div>
                 )}
                 {error.sizeThresholds && (
-                  <div className="text-red-500">{error.sizeThresholds}</div>
+                  <div className="text-red-500 text-[12px]">{error.sizeThresholds}</div>
                 )}
                 {error.general && (
-                  <div className="text-red-500">{error.general}</div>
+                  <div className="text-red-500 text-[12px]">{error.general}</div>
                 )}
               </div>
             </div>
           </div>
-          <div className="w-[80%] mb-5">
+          <div className="w-[77%] mb-5">
             <div className="float-right">
               <button
                 className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
@@ -571,7 +570,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
               <button
                 type="button"
                 disabled
-                className="px-3 py-1.5 font-semibold rounded  w-[80px] text-[12px] bg-blue-400 text-white"
+                className="px-3 py-1.5 font-semibold rounded  w-[80px] text-[12px] bg-blue-400 text-white cursor-not-allowed"
               >
                 {" "}
                 Next &gt;
@@ -584,7 +583,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
           <div className="container mx-auto mt-5">
             <div className="flex">
               <div className="w-[75%]">
-                <p className="font-bold  text-md mx-4 ">
+              <p className="font-semibold text-[17px] mb-4 mx-4">
                   {" "}
                   Identifying information
                 </p>
@@ -625,7 +624,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                       name="isCheckednew"
                       checked={isCheckednew}
                       onChange={handleCheckboxChangenew("isCheckednew")}
-                      className="mr-3 pt-1"
+                      className="mr-3 pt-1 cursor-pointer"
 
                     />
                     Listed on a stock exchange in Canada
@@ -639,7 +638,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                         name="isChecked"
                         checked={isChecked}
                         onChange={handleCheckboxChange("isChecked")}
-                        className="mr-3 pt-1"
+                        className="mr-3 pt-1 cursor-pointer"
 
                       />
                       Canadian business presence (select all that apply)
@@ -653,7 +652,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                         name="isCheckedone"
                         checked={isCheckedone}
                         onChange={handleCheckboxChange("isCheckedone")}
-                        className="mr-3 pt-1"
+                        className="mr-3 pt-1 cursor-pointer"
 
                       />
                       Meets size-related thresholds (select all that apply):
@@ -663,7 +662,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                   {/* Display validation errors */}
                 </div>
               </div>
-              <div className="w-[80%] mb-5 mt-5">
+              <div className="w-[77%] mb-5 mt-5">
                 <div className="float-right">
                   <button
                     className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
@@ -702,7 +701,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                       name="isCheckednew"
                       checked={isCheckednew}
                       onChange={handleCheckboxChangenew("isCheckednew")}
-                      className="mr-3 pt-1"
+                      className="mr-3 pt-1 cursor-pointer"
                     />
                     Listed on a stock exchange in Canada
                   </label>
@@ -715,7 +714,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                         name="isChecked"
                         checked={isChecked}
                         onChange={handleCheckboxChange("isChecked")}
-                        className="mr-3 pt-1"
+                        className="mr-3 pt-1 cursor-pointer"
                       />
                       Canadian business presence (select all that apply)
                     </label>
@@ -728,7 +727,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                         name="isCheckedone"
                         checked={isCheckedone}
                         onChange={handleCheckboxChange("isCheckedone")}
-                        className="mr-3 pt-1"
+                        className="mr-3 pt-1 cursor-pointer"
                       />
                       Meets size-related thresholds (select all that apply):
                     </label>
@@ -737,20 +736,20 @@ const Screenfive = ({ nextStep, prevStep }) => {
                   {/* Display validation errors */}
                   <div className="mt-5 ml-3 mb-5">
                     {error.businessPresence && (
-                      <div className="text-red-500">
+                      <div className="text-red-500 text-[12px]">
                         {error.businessPresence}
                       </div>
                     )}
                     {error.sizeThresholds && (
-                      <div className="text-red-500">{error.sizeThresholds}</div>
+                      <div className="text-red-500 text-[12px]">{error.sizeThresholds}</div>
                     )}
                     {error.general && (
-                      <div className="text-red-500">{error.general}</div>
+                      <div className="text-red-500 text-[12px]">{error.general}</div>
                     )}
                   </div>
                 </div>
               </div>
-              <div className="w-[80%] mb-5">
+              <div className="w-[77%] mb-5">
                 <div className="float-right">
                   <button
                     className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
@@ -769,6 +768,7 @@ const Screenfive = ({ nextStep, prevStep }) => {
                   </button>
                 </div>
               </div>
+              
             </>
           )}
         </>

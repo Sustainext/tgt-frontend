@@ -61,23 +61,23 @@ const schema = {
       },
       Wastedisposed: {
         type: "string",
-        title: "Waste disposed",
+        title: "Waste Disposed",
         tooltiptext: "Enter the amount of waste disposed.",
         display:"block",
 
       },
       Methodofdisposal: {
         type: "string",
-        title: "Method of disposal",
+        title: "Method of Disposal",
         enum: ['Inceneration (with energy recovery)', 'Inceneration (without energy recovery)', 'Landfilling','External Vendor','Other (please specify)'],
-        tooltiptext: "Disposal: Any operation which is not recovery, even where the operation has as a secondary consequence the recovery of energy Landfilling: Final depositing of solid waste at, below, or above ground level at engineered disposal sites Incineration: Controlled burning of waste at high temperatures",
+        tooltiptext: "<p>Disposal: Any operation which is not recovery, even where the operation has as a secondary consequence the recovery of energy</p> <p>Landfilling: Final depositing of solid waste at, below, or above ground level at engineered disposal sites Incineration: Controlled burning of waste at high temperatures</p>",
         display:"block",
       },
       Site: {
         type: "string",
         title: "Site",
         enum: ['Onsite', 'Offsite'],
-        tooltiptext: "On-site: ‘Onsite’ means within the physical boundary  or administrative control of the reporting organization Off-site: ‘Offsite’ means outside the physical boundary \ or administrative control of the reporting organization",
+        tooltiptext: "<p>On-site: ‘Onsite’ means within the physical boundary  or administrative control of the reporting organization Off-site: ‘Offsite’ means outside the physical boundary \ or administrative control of the reporting organization</p>",
         display:"block",
       },
       AssignTo: {
@@ -307,7 +307,7 @@ const Wastedirectedimpact = ({location, year, month}) => {
 
   return (
     <>
-      <div className={`overflow-auto custom-scrollbar flex`}>
+      <div className={`overflow-auto custom-scrollbar flex py-4`}>
         <div>
           <Form
             className="flex"

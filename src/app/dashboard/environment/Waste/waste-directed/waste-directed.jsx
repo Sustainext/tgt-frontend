@@ -104,7 +104,7 @@ const Wastedirected = () => {
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-            Topic disclosure
+          Waste diverted to disposal
             {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section is dedicated to the calculation of Energy Intensity Ratios based on organizational metrics. These ratios quantify the energy demand per unit of activity, output, or any other organization-specific metric" className="mt-1.5 ml-2 text-[15px]" />
                         <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{

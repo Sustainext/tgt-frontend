@@ -86,9 +86,8 @@ const Reductionenergyconsumptionbody = ({location, year, month,setLocationMessag
     <>
       <div className="mx-3">
       <AccordionItem
-          title="Energy consumption outside organization"
-          tooltiptext={`This section is dedicated to reporting the reduction in energy consumption within an organization. While calculating
-          Reduction in Energy Consumption exclude reductions resulting from reduced production capacity or outsourcing.`}
+          title="Reduction of energy consumption"
+          tooltiptext={`This section is dedicated to reporting the reduction in energy consumption within an organization. While calculating Reduction in Energy Consumption exclude reductions resulting from reduced production capacity or outsourcing`}
           sdg={['GRI 302-4a','GRI 302-4b']}
           display="block"
           location={location}
@@ -99,7 +98,7 @@ const Reductionenergyconsumptionbody = ({location, year, month,setLocationMessag
           <Reductionenergy location={location} year={year} month={month}/>
         </AccordionItem>
 
-        <AccordionItem
+        {/* <AccordionItem
           title="Base year or baseline"
           tooltiptext={`This section is dedicated to reporting the reduction in energy consumption within an organization. While calculating
           Reduction in Energy Consumption exclude reductions resulting from reduced production capacity or outsourcing.`}
@@ -111,8 +110,8 @@ const Reductionenergyconsumptionbody = ({location, year, month,setLocationMessag
           setYearMessage={setYearMessage}
         >
           <Baseyearenergy location={location} year={year} month={month}/>
-        </AccordionItem>
-        <AccordionItem
+        </AccordionItem> */}
+        {/* <AccordionItem
           title="Standards, methodologies, assumptions and calculation tools used"
           tooltiptext={`This section is dedicated to reporting the reduction in energy consumption within an organization. While calculating
           Reduction in Energy Consumption exclude reductions resulting from reduced production capacity or outsourcing.`}
@@ -124,7 +123,7 @@ const Reductionenergyconsumptionbody = ({location, year, month,setLocationMessag
           setYearMessage={setYearMessage}
         >
           <Standardsenergy  location={location} year={year} month={month}/>
-        </AccordionItem>
+        </AccordionItem> */}
         {/* Add more accordion items here */}
       </div>
     </>

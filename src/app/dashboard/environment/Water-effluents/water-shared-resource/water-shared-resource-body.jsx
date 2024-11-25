@@ -149,7 +149,7 @@ const Watersharedresourcebody = ({ year, selectedOrg, selectedCorp }) => {
         <AccordionItem
           title="Profile of receiving waterbody"
           tooltiptext={`This section documents data corresponding to  requirements for controlling the quality
-          of effluent discharge. This section documents data corresponding to the organizational interactions with water.`}
+of effluent discharge.`}
           sdg={["GRI 303-2a"]}
           display="block"
           selectedOrg={selectedOrg}
