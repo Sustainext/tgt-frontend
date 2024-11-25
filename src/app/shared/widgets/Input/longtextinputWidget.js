@@ -3,7 +3,7 @@ import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { MdInfoOutline } from "react-icons/md";
 
-const inputWidget = ({
+const LonginputWidget = ({
   onChange,
   value = "",
   placeholder,
@@ -40,16 +40,16 @@ const inputWidget = ({
     <div className="mb-3 px-1">
       {/* Conditionally show label and tooltip based on the id */}
      
-        <div className="relative w-[100%]">
+        <div className="relative">
          
           {id.startsWith("root_0") && (
             <>
-             <p className="flex text-[13px] h-[35px] text-neutral-950 font-[400] mb-1 leading-[15px] ml-1">
+             <p className="flex text-[13px] h-[35px] text-neutral-950 font-[400] mb-1 leading-[15px]">
             {label}
             <MdInfoOutline
               data-tooltip-id={tooltipId}
               data-tooltip-content={schema.tooltiptext}
-              className="mt-0.5 ml-2 w-[30px] text-[14px]"
+              className="mt-0.5  w-[30px] text-[14px]"
               style={{display:schema.display}}
             />
             <ReactTooltip
@@ -71,21 +71,21 @@ const inputWidget = ({
             </p>
             </>
           )}
-        
-        </div>
-   
-      <div className="relative">
-        <input
-          className="block w-[20vw] py-2  text-[12px]  leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300"
+           <input
+          className="block w-[25vw]  py-2  text-[12px]  leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5 border-b-2 border-gray-300"
           placeholder={placeholder || `Enter ${label || title}`}
           type={inputType}
           value={value}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
         />
-      </div>
+        </div>
+   
+     
+     
+     
     </div>
   );
 };
 
-export default inputWidget;
+export default LonginputWidget;

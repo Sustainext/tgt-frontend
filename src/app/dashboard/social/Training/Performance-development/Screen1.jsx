@@ -57,7 +57,7 @@ const uiSchema = {
       { title: "Male",title2:"Male", tooltip: "Please specify the number of male individuals.", colSpan: 1, type: "number" },
       { title: "Female",title2:"Female", tooltip: "Please specify the number of female individuals.", colSpan: 1, type: "number" },
       { title: "Others",title2:"Others", tooltip: "Please specify the number of others individuals.", colSpan: 1, type: "number" },
-      { title: "Total  Number of Training Hours",title2:"totalTrainingHours", tooltip: "Please specify the total number of employees.", colSpan: 1, type: "number" },
+      { title: "Total  number of Employee",title2:"totalTrainingHours", tooltip: "Please specify the total number of employees.", colSpan: 1, type: "number" },
       { title: "Male", title2:"Male1", tooltip: "Please specify the number of male individuals.", colSpan: 1, type: "number" },
       { title: "Female", title2:"Female1", tooltip: "Please specify the number of female individuals.", colSpan: 1, type: "number" },
       { title: "Others", title2:"Others1", tooltip: "Please specify the number of others individuals.", colSpan: 1, type: "number" },

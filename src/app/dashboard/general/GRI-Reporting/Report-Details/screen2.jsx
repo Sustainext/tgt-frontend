@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef,useImperativeHandle, forwardRef } from "react";
 import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 import inputWidget2 from "../../../../shared/widgets/Input/inputWidget2";
@@ -90,7 +90,7 @@ const uiSchema = {
   },
 };
 
-const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
+const Screen2 = forwardRef(({ selectedOrg, year, selectedCorp }, ref) => {
   const [formData, setFormData] = useState([{}]);
   const [r_schema, setRemoteSchema] = useState({});
   const [r_ui_schema, setRemoteUiSchema] = useState({});
@@ -127,32 +127,32 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
       const response = await axiosInstance.post(url, data);
-      if (response.status === 200) {
-        toast.success("Data added successfully", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        LoaderClose();
-        loadFormData();
-      } else {
-        toast.error("Oops, something went wrong", {
-          position: "top-right",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-        LoaderClose();
-      }
+      // if (response.status === 200) {
+      //   toast.success("Data added successfully", {
+      //     position: "top-right",
+      //     autoClose: 3000,
+      //     hideProgressBar: false,
+      //     closeOnClick: true,
+      //     pauseOnHover: true,
+      //     draggable: true,
+      //     progress: undefined,
+      //     theme: "light",
+      //   });
+      //   LoaderClose();
+      //   loadFormData();
+      // } else {
+      //   toast.error("Oops, something went wrong", {
+      //     position: "top-right",
+      //     autoClose: 1000,
+      //     hideProgressBar: false,
+      //     closeOnClick: true,
+      //     pauseOnHover: true,
+      //     draggable: true,
+      //     progress: undefined,
+      //     theme: "colored",
+      //   });
+      //   LoaderClose();
+      // }
     } catch (error) {
       toast.error("Oops, something went wrong", {
         position: "top-right",
@@ -200,7 +200,7 @@ const Screen2 = ({ selectedOrg, year, selectedCorp }) => {
     updateFormData();
     console.log("test form data", formData);
   };
-
+  useImperativeHandle(ref, () => updateFormData);
   return (
     <>
       <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
@@ -249,14 +249,14 @@ iv. Disposal of the product and environmental or social impacts.
             widgets={widgets}
           />
         </div>
-        <div className="mt-4">
+        {/* <div className="mt-4">
           <button type="button"
             className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!selectedOrg || !year  ? 'cursor-not-allowed' : ''}`}
             onClick={handleSubmit}
             disabled={!selectedOrg || !year }>
             Submit
           </button>
-        </div>
+        </div> */}
       </div>
       {loopen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
@@ -272,6 +272,6 @@ iv. Disposal of the product and environmental or social impacts.
       )}
     </>
   );
-};
+});
 
 export default Screen2;
