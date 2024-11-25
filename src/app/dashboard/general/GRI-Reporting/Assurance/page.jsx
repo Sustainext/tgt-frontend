@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -10,6 +10,7 @@ import GeneralHeader2 from "../../GeneralHeader2";
 import Screen1 from "./screen1";
 import Screen2 from "./screen2";
 import Screen3 from "./screen3";
+import { Oval } from "react-loader-spinner";
 const Assurance = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
@@ -19,7 +20,10 @@ const Assurance = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOrg, setSelectedOrg] = useState("");
   const [selectedCorp, setSelectedCorp] = useState("");
-
+  const screen1Ref = useRef(null);
+  const screen2Ref = useRef(null);
+  const screen3Ref = useRef(null);
+  const [loopen, setLoOpen] = useState(false);
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -39,7 +43,38 @@ const Assurance = () => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
+  const handleSubmit = async () => {
+    LoaderOpen(); // Show loader
+    try {
+      const promises = [];
+      if (screen1Ref.current) {
+        promises.push(screen1Ref.current());
+      }
+      if (screen2Ref.current) {
+        promises.push(screen2Ref.current());
+      }
+      if (screen3Ref.current) {
+        promises.push(screen3Ref.current());
+      }
+   
 
+      await Promise.all(promises); // Wait for all submissions to complete
+
+      toast.success("Data submitted successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    } catch (error) {
+      toast.error("Failed to submit data. Please try again.", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    } finally {
+      LoaderClose(); // Hide loader
+    }
+  };
+  const LoaderOpen = () => setLoOpen(true); // Show loader
+  const LoaderClose = () => setLoOpen(false); // Hide loader
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
@@ -153,6 +188,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         location={location}
         year={year}
         month={activeMonth}
+        ref={screen1Ref}
       />
 
       <Screen2
@@ -161,6 +197,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         location={location}
         year={year}
         month={activeMonth}
+        ref={screen2Ref}
       />
         <Screen3
         selectedOrg={selectedOrg}
@@ -168,7 +205,32 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         location={location}
         year={year}
         month={activeMonth}
+        ref={screen3Ref}
       />
+       <div className="mt-4">
+        <button
+          type="button"
+          className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end mr-1 ${
+            !selectedOrg || !year ? "cursor-not-allowed" : ""
+          }`}
+          onClick={handleSubmit}
+          disabled={!selectedOrg || !year}
+        >
+          Submit
+        </button>
+      </div>
+      {loopen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <Oval
+            height={50}
+            width={50}
+            color="#00BFFF"
+            secondaryColor="#f3f3f3"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
     </>
   );
 };

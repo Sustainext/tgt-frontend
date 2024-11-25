@@ -47,7 +47,7 @@ const Section2 = ({selectedOrg,selectedCorp,year,isBoxOpen,setSelectedYear,selec
     setRatioOfRemunerationOfWomenToMen([]);
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_diversity_inclusion_analysis/`,
+        `/sustainapp/get_diversity_inclusion_second_screen_analyse/`,
         { params: {
             organisation: selectedOrg,
             corporate: selectedCorp,

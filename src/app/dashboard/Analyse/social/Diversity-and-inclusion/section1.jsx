@@ -44,10 +44,10 @@ const Section1 = ({
   const fetchData = async () => {
     LoaderOpen();
     setPercentageOfEmployeesWithinGovernmentBodies([]);
-
+  
     try {
       const response = await axiosInstance.get(
-        `/sustainapp/get_diversity_inclusion_analysis/`,
+        `/sustainapp/get_diversity_inclusion_first_screen_analyse/`,
         {
           params: {
             organisation: selectedOrg,
@@ -57,42 +57,34 @@ const Section1 = ({
           },
         }
       );
+  
       const data = response.data;
-
       const { percentage_of_employees_within_government_bodies } = data;
-
-      const formatGovernanceBodiesData = (data) => {
-        return data.map((item) => ({
-          "Percentage of female within organisation's governance bodies":
-            item.percentage_of_female_with_org_governance,
-          "Percentage of male within organisation's governance bodies":
-            item.percentage_of_male_with_org_governance,
-          "Percentage of Non-binary within organisation's governance bodies":
-            item.percentage_of_non_binary_with_org_governance,
-          "Percentage of employee within age group of (under 30 years old) organisation's governance bodies":
-            item.percentage_of_employees_within_30_age_group,
-          "Percentage of employee within age group of (30-50 years old) organisation's governance bodies":
-            item.percentage_of_employees_within_30_to_50_age_group,
-          "Percentage of employee within age group of (over 50 years old) organisation's governance bodies":
-            item.percentage_of_employees_more_than_50_age_group,
-          "Percentage of minority group of organisation's governance bodies":
-            item.percentage_of_employees_in_minority_group,
-        }));
-      };
-
-      setPercentageOfEmployeesWithinGovernmentBodies(
-        formatGovernanceBodiesData(
-          percentage_of_employees_within_government_bodies
-        )
-      );
-
+  
+      // Transform API data into an array of arrays for the table
+      const transformedData = percentage_of_employees_within_government_bodies.map((item) => [
+        item.male,
+        item.female,
+        item.nonBinary,
+        item.lessThan30,
+        item.between30and50,
+        item.moreThan50,
+        item.minorityGroup,
+        item.vulnerableCommunities,
+      ]);
+  
+      console.log("Transformed Data:", transformedData);
+  
+      setPercentageOfEmployeesWithinGovernmentBodies(transformedData);
+  
       LoaderClose();
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
       LoaderClose();
     }
   };
-
+  
+  
   useEffect(() => {
     if (selectedOrg && year) {
       fetchData();
@@ -142,7 +134,7 @@ const Section1 = ({
                   </div>
                   <div className="mb-4">
                     <Table1
-                      columns={column1}
+                    
                       data={percentageOfEmployeesWithinGovernmentBodies}
                     />
                   </div>
