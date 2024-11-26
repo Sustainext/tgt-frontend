@@ -22,30 +22,38 @@ const DeleteConfirmationModal = ({
       case "organization":
         return (
           <div className="space-y-4">
-            <div className="flex justify-between items-center text-sm">
-              <span className="text-gray-900">Organization Name</span>
+            <div className="flex gap-4 items-center text-sm">
+              <span className="text-gray-900 font-semibold">
+                Organization Name
+              </span>
               <span className="text-gray-600">{entityData.name}</span>
             </div>
-            <div className="flex justify-between items-center text-sm">
-              <span className="text-gray-900">Sector</span>
+            <div className="flex gap-4 items-center text-sm">
+              <span className="text-gray-900 font-semibold">Sector</span>
               <span className="text-gray-600">
                 {entityData.sector || "Default"}
               </span>
             </div>
-            <div className="flex justify-between items-center text-sm">
-              <span className="text-gray-900">Location of Head quarters</span>
+            <div className="flex gap-4 items-center text-sm">
+              <span className="text-gray-900 font-semibold">
+                Location of Head quarters
+              </span>
               <span className="text-gray-600">
                 {entityData.location_of_headquarters || "Location"}
               </span>
             </div>
-            <div className="flex justify-between items-center text-sm">
-              <span className="text-gray-900">Total Corporates Under</span>
+            <div className="flex gap-4 items-center text-sm">
+              <span className="text-gray-900 font-semibold">
+                Total Corporates Under
+              </span>
               <span className="text-gray-600">
                 {entityData.corporatenetityorg?.length || 0}
               </span>
             </div>
-            <div className="flex justify-between items-center text-sm">
-              <span className="text-gray-900">Total Locations Under</span>
+            <div className="flex gap-4 items-center text-sm">
+              <span className="text-gray-900 font-semibold">
+                Total Locations Under
+              </span>
               <span className="text-gray-600">
                 {entityData.corporatenetityorg?.reduce(
                   (total, corp) => total + (corp.location?.length || 0),
@@ -58,35 +66,35 @@ const DeleteConfirmationModal = ({
       case "corporate":
         return (
           <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-4 mb-4">
+            <div className="flex items-center gap-4 mb-4">
               <div>
-                <div className="text-sm text-gray-900 mb-1">Organization</div>
+                <div className="text-sm text-gray-900 font-semibold mb-1">
+                  Organization
+                </div>
                 <div className="text-sm text-blue-600 bg-blue-100 px-1 py-1.5 rounded-md">
                   {entityData.organization}
                 </div>
               </div>
-              <div>
-                <div className="text-sm text-gray-900 mb-1">
-                  Corporate Entity
-                </div>
-                <div className="text-sm text-green-600">{entityData.name}</div>
-              </div>
             </div>
             <div className="space-y-2">
-              <div className="flex justify-between items-center text-sm">
-                <span className="text-gray-900">Type</span>
+              <div className="flex gap-4 items-center text-sm">
+                <span className="text-gray-900 font-semibold">
+                  Sub Industry
+                </span>
                 <span className="text-gray-600">
-                  {entityData.corporatetype || "Default"}
+                  {entityData.subindustry || "Default"}
                 </span>
               </div>
-              <div className="flex justify-between items-center text-sm">
-                <span className="text-gray-900">Country</span>
+              <div className="flex gap-4 items-center text-sm">
+                <span className="text-gray-900 font-semibold">Country</span>
                 <span className="text-gray-600">
                   {entityData.Country || "Default"}
                 </span>
               </div>
-              <div className="flex justify-between items-center text-sm">
-                <span className="text-gray-900">Total Locations Under</span>
+              <div className="flex gap-4 items-center text-sm">
+                <span className="text-gray-900 font-semibold">
+                  Total Locations Under
+                </span>
                 <span className="text-gray-600">
                   {entityData.location?.length || 0}
                 </span>
@@ -99,13 +107,15 @@ const DeleteConfirmationModal = ({
           <div className="space-y-4">
             <div className="flex items-center gap-4 mb-4">
               <div>
-                <div className="text-sm text-gray-900 mb-1">Organization</div>
+                <div className="text-sm text-gray-900 font-semibold mb-1">
+                  Organization
+                </div>
                 <div className="text-sm text-blue-600 font-bold bg-blue-100 px-1 py-1.5 rounded-md">
                   {entityData.organization}
                 </div>
               </div>
               <div>
-                <div className="text-sm text-gray-900 mb-1">
+                <div className="text-sm text-gray-900 font-semibold mb-1">
                   Corporate Entity
                 </div>
                 <div className="text-sm text-green-600 bg-green-100 px-1 py-1.5 rounded-md">
@@ -115,19 +125,21 @@ const DeleteConfirmationModal = ({
             </div>
             <div className="space-y-2">
               <div className="flex justify-start gap-4 items-center text-sm">
-                <span className="text-gray-900">Location Type</span>
+                <span className="text-gray-900 font-semibold">
+                  Location Type
+                </span>
                 <span className="text-gray-600">
                   {entityData.location_type || "Default"}
                 </span>
               </div>
               <div className="flex justify-start gap-4 items-center text-sm">
-                <span className="text-gray-900">Address</span>
+                <span className="text-gray-900 font-semibold">Address</span>
                 <span className="text-gray-600">
                   {entityData.streetaddress || "Default"}
                 </span>
               </div>
               <div className="flex justify-start gap-4 items-center text-sm">
-                <span className="text-gray-900">City</span>
+                <span className="text-gray-900 font-semibold">City</span>
                 <span className="text-gray-600">
                   {entityData.city || "Default"}
                 </span>
@@ -187,34 +199,55 @@ const DeleteConfirmationModal = ({
                   <div className="text-red-600 text-sm font-medium mb-2">
                     Warning!
                   </div>
-                  <p className="text-gray-600 text-sm">
-                    {entityType === "organization"
-                      ? "This process will delete the entire organization along with the corporates and locations under them. All the data collected under this organization will also be erased and this is irreversible."
-                      : entityType === "corporate"
-                      ? "This process will delete the corporate entity along with all locations under it. All the data collected under this corporate entity will also be erased and this is irreversible."
-                      : "This process will delete this location and it is irreversible."}
-                  </p>
+                  {entityType === "organization" ? (
+                    <p className="text-gray-600 text-sm">
+                      This process will delete the entire organization along
+                      with the corporates and locations under them.{" "}
+              
+                    </p>
+                  ) : entityType === "corporate" ? (
+                    <p className="text-gray-600 text-sm">
+                      This process will delete the corporate entity along with
+                      all locations under it.{" "}
+                      
+                    </p>
+                  ) : (
+                    <p className="text-gray-600 text-sm">
+                      This process will delete this location{" "}
+                      <span className="line-through">
+                        and it is irreversible.
+                      </span>
+                    </p>
+                  )}
                 </div>
+
+                <hr className="text-gray-300 mt-6 mb-4" />
 
                 {/* Entity details */}
                 <div className="mb-6">{renderEntityDetails()}</div>
 
+                <hr className="text-gray-300 my-6" />
+
                 {/* Confirmation text */}
                 <div className="text-gray-600 text-sm mb-6">
-                  Are you sure you want to delete this {entityType}?
+                  Are you sure you want to delete this{" "}
+                  {entityType === "organization"
+                    ? "entire organization"
+                    : entityType}
+                  ?
                 </div>
 
                 {/* Buttons */}
                 <div className="flex justify-end space-x-4">
                   <button
-                  type='button'
+                    type="button"
                     onClick={onClose}
                     className="w-full py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                   >
                     Cancel
                   </button>
                   <button
-                  type='button'
+                    type="button"
                     onClick={handleDelete}
                     className="w-full py-2 text-sm font-medium text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                   >

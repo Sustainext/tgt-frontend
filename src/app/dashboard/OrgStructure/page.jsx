@@ -6,8 +6,15 @@ import { FaPlus } from "react-icons/fa";
 import QuickAddModal from "./QuickAddModal";
 import NodeDetailModal from "./NodeDetailModal";
 import Link from "next/link";
+import {
+  setHeadertext1,
+  setHeadertext2,
+  setHeaderdisplay,
+  setMiddlename,
+} from "../../../lib/redux/features/topheaderSlice";
+import { useDispatch } from "react-redux";
 
-const OrgTree = ({ data }) => {
+const OrgTree = ({ data, newrole }) => {
   const nodeWidth = 180;
   const nodeHeight = 60;
   const levelGap = 200;
@@ -298,33 +305,37 @@ const OrgTree = ({ data }) => {
   // Add buttons for navigation aligned with hierarchy
   const AddButtons = () => (
     <div className="flex mt-8 mb-4" style={{ marginLeft: "50px" }}>
-      <div style={{ width: nodeWidth, marginRight: levelGap }}>
-        <Link
-          href="/dashboard/OrgStructure/forms/Organization"
-          className="text-sky-600 text-xs font-bold leading-[15px] flex items-center justify-center border border-sky-600 py-2 px-4 hover:text-white hover:bg-sky-600 transition-all w-full rounded-md"
-        >
-          <FaPlus className="mr-2" size={12} />
-          Add Organization
-        </Link>
-      </div>
-      <div style={{ width: nodeWidth, marginRight: levelGap }}>
-        <Link
-          href="/dashboard/OrgStructure/forms/Entity"
-          className="text-sky-600 text-xs font-bold leading-[15px] flex items-center justify-center border border-sky-600 py-2 px-4 hover:text-white hover:bg-sky-600 transition-all w-full rounded-md"
-        >
-          <FaPlus className="mr-2" size={12} />
-          Add Corporate
-        </Link>
-      </div>
-      <div style={{ width: nodeWidth }}>
-        <Link
-          href="/dashboard/OrgStructure/forms/Location"
-          className="text-sky-600 text-xs font-bold leading-[15px] flex items-center justify-center border border-sky-600 py-2 px-4 hover:text-white hover:bg-sky-600 transition-all w-full rounded-md"
-        >
-          <FaPlus className="mr-2" size={12} />
-          Add Location
-        </Link>
-      </div>
+      {newrole && (
+        <>
+          <div style={{ width: nodeWidth, marginRight: levelGap }}>
+            <Link
+              href="/dashboard/OrgStructure/forms/Organization"
+              className="text-sky-600 text-xs font-bold leading-[15px] flex items-center justify-center border border-sky-600 py-2 px-4 hover:text-white hover:bg-sky-600 transition-all w-full rounded-md"
+            >
+              <FaPlus className="mr-2" size={12} />
+              Add Organization
+            </Link>
+          </div>
+          <div style={{ width: nodeWidth, marginRight: levelGap }}>
+            <Link
+              href="/dashboard/OrgStructure/forms/Entity"
+              className="text-sky-600 text-xs font-bold leading-[15px] flex items-center justify-center border border-sky-600 py-2 px-4 hover:text-white hover:bg-sky-600 transition-all w-full rounded-md"
+            >
+              <FaPlus className="mr-2" size={12} />
+              Add Corporate
+            </Link>
+          </div>
+          <div style={{ width: nodeWidth }}>
+            <Link
+              href="/dashboard/OrgStructure/forms/Location"
+              className="text-sky-600 text-xs font-bold leading-[15px] flex items-center justify-center border border-sky-600 py-2 px-4 hover:text-white hover:bg-sky-600 transition-all w-full rounded-md"
+            >
+              <FaPlus className="mr-2" size={12} />
+              Add Location
+            </Link>
+          </div>
+        </>
+      )}
     </div>
   );
 
@@ -629,7 +640,7 @@ const OrgTree = ({ data }) => {
                   nodeId={node.id}
                 />
                 {/* Quick Add Buttons - Outside the node */}
-                {hoveredNode === node.id && (
+                {newrole && hoveredNode === node.id && (
                   <>
                     {/* Right Quick Add Button (for children) */}
                     {(node.type === "organization" ||
@@ -785,21 +796,36 @@ const OrgTree = ({ data }) => {
         nodeType={selectedNode?.type}
         rawData={data}
         setActiveNode={setActiveNode}
+        role={newrole}
       />
-      <QuickAddModal
-        isOpen={quickAddModal.isOpen}
-        onClose={() =>
-          setQuickAddModal({ isOpen: false, type: null, parentNode: null })
-        }
-        type={quickAddModal.type}
-        parentNode={quickAddModal.parentNode}
-      />
+      {newrole && (
+        <QuickAddModal
+          isOpen={quickAddModal.isOpen}
+          onClose={() =>
+            setQuickAddModal({ isOpen: false, type: null, parentNode: null })
+          }
+          type={quickAddModal.type}
+          parentNode={quickAddModal.parentNode}
+        />
+      )}
     </div>
   );
 };
 
 const OrganizationTreePage = () => {
   const [orgData, setOrgData] = useState(null);
+  const [newrole, setRole] = useState(false);
+  const isNewRole = newrole === "false";
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedRole = localStorage.getItem("custom_role");
+      if (storedRole) {
+        setRole(storedRole);
+        console.log("Stored role:", storedRole);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -815,36 +841,14 @@ const OrganizationTreePage = () => {
 
     fetchData();
   }, []);
+  const dispatch = useDispatch();
 
-  // Add buttons for navigation aligned with hierarchy
-  const AddButtons = () => (
-    <div className="flex mb-8" style={{ marginLeft: "50px" }}>
-      <div style={{ width: nodeWidth, marginRight: levelGap }}>
-        <Link
-          href="/dashboard/OrgStructure/forms/Organization"
-          className="text-sky-600 text-xs font-bold leading-[15px] flex items-center justify-center border border-sky-600 py-2 px-4 hover:text-white hover:bg-sky-600 transition-all w-full"
-        >
-          Add Organization
-        </Link>
-      </div>
-      <div style={{ width: nodeWidth, marginRight: levelGap }}>
-        <Link
-          href="/dashboard/OrgStructure/forms/Entity"
-          className="text-sky-600 text-xs font-bold leading-[15px] flex items-center justify-center border border-sky-600 py-2 px-4 hover:text-white hover:bg-sky-600 transition-all w-full"
-        >
-          Add Corporate
-        </Link>
-      </div>
-      <div style={{ width: nodeWidth }}>
-        <Link
-          href="/dashboard/OrgStructure/forms/Location"
-          className="text-sky-600 text-xs font-bold leading-[15px] flex items-center justify-center border border-sky-600 py-2 px-4 hover:text-white hover:bg-sky-600 transition-all w-full"
-        >
-          Add Location
-        </Link>
-      </div>
-    </div>
-  );
+  useEffect(() => {
+    dispatch(setHeadertext1("Organization Structure"));
+    dispatch(setHeaderdisplay(null));
+    dispatch(setHeadertext2(null));
+    dispatch(setMiddlename(null));
+  }, [dispatch]);
 
   if (!orgData) {
     return (
@@ -865,11 +869,11 @@ const OrganizationTreePage = () => {
           <h1 className="text-xl">Organization Hierarchy</h1>
         </div>
         <div className="text-gray-600">
-          Click on the any Organization, Corporate or Location to view the
-          details about them.
+          Click on any Organization, Corporate or Location to view the details
+          about them.
         </div>
       </div>
-      <OrgTree data={orgData} />
+      <OrgTree data={orgData} newrole={newrole} />
     </div>
   );
 };
