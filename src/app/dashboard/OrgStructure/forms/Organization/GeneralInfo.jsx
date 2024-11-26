@@ -107,7 +107,7 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
       //   ? frameworkNumbers.map(num => frameworkMapping[num])
       //   : [frameworkMapping[frameworkNumbers]];
 
-      if (editData.type === "Corporate Entity") {
+      if (editData.type === "Corporate Entity" || editData.type === "organization") {
         setFormData({
           generalDetails: {
             name: editData.filteredData[0]?.name || "",
