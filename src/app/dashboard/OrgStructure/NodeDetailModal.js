@@ -11,7 +11,7 @@ const NodeDetailModal = ({
   nodeData,
   nodeType,
   rawData,
-  setActiveNode,
+  role
 }) => {
   const router = useRouter();
   const modalRef = useRef(null);
@@ -21,14 +21,123 @@ const NodeDetailModal = ({
 
    // Handle edit navigation
    const handleEdit = () => {
+    let filteredDetails = {};
+
+    if (details) {
+      if (nodeType === "organization") {
+        // Organization format based on your original Structure code
+        filteredDetails = {
+          id: details.id,
+          name: details.name,
+          type_corporate_entity: details.type_of_corporate_entity,
+          owner: details.owner,
+          phone: details.phone,
+          mobile: details.mobile,
+          website: details.website,
+          fax: details.fax,
+          employeecount: details.employeecount || details.no_of_employees,
+          revenue: details.revenue,
+          sector: details.sector,
+          subindustry: details.subindustry || details.sub_industry,
+          address: details.address,
+          countryoperation: details.countryoperation,
+          state: details.state,
+          city: details.city,
+          timezone: details.timezone,
+          language: details.language,
+          date_format: details.date_format,
+          currency: details.currency,
+          from_date: details.from_date,
+          to_date: details.to_date,
+          active: details.active,
+          amount: details.amount,
+          ownership_and_legal_form: details.ownership_and_legal_form,
+          group: details.group,
+          type_of_business_activities: details.type_of_business_activities,
+          type_of_product: details.type_of_product,
+          type_of_services: details.type_of_services,
+          location_of_headquarters: details.location_of_headquarters,
+          sdg: details.sdg,
+          rating: details.rating,
+          certification: details.certification,
+          target: details.target,
+          framework: details.framework
+        };
+      } else if (nodeType === "corporate") {
+        // Corporate format based on your original Structure code
+        filteredDetails = {
+          id: details.id,
+          name: details.name,
+          corporatetype: details.corporatetype || details.type,
+          ownershipnature: details.ownershipnature || details.ownership,
+          legalform: details.legalform,
+          ownership: details.ownership,
+          revenue: details.revenue,
+          sector: details.sector,
+          subindustry: details.subindustry,
+          website: details.website,
+          employeecount: details.employeecount,
+          address: details.address,
+          city: details.city,
+          state: details.state,
+          Country: details.Country || details.country,
+          from_date: details.from_date,
+          to_date: details.to_date,
+          currency: details.currency,
+          date_format: details.date_format,
+          timezone: details.timezone,
+          language: details.language,
+          location_headquarters: details.location_headquarters || details.location_of_headquarters,
+          phone: details.phone,
+          mobile: details.mobile,
+          fax: details.fax,
+          zipcode: details.zipcode,
+          framework: details.framework,
+          organization: details.organization // Keep the parent organization reference
+        };
+      } else if (nodeType === "location") {
+        // Filter only location relevant fields
+        filteredDetails = {
+          id: details.id,
+          name: details.name,
+          typelocation: details.typelocation || details.location_type,
+          currency: details.currency,
+          dateformat: details.dateformat || details.date_format,
+          phone: details.phone,
+          mobile: details.mobile,
+          website: details.website,
+          fax: details.fax,
+          sector: details.sector,
+          subindustry: details.subindustry,
+          timezone: details.timezone,
+          employeecount: details.employeecount,
+          language: details.language,
+          revenue: details.revenue,
+          streetaddress: details.streetaddress || details.address,
+          country: details.country,
+          state: details.state,
+          city: details.city,
+          zipcode: details.zipcode || details.zipCode,
+          from_date: details.from_date,
+          to_date: details.to_date,
+          latitude: details.latitude,
+          longitude: details.longitude,
+          location_type: details.location_type,
+          area: details.area,
+          corporate: details.corporate,
+          organization: details.organization
+        };
+      }
+    }
+
     const dataToPass = {
-      type: nodeType,
+      type: nodeType === "corporate" ? "Corporate Entity" : nodeType,
       item: nodeData,
-      filteredData: [details]
+      filteredData: [filteredDetails]
     };
-    
+
     const encodedData = encodeURIComponent(JSON.stringify(dataToPass));
-    
+
     // Navigate based on entity type
     if (nodeType === "organization") {
       router.push(`/dashboard/OrgStructure/forms/Organization?data=${encodedData}`);
@@ -37,7 +146,7 @@ const NodeDetailModal = ({
     } else if (nodeType === "location") {
       router.push(`/dashboard/OrgStructure/forms/Location?data=${encodedData}`);
     }
-    
+
     onClose();
   };
 
@@ -183,11 +292,12 @@ const NodeDetailModal = ({
               <span className="font-medium text-lg">{details.name}</span>
             </div>
             <div className="flex items-center space-x-3">
-              {/* Edit Button */}
+              {
+                role && <>{/* Edit Button */}
               <button className="inline-flex items-center px-3 py-1.5 bg-white border border-gray-200 rounded-md text-sm text-gray-600 
               hover:text-[#007eef] hover:border-[#007eef]"
               type="button"
-              // onClick={handleEdit}
+              onClick={handleEdit}
               >
                 <svg
                   fill="none"
@@ -223,7 +333,8 @@ const NodeDetailModal = ({
                   <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                 </svg>
                 Delete
-              </button>
+              </button></>
+              }
 
               {/* Close Button */}
               <button
