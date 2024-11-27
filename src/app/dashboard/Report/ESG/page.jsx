@@ -25,6 +25,7 @@ import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import OmissionPopup from "./content-index/modals/omissionPopup";
 import ReportCreatedPopup from "./content-index/modals/reportCreatedPopup";
 import MainValidationPopup from "./validation-modals/mainModal";
+import axiosInstance,{patch} from "../../../utils/axiosMiddleware";
 import {
   setHeadertext1,
   setHeadertext2,
@@ -48,6 +49,7 @@ const [reportid,setReportid] =useState('')
 const [reportType,setReportType]=useState('')
 const [reportCreatedOn,setCreatedOn]=useState('')
 const [orgName,setOrgName]=useState('')
+const [missing_fields,setMissingFields]=useState([])
   const messageFromCeoRef = useRef(); // Use useRef to store a reference to submitForm
   const aboutTheCompany=useRef();
   const missionVision=useRef();
@@ -88,46 +90,70 @@ const [orgName,setOrgName]=useState('')
     15:customers
   };
 
-  const  missing_fields=[
-    {
-      page: "screen_fourteen",
-      label: "14.1 Community Engagement",
-      subLabel: "Add statement about company’s community engagement",
-      type:'textarea'
-    },
-    {
-      page: "screen_fourteen",
-      label: "14.2 Impact Assessment",
-      subLabel: "",
-      type:'richTextarea'
-    },
-    {
-      page: "screen_fourteen",
-      label: "14.3 CSR",
-      subLabel:
-        "Add statement about company’s Corporate Social Responsibility policies",
-        type:'richTextarea'
-    },
-    {
-      page: "screen_fifteen",
-      label: "15.1 Environmental Impact",
-      subLabel:
-        "Add statement about company’s responsibility to minimize the environmental impact",
-         type:'textarea'
-    },
-    {
-      page: "screen_fifteen",
-      label: "15.2 Emissions Strategy",
-      subLabel: "Add statement about company’s strategy to reduce emission",
-       type:'textarea'
-    },
-    {
-      page: "screen_fifteen",
-      label: "15.3 Scope 1 GHG Emissions",
-      subLabel: "Add statement about company’s scope 1 emissions",
-       type:'richTextarea'
-    },
-  ]
+  // const  missing_fields=[
+  //   {
+  //     page: "screen_fourteen",
+  //     label: "14.1 Community Engagement",
+  //     subLabel: "Add statement about company’s community engagement",
+  //     type:'textarea'
+  //   },
+  //   {
+  //     page: "screen_fourteen",
+  //     label: "14.2 Impact Assessment",
+  //     subLabel: "",
+  //     type:'richTextarea'
+  //   },
+  //   {
+  //     page: "screen_fourteen",
+  //     label: "14.3 CSR",
+  //     subLabel:
+  //       "Add statement about company’s Corporate Social Responsibility policies",
+  //       type:'richTextarea'
+  //   },
+  //   {
+  //     page: "screen_fifteen",
+  //     label: "15.1 Environmental Impact",
+  //     subLabel:
+  //       "Add statement about company’s responsibility to minimize the environmental impact",
+  //        type:'textarea'
+  //   },
+  //   {
+  //     page: "screen_fifteen",
+  //     label: "15.2 Emissions Strategy",
+  //     subLabel: "Add statement about company’s strategy to reduce emission",
+  //      type:'textarea'
+  //   },
+  //   {
+  //     page: "screen_fifteen",
+  //     label: "15.3 Scope 1 GHG Emissions",
+  //     subLabel: "Add statement about company’s scope 1 emissions",
+  //      type:'richTextarea'
+  //   },
+  // ]
+
+  const loadMissingFields = async () => {
+    // LoaderOpen();
+    const url = `${process.env.BACKEND_API_URL}/esg_report/get_field_validation/${reportid}/`;
+    try {
+        const response = await axiosInstance.get(url);
+        if(response.status==200){
+          console.log(response.data,"seeee mssing")
+          if(response.data.length>0){
+            setMissingFields(response.data)
+            setIsValidationModalOpen(true)
+          }
+          else{
+            setActiveStep((prev) => prev + 1);
+          }
+        }
+        
+        // LoaderClose();
+    
+    } catch (error) {
+        console.error('API call failed:', error);
+        // LoaderClose();
+    }
+};
   
   const handleNextStep = async (type) => {
     const currentRef = stepRefs[activeStep]?.current;
@@ -195,13 +221,7 @@ const [orgName,setOrgName]=useState('')
     else if (type === "last") {
       const isSubmitted = await submitAndProceed();
       if (isSubmitted) {
-        if(missing_fields){
-          setIsValidationModalOpen(true)
-        }
-        else{
-          setActiveStep((prev) => prev + 1);
-        }
-        
+        loadMissingFields()
       }
     }
     else {
