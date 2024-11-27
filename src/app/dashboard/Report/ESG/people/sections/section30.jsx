@@ -94,7 +94,7 @@ const Section30=({section13_7_2Ref,orgName,data})=>{
         <div id="section13_7_2" ref={section13_7_2Ref}>
 
 <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-13.7.2 Operations and Suppliers in Which the Right to Freedom of Association and Collective Bargaining May Be at Risk
+13.7.1 Operations and Suppliers in Which the Right to Freedom of Association and Collective Bargaining May Be at Risk
 </h3>
 <div className="flex justify-between">
           <p className="text-[15px] text-[#344054] mb-2 mt-3">Add statement about company’s views on freedom of association and collective bargaining</p>

@@ -339,21 +339,21 @@ const scrollToSection = (sectionRef, sectionId) => {
     9.6 Policy
   </p>
   
-  <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section9_6_1' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section9_6_1Ref, 'section9_6_1')}>
+  {/* <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section9_6_1' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section9_6_1Ref, 'section9_6_1')}>
     9.6.1 Management of material topic
    
-  </p>
+  </p> */}
   
   <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section9_6_2' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section9_6_2Ref, 'section9_6_2')}>
-    9.6.2 Embedding policy Commitment
+    9.6.1 Embedding policy Commitment
   </p>
   
   <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section9_6_3' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section9_6_3Ref, 'section9_6_3')}>
-    9.6.3 Anti-trust, anti-competitive behavior, monopoly practices
+    9.6.2 Anti-trust, anti-competitive behavior, monopoly practices
   </p>
   
   <p className={`text-[11px] mb-2 ml-2 cursor-pointer ${activeSection === 'section9_6_4' ? 'text-blue-400' : ''}`} onClick={() => scrollToSection(section9_6_4Ref, 'section9_6_4')}>
-    9.6.4 Defined benefit plan obligations and other retirement plans
+    9.6.3 Defined benefit plan obligations and other retirement plans
   </p>
 
   

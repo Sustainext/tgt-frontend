@@ -324,7 +324,7 @@ Water discharge (from water stress areas) by water type
 Total Water Discharge by Water type (from water stress area)
         </p>
 <div className="shadow-md rounded-md mb-4">
-<WaterTable columns={column5} data={data5} consumption="Total Water Consumption" unit={"Megalitre"} total={'212123545'}/>
+<WaterTable columns={column5} data={data5} consumption="Total Water Consumption" unit={waterDischargeByStressArea.unit} total={waterDischargeByStressArea.total}/>
 </div>
 
 <p className="text-[15px]  mb-2 font-semibold">
