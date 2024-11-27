@@ -10,7 +10,7 @@ const Section22=({section9_6_4Ref,data})=>{
         <div id="section9_6_4" ref={section9_6_4Ref}>
 
 <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-9.6.4 Defined Benefit Plan Obligations and Other Retirement Plans
+9.6.3  Defined Benefit Plan Obligations and Other Retirement Plans
 </h3>
 
 <p className="text-[15px] text-[#344054] mb-2 font-semibold">

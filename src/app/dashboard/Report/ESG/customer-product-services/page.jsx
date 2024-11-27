@@ -189,7 +189,7 @@ const scrollToSection = (sectionRef, sectionId) => {
             <Section6 section15_2_1Ref={section15_2_1Ref} data={data} />
             <Section7 section15_2_2Ref={section15_2_2Ref} data={data} />
             <Section8 section15_3Ref={section15_3Ref} data={data} />
-            <Section9 section15_3_1Ref={section15_3_1Ref} orgName={orgName} />
+            <Section9 section15_3_1Ref={section15_3_1Ref} orgName={orgName} data={data} />
         
         
 
