@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import EnvironmentHeader from "../../environmentheader";
 import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
 import { Energydata } from "../../data/griinfo";
@@ -18,7 +18,7 @@ const Significantwaste = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [locationMessage, setLocationMessage] = useState("");
   const [yearMessage, setYearMessage] = useState("");
-
+  const drawerRef = useRef(null);
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -38,7 +38,20 @@ const Significantwaste = () => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (drawerRef.current && !drawerRef.current.contains(event.target)) {
+        setIsOpen(false); // Close drawer when clicking outside
+      }
+    };
 
+    // Attach event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Cleanup event listener
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
@@ -115,6 +128,7 @@ const Significantwaste = () => {
           </h6>
         </div>
         <div
+        ref={drawerRef}
            className={`${
             isOpen
               ? "translate-x-[15%] block top-16"

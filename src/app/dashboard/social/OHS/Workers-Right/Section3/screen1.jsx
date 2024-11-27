@@ -16,7 +16,7 @@ const widgets = {
   TableWidget: GeneralWorkersEmployees,
 };
 
-const view_path = "gri-social-ohs-403-2c-worker_right-new";
+const view_path = "gri-social-ohs-403-2d-work_related_incident-new";
 const client_id = 1;
 const user_id = 1;
 
@@ -25,35 +25,69 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      Rightrefuse: {
+      Descriptionincident: {
         type: "string",
-        title: "Right to refuse unsafe work",
-        enum: [
-          "Yes",
-          "No",
-       
-        ],
-      },
-     
-      PolicyProcess: {
-        type: "string",
-        title: "Policy and Process",
+        title: "Description of Incident",
         texttype: "text",
       },
-      Protectionreprisals: {
+     
+      Incidentreporting: {
         type: "string",
-        title: "Protection from Reprisals",
+        title: "Incident Reporting Personnel",
         enum: [
-          "Regular training",
-          "Safety incentives",
-          "Open communication culture",
-          "Positive feedback for reporting",
-          "Anonymous reporting options",
+          "Supervisor",
+          "Safety committee",
+          "Safety representative",
+          "Anonymous reporting system",
+          "Online platform",
           "Others (please specify)",
         ],
       },
+      Investigationteam: {
+        type: "string",
+        title: "Investigation team",
+        enum: [
+          "Safety Manager",
+          "Supervisor",
+          "Trained Team",
+          "External Consultants",
+          "Others (please specify)",
+        ],
+      },
+      InvestigationMethods: {
+        type: "string",
+        title: "Investigation Methods",
+        enum: [
+          "Interviews",
+          "Witness Statements",
+          "Site Inspection",
+          "Equipment Review",
+          "Document Analysis",
+          "Others (please specify)",
+        ],
+      },
+      HazardIdentification : {
+        type: "string",
+        title: "Hazard Identification & Risk Assessment",
+        texttype: "text",
+      },
    
-
+      CorrectiveActions: {
+        type: "string",
+        title: "Corrective Actions",
+        enum: [
+          "Elimination of hazard",
+          "Engineering control",
+          "Administrative control",
+          "PPE",
+          "Others (please specify)",
+        ],
+      },
+      SystemImprovement: {
+        type: "string",
+        title: "System Improvement",
+        texttype: "text",
+      },
    
     },
   },
@@ -64,34 +98,61 @@ const uiSchema = {
   "ui:options": {
     titles: [
       {
-        key: "Rightrefuse",
-        title: "Right to refuse unsafe work",
+        key: "Descriptionincident",
+        title: "Description of Incident",
         tooltip:
-          "Do workers have the right to refuse work they believe could cause injury or ill health?",
+          "<p>Please describe the processes used to investigate work-related incidents.</p> <br> <p>Example: Incidents might be due to, for example, electrical problems, explosion, fire; overflow, overturning, leakage, flow; breakage, bursting, splitting; loss of control, slipping, stumbling and falling; body movement without stress; body movement under/with stress; shock, fright; workplace violence or harassment.</p>",
       },
       {
-        key: "PolicyProcess",
-        title: "Policy and Process",
+        key: "Incidentreporting",
+        title: "Incident Reporting Personnel",
         tooltip:
-          "Briefly describe the policy and process for workers to exercise their right to refuse unsafe work. For example: how workers notify supervisors, what triggers investigation, and how concerns are addressed.",
+          "Who can workers report work-related hazards and hazardous situations to? (Select all that apply)",
       },
       {
-        key: "Protectionreprisals",
-        title: "Protection from Reprisals",
+        key: "Investigationteam",
+        title: "Investigation team",
         tooltip:
-          "How are workers protected from reprisals for refusing unsafe work?",
+          "Who typically conducts incident investigations? (Select all that apply) ",
       },
-
+      {
+        key: "InvestigationMethods",
+        title: "Investigation Methods",
+        tooltip:
+          "What methods are used to investigate incidents? (Select all that apply)",
+      },
+      {
+        key: "HazardIdentification",
+        title: "Hazard Identification & Risk Assessment",
+        tooltip:
+          "What actions did the organization take to address hazards and risks identified in incident investigations, following the hierarchy of controls? (Select all that apply)",
+      },
+      {
+        key: "CorrectiveActions",
+        title: "Corrective Actions",
+        tooltip:
+          "What actions did the organization take to address hazards and risks identified in incident investigations, following the hierarchy of controls? (Select all that apply)",
+      },
+      {
+        key: "SystemImprovement",
+        title: "System Improvement",
+        tooltip:
+          "What changes did the organization make to policies, training, equipment, or communication after investigating incidents? (e.g., revised safety procedures, improved equipment, additional hazard training)",
+      },
+    
     ],
   },
 };
-const Screen1 = ({location, year}) => {
+const Screen1 = ({location, year,month}) => {
   const initialFormData = [
     {
-      Rightrefuse: "",
-      PolicyProcess: "",
-      Protectionreprisals: "",
-
+      Descriptionincident: "",
+      Incidentreporting: "",
+      Investigationteam: "",
+      InvestigationMethods: "",
+      HazardIdentification: "",
+      CorrectiveActions: "",
+      SystemImprovement: "",
     },
   ];
   const [formData, setFormData] = useState(initialFormData);
@@ -119,6 +180,7 @@ const Screen1 = ({location, year}) => {
       form_data: formData,
       location,
       year,
+  
     };
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
@@ -209,10 +271,10 @@ const Screen1 = ({location, year}) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-           Worker Right to Refuse Unsafe Work
+           Work-Related Incident Investigation
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e86`}
-                data-tooltip-content="This section documents data corresponding to the organization's processes for workers to report work-related hazards and hazardous situations, along with the measures in place to protect workers from reprisals for reporting."
+                data-tooltip-content="This section documents data corresponding to the organization's processes for investigating work-related incidents."
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
@@ -236,7 +298,7 @@ const Screen1 = ({location, year}) => {
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 403-2c
+                GRI 403-2d
                 </div>
               </div>
             </div>

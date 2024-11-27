@@ -43,7 +43,7 @@ const Securitypersonnel2 = () => {
                             <div className='flex'>
                                 <div>
                                    <p className="gradient-text text-[22px] font-bold py-2">
-                                    Security Practices 2016
+                                   Human Rights and Community Impact
                                     </p>
                                 </div>
 
@@ -63,7 +63,7 @@ const Securitypersonnel2 = () => {
                 <div className="ml-3 flex">
                     <h6 className="text-[17px] mb-4 font-semibold flex">
 
-                    Security personnel trained in human rights policies or procedures
+                    Training requirements apply to third party organizations
                         {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />

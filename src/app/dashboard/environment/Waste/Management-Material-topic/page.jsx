@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Energydata } from "../../../../shared/data/Energydata";
@@ -13,7 +13,7 @@ const WasteMaterialtopic = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [category, setCategory] = useState("");
   const [data, setData] = useState();
-
+  const drawerRef = useRef(null);
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -33,7 +33,20 @@ const WasteMaterialtopic = () => {
     // //console.log(newData);
     setData(newData);
   }, [category]);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (drawerRef.current && !drawerRef.current.contains(event.target)) {
+        setIsOpen(false); // Close drawer when clicking outside
+      }
+    };
 
+    // Attach event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Cleanup event listener
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
@@ -76,6 +89,7 @@ const WasteMaterialtopic = () => {
           </h6>
         </div>
         <div
+         ref={drawerRef}
            className={`${
             isOpen
               ? "translate-x-[15%] block top-16"

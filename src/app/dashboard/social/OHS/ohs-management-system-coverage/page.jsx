@@ -45,7 +45,7 @@ const Ohsmanagementsystemcoverage = () => {
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] font-bold py-2">
-                    Ocupational Health and Safety 2018
+                    Occupational Health and Safety
                   </p>
                 </div>
               </div>

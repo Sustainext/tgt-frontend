@@ -49,7 +49,7 @@ const Salaryratio = () => {
               <div className="flex">
                          <div className="h-[29px]">
                   <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
-                    Diversity of the Board
+                  Diversity and Equal Opportunity
                   </p>
                 </div>
               </div>
@@ -87,8 +87,7 @@ const Salaryratio = () => {
 
       <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-            Percentage of employees receiving regular performance and career
-            development reviews
+          Ratio of basic salary and remuneration of women to men 
             {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />

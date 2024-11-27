@@ -5,7 +5,7 @@ import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
 import { Socialdata } from "../../data/socialgriinfo"
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
-import Illhealthscreen1 from "./illhealth"
+import Section1 from "./Section1/page";
 const Illhealth = () => {
 
     const [data, setData] = useState();
@@ -42,7 +42,7 @@ const Illhealth = () => {
                             <div className='flex'>
                                 <div>
                                    <p className="gradient-text text-[22px] font-bold py-2">
-                                    Ocupational Health and Safety 2018
+                                    Occupational Health and Safety
                                     </p>
                                 </div>
 
@@ -64,7 +64,7 @@ const Illhealth = () => {
                 <div className="ml-3 flex">
                     <h6 className="text-[17px] mb-4 font-semibold flex">
 
-                    Ill Health
+                    Work-related ill health
                         {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />
@@ -125,7 +125,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         </div>
             </div>
          
-            <Illhealthscreen1/>
+            <Section1/>
 
         </>
     );

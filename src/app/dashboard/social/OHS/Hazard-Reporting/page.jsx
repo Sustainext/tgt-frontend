@@ -2,23 +2,13 @@
 import React, { useState, useEffect } from "react";
 import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
 import { Socialdata } from "../../data/socialgriinfo";
-import { Tooltip as ReactTooltip } from "react-tooltip";
-import "react-tooltip/dist/react-tooltip.css";
-import Socialheader2 from "../../socialheader2";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Screen1 from "./screen1";
-// import Screen2 from "./Screen2";
-// import Screen3 from "./Screen3";
-const CustomerPrivacy2 = () => {
-  const [activeMonth, setActiveMonth] = useState(1);
-  const [location, setLocation] = useState("");
-  const [year, setYear] = useState();
+import Section2 from "./Section2/page"
+const HazardReporting = () => {
+
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOrg, setSelectedOrg] = useState("");
-  const [selectedCorp, setSelectedCorp] = useState("");
+
   const toggleDrawerclose = () => {
     setIsOpen(!isOpen);
   };
@@ -41,36 +31,40 @@ const CustomerPrivacy2 = () => {
 
   return (
     <>
-     <ToastContainer style={{ fontSize: "12px" }} />
       <div className="flex flex-col justify-start overflow-x-hidden ">
         <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
           <div className="w-full">
-           <div className="text-left mb-2 ml-3 pt-5">
+            <div className="text-left mb-2 ml-3 pt-5">
               <p className="text-[11px]">Social</p>
               <div className="flex">
                 <div>
-                  <p className="gradient-text text-[22px] h-[30px] font-bold pt-1">
-                  Customer Privacy & Data Security
+                  <p className="gradient-text text-[22px] font-bold py-2">
+                  Occupational Health and Safety
                   </p>
                 </div>
               </div>
             </div>
           </div>
-          <div className="w-full float-end ">
+          <div className="w-full float-end pt-5 me-1">
             <div className="flex float-end border-l">
-            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('70')}>GRI 418 - 1</button>
-            <button className="text-[#fff] bg-[#00558A] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('71')}>SDG 16</button>
+              <button
+                className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                onClick={() => toggleDrawer("23")}
+              >
+                GRI 403 - 2
+              </button>
 
-
+              <button
+                className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5"
+                onClick={() => toggleDrawer("24")}
+              >
+                SDG 8
+              </button>
             </div>
           </div>
         </div>
 
-      <div className="ml-3 flex relative">
-          <h6 className="text-[17px] mb-4 font-semibold flex">
-          Statement of Fact
-          </h6>
-        </div>
+     
        <div
            className={`${
             isOpen
@@ -115,20 +109,8 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
             ))}
         </div>
       </div>
-      <Socialheader2
-        activeMonth={activeMonth}
-        setActiveMonth={setActiveMonth}
-        selectedOrg={selectedOrg}
-        setSelectedOrg={setSelectedOrg}
-        selectedCorp={selectedCorp}
-        setSelectedCorp={setSelectedCorp}
-        year={year}
-        setYear={setYear}
-      />
-    <Screen1 selectedOrg={selectedOrg} selectedCorp={selectedCorp} year={year}  />
-
-
+   <Section2/>
     </>
   );
 };
-export default CustomerPrivacy2;
+export default HazardReporting;

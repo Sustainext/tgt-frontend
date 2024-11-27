@@ -51,7 +51,7 @@ const EmployeeHiresTurnover = () => {
               <div className="flex">
                 <div className="h-[29px]">
                   <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
-                    Employment 2016
+                  Employment 
                   </p>
                 </div>
               </div>
