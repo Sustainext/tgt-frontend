@@ -1,5 +1,6 @@
 
-import React from "react";
+"use client";
+import React, { useState,useEffect } from "react";
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { MdInfoOutline } from "react-icons/md";
@@ -13,21 +14,48 @@ const SelectdisableWidget = ({
   uiSchema = {},
   schema = {},
   id,
-
+  options,
   isEnabled = false, // Add isEnabled prop with default value
 }) => {
-  const handleChange = (event) => {
-    onChange(event.target.value);
+  const [otherValue, setOtherValue] = useState(value || ""); // Initialize with value or empty
+  const [showOtherInput, setShowOtherInput] = useState(
+    value && !options?.enumOptions?.some((option) => option.value === value)
+  ); // Initial state depends on if the value is an "Other" value.
+
+  const handleChange = (e) => {
+    const selectedValue = e.target.value;
+
+    if (selectedValue === "Other (please specify)") {
+      setShowOtherInput(true); // Show the input field for "Other"
+      setOtherValue(""); // Reset any other input value
+      onChange(""); // Reset the main value in the parent state to empty
+    } else {
+      setShowOtherInput(false); // Hide the "Other" input field
+      onChange(selectedValue); // Set the selected value in the parent state
+    }
+  };
+
+  const handleOtherInputChange = (e) => {
+    const inputValue = e.target.value;
+    onChange(inputValue); // Update the parent state
   };
 
 
+  const randomId = Math.floor(Math.random() * 10000); // Generate a random number between 0 and 9999
+  const tooltipId = schema.title
+    ? `tooltip-${schema.title.replace(/\s+/g, "-")}-${randomId}`
+    : `tooltip-${id}-${randomId}`;
 
-
-
+    useEffect(() => {
+      if (!isEnabled) {
+    
+        setShowOtherInput(false); // Hide "Other" input
+      }
+    }, [isEnabled]);
   return (
     <div className="mb-3 px-1">
       {id.startsWith("root_0") && (
-        <div className="relative flex justify-end">
+        <div className="relative flex">
           <p className="flex text-[13px] h-[35px] text-neutral-950 font-[400] mb-1">
             {label}
             <MdInfoOutline
@@ -51,8 +79,10 @@ const SelectdisableWidget = ({
           </p>
         </div>
       )}
-      <div>
-      <select
+         <div className="relative">
+        {/* Render select or input based on state */}
+        {!showOtherInput ? (
+          <select
             className={`block w-[20vw] py-2 text-[12px] p-0 custom-select focus:outline-none focus:border-blue-300 border-b-2 border-gray-300 capitalize`}
             value={value}
             onChange={handleChange}
@@ -67,7 +97,18 @@ const SelectdisableWidget = ({
               </option>
             ))}
           </select>
-    
+        ) : (
+          <input
+            type="text"
+            className={`block w-[20vw] py-2 text-[12px] border-b-2 border-gray-300 ${
+              id.startsWith("root_0") ? "mt-[0.1rem]" : "mt-0.3"
+            }`}
+            placeholder={`Specify other ${label}`}
+            value={otherValue}
+            onChange={handleOtherInputChange}
+            disabled={!isEnabled}
+          />
+        )}
       </div>
     </div>
   );
