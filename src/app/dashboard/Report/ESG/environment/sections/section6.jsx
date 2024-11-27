@@ -30,6 +30,8 @@ const Section6=({section12_1_4Ref,data})=>{
       dispatch(setBiogenicCO2305(value))
     }
     const config = {
+      enter: "BR", // Or customize behavior on Enter key
+  cleanHTML: true,
       enablePasteHTMLFilter: false, 
     askBeforePasteHTML: false, 
     askBeforePasteFromWord: false,

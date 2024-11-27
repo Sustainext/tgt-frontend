@@ -112,6 +112,8 @@ const Section1 = ({ orgName,selectedfile,setSelectedFile }) => {
   };
 
   const config = {
+    enter: "BR", // Or customize behavior on Enter key
+  cleanHTML: true,
     enablePasteHTMLFilter: false, 
     askBeforePasteHTML: false, 
     askBeforePasteFromWord: false,
