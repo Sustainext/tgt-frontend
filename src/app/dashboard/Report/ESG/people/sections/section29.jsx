@@ -12,7 +12,7 @@ const Section29=({section13_7_1Ref,data})=>{
         
         <div id="section13_7_1" ref={section13_7_1Ref}>
 
-<h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
+{/* <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
 13.7.1 Management of material topic
 </h3>
 
@@ -25,7 +25,7 @@ const Section29=({section13_7_1Ref,data})=>{
     ))
 ) : (
     <p className="text-sm mb-4">No data available</p>
-)}
+)} */}
 
 </div>
         </>

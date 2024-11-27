@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 
 
-const Section6=({section11_2_1Ref})=>{
+const Section6=({section11_2_1Ref,data})=>{
     const [content,setContent] = useState(
         `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum ipsam minus, voluptates obcaecati velit fuga tempore laudantium consequuntur illo`
     )

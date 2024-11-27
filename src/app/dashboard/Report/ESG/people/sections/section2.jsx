@@ -19,7 +19,7 @@ const Section2=({section13_1Ref,section13_1_1Ref,data})=>{
         <div id="section13_1_1" ref={section13_1_1Ref}>
 
 <h3 className="text-[15px] text-[#344054] mb-4 text-left font-semibold">
-13.1.1 Management of material topic
+13.1.1 Management of material topic 
 </h3>
 
 {data["3-3cde_13-1-1"] && data["3-3cde_13-1-1"].length > 0 ? (

@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 
-const Section16 = ({ section11_5Ref, section11_5_1Ref }) => {
+const Section16 = ({ section11_5Ref, section11_5_1Ref,data }) => {
   const [content, setContent] = useState(
     `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum ipsam minus, voluptates obcaecati velit fuga tempore laudantium consequuntur illo`
   );
