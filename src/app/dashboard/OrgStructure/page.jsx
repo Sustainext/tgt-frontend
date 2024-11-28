@@ -14,7 +14,7 @@ import {
 } from "../../../lib/redux/features/topheaderSlice";
 import { useDispatch } from "react-redux";
 
-const OrgTree = ({ data, newrole }) => {
+const OrgTree = ({ data }) => {
   const nodeWidth = 180;
   const nodeHeight = 60;
   const levelGap = 200;
@@ -24,6 +24,18 @@ const OrgTree = ({ data, newrole }) => {
   const [selectedNode, setSelectedNode] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeNode, setActiveNode] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedRole = localStorage.getItem("isAdmin");
+      const isRoleTrue = storedRole === "true";
+      if (storedRole) {
+        setIsAdmin(isRoleTrue);
+        console.log("Stored role:", isRoleTrue);
+      }
+    }
+  }, []);
 
   // Add handleNodeClick function
   const handleNodeClick = (node) => {
@@ -305,7 +317,7 @@ const OrgTree = ({ data, newrole }) => {
   // Add buttons for navigation aligned with hierarchy
   const AddButtons = () => (
     <div className="flex mt-8 mb-4" style={{ marginLeft: "50px" }}>
-      {newrole && (
+      {isAdmin && (
         <>
           <div style={{ width: nodeWidth, marginRight: levelGap }}>
             <Link
@@ -640,7 +652,7 @@ const OrgTree = ({ data, newrole }) => {
                   nodeId={node.id}
                 />
                 {/* Quick Add Buttons - Outside the node */}
-                {newrole && hoveredNode === node.id && (
+                {isAdmin && hoveredNode === node.id && (
                   <>
                     {/* Right Quick Add Button (for children) */}
                     {(node.type === "organization" ||
@@ -796,9 +808,9 @@ const OrgTree = ({ data, newrole }) => {
         nodeType={selectedNode?.type}
         rawData={data}
         setActiveNode={setActiveNode}
-        role={newrole}
+        isAdmin={isAdmin}
       />
-      {newrole && (
+      {isAdmin && (
         <QuickAddModal
           isOpen={quickAddModal.isOpen}
           onClose={() =>
@@ -814,18 +826,6 @@ const OrgTree = ({ data, newrole }) => {
 
 const OrganizationTreePage = () => {
   const [orgData, setOrgData] = useState(null);
-  const [newrole, setRole] = useState(false);
-  const isNewRole = newrole === "false";
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedRole = localStorage.getItem("custom_role");
-      if (storedRole) {
-        setRole(storedRole);
-        console.log("Stored role:", storedRole);
-      }
-    }
-  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -841,6 +841,7 @@ const OrganizationTreePage = () => {
 
     fetchData();
   }, []);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -873,7 +874,7 @@ const OrganizationTreePage = () => {
           about them.
         </div>
       </div>
-      <OrgTree data={orgData} newrole={newrole} />
+      <OrgTree data={orgData} />
     </div>
   );
 };
