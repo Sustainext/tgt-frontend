@@ -639,10 +639,10 @@ const TableWithPagination = ({
                   </td>
                   <td
                     className="py-3 px-6 relative text-center flex justify-center"
-                    onMouseEnter={() => handleMouseEnter(item.id)}
-                    onMouseLeave={handleMouseLeave}
+                   
                   >
-                    <MdMoreVert className="cursor-pointer" />
+                    <MdMoreVert className="cursor-pointer"  onMouseEnter={() => handleMouseEnter(item.id)}
+                    onMouseLeave={handleMouseLeave}/>
                     {isMenuOpen === item.id && (
                       <div
                         onMouseEnter={() => handleMouseEnter(item.id)} // Ensure menu stays open

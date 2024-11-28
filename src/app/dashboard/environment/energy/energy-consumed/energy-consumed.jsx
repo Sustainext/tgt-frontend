@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import EnvironmentHeader from "../../environmentheader";
 import EnergyConsumedBody from "./energy-consumed-body";
 import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
@@ -8,6 +8,7 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 const Energyconsumed = ({ open }) => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
@@ -17,25 +18,39 @@ const Energyconsumed = ({ open }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [locationMessage, setLocationMessage] = useState("");
   const [yearMessage, setYearMessage] = useState("");
+
+  const drawerRef = useRef(null); // Ref for the drawer
+
   const toggleDrawerclose = () => {
-    setIsOpen(!isOpen);
+    setIsOpen(false);
   };
+
   const toggleDrawer = (selected) => {
     setIsOpen(!isOpen);
     setCategory(selected);
   };
+
   useEffect(() => {
-    var newData = [];
-    Energydata.map((program) => {
-      program.category.map((tag) => {
-        if (tag === category) {
-          newData.push(program);
-        }
-      });
-    });
-    // //console.log(newData);
+    const newData = Energydata.filter((program) =>
+      program.category.includes(category)
+    );
     setData(newData);
   }, [category]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (drawerRef.current && !drawerRef.current.contains(event.target)) {
+        setIsOpen(false); // Close drawer when clicking outside
+      }
+    };
+
+    // Attach event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Cleanup event listener
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <>
@@ -120,6 +135,7 @@ const Energyconsumed = ({ open }) => {
           </h6>
         </div>
         <div
+          ref={drawerRef} // Attach ref to the drawer
           className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
@@ -150,7 +166,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
                 </div>
 
                 {/* Footer (Learn more link) */}
-                <div className="pt-2 pb-4 ml-4">
+                <div className="pt-2 pb-4 ml-4"   onClick={toggleDrawerclose}>
                   <a
                     className="text-[14px] text-[#2196F3] pt-1 inline-flex"
                     href={program.link}
@@ -164,26 +180,25 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         </div>
       </div>
 
-        <EnvironmentHeader
-          activeMonth={activeMonth}
-          setActiveMonth={setActiveMonth}
-          location={location}
-          setLocation={setLocation}
-          year={year}
-          setYear={setYear}
-          locationMessage={locationMessage}
-          setLocationMessage={setLocationMessage}
-          yearMessage={yearMessage}
-          setYearMessage={setYearMessage}
-        />
-        <EnergyConsumedBody
-          location={location}
-          year={year}
-          month={activeMonth}
-          setLocationMessage={setLocationMessage}
-          setYearMessage={setYearMessage}
-        />
-     
+      <EnvironmentHeader
+        activeMonth={activeMonth}
+        setActiveMonth={setActiveMonth}
+        location={location}
+        setLocation={setLocation}
+        year={year}
+        setYear={setYear}
+        locationMessage={locationMessage}
+        setLocationMessage={setLocationMessage}
+        yearMessage={yearMessage}
+        setYearMessage={setYearMessage}
+      />
+      <EnergyConsumedBody
+        location={location}
+        year={year}
+        month={activeMonth}
+        setLocationMessage={setLocationMessage}
+        setYearMessage={setYearMessage}
+      />
     </>
   );
 };

@@ -46,7 +46,7 @@ const Forcedorcompulsorylabour = () => {
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] font-bold py-2">
-                    Forced or Compulsory Labor 2016
+                  Child and Forced Labour
                   </p>
                 </div>
               </div>
@@ -78,8 +78,7 @@ const Forcedorcompulsorylabour = () => {
 
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-            Operations and suppliers at significant risk for incidents of forced
-            or compulsory labor
+          Operations and suppliers at significant risk for incidents of forced or compulsory labor
             {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />

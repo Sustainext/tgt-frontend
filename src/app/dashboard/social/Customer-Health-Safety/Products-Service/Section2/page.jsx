@@ -1,16 +1,16 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
-import { Socialdata } from "../../data/socialgriinfo";
+import { Socialdata } from "../../../data/socialgriinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import Socialheader2 from "../../socialheader2";
+import Socialheader2 from "../../../socialheader2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Screen1 from "./screen1";
 // import Screen2 from "./Screen2";
 // import Screen3 from "./Screen3";
-const CustomerPrivacy2 = () => {
+const ProductsService = () => {
   const [activeMonth, setActiveMonth] = useState(1);
   const [location, setLocation] = useState("");
   const [year, setYear] = useState();
@@ -50,7 +50,7 @@ const CustomerPrivacy2 = () => {
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] h-[30px] font-bold pt-1">
-                  Customer Privacy & Data Security
+                  Product Safety & Quality
                   </p>
                 </div>
               </div>
@@ -58,8 +58,8 @@ const CustomerPrivacy2 = () => {
           </div>
           <div className="w-full float-end ">
             <div className="flex float-end border-l">
-            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('70')}>GRI 418 - 1</button>
-            <button className="text-[#fff] bg-[#00558A] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('71')}>SDG 16</button>
+            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('68')}>GRI 416 - 2</button>
+            <button className="text-[#fff] bg-[#00558A] rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('69')}>SDG 16</button>
 
 
             </div>
@@ -68,7 +68,7 @@ const CustomerPrivacy2 = () => {
 
       <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Statement of Fact
+          Incidents of non-compliance concerning the health and safety impacts of products and services  (2/2)
           </h6>
         </div>
        <div
@@ -131,4 +131,4 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
     </>
   );
 };
-export default CustomerPrivacy2;
+export default ProductsService;

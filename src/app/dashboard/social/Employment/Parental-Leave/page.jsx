@@ -47,7 +47,7 @@ const Parentalleave = () => {
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] font-bold py-2">
-                    Employment 2016
+                  Employment 
                   </p>
                 </div>
               </div>

@@ -2,18 +2,12 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
+import { Socialdata } from "../../data/socialgriinfo"
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css'
-import Socialheader from "../../socialheader"
-import Screen1 from "./screen1"
-import Screen2 from "./screen2"
-import { Socialdata } from "../../data/socialgriinfo"
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-const IncidentsofDiscrimination = () => {
-    const [activeMonth, setActiveMonth] = useState(1);
-    const [location, setLocation] = useState("");
-    const [year, setYear] = useState();
+import Section2 from "./Section2/page";
+const IllhealthHazard = () => {
+
     const [data, setData] = useState();
     const [category, setCategory] = useState("");
     const [isOpen, setIsOpen] = useState(false);
@@ -40,7 +34,6 @@ const IncidentsofDiscrimination = () => {
 
     return (
         <>
-               <ToastContainer style={{ fontSize: "12px" }} />
             <div className="flex flex-col justify-start overflow-x-hidden ">
                 <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
                     <div className='w-full'>
@@ -49,7 +42,7 @@ const IncidentsofDiscrimination = () => {
                             <div className='flex'>
                                 <div>
                                    <p className="gradient-text text-[22px] font-bold py-2">
-                                   Non-discrimination
+                                    Occupational Health and Safety
                                     </p>
                                 </div>
 
@@ -59,9 +52,10 @@ const IncidentsofDiscrimination = () => {
                     </div>
                  <div className="w-full float-end pt-5 me-1">
                         <div className="flex float-end border-l">
-                            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('57')}>GRI 406 - 1</button>
-                            <button className="text-[#fff] bg-orange-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('2')}>SDG 5</button>
-                            <button className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('22')}>SDG 8</button>
+                            <button className="text-[#007EEF] bg-slate-200 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('42')}>GRI 403 - 10</button>
+                            <button className="text-[#fff] bg-green-600 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('43')}>SDG 3</button>
+                            <button className="text-[#fff] bg-red-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('44')}>SDG 8</button>
+                            <button className="text-[#fff] bg-blue-900 rounded-full text-[11px] w-[72px] h-[22px] ml-2 text-center pt-0.5" onClick={() => toggleDrawer('45')}>SDG 16</button>
                         </div>
                     </div>
                 </div>
@@ -70,7 +64,7 @@ const IncidentsofDiscrimination = () => {
                 <div className="ml-3 flex">
                     <h6 className="text-[17px] mb-4 font-semibold flex">
 
-                        Incidents of discrimination and corrective actions taken
+                    Work-related Hazards
                         {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />
@@ -86,7 +80,7 @@ const IncidentsofDiscrimination = () => {
                         </ReactTooltip> */}
                     </h6>
                 </div>
-                 <div
+                    <div
            className={`${
             isOpen
               ? "translate-x-[15%] block top-16"
@@ -130,18 +124,10 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
             ))}
         </div>
             </div>
-            <Socialheader
-                activeMonth={activeMonth}
-                setActiveMonth={setActiveMonth}
-                location={location}
-                setLocation={setLocation}
-                year={year}
-                setYear={setYear}
-            />
+         
+            <Section2/>
 
-            <Screen1 location={location} year={year} month={activeMonth} activeMonth={activeMonth} />
-           <Screen2 location={location} year={year} month={activeMonth} activeMonth={activeMonth} />
         </>
     );
 };
-export default IncidentsofDiscrimination;
+export default IllhealthHazard;

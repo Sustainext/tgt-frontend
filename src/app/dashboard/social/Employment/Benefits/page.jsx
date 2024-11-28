@@ -52,7 +52,7 @@ const Benefits = () => {
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] font-bold py-2">
-                    Employment 2016
+                  Employment 
                   </p>
                 </div>
               </div>
@@ -90,7 +90,7 @@ const Benefits = () => {
 
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-            Benefits
+          Benefits provided to full-time employees that are not provided to temporary or part-time employees
             {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />

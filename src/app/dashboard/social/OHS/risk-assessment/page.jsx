@@ -39,8 +39,7 @@ const Riskassessment = () => {
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] font-bold py-2">
-                    Hazard identification, risk assessment, and incident
-                    investigation
+                  Occupational Health and Safety
                   </p>
                 </div>
               </div>
