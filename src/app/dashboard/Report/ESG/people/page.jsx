@@ -251,26 +251,27 @@ const People=forwardRef(({ onSubmitSuccess }, ref) => {
           const response = await axiosInstance.get(url);
           if(response.data){
             setData(response.data)
-            dispatch(setEmployeePoliciesStatement(response.data.employee_policies_statement.content));
-            dispatch(setWorkforceHireRetentionStatement(response.data.workforce_hire_retention_statement.content));
-            dispatch(setStandardWage(response.data.standard_wage.content));
-            dispatch(setPerformanceReviewProcess(response.data.performance_review_process.content));
-            dispatch(setForcedLaborPosition(response.data.forced_labor_position.content));
-            dispatch(setChildLaborPosition(response.data.child_labor_position.content));
-            dispatch(setEmployeeDiversityPosition(response.data.employee_diversity_position.content));
-            dispatch(setEmployeeSkillUpgradePrograms(response.data.employee_skill_upgrade_programs.content));
-            dispatch(setRemunerationPractices(response.data.remuneration_practices.content));
-            dispatch(setOHSPolicies(response.data.ohs_policies.content));
-            dispatch(setHazardRiskAssessment(response.data.hazard_risk_assessment.content));
-            dispatch(setWorkRelatedHealthInjuries(response.data.work_related_health_injuries.content));
-            dispatch(setSafetyTraining(response.data.safety_training.content));
-            dispatch(setOHSManagementSystem(response.data.ohs_management_system.content));
-            dispatch(setFreedomOfAssociationViews(response.data.freedom_of_association_views.content));
-            dispatch(setViolationDiscriminationPolicy(response.data.violation_discrimination_policy.content));
-            dispatch(setIndigenousRightsPolicy(response.data.indigenous_rights_policy.content));
-            dispatch(setParentalLeaves(response.data.parental_leaves.content));
-            dispatch(setSecurityPersonnelInternalTraining(response.data.security_personnel_internal_training.content));
-      dispatch(setSecurityPersonnelExternalTraining(response.data.security_personnel_external_training.content));
+            dispatch(setEmployeePoliciesStatement(response.data.employee_policies_statement?.content || ""));
+dispatch(setWorkforceHireRetentionStatement(response.data.workforce_hire_retention_statement?.content || ""));
+dispatch(setStandardWage(response.data.standard_wage?.content || ""));
+dispatch(setPerformanceReviewProcess(response.data.performance_review_process?.content || ""));
+dispatch(setForcedLaborPosition(response.data.forced_labor_position?.content || ""));
+dispatch(setChildLaborPosition(response.data.child_labor_position?.content || ""));
+dispatch(setEmployeeDiversityPosition(response.data.employee_diversity_position?.content || ""));
+dispatch(setEmployeeSkillUpgradePrograms(response.data.employee_skill_upgrade_programs?.content || ""));
+dispatch(setRemunerationPractices(response.data.remuneration_practices?.content || ""));
+dispatch(setOHSPolicies(response.data.ohs_policies?.content || ""));
+dispatch(setHazardRiskAssessment(response.data.hazard_risk_assessment?.content || ""));
+dispatch(setWorkRelatedHealthInjuries(response.data.work_related_health_injuries?.content || ""));
+dispatch(setSafetyTraining(response.data.safety_training?.content || ""));
+dispatch(setOHSManagementSystem(response.data.ohs_management_system?.content || ""));
+dispatch(setFreedomOfAssociationViews(response.data.freedom_of_association_views?.content || ""));
+dispatch(setViolationDiscriminationPolicy(response.data.violation_discrimination_policy?.content || ""));
+dispatch(setIndigenousRightsPolicy(response.data.indigenous_rights_policy?.content || ""));
+dispatch(setParentalLeaves(response.data.parental_leaves?.content || ""));
+dispatch(setSecurityPersonnelInternalTraining(response.data.security_personnel_internal_training?.content || ""));
+dispatch(setSecurityPersonnelExternalTraining(response.data.security_personnel_external_training?.content || ""));
+
           }
           
           LoaderClose();

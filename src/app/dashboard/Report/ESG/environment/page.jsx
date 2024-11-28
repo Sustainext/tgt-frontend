@@ -268,28 +268,29 @@ const scrollToSection = (sectionRef, sectionId) => {
           const response = await axiosInstance.get(url);
           if(response.data){
             setData(response.data)
-            dispatch(setEnvironmentStatement(response.data.environmental_responsibility_statement.content));
-          dispatch(setEmission(response.data.emissions.content));
-          dispatch(setScopeOneEmission(response.data.scope_one_emissions.content));
-          dispatch(setScopeTwoEmission(response.data.scope_two_emissions.content));
-          dispatch(setScopeThreeEmission(response.data.scope_three_emissions.content));
-      dispatch(setGHGEmissionIntensityTracking(response.data.ghg_emission_intensity_tracking.content));
-      dispatch(setGHGEmissionReductionEfforts(response.data.ghg_emission_reduction_efforts.content));
-      dispatch(setOzoneDepletingSubstanceElimination(response.data.ozone_depleting_substance_elimination.content));
-      dispatch(setMaterialManagementStrategy(response.data.material_management_strategy.content));
-      dispatch(setRecyclingProcess(response.data.recycling_process.content));
-      dispatch(setReclamationRecyclingProcess(response.data.reclamation_recycling_process.content));
-      dispatch(setWaterWithdrawalTracking(response.data.water_withdrawal_tracking.content));
-      dispatch(setWaterConsumptionGoals(response.data.water_consumption_goals.content));
-      dispatch(setEnergyConsumptionWithinOrganization(response.data.energy_consumption_within_organization.content));
-      dispatch(setEnergyConsumptionOutsideOrganization(response.data.energy_consumption_outside_organization.content));
-      dispatch(setEnergyIntensityTracking(response.data.energy_intensity_tracking.content));
-      dispatch(setEnergyConsumptionReductionCommitment(response.data.energy_consumption_reduction_commitment.content));
-      dispatch(setSignificantSpills(response.data.significant_spills.content));
-      dispatch(setHabitatProtectionRestorationCommitment(response.data.habitat_protection_restoration_commitment.content));
-      dispatch(setAirQualityProtectionCommitment(response.data.air_quality_protection_commitment.content))
-      dispatch(setBiogenicCO2Emission(response.data.biogenic_c02_emissions.content))
-      dispatch(setBiogenicCO2305(response.data.biogenic_c02_emissions_305_3c.content))
+            dispatch(setEnvironmentStatement(response.data.environmental_responsibility_statement?.content || ""));
+dispatch(setEmission(response.data.emissions?.content || ""));
+dispatch(setScopeOneEmission(response.data.scope_one_emissions?.content || ""));
+dispatch(setScopeTwoEmission(response.data.scope_two_emissions?.content || ""));
+dispatch(setScopeThreeEmission(response.data.scope_three_emissions?.content || ""));
+dispatch(setGHGEmissionIntensityTracking(response.data.ghg_emission_intensity_tracking?.content || ""));
+dispatch(setGHGEmissionReductionEfforts(response.data.ghg_emission_reduction_efforts?.content || ""));
+dispatch(setOzoneDepletingSubstanceElimination(response.data.ozone_depleting_substance_elimination?.content || ""));
+dispatch(setMaterialManagementStrategy(response.data.material_management_strategy?.content || ""));
+dispatch(setRecyclingProcess(response.data.recycling_process?.content || ""));
+dispatch(setReclamationRecyclingProcess(response.data.reclamation_recycling_process?.content || ""));
+dispatch(setWaterWithdrawalTracking(response.data.water_withdrawal_tracking?.content || ""));
+dispatch(setWaterConsumptionGoals(response.data.water_consumption_goals?.content || ""));
+dispatch(setEnergyConsumptionWithinOrganization(response.data.energy_consumption_within_organization?.content || ""));
+dispatch(setEnergyConsumptionOutsideOrganization(response.data.energy_consumption_outside_organization?.content || ""));
+dispatch(setEnergyIntensityTracking(response.data.energy_intensity_tracking?.content || ""));
+dispatch(setEnergyConsumptionReductionCommitment(response.data.energy_consumption_reduction_commitment?.content || ""));
+dispatch(setSignificantSpills(response.data.significant_spills?.content || ""));
+dispatch(setHabitatProtectionRestorationCommitment(response.data.habitat_protection_restoration_commitment?.content || ""));
+dispatch(setAirQualityProtectionCommitment(response.data.air_quality_protection_commitment?.content || ""));
+dispatch(setBiogenicCO2Emission(response.data.biogenic_c02_emissions?.content || ""));
+dispatch(setBiogenicCO2305(response.data.biogenic_c02_emissions_305_3c?.content || ""));
+
           }
           
           LoaderClose();

@@ -140,10 +140,11 @@ const scrollToSection = (sectionRef, sectionId) => {
           const response = await axiosInstance.get(url);
           if(response.data){
             setData(response.data)
-            dispatch(setCompanyStatement(response.data.company_sustainability_statement.content));
-          dispatch(setApproachSustainability(response.data.approach_for_sustainability.content));
-          dispatch(setSustainabilityGoals(response.data.sustainability_goals.content));
-          dispatch(setSupplyChainSustainability(response.data.approach_to_supply_chain_sustainability.content));
+            dispatch(setCompanyStatement(response.data.company_sustainability_statement?.content || ""));
+            dispatch(setApproachSustainability(response.data.approach_for_sustainability?.content || ""));
+            dispatch(setSustainabilityGoals(response.data.sustainability_goals?.content || ""));
+            dispatch(setSupplyChainSustainability(response.data.approach_to_supply_chain_sustainability?.content || ""));
+            
           }
           
           LoaderClose();

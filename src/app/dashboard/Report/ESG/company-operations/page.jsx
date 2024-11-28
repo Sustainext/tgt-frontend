@@ -205,10 +205,11 @@ const loadFormData = async () => {
         const response = await axiosInstance.get(url);
         if(response.data){
           setScreentwoData(response.data)
-          dispatch(setAboutTheCompany(response.data.about_the_company.content));
-        dispatch(setBusinessRelation(response.data.business_relations.content));
-        dispatch(setEntitiesInclude(response.data.entities_included.content));
-        dispatch(setSupplyChain(response.data.supply_chain_description.content));
+          dispatch(setAboutTheCompany(response.data.about_the_company?.content || ""));
+          dispatch(setBusinessRelation(response.data.business_relations?.content || ""));
+          dispatch(setEntitiesInclude(response.data.entities_included?.content || ""));
+          dispatch(setSupplyChain(response.data.supply_chain_description?.content || ""));
+          
         }
         
         LoaderClose();

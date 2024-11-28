@@ -127,10 +127,10 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
       const response = await axiosInstance.get(url);
       if(response.data)
         {
-            dispatch(setMessage(response.data.message.content));
+            dispatch(setMessage(response.data.message?.content || ""));
             dispatch(setMessageimage(response.data.message_image));
             dispatch(setCompanyname(response.data.company_name));
-            dispatch(setCeoname(response.data.ceo_name.content));
+            dispatch(setCeoname(response.data.ceo_name?.content || ""));
             dispatch(setSignatureimage(response.data.signature_image));
             setSelectedCEOFile({name:response.data.message_image_name})
             setSelectedSignFile({name:response.data.signature_image_name})

@@ -137,7 +137,6 @@ const [missing_fields,setMissingFields]=useState([])
     try {
         const response = await axiosInstance.get(url);
         if(response.status==200){
-          console.log(response.data,"seeee mssing")
           if(response.data.length>0){
             setMissingFields(response.data)
             setIsValidationModalOpen(true)

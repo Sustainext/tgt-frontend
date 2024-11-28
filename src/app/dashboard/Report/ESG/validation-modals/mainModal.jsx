@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import { IoIosWarning } from "react-icons/io";
 import { IoCloseOutline } from "react-icons/io5";
 import { ToastContainer, toast } from "react-toastify";
@@ -28,6 +28,7 @@ const MainValidationPopup = ({
   fromDate,
   toDate,
 }) => {
+  const editor = useRef(null);
   const [selectedField, setSelectedField] = useState(null);
   const [selectedFieldIndex, setSelectedFieldIndex] = useState(null);
   const [fieldStatuses, setFieldStatuses] = useState({});
@@ -66,6 +67,9 @@ const MainValidationPopup = ({
       color:"#667085"
     },
     height:200,
+    autofocus: true, // Ensure the editor focuses automatically
+    preserveAspectRatio: false, // Prevent layout resets
+    readonly: false, // Ensure the editor is editable
     allowResizeY: false,
     defaultActionOnPaste: 'insert_clear_html',
     toolbarSticky: false,
@@ -351,6 +355,7 @@ const MainValidationPopup = ({
                       isAnyFieldFilled ? "opacity-30 cursor-not-allowed" : ""
                     }`}
                     disabled={isAnyFieldFilled}
+                    onClick={()=>{setActiveStep(16) ;setIsModalOpen(false)}}
                   >
                     Leave Blank and Proceed
                   </button>
@@ -361,6 +366,7 @@ const MainValidationPopup = ({
                         : "opacity-30 cursor-not-allowed"
                     }`}
                     disabled={!isAnyFieldFilled}
+                    onClick={()=>{setActiveStep(16);setIsModalOpen(false)}}
                   >
                     Save and Continue
                   </button>
@@ -404,10 +410,12 @@ const MainValidationPopup = ({
                     ):(
                       <div>
                       <JoditEditor
+                      ref={editor}
                         value={statement}
                         config={config}
                         tabIndex={1} 
                         onBlur={handleChangeEditor}
+                        // onChange={handleChangeEditor}
                       />
                     </div>
                     )}

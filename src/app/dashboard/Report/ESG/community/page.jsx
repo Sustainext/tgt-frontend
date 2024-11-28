@@ -128,9 +128,10 @@ const Community = forwardRef(({ onSubmitSuccess }, ref) => {
           const response = await axiosInstance.get(url);
           if(response.data){
             setData(response.data)
-            dispatch(setCommunityEngagementStatement(response.data.community_engagement.content));
-          dispatch(setImpactAssessment(response.data.impact_assessment.content));
-          dispatch(setCSRStatement(response.data.csr_policies.content));
+            dispatch(setCommunityEngagementStatement(response.data.community_engagement?.content || ""));
+            dispatch(setImpactAssessment(response.data.impact_assessment?.content || ""));
+            dispatch(setCSRStatement(response.data.csr_policies?.content || ""));
+            
           }
           
           LoaderClose();

@@ -99,7 +99,7 @@ const MissionVission=forwardRef(({ onSubmitSuccess }, ref) => {
         try {
             const response = await axiosInstance.get(url);
             if(response.data){
-              dispatch(setMission(response.data.mission.content));
+              dispatch(setMission(response.data.mission?.content || ""));
             }
             
             LoaderClose();

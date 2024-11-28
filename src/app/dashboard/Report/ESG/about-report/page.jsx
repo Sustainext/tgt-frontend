@@ -107,9 +107,10 @@ const AboutTheReport=forwardRef(({ onSubmitSuccess }, ref) => {
           const response = await axiosInstance.get(url);
           if(response.data){
             setData(response.data)
-            dispatch(setAboutReport(response.data.description.content));
-          dispatch(setFramework(response.data.framework_description.content));
-          dispatch(setExternalAssurance(response.data.external_assurance.content));
+            dispatch(setAboutReport(response.data.description?.content || ""));
+            dispatch(setFramework(response.data.framework_description?.content || ""));
+            dispatch(setExternalAssurance(response.data.external_assurance?.content || ""));
+            
           }
           
           LoaderClose();

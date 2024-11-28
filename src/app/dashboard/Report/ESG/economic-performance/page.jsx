@@ -170,9 +170,10 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
         console.error("API response data11", response.data);
         setData(response.data)
         dispatch(setgetdata(response.data));
-      dispatch(setCompanyeconomic(response.data.company_economic_performance_statement.content));
-      dispatch(setIntroductionto(response.data.introduction_to_economic_value_creation.content));
-      dispatch(setFinancialassistanc(response.data.financial_assistance_from_government.content));
+        dispatch(setCompanyeconomic(response.data.company_economic_performance_statement?.content || ""));
+        dispatch(setIntroductionto(response.data.introduction_to_economic_value_creation?.content || ""));
+        dispatch(setFinancialassistanc(response.data.financial_assistance_from_government?.content || ""));
+        
       }
 
       LoaderClose();

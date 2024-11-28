@@ -178,10 +178,11 @@ const scrollToSection = (sectionRef, sectionId) => {
           const response = await axiosInstance.get(url);
           if(response.data){
             setData(response.data)
-            dispatch(setStatement(response.data.statement.content));
-          dispatch(setBoardGov(response.data.board_gov_statement.content));
-          dispatch(setRemunerationPolicies(response.data.remuneration_policies.content));
-          dispatch(setPolicyPublic(response.data.policy_not_public_reason.content));
+            dispatch(setStatement(response.data.statement?.content || ""));
+            dispatch(setBoardGov(response.data.board_gov_statement?.content || ""));
+            dispatch(setRemunerationPolicies(response.data.remuneration_policies?.content || ""));
+            dispatch(setPolicyPublic(response.data.policy_not_public_reason?.content || ""));
+            
           }
           
           LoaderClose();

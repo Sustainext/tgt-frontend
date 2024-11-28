@@ -149,10 +149,11 @@ const scrollToSection = (sectionRef, sectionId) => {
           const response = await axiosInstance.get(url);
           if(response.data){
             setData(response.data)
-            dispatch(setCommitmentStatement(response.data.commitment_statement.content));
-          dispatch(setProductInfo(response.data.product_info_labelling.content));
-          dispatch(setMarketingPractices(response.data.marketing_practices.content));
-          dispatch(setConclusion(response.data.conclusion.content));
+            dispatch(setCommitmentStatement(response.data.commitment_statement?.content || ""));
+            dispatch(setProductInfo(response.data.product_info_labelling?.content || ""));
+            dispatch(setMarketingPractices(response.data.marketing_practices?.content || ""));
+            dispatch(setConclusion(response.data.conclusion?.content || ""));
+            
           }
           
           LoaderClose();

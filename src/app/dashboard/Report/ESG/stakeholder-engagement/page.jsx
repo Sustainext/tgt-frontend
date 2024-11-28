@@ -103,7 +103,7 @@ const StakeholderEngagement=forwardRef(({ onSubmitSuccess }, ref) => {
             const response = await axiosInstance.get(url);
             if(response.data){
                 setData(response.data)
-              dispatch(setdescription(response.data.description.content));
+              dispatch(setdescription(response.data.description?.content || ""));
             }
             
             LoaderClose();
