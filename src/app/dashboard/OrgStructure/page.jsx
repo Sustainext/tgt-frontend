@@ -14,7 +14,7 @@ import {
 } from "../../../lib/redux/features/topheaderSlice";
 import { useDispatch } from "react-redux";
 
-const OrgTree = ({ data, newrole }) => {
+const OrgTree = ({ data }) => {
   const nodeWidth = 180;
   const nodeHeight = 60;
   const levelGap = 200;
@@ -24,6 +24,18 @@ const OrgTree = ({ data, newrole }) => {
   const [selectedNode, setSelectedNode] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeNode, setActiveNode] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedRole = localStorage.getItem("isAdmin");
+      const isRoleTrue = storedRole === "true";
+      if (storedRole) {
+        setIsAdmin(isRoleTrue);
+        console.log("Stored role:", isRoleTrue);
+      }
+    }
+  }, []);
 
   // Add handleNodeClick function
   const handleNodeClick = (node) => {
@@ -305,7 +317,7 @@ const OrgTree = ({ data, newrole }) => {
   // Add buttons for navigation aligned with hierarchy
   const AddButtons = () => (
     <div className="flex mt-8 mb-4" style={{ marginLeft: "50px" }}>
-      {newrole && (
+      {isAdmin && (
         <>
           <div style={{ width: nodeWidth, marginRight: levelGap }}>
             <Link
@@ -395,7 +407,7 @@ const OrgTree = ({ data, newrole }) => {
             {/* Background rectangle */}
             <rect
               x={nodeWidth / 2 - Math.max(name.length, info.length) * 4} // Center horizontally
-              y={-75} // Position above the node
+              y={-55} // Position above the node
               width={Math.max(name.length, info.length) * 8}
               height="50"
               rx="4"
@@ -404,7 +416,7 @@ const OrgTree = ({ data, newrole }) => {
             {/* Full name text */}
             <text
               x={nodeWidth / 2} // Center horizontally
-              y={-55} // Position in top part of tooltip
+              y={-35} // Position in top part of tooltip
               className="text-xs fill-gray-700 font-medium"
               textAnchor="middle"
               dominantBaseline="middle"
@@ -414,7 +426,7 @@ const OrgTree = ({ data, newrole }) => {
             {/* Full info text */}
             <text
               x={nodeWidth / 2} // Center horizontally
-              y={-35} // Position below name in tooltip
+              y={-15} // Position below name in tooltip
               className="text-xs fill-gray-500"
               textAnchor="middle"
               dominantBaseline="middle"
@@ -640,7 +652,7 @@ const OrgTree = ({ data, newrole }) => {
                   nodeId={node.id}
                 />
                 {/* Quick Add Buttons - Outside the node */}
-                {newrole && hoveredNode === node.id && (
+                {isAdmin && hoveredNode === node.id && (
                   <>
                     {/* Right Quick Add Button (for children) */}
                     {(node.type === "organization" ||
@@ -663,7 +675,6 @@ const OrgTree = ({ data, newrole }) => {
                       >
                         <g className="group/add-right">
                           {" "}
-                          {/* Tooltip - Only shows when hovering over this specific button */}
                           <g className="opacity-0 group-hover/add-right:opacity-100 transition-opacity duration-200">
                             <rect
                               x="-65"
@@ -729,7 +740,7 @@ const OrgTree = ({ data, newrole }) => {
                     >
                       <g className="group/add-bottom">
                         {" "}
-                        {/* Tooltip - Only shows when hovering over this specific button */}
+                        ={" "}
                         <g className="opacity-0 group-hover/add-bottom:opacity-100 transition-opacity duration-200">
                           <rect
                             x="0"
@@ -796,9 +807,9 @@ const OrgTree = ({ data, newrole }) => {
         nodeType={selectedNode?.type}
         rawData={data}
         setActiveNode={setActiveNode}
-        role={newrole}
+        isAdmin={isAdmin}
       />
-      {newrole && (
+      {isAdmin && (
         <QuickAddModal
           isOpen={quickAddModal.isOpen}
           onClose={() =>
@@ -814,18 +825,6 @@ const OrgTree = ({ data, newrole }) => {
 
 const OrganizationTreePage = () => {
   const [orgData, setOrgData] = useState(null);
-  const [newrole, setRole] = useState(false);
-  const isNewRole = newrole === "false";
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedRole = localStorage.getItem("custom_role");
-      if (storedRole) {
-        setRole(storedRole);
-        console.log("Stored role:", storedRole);
-      }
-    }
-  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -841,6 +840,7 @@ const OrganizationTreePage = () => {
 
     fetchData();
   }, []);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -873,7 +873,7 @@ const OrganizationTreePage = () => {
           about them.
         </div>
       </div>
-      <OrgTree data={orgData} newrole={newrole} />
+      <OrgTree data={orgData} />
     </div>
   );
 };

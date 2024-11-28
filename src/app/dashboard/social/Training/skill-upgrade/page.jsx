@@ -48,7 +48,7 @@ const Skillupgrade = () => {
               <div className="flex">
                 <div className="h-[29px]">
                   <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
-                    Training and Education 2018
+                  Training and Development
                   </p>
                 </div>
               </div>
@@ -74,8 +74,7 @@ const Skillupgrade = () => {
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-            Programs for upgrading employee skills and transition assistance
-            programs
+          Programs for upgrading employee skills and transition assistance programs
             {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />

@@ -69,7 +69,7 @@ const ProductServicelabelling = () => {
                 <div className="ml-3 flex">
                     <h6 className="text-[17px] mb-4 font-semibold flex">
 
-                        Requirements for product and service information and labeling (1/2)
+                    Requirements for product and service information and labeling
                         {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />

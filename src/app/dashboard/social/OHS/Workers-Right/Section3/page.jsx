@@ -9,8 +9,7 @@ const Section3 = () => {
     <>
       <div className="ml-3 flex">
         <h6 className="text-[17px] mb-4 font-semibold flex">
-          Hazard identification, risk assessment, and incident investigation
-          (3/4)
+        Workers Right
         </h6>
       </div>
       <Socialheader3

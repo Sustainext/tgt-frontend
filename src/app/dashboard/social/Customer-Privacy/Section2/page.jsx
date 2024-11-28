@@ -50,7 +50,7 @@ const CustomerPrivacy2 = () => {
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] h-[30px] font-bold pt-1">
-                  Customer Privacy
+                  Customer Privacy & Data Security
                   </p>
                 </div>
               </div>
@@ -68,7 +68,7 @@ const CustomerPrivacy2 = () => {
 
       <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Substantiated complaints concerning breaches of customer privacy and losses of customer data (2/2)
+          Statement of Fact
           </h6>
         </div>
        <div

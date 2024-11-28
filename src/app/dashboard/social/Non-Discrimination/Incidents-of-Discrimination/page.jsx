@@ -49,7 +49,7 @@ const IncidentsofDiscrimination = () => {
                             <div className='flex'>
                                 <div>
                                    <p className="gradient-text text-[22px] font-bold py-2">
-                                        Non-Discrimination 2016
+                                   Non-discrimination
                                     </p>
                                 </div>
 

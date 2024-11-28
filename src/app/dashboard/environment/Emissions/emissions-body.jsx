@@ -1,21 +1,15 @@
 "use client";
-import { useState,useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoHomeOutline } from "react-icons/io5";
 import CalculateSuccess from "./calculateSuccess";
-import { fetchEmissionsData } from '@/lib/redux/features/emissionSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { fetchEmissionsData } from "@/lib/redux/features/emissionSlice";
+import { useDispatch, useSelector } from "react-redux";
 import Scope1 from "./scope1new";
 import Scope2 from "./scope2new";
 import Scope3 from "./scope3new";
 
-const AccordionItem = ({
-  title,
-  children,
-  scops,
-  icons,
-  onAccordionClick,
-}) => {
+const AccordionItem = ({ title, children, scops, icons, onAccordionClick }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleAccordionClick = () => {
@@ -60,7 +54,15 @@ const AccordionItem = ({
   );
 };
 
-const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setLocationError, locationname }) => {
+const Emissionsnbody = ({
+  location,
+  year,
+  month,
+  countryCode,
+  setYearError,
+  setLocationError,
+  locationname,
+}) => {
   const dispatch = useDispatch();
   const scope1Ref = useRef();
   const scope2Ref = useRef();
@@ -93,7 +95,7 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
 
     await dispatch(fetchEmissionsData({ location, year, month }));
 
-    if (climatiqData.status==='succeeded') {
+    if (climatiqData.status === "succeeded") {
       setModalData({
         ...modalData,
         locationname,
@@ -124,7 +126,9 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
               year={year}
               month={month}
               countryCode={countryCode}
-              successCallback={() => dispatch(fetchEmissionsData({ location, year, month }))}
+              successCallback={() =>
+                dispatch(fetchEmissionsData({ location, year, month }))
+              }
               setAccordionOpen={setAccordionOpen}
             />
           )}
@@ -142,7 +146,9 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
               year={year}
               month={month}
               countryCode={countryCode}
-              successCallback={() => dispatch(fetchEmissionsData({ location, year, month }))}
+              successCallback={() =>
+                dispatch(fetchEmissionsData({ location, year, month }))
+              }
               setAccordionOpen={setAccordionOpen} // Pass setAccordionOpen to Scope2
             />
           )}
@@ -161,7 +167,9 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
               year={year}
               month={month}
               countryCode={countryCode}
-              successCallback={() => dispatch(fetchEmissionsData({ location, year, month }))}
+              successCallback={() =>
+                dispatch(fetchEmissionsData({ location, year, month }))
+              }
               setAccordionOpen={setAccordionOpen} // Pass setAccordionOpen to Scope3
             />
           )}
@@ -172,15 +180,12 @@ const Emissionsnbody = ({ location, year, month, countryCode, setYearError, setL
           onClick={handleCalculate}
           className="w-[172px] h-8 px-[22px] py-2 bg-sky-600 rounded shadow flex-col justify-center items-center inline-flex text-white text-xs font-bold leading-[15px] cursor-pointer"
         >
-            Calculate
+          Calculate
         </button>
       </div>
 
       {modalData && (
-        <CalculateSuccess
-          data={modalData}
-          onClose={handleCloseModal}
-        />
+        <CalculateSuccess data={modalData} onClose={handleCloseModal} />
       )}
     </>
   );

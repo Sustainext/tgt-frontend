@@ -47,7 +47,7 @@ const NonDiscriminationMaterialtopic = () => {
               <div className="flex h-[28px]">
                 <div className="h-[28px]">
                   <p className="gradient-text text-[22px] font-bold h-[28px] pt-1">
-                  Non-Discrimination 2016
+                  Non-discrimination
                   </p>
                 </div>
                 {/* <div className="bg-gray-100 h-[22px] w-[100px]  mx-2 mt-2 rounded-md">

@@ -44,7 +44,7 @@ const Workinvolvement = () => {
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] font-bold py-2">
-                    Ocupational Health and Safety 2018
+                    Occupational Health and Safety
                   </p>
                 </div>
               </div>
@@ -75,9 +75,9 @@ const Workinvolvement = () => {
         </div>
 
         <div className="ml-3 flex relative">
-          <h6 className="text-[17px] mb-4 font-semibold flex">
-            Hazard identification, risk assessment, and incident investigation
-            <MdInfoOutline
+          <h6 className="text-[17px]  font-semibold flex">
+          Worker participation, consultation & communication on occupational health & safety
+            {/* <MdInfoOutline
               data-tooltip-id={`tooltip-$e1`}
               data-tooltip-content="For employees and for workers who are not employees
                             but whose work and/or workplace is controlled by the organization:"
@@ -96,9 +96,13 @@ const Workinvolvement = () => {
                 borderRadius: "8px",
                 textAlign: "left",
               }}
-            ></ReactTooltip>
+            ></ReactTooltip> */}
           </h6>
         </div>
+        <div className="mb-4">
+        <p className="text-[12px] text-[#71717a] ml-3">For employees and for workers who are not employees but whose work and/or workplace is controlled by the organization:</p>
+        </div>
+       
        <div
            className={`${
             isOpen

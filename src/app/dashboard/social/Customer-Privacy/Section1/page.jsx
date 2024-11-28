@@ -49,7 +49,7 @@ const CustomerPrivacy = () => {
                             <div className='flex'>
                                 <div>
                                    <p className="gradient-text text-[22px] font-bold py-2">
-                                    Customer Privacy
+                                   Customer Privacy & Data Security
                                     </p>
                                 </div>
 
@@ -70,7 +70,7 @@ const CustomerPrivacy = () => {
                 <div className="ml-3 flex">
                     <h6 className="text-[17px] mb-4 font-semibold flex">
 
-                    Substantiated complaints concerning breaches of customer privacy and losses of customer data (1/2)
+                    Substantiated complaints concerning breaches of customer privacy and losses of customer data 
                         {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />

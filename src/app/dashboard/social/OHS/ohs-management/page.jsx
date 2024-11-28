@@ -47,7 +47,7 @@ const Ohsmanagment = () => {
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] font-bold py-2">
-                    Occupational Health and Safety 2018
+                  Occupational Health and Safety
                   </p>
                 </div>
               </div>
@@ -74,7 +74,7 @@ const Ohsmanagment = () => {
 
         <div className="ml-3 flex">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-            Occupational health and safety management system
+          Occupational health and safety management system
             {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />

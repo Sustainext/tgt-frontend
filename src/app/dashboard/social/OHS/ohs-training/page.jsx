@@ -44,7 +44,7 @@ const Ohstraining = () => {
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] font-bold py-2">
-                    Ocupational Health and Safety 2018
+                    Occupational Health and Safety
                   </p>
                 </div>
               </div>
@@ -68,27 +68,15 @@ const Ohstraining = () => {
           </div>
         </div>
 
-        <div className="ml-3 mb-4">
-          <h6 className="text-[17px] font-semibold flex">
-            Worker training on occupational health & safety
-            {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
-                            data-tooltip-content="This section documents data corresponding to total water
-                            withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />
-                        <ReactTooltip id={`tooltip-$e1`} place="top" effect="solid" style={{
-                            width: "290px", backgroundColor: "#000",
-                            color: "white",
-                            fontSize: "12px",
-                            boxShadow: 3,
-                            borderRadius: "8px",
-                            textAlign: 'left',
-                        }}>
-
-                        </ReactTooltip> */}
+   
+        <div className="ml-3 flex relative">
+          <h6 className="text-[17px]  font-semibold flex">
+          Worker training on occupational health & safety
+        
           </h6>
-          <p className="text-[11px] text-gray-500">
-            For employees and for workers who are not employees but whose work
-            and/or workplace is controlled by the organization
-          </p>
+        </div>
+        <div className="mb-4">
+        <p className="text-[12px] text-[#71717a] ml-3">For employees and for workers who are not employees but whose work and/or workplace is controlled by the organization</p>
         </div>
 
        <div

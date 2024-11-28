@@ -43,7 +43,7 @@ const Securitypersonnel = () => {
                             <div className='flex'>
                                 <div>
                                    <p className="gradient-text text-[22px] font-bold py-2">
-                                    Security Practices 2016
+                                   Human Rights and Community Impact
                                     </p>
                                 </div>
 

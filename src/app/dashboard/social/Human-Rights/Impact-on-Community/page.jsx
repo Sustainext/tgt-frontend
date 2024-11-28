@@ -48,7 +48,7 @@ const ImpactonCommunity = () => {
                             <div className='flex'>
                                 <div>
                                    <p className="gradient-text text-[22px] font-bold py-2">
-                                        Local Communities 2016
+                                   Human Rights and Community Impact
                                     </p>
                                 </div>
 

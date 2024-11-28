@@ -66,7 +66,7 @@ const StatementnoncomplianceLabeling = () => {
 
       <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Incidents of non-compliance concerning marketing communications (2/2)
+          Incidents of non-compliance concerning marketing communications
           </h6>
         </div>
        <div
