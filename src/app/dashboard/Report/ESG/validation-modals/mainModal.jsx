@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineReplay,MdDone } from "react-icons/md";
 import { GoChevronRight } from "react-icons/go";
 import dynamic from 'next/dynamic';
-
+import axiosInstance,{patch} from "../../../../utils/axiosMiddleware";
 
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 
@@ -35,7 +35,6 @@ const MainValidationPopup = ({
   const [fieldValues, setFieldValues] = useState({});
   const [statement,setStatement]=useState('')
 
-  console.log(fieldValues,"look")
   const data = {
     screenTitles: {
       screen_one: "1 Message from Our Leadership",
@@ -57,7 +56,7 @@ const MainValidationPopup = ({
   };
 
   const config = {
-    enter: "BR", // Or customize behavior on Enter key
+    enter: "BR",
   cleanHTML: true,
     enablePasteHTMLFilter: false, 
     askBeforePasteHTML: false, 
@@ -115,29 +114,94 @@ const MainValidationPopup = ({
     setSelectedPage(null);
   };
 
-  const handleUpdateField = () => {
-    // Mark field as "filled"
-    setFieldStatuses((prevStatuses) => ({
-      ...prevStatuses,
-      [`${selectedPage}-${selectedFieldIndex}`]: "filled",
-    }));
-    setFieldValues((prevValues) => ({
-      ...prevValues,
-      [`${selectedPage}-${selectedFieldIndex}`]: statement,
-    }));
-    toast.success("Data updated!");
-    handleCloseSideModal();
+  // const handleUpdateField = () => {
+    
+  //   setFieldStatuses((prevStatuses) => ({
+  //     ...prevStatuses,
+  //     [`${selectedPage}-${selectedFieldIndex}`]: "filled",
+  //   }));
+  //   setFieldValues((prevValues) => ({
+  //     ...prevValues,
+  //     [`${selectedPage}-${selectedFieldIndex}`]: statement,
+  //   }));
+  //   toast.success("Data updated!");
+  //   handleCloseSideModal();
+  // };
+
+  // const handleSkipField = () => {
+   
+  //   setFieldStatuses((prevStatuses) => ({
+  //     ...prevStatuses,
+  //     [`${selectedPage}-${selectedFieldIndex}`]: "skipped",
+  //   }));
+  //   handleCloseSideModal();
+  // };
+
+  const handleUpdateField = async () => {
+    const screen = selectedPage; // Extract the screen from the selected page
+    const fieldKey = selectedField.field; // Extract the field key from the selected field
+    const url = `${process.env.BACKEND_API_URL}/esg_report/${screen}/${reportid}/`; // API endpoint
+
+    const payload = {
+      [fieldKey]: {
+        ...selectedField,
+        content: statement, // Update the content with the user's input
+      },
+    };
+
+    try {
+      const response = await axiosInstance.put(url, payload); // API call with payload
+      if (response.status === 200) {
+        toast.success("Data updated successfully!");
+        // Mark field as "filled"
+        setFieldStatuses((prevStatuses) => ({
+          ...prevStatuses,
+          [`${selectedPage}-${selectedFieldIndex}`]: "filled",
+        }));
+        setFieldValues((prevValues) => ({
+          ...prevValues,
+          [`${selectedPage}-${selectedFieldIndex}`]: statement,
+        }));
+        handleCloseSideModal();
+      } else {
+        toast.error("Failed to update data. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error updating field:", error);
+      toast.error("An error occurred while updating data.");
+    }
   };
 
-  const handleSkipField = () => {
-    // Mark field as "skipped"
-    setFieldStatuses((prevStatuses) => ({
-      ...prevStatuses,
-      [`${selectedPage}-${selectedFieldIndex}`]: "skipped",
-    }));
-    handleCloseSideModal();
-  };
+  const handleSkipField = async () => {
+    const screen = selectedPage; // Extract the screen from the selected page
+    const fieldKey = selectedField.field; // Extract the field key from the selected field
+    const url = `${process.env.BACKEND_API_URL}/esg_report/${screen}/${reportid}/`; // API endpoint
 
+    const payload = {
+      [fieldKey]: {
+        ...selectedField,
+        isSkipped: true, // Mark the field as skipped
+      },
+    };
+
+    try {
+      const response = await axiosInstance.put(url, payload); // API call with payload
+      if (response.status === 200) {
+        toast.success("Field skipped successfully!");
+        // Mark field as "skipped"
+        setFieldStatuses((prevStatuses) => ({
+          ...prevStatuses,
+          [`${selectedPage}-${selectedFieldIndex}`]: "skipped",
+        }));
+        handleCloseSideModal();
+      } else {
+        toast.error("Failed to skip field. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error skipping field:", error);
+      toast.error("An error occurred while skipping the field.");
+    }
+  };
   const handleChange=(e)=>{
     setStatement(e.target.value)
   }
@@ -145,7 +209,6 @@ const MainValidationPopup = ({
     setStatement(value)
   }
 
-  console.log(statement,"look")
 
   const isAnyFieldFilled = Object.values(fieldStatuses).includes("filled");
 
