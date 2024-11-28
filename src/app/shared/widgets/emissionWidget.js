@@ -916,7 +916,9 @@ const EmissionWidget = React.memo(
                       : ""
                   }
 `}
-                  disabled={rowType === "assigned" || rowType === "calculated"}
+                  disabled={["assigned", "calculated", "approved"].includes(
+                    rowType
+                  )}
                 >
                   <option className="emissionscopc">Select Category</option>
                   {baseCategories.map((categoryName, index) => (
@@ -937,7 +939,9 @@ const EmissionWidget = React.memo(
                       ? "border-b border-zinc-800"
                       : ""
                   }`}
-                  disabled={rowType === "assigned" || rowType === "calculated"}
+                  disabled={["assigned", "calculated", "approved"].includes(
+                    rowType
+                  )}
                 >
                   <option className="emissionscopc">Select Sub-Category</option>
                   {subcategories.map((sub, index) => (
@@ -975,9 +979,9 @@ const EmissionWidget = React.memo(
                     onChange={(e) => setActivitySearch(e.target.value)}
                     onFocus={toggleDropdown}
                     className={`text-[12px] focus:border-blue-500 focus:outline-none w-full py-1 `}
-                    disabled={
-                      rowType === "assigned" || rowType === "calculated"
-                    }
+                    disabled={["assigned", "calculated", "approved"].includes(
+                      rowType
+                    )}
                   />
 
                   {isDropdownActive && (
@@ -991,9 +995,9 @@ const EmissionWidget = React.memo(
                         setActivitySearch("");
                       }}
                       className={`text-[12px] focus:border-blue-500 focus:outline-none w-full absolute left-0 top-8 z-[100] min-w-[810px]`}
-                      disabled={
-                        rowType === "assigned" || rowType === "calculated"
-                      }
+                      disabled={["assigned", "calculated", "approved"].includes(
+                        rowType
+                      )}
                     >
                       <option value="" className="px-1">
                         {isFetching.current
@@ -1042,7 +1046,11 @@ const EmissionWidget = React.memo(
                           className="focus:border-blue-500 focus:outline-none text-[12px] w-[7vw] text-right pe-1"
                           step="1"
                           min="0"
-                          disabled={rowType === "assigned"}
+                          disabled={[
+                            "assigned",
+                            "calculated",
+                            "approved",
+                          ].includes(rowType)}
                         />
                         <select
                           value={unit}
@@ -1052,7 +1060,11 @@ const EmissionWidget = React.memo(
                               ? "bg-white text-blue-500 "
                               : "bg-blue-500 text-white hover:bg-blue-600"
                           }`}
-                          disabled={rowType === "assigned"}
+                          disabled={[
+                            "assigned",
+                            "calculated",
+                            "approved",
+                          ].includes(rowType)}
                         >
                           <option value="">Unit</option>
                           {units.map((unit, index) => (
@@ -1074,7 +1086,11 @@ const EmissionWidget = React.memo(
                           className="focus:border-blue-500 focus:outline-none text-[12px] w-[6vw] text-right pe-1"
                           step="1"
                           min="0"
-                          disabled={rowType === "assigned"}
+                          disabled={[
+                            "assigned",
+                            "calculated",
+                            "approved",
+                          ].includes(rowType)}
                         />
                         <select
                           value={unit2}
@@ -1084,7 +1100,11 @@ const EmissionWidget = React.memo(
                               ? "bg-white text-blue-500 "
                               : "bg-blue-500 text-white hover:bg-blue-600"
                           }`}
-                          disabled={rowType === "assigned"}
+                          disabled={[
+                            "assigned",
+                            "calculated",
+                            "approved",
+                          ].includes(rowType)}
                         >
                           <option value="">Unit</option>
                           {units2.map((unit, index) => (
@@ -1108,7 +1128,11 @@ const EmissionWidget = React.memo(
                         className="focus:border-blue-500 focus:outline-none text-[12px] w-[19.7vw] text-right pe-1"
                         step="1"
                         min="0"
-                        disabled={rowType === "assigned"}
+                        disabled={[
+                          "assigned",
+                          "calculated",
+                          "approved",
+                        ].includes(rowType)}
                       />
                       <select
                         value={unit}
@@ -1118,7 +1142,11 @@ const EmissionWidget = React.memo(
                             ? "bg-white text-blue-500 "
                             : "bg-blue-500 text-white hover:bg-blue-600"
                         }`}
-                        disabled={rowType === "assigned"}
+                        disabled={[
+                          "assigned",
+                          "calculated",
+                          "approved",
+                        ].includes(rowType)}
                       >
                         <option value="">Unit</option>
                         {units.map((unit, index) => (

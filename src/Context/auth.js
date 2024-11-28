@@ -23,9 +23,9 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     if (token) {
-      fetchUserDetails(token).then(data => {
-        setUserDetails(data)
-        saveToLocalStorage(data)
+      fetchUserDetails(token).then((data) => {
+        setUserDetails(data);
+        saveToLocalStorage(data);
       });
     }
   }, [token]);
@@ -44,7 +44,6 @@ export function AuthProvider({ children }) {
       });
 
       if (!response.ok) {
-     
         if (response.status === 400) {
           throw new Error("Incorrect username or password");
         } else {
@@ -64,6 +63,7 @@ export function AuthProvider({ children }) {
       saveToLocalStorage("client_key", client_key);
       saveToLocalStorage("permissions", permissions);
       saveToLocalStorage("custom_role", newrole);
+      saveToLocalStorage("isAdmin", newrole);
       const isFirstLogin = userData.needs_password_reset;
       // const isFirstLogin = 1;
       if (isFirstLogin) {
@@ -77,9 +77,13 @@ export function AuthProvider({ children }) {
       setUserDetails(userDetails);
       saveToLocalStorage("userData", userDetails);
       saveToLocalStorage("user_id", userDetails.user_detail[0].id);
-      saveToLocalStorage("userName", userDetails.user_detail[0].first_name + " "+ userDetails.user_detail[0].last_name);
+      saveToLocalStorage(
+        "userName",
+        userDetails.user_detail[0].first_name +
+          " " +
+          userDetails.user_detail[0].last_name
+      );
       saveToLocalStorage("userEmail", userDetails.user_detail[0].email);
-
     } catch (error) {
       console.error("Login error:", error);
       toast.error("Failed to login: " + error.message, {

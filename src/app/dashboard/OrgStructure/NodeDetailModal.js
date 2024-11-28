@@ -11,7 +11,7 @@ const NodeDetailModal = ({
   nodeData,
   nodeType,
   rawData,
-  role
+  isAdmin,
 }) => {
   const router = useRouter();
   const modalRef = useRef(null);
@@ -19,8 +19,8 @@ const NodeDetailModal = ({
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedEntity, setSelectedEntity] = useState(null);
 
-   // Handle edit navigation
-   const handleEdit = () => {
+  // Handle edit navigation
+  const handleEdit = () => {
     let filteredDetails = {};
 
     if (details) {
@@ -61,7 +61,7 @@ const NodeDetailModal = ({
           rating: details.rating,
           certification: details.certification,
           target: details.target,
-          framework: details.framework
+          framework: details.framework,
         };
       } else if (nodeType === "corporate") {
         // Corporate format based on your original Structure code
@@ -87,13 +87,14 @@ const NodeDetailModal = ({
           date_format: details.date_format,
           timezone: details.timezone,
           language: details.language,
-          location_headquarters: details.location_headquarters || details.location_of_headquarters,
+          location_headquarters:
+            details.location_headquarters || details.location_of_headquarters,
           phone: details.phone,
           mobile: details.mobile,
           fax: details.fax,
           zipcode: details.zipcode,
           framework: details.framework,
-          organization: details.organization // Keep the parent organization reference
+          organization: details.organization, // Keep the parent organization reference
         };
       } else if (nodeType === "location") {
         // Filter only location relevant fields
@@ -125,7 +126,7 @@ const NodeDetailModal = ({
           location_type: details.location_type,
           area: details.area,
           corporate: details.corporate,
-          organization: details.organization
+          organization: details.organization,
         };
       }
     }
@@ -133,14 +134,16 @@ const NodeDetailModal = ({
     const dataToPass = {
       type: nodeType === "corporate" ? "Corporate Entity" : nodeType,
       item: nodeData,
-      filteredData: [filteredDetails]
+      filteredData: [filteredDetails],
     };
 
     const encodedData = encodeURIComponent(JSON.stringify(dataToPass));
 
     // Navigate based on entity type
     if (nodeType === "organization") {
-      router.push(`/dashboard/OrgStructure/forms/Organization?data=${encodedData}`);
+      router.push(
+        `/dashboard/OrgStructure/forms/Organization?data=${encodedData}`
+      );
     } else if (nodeType === "corporate") {
       router.push(`/dashboard/OrgStructure/forms/Entity?data=${encodedData}`);
     } else if (nodeType === "location") {
@@ -160,7 +163,7 @@ const NodeDetailModal = ({
   const handleEntityDelete = async () => {
     try {
       let endpoint = "";
-      console.log('node type delete triggered!', nodeType)
+      console.log("node type delete triggered!", nodeType);
       switch (nodeType) {
         case "organization":
           endpoint = `/organization_activity/${details.id}/`;
@@ -180,7 +183,10 @@ const NodeDetailModal = ({
       onClose();
       window.location.reload();
     } catch (error) {
-      console.error("Error deleting entity:", error.response?.data || error.message);
+      console.error(
+        "Error deleting entity:",
+        error.response?.data || error.message
+      );
     }
   };
 
@@ -292,49 +298,52 @@ const NodeDetailModal = ({
               <span className="font-medium text-lg">{details.name}</span>
             </div>
             <div className="flex items-center space-x-3">
-              {
-                role && <>{/* Edit Button */}
-              <button className="inline-flex items-center px-3 py-1.5 bg-white border border-gray-200 rounded-md text-sm text-gray-600 
+              {isAdmin && (
+                <>
+                  {/* Edit Button */}
+                  <button
+                    className="inline-flex items-center px-3 py-1.5 bg-white border border-gray-200 rounded-md text-sm text-gray-600 
               hover:text-[#007eef] hover:border-[#007eef]"
-              type="button"
-              onClick={handleEdit}
-              >
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  className="w-4 h-4 mr-1.5"
-                >
-                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                </svg>
-                Edit
-              </button>
+                    type="button"
+                    onClick={handleEdit}
+                  >
+                    <svg
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                      className="w-4 h-4 mr-1.5"
+                    >
+                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                    Edit
+                  </button>
 
-              {/* Delete Button */}
-              <button
-                className="inline-flex items-center px-3 py-1.5 bg-white border border-gray-200 rounded-md text-sm text-gray-600 hover:text-red-500 hover:border-red-500"
-                onClick={() => handleDeleteClick(details, details.type)}
-              >
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  className="w-4 h-4 mr-1.5"
-                >
-                  <path d="M3 6h18"></path>
-                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
-                  <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                </svg>
-                Delete
-              </button></>
-              }
+                  {/* Delete Button */}
+                  <button
+                    className="inline-flex items-center px-3 py-1.5 bg-white border border-gray-200 rounded-md text-sm text-gray-600 hover:text-red-500 hover:border-red-500"
+                    onClick={() => handleDeleteClick(details, details.type)}
+                  >
+                    <svg
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                      className="w-4 h-4 mr-1.5"
+                    >
+                      <path d="M3 6h18"></path>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
+                      <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                    Delete
+                  </button>
+                </>
+              )}
 
               {/* Close Button */}
               <button
