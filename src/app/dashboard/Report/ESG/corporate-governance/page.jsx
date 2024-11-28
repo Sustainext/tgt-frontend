@@ -106,10 +106,10 @@ const scrollToSection = (sectionRef, sectionId) => {
   const submitForm = async (type) => {
       LoaderOpen();
       const data={
-       "statement": {"page":"screen_nine","label":"9. Corporate Governance","subLabel":"Add statement about company’s corporate governance","type":"textarea","content":statement,field:"statement",isSkipped:false} ,
-    "board_gov_statement": {"page":"screen_nine","label":"9.1.1 Governance structure and composition","subLabel":"Add statement about company’s board of directors","type":"textarea","content":board_gov_statement,field:"board_gov_statement",isSkipped:false},
-    "remuneration_policies": {"page":"screen_nine","label":"9.3.7 Remuneration Policies & Process to Determine Remuneration","subLabel":"Add statement about company’s remuneration policies","type":"textarea","content":remuneration_policies,field:"remuneration_policies",isSkipped:false},
-    "policy_not_public_reason": {"page":"screen_nine","label":"9.6.2 Reason why policy is not publicly available","subLabel":"Add statement about company’s sustainability policies","type":"textarea","content":policy_not_public_reason,field:"policy_not_public_reason",isSkipped:false}
+       "statement": {"page":"screen_nine","label":"9. Corporate Governance","subLabel":"Add statement about company’s corporate governance","type":"textarea","content":statement,"field":"statement","isSkipped":false} ,
+    "board_gov_statement": {"page":"screen_nine","label":"9.1.1 Governance structure and composition","subLabel":"Add statement about company’s board of directors","type":"textarea","content":board_gov_statement,"field":"board_gov_statement","isSkipped":false},
+    "remuneration_policies": {"page":"screen_nine","label":"9.3.7 Remuneration Policies & Process to Determine Remuneration","subLabel":"Add statement about company’s remuneration policies","type":"textarea","content":remuneration_policies,"field":"remuneration_policies","isSkipped":false},
+    "policy_not_public_reason": {"page":"screen_nine","label":"9.6.2 Reason why policy is not publicly available","subLabel":"Add statement about company’s sustainability policies","type":"textarea","content":policy_not_public_reason,"field":"policy_not_public_reason","isSkipped":false}
       }
   
       const url = `${process.env.BACKEND_API_URL}/esg_report/screen_nine/${reportid}/`;

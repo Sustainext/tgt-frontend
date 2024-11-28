@@ -36,7 +36,7 @@ const Materiality=forwardRef(({ onSubmitSuccess }, ref) => {
   const submitForm = async (type) => {
       LoaderOpen();
       const data={
-        "statement":{"page":"screen_eight","label":"8. Materiality","subLabel":"Add statement about company’s materiality assessment","type":"textarea","content":description,field:"statement",isSkipped:false},
+        "statement":{"page":"screen_eight","label":"8. Materiality","subLabel":"Add statement about company’s materiality assessment","type":"textarea","content":description,"field":"statement","isSkipped":false},
       }
   
       const url = `${process.env.BACKEND_API_URL}/esg_report/screen_eight/${reportid}/`;

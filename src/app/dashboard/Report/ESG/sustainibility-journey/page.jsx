@@ -68,10 +68,10 @@ const scrollToSection = (sectionRef, sectionId) => {
   const submitForm = async (type) => {
       LoaderOpen();
       const data={
-       "company_sustainability_statement": {"page":"screen_ten","label":"10. Sustainability Journey","subLabel":"Add statement about company’s sustainability journey","type":"textarea","content":company_sustainability_statement,field:"company_sustainability_statement",isSkipped:false} ,
-    "approach_for_sustainability": {"page":"screen_ten","label":"10.1 Management approach for sustainability/ESG topics","subLabel":"Add statement about company’s approach for sustainability","type":"textarea","content":approach_for_sustainability,field:"approach_for_sustainability",isSkipped:false},
-    "sustainability_goals": {"page":"screen_ten","label":"10.2 Company’s Sustainability Goals","subLabel":"Add statement about company’s sustainability goals","type":"textarea","content":sustainability_goals,field:"sustainability_goals",isSkipped:false},
-    "approach_to_supply_chain_sustainability": {"page":"screen_ten","label":"10.3 Supply Chain Sustainability","subLabel":"Add statement about company’s approach to supply chain sustainability","type":"textarea","content":approach_to_supply_chain_sustainability,field:"approach_to_supply_chain_sustainability",isSkipped:false}
+       "company_sustainability_statement": {"page":"screen_ten","label":"10. Sustainability Journey","subLabel":"Add statement about company’s sustainability journey","type":"textarea","content":company_sustainability_statement,"field":"company_sustainability_statement","isSkipped":false} ,
+    "approach_for_sustainability": {"page":"screen_ten","label":"10.1 Management approach for sustainability/ESG topics","subLabel":"Add statement about company’s approach for sustainability","type":"textarea","content":approach_for_sustainability,"field":"approach_for_sustainability","isSkipped":false},
+    "sustainability_goals": {"page":"screen_ten","label":"10.2 Company’s Sustainability Goals","subLabel":"Add statement about company’s sustainability goals","type":"textarea","content":sustainability_goals,"field":"sustainability_goals","isSkipped":false},
+    "approach_to_supply_chain_sustainability": {"page":"screen_ten","label":"10.3 Supply Chain Sustainability","subLabel":"Add statement about company’s approach to supply chain sustainability","type":"textarea","content":approach_to_supply_chain_sustainability,"field":"approach_to_supply_chain_sustainability","isSkipped":false}
       }
   
       const url = `${process.env.BACKEND_API_URL}/esg_report/screen_ten/${reportid}/`;

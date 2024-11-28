@@ -98,11 +98,11 @@ const EconomicPerformance = forwardRef(({ onSubmitSuccess }, ref) => {
     LoaderOpen();
     const data = {
       company_economic_performance_statement:
-      {"page":"screen_eleven","label":"11. Economic Performance","subLabel":"Add statement about company’s economic performance","type":"textarea","content":company_economic_performance_statement,field:"company_economic_performance_statement",isSkipped:false},
+      {"page":"screen_eleven","label":"11. Economic Performance","subLabel":"Add statement about company’s economic performance","type":"textarea","content":company_economic_performance_statement,"field":"company_economic_performance_statement","isSkipped":false},
       introduction_to_economic_value_creation:
-      {"page":"screen_eleven","label":"11.1.2 Economic Value Creation","subLabel":"Add introduction for company’s economic value creation","type":"textarea","content":introduction_to_economic_value_creation,field:"introduction_to_economic_value_creation",isSkipped:false},
+      {"page":"screen_eleven","label":"11.1.2 Economic Value Creation","subLabel":"Add introduction for company’s economic value creation","type":"textarea","content":introduction_to_economic_value_creation,"field":"introduction_to_economic_value_creation","isSkipped":false},
       financial_assistance_from_government:
-      {"page":"screen_eleven","label":"11.1.3 Financial Assistance Received from Government","subLabel":"Add introduction about financial assistance received from government","type":"textarea","content":financial_assistance_from_government,field:"financial_assistance_from_government",isSkipped:false},
+      {"page":"screen_eleven","label":"11.1.3 Financial Assistance Received from Government","subLabel":"Add introduction about financial assistance received from government","type":"textarea","content":financial_assistance_from_government,"field":"financial_assistance_from_government","isSkipped":false},
          };
 
     const url = `${process.env.BACKEND_API_URL}/esg_report/screen_eleven/${reportid}/`;
