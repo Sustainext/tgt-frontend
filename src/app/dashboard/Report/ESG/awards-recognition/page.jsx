@@ -33,7 +33,7 @@ const AwardsRecognition=forwardRef(({ onSubmitSuccess }, ref) =>{
     const submitForm = async (type) => {
         LoaderOpen();
         const data={
-          "description":{"page":"screen_five","label":"Awards & Recognition","subLabel":"","type":"richTextarea","content":description},
+          "description":{"page":"screen_five","label":"5. Awards & Recognition","subLabel":"","type":"richTextarea","content":description,field:"description",isSkipped:false},
         }
     
         const url = `${process.env.BACKEND_API_URL}/esg_report/screen_five/${reportid}/`;

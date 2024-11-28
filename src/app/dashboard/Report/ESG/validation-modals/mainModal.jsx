@@ -35,6 +35,7 @@ const MainValidationPopup = ({
   const [fieldValues, setFieldValues] = useState({});
   const [statement,setStatement]=useState('')
 
+  console.log(fieldValues,"look")
   const data = {
     screenTitles: {
       screen_one: "1 Message from Our Leadership",
@@ -143,6 +144,8 @@ const MainValidationPopup = ({
   const handleChangeEditor=(value)=>{
     setStatement(value)
   }
+
+  console.log(statement,"look")
 
   const isAnyFieldFilled = Object.values(fieldStatuses).includes("filled");
 

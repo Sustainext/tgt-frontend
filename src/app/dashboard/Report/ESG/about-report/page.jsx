@@ -37,9 +37,9 @@ const AboutTheReport=forwardRef(({ onSubmitSuccess }, ref) => {
   const submitForm = async (type) => {
       LoaderOpen();
       const data={
-        "description":{"page":"screen_seven","label":"About the Report","subLabel":"Add statement about the report","type":"textarea","content":description},
-        "framework_description":{"page":"screen_seven","label":"Frameworks","subLabel":"Add statement about framework used in report","type":"textarea","content":framework_description},
-        "external_assurance":{"page":"screen_seven","label":"External Assurance","subLabel":"Add statement about external assurance","type":"textarea","content":external_assurance}
+        "description":{"page":"screen_seven","label":"7. About the Report","subLabel":"Add statement about the report","type":"textarea","content":description,field:"description",isSkipped:false},
+        "framework_description":{"page":"screen_seven","label":"7.2 Frameworks","subLabel":"Add statement about framework used in report","type":"textarea","content":framework_description,field:"framework_description",isSkipped:false},
+        "external_assurance":{"page":"screen_seven","label":"7.3 External Assurance","subLabel":"Add statement about external assurance","type":"textarea","content":external_assurance,field:"external_assurance",isSkipped:false}
       }
   
       const url = `${process.env.BACKEND_API_URL}/esg_report/screen_seven/${reportid}/`;

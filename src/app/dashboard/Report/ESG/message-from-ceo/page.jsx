@@ -50,9 +50,9 @@ const MessageFromCeo = forwardRef(({ onSubmitSuccess }, ref) => {
     LoaderOpen();
     localStorage.setItem('reportorgname',companyName)
     const formData = new FormData();
-    formData.append("message", JSON.stringify({page:"screen_one",label:"Message from CEO",subLabel:"Add message from CEO",type:"richTextarea",content:content}));
+    formData.append("message", JSON.stringify({page:"screen_one",label:"1. Message from CEO",subLabel:"Add message from CEO",type:"richTextarea",content:content,field:"message",isSkipped:false}));
     formData.append("message_image", imageceo); // If imageceo is a file, this will work
-    formData.append("ceo_name", JSON.stringify({page:"screen_one",label:"CEO’s Name",subLabel:"",type:"input",content:ceoname}));
+    formData.append("ceo_name", JSON.stringify({page:"screen_one",label:"CEO’s Name",subLabel:"Add CEO's name",type:"input",content:ceoname,field:"ceo_name",isSkipped:false}));
     formData.append("company_name", companyName);
     formData.append("signature_image", imagesing);
     formData.append("signature_image_name", selectedSignfile?selectedSignfile.name:'');

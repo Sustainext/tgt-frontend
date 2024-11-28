@@ -58,9 +58,9 @@ const Community = forwardRef(({ onSubmitSuccess }, ref) => {
   const submitForm = async (type) => {
       LoaderOpen();
       const data={
-       "community_engagement": {"page":"screen_fourteen","label":"Community Engagement","subLabel":"Add statement about company’s community engagement","type":"textarea","content":community_engagement_statement} ,
-    "impact_assessment": {"page":"screen_fourteen","label":"Impact Assessment","subLabel":"","type":"textarea","content":impact_assessment},
-    "csr_policies": {"page":"screen_fourteen","label":"CSR","subLabel":"Add statement about company’s Corporate Social Responsibility policies","type":"richTextarea","content":csr_statement},
+       "community_engagement": {"page":"screen_fourteen","label":"14.1 Community Engagement","subLabel":"Add statement about company’s community engagement","type":"textarea","content":community_engagement_statement,field:"community_engagement_statement",isSkipped:false} ,
+    "impact_assessment": {"page":"screen_fourteen","label":"Impact Assessment","subLabel":"","type":"textarea","content":impact_assessment,field:"impact_assessment",isSkipped:false},
+    "csr_policies": {"page":"screen_fourteen","label":"14.2 CSR","subLabel":"Add statement about company’s Corporate Social Responsibility policies","type":"richTextarea","content":csr_statement,field:"csr_statement",isSkipped:false},
       }
   
       const url = `${process.env.BACKEND_API_URL}/esg_report/screen_fourteen/${reportid}/`;

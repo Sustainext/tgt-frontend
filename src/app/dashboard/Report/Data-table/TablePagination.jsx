@@ -118,7 +118,8 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
                 item.start_date,
                 item.end_date,
                 item.organization_country,
-                item.name
+                item.name,
+                item.created_at
               );
             } else {
               handleSetdata(
@@ -223,7 +224,8 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
     startdate,
     enddate,
     organization_country,
-    name
+    name,
+    created_at
   ) => {
     const newdata = {
       id: id,
@@ -238,6 +240,8 @@ const TableWithPagination = ({ data, defaultItemsPerPage, fetchReoprts,isMenuOpe
     window.localStorage.setItem("reportstartdate", startdate);
     window.localStorage.setItem("reportenddate", enddate);
     window.localStorage.setItem("organizationcountry", organization_country);
+    window.localStorage.setItem("reportCreatedOn", created_at);
+
     // sessionStorage.setItem('reportData',newdata);
     router.push("/dashboard/Report/ESG");
 

@@ -35,7 +35,7 @@ const MissionVission=forwardRef(({ onSubmitSuccess }, ref) => {
     const submitForm = async (type) => {
         LoaderOpen();
         const data={
-          "mission":{"page":"screen_three","label":"Mission, Vision, and Values","subLabel":"Add statement about Mission, Vision and Values of the company","type":"richTextarea","content":mission},
+          "mission":{"page":"screen_three","label":"3. Mission, Vision, and Values","subLabel":"Add statement about Mission, Vision and Values of the company","type":"richTextarea","content":mission,field:"mission",isSkipped:false},
         }
     
         const url = `${process.env.BACKEND_API_URL}/esg_report/screen_three/${reportid}/`;

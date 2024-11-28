@@ -77,10 +77,10 @@ const scrollToSection = (sectionRef, sectionId) => {
   const submitForm = async (type) => {
       LoaderOpen();
       const data={
-       "commitment_statement": {"page":"screen_fifteen","label":"Products and Services","subLabel":"Add statement about company’s commitment to products and services","type":"textarea","content":commitment_statement} ,
-    "product_info_labelling": {"page":"screen_fifteen","label":"Product and Service Information and Labelling","subLabel":"Add statement about company’s product and service information and labelling","type":"textarea","content":product_info_labelling},
-    "marketing_practices": {"page":"screen_fifteen","label":"Marketing","subLabel":"Add statement about company’s marketing practices","type":"textarea","content":marketing_practices},
-    "conclusion": {"page":"screen_fifteen","label":"Conclusion","subLabel":"Add a conclusion to the report","type":"richTextarea","content":conclusion}
+       "commitment_statement": {"page":"screen_fifteen","label":"15.1 Products and Services","subLabel":"Add statement about company’s commitment to products and services","type":"textarea","content":commitment_statement,field:"commitment_statement",isSkipped:false} ,
+    "product_info_labelling": {"page":"screen_fifteen","label":"15.2 Product and Service Information and Labelling","subLabel":"Add statement about company’s product and service information and labelling","type":"textarea","content":product_info_labelling,field:"product_info_labelling",isSkipped:false},
+    "marketing_practices": {"page":"screen_fifteen","label":"15.2.2 Marketing","subLabel":"Add statement about company’s marketing practices","type":"textarea","content":marketing_practices,field:"marketing_practices",isSkipped:false},
+    "conclusion": {"page":"screen_fifteen","label":"Conclusion","subLabel":"Add a conclusion to the report","type":"richTextarea","content":conclusion,field:"conclusion",isSkipped:false}
       }
   
       const url = `${process.env.BACKEND_API_URL}/esg_report/screen_fifteen/${reportid}/`;

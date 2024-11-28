@@ -242,7 +242,6 @@ const Report = () => {
       organization: selectedOrg,
       corporate: selectedCorp,
       investment_corporates: selectedEntities,
-      createdOn:formatCurrentDate()
     };
 
     await post(`/sustainapp/report_create/`, sandData)
@@ -279,7 +278,7 @@ const Report = () => {
             response.data.start_date
           );
           window.localStorage.setItem("reportenddate", response.data.end_date);
-          window.localStorage.setItem("reportCreatedOn", response.data.createdOn);
+          window.localStorage.setItem("reportCreatedOn", response.data.created_at);
           window.localStorage.setItem(
             "organizationcountry",
             response.data.organization_country
