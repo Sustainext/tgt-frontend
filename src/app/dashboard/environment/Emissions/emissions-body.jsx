@@ -3,11 +3,15 @@ import { useState, useEffect, useRef } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoHomeOutline } from "react-icons/io5";
 import CalculateSuccess from "./calculateSuccess";
-import { fetchEmissionsData } from "@/lib/redux/features/emissionSlice";
+import {
+  fetchEmissionsData,
+  fetchUsers,
+} from "@/lib/redux/features/emissionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Scope1 from "./scope1new";
 import Scope2 from "./scope2new";
 import Scope3 from "./scope3new";
+import CalculateConfirmationModal from "./CalculateConfirmationModal";
 
 const AccordionItem = ({ title, children, scops, icons, onAccordionClick }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -70,6 +74,11 @@ const Emissionsnbody = ({
   const [modalData, setModalData] = useState(null);
   const climatiqData = useSelector((state) => state.emissions.climatiqData);
 
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [scopeData, setScopeData] = useState({});
+  const assignedTasks = useSelector((state) => state.emissions.assignedTasks);
+  const usersStatus = useSelector((state) => state.emissions.users.status);
+
   const handleAccordionClick = () => {
     if (!location) {
       setLocationError("Please select a location");
@@ -85,25 +94,60 @@ const Emissionsnbody = ({
   };
 
   const handleCalculate = async () => {
+    // Check for assigned tasks
+    const hasAssignedTasks =
+      assignedTasks.scope1.length > 0 ||
+      assignedTasks.scope2.length > 0 ||
+      assignedTasks.scope3.length > 0;
+
+    if (hasAssignedTasks) {
+      // Ensure users are loaded before showing modal
+      if (usersStatus === "idle") {
+        await dispatch(fetchUsers());
+      }
+
+      const formattedScopeData = {
+        "Scope 1": assignedTasks.scope1,
+        "Scope 2": assignedTasks.scope2,
+        "Scope 3": assignedTasks.scope3,
+      };
+
+      // Remove empty scopes
+      Object.keys(formattedScopeData).forEach((key) => {
+        if (formattedScopeData[key].length === 0) {
+          delete formattedScopeData[key];
+        }
+      });
+
+      setScopeData(formattedScopeData);
+      setShowConfirmationModal(true);
+    } else {
+      await proceedWithCalculation();
+    }
+  };
+
+  const proceedWithCalculation = async () => {
     const updatePromises = [
       scope1Ref.current?.updateFormData(),
       scope2Ref.current?.updateFormData(),
       scope3Ref.current?.updateFormData(),
     ];
-
     await Promise.all(updatePromises);
-
     await dispatch(fetchEmissionsData({ location, year, month }));
 
     if (climatiqData.status === "succeeded") {
       setModalData({
-        ...modalData,
         locationname,
         location,
         month,
         message: "Emission has been created",
       });
     }
+  };
+
+  const handleConfirmCalculate = async () => {
+    setShowConfirmationModal(false);
+    await proceedWithCalculation();
   };
 
   const handleCloseModal = () => {
@@ -183,6 +227,13 @@ const Emissionsnbody = ({
           Calculate
         </button>
       </div>
+
+      <CalculateConfirmationModal
+        isOpen={showConfirmationModal}
+        onClose={() => setShowConfirmationModal(false)}
+        onConfirm={handleConfirmCalculate}
+        scopeData={scopeData}
+      />
 
       {modalData && (
         <CalculateSuccess data={modalData} onClose={handleCloseModal} />
