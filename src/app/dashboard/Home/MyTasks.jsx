@@ -1138,7 +1138,8 @@ const MyTask = () => {
 
   const [selectedLocation, setSelectedLocation] = useState();
   useEffect(() => {
-    setSelectedLocation(getLocationName(taskassigndata.location));
+    // setSelectedLocation(getLocationName(taskassigndata.location));
+    setSelectedLocation(taskassigndata.task_name.split("-")[0]);
   }, [taskassigndata]);
 
   const validateDecimalPlaces = (value) => {
