@@ -1,5 +1,5 @@
 "use client";
-import React, { useState,useRef } from "react";
+import React, { useState,useRef, useEffect } from "react";
 import { IoIosWarning } from "react-icons/io";
 import { IoCloseOutline } from "react-icons/io5";
 import { ToastContainer, toast } from "react-toastify";
@@ -36,6 +36,11 @@ const MainValidationPopup = ({
   const [fieldValues, setFieldValues] = useState({});
   const [statement,setStatement]=useState('')
 
+  useEffect(()=>{
+    setFieldStatuses({})
+    setFieldValues({})
+  },[missing_fields])
+  
   const data = {
     screenTitles: {
       screen_one: "1 Message from Our Leadership",
@@ -191,7 +196,7 @@ const MainValidationPopup = ({
     try {
       const response = await axiosInstance.put(url, payload); // API call with payload
       if (response.status === 200) {
-        toast.success("Field skipped successfully!");
+        toast.success("Field skipped successfully");
         // Mark field as "skipped"
         setFieldStatuses((prevStatuses) => ({
           ...prevStatuses,
@@ -223,7 +228,7 @@ const MainValidationPopup = ({
           <div className="top-0 z-50 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center pt-14">
             <div
               className={`bg-white p-6 rounded-lg shadow-md w-full max-w-xl mx-4 ${
-                selectedField ? "mr-[25%]" : ""
+                selectedField ? "mr-[400px]" : ""
               }`}
             >
               <div className="flex flex-col gap-4">
@@ -349,9 +354,9 @@ const MainValidationPopup = ({
                     Save and Continue
                   </button>
                 </div> */}
-                <div className="flex justify-end gap-3 mt-1">
+                <div className="flex justify-center gap-3 mt-1">
                   <button
-                    className={`py-2 px-4 bg-transparent text-gray-700 rounded-lg shadow border border-gray-300 ${
+                    className={`py-2 px-10 bg-transparent text-gray-700 rounded-lg shadow border border-gray-300 ${
                       isAnyFieldFilled ? "opacity-30 cursor-not-allowed" : ""
                     }`}
                     disabled={isAnyFieldFilled}
@@ -360,7 +365,7 @@ const MainValidationPopup = ({
                     Leave Blank and Proceed
                   </button>
                   <button
-                    className={`py-2 px-4 bg-blue-500 text-white rounded-lg shadow ${
+                    className={`py-2 px-10 bg-blue-500 text-white rounded-lg shadow ${
                       isAnyFieldFilled
                         ? "hover:bg-blue-600"
                         : "opacity-30 cursor-not-allowed"
@@ -378,7 +383,7 @@ const MainValidationPopup = ({
             <div className="z-50 fixed inset-0 flex justify-center items-center pt-14">
               <div
                 className={`bg-white rounded-lg shadow-md w-full max-w-xl h-[655px] ${
-                  selectedField ? "ml-[50%]" : ""
+                  selectedField ? "ml-[800px]" : ""
                 }`}
               >
                 <div className="flex flex-col h-full">
@@ -400,7 +405,13 @@ const MainValidationPopup = ({
                     <p className="text-[14px] text-[#344054] mb-4">
                       {selectedField.subLabel || "No description provided"}
                     </p>
-                    {selectedField.type=="textarea"?(
+                    <textarea
+                       value={statement}
+                       onChange={handleChange}
+                       className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-400 resize-none"
+                       rows={3}
+                     ></textarea>
+                    {/* {selectedField.type=="textarea"?(
                        <textarea
                        value={statement}
                        onChange={handleChange}
@@ -418,7 +429,7 @@ const MainValidationPopup = ({
                         // onChange={handleChangeEditor}
                       />
                     </div>
-                    )}
+                    )} */}
                    
                   </div>
 
