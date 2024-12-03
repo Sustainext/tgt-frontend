@@ -11,9 +11,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import GeneralWorkersEmployees from "../../../../../shared/widgets/Table/generalWorkersEmployees";
-// Simple Custom Table Widget
+import MultiselectTableWidget from "../../../../../shared/widgets/Table/MultiselectTableWidget"
 const widgets = {
-  TableWidget: GeneralWorkersEmployees,
+  TableWidget: MultiselectTableWidget,
 };
 
 const view_path = "gri-social-ohs-403-2d-work_related_incident-new";
@@ -102,42 +102,49 @@ const uiSchema = {
         title: "Description of Incident",
         tooltip:
           "<p>Please describe the processes used to investigate work-related incidents.</p> <br> <p>Example: Incidents might be due to, for example, electrical problems, explosion, fire; overflow, overturning, leakage, flow; breakage, bursting, splitting; loss of control, slipping, stumbling and falling; body movement without stress; body movement under/with stress; shock, fright; workplace violence or harassment.</p>",
+          layouttype:"input",
       },
       {
         key: "Incidentreporting",
         title: "Incident Reporting Personnel",
         tooltip:
           "Who can workers report work-related hazards and hazardous situations to? (Select all that apply)",
+          layouttype:"multiselect",
       },
       {
         key: "Investigationteam",
         title: "Investigation team",
         tooltip:
           "Who typically conducts incident investigations? (Select all that apply) ",
+          layouttype:"multiselect",
       },
       {
         key: "InvestigationMethods",
         title: "Investigation Methods",
         tooltip:
           "What methods are used to investigate incidents? (Select all that apply)",
+          layouttype:"multiselect",
       },
       {
         key: "HazardIdentification",
         title: "Hazard Identification & Risk Assessment",
         tooltip:
           "What actions did the organization take to address hazards and risks identified in incident investigations, following the hierarchy of controls? (Select all that apply)",
+          layouttype:"input",
       },
       {
         key: "CorrectiveActions",
         title: "Corrective Actions",
         tooltip:
           "What actions did the organization take to address hazards and risks identified in incident investigations, following the hierarchy of controls? (Select all that apply)",
+          layouttype:"multiselect",
       },
       {
         key: "SystemImprovement",
         title: "System Improvement",
         tooltip:
           "What changes did the organization make to policies, training, equipment, or communication after investigating incidents? (e.g., revised safety procedures, improved equipment, additional hazard training)",
+          layouttype:"input",
       },
     
     ],
@@ -248,16 +255,16 @@ const Screen1 = ({location, year,month}) => {
     }
   };
 
-  useEffect(() => {
-    if (location && year) {
-      loadFormData();
-      toastShown.current = false; 
-    } else {
-      if (!toastShown.current) {
-        toastShown.current = true; 
-      }
-    }
-  }, [location, year]);
+  // useEffect(() => {
+  //   if (location && year) {
+  //     loadFormData();
+  //     toastShown.current = false; 
+  //   } else {
+  //     if (!toastShown.current) {
+  //       toastShown.current = true; 
+  //     }
+  //   }
+  // }, [location, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -306,8 +313,8 @@ const Screen1 = ({location, year,month}) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+            schema={schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

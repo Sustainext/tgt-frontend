@@ -291,7 +291,7 @@ const WaterstorageQ1 = ({ location, year, month }) => {
     const newData = e.formData.map((item) => {
       const reporting1 = parseFloat(item.Reporting1) || 0; // Safely parse or default to 0
       const reporting2 = parseFloat(item.Reporting2) || 0;
-      const reporting3 = reporting1 + reporting2; // Calculate the sum
+      const reporting3 = reporting1 - reporting2; // Calculate the sum
       return {
         ...item, // Retain other fields
         Reporting3: reporting3.toString(), // Ensure it remains a string for the form

@@ -11,9 +11,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import GeneralWorkersEmployees from "../../../../../shared/widgets/Table/generalWorkersEmployees";
-// Simple Custom Table Widget
+import MultiselectTableWidget from "../../../../../shared/widgets/Table/MultiselectTableWidget"
 const widgets = {
-  TableWidget: GeneralWorkersEmployees,
+  TableWidget: MultiselectTableWidget,
 };
 
 const view_path = "gri-social-ohs-403-2c-worker_right-new";
@@ -68,18 +68,21 @@ const uiSchema = {
         title: "Right to refuse unsafe work",
         tooltip:
           "Do workers have the right to refuse work they believe could cause injury or ill health?",
+          layouttype:"select",
       },
       {
         key: "PolicyProcess",
         title: "Policy and Process",
         tooltip:
           "Briefly describe the policy and process for workers to exercise their right to refuse unsafe work. For example: how workers notify supervisors, what triggers investigation, and how concerns are addressed.",
+          layouttype:"input",
       },
       {
         key: "Protectionreprisals",
         title: "Protection from Reprisals",
         tooltip:
           "How are workers protected from reprisals for refusing unsafe work?",
+          layouttype:"multiselect",
       },
 
     ],
@@ -90,7 +93,7 @@ const Screen4 = ({location, year}) => {
     {
       Rightrefuse: "",
       PolicyProcess: "",
-      Protectionreprisals: "",
+      Protectionreprisals: [],
 
     },
   ];
@@ -186,16 +189,16 @@ const Screen4 = ({location, year}) => {
     }
   };
 
-  useEffect(() => {
-    if (location && year) {
-      loadFormData();
-      toastShown.current = false; 
-    } else {
-      if (!toastShown.current) {
-        toastShown.current = true; 
-      }
-    }
-  }, [location, year]);
+  // useEffect(() => {
+  //   if (location && year) {
+  //     loadFormData();
+  //     toastShown.current = false; 
+  //   } else {
+  //     if (!toastShown.current) {
+  //       toastShown.current = true; 
+  //     }
+  //   }
+  // }, [location, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -244,8 +247,8 @@ const Screen4 = ({location, year}) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+            schema={schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}

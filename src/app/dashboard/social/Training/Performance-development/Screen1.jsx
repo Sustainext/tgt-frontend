@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
 import CustomTableWidget10 from "../../../../shared/widgets/Table/tableWidget10"
+import PerformanceTable from "../../../../shared/widgets/Table/PerformanceTableWidget"
 import { MdAdd, MdOutlineDeleteOutline, MdInfoOutline } from "react-icons/md";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
@@ -12,7 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from 'react-loader-spinner';
 import axiosInstance from '@/app/utils/axiosMiddleware'
 const widgets = {
-  TableWidget: CustomTableWidget10,
+  TableWidget: PerformanceTable,
 
 };
 
@@ -29,11 +30,8 @@ const schema = {
       male: { type: "string", title: "Male" },
       female: { type: "string", title: "Female" },
       others: { type: "string", title: "Others" },
-      male1: { type: "string", title: "Male" },
-      female1: { type: "string", title: "Female" },
-      others2: { type: "string", title: "Others" },
-      totalEmployees: { type: "string", title: "Total number of Employee" },
-      totalTrainingHours: { type: "string", title: "Total number of Employee" },
+      performance: { type: "string", title: "Number of employees who received regular performance review" },
+      careerDevelopment: { type: "string", title: "Number of employees who received regular career development review" },
     },
 
   }
@@ -43,43 +41,37 @@ const uiSchema = {
   "ui:widget": "TableWidget",
   'ui:options': {
     titles: [
-      { title: "Employee Category", tooltip: "Please specify the employee category. Employee category:breakdown of employees by level (such as senior management, middle management) and function (such as technical, administrative, production).", colSpan: 1 },
-      { title: "Number of employees who received regular performance review", tooltip: "Regular performance and career development review: Review based on criteria known to the employee and his or her superior..", colSpan: 4 },
-      { title: "Number of employees who received regular career development review", tooltip: "Regular performance and career development review: Review based on criteria known to the employee and his or her superior. ", colSpan: 4 },
+      { title: "Employee Category", tooltip: "Regular performance and career development review: Review based on criteria known to the employee and his or her superior.",tooltipdispla:"block" },
+      { title: "Gender", tooltip: "Please specify the employee category. Employee category:breakdown of employees by level (such as senior management, middle management) and function (such as technical, administrative, production).",tooltipdispla:"none" },
+      { title: "Number of employees who received regular performance review", tooltip: "Regular performance and career development review: Review based on criteria known to the employee and his or her superior.",tooltipdispla:"block" },
+      { title: "Number of employees who received regular career development review", tooltip: "Regular performance and career development review: Review based on criteria known to the employee and his or her superior.",tooltipdispla:"block"},
     ],
-    tbtilte: [
 
-      { title: "Gender", tooltip: "Please specify the training hours.", colSpan: 4 },
-      { title: "Gender", tooltip: "Please specify the number of employees.", colSpan: 4 },
-    ],
     subTitles: [
-      { title: "", title2:"Category", tooltip: "Please specify the category.", colSpan: 1, type: "text" },
-      { title: "Male",title2:"Male", tooltip: "Please specify the number of male individuals.", colSpan: 1, type: "number" },
-      { title: "Female",title2:"Female", tooltip: "Please specify the number of female individuals.", colSpan: 1, type: "number" },
-      { title: "Others",title2:"Others", tooltip: "Please specify the number of others individuals.", colSpan: 1, type: "number" },
-      { title: "Total  number of Employee",title2:"totalTrainingHours", tooltip: "Please specify the total number of employees.", colSpan: 1, type: "number" },
-      { title: "Male", title2:"Male1", tooltip: "Please specify the number of male individuals.", colSpan: 1, type: "number" },
-      { title: "Female", title2:"Female1", tooltip: "Please specify the number of female individuals.", colSpan: 1, type: "number" },
-      { title: "Others", title2:"Others1", tooltip: "Please specify the number of others individuals.", colSpan: 1, type: "number" },
-      { title: "Total  number of Employee", title2:"totalEmployees", tooltip: "Please specify the total number of employees.", colSpan: 1, type: "number" },
+      { title: "", title2:"Category", tooltip: "Please specify the category.",},
+      { title: "Male",title2:"Male", tooltip: "Please specify the number of male individuals.", type: "number" },
+      { title: "Female",title2:"Female", tooltip: "Please specify the number of female individuals.",  type: "number" },
+      { title: "Others",title2:"Others", tooltip: "Please specify the number of others individuals.",  type: "number" },
+    
     ]
   }
 };
 const Screen1 = ({  location, year,month }) => {
-  const initialFormData = [
-    {
-      category: "",
-      male: "",
-      female: "",
-      others: "",
-      totalTrainingHours: "",
-      male1: "",
-      female1: "",
-      others1: "",
-      totalEmployees: "",
-    }
-  ];
-  const [formData, setFormData] = useState(initialFormData);
+ 
+  const [formData, setFormData] = useState({
+    employeeCategories: [
+      { category: "Category A", performance: "", careerDevelopment: "" },
+      { category: "Category B", performance: "", careerDevelopment: "" },
+      { category: "Category C", performance: "", careerDevelopment: "" },
+    ],
+    genders: [
+      { gender: "Male", performance: "", careerDevelopment: "" },
+      { gender: "Female", performance: "", careerDevelopment: "" },
+      { gender: "Non-Binary", performance: "", careerDevelopment: "" },
+    ],
+    totalPerformance: 0,
+    totalCareerDevelopment: 0,
+  });
   const [r_schema, setRemoteSchema] = useState({})
   const [r_ui_schema, setRemoteUiSchema] = useState({})
   const [loopen, setLoOpen] = useState(false);
@@ -176,16 +168,16 @@ const Screen1 = ({  location, year,month }) => {
     updateFormData();
   };
 
-  useEffect(() => {
-    if (location && year && month) {
-      loadFormData();
-      toastShown.current = false;
-    } else {
-      if (!toastShown.current) {
-        toastShown.current = true;
-      }
-    }
-  }, [location, year,month]);
+  // useEffect(() => {
+  //   if (location && year && month) {
+  //     loadFormData();
+  //     toastShown.current = false;
+  //   } else {
+  //     if (!toastShown.current) {
+  //       toastShown.current = true;
+  //     }
+  //   }
+  // }, [location, year,month]);
   return (
     <>
      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
@@ -223,8 +215,8 @@ negative social impacts." className="mt-1.5 ml-2 text-[15px]" />
         </div>
         <div className='mx-2'>
           <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+            schema={schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -234,9 +226,9 @@ negative social impacts." className="mt-1.5 ml-2 text-[15px]" />
         </div>
         <div className='mt-4'>
           <button type="button"
-            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end ${!location || !year  ? "cursor-not-allowed" : ""}`}
+            className={`text-center py-1 text-sm w-[100px] bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline float-end `}
             onClick={handleSubmit}
-            disabled={!location || !year}
+            // disabled={!location || !year}
           >
             Submit
           </button>

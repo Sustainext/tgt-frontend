@@ -12,9 +12,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "@/app/utils/axiosMiddleware";
+import CheckboxWidget3 from "../../../../shared/widgets/Input/checkboxWidget3"
 const widgets = {
   inputWidget: inputWidget2,
-  RadioWidget: RadioWidget,
+  RadioWidget: CheckboxWidget3,
 };
 
 const view_path = "gri-social-ohs-403-1a-ohs_management_system";
@@ -41,6 +42,7 @@ const schema = {
           "Risk management and accident prevention",
           "Improvement of worker safety and well-being",
           "Enhancing corporate social responsibility",
+       
         ],
       },
       Q3: {
