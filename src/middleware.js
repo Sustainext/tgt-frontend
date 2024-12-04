@@ -5,17 +5,17 @@ export function middleware(request) {
   const token = cookies().get("token")?.value;
   const admin = cookies().get("isAdmin")?.value === "true"; // Ensure admin is boolean
   const permissionCookie = cookies().get("permissions")?.value;
-  console.log("Raw Permissions Cookie:", permissionCookie);
+  // console.log("Raw Permissions Cookie:", permissionCookie);
 
   let permissions = null; // Declare permissions in the broader scope
 
   if (!permissionCookie) {
-    console.log("No permissions cookie found.");
+    // console.log("No permissions cookie found.");
   } else {
     try {
       const decodedPermission = decodeURIComponent(permissionCookie);
       permissions = JSON.parse(decodedPermission); // Parse the permissions object
-      console.log("Parsed Permissions:", permissions);
+      // console.log("Parsed Permissions:", permissions);
     } catch (error) {
       console.error("Error decoding or parsing the permission cookie:", error);
     }
@@ -66,23 +66,23 @@ export function middleware(request) {
 
   // Redirect to the homepage if the user is not logged in and trying to access any /dashboard path
   if (!token && currentPath.startsWith("/dashboard")) {
-    console.log("Redirecting unauthenticated user to homepage");
+    // console.log("Redirecting unauthenticated user to homepage");
     const url = new URL("/", request.nextUrl.origin);
     return NextResponse.redirect(url);
   }
 
   // Redirect to /dashboard if the user is logged in and trying to access the homepage
   if (token && currentPath === "/") {
-    console.log("Redirecting logged-in user to /dashboard");
+    // console.log("Redirecting logged-in user to /dashboard");
     const url = new URL("/dashboard", request.nextUrl.origin);
     return NextResponse.redirect(url);
   }
 
   // Check permissions for restricted paths
   if (token && isRestrictedPath) {
-    console.log(`Attempting to access restricted path: ${currentPath}`);
+    // console.log(`Attempting to access restricted path: ${currentPath}`);
     if (!permissions || permissions.collect !== true) {
-      console.log("Access denied due to insufficient permissions (collect).");
+      // console.log("Access denied due to insufficient permissions (collect).");
       const url = new URL("/dashboard", request.nextUrl.origin);
       return NextResponse.redirect(url);
     } else {
@@ -91,9 +91,9 @@ export function middleware(request) {
   }
 
   if (token && isAnalyseRestrictedPath) {
-    console.log(`Attempting to access Analyse restricted path: ${currentPath}`);
+    // console.log(`Attempting to access Analyse restricted path: ${currentPath}`);
     if (!permissions || permissions.analyse !== true) {
-      console.log("Access denied due to insufficient permissions (analyse).");
+      // console.log("Access denied due to insufficient permissions (analyse).");
       const url = new URL("/dashboard", request.nextUrl.origin);
       return NextResponse.redirect(url);
     } else {
@@ -102,9 +102,9 @@ export function middleware(request) {
   }
 
   if (token && isReportRestrictedPath) {
-    console.log(`Attempting to access Report restricted path: ${currentPath}`);
+    // console.log(`Attempting to access Report restricted path: ${currentPath}`);
     if (!permissions || permissions.report !== true) {
-      console.log("Access denied due to insufficient permissions (report).");
+      // console.log("Access denied due to insufficient permissions (report).");
       const url = new URL("/dashboard", request.nextUrl.origin);
       return NextResponse.redirect(url);
     } else {
@@ -113,9 +113,9 @@ export function middleware(request) {
   }
 
   if (token && isTrackRestrictedPath) {
-    console.log(`Attempting to access Track restricted path: ${currentPath}`);
+    // console.log(`Attempting to access Track restricted path: ${currentPath}`);
     if (!permissions || permissions.track !== true) {
-      console.log("Access denied due to insufficient permissions (track).");
+      // console.log("Access denied due to insufficient permissions (track).");
       const url = new URL("/dashboard", request.nextUrl.origin);
       return NextResponse.redirect(url);
     } else {
@@ -124,10 +124,10 @@ export function middleware(request) {
   }
 
   if (token && isAdminRestrictedPath) {
-    console.log(`Attempting to access Admin restricted path: ${currentPath}`);
+    // console.log(`Attempting to access Admin restricted path: ${currentPath}`);
     if (!admin) {
       // Check if admin flag is false
-      console.log("Access denied due to insufficient admin permissions.");
+      // console.log("Access denied due to insufficient admin permissions.");
       const url = new URL("/dashboard", request.nextUrl.origin);
       return NextResponse.redirect(url);
     } else {

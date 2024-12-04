@@ -58,20 +58,20 @@ const uiSchema = {
 };
 const Screen1 = ({  location, year,month }) => {
  
-  const [formData, setFormData] = useState({
-    employeeCategories: [
-      { category: "Category A", performance: "", careerDevelopment: "" },
-      { category: "Category B", performance: "", careerDevelopment: "" },
-      { category: "Category C", performance: "", careerDevelopment: "" },
-    ],
-    genders: [
-      { gender: "Male", performance: "", careerDevelopment: "" },
-      { gender: "Female", performance: "", careerDevelopment: "" },
-      { gender: "Non-Binary", performance: "", careerDevelopment: "" },
-    ],
-    totalPerformance: 0,
-    totalCareerDevelopment: 0,
-  });
+  const [formData, setFormData] = useState([
+    {
+      employeeCategories: [
+    
+      ],
+      genders: [
+        { gender: "Male", performance: "", careerDevelopment: "" },
+        { gender: "Female", performance: "", careerDevelopment: "" },
+        { gender: "Non-Binary", performance: "", careerDevelopment: "" },
+      ],
+      totalPerformance: 82,
+      totalCareerDevelopment: 78,
+    },
+  ]);
   const [r_schema, setRemoteSchema] = useState({})
   const [r_ui_schema, setRemoteUiSchema] = useState({})
   const [loopen, setLoOpen] = useState(false);
@@ -93,16 +93,44 @@ const Screen1 = ({  location, year,month }) => {
 
   const loadFormData = async () => {
     LoaderOpen();
-    setFormData(initialFormData);
+    setFormData([
+      {
+        employeeCategories: [
+      
+        ],
+        genders: [
+          { gender: "Male", performance: "", careerDevelopment: "" },
+          { gender: "Female", performance: "", careerDevelopment: "" },
+          { gender: "Non-Binary", performance: "", careerDevelopment: "" },
+        ],
+        totalPerformance: 0,
+        totalCareerDevelopment: 0,
+      },
+    ]);
     const url = `${process.env.BACKEND_API_URL}/datametric/get-fieldgroups?path_slug=${view_path}&client_id=${client_id}&user_id=${user_id}&location=${location}&year=${year}&month=${month}`;
     try {
       const response = await axiosInstance.get(url);
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
-      setFormData(response.data.form_data[0].data);
+      setFormData(response.data.form_data[0]);
+      console.log("test data new test", response.data.form_data);
     } catch (error) {
-      setFormData(initialFormData);
+      setFormData([
+        {
+          employeeCategories: [
+        
+          ],
+          genders: [
+            { gender: "Male", performance: "", careerDevelopment: "" },
+            { gender: "Female", performance: "", careerDevelopment: "" },
+            { gender: "Non-Binary", performance: "", careerDevelopment: "" },
+          ],
+          totalPerformance: 0,
+          totalCareerDevelopment: 0,
+        },
+      ]);
+      LoaderClose();
     } finally {
       LoaderClose();
     }
@@ -113,7 +141,7 @@ const Screen1 = ({  location, year,month }) => {
       client_id: client_id,
       user_id: user_id,
       path: view_path,
-      form_data: formData,
+      form_data: [formData],
       location: location,
       year,
       month,
@@ -168,16 +196,16 @@ const Screen1 = ({  location, year,month }) => {
     updateFormData();
   };
 
-  // useEffect(() => {
-  //   if (location && year && month) {
-  //     loadFormData();
-  //     toastShown.current = false;
-  //   } else {
-  //     if (!toastShown.current) {
-  //       toastShown.current = true;
-  //     }
-  //   }
-  // }, [location, year,month]);
+  useEffect(() => {
+    if (location && year && month) {
+      loadFormData();
+      toastShown.current = false;
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true;
+      }
+    }
+  }, [location, year,month]);
   return (
     <>
      <div className="mx-2 pb-11 pt-3 px-3 mb-6 rounded-md " style={{ boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" }}>
@@ -215,8 +243,8 @@ negative social impacts." className="mt-1.5 ml-2 text-[15px]" />
         </div>
         <div className='mx-2'>
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
