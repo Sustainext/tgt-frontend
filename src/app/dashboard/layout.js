@@ -12,13 +12,13 @@ export default function DashboardLayout({ children }) {
   const [defaultLanguage, setDefaultLanguage] = useState('ja');
   const router = useRouter(); // Initialize router
 
-  useEffect(() => {
-    // Redirect if token is not set in local storage
-    const token = localStorage.getItem('token');
-    if (!token) {
-      router.push('/'); // Redirect to home page if no token
-    }
-  }, [router]); // Include router in the dependency array
+  // useEffect(() => {
+  //   // Redirect if token is not set in local storage
+  //   const token = localStorage.getItem('token');
+  //   if (!token) {
+  //     router.push('/'); // Redirect to home page if no token
+  //   }
+  // }, [router]); // Include router in the dependency array
 
   useEffect(() => {
     if (!document.getElementById('gtranslate-script')) {
