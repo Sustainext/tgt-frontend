@@ -6,6 +6,7 @@ import { FiArrowLeft } from "react-icons/fi";
 import industryList from "../../../../shared/data/sectors";
 import { timeZones } from "../../../../shared/data/timezones";
 import axiosInstance, { post, put } from "../../../../utils/axiosMiddleware";
+import { Currency } from "../../../../shared/data/currency";
 
 const dateFormatOptions = [
   { label: "MM/DD/YYYY", value: "MM/DD/YYYY" },
@@ -13,19 +14,7 @@ const dateFormatOptions = [
   { label: "YYYY/MM/DD", value: "YYYY/MM/DD" },
 ];
 
-const currencyOptions = [
-  { label: "USD", value: "USD" },
-  { label: "EUR", value: "EUR" },
-  { label: "GBP", value: "GBP" },
-  { label: "CAD", value: "CAD" },
-  { label: "AUD", value: "AUD" },
-  { label: "INR", value: "INR" },
-  { label: "SGD", value: "SGD" },
-  { label: "KRW", value: "KRW" },
-  { label: "JPY", value: "JPY" },
-  { label: "TTD", value: "TTD" },
-  { label: "ZAR", value: "ZAR" },
-];
+//
 
 const reportFramework = ["GRI"];
 
@@ -950,9 +939,9 @@ const Location = ({ heading }) => {
                 onChange={handleGeneralDetailsChange}
                 className="border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight"
               >
-                {currencyOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
+                {Currency.map((option) => (
+                  <option key={option.currency} value={option.currency}>
+                    {option.currency}
                   </option>
                 ))}
               </select>

@@ -12,6 +12,10 @@ import Scope1 from "./scope1new";
 import Scope2 from "./scope2new";
 import Scope3 from "./scope3new";
 import CalculateConfirmationModal from "./CalculateConfirmationModal";
+import {
+  validateEmissionsData,
+  formatValidationErrors,
+} from "./emissionValidation";
 
 const AccordionItem = ({ title, children, scops, icons, onAccordionClick }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -79,6 +83,30 @@ const Emissionsnbody = ({
   const assignedTasks = useSelector((state) => state.emissions.assignedTasks);
   const usersStatus = useSelector((state) => state.emissions.users.status);
 
+  const scope1Data = useSelector((state) => state.emissions.scope1Data);
+  const scope2Data = useSelector((state) => state.emissions.scope2Data);
+  const scope3Data = useSelector((state) => state.emissions.scope3Data);
+
+  const [scope1DataError, setScope1DataError] = useState("");
+  const [scope2DataError, setScope2DataError] = useState("");
+  const [scope3DataError, setScope3DataError] = useState("");
+  const [showError, setShowError] = useState(false);
+
+  // When dataError changes
+  useEffect(() => {
+    if (scope1DataError || scope2DataError || scope3DataError) {
+      setShowError(true);
+      const timer = setTimeout(() => {
+        setShowError(false);
+        setScope1DataError("");
+        setScope2DataError("");
+        setScope3DataError("");
+      }, 3000);
+
+      return () => clearTimeout(timer); // Cleanup timeout
+    }
+  }, [scope1DataError, scope2DataError, scope3DataError]);
+
   const handleAccordionClick = () => {
     if (!location) {
       setLocationError("Please select a location");
@@ -94,6 +122,60 @@ const Emissionsnbody = ({
   };
 
   const handleCalculate = async () => {
+    // First check for required location and year
+    if (!location) {
+      setLocationError("Please select a location");
+      return;
+    }
+    if (!year) {
+      setYearError("Please select a year");
+      return;
+    }
+
+    // Validate each scope
+    const validationResults = [
+      { data: scope1Data, scope: "Scope 1" },
+      { data: scope2Data, scope: "Scope 2" },
+      { data: scope3Data, scope: "Scope 3" },
+    ]
+      .filter(({ data }) => data?.data?.data?.length > 0)
+      .map(({ data, scope }) => ({
+        scope,
+        result: validateEmissionsData(data, scope),
+      }));
+
+    const errorMessages = formatValidationErrors(validationResults);
+    console.log(
+      "errorMessages.. validationResults",
+      errorMessages,
+      validationResults
+    );
+
+    // First set all errors that exist
+    let hasAnyErrors = false;
+    for (let i = 0; i < validationResults.length; i++) {
+      if (
+        validationResults[i]?.result?.hasErrors &&
+        errorMessages[`Scope ${i + 1}`]?.length > 0
+      ) {
+        hasAnyErrors = true;
+        if (i === 0) {
+          setScope1DataError(errorMessages["Scope 1"][0]);
+        }
+        if (i === 1) {
+          setScope2DataError(errorMessages["Scope 2"][0]);
+        }
+        if (i === 2) {
+          setScope3DataError(errorMessages["Scope 3"][0]);
+        }
+      }
+    }
+
+    // Return if any errors were found
+    if (hasAnyErrors) {
+      return;
+    }
+
     // Check for assigned tasks
     const hasAssignedTasks =
       assignedTasks.scope1.length > 0 ||
@@ -174,6 +256,8 @@ const Emissionsnbody = ({
                 dispatch(fetchEmissionsData({ location, year, month }))
               }
               setAccordionOpen={setAccordionOpen}
+              dataError={scope1DataError}
+              showError={showError}
             />
           )}
         </AccordionItem>
@@ -193,7 +277,9 @@ const Emissionsnbody = ({
               successCallback={() =>
                 dispatch(fetchEmissionsData({ location, year, month }))
               }
-              setAccordionOpen={setAccordionOpen} // Pass setAccordionOpen to Scope2
+              setAccordionOpen={setAccordionOpen}
+              dataError={scope2DataError}
+              showError={showError}
             />
           )}
         </AccordionItem>
@@ -214,7 +300,9 @@ const Emissionsnbody = ({
               successCallback={() =>
                 dispatch(fetchEmissionsData({ location, year, month }))
               }
-              setAccordionOpen={setAccordionOpen} // Pass setAccordionOpen to Scope3
+              setAccordionOpen={setAccordionOpen}
+              dataError={scope3DataError}
+              showError={showError}
             />
           )}
         </AccordionItem>

@@ -8,6 +8,7 @@ import { Country, State, City } from "country-state-city";
 import { timeZones } from "../../../../shared/data/timezones";
 import axiosInstance from "../../../../utils/axiosMiddleware";
 import { useRouter } from "next/navigation";
+import { Currency } from "../../../../shared/data/currency";
 
 const dateFormatOptions = [
   { label: "MM/DD/YYYY", value: "MM/DD/YYYY" },
@@ -15,30 +16,7 @@ const dateFormatOptions = [
   { label: "YYYY/MM/DD", value: "YYYY/MM/DD" },
 ];
 
-const currencyOptions = [
-  { label: "USD", value: "USD" },
-  { label: "EUR", value: "EUR" },
-  { label: "GBP", value: "GBP" },
-  { label: "CAD", value: "CAD" },
-  { label: "AUD", value: "AUD" },
-  { label: "INR", value: "INR" },
-  { label: "SGD", value: "SGD" },
-  { label: "KRW", value: "KRW" },
-  { label: "JPY", value: "JPY" },
-  { label: "TTD", value: "TTD" },
-  { label: "ZAR", value: "ZAR" },
-];
-
 const reportFramework = ["GRI"];
-const frameworkMapping = {
-  1: "GRI",
-  2: "CDP",
-  3: "SASB",
-  4: "TCFD",
-  5: "BRSR",
-  6: "UN PRI",
-  // ... other mappings
-};
 
 const initialState = {
   generalDetails: {
@@ -107,7 +85,10 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
       //   ? frameworkNumbers.map(num => frameworkMapping[num])
       //   : [frameworkMapping[frameworkNumbers]];
 
-      if (editData.type === "Corporate Entity" || editData.type === "organization") {
+      if (
+        editData.type === "Corporate Entity" ||
+        editData.type === "organization"
+      ) {
         setFormData({
           generalDetails: {
             name: editData.filteredData[0]?.name || "",
@@ -747,9 +728,9 @@ const GeneralInfo = ({ handleGeneralDetailsSubmit, heading, editData }) => {
                 className="border border-gray-300 rounded-md w-full p-2 text-neutral-500 text-xs font-normal leading-tight"
               >
                 <option value="">Select Currency</option>
-                {currencyOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
+                {Currency.map((option) => (
+                  <option key={option.currency} value={option.currency}>
+                    {option.currency}
                   </option>
                 ))}
               </select>
