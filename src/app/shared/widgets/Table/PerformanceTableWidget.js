@@ -146,7 +146,7 @@ const PerformanceTable = ({ value = {}, onChange }) => {
                     <p>Employee Category</p>
                     <MdInfoOutline
                       data-tooltip-id={`test126`}
-                      data-tooltip-content="Regular performance and career development review: Review based on criteria known to the employee and his or her superior."
+                      data-tooltip-content="Please specify the employee category."
                       className="cursor-pointer ml-1 w-[20%]"
                     />
                     <ReactTooltip

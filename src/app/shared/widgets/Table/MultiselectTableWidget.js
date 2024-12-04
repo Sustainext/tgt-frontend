@@ -16,7 +16,11 @@ const MultiselectTableWidget = ({
   const [othersInputs, setOthersInputs] = useState([]);
   const [openDropdown, setOpenDropdown] = useState(null);
   const dropdownRefs = useRef([]);
-
+  useEffect(() => {
+    if (Array.isArray(value) && value.length > 0) {
+      setLocalValue(value);
+    }
+  }, [value]);
   useEffect(() => {
     const initializeOthersInputs = () => {
       const newOthersInputs = localValue.map((row) => {
@@ -202,7 +206,7 @@ const MultiselectTableWidget = ({
                 </div>
               </th>
             ))}
-            <th className="text-[12px] p-3 text-center border-gray-300 px-2 py-2"></th>
+            <th className="text-[12px] p-3 text-center border-gray-300 px-2 py-2 w-[3vw]"></th>
           </tr>
         </thead>
         <tbody>
@@ -225,7 +229,7 @@ const MultiselectTableWidget = ({
                     {layoutType === "multiselect" && propertySchema.enum ? (
                       <div className="relative ">
                         <div
-                          className="border rounded-md w-full px-3 py-2 text-left text-[12px] cursor-pointer z-[999]"
+                          className="border-b rounded-md w-full px-3 py-2 text-left text-[12px] cursor-pointer z-[999]"
                           onClick={() =>
                             setOpenDropdown(
                               openDropdown === `${rowIndex}-${key}`
@@ -243,7 +247,7 @@ const MultiselectTableWidget = ({
                             ref={(el) =>
                               (dropdownRefs.current[`${rowIndex}-${key}`] = el)
                             }
-                            className=" top-full left-0 bg-white border rounded-md shadow-lg z-[999] "
+                            className=" top-full left-0 bg-white border-b rounded-md shadow-lg z-[999] "
                           >
                             {propertySchema.enum.map((option) => (
                               <label
@@ -297,7 +301,7 @@ const MultiselectTableWidget = ({
                           onChange={(e) =>
                             handleSelectChange(rowIndex, key, e.target.value)
                           }
-                          className="text-[12px] pl-2 py-2 w-full"
+                          className="text-[12px] pl-2 py-2 w-full border-b "
                         >
                           <option value="">Select an option</option>
                           {propertySchema.enum.map((option) => (
@@ -355,7 +359,7 @@ const MultiselectTableWidget = ({
       </table>
       <button
         type="button"
-        className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5"
+        className="text-[#007EEF] text-[13px] flex cursor-pointer mt-5 mb-5 ml-3"
         onClick={handleAddRow}
       >
         Add Row <MdAdd className="text-lg" />

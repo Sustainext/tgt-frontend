@@ -229,16 +229,16 @@ const Screen3 = ({location, year}) => {
     }
   };
 
-  // useEffect(() => {
-  //   if (location && year) {
-  //     loadFormData();
-  //     toastShown.current = false; 
-  //   } else {
-  //     if (!toastShown.current) {
-  //       toastShown.current = true; 
-  //     }
-  //   }
-  // }, [location, year]);
+  useEffect(() => {
+    if (location && year) {
+      loadFormData();
+      toastShown.current = false; 
+    } else {
+      if (!toastShown.current) {
+        toastShown.current = true; 
+      }
+    }
+  }, [location, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -287,8 +287,8 @@ const Screen3 = ({location, year}) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={schema}
-            uiSchema={uiSchema}
+            schema={r_schema}
+            uiSchema={r_ui_schema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
