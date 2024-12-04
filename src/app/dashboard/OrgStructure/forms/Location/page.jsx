@@ -467,7 +467,7 @@ const Location = ({ heading }) => {
           mobile: editData.filteredData[0].mobile,
           fax: editData.filteredData[0].fax,
           sector: editData.filteredData[0].sector,
-          subIndustry: editData.filteredData[0].subindustry,
+          subIndustry: editData.filteredData[0].sub_industry,
           organisation: editData.filteredData[0].organisation,
           dateFormat: editData.filteredData[0].date_format,
           currency: editData.filteredData[0].currency,

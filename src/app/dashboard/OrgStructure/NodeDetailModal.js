@@ -109,7 +109,7 @@ const NodeDetailModal = ({
           website: details.website,
           fax: details.fax,
           sector: details.sector,
-          subindustry: details.subindustry,
+          sub_industry: details.sub_industry,
           timezone: details.timezone,
           employeecount: details.employeecount,
           language: details.language,
@@ -189,23 +189,6 @@ const NodeDetailModal = ({
       );
     }
   };
-
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     if (modalRef.current && !modalRef.current.contains(event.target)) {
-  //       onClose();
-  //       setActiveNode(null);
-  //     }
-  //   };
-
-  //   if (isOpen) {
-  //     document.addEventListener("mousedown", handleClickOutside);
-  //   }
-
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, [isOpen, onClose]);
 
   useEffect(() => {
     if (isOpen && nodeData && rawData) {
@@ -406,7 +389,7 @@ const NodeDetailModal = ({
                 <div>
                   <label className="text-sm text-gray-600">Sub Industry</label>
                   <p className="text-sm text-gray-900">
-                    {details.subindustry || "Default"}
+                    {details.sub_industry || "Default"}
                   </p>
                 </div>
                 <div>
