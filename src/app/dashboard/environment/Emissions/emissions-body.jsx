@@ -101,7 +101,7 @@ const Emissionsnbody = ({
         setScope1DataError("");
         setScope2DataError("");
         setScope3DataError("");
-      }, 3000);
+      }, 6000);
 
       return () => clearTimeout(timer); // Cleanup timeout
     }
