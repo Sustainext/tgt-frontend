@@ -389,7 +389,7 @@ const NodeDetailModal = ({
                 <div>
                   <label className="text-sm text-gray-600">Sub Industry</label>
                   <p className="text-sm text-gray-900">
-                    {details.sub_industry || "Default"}
+                    {details.sub_industry || details.subindustry || "Default"}
                   </p>
                 </div>
                 <div>
