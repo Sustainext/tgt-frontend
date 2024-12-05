@@ -113,7 +113,7 @@ const Screen1 = ({  location, year,month }) => {
       console.log("API called successfully:", response.data);
       setRemoteSchema(response.data.form[0].schema);
       setRemoteUiSchema(response.data.form[0].ui_schema);
-      setFormData(response.data.form_data[0]);
+      setFormData(response.data.form_data[0].data[0]);
       console.log("test data new test", response.data.form_data);
     } catch (error) {
       setFormData([
