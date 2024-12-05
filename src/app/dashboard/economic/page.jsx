@@ -60,6 +60,7 @@ const Economic = () => {
       "Management of Material topic Anti",
       "Management of Material topic Tax",
       "Management of Material topic Political Influence",
+      "Management of Material topic Indirect Economic",
     ];
     const emissionTabs = [
       "Direct economic value generated & distributed",

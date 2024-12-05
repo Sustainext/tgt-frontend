@@ -47,10 +47,10 @@ const CustomTableWidget6 = ({
               {formContext.newMonth}
             </th>
             <th  rowSpan={2} className="text-[12px] border-b border-x border-gray-300 px-2 py-2 text-center w-[20%]">
-            Total number of employee turnover. (at the beginning of the reporting period)
+            Total number of employees  (at the beginning of the reporting period)
             </th>
             <th rowSpan={2} className="text-[12px] border-b border-l border-gray-300 px-2 py-2 text-center w-[20%]">
-            Total number of employee turnover. (at the end of the reporting period)
+            Total number of employees  (at the end of the reporting period)
             </th>
           </tr>
           <tr>

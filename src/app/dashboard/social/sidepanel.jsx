@@ -29,6 +29,10 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setIsLegal(false);
     setTax(false);
     setBillS211(false)
+    setSafety(false);
+    setPrivacy(false);
+    setMarketing(false);
+    setSupplyChain(false);
   };
   const toggleSupplierSectionVisibility = () => {
     setIsSupplierVisible(!isSupplierVisible);
@@ -39,7 +43,11 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setEmisssion(false);
     setIsLegal(false);
     setTax(false);
-    setBillS211(false)
+    setBillS211(false);
+    setSafety(false);
+    setPrivacy(false);
+    setMarketing(false);
+    setSupplyChain(false);
   };
   const toggleEnergySectionVisibility = () => {
     setEnergySectionVisible(!isEnergySectionVisible);
@@ -50,7 +58,11 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setEmisssion(false);
     setIsLegal(false);
     setTax(false);
-    setBillS211(false)
+    setBillS211(false);
+    setSafety(false);
+    setPrivacy(false);
+    setMarketing(false);
+    setSupplyChain(false);
   };
   const toggleWasteVisible = () => {
     setWasteVisible(!isWasteVisible);
@@ -61,7 +73,11 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setEmisssion(false);
     setIsLegal(false);
     setTax(false);
-    setBillS211(false)
+    setBillS211(false);
+    setSafety(false);
+    setPrivacy(false);
+    setMarketing(false);
+    setSupplyChain(false);
   };
   const toggleWaterVisible = () => {
     setWaterVisible(!isWaterVisible);
@@ -72,7 +88,11 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setEmisssion(false);
     setIsLegal(false);
     setTax(false);
-    setBillS211(false)
+    setBillS211(false);
+    setSafety(false);
+    setPrivacy(false);
+    setMarketing(false);
+    setSupplyChain(false);
   };
 
   const toggleMaterialsVisible = () => {
@@ -84,7 +104,11 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setEmisssion(false);
     setIsLegal(false);
     setTax(false);
-    setBillS211(false)
+    setBillS211(false);
+    setSafety(false);
+    setPrivacy(false);
+    setMarketing(false);
+    setSupplyChain(false);
   };
   const toggleLegal = () => {
     setIsLegal(!isLegal);
@@ -95,7 +119,10 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setIsSupplierVisible(false);
     setEmisssion(false);
     setTax(false);
-    setBillS211(false)
+    setBillS211(false);
+    setSafety(false);
+    setPrivacy(false);
+    setMarketing(false);
   };
   const toggleTax = () => {
     setTax(!isTax);
@@ -106,7 +133,10 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setIsSupplierVisible(false);
     setEmisssion(false);
     setIsLegal(false);
-    setBillS211(false)
+    setBillS211(false);
+    setSafety(false);
+    setPrivacy(false);
+    setMarketing(false);
   };
 
   const toggleSupplyChain = () => {
@@ -119,10 +149,14 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setIsSupplierVisible(false);
     setEmisssion(false);
     setIsLegal(false);
-    setBillS211(false)
+    setBillS211(false);
+    setSafety(false);
+    setPrivacy(false);
+    setMarketing(false);
   };
   const toggleSafety = () => {
     setSafety(!Safety);
+    setPrivacy(false);
     setSupplyChain(false);
     setTax(false);
     setWasteVisible(false);
@@ -132,11 +166,13 @@ const Aside = ({ activeTab, handleTabClick }) => {
     setIsSupplierVisible(false);
     setEmisssion(false);
     setIsLegal(false);
-    setBillS211(false)
+    setBillS211(false);
+    setMarketing(false);
   };
   const toggleMarketing = () => {
     setMarketing(!Marketing)
     setSafety(false);
+    setPrivacy(false);
     setSupplyChain(false);
     setTax(false);
     setWasteVisible(false);

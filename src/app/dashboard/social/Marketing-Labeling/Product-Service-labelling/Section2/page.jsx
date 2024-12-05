@@ -66,7 +66,7 @@ const ProductServicelabelling2 = () => {
 
       <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-          Requirements for product and service information and labeling (2/2)
+          Requirements for product and service information and labeling
           </h6>
         </div>
        <div
