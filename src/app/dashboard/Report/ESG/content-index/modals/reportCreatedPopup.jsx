@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import GRISVG from "../../../../../../../public/gri.svg";
 import CorrectSVG from "../../../../../../../public/correct.svg";
 import Image from "next/image";
@@ -41,6 +41,25 @@ const ReportCreatedPopup = ({
   const [isCIXLDownloading, setIsCIXLDownloading] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const router = useRouter();
+  const dropdownRef = useRef(null);
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsHovered(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isHovered) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isHovered]);
   const getAuthToken = () => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("token")?.replace(/"/g, "");
@@ -180,13 +199,12 @@ const ReportCreatedPopup = ({
                 </div>
               </div>
               <div className="mt-6 mb-2">
-                <div className="relative">
+                <div className="relative" ref={dropdownRef}>
                   <button
                     className={`p-4 border w-full border-gray-200 text-[16px] text-[#343A40] flex justify-between ${
                       isHovered ? "" : "mb-3"
                     } rounded-md hover:text-blue-500 hover:border-blue-500 group`}
-                    onMouseEnter={() => setIsHovered(true)}
-                    onMouseLeave={() => setIsHovered(false)}
+                    onClick={() => setIsHovered(!isHovered)}
                   >
                     <span className="w-4.5 h-4.5 text-[#667085] mt-1 group-hover:text-blue-500 flex gap-2">
                       <GoDownload className="mt-0.5" />
@@ -198,8 +216,6 @@ const ReportCreatedPopup = ({
                   {isHovered && (
                     <div
                       className="absolute bg-white border border-gray-200 rounded-md shadow-md  w-full"
-                      onMouseEnter={() => setIsHovered(true)}
-                      onMouseLeave={() => setIsHovered(false)}
                     >
                       <div
                         className="p-3 hover:bg-blue-50 cursor-pointer flex items-center gap-2"
