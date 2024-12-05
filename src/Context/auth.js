@@ -9,18 +9,41 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axiosInstance from "../app/utils/axiosMiddleware";
+import Cookies from "js-cookie";
 
 const AuthContext = createContext(null);
 
 export const useAuth = () => useContext(AuthContext);
 
 export function AuthProvider({ children }) {
-  const [token, setToken] = useState(loadFromLocalStorage("token"));
+  const [token, setTokenState] = useState(loadFromLocalStorage("token"));
   const [userDetails, setUserDetails] = useState(
     loadFromLocalStorage("userData")
   );
   const router = useRouter();
 
+  const setToken = (token) => {
+    setTokenState(token);
+    if (token) {
+      Cookies.set("token", token, { secure: true, sameSite: "strict" }); // Set token in cookies
+    } else {
+      Cookies.remove("token"); // Remove token from cookies
+    }
+  };
+
+  useEffect(() => {
+    const cookieToken = Cookies.get("token");
+    if (cookieToken && !token) {
+      setToken(cookieToken); // Sync state with cookie if token is missing in state
+    }
+
+    if (token) {
+      fetchUserDetails(token).then((data) => {
+        setUserDetails(data);
+        saveToLocalStorage("userData", data);
+      });
+    }
+  }, [token]);
   useEffect(() => {
     if (token) {
       fetchUserDetails(token).then((data) => {
@@ -64,6 +87,8 @@ export function AuthProvider({ children }) {
       saveToLocalStorage("permissions", permissions);
       saveToLocalStorage("custom_role", newrole);
       saveToLocalStorage("isAdmin", newrole);
+      Cookies.set("permissions", JSON.stringify(permissions), { secure: true, sameSite: "strict" });
+      Cookies.set("isAdmin", JSON.stringify(newrole), { secure: true, sameSite: "strict" });
       const isFirstLogin = userData.needs_password_reset;
       // const isFirstLogin = 1;
       if (isFirstLogin) {
@@ -141,6 +166,9 @@ export function AuthProvider({ children }) {
 
       setToken(null);
       setUserDetails(null);
+      Cookies.remove("token");
+      Cookies.remove("permissions");
+      Cookies.remove("isAdmin");
       localStorage.clear();
     } catch (error) {
       console.error("Logout error:", error);
