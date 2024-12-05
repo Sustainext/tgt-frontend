@@ -15,6 +15,7 @@ import {
   BsFileEarmarkWord,
   BsDownload,
 } from "react-icons/bs";
+import { ImFileExcel } from "react-icons/im";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
@@ -43,6 +44,7 @@ const TableWithPagination = ({
   const [reportid, setReportid] = useState();
   const [reporttepname, setReportTepname] = useState();
   const [isCIDownloading, setIsCIDownloading] = useState(false);
+  const [isCIXLDownloading, setIsCIXLDownloading] = useState(false);
   const router = useRouter();
 
   const ActionMenu = ({ item }) => {
@@ -71,7 +73,7 @@ const TableWithPagination = ({
               strokeWidthSecondary={2}
             />
           ) : (
-            <BsFileEarmarkPdf className="mr-2" />
+            <BsFileEarmarkPdf className="mr-2 w-4 h-4" />
           )}
           Download Report PDF
         </button>
@@ -98,7 +100,7 @@ const TableWithPagination = ({
               strokeWidthSecondary={2}
             />
           ) : (
-            <BsFileEarmarkWord className="mr-2" />
+            <BsFileEarmarkWord className="mr-2 w-4 h-4" />
           )}
           Download Report Word
         </button>
@@ -122,15 +124,35 @@ const TableWithPagination = ({
                   strokeWidthSecondary={2}
                 />
               ) : (
-                <BsDownload className="mr-2 text-[#344054]" />
+                <BsFileEarmarkPdf className="mr-2 text-[#344054] w-4 h-4" />
               )}
-              Download Content Index
+              Download Content Index PDF
+            </button>
+            <button
+              className={
+                "flex items-center p-2 w-full text-left h text-[#344054] gradient-sky-blue"
+              }
+              onClick={() => handleDownloadExcel(item.id, item.name)}
+            >
+              {isCIXLDownloading ? (
+                <Oval
+                  height={20}
+                  width={20}
+                  color="#00BFFF"
+                  secondaryColor="#f3f3f3"
+                  strokeWidth={2}
+                  strokeWidthSecondary={2}
+                />
+              ) : (
+                <ImFileExcel className="mr-2 text-[#344054] w-4 h-4" />
+              )}
+              Download Content Index Excel
             </button>
             <button
               onClick={() => console.log("Notify GRI")}
               className="flex items-center p-2 w-full text-left  text-[#d1d5db]"
             >
-              <MdOutlineEmail className="mr-2 text-[#d1d5db]" /> Notify GRI
+              <MdOutlineEmail className="mr-2 text-[#d1d5db] w-4 h-4" /> Notify GRI
             </button>
           </>
         )}
@@ -161,7 +183,7 @@ const TableWithPagination = ({
             }
           }}
         >
-          <AiOutlineEdit className="mr-2" /> Edit Report
+          <AiOutlineEdit className="mr-2 w-4 h-4" /> Edit Report
         </button>
 
         <button
@@ -170,7 +192,7 @@ const TableWithPagination = ({
             openModal(item.id, item.name, item.report_type, item.start_date)
           }
         >
-          <MdDeleteOutline className="mr-2" /> Delete Report
+          <MdDeleteOutline className="mr-2 w-4 h-4" /> Delete Report
         </button>
       </div>
     );
@@ -458,6 +480,49 @@ const TableWithPagination = ({
       });
     }
   };
+  const handleDownloadExcel = async (id, name) => {
+    setIsCIXLDownloading(true);
+
+    try {
+      const response = await fetch(
+        `${process.env.BACKEND_API_URL}/esg_report/content_index_excel/${id}/?download=true`,
+        axiosConfig
+      );
+
+      if (!response.ok) {
+        setIsCIXLDownloading(false);
+        throw new Error(`Error: ${response.status} - ${response.statusText}`);
+      }
+
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.setAttribute(
+        "download",
+        `${name} Content Index.xlsx`
+      );
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      setIsCIXLDownloading(false);
+    } catch (error) {
+      console.error("Error downloading the file:", error);
+      toast.error("Error downloading the file", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
+
 
   const handleDownloadpdf = async (id, name) => {
     // Set loading to true for the specific item
