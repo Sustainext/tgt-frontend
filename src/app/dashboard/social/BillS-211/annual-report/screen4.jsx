@@ -440,27 +440,29 @@ const Screenfour = ({ nextStep, prevStep }) => {
   return (
     <>
       <ToastContainer style={{ fontSize: "12px" }} />
-      <div className="flex justify-between items-center shadow-sm border-gray-100">
-        <div
-          className={`${
-            open ? "w-[95%] " : "w-[95%]"
-          } flex justify-between items-center`}
-        >
-          <div className="text-left mb-5 ml-6 mt-4">
-            <p className="text-[11px]">Social</p>
-           <p className="gradient-text text-[22px] h-[24px]">
-              Bill S-211 - Fighting Bill Forced Labour and Child Labour in
-              Supply Chains Act
-            </p>
+      <div className="flex justify-between items-center border-b border-gray-200 mb-5 w-full">
+      <div className="w-full">
+            <div className="text-left mb-2 ml-3 pt-5">
+              <p className="text-[11px]">Social</p>
+              <div className="flex">
+                <div className="h-[29px]">
+                  <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
+                  Bill S-211 - Fighting Bill Forced Labour and Child Labour in Supply Chains Act
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
       </div>
       {isClicked ? (
         <>
           <div className="container mx-auto mt-5">
             <div className="flex">
-              <div className="w-[80%] relative">
-                <p className="font-bold  text-md mx-4 "> Annual Report</p>
+            <div className="w-[72%]">
+                <p className="font-semibold text-[17px] mb-4 mx-4">
+                  {" "}
+                  Annual Report
+                </p>
               </div>
               <div className="text-md flex">
                 <div> 4/8</div>
@@ -480,7 +482,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
             </div>
           </div>
           <div className="mx-4 mt-8">
-            <form className="w-[90%] text-left">
+            <form className="w-[80%] text-left">
               <div className="mb-5">
                 <label
                   className="block text-gray-700 text-[15px] mb-2 ml-1"
@@ -670,7 +672,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
                   name="countriesOfOperation"
                   placeholder="Enter a description..."
                   className={`${
-                    open ? "w-[90%]" : "w-[90%]"
+                    open ? "w-full" : "w-full"
                   }  border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
                   value={reportingdescription}
                   // value={formData.countriesOfOperation}
@@ -685,10 +687,10 @@ const Screenfour = ({ nextStep, prevStep }) => {
                 </div> */}
               </div>
             </form>
-            <div className="w-[90%] mb-5">
+            <div className="w-[80%] mb-5">
               <div className="float-right">
                 <button
-                  className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
+                  className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px] cursor-not-allowed"
                   disabled
                 >
                   &lt; Previous
@@ -696,7 +698,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
                 <button
                   type="button"
                   disabled
-                  className="px-3 py-1.5 font-semibold rounded  w-[80px] text-[12px] bg-blue-400 text-white"
+                  className="px-3 py-1.5 font-semibold rounded  w-[80px] text-[12px] bg-blue-400 text-white cursor-not-allowed"
                 >
                   {" "}
                   Next &gt;
@@ -709,8 +711,11 @@ const Screenfour = ({ nextStep, prevStep }) => {
         <>
           <div className="container mx-auto mt-5">
             <div className="flex">
-              <div className="w-[85%]">
-                <p className="font-bold  text-md mx-4 "> Annual Report</p>
+            <div className="w-[72%]">
+                <p className="font-semibold text-[17px] mb-4 mx-4">
+                  {" "}
+                  Annual Report
+                </p>
               </div>
               <div className="text-md flex">
                 <div> 4/8</div>
@@ -731,7 +736,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
           <div className="mx-4 mt-8">
             {data !== null ? (
               <>
-                <form className="w-[90%] text-left">
+                <form className="w-[80%] text-left">
                   <div className="mb-5">
                     <label
                       className="block text-gray-700 text-[15px] mb-2 ml-1"
@@ -934,7 +939,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
                       name="countriesOfOperation"
                       placeholder="Enter a description..."
                       className={`${
-                        open ? "w-[90%]" : "w-[90%]"
+                        open ? "w-full" : "w-full"
                       }  border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
                       value={reportingdescription}
                       // value={formData.countriesOfOperation}
@@ -952,7 +957,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
                     </div> */}
                   </div>
                 </form>
-                <div className="w-[90%] mb-5">
+                <div className="w-[80%] mb-5">
                   <div className="float-right">
                     <button
                       className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"
@@ -974,7 +979,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
               </>
             ) : (
               <>
-                <form className="w-[90%] text-left">
+                <form className="w-[80%] text-left">
                   <div className="mb-5">
                     <label
                       className="block text-gray-700 text-[15px] mb-2 ml-1"
@@ -1175,7 +1180,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
                       name="countriesOfOperation"
                       placeholder="Enter a description..."
                       className={`${
-                        open ? "w-[90%]" : "w-[90%]"
+                        open ? "w-full" : "w-full"
                       }  border appearance-none text-xs border-gray-400 text-neutral-600 m-0.5 pl-2 rounded-md py-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-400 cursor-pointer `}
                       value={reportingdescription}
                       // value={formData.countriesOfOperation}
@@ -1192,7 +1197,7 @@ const Screenfour = ({ nextStep, prevStep }) => {
                     </div> */}
                   </div>
                 </form>
-                <div className="w-[90%] mb-5">
+                <div className="w-[80%] mb-5">
                   <div className="float-right">
                     <button
                       className="px-3 py-1.5 rounded ml-2 font-semibold w-[120px] text-gray-600 text-[14px]"

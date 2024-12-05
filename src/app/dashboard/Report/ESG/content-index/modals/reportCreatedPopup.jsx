@@ -1,14 +1,14 @@
 "use client";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import GRISVG from "../../../../../../../public/gri.svg";
-import CorrectSVG from '../../../../../../../public/correct.svg'
+import CorrectSVG from "../../../../../../../public/correct.svg";
 import Image from "next/image";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { GoDownload } from "react-icons/go";
 import { IoMailOutline } from "react-icons/io5";
-import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
-import { MdExitToApp,MdKeyboardArrowDown } from "react-icons/md";
+import { MdOutlineClear, MdInfoOutline, MdChevronRight } from "react-icons/md";
+import { MdExitToApp, MdKeyboardArrowDown } from "react-icons/md";
 import NotifyGRI from "./notifyGRIPopup";
 import { loadFromLocalStorage } from "../../../../../utils/storage";
 import { useRouter } from "next/navigation";
@@ -16,87 +16,142 @@ import { IoIosCheckmarkCircle } from "react-icons/io";
 import { Oval } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ImFileExcel } from "react-icons/im";
+import { BsFileEarmarkPdf } from "react-icons/bs";
+import { IoIosArrowDown } from "react-icons/io";
 
+const ReportCreatedPopup = ({
+  reportname,
+  reportid,
+  isCreateReportModalOpen,
+  setIsCreateReportModalOpen,
+  setActiveStep,
+  orgName,
+  fromDate,
+  toDate,
+  reportName,
+  statement,
+  userName,
+  userEmail,
+}) => {
+  const [isNotifyModalOpen, setIsNotifyModalOpen] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
+  const [isCIDownloading, setIsCIDownloading] = useState(false);
+  const [isCIXLDownloading, setIsCIXLDownloading] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const router = useRouter();
+  const getAuthToken = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token")?.replace(/"/g, "");
+    }
+    return "";
+  };
+  const token = getAuthToken();
+  let axiosConfig = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
 
-const ReportCreatedPopup = ({reportname, reportid, isCreateReportModalOpen, setIsCreateReportModalOpen,setActiveStep,orgName,fromDate,toDate ,reportName,statement,userName,userEmail}) => {
-    const [isNotifyModalOpen,setIsNotifyModalOpen]=useState(false)
-    const [showSuccessMessage,setShowSuccessMessage]=useState(false)
-    const [isDownloading,setIsDownloading]=useState(false)
-    const [isCIDownloading,setIsCIDownloading]=useState(false)
-    const router=useRouter()
-    const getAuthToken = () => {
-      if (typeof window !== "undefined") {
-        return localStorage.getItem("token")?.replace(/"/g, "");
-      }
-      return "";
-    };
-    const token = getAuthToken();
-    let axiosConfig = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    };
+  const handleDownloadpdf = async (id, name, contentIndex) => {
+    if (contentIndex) {
+      setIsCIDownloading(true);
+    } else {
+      setIsDownloading(true);
+    }
 
-    const handleDownloadpdf = async (id,name,contentIndex) => {
-      if(contentIndex){
-        setIsCIDownloading(true)
-      }
-      else{
-        setIsDownloading(true);
-      }
-      
-     
-      try {
-        const response = await fetch(
-          `${process.env.BACKEND_API_URL}/esg_report/esg_report_pdf/${id}/?content_index=${contentIndex}&download=true`,
-          axiosConfig
-        );
-    
-        if (!response.ok) {
-          if(contentIndex){
-            setIsCIDownloading(true)
-          }
-          else{
-            setIsDownloading(true);
-          }
-          throw new Error(`Error: ${response.status} - ${response.statusText}`);
-         
-        }
-    
-        const blob = await response.blob();
-        const downloadUrl = window.URL.createObjectURL(blob);
-    
-        const link = document.createElement("a");
-        link.href = downloadUrl;
-        link.setAttribute("download", `${name} ${contentIndex?" Content Index":""}.pdf`);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-       
-        if(contentIndex){
-          setIsCIDownloading(false)
-        }
-        else{
+    try {
+      const response = await fetch(
+        `${process.env.BACKEND_API_URL}/esg_report/esg_report_pdf/${id}/?content_index=${contentIndex}&download=true`,
+        axiosConfig
+      );
+
+      if (!response.ok) {
+        if (contentIndex) {
+          setIsCIDownloading(false);
+        } else {
           setIsDownloading(false);
-          router.push('/dashboard/Report');
         }
-       
-      } catch (error) {
-        console.error("Error downloading the file:", error);
-        toast.error("Error downloading the file", {
-          position: "top-right",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+        throw new Error(`Error: ${response.status} - ${response.statusText}`);
       }
-    };
-    
-    
+
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.setAttribute(
+        "download",
+        `${name} ${contentIndex ? " Content Index" : ""}.pdf`
+      );
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      if (contentIndex) {
+        setIsCIDownloading(false);
+      } else {
+        setIsDownloading(false);
+        router.push("/dashboard/Report");
+      }
+    } catch (error) {
+      console.error("Error downloading the file:", error);
+      toast.error("Error downloading the file", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
+  const handleDownloadExcel = async (id, name) => {
+    setIsCIXLDownloading(true);
+
+    try {
+      const response = await fetch(
+        `${process.env.BACKEND_API_URL}/esg_report/content_index_excel/${id}/?download=true`,
+        axiosConfig
+      );
+
+      if (!response.ok) {
+        setIsCIXLDownloading(false);
+        throw new Error(`Error: ${response.status} - ${response.statusText}`);
+      }
+
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.setAttribute(
+        "download",
+        `${name} Content Index.xlsx`
+      );
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      setIsCIXLDownloading(false);
+    } catch (error) {
+      console.error("Error downloading the file:", error);
+      toast.error("Error downloading the file", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
+
   return (
     <>
       {isCreateReportModalOpen && (
@@ -105,110 +160,165 @@ const ReportCreatedPopup = ({reportname, reportid, isCreateReportModalOpen, setI
             <div className="bg-white p-5 rounded-lg shadow-md w-[45%]">
               <div className="flex justify-between items-center pt-2 w-full">
                 <div className="flex gap-2">
-                  <Image src={CorrectSVG} className="w-7 h-7 mr-2" alt="gri-logo" />
+                  <Image
+                    src={CorrectSVG}
+                    className="w-7 h-7 mr-2"
+                    alt="gri-logo"
+                  />
                   <div className="relative">
-                  <h2 className="self-stretch text-black  text-[18px] font-bold">
-                    <span className=" flex mb-1"> {reportName} has been created
-                    
-                </span>
-                    <p className="text-[14px] text-[#667085] font-normal">To proceed, select an option from the below.</p>
-                  </h2>
-                  <div>
-              </div>
-    
+                    <h2 className="self-stretch text-black  text-[18px] font-bold">
+                      <span className=" flex mb-1">
+                        {" "}
+                        {reportName} has been created
+                      </span>
+                      <p className="text-[14px] text-[#667085] font-normal">
+                        To proceed, select an option from the below.
+                      </p>
+                    </h2>
+                    <div></div>
                   </div>
-                  
-
                 </div>
               </div>
               <div className="mt-6 mb-2">
-  <button className="p-4 border w-full border-gray-200 text-[16px] text-[#343A40] mb-3 rounded-md flex gap-2 hover:text-blue-500 hover:border-blue-500 group"
-   onClick={() => {
-    handleDownloadpdf(reportid,reportname,true)
-  }}
-  >
-    <span className="w-4.5 h-4.5 text-[#667085] mt-1 group-hover:text-blue-500">
-    {isCIDownloading?(
-                      <div  className="mt-0.5">
-                        <Oval
-                      height={20}
-                      width={20}
-                      color="#3b82f6d9"
-                      secondaryColor="#f3f3f3"
-                      strokeWidth={2}
-                      strokeWidthSecondary={2}
-                    />
+                <div className="relative">
+                  <button
+                    className={`p-4 border w-full border-gray-200 text-[16px] text-[#343A40] flex justify-between ${
+                      isHovered ? "" : "mb-3"
+                    } rounded-md hover:text-blue-500 hover:border-blue-500 group`}
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                  >
+                    <span className="w-4.5 h-4.5 text-[#667085] mt-1 group-hover:text-blue-500 flex gap-2">
+                      <GoDownload className="mt-0.5" />
+                      Download Content Index
+                    </span>
+
+                    <IoIosArrowDown className="mt-1" />
+                  </button>
+                  {isHovered && (
+                    <div
+                      className="absolute bg-white border border-gray-200 rounded-md shadow-md  w-full"
+                      onMouseEnter={() => setIsHovered(true)}
+                      onMouseLeave={() => setIsHovered(false)}
+                    >
+                      <div
+                        className="p-3 hover:bg-blue-50 cursor-pointer flex items-center gap-2"
+                        onClick={() => {
+                          handleDownloadpdf(reportid, reportname, true);
+                        }}
+                      >
+                        {isCIDownloading ? (
+                          <div className="mt-0.5">
+                            <Oval
+                              height={20}
+                              width={20}
+                              color="#3b82f6d9"
+                              secondaryColor="#f3f3f3"
+                              strokeWidth={2}
+                              strokeWidthSecondary={2}
+                            />
+                          </div>
+                        ) : (
+                          <BsFileEarmarkPdf className="text-[#667085]" />
+                        )}
+                        Download PDF
                       </div>
-                    ):(
-                      <GoDownload />
-                    )}
-    </span>
-    Download Content Index
-  </button>
-  
-  <button 
-   
-    onClick={() => { 
-      setIsCreateReportModalOpen(false);
-      setIsNotifyModalOpen(true);
-    }} 
-    className="p-4 border w-full border-gray-200 text-[16px] text-[#343A40] rounded-md flex gap-2  hover:text-blue-500 hover:border-blue-500 group"
-  >
-    <span className="w-4.5 h-4.5 text-[#667085] mt-1 group-hover:text-blue-500">
-      <IoMailOutline />
-    </span>
-    Notify GRI
-    {
-        showSuccessMessage?(
-            <IoIosCheckmarkCircle className="w-5 h-5 text-[#54B054] mt-[2px]" />
-        ):(
-            <></>
-        )
-    }
-   
-  </button>
-</div>
+                      <div
+                        className="p-3 hover:bg-blue-50 cursor-pointer flex items-center gap-2"
+                        onClick={() => {
+                          handleDownloadExcel(reportid, reportname);
+                        }}
+                      >
+                        {isCIXLDownloading ? (
+                          <div className="mt-0.5">
+                            <Oval
+                              height={20}
+                              width={20}
+                              color="#3b82f6d9"
+                              secondaryColor="#f3f3f3"
+                              strokeWidth={2}
+                              strokeWidthSecondary={2}
+                            />
+                          </div>
+                        ) : (
+                          <ImFileExcel className="text-[#667085]" />
+                        )}
+                        Download Excel
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <button
+                  onClick={() => {
+                    setIsCreateReportModalOpen(false);
+                    setIsNotifyModalOpen(true);
+                  }}
+                  className="p-4 border w-full border-gray-200 text-[16px] text-[#343A40] rounded-md flex gap-2  hover:text-blue-500 hover:border-blue-500 group"
+                >
+                  <span className="w-4.5 h-4.5 text-[#667085] mt-1 group-hover:text-blue-500">
+                    <IoMailOutline />
+                  </span>
+                  Notify GRI
+                  {showSuccessMessage ? (
+                    <IoIosCheckmarkCircle className="w-5 h-5 text-[#54B054] mt-[2px]" />
+                  ) : (
+                    <></>
+                  )}
+                </button>
+              </div>
 
               <div className="flex justify-end mt-5 mb-3">
-              <button className="w-auto h-full mr-3  py-2 px-3 bg-transparent text-[#4F4F4F] rounded-[8px] shadow cursor-pointer border border-gray-200 flex gap-2"
+                <button
+                  className="w-auto h-full mr-3  py-2 px-3 bg-transparent text-[#4F4F4F] rounded-[8px] shadow cursor-pointer border border-gray-200 flex gap-2"
                   onClick={() => {
-                   router.push('/dashboard/Report')
+                    router.push("/dashboard/Report");
                   }}
-                  >
-                    <MdExitToApp className="w-4.5 h-4.5 text-[#667085] mt-1" />
-                    Exit to Report Module
-                  </button>
-                  <button className="w-auto h-full py-2 px-3 bg-[#007EEF] text-white rounded-[8px] shadow  flex gap-2"
+                >
+                  <MdExitToApp className="w-4.5 h-4.5 text-[#667085] mt-1" />
+                  Exit to Report Module
+                </button>
+                <button
+                  className="w-auto h-full py-2 px-3 bg-[#007EEF] text-white rounded-[8px] shadow  flex gap-2"
                   onClick={() => {
-                    handleDownloadpdf(reportid,reportname,false)
+                    handleDownloadpdf(reportid, reportname, false);
                   }}
-                  >
-                    {isDownloading?(
-                      <div  className="mt-0.5">
-                        <Oval
-                      height={20}
-                      width={20}
-                      color="#FFF"
-                      secondaryColor="#f3f3f3"
-                      strokeWidth={2}
-                      strokeWidthSecondary={2}
-                    />
-                      </div>
-                    ):(
-                      <GoDownload className="w-4.5 h-4.5 text-[#fff] mt-1"/>
-                    )}
-                    
-                    Download Report
-                    {/* <MdKeyboardArrowDown className="w-5 h-5 text-[#fff] mt-[3px]"/> */}
-                  </button>
-                </div>
+                >
+                  {isDownloading ? (
+                    <div className="mt-0.5">
+                      <Oval
+                        height={20}
+                        width={20}
+                        color="#FFF"
+                        secondaryColor="#f3f3f3"
+                        strokeWidth={2}
+                        strokeWidthSecondary={2}
+                      />
+                    </div>
+                  ) : (
+                    <GoDownload className="w-4.5 h-4.5 text-[#fff] mt-1" />
+                  )}
+                  Download Report
+                  {/* <MdKeyboardArrowDown className="w-5 h-5 text-[#fff] mt-[3px]"/> */}
+                </button>
+              </div>
             </div>
           </div>
         </div>
       )}
-      <NotifyGRI userName={userName} userEmail={userEmail} orgName={orgName} statement={statement} showSuccessMessage={showSuccessMessage} setShowSuccessMessage={setShowSuccessMessage} isNotifyModalOpen={isNotifyModalOpen} setIsNotifyModalOpen={setIsNotifyModalOpen} setIsCreateReportModalOpen={setIsCreateReportModalOpen} />
+      <NotifyGRI
+        userName={userName}
+        userEmail={userEmail}
+        orgName={orgName}
+        statement={statement}
+        showSuccessMessage={showSuccessMessage}
+        setShowSuccessMessage={setShowSuccessMessage}
+        isNotifyModalOpen={isNotifyModalOpen}
+        setIsNotifyModalOpen={setIsNotifyModalOpen}
+        setIsCreateReportModalOpen={setIsCreateReportModalOpen}
+      />
     </>
   );
 };
-    
+
 export default ReportCreatedPopup;
