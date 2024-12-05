@@ -533,12 +533,12 @@ const Scope3 = forwardRef(
           >
             + Add new
           </button>
-          {/* {showError && (
+          {showError && (
             <div className="text-xs text-red-500 mt-4 flex items-center">
               <MdError />
               <span>{dataError}</span>
             </div>
-          )} */}
+          )}
         </div>
         {loopen && (
           <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
