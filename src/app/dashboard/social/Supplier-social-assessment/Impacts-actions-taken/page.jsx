@@ -88,7 +88,7 @@ const Suppliersscreened = () => {
 
       <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-            New suppliers that were screened using social criteria
+          Negative social impacts in the supply chain and actions taken		
             {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />
