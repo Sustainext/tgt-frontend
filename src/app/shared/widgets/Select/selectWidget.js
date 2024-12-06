@@ -13,7 +13,13 @@ const SelectWidget = ({
   schema = {},
   id,
   options,
+  formContext,
+  name,
 }) => {
+  const { validationErrors } = formContext || {};
+  const rowIndex = parseInt(id.split('_')[1], 10);
+  const rowErrors = validationErrors && validationErrors[rowIndex] || {};
+  const hasError = !value && rowErrors && rowErrors[name];
   const [otherValue, setOtherValue] = useState(value || ""); // Initialize with value or empty
   const [showOtherInput, setShowOtherInput] = useState(
     value && !options?.enumOptions?.some((option) => option.value === value)
@@ -80,7 +86,7 @@ const SelectWidget = ({
         {/* Render select or input based on state */}
         {!showOtherInput ? (
           <select
-            className={`block w-[20vw] py-2 text-[12px] p-0 custom-select focus:outline-none focus:border-blue-300 border-b-2 border-gray-300 capitalize table-scrollbar`}
+            className={`block w-[20vw] py-2 text-[12px] p-0 custom-select focus:outline-none focus:border-blue-300 border-b-2 border-gray-300 capitalize table-scrollbar ${hasError ? 'border-red-500' : 'border-gray-300'}`}
             value={value}
             onChange={handleChange}
           >
@@ -105,6 +111,11 @@ const SelectWidget = ({
           />
         )}
       </div>
+      {hasError && (
+        <div className="text-red-500 text-[12px] mt-1">
+          {hasError}
+        </div>
+      )}
     </div>
   );
 };

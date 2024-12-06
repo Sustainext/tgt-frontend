@@ -11,7 +11,15 @@ const inputnumberWidget = ({
   uiSchema = {},
   schema = {},
   id,
+  formContext,
+  props,
+  name,
 }) => {
+  const { validationErrors } = formContext || {};
+  const rowIndex = parseInt(id.split('_')[1], 10);
+  const rowErrors = validationErrors && validationErrors[rowIndex] || {};
+  const hasError = !value && rowErrors && rowErrors[name];
+  console.log(id, "test"); // Log id for debugging
   const handleChange = (event) => {
     onChange(event.target.value);
   };
@@ -56,7 +64,7 @@ const inputnumberWidget = ({
       )}
       <div>
       <input
-        className="block w-[20vw] py-2 text-[12px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300  sm:leading-5 border-b-2 border-gray-300 mb-3 text-right placeholders pr-2 "
+        className={`block w-[20vw] py-2 text-[12px] leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300  sm:leading-5 border-b-2 border-gray-300 text-right placeholders pr-2 ${hasError ? 'border-red-500' : 'border-gray-300'} `}
         placeholder={placeholder || `Enter ${label}`}
         type="number"
         value={value}
@@ -64,7 +72,11 @@ const inputnumberWidget = ({
         onKeyDown={handleKeyDown}
       />
       </div>
-  
+      {hasError && (
+        <div className="text-red-500 text-[12px] mt-1 float-right">
+          {hasError}
+        </div>
+      )}
     </div>
   );
 };

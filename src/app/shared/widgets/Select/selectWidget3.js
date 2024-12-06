@@ -3,8 +3,14 @@ import React from 'react';
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { MdInfoOutline } from "react-icons/md";
-const selectWidget3 =  ({onChange, value = "", placeholder, label, title, uiSchema = {}, schema = {}, id,options}) => {
-
+const selectWidget3 =  ({onChange, value = "", placeholder, label, title, uiSchema = {}, schema = {}, id,options,formContext,
+  props,
+  name,}) => {
+    const { validationErrors } = formContext || {};
+    const rowIndex = parseInt(id.split('_')[1], 10);
+    const rowErrors = validationErrors && validationErrors[rowIndex] || {};
+    const hasError = !value && rowErrors && rowErrors[name];
+    console.log(id, "test"); // Log id for debugging
     const handleChange = (e) => {
       // Call props.onChange to ensure RJSF handles the state update
       onChange(e.target.value);
@@ -58,6 +64,11 @@ const selectWidget3 =  ({onChange, value = "", placeholder, label, title, uiSche
           ))}
         </select>
       </div>
+      {hasError && (
+        <div className="text-red-500 text-[12px] mt-1 text-center">
+          {hasError}
+        </div>
+      )}
       </div>
     );
   };
