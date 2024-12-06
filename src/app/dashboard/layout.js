@@ -11,14 +11,77 @@ export default function DashboardLayout({ children }) {
   const { open } = GlobalState();
   const [defaultLanguage, setDefaultLanguage] = useState('ja');
   const router = useRouter(); // Initialize router
+  const [devToolsOpen, setDevToolsOpen] = useState(false);
 
-  // useEffect(() => {
-  //   // Redirect if token is not set in local storage
-  //   const token = localStorage.getItem('token');
-  //   if (!token) {
-  //     router.push('/'); // Redirect to home page if no token
-  //   }
-  // }, [router]); // Include router in the dependency array
+  // DevTools detection logic
+  useEffect(() => {
+    const threshold = 160; // Adjust if necessary to detect smaller changes
+    const detectDevTools = () => {
+      const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+      const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+
+      if (widthThreshold || heightThreshold) {
+        if (!devToolsOpen) {
+          setDevToolsOpen(true);
+          console.warn('DevTools is open!');
+          // Optional: Log out user or redirect
+          // router.push('/unauthorized'); // Redirect user if necessary
+        }
+      } else {
+        if (devToolsOpen) {
+          setDevToolsOpen(false);
+          console.log('DevTools is closed.');
+        }
+      }
+    };
+
+    const interval = setInterval(detectDevTools, 1000); // Check every second
+
+    return () => clearInterval(interval); // Clean up on unmount
+  }, [devToolsOpen]);
+
+  useEffect(() => {
+    const clearNetworkLogs = () => {
+      console.clear();
+      console.log('logs cleared');
+    };
+
+    const interval = setInterval(clearNetworkLogs, 5000);
+
+    return () => clearInterval(interval); 
+  }, []);
+
+  useEffect(() => {
+    // Function to block right-click on images
+    const disableRightClick = (event) => {
+      if (event.target.tagName === 'IMG') {
+        event.preventDefault();
+      }
+    };
+
+    // Add event listener to the document
+    document.addEventListener('contextmenu', disableRightClick);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('contextmenu', disableRightClick);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'A') {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
+
+    document.addEventListener('click', handleClick);
+
+    return () => {
+      document.removeEventListener('click', handleClick);
+    };
+  }, []);
 
   useEffect(() => {
     if (!document.getElementById('gtranslate-script')) {
@@ -36,6 +99,9 @@ export default function DashboardLayout({ children }) {
       document.body.appendChild(script);
     }
   }, [defaultLanguage]);
+
+  // DevTools detection logic
+ 
 
   return (
     <>
