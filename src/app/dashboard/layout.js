@@ -40,16 +40,16 @@ export default function DashboardLayout({ children }) {
     return () => clearInterval(interval); // Clean up on unmount
   }, [devToolsOpen]);
 
-  useEffect(() => {
-    const clearNetworkLogs = () => {
-      console.clear();
-      console.log('logs cleared');
-    };
+  // useEffect(() => {
+  //   const clearNetworkLogs = () => {
+  //     console.clear();
+  //     console.log('logs cleared');
+  //   };
 
-    const interval = setInterval(clearNetworkLogs, 5000);
+  //   const interval = setInterval(clearNetworkLogs, 5000);
 
-    return () => clearInterval(interval); 
-  }, []);
+  //   return () => clearInterval(interval); 
+  // }, []);
 
   useEffect(() => {
     // Function to block right-click on images
