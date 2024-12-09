@@ -73,7 +73,7 @@ const EmissionWidget = React.memo(
       (state) => state.emissions.validationErrors
     );
     // Access the fields object within the scope
-    const scopeErrors = validationErrors?.[scope]?.fields?.[index - 1] || {};
+    const scopeErrors = validationErrors?.[scope]?.fields?.[index] || {};
 
     // Function to get field class based on validation state
     const getFieldClass = useCallback(
@@ -952,7 +952,11 @@ const EmissionWidget = React.memo(
               {renderFirstColumn()}
 
               {/* Category Dropdown */}
-              <td className={`py-2 px-1 pl-2 w-[15vw] relative`}>
+              <td
+                className={`py-2 px-1 pl-2 w-[15vw] relative ${
+                  scopeErrors["Category"] ? "" : ""
+                }`}
+              >
                 <select
                   value={category}
                   onChange={(e) => handleCategoryChange(e.target.value)}
@@ -974,7 +978,7 @@ const EmissionWidget = React.memo(
                   ))}
                 </select>
                 {scopeErrors["Category"] && (
-                  <div className="text-[10px] text-red-500 absolute left-3 -bottom-4">
+                  <div className="text-[12px] text-red-500 absolute left-3 -bottom-[18px]">
                     {getErrorMessage("Category")}
                   </div>
                 )}
@@ -1001,7 +1005,7 @@ const EmissionWidget = React.memo(
                   ))}
                 </select>
                 {scopeErrors["Subcategory"] && (
-                  <div className="text-[10px] text-red-500 absolute left-2 -bottom-4">
+                  <div className="text-[12px] text-red-500 absolute left-2 -bottom-[18px]">
                     {getErrorMessage("Subcategory")}
                   </div>
                 )}
@@ -1047,7 +1051,7 @@ const EmissionWidget = React.memo(
                     }}
                   />
                   {scopeErrors["Activity"] && (
-                    <div className="text-[10px] text-red-500 absolute left-0 -bottom-6">
+                    <div className="text-[12px] text-red-500 absolute left-0 -bottom-6">
                       {getErrorMessage("Activity")}
                     </div>
                   )}
@@ -1133,14 +1137,14 @@ const EmissionWidget = React.memo(
                           }}
                         />
                         {scopeErrors["Quantity"] && (
-                          <div className="text-[10px] text-red-500 absolute left-0 -bottom-6">
+                          <div className="text-[12px] text-red-500 absolute left-[2rem] -bottom-6">
                             {getErrorMessage("Quantity")}
                           </div>
                         )}
                         <select
                           value={unit}
                           onChange={(e) => handleUnitChange(e.target.value)}
-                          className={` text-[12px] w-[100px]   text-center rounded-md py-1 shadow ${
+                          className={`text-[12px] w-[100px]   text-center rounded-md py-1 shadow ${
                             unit
                               ? "bg-white text-blue-500 "
                               : "bg-blue-500 text-white hover:bg-blue-600"
@@ -1154,8 +1158,13 @@ const EmissionWidget = React.memo(
                             </option>
                           ))}
                         </select>
+                        {scopeErrors["Unit"] && (
+                          <div className="text-[12px] text-red-500 absolute right-1 -bottom-6">
+                            {getErrorMessage("Unit")}
+                          </div>
+                        )}
                       </div>
-                      <div className="flex justify-end">
+                      <div className="flex justify-end relative">
                         <input
                           ref={quantity2Ref}
                           type="number"
@@ -1164,11 +1173,26 @@ const EmissionWidget = React.memo(
                           onFocus={() => handleFocus("quantity2")}
                           onBlur={handleBlur}
                           placeholder="Enter Value"
-                          className="focus:border-blue-500 focus:outline-none text-[12px] w-[6vw] text-right pe-1"
+                          className={getFieldClass(
+                            "Quantity2",
+                            "text-[12px] focus:outline-none w-[7vw] text-right pe-1"
+                          )}
                           step="1"
                           min="0"
                           disabled={["assigned", "approved"].includes(rowType)}
+                          style={{
+                            "::placeholder": {
+                              color: scopeErrors["Quantity"]
+                                ? "#EF4444"
+                                : "inherit",
+                            },
+                          }}
                         />
+                        {scopeErrors["Quantity2"] && (
+                          <div className="text-[12px] text-red-500 absolute left-[2rem] -bottom-6">
+                            {getErrorMessage("Quantity2")}
+                          </div>
+                        )}
                         <select
                           value={unit2}
                           onChange={(e) => handleUnit2Change(e.target.value)}
@@ -1186,6 +1210,11 @@ const EmissionWidget = React.memo(
                             </option>
                           ))}
                         </select>
+                        {scopeErrors["Unit2"] && (
+                          <div className="text-[12px] text-red-500 absolute right-1 -bottom-6">
+                            {getErrorMessage("Unit2")}
+                          </div>
+                        )}
                       </div>
                     </>
                   ) : (
@@ -1215,7 +1244,7 @@ const EmissionWidget = React.memo(
                         }}
                       />
                       {scopeErrors["Quantity"] && (
-                        <div className="text-[10px] text-red-500 absolute left-14 -bottom-6">
+                        <div className="text-[12px] text-red-500 absolute left-[3rem] -bottom-7">
                           {getErrorMessage("Quantity")}
                         </div>
                       )}
@@ -1242,7 +1271,7 @@ const EmissionWidget = React.memo(
                         ))}
                       </select>
                       {scopeErrors["Unit"] && (
-                        <div className="text-[10px] text-red-500 absolute right-1 -bottom-6">
+                        <div className="text-[12px] text-red-500 absolute right-2 -bottom-7">
                           {getErrorMessage("Unit")}
                         </div>
                       )}
