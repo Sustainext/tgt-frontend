@@ -48,7 +48,7 @@ const Performancedevelopment = () => {
                             <div className='flex'>
                                 <div>
                                    <p className="gradient-text text-[22px] font-bold py-2">
-                                    Training and Education 2018
+                                   Training and Development
                                     </p>
                                 </div>
 

@@ -48,7 +48,7 @@ const Traininghours = () => {
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] h-[30px] font-bold pt-1">
-                    Training and Education 2016
+                  Training and Development
                   </p>
                 </div>
               </div>

@@ -93,43 +93,48 @@ const uiSchema = {
         title: "Reporting channels",
         tooltip:
           "Who can workers report work-related hazards and hazardous situations to? (Select all that apply)",
+          layouttype:"multiselect",
       },
       {
         key: "ReportingProcesses",
         title: "Reporting Processes",
         tooltip:
           "How can workers report hazards? (Select all that apply)",
+          layouttype:"multiselect",
       },
       {
         key: "Reportingencouragement",
         title: "Reporting encouragement",
         tooltip:
           "How do you encourage workers to report hazards without fear of reprisal? (Select all that apply)",
+          layouttype:"multiselect",
       },
       {
         key: "ReprisalProtection",
         title: "Reprisal Protection Measures",
         tooltip:
           "Please provide a brief description on how are workers protected from reprisals for reporting hazards.",
+          layouttype:"input",
       },
       {
         key: "FeedbackCommunication",
         title: "Feedback and Communication",
         tooltip:
           "How are workers informed about reported hazards and implemented actions, and how can they provide feedback? (Select all that apply)",
+          layouttype:"multiselect",
       },
 
     ],
   },
 };
-const Screen3 = ({location, year}) => {
+const Screen1 = ({location, year}) => {
   const initialFormData = [
     {
-      Reportingchannels: "",
-      ReportingProcesses: "",
-      Reportingencouragement: "",
+      Reportingchannels: [],
+      ReportingProcesses: [],
+      Reportingencouragement: [],
       ReprisalProtection: "",
-      FeedbackCommunication: "",
+      FeedbackCommunication: [],
     },
   ];
   const [formData, setFormData] = useState(initialFormData);
@@ -224,16 +229,16 @@ const Screen3 = ({location, year}) => {
     }
   };
 
-  useEffect(() => {
-    if (location && year) {
-      loadFormData();
-      toastShown.current = false; 
-    } else {
-      if (!toastShown.current) {
-        toastShown.current = true; 
-      }
-    }
-  }, [location, year]);
+  // useEffect(() => {
+  //   if (location && year) {
+  //     loadFormData();
+  //     toastShown.current = false; 
+  //   } else {
+  //     if (!toastShown.current) {
+  //       toastShown.current = true; 
+  //     }
+  //   }
+  // }, [location, year]);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
@@ -282,8 +287,8 @@ const Screen3 = ({location, year}) => {
         </div>
         <div className="mx-2">
           <Form
-            schema={r_schema}
-            uiSchema={r_ui_schema}
+            schema={schema}
+            uiSchema={uiSchema}
             formData={formData}
             onChange={handleChange}
             validator={validator}
@@ -320,4 +325,4 @@ const Screen3 = ({location, year}) => {
   );
 };
 
-export default Screen3;
+export default Screen1;

@@ -4,8 +4,8 @@ import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
 import { Socialdata } from "../../data/socialgriinfo";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import Section1 from "./Section1/page";
 
-import Injuriesscreen from "./injuries";
 const Injuries = () => {
   const [data, setData] = useState();
   const [category, setCategory] = useState("");
@@ -41,7 +41,7 @@ const Injuries = () => {
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] font-bold py-2">
-                    Ocupational Health and Safety 2018
+                    Occupational Health and Safety
                   </p>
                 </div>
               </div>
@@ -139,7 +139,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         </div>
       </div>
 
-      <Injuriesscreen />
+      <Section1 />
     </>
   );
 };

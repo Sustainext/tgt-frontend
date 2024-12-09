@@ -51,7 +51,7 @@ const SoicalProcurementPractices = () => {
               <div className="flex">
                 <div className="h-[29px]">
                   <p className="gradient-text text-[22px] h-[52px] font-bold pt-1">
-                  Procurement Practices
+                  Supply Chain Labor Standards
                   </p>
                 </div>
               </div>

@@ -11,12 +11,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import GeneralWorkersEmployees from "../../../../../shared/widgets/Table/generalWorkersEmployees";
-// Simple Custom Table Widget
+import MultiselectTableWidget from "../../../../../shared/widgets/Table/MultiselectTableWidget"
 const widgets = {
-  TableWidget: GeneralWorkersEmployees,
+  TableWidget: MultiselectTableWidget,
 };
 
-const view_path = "gri-social-ohs-403-2b-hazard_reporting-new";
+const view_path = "gri-social-ohs-403-2d-work_related_incident-new";
 const client_id = 1;
 const user_id = 1;
 
@@ -25,9 +25,15 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      Reportingchannels: {
+      Descriptionincident: {
         type: "string",
-        title: "Reporting channels",
+        title: "Description of Incident",
+        texttype: "text",
+      },
+     
+      Incidentreporting: {
+        type: "string",
+        title: "Incident Reporting Personnel",
         enum: [
           "Supervisor",
           "Safety committee",
@@ -37,48 +43,51 @@ const schema = {
           "Others (please specify)",
         ],
       },
-     
-      ReportingProcesses: {
+      Investigationteam: {
         type: "string",
-        title: "How can workers report hazards? (Select all that apply)",
+        title: "Investigation team",
         enum: [
-          "Directly contact",
-          "Submit a form",
-          "Online reporting portal",
+          "Safety Manager",
+          "Supervisor",
+          "Trained Team",
+          "External Consultants",
           "Others (please specify)",
         ],
       },
-      Reportingencouragement: {
+      InvestigationMethods: {
         type: "string",
-        title: "How do you encourage workers to report hazards without fear of reprisal? (Select all that apply)",
+        title: "Investigation Methods",
         enum: [
-          "Regular training",
-          "Safety incentives",
-          "Open communication culture",
-          "Positive feedback for reporting",
-          "Anonymous reporting options",
+          "Interviews",
+          "Witness Statements",
+          "Site Inspection",
+          "Equipment Review",
+          "Document Analysis",
           "Others (please specify)",
         ],
       },
-   
-      ReprisalProtection: {
+      HazardIdentification : {
         type: "string",
-        title: "Reprisal Protection Measures",
+        title: "Hazard Identification & Risk Assessment",
         texttype: "text",
       },
-      FeedbackCommunication: {
+   
+      CorrectiveActions: {
         type: "string",
-        title: "Feedback and Communication",
+        title: "Corrective Actions",
         enum: [
-          "Safety meetings",
-          "Internal communication channels",
-          "Direct feedback to reporter",
-          "Posted hazard updates",
-          "Anonymous feedback survey",
+          "Elimination of hazard",
+          "Engineering control",
+          "Administrative control",
+          "PPE",
           "Others (please specify)",
         ],
       },
-  
+      SystemImprovement: {
+        type: "string",
+        title: "System Improvement",
+        texttype: "text",
+      },
    
     },
   },
@@ -89,47 +98,68 @@ const uiSchema = {
   "ui:options": {
     titles: [
       {
-        key: "Reportingchannels",
-        title: "Reporting channels",
+        key: "Descriptionincident",
+        title: "Description of Incident",
+        tooltip:
+          "<p>Please describe the processes used to investigate work-related incidents.</p> <br> <p>Example: Incidents might be due to, for example, electrical problems, explosion, fire; overflow, overturning, leakage, flow; breakage, bursting, splitting; loss of control, slipping, stumbling and falling; body movement without stress; body movement under/with stress; shock, fright; workplace violence or harassment.</p>",
+          layouttype:"input",
+      },
+      {
+        key: "Incidentreporting",
+        title: "Incident Reporting Personnel",
         tooltip:
           "Who can workers report work-related hazards and hazardous situations to? (Select all that apply)",
+          layouttype:"multiselect",
       },
       {
-        key: "ReportingProcesses",
-        title: "Reporting Processes",
+        key: "Investigationteam",
+        title: "Investigation team",
         tooltip:
-          "How can workers report hazards? (Select all that apply)",
+          "Who typically conducts incident investigations? (Select all that apply) ",
+          layouttype:"multiselect",
       },
       {
-        key: "Reportingencouragement",
-        title: "Reporting encouragement",
+        key: "InvestigationMethods",
+        title: "Investigation Methods",
         tooltip:
-          "How do you encourage workers to report hazards without fear of reprisal? (Select all that apply)",
+          "What methods are used to investigate incidents? (Select all that apply)",
+          layouttype:"multiselect",
       },
       {
-        key: "ReprisalProtection",
-        title: "Reprisal Protection Measures",
+        key: "HazardIdentification",
+        title: "Hazard Identification & Risk Assessment",
         tooltip:
-          "Please provide a brief description on how are workers protected from reprisals for reporting hazards.",
+          "What actions did the organization take to address hazards and risks identified in incident investigations, following the hierarchy of controls? (Select all that apply)",
+          layouttype:"input",
       },
       {
-        key: "FeedbackCommunication",
-        title: "Feedback and Communication",
+        key: "CorrectiveActions",
+        title: "Corrective Actions",
         tooltip:
-          "How are workers informed about reported hazards and implemented actions, and how can they provide feedback? (Select all that apply)",
+          "What actions did the organization take to address hazards and risks identified in incident investigations, following the hierarchy of controls? (Select all that apply)",
+          layouttype:"multiselect",
       },
-
+      {
+        key: "SystemImprovement",
+        title: "System Improvement",
+        tooltip:
+          "What changes did the organization make to policies, training, equipment, or communication after investigating incidents? (e.g., revised safety procedures, improved equipment, additional hazard training)",
+          layouttype:"input",
+      },
+    
     ],
   },
 };
-const Screen1 = ({location, year}) => {
+const Screen1 = ({location, year,month}) => {
   const initialFormData = [
     {
-      Reportingchannels: "",
-      ReportingProcesses: "",
-      Reportingencouragement: "",
-      ReprisalProtection: "",
-      FeedbackCommunication: "",
+      Descriptionincident: "",
+      Incidentreporting: [],
+      Investigationteam: [],
+      InvestigationMethods: [],
+      HazardIdentification: "",
+      CorrectiveActions: [],
+      SystemImprovement: "",
     },
   ];
   const [formData, setFormData] = useState(initialFormData);
@@ -157,6 +187,7 @@ const Screen1 = ({location, year}) => {
       form_data: formData,
       location,
       year,
+  
     };
     const url = `${process.env.BACKEND_API_URL}/datametric/update-fieldgroup`;
     try {
@@ -247,10 +278,10 @@ const Screen1 = ({location, year}) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-           Hazard Reporting and Worker Protection
+           Work-Related Incident Investigation
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e86`}
-                data-tooltip-content="This section documents data corresponding to the organization's processes for workers to report work-related hazards and hazardous situations, along with the measures in place to protect workers from reprisals for reporting."
+                data-tooltip-content="This section documents data corresponding to the organization's processes for investigating work-related incidents."
                 className="mt-1.5 ml-2 text-[15px]"
               />
               <ReactTooltip
@@ -274,7 +305,7 @@ const Screen1 = ({location, year}) => {
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 403-2b
+                GRI 403-2d
                 </div>
               </div>
             </div>

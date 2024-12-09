@@ -12,6 +12,8 @@ import CollectiveBargaining from "./Labor-Management/Collective-Bargaining/page"
 import OHSMaterialtopic from "./OHS/Management-Material-topic/page";
 import Ohsmanagment from "./OHS/ohs-management/page";
 import Riskassessment from "./OHS/risk-assessment/page";
+import WorkersRight from "./OHS/Workers-Right/page"
+import HazardReporting from "./OHS/Hazard-Reporting/page"
 import Ohsservices from "./OHS/ohs-services/page";
 import Workinvolvement from "./OHS/work-involvement/page";
 import Ohstraining from "./OHS/ohs-training/page";
@@ -20,6 +22,8 @@ import Preventionohsimpact from "./OHS/prevention-ohs-Impact/page";
 import Ohsmanagementsystemcoverage from "./OHS/ohs-management-system-coverage/page";
 import Injuries from "./OHS/Injuries/page";
 import Illhealth from "./OHS/ill-health/page";
+import InjuriesHazards from "./OHS/Injuries-Hazards/page";
+import IllhealthHazard from "./OHS/Illhealth-Hazard/page"
 import TrainingMaterialtopic from "./Training/Management-Material-topic/page";
 import Traininghours from "./Training/Training-hours/page";
 import Skillupgrade from "./Training/skill-upgrade/page";
@@ -45,7 +49,8 @@ import Impactsactionstaken from "./Supplier-social-assessment/Suppliers-screened
 import SoicalProcurementPractices from "./Supplier-social-assessment/procurement-practices/page"
 import HealthSafetyMaterialtopic from "./Customer-Health-Safety/Management-Material-topic/page"
 import ProductServiceSafety from "./Customer-Health-Safety/Product-Service-Safety/page"
-import Compliance from "./Customer-Health-Safety/Compliance/page"
+import Compliance from "./Customer-Health-Safety/Compliance/Section1/page"
+import ProductsService from "./Customer-Health-Safety/Products-Service/Section2/page"
 import MarketingLabelingMaterialtopic from "./Marketing-Labeling/Management-Material-topic/page"
 import ProductServicelabelling from "./Marketing-Labeling/Product-Service-labelling/Section1/page"
 import ProductServicelabelling2 from "./Marketing-Labeling/Product-Service-labelling/Section2/page"
@@ -71,7 +76,7 @@ import { GlobalState } from "@/Context/page";
 const Social = () => {
   const { open } = GlobalState();
   const [activeTab, setActiveTab] = useState(
-    "Management of Material topic Employment"
+    "Management of Material topic OHS"
   );
   const dispatch = useDispatch();
 
@@ -121,6 +126,10 @@ const Social = () => {
       "OHS Management System Coverage",
       "Injuries",
       "Ill-health",
+      "Hazard Reporting",
+      "Workers Right",
+      "Hazards - Ill-health",
+      "Hazard Injuries",
     ];
 
     // List of tabs related to Materials
@@ -156,6 +165,7 @@ const Social = () => {
     const SafetyTabs = [
       "Product/Service Safety",
       "Compliance",
+      "Products & Service",
     ];
     const MarketingTabs = [
       "Product/Service labelling",
@@ -255,6 +265,8 @@ const Social = () => {
             )}
             {activeTab === "OHS Management" && <Ohsmanagment />}
             {activeTab === "Risk Assessment" && <Riskassessment />}
+            {activeTab === "Hazard Reporting" && <HazardReporting />} 
+            {activeTab === "Workers Right" && <WorkersRight />}
             {activeTab === "OHS Sevices" && <Ohsservices />}
             {activeTab === "Worker Involvement in OHS" && <Workinvolvement />}
             {activeTab === "OHS Training" && <Ohstraining />}
@@ -266,7 +278,9 @@ const Social = () => {
               <Ohsmanagementsystemcoverage />
             )}
             {activeTab === "Injuries" && <Injuries />}
+            {activeTab === "Hazard Injuries" && <InjuriesHazards />}
             {activeTab === "Ill-health" && <Illhealth />}
+            {activeTab === "Hazards - Ill-health" && <IllhealthHazard />}
 
             {activeTab ===
               "Management of Material topic Training and Development" && (
@@ -320,6 +334,7 @@ const Social = () => {
             )}
             {activeTab === "Product/Service Safety" && <ProductServiceSafety />}
             {activeTab === "Compliance" && <Compliance />}
+            {activeTab === "Products & Service" && <ProductsService />}   
             {activeTab === "Management of Material topic Marketing" && (
               <MarketingLabelingMaterialtopic />
             )}

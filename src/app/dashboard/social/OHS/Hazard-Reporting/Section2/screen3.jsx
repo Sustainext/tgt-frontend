@@ -11,12 +11,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import axiosInstance from "@/app/utils/axiosMiddleware";
 import GeneralWorkersEmployees from "../../../../../shared/widgets/Table/generalWorkersEmployees";
-// Simple Custom Table Widget
+import MultiselectTableWidget from "../../../../../shared/widgets/Table/MultiselectTableWidget"
 const widgets = {
-  TableWidget: GeneralWorkersEmployees,
+  TableWidget: MultiselectTableWidget,
 };
 
-const view_path = "gri-social-ohs-403-2c-worker_right-new";
+const view_path = "gri-social-ohs-403-2b-hazard_reporting-new";
 const client_id = 1;
 const user_id = 1;
 
@@ -25,24 +25,32 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      Rightrefuse: {
+      Reportingchannels: {
         type: "string",
-        title: "Right to refuse unsafe work",
+        title: "Reporting channels",
         enum: [
-          "Yes",
-          "No",
-       
+          "Supervisor",
+          "Safety committee",
+          "Safety representative",
+          "Anonymous reporting system",
+          "Online platform",
+          "Others (please specify)",
         ],
       },
      
-      PolicyProcess: {
+      ReportingProcesses: {
         type: "string",
-        title: "Policy and Process",
-        texttype: "text",
+        title: "How can workers report hazards? (Select all that apply)",
+        enum: [
+          "Directly contact",
+          "Submit a form",
+          "Online reporting portal",
+          "Others (please specify)",
+        ],
       },
-      Protectionreprisals: {
+      Reportingencouragement: {
         type: "string",
-        title: "Protection from Reprisals",
+        title: "How do you encourage workers to report hazards without fear of reprisal? (Select all that apply)",
         enum: [
           "Regular training",
           "Safety incentives",
@@ -53,7 +61,24 @@ const schema = {
         ],
       },
    
-
+      ReprisalProtection: {
+        type: "string",
+        title: "Reprisal Protection Measures",
+        texttype: "text",
+      },
+      FeedbackCommunication: {
+        type: "string",
+        title: "Feedback and Communication",
+        enum: [
+          "Safety meetings",
+          "Internal communication channels",
+          "Direct feedback to reporter",
+          "Posted hazard updates",
+          "Anonymous feedback survey",
+          "Others (please specify)",
+        ],
+      },
+  
    
     },
   },
@@ -64,34 +89,52 @@ const uiSchema = {
   "ui:options": {
     titles: [
       {
-        key: "Rightrefuse",
-        title: "Right to refuse unsafe work",
+        key: "Reportingchannels",
+        title: "Reporting channels",
         tooltip:
-          "Do workers have the right to refuse work they believe could cause injury or ill health?",
+          "Who can workers report work-related hazards and hazardous situations to? (Select all that apply)",
+          layouttype:"multiselect",
       },
       {
-        key: "PolicyProcess",
-        title: "Policy and Process",
+        key: "ReportingProcesses",
+        title: "Reporting Processes",
         tooltip:
-          "Briefly describe the policy and process for workers to exercise their right to refuse unsafe work. For example: how workers notify supervisors, what triggers investigation, and how concerns are addressed.",
+          "How can workers report hazards? (Select all that apply)",
+          layouttype:"multiselect",
       },
       {
-        key: "Protectionreprisals",
-        title: "Protection from Reprisals",
+        key: "Reportingencouragement",
+        title: "Reporting encouragement",
         tooltip:
-          "How are workers protected from reprisals for refusing unsafe work?",
+          "How do you encourage workers to report hazards without fear of reprisal? (Select all that apply)",
+          layouttype:"multiselect",
+      },
+      {
+        key: "ReprisalProtection",
+        title: "Reprisal Protection Measures",
+        tooltip:
+          "Please provide a brief description on how are workers protected from reprisals for reporting hazards.",
+          layouttype:"input",
+      },
+      {
+        key: "FeedbackCommunication",
+        title: "Feedback and Communication",
+        tooltip:
+          "How are workers informed about reported hazards and implemented actions, and how can they provide feedback? (Select all that apply)",
+          layouttype:"multiselect",
       },
 
     ],
   },
 };
-const Screen4 = ({location, year}) => {
+const Screen3 = ({location, year}) => {
   const initialFormData = [
     {
-      Rightrefuse: "",
-      PolicyProcess: "",
-      Protectionreprisals: "",
-
+      Reportingchannels: [],
+      ReportingProcesses: [],
+      Reportingencouragement: [],
+      ReprisalProtection: "",
+      FeedbackCommunication: [],
     },
   ];
   const [formData, setFormData] = useState(initialFormData);
@@ -209,7 +252,7 @@ const Screen4 = ({location, year}) => {
         <div className="mb-4 flex">
           <div className="w-[80%] relative">
            <h2 className="flex mx-2 text-[15px] text-neutral-950 font-[500]">
-           Worker Right to Refuse Unsafe Work
+           Hazard Reporting and Worker Protection
               <MdInfoOutline
                 data-tooltip-id={`tooltip-$e86`}
                 data-tooltip-content="This section documents data corresponding to the organization's processes for workers to report work-related hazards and hazardous situations, along with the measures in place to protect workers from reprisals for reporting."
@@ -236,7 +279,7 @@ const Screen4 = ({location, year}) => {
             <div className="float-end">
               <div className="w-[70px] h-[26px] p-2 bg-sky-700 bg-opacity-5 rounded-lg justify-center items-center gap-2 inline-flex">
                 <div className="text-sky-700 text-[10px] font-semibold font-['Manrope'] leading-[10px] tracking-tight">
-                GRI 403-2c
+                GRI 403-2b
                 </div>
               </div>
             </div>
@@ -282,4 +325,4 @@ const Screen4 = ({location, year}) => {
   );
 };
 
-export default Screen4;
+export default Screen3;

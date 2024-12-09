@@ -3329,11 +3329,15 @@ export const Energydata = [
             <p className="text-[11px] text-[#727272] mb-2">
             Materials that cannot be replenished naturally over time. They are typically formed from geological processes that take millions of years, such as Fossil Fuel, Glass, Fuel.
 </p>
+            <p className="text-[11px] text-[#222222] mb-2">Internally sourced materials</p>
+            <p className="text-[11px] text-[#727272] mb-2">
+            Materials that the company makes itself. 
+            </p>
             <p className="text-[11px] text-[#222222] mb-2">Externally sourced materials</p>
             <p className="text-[11px] text-[#727272] mb-2">
-            Materials that the company makes itself.
+            Materials that the company buys from other companies. 
             </p>
-            <p className="text-[11px] text-[#222222] mb-2">Estimation  </p>
+            <p className="text-[11px] text-[#222222] mb-2">Estimation</p>
             <p className="text-[11px] text-[#727272] mb-2">
             Process of making an approximate calculation of something.
             </p>

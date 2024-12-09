@@ -108,7 +108,7 @@ const Reclaimedproductsbody = ({location, year, month,setLocationMessage, setYea
           <Reclaimedproductspackdging location={location} year={year} month={month}/>
         </AccordionItem>
 
-        <AccordionItem
+        {/* <AccordionItem
           title="Data Collection method"
           tooltiptext={`  This section documents data corresponding to the organizational interactions with water.`}
           sdg={['GRI 303-1b']}
@@ -119,9 +119,8 @@ const Reclaimedproductsbody = ({location, year, month,setLocationMessage, setYea
           year={year}
           setYearMessage={setYearMessage}
         >
-
           <Datacollection location={location} year={year} month={month}/>
-        </AccordionItem>
+        </AccordionItem> */}
         {/* Add more accordion items here */}
       </div>
 

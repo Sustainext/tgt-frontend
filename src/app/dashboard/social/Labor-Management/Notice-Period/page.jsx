@@ -48,7 +48,7 @@ const Noticeperiod = () => {
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] font-bold py-2">
-                    Labor/Management Relations 2016
+                  Labour Management
                   </p>
                 </div>
               </div>

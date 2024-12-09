@@ -49,7 +49,7 @@ const IndigenousPeople = () => {
                             <div className='flex'>
                                 <div>
                                    <p className="gradient-text text-[22px] font-bold py-2">
-                                    Rights of Indigenous Peoples 2016
+                                   Human Rights and Community Impact
                                     </p>
                                 </div>
 

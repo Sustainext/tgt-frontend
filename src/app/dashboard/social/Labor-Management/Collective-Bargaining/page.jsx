@@ -50,7 +50,7 @@ const CollectiveBargaining = () => {
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] h-[30px] font-bold pt-1">
-                    Freedom of Association and Collective Bargaining 2016
+                  Labour Management
                   </p>
                 </div>
               </div>
@@ -76,7 +76,7 @@ const CollectiveBargaining = () => {
 
         <div className="ml-3 flex relative">
           <h6 className="text-[17px] mb-4 font-semibold flex">
-            Freedom of Association and Collective Bargaining 2016
+          Operations and suppliers in which the right to freedom of association and collective bargaining may be at risk (Labor manage)
             {/* <MdInfoOutline data-tooltip-id={`tooltip-$e1`}
                             data-tooltip-content="This section documents data corresponding to total water
                             withdrawn and total water discharged from areas with water stress." className="mt-1.5 ml-2 text-[15px]" />

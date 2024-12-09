@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { MdOutlineClear, MdInfoOutline,MdChevronRight } from "react-icons/md";
 import { Socialdata } from "../../data/socialgriinfo";
-import Riskscreeen from "./risk-screeen";
+import Section1 from "./Section1/page"
 const Riskassessment = () => {
 
   const [data, setData] = useState();
@@ -39,8 +39,7 @@ const Riskassessment = () => {
               <div className="flex">
                 <div>
                   <p className="gradient-text text-[22px] font-bold py-2">
-                    Hazard identification, risk assessment, and incident
-                    investigation
+                  Occupational Health and Safety
                   </p>
                 </div>
               </div>
@@ -111,7 +110,7 @@ transition-transform duration-300 ease-in-out z-[100] shadow-2xl px-2`}
         </div>
       </div>
    
-      <Riskscreeen/>
+      <Section1/>
     </>
   );
 };

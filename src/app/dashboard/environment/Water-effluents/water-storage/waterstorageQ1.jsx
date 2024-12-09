@@ -20,6 +20,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import selectWidget3 from "../../../../shared/widgets/Select/selectWidget3";
 import axiosInstance from "../../../../utils/axiosMiddleware";
+import LonginputrdonlyWidget from "../../../../shared/widgets/Input/LonginputrdonlyWidget"
 const widgets = {
   inputWidget: LonginputWidget,
   dateWidget: dateWidget,
@@ -29,6 +30,7 @@ const widgets = {
   CustomSelectInputWidget: CustomSelectInputWidget,
   RemoveWidget: RemoveWidget,
   selectWidget3: selectWidget3,
+  LonginputrdonlyWidget:LonginputrdonlyWidget,
 };
 
 const view_path = "gri-environment-water-303-5c-change_in_water_storage";
@@ -125,7 +127,7 @@ const uiSchema = {
       },
     },
     Reporting3: {
-      "ui:widget": "inputWidget",
+      "ui:widget": "LonginputrdonlyWidget",
       "ui:horizontal": true,
       "ui:options": {
         label: false,
@@ -270,17 +272,17 @@ const WaterstorageQ1 = ({ location, year, month }) => {
   }, [formData]);
 
   // fetch backend and replace initialized forms
-  useEffect(() => {
-    if (location && year && month) {
-      loadFormData();
-      toastShown.current = false; // Reset the flag when valid data is present
-    } else {
-      // Only show the toast if it has not been shown already
-      if (!toastShown.current) {
-        toastShown.current = true; // Set the flag to true after showing the toast
-      }
-    }
-  }, [location, year, month]);
+  // useEffect(() => {
+  //   if (location && year && month) {
+  //     loadFormData();
+  //     toastShown.current = false; // Reset the flag when valid data is present
+  //   } else {
+  //     // Only show the toast if it has not been shown already
+  //     if (!toastShown.current) {
+  //       toastShown.current = true; // Set the flag to true after showing the toast
+  //     }
+  //   }
+  // }, [location, year, month]);
 
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
@@ -289,7 +291,7 @@ const WaterstorageQ1 = ({ location, year, month }) => {
     const newData = e.formData.map((item) => {
       const reporting1 = parseFloat(item.Reporting1) || 0; // Safely parse or default to 0
       const reporting2 = parseFloat(item.Reporting2) || 0;
-      const reporting3 = reporting1 + reporting2; // Calculate the sum
+      const reporting3 = reporting1 - reporting2; // Calculate the sum
       return {
         ...item, // Retain other fields
         Reporting3: reporting3.toString(), // Ensure it remains a string for the form
@@ -359,8 +361,8 @@ const WaterstorageQ1 = ({ location, year, month }) => {
             <div>
               <Form
                 className="flex"
-                schema={r_schema}
-                uiSchema={r_ui_schema}
+                schema={schema}
+                uiSchema={uiSchema}
                 formData={formData}
                 onChange={handleChange}
                 validator={validator}
